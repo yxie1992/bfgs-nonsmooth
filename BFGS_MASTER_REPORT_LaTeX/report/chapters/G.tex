@@ -1,0 +1,283 @@
+\begingroup
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb R}
+\providecommand{\PSD}{}
+\renewcommand{\PSD}{\succeq0}
+\providecommand{\range}{}
+\renewcommand{\range}{\operatorname{range}}
+\providecommand{\aff}{}
+\renewcommand{\aff}{\operatorname{aff}}
+\providecommand{\conv}{}
+\renewcommand{\conv}{\operatorname{conv}}
+\providecommand{\norm}{}
+\renewcommand{\norm}[1]{\left\|#1\right\|}
+\providecommand{\ip}{}
+\renewcommand{\ip}[2]{\langle #1,#2\rangle}
+\makeatletter\let\c@lemma\c@theorem\let\c@corollary\c@theorem\let\c@proposition\c@theorem\let\c@remark\c@theorem\makeatother
+\renewcommand{\thelemma}{\thetheorem}\renewcommand{\thecorollary}{\thetheorem}\renewcommand{\theproposition}{\thetheorem}\renewcommand{\theremark}{\thetheorem}
+\renewcommand{\thetheorem}{G.\arabic{section}.\arabic{theorem}}
+\setcounter{section}{0}
+\setcounter{theorem}{0}
+\setcounter{equation}{0}
+\section{The precise condition under study}
+Let $F:\R^n\to\R$ be finite and convex, with attained minimum $F_*$. Fix a compact sublevel $K=\{F\le b\}$, a positive band
+\[
+ K_\eta=\{x\in K:F(x)\ge F_*+\eta\},\qquad \eta>0,
+\]
+and fixed $0<c_1<c_2<1$. Endpoints below are differentiable. Write
+\[
+ g=\nabla F(x),\quad g_z=\nabla F(z),\quad y=g_z-g,\quad s=z-x,
+\]
+\[
+ d=-g^Ts,\quad \Delta=F(x)-F(z),\quad t=y^Ts.
+\]
+A pair is \emph{eligible} when
+\begin{equation}
+ d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge(1-c_2)d. \tag{G.E}
+\end{equation}
+These are the necessary endpoint inequalities of the Armijo--weak-Wolfe formulation in Xie--W\"achter~\cite{XW}. In particular $t>0$ and $s\ne0$.
+
+On each positive band, the condition asks for a finite-valued PSD field $W(x)$ and constants $m>0$, $C<\infty$, $L\ge0$, $\delta>0$ such that
+\begin{align}
+ g_x^TW(x)g_x&\ge m, \tag{G.V}\\
+ y^TW(z)y&\le Ct, \tag{G.S}\\
+ \Pi_sW(z)\Pi_s&\preceq(1+Ld)\Pi_sW(x)\Pi_s,
+ \qquad \Pi_s=I-ss^T/(s^Ts). \tag{G.T}
+\end{align}
+The last two apply to all eligible pairs in the band with $d\le\delta$. The field may be singular, discontinuous, and unbounded as a function on the band; only its value at each point is finite. All constants may depend on the band and the fixed line-search parameters. No claim below silently imposes continuity or local boundedness on $W$.
+
+The preceding theorem says that this condition implies objective convergence for every admissible infinite full-BFGS run in $K$, and iterate convergence under uniqueness. A local theorem requires the condition only near the minimizer, then uses a sufficiently low trapped sublevel. Failure on a large sublevel and failure in every neighborhood of a minimizer are different statements.
+
+
+\setcounter{section}{1}
+\setcounter{theorem}{0}
+\setcounter{equation}{1}
+\section{The expansion allowance can be removed completely}
+\begin{proposition}[Exact nonexpansion normalization]
+The existential condition (V)--(T) is equivalent to one in which $L=0$:
+\begin{equation}
+ \Pi_s\widehat W(z)\Pi_s\preceq\Pi_s\widehat W(x)\Pi_s. \tag{G.T0}
+\end{equation}
+The other constants may change, but no domain or eligible-pair hypothesis is added.
+\end{proposition}
+\begin{proof}
+Given a field satisfying (T), put $\kappa=L/c_1$ and
+\[
+ \widehat W(x)=e^{\kappa(F(x)-F_*)}W(x).
+\]
+On the compact value band this multiplier is bounded above and away from zero, preserving finite values, (V), and (S), with changed constants. Since $\Delta\ge c_1d$,
+\[
+ e^{-\kappa\Delta}(1+Ld)\le e^{-Ld}(1+Ld)\le1.
+\]
+Multiplying (T) by $e^{\kappa(F(z)-F_*)}$ gives (T0). The converse is the case $L=0$.
+\end{proof}
+This is an equivalence, not a further relaxation. The accumulated-expansion budget was useful in the proof, but is not essential to the existential definition: an objective-value rescaling absorbs it.
+
+\subsection{An ellipsoid interpretation}
+Associate with $W(x)$ the possibly degenerate centered ellipsoid
+\[
+ \mathcal E_x=W(x)^{1/2}\{v:\norm v\le1\}.
+\]
+Its support function is $h_{\mathcal E_x}(a)=\sqrt{a^TW(x)a}$. Thus the normalized condition means:
+\begin{enumerate}[label=(\roman*),itemsep=3pt]
+\item $\mathcal E_x$ contains a direction with descent magnitude at least $\sqrt m$;
+\item every incoming gradient change has magnitude at most $\sqrt{Ct}$ when tested on $\mathcal E_z$;
+\item $\Pi_s\mathcal E_z\subseteq\Pi_s\mathcal E_x$ for every eligible small-decrease pair.
+\end{enumerate}
+Equivalently, after quotienting out the executed step direction, the comparison ellipsoid can only shrink. The ellipsoids are analytical comparison directions, not BFGS steps or approximations of $H_k$.
+
+A necessary rank consequence is
+\begin{equation}
+ \range W(z)\subseteq\range W(x)+\operatorname{span}\{s\}. \label{G:eq:range}
+\end{equation}
+Indeed, Loewner ordering implies inclusion of the ranges of the projected PSD matrices. The range of $\Pi_sW\Pi_s$ is $\Pi_s\range W$, because it equals the range of $(\Pi_sW^{1/2})(\Pi_sW^{1/2})^T$. Lifting the projected inclusion proves \eqref{G:eq:range}. For a rank-one field, a new comparison direction must therefore lie in the plane spanned by the old comparison direction and the step.
+
+
+\setcounter{section}{2}
+\setcounter{theorem}{0}
+\setcounter{equation}{3}
+\section{Removing the matrix from pointwise feasibility}
+Fix a band and a predicted-decrease threshold $\delta$. For each differentiable endpoint $z$, let $\mathcal I(z)$ be all differentiable predecessors $x$ for which $(x,z)$ is eligible, belongs to the band, and has $d\le\delta$. Define
+\[
+ \mathcal D(z)=\left\{v:\left|[\nabla F(z)-\nabla F(x)]^Tv\right|
+       \le\sqrt{t(x,z)}\ \text{for every }x\in\mathcal I(z)\right\},
+\]
+\begin{equation}
+ \nu(z)=\sup_{v\in\mathcal D(z)}|\nabla F(z)^Tv|\in[0,\infty]. \label{G:eq:nu}
+\end{equation}
+An empty predecessor set gives $\mathcal D(z)=\R^n$. The set $\mathcal D(z)$ is the polar of the closed absolutely convex hull of the normalized incoming jumps $y/\sqrt t$.
+
+\begin{proposition}[Exact characterization of (V) and (S), without transport]
+There is a finite-valued PSD field satisfying (V) and (S) with uniform positive $m$ and finite $C$ if and only if
+\[
+ \inf_z\nu(z)>0.
+\]
+This statement concerns only (V) and (S). It does not assert that the pointwise selections satisfy (T).
+\end{proposition}
+\begin{proof}
+If $C>0$ and $W$ satisfies (V)--(S), set $h=\nabla F(z)$ and
+\[
+ v=\frac{W(z)h}{\sqrt C\sqrt{h^TW(z)h}}.
+\]
+PSD Cauchy--Schwarz gives $|y^Tv|\le\sqrt t$ for every incoming pair and
+$|h^Tv|\ge\sqrt{m/C}$. If $C=0$, the same argument without $\sqrt C$ gives a nonzero visible direction annihilating every incoming jump, which can be scaled arbitrarily.
+
+Conversely, if $\inf\nu\ge\nu_0>0$, choose, for each $z$, a finite vector $v_z\in\mathcal D(z)$ with $|\nabla F(z)^Tv_z|\ge\nu_0/2$. Then $W(z)=v_zv_z^T$ satisfies (S) with $C=1$ and (V) with $m=\nu_0^2/4$. No continuity is needed for these pointwise selections.
+\end{proof}
+Thus higher rank adds no pointwise power to (V)--(S); its potential advantage is compatibility of comparison geometries across endpoints through (T). The scalar $\nu(z)$ has a direct interpretation: how much descent remains visible after all low-curvature incoming jumps have been suppressed?
+
+\subsection{A nonexistence test independent of the certificate}
+\begin{proposition}[Incoming-jump obstruction]\label{G:prop:star}
+Suppose $z_\epsilon$ and finitely many predecessors $x_{j,\epsilon}$ give eligible pairs in a fixed positive band with $d_{j,\epsilon}\to0$. Write $y_{j,\epsilon}=\nabla F(z_\epsilon)-\nabla F(x_{j,\epsilon})$ and $t_{j,\epsilon}=y_{j,\epsilon}^T(z_\epsilon-x_{j,\epsilon})$. If
+\[
+ \nabla F(z_\epsilon)=\sum_{j=1}^r\lambda_{j,\epsilon}y_{j,\epsilon},
+ \qquad
+ \sum_{j=1}^r|\lambda_{j,\epsilon}|\sqrt{t_{j,\epsilon}}\longrightarrow0,
+\]
+then no field satisfies (V) and (S), and hence no transported certificate exists on that band.
+\end{proposition}
+\begin{proof}
+For any PSD field satisfying (S), the triangle inequality for the seminorm induced by $W(z_\epsilon)$ gives
+\[
+ \sqrt{\nabla F(z_\epsilon)^TW(z_\epsilon)\nabla F(z_\epsilon)}
+ \le\sqrt C\sum_j|\lambda_{j,\epsilon}|\sqrt{t_{j,\epsilon}}\to0,
+\]
+contradicting (V). Neither transport nor boundedness or continuity of $W$ was used.
+\end{proof}
+In particular, the obstruction holds if $n$ incoming jumps converge to a basis of $\R^n$, their curvature products tend to zero, and endpoint gradients remain bounded. The coefficients expressing the gradient in that basis then remain bounded.
+
+The predecessors need not belong to one BFGS history. This is not a loophole: the condition quantifies over all such pairs. Moreover, every eligible pair is individually realizable as a first BFGS step. If $d=-g^Ts>0$, then
+\[
+ H=\frac{ss^T}{d}+I-\frac{gg^T}{g^Tg}\succ0,\qquad Hg=-s.
+\]
+Hence $\alpha=1$ realizes it. Positive definiteness follows because a vector in both nullspaces would be parallel to $g$ and orthogonal to $s$, and therefore zero.
+
+
+\setcounter{section}{3}
+\setcounter{theorem}{0}
+\setcounter{equation}{4}
+\section{Connection with tangent and normal geometry}
+At a nonsmooth point $p$, let $g_1,\dots,g_r$ be limiting active gradients. Define
+\[
+ N=\operatorname{span}\{g_i-g_j\},\qquad U=N^\perp.
+\]
+The projected gradients $P_Ug_i$ agree. They are the common part of the first-order models that is not affected by gradient jumps. In suitable partly smooth settings $N$ is the normal space and $U$ the tangent space; this interpretation and its relation to the affine span of the subdifferential are standard in partial smoothness~\cite{LL}.
+
+For a certificate with a finite continuous extension to $p$, accessible incoming pairs with $t\to0$ force
+\[
+ W(p)(g_i-g_j)=0.
+\]
+Thus its range is tangential to the accessible jump directions. Visibility then requires a nonzero common tangential gradient. Algebraically,
+\[
+ P_Ug_i=0\quad\Longleftrightarrow\quad0\in\aff\{g_1,\dots,g_r\}.
+\]
+The condition $0\in\aff G$ is weaker than $0\in\conv G$: a point can have no tangent descent of this type yet remain nonstationary for the convex objective.
+
+This limiting picture is an interpretation under the stated continuity and accessibility qualifications, \emph{not} a proof for arbitrary fields. Proposition~\ref{G:prop:star} supplies the rigorous obstruction without those regularity assumptions. Eligibility matters: some local derivative jumps cannot be crossed by arbitrarily small steps satisfying the fixed Wolfe condition.
+
+For $u^2+|v|$ at $(u,0)$ with $u\ne0$, the jump space is vertical and a nonzero horizontal derivative remains. At a generic two-dimensional vertex with independent accessible jumps in both coordinates, there may be no remaining comparison direction. The common-target obstruction above makes that interpretation rigorous without continuity of a certificate.
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{0}
+\setcounter{equation}{5}
+\section{In one dimension the condition can be fully eliminated}
+\begin{proposition}[Exact scalar characterization]
+On a compact positive objective band in $\R$, the transported certificate exists if and only if, for some small-decrease threshold, eligible pairs satisfy
+\begin{equation}
+ \sup_{(x,z)}\frac{|F'(z)-F'(x)|}{|z-x|\,|F'(z)|^2}<\infty. \label{G:eq:scalar}
+\end{equation}
+Equivalently, the derivative is uniformly Lipschitz on these eligible pairs:
+\[
+ |F'(z)-F'(x)|\le A_\eta|z-x|.
+\]
+This is not a Lipschitz assertion on all pairs or across the minimizer.
+\end{proposition}
+\begin{proof}
+In one dimension $\Pi_s=0$, so transport imposes no restriction. From (V),
+$W(z)\ge m/|F'(z)|^2$. From (S), using $t=|y||s|$,
+$W(z)|y|\le C|s|$. These imply \eqref{G:eq:scalar}. Conversely, choose
+$W(z)=1/|F'(z)|^2$; visibility equals one and \eqref{G:eq:scalar} gives (S).
+
+On a compact positive band, convexity gives $|F'(z)|\ge\eta/R$, where $R$ bounds distance to a fixed minimizer, and local boundedness gives $|F'(z)|\le G$. These bounds make \eqref{G:eq:scalar} equivalent to the displayed Lipschitz inequality.
+\end{proof}
+This reveals a genuine restriction: an eligible arbitrarily small crossing of a nonoptimal derivative jump rules out every certificate.
+
+\subsection{Convergence itself does not need this scalar restriction}
+\begin{proposition}[Scalar convergence, independently of BFGS updates]\label{G:prop:scalarconv}
+Let $f:\R\to\R$ be finite and convex with unique minimizer and compact initial sublevel. Every infinite differentiable-iterate Armijo--weak-Wolfe run using any positive scalar metric converges to that minimizer.
+\end{proposition}
+\begin{proof}
+Suppose the monotone objective gap tends to $L>0$. Convexity gives $|g_k|\ge L/R$ on the compact sublevel. In one dimension a positive-metric descent step obeys $d_k=|g_k||s_k|$. Armijo makes $\sum d_k<\infty$, hence $\sum|s_k|<\infty$. Thus the iterates converge to a nonminimizer. On a tail they lie on one side of the unique minimizer, so all gradients have the same sign. Weak Wolfe then gives $|g_{k+1}|\le c_2|g_k|$, contradicting the positive lower bound. Objective convergence and compactness with uniqueness give iterate convergence.
+\end{proof}
+Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly convex example with global convergence but no global certificate on a sublevel containing zero. For $x=\epsilon$, $z=-\epsilon/2$,
+\[
+ g_x=3+\epsilon,\quad g_z=1-\epsilon/2,\quad y=-2-3\epsilon/2,
+\]
+\[
+ d=\frac92\epsilon+\frac32\epsilon^2,\quad
+ \Delta=\frac72\epsilon+\frac38\epsilon^2,\quad
+ t=3\epsilon+\frac94\epsilon^2.
+\]
+These pairs are strictly eligible for $(1/4,1/2)$ for small $\epsilon$, and their scalar quotient in \eqref{G:eq:scalar} diverges.
+
+
+\setcounter{section}{6}
+\setcounter{theorem}{0}
+\setcounter{equation}{6}
+\section{Local nonexistence despite global convergence}
+The difference between a local certificate and actual convergence remains even after shrinking every neighborhood of the optimizer.
+
+Define $a_j=4^{-j}$ and
+\begin{equation}
+ h(x)=\frac12x^2+3\sum_{j=1}^\infty a_j(x-a_j)_+. \label{G:eq:infinite}
+\end{equation}
+The series converges uniformly on compact sets: its absolute value is bounded by a constant times $\sum a_j$. Every summand is convex, and $h(x)\ge x^2/2$ with $h(0)=0$. Thus $h$ is finite, $1$-strongly convex, coercive, and uniquely minimized at zero.
+
+At a knot $a=a_j$, the one-sided derivatives are $2a$ and $5a$. These formulas come from exact geometric sums, not a truncation. For example, when $a/4<x<a$,
+\[
+ h(x)=\frac12x^2+ax-\frac15a^2,
+\]
+while just above $a$,
+\[
+ h(x)=\frac12x^2+4ax-\frac{16}{5}a^2.
+\]
+Also $h(a)=13a^2/10$.
+
+Fix any knot, then let $x=a+\epsilon$, $z=a-\epsilon$, with $\epsilon\downarrow0$. Exactly,
+\[
+ g_x=5a+\epsilon,\quad g_z=2a-\epsilon,\quad y=-3a-2\epsilon,
+\]
+\begin{align*}
+ d&=10a\epsilon+2\epsilon^2,&
+ \Delta&=7a\epsilon,&
+ t&=6a\epsilon+4\epsilon^2.
+\end{align*}
+The pairs are strictly eligible for $(c_1,c_2)=(1/4,1/2)$ for small $\epsilon$. Yet
+\[
+ \frac{|y|}{|s|\,g_z^2}
+ =\frac{3a+2\epsilon}{2\epsilon(2a-\epsilon)^2}\longrightarrow\infty.
+\]
+No certificate exists on a positive band containing this knot. Every neighborhood of zero contains such a knot. Fixing a knot first, then taking $\epsilon\to0$, is essential: deterioration of band constants as $\eta\downarrow0$ cannot repair the divergence on the fixed knot's band.
+
+Nevertheless Proposition~\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$. The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it. Thus the transported condition is not necessary even for local convergence. A further source example is retained in the provenance archive; it is not needed for the nonnecessity conclusion here.
+
+
+\setcounter{section}{8}
+\setcounter{theorem}{0}
+\setcounter{equation}{8}
+\section{Why numerical nonexistence is intrinsically delicate}
+\begin{proposition}[Every finite sample is feasible if constants are free]
+Take any finite set of differentiable nonstationary endpoints and any finite set of eligible pairs between them. There are finite constants $m>0$, $C<\infty$ and a constant field $W(x)=I$ satisfying (V), (S), and (T0) on that finite sample.
+\end{proposition}
+\begin{proof}
+Choose $m=\min_x\norm{\nabla F(x)}^2>0$ and
+\[
+ C=\max_{(x,z)}\frac{\norm{\nabla F(z)-\nabla F(x)}^2}{t(x,z)}<\infty.
+\]
+There are finitely many pairs and all their denominators are positive. Transport is equality for a constant field.
+\end{proof}
+Consequently a finite-sample feasibility problem with unrestricted constants cannot prove nonexistence. One needs a known bound on the constants, extra restrictions on the field, or an analytic limiting family that forces the required constants to infinity. The examples above supply the latter. Conversely, passing many finite tests is not an existence theorem for a uniform field on the continuum.
+
+
+\endgroup

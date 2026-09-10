@@ -1,0 +1,156 @@
+\documentclass[10pt,oneside,openany]{book}
+\usepackage[a4paper,top=22mm,bottom=23mm,left=23mm,right=23mm,headheight=15pt,headsep=7mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{Ink}{HTML}{172C45}
+\definecolor{Accent}{HTML}{14686B}
+\definecolor{RuleGray}{HTML}{C8D0D6}
+\usepackage{graphicx,booktabs,longtable,array,calc,multirow}
+\usepackage{needspace}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=Accent,citecolor=Accent,urlcolor=Accent,bookmarksnumbered=true,pdfpagelabels=true,hypertexnames=false]{hyperref}
+\usepackage{bookmark}
+\hypersetup{pdftitle={Full BFGS on Convex Nonsmooth Objectives: Consolidated Proofs and Verification},pdfauthor={Working research consolidation},pdfsubject={Ordinary full BFGS, Armijo--weak-Wolfe, positive and negative convergence results},pdfkeywords={BFGS, nonsmooth convex optimization, convergence, counterexample, affine criticality}}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\passthrough}[1]{#1}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\ModuleTag}{I}
+\renewcommand{\thechapter}{\ModuleTag}
+\renewcommand{\thesection}{\ModuleTag.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\theequation}{\ModuleTag.\arabic{equation}}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{remark}\newtheorem{remark}{Remark}[chapter]
+\renewcommand{\thetheorem}{\ModuleTag.\arabic{theorem}}
+\renewcommand{\thelemma}{\ModuleTag.\arabic{lemma}}
+\renewcommand{\thecorollary}{\ModuleTag.\arabic{corollary}}
+\renewcommand{\theproposition}{\ModuleTag.\arabic{proposition}}
+\renewcommand{\theremark}{\ModuleTag.\arabic{remark}}
+\setlength{\emergencystretch}{2em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\setlist{itemsep=2pt,topsep=4pt,parsep=0pt}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\raggedbottom
+\allowdisplaybreaks[2]
+\titleformat{\chapter}[display]{\normalfont\color{Ink}}{\Large\sffamily\bfseries MODULE \ModuleTag}{5pt}{\huge\bfseries}
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titleformat{\section}{\large\bfseries\color{Ink}}{\thesection}{.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{Ink}}{\thesubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{15pt}{6pt}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily Full BFGS on convex nonsmooth objectives}
+\fancyhead[R]{\small\sffamily Working proof record}
+\fancyfoot[L]{\footnotesize\sffamily 10 September 2026}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[L]{\footnotesize\sffamily Working proof record\enspace|\enspace10 September 2026}\fancyfoot[R]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\newcommand{\StartModule}[3]{\cleardoublepage\renewcommand{\ModuleTag}{#1}\chapter{#2}\label{#1:chapter}\begin{small}\color{Accent}#3\end{small}\par\vspace{3pt}{\color{RuleGray}\hrule}\vspace{9pt}}
+\begin{document}
+\begin{titlepage}
+\color{Ink}
+{\large\sffamily\bfseries RESEARCH CONSOLIDATION}\par
+\vspace{22mm}
+{\Huge\bfseries Full BFGS on\\[3mm]convex nonsmooth\\[3mm]objectives}\par
+\vspace{10mm}
+{\Large Complete retained proofs, negative constructions,\\verification, and the remaining boundary}\par
+\vspace{15mm}
+{\color{Accent}\rule{\textwidth}{1.2pt}}\par
+\vspace{7mm}
+\begin{minipage}{.94\textwidth}
+\large
+Ordinary full BFGS. Fixed Armijo--weak-Wolfe conditions.\\
+Objective-level convergence criteria. Deterministic counterexamples.\\
+Planar affine criticality and arbitrary-dimensional fixed-normal geometry.
+\end{minipage}
+\vfill
+\begin{minipage}{.94\textwidth}
+\normalsize
+\textbf{Status.} A consolidated working mathematical record, not an independently reviewed publication or a priority certification. The proof modules retain distinct assumptions. Exact finite certificates, numerical regressions, and analytic infinite-sequence arguments are identified separately.\par
+\vspace{5mm}
+\textbf{Fresh reproducibility audit:} 19 requested jobs passed.\par
+\textbf{Record closed:} 10 September 2026.\par
+\textbf{Companion material:} editable sources, original snapshots, verification scripts, historical and fresh logs, hashes, and supersession notes.
+\end{minipage}
+\end{titlepage}
+\frontmatter
+\chapter*{How to read this record}
+\addcontentsline{toc}{chapter}{How to read this record}
+This edition replaces the earlier inventory with a proof-bearing consolidation through the fixed-normal multidimensional continuation. Module I is the statement and supersession map. Modules M--U present the retained positive framework and its geometric applications; Modules D and L give the two incomparable negative constructions. Module E is the fresh verification record.
+
+\textbf{The mathematical scope does not change between examples:} the algorithm is ordinary full BFGS, not a limited-memory or modified substitute. Positive statements concern infinite admissible differentiable-iterate runs unless stated otherwise. The counterexamples fix a particular unit-first weak-Wolfe doubling/bisection implementation and verify every oracle decision.
+
+\textbf{Not one maximal function class.} The strongest results are not all ordered by implication. Compact-level geometry does not subsume noncompact homogeneous behavior. Positive lower curvature and higher branch differentiability are separate hypotheses. Planar curved geometry does not encompass arbitrary dimension, and fixed normals do not encompass rotating normals. The report explicitly retains these distinctions.
+
+\textbf{Detailed proofs, with shared algebra centralized.} The common principal-minor and energy foundation is proved once in Module M. Source proof modules then refer to that foundation rather than repeating the appendix. The selected modules preserve their original internal section and theorem ordering with a module prefix; occasional numbering gaps correspond to omitted superseded or historical material. The complete original snapshots remain available for comparison.
+
+\textbf{Disclosed consolidation deductions.} First, the older general two-branch scalar-ridge result is a corollary of the later planar theorem; the implication is proved in Module I, and its independent source proof is archived rather than repeated as a principal result. Second, the new superquadratic reciprocal estimate allows an $O(N^2)$ reference-energy correction. The same ordered-tail bound also strengthens the recorded conservative rates to little-$o$ corollaries in Module F. No unproved theorem is created by combining the two different local counterexamples.
+
+\textbf{Verification is not peer review.} All 19 selected jobs passed in a fresh isolated run. This establishes reproducibility of their finite calculations. The root certificates, continuum geometric arguments, ordered limits and stable-manifold existence steps have different roles; their limits are detailed in Module E. Neither the results nor their novelty have been independently certified.
+
+\begin{center}
+\begin{tabular}{p{.16\textwidth}p{.74\textwidth}}
+\toprule
+Read first & What it contains\\\midrule
+I & The strongest statements, exact quantifiers, supersessions and unresolved cases.\\
+M, T, R & Shared BFGS algebra, objective certificates and radial interpretation.\\
+C, U & New geometric local/cluster theorems: planar and fixed-normal multidimensional.\\
+D, L & Exact deterministic failure and persistence with positive lower curvature.\\
+E & Fresh audit, arithmetic classification, commands and limitations.\\\bottomrule
+\end{tabular}
+\end{center}
+\tableofcontents
+\mainmatter
+\StartModule{I}{Strongest results and logical map}{Editorial synthesis of the source record. Full proofs follow; source snapshots and explicit supersession notes are included in the companion package.}
+\input{chapters/inventory}
+\StartModule{M}{Shared BFGS algebra and energy budgets}{Unified complete proof of the principal-minor hierarchy, reciprocal-growth theorems, fixed and moving comparison energies, and the smooth-subspace residual budget.}
+\input{chapters/foundation}
+\StartModule{T}{Objective-level transported certificates}{Selected proof from source [ST]. Positive bands and small eligible pairs, not assumptions on BFGS matrices. Normalization is proved in Module G.}
+\input{chapters/T}
+\StartModule{R}{Radial smoothness and finite partitions}{Selected complete arguments from source [SR]. RS is a special case, not the most general sufficient condition. Boundary examples disprove a criterion, not convergence.}
+\input{chapters/R}
+\StartModule{F}{Structural corollaries and rates}{Consolidated proofs from [SM], [SP], [SE] and [SQ]. Includes centered composites, transformed gauges, explicit basins, lifting, conservative rates and line-search qualifications.}
+\input{chapters/families}
+\StartModule{H}{Homogeneous objectives without compactness}{Selected proof from source [SH]. Retains the value dichotomy, affine-hull obstruction, low-effective-rank iterates and affine-fiber cases. Superseded matrix arguments are replaced by Module M.}
+\input{chapters/H}
+\StartModule{Q}{Arbitrarily many parabolic branches}{Selected complete application from [ST]. Flat contour segments are permitted, so this family is not subsumed by Module C.}
+\input{chapters/Q}
+\StartModule{G}{What certificates mean and cannot imply}{Selected geometric proofs from [SG]. Certificate nonexistence is distinct from a bad BFGS trajectory. The scalar convergence theorem shows strict nonnecessity.}
+\input{chapters/G}
+\StartModule{A}{Affine criticality and local geometry}{Source-derived geometric deductions from [SA]. Equal-rate descent, rank stability and finite semialgebraic affine-critical values; no blanket dynamical theorem is inferred.}
+\input{chapters/affine_geometry}
+\StartModule{C}{Forced affine-critical cluster points in the plane}{Complete retained proof from [SC], excluding its repeated matrix appendix. Strict positive contours and regular switching are substantive assumptions.}
+\input{chapters/C}
+\StartModule{U}{Arbitrary dimension with fixed jump normals}{Selected objective proofs from [SU], using the new residual budget in Module M. Parallel interfaces and a single exceptional hyperplane are distinct statements.}
+\input{chapters/U}
+\StartModule{D}{Exact deterministic local failure}{Canonical source [SD]. Algebraic root, full matrix closure, all accepted and rejected trials, and a globally $C^{2,1}$ convex-branch embedding. No positive lower curvature is asserted.}
+\input{chapters/D}
+\StartModule{L}{Failure with positive lower curvature}{Complete construction from [SLC]. Stable-manifold persistence and local lower-curvature embeddings. The local smooth branches are $C^{1,1}$, not $C^2$ at the accumulation point.}
+\input{chapters/L}
+\StartModule{E}{Fresh verification and reproducibility}{New isolated reruns of the preserved source scripts. The status of finite algebra, rigorous intervals, numerical experiments and analytic proof steps is separated explicitly.}
+\input{chapters/verification}
+\backmatter
+\renewcommand{\ModuleTag}{B}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{References and source provenance}
+\input{bibliography}
+\end{document}

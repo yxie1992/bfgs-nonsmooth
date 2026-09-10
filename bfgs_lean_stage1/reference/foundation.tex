@@ -1,0 +1,248 @@
+\section{Notation, elementary consequences, and localization}
+\label{M:notation}
+This module consolidates the common algebra from sources~\cite{SM,SH,SQ,SU}. No outside BFGS convergence theorem is substituted for this algebra. All results inherit the infinite-admissible-run convention in the inventory.
+
+Put
+\[
+ \begin{gathered}
+ B_k=H_k^{-1},\qquad q_k=g_k^TH_kg_k>0,\qquad d_k=-g_k^Ts_k=\alpha_kq_k,\\
+ t_k=y_k^Ts_k,\qquad\Delta_k=F(x_k)-F(x_{k+1}),\qquad c=1-c_2>0.
+ \end{gathered}
+\]
+Convexity, Armijo and weak Wolfe give
+\begin{equation}\label{M:basic}
+ c_1d_k\le\Delta_k\le d_k,\qquad t_k\ge c d_k>0.
+\end{equation}
+In particular $\sum d_k<\infty$ on a run with finite limiting value. The Hessian form is
+\begin{equation}\label{M:hessian}
+ B_{k+1}=B_k-\frac{g_kg_k^T}{q_k}+\frac{y_ky_k^T}{t_k}.
+\end{equation}
+Metric Cauchy--Schwarz proves
+\begin{equation}\label{M:annihilation}
+ M_k:=B_k-\frac{g_kg_k^T}{q_k}\succeq0,\qquad M_ks_k=0.
+\end{equation}
+For example $(g_k^Tz)^2\le q_k z^TB_kz$, and $B_ks_k=-\alpha_kg_k$ proves the second identity.
+
+A finite convex function has uniformly bounded subgradients on any compact set $K$. Indeed, choose $\epsilon>0$ and bound its continuous values on $K+\epsilon\overline B$. The supporting inequality at $x$ evaluated at $x+\epsilon u$ bounds $g^Tu$ for every unit $u$, hence $\|g\|$. This does not require differentiability throughout $K$.
+
+\begin{lemma}[A low sublevel is an invariant local basin]\label{M:localization}
+Let $F$ be finite convex and have a unique minimizer $x_*$. Inside any specified structural neighborhood, choose $r>0$ with $\overline B_r(x_*)$ contained in it. Then
+\[
+ \omega_r=\min_{\|z\|=r}\{F(x_*+z)-F(x_*)\}>0,
+\]
+and $F(x_0)-F(x_*)<\omega_r$ places the entire initial sublevel in $B_r(x_*)$.
+\end{lemma}
+\begin{proof}
+For $\|x-x_*\|\ge r$, convexity along the radial segment gives
+\[
+ F(x)-F(x_*)\ge\frac{\|x-x_*\|}{r}\omega_r\ge\omega_r.
+\]
+Continuity, compactness of the sphere, and uniqueness give $\omega_r>0$. Armijo keeps every accepted iterate in the initial sublevel. No bound on $H_0$ is needed, and rejected trials need not remain in the neighborhood. This argument also proves boundedness of every sublevel for a finite convex function with an attained unique minimizer.
+\end{proof}
+
+\begin{lemma}[Strict contours give vanishing steps on a positive limiting level]\label{M:strictcontours}
+Suppose the run is contained in a compact sublevel, $F(x_k)\downarrow\ell>F_*$, and the boundary of $\{F\le\ell\}$ contains no nontrivial line segment. Then $s_k\to0$.
+\end{lemma}
+\begin{proof}
+Otherwise, along a subsequence $x_k\to x$, $x_{k+1}\to z\ne x$ and $g_k\to g\in\partial F(x)$. Since $d_k\to0$, $F(x)=F(z)=\ell$ and $g^T(z-x)=0$. The supporting inequality and convexity imply that $F=\ell$ on $[x,z]$, contrary to the contour assumption.
+\end{proof}
+
+\section{The principal-minor inequality: complete algebra}
+\label{M:principal}
+For SPD $H$, let $e_j(H)$ be the elementary symmetric polynomial of degree $j$ of its eigenvalues, with $e_{n+1}=0$. Thus $e_1=\operatorname{tr}$ and $e_n=\det$.
+
+\begin{theorem}[Principal-minor hierarchy]\label{M:hierarchy}
+For an ordinary inverse-BFGS update with $s=-\alpha Hg$, $q=g^THg>0$ and $\beta=-y^THg/q>0$,
+\begin{equation}\label{M:minor}
+ e_j(H_+)\le \frac{\|y\|^2}{\beta^2q}e_{j+1}(H)+\frac\alpha\beta e_j(H),\qquad1\le j\le n.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Set $v=Hg$, $\kappa=g^THy=-\beta q$, $P=I-vy^T/\kappa$ and $\mathcal F=PHP^T$. The update is
+\[
+ H_+=\mathcal F+\frac{\alpha}{\beta q}vv^T.
+\]
+Let $Z$ have $j$ orthonormal columns, and put
+\[
+ A=Z^THZ,\ a=Z^THg,\ b=Z^THy,\ r=y^THy,
+ \quad u=a^TA^{-1}a,\quad w=a^TA^{-1}b,\quad z=b^TA^{-1}b.
+\]
+The compression is $Z^T\mathcal FZ=A-(ab^T+ba^T)/\kappa+(r/\kappa^2)aa^T$. A rank-two determinant expansion gives
+\[
+ \det(Z^T\mathcal FZ)=\frac{\det A}{\kappa^2}\bigl((\kappa-w)^2+u(r-z)\bigr).
+\]
+If $\operatorname{Gram}_H$ denotes the Gram matrix in the $H$ inner product, Schur complements give
+\[
+ \det\operatorname{Gram}_H(y,Z)=\det A(r-z),
+\]
+\[
+ \det\operatorname{Gram}_H(g,y,Z)
+ =\det A\bigl((q-u)(r-z)-(\kappa-w)^2\bigr).
+\]
+Consequently
+\begin{equation}\label{M:compression}
+ \det(Z^T\mathcal FZ)
+ =\frac{q\det\operatorname{Gram}_H(y,Z)-\det\operatorname{Gram}_H(g,y,Z)}{\beta^2q^2}
+ \le\frac{\det\operatorname{Gram}_H(y,Z)}{\beta^2q}.
+\end{equation}
+All Gram determinants are nonnegative. Adding the rank-one term changes the compressed determinant by exactly
+\[
+ \frac{\alpha}{\beta q}\det A\,u\le\frac\alpha\beta\det A,
+\]
+because $u\le q$. The identities remain valid for singular larger Gram matrices or singular $Z^T\mathcal FZ$; only $A$ must be invertible, which it is.
+
+Choose an orthonormal eigenbasis of $H$, with eigenvalues $\lambda_i$, and sum over coordinate $j$-subsets $I$. Then
+\[
+ \sum_{|I|=j}\det\operatorname{Gram}_H(y,E_I)
+ =\sum_{|J|=j+1}\left(\prod_{i\in J}\lambda_i\right)\sum_{i\in J}y_i^2
+ \le\|y\|^2e_{j+1}(H).
+\]
+The rank-one increases sum to at most $(\alpha/\beta)e_j(H)$. This proves \eqref{M:minor}. For $j=n$, the calculation gives the exact identity $\det H_+=(\alpha/\beta)\det H$.
+\end{proof}
+
+\section{Reciprocal growth: the strongest recorded versions}
+\label{M:reciprocal}
+\begin{theorem}[Bounded gradients and vanishing predicted decrease]\label{M:average}
+If an infinite full-BFGS run has bounded gradients, fixed weak Wolfe and $d_k\to0$, then
+\[
+ \left(\prod_{k<N}q_k^{-1}\right)^{1/N}\to\infty,
+ \qquad\frac1N\sum_{k<N}q_k^{-1}\to\infty.
+\]
+\end{theorem}
+\begin{proof}
+Choose $G>0$ with $\|g_k\|\le G$ and write $K_0=4G^2/c^2$. Since $\beta_k\ge c$ and $\|y_k\|\le2G$, the hierarchy gives
+\[
+ e_j(H_{k+1})\le q_k^{-1}\{K_0 e_{j+1}(H_k)+(d_k/c)e_j(H_k)\}.
+\]
+Fix $\eta>0$ and a tail $k\ge J$ on which $d_k/c\le\eta$. Define
+\[
+ V_\eta(H)=\sum_{j=1}^n(K_0/\eta)^{j-1}e_j(H)\ge\operatorname{tr}H.
+\]
+Multiplying and summing yields $V_\eta(H_{k+1})\le(2\eta/q_k)V_\eta(H_k)$, while $q_k\le G^2V_\eta(H_k)$. Iterating through the penultimate step of a block and using the last endpoint gives
+\[
+ \prod_{k=J}^{J+m-1}q_k^{-1}\ge\frac1{G^2V_\eta(H_J)(2\eta)^{m-1}}.
+\]
+Taking $m$th roots and then allowing the fixed $\eta$ to be arbitrarily small proves divergence of the geometric mean; a fixed prefix has no effect. Arithmetic--geometric mean proves the other assertion.
+\end{proof}
+
+\begin{theorem}[Finite horizon and superquadratic growth under summability]\label{M:superquadratic}
+Assume bounded gradients, fixed weak Wolfe, and $\sum_kd_k<\infty$. For a fixed tail $J$, let $D_J=\sum_{k\ge J}d_k>0$. For every $\eta>0$ and $m\ge2$,
+\begin{equation}\label{M:finitehorizon}
+ \sum_{k=J}^{J+m-1}q_k^{-1}\ge
+ m[G^2V_\eta(H_J)]^{-1/m}
+ \left(\eta+\frac{D_J}{c(m-1)}\right)^{-(m-1)/m}.
+\end{equation}
+In particular,
+\begin{equation}\label{M:superquad}
+ \frac1{N^2}\sum_{k<N}q_k^{-1}\longrightarrow\infty.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Without any tail restriction on $d_k$, the weighted hierarchy gives
+\[
+ V_\eta(H_{k+1})\le\frac{\eta+d_k/c}{q_k}V_\eta(H_k).
+\]
+Iterate for $m-1$ steps, use the endpoint bound for $q_{J+m-1}$, and apply arithmetic--geometric mean:
+\[
+ \prod_{k=J}^{J+m-1}q_k
+ \le G^2V_\eta(H_J)\prod_{k=J}^{J+m-2}(\eta+d_k/c)
+ \le G^2V_\eta(H_J)\left(\eta+\frac{D_J}{c(m-1)}\right)^{m-1}.
+\]
+Arithmetic--geometric mean for the reciprocals proves \eqref{M:finitehorizon}. Choose $\eta=D_J/[c(m-1)]$. With $J$ fixed, $V_\eta(H_J)$ grows at most polynomially in $m$, of degree $n-1$. Its $m$th root tends to one. Hence
+\[
+ \liminf_{N\to\infty}N^{-2}\sum_{k<N}q_k^{-1}\ge \frac{c}{2D_J}.
+\]
+The fixed prefix does not affect the normalization. Finally let $J\to\infty$; then $D_J\to0$. This proves \eqref{M:superquad}. No uniform bound on $H_J$ as $J$ varies is used: the tail is fixed before the horizon limit.
+\end{proof}
+These conclusions do not say $H_k\to0$, $q_k\to0$ pointwise, or that eigenvectors converge. The finite-horizon bound and the weaker-assumption geometric-mean theorem are retained alongside the strongest summable-budget asymptotic statement.
+
+\section{Fixed-reference and moving-frame energy identities}
+\label{M:energy}
+For any fixed reference point $x_*$ define $r_k=x_k-x_*$, $a_k=g_k^Tr_k$, $E_k=r_k^TB_kr_k$ and
+\[
+ R_k=\frac{(y_k^Tr_{k+1})^2}{t_k}.
+\]
+Expansion of \eqref{M:hessian} at $r_{k+1}=r_k-\alpha_kH_kg_k$ gives exactly
+\begin{equation}\label{M:fixedenergy}
+ E_{k+1}=E_k-\frac{a_k^2}{q_k}+R_k.
+\end{equation}
+The cancellation is $-2\alpha a+\alpha^2q-(a-\alpha q)^2/q=-a^2/q$. If $x_*$ is a minimizer, convexity gives $a_k\ge F(x_k)-F_*$. Therefore
+\begin{equation}\label{M:energybound}
+ [F(x_N)-F_*]^2\sum_{k<N}q_k^{-1}\le E_0+\sum_{k<N}R_k.
+\end{equation}
+Thus $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes a positive gap. With the summability assumptions of Theorem~\ref{M:superquadratic}, an $O(N^2)$ cumulative correction suffices. This last observation is an explicit consolidation deduction from the recorded energy and reciprocal results; no new regularity hypothesis is inferred.
+
+For $V_k\in\mathbb R^{n\times r}$, suppose
+\[
+ V_{k+1}=V_kT_k+s_kb_k^T.
+\]
+Set $A_k=V_k^TB_kV_k$, $a_k=V_k^Tg_k$, $c_k=V_{k+1}^Ty_k$. By \eqref{M:annihilation},
+\begin{equation}\label{M:frameidentity}
+ A_{k+1}=T_k^T\left(A_k-\frac{a_ka_k^T}{q_k}\right)T_k+\frac{c_kc_k^T}{t_k}.
+\end{equation}
+Suppose on a hypothetical nonoptimal tail $\|a_k\|\ge\epsilon>0$, $\|c_k\|^2/t_k\le C$ and the cumulative products $P_J=I$, $P_{k+1}=P_kT_k$ have bounded norms and bounded inverse norms. Congruence by $P_{k+1}^{-1}$ and a trace yield
+\[
+ \operatorname{tr}\widetilde A_{k+1}=\operatorname{tr}\widetilde A_k
+ -\frac{\|P_k^{-T}a_k\|^2}{q_k}
+ +\frac{\|P_{k+1}^{-T}c_k\|^2}{t_k},\quad
+ \widetilde A_k=P_k^{-T}A_kP_k^{-1}.
+\]
+Positivity gives $\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\ref{M:average}. This is a trajectory criterion; one still has to derive its hypotheses from the objective. Neither $P_k$ nor $T_k$ is a BFGS matrix.
+
+\section{Imperfect transport with a derived smooth-subspace budget}
+\label{M:residual}
+\begin{theorem}[Residuals in fixed smooth directions]\label{M:residualtheorem}
+Assume bounded gradients, fixed weak Wolfe and $\sum d_k<\infty$. For a fixed subspace $S$, suppose
+\[
+ \|P_Sy_k\|^2\le L_St_k.
+\]
+A tail cannot simultaneously admit frames with
+\[
+ \|V_k^Tg_k\|^2\ge m>0,\qquad\|V_{k+1}^Ty_k\|^2\le C_0t_k,
+\]
+\[
+ V_{k+1}=V_kT_k+s_kb_k^T+R_k,
+\]
+\[
+ \|T_k\|_{\rm op}^2\le1+C_Td_k,\quad\operatorname{range}R_k\subset S,
+ \quad\|R_k\|_F^2\le C_Rd_k.
+\]
+No full-rank frame or invertible transport is required.
+\end{theorem}
+\begin{proof}
+Taking the trace of \eqref{M:hessian} on $S$ gives
+\[
+ \operatorname{tr}(P_SB_{k+1})
+ =\operatorname{tr}(P_SB_k)-\frac{\|P_Sg_k\|^2}{q_k}
+ +\frac{\|P_Sy_k\|^2}{t_k}
+ \le\operatorname{tr}(P_SB_k)+L_S.
+\]
+Consequently $\operatorname{tr}(P_SB_k)\le C_S+L_Sk$. This bound is derived, not imposed.
+
+Let $E_k=\operatorname{tr}(V_k^TB_kV_k)$ and use $M_k$ from \eqref{M:annihilation}. Then
+\[
+ E_{k+1}=\|M_k^{1/2}(V_kT_k+R_k)\|_F^2+\frac{\|V_{k+1}^Ty_k\|^2}{t_k}.
+\]
+Young's inequality with parameter $d_k$ bounds this by
+\[
+ (1+d_k)\|T_k\|^2\left(E_k-\frac{\|V_k^Tg_k\|^2}{q_k}\right)
+ +(1+d_k^{-1})\operatorname{tr}(R_k^TM_kR_k)+C_0.
+\]
+The parenthesized energy is nonnegative, and
+\[
+ \operatorname{tr}(R_k^TM_kR_k)
+ \le\|R_k\|_F^2\operatorname{tr}(P_SB_k)
+ \le C_Rd_k(C_S+L_Sk).
+\]
+On a tail with $d_k\le1$,
+\[
+ E_{k+1}\le(1+C_1d_k)(E_k-m/q_k)+C_2(k+1).
+\]
+Normalize by $P_{k+1}=P_k(1+C_1d_k)$ with $P_J=1$. Finite $\sum d_k$ gives $1\le P_k\le\bar P<\infty$. Summing and using final-energy positivity gives
+\[
+ \frac m{\bar P}\sum_{k=J}^{N-1}q_k^{-1}
+ \le E_J+C_2\sum_{k=J}^{N-1}(k+1)=O(N^2),
+\]
+contrary to Theorem~\ref{M:superquadratic}.
+\end{proof}
+Only residuals in the fixed subspace are controlled. Euclidean smallness alone does not control a residual in a direction where $B_k$ may grow without this estimate. No strict inclusion of all existential objective-certificate classes is claimed.

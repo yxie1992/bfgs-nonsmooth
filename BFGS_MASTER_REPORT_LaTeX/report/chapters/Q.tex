@@ -1,0 +1,256 @@
+\begingroup
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb R}
+\providecommand{\tr}{}
+\renewcommand{\tr}{\operatorname{tr}}
+\providecommand{\diag}{}
+\renewcommand{\diag}{\operatorname{diag}}
+\providecommand{\Span}{}
+\renewcommand{\Span}{\operatorname{span}}
+\providecommand{\ip}{}
+\renewcommand{\ip}[2]{\langle #1,#2\rangle}
+\providecommand{\norm}{}
+\renewcommand{\norm}[1]{\lVert #1\rVert}
+\providecommand{\T}{}
+\renewcommand{\T}{^{\mathsf T}}
+\providecommand{\D}{}
+\renewcommand{\D}{\mathcal D}
+\setcounter{section}{4}
+\setcounter{theorem}{1}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{6}
+\section{A new application: arbitrarily many curved quadratic branches}
+\begin{theorem}[Finite multi-branch parabolic maxima]
+Let $m<\infty$ and
+\[
+ F(u,v)=\max_{i\le m}\{a_i u^2+b_i v\},\qquad
+ a_i>0,\quad\min_i b_i<0<\max_i b_i.
+\]
+Every infinite admissible unmodified full-BFGS run, for arbitrary $H_0\succ0$ and fixed $0<c_1<c_2<1$, satisfies
+\[
+ (u_k,v_k)\to(0,0),\qquad F(u_k,v_k)\to0.
+\]
+The number of essential branches is arbitrary. In particular, branches with $b_i=0$, giving a region flat in the normal coordinate, are allowed.
+\end{theorem}
+This is a concrete application of the objective-pair theorem, not the definition of its scope. The abstract condition is dimension-independent; this explicitly verified new class has two variables.
+
+\subsection{Compactness and the normalized upper envelope}
+Set $a_{\min}=\min_i a_i>0$. A convex combination of one positive and one negative normal slope has slope zero, so
+\[
+ F(u,v)\ge a_{\min}u^2.
+\]
+The positive extreme slope bounds $v$ above on a sublevel, and the negative extreme bounds it below. Thus every sublevel is compact. At $u=0$, $F(0,v)>0$ for $v\ne0$, proving uniqueness of the minimum zero.
+
+Discard globally redundant pieces, merge equal normal slopes by retaining the largest $a_i$, and remove pieces active only on a tie. Order the remaining pieces by strictly increasing $b_i$. They form the upper envelope
+\[
+ \varphi(\xi)=\max_i(a_i+b_i\xi),\qquad \xi=v/u^2\quad(u\ne0).
+\]
+The neighboring breakpoints $\xi_i$ increase strictly. Put
+\[
+ A_i=a_i+b_i\xi_i=a_{i+1}+b_{i+1}\xi_i>0.
+\]
+Choose constants $k_i$ recursively:
+\begin{equation}
+ k_{i+1}-k_i=-\frac{a_{i+1}-a_i}{2A_i}. \tag{Q.7}
+\end{equation}
+At a differentiable point with active branch $i$, define
+\begin{equation}
+ r(u,v)=(u,2v)\T,\qquad
+ \theta(u,v)=\exp\left\{\frac{a_i u^2}{2F(u,v)}+k_i\right\},
+ \qquad W=\theta^2rr\T. \tag{Q.8}
+\end{equation}
+The constants make $\theta$ agree across every switching interface. At a tie $v=\xi_i u^2$ the exponent difference is
+\[
+ \frac{a_{i+1}-a_i}{2A_i}+k_{i+1}-k_i=0.
+\]
+The field is well-defined on $F>0$, including by continuous extension across ties. It is only used at differentiable endpoints in the theorem. Since $0\le u^2/F\le1/a_{\min}$, there are global constants
+\[
+ 0<\theta_{\min}\le\theta\le\theta_{\max}<\infty.
+\]
+There is no coordinate change in the BFGS algorithm. The normalized upper envelope is used solely to construct an analytical certificate.
+
+\subsection{Visibility and secant correction}
+Fix a compact positive band $\eta\le F\le B$. For old branch $i$ at $x=(u,v)$ and new branch $j$ at $z=(u',v')$, set
+\[
+ h=u'-u,\quad \ell=v'-v,\quad s=(h,\ell),
+\]
+\[
+ e=F(z)-(a_i u'^2+b_i v')\ge0,\qquad
+ \bar e=F(x)-(a_j u^2+b_jv)\ge0.
+\]
+Exact identities are
+\begin{align}
+ d-\Delta&=a_i h^2+e, \tag{Q.9}\\
+ t&=(a_i+a_j)h^2+e+\bar e, \tag{Q.10}\\
+ g\T r(x)&=2F(x), \tag{Q.11}\\
+ y\T r(z)&=2a_i h u'+2e. \tag{Q.12}
+\end{align}
+For eligible pairs, $h^2\le d/a_{\min}$ and $e\le d$. Weighted Cauchy--Schwarz gives
+\[
+ \frac{(y\T r(z))^2}{t}
+ \le \frac{4a_i^2}{a_i+a_j}u'^2+4e.
+\]
+The right side is uniformly bounded on the compact band for small $d$. Multiplication by $\theta(z)^2$ proves (S). Equation (11) proves (V) with $m=4\theta_{\min}^2\eta^2$.
+
+\subsection{The step quotient cannot degenerate on an eligible small-decrease pair}
+Define
+\[
+ D=\det(s,r(x))=2vh-u\ell.
+\]
+We next prove, uniformly on the positive band and for sufficiently small eligible $d$,
+\begin{equation}
+ d\le C|D|,\qquad |h|\le C|D|. \tag{Q.13}
+\end{equation}
+This is the essential denominator estimate. It does not assume $s\to0$ in both coordinates or that successive active pieces are adjacent.
+
+Let $N=y\T r(z)$. Since $r(z)-r(x)=\diag(1,2)s$,
+\[
+ y\T r(x)=-2t+N+y_u h.
+\]
+By (12), bounded endpoints and gradients, and $e\le d$,
+\[
+ y\T r(x)=-2t+\varepsilon,\qquad |\varepsilon|\le C(|h|+d).
+\]
+The two-dimensional determinant identity yields
+\[
+ \det(g,y)D=(g\T s)(y\T r(x))-(g\T r(x))(y\T s)
+ =-d\,y\T r(x)-2F(x)t.
+\]
+Consequently
+\[
+ (2F(x)-2d)t\le C|D|+Cd(|h|+d).
+\]
+Use $F(x)\ge\eta$, $t\ge(1-c_2)d$, and $|h|\le\sqrt{d/a_{\min}}$. Taking $d$ sufficiently small absorbs the final term into the left side, proving $d\le C|D|$. The exact identity
+\begin{equation}
+ b_iD=2F(x)h+ud \tag{Q.14}
+\end{equation}
+then proves $|h|\le C|D|$, including when $b_i=0$. In particular $D\ne0$.
+
+\subsection{The rescaling cancels first-order transport}
+Since $D\ne0$, define
+\[
+ \lambda=1+\frac{h\ell}{D}.
+\]
+Then $r(z)-\lambda r(x)$ is parallel to $s$. A direct identity using $d=-2a_iuh-b_i\ell$ is
+\begin{equation}
+ \lambda-1+\frac{a_i u}{F(x)}h
+ =-\frac{vhd}{F(x)D}. \tag{Q.15}
+\end{equation}
+By (13), the right side is $O(d)$ uniformly on the band. Since $h^2=O(d)$,
+\[
+ \lambda=1+O(\sqrt d)>0,\qquad
+ \log\lambda=-\frac{a_i u}{F(x)}h+O(d).
+\]
+For the old branch's exponent $L_i(x)=a_i u^2/(2F(x))+k_i$, smoothness in the two scalar arguments $(u,F)$ on the positive band gives
+\[
+ L_i(z)-L_i(x)=\frac{a_i u}{F(x)}h+O(h^2+\Delta)
+ =\frac{a_i u}{F(x)}h+O(d).
+\]
+Thus $\log\lambda+L_i(z)-L_i(x)=O(d)$.
+
+We still need to account for a change from branch $i$ to branch $j$. The finite-envelope geometry implies
+\begin{equation}
+ |L_j(z)-L_i(z)|\le C\frac{e}{F(z)}\le C_\eta d. \tag{Q.16}
+\end{equation}
+A complete justification is as follows. Normalize a point by
+\[
+ t_0=u'^2/F(z),\qquad v_0=v'/F(z).
+\]
+It lies on the compact polygonal arc
+\[
+ S=\{(t_0,v_0):t_0\ge0,\ \max_i(a_it_0+b_iv_0)=1\}.
+\]
+Compactness follows from $t_0\le1/a_{\min}$ and the two nonzero extreme normal slopes. On the segment where $j$ is active, both
+\[
+ e/F(z)=1-a_it_0-b_iv_0,\qquad
+ L_j-L_i=(a_j-a_i)t_0/2+k_j-k_i
+\]
+are affine functions. The first is nonnegative. Whenever it vanishes, the second vanishes by (7). On an adjacent segment the two functions are proportional; on a nonadjacent segment the first has a positive minimum. There are finitely many segments and pairs, proving (16). Removal of zero-length envelope pieces avoids spurious triple junctions; it does not change the objective or its differentiable gradients.
+
+It follows that the compensated transport multiplier
+\[
+ \widetilde\lambda=\theta(z)\lambda/\theta(x)
+\]
+satisfies
+\begin{equation}
+ |\log\widetilde\lambda|\le C_\eta d. \tag{Q.17}
+\end{equation}
+Because
+\[
+ \Pi_s(\theta(z)r(z))=\widetilde\lambda\Pi_s(\theta(x)r(x)),
+\]
+we obtain
+\[
+ \Pi_sW(z)\Pi_s\preceq e^{2C_\eta d}\Pi_sW(x)\Pi_s
+ \preceq(1+L_\eta d)\Pi_sW(x)\Pi_s
+\]
+on a sufficiently small-decrease tail. This is (T). The general theorem proves convergence from every admissible initialization. \qed
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{2}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{13}
+\section{Explicit three-branch example and strict nonnecessity of RS}
+Consider
+\begin{equation}
+ F(u,v)=\max\{u^2+v,\ 3u^2,\ 2u^2-v\}. \tag{Q.18}
+\end{equation}
+The switching parabolas are $v=-u^2$ and $v=2u^2$. Between them the objective is flat in $v$, but the origin is its unique minimizer. The theorem applies globally.
+
+An especially simple scaling for (8) is
+\[
+ \theta(u,v)=
+ \begin{cases}
+ \exp\{u^2/F-1/3\},&v<-u^2,\\
+ 1,&-u^2<v<2u^2,\\
+ \exp\{u^2/(2F)-1/6\},&v>2u^2.
+ \end{cases}
+\]
+It is continuous across both interfaces, and $e^{-1/3}\le\theta\le1$. Take $W=\theta^2(u,2v)(u,2v)\T$.
+
+Fix $u\ne0$, $A>0$, and $0<\epsilon<6u^2$. Let
+\[
+ x_\epsilon=(u,2u^2+\epsilon),\qquad
+ z_\epsilon=(u,2u^2-\epsilon/2),
+\]
+\[
+ H_\epsilon=
+ \begin{pmatrix}
+ A&-2uA\\-2uA&4u^2A+3\epsilon/2
+ \end{pmatrix}\succ0.
+\]
+The gradients are $g=(2u,1)\T$ and $g'=(6u,0)\T$. Directly,
+\[
+ -H_\epsilon g=z_\epsilon-x_\epsilon,
+ \quad d=t=3\epsilon/2,\quad \Delta=\epsilon.
+\]
+Thus $\alpha=1$ is a valid BFGS step, with strict Armijo whenever $c_1<2/3$ and strict weak Wolfe for every allowed $c_2>0$.
+
+Here $y=(4u,-1)\T$, so
+\[
+ \frac{(y\T z_\epsilon)^2}{t}
+ =\frac{(2u^2+\epsilon/2)^2}{3\epsilon/2}\longrightarrow\infty.
+\]
+The values tend to the positive level $3u^2$ while $d\to0$. Such pairs exist in every neighborhood of zero. The original RS condition, even restricted to eligible near-stalling pairs for ordinary line-search constants, fails.
+
+In contrast, $\theta(z_\epsilon)=1$ and
+\[
+ y\T r(z_\epsilon)=\epsilon,\qquad
+ \frac{y\T W(z_\epsilon)y}{t}=\frac{2\epsilon}{3}\to0.
+\]
+The unscaled quotient multiplier is $\lambda=1$, and the compensated multiplier satisfies exactly
+\[
+ \log\widetilde\lambda
+ =\frac{\epsilon}{6(3u^2+\epsilon)}=O(d)
+\]
+on each fixed positive band. This displays both parts of the mechanism: removing the radial mismatch makes the secant correction small, while a mild objective-defined rescaling controls accumulated transport.
+
+
+\endgroup

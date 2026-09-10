@@ -1,0 +1,30 @@
+import BfgsVerification
+
+#print axioms BfgsVerification.CompressionAlgebra.gram_numerator_identity
+#print axioms BfgsVerification.CompressionAlgebra.compression_scalar_identity
+#print axioms BfgsVerification.CompressionAlgebra.compression_from_gram_relations
+#print axioms BfgsVerification.CompressionAlgebra.compression_upper_bound
+#print axioms BfgsVerification.CompressionAlgebra.rank_one_increment_upper_bound
+#print axioms BfgsVerification.CompressionAlgebra.compressed_update_bound
+#print axioms BfgsVerification.CompressionAlgebra.sum_compressed_bounds
+#print axioms BfgsVerification.ScalarHierarchy.shift_identity
+#print axioms BfgsVerification.ScalarHierarchy.weighted_nonneg
+#print axioms BfgsVerification.ScalarHierarchy.first_le_weighted
+#print axioms BfgsVerification.ScalarHierarchy.weighted_step
+#print axioms BfgsVerification.ScalarHierarchy.hierarchy_tail_potentials
+#print axioms BfgsVerification.ReciprocalGrowth.sum_prefix_tail
+#print axioms BfgsVerification.ReciprocalGrowth.log_potential_telescope
+#print axioms BfgsVerification.ReciprocalGrowth.tail_log_product_upper
+#print axioms BfgsVerification.ReciprocalGrowth.global_log_product_upper
+#print axioms BfgsVerification.ReciprocalGrowth.tail_potentials_force_log_growth
+#print axioms BfgsVerification.ReciprocalGrowth.geometricMean_eq_exp_logMean
+#print axioms BfgsVerification.ReciprocalGrowth.logMean_le_arithmeticMean
+#print axioms BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth
+
+-- Print the complete signature so the conditional premise remains visible.
+#check @BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth
+
+-- These are proposition DEFINITIONS, not exported theorem proofs.
+#check BfgsVerification.PrincipalMinorHierarchyTarget
+#check BfgsVerification.ReciprocalGrowthTarget
+#check BfgsVerification.SuperquadraticReciprocalTarget

@@ -1,0 +1,209 @@
+\begingroup
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb R}
+\providecommand{\tr}{}
+\renewcommand{\tr}{\operatorname{tr}}
+\providecommand{\diag}{}
+\renewcommand{\diag}{\operatorname{diag}}
+\providecommand{\Span}{}
+\renewcommand{\Span}{\operatorname{span}}
+\providecommand{\ip}{}
+\renewcommand{\ip}[2]{\langle #1,#2\rangle}
+\providecommand{\norm}{}
+\renewcommand{\norm}[1]{\lVert #1\rVert}
+\providecommand{\T}{}
+\renewcommand{\T}{^{\mathsf T}}
+\providecommand{\D}{}
+\renewcommand{\D}{\mathcal D}
+\setcounter{section}{1}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{2}
+\section{Algorithm and objective-pair terminology}
+Let $F:\R^n\to\R$ be finite and convex, let $F_*=\min F$ be attained, and let
+\[
+ K=\{x:F(x)\le b\},\qquad b>F_*,
+\]
+be compact. Ordinary full BFGS uses differentiable accepted endpoints,
+\[
+ g_k=\nabla F(x_k),\quad s_k=-\alpha_kH_kg_k,\quad
+ x_{k+1}=x_k+s_k,\quad y_k=g_{k+1}-g_k,
+\]
+with $H_0\succ0$, $\alpha_k>0$, and
+\[
+ H_{k+1}=(I-s_ky_k\T/t_k)H_k(I-y_ks_k\T/t_k)+s_ks_k\T/t_k,
+ \qquad t_k=y_k\T s_k.
+\]
+The fixed Armijo--weak-Wolfe conditions are
+\[
+ F(x_{k+1})\le F(x_k)+c_1g_k\T s_k,\qquad
+ g_{k+1}\T s_k\ge c_2g_k\T s_k,\qquad 0<c_1<c_2<1.
+\]
+An infinite admissible run has nonzero gradients and well-defined accepted steps. These are the algorithmic quantifiers in Xie--W\"achter~\cite{XW}. No particular line-search implementation, damping, restart, or proximal operation is added.
+
+For differentiable endpoints $x,z$, write
+\[
+ g=\nabla F(x),\quad y=\nabla F(z)-g,\quad s=z-x,
+\]
+\[
+ d=-g\T s,\qquad \Delta=F(x)-F(z),\qquad t=y\T s.
+\]
+Call the pair \emph{eligible} if
+\begin{equation}
+ d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge(1-c_2)d. \tag{T.2}
+\end{equation}
+Every accepted step is eligible. The upper bound $\Delta\le d$ follows from convexity. Eligibility does not assert compatibility of an arbitrary chain with BFGS; imposing a condition on all such pairs is an objective-only sufficient assumption.
+
+For $s\ne0$, define the Euclidean orthogonal projector
+\[
+ \Pi_s=I-\frac{ss\T}{s\T s}.
+\]
+All matrices in the next assumption are objective-pair data, not $H_k$.
+
+
+\setcounter{section}{2}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{3}
+\section{The transported quadratic secant condition}
+\begin{theorem}[One-sided transported-certificate convergence]
+For each $\eta>0$ with nonempty band
+\[
+ K_\eta=\{x\in K:F(x)\ge F_*+\eta\},
+\]
+suppose there is a finite-valued symmetric positive-semidefinite field $W_\eta(x)$ on differentiable points of $K_\eta$, and constants
+\[
+ m_\eta>0,\quad C_\eta<\infty,\quad L_\eta\ge0,\quad \delta_\eta>0,
+\]
+with these properties:
+\begin{align}
+ g\T W_\eta(x)g&\ge m_\eta, \tag{T.V}\\
+ y\T W_\eta(z)y&\le C_\eta t, \tag{T.S}\\
+ \Pi_s W_\eta(z)\Pi_s&\preceq
+ (1+L_\eta d)\Pi_s W_\eta(x)\Pi_s. \tag{T.T}
+\end{align}
+The last two inequalities need hold only for eligible pairs $x,z\in K_\eta$ with $d\le\delta_\eta$. Then every infinite admissible full-BFGS run starting in $K$ satisfies
+\[
+ F(x_k)\to F_*,\qquad \operatorname{dist}(x_k,\arg\min F)\to0.
+\]
+If the minimizer is unique, the entire iterate sequence converges to it.
+\end{theorem}
+Condition (V) says that the comparison directions retain a nonzero component of the gradient on a positive band. Condition (S) controls the secant correction in those directions. Condition (T) controls their expansion only in directions perpendicular to the proposed step.
+
+There is no uniform positive-definiteness requirement on $W_\eta$. Uniform boundedness of $W_\eta$ is convenient in examples but is not used by the proof; it is enough that its values are finite. Constants and the field may depend on the positive band and the fixed line-search parameters. They may degenerate as $\eta\downarrow0$.
+
+\subsection{Proof}
+Put
+\[
+ B_k=H_k^{-1},\qquad q_k=g_k\T H_kg_k,\qquad
+ d_k=\alpha_kq_k.
+\]
+The ordinary Hessian update is
+\begin{equation}
+ B_{k+1}=B_k-\frac{g_kg_k\T}{q_k}+\frac{y_ky_k\T}{t_k}. \tag{T.3}
+\end{equation}
+Its first two terms form a PSD matrix
+\[
+ M_k=B_k-g_kg_k\T/q_k\succeq0,
+\]
+by metric Cauchy--Schwarz. Also
+\begin{equation}
+ M_ks_k=0,\qquad M_k=\Pi_{s_k}M_k\Pi_{s_k}. \tag{T.4}
+\end{equation}
+This is why (T) may ignore the step direction.
+
+Armijo implies $\sum d_k<\infty$. Gradients are bounded on $K$: a finite convex function has uniformly bounded subgradients on a compact set, as follows by comparing its values at $x$ and $x+\epsilon u$ on a slightly enlarged compact set. Thus the shared foundation in Module M applies and gives
+\begin{equation}
+ \frac1N\sum_{k<N}\frac1{q_k}\longrightarrow\infty. \tag{T.5}
+\end{equation}
+Suppose the objective gap tends to $\ell>0$. Use the field for $\eta=\ell/2$. On a tail $k\ge k_0$, all pairs lie in the band and $d_k\le\delta_\eta$. Suppress $\eta$ and set
+\[
+ E_k=\tr(B_kW(x_k))\ge0,\qquad a_k=1+L d_k.
+\]
+Using (3)--(4), the Loewner inequality (T), and (S),
+\begin{align}
+ E_{k+1}
+ &=\tr(M_kW(x_{k+1}))+y_k\T W(x_{k+1})y_k/t_k\notag\\
+ &\le a_k\tr(M_kW(x_k))+C\notag\\
+ &=a_k\left(E_k-\frac{g_k\T W(x_k)g_k}{q_k}\right)+C\notag\\
+ &\le a_k(E_k-m/q_k)+C. \tag{T.6}
+\end{align}
+Let $P_{k_0}=1$, $P_{k+1}=P_ka_k$. Since $\sum d_k<\infty$,
+\[
+ 1\le P_k\le \exp\left(L\sum_{j\ge k_0}d_j\right)=:\overline P<\infty.
+\]
+Divide (6) by $P_{k+1}$ and sum:
+\[
+ \frac m{\overline P}\sum_{k=k_0}^{N-1}\frac1{q_k}
+ \le E_{k_0}+C(N-k_0).
+\]
+This contradicts (5). The gap therefore tends to zero. Compactness gives convergence to the solution set, and uniqueness gives whole-sequence convergence. \qed
+
+\subsection{Local statement and weaker band requirements}
+If the assumptions hold only in a neighborhood $U$ of a unique minimizer and $K$ is a compact low sublevel, choose an initial level below
+\[
+ \inf_{x\in K\setminus U}F(x)>F_*.
+\]
+Armijo then traps all accepted iterates in $U$. This produces a local basin independent of $H_0$. Rejected trial points need not stay in $U$. For multiple minimizers, one may instead use a neighborhood of the entire compact solution set or directly assume that the initial sublevel lies in the structural region.
+
+The proof only needs a certificate in a small one-sided level neighborhood of each possible finite limit $\ell>F_*$. Requiring a field on every whole positive band is a cleaner, stronger formulation; certificates on shells $\ell\le F\le\ell+\epsilon_\ell$ also suffice.
+
+\subsection{Scalar form and freedom to rescale}
+Taking $W(x)=v(x)v(x)\T$, a sufficient version of (T) is
+\[
+ v(z)=\lambda(x,z)v(x)+\beta(x,z)s,\qquad
+ |\lambda(x,z)|^2\le1+L d.
+\]
+Conditions (V)--(S) become
+\[
+ |g\T v(x)|^2\ge m,\qquad |y\T v(z)|^2\le Ct.
+\]
+Unlike the preceding moving-frame theorem, there is no requirement that $\lambda$ be invertible or bounded away from zero. The PSD form also accommodates multiple comparison directions and varying rank, without choosing an exact frame transport.
+
+A bounded potential may be absorbed into $W$. If (T) instead has multiplier
+\[
+ \exp\{L d+\Psi(x)-\Psi(z)\},
+\]
+where $\Psi$ is bounded on the band, replace $W$ by $e^{\Psi}W$. This gives multiplier $e^{Ld}$, which is at most $1+L'd$ for $d$ sufficiently small. The other bounds change only by band-dependent constants.
+
+
+\setcounter{section}{3}
+\setcounter{theorem}{1}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{6}
+\section{Why this is genuinely weaker than RS}
+Given (RS), take
+\[
+ W(x)=(x-x_*)(x-x_*)\T.
+\]
+Convexity gives
+\[
+ g\T W(x)g=(g\T(x-x_*))^2\ge(F(x)-F_*)^2\ge\eta^2.
+\]
+Condition (S) is exactly (RS), while
+\[
+ \Pi_s(z-x_*)=\Pi_s(x-x_*)
+\]
+makes (T) an equality with $L=0$. Thus every objective covered by RS is covered by the new condition.
+
+The reverse implication fails. Module Q constructs fields satisfying the new condition for a multi-branch curved objective that violates even the eligible-pair radial condition on every positive neighborhood of its minimizer. This is strict inclusion of sufficient conditions, not merely a new notation for the old inequality.
+
+Although $\Pi_s$ is written as a Euclidean projector, (T) equivalently requires
+\[
+ a\T W(z)a\le(1+Ld)a\T W(x)a\qquad\text{for every }a\text{ with }a\T s=0.
+\]
+Under an invertible affine change of variables with linear part $A$, gradients transform by $A^{-\mathsf T}$ and the certificate transforms by $W\mapsto AWA\T$. The three conditions are therefore affine-covariant; no preferred coordinate system is essential.
+
+The extra transport clause cannot simply be omitted: changing a comparison vector creates terms involving $B_k$, which may be unbounded. A small Euclidean change is not by itself a small change in the $B_k$ energy. Projection and the multiplicative budget are precisely what make the new hypothesis sufficient without assumptions on $B_k$.
+
+
+\endgroup
