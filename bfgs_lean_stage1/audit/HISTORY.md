@@ -21,6 +21,19 @@ Source hashes tie that status to the checked files.
   code with the initial pushed checkpoint.
 - `bootstrap_final.log` records the final bootstrap from a clean project build
   directory, separate from the historical bootstrap log.
+- Commit `22fe2e8` completed the original matrix-run targets, with 115 explicit
+  and 167 total audited theorem declarations. Those counts precede the objective
+  bridge and are not the current declaration inventory.
+- `objective_*_build.log`, `positive_update_build.log`, and
+  `descent_budget_build.log` record intermediate objective-bridge compilation.
+- `objective_check.log` records its first complete integration audit.
+- `OBJECTIVE_STATEMENT_REVIEW.md` records independent agent review of the
+  objective hypotheses and exact connection to the existing matrix theorems.
+- `objective_bootstrap_final.log` records the objective bridge's clean-project
+  bootstrap and final compiler/axiom audit.
+- `objective_source_preservation.log` confirms the original research sources,
+  preserved reference, matrix formulas, and original target statements still
+  match the initial checkpoint.
 
 Historical successful logs do not certify later source changes. Current status
 and its full compiler/axiom transcripts certify the delivered source state.

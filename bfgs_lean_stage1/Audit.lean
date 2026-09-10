@@ -61,3 +61,27 @@ example : BfgsVerification.ReciprocalGrowthTarget := BfgsVerification.reciprocal
 example : BfgsVerification.SuperquadraticReciprocalTarget := BfgsVerification.superquadraticReciprocalGrowth
 #check @BfgsVerification.finiteHorizon
 #check @BfgsVerification.fullBFGS_normalizedHierarchy
+
+-- Objective-level hypotheses and conclusions are printed for statement review.
+#print BfgsVerification.gradientFunctional
+#print BfgsVerification.AdmissibleBFGSRun
+#print BfgsVerification.AdmissibleBFGSRun.q
+#print BfgsVerification.AdmissibleBFGSRun.d
+#print BfgsVerification.AdmissibleBFGSRun.beta
+#print BfgsVerification.AdmissibleBFGSRun.initialSublevel
+#print BfgsVerification.ObjectiveReciprocalGrowthTarget
+#print BfgsVerification.ObjectiveLowerBoundGrowthTarget
+#print BfgsVerification.CompactObjectiveGrowthTarget
+#print BfgsVerification.ObjectiveFiniteHorizonBound
+#print BfgsVerification.CompactObjectiveFiniteHorizonTarget
+
+example : BfgsVerification.ObjectiveReciprocalGrowthTarget := BfgsVerification.objectiveReciprocalGrowth
+example : BfgsVerification.ObjectiveLowerBoundGrowthTarget := BfgsVerification.objectiveLowerBoundGrowth
+example : BfgsVerification.CompactObjectiveGrowthTarget := BfgsVerification.compactObjectiveGrowth
+example : BfgsVerification.CompactObjectiveFiniteHorizonTarget := BfgsVerification.compactObjectiveFiniteHorizon
+#check @BfgsVerification.fullBFGS_positive_invariants
+#check @BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun
+#check @BfgsVerification.convex_gradient_bound_on_compact
+#check @BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound
+#check @BfgsVerification.objectiveFiniteHorizon_of_lower_bound
+#check @BfgsVerification.objectiveGrowth_of_value_limit

@@ -4,7 +4,7 @@
 A static source scan is not a Lean verification. Missing executables, build
 errors, missing axiom output, or unexpected axioms prevent a verified status.
 A successful helper build alone is insufficient: exact target inhabitants and
-compiled-environment axiom reports establish the matrix-run target status.
+compiled-environment axiom reports establish the matrix-run and objective-level status.
 """
 from __future__ import annotations
 
@@ -32,6 +32,17 @@ TARGETS = {
     "superquadratic_growth_verified":
         ("BfgsVerification.superquadraticReciprocalGrowth", "BfgsVerification.SuperquadraticReciprocalTarget"),
 }
+OBJECTIVE_TARGETS = {
+    "objective_reciprocal_growth_verified":
+        ("BfgsVerification.objectiveReciprocalGrowth", "BfgsVerification.ObjectiveReciprocalGrowthTarget"),
+    "objective_lower_bound_growth_verified":
+        ("BfgsVerification.objectiveLowerBoundGrowth", "BfgsVerification.ObjectiveLowerBoundGrowthTarget"),
+    "compact_objective_growth_verified":
+        ("BfgsVerification.compactObjectiveGrowth", "BfgsVerification.CompactObjectiveGrowthTarget"),
+    "compact_objective_finite_horizon_verified":
+        ("BfgsVerification.compactObjectiveFiniteHorizon", "BfgsVerification.CompactObjectiveFiniteHorizonTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -130,9 +141,8 @@ def main() -> int:
         "timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "status": "NOT_CHECKED",
         "lean_typechecking_performed": False,
-        "end_to_end_principal_minor_hierarchy_verified": False,
-        "end_to_end_bfgs_reciprocal_growth_verified": False,
-        "superquadratic_growth_verified": False,
+        **{flag: False for flag in ALL_TARGETS},
+        "objective_level_model_formalized": False,
         "verified_declarations": [],
         "warning": "Verification is pending for this invocation; success requires the complete build and axiom audit.",
     }
@@ -168,6 +178,7 @@ def main() -> int:
         record(status)
         print(json.dumps(status, indent=2))
         return 0
+    record(status)
     lake = shutil.which("lake")
     lean = shutil.which("lean")
     status["executables"] = {"lake": lake, "lean": lean}
@@ -235,7 +246,7 @@ def main() -> int:
             status["status"] = "AXIOM_AUDIT_FAILED"
             record(status)
             return 1
-        for flag, (name, signature) in TARGETS.items():
+        for flag, (name, signature) in ALL_TARGETS.items():
             status[flag] = name in inventory and inventory[name]["signature"] == signature
         status["conditional_results"] = [
             {"theorem": name, "verified": name in inventory, "condition": "NormalizedHierarchy"}
@@ -247,23 +258,29 @@ def main() -> int:
         ]
         status["matrix_to_normalized_hierarchy_verified"] = "BfgsVerification.fullBFGS_normalizedHierarchy" in inventory
         status["finite_horizon_verified"] = "BfgsVerification.finiteHorizon" in inventory
-        status["objective_level_model_formalized"] = False
+        status["positive_definiteness_from_initial_matrix_verified"] = "BfgsVerification.fullBFGS_positive_invariants" in inventory
+        status["armijo_summability_verified"] = "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound" in inventory
+        status["compact_gradient_bound_verified"] = "BfgsVerification.convex_gradient_bound_on_compact" in inventory
+        status["objective_level_model_formalized"] = all(status[flag] for flag in OBJECTIVE_TARGETS)
         status["outside_verified_scope"] = [
-            "Finite-convex-objective and differentiable-accepted-iterate model",
-            "Objective-level Armijo-to-summability and compactness-to-gradient-bound deductions",
-            "Other Module M statements and other research modules",
+            "Other Module M energy, localization and residual lemmas",
+            "Other research modules and an overall optimal-value convergence theorem",
+            "Existence of admissible steps on every search ray",
         ]
-        status["remaining_target_obligations"] = [name for flag, (name, _) in TARGETS.items()
+        status["remaining_target_obligations"] = [name for flag, (name, _) in ALL_TARGETS.items()
                                                   if not status[flag]]
-        complete = all(status[flag] for flag in TARGETS)
-        status["status"] = ("MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if complete
+        complete = all(status[flag] for flag in ALL_TARGETS)
+        matrix_complete = all(status[flag] for flag in TARGETS)
+        status["status"] = ("MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if complete
+                            else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
-        status["warning"] = ("Claims concern the exact matrix-run targets printed in axioms.log; "
-                             "other research modules and objective-level modeling are outside this audit.")
+        status["warning"] = ("Claims concern the exact matrix-run and objective-level targets printed in axioms.log. "
+                             "Compactness, gradient bounds, and value bounds remain explicit where used; "
+                             "no overall optimal-value, iterate or matrix convergence theorem is claimed.")
         status["verified_declarations"] = accepted
         record(status)
         print(json.dumps(status, indent=2))
-        return 0
+        return 0 if complete else 1
     except subprocess.TimeoutExpired as exc:
         status["status"] = "COMMAND_TIMED_OUT"
         status["failed_command"] = exc.cmd

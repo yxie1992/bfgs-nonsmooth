@@ -1,8 +1,9 @@
 # Full BFGS: principal minors and reciprocal growth in Lean
 
-**Module M.1–M.3's original matrix-run targets are compiler-checked.**
+**Module M.1–M.3's original matrix-run targets and their objective-level bridge
+are compiler-checked.**
 The pinned Lean 4.19.0 build and transitive axiom audit succeeded on 10 September
-2026. All 115 explicit theorem declarations and 167 theorem declarations including
+2026. All 178 explicit theorem declarations and 251 theorem declarations including
 Lean-generated auxiliaries were audited. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur. There are no `sorry`, `admit`, custom mathematical axioms, or
 unchecked external mathematical computations.
@@ -20,20 +21,33 @@ previous runtime, not the current proof status.
 | `reciprocalGrowth` | Inhabits the unchanged `ReciprocalGrowthTarget`: geometric and arithmetic reciprocal means diverge when predicted decreases tend to zero |
 | `finiteHorizon` | The source's explicit real-power finite-horizon lower bound, including the actual tail budget and matrix potential |
 | `superquadraticReciprocalGrowth` | Inhabits the unchanged `SuperquadraticReciprocalTarget`: reciprocal sums divided by `N²` tend to infinity under summability |
+| `objectiveReciprocalGrowth` | Reciprocal means diverge for actual finite-convex-objective runs with bounded gradients and vanishing predicted decreases |
+| `objectiveLowerBoundGrowth` | Armijo derives summability from lower-bounded values along the run; bounded gradients then give both mean divergences and superquadratic reciprocal sums |
+| `compactObjectiveGrowth` | Initial-sublevel compactness supplies the gradient and value bounds, so summability and all three growth conclusions follow |
+| `objectiveFiniteHorizon_of_lower_bound`, `compactObjectiveFiniteHorizon` | The exact finite-horizon bound for objective runs, with actual principal determinants and predicted-decrease tail sums |
 
-The exported growth results use `FullBFGSRun`, the original algebraic specification
+The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed
 lower bound on beta. The accepted-step weak-Wolfe inequality implies this beta
 bound by `FullBFGSRun.beta_ge_of_weakWolfe`. The growth assumptions are vanishing
 or summable predicted decreases, respectively. No iterate/matrix convergence or
 uniform matrix bound is assumed. No L-BFGS or update modification occurs.
 
-This project does **not** claim a formal model of finite convex objectives,
-differentiability of accepted iterates, or Armijo-to-summability/compact-sublevel
-bounded-gradient deductions. Those objective-level connections and the other
-research modules remain outside this matrix-run formalization. See
+`AdmissibleBFGSRun` now specifies a finite convex objective, actual derivatives at
+accepted iterates, positive lengths, nonzero accepted gradients, Armijo and weak
+Wolfe, the unmodified full inverse-BFGS update, and **only initial** positive
+definiteness. Positive definiteness and curvature at every later step are proved.
+Compact-sublevel exports derive their gradient and budget bounds; the more general
+exports retain their stated gradient/value bounds. No smoothness away from accepted
+iterates or continuity of gradients is assumed.
+
+The other Module M energy/localization/residual lemmas and other research modules
+remain outside this verification. No universal step-existence or overall
+optimal-value convergence theorem is claimed. See
 [MATHEMATICAL_REVIEW.md](MATHEMATICAL_REVIEW.md) and
-[audit/STATEMENT_REVIEW.md](audit/STATEMENT_REVIEW.md) for the statement review.
+[audit/STATEMENT_REVIEW.md](audit/STATEMENT_REVIEW.md) and
+[audit/OBJECTIVE_STATEMENT_REVIEW.md](audit/OBJECTIVE_STATEMENT_REVIEW.md) for the
+statement reviews.
 
 ## Reproduce
 
@@ -84,7 +98,7 @@ the delivered artifact hashes in `MANIFEST.json`.
 verifies the compiler and mathlib revision, builds the library, enumerates the
 compiled environment, checks every explicit source theorem has an axiom report,
 and rejects unexpected transitive axioms. `Audit.lean` additionally requires
-terms of the exact original targets and prints their definitions and full key
+terms of the exact original and objective-level targets and prints their definitions and full key
 signatures. Verification is not inferred from names or compilation alone.
 
 ## Evidence and organization
@@ -106,3 +120,7 @@ The matrix chain runs through `PrincipalMinors`, `GramSchur`,
 `PrincipalHierarchy`. `Normalization` connects this to `ScalarHierarchy`,
 `ReciprocalGrowth`, and `QuantitativeGrowth`. `EndToEnd` exports the complete
 matrix-run results. Conditional helper premises are discharged in `EndToEnd`.
+`PositiveUpdate`, `ConvexAnalysis`, and `DescentBudget` supply the new invariants
+and objective consequences. `ObjectiveRun` constructs the actual matrix run;
+`ObjectiveEndToEnd` exports the objective-level growth results against the explicit
+propositions in `ObjectiveTargets`.

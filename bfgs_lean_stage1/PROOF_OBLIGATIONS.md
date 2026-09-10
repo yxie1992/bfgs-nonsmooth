@@ -74,16 +74,41 @@ source's constants. Its block length is m+1 with m>0, exactly the source's lengt
 at least two. `superquadraticReciprocalGrowth : SuperquadraticReciprocalTarget`
 discharges the scalar hierarchy using the actual matrix theorem.
 
-## 5. Remaining scope, distinct from completed targets
+## 5. Objective-to-matrix bridge — complete
+
+The new run model assumes a finite convex objective, actual derivatives at the
+accepted iterates, `0<c₁<c₂<1`, positive lengths, nonzero accepted gradients, the
+Armijo and weak-Wolfe inequalities, and the original full inverse-BFGS recurrence.
+Only the initial matrix is assumed SPD.
+
+| Obligation | Checked implementation |
+|---|---|
+| Actual gradients and finite convex objective | `ObjectiveDefinitions.lean`: `gradientFunctional`, `AdmissibleBFGSRun` |
+| SPD preservation from positive curvature | `inverseBFGS_posDef` |
+| All run invariants from initial SPD and weak Wolfe | `fullBFGS_positive_invariants`, `AdmissibleBFGSRun.positive_invariants` |
+| Same actual matrix run, with no new assumptions | `AdmissibleBFGSRun.toFullBFGSRun`, definitional q/d/beta equalities |
+| Convex supporting inequality at differentiable accepted points | `convex_supporting_inequality` |
+| Two-sided decrease and sublevel membership | `AdmissibleBFGSRun.predicted_decrease_bounds`, `iterate_mem_initialSublevel` |
+| Armijo summability and actual tail budgets from lower-bounded values | `DescentBudget.lean`; `summable_predicted_decreases_of_lower_bound`, `tail_budget_le` |
+| Finite objective-limit branch | `summable_predicted_decreases_of_value_limit`, `objectiveGrowth_of_value_limit` |
+| Compactness supplies bounded gradients without gradient continuity | `convex_supporting_bound_on_compact`, `convex_gradient_bound_on_compact` |
+| Objective-level qualitative, finite-horizon, and superquadratic exports | `ObjectiveEndToEnd.lean`, exact propositions in `ObjectiveTargets.lean` |
+
+The compact-sublevel variants derive gradient and budget hypotheses. The general
+variants retain explicit gradient/value bounds; the qualitative variant retains
+the weaker vanishing-decrease condition. No iterate or matrix limit is assumed.
+
+## 6. Remaining scope, distinct from completed targets
 
 There are **no remaining obligations for the three original targets or the
-requested finite-horizon matrix-run bound**. Reusable conditional helpers are
+requested finite-horizon matrix-run bound or the objective bridge above**. Reusable conditional helpers are
 labeled as such in the status register and their signatures.
 
-Outside these targets, an objective-level formal model and deductions from finite
-convexity, differentiability of accepted iterates, Armijo, compactness, and finite
-limiting objective value have not been implemented. Other Module M energy,
-localization, and residual statements and the other research modules also remain
-outside this verification. The source's separate exact top-determinant update
+Other Module M energy, localization, and residual statements and the other
+research modules remain outside this verification. There is no theorem of
+admissible-step existence on every search ray or of overall optimal-value
+convergence. Infinite-run results assume nonzero gradients at all accepted
+iterates; a separate finite-termination theorem is not exported. The source's
+separate exact top-determinant update
 identity is not an exported result here; the requested hierarchy includes its
 top-degree inequality.

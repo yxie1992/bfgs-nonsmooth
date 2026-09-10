@@ -1,9 +1,10 @@
 # Mathematical and statement review
 
-The original M.1–M.3 matrix-run targets are now compiled with the pinned toolchain
+The original M.1–M.3 matrix-run targets and objective-level bridge are compiled with the pinned toolchain
 and transitively axiom-audited. This replaces the uncompiled-draft status. Original
 target definitions are unchanged apart from documentation comments. Independent
-agent review appears in `audit/STATEMENT_REVIEW.md`; this is not external peer review.
+agent reviews appear in `audit/STATEMENT_REVIEW.md` and
+`audit/OBJECTIVE_STATEMENT_REVIEW.md`; these are not external peer reviews.
 
 ## Actual matrices and original assumptions
 
@@ -41,10 +42,39 @@ bound, iterate convergence, eigenvector convergence, or finite gradient alphabet
 is introduced.
 
 `FullBFGSRun` is the original pure matrix-run specification, including SPD matrices
-and positive accepted lengths/curvature. Exported targets do not encode an
-objective or claim objective convergence. Objective-level derivations of bounded
-gradients and summability from compactness/Armijo remain outside this project;
-M.2 and M.3 state those hypotheses explicitly.
+and positive accepted lengths/curvature. The original targets retain their exact
+statements. The new `AdmissibleBFGSRun` supplies the objective-level bridge below.
+
+## Finite convex objective and accepted-run bridge
+
+`AdmissibleBFGSRun` assumes `F : (Fin n → ℝ) → ℝ` is convex on the whole space,
+which expresses finiteness everywhere. Its actual derivative at each accepted
+point is the continuous linear functional `v ↦ dot g v`. The coordinate space
+uses mathlib's Pi norm; in finite dimension this represents the same derivative
+and topology as Euclidean coordinates. Matrix energy and `sqNorm` use the
+Euclidean dot product explicitly. No transport to the `EuclideanSpace` type is
+exported, and no smoothness at other points is assumed.
+
+Only `H 0` is assumed positive definite. Positive alpha and nonzero current
+gradient give positive energy; weak Wolfe gives positive curvature. The exact
+inverse-BFGS quadratic form then proves positive definiteness of the next matrix.
+Induction derives all invariants without assuming future SPD or curvature.
+`toFullBFGSRun` keeps the same matrices, gradients, and lengths, with energies,
+predicted decreases, and beta definitionally identical.
+
+Convexity and the derivative at the current point give the supporting inequality
+and `c₁ d_k ≤ F(x_k)−F(x_(k+1)) ≤ d_k`. Armijo keeps iterates in the initial
+sublevel. A lower bound on values along the run yields summability and the tail
+budget `sum_i d_(J+i) ≤ (F(x_J)−L)/c₁`; a finite limiting value also supplies such
+a lower bound, without claiming it is optimal.
+
+Finite convexity supplies continuity. On a compact set, values are bounded below,
+and all supporting vectors are bounded by evaluating at coordinate translates
+of that set. This proves the accepted-gradient bound without continuity of the
+gradient, including when the function is nonsmooth elsewhere. The compact-sublevel
+exports derive both bounds. The separate bounded-gradient/lower-value-bound
+exports avoid imposing compactness where the more general hypotheses suffice.
+They apply the existing matrix hierarchy, never an assumed scalar hierarchy.
 
 ## Qualitative means
 
@@ -72,7 +102,7 @@ is required.
 
 ## Corrections and unformalized conclusions
 
-No correction to the requested M.1–M.3 statements was needed. The principal-product
+No correction to the requested M.1–M.3 statements or objective bridge was needed. The principal-product
 inequality is proved directly using an insertion injection instead of exporting
 the exact regrouping equality; the potential bound uses degree n instead of n−1.
 These disclosed proof choices change no requested conclusion or constant.
