@@ -1,0 +1,280 @@
+# Full BFGS on convex nonsmooth objectives
+
+## Consolidated results, proofs, and verification
+
+**Record closed: 10 September 2026.** This edition includes the deterministic-bracketing, positive-lower-curvature, planar affine-critical-cluster, and arbitrary-dimensional fixed-normal continuations. It supersedes the earlier theorem inventory, not the archived source proofs.
+
+### Status and reading convention
+
+These are mathematical claims developed in the supplied working reports. They have not received independent mathematical review or an exhaustive publication-priority audit. This consolidation distinguishes complete working arguments, computer-assisted algebraic certificates, finite algebraic regressions, numerical experiments, and unresolved conjectures. A successful verifier is not treated as a proof of an infinite-sequence theorem or of a geometric joining argument.
+
+The accompanying PDF contains the retained proof sections, not only this inventory. Its proof modules preserve source terminology and internal numbering, with a module prefix to make references unique. Shared BFGS algebra is proved once in Module M. Where a source proof is condensed or replaced by an implication, that change is identified. Original source snapshots remain in `provenance/` for comparison; obsolete statements in those snapshots are not the operative conclusions of this edition.
+
+No new literature survey was performed for this consolidation. Published results mentioned in the source reports remain background, and are not represented as discoveries of this investigation.
+
+## 1. Algorithm, quantifiers, and notions of convergence
+
+The algorithm is **ordinary full BFGS** in finite-dimensional Euclidean space:
+
+$$
+ g_k=\nabla F(x_k),\qquad s_k=-\alpha_kH_kg_k,\qquad
+ y_k=g_{k+1}-g_k,\qquad H_0\succ0,
+$$
+
+$$
+ H_{k+1}=\left(I-\frac{s_ky_k^T}{y_k^Ts_k}\right)H_k
+ \left(I-\frac{y_ks_k^T}{y_k^Ts_k}\right)
+ +\frac{s_ks_k^T}{y_k^Ts_k}.
+$$
+
+An *infinite admissible run* has nonzero gradients at differentiable accepted iterates, positive lengths, and fixed Armijo–weak-Wolfe constants $0<c_1<c_2<1$:
+
+$$
+ F(x_{k+1})\le F(x_k)+c_1g_k^Ts_k,\qquad
+ g_{k+1}^Ts_k\ge c_2g_k^Ts_k.
+$$
+
+No damping, restart, skipped update, memory truncation, proximal operation, imposed spectral limit, or assumed iterate convergence is introduced. Positive theorems quantify over all such infinite runs unless a more specific implementation is stated.
+
+Three conclusions must remain distinct:
+
+$$
+ F(x_k)\to F_*;\qquad \operatorname{dist}(x_k,X_*)\to0;\qquad x_k\to x_*.
+$$
+
+On a compact sublevel, objective convergence implies distance to the solution set tends to zero. Uniqueness then gives whole-sequence convergence. Affine-fiber nonuniqueness has a separate lifting theorem; arbitrary nonunique solution sets do not inherit that conclusion.
+
+A zero gradient at a differentiable point is successful termination. A ray with no differentiable acceptable point is not an infinite admissible run. The positive statements must not silently be strengthened into universal all-ray existence or finite oracle complexity.
+
+## 2. The negative results that must both be retained
+
+### N1. Deterministic local failure with globally C2,1 convex branches
+
+There is one fixed coercive $F:\mathbb R^2\to\mathbb R$, with a unique nonsmooth minimizer at zero, of the form
+
+$$
+ F=\max_{0\le i\le3}f_i,\qquad f_i\in C^{2,1}(\mathbb R^2),\qquad
+ 0\preceq\nabla^2f_i\preceq64I.
+$$
+
+Every branch Hessian is globally Lipschitz. With the fixed initialization $H_0=I$, a sequence of bad starts approaches the minimizer. The **actual deterministic unit-first weak-Wolfe doubling/bisection search** produces nonstationary converged limits:
+
+$$
+ x_0^{(j)}\to0,\qquad x_k^{(j)}\to p_j\ne0,\qquad
+ F(x_k^{(j)})\downarrow F(p_j)>0,\qquad0\notin\partial F(p_j).
+$$
+
+The same objective, starts, and trial decisions work for every fixed $0<c_1\le1/3$, $c_1<c_2<1$. Every accepted and rejected query is differentiable. Accepted lengths repeat $1,1/4,1/16$, with at most five trials per iteration. The entire query trajectory can remain in an arbitrarily small neighborhood of the true minimizer. Initial objective gaps also tend to zero.
+
+This is a failure of a deterministic neighborhood guarantee, not a claim that every close start fails. It is proved by an exactly isolated algebraic cycle, exact matrix closure, a scalar convex interpolation, all-trial containment, and scaling induction. **Proof: Module D.**
+
+### N2. Deterministic local failure with positive lower curvature
+
+There is also a strongly convex finite objective, with a unique nonsmooth minimizer and compact sublevels, such that
+
+$$
+ 0<\mu I\preceq\nabla^2F(x)\preceq LI
+$$
+
+wherever its classical Hessian exists, yet the same specified deterministic implementation admits bad starts arbitrarily close to the minimizer. A single fixed affine change of coordinates makes the common initial matrix $I$.
+
+One version is a maximum of four globally $C^{1,1}$, uniformly strongly convex, gradient-Lipschitz branches. The individual branches **are not twice differentiable at the accumulation point**. Another version has one constant SPD classical Hessian wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.
+
+The source uses $c_1=10^{-4}$, $c_2=1/2$. Its bad seed is an existence object on a certified hyperbolic stable manifold, not a displayed rounded point claimed to lie exactly on that manifold. **Proof: Module L.**
+
+**N1 and N2 are not merged into a fictitious stronger theorem.** N1 has more branch differentiability and no uniform positive lower curvature. N2 has positive lower curvature and less differentiability at the accumulation point. Neither proves local failure for a finite maximum of uniformly strongly convex $C^2$ branches through the optimizer.
+
+### N3. Simple global counterexamples retained as corollaries
+
+The deterministic seed gives failure on a coercive finite maximum of four affine functions, with a unique minimizer. This retains global failure in the finite polyhedral and semialgebraic class. It is not superseded by an accumulation-based local example.
+
+Adding a common positive quadratic to the three-piece seed yields
+
+$$
+ Q_\mu(x)=\frac\mu2\|x\|^2+\max_{i=0,1,2}g_i^Tx.
+$$
+
+For every $\mu>0$, suitable initial states produce deterministic nonstationary convergence to zero. Each branch is quadratic, analytic, and has Hessian exactly $\mu I$. The true minimizer lies elsewhere. This is **global failure**, and is consistent with local convergence near the true minimizer. The stable-manifold argument is required; the unperturbed orbit cannot simply be reused. **Proofs: D.3.1 and Module L.**
+
+## 3. General positive mechanisms: retain distinct hypotheses
+
+### P1. Objective-level transported certificates
+
+For differentiable endpoints define $g=\nabla F(x)$, $y=\nabla F(z)-g$, $s=z-x$, $d=-g^Ts$, $\Delta=F(x)-F(z)$, and $t=y^Ts$. An eligible pair satisfies
+
+$$d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge(1-c_2)d.$$
+
+On each compact positive objective band, it suffices that a finite-valued PSD field $W$ satisfy
+
+$$g^TW(x)g\ge m>0,\qquad y^TW(z)y\le Ct,$$
+
+$$\Pi_sW(z)\Pi_s\preceq\Pi_sW(x)\Pi_s,$$
+
+for every eligible pair with sufficiently small $d$. The latter two constants and the field may depend on the band and on the fixed line-search parameters. No continuity, uniform boundedness, or positive definiteness of $W$ is required.
+
+Then every admissible run on the compact sublevel has value and solution-set convergence; uniqueness gives iterate convergence. A local structural neighborhood gives a trapped low-sublevel basin. A condition on one-sided shells around possible positive limiting levels suffices as well.
+
+The normalization with exact projected nonexpansion is equivalent to allowing $(1+Ld)$: multiply $W$ by $\exp((L/c_1)(F-F_*))$. **Proof: Module T; normalization and geometry: Module G.**
+
+RS is the radial specialization $W(x)=(x-x_*)(x-x_*)^T$. Its equivalent inward Taylor condition is useful for checking functions, but is not a separate strongest certificate theorem. The inclusion of RS is strict. The transported condition itself is not necessary for actual convergence.
+
+### P2. Moving frames with controlled cumulative transport
+
+A frame satisfying $V_{k+1}=V_kT_k+s_kb_k^T$ has an exact BFGS comparison-energy identity. Uniform visibility, bounded secant correction, and bounded cumulative transport products and inverses exclude positive-level stagnation. This trajectory mechanism need not produce a single position-only certificate. **Proof: Module M.**
+
+### P3. Imperfect transport in fixed smooth directions
+
+If a fixed subspace $S$ satisfies $\|P_Sy_k\|^2\le L_Sy_k^Ts_k$, the actual update gives $\operatorname{tr}(P_SB_k)=O(k)$. Frame residuals are then permitted:
+
+$$V_{k+1}=V_kT_k+s_kb_k^T+R_k,$$
+
+$$\|T_k\|^2\le1+Cd_k,\qquad \operatorname{range}R_k\subset S,
+\qquad\|R_k\|_F^2\le Cd_k.$$
+
+Together with uniform visibility and bounded secant correction, the resulting $O(N^2)$ error budget is defeated by the superquadratic reciprocal theorem below. This extends the proof mechanism; **a strict inclusion between the existential function classes of P1 and P3 has not been proved**. **Proof: Module M; objective applications: Module U.**
+
+## 4. Strongest concrete local and global positive families
+
+### P4. Radially regular and finite-partition geometry
+
+On a compact positive band, RS is equivalent to uniformly quadratic inward first-order modeling error:
+
+$$
+ 0\le F(x-\theta r)-F(x)+\theta\nabla F(x)^Tr
+ \le(M_\eta/2)\theta^2,\qquad r=x-x_*.
+$$
+
+The constants may deteriorate as the band approaches the minimum. This yields local convergence for a finite convex function whose neighborhood of a unique minimizer has a **finite polyhedral partition with $C^{1,1}$ extensions on each cell**. Individual cell extensions need not be convex outside their cells; the full objective is convex.
+
+Consequences include finite convex PLQ objectives on polyhedral cells; smooth convex plus finite polyhedral terms; appropriate absolute-value, hinge, quantile, fused and generalized $\ell_1$ terms; and local mixtures of Euclidean group residuals. A finite maximum of arbitrary quadratics is not automatically PLQ.
+
+Centered local representations
+
+$$F(x_*+z)=\psi(z)+\gamma(z)$$
+
+are covered when $\psi$ is convex $C^{1,1}_{\rm loc}$ and $\gamma$ is finite convex degree-one homogeneous. A global representation on a compact initial sublevel gives global value convergence; uniqueness gives iterate convergence. Neither original summand must separately be minimized at the center.
+
+Also retained are finite sums of powered nonnegative gauges, and increasing convex smooth transforms of coercive gauges. Different powers, including $1<p<2$, and coupled linear maps are permitted under the stated source hypotheses. General spectral regularization at a nonzero rank-deficient solution is not automatic. **Proofs: Modules R and F.**
+
+For smooth-plus-polyhedral objectives, retain the explicit sufficient basin threshold obtained by minimizing the objective over the active regions of pieces inactive at the optimizer. For nonunique affine fibers, retain the exact linear-image lifting formula. These are not replaced by a generic uniqueness statement.
+
+### P5. Planar affine-critical cluster points
+
+Let $F:\mathbb R^2\to\mathbb R$ be finite convex, have an attained minimum and a compact sublevel, and have strictly convex positive sublevels. Away from affine-critical points, assume either local convex $C^2$ smoothness or a local maximum of two convex $C^2$ branches whose active gradients are linearly independent.
+
+Then every infinite admissible run has an affine-critical cluster point. Adding no false affine criticality on the local basin gives convergence. For finite smooth maxima, affine independence and strictly positive optimal barycentric weights at a unique optimizer make the required local geometry automatic in the plane. Strictly convex low contours then suffice; uniformly strongly convex branches are a stronger convenient assumption. **Complete proof: Module C.**
+
+This does not cover every planar finite maximum: rank-degenerate ties and flat positive contours are outside the stated theorem. Nor does it prove the arbitrary-dimensional rotating-normal conjecture.
+
+### An explicit supersession established in this consolidation
+
+The older theorem for
+
+$$F(u,v)=\max\{a(u)+pv,b(u)-qv\},\qquad p,q>0,$$
+
+with convex $C^2$ profiles, coercive $\phi=(qa+pb)/(p+q)$ having unique minimizer $u_*$, and $a'',b''>0$ off $u_*$, is a **corollary of P5**, not an independent strongest theorem.
+
+Here is the implication. The profiles are strictly convex. If two different points of a positive sublevel have different horizontal coordinates, strict profile convexity puts the interior of their segment strictly below the level. If their horizontal coordinates agree, their vertical coordinates differ; the two nonzero normal slopes again make every strict convex combination satisfy both inequalities strictly. Thus every positive sublevel is strictly convex. At a tie, the determinant of the active gradients is $-qa'(u)-pb'(u)=-(p+q)\phi'(u)$. It is nonzero except at $u_*$, where the tied point is precisely the optimizer. Smooth points are already regular. Hence P5 applies globally, and its localization argument gives the old local result.
+
+This is a disclosed deduction of a relationship between already recorded theorems. The original independent moving-ridge proof and its verification remain in the provenance archive, but are not repeated as a standalone principal result.
+
+### P6. Arbitrarily many parabolic branches, including flat contours
+
+For
+
+$$F(u,v)=\max_{i\le m}\{a_i u^2+b_iv\},\qquad a_i>0,
+\quad\min_i b_i<0<\max_i b_i,$$
+
+all admissible full-BFGS runs converge globally to zero. Branches with $b_i=0$ are allowed. Such branches can create flat contour segments, so P5 does **not** subsume the whole family. Its explicit certificate also proves strict inclusion beyond eligible-pair RS. **Full proof: Module Q.**
+
+### P7. Arbitrary-dimensional fixed-normal geometry
+
+Let $P=\{x:a^Tx=b\}$ be an exceptional hyperplane through a unique minimizer, with $S=a^\perp$. On a neighborhood of a compact initial sublevel, assume strong convexity, a single-valued Lipschitz tangential subgradient projection $P_S\partial F(x)=\{A(x)\}$, and local $C^{1,1}$ regularity off $P$. Every admissible run converges.
+
+The full normal gradient need not have a uniform Lipschitz constant near the hyperplane. A local version uses a low trapped sublevel. For $F(u,v)=\psi(u,v)+h(v)$, full strong convexity can be weakened to tangential strong convexity of $\psi$, strict positive contours, compactness, and a unique optimizer with $v_*=0$.
+
+A separate cluster theorem permits a closed collection of **parallel genuinely nonsmooth interfaces**. It forces one affine-critical cluster point under strong convexity and a Lipschitz tangential projection. Add no false affine criticality to conclude optimality. The single-hyperplane theorem is not a literal specialization: it allows differentiable but non-$C^{1,1}$ exceptional points.
+
+The arbitrary-dimensional result is not a planar reduction or a block-diagonal algorithm. Its real restriction is the fixed normal direction. The explicit normal-curvature-spike examples lie outside RS. **Complete proofs and infinite-series oracle: Module U.**
+
+### P8. Scalar convergence
+
+In one dimension, finite convex objectives with a unique minimizer and compact initial sublevel have convergence of every infinite admissible positive-metric Armijo–weak-Wolfe run, independently of the BFGS update. This remains nonredundant because it covers functions lacking every local transported certificate. **Proof and nonnecessity example: Module G.**
+
+## 5. Noncompact homogeneous theory remains independent
+
+For every finite convex degree-one homogeneous objective, every infinite admissible run satisfies
+
+$$F(x_k)\to0\quad\text{or}\quad F(x_k)\to-\infty.$$
+
+No iterate, step, matrix, or length bound is assumed, and the supporting gradient set may be infinite. Bounded-below objectives therefore have optimal value convergence; coercive ones have $x_k\to0$.
+
+For finite max-linear objectives, retain three refinements: a finite-value-limit run has zero in the affine hull of its recurrent gradients; recurrent gradient span of dimension at most two gives whole-iterate convergence on the finite-value branch; and purely flat-direction noncompactness admits an explicit metric-projection limit. General affine-fiber lifting gives the same type of result for reduced nonhomogeneous objectives.
+
+The noncompact zero-value iterate branch in recurrent dimension at least three is **not completely classified**. A compact-level certificate theorem cannot replace these noncompact statements. **Full proofs: Module H.**
+
+The two-piece finite-escape theorem from Xie–Wächter is pre-existing background and remains stronger in its finite-termination conclusion than the new many-piece infinite-run escape statement. The user's paper is supplied separately, not rebranded as a new result.
+
+## 6. Shared algebra and quantitative record
+
+The principal-minor inequality is proved once in Module M:
+
+$$e_j(H_{k+1})\le
+\frac{\|y_k\|^2}{\beta_k^2q_k}e_{j+1}(H_k)
++\frac{\alpha_k}{\beta_k}e_j(H_k),\quad
+q_k=g_k^TH_kg_k,\quad\beta_k=\frac{y_k^Ts_k}{d_k}.$$
+
+With bounded gradients, fixed weak Wolfe and $d_k\to0$, both the geometric and arithmetic means of $q_k^{-1}$ diverge. Under the stronger assumption $\sum d_k<\infty$, the final recorded strengthening is
+
+$$\boxed{\frac1{N^2}\sum_{k<N}q_k^{-1}\to\infty.}$$
+
+Retain the explicit finite-horizon bound as well; an asymptotic statement does not replace its finite constants. The former $\liminf q_k=0$ and $\Omega(N^2)$ headlines are retired as main results. They remain consequences used by older proofs.
+
+The fixed-reference identity is
+
+$$E_{k+1}=E_k-\frac{[g_k^T(x_k-x_*)]^2}{q_k}
++\frac{[y_k^T(x_{k+1}-x_*)]^2}{y_k^Ts_k}.$$
+
+A cumulative correction $o(\sum q_k^{-1})$ excludes a positive gap. In particular, by the final reciprocal result, an $O(N^2)$ cumulative correction suffices. This last sentence is an explicit consolidation consequence of the two displayed inequalities, not a claim of an additional source theorem.
+
+The original rate note recorded big-$O$ corollaries. The later superquadratic reciprocal theorem strengthens them to $o(N^{-1/2})$ for uniformly bounded radial correction, $o(N^{-1})$ for bounded-below degree-one homogeneous objectives, and $o(\log N/N)$ for positive-definite quadratic plus coercive gauge. These are disclosed consolidation deductions, proved in Module F while preserving the stronger explicit finite-horizon inequalities. They are not uniform rates over arbitrary certificates, sharpness statements, or line-search evaluation bounds.
+
+## 7. Geometric findings retained independently of convergence
+
+The condition
+
+$$0\in\operatorname{aff}\partial F(p)\Longrightarrow0\in\partial F(p)$$
+
+means that every nonoptimal nearby point admits a direction along which all subgradients predict the same strictly negative rate. Affine independence and strictly positive optimal coefficients make this true locally for finite smooth maxima, with uniform positive-band affine separation. Pointwise separation alone need not be uniform when ranks change.
+
+For finite convex semialgebraic objectives, the affine-critical set has finitely many connected components, and the objective is constant on each. Thus only finitely many affine-critical values occur, giving no false affine criticality below a sufficiently low threshold. This is a geometric proposition, not a blanket BFGS theorem. **Proofs: Module A.**
+
+The incoming-jump obstruction rules out all PSD certificates when the target gradient is a vanishing-cost linear combination of several eligible jumps arriving at the same target. It neither assumes regularity of the certificate nor constructs one common BFGS history. Scalar accumulating-kink examples show certificate failure despite convergence. These distinctions are retained in Module G.
+
+## 8. Verification and unresolved boundaries
+
+The fresh verification package preserves the source scripts and runs them in separate writable directories. Historical JSON and logs are never overwritten or counted as new runs. `verification/fresh/SUMMARY.json` records commands, script hashes, environment, exit codes, elapsed time, and output paths. The final audit report classifies each job by exact rational, symbolic, interval, mixed rational/decimal, or non-interval high-precision arithmetic.
+
+The exact deterministic cycle, its smooth embedding, the hyperbolicity bounds, principal-minor identities, frame identities, special examples and full-objective regressions have different evidential roles. In particular, finite stable-eigenspace calculations plus the stated stable-manifold theorem supply an existence argument; no rounded initial point is certified as lying on that manifold. Geometric joining and infinite tail arguments are analytic proof steps, not tested asymptotic facts.
+
+The remaining central gaps are: arbitrary-dimensional rotating-normal smooth-max geometry; the general local theorem for finite uniformly strongly convex $C^2$ branches without the recorded nondegeneracy/geometric assumptions; generic or positive-measure failure; other fixed line-search implementations; arbitrary nonunique solution-set iterate convergence; noncompact high-rank homogeneous zero-value iterates; and sharp rates or universal matrix asymptotics.
+
+The blanket question is not answered by calling all semialgebraic functions safe: global failure already occurs for affine maxima. The planar and fixed-normal positive theorems have precise additional assumptions. The latest lower-curvature counterexamples likewise do not establish local failure in a finite analytic or semialgebraic description.
+
+## 9. Supersession policy
+
+| Earlier item | Operative treatment |
+|:--|:--|
+| Prescribed acceptable-length counterexamples | Replaced by the final deterministic-bracketing seed and all-trial embeddings. |
+| Alternative deterministic seeds | Do not mix constants. Only the final $(1,0),(-1,-1/8),(c,d)$ seed is canonical. |
+| Upper-regularity local failure versus lower-curvature local failure | Retain both: differentiability and lower-curvature assumptions are incomparable. |
+| Original scalar-ridge convergence headline | Corollary of the later planar theorem; the implication is proved above. Independent proof retained only for provenance. |
+| All parabolic multi-branch convergence | Retain: zero-normal-slope pieces can violate the planar strict-contour hypothesis. |
+| Separate $\ell_1$ and $u^2+|v|$ headlines | Examples of broad radial/partition families; retain special rate and matrix-limit facts as corollaries. |
+| RS as the broadest sufficient condition | Replaced by the transported criterion; retain its natural equivalent and verifiable subclasses. |
+| Exact versus smooth-subspace-imperfect frame transport | Retain the distinct hypotheses; no unproved strict inclusion of function classes is asserted. |
+| Earlier reciprocal lower bounds | Use the superquadratic conclusion under summability, but retain the weaker-assumption theorem and finite-horizon constants. |
+| Noncompact homogeneous theorems | Retain independently of compact-level results. |
+| Certificate counterexamples | Keep the general obstruction and strongest nonnecessity example; do not label these as bad BFGS trajectories. |
+
+The scope of the positive and negative programs is now substantially clearer, but neither gives a necessary-and-sufficient classification of nonsmooth full-BFGS convergence.
