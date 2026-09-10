@@ -3,10 +3,10 @@ import Mathlib
 /-!
 # Scalar algebra in the principal-minor compression proof
 
-STATUS: uncompiled draft proof scripts.
-These are real-algebra lemmas, NOT the missing matrix determinant identities.
-In particular, no assumption below is to be represented as an established fact
-about actual BFGS matrices until the matrix bridge is separately proved.
+STATUS: compiler-checked scalar algebra.
+These are real-algebra lemmas. The actual determinant identities and their use
+for BFGS matrices are proved separately in `CompressionDeterminant.lean`,
+`GramSchur.lean`, and `BFGSCompression.lean`.
 -/
 
 noncomputable section

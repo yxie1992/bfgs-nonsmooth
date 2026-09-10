@@ -1,120 +1,89 @@
-# Source-to-formalization map and remaining obligations
+# Module M source-to-proof register
 
-Source: `BFGS_MASTER_REPORT.pdf`, Module M, printed pp. 9–10, physical PDF pp. 13–14.
-This file is a status register. An item is not proved merely by being listed.
+**All original M.1–M.3 matrix-run targets are proved, compiled, and axiom-audited.**
+See `audit/STATUS.json` for the actual run and declaration inventory. The original
+draft targets in `Definitions.lean` have not been altered.
 
-## 1. Exact target — M.1
+Source: `BFGS_MASTER_REPORT_LaTeX/report/chapters/foundation.tex`, preserved also
+as `reference/foundation.tex`. No original research source was edited.
 
-For arbitrary finite dimension n, actual SPD H, alpha > 0, q = g^T H g > 0,
-beta = -y^T H g / q > 0, and s = -alpha H g, prove for 1 <= j <= n:
+## 1. Actual matrix hierarchy — complete
 
-    e_j(BFGS(H,s,y))
-      <= ||y||^2/(beta^2 q) e_(j+1)(H) + (alpha/beta)e_j(H).
+For SPD H, alpha>0, q=gᵀHg>0 and beta=−yᵀHg/q>0, the checked theorem proves
 
-`Definitions.lean` defines e_j as sums of the actual j-by-j principal determinants.
-No surrogate sequence is substituted in this end-to-end target.
+    e_j(inverseBFGS(H,−alpha H g,y))
+      <= ||y||²/(beta² q) e_(j+1)(H) + (alpha/beta)e_j(H)
 
-### Matrix-side obligations not yet implemented
+for 1<=j<=n and arbitrary n. `e_j` is the original `principalSum`: a sum of actual
+principal submatrix determinants.
 
-M1.1. From SPD H and independent columns Z, prove A = Z^T H Z is SPD/invertible.
+| Original obligation | Checked implementation |
+|---|---|
+| M1.1 SPD/invertible compression | `metricGram_posDef`, `metricGram_posSemidef` |
+| M1.2 Actual inverse-BFGS projected/rank-one form | `inverseBFGS_projection_form`; actual compressed form in `BFGSCompression.lean` |
+| M1.3 Rank-two determinant identity | `CompressionDeterminant.det_rank_two`, `compression_det`, arbitrary size |
+| M1.4 Schur identities and singular Gram nonnegativity | `metricGram_det_append_one`, `metricGram_det_append_two`, `metricGram_det_nonneg` |
+| M1.5 Exact rank-one increment and captured-energy bound | `compression_add_rank_one_det`, `compressed_energy_le`; combined in `compressed_inverseBFGS_bound` and its finite-type version |
+| M1.6 Actual principal sums and basis invariance | `PrincipalMinors.lean`; `PrincipalInvariance.principalPolynomial_coeff`, `principalSum_conjugate` |
+| M1.7 Eigenbasis Gram summation bound | `diagonal_coordinate_gram_det`, `diagonal_coordinate_gram_sum_le`; `PrincipalCombinatorics.lean` |
+| M1.8 Assembly without assumed determinant identities | `principalMinorHierarchy : PrincipalMinorHierarchyTarget` |
 
-M1.2. Relate the actual inverse-BFGS update to
+The source's combinatorial equality is not separately exported. The proof checks
+the needed inequality directly by inserting a missing index into a coordinate
+subset and bounding nonnegative omitted terms. This changes the proof route,
+not the hierarchy's statement or constants. Larger Gram matrices and projected
+compressions may be singular; only the SPD base compression is inverted.
 
-    P H P^T + alpha/(beta q) (Hg)(Hg)^T,
-    P = I - (Hg)y^T/kappa,   kappa = g^T H y = -beta q.
+## 2. Actual matrix-to-scalar normalization — complete
 
-M1.3. Prove the rank-two compression determinant identity in arbitrary size:
+`fullBFGS_normalizedHierarchy` proves the instance with
 
-    det(Z^T P H P^T Z)
-      = det(A)/kappa^2 * ((kappa-w)^2 + u(r-zeta)),
+    E(k,j) = principalSum (R.H k) j
+    delta(k) = R.d k / c
+    K = 4G²/c², C = G².
 
-with u=a^T A^-1 a, w=a^T A^-1 b, zeta=b^T A^-1 b, and r=y^T H y.
-This must remain valid when the compressed projected matrix is singular.
+`metricEnergy_le_sqNorm_mul_trace` supplies the energy/trace inequality using a
+PSD square root and finite Cauchy–Schwarz. Nonnegative entries, positive trace,
+and terminal zero come from actual matrices. Positive dimension follows from
+positive energy; it is not a new assumption.
 
-M1.4. Prove both Schur-complement / Gram determinant identities and the
-nonnegativity of the larger Gram determinant. No unjustified invertibility of
-that larger Gram matrix is permitted.
+`FullBFGSRun.beta_ge_of_weakWolfe` derives beta>=1−c2 directly from the ordinary
+weak-Wolfe accepted-step inequality. `upperNull_of_tendsto` connects the vanishing
+predicted-decrease limit to the scalar qualitative proof.
 
-M1.5. Prove the exact rank-one determinant increment and 0 <= u <= q.
-The candidate scalar bounds in `CompressionAlgebra.lean` only finish the
-arithmetic AFTER these matrix facts have been supplied.
+## 3. Qualitative reciprocal means — complete
 
-M1.6. Prove the principal-sum/basis identities: orthogonal-conjugation invariance,
-e_1=trace, e_n=determinant, e_(n+1)=0, and nonnegativity for SPD H.
+`ScalarHierarchy` checks the shift identity including the terminal slot, positive
+weighted potentials, and recurrence. `ReciprocalGrowth` retains the fixed prefix
+and proves logarithmic, geometric, and arithmetic reciprocal-mean divergence.
+Its reusable sequence theorem is conditional.
 
-M1.7. In an orthonormal eigenbasis, establish the combinatorial identity
+The exported `reciprocalGrowth : ReciprocalGrowthTarget` supplies its hierarchy
+from the actual matrix theorem. No hierarchy premise remains in this export;
+neither pointwise q_k→0 nor matrix convergence is assumed.
 
-    sum_{|I|=j} det Gram_H(y,E_I)
-      = sum_{|J|=j+1} (product_{i in J} lambda_i) (sum_{i in J} y_i^2)
-      <= ||y||^2 e_(j+1)(H).
+## 4. Finite horizon and superquadratic growth — complete
 
-M1.8. Assemble M1.1–M1.7 into an actual proof of `PrincipalMinorHierarchyTarget`.
+`QuantitativeGrowth` checks logarithmic AM–GM, telescoping, the exact real-power
+finite bound, polynomial domination of the horizon-dependent potential, and
+the fixed-tail horizon limit. It keeps the finite prefix explicitly and only then
+sends the summable tail budget to zero.
 
-**Critical warning:** passing M1.3, M1.4, or M1.7 as hypotheses proves only a
-conditional assembly lemma. It is NOT end-to-end formalization of M.1.
+`finiteHorizon` uses actual `R.H J`, actual tail sum `sum_i R.d(J+i)`, and the
+source's constants. Its block length is m+1 with m>0, exactly the source's length
+at least two. `superquadraticReciprocalGrowth : SuperquadraticReciprocalTarget`
+discharges the scalar hierarchy using the actual matrix theorem.
 
-## 2. Normalization bridge from M.1 to the scalar hierarchy
+## 5. Remaining scope, distinct from completed targets
 
-With c>0, beta_k>=c, and ||g_k||<=G, derive
+There are **no remaining obligations for the three original targets or the
+requested finite-horizon matrix-run bound**. Reusable conditional helpers are
+labeled as such in the status register and their signatures.
 
-    q_k e_j(H_(k+1))
-      <= (4G^2/c^2)e_(j+1)(H_k) + (d_k/c)e_j(H_k),
-    q_k <= G^2 e_1(H_k).
-
-Also supply nonnegativity of the entries, positivity of e_1, and e_(n+1)=0.
-For a nontrivial infinite run n>0. Show d_k/c has the `UpperNull` property from
-Tendsto d 0, and assemble the actual run into `NormalizedHierarchy`.
-
-These are not yet implemented. The scalar library intentionally makes this
-interface explicit rather than concealing it as an axiom or a renamed theorem.
-
-## 3. Implemented candidate proof scripts — weighted and qualitative growth stage
-
-`ScalarHierarchy.lean`:
-
-    V_eta(k) = sum_(j=1)^n (K/eta)^(j-1) E(k,j)
-    q_k V_eta(k+1) <= (eta+delta_k)V_eta(k)
-    E(k,1) <= V_eta(k).
-
-The terminal term is included in `shift_identity` and is removed only with
-E(k,n+1)=0. For any requested A>0, take eta=A/2 and select a single tail on
-which delta_k<=eta. That gives q_k V(k+1)<=A V(k), q_k<=C V(k).
-
-`ReciprocalGrowth.lean` then gives candidate proofs for:
-
-    sum_(k=0)^(N-1) log q_k <= B_A + N log A      eventually,
-    -(1/N) sum_(k<N) log q_k -> infinity,
-    (product_(k<N) q_k^-1)^(1/N) -> infinity,
-    (1/N) sum_(k<N) q_k^-1 -> infinity.
-
-The finite prefix is explicitly retained and absorbed into B_A. The arithmetic
-mean uses log(u)<=u-1 rather than AM–GM. This is a disclosed presentation change
-of the source's qualitative scalar argument; it is not a new mathematical claim.
-
-All these scripts are currently UNCOMPILED. Even after successful compilation,
-the exported result `hierarchy_reciprocal_growth` is conditional on the explicit
-hierarchy until the bridge in section 2 is checked.
-
-## 4. M.3 — not yet implemented
-
-Retain the source's explicit finite-horizon lower bound. Required steps:
-
-* product bound over a fixed tail J;
-* AM–GM for eta+d_k/c and for the positive reciprocals;
-* choose eta=D_J/[c(m-1)] while keeping J fixed;
-* bound V_eta(H_J) polynomially in m and prove its m-th root tends to one;
-* deduce liminf S_N/N^2 >= c/(2D_J);
-* only then let J increase, so D_J -> 0, obtaining S_N/N^2 -> infinity.
-
-`SuperquadraticReciprocalTarget` freezes the end-to-end statement but has no proof.
-The qualitative M.2 theorem does not imply M.3 without these additional steps.
-
-## 5. Acceptance criteria for the next stage
-
-A successful `lake build` and clean transitive axiom audit are necessary but not
-sufficient to claim the full result: the exported theorem signatures must be
-reviewed for unproved assumptions equivalent to the desired conclusion.
-
-Do not introduce a matrix bound, convergence of H_k, convergence of x_k, positive
-curvature beyond the BFGS conditions, or finite gradient alphabets. These are not
-hypotheses of the source result.
+Outside these targets, an objective-level formal model and deductions from finite
+convexity, differentiability of accepted iterates, Armijo, compactness, and finite
+limiting objective value have not been implemented. Other Module M energy,
+localization, and residual statements and the other research modules also remain
+outside this verification. The source's separate exact top-determinant update
+identity is not an exported result here; the requested hierarchy includes its
+top-degree inequality.

@@ -2,9 +2,17 @@ import BfgsVerification.Definitions
 import BfgsVerification.CompressionAlgebra
 import BfgsVerification.ScalarHierarchy
 import BfgsVerification.ReciprocalGrowth
+import BfgsVerification.PrincipalMinors
+import BfgsVerification.CompressionDeterminant
+import BfgsVerification.GramSchur
+import BfgsVerification.BFGSUpdate
+import BfgsVerification.BFGSCompression
+import BfgsVerification.OrthogonalCoordinates
+import BfgsVerification.QuantitativeGrowth
+import BfgsVerification.Normalization
+import BfgsVerification.EndToEnd
 
 /-!
-Stage 1 formalization draft. A successful build would check the scalar lemmas
-and the conditional sequence theorem, NOT the end-to-end matrix target.
-The target propositions in Definitions remain unproved.
+Module M's actual matrix hierarchy and reciprocal-growth chain. Consult
+audit/STATUS.json for current build status and audited theorem statements.
 -/

@@ -3,11 +3,11 @@ import Mathlib
 /-!
 # A finite nonnegative hierarchy gives a weighted scalar recurrence
 
-STATUS: uncompiled draft proof scripts.
+STATUS: compiled with the pinned Lean 4.19.0 / mathlib environment.
 
 This file is deliberately independent of matrices. Its inputs are the normalized
-inequalities to be derived from the actual principal-minor theorem. A successful
-build of this file alone would NOT prove the principal-minor theorem.
+inequalities to be derived from the actual principal-minor theorem. Compilation
+of this file alone does NOT prove the principal-minor theorem.
 
 Index convention: `e 1` is the trace slot; `e (n+1) = 0` is the terminal slot.
 -/
@@ -127,6 +127,16 @@ structure NormalizedHierarchy (n : ℕ) (E : ℕ → ℕ → ℝ)
 /-- This is an epsilon-tail formulation, not an assumed growth conclusion. -/
 def UpperNull (δ : ℕ → ℝ) : Prop :=
   ∀ ε : ℝ, 0 < ε → ∃ J : ℕ, ∀ k : ℕ, J ≤ k → δ k ≤ ε
+
+/-- Ordinary convergence to zero supplies the one-sided tail condition used by
+    the qualitative weighted-potential argument. -/
+theorem upperNull_of_tendsto {δ : ℕ → ℝ}
+    (hδ : Filter.Tendsto δ Filter.atTop (nhds 0)) : UpperNull δ := by
+  intro ε hε
+  have hevent : ∀ᶠ k in Filter.atTop, δ k < ε :=
+    hδ.eventually (Iio_mem_nhds hε)
+  obtain ⟨J, hJ⟩ := Filter.eventually_atTop.1 hevent
+  exact ⟨J, fun k hk => (hJ k hk).le⟩
 
 /-- For each positive contraction factor, construct one fixed weighted potential
     and one tail. The potential does not vary with the index along that tail. -/

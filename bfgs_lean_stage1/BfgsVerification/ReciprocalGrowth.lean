@@ -4,7 +4,7 @@ import BfgsVerification.ScalarHierarchy
 /-!
 # Reciprocal growth from an explicit scalar hierarchy
 
-STATUS: uncompiled draft proof scripts.
+STATUS: compiled with the pinned Lean 4.19.0 / mathlib environment.
 
 The final theorem in this file is CONDITIONAL on `NormalizedHierarchy`. It must
 not be described as an end-to-end BFGS theorem until the matrix-to-hierarchy
@@ -156,7 +156,7 @@ theorem logMean_le_arithmeticMean
   rw [Finset.sum_neg_distrib] at hs
   exact div_le_div_of_nonneg_right hs (Nat.cast_nonneg N)
 
-/-- Draft qualitative reciprocal-growth theorem for arbitrary finite hierarchy
+/-- Conditional qualitative reciprocal-growth theorem for arbitrary finite hierarchy
     height. The NORMALIZED HIERARCHY IS AN EXPLICIT HYPOTHESIS. -/
 theorem hierarchy_reciprocal_growth
     {n : ℕ} {E : ℕ → ℕ → ℝ} {q δ : ℕ → ℝ} {K C : ℝ}

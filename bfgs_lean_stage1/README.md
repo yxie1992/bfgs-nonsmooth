@@ -1,102 +1,108 @@
-# BFGS principal-minor and reciprocal-growth formalization — stage 1
+# Full BFGS: principal minors and reciprocal growth in Lean
 
-**Status: DRAFT; NOT COMPILED; NOT LEAN-VERIFIED.**
+**Module M.1–M.3's original matrix-run targets are compiler-checked.**
+The pinned Lean 4.19.0 build and transitive axiom audit succeeded on 10 September
+2026. All 115 explicit theorem declarations and 167 theorem declarations including
+Lean-generated auxiliaries were audited. Only `propext`, `Classical.choice`, and
+`Quot.sound` occur. There are no `sorry`, `admit`, custom mathematical axioms, or
+unchecked external mathematical computations.
 
-This project starts formalizing Module M of the supplied BFGS master report.
-The execution environment in which these files were prepared had neither Lean,
-Lake, nor Elan. Attempts to download the toolchain and packages failed with DNS /
-network errors. No `.olean` was produced and no Lean theorem is claimed verified.
+The original research sources are unchanged. The pre-work draft and report were
+committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
+previous runtime, not the current proof status.
 
-The code is a set of candidate proof scripts, not a promise that it compiles.
-Compiler errors, including tactic/API mismatches, may remain. The next action is
-to compile and repair the drafts in the pinned environment.
+## Results and exact scope
 
-## Scope actually represented
-
-| Item | Status |
+| Export | Verified conclusion |
 |---|---|
-| Exact matrix definitions and target propositions for M.1–M.3 | Drafted, not typechecked |
-| Scalar cancellation in the compressed-determinant argument | Candidate proof scripts |
-| Finite weighted-potential recurrence at arbitrary hierarchy height | Candidate proof scripts |
-| Geometric/arithmetic reciprocal divergence from `NormalizedHierarchy` | Candidate proof scripts, explicitly conditional |
-| Derivation of `NormalizedHierarchy` from the actual full-BFGS update | **NOT IMPLEMENTED** |
-| General matrix principal-minor theorem | **NOT IMPLEMENTED** |
-| Finite-horizon AM–GM/root bound and superquadratic conclusion | **NOT IMPLEMENTED** |
-| Kernel compilation and axiom audit | **BLOCKED / NOT PERFORMED** |
+| `principalMinorHierarchy` | Inhabits the unchanged `PrincipalMinorHierarchyTarget`: actual full inverse-BFGS matrices, actual sums of principal determinants, arbitrary finite dimension |
+| `fullBFGS_normalizedHierarchy` | Derives the scalar hierarchy from those matrices, with `K=4G²/c²`, `C=G²`, and `δ=d/c` |
+| `reciprocalGrowth` | Inhabits the unchanged `ReciprocalGrowthTarget`: geometric and arithmetic reciprocal means diverge when predicted decreases tend to zero |
+| `finiteHorizon` | The source's explicit real-power finite-horizon lower bound, including the actual tail budget and matrix potential |
+| `superquadraticReciprocalGrowth` | Inhabits the unchanged `SuperquadraticReciprocalTarget`: reciprocal sums divided by `N²` tend to infinity under summability |
 
-A successful future build of the CURRENT project would prove only the implemented
-conditional scalar lemmas. It would not establish the still-open matrix theorem.
-The three `...Target` declarations are definitions of propositions, NOT proofs of
-those propositions. There are no placeholder theorem proofs for those targets.
+The exported growth results use `FullBFGSRun`, the original algebraic specification
+of the unmodified full matrix update, with bounded gradients and a positive fixed
+lower bound on beta. The accepted-step weak-Wolfe inequality implies this beta
+bound by `FullBFGSRun.beta_ge_of_weakWolfe`. The growth assumptions are vanishing
+or summable predicted decreases, respectively. No iterate/matrix convergence or
+uniform matrix bound is assumed. No L-BFGS or update modification occurs.
 
-## Files
+This project does **not** claim a formal model of finite convex objectives,
+differentiability of accepted iterates, or Armijo-to-summability/compact-sublevel
+bounded-gradient deductions. Those objective-level connections and the other
+research modules remain outside this matrix-run formalization. See
+[MATHEMATICAL_REVIEW.md](MATHEMATICAL_REVIEW.md) and
+[audit/STATEMENT_REVIEW.md](audit/STATEMENT_REVIEW.md) for the statement review.
 
-* `BfgsVerification/Definitions.lean`: actual matrices, full inverse-BFGS update,
-  principal sums, full matrix runs, and honest unproved end-to-end target statements.
-* `BfgsVerification/CompressionAlgebra.lean`: real-algebra portions of the Schur /
-  compressed-determinant calculation. Matrix identities remain separate obligations.
-* `BfgsVerification/ScalarHierarchy.lean`: finite weighted sum and normalized
-  hierarchy interface, including the terminal slot and trace domination.
-* `BfgsVerification/ReciprocalGrowth.lean`: finite-prefix-preserving logarithmic
-  proof of qualitative reciprocal growth from that explicit interface.
-* `Audit.lean`: axiom reports and the full signature of the conditional result.
-* `PROOF_OBLIGATIONS.md`: missing matrix bridges and exact source-to-code map.
-* `MATHEMATICAL_REVIEW.md`: informal review of the scalar argument and quantifiers.
-* `reference/foundation.tex`: unchanged source Module M extracted from the supplied ZIP.
-* `scripts/check.py`: fail-closed build/audit driver; static scanning is never
-  represented as Lean verification.
-* `audit/STATUS.json`: actual execution status for this delivery.
+## Reproduce
 
-## Reproducible version choices
+Pinned versions are unchanged:
 
-* Lean: `leanprover/lean4:v4.19.0`
-* mathlib: `c44e0c8ee63ca166450922a373c7409c5d26b00b` (release `v4.19.0`)
+- Lean: `leanprover/lean4:v4.19.0`
+- mathlib: `c44e0c8ee63ca166450922a373c7409c5d26b00b`
+- Transitive package revisions: generated and committed `lake-manifest.json`.
 
-These are explicit stable version choices, not claims about the latest release.
-The tagged mathlib `lean-toolchain` was checked against the specified Lean version.
-The commit was read from the official mathlib release page.
-
-No `lake-manifest.json` has been fabricated: the first `lake update` must resolve
-it from the pinned mathlib commit. Keep the generated manifest with subsequent
-verified builds. This ZIP does not bundle a compiler or the mathlib cache.
-
-## First compilation
-
-In a terminal with a functioning Elan/Lean installation and network access:
+With Elan/Lake available:
 
 ```bash
 cd bfgs_lean_stage1
 bash scripts/bootstrap.sh
 ```
 
-This performs `lake update`, `lake exe cache get`, then the build and axiom audit.
-After dependencies exist, rerun:
+The current workspace keeps Elan in `.toolchain/elan`, dependencies and compiled
+objects in `.lake`, and downloaded caches in `.cache`, all inside this repository
+and ignored by Git. `bootstrap.sh` and `check.py` discover the local installation.
+To install Elan locally in a fresh checkout:
+
+```bash
+mkdir -p .toolchain/elan
+curl --proto '=https' --tlsv1.2 -sSfL \
+  https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+  -o .toolchain/elan-init.sh
+ELAN_HOME="$PWD/.toolchain/elan" bash .toolchain/elan-init.sh \
+  -y --no-modify-path --default-toolchain none
+bash scripts/bootstrap.sh
+```
+
+On this macOS runtime the pinned native mathlib cache utility failed to load with
+`__DATA_CONST segment missing SG_READ_ONLY flag`. Bootstrap disables the native
+cache post-update hook and runs the **same pinned cache program** with
+`lake env lean --run`. This concerns download tooling, not proof trust. No
+toolchain or mathlib revision was changed.
+
+For subsequent checks:
 
 ```bash
 python3 scripts/check.py
 ```
 
-A source-only scan is available but is NOT a proof check:
+After the audit output log has closed, `python3 scripts/manifest.py` regenerates
+the delivered artifact hashes in `MANIFEST.json`.
 
-```bash
-python3 scripts/check.py --static-only
-```
+`--static-only` is explicitly **not** Lean verification. The default checker
+verifies the compiler and mathlib revision, builds the library, enumerates the
+compiled environment, checks every explicit source theorem has an axiom report,
+and rejects unexpected transitive axioms. `Audit.lean` additionally requires
+terms of the exact original targets and prints their definitions and full key
+signatures. Verification is not inferred from names or compilation alone.
 
-The driver exits nonzero on a missing toolchain, compilation error, timeout,
-missing axiom report, or unapproved axiom dependency. It does not use
-`native_decide` or import outputs of Python/SymPy as mathematical facts.
-The standard mathlib foundational axioms allowed by the audit are `propext`,
-`Classical.choice`, and `Quot.sound`.
+## Evidence and organization
 
-## What counts as completion
+- [audit/STATUS.json](audit/STATUS.json): actual status, source hashes, every
+  explicit theorem's signature/dependencies, conditional reusable stages, and
+  remaining target obligations.
+- [audit/build.log](audit/build.log), [audit/axioms.log](audit/axioms.log): current
+  compiler and complete axiom/type audit transcripts.
+- [audit/lean_version.log](audit/lean_version.log),
+  [audit/mathlib_revision.log](audit/mathlib_revision.log): actual pinned versions.
+- [audit/declarations.json](audit/declarations.json): all audited theorem records.
+- [PROOF_OBLIGATIONS.md](PROOF_OBLIGATIONS.md): source-to-proof completion map.
+- [audit/HISTORY.md](audit/HISTORY.md): historical versus current evidence.
 
-1. Every staged source must compile and its axiom dependency report must be audited.
-2. The actual matrix obligations in `PROOF_OBLIGATIONS.md` must be implemented.
-3. An exported theorem must inhabit `PrincipalMinorHierarchyTarget` without assuming
-   that target or an equivalent unchecked matrix identity.
-4. The matrix-to-`NormalizedHierarchy` bridge must be proved and used to inhabit
-   `ReciprocalGrowthTarget`.
-5. M.3 requires a separately completed finite-horizon and ordered-tail proof.
-
-Until then, do not label the paper's matrix hierarchy or its end-to-end BFGS
-reciprocal-growth theorem "Lean-verified."
+The matrix chain runs through `PrincipalMinors`, `GramSchur`,
+`CompressionDeterminant`, `BFGSUpdate`, `BFGSCompression`, `PrincipalInvariance`,
+`PrincipalCombinatorics`, `CoordinateGram`, `OrthogonalCoordinates`, and
+`PrincipalHierarchy`. `Normalization` connects this to `ScalarHierarchy`,
+`ReciprocalGrowth`, and `QuantitativeGrowth`. `EndToEnd` exports the complete
+matrix-run results. Conditional helper premises are discharged in `EndToEnd`.

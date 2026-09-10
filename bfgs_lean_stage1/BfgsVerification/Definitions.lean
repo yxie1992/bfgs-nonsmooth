@@ -3,12 +3,13 @@ import Mathlib
 /-!
 # Exact mathematical targets for the BFGS formalization
 
-STATUS: uncompiled draft. These definitions do not prove the target propositions.
+STATUS: compiled definitions. These definitions do not prove the target propositions.
 Source: BFGS_MASTER_REPORT.pdf, Module M, printed pp. 9--10 (PDF pp. 13--14).
 
 `principalSum` uses sums of actual principal determinants. It is NOT an
-uninterpreted collection of numbers. The matrix-to-scalar bridge must eventually
-connect this definition to the hierarchy in `ScalarHierarchy.lean`.
+uninterpreted collection of numbers. `EndToEnd.fullBFGS_normalizedHierarchy`
+connects this definition to the hierarchy in `ScalarHierarchy.lean` (the export
+is in the `BfgsVerification` namespace).
 -/
 
 noncomputable section
@@ -86,7 +87,8 @@ def reciprocalMean (q : ℕ → ℝ) (N : ℕ) : ℝ :=
 def reciprocalGeometricMean (q : ℕ → ℝ) (N : ℕ) : ℝ :=
   (∏ k ∈ Finset.range N, (q k)⁻¹) ^ ((N : ℝ)⁻¹)
 
-/-- M.2, with boundedness and the weak-Wolfe lower bound spelled out. OPEN. -/
+/-- M.2's target, inhabited by `reciprocalGrowth`, with boundedness and the
+weak-Wolfe lower bound spelled out. -/
 def ReciprocalGrowthTarget : Prop :=
   ∀ (n : ℕ) (R : FullBFGSRun n) (G c : ℝ),
     0 < G → 0 < c →
@@ -96,7 +98,7 @@ def ReciprocalGrowthTarget : Prop :=
     Tendsto (reciprocalGeometricMean R.q) atTop atTop ∧
     Tendsto (reciprocalMean R.q) atTop atTop
 
-/-- M.3's strongest asymptotic conclusion. OPEN. -/
+/-- M.3's target, inhabited by `superquadraticReciprocalGrowth`. -/
 def SuperquadraticReciprocalTarget : Prop :=
   ∀ (n : ℕ) (R : FullBFGSRun n) (G c : ℝ),
     0 < G → 0 < c →

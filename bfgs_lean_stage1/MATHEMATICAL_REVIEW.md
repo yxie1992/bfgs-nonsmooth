@@ -1,94 +1,80 @@
-# Informal review accompanying the first Lean draft
+# Mathematical and statement review
 
-This is a mathematical/readability review, NOT compiler feedback and NOT formal
-verification. It records why the proposed stages correspond to the supplied proof.
+The original M.1–M.3 matrix-run targets are now compiled with the pinned toolchain
+and transitively axiom-audited. This replaces the uncompiled-draft status. Original
+target definitions are unchanged apart from documentation comments. Independent
+agent review appears in `audit/STATEMENT_REVIEW.md`; this is not external peer review.
 
-## Source and scope
+## Actual matrices and original assumptions
 
-The requested targets are M.1, M.2, and the stronger M.3 in the consolidated
-report. Their actual matrix assumptions are retained. In particular:
+`principalSum` remains the sum of actual principal determinants. `inverseBFGS`
+is the full undamped inverse-BFGS formula. Positive alpha, energy, and beta are
+used exactly where required. Local compression assumes independent columns; the
+final theorem constructs and proves that property for eigenbasis coordinate
+columns, adding no assumption on the run.
 
-- alpha is positive; this is required when bounding the rank-one increment.
-- q and beta are positive, so cancellation and logarithms are legitimate.
-- the hierarchy ranges from j=1 through j=n; no j=0 claim is introduced.
-- the terminal slot e_(n+1)=0 is used explicitly, not inferred from a name.
-- q_k need not tend to zero pointwise; only the stated reciprocal means diverge.
-- neither bounded matrices nor convergence of the matrices or iterates is assumed.
+The rank-two formula follows from the determinant lemma for the original SPD
+compression and an actual 2-by-2 determinant. One- and two-column Schur identities
+are checked for actual appended Gram matrices. Nonnegativity includes singular
+Gram matrices. The rank-one increment never inverts the projected compression
+or the larger Gram matrix.
 
-## Compression arithmetic
+Principal-sum invariance follows from the checked generating identity for
+`det(I+XH)`: its degree-j coefficient is the actual principal sum. A block
+determinant and multilinearity prove that identity; the verified spectral theorem
+supplies the eigenbasis. The final hierarchy uses these proved facts, not scalar
+identities passed as unproved matrix hypotheses.
 
-Put Delta=det(A). The three scalar identities in the source are
+## Normalization and line search
 
-    kappa^2 D = Delta ((kappa-w)^2 + u(r-zeta)),
-    Dy = Delta(r-zeta),
-    Dgy = Delta((q-u)(r-zeta) - (kappa-w)^2).
+Normalized entries are exactly `principalSum (R.H k) j`. The energy bound
+q<=||g||² trace(H) uses a PSD square root and Cauchy–Schwarz. Bounded gradients give
+||y||²<=4G²; beta>=c gives K=4G²/c² and delta=d/c. Positive trace, terminal zero,
+and nonnegative entries are derived.
 
-Expanding gives
+The weak-Wolfe bridge checks
 
-    kappa^2 D = q Dy - Dgy.
+    g_nextᵀs >= c2 gᵀs  =>  beta >= 1-c2,
 
-With kappa^2=beta^2 q^2 and Dgy>=0, q>0, beta>0:
+using d=−gᵀs=alpha*q and yᵀs=beta*d. Strong Wolfe is not substituted. No matrix
+bound, iterate convergence, eigenvector convergence, or finite gradient alphabet
+is introduced.
 
-    D <= Dy/(beta^2 q).
+`FullBFGSRun` is the original pure matrix-run specification, including SPD matrices
+and positive accepted lengths/curvature. Exported targets do not encode an
+objective or claim objective convergence. Objective-level derivations of bounded
+gradients and summability from compactness/Armijo remain outside this project;
+M.2 and M.3 state those hypotheses explicitly.
 
-The rank-one addition is bounded using Delta>=0, alpha>=0, beta*q>0 and u<=q:
+## Qualitative means
 
-    alpha/(beta*q) Delta*u <= (alpha/beta) Delta.
+The weighted shift identity includes its terminal term. For any fixed contraction
+factor, one fixed potential and one tail are selected. The log telescope retains
+the entire finite prefix. Exponentiation yields the actual product-root geometric
+mean, and log(u)<=u transfers divergence to the arithmetic mean.
 
-The draft implements these scalar implications. It does NOT yet establish that
-D, Dy, Dgy, Delta and u are the claimed determinants/Schur quantities of actual
-matrices. That is the primary unfinished algebraic task.
+This replaces the source's qualitative root/AM–GM presentation. It does not infer
+pointwise q_k→0 or the stronger summable-budget result without its separate proof.
 
-## Weighted recurrence
+## Finite horizon and ordered tail limit
 
-Use an actual finite number n of slots, and r=K/eta. The exact shift identity is
+The exact finite bound is exported in real-power notation with the source's
+constants, actual matrix potential, and tail sum. Formal m+1 is source m; formal
+m>0 is exactly source m>=2.
 
-    r sum_(j=0)^(n-1) r^j E_(j+2) + E_1
-      = sum_(j=0)^(n-1) r^j E_(j+1) + r^n E_(n+1).
+Optimized eta depends on the horizon, while J and its matrix are fixed. The proof
+bounds the potential by a polynomial of degree n, a convenient weaker estimate
+than the source's n−1; either gives the same root limit. The explicit normalized
+lower function tends to 1/(2D), with D the normalized tail budget. The nonnegative
+prefix and factor ((m+1)/(J+m+1))²→1 are handled explicitly. Only then does
+summability make the tail budget arbitrarily small. No bound on H_J uniform in J
+is required.
 
-Only after inserting E_(n+1)=0 and E_1>=0 does it give
+## Corrections and unformalized conclusions
 
-    K shiftedPotential <= eta weightedPotential.
-
-Multiplying the normalized hierarchy by r^(j-1), summing, and using nonnegative
-weights proves
-
-    q_k V_eta(k+1) <= (eta+delta_k)V_eta(k).
-
-The first coefficient is one, so V_eta(k)>=E_(k,1)>0.
-
-## Qualitative reciprocal growth (M.2)
-
-For each A>0 choose eta=A/2 and a fixed tail where delta_k<=eta. Then
-
-    q_k V(k+1)<=A V(k),             q_k<=C V(k).
-
-Logarithms telescope. For a tail starting at J and a block with m+1 terms,
-
-    sum_(i=0)^m log(q_(J+i))
-      <= log(C)+log(V(J))+m log(A).
-
-Restoring the first J terms gives an explicit constant B_A with
-
-    sum_(k=0)^(N-1) log(q_k) <= B_A + N log(A)
-
-for every N>=J+1. Given any requested threshold T, take A=exp(-(T+1)); for
-N large enough that B_A<=N, the negative logarithmic mean is at least T.
-
-Thus the geometric reciprocal mean, which equals the exponential of that
-logarithmic mean, tends to infinity. The arithmetic reciprocal mean dominates
-the logarithmic mean since -log(q)=log(1/q)<=1/q-1. This establishes the same
-qualitative conclusion as the source's root/AM–GM argument.
-
-This logarithmic route is chosen to simplify formalization. It does not prove a
-new rate, nor does it silently replace M.3. The stronger quadratic normalization
-requires the separate finite-horizon argument.
-
-## Explicit next checkpoint
-
-Run the pinned compiler, repair elaboration/tactic errors, and inspect the axiom
-reports. Only then can any implemented scalar declaration be called Lean-checked.
-The principal-minor theorem remains open until the matrix identities,
-nonnegativity, basis invariance, combinatorial summation and normalization bridge
-are formally proved. A clean build of an implication with those facts as
-hypotheses is not a substitute.
+No correction to the requested M.1–M.3 statements was needed. The principal-product
+inequality is proved directly using an insertion injection instead of exporting
+the exact regrouping equality; the potential bound uses degree n instead of n−1.
+These disclosed proof choices change no requested conclusion or constant.
+Original research sources and `reference/foundation.tex` are unchanged.
+`PROOF_OBLIGATIONS.md` records the verified/unformalized boundary.

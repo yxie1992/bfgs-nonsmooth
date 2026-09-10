@@ -1,0 +1,6 @@
+import BfgsVerification.PrincipalInvariance
+#print axioms BfgsVerification.PrincipalInvariance.det_piecewise_one
+#print axioms BfgsVerification.PrincipalInvariance.principalPolynomial_coeff
+#print axioms BfgsVerification.PrincipalInvariance.principalSum_conjugate
+#print axioms BfgsVerification.PrincipalInvariance.principalSum_orthogonal_conjugate
+#check BfgsVerification.PrincipalInvariance.principalSum_orthogonal_conjugate

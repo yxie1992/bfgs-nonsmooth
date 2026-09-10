@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Fail-closed build/audit driver for the staged BFGS Lean project.
+"""Fail-closed build/audit driver for the BFGS Lean project.
 
 A static source scan is not a Lean verification. Missing executables, build
 errors, missing axiom output, or unexpected axioms prevent a verified status.
-Even a successful staged build does not establish the still-open matrix target.
+A successful helper build alone is insufficient: exact target inhabitants and
+compiled-environment axiom reports establish the matrix-run target status.
 """
 from __future__ import annotations
 
@@ -11,6 +12,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -21,6 +23,41 @@ ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "audit"
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 EXPECTED_LEAN = "4.19.0"
+EXPECTED_MATHLIB = "c44e0c8ee63ca166450922a373c7409c5d26b00b"
+TARGETS = {
+    "end_to_end_principal_minor_hierarchy_verified":
+        ("BfgsVerification.principalMinorHierarchy", "BfgsVerification.PrincipalMinorHierarchyTarget"),
+    "end_to_end_bfgs_reciprocal_growth_verified":
+        ("BfgsVerification.reciprocalGrowth", "BfgsVerification.ReciprocalGrowthTarget"),
+    "superquadratic_growth_verified":
+        ("BfgsVerification.superquadraticReciprocalGrowth", "BfgsVerification.SuperquadraticReciprocalTarget"),
+}
+
+
+def theorem_names(code: str) -> list[str]:
+    """Discover explicit declarations; compiled-environment enumeration audits
+    these plus Lean-generated theorem declarations. Fail closed if one is absent.
+    """
+    scopes: list[tuple[str, str]] = []
+    names: list[str] = []
+    for line in code.splitlines():
+        line = line.strip()
+        namespace = re.match(r"namespace\s+(\S+)", line)
+        section = re.match(r"(?:noncomputable\s+)?section(?:\s+(\S+))?$", line)
+        ending = re.match(r"end(?:\s+(\S+))?$", line)
+        if namespace:
+            scopes.append(("namespace", namespace.group(1)))
+        elif section:
+            scopes.append(("section", section.group(1) or ""))
+        elif ending and scopes:
+            scopes.pop()
+        theorem = re.search(r"\b(?:theorem|lemma)\s+([\w'.]+)", line)
+        if theorem:
+            name = theorem.group(1)
+            prefix = ".".join(value for kind, value in scopes if kind == "namespace")
+            names.append(name.removeprefix("_root_.") if name.startswith("_root_.")
+                         else f"{prefix}.{name}" if prefix else name)
+    return names
 
 
 def lean_code_only(text: str) -> str:
@@ -82,6 +119,12 @@ def main() -> int:
     parser.add_argument("--static-only", action="store_true")
     parser.add_argument("--timeout", type=int, default=600)
     args = parser.parse_args()
+    local_elan = ROOT / ".toolchain" / "elan"
+    if (local_elan / "bin" / "lake").is_file():
+        os.environ["ELAN_HOME"] = str(local_elan)
+        os.environ["PATH"] = str(local_elan / "bin") + os.pathsep + os.environ.get("PATH", "")
+    os.environ["XDG_CACHE_HOME"] = str(ROOT / ".cache")
+    os.environ["MATHLIB_CACHE_DIR"] = str(ROOT / ".cache" / "mathlib")
     AUDIT.mkdir(exist_ok=True)
     status: dict = {
         "timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
@@ -91,7 +134,7 @@ def main() -> int:
         "end_to_end_bfgs_reciprocal_growth_verified": False,
         "superquadratic_growth_verified": False,
         "verified_declarations": [],
-        "warning": "A staged build is not a proof of the unimplemented matrix-to-hierarchy bridge.",
+        "warning": "Verification is pending for this invocation; success requires the complete build and axiom audit.",
     }
     lean_files = [ROOT / "BfgsVerification.lean", ROOT / "Audit.lean"] + sorted(
         (ROOT / "BfgsVerification").glob("*.lean")
@@ -99,15 +142,20 @@ def main() -> int:
     forbidden = re.compile(r"\b(sorry|admit|axiom|native_decide|unsafe|implemented_by)\b")
     problems = []
     theorem_count = 0
+    declarations: dict[str, str] = {}
     sources = []
     for path in lean_files:
         content = path.read_text()
         code = lean_code_only(content)
         theorem_count += len(re.findall(r"\b(?:theorem|lemma)\s+", code))
+        for name in theorem_names(code):
+            declarations[name] = str(path.relative_to(ROOT))
         problems += [f"{path.relative_to(ROOT)}: forbidden token {m.group(0)}" for m in forbidden.finditer(code)]
         sources.append({"path": str(path.relative_to(ROOT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
     status["sources"] = sources
-    status["draft_theorem_declarations"] = theorem_count
+    status["explicit_theorem_declarations"] = theorem_count
+    if len(declarations) != theorem_count:
+        problems.append("Explicit theorem discovery mismatch; audit coverage cannot be certified")
     status["static_scan_passed"] = not problems
     status["static_scan_problems"] = problems
     if problems:
@@ -129,8 +177,17 @@ def main() -> int:
         print(json.dumps(status, indent=2))
         return 69
     try:
+        manifest = json.loads((ROOT / "lake-manifest.json").read_text())
+        mathlib = next(p for p in manifest["packages"] if p["name"] == "mathlib")
+        revision = run(["git", "-C", ".lake/packages/mathlib", "rev-parse", "HEAD"],
+                       "mathlib_revision.log", args.timeout)
+        if mathlib["rev"] != EXPECTED_MATHLIB or revision.stdout.strip() != EXPECTED_MATHLIB:
+            status["status"] = "DEPENDENCY_REVISION_FAILED"
+            record(status)
+            return 1
+        status["mathlib_revision"] = EXPECTED_MATHLIB
         version = run([lake, "env", "lean", "--version"], "lean_version.log", args.timeout)
-        if version.returncode or f"version {EXPECTED_LEAN}" not in version.stdout:
+        if version.returncode or not re.search(r"version " + re.escape(EXPECTED_LEAN) + r"(?:,|\s|\))", version.stdout):
             status["status"] = "TOOLCHAIN_VERSION_FAILED"
             record(status)
             return 1
@@ -146,30 +203,63 @@ def main() -> int:
             record(status)
             return 1
         transcript = ax.stdout + ax.stderr
-        expected = re.findall(r"^#print axioms (\S+)", (ROOT / "Audit.lean").read_text(), re.M)
+        reports = [json.loads(line.removeprefix("BFGS_AUDIT "))
+                   for line in transcript.splitlines() if line.startswith("BFGS_AUDIT ")]
+        counts = re.findall(r"^BFGS_AUDIT_COUNT (\d+)$", transcript, re.M)
+        if len(counts) != 1 or int(counts[0]) != len(reports) or not reports:
+            status["status"] = "AXIOM_INVENTORY_FAILED"
+            record(status)
+            return 1
+        inventory = {item["theorem"]: item for item in reports}
+        if len(inventory) != len(reports):
+            status["status"] = "DUPLICATE_AXIOM_REPORT"
+            record(status)
+            return 1
         unexpected = []
         missing = []
         accepted = []
-        for theorem in expected:
-            # Lean versions differ in quote delimiters, but use this wording.
-            match = re.search(re.escape(theorem) + r"['’]?\s+depends on axioms:\s*\[([^\]]*)\]", transcript)
-            empty = re.search(re.escape(theorem) + r"['’]?\s+does not depend on any axioms", transcript)
-            if not match and not empty:
-                missing.append(theorem)
-                continue
-            axioms = set() if empty else {x.strip() for x in match.group(1).split(",") if x.strip()}
+        missing = sorted(set(declarations) - set(inventory))
+        for theorem, item in sorted(inventory.items()):
+            axioms = set(item["axioms"])
             excess = sorted(axioms - ALLOWED_AXIOMS)
             if excess:
                 unexpected.append({"theorem": theorem, "unexpected": excess})
             else:
-                accepted.append({"theorem": theorem, "axioms": sorted(axioms)})
+                if theorem in declarations:
+                    accepted.append({**item, "axioms": sorted(axioms), "source": declarations[theorem]})
+        status["audited_declaration_count"] = len(inventory)
+        (AUDIT / "declarations.json").write_text(json.dumps(reports, indent=2) + "\n")
         status["unexpected_axioms"] = unexpected
         status["missing_axiom_reports"] = missing
         if unexpected or missing:
             status["status"] = "AXIOM_AUDIT_FAILED"
             record(status)
             return 1
-        status["status"] = "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN"
+        for flag, (name, signature) in TARGETS.items():
+            status[flag] = name in inventory and inventory[name]["signature"] == signature
+        status["conditional_results"] = [
+            {"theorem": name, "verified": name in inventory, "condition": "NormalizedHierarchy"}
+            for name in [
+                "BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth",
+                "BfgsVerification.QuantitativeGrowth.hierarchy_finite_horizon_rpow",
+                "BfgsVerification.QuantitativeGrowth.hierarchy_superquadratic_growth",
+            ]
+        ]
+        status["matrix_to_normalized_hierarchy_verified"] = "BfgsVerification.fullBFGS_normalizedHierarchy" in inventory
+        status["finite_horizon_verified"] = "BfgsVerification.finiteHorizon" in inventory
+        status["objective_level_model_formalized"] = False
+        status["outside_verified_scope"] = [
+            "Finite-convex-objective and differentiable-accepted-iterate model",
+            "Objective-level Armijo-to-summability and compactness-to-gradient-bound deductions",
+            "Other Module M statements and other research modules",
+        ]
+        status["remaining_target_obligations"] = [name for flag, (name, _) in TARGETS.items()
+                                                  if not status[flag]]
+        complete = all(status[flag] for flag in TARGETS)
+        status["status"] = ("MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if complete
+                            else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
+        status["warning"] = ("Claims concern the exact matrix-run targets printed in axioms.log; "
+                             "other research modules and objective-level modeling are outside this audit.")
         status["verified_declarations"] = accepted
         record(status)
         print(json.dumps(status, indent=2))
@@ -181,6 +271,11 @@ def main() -> int:
         return 124
     except OSError as exc:
         status["status"] = "EXECUTION_ERROR"
+        status["error"] = str(exc)
+        record(status)
+        return 1
+    except (ValueError, KeyError, StopIteration) as exc:
+        status["status"] = "AUDIT_METADATA_ERROR"
         status["error"] = str(exc)
         record(status)
         return 1

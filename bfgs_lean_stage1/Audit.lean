@@ -1,5 +1,25 @@
 import BfgsVerification
 
+/- Enumerate the compiled environment, rather than trusting a hand-maintained
+list to cover every theorem. This is audit tooling, not a mathematical premise.
+`collectAxioms` traverses proof dependencies, exactly as `#print axioms` does. -/
+open Lean Elab Command in
+run_cmd do
+  let env ← getEnv
+  let mut count := 0
+  for (name, info) in env.constants.toList do
+    if (`BfgsVerification).isPrefixOf name && info.isTheorem then
+      let deps ← collectAxioms name
+      let signature ← liftTermElabM do
+        return (← Meta.ppExpr info.type).pretty
+      let report := Json.mkObj [
+        ("theorem", toJson name.toString),
+        ("axioms", toJson (deps.map Name.toString)),
+        ("signature", toJson signature)]
+      logInfo m!"BFGS_AUDIT {report.compress}"
+      count := count + 1
+  logInfo m!"BFGS_AUDIT_COUNT {count}"
+
 #print axioms BfgsVerification.CompressionAlgebra.gram_numerator_identity
 #print axioms BfgsVerification.CompressionAlgebra.compression_scalar_identity
 #print axioms BfgsVerification.CompressionAlgebra.compression_from_gram_relations
@@ -25,6 +45,19 @@ import BfgsVerification
 #check @BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth
 
 -- These are proposition DEFINITIONS, not exported theorem proofs.
-#check BfgsVerification.PrincipalMinorHierarchyTarget
-#check BfgsVerification.ReciprocalGrowthTarget
-#check BfgsVerification.SuperquadraticReciprocalTarget
+#print BfgsVerification.PrincipalMinorHierarchyTarget
+#print BfgsVerification.ReciprocalGrowthTarget
+#print BfgsVerification.SuperquadraticReciprocalTarget
+#print BfgsVerification.FullBFGSRun
+#print BfgsVerification.principalSum
+#print BfgsVerification.inverseBFGS
+#print BfgsVerification.FullBFGSRun.q
+#print BfgsVerification.FullBFGSRun.d
+#print BfgsVerification.FullBFGSRun.beta
+
+-- These terms must inhabit the exact original targets, with no extra premises.
+example : BfgsVerification.PrincipalMinorHierarchyTarget := BfgsVerification.principalMinorHierarchy
+example : BfgsVerification.ReciprocalGrowthTarget := BfgsVerification.reciprocalGrowth
+example : BfgsVerification.SuperquadraticReciprocalTarget := BfgsVerification.superquadraticReciprocalGrowth
+#check @BfgsVerification.finiteHorizon
+#check @BfgsVerification.fullBFGS_normalizedHierarchy
