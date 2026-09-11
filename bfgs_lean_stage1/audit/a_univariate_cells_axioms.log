@@ -1,0 +1,155 @@
+BfgsVerification.RealAlgebraicGeometry.rootBoundary (P : Finset (Polynomial ℝ)) : Finset ℝ
+'BfgsVerification.RealAlgebraicGeometry.rootBoundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.mem_rootBoundary {P : Finset (Polynomial ℝ)} {p : Polynomial ℝ} (hp : p ∈ P)
+  (hne : p ≠ 0) {x : ℝ} (hx : Polynomial.eval x p = 0) : x ∈ BfgsVerification.RealAlgebraicGeometry.rootBoundary P
+'BfgsVerification.RealAlgebraicGeometry.mem_rootBoundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_constant_on_gap {P : Finset (Polynomial ℝ)} {p : Polynomial ℝ}
+  (hp : p ∈ P) {x y : ℝ} (hxy : x ≤ y)
+  (hgap : ∀ z ∈ Set.Icc x y, z ∉ BfgsVerification.RealAlgebraicGeometry.rootBoundary P) :
+  (Polynomial.eval x p = 0 ↔ Polynomial.eval y p = 0) ∧ (0 < Polynomial.eval x p ↔ 0 < Polynomial.eval y p)
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_constant_on_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.cutProfile (B : Finset ℝ) (x : ℝ) : Finset ℝ
+'BfgsVerification.RealAlgebraicGeometry.cutProfile' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.gap_of_equal_cutProfile {B : Finset ℝ} {x y : ℝ} (hxy : x ≤ y) (hy : y ∉ B)
+  (hprofile :
+    BfgsVerification.RealAlgebraicGeometry.cutProfile B x = BfgsVerification.RealAlgebraicGeometry.cutProfile B y)
+  (z : ℝ) : z ∈ Set.Icc x y → z ∉ B
+'BfgsVerification.RealAlgebraicGeometry.gap_of_equal_cutProfile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_constant_on_profile {P : Finset (Polynomial ℝ)}
+  {p : Polynomial ℝ} (hp : p ∈ P) {x y : ℝ} (hx : x ∉ BfgsVerification.RealAlgebraicGeometry.rootBoundary P)
+  (hy : y ∉ BfgsVerification.RealAlgebraicGeometry.rootBoundary P)
+  (hprofile :
+    BfgsVerification.RealAlgebraicGeometry.cutProfile (BfgsVerification.RealAlgebraicGeometry.rootBoundary P) x =
+      BfgsVerification.RealAlgebraicGeometry.cutProfile (BfgsVerification.RealAlgebraicGeometry.rootBoundary P) y) :
+  (Polynomial.eval x p = 0 ↔ Polynomial.eval y p = 0) ∧ (0 < Polynomial.eval x p ↔ 0 < Polynomial.eval y p)
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_constant_on_profile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.toUnivariate (p : MvPolynomial Unit ℝ) : Polynomial ℝ
+'BfgsVerification.RealAlgebraicGeometry.toUnivariate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.toUnivariate_eval (p : MvPolynomial Unit ℝ) (t : ℝ) :
+  Polynomial.eval t (BfgsVerification.RealAlgebraicGeometry.toUnivariate p) = (MvPolynomial.eval fun x => t) p
+'BfgsVerification.RealAlgebraicGeometry.toUnivariate_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.univariatePolynomials :
+  BfgsVerification.RealAlgebraicGeometry.PolynomialFormula Unit → Finset (Polynomial ℝ)
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.univariatePolynomials' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.holds_constant_on_profile
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula Unit) {P : Finset (Polynomial ℝ)}
+  (hP : f.univariatePolynomials ⊆ P) {x y : ℝ} (hx : x ∉ BfgsVerification.RealAlgebraicGeometry.rootBoundary P)
+  (hy : y ∉ BfgsVerification.RealAlgebraicGeometry.rootBoundary P)
+  (hprofile :
+    BfgsVerification.RealAlgebraicGeometry.cutProfile (BfgsVerification.RealAlgebraicGeometry.rootBoundary P) x =
+      BfgsVerification.RealAlgebraicGeometry.cutProfile (BfgsVerification.RealAlgebraicGeometry.rootBoundary P) y) :
+  (f.Holds fun x_1 => x) ↔ f.Holds fun x => y
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.holds_constant_on_profile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.exists_finite_sign_boundary
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula Unit) :
+  ∃ B,
+    ∀ (x y : ℝ),
+      x ∉ B →
+        y ∉ B →
+          BfgsVerification.RealAlgebraicGeometry.cutProfile B x =
+              BfgsVerification.RealAlgebraicGeometry.cutProfile B y →
+            ((f.Holds fun x_1 => x) ↔ f.Holds fun x => y)
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.exists_finite_sign_boundary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFreeCell (B S : Finset ℝ) : Set ℝ
+'BfgsVerification.RealAlgebraicGeometry.rootFreeCell' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFreeCell_convex (B S : Finset ℝ) :
+  Convex ℝ (BfgsVerification.RealAlgebraicGeometry.rootFreeCell B S)
+'BfgsVerification.RealAlgebraicGeometry.rootFreeCell_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootCells (B : Finset ℝ) : Finset (Set ℝ)
+'BfgsVerification.RealAlgebraicGeometry.rootCells' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootCells_convex (B : Finset ℝ) (C : Set ℝ)
+  (hC : C ∈ BfgsVerification.RealAlgebraicGeometry.rootCells B) : Convex ℝ C
+'BfgsVerification.RealAlgebraicGeometry.rootCells_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootCells_cover (B : Finset ℝ) :
+  ⋃ C ∈ BfgsVerification.RealAlgebraicGeometry.rootCells B, C = Set.univ
+'BfgsVerification.RealAlgebraicGeometry.rootCells_cover' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_finite_convex_root_cover (B : Finset ℝ) :
+  ∃ C, (∀ s ∈ C, Convex ℝ s) ∧ ⋃ s ∈ C, s = Set.univ
+'BfgsVerification.RealAlgebraicGeometry.exists_finite_convex_root_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.holds_constant_on_rootCell
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula Unit) {C : Set ℝ}
+  (hC :
+    C ∈
+      BfgsVerification.RealAlgebraicGeometry.rootCells
+        (BfgsVerification.RealAlgebraicGeometry.rootBoundary f.univariatePolynomials))
+  {x y : ℝ} (hx : x ∈ C) (hy : y ∈ C) : (f.Holds fun x_1 => x) ↔ f.Holds fun x => y
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.holds_constant_on_rootCell' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_convex_cover
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula Unit) :
+  ∃ C, (∀ s ∈ C, Convex ℝ s) ∧ ⋃ s ∈ C, s = {x | f.Holds fun x_1 => x}
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_convex_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_finite_convex_cover {S : Set (Unit → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) : ∃ C, (∀ s ∈ C, Convex ℝ s) ∧ ⋃ s ∈ C, s = S
+'BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_finite_convex_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.univariateLift (S : Set ℝ) : Set (Unit → ℝ)
+'BfgsVerification.RealAlgebraicGeometry.univariateLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFreeCell_eq_inter {B S : Finset ℝ} (hS : S ⊆ B) :
+  BfgsVerification.RealAlgebraicGeometry.rootFreeCell B S = ⋂ b ∈ B, {x | if b ∈ S then b < x else x < b}
+'BfgsVerification.RealAlgebraicGeometry.rootFreeCell_eq_inter' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFreeCell_isOpen {B S : Finset ℝ} (hS : S ⊆ B) :
+  IsOpen (BfgsVerification.RealAlgebraicGeometry.rootFreeCell B S)
+'BfgsVerification.RealAlgebraicGeometry.rootFreeCell_isOpen' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFreeCell_semialgebraic {B S : Finset ℝ} (hS : S ⊆ B) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    (BfgsVerification.RealAlgebraicGeometry.univariateLift (BfgsVerification.RealAlgebraicGeometry.rootFreeCell B S))
+'BfgsVerification.RealAlgebraicGeometry.rootFreeCell_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootCells_semialgebraic (B : Finset ℝ) {S : Set ℝ}
+  (hS : S ∈ BfgsVerification.RealAlgebraicGeometry.rootCells B) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (BfgsVerification.RealAlgebraicGeometry.univariateLift S)
+'BfgsVerification.RealAlgebraicGeometry.rootCells_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootCells_open_or_singleton (B : Finset ℝ) {S : Set ℝ}
+  (hS : S ∈ BfgsVerification.RealAlgebraicGeometry.rootCells B) : IsOpen S ∨ ∃ b, S = {b}
+'BfgsVerification.RealAlgebraicGeometry.rootCells_open_or_singleton' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_semialgebraic_cell_cover
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula Unit) :
+  ∃ C,
+    (∀ s ∈ C,
+        s.Nonempty ∧
+          Convex ℝ s ∧
+            BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+                (BfgsVerification.RealAlgebraicGeometry.univariateLift s) ∧
+              (IsOpen s ∨ ∃ b, s = {b})) ∧
+      ⋃ s ∈ C, s = {x | f.Holds fun x_1 => x}
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_semialgebraic_cell_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.UnivariateSignBoundaryTarget : Prop
+'BfgsVerification.UnivariateSignBoundaryTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.univariateSignBoundary : BfgsVerification.UnivariateSignBoundaryTarget
+'BfgsVerification.univariateSignBoundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.UnivariateConvexCoverTarget : Prop
+'BfgsVerification.UnivariateConvexCoverTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.univariateConvexCover : BfgsVerification.UnivariateConvexCoverTarget
+'BfgsVerification.univariateConvexCover' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.UnivariateCellCoverTarget : Prop
+'BfgsVerification.UnivariateCellCoverTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.univariateCellCover : BfgsVerification.UnivariateCellCoverTarget
+'BfgsVerification.univariateCellCover' depends on axioms: [propext, Classical.choice, Quot.sound]

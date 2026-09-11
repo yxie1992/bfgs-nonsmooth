@@ -1,3 +1,8 @@
+Current source reconciliation at milestone13: **verified with the documented accessible/active-span correction**.
+See [G_SOURCE_CLOSURE_REVIEW.md](G_SOURCE_CLOSURE_REVIEW.md) and REPORT_STATUS.json for the authoritative
+line-by-line coverage. The chronological entries below preserve earlier
+obligations and must not be read as current pending status.
+
 # Module G retained-claim inventory
 
 Source read in full: `BFGS_MASTER_REPORT_LaTeX/report/chapters/G.tex`.

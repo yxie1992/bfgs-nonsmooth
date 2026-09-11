@@ -1,0 +1,244 @@
+BfgsVerification.AffineRankLoss.sign (i : Fin 2) : ℝ
+'BfgsVerification.AffineRankLoss.sign' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.hessian (i : Fin 2) : BfgsVerification.Mat 2
+'BfgsVerification.AffineRankLoss.hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.secondMap (i : Fin 2) : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2 →L[ℝ] ℝ
+'BfgsVerification.AffineRankLoss.secondMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.branch_contDiff (i : Fin 2) : ContDiff ℝ ⊤ (BfgsVerification.AffineRankLoss.branch i)
+'BfgsVerification.AffineRankLoss.branch_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.branch_second_hasFDerivAt (i : Fin 2) (x : BfgsVerification.Vec 2) :
+  HasFDerivAt (fderiv ℝ (BfgsVerification.AffineRankLoss.branch i)) (BfgsVerification.AffineRankLoss.secondMap i) x
+'BfgsVerification.AffineRankLoss.branch_second_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.branch_hessian (i : Fin 2) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.RadialHessian.matrix (BfgsVerification.AffineRankLoss.branch i) x =
+    BfgsVerification.AffineRankLoss.hessian i
+'BfgsVerification.AffineRankLoss.branch_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.hessian_isSymm (i : Fin 2) : Matrix.IsSymm (BfgsVerification.AffineRankLoss.hessian i)
+'BfgsVerification.AffineRankLoss.hessian_isSymm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.hessian_charpoly (i : Fin 2) :
+  Matrix.charpoly (BfgsVerification.AffineRankLoss.hessian i) = (Polynomial.X - 1) * (Polynomial.X - 3)
+'BfgsVerification.AffineRankLoss.hessian_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.shifted_determinant (i : Fin 2) (r : ℝ) :
+  Matrix.det (BfgsVerification.AffineRankLoss.hessian i - r • 1) = (r - 1) * (r - 3)
+'BfgsVerification.AffineRankLoss.shifted_determinant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.hessian_eigenvalues (i : Fin 2) (r : ℝ) :
+  (∃ v, v ≠ 0 ∧ Matrix.mulVec (BfgsVerification.AffineRankLoss.hessian i) v = r • v) ↔ r = 1 ∨ r = 3
+'BfgsVerification.AffineRankLoss.hessian_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.branch_strongConvex (i : Fin 2) :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ 1 (BfgsVerification.AffineRankLoss.branch i)
+'BfgsVerification.AffineRankLoss.branch_strongConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.objective_strongConvex :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ 1 BfgsVerification.AffineRankLoss.objective
+'BfgsVerification.AffineRankLoss.objective_strongConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.RankLossCurvatureTarget : Prop
+'BfgsVerification.AffineRankLoss.RankLossCurvatureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineRankLoss.rankLossCurvature : BfgsVerification.AffineRankLoss.RankLossCurvatureTarget
+'BfgsVerification.AffineRankLoss.rankLossCurvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failureFamily {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  BfgsVerification.AdmissibleBFGSRun 2
+    (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)
+'BfgsVerification.LWhitening.failureFamily' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failureCenter (m : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.LWhitening.failureCenter' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_initial {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) : (BfgsVerification.LWhitening.failureFamily D m).H 0 = 1
+'BfgsVerification.LWhitening.failure_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_point_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  Filter.Tendsto (BfgsVerification.LWhitening.failureFamily D m).x Filter.atTop
+    (nhds (BfgsVerification.LWhitening.failureCenter m))
+'BfgsVerification.LWhitening.failure_point_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_matrix_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  Filter.Tendsto (BfgsVerification.LWhitening.failureFamily D m).H Filter.atTop (nhds 0)
+'BfgsVerification.LWhitening.failure_matrix_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_value_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  Filter.Tendsto
+    (fun k =>
+      BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F
+        ((BfgsVerification.LWhitening.failureFamily D m).x k))
+    Filter.atTop (nhds (BfgsVerification.LScalarGeometric.scale m ^ 2 * BfgsVerification.LEmbedding.offset))
+'BfgsVerification.LWhitening.failure_value_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_values_above {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  BfgsVerification.LScalarGeometric.scale m ^ 2 * BfgsVerification.LEmbedding.offset <
+    BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F
+      ((BfgsVerification.LWhitening.failureFamily D m).x k)
+'BfgsVerification.LWhitening.failure_values_above' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_starts {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) :
+  Filter.Tendsto (fun m => (BfgsVerification.LWhitening.failureFamily D m).x 0) Filter.atTop (nhds 0)
+'BfgsVerification.LWhitening.failure_starts' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_centers_nonstationary {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (hF0 : F 0 = 0) (m : ℕ) :
+  0 ∉
+    BfgsVerification.ConvexSubdifferential.subdifferential
+      (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)
+      (BfgsVerification.LWhitening.failureCenter m)
+'BfgsVerification.LWhitening.failure_centers_nonstationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_search {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric
+      (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)
+      ((BfgsVerification.LWhitening.failureFamily D m).x k) ((BfgsVerification.LWhitening.failureFamily D m).H k)
+      (1 / 10000) (1 / 2) 5 =
+    (some ((BfgsVerification.LWhitening.failureFamily D m).α k),
+      BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.LWhitening.failure_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_strict_accept {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F
+        ((BfgsVerification.LWhitening.failureFamily D m).x (k + 1)) <
+      BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F
+          ((BfgsVerification.LWhitening.failureFamily D m).x k) +
+        1 / 10000 *
+          BfgsVerification.dot ((BfgsVerification.LWhitening.failureFamily D m).g k)
+            (BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+              ((BfgsVerification.LWhitening.failureFamily D m).g k)
+              ((BfgsVerification.LWhitening.failureFamily D m).α k)) ∧
+    1 / 2 *
+        BfgsVerification.dot ((BfgsVerification.LWhitening.failureFamily D m).g k)
+          (BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+            ((BfgsVerification.LWhitening.failureFamily D m).g k)
+            ((BfgsVerification.LWhitening.failureFamily D m).α k)) <
+      BfgsVerification.dot ((BfgsVerification.LWhitening.failureFamily D m).g (k + 1))
+        (BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+          ((BfgsVerification.LWhitening.failureFamily D m).g k) ((BfgsVerification.LWhitening.failureFamily D m).α k))
+'BfgsVerification.LWhitening.failure_strict_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_trial {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  DifferentiableAt ℝ (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)
+      ((BfgsVerification.LWhitening.failureFamily D m).x k +
+        BfgsVerification.SeedOrbit.trialLength q •
+          BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+            ((BfgsVerification.LWhitening.failureFamily D m).g k) 1) ∧
+    0 <
+      BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F
+        ((BfgsVerification.LWhitening.failureFamily D m).x k +
+          BfgsVerification.SeedOrbit.trialLength q •
+            BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+              ((BfgsVerification.LWhitening.failureFamily D m).g k) 1)
+'BfgsVerification.LWhitening.failure_trial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_trials_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) (q : ℕ → Fin 9)
+  (hq : ∀ (k : ℕ), BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) :
+  Filter.Tendsto
+    (fun k =>
+      (BfgsVerification.LWhitening.failureFamily D m).x k +
+        BfgsVerification.SeedOrbit.trialLength (q k) •
+          BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+            ((BfgsVerification.LWhitening.failureFamily D m).g k) 1)
+    Filter.atTop (nhds (BfgsVerification.LWhitening.failureCenter m))
+'BfgsVerification.LWhitening.failure_trials_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_uniform_locality {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (U : Set (BfgsVerification.Vec 2)) (hU : U ∈ nhds 0) :
+  ∃ N,
+    ∀ m ≥ N,
+      ∀ (k : ℕ),
+        (BfgsVerification.LWhitening.failureFamily D m).x k ∈ U ∧
+          ∀ (q : Fin 9),
+            BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+              (BfgsVerification.LWhitening.failureFamily D m).x k +
+                  BfgsVerification.SeedOrbit.trialLength q •
+                    BfgsVerification.bfgsStep ((BfgsVerification.LWhitening.failureFamily D m).H k)
+                      ((BfgsVerification.LWhitening.failureFamily D m).g k) 1 ∈
+                U
+'BfgsVerification.LWhitening.failure_uniform_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.IdentityFailureTarget (F : BfgsVerification.Vec 2 → ℝ) : Prop
+'BfgsVerification.LWhitening.IdentityFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.identity_failure {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (hF0 : F 0 = 0) :
+  BfgsVerification.LWhitening.IdentityFailureTarget
+    (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)
+'BfgsVerification.LWhitening.identity_failure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.SmoothIdentityFailureTarget : Prop
+'BfgsVerification.LWhitening.SmoothIdentityFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smoothIdentityFailure : BfgsVerification.LWhitening.SmoothIdentityFailureTarget
+'BfgsVerification.LWhitening.smoothIdentityFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.StepIdentityFailureTarget : Prop
+'BfgsVerification.LWhitening.StepIdentityFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.stepIdentityFailure : BfgsVerification.LWhitening.StepIdentityFailureTarget
+'BfgsVerification.LWhitening.stepIdentityFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.constants_order :
+  BfgsVerification.LWhitening.lowerConstant ≤ BfgsVerification.LWhitening.upperConstant
+'BfgsVerification.LWhitening.constants_order' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.failure_centers_tendsto :
+  Filter.Tendsto BfgsVerification.LWhitening.failureCenter Filter.atTop (nhds 0)
+'BfgsVerification.LWhitening.failure_centers_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_convex : ConvexOn ℝ Set.univ BfgsVerification.LWhitening.smoothObjective
+'BfgsVerification.LWhitening.smooth_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_convex : ConvexOn ℝ Set.univ BfgsVerification.LWhitening.stepObjective
+'BfgsVerification.LWhitening.step_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_localFiniteMax (x : BfgsVerification.Vec 2) :
+  BfgsVerification.ConvexSubdifferential.LocalFiniteMax BfgsVerification.LWhitening.smoothObjective
+    BfgsVerification.LWhitening.smoothBranch x
+'BfgsVerification.LWhitening.smooth_localFiniteMax' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_actual_hessian {x : BfgsVerification.Vec 2}
+  (hfirst : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, DifferentiableAt ℝ BfgsVerification.LWhitening.smoothObjective z)
+  (hsecond : DifferentiableAt ℝ (fderiv ℝ BfgsVerification.LWhitening.smoothObjective) x) :
+  Matrix.IsSymm (BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.smoothObjective x) ∧
+    ∀ (v : BfgsVerification.Vec 2),
+      BfgsVerification.LWhitening.lowerConstant * BfgsVerification.sqNorm v ≤
+          BfgsVerification.dot v
+            (Matrix.mulVec (BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.smoothObjective x) v) ∧
+        BfgsVerification.dot v
+            (Matrix.mulVec (BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.smoothObjective x) v) ≤
+          BfgsVerification.LWhitening.upperConstant * BfgsVerification.sqNorm v
+'BfgsVerification.LWhitening.smooth_actual_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.fixedHessian : BfgsVerification.Mat 2
+'BfgsVerification.LWhitening.fixedHessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.fixedHessian_posDef : Matrix.PosDef BfgsVerification.LWhitening.fixedHessian
+'BfgsVerification.LWhitening.fixedHessian_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_actual_hessian_bounds {x : BfgsVerification.Vec 2}
+  (hd : DifferentiableAt ℝ BfgsVerification.LWhitening.stepObjective x) :
+  DifferentiableAt ℝ (fderiv ℝ BfgsVerification.LWhitening.stepObjective) x ∧
+    BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.stepObjective x =
+        BfgsVerification.LWhitening.fixedHessian ∧
+      ∀ (v : BfgsVerification.Vec 2),
+        BfgsVerification.LWhitening.lowerConstant * BfgsVerification.sqNorm v ≤
+            BfgsVerification.dot v
+              (Matrix.mulVec (BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.stepObjective x) v) ∧
+          BfgsVerification.dot v
+              (Matrix.mulVec (BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.stepObjective x) v) ≤
+            BfgsVerification.LWhitening.upperConstant * BfgsVerification.sqNorm v
+'BfgsVerification.LWhitening.step_actual_hessian_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.stepResidual (x : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.LWhitening.stepResidual' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.stepAffine (j : BfgsVerification.LStepEmbedding.CountableIndex) :
+  BfgsVerification.Vec 2 →L[ℝ] ℝ
+'BfgsVerification.LWhitening.stepAffine' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_residual_countable_max (x : BfgsVerification.Vec 2) :
+  IsGreatest
+    (Set.range fun j =>
+      (BfgsVerification.LWhitening.stepAffine j) x + BfgsVerification.LStepEmbedding.countableOffset j)
+    (BfgsVerification.LWhitening.stepResidual x)
+'BfgsVerification.LWhitening.step_residual_countable_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_decomposition (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LWhitening.stepObjective x =
+    BfgsVerification.metricEnergy BfgsVerification.LWhitening.fixedHessian x / 2 +
+      BfgsVerification.LWhitening.stepResidual x
+'BfgsVerification.LWhitening.step_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.ObjectiveGeometryTarget (F : BfgsVerification.Vec 2 → ℝ) : Prop
+'BfgsVerification.LWhitening.ObjectiveGeometryTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_objective_geometry :
+  BfgsVerification.LWhitening.ObjectiveGeometryTarget BfgsVerification.LWhitening.smoothObjective
+'BfgsVerification.LWhitening.smooth_objective_geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_objective_geometry :
+  BfgsVerification.LWhitening.ObjectiveGeometryTarget BfgsVerification.LWhitening.stepObjective
+'BfgsVerification.LWhitening.step_objective_geometry' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.SmoothLocalFailureTarget : Prop
+'BfgsVerification.LWhitening.SmoothLocalFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smoothLocalFailure : BfgsVerification.LWhitening.SmoothLocalFailureTarget
+'BfgsVerification.LWhitening.smoothLocalFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.StepLocalFailureTarget : Prop
+'BfgsVerification.LWhitening.StepLocalFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.stepLocalFailure : BfgsVerification.LWhitening.StepLocalFailureTarget
+'BfgsVerification.LWhitening.stepLocalFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.AffineRankLoss.rankLossCurvature BfgsVerification.AffineRankLoss.RankLossCurvatureTarget
+EXACT_TARGET_OK BfgsVerification.LWhitening.smoothIdentityFailure BfgsVerification.LWhitening.SmoothIdentityFailureTarget
+EXACT_TARGET_OK BfgsVerification.LWhitening.stepIdentityFailure BfgsVerification.LWhitening.StepIdentityFailureTarget
+EXACT_TARGET_OK BfgsVerification.LWhitening.smoothLocalFailure BfgsVerification.LWhitening.SmoothLocalFailureTarget
+EXACT_TARGET_OK BfgsVerification.LWhitening.stepLocalFailure BfgsVerification.LWhitening.StepLocalFailureTarget

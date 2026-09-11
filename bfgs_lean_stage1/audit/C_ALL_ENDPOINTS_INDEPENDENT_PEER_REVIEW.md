@@ -1,0 +1,9 @@
+# Independent same-field endpoint review
+
+Root read all three additional modules, their source/wrapper target types, and the generic compact secant theorem used by the final assembly. The earlier independent five-file review remains applicable. The fresh combined independent audit passed all eight frozen hashes, 16 actual declaration type/transitive-axiom reports, and four strict source/wrapper target comparisons. Only propext, Classical.choice and Quot.sound occur. See combined_peer_axioms_contracts.log and combined_peer_validation.log.
+
+The field is selected once by the actual finite convex-corner-chart construction. Its local secant control is derived from the same hfield and local Lipschitz data that produce the common-pairing and structural neighborhood properties. No second field is selected. The endpoint theorem intersects the secant and transport neighborhoods and takes the minimum radius; closure containment in the original compact structural buffer is preserved. The actual eligible pair supplies both gradients, positive predicted decrease, and positive curvature through weak Wolfe, so the displayed correction quotient has a proved positive denominator.
+
+The final source contract simultaneously contains the all-segment Euclidean determinant bound, actual bounded secant correction, positive endpoint field coefficient, logarithmic decrease budget and squared-factor consequence, for one fixed field and constants chosen before all endpoint pairs. No trajectory, finite switching count, assumed transport/secant bound or convergence premise is added. This resolves the combination boundary explicitly identified in the earlier peer review and closes the three source endpoint estimates. C's general-dimensional field construction and semialgebraic alternative remain separate obligations.
+
+Verdict: PASS, no mathematical or statement defect found in the reviewed eight-module scope.

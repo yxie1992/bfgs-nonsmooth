@@ -1,0 +1,614 @@
+BfgsVerification.ParametricFixedPoint.oneSubEquiv.{u_2} {E : Type u_2} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [CompleteSpace E] (C : E →L[ℝ] E) (hC : ‖C‖ < 1) : E ≃L[ℝ] E
+'BfgsVerification.ParametricFixedPoint.oneSubEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ParametricFixedPoint.oneSubEquiv_apply.{u_2} {E : Type u_2} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [CompleteSpace E] (C : E →L[ℝ] E) (hC : ‖C‖ < 1) (x : E) :
+  (BfgsVerification.ParametricFixedPoint.oneSubEquiv C hC) x = x - C x
+'BfgsVerification.ParametricFixedPoint.oneSubEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ParametricFixedPoint.triangularEquiv.{u_1, u_2} {S : Type u_1} {E : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup E] [NormedSpace ℝ E] (P : S →L[ℝ] E) (M : E ≃L[ℝ] E) : (S × E) ≃L[ℝ] S × E
+'BfgsVerification.ParametricFixedPoint.triangularEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ParametricFixedPoint.triangularEquiv_apply.{u_1, u_2} {S : Type u_1} {E : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] (P : S →L[ℝ] E)
+  (M : E ≃L[ℝ] E) (p : S × E) : (BfgsVerification.ParametricFixedPoint.triangularEquiv P M) p = (p.1, M p.2 - P p.1)
+'BfgsVerification.ParametricFixedPoint.triangularEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ParametricFixedPoint.triangularEquiv_symm_apply.{u_1, u_2} {S : Type u_1} {E : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] (P : S →L[ℝ] E)
+  (M : E ≃L[ℝ] E) (p : S × E) :
+  (BfgsVerification.ParametricFixedPoint.triangularEquiv P M).symm p = (p.1, M.symm (p.2 + P p.1))
+'BfgsVerification.ParametricFixedPoint.triangularEquiv_symm_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ParametricFixedPoint.residualMap.{u_1, u_2} {S : Type u_1} {E : Type u_2} [NormedAddCommGroup E]
+  (Φ : S × E → E) (p : S × E) : S × E
+'BfgsVerification.ParametricFixedPoint.residualMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ParametricFixedPoint.residualMap_hasFDerivAt.{u_1, u_2} {S : Type u_1} {E : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] {Φ : S × E → E}
+  (P : S →L[ℝ] E) (C : E →L[ℝ] E) (hC : ‖C‖ < 1) (hΦ : HasFDerivAt Φ (P.coprod C) 0) :
+  HasFDerivAt (BfgsVerification.ParametricFixedPoint.residualMap Φ)
+    (↑(BfgsVerification.ParametricFixedPoint.triangularEquiv P
+        (BfgsVerification.ParametricFixedPoint.oneSubEquiv C hC)))
+    0
+'BfgsVerification.ParametricFixedPoint.residualMap_hasFDerivAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ParametricFixedPoint.residualMap_contDiffAt.{u_1, u_2} {S : Type u_1} {E : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] {Φ : S × E → E}
+  {n : WithTop ℕ∞} (hΦ : ContDiffAt ℝ n Φ 0) : ContDiffAt ℝ n (BfgsVerification.ParametricFixedPoint.residualMap Φ) 0
+'BfgsVerification.ParametricFixedPoint.residualMap_contDiffAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ParametricFixedPoint.residualMap_zero.{u_1, u_2} {S : Type u_1} {E : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] {Φ : S × E → E} (hΦ : Φ 0 = 0) :
+  BfgsVerification.ParametricFixedPoint.residualMap Φ 0 = 0
+'BfgsVerification.ParametricFixedPoint.residualMap_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ParametricFixedPoint.exists_smooth_fixedPoint.{u_1, u_2} {S : Type u_1} {E : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  {Φ : S × E → E} (P : S →L[ℝ] E) (C : E →L[ℝ] E) (hC : ‖C‖ < 1) (h0 : Φ 0 = 0) {n : WithTop ℕ∞} (hn : 1 ≤ n)
+  (hΦ : ContDiffAt ℝ n Φ 0) (hd : HasFDerivAt Φ (P.coprod C) 0) :
+  ∃ g,
+    g 0 = 0 ∧
+      ContDiffAt ℝ n g 0 ∧
+        HasFDerivAt g ((↑(BfgsVerification.ParametricFixedPoint.oneSubEquiv C hC).symm).comp P) 0 ∧
+          (∀ᶠ (a : S) in nhds 0, Φ (a, g a) = g a) ∧ ∀ᶠ (p : S × E) in nhds 0, Φ p = p.2 → p.2 = g p.1
+'BfgsVerification.ParametricFixedPoint.exists_smooth_fixedPoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ParametricFixedPoint.exists_smooth_fixedPoint_graph.{u_1, u_2} {S : Type u_1} {E : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+  {Φ : S × E → E} (P : S →L[ℝ] E) (C : E →L[ℝ] E) (hC : ‖C‖ < 1) (h0 : Φ 0 = 0) (hΦ : AnalyticAt ℝ Φ 0)
+  (hd : HasFDerivAt Φ (P.coprod C) 0) :
+  ∃ g V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        g 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) g V ∧
+            HasFDerivAt g ((↑(BfgsVerification.ParametricFixedPoint.oneSubEquiv C hC).symm).comp P) 0 ∧
+              (∀ a ∈ V, Φ (a, g a) = g a) ∧ ∀ᶠ (p : S × E) in nhds 0, Φ p = p.2 → p.2 = g p.1
+'BfgsVerification.ParametricFixedPoint.exists_smooth_fixedPoint_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficient_bound.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F)
+  (v : Fin n → BoundedContinuousFunction ℕ E) (k : ℕ) : ‖p fun i => (v i) k‖ ≤ ‖p‖ * ∏ i, ‖v i‖
+'BfgsVerification.BoundedAnalytic.coefficient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientValue.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F)
+  (v : Fin n → BoundedContinuousFunction ℕ E) : BoundedContinuousFunction ℕ F
+'BfgsVerification.BoundedAnalytic.coefficientValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientValue_apply.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F)
+  (v : Fin n → BoundedContinuousFunction ℕ E) (k : ℕ) :
+  (BfgsVerification.BoundedAnalytic.coefficientValue p v) k = p fun i => (v i) k
+'BfgsVerification.BoundedAnalytic.coefficientValue_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientValue_norm.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F)
+  (v : Fin n → BoundedContinuousFunction ℕ E) :
+  ‖BfgsVerification.BoundedAnalytic.coefficientValue p v‖ ≤ ‖p‖ * ∏ i, ‖v i‖
+'BfgsVerification.BoundedAnalytic.coefficientValue_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.eval_update.{u_1} {E : Type u_1} [NormedAddCommGroup E] [NormedSpace ℝ E] {n : ℕ}
+  [DecidableEq (Fin n)] (v : Fin n → BoundedContinuousFunction ℕ E) (i : Fin n) (a : BoundedContinuousFunction ℕ E)
+  (k : ℕ) : (fun j => (Function.update v i a j) k) = Function.update (fun j => (v j) k) i (a k)
+'BfgsVerification.BoundedAnalytic.eval_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientMap.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F) :
+  MultilinearMap ℝ (fun x => BoundedContinuousFunction ℕ E) (BoundedContinuousFunction ℕ F)
+'BfgsVerification.BoundedAnalytic.coefficientMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientLift.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F) :
+  ContinuousMultilinearMap ℝ (fun x => BoundedContinuousFunction ℕ E) (BoundedContinuousFunction ℕ F)
+'BfgsVerification.BoundedAnalytic.coefficientLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientLift_apply.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F)
+  (v : Fin n → BoundedContinuousFunction ℕ E) (k : ℕ) :
+  ((BfgsVerification.BoundedAnalytic.coefficientLift p) v) k = p fun i => (v i) k
+'BfgsVerification.BoundedAnalytic.coefficientLift_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.coefficientLift_norm.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {n : ℕ} (p : ContinuousMultilinearMap ℝ (fun x => E) F) :
+  ‖BfgsVerification.BoundedAnalytic.coefficientLift p‖ ≤ ‖p‖
+'BfgsVerification.BoundedAnalytic.coefficientLift_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.seriesLift.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] (p : FormalMultilinearSeries ℝ E F) :
+  FormalMultilinearSeries ℝ (BoundedContinuousFunction ℕ E) (BoundedContinuousFunction ℕ F)
+'BfgsVerification.BoundedAnalytic.seriesLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.seriesLift_radius.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] (p : FormalMultilinearSeries ℝ E F) :
+  p.radius ≤ (BfgsVerification.BoundedAnalytic.seriesLift p).radius
+'BfgsVerification.BoundedAnalytic.seriesLift_radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.apply_mem_eball.{u_1} {E : Type u_1} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {w : BoundedContinuousFunction ℕ E} {r : ENNReal} (hw : w ∈ EMetric.ball 0 r) (k : ℕ) : w k ∈ EMetric.ball 0 r
+'BfgsVerification.BoundedAnalytic.apply_mem_eball' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.seriesLift_sum_apply.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F] {f : E → F}
+  {p : FormalMultilinearSeries ℝ E F} {r : ENNReal} (hp : HasFPowerSeriesOnBall f p 0 r)
+  {w : BoundedContinuousFunction ℕ E} (hw : w ∈ EMetric.ball 0 r) (k : ℕ) :
+  ((BfgsVerification.BoundedAnalytic.seriesLift p).sum w) k = f (w k)
+'BfgsVerification.BoundedAnalytic.seriesLift_sum_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.exists_analytic_lift.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F] {f : E → F} (hf : AnalyticAt ℝ f 0) :
+  ∃ L, AnalyticAt ℝ L 0 ∧ ∃ R, 0 < R ∧ ∀ (w : BoundedContinuousFunction ℕ E), ‖w‖ < R → ∀ (k : ℕ), (L w) k = f (w k)
+'BfgsVerification.BoundedAnalytic.exists_analytic_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.BoundedAnalytic.exists_analytic_lift_zero.{u_1, u_2} {E : Type u_1} {F : Type u_2}
+  [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] [CompleteSpace F] {f : E → F}
+  (hf : AnalyticAt ℝ f 0) (h0 : f 0 = 0) (hd : HasFDerivAt f 0 0) :
+  ∃ L,
+    AnalyticAt ℝ L 0 ∧
+      L 0 = 0 ∧
+        HasStrictFDerivAt L 0 0 ∧
+          ∃ R, 0 < R ∧ ∀ (w : BoundedContinuousFunction ℕ E), ‖w‖ < R → ∀ (k : ℕ), (L w) k = f (w k)
+'BfgsVerification.BoundedAnalytic.exists_analytic_lift_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.Seq.{u_3, u_4} (S : Type u_3) (U : Type u_4) [NormedAddCommGroup S]
+  [NormedAddCommGroup U] : Type (max u_4 u_3)
+'BfgsVerification.AnalyticStableGraph.Seq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedValue.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedAddCommGroup U] (a : S) (n : ℕ) : S × U
+'BfgsVerification.AnalyticStableGraph.seedValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedValue_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (a : S) (n : ℕ) :
+  ‖BfgsVerification.AnalyticStableGraph.seedValue a n‖ ≤ ‖a‖
+'BfgsVerification.AnalyticStableGraph.seedValue_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedSequence.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (a : S) : BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.seedSequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedSequence_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (a : S) (n : ℕ) :
+  (BfgsVerification.AnalyticStableGraph.seedSequence a) n = BfgsVerification.AnalyticStableGraph.seedValue a n
+'BfgsVerification.AnalyticStableGraph.seedSequence_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedLinear.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] : S →ₗ[ℝ] BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.seedLinear' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedLinear_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (a : S) :
+  ‖BfgsVerification.AnalyticStableGraph.seedLinear a‖ ≤ 1 * ‖a‖
+'BfgsVerification.AnalyticStableGraph.seedLinear_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedMap.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] : S →L[ℝ] BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.seedMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.seedMap_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (a : S) (n : ℕ) :
+  (BfgsVerification.AnalyticStableGraph.seedMap a) n = BfgsVerification.AnalyticStableGraph.seedValue a n
+'BfgsVerification.AnalyticStableGraph.seedMap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearValue.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) : S × U
+'BfgsVerification.AnalyticStableGraph.linearValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearValue_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  ‖BfgsVerification.AnalyticStableGraph.linearValue A B w n‖ ≤ max ‖A‖ ‖B‖ * ‖w‖
+'BfgsVerification.AnalyticStableGraph.linearValue_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearSequence.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) : BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.linearSequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearSequence_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  (BfgsVerification.AnalyticStableGraph.linearSequence A B w) n =
+    BfgsVerification.AnalyticStableGraph.linearValue A B w n
+'BfgsVerification.AnalyticStableGraph.linearSequence_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearOperator.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) :
+  BfgsVerification.AnalyticStableGraph.Seq S U →ₗ[ℝ] BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.linearOperator' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearOperator_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) :
+  ‖(BfgsVerification.AnalyticStableGraph.linearOperator A B) w‖ ≤ max ‖A‖ ‖B‖ * ‖w‖
+'BfgsVerification.AnalyticStableGraph.linearOperator_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearStep.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) :
+  BfgsVerification.AnalyticStableGraph.Seq S U →L[ℝ] BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.linearStep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearStep_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  ((BfgsVerification.AnalyticStableGraph.linearStep A B) w) n = BfgsVerification.AnalyticStableGraph.linearValue A B w n
+'BfgsVerification.AnalyticStableGraph.linearStep_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearStep_norm.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) :
+  ‖BfgsVerification.AnalyticStableGraph.linearStep A B‖ ≤ max ‖A‖ ‖B‖
+'BfgsVerification.AnalyticStableGraph.linearStep_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearStep_norm_lt.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (hA : ‖A‖ < 1)
+  (hB : ‖B‖ < 1) : ‖BfgsVerification.AnalyticStableGraph.linearStep A B‖ < 1
+'BfgsVerification.AnalyticStableGraph.linearStep_norm_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearValue.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U) (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  S × U
+'BfgsVerification.AnalyticStableGraph.nonlinearValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearValue_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  ‖BfgsVerification.AnalyticStableGraph.nonlinearValue B w n‖ ≤ max 1 ‖B‖ * ‖w‖
+'BfgsVerification.AnalyticStableGraph.nonlinearValue_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearSequence.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) : BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.nonlinearSequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearSequence_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  (BfgsVerification.AnalyticStableGraph.nonlinearSequence B w) n =
+    BfgsVerification.AnalyticStableGraph.nonlinearValue B w n
+'BfgsVerification.AnalyticStableGraph.nonlinearSequence_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearOperator.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U) :
+  BfgsVerification.AnalyticStableGraph.Seq S U →ₗ[ℝ] BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.nonlinearOperator' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearOperator_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) :
+  ‖(BfgsVerification.AnalyticStableGraph.nonlinearOperator B) w‖ ≤ max 1 ‖B‖ * ‖w‖
+'BfgsVerification.AnalyticStableGraph.nonlinearOperator_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearStep.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U) :
+  BfgsVerification.AnalyticStableGraph.Seq S U →L[ℝ] BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.nonlinearStep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.nonlinearStep_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (n : ℕ) :
+  ((BfgsVerification.AnalyticStableGraph.nonlinearStep B) w) n =
+    BfgsVerification.AnalyticStableGraph.nonlinearValue B w n
+'BfgsVerification.AnalyticStableGraph.nonlinearStep_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.transform.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  (L : BfgsVerification.AnalyticStableGraph.Seq S U → BfgsVerification.AnalyticStableGraph.Seq S U)
+  (p : S × BfgsVerification.AnalyticStableGraph.Seq S U) : BfgsVerification.AnalyticStableGraph.Seq S U
+'BfgsVerification.AnalyticStableGraph.transform' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.transform_zero.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  {L : BfgsVerification.AnalyticStableGraph.Seq S U → BfgsVerification.AnalyticStableGraph.Seq S U} (hL : L 0 = 0) :
+  BfgsVerification.AnalyticStableGraph.transform A B L 0 = 0
+'BfgsVerification.AnalyticStableGraph.transform_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.transform_analytic.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  {L : BfgsVerification.AnalyticStableGraph.Seq S U → BfgsVerification.AnalyticStableGraph.Seq S U}
+  (hL : AnalyticAt ℝ L 0) : AnalyticAt ℝ (BfgsVerification.AnalyticStableGraph.transform A B L) 0
+'BfgsVerification.AnalyticStableGraph.transform_analytic' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.transform_hasFDerivAt.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U)
+  {L : BfgsVerification.AnalyticStableGraph.Seq S U → BfgsVerification.AnalyticStableGraph.Seq S U}
+  (hL : HasFDerivAt L 0 0) :
+  HasFDerivAt (BfgsVerification.AnalyticStableGraph.transform A B L)
+    (BfgsVerification.AnalyticStableGraph.seedMap.coprod (BfgsVerification.AnalyticStableGraph.linearStep A B)) 0
+'BfgsVerification.AnalyticStableGraph.transform_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.transform_eq_of_recurrence.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U)
+  (L : BfgsVerification.AnalyticStableGraph.Seq S U → BfgsVerification.AnalyticStableGraph.Seq S U) (a : S)
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) (hL : ∀ (k : ℕ), (L w) k = N (w k)) (ha : (w 0).1 = a)
+  (hrec : ∀ (n : ℕ), (w (n + 1)).1 = A (w n).1 + (N (w n)).1 ∧ (w n).2 = B ((w (n + 1)).2 - (N (w n)).2)) :
+  BfgsVerification.AnalyticStableGraph.transform A B L (a, w) = w
+'BfgsVerification.AnalyticStableGraph.transform_eq_of_recurrence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_smooth_stable_sequence.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (hN : AnalyticAt ℝ N 0) (hN0 : N 0 = 0) (hNd : HasFDerivAt N 0 0)
+  (hA : ‖A‖ < 1) (hB : ‖B‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ g V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        g 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) g V ∧
+            HasFDerivAt g
+                ((↑(BfgsVerification.ParametricFixedPoint.oneSubEquiv
+                          (BfgsVerification.AnalyticStableGraph.linearStep A B) ⋯).symm).comp
+                  BfgsVerification.AnalyticStableGraph.seedMap)
+                0 ∧
+              ∀ a ∈ V,
+                ∃ w,
+                  ZeroAtInftyContinuousMap.toBCF w = g a ∧
+                    ‖w‖ ≤ r ∧
+                      (w 0).1 = a ∧
+                        ∀ (n : ℕ), (w (n + 1)).1 = A (w n).1 + (N (w n)).1 ∧ (w n).2 = B ((w (n + 1)).2 - (N (w n)).2)
+'BfgsVerification.AnalyticStableGraph.exists_smooth_stable_sequence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.bounded_backward_orbit_zero.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (B : U →L[ℝ] U) (hB : ‖B‖ < 1) (w : BfgsVerification.AnalyticStableGraph.Seq S U)
+  (hrec : ∀ (n : ℕ), (w n).2 = B (w (n + 1)).2) (n : ℕ) : (w n).2 = 0
+'BfgsVerification.AnalyticStableGraph.bounded_backward_orbit_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.linear_graph_derivative_unstable_zero.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (B : U →L[ℝ] U) (hA : ‖A‖ < 1) (hB : ‖B‖ < 1) (a : S) (n : ℕ) :
+  (((BfgsVerification.ParametricFixedPoint.oneSubEquiv (BfgsVerification.AnalyticStableGraph.linearStep A B) ⋯).symm
+          (BfgsVerification.AnalyticStableGraph.seedMap a))
+        n).2 =
+    0
+'BfgsVerification.AnalyticStableGraph.linear_graph_derivative_unstable_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.initialUnstable.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] : BfgsVerification.AnalyticStableGraph.Seq S U →L[ℝ] U
+'BfgsVerification.AnalyticStableGraph.initialUnstable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.initialUnstable_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (w : BfgsVerification.AnalyticStableGraph.Seq S U) : BfgsVerification.AnalyticStableGraph.initialUnstable w = (w 0).2
+'BfgsVerification.AnalyticStableGraph.initialUnstable_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.initialUnstable_comp_derivative.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (B : U →L[ℝ] U) (hA : ‖A‖ < 1) (hB : ‖B‖ < 1) :
+  BfgsVerification.AnalyticStableGraph.initialUnstable.comp
+      ((↑(BfgsVerification.ParametricFixedPoint.oneSubEquiv (BfgsVerification.AnalyticStableGraph.linearStep A B)
+                ⋯).symm).comp
+        BfgsVerification.AnalyticStableGraph.seedMap) =
+    0
+'BfgsVerification.AnalyticStableGraph.initialUnstable_comp_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_smooth_stable_graph_from_remainder.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (N : S × U → S × U) (hN : AnalyticAt ℝ N 0) (hN0 : N 0 = 0) (hNd : HasFDerivAt N 0 0)
+  (hA : ‖A‖ < 1) (hB : ‖↑L.symm‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ h V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        h 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) h V ∧
+            HasFDerivAt h 0 0 ∧
+              ∀ a ∈ V,
+                ∃ w,
+                  w 0 = (a, h a) ∧
+                    (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+                      Filter.Tendsto w Filter.atTop (nhds 0) ∧ ∀ (n : ℕ), w (n + 1) = (A (w n).1, L (w n).2) + N (w n)
+'BfgsVerification.AnalyticStableGraph.exists_smooth_stable_graph_from_remainder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_smooth_stable_graph.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (T : S × U → S × U) (hT : AnalyticAt ℝ T 0) (hT0 : T 0 = 0)
+  (hTd : HasFDerivAt T (A.prodMap ↑L) 0) (hA : ‖A‖ < 1) (hB : ‖↑L.symm‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ h V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        h 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) h V ∧
+            HasFDerivAt h 0 0 ∧
+              ∀ a ∈ V,
+                ∃ w,
+                  w 0 = (a, h a) ∧
+                    (∀ (n : ℕ), ‖w n‖ ≤ r) ∧ Filter.Tendsto w Filter.atTop (nhds 0) ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+'BfgsVerification.AnalyticStableGraph.exists_smooth_stable_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.chart.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] [NormedAddCommGroup X]
+  [NormedSpace ℝ X] (P : X) (E : (S × U) ≃L[ℝ] X) (h : S → U) (a : S) : X
+'BfgsVerification.AnalyticStableGraph.chart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.chart_inverse.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (P : X) (E : (S × U) ≃L[ℝ] X) (h : S → U) (a : S) :
+  (E.symm (BfgsVerification.AnalyticStableGraph.chart P E h a - P)).1 = a
+'BfgsVerification.AnalyticStableGraph.chart_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.chart_injective.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (P : X) (E : (S × U) ≃L[ℝ] X) (h : S → U) :
+  Function.Injective (BfgsVerification.AnalyticStableGraph.chart P E h)
+'BfgsVerification.AnalyticStableGraph.chart_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.chart_contDiffOn.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (P : X) (E : (S × U) ≃L[ℝ] X) {h : S → U} {V : Set S}
+  (hc : ContDiffOn ℝ (↑⊤) h V) : ContDiffOn ℝ (↑⊤) (BfgsVerification.AnalyticStableGraph.chart P E h) V
+'BfgsVerification.AnalyticStableGraph.chart_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.chart_hasFDerivAt.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (P : X) (E : (S × U) ≃L[ℝ] X) {h : S → U}
+  (hd : HasFDerivAt h 0 0) :
+  HasFDerivAt (BfgsVerification.AnalyticStableGraph.chart P E h) ((↑E).comp (ContinuousLinearMap.inl ℝ S U)) 0
+'BfgsVerification.AnalyticStableGraph.chart_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_smooth_graph_of_splitting.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2}
+  {X : Type u_3} [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U]
+  [CompleteSpace U] [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] {T : X → X} {P : X} {F : X →L[ℝ] X}
+  (hT : AnalyticAt ℝ T P) (hfix : T P = P) (hd : HasFDerivAt T F P) (E : (S × U) ≃L[ℝ] X) (A : S →L[ℝ] S)
+  (L : U ≃L[ℝ] U) (hA : ‖A‖ < 1) (hL : ‖↑L.symm‖ < 1) (hconj : F.comp ↑E = (↑E).comp (A.prodMap ↑L)) (W : Set X)
+  (hW : W ∈ nhds P) :
+  ∃ h V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        h 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) h V ∧
+            HasFDerivAt h 0 0 ∧
+              ContDiffOn ℝ (↑⊤) (BfgsVerification.AnalyticStableGraph.chart P E h) V ∧
+                HasFDerivAt (BfgsVerification.AnalyticStableGraph.chart P E h)
+                    ((↑E).comp (ContinuousLinearMap.inl ℝ S U)) 0 ∧
+                  ∀ a ∈ V,
+                    ∃ w,
+                      w 0 = BfgsVerification.AnalyticStableGraph.chart P E h a ∧
+                        (∀ (n : ℕ), w n ∈ W) ∧ Filter.Tendsto w Filter.atTop (nhds P) ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+'BfgsVerification.AnalyticStableGraph.exists_smooth_graph_of_splitting' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.linearStableSet.{u_3} {X : Type u_3} [NormedAddCommGroup X] [NormedSpace ℝ X]
+  (F : X →L[ℝ] X) : Set X
+'BfgsVerification.AnalyticStableGraph.linearStableSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.conjugate_power.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (F : X →L[ℝ] X) (E : (S × U) ≃L[ℝ] X) (A : S →L[ℝ] S)
+  (L : U ≃L[ℝ] U) (hc : F.comp ↑E = (↑E).comp (A.prodMap ↑L)) (z : S × U) (n : ℕ) :
+  (F ^ n) (E z) = E ((A ^ n) z.1, (↑L ^ n) z.2)
+'BfgsVerification.AnalyticStableGraph.conjugate_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.stable_set_eq_range.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (F : X →L[ℝ] X) (E : (S × U) ≃L[ℝ] X) (A : S →L[ℝ] S)
+  (L : U ≃L[ℝ] U) (hA : ‖A‖ < 1) (hL : ‖↑L.symm‖ < 1) (hc : F.comp ↑E = (↑E).comp (A.prodMap ↑L)) :
+  BfgsVerification.AnalyticStableGraph.linearStableSet F = Set.range fun a => E (a, 0)
+'BfgsVerification.AnalyticStableGraph.stable_set_eq_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.chart_isEmbedding.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (P : X) (E : (S × U) ≃L[ℝ] X) {h : S → U} {V : Set S}
+  (hc : ContDiffOn ℝ (↑⊤) h V) : Topology.IsEmbedding fun a => BfgsVerification.AnalyticStableGraph.chart P E h ↑a
+'BfgsVerification.AnalyticStableGraph.chart_isEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.stable_inclusion_injective.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2}
+  {X : Type u_3} [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U]
+  [CompleteSpace U] [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (E : (S × U) ≃L[ℝ] X) :
+  Function.Injective ⇑((↑E).comp (ContinuousLinearMap.inl ℝ S U))
+'BfgsVerification.AnalyticStableGraph.stable_inclusion_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.stable_inclusion_dimension.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2}
+  {X : Type u_3} [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U]
+  [CompleteSpace U] [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] [FiniteDimensional ℝ S]
+  (E : (S × U) ≃L[ℝ] X) :
+  Module.finrank ℝ ↥(LinearMap.range ↑((↑E).comp (ContinuousLinearMap.inl ℝ S U))) = Module.finrank ℝ S
+'BfgsVerification.AnalyticStableGraph.stable_inclusion_dimension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.stable_inclusion_range.{u_1, u_2, u_3} {S : Type u_1} {U : Type u_2} {X : Type u_3}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] (F : X →L[ℝ] X) (E : (S × U) ≃L[ℝ] X) (A : S →L[ℝ] S)
+  (L : U ≃L[ℝ] U) (hA : ‖A‖ < 1) (hL : ‖↑L.symm‖ < 1) (hc : F.comp ↑E = (↑E).comp (A.prodMap ↑L)) :
+  ↑(LinearMap.range ↑((↑E).comp (ContinuousLinearMap.inl ℝ S U))) =
+    BfgsVerification.AnalyticStableGraph.linearStableSet F
+'BfgsVerification.AnalyticStableGraph.stable_inclusion_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnStableGraph.source_splitting (μ : ℝ) :
+  ∃ E,
+    (∀ (z : BfgsVerification.LBlockSplitting.Coordinates), E z 4 = z.1 1) ∧
+      ∃ A L,
+        ‖A‖ < 1 ∧
+          ‖↑L.symm‖ < 1 ∧
+            (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed).comp
+                ↑E =
+              (↑E).comp (A.prodMap ↑L)
+'BfgsVerification.LReturnStableGraph.source_splitting' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnStableGraph.source_smooth_stable_graph (μ : ℝ)
+  (W : Set BfgsVerification.LNormalizedReturn.State) (hW : W ∈ nhds BfgsVerification.LNormalizedReturn.seed) :
+  ∃ E,
+    (∀ (z : BfgsVerification.LBlockSplitting.Coordinates), E z 4 = z.1 1) ∧
+      ∃ A L,
+        ‖A‖ < 1 ∧
+          ‖↑L.symm‖ < 1 ∧
+            (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed).comp
+                  ↑E =
+                (↑E).comp (A.prodMap ↑L) ∧
+              ∃ h V,
+                IsOpen V ∧
+                  0 ∈ V ∧
+                    h 0 = 0 ∧
+                      ContDiffOn ℝ (↑⊤) h V ∧
+                        HasFDerivAt h 0 0 ∧
+                          ContDiffOn ℝ (↑⊤)
+                              (BfgsVerification.AnalyticStableGraph.chart BfgsVerification.LNormalizedReturn.seed E h)
+                              V ∧
+                            HasFDerivAt
+                                (BfgsVerification.AnalyticStableGraph.chart BfgsVerification.LNormalizedReturn.seed E h)
+                                ((↑E).comp
+                                  (ContinuousLinearMap.inl ℝ (BfgsVerification.Vec 2) (BfgsVerification.Vec 3)))
+                                0 ∧
+                              (∀ (a : BfgsVerification.Vec 2),
+                                  BfgsVerification.LNormalizedReturn.scale
+                                      (BfgsVerification.AnalyticStableGraph.chart
+                                        BfgsVerification.LNormalizedReturn.seed E h a) =
+                                    a 1) ∧
+                                ∀ a ∈ V,
+                                  ∃ w,
+                                    w 0 =
+                                        BfgsVerification.AnalyticStableGraph.chart
+                                          BfgsVerification.LNormalizedReturn.seed E h a ∧
+                                      (∀ (n : ℕ), w n ∈ W) ∧
+                                        Filter.Tendsto w Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed) ∧
+                                          ∀ (n : ℕ), w (n + 1) = BfgsVerification.LNormalizedReturn.returnMap μ (w n)
+'BfgsVerification.LReturnStableGraph.source_smooth_stable_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnStableGraph.positive_parameter_in_neighborhood {V : Set (BfgsVerification.Vec 2)}
+  (hV : V ∈ nhds 0) {eps : ℝ} (heps : 0 < eps) : ∃ a ∈ V, 0 < a 1 ∧ a 1 < eps
+'BfgsVerification.LReturnStableGraph.positive_parameter_in_neighborhood' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnStableGraph.LStableManifoldTarget : Prop
+'BfgsVerification.LReturnStableGraph.LStableManifoldTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnStableGraph.lStableManifold : BfgsVerification.LReturnStableGraph.LStableManifoldTarget
+'BfgsVerification.LReturnStableGraph.lStableManifold' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AnalyticStableGraph.sequenceMap_fixed_of_forward.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (N : S × U → S × U) (hN : ContinuousAt N 0) (hN0 : N 0 = 0)
+  (w : BfgsVerification.LocalStableOrbit.Sequence S U)
+  (hrec : ∀ (n : ℕ), w (n + 1) = (A (w n).1, L (w n).2) + N (w n)) :
+  BfgsVerification.LocalStableOrbit.sequenceMap A (↑L.symm) N (w 0).1 hN hN0 w = w
+'BfgsVerification.AnalyticStableGraph.sequenceMap_fixed_of_forward' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_unique_orbits_radius.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (T : S × U → S × U) (hT : AnalyticAt ℝ T 0) (hT0 : T 0 = 0)
+  (hTd : HasFDerivAt T (A.prodMap ↑L) 0) (hA : ‖A‖ < 1) (hB : ‖↑L.symm‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ R,
+    0 < R ∧
+      R ≤ r ∧
+        ∀ (w v : ℕ → S × U),
+          (∀ (n : ℕ), ‖w n‖ ≤ R) →
+            (∀ (n : ℕ), ‖v n‖ ≤ R) →
+              Filter.Tendsto w Filter.atTop (nhds 0) →
+                Filter.Tendsto v Filter.atTop (nhds 0) →
+                  (w 0).1 = (v 0).1 → (∀ (n : ℕ), w (n + 1) = T (w n)) → (∀ (n : ℕ), v (n + 1) = T (v n)) → w = v
+'BfgsVerification.AnalyticStableGraph.exists_unique_orbits_radius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_smooth_locally_invariant_graph.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (T : S × U → S × U) (hT : AnalyticAt ℝ T 0) (hT0 : T 0 = 0)
+  (hTd : HasFDerivAt T (A.prodMap ↑L) 0) (hA : ‖A‖ < 1) (hB : ‖↑L.symm‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ h V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        h 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) h V ∧
+            HasFDerivAt h 0 0 ∧
+              (∀ a ∈ V,
+                  ∃ w,
+                    w 0 = (a, h a) ∧
+                      (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+                        Filter.Tendsto w Filter.atTop (nhds 0) ∧ ∀ (n : ℕ), w (n + 1) = T (w n)) ∧
+                ∃ V₀, IsOpen V₀ ∧ 0 ∈ V₀ ∧ V₀ ⊆ V ∧ ∀ a ∈ V₀, ∃ b ∈ V, T (a, h a) = (b, h b)
+'BfgsVerification.AnalyticStableGraph.exists_smooth_locally_invariant_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AnalyticStableGraph.exists_smooth_invariant_graph_of_splitting.{u_1, u_2, u_3} {S : Type u_1}
+  {U : Type u_2} {X : Type u_3} [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U]
+  [NormedSpace ℝ U] [CompleteSpace U] [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] {T : X → X} {P : X}
+  {F : X →L[ℝ] X} (hT : AnalyticAt ℝ T P) (hfix : T P = P) (hd : HasFDerivAt T F P) (E : (S × U) ≃L[ℝ] X)
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (hA : ‖A‖ < 1) (hL : ‖↑L.symm‖ < 1) (hconj : F.comp ↑E = (↑E).comp (A.prodMap ↑L))
+  (W : Set X) (hW : W ∈ nhds P) :
+  ∃ h V,
+    IsOpen V ∧
+      0 ∈ V ∧
+        h 0 = 0 ∧
+          ContDiffOn ℝ (↑⊤) h V ∧
+            HasFDerivAt h 0 0 ∧
+              ContDiffOn ℝ (↑⊤) (BfgsVerification.AnalyticStableGraph.chart P E h) V ∧
+                HasFDerivAt (BfgsVerification.AnalyticStableGraph.chart P E h)
+                    ((↑E).comp (ContinuousLinearMap.inl ℝ S U)) 0 ∧
+                  (∀ a ∈ V,
+                      ∃ w,
+                        w 0 = BfgsVerification.AnalyticStableGraph.chart P E h a ∧
+                          (∀ (n : ℕ), w n ∈ W) ∧
+                            Filter.Tendsto w Filter.atTop (nhds P) ∧ ∀ (n : ℕ), w (n + 1) = T (w n)) ∧
+                    ∃ V₀,
+                      IsOpen V₀ ∧
+                        0 ∈ V₀ ∧
+                          V₀ ⊆ V ∧
+                            ∀ a ∈ V₀,
+                              ∃ b ∈ V,
+                                T (BfgsVerification.AnalyticStableGraph.chart P E h a) =
+                                  BfgsVerification.AnalyticStableGraph.chart P E h b
+'BfgsVerification.AnalyticStableGraph.exists_smooth_invariant_graph_of_splitting' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget : Prop
+'BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnStableGraph.lStableInvariantManifold :
+  BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget
+'BfgsVerification.LReturnStableGraph.lStableInvariantManifold' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

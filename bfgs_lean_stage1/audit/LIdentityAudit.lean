@@ -1,0 +1,354 @@
+import BfgsVerification.AffineWhiteningRun
+import BfgsVerification.AffineWhiteningSearch
+import BfgsVerification.AffineWhiteningSquareRoot
+import BfgsVerification.SpectralMetricBounds
+import BfgsVerification.AffineWhiteningGeometry
+import BfgsVerification.AffineWhiteningLimits
+import BfgsVerification.AffineWhiteningHessian
+import BfgsVerification.LWhiteningGeometry
+import BfgsVerification.AffineRankLossHessian
+import BfgsVerification.AffineRankLossTargets
+import BfgsVerification.LIdentityRuns
+import BfgsVerification.LIdentityTargets
+import BfgsVerification.LIdentityGeometry
+
+set_option pp.proofs false
+#check BfgsVerification.AffineWhitening.objective
+#print axioms BfgsVerification.AffineWhitening.objective
+#check BfgsVerification.AffineWhitening.point
+#print axioms BfgsVerification.AffineWhitening.point
+#check BfgsVerification.AffineWhitening.metric
+#print axioms BfgsVerification.AffineWhitening.metric
+#check BfgsVerification.AffineWhitening.gradient
+#print axioms BfgsVerification.AffineWhitening.gradient
+#check BfgsVerification.AffineWhitening.map_point
+#print axioms BfgsVerification.AffineWhitening.map_point
+#check BfgsVerification.AffineWhitening.point_map
+#print axioms BfgsVerification.AffineWhitening.point_map
+#check BfgsVerification.AffineWhitening.inverse_fullRowRank
+#print axioms BfgsVerification.AffineWhitening.inverse_fullRowRank
+#check BfgsVerification.AffineWhitening.gradient_inverse
+#print axioms BfgsVerification.AffineWhitening.gradient_inverse
+#check BfgsVerification.AffineWhitening.dot_gradient_point
+#print axioms BfgsVerification.AffineWhitening.dot_gradient_point
+#check BfgsVerification.AffineWhitening.step_equiv
+#print axioms BfgsVerification.AffineWhitening.step_equiv
+#check BfgsVerification.AffineWhitening.update_equiv
+#print axioms BfgsVerification.AffineWhitening.update_equiv
+#check BfgsVerification.AffineWhitening.hasGradient_equiv
+#print axioms BfgsVerification.AffineWhitening.hasGradient_equiv
+#check BfgsVerification.AffineWhitening.run
+#print axioms BfgsVerification.AffineWhitening.run
+#check BfgsVerification.AffineWhitening.run_x
+#print axioms BfgsVerification.AffineWhitening.run_x
+#check BfgsVerification.AffineWhitening.run_H
+#print axioms BfgsVerification.AffineWhitening.run_H
+#check BfgsVerification.AffineWhitening.run_g
+#print axioms BfgsVerification.AffineWhitening.run_g
+#check BfgsVerification.AffineWhitening.run_alpha
+#print axioms BfgsVerification.AffineWhitening.run_alpha
+#check BfgsVerification.AffineWhitening.run_value
+#print axioms BfgsVerification.AffineWhitening.run_value
+#check BfgsVerification.AffineWhitening.query_equiv
+#print axioms BfgsVerification.AffineWhitening.query_equiv
+#check BfgsVerification.AffineWhitening.linearEquiv
+#print axioms BfgsVerification.AffineWhitening.linearEquiv
+#check BfgsVerification.AffineWhitening.linearEquiv_apply
+#print axioms BfgsVerification.AffineWhitening.linearEquiv_apply
+#check BfgsVerification.AffineWhitening.differentiableAt_equiv
+#print axioms BfgsVerification.AffineWhitening.differentiableAt_equiv
+#check BfgsVerification.AffineWhitening.coordinateGradient_equiv
+#print axioms BfgsVerification.AffineWhitening.coordinateGradient_equiv
+#check BfgsVerification.AffineWhitening.armijo_equiv
+#print axioms BfgsVerification.AffineWhitening.armijo_equiv
+#check BfgsVerification.AffineWhitening.wolfe_equiv
+#print axioms BfgsVerification.AffineWhitening.wolfe_equiv
+#check BfgsVerification.AffineWhitening.search_equiv
+#print axioms BfgsVerification.AffineWhitening.search_equiv
+#check BfgsVerification.AffineWhitening.fromMetric_equiv
+#print axioms BfgsVerification.AffineWhitening.fromMetric_equiv
+#check BfgsVerification.AffineWhitening.squareRoot
+#print axioms BfgsVerification.AffineWhitening.squareRoot
+#check BfgsVerification.AffineWhitening.squareRoot_square
+#print axioms BfgsVerification.AffineWhitening.squareRoot_square
+#check BfgsVerification.AffineWhitening.squareRoot_transpose
+#print axioms BfgsVerification.AffineWhitening.squareRoot_transpose
+#check BfgsVerification.AffineWhitening.squareRoot_det_ne_zero
+#print axioms BfgsVerification.AffineWhitening.squareRoot_det_ne_zero
+#check BfgsVerification.AffineWhitening.squareRoot_initial_metric
+#print axioms BfgsVerification.AffineWhitening.squareRoot_initial_metric
+#check BfgsVerification.AffineWhitening.whiten
+#print axioms BfgsVerification.AffineWhitening.whiten
+#check BfgsVerification.AffineWhitening.whiten_initial
+#print axioms BfgsVerification.AffineWhitening.whiten_initial
+#check BfgsVerification.AffineWhitening.fixed_initial_whitening
+#print axioms BfgsVerification.AffineWhitening.fixed_initial_whitening
+#check BfgsVerification.AffineWhitening.fixed_family_identity
+#print axioms BfgsVerification.AffineWhitening.fixed_family_identity
+#check BfgsVerification.AffineWhitening.minEigenvalue
+#print axioms BfgsVerification.AffineWhitening.minEigenvalue
+#check BfgsVerification.AffineWhitening.maxEigenvalue
+#print axioms BfgsVerification.AffineWhitening.maxEigenvalue
+#check BfgsVerification.AffineWhitening.minEigenvalue_le
+#print axioms BfgsVerification.AffineWhitening.minEigenvalue_le
+#check BfgsVerification.AffineWhitening.le_maxEigenvalue
+#print axioms BfgsVerification.AffineWhitening.le_maxEigenvalue
+#check BfgsVerification.AffineWhitening.minEigenvalue_pos
+#print axioms BfgsVerification.AffineWhitening.minEigenvalue_pos
+#check BfgsVerification.AffineWhitening.maxEigenvalue_pos
+#print axioms BfgsVerification.AffineWhitening.maxEigenvalue_pos
+#check BfgsVerification.AffineWhitening.spectral_metric_bounds
+#print axioms BfgsVerification.AffineWhitening.spectral_metric_bounds
+#check BfgsVerification.AffineWhitening.actual_extreme_metric_bounds
+#print axioms BfgsVerification.AffineWhitening.actual_extreme_metric_bounds
+#check BfgsVerification.AffineWhitening.squareRoot_sqNorm
+#print axioms BfgsVerification.AffineWhitening.squareRoot_sqNorm
+#check BfgsVerification.AffineWhitening.squareRoot_norm_bounds
+#print axioms BfgsVerification.AffineWhitening.squareRoot_norm_bounds
+#check BfgsVerification.AffineWhitening.min_sub_posSemidef
+#print axioms BfgsVerification.AffineWhitening.min_sub_posSemidef
+#check BfgsVerification.AffineWhitening.strongConvex_whitening
+#print axioms BfgsVerification.AffineWhitening.strongConvex_whitening
+#check BfgsVerification.AffineWhitening.gradient_bound_whitening
+#print axioms BfgsVerification.AffineWhitening.gradient_bound_whitening
+#check BfgsVerification.AffineWhitening.contDiff_whitening
+#print axioms BfgsVerification.AffineWhitening.contDiff_whitening
+#check BfgsVerification.AffineWhitening.sublevels_compact_whitening
+#print axioms BfgsVerification.AffineWhitening.sublevels_compact_whitening
+#check BfgsVerification.AffineWhitening.zero_unique_whitening
+#print axioms BfgsVerification.AffineWhitening.zero_unique_whitening
+#check BfgsVerification.AffineWhitening.nonstationary_whitening
+#print axioms BfgsVerification.AffineWhitening.nonstationary_whitening
+#check BfgsVerification.AffineWhitening.coercive_of_compact_sublevels
+#print axioms BfgsVerification.AffineWhitening.coercive_of_compact_sublevels
+#check BfgsVerification.AffineWhitening.point_continuous
+#print axioms BfgsVerification.AffineWhitening.point_continuous
+#check BfgsVerification.AffineWhitening.metric_continuous
+#print axioms BfgsVerification.AffineWhitening.metric_continuous
+#check BfgsVerification.AffineWhitening.point_limit
+#print axioms BfgsVerification.AffineWhitening.point_limit
+#check BfgsVerification.AffineWhitening.metric_limit_zero
+#print axioms BfgsVerification.AffineWhitening.metric_limit_zero
+#check BfgsVerification.AffineWhitening.starts_limit_zero
+#print axioms BfgsVerification.AffineWhitening.starts_limit_zero
+#check BfgsVerification.AffineWhitening.run_pairing
+#print axioms BfgsVerification.AffineWhitening.run_pairing
+#check BfgsVerification.AffineWhitening.strict_accept_equiv
+#print axioms BfgsVerification.AffineWhitening.strict_accept_equiv
+#check BfgsVerification.AffineWhitening.queries_limit
+#print axioms BfgsVerification.AffineWhitening.queries_limit
+#check BfgsVerification.AffineWhitening.uniform_locality
+#print axioms BfgsVerification.AffineWhitening.uniform_locality
+#check BfgsVerification.AffineWhitening.secondMap
+#print axioms BfgsVerification.AffineWhitening.secondMap
+#check BfgsVerification.AffineWhitening.secondMap_apply
+#print axioms BfgsVerification.AffineWhitening.secondMap_apply
+#check BfgsVerification.AffineWhitening.fderiv_objective
+#print axioms BfgsVerification.AffineWhitening.fderiv_objective
+#check BfgsVerification.AffineWhitening.second_hasFDerivAt
+#print axioms BfgsVerification.AffineWhitening.second_hasFDerivAt
+#check BfgsVerification.AffineWhitening.bilinearMatrix_pairing
+#print axioms BfgsVerification.AffineWhitening.bilinearMatrix_pairing
+#check BfgsVerification.AffineWhitening.bilinearMatrix_secondMap
+#print axioms BfgsVerification.AffineWhitening.bilinearMatrix_secondMap
+#check BfgsVerification.AffineWhitening.second_differentiableAt_iff
+#print axioms BfgsVerification.AffineWhitening.second_differentiableAt_iff
+#check BfgsVerification.AffineWhitening.hessian_formula
+#print axioms BfgsVerification.AffineWhitening.hessian_formula
+#check BfgsVerification.AffineWhitening.hessian_quadratic
+#print axioms BfgsVerification.AffineWhitening.hessian_quadratic
+#check BfgsVerification.AffineWhitening.hessian_bounds_whitening
+#print axioms BfgsVerification.AffineWhitening.hessian_bounds_whitening
+#check BfgsVerification.LWhitening.initialMetric
+#print axioms BfgsVerification.LWhitening.initialMetric
+#check BfgsVerification.LWhitening.initialMetric_posDef
+#print axioms BfgsVerification.LWhitening.initialMetric_posDef
+#check BfgsVerification.LWhitening.coordinateMatrix
+#print axioms BfgsVerification.LWhitening.coordinateMatrix
+#check BfgsVerification.LWhitening.coordinateMatrix_square
+#print axioms BfgsVerification.LWhitening.coordinateMatrix_square
+#check BfgsVerification.LWhitening.coordinateMatrix_transpose
+#print axioms BfgsVerification.LWhitening.coordinateMatrix_transpose
+#check BfgsVerification.LWhitening.coordinateMatrix_invertible
+#print axioms BfgsVerification.LWhitening.coordinateMatrix_invertible
+#check BfgsVerification.LWhitening.lowerConstant
+#print axioms BfgsVerification.LWhitening.lowerConstant
+#check BfgsVerification.LWhitening.upperConstant
+#print axioms BfgsVerification.LWhitening.upperConstant
+#check BfgsVerification.LWhitening.lowerConstant_pos
+#print axioms BfgsVerification.LWhitening.lowerConstant_pos
+#check BfgsVerification.LWhitening.upperConstant_pos
+#print axioms BfgsVerification.LWhitening.upperConstant_pos
+#check BfgsVerification.LWhitening.smoothObjective
+#print axioms BfgsVerification.LWhitening.smoothObjective
+#check BfgsVerification.LWhitening.stepObjective
+#print axioms BfgsVerification.LWhitening.stepObjective
+#check BfgsVerification.LWhitening.smoothBranch
+#print axioms BfgsVerification.LWhitening.smoothBranch
+#check BfgsVerification.LWhitening.smoothGradient
+#print axioms BfgsVerification.LWhitening.smoothGradient
+#check BfgsVerification.LWhitening.smooth_branch_regular
+#print axioms BfgsVerification.LWhitening.smooth_branch_regular
+#check BfgsVerification.LWhitening.smooth_objective_eq_max
+#print axioms BfgsVerification.LWhitening.smooth_objective_eq_max
+#check BfgsVerification.LWhitening.smooth_strongConvex
+#print axioms BfgsVerification.LWhitening.smooth_strongConvex
+#check BfgsVerification.LWhitening.step_strongConvex
+#print axioms BfgsVerification.LWhitening.step_strongConvex
+#check BfgsVerification.LWhitening.smooth_zero
+#print axioms BfgsVerification.LWhitening.smooth_zero
+#check BfgsVerification.LWhitening.step_zero
+#print axioms BfgsVerification.LWhitening.step_zero
+#check BfgsVerification.LWhitening.smooth_unique_zero
+#print axioms BfgsVerification.LWhitening.smooth_unique_zero
+#check BfgsVerification.LWhitening.step_unique_zero
+#print axioms BfgsVerification.LWhitening.step_unique_zero
+#check BfgsVerification.LWhitening.smooth_compact_sublevel
+#print axioms BfgsVerification.LWhitening.smooth_compact_sublevel
+#check BfgsVerification.LWhitening.step_compact_sublevel
+#print axioms BfgsVerification.LWhitening.step_compact_sublevel
+#check BfgsVerification.LWhitening.smooth_coercive
+#print axioms BfgsVerification.LWhitening.smooth_coercive
+#check BfgsVerification.LWhitening.step_coercive
+#print axioms BfgsVerification.LWhitening.step_coercive
+#check BfgsVerification.LWhitening.smooth_lower
+#print axioms BfgsVerification.LWhitening.smooth_lower
+#check BfgsVerification.LWhitening.step_lower
+#print axioms BfgsVerification.LWhitening.step_lower
+#check BfgsVerification.LWhitening.smooth_nonsmooth_origin
+#print axioms BfgsVerification.LWhitening.smooth_nonsmooth_origin
+#check BfgsVerification.LWhitening.step_nonsmooth_origin
+#print axioms BfgsVerification.LWhitening.step_nonsmooth_origin
+#check BfgsVerification.LWhitening.step_actual_hessian
+#print axioms BfgsVerification.LWhitening.step_actual_hessian
+#check BfgsVerification.AffineRankLoss.sign
+#print axioms BfgsVerification.AffineRankLoss.sign
+#check BfgsVerification.AffineRankLoss.hessian
+#print axioms BfgsVerification.AffineRankLoss.hessian
+#check BfgsVerification.AffineRankLoss.secondMap
+#print axioms BfgsVerification.AffineRankLoss.secondMap
+#check BfgsVerification.AffineRankLoss.branch_contDiff
+#print axioms BfgsVerification.AffineRankLoss.branch_contDiff
+#check BfgsVerification.AffineRankLoss.branch_second_hasFDerivAt
+#print axioms BfgsVerification.AffineRankLoss.branch_second_hasFDerivAt
+#check BfgsVerification.AffineRankLoss.branch_hessian
+#print axioms BfgsVerification.AffineRankLoss.branch_hessian
+#check BfgsVerification.AffineRankLoss.hessian_isSymm
+#print axioms BfgsVerification.AffineRankLoss.hessian_isSymm
+#check BfgsVerification.AffineRankLoss.hessian_charpoly
+#print axioms BfgsVerification.AffineRankLoss.hessian_charpoly
+#check BfgsVerification.AffineRankLoss.shifted_determinant
+#print axioms BfgsVerification.AffineRankLoss.shifted_determinant
+#check BfgsVerification.AffineRankLoss.hessian_eigenvalues
+#print axioms BfgsVerification.AffineRankLoss.hessian_eigenvalues
+#check BfgsVerification.AffineRankLoss.branch_strongConvex
+#print axioms BfgsVerification.AffineRankLoss.branch_strongConvex
+#check BfgsVerification.AffineRankLoss.objective_strongConvex
+#print axioms BfgsVerification.AffineRankLoss.objective_strongConvex
+#check BfgsVerification.AffineRankLoss.RankLossCurvatureTarget
+#print axioms BfgsVerification.AffineRankLoss.RankLossCurvatureTarget
+#check BfgsVerification.AffineRankLoss.rankLossCurvature
+#print axioms BfgsVerification.AffineRankLoss.rankLossCurvature
+#check BfgsVerification.LWhitening.failureFamily
+#print axioms BfgsVerification.LWhitening.failureFamily
+#check BfgsVerification.LWhitening.failureCenter
+#print axioms BfgsVerification.LWhitening.failureCenter
+#check BfgsVerification.LWhitening.failure_initial
+#print axioms BfgsVerification.LWhitening.failure_initial
+#check BfgsVerification.LWhitening.failure_point_limit
+#print axioms BfgsVerification.LWhitening.failure_point_limit
+#check BfgsVerification.LWhitening.failure_matrix_limit
+#print axioms BfgsVerification.LWhitening.failure_matrix_limit
+#check BfgsVerification.LWhitening.failure_value_limit
+#print axioms BfgsVerification.LWhitening.failure_value_limit
+#check BfgsVerification.LWhitening.failure_values_above
+#print axioms BfgsVerification.LWhitening.failure_values_above
+#check BfgsVerification.LWhitening.failure_starts
+#print axioms BfgsVerification.LWhitening.failure_starts
+#check BfgsVerification.LWhitening.failure_centers_nonstationary
+#print axioms BfgsVerification.LWhitening.failure_centers_nonstationary
+#check BfgsVerification.LWhitening.failure_search
+#print axioms BfgsVerification.LWhitening.failure_search
+#check BfgsVerification.LWhitening.failure_strict_accept
+#print axioms BfgsVerification.LWhitening.failure_strict_accept
+#check BfgsVerification.LWhitening.failure_trial
+#print axioms BfgsVerification.LWhitening.failure_trial
+#check BfgsVerification.LWhitening.failure_trials_limit
+#print axioms BfgsVerification.LWhitening.failure_trials_limit
+#check BfgsVerification.LWhitening.failure_uniform_locality
+#print axioms BfgsVerification.LWhitening.failure_uniform_locality
+#check BfgsVerification.LWhitening.IdentityFailureTarget
+#print axioms BfgsVerification.LWhitening.IdentityFailureTarget
+#check BfgsVerification.LWhitening.identity_failure
+#print axioms BfgsVerification.LWhitening.identity_failure
+#check BfgsVerification.LWhitening.SmoothIdentityFailureTarget
+#print axioms BfgsVerification.LWhitening.SmoothIdentityFailureTarget
+#check BfgsVerification.LWhitening.smoothIdentityFailure
+#print axioms BfgsVerification.LWhitening.smoothIdentityFailure
+#check BfgsVerification.LWhitening.StepIdentityFailureTarget
+#print axioms BfgsVerification.LWhitening.StepIdentityFailureTarget
+#check BfgsVerification.LWhitening.stepIdentityFailure
+#print axioms BfgsVerification.LWhitening.stepIdentityFailure
+#check BfgsVerification.LWhitening.constants_order
+#print axioms BfgsVerification.LWhitening.constants_order
+#check BfgsVerification.LWhitening.failure_centers_tendsto
+#print axioms BfgsVerification.LWhitening.failure_centers_tendsto
+#check BfgsVerification.LWhitening.smooth_convex
+#print axioms BfgsVerification.LWhitening.smooth_convex
+#check BfgsVerification.LWhitening.step_convex
+#print axioms BfgsVerification.LWhitening.step_convex
+#check BfgsVerification.LWhitening.smooth_localFiniteMax
+#print axioms BfgsVerification.LWhitening.smooth_localFiniteMax
+#check BfgsVerification.LWhitening.smooth_actual_hessian
+#print axioms BfgsVerification.LWhitening.smooth_actual_hessian
+#check BfgsVerification.LWhitening.fixedHessian
+#print axioms BfgsVerification.LWhitening.fixedHessian
+#check BfgsVerification.LWhitening.fixedHessian_posDef
+#print axioms BfgsVerification.LWhitening.fixedHessian_posDef
+#check BfgsVerification.LWhitening.step_actual_hessian_bounds
+#print axioms BfgsVerification.LWhitening.step_actual_hessian_bounds
+#check BfgsVerification.LWhitening.stepResidual
+#print axioms BfgsVerification.LWhitening.stepResidual
+#check BfgsVerification.LWhitening.stepAffine
+#print axioms BfgsVerification.LWhitening.stepAffine
+#check BfgsVerification.LWhitening.step_residual_countable_max
+#print axioms BfgsVerification.LWhitening.step_residual_countable_max
+#check BfgsVerification.LWhitening.step_decomposition
+#print axioms BfgsVerification.LWhitening.step_decomposition
+#check BfgsVerification.LWhitening.ObjectiveGeometryTarget
+#print axioms BfgsVerification.LWhitening.ObjectiveGeometryTarget
+#check BfgsVerification.LWhitening.smooth_objective_geometry
+#print axioms BfgsVerification.LWhitening.smooth_objective_geometry
+#check BfgsVerification.LWhitening.step_objective_geometry
+#print axioms BfgsVerification.LWhitening.step_objective_geometry
+#check BfgsVerification.LWhitening.SmoothLocalFailureTarget
+#print axioms BfgsVerification.LWhitening.SmoothLocalFailureTarget
+#check BfgsVerification.LWhitening.smoothLocalFailure
+#print axioms BfgsVerification.LWhitening.smoothLocalFailure
+#check BfgsVerification.LWhitening.StepLocalFailureTarget
+#print axioms BfgsVerification.LWhitening.StepLocalFailureTarget
+#check BfgsVerification.LWhitening.stepLocalFailure
+#print axioms BfgsVerification.LWhitening.stepLocalFailure
+
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.AffineRankLoss.rankLossCurvature
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.AffineRankLoss.RankLossCurvatureTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.AffineRankLoss.rankLossCurvature"
+  logInfo "EXACT_TARGET_OK BfgsVerification.AffineRankLoss.rankLossCurvature BfgsVerification.AffineRankLoss.RankLossCurvatureTarget"
+  let info ← getConstInfo `BfgsVerification.LWhitening.smoothIdentityFailure
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.LWhitening.SmoothIdentityFailureTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.LWhitening.smoothIdentityFailure"
+  logInfo "EXACT_TARGET_OK BfgsVerification.LWhitening.smoothIdentityFailure BfgsVerification.LWhitening.SmoothIdentityFailureTarget"
+  let info ← getConstInfo `BfgsVerification.LWhitening.stepIdentityFailure
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.LWhitening.StepIdentityFailureTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.LWhitening.stepIdentityFailure"
+  logInfo "EXACT_TARGET_OK BfgsVerification.LWhitening.stepIdentityFailure BfgsVerification.LWhitening.StepIdentityFailureTarget"
+  let info ← getConstInfo `BfgsVerification.LWhitening.smoothLocalFailure
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.LWhitening.SmoothLocalFailureTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.LWhitening.smoothLocalFailure"
+  logInfo "EXACT_TARGET_OK BfgsVerification.LWhitening.smoothLocalFailure BfgsVerification.LWhitening.SmoothLocalFailureTarget"
+  let info ← getConstInfo `BfgsVerification.LWhitening.stepLocalFailure
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.LWhitening.StepLocalFailureTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.LWhitening.stepLocalFailure"
+  logInfo "EXACT_TARGET_OK BfgsVerification.LWhitening.stepLocalFailure BfgsVerification.LWhitening.StepLocalFailureTarget"

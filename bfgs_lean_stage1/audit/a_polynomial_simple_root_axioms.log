@@ -1,0 +1,146 @@
+BfgsVerification.RealAlgebraicGeometry.rootAugment {n : ℕ} (F : BfgsVerification.Vec n × ℝ → ℝ)
+  (z : BfgsVerification.Vec n × ℝ) : BfgsVerification.Vec n × ℝ
+'BfgsVerification.RealAlgebraicGeometry.rootAugment' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.linear_vertical {n : ℕ} (D : BfgsVerification.Vec n × ℝ →L[ℝ] ℝ) (t : ℝ) :
+  D (0, t) = t * D (0, 1)
+'BfgsVerification.RealAlgebraicGeometry.linear_vertical' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootAugment_derivative_injective {n : ℕ} (D : BfgsVerification.Vec n × ℝ →L[ℝ] ℝ)
+  (hD : D (0, 1) ≠ 0) : Function.Injective ⇑((ContinuousLinearMap.fst ℝ (BfgsVerification.Vec n) ℝ).prod D)
+'BfgsVerification.RealAlgebraicGeometry.rootAugment_derivative_injective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootAugmentEquiv {n : ℕ} (D : BfgsVerification.Vec n × ℝ →L[ℝ] ℝ)
+  (hD : D (0, 1) ≠ 0) : (BfgsVerification.Vec n × ℝ) ≃L[ℝ] BfgsVerification.Vec n × ℝ
+'BfgsVerification.RealAlgebraicGeometry.rootAugmentEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootAugmentEquiv_apply {n : ℕ} (D : BfgsVerification.Vec n × ℝ →L[ℝ] ℝ)
+  (hD : D (0, 1) ≠ 0) (z : BfgsVerification.Vec n × ℝ) :
+  (BfgsVerification.RealAlgebraicGeometry.rootAugmentEquiv D hD) z = (z.1, D z)
+'BfgsVerification.RealAlgebraicGeometry.rootAugmentEquiv_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_smooth_root_germ {n : ℕ} {F : BfgsVerification.Vec n × ℝ → ℝ}
+  {a : BfgsVerification.Vec n} {b : ℝ} {k : WithTop ℕ∞} (hk : 1 ≤ k) (hF : ContDiffAt ℝ k F (a, b))
+  (hzero : F (a, b) = 0) (hD : (fderiv ℝ F (a, b)) (0, 1) ≠ 0) :
+  ∃ g,
+    g a = b ∧
+      ContDiffAt ℝ k g a ∧
+        (∀ᶠ (x : BfgsVerification.Vec n) in nhds a, F (x, g x) = 0) ∧
+          ∀ᶠ (z : BfgsVerification.Vec n × ℝ) in nhds (a, b), F z = 0 → z.2 = g z.1
+'BfgsVerification.RealAlgebraicGeometry.exists_smooth_root_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterPoint {n : ℕ} (x : BfgsVerification.Vec n) (t : ℝ) : Option (Fin n) → ℝ
+'BfgsVerification.RealAlgebraicGeometry.parameterPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterEval {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (z : BfgsVerification.Vec n × ℝ) : ℝ
+'BfgsVerification.RealAlgebraicGeometry.parameterEval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) : Polynomial ℝ
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_eval {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) (t : ℝ) :
+  Polynomial.eval t (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x) =
+    BfgsVerification.RealAlgebraicGeometry.parameterEval p (x, t)
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterCoordinate {n : ℕ} : Option (Fin n) → BfgsVerification.Vec n × ℝ →L[ℝ] ℝ
+'BfgsVerification.RealAlgebraicGeometry.parameterCoordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.analytic_parameterEval {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (z : BfgsVerification.Vec n × ℝ) : AnalyticAt ℝ (BfgsVerification.RealAlgebraicGeometry.parameterEval p) z
+'BfgsVerification.RealAlgebraicGeometry.analytic_parameterEval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterEval_vertical_derivative {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) (t : ℝ) :
+  (fderiv ℝ (BfgsVerification.RealAlgebraicGeometry.parameterEval p) (x, t)) (0, 1) =
+    Polynomial.eval t (Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x))
+'BfgsVerification.RealAlgebraicGeometry.parameterEval_vertical_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_smooth_root_box {n : ℕ} {F : BfgsVerification.Vec n × ℝ → ℝ}
+  {a : BfgsVerification.Vec n} {b : ℝ} (hF : ContDiffAt ℝ ⊤ F (a, b)) (hzero : F (a, b) = 0)
+  (hD : (fderiv ℝ F (a, b)) (0, 1) ≠ 0) :
+  ∃ g r δ,
+    0 < r ∧
+      0 < δ ∧
+        g a = b ∧
+          ContDiffOn ℝ (↑⊤) g (Metric.ball a r) ∧
+            ∀ x ∈ Metric.ball a r, dist (g x) b < δ ∧ ∀ (t : ℝ), dist t b < δ → (F (x, t) = 0 ↔ t = g x)
+'BfgsVerification.RealAlgebraicGeometry.exists_smooth_root_box' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_coordinate_band.{u_1} {σ : Type u_1} [Finite σ] (i : σ)
+  (b δ : ℝ) : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | dist (v i) b < δ}
+'BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_coordinate_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_parameter_ball {n : ℕ} (a : BfgsVerification.Vec n) {r : ℝ}
+  (hr : 0 < r) : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | (fun i => v (some i)) ∈ Metric.ball a r}
+'BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_parameter_ball' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.local_root_graph_semialgebraic {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (a : BfgsVerification.Vec n) (b : ℝ) {r δ : ℝ} (hr : 0 < r) (g : BfgsVerification.Vec n → ℝ)
+  (hroot :
+    ∀ x ∈ Metric.ball a r,
+      dist (g x) b < δ ∧
+        ∀ (t : ℝ), dist t b < δ → (BfgsVerification.RealAlgebraicGeometry.parameterEval p (x, t) = 0 ↔ t = g x)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    {v | (fun i => v (some i)) ∈ Metric.ball a r ∧ v none = g fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.local_root_graph_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_simple_root_chart {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (a : BfgsVerification.Vec n) (b : ℝ)
+  (hzero : Polynomial.eval b (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a) = 0)
+  (hsimple :
+    Polynomial.eval b (Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a)) ≠ 0) :
+  ∃ g r δ,
+    0 < r ∧
+      0 < δ ∧
+        g a = b ∧
+          ContDiffOn ℝ (↑⊤) g (Metric.ball a r) ∧
+            (∀ x ∈ Metric.ball a r,
+                dist (g x) b < δ ∧
+                  ∀ (t : ℝ),
+                    dist t b < δ → (BfgsVerification.RealAlgebraicGeometry.parameterEval p (x, t) = 0 ↔ t = g x)) ∧
+              BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+                {v | (fun i => v (some i)) ∈ Metric.ball a r ∧ v none = g fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.polynomial_simple_root_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_pi_ball {n : ℕ} (a : BfgsVerification.Vec n) {r : ℝ}
+  (hr : 0 < r) : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (Metric.ball a r)
+'BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_pi_ball' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_simple_root_local_projection {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (a : BfgsVerification.Vec n) (b : ℝ)
+  (hzero : Polynomial.eval b (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a) = 0)
+  (hsimple :
+    Polynomial.eval b (Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a)) ≠ 0) :
+  ∃ r δ,
+    0 < r ∧
+      0 < δ ∧
+        {x |
+              x ∈ Metric.ball a r ∧
+                ∃ t, dist t b < δ ∧ BfgsVerification.RealAlgebraicGeometry.parameterEval p (x, t) = 0} =
+            Metric.ball a r ∧
+          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+            {x |
+              x ∈ Metric.ball a r ∧
+                ∃ t, dist t b < δ ∧ BfgsVerification.RealAlgebraicGeometry.parameterEval p (x, t) = 0}
+'BfgsVerification.RealAlgebraicGeometry.polynomial_simple_root_local_projection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PolynomialFiberDerivativeTarget : Prop
+'BfgsVerification.PolynomialFiberDerivativeTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialFiberDerivative : BfgsVerification.PolynomialFiberDerivativeTarget
+'BfgsVerification.polynomialFiberDerivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialSimpleRootChartTarget : Prop
+'BfgsVerification.PolynomialSimpleRootChartTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialSimpleRootChart : BfgsVerification.PolynomialSimpleRootChartTarget
+'BfgsVerification.polynomialSimpleRootChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialSimpleRootProjectionTarget : Prop
+'BfgsVerification.PolynomialSimpleRootProjectionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialSimpleRootProjection : BfgsVerification.PolynomialSimpleRootProjectionTarget
+'BfgsVerification.polynomialSimpleRootProjection' depends on axioms: [propext, Classical.choice, Quot.sound]

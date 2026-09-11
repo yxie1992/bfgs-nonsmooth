@@ -1,3 +1,8 @@
+Current source reconciliation at milestone13: **verified**.
+See [TF_SOURCE_DETAILS_STATEMENT_REVIEW.md](TF_SOURCE_DETAILS_STATEMENT_REVIEW.md) and REPORT_STATUS.json for the authoritative
+line-by-line coverage. The chronological entries below preserve earlier
+obligations and must not be read as current pending status.
+
 # Module T source-to-proof inventory
 
 Source: `BFGS_MASTER_REPORT_LaTeX/report/chapters/T.tex`, read in full. Original source is unchanged.

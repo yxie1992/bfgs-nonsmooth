@@ -1,0 +1,68 @@
+BfgsVerification.ComparisonEnergyWarning.reference : BfgsVerification.Vec 2
+'BfgsVerification.ComparisonEnergyWarning.reference' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.moving (k : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.ComparisonEnergyWarning.moving' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.hessian (k : ℕ) : BfgsVerification.Mat 2
+'BfgsVerification.ComparisonEnergyWarning.hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.hessian_posDef (k : ℕ) :
+  Matrix.PosDef (BfgsVerification.ComparisonEnergyWarning.hessian k)
+'BfgsVerification.ComparisonEnergyWarning.hessian_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.reference_energy (k : ℕ) :
+  BfgsVerification.metricEnergy (BfgsVerification.ComparisonEnergyWarning.hessian k)
+      BfgsVerification.ComparisonEnergyWarning.reference =
+    1
+'BfgsVerification.ComparisonEnergyWarning.reference_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.moving_energy (k : ℕ) :
+  BfgsVerification.metricEnergy (BfgsVerification.ComparisonEnergyWarning.hessian k)
+      (BfgsVerification.ComparisonEnergyWarning.moving k) =
+    1 + (↑k + 1) ^ 2
+'BfgsVerification.ComparisonEnergyWarning.moving_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.moving_tendsto_reference :
+  Filter.Tendsto BfgsVerification.ComparisonEnergyWarning.moving Filter.atTop
+    (nhds BfgsVerification.ComparisonEnergyWarning.reference)
+'BfgsVerification.ComparisonEnergyWarning.moving_tendsto_reference' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.energy_increase_tendsto :
+  Filter.Tendsto
+    (fun k =>
+      BfgsVerification.metricEnergy (BfgsVerification.ComparisonEnergyWarning.hessian k)
+          (BfgsVerification.ComparisonEnergyWarning.moving k) -
+        BfgsVerification.metricEnergy (BfgsVerification.ComparisonEnergyWarning.hessian k)
+          BfgsVerification.ComparisonEnergyWarning.reference)
+    Filter.atTop Filter.atTop
+'BfgsVerification.ComparisonEnergyWarning.energy_increase_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget : Prop
+'BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning :
+  BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget
+'BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineProjection.range_mulVec_mul_invertible {n r : ℕ} (A : Matrix (Fin n) (Fin r) ℝ)
+  (B : BfgsVerification.Mat r) (hB : Matrix.det B ≠ 0) : Set.range (A * B).mulVec = Set.range A.mulVec
+'BfgsVerification.AffineProjection.range_mulVec_mul_invertible' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineProjection.matrix_image_constant {n r : ℕ} (A : Matrix (Fin r) (Fin n) ℝ)
+  (hA : BfgsVerification.AffineProjection.FullRowRank A) (R : BfgsVerification.FullBFGSRun n)
+  (gbar : ℕ → BfgsVerification.Vec r) (hg : ∀ (k : ℕ), A.transpose.mulVec (gbar k) = R.g k) (k : ℕ) :
+  Set.range (R.H k * A.transpose).mulVec = Set.range (R.H 0 * A.transpose).mulVec
+'BfgsVerification.AffineProjection.matrix_image_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineProjection.image_objective_matrix_image {n r : ℕ} (A : Matrix (Fin r) (Fin n) ℝ)
+  (hA : BfgsVerification.AffineProjection.FullRowRank A) (F : BfgsVerification.Vec r → ℝ)
+  (R : BfgsVerification.AdmissibleBFGSRun n fun x => F (A.mulVec x)) (k : ℕ) :
+  Set.range (R.H k * A.transpose).mulVec = Set.range (R.H 0 * A.transpose).mulVec
+'BfgsVerification.AffineProjection.image_objective_matrix_image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineProjection.ActualImageRangeTarget : Prop
+'BfgsVerification.AffineProjection.ActualImageRangeTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineProjection.actualImageRange : BfgsVerification.AffineProjection.ActualImageRangeTarget
+'BfgsVerification.AffineProjection.actualImageRange' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget
+EXACT_TARGET_OK BfgsVerification.AffineProjection.actualImageRange BfgsVerification.AffineProjection.ActualImageRangeTarget

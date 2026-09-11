@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 4,039 explicit
-theorems and 5,852 theorem declarations including generated auxiliaries. All 145
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 4,291 explicit
+theorems and 6,264 theorem declarations including generated auxiliaries. All 162
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_l_failure_check.log`.
+`audit/report_source_closure_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -51,9 +51,14 @@ The twelfth tranche verifies L's actual spectrum/global bad orbit and both liter
 local-copy failures with one fixed SPD initial matrix, plus all scalar/embedding
 geometry, A's path and special projection infrastructure, and C's spatial warning.
 See [audit/REPORT_L_FAILURE_STATEMENT_REVIEW.md](audit/REPORT_L_FAILURE_STATEMENT_REVIEW.md).
-L's fixed identity initialization and smooth-manifold/tangency, A's general
-semialgebraic closure, C's remaining uniform/higher-dimensional assertions, and
-final source reconciliation remain open.
+The thirteenth tranche verifies both actual identity-initialized local failure
+families, the actual smooth locally invariant stable manifold, C's uniform
+same-field endpoint estimates, A's rank-loss spectrum and local semialgebraic
+infrastructure, and T/F source details. See
+[audit/REPORT_SOURCE_CLOSURE_STATEMENT_REVIEW.md](audit/REPORT_SOURCE_CLOSURE_STATEMENT_REVIEW.md).
+A's general semialgebraic closure, C's higher-dimensional partial field/secant
+assertion and A-dependent alternative, and final source/evidence reconciliation
+remain open.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
 

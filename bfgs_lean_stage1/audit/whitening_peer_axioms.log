@@ -1,0 +1,509 @@
+BfgsVerification.AffineWhitening.objective {n : ℕ} (A : BfgsVerification.Mat n) (F : BfgsVerification.Vec n → ℝ) :
+  BfgsVerification.Vec n → ℝ
+'BfgsVerification.AffineWhitening.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.point {n : ℕ} (A : BfgsVerification.Mat n) (x : BfgsVerification.Vec n) :
+  BfgsVerification.Vec n
+'BfgsVerification.AffineWhitening.point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.metric {n : ℕ} (A H : BfgsVerification.Mat n) : BfgsVerification.Mat n
+'BfgsVerification.AffineWhitening.metric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.gradient {n : ℕ} (A : BfgsVerification.Mat n) (g : BfgsVerification.Vec n) :
+  BfgsVerification.Vec n
+'BfgsVerification.AffineWhitening.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.map_point {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (x : BfgsVerification.Vec n) : Matrix.mulVec A (BfgsVerification.AffineWhitening.point A x) = x
+'BfgsVerification.AffineWhitening.map_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.point_map {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (x : BfgsVerification.Vec n) : BfgsVerification.AffineWhitening.point A (Matrix.mulVec A x) = x
+'BfgsVerification.AffineWhitening.point_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.inverse_fullRowRank {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0) :
+  BfgsVerification.AffineProjection.FullRowRank A⁻¹
+'BfgsVerification.AffineWhitening.inverse_fullRowRank' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.gradient_inverse {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (g : BfgsVerification.Vec n) : A⁻¹.transpose.mulVec (BfgsVerification.AffineWhitening.gradient A g) = g
+'BfgsVerification.AffineWhitening.gradient_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.dot_gradient_point {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (g s : BfgsVerification.Vec n) :
+  BfgsVerification.dot (BfgsVerification.AffineWhitening.gradient A g) (BfgsVerification.AffineWhitening.point A s) =
+    BfgsVerification.dot g s
+'BfgsVerification.AffineWhitening.dot_gradient_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.step_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (H : BfgsVerification.Mat n) (g : BfgsVerification.Vec n) (a : ℝ) :
+  BfgsVerification.bfgsStep (BfgsVerification.AffineWhitening.metric A H)
+      (BfgsVerification.AffineWhitening.gradient A g) a =
+    BfgsVerification.AffineWhitening.point A (BfgsVerification.bfgsStep H g a)
+'BfgsVerification.AffineWhitening.step_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.update_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n) :
+  BfgsVerification.AffineWhitening.metric A (BfgsVerification.inverseBFGS H s y) =
+    BfgsVerification.inverseBFGS (BfgsVerification.AffineWhitening.metric A H)
+      (BfgsVerification.AffineWhitening.point A s) (BfgsVerification.AffineWhitening.gradient A y)
+'BfgsVerification.AffineWhitening.update_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.hasGradient_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x g : BfgsVerification.Vec n)
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  HasFDerivAt (BfgsVerification.AffineWhitening.objective A F)
+    (BfgsVerification.gradientFunctional (BfgsVerification.AffineWhitening.gradient A g))
+    (BfgsVerification.AffineWhitening.point A x)
+'BfgsVerification.AffineWhitening.hasGradient_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) :
+  BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.AffineWhitening.objective A F)
+'BfgsVerification.AffineWhitening.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run_x {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.AffineWhitening.run A hA R).x k = BfgsVerification.AffineWhitening.point A (R.x k)
+'BfgsVerification.AffineWhitening.run_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run_H {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.AffineWhitening.run A hA R).H k = BfgsVerification.AffineWhitening.metric A (R.H k)
+'BfgsVerification.AffineWhitening.run_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run_g {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.AffineWhitening.run A hA R).g k = BfgsVerification.AffineWhitening.gradient A (R.g k)
+'BfgsVerification.AffineWhitening.run_g' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run_alpha {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.AffineWhitening.run A hA R).α k = R.α k
+'BfgsVerification.AffineWhitening.run_alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run_value {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  BfgsVerification.AffineWhitening.objective A F ((BfgsVerification.AffineWhitening.run A hA R).x k) = F (R.x k)
+'BfgsVerification.AffineWhitening.run_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.query_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (x g : BfgsVerification.Vec n) (H : BfgsVerification.Mat n) (a : ℝ) :
+  BfgsVerification.AffineWhitening.point A x +
+      a •
+        BfgsVerification.bfgsStep (BfgsVerification.AffineWhitening.metric A H)
+          (BfgsVerification.AffineWhitening.gradient A g) 1 =
+    BfgsVerification.AffineWhitening.point A (x + a • BfgsVerification.bfgsStep H g 1)
+'BfgsVerification.AffineWhitening.query_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.linearEquiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0) :
+  BfgsVerification.Vec n ≃L[ℝ] BfgsVerification.Vec n
+'BfgsVerification.AffineWhitening.linearEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.linearEquiv_apply {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (x : BfgsVerification.Vec n) : (BfgsVerification.AffineWhitening.linearEquiv A hA) x = Matrix.mulVec A x
+'BfgsVerification.AffineWhitening.linearEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.differentiableAt_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n) :
+  DifferentiableAt ℝ (BfgsVerification.AffineWhitening.objective A F) (BfgsVerification.AffineWhitening.point A x) ↔
+    DifferentiableAt ℝ F x
+'BfgsVerification.AffineWhitening.differentiableAt_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.coordinateGradient_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n) :
+  BfgsVerification.coordinateGradient (BfgsVerification.AffineWhitening.objective A F)
+      (BfgsVerification.AffineWhitening.point A x) =
+    BfgsVerification.AffineWhitening.gradient A (BfgsVerification.coordinateGradient F x)
+'BfgsVerification.AffineWhitening.coordinateGradient_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.armijo_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x p g : BfgsVerification.Vec n) (c a : ℝ) :
+  BfgsVerification.DeterministicLineSearch.Armijo (BfgsVerification.AffineWhitening.objective A F)
+      (BfgsVerification.AffineWhitening.point A x) (BfgsVerification.AffineWhitening.point A p)
+      (BfgsVerification.AffineWhitening.gradient A g) c a ↔
+    BfgsVerification.DeterministicLineSearch.Armijo F x p g c a
+'BfgsVerification.AffineWhitening.armijo_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.wolfe_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x p g : BfgsVerification.Vec n) (c a : ℝ) :
+  BfgsVerification.DeterministicLineSearch.Wolfe (BfgsVerification.AffineWhitening.objective A F)
+      (BfgsVerification.AffineWhitening.point A x) (BfgsVerification.AffineWhitening.point A p)
+      (BfgsVerification.AffineWhitening.gradient A g) c a ↔
+    BfgsVerification.DeterministicLineSearch.Wolfe F x p g c a
+'BfgsVerification.AffineWhitening.wolfe_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.search_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x p g : BfgsVerification.Vec n) (c₁ c₂ : ℝ) (fuel : ℕ) (l : ℝ) (h : Option ℝ)
+  (a : ℝ) :
+  BfgsVerification.DeterministicLineSearch.search (BfgsVerification.AffineWhitening.objective A F)
+      (BfgsVerification.AffineWhitening.point A x) (BfgsVerification.AffineWhitening.point A p)
+      (BfgsVerification.AffineWhitening.gradient A g) c₁ c₂ fuel l h a =
+    BfgsVerification.DeterministicLineSearch.search F x p g c₁ c₂ fuel l h a
+'BfgsVerification.AffineWhitening.search_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.fromMetric_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n) (H : BfgsVerification.Mat n) (c₁ c₂ : ℝ) (fuel : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric (BfgsVerification.AffineWhitening.objective A F)
+      (BfgsVerification.AffineWhitening.point A x) (BfgsVerification.AffineWhitening.metric A H) c₁ c₂ fuel =
+    BfgsVerification.DeterministicLineSearch.fromMetric F x H c₁ c₂ fuel
+'BfgsVerification.AffineWhitening.fromMetric_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.PosDef H) :
+  BfgsVerification.Mat n
+'BfgsVerification.AffineWhitening.squareRoot' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot_square {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.PosDef H) :
+  BfgsVerification.AffineWhitening.squareRoot H hH * BfgsVerification.AffineWhitening.squareRoot H hH = H
+'BfgsVerification.AffineWhitening.squareRoot_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot_transpose {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.PosDef H) :
+  Matrix.transpose (BfgsVerification.AffineWhitening.squareRoot H hH) = BfgsVerification.AffineWhitening.squareRoot H hH
+'BfgsVerification.AffineWhitening.squareRoot_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot_det_ne_zero {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.PosDef H) :
+  Matrix.det (BfgsVerification.AffineWhitening.squareRoot H hH) ≠ 0
+'BfgsVerification.AffineWhitening.squareRoot_det_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot_initial_metric {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.PosDef H) :
+  BfgsVerification.AffineWhitening.metric (BfgsVerification.AffineWhitening.squareRoot H hH) H = 1
+'BfgsVerification.AffineWhitening.squareRoot_initial_metric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.whiten {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) :
+  BfgsVerification.AdmissibleBFGSRun n
+    (BfgsVerification.AffineWhitening.objective (BfgsVerification.AffineWhitening.squareRoot (R.H 0) ⋯) F)
+'BfgsVerification.AffineWhitening.whiten' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.whiten_initial {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) : (BfgsVerification.AffineWhitening.whiten R).H 0 = 1
+'BfgsVerification.AffineWhitening.whiten_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.fixed_initial_whitening {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (H₀ : BfgsVerification.Mat n) (hH : Matrix.PosDef H₀) (R : BfgsVerification.AdmissibleBFGSRun n F) (hR : R.H 0 = H₀) :
+  (BfgsVerification.AffineWhitening.run (BfgsVerification.AffineWhitening.squareRoot H₀ hH) ⋯ R).H 0 = 1
+'BfgsVerification.AffineWhitening.fixed_initial_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.fixed_family_identity.{u_1} {n : ℕ} {ι : Type u_1} {F : BfgsVerification.Vec n → ℝ}
+  (H₀ : BfgsVerification.Mat n) (hH : Matrix.PosDef H₀) (R : ι → BfgsVerification.AdmissibleBFGSRun n F)
+  (hR : ∀ (i : ι), (R i).H 0 = H₀) :
+  ∃ A,
+    A * A = H₀ ∧
+      Matrix.transpose A = A ∧
+        ∃ (hA : Matrix.det A ≠ 0),
+          (∀ (i : ι), (BfgsVerification.AffineWhitening.run A hA (R i)).H 0 = 1) ∧
+            ∀ (i : ι) (k fuel : ℕ),
+              BfgsVerification.DeterministicLineSearch.fromMetric (BfgsVerification.AffineWhitening.objective A F)
+                  ((BfgsVerification.AffineWhitening.run A hA (R i)).x k)
+                  ((BfgsVerification.AffineWhitening.run A hA (R i)).H k) (R i).c₁ (R i).c₂ fuel =
+                BfgsVerification.DeterministicLineSearch.fromMetric F ((R i).x k) ((R i).H k) (R i).c₁ (R i).c₂ fuel
+'BfgsVerification.AffineWhitening.fixed_family_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.minEigenvalue {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.IsHermitian H) : ℝ
+'BfgsVerification.AffineWhitening.minEigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.maxEigenvalue {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.IsHermitian H) : ℝ
+'BfgsVerification.AffineWhitening.maxEigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.minEigenvalue_le {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.IsHermitian H) (i : Fin n) : BfgsVerification.AffineWhitening.minEigenvalue H hH ≤ hH.eigenvalues i
+'BfgsVerification.AffineWhitening.minEigenvalue_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.le_maxEigenvalue {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.IsHermitian H) (i : Fin n) : hH.eigenvalues i ≤ BfgsVerification.AffineWhitening.maxEigenvalue H hH
+'BfgsVerification.AffineWhitening.le_maxEigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.minEigenvalue_pos {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) : 0 < BfgsVerification.AffineWhitening.minEigenvalue H ⋯
+'BfgsVerification.AffineWhitening.minEigenvalue_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.maxEigenvalue_pos {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) : 0 < BfgsVerification.AffineWhitening.maxEigenvalue H ⋯
+'BfgsVerification.AffineWhitening.maxEigenvalue_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.spectral_metric_bounds {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.IsHermitian H)
+  (a b : ℝ) (hl : ∀ (i : Fin n), a ≤ hH.eigenvalues i) (hu : ∀ (i : Fin n), hH.eigenvalues i ≤ b)
+  (x : BfgsVerification.Vec n) :
+  a * BfgsVerification.sqNorm x ≤ BfgsVerification.metricEnergy H x ∧
+    BfgsVerification.metricEnergy H x ≤ b * BfgsVerification.sqNorm x
+'BfgsVerification.AffineWhitening.spectral_metric_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.actual_extreme_metric_bounds {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.IsHermitian H) (x : BfgsVerification.Vec n) :
+  BfgsVerification.AffineWhitening.minEigenvalue H hH * BfgsVerification.sqNorm x ≤ BfgsVerification.metricEnergy H x ∧
+    BfgsVerification.metricEnergy H x ≤ BfgsVerification.AffineWhitening.maxEigenvalue H hH * BfgsVerification.sqNorm x
+'BfgsVerification.AffineWhitening.actual_extreme_metric_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot_sqNorm {n : ℕ} (H : BfgsVerification.Mat n) (hH : Matrix.PosDef H)
+  (x : BfgsVerification.Vec n) :
+  BfgsVerification.sqNorm (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x) =
+    BfgsVerification.metricEnergy H x
+'BfgsVerification.AffineWhitening.squareRoot_sqNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.squareRoot_norm_bounds {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) (x : BfgsVerification.Vec n) :
+  BfgsVerification.AffineWhitening.minEigenvalue H ⋯ * BfgsVerification.sqNorm x ≤
+      BfgsVerification.sqNorm (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x) ∧
+    BfgsVerification.sqNorm (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x) ≤
+      BfgsVerification.AffineWhitening.maxEigenvalue H ⋯ * BfgsVerification.sqNorm x
+'BfgsVerification.AffineWhitening.squareRoot_norm_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.min_sub_posSemidef {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) : Matrix.PosSemidef (H - BfgsVerification.AffineWhitening.minEigenvalue H ⋯ • 1)
+'BfgsVerification.AffineWhitening.min_sub_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.strongConvex_whitening {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) {F : BfgsVerification.Vec n → ℝ} {μ : ℝ} (hμ : 0 ≤ μ)
+  (hF : BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ μ F) :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ (μ * BfgsVerification.AffineWhitening.minEigenvalue H ⋯)
+    (BfgsVerification.AffineWhitening.objective (BfgsVerification.AffineWhitening.squareRoot H hH) F)
+'BfgsVerification.AffineWhitening.strongConvex_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.gradient_bound_whitening {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) (g : BfgsVerification.Vec n → BfgsVerification.Vec n) (L : ℝ)
+  (hg : ∀ (x y : BfgsVerification.Vec n), BfgsVerification.sqNorm (g x - g y) ≤ L ^ 2 * BfgsVerification.sqNorm (x - y))
+  (x y : BfgsVerification.Vec n) :
+  BfgsVerification.sqNorm
+      (BfgsVerification.AffineWhitening.gradient (BfgsVerification.AffineWhitening.squareRoot H hH)
+          (g (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x)) -
+        BfgsVerification.AffineWhitening.gradient (BfgsVerification.AffineWhitening.squareRoot H hH)
+          (g (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) y))) ≤
+    (L * BfgsVerification.AffineWhitening.maxEigenvalue H ⋯) ^ 2 * BfgsVerification.sqNorm (x - y)
+'BfgsVerification.AffineWhitening.gradient_bound_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.contDiff_whitening {n : ℕ} (A : BfgsVerification.Mat n)
+  {F : BfgsVerification.Vec n → ℝ} {k : WithTop ℕ∞} (hF : ContDiff ℝ k F) :
+  ContDiff ℝ k (BfgsVerification.AffineWhitening.objective A F)
+'BfgsVerification.AffineWhitening.contDiff_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.sublevels_compact_whitening {n : ℕ} (A : BfgsVerification.Mat n)
+  (hA : Matrix.det A ≠ 0) {F : BfgsVerification.Vec n → ℝ} (hF : ∀ (a : ℝ), IsCompact {x | F x ≤ a}) (a : ℝ) :
+  IsCompact {x | BfgsVerification.AffineWhitening.objective A F x ≤ a}
+'BfgsVerification.AffineWhitening.sublevels_compact_whitening' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineWhitening.zero_unique_whitening {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (hF : ∀ (x : BfgsVerification.Vec n), F x = 0 → x = 0) {x : BfgsVerification.Vec n}
+  (hx : BfgsVerification.AffineWhitening.objective A F x = 0) : x = 0
+'BfgsVerification.AffineWhitening.zero_unique_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.nonstationary_whitening {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (p : BfgsVerification.Vec n)
+  (hp : 0 ∉ BfgsVerification.ConvexSubdifferential.subdifferential F p) :
+  0 ∉
+    BfgsVerification.ConvexSubdifferential.subdifferential (BfgsVerification.AffineWhitening.objective A F)
+      (BfgsVerification.AffineWhitening.point A p)
+'BfgsVerification.AffineWhitening.nonstationary_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.coercive_of_compact_sublevels {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ∀ (a : ℝ), IsCompact {x | F x ≤ a}) : Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop
+'BfgsVerification.AffineWhitening.coercive_of_compact_sublevels' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineWhitening.point_continuous {n : ℕ} (A : BfgsVerification.Mat n) :
+  Continuous (BfgsVerification.AffineWhitening.point A)
+'BfgsVerification.AffineWhitening.point_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.metric_continuous {n : ℕ} (A : BfgsVerification.Mat n) :
+  Continuous (BfgsVerification.AffineWhitening.metric A)
+'BfgsVerification.AffineWhitening.metric_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.point_limit.{u_1} {n : ℕ} {ι : Type u_1} {l : Filter ι} (A : BfgsVerification.Mat n)
+  {x : ι → BfgsVerification.Vec n} {p : BfgsVerification.Vec n} (hx : Filter.Tendsto x l (nhds p)) :
+  Filter.Tendsto (fun i => BfgsVerification.AffineWhitening.point A (x i)) l
+    (nhds (BfgsVerification.AffineWhitening.point A p))
+'BfgsVerification.AffineWhitening.point_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.metric_limit_zero.{u_1} {n : ℕ} {ι : Type u_1} {l : Filter ι}
+  (A : BfgsVerification.Mat n) {H : ι → BfgsVerification.Mat n} (hH : Filter.Tendsto H l (nhds 0)) :
+  Filter.Tendsto (fun i => BfgsVerification.AffineWhitening.metric A (H i)) l (nhds 0)
+'BfgsVerification.AffineWhitening.metric_limit_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.starts_limit_zero {n : ℕ} (A : BfgsVerification.Mat n) {F : BfgsVerification.Vec n → ℝ}
+  (hA : Matrix.det A ≠ 0) (R : ℕ → BfgsVerification.AdmissibleBFGSRun n F)
+  (hx : Filter.Tendsto (fun m => (R m).x 0) Filter.atTop (nhds 0)) :
+  Filter.Tendsto (fun m => (BfgsVerification.AffineWhitening.run A hA (R m)).x 0) Filter.atTop (nhds 0)
+'BfgsVerification.AffineWhitening.starts_limit_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.run_pairing {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (j k : ℕ) (a : ℝ) :
+  BfgsVerification.dot ((BfgsVerification.AffineWhitening.run A hA R).g j)
+      (BfgsVerification.bfgsStep ((BfgsVerification.AffineWhitening.run A hA R).H k)
+        ((BfgsVerification.AffineWhitening.run A hA R).g k) a) =
+    BfgsVerification.dot (R.g j) (BfgsVerification.bfgsStep (R.H k) (R.g k) a)
+'BfgsVerification.AffineWhitening.run_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.strict_accept_equiv {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  BfgsVerification.AffineWhitening.objective A F ((BfgsVerification.AffineWhitening.run A hA R).x (k + 1)) <
+        BfgsVerification.AffineWhitening.objective A F ((BfgsVerification.AffineWhitening.run A hA R).x k) +
+          R.c₁ *
+            BfgsVerification.dot ((BfgsVerification.AffineWhitening.run A hA R).g k)
+              (BfgsVerification.bfgsStep ((BfgsVerification.AffineWhitening.run A hA R).H k)
+                ((BfgsVerification.AffineWhitening.run A hA R).g k)
+                ((BfgsVerification.AffineWhitening.run A hA R).α k)) ∧
+      R.c₂ *
+          BfgsVerification.dot ((BfgsVerification.AffineWhitening.run A hA R).g k)
+            (BfgsVerification.bfgsStep ((BfgsVerification.AffineWhitening.run A hA R).H k)
+              ((BfgsVerification.AffineWhitening.run A hA R).g k) ((BfgsVerification.AffineWhitening.run A hA R).α k)) <
+        BfgsVerification.dot ((BfgsVerification.AffineWhitening.run A hA R).g (k + 1))
+          (BfgsVerification.bfgsStep ((BfgsVerification.AffineWhitening.run A hA R).H k)
+            ((BfgsVerification.AffineWhitening.run A hA R).g k) ((BfgsVerification.AffineWhitening.run A hA R).α k)) ↔
+    F (R.x (k + 1)) <
+        F (R.x k) + R.c₁ * BfgsVerification.dot (R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) ∧
+      R.c₂ * BfgsVerification.dot (R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) <
+        BfgsVerification.dot (R.g (k + 1)) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))
+'BfgsVerification.AffineWhitening.strict_accept_equiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.queries_limit.{u_1} {n : ℕ} {ι : Type u_1} {l : Filter ι} (A : BfgsVerification.Mat n)
+  (hA : Matrix.det A ≠ 0) (x g : ι → BfgsVerification.Vec n) (H : ι → BfgsVerification.Mat n) (a : ι → ℝ)
+  (p : BfgsVerification.Vec n)
+  (hq : Filter.Tendsto (fun i => x i + a i • BfgsVerification.bfgsStep (H i) (g i) 1) l (nhds p)) :
+  Filter.Tendsto
+    (fun i =>
+      BfgsVerification.AffineWhitening.point A (x i) +
+        a i •
+          BfgsVerification.bfgsStep (BfgsVerification.AffineWhitening.metric A (H i))
+            (BfgsVerification.AffineWhitening.gradient A (g i)) 1)
+    l (nhds (BfgsVerification.AffineWhitening.point A p))
+'BfgsVerification.AffineWhitening.queries_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.uniform_locality.{u_1} {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  {F : BfgsVerification.Vec n → ℝ} (R : ℕ → BfgsVerification.AdmissibleBFGSRun n F) {ι : Type u_1} (length : ι → ℝ)
+  (allowed : ℕ → ι → Prop)
+  (hR :
+    ∀ U ∈ nhds 0,
+      ∃ N,
+        ∀ m ≥ N,
+          ∀ (k : ℕ),
+            (R m).x k ∈ U ∧
+              ∀ (q : ι), allowed k q → (R m).x k + length q • BfgsVerification.bfgsStep ((R m).H k) ((R m).g k) 1 ∈ U)
+  (U : Set (BfgsVerification.Vec n)) (hU : U ∈ nhds 0) :
+  ∃ N,
+    ∀ m ≥ N,
+      ∀ (k : ℕ),
+        (BfgsVerification.AffineWhitening.run A hA (R m)).x k ∈ U ∧
+          ∀ (q : ι),
+            allowed k q →
+              (BfgsVerification.AffineWhitening.run A hA (R m)).x k +
+                  length q •
+                    BfgsVerification.bfgsStep ((BfgsVerification.AffineWhitening.run A hA (R m)).H k)
+                      ((BfgsVerification.AffineWhitening.run A hA (R m)).g k) 1 ∈
+                U
+'BfgsVerification.AffineWhitening.uniform_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.secondMap {n : ℕ} (A : BfgsVerification.Mat n)
+  (B : BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n →L[ℝ] ℝ) :
+  BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n →L[ℝ] ℝ
+'BfgsVerification.AffineWhitening.secondMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.secondMap_apply {n : ℕ} (A : BfgsVerification.Mat n)
+  (B : BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n →L[ℝ] ℝ) (u v : BfgsVerification.Vec n) :
+  ((BfgsVerification.AffineWhitening.secondMap A B) u) v = (B (Matrix.mulVec A u)) (Matrix.mulVec A v)
+'BfgsVerification.AffineWhitening.secondMap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.fderiv_objective {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n) :
+  fderiv ℝ (BfgsVerification.AffineWhitening.objective A F) x =
+    (fderiv ℝ F (Matrix.mulVec A x)).comp (BfgsVerification.AffineProjection.matrixCLM A)
+'BfgsVerification.AffineWhitening.fderiv_objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.second_hasFDerivAt {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n)
+  (B : BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n →L[ℝ] ℝ)
+  (hB : HasFDerivAt (fderiv ℝ F) B (Matrix.mulVec A x)) :
+  HasFDerivAt (fderiv ℝ (BfgsVerification.AffineWhitening.objective A F))
+    (BfgsVerification.AffineWhitening.secondMap A B) x
+'BfgsVerification.AffineWhitening.second_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.bilinearMatrix_pairing {n : ℕ}
+  (B : BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n →L[ℝ] ℝ) (u v : BfgsVerification.Vec n) :
+  BfgsVerification.dot u (Matrix.mulVec (BfgsVerification.RadialHessian.bilinearMatrix B) v) = (B u) v
+'BfgsVerification.AffineWhitening.bilinearMatrix_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.bilinearMatrix_secondMap {n : ℕ} (A : BfgsVerification.Mat n)
+  (B : BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n →L[ℝ] ℝ) :
+  BfgsVerification.RadialHessian.bilinearMatrix (BfgsVerification.AffineWhitening.secondMap A B) =
+    Matrix.transpose A * BfgsVerification.RadialHessian.bilinearMatrix B * A
+'BfgsVerification.AffineWhitening.bilinearMatrix_secondMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.second_differentiableAt_iff {n : ℕ} (A : BfgsVerification.Mat n)
+  (hA : Matrix.det A ≠ 0) (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n) :
+  DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.AffineWhitening.objective A F)) x ↔
+    DifferentiableAt ℝ (fderiv ℝ F) (Matrix.mulVec A x)
+'BfgsVerification.AffineWhitening.second_differentiableAt_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineWhitening.hessian_formula {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n)
+  (hF : DifferentiableAt ℝ (fderiv ℝ F) (Matrix.mulVec A x)) :
+  BfgsVerification.RadialHessian.matrix (BfgsVerification.AffineWhitening.objective A F) x =
+    Matrix.transpose A * BfgsVerification.RadialHessian.matrix F (Matrix.mulVec A x) * A
+'BfgsVerification.AffineWhitening.hessian_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.hessian_quadratic {n : ℕ} (A : BfgsVerification.Mat n) (hA : Matrix.det A ≠ 0)
+  (F : BfgsVerification.Vec n → ℝ) (x v : BfgsVerification.Vec n)
+  (hF : DifferentiableAt ℝ (fderiv ℝ F) (Matrix.mulVec A x)) :
+  BfgsVerification.metricEnergy
+      (BfgsVerification.RadialHessian.matrix (BfgsVerification.AffineWhitening.objective A F) x) v =
+    BfgsVerification.metricEnergy (BfgsVerification.RadialHessian.matrix F (Matrix.mulVec A x)) (Matrix.mulVec A v)
+'BfgsVerification.AffineWhitening.hessian_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineWhitening.hessian_bounds_whitening {n : ℕ} [NeZero n] (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosDef H) (F : BfgsVerification.Vec n → ℝ) (x : BfgsVerification.Vec n)
+  (hF : DifferentiableAt ℝ (fderiv ℝ F) (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x)) (μ L : ℝ)
+  (hμ : 0 ≤ μ) (hL : 0 ≤ L)
+  (hb :
+    ∀ (v : BfgsVerification.Vec n),
+      μ * BfgsVerification.sqNorm v ≤
+          BfgsVerification.metricEnergy
+            (BfgsVerification.RadialHessian.matrix F
+              (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x))
+            v ∧
+        BfgsVerification.metricEnergy
+            (BfgsVerification.RadialHessian.matrix F
+              (Matrix.mulVec (BfgsVerification.AffineWhitening.squareRoot H hH) x))
+            v ≤
+          L * BfgsVerification.sqNorm v)
+  (v : BfgsVerification.Vec n) :
+  μ * BfgsVerification.AffineWhitening.minEigenvalue H ⋯ * BfgsVerification.sqNorm v ≤
+      BfgsVerification.metricEnergy
+        (BfgsVerification.RadialHessian.matrix
+          (BfgsVerification.AffineWhitening.objective (BfgsVerification.AffineWhitening.squareRoot H hH) F) x)
+        v ∧
+    BfgsVerification.metricEnergy
+        (BfgsVerification.RadialHessian.matrix
+          (BfgsVerification.AffineWhitening.objective (BfgsVerification.AffineWhitening.squareRoot H hH) F) x)
+        v ≤
+      L * BfgsVerification.AffineWhitening.maxEigenvalue H ⋯ * BfgsVerification.sqNorm v
+'BfgsVerification.AffineWhitening.hessian_bounds_whitening' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.initialMetric : BfgsVerification.Mat 2
+'BfgsVerification.LWhitening.initialMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.initialMetric_posDef : Matrix.PosDef BfgsVerification.LWhitening.initialMetric
+'BfgsVerification.LWhitening.initialMetric_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.coordinateMatrix : BfgsVerification.Mat 2
+'BfgsVerification.LWhitening.coordinateMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.coordinateMatrix_square :
+  BfgsVerification.LWhitening.coordinateMatrix * BfgsVerification.LWhitening.coordinateMatrix =
+    BfgsVerification.LWhitening.initialMetric
+'BfgsVerification.LWhitening.coordinateMatrix_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.coordinateMatrix_transpose :
+  Matrix.transpose BfgsVerification.LWhitening.coordinateMatrix = BfgsVerification.LWhitening.coordinateMatrix
+'BfgsVerification.LWhitening.coordinateMatrix_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.coordinateMatrix_invertible : Matrix.det BfgsVerification.LWhitening.coordinateMatrix ≠ 0
+'BfgsVerification.LWhitening.coordinateMatrix_invertible' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.lowerConstant : ℝ
+'BfgsVerification.LWhitening.lowerConstant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.upperConstant : ℝ
+'BfgsVerification.LWhitening.upperConstant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.lowerConstant_pos : 0 < BfgsVerification.LWhitening.lowerConstant
+'BfgsVerification.LWhitening.lowerConstant_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.upperConstant_pos : 0 < BfgsVerification.LWhitening.upperConstant
+'BfgsVerification.LWhitening.upperConstant_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smoothObjective : BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.LWhitening.smoothObjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.stepObjective : BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.LWhitening.stepObjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smoothBranch (i : Fin 4) : BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.LWhitening.smoothBranch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smoothGradient (i : Fin 4) (z : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.LWhitening.smoothGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_branch_regular (i : Fin 4) :
+  ContDiff ℝ 1 (BfgsVerification.LWhitening.smoothBranch i) ∧
+    BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ BfgsVerification.LWhitening.lowerConstant
+        (BfgsVerification.LWhitening.smoothBranch i) ∧
+      (∀ (z : BfgsVerification.Vec 2),
+          HasFDerivAt (BfgsVerification.LWhitening.smoothBranch i)
+            (BfgsVerification.gradientFunctional (BfgsVerification.LWhitening.smoothGradient i z)) z) ∧
+        ∀ (x y : BfgsVerification.Vec 2),
+          BfgsVerification.sqNorm
+              (BfgsVerification.LWhitening.smoothGradient i x - BfgsVerification.LWhitening.smoothGradient i y) ≤
+            BfgsVerification.LWhitening.upperConstant ^ 2 * BfgsVerification.sqNorm (x - y)
+'BfgsVerification.LWhitening.smooth_branch_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_objective_eq_max (z : BfgsVerification.Vec 2) :
+  BfgsVerification.LWhitening.smoothObjective z =
+    Finset.univ.sup' ⋯ fun i => BfgsVerification.LWhitening.smoothBranch i z
+'BfgsVerification.LWhitening.smooth_objective_eq_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_strongConvex :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ BfgsVerification.LWhitening.lowerConstant
+    BfgsVerification.LWhitening.smoothObjective
+'BfgsVerification.LWhitening.smooth_strongConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_strongConvex :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ BfgsVerification.LWhitening.lowerConstant
+    BfgsVerification.LWhitening.stepObjective
+'BfgsVerification.LWhitening.step_strongConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_zero : BfgsVerification.LWhitening.smoothObjective 0 = 0
+'BfgsVerification.LWhitening.smooth_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_zero : BfgsVerification.LWhitening.stepObjective 0 = 0
+'BfgsVerification.LWhitening.step_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_unique_zero {z : BfgsVerification.Vec 2}
+  (hz : BfgsVerification.LWhitening.smoothObjective z = 0) : z = 0
+'BfgsVerification.LWhitening.smooth_unique_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_unique_zero {z : BfgsVerification.Vec 2}
+  (hz : BfgsVerification.LWhitening.stepObjective z = 0) : z = 0
+'BfgsVerification.LWhitening.step_unique_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_compact_sublevel (a : ℝ) :
+  IsCompact {z | BfgsVerification.LWhitening.smoothObjective z ≤ a}
+'BfgsVerification.LWhitening.smooth_compact_sublevel' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_compact_sublevel (a : ℝ) :
+  IsCompact {z | BfgsVerification.LWhitening.stepObjective z ≤ a}
+'BfgsVerification.LWhitening.step_compact_sublevel' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_coercive :
+  Filter.Tendsto BfgsVerification.LWhitening.smoothObjective (Filter.cocompact (BfgsVerification.Vec 2)) Filter.atTop
+'BfgsVerification.LWhitening.smooth_coercive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_coercive :
+  Filter.Tendsto BfgsVerification.LWhitening.stepObjective (Filter.cocompact (BfgsVerification.Vec 2)) Filter.atTop
+'BfgsVerification.LWhitening.step_coercive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_lower (z : BfgsVerification.Vec 2) :
+  BfgsVerification.LWhitening.lowerConstant / 2 * BfgsVerification.sqNorm z ≤
+    BfgsVerification.LWhitening.smoothObjective z
+'BfgsVerification.LWhitening.smooth_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_lower (z : BfgsVerification.Vec 2) :
+  BfgsVerification.LWhitening.lowerConstant / 2 * BfgsVerification.sqNorm z ≤
+    BfgsVerification.LWhitening.stepObjective z
+'BfgsVerification.LWhitening.step_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.smooth_nonsmooth_origin : ¬DifferentiableAt ℝ BfgsVerification.LWhitening.smoothObjective 0
+'BfgsVerification.LWhitening.smooth_nonsmooth_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_nonsmooth_origin : ¬DifferentiableAt ℝ BfgsVerification.LWhitening.stepObjective 0
+'BfgsVerification.LWhitening.step_nonsmooth_origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LWhitening.step_actual_hessian {z : BfgsVerification.Vec 2}
+  (hd : DifferentiableAt ℝ BfgsVerification.LWhitening.stepObjective z) :
+  DifferentiableAt ℝ (fderiv ℝ BfgsVerification.LWhitening.stepObjective) z ∧
+    BfgsVerification.RadialHessian.matrix BfgsVerification.LWhitening.stepObjective z =
+      BfgsVerification.LEmbedding.mu • BfgsVerification.LWhitening.initialMetric
+'BfgsVerification.LWhitening.step_actual_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]

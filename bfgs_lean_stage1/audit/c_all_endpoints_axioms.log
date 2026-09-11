@@ -1,0 +1,330 @@
+BfgsVerification.PlanarAllPairs.eligible_step_ne_zero {F : BfgsVerification.Vec 2 → ℝ} {c₁ c₂ : ℝ}
+  {x z g h : BfgsVerification.Vec 2} (hp : BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h) :
+  z - x ≠ 0
+'BfgsVerification.PlanarAllPairs.eligible_step_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.eligible_normalized_descent {F : BfgsVerification.Vec 2 → ℝ} {c₁ c₂ : ℝ}
+  {x z g h : BfgsVerification.Vec 2} (hp : BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h) :
+  BfgsVerification.dot g (BfgsVerification.PlanarNormalGeometry.normalized (z - x)) ≤ 0
+'BfgsVerification.PlanarAllPairs.eligible_normalized_descent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.eligible_normalized_wolfe {F : BfgsVerification.Vec 2 → ℝ} {c₁ c₂ : ℝ}
+  {x z g h : BfgsVerification.Vec 2} (hp : BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h) :
+  (1 - c₂) * -BfgsVerification.dot g (BfgsVerification.PlanarNormalGeometry.normalized (z - x)) ≤
+    BfgsVerification.dot (h - g) (BfgsVerification.PlanarNormalGeometry.normalized (z - x))
+'BfgsVerification.PlanarAllPairs.eligible_normalized_wolfe' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.compact_pair_transversality {F : BfgsVerification.Vec 2 → ℝ} {c₁ c₂ : ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {Q : Set (BfgsVerification.Vec 2)} (hQ : IsCompact Q) (hc₂ : c₂ < 1)
+  (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2) (hW : ∀ p ∈ Q, ContinuousAt W p)
+  (hpos : ∀ p ∈ Q, ∀ a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p, 0 < BfgsVerification.dot a (W p))
+  (hcommon :
+    ∀ p ∈ Q,
+      ∀ a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+        ∀ b ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+          BfgsVerification.dot a (W p) = BfgsVerification.dot b (W p)) :
+  ∃ κ,
+    0 < κ ∧
+      ∃ δ,
+        0 < δ ∧
+          ∀ x ∈ Q,
+            ∀ z ∈ Q,
+              ∀ (g h : BfgsVerification.Vec 2),
+                BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+                  ‖z - x‖ < δ →
+                    ∀ θ ∈ Set.Icc 0 1,
+                      κ ≤
+                        |BfgsVerification.HomogeneousPlanar.pairDet
+                            (BfgsVerification.PlanarNormalGeometry.normalized (z - x)) (W (x + θ • (z - x)))|
+'BfgsVerification.PlanarAllPairs.compact_pair_transversality' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.compact_pair_transversality_length {F : BfgsVerification.Vec 2 → ℝ} {c₁ c₂ : ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {Q : Set (BfgsVerification.Vec 2)} (hQ : IsCompact Q) (hc₂ : c₂ < 1)
+  (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2) (hW : ∀ p ∈ Q, ContinuousAt W p)
+  (hpos : ∀ p ∈ Q, ∀ a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p, 0 < BfgsVerification.dot a (W p))
+  (hcommon :
+    ∀ p ∈ Q,
+      ∀ a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+        ∀ b ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+          BfgsVerification.dot a (W p) = BfgsVerification.dot b (W p)) :
+  ∃ κ,
+    0 < κ ∧
+      ∃ δ,
+        0 < δ ∧
+          ∀ x ∈ Q,
+            ∀ z ∈ Q,
+              ∀ (g h : BfgsVerification.Vec 2),
+                BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+                  ‖z - x‖ < δ →
+                    ∀ θ ∈ Set.Icc 0 1,
+                      κ * ‖BfgsVerification.euclideanVector (z - x)‖ ≤
+                        |BfgsVerification.HomogeneousPlanar.pairDet (z - x) (W (x + θ • (z - x)))|
+'BfgsVerification.PlanarAllPairs.compact_pair_transversality_length' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAllPairs.common_pairing_neighborhood {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {m : ℕ} (points : Fin m → BfgsVerification.Vec 2)
+  (charts : (i : Fin m) → BfgsVerification.PlanarCornerCharts.ConvexCornerChart F (points i))
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hcorner : ∀ (i : Fin m), ∀ᶠ (z : BfgsVerification.Vec 2) in nhds (points i), W z = deriv (charts i).curve (F z))
+  (hcover : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ∃ i, x = points i) :
+  ∃ N,
+    IsOpen N ∧
+      K ⊆ N ∧
+        ∀ x ∈ N,
+          ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+            ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+              BfgsVerification.dot g (W x) = BfgsVerification.dot h (W x)
+'BfgsVerification.PlanarAllPairs.common_pairing_neighborhood' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.exists_pairwise_structured_field {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) :
+  ∃ m χ v,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      ∃ N η,
+        0 < η ∧
+          IsOpen N ∧
+            K ⊆ N ∧
+              (∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) U) ∧
+                (∀ x ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                      η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                  (∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) ∧
+                    (∀ x ∈ N,
+                        ContDiffAt ℝ 2 F x ∨
+                          ∃ i,
+                            ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+                              BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z)) ∧
+                      ∀ x ∈ N,
+                        ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                          ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                            BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+                              BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field hF χ v x)
+'BfgsVerification.PlanarAllPairs.exists_pairwise_structured_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAllPairs.structured_all_pair_transport {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K N : Set (BfgsVerification.Vec 2)} (hK : IsCompact K) (hN : IsOpen N) (hKN : K ⊆ N)
+  {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ} {v : Fin m → ℝ → BfgsVerification.Vec 2}
+  (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) {η : ℝ} (hη : 0 < η)
+  (hLip : ∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) U)
+  (hvis :
+    ∀ x ∈ N,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x))
+  (hv : ∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x))
+  (hstruct :
+    ∀ x ∈ N,
+      ContDiffAt ℝ 2 F x ∨
+        ∃ i,
+          ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z))
+  (hcommon :
+    ∀ x ∈ N,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+          BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+            BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field hF χ v x))
+  {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₂ : c₂ < 1) :
+  ∃ U Q,
+    IsOpen U ∧
+      K ⊆ U ∧
+        closure U ⊆ Q ∧
+          IsCompact Q ∧
+            Q ⊆ N ∧
+              ∃ κ δ C,
+                0 < κ ∧
+                  0 < δ ∧
+                    0 ≤ C ∧
+                      ∀ x ∈ U,
+                        ∀ z ∈ U,
+                          ∀ (g h : BfgsVerification.Vec 2),
+                            BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+                              ‖z - x‖ < δ →
+                                (∀ θ ∈ Set.Icc 0 1,
+                                    x + θ • (z - x) ∈ Q ∧
+                                      κ * ‖BfgsVerification.euclideanVector (z - x)‖ ≤
+                                        |BfgsVerification.HomogeneousPlanar.pairDet (z - x)
+                                            (BfgsVerification.PlanarObjectiveField.field hF χ v (x + θ • (z - x)))|) ∧
+                                  ∃ lam β,
+                                    0 < lam ∧
+                                      BfgsVerification.PlanarObjectiveField.field hF χ v z =
+                                          lam • BfgsVerification.PlanarObjectiveField.field hF χ v x + β • (z - x) ∧
+                                        |Real.log lam| ≤ C * BfgsVerification.TransportedCertificate.pairDecrease x z g
+'BfgsVerification.PlanarAllPairs.structured_all_pair_transport' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAllPairs.square_bound_of_log_bound {lam C d : ℝ} (hlam : 0 < lam) (hd : 0 ≤ d) (hd1 : d ≤ 1)
+  (hlog : |Real.log lam| ≤ C * d) : lam ^ 2 ≤ 1 + (Real.exp (2 * C) - 1) * d
+'BfgsVerification.PlanarAllPairs.square_bound_of_log_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.source_all_pair_transport {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁)
+  (hc₂ : c₂ < 1) :
+  ∃ m χ v,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      ∃ U Q,
+        IsOpen U ∧
+          K ⊆ U ∧
+            closure U ⊆ Q ∧
+              IsCompact Q ∧
+                ∃ η κ δ C C',
+                  0 < η ∧
+                    0 < κ ∧
+                      0 < δ ∧
+                        0 ≤ C ∧
+                          0 ≤ C' ∧
+                            (∀ x ∈ Q,
+                                ∃ L,
+                                  ∃ V ∈ nhds x,
+                                    LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) V) ∧
+                              (∀ x ∈ Q,
+                                  ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                                    η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                                (∀ x ∈ Q,
+                                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                                      ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                                        BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+                                          BfgsVerification.dot h
+                                            (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                                  ∀ x ∈ U,
+                                    ∀ z ∈ U,
+                                      ∀ (g h : BfgsVerification.Vec 2),
+                                        BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+                                          ‖BfgsVerification.euclideanVector (z - x)‖ < δ →
+                                            (∀ θ ∈ Set.Icc 0 1,
+                                                x + θ • (z - x) ∈ Q ∧
+                                                  κ * ‖BfgsVerification.euclideanVector (z - x)‖ ≤
+                                                    |BfgsVerification.HomogeneousPlanar.pairDet (z - x)
+                                                        (BfgsVerification.PlanarObjectiveField.field hF χ v
+                                                          (x + θ • (z - x)))|) ∧
+                                              ∃ lam β,
+                                                0 < lam ∧
+                                                  BfgsVerification.PlanarObjectiveField.field hF χ v z =
+                                                      lam • BfgsVerification.PlanarObjectiveField.field hF χ v x +
+                                                        β • (z - x) ∧
+                                                    |Real.log lam| ≤
+                                                        C * BfgsVerification.TransportedCertificate.pairDecrease x z g ∧
+                                                      (BfgsVerification.TransportedCertificate.pairDecrease x z g ≤ 1 →
+                                                        lam ^ 2 ≤
+                                                          1 +
+                                                            C' *
+                                                              BfgsVerification.TransportedCertificate.pairDecrease x z
+                                                                g)
+'BfgsVerification.PlanarAllPairs.source_all_pair_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget : Prop
+'BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAllPairs.sourceAllPairTransport : BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget
+'BfgsVerification.PlanarAllPairs.sourceAllPairTransport' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.exists_all_endpoint_field {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) {σ : ℝ} (hσ : 0 < σ) :
+  ∃ m χ v,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      ∃ N η,
+        0 < η ∧
+          IsOpen N ∧
+            K ⊆ N ∧
+              (∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) U) ∧
+                (∀ x ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                      η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                  (∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) ∧
+                    (∀ x ∈ N,
+                        ContDiffAt ℝ 2 F x ∨
+                          ∃ i,
+                            ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+                              BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z)) ∧
+                      (∀ x ∈ N,
+                          ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                            ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                              BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+                                BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                        ∀ p ∈ K,
+                          BfgsVerification.PlanarCrossing.LocalSecantControl F
+                            (BfgsVerification.PlanarObjectiveField.field hF χ v) σ p
+'BfgsVerification.PlanarAllPairs.exists_all_endpoint_field' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁)
+  (hc₂ : c₂ < 1) :
+  ∃ m χ v,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      ∃ U Q,
+        IsOpen U ∧
+          K ⊆ U ∧
+            closure U ⊆ Q ∧
+              IsCompact Q ∧
+                ∃ η κ δ C C' C₀,
+                  0 < η ∧
+                    0 < κ ∧
+                      0 < δ ∧
+                        0 ≤ C ∧
+                          0 ≤ C' ∧
+                            0 ≤ C₀ ∧
+                              (∀ x ∈ Q,
+                                  ∃ L,
+                                    ∃ V ∈ nhds x,
+                                      LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) V) ∧
+                                (∀ x ∈ Q,
+                                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                                      η ≤
+                                        BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                                  (∀ x ∈ Q,
+                                      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                                        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                                          BfgsVerification.dot g
+                                              (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+                                            BfgsVerification.dot h
+                                              (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                                    ∀ x ∈ U,
+                                      ∀ z ∈ U,
+                                        ∀ (g h : BfgsVerification.Vec 2),
+                                          BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+                                            ‖BfgsVerification.euclideanVector (z - x)‖ < δ →
+                                              (∀ θ ∈ Set.Icc 0 1,
+                                                  x + θ • (z - x) ∈ Q ∧
+                                                    κ * ‖BfgsVerification.euclideanVector (z - x)‖ ≤
+                                                      |BfgsVerification.HomogeneousPlanar.pairDet (z - x)
+                                                          (BfgsVerification.PlanarObjectiveField.field hF χ v
+                                                            (x + θ • (z - x)))|) ∧
+                                                BfgsVerification.dot (h - g)
+                                                          (BfgsVerification.PlanarObjectiveField.field hF χ v z) ^
+                                                        2 /
+                                                      BfgsVerification.TransportedCertificate.pairCurvature x z g h ≤
+                                                    C₀ ∧
+                                                  ∃ lam β,
+                                                    0 < lam ∧
+                                                      BfgsVerification.PlanarObjectiveField.field hF χ v z =
+                                                          lam • BfgsVerification.PlanarObjectiveField.field hF χ v x +
+                                                            β • (z - x) ∧
+                                                        |Real.log lam| ≤
+                                                            C *
+                                                              BfgsVerification.TransportedCertificate.pairDecrease x z
+                                                                g ∧
+                                                          (BfgsVerification.TransportedCertificate.pairDecrease x z g ≤
+                                                              1 →
+                                                            lam ^ 2 ≤
+                                                              1 +
+                                                                C' *
+                                                                  BfgsVerification.TransportedCertificate.pairDecrease x
+                                                                    z g)
+'BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget : Prop
+'BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates :
+  BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget
+'BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.PlanarAllPairs.source_all_pair_transport
+EXACT_TARGET_OK BfgsVerification.PlanarAllPairs.sourceAllPairTransport
+EXACT_TARGET_OK BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates
+EXACT_TARGET_OK BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates

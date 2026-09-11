@@ -378,3 +378,36 @@ as is smooth stable-manifold regularity/tangency. A's general semialgebraic
 application/rank-loss spectrum, C's remaining uniform and higher-dimensional
 partial statements, and final family/source/synthesis/evidence reconciliation
 remain active obligations. Original research sources are unchanged.
+
+
+## Thirteenth milestone: identity initialization and invariant stable manifold
+
+The frozen pinned build and full transitive axiom audit passed 4,291 explicit
+theorems, 6,264 total theorem declarations including generated auxiliaries, and
+162 registered exact targets in 543 Lean files. Only propext, Classical.choice
+and Quot.sound occur. Evidence: audit/report_source_closure_check.log,
+audit/build.log, audit/axioms.log, audit/STATUS.json and the frozen source hashes.
+
+Both actual L local failure families now use identity initialization for one
+fixed objective each, with all exact search histories, actual query derivatives,
+strict Armijo/weak Wolfe, positive nonstationary limits and uniform query
+locality. Actual transformed strong-convexity/Lipschitz/Hessian constants are
+derived from the fixed SPD square root. The actual L return map now has a
+smooth embedded two-dimensional locally invariant stable manifold, with actual
+stable tangent space and positive physical scales. These are conclusions, not
+assumed orbit or spectral data.
+
+C's same constructed field satisfies all three uniform estimates for every
+sufficiently close eligible endpoint pair. A's literal rank-loss Hessian spectrum,
+genuine univariate cells and actual arbitrary-degree simple-root local charts
+are checked. T/F source details are closed; G is covered with its explicitly
+documented accessible/active-span correction and actual objective counterexample.
+See audit/REPORT_SOURCE_CLOSURE_STATEMENT_REVIEW.md and its linked independent
+reviews and delivered-only reproduction scripts.
+
+The entire report remains incomplete. A still needs general nonlinear
+semialgebraic projection and finite smooth-path decomposition/application; C
+still needs its arbitrary-dimensional constant-rank field/secant partial
+construction and A-dependent alternative. Final numerical-display, historical
+source, synthesis and evidence reconciliation remain active. Original sources
+are preserved, including every disputed claim and documented correction.

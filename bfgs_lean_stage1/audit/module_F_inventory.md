@@ -1,3 +1,8 @@
+Current source reconciliation at milestone13: **verified with the documented line-search proof replacement**.
+See [TF_SOURCE_DETAILS_STATEMENT_REVIEW.md](TF_SOURCE_DETAILS_STATEMENT_REVIEW.md) and REPORT_STATUS.json for the authoritative
+line-by-line coverage. The chronological entries below preserve earlier
+obligations and must not be read as current pending status.
+
 # Module F retained-claim inventory
 
 Source `BFGS_MASTER_REPORT_LaTeX/report/chapters/families.tex` read in full. No

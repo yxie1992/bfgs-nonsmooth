@@ -669,3 +669,56 @@ example : BfgsVerification.LGlobalTargets.SpectrumTarget := BfgsVerification.LGl
 #print BfgsVerification.LGlobalTargets.LocalInverseTarget
 example : BfgsVerification.LGlobalTargets.LocalInverseTarget := BfgsVerification.LGlobalTargets.localInverse
 #print axioms BfgsVerification.LGlobalTargets.localInverse
+
+/- Thirteenth milestone: identity failures, invariant manifold and source details. -/
+#print BfgsVerification.AffineRankLoss.RankLossCurvatureTarget
+example : BfgsVerification.AffineRankLoss.RankLossCurvatureTarget := BfgsVerification.AffineRankLoss.rankLossCurvature
+#print axioms BfgsVerification.AffineRankLoss.rankLossCurvature
+#print BfgsVerification.LWhitening.SmoothIdentityFailureTarget
+example : BfgsVerification.LWhitening.SmoothIdentityFailureTarget := BfgsVerification.LWhitening.smoothIdentityFailure
+#print axioms BfgsVerification.LWhitening.smoothIdentityFailure
+#print BfgsVerification.LWhitening.StepIdentityFailureTarget
+example : BfgsVerification.LWhitening.StepIdentityFailureTarget := BfgsVerification.LWhitening.stepIdentityFailure
+#print axioms BfgsVerification.LWhitening.stepIdentityFailure
+#print BfgsVerification.LWhitening.SmoothLocalFailureTarget
+example : BfgsVerification.LWhitening.SmoothLocalFailureTarget := BfgsVerification.LWhitening.smoothLocalFailure
+#print axioms BfgsVerification.LWhitening.smoothLocalFailure
+#print BfgsVerification.LWhitening.StepLocalFailureTarget
+example : BfgsVerification.LWhitening.StepLocalFailureTarget := BfgsVerification.LWhitening.stepLocalFailure
+#print axioms BfgsVerification.LWhitening.stepLocalFailure
+#print BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget
+example : BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget := BfgsVerification.PlanarAllPairs.sourceAllPairTransport
+#print axioms BfgsVerification.PlanarAllPairs.sourceAllPairTransport
+#print BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget
+example : BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget := BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates
+#print axioms BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates
+#print BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget
+example : BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget := BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+#print axioms BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+#print BfgsVerification.AffineProjection.ActualImageRangeTarget
+example : BfgsVerification.AffineProjection.ActualImageRangeTarget := BfgsVerification.AffineProjection.actualImageRange
+#print axioms BfgsVerification.AffineProjection.actualImageRange
+#print BfgsVerification.LReturnStableGraph.LStableManifoldTarget
+example : BfgsVerification.LReturnStableGraph.LStableManifoldTarget := BfgsVerification.LReturnStableGraph.lStableManifold
+#print axioms BfgsVerification.LReturnStableGraph.lStableManifold
+#print BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget
+example : BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget := BfgsVerification.LReturnStableGraph.lStableInvariantManifold
+#print axioms BfgsVerification.LReturnStableGraph.lStableInvariantManifold
+#print BfgsVerification.UnivariateSignBoundaryTarget
+example : BfgsVerification.UnivariateSignBoundaryTarget := BfgsVerification.univariateSignBoundary
+#print axioms BfgsVerification.univariateSignBoundary
+#print BfgsVerification.UnivariateConvexCoverTarget
+example : BfgsVerification.UnivariateConvexCoverTarget := BfgsVerification.univariateConvexCover
+#print axioms BfgsVerification.univariateConvexCover
+#print BfgsVerification.UnivariateCellCoverTarget
+example : BfgsVerification.UnivariateCellCoverTarget := BfgsVerification.univariateCellCover
+#print axioms BfgsVerification.univariateCellCover
+#print BfgsVerification.PolynomialFiberDerivativeTarget
+example : BfgsVerification.PolynomialFiberDerivativeTarget := BfgsVerification.polynomialFiberDerivative
+#print axioms BfgsVerification.polynomialFiberDerivative
+#print BfgsVerification.PolynomialSimpleRootChartTarget
+example : BfgsVerification.PolynomialSimpleRootChartTarget := BfgsVerification.polynomialSimpleRootChart
+#print axioms BfgsVerification.polynomialSimpleRootChart
+#print BfgsVerification.PolynomialSimpleRootProjectionTarget
+example : BfgsVerification.PolynomialSimpleRootProjectionTarget := BfgsVerification.polynomialSimpleRootProjection
+#print axioms BfgsVerification.polynomialSimpleRootProjection

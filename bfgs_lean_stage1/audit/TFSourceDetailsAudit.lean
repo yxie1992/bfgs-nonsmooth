@@ -1,0 +1,45 @@
+import BfgsVerification.ComparisonEnergyWarning
+import BfgsVerification.AffineImageRanges
+
+set_option pp.proofs false
+#check BfgsVerification.ComparisonEnergyWarning.reference
+#print axioms BfgsVerification.ComparisonEnergyWarning.reference
+#check BfgsVerification.ComparisonEnergyWarning.moving
+#print axioms BfgsVerification.ComparisonEnergyWarning.moving
+#check BfgsVerification.ComparisonEnergyWarning.hessian
+#print axioms BfgsVerification.ComparisonEnergyWarning.hessian
+#check BfgsVerification.ComparisonEnergyWarning.hessian_posDef
+#print axioms BfgsVerification.ComparisonEnergyWarning.hessian_posDef
+#check BfgsVerification.ComparisonEnergyWarning.reference_energy
+#print axioms BfgsVerification.ComparisonEnergyWarning.reference_energy
+#check BfgsVerification.ComparisonEnergyWarning.moving_energy
+#print axioms BfgsVerification.ComparisonEnergyWarning.moving_energy
+#check BfgsVerification.ComparisonEnergyWarning.moving_tendsto_reference
+#print axioms BfgsVerification.ComparisonEnergyWarning.moving_tendsto_reference
+#check BfgsVerification.ComparisonEnergyWarning.energy_increase_tendsto
+#print axioms BfgsVerification.ComparisonEnergyWarning.energy_increase_tendsto
+#check BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget
+#print axioms BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget
+#check BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+#print axioms BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+#check BfgsVerification.AffineProjection.range_mulVec_mul_invertible
+#print axioms BfgsVerification.AffineProjection.range_mulVec_mul_invertible
+#check BfgsVerification.AffineProjection.matrix_image_constant
+#print axioms BfgsVerification.AffineProjection.matrix_image_constant
+#check BfgsVerification.AffineProjection.image_objective_matrix_image
+#print axioms BfgsVerification.AffineProjection.image_objective_matrix_image
+#check BfgsVerification.AffineProjection.ActualImageRangeTarget
+#print axioms BfgsVerification.AffineProjection.ActualImageRangeTarget
+#check BfgsVerification.AffineProjection.actualImageRange
+#print axioms BfgsVerification.AffineProjection.actualImageRange
+
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning"
+  logInfo "EXACT_TARGET_OK BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget"
+  let info ← getConstInfo `BfgsVerification.AffineProjection.actualImageRange
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.AffineProjection.ActualImageRangeTarget)
+  unless ok do throwError "wrong exact target: BfgsVerification.AffineProjection.actualImageRange"
+  logInfo "EXACT_TARGET_OK BfgsVerification.AffineProjection.actualImageRange BfgsVerification.AffineProjection.ActualImageRangeTarget"

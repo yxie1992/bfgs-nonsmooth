@@ -344,7 +344,43 @@ REPORT_L_FAILURE_TARGETS = {
     "LGlobalTargets_localInverse_verified":
         ("BfgsVerification.LGlobalTargets.localInverse", "BfgsVerification.LGlobalTargets.LocalInverseTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS
+REPORT_SOURCE_CLOSURE_TARGETS = {
+    "AffineRankLoss_rankLossCurvature_verified":
+        ("BfgsVerification.AffineRankLoss.rankLossCurvature", "BfgsVerification.AffineRankLoss.RankLossCurvatureTarget"),
+    "LWhitening_smoothIdentityFailure_verified":
+        ("BfgsVerification.LWhitening.smoothIdentityFailure", "BfgsVerification.LWhitening.SmoothIdentityFailureTarget"),
+    "LWhitening_stepIdentityFailure_verified":
+        ("BfgsVerification.LWhitening.stepIdentityFailure", "BfgsVerification.LWhitening.StepIdentityFailureTarget"),
+    "LWhitening_smoothLocalFailure_verified":
+        ("BfgsVerification.LWhitening.smoothLocalFailure", "BfgsVerification.LWhitening.SmoothLocalFailureTarget"),
+    "LWhitening_stepLocalFailure_verified":
+        ("BfgsVerification.LWhitening.stepLocalFailure", "BfgsVerification.LWhitening.StepLocalFailureTarget"),
+    "PlanarAllPairs_sourceAllPairTransport_verified":
+        ("BfgsVerification.PlanarAllPairs.sourceAllPairTransport", "BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget"),
+    "PlanarAllPairs_sourceAllEndpointEstimates_verified":
+        ("BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates", "BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget"),
+    "ComparisonEnergyWarning_comparisonEnergyWarning_verified":
+        ("BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning", "BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget"),
+    "AffineProjection_actualImageRange_verified":
+        ("BfgsVerification.AffineProjection.actualImageRange", "BfgsVerification.AffineProjection.ActualImageRangeTarget"),
+    "LReturnStableGraph_lStableManifold_verified":
+        ("BfgsVerification.LReturnStableGraph.lStableManifold", "BfgsVerification.LReturnStableGraph.LStableManifoldTarget"),
+    "LReturnStableGraph_lStableInvariantManifold_verified":
+        ("BfgsVerification.LReturnStableGraph.lStableInvariantManifold", "BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget"),
+    "univariateSignBoundary_verified":
+        ("BfgsVerification.univariateSignBoundary", "BfgsVerification.UnivariateSignBoundaryTarget"),
+    "univariateConvexCover_verified":
+        ("BfgsVerification.univariateConvexCover", "BfgsVerification.UnivariateConvexCoverTarget"),
+    "univariateCellCover_verified":
+        ("BfgsVerification.univariateCellCover", "BfgsVerification.UnivariateCellCoverTarget"),
+    "polynomialFiberDerivative_verified":
+        ("BfgsVerification.polynomialFiberDerivative", "BfgsVerification.PolynomialFiberDerivativeTarget"),
+    "polynomialSimpleRootChart_verified":
+        ("BfgsVerification.polynomialSimpleRootChart", "BfgsVerification.PolynomialSimpleRootChartTarget"),
+    "polynomialSimpleRootProjection_verified":
+        ("BfgsVerification.polynomialSimpleRootProjection", "BfgsVerification.PolynomialSimpleRootProjectionTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -626,7 +662,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "A general semialgebraic projection/path/critical-value closure and rank-loss spectrum; C stronger uniform transport and higher-dimensional partial assertions; L fixed identity initialization and smooth-manifold/tangency; final family/source/synthesis/evidence reconciliation. Actual L spectrum, global failure and both fixed-SPD local-copy failures, plus the literal C spatial warning, are now checked; see REPORT_STATUS.json",
+            "A general nonlinear semialgebraic projection/path/critical-value closure; C arbitrary-dimensional constant-rank field/secant partial assertion and semialgebraic alternative; final source/synthesis/evidence reconciliation. Actual L identity-initialized local failure families and smooth invariant stable manifold, C one-field uniform all-endpoint estimates, A rank-loss spectrum and univariate/simple-root infrastructure, and T/F source details are now checked; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -635,7 +671,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_L_FAILURE_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_SOURCE_CLOSURE_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
