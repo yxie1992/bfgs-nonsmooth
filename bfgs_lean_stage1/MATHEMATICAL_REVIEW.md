@@ -198,3 +198,28 @@ The full report is not verified. `ENTIRE_REPORT_PLAN.md` and
 Q records that its printed eligible separation pair covers only c1≤2/3; a
 parameterized generalization is proposed for all c1<1 and still requires Lean
 verification. This observation is not used to overclaim the example's scope.
+
+
+## Entire-report execution: second tranche
+
+The full pinned build and transitive axiom audit pass for 528 explicit / 768
+total theorem declarations and 26 exact targets. The seven new targets cover
+exact normalization, actual recurrent affine-hull geometry and max-linear escape,
+radial/supporting-intercept equivalence, inward-certificate convergence, incoming
+jump obstruction, and scalar certificate characterization. Additional checked
+consequences include rank-one/projected transport, bounded-potential absorption,
+unique-minimizer local basins, one-sided shells, and recurrent cardinality.
+
+The statement/dependency review is `audit/REPORT_GEOMETRY_STATEMENT_REVIEW.md`,
+with separate incoming-jump and radial peer reviews. No mathematical axiom was
+added. A failed audit caused by an outdated namespace in one #check command is
+preserved in audit/history; it was corrected before the passing full rerun.
+
+Full RS-to-IR still needs approximation through jointly differentiable points;
+the paired reverse estimate does not discharge this. Nonunique solution-set
+neighborhood localization, H.C/affine lifting, remaining G examples and geometry,
+and the other modules remain explicit obligations. Source reading also identified
+precision issues in C's oriented determinant, U's non-additive example at c=0,
+and C's use of smooth for C1 fields; these are recorded in
+`audit/PLANAR_FIXED_NORMAL_INVENTORY.md` for exact formal correction. Original
+research sources remain unchanged.

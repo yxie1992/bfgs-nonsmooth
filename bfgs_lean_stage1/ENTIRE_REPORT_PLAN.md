@@ -100,3 +100,10 @@ reviews. Next: T normalization/rank-one/RS/local variants, H finite max-linear
 and recurrent affine-hull obstruction, G incoming-jump/scalar certificate claims,
 and R inward-radial and supporting-intercept equivalences. Independent inventories
 also map Q and the negative constructions before their proof implementation.
+
+Second tranche passed: 26 exact targets, 528 explicit / 768 total theorem
+declarations. Detailed statement and peer reviews cover all seven new targets
+and their secondary consequences. Next independent tasks are full RS-to-IR
+approximation, affine projection/lifting followed by H.C, remaining G examples,
+and F rates/structural families. Read-only inventories now cover every retained
+claim in A, F, C and U; D/L infrastructure obligations are documented.

@@ -1,0 +1,13 @@
+import BfgsVerification.IncomingJumpObstruction
+
+#print axioms BfgsVerification.IncomingJump.metricEnergy_gram
+#print axioms BfgsVerification.IncomingJump.sqrt_metricEnergy_gram
+#print axioms BfgsVerification.IncomingJump.sqrt_metricEnergy_sum_le
+#print axioms BfgsVerification.IncomingJump.weighted_jump_bound
+#print axioms BfgsVerification.IncomingJump.no_visible_suppression
+#print axioms BfgsVerification.IncomingJump.basis_limit_coefficients
+#print axioms BfgsVerification.TransportedCertificate.BandCertificate.toVisibilitySecant
+#print axioms BfgsVerification.TransportedCertificate.incoming_jump_no_visibility_secant
+#print axioms BfgsVerification.TransportedCertificate.incoming_jump_no_band_certificate
+#print axioms BfgsVerification.TransportedCertificate.basis_limit_no_visibility_secant
+#print axioms BfgsVerification.TransportedCertificate.basis_limit_no_band_certificate

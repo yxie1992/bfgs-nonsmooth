@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 417 explicit
-theorems and 594 theorem declarations including generated auxiliaries. All 19
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 528 explicit
+theorems and 768 theorem declarations including generated auxiliaries. All 26
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_core_check.log`.
+`audit/report_geometry_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -44,7 +44,11 @@ including actual Euclidean distance to the full solution set),
 `scalarBFGSConvergence` (actual dimension-one specialization), and
 `radialCertificateConvergence` (RS sufficient condition). Their statement review
 is [audit/REPORT_CORE_STATEMENT_REVIEW.md](audit/REPORT_CORE_STATEMENT_REVIEW.md).
-Secondary claims in these modules and the other report modules remain open.
+The second tranche checks normalization and variants in T/G, H.B recurrent
+affine geometry, incoming-jump obstruction and scalar characterization in G,
+and R supporting-intercept equivalence and inward sufficiency. See
+[audit/REPORT_GEOMETRY_STATEMENT_REVIEW.md](audit/REPORT_GEOMETRY_STATEMENT_REVIEW.md).
+Full RS-to-IR, H.C, geometric applications and other report claims remain open.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed

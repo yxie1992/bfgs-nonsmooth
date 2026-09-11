@@ -1,0 +1,513 @@
+BfgsVerification.TransportedCertificate.psd_smul {n : Nat} {A : BfgsVerification.Mat n}
+  (hA : Matrix.PosSemidef.{0, 0} A) {a : Real} (ha : LE.le.{0} 0 a) :
+  Matrix.PosSemidef.{0, 0} (HSMul.hSMul.{0, 0, 0} a A)
+'BfgsVerification.TransportedCertificate.psd_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.projected_psd {n : Nat} {W : BfgsVerification.Mat n}
+  (hW : Matrix.PosSemidef.{0, 0} W) (s : BfgsVerification.Vec n) :
+  Matrix.PosSemidef.{0, 0}
+    (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) W)
+      (BfgsVerification.TransportedCertificate.stepProjector s))
+'BfgsVerification.TransportedCertificate.projected_psd' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.scale_loewner {n : Nat} {X Z : BfgsVerification.Mat n}
+  (hX : Matrix.PosSemidef.{0, 0} X) {a u v : Real} (hu : LE.le.{0} 0 u)
+  (hT : Matrix.PosSemidef.{0, 0} (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} a X) Z))
+  (huv : LE.le.{0} (HMul.hMul.{0, 0, 0} u a) v) :
+  Matrix.PosSemidef.{0, 0} (HSub.hSub.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} v X) (HSMul.hSMul.{0, 0, 0} u Z))
+'BfgsVerification.TransportedCertificate.scale_loewner' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.eligible_curvature_pos {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {c₁ c₂ : Real} {x z g h : BfgsVerification.Vec n}
+  (e : BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h) (hc₂ : LT.lt.{0} c₂ 1) :
+  LT.lt.{0} 0 (BfgsVerification.TransportedCertificate.pairCurvature x z g h)
+'BfgsVerification.TransportedCertificate.eligible_curvature_pos' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.BandCertificate.rescale {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η) (hc₂ : LT.lt.{0} c₂ 1)
+  (w : BfgsVerification.Vec n → Real) (lo hi L' : Real) (hlo : LT.lt.{0} 0 lo) (hL' : LE.le.{0} 0 L')
+  (hw :
+    ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        And (LE.le.{0} lo (w x)) (LE.le.{0} (w x) hi))
+  (hscale :
+    ∀ (x z g h : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+          BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+            LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g)
+                (BfgsVerification.TransportedCertificate.BandCertificate.δ C) →
+              LE.le.{0}
+                (HMul.hMul.{0, 0, 0} (w z)
+                  (HAdd.hAdd.{0, 0, 0} 1
+                    (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.BandCertificate.L C)
+                      (BfgsVerification.TransportedCertificate.pairDecrease x z g))))
+                (HMul.hMul.{0, 0, 0}
+                  (HAdd.hAdd.{0, 0, 0} 1
+                    (HMul.hMul.{0, 0, 0} L' (BfgsVerification.TransportedCertificate.pairDecrease x z g)))
+                  (w x))) :
+  BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η
+'BfgsVerification.TransportedCertificate.BandCertificate.rescale' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.value_weight_transport {L c₁ d fx fz fstar : Real} (hL : LE.le.{0} 0 L)
+  (hc₁ : LT.lt.{0} 0 c₁) (hA : LE.le.{0} (HMul.hMul.{0, 0, 0} c₁ d) (HSub.hSub.{0, 0, 0} fx fz)) :
+  LE.le.{0}
+    (HMul.hMul.{0, 0, 0} (Real.exp (HMul.hMul.{0, 0, 0} (HDiv.hDiv.{0, 0, 0} L c₁) (HSub.hSub.{0, 0, 0} fz fstar)))
+      (HAdd.hAdd.{0, 0, 0} 1 (HMul.hMul.{0, 0, 0} L d)))
+    (Real.exp (HMul.hMul.{0, 0, 0} (HDiv.hDiv.{0, 0, 0} L c₁) (HSub.hSub.{0, 0, 0} fx fstar)))
+'BfgsVerification.TransportedCertificate.value_weight_transport' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.BandCertificate.normalize {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₂ : LT.lt.{0} c₂ 1) (b : Real)
+  (hb :
+    ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x → LE.le.{0} (F x) b) :
+  BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η
+'BfgsVerification.TransportedCertificate.BandCertificate.normalize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.BandCertificate.normalize_field {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₂ : LT.lt.{0} c₂ 1) (b : Real)
+  (hb :
+    ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x → LE.le.{0} (F x) b)
+  (x : BfgsVerification.Vec n) :
+  Eq.{1}
+    (BfgsVerification.TransportedCertificate.BandCertificate.W
+      (BfgsVerification.TransportedCertificate.BandCertificate.normalize C hc₁ hc₂ b hb) x)
+    (HSMul.hSMul.{0, 0, 0}
+      (Real.exp
+        (HMul.hMul.{0, 0, 0} (HDiv.hDiv.{0, 0, 0} (BfgsVerification.TransportedCertificate.BandCertificate.L C) c₁)
+          (HSub.hSub.{0, 0, 0} (F x) fstar)))
+      (BfgsVerification.TransportedCertificate.BandCertificate.W C x))
+'BfgsVerification.TransportedCertificate.BandCertificate.normalize_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.BandCertificate.normalize_budget {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₂ : LT.lt.{0} c₂ 1) (b : Real)
+  (hb :
+    ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x → LE.le.{0} (F x) b) :
+  And
+    (Eq.{1}
+      (BfgsVerification.TransportedCertificate.BandCertificate.L
+        (BfgsVerification.TransportedCertificate.BandCertificate.normalize C hc₁ hc₂ b hb))
+      0)
+    (Eq.{1}
+      (BfgsVerification.TransportedCertificate.BandCertificate.δ
+        (BfgsVerification.TransportedCertificate.BandCertificate.normalize C hc₁ hc₂ b hb))
+      (BfgsVerification.TransportedCertificate.BandCertificate.δ C))
+'BfgsVerification.TransportedCertificate.BandCertificate.normalize_budget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.hasBandCertificates_iff_zero_budget {n : Nat}
+  {F : BfgsVerification.Vec n → Real} {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₂ : LT.lt.{0} c₂ 1) (b : Real)
+  (hb : ∀ (x : BfgsVerification.Vec n), Membership.mem.{0, 0} K x → LE.le.{0} (F x) b) :
+  Iff (BfgsVerification.TransportedCertificate.HasBandCertificates F K fstar c₁ c₂)
+    (∀ (η : Real),
+      LT.lt.{0} 0 η →
+        Set.Nonempty.{0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) →
+          ∃ C, Eq.{1} (BfgsVerification.TransportedCertificate.BandCertificate.L C) 0)
+'BfgsVerification.TransportedCertificate.hasBandCertificates_iff_zero_budget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.PotentialBandCertificate {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (K : Set.{0} (BfgsVerification.Vec n)) (fstar c₁ c₂ η : Real) : Type
+'BfgsVerification.TransportedCertificate.PotentialBandCertificate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.exp_small_linear {L d : Real} (hL : LE.le.{0} 0 L) (hd : LE.le.{0} 0 d)
+  (hsmall : LE.le.{0} d (Inv.inv.{0} (HAdd.hAdd.{0, 0, 0} L 1))) :
+  LE.le.{0} (Real.exp (HMul.hMul.{0, 0, 0} L d))
+    (HAdd.hAdd.{0, 0, 0} 1 (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} 2 L) d))
+'BfgsVerification.TransportedCertificate.exp_small_linear' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.PotentialBandCertificate F K fstar c₁ c₂ η) (hc₂ : LT.lt.{0} c₂ 1) :
+  BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η
+'BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb_field {n : Nat}
+  {F : BfgsVerification.Vec n → Real} {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.PotentialBandCertificate F K fstar c₁ c₂ η) (hc₂ : LT.lt.{0} c₂ 1)
+  (x : BfgsVerification.Vec n) :
+  Eq.{1}
+    (BfgsVerification.TransportedCertificate.BandCertificate.W
+      (BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb C hc₂) x)
+    (HSMul.hSMul.{0, 0, 0} (Real.exp (BfgsVerification.TransportedCertificate.PotentialBandCertificate.Ψ C x))
+      (BfgsVerification.TransportedCertificate.PotentialBandCertificate.W C x))
+'BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb_constants {n : Nat}
+  {F : BfgsVerification.Vec n → Real} {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.PotentialBandCertificate F K fstar c₁ c₂ η) (hc₂ : LT.lt.{0} c₂ 1) :
+  And
+    (Eq.{1}
+      (BfgsVerification.TransportedCertificate.BandCertificate.L
+        (BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb C hc₂))
+      (HMul.hMul.{0, 0, 0} 2 (BfgsVerification.TransportedCertificate.PotentialBandCertificate.L C)))
+    (Eq.{1}
+      (BfgsVerification.TransportedCertificate.BandCertificate.δ
+        (BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb C hc₂))
+      (Min.min.{0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.δ C)
+        (Inv.inv.{0} (HAdd.hAdd.{0, 0, 0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.L C) 1))))
+'BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb_constants' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.stepProjector_mulVec_self {n : Nat} (s : BfgsVerification.Vec n) :
+  Eq.{1} (Matrix.mulVec.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) s) 0
+'BfgsVerification.TransportedCertificate.stepProjector_mulVec_self' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.projected_outer {n : Nat} (s v : BfgsVerification.Vec n) :
+  Eq.{1}
+    (HMul.hMul.{0, 0, 0}
+      (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) (BfgsVerification.outer v v))
+      (BfgsVerification.TransportedCertificate.stepProjector s))
+    (BfgsVerification.outer (Matrix.mulVec.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) v)
+      (Matrix.mulVec.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) v))
+'BfgsVerification.TransportedCertificate.projected_outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.stepProjector_fixes_perpendicular {n : Nat} (s v : BfgsVerification.Vec n)
+  (hv : Eq.{1} (BfgsVerification.dot v s) 0) :
+  Eq.{1} (Matrix.mulVec.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) v) v
+'BfgsVerification.TransportedCertificate.stepProjector_fixes_perpendicular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.stepProjector_perpendicular {n : Nat} (s v : BfgsVerification.Vec n) :
+  Eq.{1} (BfgsVerification.dot (Matrix.mulVec.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) v) s)
+    0
+'BfgsVerification.TransportedCertificate.stepProjector_perpendicular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.projected_energy {n : Nat} (W : BfgsVerification.Mat n)
+  (s v : BfgsVerification.Vec n) :
+  Eq.{1}
+    (BfgsVerification.metricEnergy
+      (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) W)
+        (BfgsVerification.TransportedCertificate.stepProjector s))
+      v)
+    (BfgsVerification.metricEnergy W
+      (Matrix.mulVec.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) v))
+'BfgsVerification.TransportedCertificate.projected_energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.projected_transport_iff_perpendicular {n : Nat} (W Z : BfgsVerification.Mat n)
+  (hW : Matrix.IsSymm.{0, 0} W) (hZ : Matrix.IsSymm.{0, 0} Z) (s : BfgsVerification.Vec n) (a : Real) :
+  Iff
+    (Matrix.PosSemidef.{0, 0}
+      (HSub.hSub.{0, 0, 0}
+        (HSMul.hSMul.{0, 0, 0} a
+          (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) W)
+            (BfgsVerification.TransportedCertificate.stepProjector s)))
+        (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) Z)
+          (BfgsVerification.TransportedCertificate.stepProjector s))))
+    (∀ (v : BfgsVerification.Vec n),
+      Eq.{1} (BfgsVerification.dot v s) 0 →
+        LE.le.{0} (BfgsVerification.metricEnergy Z v) (HMul.hMul.{0, 0, 0} a (BfgsVerification.metricEnergy W v)))
+'BfgsVerification.TransportedCertificate.projected_transport_iff_perpendicular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.rank_one_transport {n : Nat} (s v w : BfgsVerification.Vec n) (ell β a : Real)
+  (hw : Eq.{1} w (HAdd.hAdd.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} ell v) (HSMul.hSMul.{0, 0, 0} β s)))
+  (hell : LE.le.{0} (HPow.hPow.{0, 0, 0} ell 2) a) :
+  Matrix.PosSemidef.{0, 0}
+    (HSub.hSub.{0, 0, 0}
+      (HSMul.hSMul.{0, 0, 0} a
+        (HMul.hMul.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) (BfgsVerification.outer v v))
+          (BfgsVerification.TransportedCertificate.stepProjector s)))
+      (HMul.hMul.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.stepProjector s) (BfgsVerification.outer w w))
+        (BfgsVerification.TransportedCertificate.stepProjector s)))
+'BfgsVerification.TransportedCertificate.rank_one_transport' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.rankOneCertificate {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real} (v : BfgsVerification.Vec n → BfgsVerification.Vec n)
+  (m C L δ : Real) (hm : LT.lt.{0} 0 m) (hL : LE.le.{0} 0 L) (hδ : LT.lt.{0} 0 δ)
+  (hV :
+    ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        ∀ (g : BfgsVerification.Vec n),
+          HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional g) x →
+            LE.le.{0} m (HPow.hPow.{0, 0, 0} (BfgsVerification.dot g (v x)) 2))
+  (hS :
+    ∀ (x z g h : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+          BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+            LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g) δ →
+              LE.le.{0} (HPow.hPow.{0, 0, 0} (BfgsVerification.dot (HSub.hSub.{0, 0, 0} h g) (v z)) 2)
+                (HMul.hMul.{0, 0, 0} C (BfgsVerification.TransportedCertificate.pairCurvature x z g h)))
+  (hT :
+    ∀ (x z g h : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+          BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+            LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g) δ →
+              ∃ ell β,
+                And
+                  (Eq.{1} (v z)
+                    (HAdd.hAdd.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} ell (v x))
+                      (HSMul.hSMul.{0, 0, 0} β (BfgsVerification.TransportedCertificate.pairStep x z))))
+                  (LE.le.{0} (HPow.hPow.{0, 0, 0} ell 2)
+                    (HAdd.hAdd.{0, 0, 0} 1
+                      (HMul.hMul.{0, 0, 0} L (BfgsVerification.TransportedCertificate.pairDecrease x z g))))) :
+  BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η
+'BfgsVerification.TransportedCertificate.rankOneCertificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TransportedCertificate.radial_implies_band_certificates {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  {c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁) (hc₂ : LT.lt.{0} c₂ 1)
+  (hRS : BfgsVerification.RadialCertificate.HasRadialSecantBounds F K star) :
+  BfgsVerification.TransportedCertificate.HasBandCertificates F K (F star) c₁ c₂
+'BfgsVerification.TransportedCertificate.radial_implies_band_certificates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.BandCertificate.restrict {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real}
+  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c₁ c₂ η)
+  (K' : Set.{0} (BfgsVerification.Vec n)) (hsub : HasSubset.Subset.{0} K' K) :
+  BfgsVerification.TransportedCertificate.BandCertificate F K' fstar c₁ c₂ η
+'BfgsVerification.TransportedCertificate.BandCertificate.restrict' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.hasBandCertificates_restrict {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {K K' : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ : Real}
+  (h : BfgsVerification.TransportedCertificate.HasBandCertificates F K fstar c₁ c₂) (hsub : HasSubset.Subset.{0} K' K) :
+  BfgsVerification.TransportedCertificate.HasBandCertificates F K' fstar c₁ c₂
+'BfgsVerification.TransportedCertificate.hasBandCertificates_restrict' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.HasShellCertificates {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (K : Set.{0} (BfgsVerification.Vec n)) (fstar c₁ c₂ : Real) : Prop
+'BfgsVerification.TransportedCertificate.HasShellCertificates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.local_transported_certificate_basin_on_neighborhood {n : Nat}
+  {F : BfgsVerification.Vec n → Real} (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x))
+  (hunique : ∀ (x : BfgsVerification.Vec n), Eq.{1} (F x) (F star) → Eq.{1} x star)
+  {U : Set.{0} (BfgsVerification.Vec n)} (hU : Membership.mem.{0, 0} (nhds.{0} star) U) {c₁ c₂ : Real}
+  (hcert : BfgsVerification.TransportedCertificate.HasBandCertificates F U (F star) c₁ c₂) :
+  ∃ δ,
+    And (LT.lt.{0} 0 δ)
+      (∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+        Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₁ R) c₁ →
+          Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₂ R) c₂ →
+            LE.le.{0} (F (BfgsVerification.AdmissibleBFGSRun.x R 0)) (HAdd.hAdd.{0, 0, 0} (F star) δ) →
+              And (∀ (k : Nat), Membership.mem.{0, 0} U (BfgsVerification.AdmissibleBFGSRun.x R k))
+                (And
+                  (Filter.Tendsto.{0, 0} (fun k => F (BfgsVerification.AdmissibleBFGSRun.x R k)) Filter.atTop.{0}
+                    (nhds.{0} (F star)))
+                  (Filter.Tendsto.{0, 0} (BfgsVerification.AdmissibleBFGSRun.x R) Filter.atTop.{0} (nhds.{0} star))))
+'BfgsVerification.TransportedCertificate.local_transported_certificate_basin_on_neighborhood' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.local_transported_certificate_basin {n : Nat}
+  {F : BfgsVerification.Vec n → Real} (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x))
+  (hunique : ∀ (x : BfgsVerification.Vec n), Eq.{1} (F x) (F star) → Eq.{1} x star) (b : Real)
+  (hb : LT.lt.{0} (F star) b) {U : Set.{0} (BfgsVerification.Vec n)} (hU : Membership.mem.{0, 0} (nhds.{0} star) U)
+  {c₁ c₂ : Real}
+  (hcert :
+    BfgsVerification.TransportedCertificate.HasBandCertificates F
+      (Inter.inter.{0} (setOf.{0} fun x => LE.le.{0} (F x) b) U) (F star) c₁ c₂) :
+  ∃ δ,
+    And (LT.lt.{0} 0 δ)
+      (∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+        Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₁ R) c₁ →
+          Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₂ R) c₂ →
+            LE.le.{0} (F (BfgsVerification.AdmissibleBFGSRun.x R 0)) (HAdd.hAdd.{0, 0, 0} (F star) δ) →
+              And
+                (∀ (k : Nat),
+                  And (LE.le.{0} (F (BfgsVerification.AdmissibleBFGSRun.x R k)) b)
+                    (Membership.mem.{0, 0} U (BfgsVerification.AdmissibleBFGSRun.x R k)))
+                (And
+                  (Filter.Tendsto.{0, 0} (fun k => F (BfgsVerification.AdmissibleBFGSRun.x R k)) Filter.atTop.{0}
+                    (nhds.{0} (F star)))
+                  (Filter.Tendsto.{0, 0} (BfgsVerification.AdmissibleBFGSRun.x R) Filter.atTop.{0} (nhds.{0} star))))
+'BfgsVerification.TransportedCertificate.local_transported_certificate_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.transported_shell_certificate_values {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (K : Set.{0} (BfgsVerification.Vec n)) (hK : IsCompact.{0} K)
+  (hxK : ∀ (k : Nat), Membership.mem.{0, 0} K (BfgsVerification.AdmissibleBFGSRun.x R k))
+  (star : BfgsVerification.Vec n) (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x))
+  (hcert :
+    BfgsVerification.TransportedCertificate.HasShellCertificates F K (F star) (BfgsVerification.AdmissibleBFGSRun.c₁ R)
+      (BfgsVerification.AdmissibleBFGSRun.c₂ R)) :
+  Filter.Tendsto.{0, 0} (fun k => F (BfgsVerification.AdmissibleBFGSRun.x R k)) Filter.atTop.{0} (nhds.{0} (F star))
+'BfgsVerification.AdmissibleBFGSRun.transported_shell_certificate_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.transported_shell_certificate_convergence_on_sublevel {n : Nat}
+  {F : BfgsVerification.Vec n → Real} (R : BfgsVerification.AdmissibleBFGSRun n F) (b : Real)
+  (hK : IsCompact.{0} (setOf.{0} fun x => LE.le.{0} (F x) b)) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x))
+  (hstart : LE.le.{0} (F (BfgsVerification.AdmissibleBFGSRun.x R 0)) b)
+  (hcert :
+    BfgsVerification.TransportedCertificate.HasShellCertificates F (setOf.{0} fun x => LE.le.{0} (F x) b) (F star)
+      (BfgsVerification.AdmissibleBFGSRun.c₁ R) (BfgsVerification.AdmissibleBFGSRun.c₂ R)) :
+  And
+    (Filter.Tendsto.{0, 0} (fun k => F (BfgsVerification.AdmissibleBFGSRun.x R k)) Filter.atTop.{0} (nhds.{0} (F star)))
+    (And
+      (Filter.Tendsto.{0, 0}
+        (fun k => Metric.infDist.{0} (BfgsVerification.AdmissibleBFGSRun.x R k) (BfgsVerification.argmin.{0} F))
+        Filter.atTop.{0} (nhds.{0} 0))
+      ((∀ (x : BfgsVerification.Vec n), Eq.{1} (F x) (F star) → Eq.{1} x star) →
+        Filter.Tendsto.{0, 0} (BfgsVerification.AdmissibleBFGSRun.x R) Filter.atTop.{0} (nhds.{0} star)))
+'BfgsVerification.AdmissibleBFGSRun.transported_shell_certificate_convergence_on_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+structure BfgsVerification.TransportedCertificate.PotentialBandCertificate {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (K : Set.{0} (BfgsVerification.Vec n)) (fstar c₁ c₂ η : Real) : Type
+number of parameters: 7
+fields:
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.W : BfgsVerification.Vec n → BfgsVerification.Mat n
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.Ψ : BfgsVerification.Vec n → Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.m : Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.C : Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.L : Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.δ : Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.ψlo : Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.ψhi : Real
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.m_pos : LT.lt.{0} 0
+      (BfgsVerification.TransportedCertificate.PotentialBandCertificate.m self)
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.L_nonneg : LE.le.{0} 0
+      (BfgsVerification.TransportedCertificate.PotentialBandCertificate.L self)
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.delta_pos : LT.lt.{0} 0
+      (BfgsVerification.TransportedCertificate.PotentialBandCertificate.δ self)
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.potential_bounds : ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        And
+          (LE.le.{0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.ψlo self)
+            (BfgsVerification.TransportedCertificate.PotentialBandCertificate.Ψ self x))
+          (LE.le.{0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.Ψ self x)
+            (BfgsVerification.TransportedCertificate.PotentialBandCertificate.ψhi self))
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.positive_semidefinite : ∀
+      (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        DifferentiableAt.{0, 0, 0} Real F x →
+          Matrix.PosSemidef.{0, 0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.W self x)
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.visibility : ∀ (x : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        ∀ (g : BfgsVerification.Vec n),
+          HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional g) x →
+            LE.le.{0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.m self)
+              (BfgsVerification.metricEnergy (BfgsVerification.TransportedCertificate.PotentialBandCertificate.W self x)
+                g)
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.secant : ∀ (x z g h : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+          BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+            LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g)
+                (BfgsVerification.TransportedCertificate.PotentialBandCertificate.δ self) →
+              LE.le.{0}
+                (BfgsVerification.metricEnergy
+                  (BfgsVerification.TransportedCertificate.PotentialBandCertificate.W self z) (HSub.hSub.{0, 0, 0} h g))
+                (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.C self)
+                  (BfgsVerification.TransportedCertificate.pairCurvature x z g h))
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.transport : ∀ (x z g h : BfgsVerification.Vec n),
+      Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+          BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+            LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g)
+                (BfgsVerification.TransportedCertificate.PotentialBandCertificate.δ self) →
+              Matrix.PosSemidef.{0, 0}
+                (HSub.hSub.{0, 0, 0}
+                  (HSMul.hSMul.{0, 0, 0}
+                    (Real.exp
+                      (HSub.hSub.{0, 0, 0}
+                        (HAdd.hAdd.{0, 0, 0}
+                          (HMul.hMul.{0, 0, 0} (BfgsVerification.TransportedCertificate.PotentialBandCertificate.L self)
+                            (BfgsVerification.TransportedCertificate.pairDecrease x z g))
+                          (BfgsVerification.TransportedCertificate.PotentialBandCertificate.Ψ self x))
+                        (BfgsVerification.TransportedCertificate.PotentialBandCertificate.Ψ self z)))
+                    (HMul.hMul.{0, 0, 0}
+                      (HMul.hMul.{0, 0, 0}
+                        (BfgsVerification.TransportedCertificate.stepProjector
+                          (BfgsVerification.TransportedCertificate.pairStep x z))
+                        (BfgsVerification.TransportedCertificate.PotentialBandCertificate.W self x))
+                      (BfgsVerification.TransportedCertificate.stepProjector
+                        (BfgsVerification.TransportedCertificate.pairStep x z))))
+                  (HMul.hMul.{0, 0, 0}
+                    (HMul.hMul.{0, 0, 0}
+                      (BfgsVerification.TransportedCertificate.stepProjector
+                        (BfgsVerification.TransportedCertificate.pairStep x z))
+                      (BfgsVerification.TransportedCertificate.PotentialBandCertificate.W self z))
+                    (BfgsVerification.TransportedCertificate.stepProjector
+                      (BfgsVerification.TransportedCertificate.pairStep x z))))
+constructor:
+  BfgsVerification.TransportedCertificate.PotentialBandCertificate.mk {n : Nat} {F : BfgsVerification.Vec n → Real}
+    {K : Set.{0} (BfgsVerification.Vec n)} {fstar c₁ c₂ η : Real} (W : BfgsVerification.Vec n → BfgsVerification.Mat n)
+    (Ψ : BfgsVerification.Vec n → Real) (m C L δ ψlo ψhi : Real) (m_pos : LT.lt.{0} 0 m) (L_nonneg : LE.le.{0} 0 L)
+    (delta_pos : LT.lt.{0} 0 δ)
+    (potential_bounds :
+      ∀ (x : BfgsVerification.Vec n),
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+          And (LE.le.{0} ψlo (Ψ x)) (LE.le.{0} (Ψ x) ψhi))
+    (positive_semidefinite :
+      ∀ (x : BfgsVerification.Vec n),
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+          DifferentiableAt.{0, 0, 0} Real F x → Matrix.PosSemidef.{0, 0} (W x))
+    (visibility :
+      ∀ (x : BfgsVerification.Vec n),
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+          ∀ (g : BfgsVerification.Vec n),
+            HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional g) x →
+              LE.le.{0} m (BfgsVerification.metricEnergy (W x) g))
+    (secant :
+      ∀ (x z g h : BfgsVerification.Vec n),
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+          Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+            BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+              LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g) δ →
+                LE.le.{0} (BfgsVerification.metricEnergy (W z) (HSub.hSub.{0, 0, 0} h g))
+                  (HMul.hMul.{0, 0, 0} C (BfgsVerification.TransportedCertificate.pairCurvature x z g h)))
+    (transport :
+      ∀ (x z g h : BfgsVerification.Vec n),
+        Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) x →
+          Membership.mem.{0, 0} (BfgsVerification.TransportedCertificate.positiveBand F K fstar η) z →
+            BfgsVerification.TransportedCertificate.EligiblePair F c₁ c₂ x z g h →
+              LE.le.{0} (BfgsVerification.TransportedCertificate.pairDecrease x z g) δ →
+                Matrix.PosSemidef.{0, 0}
+                  (HSub.hSub.{0, 0, 0}
+                    (HSMul.hSMul.{0, 0, 0}
+                      (Real.exp
+                        (HSub.hSub.{0, 0, 0}
+                          (HAdd.hAdd.{0, 0, 0}
+                            (HMul.hMul.{0, 0, 0} L (BfgsVerification.TransportedCertificate.pairDecrease x z g)) (Ψ x))
+                          (Ψ z)))
+                      (HMul.hMul.{0, 0, 0}
+                        (HMul.hMul.{0, 0, 0}
+                          (BfgsVerification.TransportedCertificate.stepProjector
+                            (BfgsVerification.TransportedCertificate.pairStep x z))
+                          (W x))
+                        (BfgsVerification.TransportedCertificate.stepProjector
+                          (BfgsVerification.TransportedCertificate.pairStep x z))))
+                    (HMul.hMul.{0, 0, 0}
+                      (HMul.hMul.{0, 0, 0}
+                        (BfgsVerification.TransportedCertificate.stepProjector
+                          (BfgsVerification.TransportedCertificate.pairStep x z))
+                        (W z))
+                      (BfgsVerification.TransportedCertificate.stepProjector
+                        (BfgsVerification.TransportedCertificate.pairStep x z))))) :
+    BfgsVerification.TransportedCertificate.PotentialBandCertificate F K fstar c₁ c₂ η
+def BfgsVerification.TransportedCertificate.HasShellCertificates : {n : Nat} →
+  (BfgsVerification.Vec n → Real) → Set.{0} (BfgsVerification.Vec n) → Real → Real → Real → Prop :=
+fun {n} F K fstar c₁ c₂ =>
+  ∀ (ell : Real),
+    LT.lt.{0} fstar ell →
+      (∃ x, And (Membership.mem.{0, 0} K x) (LE.le.{0} ell (F x))) →
+        ∃ ε,
+          And (LT.lt.{0} 0 ε)
+            (Nonempty.{1}
+              (BfgsVerification.TransportedCertificate.BandCertificate F
+                (Inter.inter.{0} K (setOf.{0} fun x => LE.le.{0} (F x) (HAdd.hAdd.{0, 0, 0} ell ε))) fstar c₁ c₂
+                (HSub.hSub.{0, 0, 0} ell fstar)))

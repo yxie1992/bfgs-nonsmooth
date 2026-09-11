@@ -178,3 +178,11 @@ The first tranche adds five audited exact targets covering T's primary theorem,
 H.A, scalar positive-metric convergence and actual scalar BFGS, and the radial
 sufficient condition. Detailed inventories identify secondary claims still open.
 The entire-report completion flag remains false.
+
+The second tranche adds seven exact targets (26 total) and the secondary
+consequences mapped in `audit/REPORT_GEOMETRY_STATEMENT_REVIEW.md`. H.B is checked;
+H.C remains open. RS/SP equivalence and IR sufficiency are checked; full RS-to-IR
+remains open. Incoming-jump obstruction and scalar characterization are checked;
+G examples, feasibility and geometric interpretations remain open. Inventories
+now include F, A, C/U and proof designs for D/L. Entire-report completion remains
+false; the 26-target success is not a claim that every chapter is verified.

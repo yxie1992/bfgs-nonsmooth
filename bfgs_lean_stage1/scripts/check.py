@@ -70,7 +70,23 @@ REPORT_CORE_TARGETS = {
     "radial_certificate_convergence_verified":
         ("BfgsVerification.radialCertificateConvergence", "BfgsVerification.RadialCertificateConvergenceTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS
+REPORT_GEOMETRY_TARGETS = {
+    "certificate_exact_normalization_verified":
+        ("BfgsVerification.certificateNormalization", "BfgsVerification.CertificateNormalizationTarget"),
+    "recurrent_affine_hull_verified":
+        ("BfgsVerification.recurrentAffineHull", "BfgsVerification.RecurrentAffineHullTarget"),
+    "max_linear_affine_escape_verified":
+        ("BfgsVerification.maxLinearAffineEscape", "BfgsVerification.MaxLinearAffineEscapeTarget"),
+    "radial_intercept_equivalence_verified":
+        ("BfgsVerification.radialInterceptEquivalence", "BfgsVerification.RadialInterceptEquivalenceTarget"),
+    "inward_certificate_convergence_verified":
+        ("BfgsVerification.inwardCertificateConvergence", "BfgsVerification.InwardCertificateConvergenceTarget"),
+    "incoming_jump_obstruction_verified":
+        ("BfgsVerification.incomingJumpObstruction", "BfgsVerification.IncomingJumpObstructionTarget"),
+    "scalar_certificate_characterization_verified":
+        ("BfgsVerification.scalarCertificateCharacterization", "BfgsVerification.ScalarCertificateCharacterizationTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -343,7 +359,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Secondary claims of T/G, H.B/H.C, radial equivalence and applications, and the other report modules; see REPORT_STATUS.json",
+            "Affine covariance and examples in T/G, H.C, full RS-to-IR and radial applications, and the other report modules; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -352,11 +368,11 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_CORE_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_GEOMETRY_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
-        status["warning"] = ("Claims concern the exact Module M and first report-tranche targets printed in axioms.log. The entire report remains incomplete. "
+        status["warning"] = ("Claims concern the exact Module M and registered report-tranche targets printed in axioms.log. The entire report remains incomplete. "
                              "Energy convergence criteria retain explicit correction budgets; frame theorems exclude "
                              "certificates whose construction remains objective-specific. No unconditional BFGS "
                              "convergence or all-ray step-existence theorem is claimed.")

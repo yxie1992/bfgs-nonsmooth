@@ -30,16 +30,34 @@ Conclusion for every infinite admissible ordinary full-BFGS run starting in K: v
 | Distance to argmin convergence | Compactness and value convergence, possibly multiple minimizers | Verified in `transported_certificate_convergence_on_sublevel` using `CompactConvergence` |
 | Unique-minimizer iterate convergence | Value convergence plus existing localization/unique-minimum theorem | Verified: `transported_certificate_iterates_of_unique_minimizer` and combined sublevel theorem |
 
-## Additional source claims, not silently covered by the primary theorem
+## Secondary T claims and Module G normalization
 
-1. **Local structural version:** a low initial sublevel stays inside a neighborhood of the unique minimizer (or the entire compact solution set); rejected trials need not stay there. Existing Module M localization covers the unique-minimizer mechanism, but a certificate-local corollary must instantiate it.
-2. **One-sided-shell weakening:** certificates only on a one-sided neighborhood of each possible positive limiting level suffice. Exact shell quantifiers need a separate statement and proof.
-3. **Rank-one specialization:** `W=vvᵀ`, `v(z)=λv(x)+βs`, `λ²≤1+Ld` gives projected transport. Neither λ invertibility nor a positive lower bound is required.
-4. **Bounded-potential rescaling:** multiplier `exp(Ld+Ψ(x)−Ψ(z))` becomes `exp(Ld)` under `W↦exp(Ψ)W`; bounded Ψ preserves visibility/secant constants; small-d gives a linear multiplier. Requires explicit bounds and an exponential estimate.
-5. **RS inclusion:** radial `W=(x−x*) (x−x*)ᵀ`, visibility from convexity, secant condition from RS, exact projected transport with L=0. Requires objective-pair RS definition and a formal implication.
-6. **Strict separation from RS:** delegated by T to Module Q's curved example; cannot be certified by T's algebra alone.
-7. **Perpendicular quadratic characterization:** projected Loewner inequality is equivalent to the quadratic inequality for all `a` with `aᵀs=0`; requires actual projection image/kernel facts.
-8. **Affine covariance:** invertible affine coordinate changes send gradients by inverse transpose and certificates by `AWAᵀ`; preserve the three conditions after deriving all transformed pair quantities. No preferred coordinates or matrix-limit assumptions.
+The following additions compile in `TransportedNormalization.lean` and `TransportedCertificateVariants.lean`. All 31 declarations (including certificate-producing definitions, not just named theorems) are independently checked for transitive axiom dependencies in `audit/module_T_variants_axioms.lean`; the output is `audit/module_T_variants_axioms.log`. Only `propext`, `Classical.choice`, and `Quot.sound` occur. `audit/module_T_variants_build.log` retains actual compiler-feedback history and ends with a successful build.
+
+| Source claim | Verified declaration and exact scope |
+|---|---|
+| Rank-one scalar transport | `rank_one_transport`, `rankOneCertificate`: actual `W=vvᵀ`; transport scalar may be zero; no invertibility, fixed-rank, continuity, or lower scalar bound. All small eligible-pair quantifiers remain exact. |
+| Bounded-potential absorption | `PotentialBandCertificate.absorb`: exact multiplier `exp(Ld+Ψ(x)−Ψ(z))`; arbitrary band-bounded Ψ; field becomes `exp(Ψ(x)) W(x)`. Proved constants are `m′=exp(ψlo)m`, `C′=exp(ψhi)max(C,0)`, `L′=2L`, `δ′=min(δ,1/(L+1))`. Inner field remains unconstrained except source PSD. |
+| Exact L=0 normalization (Module G) | `BandCertificate.normalize`, `normalize_field`, `normalize_budget`, `hasBandCertificates_iff_zero_budget`: field exactly `exp((L/c1)(F(x)−F*)) W(x)`. The original δ is retained. The sole bound needed is the original upper value bound `F≤b`; no uniform W bound. Both existential directions are verified. |
+| RS inclusion | `radial_implies_band_certificates`: root `HasRadialSecantBounds` implies the exact T predicate with radial field, `m=η²`, and `L=0`. Convexity provides visibility, and the original positive-curvature RS condition is applied to eligible pairs using derived curvature positivity. |
+| Structural-region restriction | `BandCertificate.restrict`, `hasBandCertificates_restrict`: same field and constants on a subset. This covers a specified initial compact sublevel contained in the structural region, also with multiple minimizers. |
+| Local basin | `local_transported_certificate_basin`: certificates only on the intersection of original sublevel K and minimizer neighborhood U. A positive initial gap is chosen before quantifying over every actual admissible run and hence every SPD initialization. Accepted iterates are proved to stay in K∩U. `..._on_neighborhood` is an additional simpler specialization. |
+| One-sided-shell weakening | `HasShellCertificates`, `transported_shell_certificate_values`, `transported_shell_certificate_convergence_on_sublevel`: a separate ε and certificate for each possible positive finite limiting level; the matrix conditions apply only inside `ell≤F≤ell+ε`. The actual objective limit, eventual shell membership, and eventual small decrease are derived; values, distance to argmin, and unique-minimizer iterates all converge. |
+| Perpendicular quadratic characterization | `projected_transport_iff_perpendicular`: exact equivalence for symmetric field values between the projected PSD difference and quadratic comparison for every vector perpendicular to the step. Actual Euclidean projector algebra includes dimension zero and even zero step. |
+
+Remaining T obligations are explicit:
+
+1. **Strict separation from RS:** Module Q must supply its complete curved objective certificate and RS failure. No such separation follows from the T algebra alone.
+2. **Compact nonunique solution-set neighborhood:** the direct structural-sublevel restriction is proved, but deriving a uniform low basin from an open neighborhood of the entire compact minimizer set still needs an explicit theorem. The current neighborhood-basin exports assume uniqueness.
+3. **Affine covariance:** derive transformed objective derivatives, accepted-pair quantities, field congruence, and the transport equivalence under every invertible affine coordinate change. The perpendicular characterization is now available but the whole coordinate-change theorem is not yet formalized.
+
+Reproduce this secondary milestone from the project directory with the pinned toolchain:
+
+```bash
+source scripts/env.sh
+lake build BfgsVerification.TransportedCertificateVariants
+lake env lean audit/module_T_variants_axioms.lean
+```
 
 ## Scope notes
 

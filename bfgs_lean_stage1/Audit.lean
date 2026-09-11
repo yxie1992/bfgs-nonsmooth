@@ -153,3 +153,40 @@ example : BfgsVerification.RadialCertificateConvergenceTarget := BfgsVerificatio
 #check @BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun
 #check @BfgsVerification.AdmissibleBFGSRun.radial_correction_bound
 #check @BfgsVerification.global_minimum_of_zero_gradient
+
+-- Second report tranche: objective geometry and equivalences.
+#print BfgsVerification.Homogeneous.finiteMaxLinear
+#print BfgsVerification.Homogeneous.recurrentValues
+#print BfgsVerification.Homogeneous.commonTilt
+#print BfgsVerification.TransportedCertificate.VisibilitySecantCertificate
+#print BfgsVerification.TransportedCertificate.PotentialBandCertificate
+#print BfgsVerification.TransportedCertificate.ScalarQuotientBound
+#print BfgsVerification.TransportedCertificate.ScalarEligibleLipschitz
+#print BfgsVerification.TransportedCertificate.HasShellCertificates
+#print BfgsVerification.RadialCertificate.HasInterceptBounds
+#print BfgsVerification.RadialCertificate.HasInwardTaylorBounds
+#print BfgsVerification.CertificateNormalizationTarget
+#print BfgsVerification.RecurrentAffineHullTarget
+#print BfgsVerification.MaxLinearAffineEscapeTarget
+#print BfgsVerification.RadialInterceptEquivalenceTarget
+#print BfgsVerification.InwardCertificateConvergenceTarget
+#print BfgsVerification.IncomingJumpObstructionTarget
+#print BfgsVerification.ScalarCertificateCharacterizationTarget
+example : BfgsVerification.CertificateNormalizationTarget := BfgsVerification.certificateNormalization
+example : BfgsVerification.RecurrentAffineHullTarget := BfgsVerification.recurrentAffineHull
+example : BfgsVerification.MaxLinearAffineEscapeTarget := BfgsVerification.maxLinearAffineEscape
+example : BfgsVerification.RadialInterceptEquivalenceTarget := BfgsVerification.radialInterceptEquivalence
+example : BfgsVerification.InwardCertificateConvergenceTarget := BfgsVerification.inwardCertificateConvergence
+example : BfgsVerification.IncomingJumpObstructionTarget := BfgsVerification.incomingJumpObstruction
+example : BfgsVerification.ScalarCertificateCharacterizationTarget := BfgsVerification.scalarCertificateCharacterization
+#check @BfgsVerification.TransportedCertificate.BandCertificate.normalize_field
+#check @BfgsVerification.TransportedCertificate.BandCertificate.normalize_budget
+#check @BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb_constants
+#check @BfgsVerification.TransportedCertificate.local_transported_certificate_basin
+#check @BfgsVerification.AdmissibleBFGSRun.transported_shell_certificate_convergence_on_sublevel
+#check @BfgsVerification.TransportedCertificate.projected_transport_iff_perpendicular
+#check @BfgsVerification.AdmissibleBFGSRun.commonTilt_value_escape
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_gradient_cardinality
+#check @BfgsVerification.TransportedCertificate.basis_limit_no_visibility_secant
+#check @BfgsVerification.RadialCertificate.inward_error_le_of_pair_radial
+#check @BfgsVerification.convex_gradients_tendsto_at_differentiable
