@@ -1,0 +1,349 @@
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:151:20: warning: unused variable `hmin`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:152:5: warning: unused variable `hK`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:152:42: warning: unused variable `hstart`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:153:5: warning: unused variable `hstrict`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:155:5: warning: unused variable `hregular`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:169:20: warning: unused variable `hmin`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:170:5: warning: unused variable `hK`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:170:42: warning: unused variable `hstart`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:171:5: warning: unused variable `hstrict`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:173:5: warning: unused variable `hregular`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+/Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/audit/claim_review20/sources/GeometryContracts.lean:175:5: warning: unused variable `hcorrect`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+GEOMETRY20_STRICT_OK BfgsVerification.planarAffineCriticalCluster GeometryClaimReview20.ExpectedCentralC
+GEOMETRY20_STRICT_OK BfgsVerification.PlanarAffineCriticalClusterTarget GeometryClaimReview20.ExpectedCentralC
+GEOMETRY20_STRICT_OK BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values GeometryClaimReview20.ExpectedCentralAValues
+GEOMETRY20_STRICT_OK BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap GeometryClaimReview20.ExpectedCentralAGap
+GEOMETRY20_STRICT_OK BfgsVerification.planarConvergence GeometryClaimReview20.ExpectedCentralCConvergence
+GEOMETRY20_STRICT_OK BfgsVerification.PlanarConvergenceTarget GeometryClaimReview20.ExpectedCentralCConvergence
+@GeometryClaimReview20.rawCritical : {n : ℕ} → (Vec n → ℝ) → Vec n → Prop
+'GeometryClaimReview20.rawCritical' depends on axioms: [propext, Classical.choice, Quot.sound]
+@GeometryClaimReview20.rawCritical_iff : ∀ {n : ℕ} (F : Vec n → ℝ) (p : Vec n),
+  GeometryClaimReview20.rawCritical F p ↔ IsAffineCritical F p
+'GeometryClaimReview20.rawCritical_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@GeometryClaimReview20.raw_A_finite_values_and_gap : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    (∃ φ, ∀ (v : Option (Fin n) → ℝ), (v none = F fun i => v (some i)) ↔ φ.Holds v) →
+      (F '' {p | 0 ∈ affineSpan ℝ {g | ∀ (z : Vec n), dot g (z - p) ≤ F z - F p}}).Finite ∧
+        ∀ (star : Vec n),
+          (∀ (z : Vec n), F star ≤ F z) →
+            ∃ ε,
+              0 < ε ∧
+                ∀ (p : Vec n),
+                  F p < F star + ε →
+                    0 ∈ affineSpan ℝ {g | ∀ (z : Vec n), dot g (z - p) ≤ F z - F p} → ∀ (z : Vec n), F p ≤ F z
+'GeometryClaimReview20.raw_A_finite_values_and_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@GeometryClaimReview20.raw_semialgebraic_finite_path_cover : ∀ {n : ℕ} (S : Set (Vec n)),
+  (∃ φ, ∀ (x : Vec n), x ∈ S ↔ φ.Holds x) →
+    ∃ C,
+      ⋃ T ∈ C, T = S ∧
+        ∀ T ∈ C,
+          IsSemialgebraic T ∧
+            ∀ x ∈ T,
+              ∀ y ∈ T,
+                ∃ p,
+                  ContinuousOn p (Icc 0 1) ∧
+                    p 0 = x ∧ p 1 = y ∧ (∀ t ∈ Icc 0 1, p t ∈ T) ∧ ∃ E, ∀ t ∈ Ioo 0 1, t ∉ E → ContDiffAt ℝ ∞ p t
+'GeometryClaimReview20.raw_semialgebraic_finite_path_cover' depends on axioms: [propext, Classical.choice, Quot.sound]
+@GeometryClaimReview20.raw_A_path_and_composition : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    (∃ φ, ∀ (v : Option (Fin n) → ℝ), (v none = F fun i => v (some i)) ↔ φ.Holds v) →
+      ∀ (p : ℝ → Vec n),
+        ContinuousOn p (Icc 0 1) →
+          (∃ ψ, ∀ (v : Option (Fin n) → ℝ), v none ∈ Icc 0 1 ∧ (fun i => v (some i)) = p (v none) ↔ ψ.Holds v) →
+            ContinuousOn (F ∘ p) (Icc 0 1) ∧ ∃ E, ∀ t ∈ Ioo 0 1, t ∉ E → ContDiffAt ℝ ∞ p t ∧ ContDiffAt ℝ ∞ (F ∘ p) t
+'GeometryClaimReview20.raw_A_path_and_composition' depends on axioms: [propext, Classical.choice, Quot.sound]
+GeometryClaimReview20.raw_C_cluster_and_convergence : ∀ (F : Vec 2 → ℝ),
+  ConvexOn ℝ univ F →
+    ∀ (x : ℕ → Vec 2) (H : ℕ → Mat 2) (g : ℕ → Vec 2) (α : ℕ → ℝ) (c₁ c₂ : ℝ),
+      0 < c₁ →
+        c₁ < c₂ →
+          c₂ < 1 →
+            PosDef (H 0) →
+              (∀ (k : ℕ), 0 < α k) →
+                (∀ (k : ℕ), g k ≠ 0) →
+                  (∀ (k : ℕ), HasFDerivAt F (∑ i, g k i • ContinuousLinearMap.proj i) (x k)) →
+                    (∀ (k : ℕ), x (k + 1) = x k + -α k • H k *ᵥ g k) →
+                      (∀ (k : ℕ),
+                          let s := -α k • H k *ᵥ g k;
+                          let y := g (k + 1) - g k;
+                          let t := dot y s;
+                          H (k + 1) =
+                            (1 - t⁻¹ • of fun i j => s i * y j) * H k * (1 - t⁻¹ • of fun i j => y i * s j) +
+                              t⁻¹ • of fun i j => s i * s j) →
+                        (∀ (k : ℕ), F (x (k + 1)) ≤ F (x k) + c₁ * dot (g k) (-α k • H k *ᵥ g k)) →
+                          (∀ (k : ℕ), c₂ * dot (g k) (-α k • H k *ᵥ g k) ≤ dot (g (k + 1)) (-α k • H k *ᵥ g k)) →
+                            ∀ (star : Vec 2),
+                              (∀ (z : Vec 2), F star ≤ F z) →
+                                ∀ (b : ℝ),
+                                  IsCompact {z | F z ≤ b} →
+                                    F (x 0) ≤ b →
+                                      (∀ (ℓ : ℝ),
+                                          F star < ℓ →
+                                            ℓ ≤ b → ∀ (u v : Vec 2), segment ℝ u v ⊆ frontier {w | F w ≤ ℓ} → u = v) →
+                                        (∀ (p : Vec 2),
+                                            F p ≤ b →
+                                              0 ∉ affineSpan ℝ {v | ∀ (z : Vec 2), dot v (z - p) ≤ F z - F p} →
+                                                ContDiffAt ℝ 2 F p ∨
+                                                  ∃ f U,
+                                                    IsOpen U ∧
+                                                      p ∈ U ∧
+                                                        (∀ (i : Fin 2), ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U) ∧
+                                                          (∀ z ∈ U, IsGreatest (range fun i => f i z) (F z)) ∧
+                                                            (∀ (i : Fin 2), f i p = F p) ∧
+                                                              pairDet (coordinateGradient (f 0) p)
+                                                                  (coordinateGradient (f 1) p) ≠
+                                                                0) →
+                                          (∃ p,
+                                              MapClusterPt p atTop x ∧
+                                                F p ≤ b ∧
+                                                  0 ∈ affineSpan ℝ {v | ∀ (z : Vec 2), dot v (z - p) ≤ F z - F p}) ∧
+                                            ((∀ (p : Vec 2),
+                                                F p ≤ b →
+                                                  0 ∈ affineSpan ℝ {v | ∀ (z : Vec 2), dot v (z - p) ≤ F z - F p} →
+                                                    ∀ (z : Vec 2), F p ≤ F z) →
+                                              Tendsto (fun k => F (x k)) atTop (𝓝 (F star)) ∧
+                                                Tendsto
+                                                    (fun k =>
+                                                      Metric.infDist (euclideanVector (x k))
+                                                        (euclideanVector '' {z | ∀ (w : Vec 2), F z ≤ F w}))
+                                                    atTop (𝓝 0) ∧
+                                                  ((∀ (z : Vec 2), F z = F star → z = star) → Tendsto x atTop (𝓝 star)))
+'GeometryClaimReview20.raw_C_cluster_and_convergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+GeometryClaimReview20.ExpectedCentralC : Prop
+'GeometryClaimReview20.ExpectedCentralC' depends on axioms: [propext, Classical.choice, Quot.sound]
+GeometryClaimReview20.ExpectedCentralAValues : Prop
+'GeometryClaimReview20.ExpectedCentralAValues' depends on axioms: [propext, Classical.choice, Quot.sound]
+GeometryClaimReview20.ExpectedCentralAGap : Prop
+'GeometryClaimReview20.ExpectedCentralAGap' depends on axioms: [propext, Classical.choice, Quot.sound]
+GeometryClaimReview20.ExpectedCentralCConvergence : Prop
+'GeometryClaimReview20.ExpectedCentralCConvergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+AdmissibleBFGSRun : (n : ℕ) → (Vec n → ℝ) → Type
+'BfgsVerification.AdmissibleBFGSRun' depends on axioms: [propext, Classical.choice, Quot.sound]
+@fullBFGS_positive_invariants : ∀ {n : ℕ} (H : ℕ → Mat n) (g : ℕ → Vec n) (α : ℕ → ℝ) (c₂ : ℝ),
+  PosDef (H 0) →
+    (∀ (k : ℕ), g k ≠ 0) →
+      (∀ (k : ℕ), 0 < α k) →
+        c₂ < 1 →
+          (∀ (k : ℕ), c₂ * dot (g k) (bfgsStep (H k) (g k) (α k)) ≤ dot (g (k + 1)) (bfgsStep (H k) (g k) (α k))) →
+            (∀ (k : ℕ), H (k + 1) = inverseBFGS (H k) (bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) →
+              ∀ (k : ℕ),
+                PosDef (H k) ∧ 0 < metricEnergy (H k) (g k) ∧ 0 < dot (g (k + 1) - g k) (bfgsStep (H k) (g k) (α k))
+'BfgsVerification.fullBFGS_positive_invariants' depends on axioms: [propext, Classical.choice, Quot.sound]
+@IsAffineCritical : {n : ℕ} → (Vec n → ℝ) → Vec n → Prop
+'BfgsVerification.AffineCriticalObjective.IsAffineCritical' depends on axioms: [propext, Classical.choice, Quot.sound]
+@IsSemialgebraicObjective : {n : ℕ} → (Vec n → ℝ) → Prop
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@coordinate_projection_semialgebraic : ∀ {σ : Type u_1} {τ : Type u_2} [inst : Finite σ] [inst_1 : Finite τ]
+  {S : Set (σ ⊕ τ → ℝ)}, IsSemialgebraic S → IsSemialgebraic (coordinateProjection S)
+'BfgsVerification.RealAlgebraicGeometry.coordinate_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AffineSupportPath.isAffineCritical_iff_bounded_supports : ∀ {n : ℕ} (F : Vec n → ℝ) (x : Vec n),
+  IsAffineCritical F x ↔
+    ∃ m, 0 < m ∧ m ≤ n + 1 ∧ ∃ g w, (∀ (i : Fin m), Homogeneous.Supports F x (g i)) ∧ ∑ i, w i = 1 ∧ ∑ i, w i • g i = 0
+'BfgsVerification.AffineSupportPath.isAffineCritical_iff_bounded_supports' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@supportGraph_semialgebraic : ∀ {n : ℕ} {F : Vec n → ℝ}, IsSemialgebraicObjective F → IsSemialgebraic (supportGraph F)
+'BfgsVerification.RealAlgebraicGeometry.supportGraph_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@affineCriticalGraph_semialgebraic : ∀ {n : ℕ} {F : Vec n → ℝ},
+  IsSemialgebraicObjective F → IsSemialgebraic (affineCriticalGraph F)
+'BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@semialgebraic_finite_smooth_cover : ∀ {σ : Type u_1} [inst : Fintype σ] {S : Set (σ → ℝ)},
+  IsSemialgebraic S → HasFiniteSmoothSemialgebraicCover S
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@finite_critical_values_of_smooth_graph_cover : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    ∀ (C : Finset (Set (Option (Fin n) → ℝ))),
+      (∀ T ∈ C, PiecewiseSmoothConnected T) →
+        ⋃ T ∈ C, T = affineCriticalGraph F → (F '' {x | IsAffineCritical F x}).Finite
+'BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@affineCriticalGraph_path_project : ∀ {n : ℕ} {F : Vec n → ℝ} {u v : Option (Fin n) → ℝ},
+  PiecewiseSmoothPathIn (affineCriticalGraph F) u v →
+    AffineSupportPath.PiecewiseDifferentiablePathIn F {x | IsAffineCritical F x} (fun i => u (some i)) fun i =>
+      v (some i)
+'BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AffineSupportPath.supporting_path_derivative_eq : ∀ {n : ℕ} {F : Vec n → ℝ} {p : ℝ → Vec n} {t a : ℝ} {v g : Vec n},
+  Homogeneous.Supports F (p t) g → HasDerivAt p v t → HasDerivAt (F ∘ p) a t → dot g v = a
+'BfgsVerification.AffineSupportPath.supporting_path_derivative_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AffineSupportPath.objective_constant_on_piecewise_differentiable_path : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    ∀ {p : ℝ → Vec n} {a b : ℝ} (s : Finset ℝ),
+      ContinuousOn p (Icc a b) →
+        (∀ t ∈ Ioo a b, IsAffineCritical F (p t)) →
+          (∀ t ∈ Ioo a b, t ∉ s → DifferentiableAt ℝ p t) →
+            (∀ t ∈ Ioo a b, t ∉ s → DifferentiableAt ℝ (F ∘ p) t) → ∀ t ∈ Icc a b, F (p t) = F (p a)
+'BfgsVerification.AffineSupportPath.objective_constant_on_piecewise_differentiable_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@semialgebraic_affine_critical_values : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F → IsSemialgebraicObjective F → (F '' {x | IsAffineCritical F x}).Finite
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@semialgebraic_low_affine_critical_gap : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    IsSemialgebraicObjective F →
+      ∀ (star : Vec n),
+        (∀ (x : Vec n), F star ≤ F x) →
+          ∃ ε, 0 < ε ∧ ∀ (p : Vec n), F p < F star + ε → IsAffineCritical F p → 0 ∈ subdifferential F p
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@continuous_semialgebraic_path_iff_piecewise_smooth : ∀ {σ : Type u_1} [inst : Fintype σ] (S : Set (σ → ℝ))
+  (x y : σ → ℝ), ContinuousSemialgebraicPathIn S x y ↔ SemialgebraicPiecewiseSmoothPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_path_iff_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@affine_critical_continuous_semialgebraic_components : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    IsSemialgebraicObjective F →
+      (continuousSemialgebraicComponent {z | IsAffineCritical F z} '' {z | IsAffineCritical F z}).Finite ∧
+        ∀ (x : Fin n → ℝ),
+          IsSemialgebraic (continuousSemialgebraicComponent {z | IsAffineCritical F z} x) ∧
+            ContinuousSemialgebraicPathConnected (continuousSemialgebraicComponent {z | IsAffineCritical F z} x) ∧
+              ∀ p ∈ continuousSemialgebraicComponent {z | IsAffineCritical F z} x,
+                ∀ q ∈ continuousSemialgebraicComponent {z | IsAffineCritical F z} x, F p = F q
+'BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@convex_semialgebraic_objective_curve_piecewise_smooth : ∀ {n : ℕ} {F : Vec n → ℝ},
+  ConvexOn ℝ univ F →
+    IsSemialgebraicObjective F →
+      ∀ {p : ℝ → Vec n},
+        ContinuousOn p (Icc 0 1) →
+          IsSemialgebraicCurveOn p (Icc 0 1) →
+            IsSemialgebraic {v | v (some 0) ∈ Icc 0 1 ∧ v none = (F ∘ p) (v (some 0))} ∧
+              ContinuousOn (F ∘ p) (Icc 0 1) ∧ ∃ E, ∀ t ∈ Ioo 0 1, t ∉ E → ContDiffAt ℝ ∞ (F ∘ p) t
+'BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AdmissibleBFGSRun.positive_limit_of_no_affineCritical_cluster : ∀ {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
+  {K : Set (Vec n)},
+  IsCompact K →
+    (∀ (k : ℕ), R.x k ∈ K) →
+      ∀ (star : Vec n),
+        (∀ (z : Vec n), F star ≤ F z) →
+          (∀ p ∈ ClusterSetGeometry.clusterSet R.x, ¬IsAffineCritical F p) →
+            ∃ ℓ,
+              F star < ℓ ∧ Tendsto (fun k => F (R.x k)) atTop (𝓝 ℓ) ∧ ClusterSetGeometry.clusterSet R.x ⊆ {p | F p = ℓ}
+'BfgsVerification.AdmissibleBFGSRun.positive_limit_of_no_affineCritical_cluster' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AdmissibleBFGSRun.steps_tendsto_zero_of_strict_contour : ∀ {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F),
+  IsCompact R.initialSublevel →
+    ∀ (ℓ : ℝ),
+      Tendsto (fun k => F (R.x k)) atTop (𝓝 ℓ) →
+        (∃ y, F y < ℓ) →
+          (∀ (x z : Vec n), segment ℝ x z ⊆ frontier {w | F w ≤ ℓ} → x = z) →
+            Tendsto (fun k => bfgsStep (R.H k) (R.g k) (R.α k)) atTop (𝓝 0)
+'BfgsVerification.AdmissibleBFGSRun.steps_tendsto_zero_of_strict_contour' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@PlanarObjectiveField.exists_secant_structured_visible_field : ∀ {F : Vec 2 → ℝ} (hF : ConvexOn ℝ univ F)
+  {K : Set (Vec 2)} {ℓ : ℝ},
+  IsCompact K →
+    (∀ x ∈ K, F x = ℓ) →
+      (∀ (x y : Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+        (∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ConvexTwoBranchRegularAt F x) →
+          (∀ x ∈ K, ¬IsAffineCritical F x) →
+            ∀ {σ : ℝ},
+              0 < σ →
+                ∃ m χ v,
+                  (∀ (i : Fin m), ContDiff ℝ ∞ (χ i)) ∧
+                    ∃ N η,
+                      0 < η ∧
+                        IsOpen N ∧
+                          K ⊆ N ∧
+                            (∀ x ∈ N, ∃ L, ∃ U ∈ 𝓝 x, LipschitzOnWith L (PlanarObjectiveField.field hF χ v) U) ∧
+                              (∀ x ∈ N, ∀ g ∈ subdifferential F x, η ≤ dot g (PlanarObjectiveField.field hF χ v x)) ∧
+                                (∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) ∧
+                                  (∀ x ∈ N,
+                                      ContDiffAt ℝ 2 F x ∨
+                                        ∃ i, ∀ᶠ (z : Vec 2) in 𝓝 x, PlanarObjectiveField.field hF χ v z = v i (F z)) ∧
+                                    (∀ x ∈ K,
+                                        ∀ g ∈ subdifferential F x,
+                                          ∀ h ∈ subdifferential F x,
+                                            dot g (PlanarObjectiveField.field hF χ v x) =
+                                              dot h (PlanarObjectiveField.field hF χ v x)) ∧
+                                      ∀ p ∈ K,
+                                        PlanarCrossing.LocalSecantControl F (PlanarObjectiveField.field hF χ v) σ p
+'BfgsVerification.PlanarObjectiveField.exists_secant_structured_visible_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AdmissibleBFGSRun.scalar_log_transport_tail_incompatible : ∀ {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F),
+  IsCompact R.initialSublevel →
+    ∀ (J : ℕ) (w : ℕ → Vec n) (a b : ℕ → ℝ),
+      (∀ (k : ℕ), J ≤ k → w (k + 1) = a k • w k + b k • R.displacement k) →
+        ∀ (η C C0 : ℝ),
+          0 < η →
+            0 ≤ C →
+              0 ≤ C0 →
+                (∀ (k : ℕ), J ≤ k → η ≤ dot (R.g k) (w k)) →
+                  (∀ (k : ℕ), J ≤ k → 0 < a k) →
+                    (∀ (k : ℕ), J ≤ k → |Real.log (a k)| ≤ C * R.d k) →
+                      (∀ (k : ℕ), J ≤ k → dot (R.gradientChange k) (w (k + 1)) ^ 2 / R.curvature k ≤ C0) → False
+'BfgsVerification.AdmissibleBFGSRun.scalar_log_transport_tail_incompatible' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@AdmissibleBFGSRun.planar_affineCritical_cluster : ∀ {F : Vec 2 → ℝ} (R : AdmissibleBFGSRun 2 F),
+  IsCompact R.initialSublevel →
+    ∀ (star : Vec 2),
+      (∀ (z : Vec 2), F star ≤ F z) →
+        (∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ F (R.x 0) → ∀ (x y : Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+          (∀ p ∈ ClusterSetGeometry.clusterSet R.x,
+              ¬IsAffineCritical F p → ContDiffAt ℝ 2 F p ∨ ConvexTwoBranchRegularAt F p) →
+            ∃ p ∈ ClusterSetGeometry.clusterSet R.x, IsAffineCritical F p
+'BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@planarAffineCriticalCluster : PlanarAffineCriticalClusterTarget
+'BfgsVerification.planarAffineCriticalCluster' depends on axioms: [propext, Classical.choice, Quot.sound]
+@planarConvergence : PlanarConvergenceTarget
+'BfgsVerification.planarConvergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+@semialgebraic_planar_low_basin : ∀ {F : Vec 2 → ℝ},
+  ConvexOn ℝ univ F →
+    IsSemialgebraicObjective F →
+      ∀ (star : Vec 2),
+        (∀ (z : Vec 2), F star ≤ F z) →
+          ∀ {b : ℝ},
+            F star < b →
+              IsCompact {x | F x ≤ b} →
+                (∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ b → ∀ (x y : Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+                  (∀ (p : Vec 2), F p ≤ b → ¬IsAffineCritical F p → ContDiffAt ℝ 2 F p ∨ ConvexTwoBranchRegularAt F p) →
+                    ∃ ε,
+                      0 < ε ∧
+                        ∀ (R : AdmissibleBFGSRun 2 F),
+                          F (R.x 0) ≤ F star + ε →
+                            Tendsto (fun k => F (R.x k)) atTop (𝓝 (F star)) ∧
+                              Tendsto (fun k => Metric.infDist (R.x k) (argmin F)) atTop (𝓝 0) ∧
+                                Tendsto (fun k => euclideanSolutionDistance F (R.x k)) atTop (𝓝 0) ∧
+                                  ((∀ (z : Vec 2), F z = F star → z = star) → Tendsto R.x atTop (𝓝 star))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
