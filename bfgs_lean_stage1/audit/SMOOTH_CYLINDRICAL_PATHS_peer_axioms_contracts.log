@@ -1,0 +1,289 @@
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [inst : NormedSpace ℝ E] → Set E → E → E → Type u_1
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mk : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : NormedSpace ℝ E] →
+      {S : Set E} →
+        {x y : E} →
+          (curve : ℝ → E) →
+            ContinuousOn curve (Set.Icc 0 1) →
+              curve 0 = x →
+                curve 1 = y →
+                  Set.MapsTo curve (Set.Icc 0 1) S →
+                    (exceptions : Finset ℝ) →
+                      (∀ t ∈ Set.Ioo 0 1, t ∉ exceptions → ContDiffAt ℝ (↑⊤) curve t) →
+                        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : NormedSpace ℝ E] →
+      {S : Set E} → {x y : E} → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y → ℝ → E
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.continuousOn : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E}
+  (self : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y), ContinuousOn self.curve (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.continuousOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.source : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E}
+  (self : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y), self.curve 0 = x
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.source' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.target : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E}
+  (self : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y), self.curve 1 = y
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.target' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mapsTo : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E}
+  (self : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y), Set.MapsTo self.curve (Set.Icc 0 1) S
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mapsTo' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.exceptions : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] →
+    [inst_1 : NormedSpace ℝ E] →
+      {S : Set E} → {x y : E} → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y → Finset ℝ
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.exceptions' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.smoothAt : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E}
+  (self : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y),
+  ∀ t ∈ Set.Ioo 0 1, t ∉ self.exceptions → ContDiffAt ℝ (↑⊤) self.curve t
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.smoothAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [inst : NormedSpace ℝ E] → Set E → E → E → Prop
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mem : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y → x ∈ S ∧ y ∈ S
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.refl : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x : E},
+  x ∈ S → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x x
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.refl' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mono : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S T : Set E} {x y : E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y →
+    S ⊆ T → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn T x y
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map : ∀ {E : Type u_1} {F : Type u_2}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] [inst_2 : NormedAddCommGroup F] [inst_3 : NormedSpace ℝ F]
+  {S : Set E} {T : Set F} {x y : E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y →
+    ∀ {G : E → F},
+      ContDiffOn ℝ (↑⊤) G S →
+        Set.MapsTo G S T → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn T (G x) (G y)
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.symm : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y →
+    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S y x
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.symm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.segment : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E},
+  Convex ℝ S → ∀ {x y : E}, x ∈ S → y ∈ S → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.segment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.joinedIn : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y : E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y → JoinedIn S x y
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.joinedIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.joinedCurve : {E : Type u_1} → (ℝ → E) → (ℝ → E) → ℝ → E
+'BfgsVerification.RealAlgebraicGeometry.joinedCurve' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {p q : ℝ → E},
+  ContinuousOn p (Set.Icc 0 1) →
+    ContinuousOn q (Set.Icc 0 1) →
+      p 1 = q 0 → ContinuousOn (BfgsVerification.RealAlgebraicGeometry.joinedCurve p q) (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E} {x y z : E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y →
+    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S y z →
+      BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x z
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected : {E : Type u_1} →
+  [inst : NormedAddCommGroup E] → [inst : NormedSpace ℝ E] → Set E → Prop
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothPathIn_equivalence : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (S : Set E),
+  Equivalence fun x y => BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S ↑x ↑y
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothPathIn_equivalence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E}, Convex ℝ S → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPathConnected : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S → S.Nonempty → IsPathConnected S
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPathConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPreconnected : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S → IsPreconnected S
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPreconnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.image : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    ∀ {F : Type u_2} [inst_2 : NormedAddCommGroup F] [inst_3 : NormedSpace ℝ F] {G : E → F},
+      ContDiffOn ℝ (↑⊤) G S → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected (G '' S)
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.graph : ∀ {E : Type u_1} [inst : NormedAddCommGroup E]
+  [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    ∀ {f : E → ℝ},
+      ContDiffOn ℝ (↑⊤) f S →
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected {z | z.1 ∈ S ∧ z.2 = f z.1}
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.cylinder_of_section : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E} {T : Set (E × ℝ)},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    ∀ {f : E → ℝ},
+      ContDiffOn ℝ (↑⊤) f S →
+        (∀ x ∈ S, (x, f x) ∈ T) →
+          (∀ z ∈ T, z.1 ∈ S) →
+            (∀ x ∈ S, Convex ℝ {t | (x, t) ∈ T}) → BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected T
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.cylinder_of_section' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.open_band : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    ∀ {a b : E → ℝ},
+      ContDiffOn ℝ (↑⊤) a S →
+        ContDiffOn ℝ (↑⊤) b S →
+          (∀ x ∈ S, a x < b x) →
+            BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected {z | z.1 ∈ S ∧ a z.1 < z.2 ∧ z.2 < b z.1}
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.open_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.upper_band : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    ∀ {a : E → ℝ},
+      ContDiffOn ℝ (↑⊤) a S →
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected {z | z.1 ∈ S ∧ a z.1 < z.2}
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.upper_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.lower_band : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    ∀ {b : E → ℝ},
+      ContDiffOn ℝ (↑⊤) b S →
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected {z | z.1 ∈ S ∧ z.2 < b z.1}
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.lower_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.full_cylinder : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {S : Set E},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected {z | z.1 ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.full_cylinder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.objectiveLift : {n : ℕ} →
+  (BfgsVerification.Vec n → ℝ) → BfgsVerification.Vec n → Option (Fin n) → ℝ
+'BfgsVerification.RealAlgebraicGeometry.objectiveLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.objectiveLift_mem_graph : ∀ {n : ℕ} (F : BfgsVerification.Vec n → ℝ)
+  (x : BfgsVerification.Vec n),
+  BfgsVerification.RealAlgebraicGeometry.objectiveLift F x ∈ BfgsVerification.RealAlgebraicGeometry.objectiveGraph F
+'BfgsVerification.RealAlgebraicGeometry.objectiveLift_mem_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} {S : Set (BfgsVerification.Vec n)} {T : Set (Option (Fin n) → ℝ)}
+  {u v : Option (Fin n) → ℝ},
+  (∀ z ∈ T, (z none = F fun i => z (some i)) ∧ (fun i => z (some i)) ∈ S) →
+    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn T u v →
+      BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn F S (fun i => u (some i)) fun i => v (some i)
+'BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project : ∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  {u v : Option (Fin n) → ℝ},
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn
+      (BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph F) u v →
+    BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn F
+      {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x} (fun i => u (some i)) fun i => v (some i)
+'BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.objective_eq_of_smooth_criticalGraph_path : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    ∀ {x y : BfgsVerification.Vec n},
+      BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn
+          (BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph F)
+          (BfgsVerification.RealAlgebraicGeometry.objectiveLift F x)
+          (BfgsVerification.RealAlgebraicGeometry.objectiveLift F y) →
+        F x = F y
+'BfgsVerification.RealAlgebraicGeometry.objective_eq_of_smooth_criticalGraph_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SmoothPathCompositionTarget : Prop
+'BfgsVerification.SmoothPathCompositionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.smoothPathComposition : BfgsVerification.SmoothPathCompositionTarget
+'BfgsVerification.smoothPathComposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SmoothPathMappingTarget : Prop
+'BfgsVerification.SmoothPathMappingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.smoothPathMapping : BfgsVerification.SmoothPathMappingTarget
+'BfgsVerification.smoothPathMapping' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SmoothCylindersTarget : Prop
+'BfgsVerification.SmoothCylindersTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.smoothCylinders : BfgsVerification.SmoothCylindersTarget
+'BfgsVerification.smoothCylinders' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LiftedObjectivePathTarget : Prop
+'BfgsVerification.LiftedObjectivePathTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.liftedObjectivePath : BfgsVerification.LiftedObjectivePathTarget
+'BfgsVerification.liftedObjectivePath' depends on axioms: [propext, Classical.choice, Quot.sound]
+PEER_EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans
+PEER_EXACT_TARGET_OK BfgsVerification.smoothPathComposition
+PEER_EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map
+PEER_EXACT_TARGET_OK BfgsVerification.smoothPathMapping
+PEER_EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath
+PEER_EXACT_TARGET_OK BfgsVerification.liftedObjectivePath
+PEER_EXACT_TARGET_OK BfgsVerification.smoothCylinders

@@ -1,0 +1,495 @@
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) : Prop
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.of_connected.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hc : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover S
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.of_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.empty.{u_1} {σ : Type u_1} [Fintype σ] :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover ∅
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.iUnion.{u_1, u_2} {σ : Type u_1} [Fintype σ]
+  {ι : Type u_2} [Fintype ι] {S : ι → Set (σ → ℝ)}
+  (hS : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover (S i)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover (⋃ i, S i)
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.iUnion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_smooth_cover_select.{u_1} {σ : Type u_1} [Fintype σ]
+  (C : Finset (Set (σ → ℝ)))
+  (hC :
+    ∀ T ∈ C,
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T ∧
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected T)
+  {S : Set (σ → ℝ)} (hsub : S ⊆ ⋃ T ∈ C, T) (hcompatible : ∀ T ∈ C, ∀ x ∈ T, ∀ y ∈ T, x ∈ S ↔ y ∈ S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover S
+'BfgsVerification.RealAlgebraicGeometry.finite_smooth_cover_select' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_smooth_cover_of_sign_cover.{u_1} {σ : Type u_1}
+  [Fintype σ] (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula σ) (C : Finset (Set (σ → ℝ)))
+  (hC :
+    ∀ T ∈ C,
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T ∧
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected T)
+  (hcover : ⋃ T ∈ C, T = Set.univ)
+  (hsign :
+    ∀ T ∈ C,
+      ∀ x ∈ T,
+        ∀ y ∈ T,
+          ∀ p ∈ f.atomPolynomials, SignType.sign ((MvPolynomial.eval x) p) = SignType.sign ((MvPolynomial.eval y) p)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {x | f.Holds x}
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_smooth_cover_of_sign_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_smooth_cover_dimension_zero {S : Set (Fin 0 → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover S
+'BfgsVerification.RealAlgebraicGeometry.finite_smooth_cover_dimension_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_constant_on_preconnected.{u_1} {E : Type u_1} [TopologicalSpace E]
+  {S : Set E} (hS : IsPreconnected S) {f : E → ℝ} (hf : ContinuousOn f S) (hne : ∀ x ∈ S, f x ≠ 0) {x y : E}
+  (hx : x ∈ S) (hy : y ∈ S) : SignType.sign (f x) = SignType.sign (f y)
+'BfgsVerification.RealAlgebraicGeometry.sign_constant_on_preconnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_constant_on_smooth_connected.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S) (p : MvPolynomial σ ℝ)
+  (hne : ∀ x ∈ S, (MvPolynomial.eval x) p ≠ 0) {x y : σ → ℝ} (hx : x ∈ S) (hy : y ∈ S) :
+  SignType.sign ((MvPolynomial.eval x) p) = SignType.sign ((MvPolynomial.eval y) p)
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_constant_on_smooth_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern {n m : ℕ} (P : Fin m → MvPolynomial (Option (Fin n)) ℝ)
+  (Z : Finset (Fin m)) : Set (BfgsVerification.Vec n)
+'BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) : MvPolynomial (Option (Fin n)) ℝ
+'BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern_semialgebraic {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+'BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zeroFiberPatterns_cover {n m : ℕ} (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) :
+  ⋃ Z, BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z = Set.univ
+'BfgsVerification.RealAlgebraicGeometry.zeroFiberPatterns_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_survivingProduct {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) (x : BfgsVerification.Vec n) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+      (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x =
+    ∏ i ∈ Finset.univ \ Z, BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_survivingProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.survivingProduct_fiber_nonzero {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) {x : BfgsVerification.Vec n}
+  (hx : x ∈ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+      (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x ≠
+    0
+'BfgsVerification.RealAlgebraicGeometry.survivingProduct_fiber_nonzero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.survivingProduct_eval_zero_of_factor {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) (x : BfgsVerification.Vec n) (t : ℝ) (i : Fin m)
+  (hi : i ∉ Z) (hz : Polynomial.eval t (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x) = 0) :
+  Polynomial.eval t
+      (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+        (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x) =
+    0
+'BfgsVerification.RealAlgebraicGeometry.survivingProduct_eval_zero_of_factor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.factor_nonzero_off_surviving_root {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) (x : BfgsVerification.Vec n) (t : ℝ) (i : Fin m)
+  (hi : i ∉ Z)
+  (hz :
+    Polynomial.eval t
+        (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x) ≠
+      0) :
+  Polynomial.eval t (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.factor_nonzero_off_surviving_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zero_pattern_factor_eval_zero {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) {x : BfgsVerification.Vec n}
+  (hx : x ∈ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z) (t : ℝ) (i : Fin m) (hi : i ∈ Z) :
+  Polynomial.eval t (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x) = 0
+'BfgsVerification.RealAlgebraicGeometry.zero_pattern_factor_eval_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterPoint_recover {n : ℕ} (v : Option (Fin n) → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.parameterPoint (fun i => v (some i)) (v none) = v
+'BfgsVerification.RealAlgebraicGeometry.parameterPoint_recover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterPoint_contDiff {n : ℕ} :
+  ContDiff ℝ ↑⊤ fun z => BfgsVerification.RealAlgebraicGeometry.parameterPoint z.1 z.2
+'BfgsVerification.RealAlgebraicGeometry.parameterPoint_contDiff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterPoint_image_semialgebraic {n : ℕ} {T : Set (BfgsVerification.Vec n × ℝ)}
+  (hT : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder T) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    ((fun z => BfgsVerification.RealAlgebraicGeometry.parameterPoint z.1 z.2) '' T)
+'BfgsVerification.RealAlgebraicGeometry.parameterPoint_image_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_smooth_cylinder_coordinate_cover.{u_1} {n : ℕ} {ι : Type u_1} [Fintype ι]
+  (C : ι → Set (BfgsVerification.Vec n × ℝ))
+  (hsa : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder (C i))
+  (hpath : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected (C i))
+  {S : Set (BfgsVerification.Vec n)} (hcover : ⋃ i, C i = {z | z.1 ∈ S}) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | (fun i => v (some i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.finite_smooth_cylinder_coordinate_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ordered_cylinder_has_finite_smooth_cover {n r : ℕ}
+  (S : Set (BfgsVerification.Vec n)) (f : Fin r → BfgsVerification.Vec n → ℝ)
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hpath : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S)
+  (hsmooth : ∀ (i : Fin r), ContDiffOn ℝ (↑⊤) (f i) S) (horder : ∀ x ∈ S, StrictMono fun i => f i x)
+  (hgraph :
+    ∀ (i : Fin r),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+        (BfgsVerification.RealAlgebraicGeometry.orderedGraphCell S f i)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | (fun i => v (some i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.ordered_cylinder_has_finite_smooth_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_range_representatives.{u_1, u_2} {E : Type u_1} {A : Type u_2} (f : E → A)
+  (hf : (Set.range f).Finite) : ∃ C, ∀ (x : E), ∃ a ∈ C, f x = f a
+'BfgsVerification.RealAlgebraicGeometry.finite_range_representatives' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootSignature {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) :
+  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction fun x =>
+    ((Polynomial.map (MvPolynomial.eval x) p).natDegree, (Polynomial.map (MvPolynomial.eval x) p).roots.toFinset.card,
+      (Polynomial.map (MvPolynomial.eval x) p).roots.card)
+'BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootSignature' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_rootSignature_cover {n : ℕ} (p : Polynomial (MvPolynomial (Fin n) ℝ)) :
+  ∃ C,
+    (∀ a ∈ C,
+        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a)) ∧
+      ⋃ a ∈ C, BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a = Set.univ
+'BfgsVerification.RealAlgebraicGeometry.finite_rootSignature_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothConnected_reindex.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype σ] [Fintype τ] {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S)
+  (e : σ ≃ τ) : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected {y | (fun i => y (e i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothConnected_reindex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.reindex.{u_1, u_2} {σ : Type u_1}
+  {τ : Type u_2} [Fintype σ] [Fintype τ] {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover S) (e : σ ≃ τ) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {y | (fun i => y (e i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.reindex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actual_ordered_gap_eval_ne_zero {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hS : S ⊆ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p) a)
+  (hp : ∀ x ∈ S, BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x ≠ 0)
+  (j : Fin ((BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a).roots.toFinset.card + 1))
+  {z : BfgsVerification.Vec n × ℝ}
+  (hz :
+    z ∈
+      BfgsVerification.RealAlgebraicGeometry.orderedGapCell S
+        (fun i => BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p ↑i) j) :
+  Polynomial.eval z.2 (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p z.1) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.actual_ordered_gap_eval_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_family_strictMono {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hS : S ⊆ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p) a)
+  (x : BfgsVerification.Vec n) :
+  x ∈ S → StrictMono fun i => BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p (↑i) x
+'BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_family_strictMono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_family_smooth {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hS : S ⊆ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p) a)
+  (i : Fin (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a).roots.toFinset.card) :
+  ContDiffOn ℝ (↑⊤) (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p ↑i) S
+'BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_family_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.input_sign_constant_on_actual_gap {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) (a : BfgsVerification.Vec n)
+  (S : Set (BfgsVerification.Vec n)) (hpath : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a)
+  (j :
+    Fin
+      ((BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card +
+        1))
+  (i : Fin m) {x y : BfgsVerification.Vec n × ℝ}
+  (hx :
+    x ∈
+      BfgsVerification.RealAlgebraicGeometry.orderedGapCell S
+        (fun k =>
+          BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+            (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) ↑k)
+        j)
+  (hy :
+    y ∈
+      BfgsVerification.RealAlgebraicGeometry.orderedGapCell S
+        (fun k =>
+          BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+            (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) ↑k)
+        j) :
+  SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval (P i) x) =
+    SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval (P i) y)
+'BfgsVerification.RealAlgebraicGeometry.input_sign_constant_on_actual_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.input_sign_constant_on_actual_cell {n m : ℕ}
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (Z : Finset (Fin m)) (a : BfgsVerification.Vec n)
+  (S : Set (BfgsVerification.Vec n)) (hpath : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a)
+  (signs :
+    Fin m →
+      Fin
+          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card →
+        SignType)
+  (hboundary :
+    ∀ x ∈ S,
+      ∀ (j : Fin m)
+        (i :
+          Fin
+            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card),
+        SignType.sign
+            (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)
+              (x,
+                BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (↑i) x)) =
+          signs j i)
+  (c :
+    Fin
+        (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card ⊕
+      Fin
+        ((BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card +
+          1))
+  (j : Fin m) {x y : BfgsVerification.Vec n × ℝ}
+  (hx :
+    x ∈
+      BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S
+        (fun i =>
+          BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+            (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) ↑i)
+        c)
+  (hy :
+    y ∈
+      BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S
+        (fun i =>
+          BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+            (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) ↑i)
+        c) :
+  SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j) x) =
+    SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j) y)
+'BfgsVerification.RealAlgebraicGeometry.input_sign_constant_on_actual_cell' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_cover_from_signed_cylinders.{u_1} {n m : ℕ} {ι : Type u_1} [Fintype ι]
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p)
+  (C : ι → Set (BfgsVerification.Vec n × ℝ)) (S : Set (BfgsVerification.Vec n))
+  (hsa : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder (C i))
+  (hpath : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected (C i))
+  (hcover : ⋃ i, C i = {z | z.1 ∈ S})
+  (hsign :
+    ∀ (i : ι),
+      ∀ x ∈ C i,
+        ∀ y ∈ C i,
+          ∀ (j : Fin m),
+            SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j) x) =
+              SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j) y)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_cover_from_signed_cylinders' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension (n : ℕ) : Prop
+'BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.restricted_formula_cover_iUnion.{u_1} {n : ℕ} {ι : Type u_1} [Fintype ι]
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n))) (S : ι → Set (BfgsVerification.Vec n))
+  (h :
+    ∀ (i : ι),
+      BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover
+        {v | (fun j => v (some j)) ∈ S i ∧ f.Holds v}) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover
+    {v | (fun j => v (some j)) ∈ ⋃ i, S i ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.restricted_formula_cover_iUnion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_cover_on_root_component {n m : ℕ}
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m))
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hpath : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a)
+  (signs :
+    Fin m →
+      Fin
+          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card →
+        SignType)
+  (hboundary :
+    ∀ x ∈ S,
+      ∀ (j : Fin m)
+        (i :
+          Fin
+            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card),
+        SignType.sign
+            (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)
+              (x,
+                BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (↑i) x)) =
+          signs j i) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_cover_on_root_component' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_cover_on_boundary_refinement {n m : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m))
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a)
+  (signs :
+    Fin m →
+      Fin
+          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card →
+        SignType)
+  (hboundary :
+    ∀ x ∈ S,
+      ∀ (j : Fin m)
+        (i :
+          Fin
+            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card),
+        SignType.sign
+            (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)
+              (x,
+                BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (↑i) x)) =
+          signs j i) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_cover_on_boundary_refinement' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_cover_on_root_signature {n m : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m))
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_cover_on_root_signature' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_cover_on_zero_pattern {n m : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover
+    {v | (fun i => v (some i)) ∈ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_cover_on_zero_pattern' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_cover_of_lower_dimension {n : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n))) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {v | f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_cover_of_lower_dimension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.smoothCoverDimension_succ {n : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension n) :
+  BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension (n + 1)
+'BfgsVerification.RealAlgebraicGeometry.smoothCoverDimension_succ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover_fin (n : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.SmoothCoverDimension n
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover_fin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover S
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicSmoothCoverTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicSmoothCoverTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover :
+  BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicSmoothCoverTarget
+'BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+SECONDARY_COVER_EXACT_OK BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover
+SECONDARY_COVER_EXACT_OK BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover

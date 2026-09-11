@@ -470,7 +470,65 @@ REPORT_ALGEBRA_COMPLETION_TARGETS = {
     "affineCriticalSemialgebraic_verified":
         ("BfgsVerification.affineCriticalSemialgebraic", "BfgsVerification.AffineCriticalSemialgebraicTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS
+REPORT_TAME_GEOMETRY_TARGETS = {
+    "RealAlgebraicGeometry_parameterRootDegreeBound_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound", "BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget"),
+    "RealAlgebraicGeometry_intervalMultiplicityRolle_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle", "BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget"),
+    "RealAlgebraicGeometry_parameterRootMultiplicityCluster_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster", "BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget"),
+    "RealAlgebraicGeometry_parameterRootClusterCover_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover", "BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget"),
+    "RootClusterConservation_finiteConservation_verified":
+        ("BfgsVerification.RootClusterConservation.finiteConservation", "BfgsVerification.RootClusterConservation.FiniteConservationTarget"),
+    "RootClusterConservation_finiteBijection_verified":
+        ("BfgsVerification.RootClusterConservation.finiteBijection", "BfgsVerification.RootClusterConservation.FiniteBijectionTarget"),
+    "RealAlgebraicGeometry_orderedRootContinuity_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity", "BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget"),
+    "RealAlgebraicGeometry_orderedRootMultiplicity_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity", "BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget"),
+    "RealAlgebraicGeometry_orderedRootSmoothBranches_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches", "BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget"),
+    "smoothPathComposition_verified":
+        ("BfgsVerification.smoothPathComposition", "BfgsVerification.SmoothPathCompositionTarget"),
+    "smoothPathMapping_verified":
+        ("BfgsVerification.smoothPathMapping", "BfgsVerification.SmoothPathMappingTarget"),
+    "liftedObjectivePath_verified":
+        ("BfgsVerification.liftedObjectivePath", "BfgsVerification.LiftedObjectivePathTarget"),
+    "smoothCylinders_verified":
+        ("BfgsVerification.smoothCylinders", "BfgsVerification.SmoothCylindersTarget"),
+    "orderedSmoothPartition_verified":
+        ("BfgsVerification.orderedSmoothPartition", "BfgsVerification.OrderedSmoothPartitionTarget"),
+    "orderedSemialgebraicCells_verified":
+        ("BfgsVerification.orderedSemialgebraicCells", "BfgsVerification.OrderedSemialgebraicCellsTarget"),
+    "RealAlgebraicGeometry_actualRootCounts_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.actualRootCounts", "BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget"),
+    "RealAlgebraicGeometry_actualRootSignature_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.actualRootSignature", "BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget"),
+    "RealAlgebraicGeometry_actualOrderedRootGraph_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph", "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget"),
+    "RealAlgebraicGeometry_actualOrderedRootBands_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands", "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget"),
+    "DLiteralTargets_literalIdentities_verified":
+        ("BfgsVerification.DLiteralTargets.literalIdentities", "BfgsVerification.DLiteralTargets.LiteralIdentitiesTarget"),
+    "DLiteralTargets_nonStrictRun_verified":
+        ("BfgsVerification.DLiteralTargets.nonStrictRun", "BfgsVerification.DLiteralTargets.NonStrictRunTarget"),
+    "boundarySignPartition_verified":
+        ("BfgsVerification.boundarySignPartition", "BfgsVerification.BoundarySignPartitionTarget"),
+    "RealAlgebraicGeometry_generalSemialgebraicSmoothCover_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover", "BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicSmoothCoverTarget"),
+    "semialgebraicAffineCritical_verified":
+        ("BfgsVerification.semialgebraicAffineCritical", "BfgsVerification.SemialgebraicAffineCriticalTarget"),
+    "semialgebraicPlanarBasin_verified":
+        ("BfgsVerification.semialgebraicPlanarBasin", "BfgsVerification.SemialgebraicPlanarBasinTarget"),
+    "semialgebraicPlanarLocalBasin_verified":
+        ("BfgsVerification.semialgebraicPlanarLocalBasin", "BfgsVerification.SemialgebraicPlanarLocalBasinTarget"),
+    "finiteSmoothComponents_verified":
+        ("BfgsVerification.finiteSmoothComponents", "BfgsVerification.FiniteSmoothComponentsTarget"),
+    "semialgebraicSmoothComponents_verified":
+        ("BfgsVerification.semialgebraicSmoothComponents", "BfgsVerification.SemialgebraicSmoothComponentsTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS | REPORT_TAME_GEOMETRY_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -728,8 +786,11 @@ def main() -> int:
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
                 ("BfgsVerification.RealAlgebraicGeometry.supportGraph_semialgebraic_of_projection", "Explicit projection premise in this reusable bridge is now discharged by actual general coordinate projection in supportGraph_semialgebraic"),
-                ("BfgsVerification.AffineSupportPath.finite_values_of_finite_path_cover", "Finite actual affine-critical path cover is explicit and remains to be derived from semialgebraicity"),
-                ("BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_values", "Finite actual affine-critical value set is explicit; the general semialgebraic finite-value application remains pending"),
+                ("BfgsVerification.AffineSupportPath.finite_values_of_finite_path_cover", "Finite actual affine-critical path cover remains explicit in this reusable implication; the actual general finite-value conclusion is now proved by semialgebraic_affine_critical_values using the constructed smooth cover of the lifted critical graph"),
+                ("BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_values", "Finite actual affine-critical value set is explicit in this reusable implication; discharged from actual convex semialgebraicity by semialgebraic_affine_critical_values and semialgebraic_low_affine_critical_gap"),
+                ("BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover", "Actual finite smooth critical-graph cover; constructed from genuine semialgebraicity in semialgebraic_affine_critical_values"),
+                ("BfgsVerification.RealAlgebraicGeometry.planar_low_basin_of_finite_critical_values", "Actual finite critical-value image; discharged in semialgebraic_planar_low_basin, with the source compactness/strict-contour/local-regularity hypotheses retained"),
+                ("BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_smooth_components", "Finite semialgebraic smooth cover; constructed from genuine semialgebraicity in semialgebraic_smooth_components"),
                 ("BfgsVerification.LocalStableOrbit.stableOrbit", "Actual strict derivative with contractive stable block and inverse-contracting unstable block; constructs a forward orbit without assuming one. The actual L spectral application and source orbit are now derived in LReturnStableOrbit/LGlobalFailure."),
                 ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "Same actual derivative/contraction hypotheses plus a positive stable functional direction; proves positive initial scale. Actual L positive scale preservation is now derived from its return recurrence in source_oracle_orbit."),
                 ("BfgsVerification.LBlockSplitting.positive_orbit_of_block", "Actual strict derivative, literal upper-block equations and two actual characteristic roots with stated ordering; all coordinates and the forward orbit are constructed. The actual L spectrum and global-run application are now discharged in LGlobalTargets."),
@@ -755,7 +816,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "A finite semialgebraic smooth path/component decomposition and critical-value closure, with the dependent C semialgebraic alternative; D literal non-strict-interpreter and immediate finite-algebra corollary wrappers; final source/synthesis and historical evidence reconciliation. General arbitrary-degree Boolean/finite-coordinate semialgebraic projection and actual supporting/affine-critical graph definability are now proved, together with actual root-sign/Euclidean-index computation. D actual numerical precision, original-box update denominators and exact Euclidean nine-query bound, H actual recurrent-cardinality sharpness and I actual ridge supersession are checked; see REPORT_STATUS.json",
+            "The literal A assertion that witnessing path graphs are semialgebraic remains under separate verification. The actual general finite smooth cover, finite ordinary/actual smooth-path components, finite critical values, original low gap and C tame basins are now proved. D literal non-strict interpreter and finite-algebra identities are also proved. Historical E jobs/counts/timings/archive identity and the old R four-piece attribution remain unverified because original inputs are absent. See REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -764,7 +825,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_ALGEBRA_COMPLETION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_TAME_GEOMETRY_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

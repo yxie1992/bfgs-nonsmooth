@@ -1,0 +1,117 @@
+BfgsVerification.RealAlgebraicGeometry.boundarySignStratum {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) (ω : Fin m → Fin r → SignType) : Set.{0} (BfgsVerification.Vec n)
+'BfgsVerification.RealAlgebraicGeometry.boundarySignStratum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.restricted_graph_polynomial_sign_semialgebraic {n : Nat}
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) {S : Set.{0} (BfgsVerification.Vec n)}
+  {f : BfgsVerification.Vec n → Real}
+  (hgraph :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (setOf.{0} fun v =>
+        And (Membership.mem.{0, 0} S fun i => v (some.{0} i)) (Eq.{1} (v none.{0}) (f fun i => v (some.{0} i)))))
+  (s : SignType) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun x =>
+      And (Membership.mem.{0, 0} S x)
+        (Eq.{1} (SignType.sign.{0} (BfgsVerification.RealAlgebraicGeometry.parameterEval p (Prod.mk.{0, 0} x (f x))))
+          s))
+'BfgsVerification.RealAlgebraicGeometry.restricted_graph_polynomial_sign_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_semialgebraic {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S)
+  (hgraph :
+    ∀ (i : Fin r),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+        (setOf.{0} fun v =>
+          And (Membership.mem.{0, 0} S fun k => v (some.{0} k)) (Eq.{1} (v none.{0}) (f i fun k => v (some.{0} k)))))
+  (ω : Fin m → Fin r → SignType) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω)
+'BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_cover {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) :
+  Eq.{1} (⋃ ω, BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω) S
+'BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_pairwise_disjoint {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) :
+  Pairwise.{0} fun ω η =>
+    Disjoint.{0} (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω)
+      (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S η)
+'BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_pairwise_disjoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_graph_sign {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) (ω : Fin m → Fin r → SignType) (j : Fin m) (i : Fin r)
+  {z : Prod.{0, 0} (BfgsVerification.Vec n) Real}
+  (hz :
+    And (Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω) z.1)
+      (Eq.{1} z.2 (f i z.1))) :
+  Eq.{1} (SignType.sign.{0} (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j) z)) (ω j i)
+'BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_graph_sign' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_restricted_graph_semialgebraic {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S)
+  (hgraph :
+    ∀ (i : Fin r),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+        (setOf.{0} fun v =>
+          And (Membership.mem.{0, 0} S fun k => v (some.{0} k)) (Eq.{1} (v none.{0}) (f i fun k => v (some.{0} k)))))
+  (ω : Fin m → Fin r → SignType) (i : Fin r) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      And
+        (Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω) fun k =>
+          v (some.{0} k))
+        (Eq.{1} (v none.{0}) (f i fun k => v (some.{0} k))))
+'BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_restricted_graph_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.boundary_sign_semialgebraic_partition {n m r : Nat}
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (f : Fin r → BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S)
+  (hgraph :
+    ∀ (i : Fin r),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+        (setOf.{0} fun v =>
+          And (Membership.mem.{0, 0} S fun k => v (some.{0} k)) (Eq.{1} (v none.{0}) (f i fun k => v (some.{0} k))))) :
+  And
+    (∀ (ω : Fin m → Fin r → SignType),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+        (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω))
+    (And (Eq.{1} (⋃ ω, BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω) S)
+      (And
+        (Pairwise.{0} fun ω η =>
+          Disjoint.{0} (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω)
+            (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S η))
+        (And
+          (∀ (ω : Fin m → Fin r → SignType) (i : Fin r),
+            BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+              (setOf.{0} fun v =>
+                And
+                  (Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω) fun k =>
+                    v (some.{0} k))
+                  (Eq.{1} (v none.{0}) (f i fun k => v (some.{0} k)))))
+          (∀ (ω : Fin m → Fin r → SignType) (j : Fin m) (i : Fin r) (z : Prod.{0, 0} (BfgsVerification.Vec n) Real),
+            And (Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.boundarySignStratum P f S ω) z.1)
+                (Eq.{1} z.2 (f i z.1)) →
+              Eq.{1} (SignType.sign.{0} (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j) z)) (ω j i)))))
+'BfgsVerification.RealAlgebraicGeometry.boundary_sign_semialgebraic_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.BoundarySignPartitionTarget : Prop
+'BfgsVerification.BoundarySignPartitionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.boundarySignPartition : BfgsVerification.BoundarySignPartitionTarget
+'BfgsVerification.boundarySignPartition' depends on axioms: [propext, Classical.choice, Quot.sound]
+PEER_EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.boundary_sign_semialgebraic_partition
+PEER_EXACT_TARGET_OK BfgsVerification.boundarySignPartition

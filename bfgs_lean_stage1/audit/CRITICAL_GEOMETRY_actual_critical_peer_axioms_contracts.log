@@ -1,0 +1,103 @@
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values {n : Nat} {F : Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real univ.{0} F) (hSA : IsSemialgebraicObjective F) :
+  Set.Finite.{0} (image.{0, 0} F (setOf.{0} fun x => IsAffineCritical F x))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components {n : Nat} {F : Vec n → Real}
+  (hSA : IsSemialgebraicObjective F) :
+  And
+    (Set.Finite.{0}
+      (image.{0, 0} (connectedComponentIn.{0} (setOf.{0} fun x => IsAffineCritical F x))
+        (setOf.{0} fun x => IsAffineCritical F x)))
+    (∀ (p : Fin n → Real), IsSemialgebraic.{0} (connectedComponentIn.{0} (setOf.{0} fun x => IsAffineCritical F x) p))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant {n : Nat} {F : Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real univ.{0} F) (hSA : IsSemialgebraicObjective F) {x p q : Vec n}
+  (hp : Membership.mem.{0, 0} (connectedComponentIn.{0} (setOf.{0} fun z => IsAffineCritical F z) x) p)
+  (hq : Membership.mem.{0, 0} (connectedComponentIn.{0} (setOf.{0} fun z => IsAffineCritical F z) x) q) :
+  Eq.{1} (F p) (F q)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap {n : Nat} {F : Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real univ.{0} F) (hSA : IsSemialgebraicObjective F) (star : Vec n)
+  (hmin : ∀ (x : Vec n), LE.le.{0} (F star) (F x)) :
+  ∃ ε,
+    And (LT.lt.{0} 0 ε)
+      (∀ (p : Vec n),
+        LT.lt.{0} (F p) (HAdd.hAdd.{0, 0, 0} (F star) ε) →
+          IsAffineCritical F p → Membership.mem.{0, 0} (subdifferential F p) 0)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin {F : Vec 2 → Real}
+  (hF : ConvexOn.{0, 0, 0} Real univ.{0} F) (hSA : IsSemialgebraicObjective F) (star : Vec 2)
+  (hmin : ∀ (z : Vec 2), LE.le.{0} (F star) (F z)) {b : Real} (hb : LT.lt.{0} (F star) b)
+  (hK : IsCompact.{0} (setOf.{0} fun x => LE.le.{0} (F x) b))
+  (hstrict :
+    ∀ (ℓ : Real),
+      LT.lt.{0} (F star) ℓ →
+        LE.le.{0} ℓ b →
+          ∀ (x y : Vec 2),
+            Subset.{0} (segment.{0, 0} Real x y) (frontier.{0} (setOf.{0} fun w => LE.le.{0} (F w) ℓ)) → Eq.{1} x y)
+  (hregular :
+    ∀ (p : Vec 2),
+      LE.le.{0} (F p) b →
+        Not (IsAffineCritical F p) → Or (ContDiffAt.{0, 0, 0} Real 2 F p) (ConvexTwoBranchRegularAt F p)) :
+  ∃ ε,
+    And (LT.lt.{0} 0 ε)
+      (∀ (R : AdmissibleBFGSRun 2 F),
+        LE.le.{0} (F (AdmissibleBFGSRun.x R 0)) (HAdd.hAdd.{0, 0, 0} (F star) ε) →
+          And (Tendsto.{0, 0} (fun k => F (AdmissibleBFGSRun.x R k)) atTop.{0} (nhds.{0} (F star)))
+            (And
+              (Tendsto.{0, 0} (fun k => Metric.infDist.{0} (AdmissibleBFGSRun.x R k) (argmin.{0} F)) atTop.{0}
+                (nhds.{0} 0))
+              (And
+                (Tendsto.{0, 0} (fun k => euclideanSolutionDistance F (AdmissibleBFGSRun.x R k)) atTop.{0} (nhds.{0} 0))
+                ((∀ (z : Vec 2), Eq.{1} (F z) (F star) → Eq.{1} z star) →
+                  Tendsto.{0, 0} (AdmissibleBFGSRun.x R) atTop.{0} (nhds.{0} star)))))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin {F : Vec 2 → Real}
+  (hF : ConvexOn.{0, 0, 0} Real univ.{0} F) (hSA : IsSemialgebraicObjective F) (star : Vec 2)
+  (hmin : ∀ (z : Vec 2), LE.le.{0} (F star) (F z)) (hunique : ∀ (z : Vec 2), Eq.{1} (F z) (F star) → Eq.{1} z star)
+  {Ω : Set.{0} (Vec 2)} (hΩ : IsOpen.{0} Ω) (hstar : Membership.mem.{0, 0} Ω star)
+  (hregular :
+    ∀ (p : Vec 2),
+      Membership.mem.{0, 0} Ω p →
+        Not (IsAffineCritical F p) → Or (ContDiffAt.{0, 0, 0} Real 2 F p) (ConvexTwoBranchRegularAt F p))
+  {b : Real} (hb : LT.lt.{0} (F star) b)
+  (hstrict :
+    ∀ (ℓ : Real),
+      LT.lt.{0} (F star) ℓ →
+        LE.le.{0} ℓ b →
+          ∀ (x y : Vec 2),
+            Subset.{0} (segment.{0, 0} Real x y) (frontier.{0} (setOf.{0} fun w => LE.le.{0} (F w) ℓ)) → Eq.{1} x y) :
+  ∃ ε,
+    And (LT.lt.{0} 0 ε)
+      (∀ (R : AdmissibleBFGSRun 2 F),
+        LT.lt.{0} (F (AdmissibleBFGSRun.x R 0)) (HAdd.hAdd.{0, 0, 0} (F star) ε) →
+          And (Tendsto.{0, 0} (fun k => F (AdmissibleBFGSRun.x R k)) atTop.{0} (nhds.{0} (F star)))
+            (Tendsto.{0, 0} (AdmissibleBFGSRun.x R) atTop.{0} (nhds.{0} star)))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicAffineCriticalTarget : Prop
+'BfgsVerification.SemialgebraicAffineCriticalTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicAffineCritical : SemialgebraicAffineCriticalTarget
+'BfgsVerification.semialgebraicAffineCritical' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicPlanarBasinTarget : Prop
+'BfgsVerification.SemialgebraicPlanarBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicPlanarBasin : SemialgebraicPlanarBasinTarget
+'BfgsVerification.semialgebraicPlanarBasin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicPlanarLocalBasinTarget : Prop
+'BfgsVerification.SemialgebraicPlanarLocalBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicPlanarLocalBasin : SemialgebraicPlanarLocalBasinTarget
+'BfgsVerification.semialgebraicPlanarLocalBasin' depends on axioms: [propext, Classical.choice, Quot.sound]
+ACTUAL_CRITICAL_PEER_EXACT_OK BfgsVerification.semialgebraicAffineCritical
+ACTUAL_CRITICAL_PEER_EXACT_OK BfgsVerification.semialgebraicPlanarBasin
+ACTUAL_CRITICAL_PEER_EXACT_OK BfgsVerification.semialgebraicPlanarLocalBasin

@@ -1,0 +1,166 @@
+@BfgsVerification.RealAlgebraicGeometry.orderedGraphCell : {E : Type u_1} →
+  {r : ℕ} → Set E → (Fin r → E → ℝ) → Fin r → Set (E × ℝ)
+'BfgsVerification.RealAlgebraicGeometry.orderedGraphCell' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell : {E : Type u_1} →
+  {r : ℕ} → Set E → (Fin r → E → ℝ) → Fin (r + 1) → Set (E × ℝ)
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell : {E : Type u_1} →
+  {r : ℕ} → Set E → (Fin r → E → ℝ) → Fin r ⊕ Fin (r + 1) → Set (E × ℝ)
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.ordered_gap_contains_nonboundary : ∀ {r : ℕ} {f : Fin r → ℝ},
+  StrictMono f →
+    ∀ (t : ℝ), (∀ (i : Fin r), f i ≠ t) → ∃ j, (∀ (i : Fin r), ↑i < ↑j → f i < t) ∧ ∀ (i : Fin r), ↑j ≤ ↑i → t < f i
+'BfgsVerification.RealAlgebraicGeometry.ordered_gap_contains_nonboundary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_cover : ∀ {E : Type u_1} {r : ℕ} (S : Set E)
+  (f : Fin r → E → ℝ),
+  (∀ x ∈ S, StrictMono fun i => f i x) →
+    ⋃ i, BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i = {z | z.1 ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGraphCell_disjoint_gap : ∀ {E : Type u_1} {r : ℕ} (S : Set E)
+  (f : Fin r → E → ℝ) (i : Fin r) (j : Fin (r + 1)),
+  Disjoint (BfgsVerification.RealAlgebraicGeometry.orderedGraphCell S f i)
+    (BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j)
+'BfgsVerification.RealAlgebraicGeometry.orderedGraphCell_disjoint_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_disjoint : ∀ {E : Type u_1} {r : ℕ} (S : Set E)
+  (f : Fin r → E → ℝ) {i j : Fin (r + 1)},
+  i < j →
+    Disjoint (BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f i)
+      (BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j)
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_disjoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_pairwise_disjoint : ∀ {E : Type u_1} {r : ℕ} (S : Set E)
+  (f : Fin r → E → ℝ),
+  (∀ x ∈ S, StrictMono fun i => f i x) →
+    Pairwise fun i j =>
+      Disjoint (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i)
+        (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f j)
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_pairwise_disjoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_empty : ∀ {E : Type u_1} (S : Set E) (f : Fin 0 → E → ℝ)
+  (j : Fin 1), BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j = {z | z.1 ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_bottom : ∀ {E : Type u_1} {r : ℕ} (S : Set E)
+  (f : Fin r → E → ℝ),
+  (∀ x ∈ S, StrictMono fun i => f i x) →
+    ∀ (hr : 0 < r) (j : Fin (r + 1)),
+      ↑j = 0 → BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j = {z | z.1 ∈ S ∧ z.2 < f ⟨0, hr⟩ z.1}
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_bottom' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top : ∀ {E : Type u_1} {r : ℕ} (S : Set E) (f : Fin r → E → ℝ),
+  (∀ x ∈ S, StrictMono fun i => f i x) →
+    ∀ (hr : 0 < r) (j : Fin (r + 1)) (hj : ↑j = r),
+      BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j = {z | z.1 ∈ S ∧ f ⟨r - 1, ⋯⟩ z.1 < z.2}
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_middle : ∀ {E : Type u_1} {r : ℕ} (S : Set E)
+  (f : Fin r → E → ℝ),
+  (∀ x ∈ S, StrictMono fun i => f i x) →
+    ∀ (j : Fin (r + 1)) (hj : 0 < ↑j) (hjr : ↑j < r),
+      BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j =
+        {z | z.1 ∈ S ∧ f ⟨↑j - 1, ⋯⟩ z.1 < z.2 ∧ z.2 < f ⟨↑j, hjr⟩ z.1}
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_middle' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_piecewiseSmoothConnected : ∀ {E : Type u_1} {r : ℕ}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (S : Set E) (f : Fin r → E → ℝ),
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    (∀ (i : Fin r), ContDiffOn ℝ (↑⊤) (f i) S) →
+      (∀ x ∈ S, StrictMono fun i => f i x) →
+        ∀ (j : Fin (r + 1)),
+          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+            (BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j)
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_piecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_piecewiseSmoothConnected : ∀ {E : Type u_1} {r : ℕ}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] (S : Set E) (f : Fin r → E → ℝ),
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    (∀ (i : Fin r), ContDiffOn ℝ (↑⊤) (f i) S) →
+      (∀ x ∈ S, StrictMono fun i => f i x) →
+        ∀ (i : Fin r ⊕ Fin (r + 1)),
+          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+            (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i)
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_piecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder : {n : ℕ} → Set (BfgsVerification.Vec n × ℝ) → Prop
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.restricted_graph_sides_semialgebraic : ∀ {n : ℕ}
+  {S : Set (BfgsVerification.Vec n)} {f : BfgsVerification.Vec n → ℝ},
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = f fun i => v (some i)} →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+        {v | (fun i => v (some i)) ∈ S ∧ v none < f fun i => v (some i)} ∧
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+        {v | (fun i => v (some i)) ∈ S ∧ (f fun i => v (some i)) < v none}
+'BfgsVerification.RealAlgebraicGeometry.restricted_graph_sides_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraic : ∀ {n r : ℕ} (S : Set (BfgsVerification.Vec n))
+  (f : Fin r → BfgsVerification.Vec n → ℝ),
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S →
+    (∀ (i : Fin r),
+        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+          (BfgsVerification.RealAlgebraicGeometry.orderedGraphCell S f i)) →
+      ∀ (j : Fin (r + 1)),
+        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+          (BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j)
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic : ∀ {n r : ℕ}
+  (S : Set (BfgsVerification.Vec n)) (f : Fin r → BfgsVerification.Vec n → ℝ),
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S →
+    (∀ (i : Fin r),
+        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+          (BfgsVerification.RealAlgebraicGeometry.orderedGraphCell S f i)) →
+      ∀ (i : Fin r ⊕ Fin (r + 1)),
+        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+          (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i)
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count : ∀ (r : ℕ),
+  Fintype.card (Fin r ⊕ Fin (r + 1)) = 2 * r + 1
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition : ∀ {E : Type u_1}
+  [inst : NormedAddCommGroup E] [inst_1 : NormedSpace ℝ E] {r : ℕ} (S : Set E) (f : Fin r → E → ℝ),
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S →
+    (∀ (i : Fin r), ContDiffOn ℝ (↑⊤) (f i) S) →
+      (∀ x ∈ S, StrictMono fun i => f i x) →
+        ⋃ i, BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i = {z | z.1 ∈ S} ∧
+          (Pairwise fun i j =>
+              Disjoint (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i)
+                (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f j)) ∧
+            ∀ (i : Fin r ⊕ Fin (r + 1)),
+              BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+                (BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i)
+'BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OrderedSmoothPartitionTarget : Prop
+'BfgsVerification.OrderedSmoothPartitionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.orderedSmoothPartition : BfgsVerification.OrderedSmoothPartitionTarget
+'BfgsVerification.orderedSmoothPartition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.OrderedSemialgebraicCellsTarget : Prop
+'BfgsVerification.OrderedSemialgebraicCellsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.orderedSemialgebraicCells : BfgsVerification.OrderedSemialgebraicCellsTarget
+'BfgsVerification.orderedSemialgebraicCells' depends on axioms: [propext, Classical.choice, Quot.sound]
+PEER_EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition
+PEER_EXACT_TARGET_OK BfgsVerification.orderedSmoothPartition
+PEER_EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic
+PEER_EXACT_TARGET_OK BfgsVerification.orderedSemialgebraicCells

@@ -1,0 +1,203 @@
+@BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound : {n : ℕ} →
+  Polynomial (MvPolynomial (Fin n) ℝ) → BfgsVerification.Vec n → NNReal
+'BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_specialize : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (x : BfgsVerification.Vec n),
+  (MvPolynomial.eval x) p.leadingCoeff ≠ 0 →
+    (Polynomial.map (MvPolynomial.eval x) p).cauchyBound =
+      BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound p x
+'BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_specialize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_continuousAt : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) {a : BfgsVerification.Vec n},
+  (MvPolynomial.eval a) p.leadingCoeff ≠ 0 →
+    ContinuousAt (BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound p) a
+'BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_continuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_roots_eventually_bounded : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) {a : BfgsVerification.Vec n},
+  (MvPolynomial.eval a) p.leadingCoeff ≠ 0 →
+    ∃ R, 0 < R ∧ ∀ᶠ (x : Fin n → ℝ) in nhds a, ∀ (t : ℝ), (Polynomial.map (MvPolynomial.eval x) p).IsRoot t → |t| < R
+'BfgsVerification.RealAlgebraicGeometry.parameter_roots_eventually_bounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eval_continuous : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)),
+  Continuous fun z => Polynomial.eval z.2 (Polynomial.map (MvPolynomial.eval z.1) p)
+'BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eval_continuous' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eventually_nonzero_on_compact : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n) {K : Set ℝ},
+  IsCompact K →
+    (∀ t ∈ K, Polynomial.eval t (Polynomial.map (MvPolynomial.eval a) p) ≠ 0) →
+      ∀ᶠ (x : Fin n → ℝ) in nhds a, ∀ t ∈ K, Polynomial.eval t (Polynomial.map (MvPolynomial.eval x) p) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eventually_nonzero_on_compact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) {a : BfgsVerification.Vec n},
+  (MvPolynomial.eval a) p.leadingCoeff ≠ 0 →
+    ∀ {U : Set ℝ},
+      IsOpen U →
+        (∀ (t : ℝ), (Polynomial.map (MvPolynomial.eval a) p).IsRoot t → t ∈ U) →
+          ∀ᶠ (x : Fin n → ℝ) in nhds a, ∀ (t : ℝ), (Polynomial.map (MvPolynomial.eval x) p).IsRoot t → t ∈ U
+'BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootsIn : Polynomial ℝ → Set ℝ → Finset ℝ
+'BfgsVerification.RealAlgebraicGeometry.rootsIn' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn : Polynomial ℝ → Set ℝ → ℕ
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootsIn_derivative_interleaving_bound : ∀ (p : Polynomial ℝ) (I : Set ℝ),
+  I.OrdConnected →
+    (BfgsVerification.RealAlgebraicGeometry.rootsIn p I).card ≤
+      (BfgsVerification.RealAlgebraicGeometry.rootsIn (Polynomial.derivative p) I \
+            BfgsVerification.RealAlgebraicGeometry.rootsIn p I).card +
+        1
+'BfgsVerification.RealAlgebraicGeometry.rootsIn_derivative_interleaving_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_derivative_add_one : ∀ (p : Polynomial ℝ) (I : Set ℝ),
+  I.OrdConnected →
+    BfgsVerification.RealAlgebraicGeometry.rootWeightIn p I ≤
+      BfgsVerification.RealAlgebraicGeometry.rootWeightIn (Polynomial.derivative p) I + 1
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_derivative_add_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_iterated_derivative_add : ∀ (p : Polynomial ℝ) (I : Set ℝ),
+  I.OrdConnected →
+    ∀ (m : ℕ),
+      BfgsVerification.RealAlgebraicGeometry.rootWeightIn p I ≤
+        BfgsVerification.RealAlgebraicGeometry.rootWeightIn ((⇑Polynomial.derivative)^[m] p) I + m
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_iterated_derivative_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn_eq_zero_of_eval_ne_zero : ∀ (p : Polynomial ℝ) (I : Set ℝ),
+  (∀ t ∈ I, Polynomial.eval t p ≠ 0) → BfgsVerification.RealAlgebraicGeometry.rootWeightIn p I = 0
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn_eq_zero_of_eval_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_of_derivative_nonzero : ∀ (p : Polynomial ℝ) (I : Set ℝ),
+  I.OrdConnected →
+    ∀ (m : ℕ),
+      (∀ t ∈ I, Polynomial.eval t ((⇑Polynomial.derivative)^[m] p) ≠ 0) →
+        BfgsVerification.RealAlgebraicGeometry.rootWeightIn p I ≤ m
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_of_derivative_nonzero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_root_multiplicity_cluster_bound : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n) (b : ℝ),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∃ δ,
+      0 < δ ∧
+        ∀ᶠ (x : Fin n → ℝ) in nhds a,
+          BfgsVerification.RealAlgebraicGeometry.rootWeightIn (Polynomial.map (MvPolynomial.eval x) p)
+              (Set.Icc (b - δ) (b + δ)) ≤
+            Polynomial.rootMultiplicity b (Polynomial.map (MvPolynomial.eval a) p)
+'BfgsVerification.RealAlgebraicGeometry.parameter_root_multiplicity_cluster_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_roots_bounded_on_degree_stratum : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∃ R,
+      0 < R ∧
+        ∀ᶠ (x : Fin n → ℝ) in nhds a,
+          (Polynomial.map (MvPolynomial.eval x) p).natDegree ≤ (Polynomial.map (MvPolynomial.eval a) p).natDegree →
+            ∀ (t : ℝ), (Polynomial.map (MvPolynomial.eval x) p).IsRoot t → |t| < R
+'BfgsVerification.RealAlgebraicGeometry.parameter_roots_bounded_on_degree_stratum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous_degree_stratum : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∀ {U : Set ℝ},
+      IsOpen U →
+        (∀ (t : ℝ), (Polynomial.map (MvPolynomial.eval a) p).IsRoot t → t ∈ U) →
+          ∀ᶠ (x : Fin n → ℝ) in nhds a,
+            (Polynomial.map (MvPolynomial.eval x) p).natDegree ≤ (Polynomial.map (MvPolynomial.eval a) p).natDegree →
+              ∀ (t : ℝ), (Polynomial.map (MvPolynomial.eval x) p).IsRoot t → t ∈ U
+'BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous_degree_stratum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_root_separating_radius : ∀ (S : Finset ℝ) (γ : ℝ → ℝ),
+  (∀ b ∈ S, 0 < γ b) →
+    ∀ {ε : ℝ}, 0 < ε → ∃ δ, 0 < δ ∧ δ < ε ∧ (∀ b ∈ S, δ < γ b) ∧ ∀ b ∈ S, ∀ c ∈ S, b ≠ c → 2 * δ < dist b c
+'BfgsVerification.RealAlgebraicGeometry.finite_root_separating_radius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn_mono : ∀ (p : Polynomial ℝ) {I J : Set ℝ},
+  I ⊆ J →
+    BfgsVerification.RealAlgebraicGeometry.rootWeightIn p I ≤ BfgsVerification.RealAlgebraicGeometry.rootWeightIn p J
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.disjoint_closed_root_intervals : ∀ {b c δ : ℝ},
+  2 * δ < dist b c → Disjoint (Set.Icc (b - δ) (b + δ)) (Set.Icc (c - δ) (c + δ))
+'BfgsVerification.RealAlgebraicGeometry.disjoint_closed_root_intervals' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_root_clusters : ∀ {n : ℕ} (p : Polynomial (MvPolynomial (Fin n) ℝ))
+  (a : BfgsVerification.Vec n),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∀ {ε : ℝ},
+      0 < ε →
+        ∃ δ,
+          0 < δ ∧
+            δ < ε ∧
+              (∀ b ∈ (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset,
+                  ∀ c ∈ (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset,
+                    b ≠ c → Disjoint (Set.Icc (b - δ) (b + δ)) (Set.Icc (c - δ) (c + δ))) ∧
+                ∀ᶠ (x : Fin n → ℝ) in nhds a,
+                  (Polynomial.map (MvPolynomial.eval x) p).natDegree ≤
+                      (Polynomial.map (MvPolynomial.eval a) p).natDegree →
+                    (∀ (t : ℝ),
+                        (Polynomial.map (MvPolynomial.eval x) p).IsRoot t →
+                          ∃ b ∈ (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset, t ∈ Set.Ioo (b - δ) (b + δ)) ∧
+                      ∀ b ∈ (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset,
+                        BfgsVerification.RealAlgebraicGeometry.rootWeightIn (Polynomial.map (MvPolynomial.eval x) p)
+                            (Set.Icc (b - δ) (b + δ)) ≤
+                          Polynomial.rootMultiplicity b (Polynomial.map (MvPolynomial.eval a) p)
+'BfgsVerification.RealAlgebraicGeometry.parameter_root_clusters' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootWeightIn_univ : ∀ (p : Polynomial ℝ),
+  BfgsVerification.RealAlgebraicGeometry.rootWeightIn p Set.univ = p.roots.card
+'BfgsVerification.RealAlgebraicGeometry.rootWeightIn_univ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound : BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget
+'BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle : BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget
+'BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster : BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget
+'BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover : BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget
+'BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+EXACT_TARGET_OK parameterRootDegreeBound
+EXACT_TARGET_OK intervalMultiplicityRolle
+EXACT_TARGET_OK parameterRootMultiplicityCluster
+EXACT_TARGET_OK parameterRootClusterCover

@@ -1,0 +1,15 @@
+# Independent review: actual components and finite values
+
+Reviewer: `/root/convex_gradient`. Scope: the separate three-theorem `ConnectedCriticalValues.lean`, not the previous two-file definability snapshot. Source: the component/value assertions in the proof of A:semialgebraic. No source file or prior audit artifact was changed.
+
+**Mathematical and statement review: PASS.** All three complete statements and proofs were read. Their hypotheses and the direction of each implication are correct.
+
+The first theorem proves finiteness of the actual family `connectedComponentIn S '' S` from an actual finite cover of `S` by preconnected pieces. A preconnected piece lies in one ambient component of `S`, because its containment in `S` is derived from the exact cover. Thus its image under the component map is subsingleton; the finite union of those images is the whole component family. No closedness, disjointness, nonemptiness or path regularity is assumed of the pieces. Empty pieces, an empty cover and an empty set are all correctly included, and components are counted only at points in `S`.
+
+The second theorem proves that a continuous function with finite real image on a preconnected set has subsingleton image. It uses actual preconnectedness of the continuous image and the standard fact that a nontrivial preconnected real set is infinite. There is no finiteness-of-domain assumption and no misuse of a potentially disconnected finite image.
+
+The third theorem is explicitly conditional on the finite **actual affine-critical value image**. Convexity supplies continuity of the actual objective. The image of each actual critical component is a subset of that finite image and is preconnected; therefore every pair of points in that component has equal objective value. The ambient base point `x` need not be separately assumed critical, since the membership hypotheses already describe the actual component and the component-subset theorem supplies the critical-point condition. No path selection or assumed objective differentiability enters this consequence.
+
+This permits the final proof to first obtain finitely many values from a finite piecewise-smooth cover and then deduce constancy on actual connected components. That is a valid reordering of the source argument. This file does not itself prove a finite semialgebraic/path cover, semialgebraicity of components, finite critical values from semialgebraicity, or the low-level gap; those conditions remain explicit. It is correctly scoped as component consequences rather than the entire proposition.
+
+`ConnectedCriticalValuesPeerAudit.lean` freshly prints the three actual types and transitive axioms and independently restates the full actual critical-component consequence for a strict comparison. The source was rebuilt into the peer's separate object directory. Frozen hash, compiler output, standard-axiom checks and exact-contract result are recorded in `connected_peer_source_hashes.json`, `connected_peer_build.log`, `connected_peer_axioms_contracts.log` and `connected_peer_validation.log`.

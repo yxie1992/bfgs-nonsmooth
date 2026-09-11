@@ -1,0 +1,246 @@
+BfgsVerification.RealAlgebraicGeometry.finite_cluster_assignment : ∀ (S T : Finset ℝ) (J : ℝ → Set ℝ),
+  (∀ t ∈ T, ∃ b ∈ S, t ∈ J b) →
+    (∀ b ∈ S, ∀ c ∈ S, b ≠ c → Disjoint (J b) (J c)) →
+      ∃ c, (∀ t ∈ T, c t ∈ S ∧ t ∈ J (c t)) ∧ ∀ t ∈ T, ∀ b ∈ S, c t = b ↔ t ∈ J b
+'BfgsVerification.RealAlgebraicGeometry.finite_cluster_assignment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.cluster_assignment_strictMonoOn : ∀ (S T : Finset ℝ) (δ : ℝ) (c : ℝ → ℝ),
+  (∀ t ∈ T, c t ∈ S ∧ t ∈ Set.Icc (c t - δ) (c t + δ)) →
+    Set.InjOn c ↑T →
+      (∀ b ∈ S, ∀ b' ∈ S, b ≠ b' → Disjoint (Set.Icc (b - δ) (b + δ)) (Set.Icc (b' - δ) (b' + δ))) → StrictMonoOn c ↑T
+'BfgsVerification.RealAlgebraicGeometry.cluster_assignment_strictMonoOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ordered_cluster_assignment : ∀ (S T : Finset ℝ) (δ : ℝ) (c : ℝ → ℝ)
+  (hcard : T.card = S.card),
+  (∀ t ∈ T, c t ∈ S ∧ t ∈ Set.Icc (c t - δ) (c t + δ)) →
+    Set.InjOn c ↑T →
+      (∀ b ∈ S, ∀ b' ∈ S, b ≠ b' → Disjoint (Set.Icc (b - δ) (b + δ)) (Set.Icc (b' - δ) (b' + δ))) →
+        ∀ (i : Fin S.card), c ((T.orderEmbOfFin hcard) i) = (S.orderEmbOfFin ⋯) i
+'BfgsVerification.RealAlgebraicGeometry.ordered_cluster_assignment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sum_actual_root_multiplicities : ∀ (p : Polynomial ℝ),
+  ∑ t ∈ p.roots.toFinset, Polynomial.rootMultiplicity t p = p.roots.card
+'BfgsVerification.RealAlgebraicGeometry.sum_actual_root_multiplicities' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_matching : ∀ (p q : Polynomial ℝ),
+  p ≠ 0 →
+    ∀ (δ : ℝ),
+      (∀ b ∈ p.roots.toFinset,
+          ∀ c ∈ p.roots.toFinset, b ≠ c → Disjoint (Set.Icc (b - δ) (b + δ)) (Set.Icc (c - δ) (c + δ))) →
+        (∀ t ∈ q.roots.toFinset, ∃ b ∈ p.roots.toFinset, t ∈ Set.Icc (b - δ) (b + δ)) →
+          (∀ b ∈ p.roots.toFinset,
+              BfgsVerification.RealAlgebraicGeometry.rootWeightIn q (Set.Icc (b - δ) (b + δ)) ≤
+                Polynomial.rootMultiplicity b p) →
+            ∀ (hcard : q.roots.toFinset.card = p.roots.toFinset.card),
+              q.roots.card = p.roots.card →
+                ∀ (i : Fin p.roots.toFinset.card),
+                  (q.roots.toFinset.orderEmbOfFin hcard) i ∈
+                      Set.Icc ((p.roots.toFinset.orderEmbOfFin ⋯) i - δ) ((p.roots.toFinset.orderEmbOfFin ⋯) i + δ) ∧
+                    Polynomial.rootMultiplicity ((q.roots.toFinset.orderEmbOfFin hcard) i) q =
+                      Polynomial.rootMultiplicity ((p.roots.toFinset.orderEmbOfFin ⋯) i) p
+'BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_matching' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot : Polynomial ℝ → ℕ → ℝ
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_eq_orderEmb : ∀ (p : Polynomial ℝ) {m : ℕ}
+  (h : p.roots.toFinset.card = m) (i : Fin m),
+  BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p ↑i = (p.roots.toFinset.orderEmbOfFin h) i
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_eq_orderEmb' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_mem : ∀ (p : Polynomial ℝ) {k : ℕ},
+  k < p.roots.toFinset.card → BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k ∈ p.roots.toFinset
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_isRoot : ∀ (p : Polynomial ℝ) {k : ℕ},
+  k < p.roots.toFinset.card → p.IsRoot (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k)
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_isRoot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_matching : ∀ (p q : Polynomial ℝ),
+  p ≠ 0 →
+    ∀ (δ : ℝ),
+      (∀ b ∈ p.roots.toFinset,
+          ∀ c ∈ p.roots.toFinset, b ≠ c → Disjoint (Set.Icc (b - δ) (b + δ)) (Set.Icc (c - δ) (c + δ))) →
+        (∀ t ∈ q.roots.toFinset, ∃ b ∈ p.roots.toFinset, t ∈ Set.Icc (b - δ) (b + δ)) →
+          (∀ b ∈ p.roots.toFinset,
+              BfgsVerification.RealAlgebraicGeometry.rootWeightIn q (Set.Icc (b - δ) (b + δ)) ≤
+                Polynomial.rootMultiplicity b p) →
+            q.roots.toFinset.card = p.roots.toFinset.card →
+              q.roots.card = p.roots.card →
+                ∀ {k : ℕ},
+                  k < p.roots.toFinset.card →
+                    BfgsVerification.RealAlgebraicGeometry.orderedRealRoot q k ∈
+                        Set.Icc (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k - δ)
+                          (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k + δ) ∧
+                      Polynomial.rootMultiplicity (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot q k) q =
+                        Polynomial.rootMultiplicity (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k) p
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_matching' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum : {n : ℕ} →
+  Polynomial (MvPolynomial (Fin n) ℝ) → BfgsVerification.Vec n → Set (BfgsVerification.Vec n)
+'BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_eventually_near : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∀ {k : ℕ},
+      k < (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset.card →
+        ∀ {ε : ℝ},
+          0 < ε →
+            ∀ᶠ (x : Fin n → ℝ) in nhds a,
+              (Polynomial.map (MvPolynomial.eval x) p).natDegree ≤ (Polynomial.map (MvPolynomial.eval a) p).natDegree →
+                (Polynomial.map (MvPolynomial.eval x) p).roots.toFinset.card =
+                    (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset.card →
+                  (Polynomial.map (MvPolynomial.eval x) p).roots.card =
+                      (Polynomial.map (MvPolynomial.eval a) p).roots.card →
+                    dist
+                          (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot
+                            (Polynomial.map (MvPolynomial.eval x) p) k)
+                          (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot
+                            (Polynomial.map (MvPolynomial.eval a) p) k) <
+                        ε ∧
+                      Polynomial.rootMultiplicity
+                          (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot
+                            (Polynomial.map (MvPolynomial.eval x) p) k)
+                          (Polynomial.map (MvPolynomial.eval x) p) =
+                        Polynomial.rootMultiplicity
+                          (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot
+                            (Polynomial.map (MvPolynomial.eval a) p) k)
+                          (Polynomial.map (MvPolynomial.eval a) p)
+'BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_eventually_near' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_continuousWithinAt : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∀ {k : ℕ},
+      k < (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset.card →
+        ∀ {S : Set (BfgsVerification.Vec n)},
+          S ⊆ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a →
+            ContinuousWithinAt
+              (fun x =>
+                BfgsVerification.RealAlgebraicGeometry.orderedRealRoot (Polynomial.map (MvPolynomial.eval x) p) k)
+              S a
+'BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_continuousWithinAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_multiplicity_locally_constant : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n),
+  Polynomial.map (MvPolynomial.eval a) p ≠ 0 →
+    ∀ {k : ℕ},
+      k < (Polynomial.map (MvPolynomial.eval a) p).roots.toFinset.card →
+        ∀ {S : Set (BfgsVerification.Vec n)},
+          S ⊆ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a →
+            ∀ᶠ (x : Fin n → ℝ) in nhdsWithin a S,
+              Polynomial.rootMultiplicity
+                  (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot (Polynomial.map (MvPolynomial.eval x) p) k)
+                  (Polynomial.map (MvPolynomial.eval x) p) =
+                Polynomial.rootMultiplicity
+                  (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot (Polynomial.map (MvPolynomial.eval a) p) k)
+                  (Polynomial.map (MvPolynomial.eval a) p)
+'BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_multiplicity_locally_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot : {n : ℕ} →
+  MvPolynomial (Option (Fin n)) ℝ → ℕ → BfgsVerification.Vec n → ℝ
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_local_smooth_extension : ∀ {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (a : BfgsVerification.Vec n),
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a ≠ 0 →
+    ∀ {k : ℕ},
+      k < (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a).roots.toFinset.card →
+        ∀ {S : Set (BfgsVerification.Vec n)},
+          S ⊆
+              BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p)
+                a →
+            ∃ g,
+              ContDiffAt ℝ ∞ g a ∧
+                g a = BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k a ∧
+                  BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k =ᶠ[nhdsWithin a S] g
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_local_smooth_extension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffWithinAt : ∀ {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (a : BfgsVerification.Vec n),
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a ≠ 0 →
+    ∀ {k : ℕ},
+      k < (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a).roots.toFinset.card →
+        ∀ {S : Set (BfgsVerification.Vec n)},
+          S ⊆
+              BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p)
+                a →
+            ContDiffWithinAt ℝ ∞ (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k) S a
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffWithinAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.mem_rootSignatureStratum_self : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) (a : BfgsVerification.Vec n),
+  a ∈ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a
+'BfgsVerification.RealAlgebraicGeometry.mem_rootSignatureStratum_self' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_eq_of_mem : ∀ {n : ℕ}
+  (p : Polynomial (MvPolynomial (Fin n) ℝ)) {a b : BfgsVerification.Vec n},
+  b ∈ BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a →
+    BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p b =
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a
+'BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_eq_of_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffOn_signature : ∀ {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (a : BfgsVerification.Vec n) {k : ℕ},
+  k < (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a).roots.toFinset.card →
+    ContDiffOn ℝ ∞ (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k)
+      (BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p) a)
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffOn_signature' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_strictMono : ∀ (p : Polynomial ℝ),
+  StrictMono fun i => BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p ↑i
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_strictMono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_lt : ∀ (p : Polynomial ℝ) {i j : ℕ},
+  i < j →
+    j < p.roots.toFinset.card →
+      BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p i <
+        BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p j
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isRoot_iff_exists_orderedRealRoot : ∀ (p : Polynomial ℝ),
+  p ≠ 0 →
+    ∀ (t : ℝ), p.IsRoot t ↔ ∃ k < p.roots.toFinset.card, BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k = t
+'BfgsVerification.RealAlgebraicGeometry.isRoot_iff_exists_orderedRealRoot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity : BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget
+'BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity : BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget
+'BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches : BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget
+'BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+EXACT_TARGET_OK orderedRootContinuity
+EXACT_TARGET_OK orderedRootMultiplicity
+EXACT_TARGET_OK orderedRootSmoothBranches

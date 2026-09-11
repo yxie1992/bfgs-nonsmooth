@@ -28,7 +28,7 @@ and explicit open questions are classified separately from mathematical claims.
 | 196–199 | G's scalar theorem permits every positive metric and its local certificate-nonnecessity example is an actual objective. |
 | 200–213 | H's noncompact value dichotomy, recurrent affine geometry, rank-at-most-two iterate theorem, explicit flat-fiber limit and attributed two-piece theorem are proved. Higher recurrent rank is explicitly open. |
 | 214–237 | M's actual arbitrary-dimensional principal-minor hierarchy derives the normalized recurrence and reciprocal mean, finite-horizon and superquadratic conclusions. The exact reference energy, negligible/quadratic correction criteria and F's disclosed little-o rate deductions retain the finite constants and required hypotheses. No rate sharpness or evaluation-complexity claim is introduced. |
-| 238–249 | Actual equal-rate affine geometry, nondegenerate compact gap and incoming-jump obstruction are proved. General semialgebraic support/critical definability is now proved, but finite components/constant values/low gap still require the active finite-path closure. This span remains mathematically partial. |
+| 238–249 | Actual equal-rate affine geometry, nondegenerate compact gap and incoming-jump obstruction are proved. Actual semialgebraic supporting/critical definability, finite ordinary components, constant critical values and the original low gap are now proved from the actual finite smooth cover. This mathematical synthesis span is complete; stronger literal path-graph facts in A remain separately tracked. |
 | 250–259 | The old 19-job package is absent. Its reported commands/counts/timings are historical evidence, not Lean facts. The source's expressly unresolved convergence/robustness/rate boundaries remain unclaimed. |
 | 260–288 | Supersession policy is consistent with the actual theorem statements: both negative families remain, the ridge implication is now formal, Q flat cases remain separate, and no necessary-and-sufficient convergence classification or unproved class inclusion is asserted. Historical archive availability remains separately qualified. |
 
@@ -36,8 +36,8 @@ The ridge proof slightly strengthens the source: unique attained minimization of
 the finite convex objective already supplies compact sublevels, so an additional
 coercivity hypothesis is not needed. This deduction is explicit and does not
 alter the original source. H's new actual recurrent-cardinality target closes its
-last concrete cross-reference. General A finite-value claims are not inferred
-from the now completed projection theorem alone.
+last concrete cross-reference. General A finite-value claims now follow from the independently proved finite
+smooth cover of the actual lifted critical graph, in addition to projection.
 
 The line map is exhaustive but does not turn editorial history into mathematics.
 In particular, preservation of the TeX reference to an archived original proof

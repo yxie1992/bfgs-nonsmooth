@@ -1,0 +1,28 @@
+import BfgsVerification.BoundarySignTargets
+import Lean
+open Lean Elab Command Meta
+#check @BfgsVerification.RealAlgebraicGeometry.boundarySignStratum
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundarySignStratum
+#check @BfgsVerification.RealAlgebraicGeometry.restricted_graph_polynomial_sign_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.restricted_graph_polynomial_sign_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_cover
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_cover
+#check @BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_pairwise_disjoint
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_pairwise_disjoint
+#check @BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_graph_sign
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_graph_sign
+#check @BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_restricted_graph_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundarySignStratum_restricted_graph_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.boundary_sign_semialgebraic_partition
+#print axioms BfgsVerification.RealAlgebraicGeometry.boundary_sign_semialgebraic_partition
+#check @BfgsVerification.BoundarySignPartitionTarget
+#print axioms BfgsVerification.BoundarySignPartitionTarget
+#check @BfgsVerification.boundarySignPartition
+#print axioms BfgsVerification.boundarySignPartition
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.boundarySignPartition
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.BoundarySignPartitionTarget)
+  unless ok do throwError "exact boundary target mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.boundarySignPartition"

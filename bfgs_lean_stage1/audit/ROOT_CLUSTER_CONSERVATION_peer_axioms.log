@@ -1,0 +1,108 @@
+BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} {α : Type u_1} {β : Type u_2} [DecidableEq.{u_2 + 1} β]
+  (s : Finset.{u_1} α) (c : α → β) (w : α → Nat) (b : β) : Nat
+'BfgsVerification.RootClusterConservation.fiberWeight' depends on axioms: [propext, Quot.sound]
+BfgsVerification.RootClusterConservation.sum_fiberWeight.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a)) (w : α → Nat) :
+  Eq.{1} (∑ b ∈ t, BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (∑ a ∈ s, w a)
+'BfgsVerification.RootClusterConservation.sum_fiberWeight' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RootClusterConservation.fiberWeight_eq_capacity.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  {w : α → Nat} {m : β → Nat} (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a))
+  (hle :
+    ∀ (b : β),
+      Membership.mem.{u_2, u_2} t b →
+        LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b))
+  (htotal : Eq.{1} (∑ a ∈ s, w a) (∑ b ∈ t, m b)) (b : β) :
+  Membership.mem.{u_2, u_2} t b → Eq.{1} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b)
+'BfgsVerification.RootClusterConservation.fiberWeight_eq_capacity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.every_fiber_nonempty.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  {w : α → Nat} {m : β → Nat} (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a))
+  (hm : ∀ (b : β), Membership.mem.{u_2, u_2} t b → LT.lt.{0} 0 (m b))
+  (hle :
+    ∀ (b : β),
+      Membership.mem.{u_2, u_2} t b →
+        LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b))
+  (htotal : Eq.{1} (∑ a ∈ s, w a) (∑ b ∈ t, m b)) (b : β) :
+  Membership.mem.{u_2, u_2} t b → Finset.Nonempty.{u_1} ({a ∈ s | Eq.{u_2 + 1} (c a) b})
+'BfgsVerification.RootClusterConservation.every_fiber_nonempty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.every_label_hit.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  {w : α → Nat} {m : β → Nat} (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a))
+  (hm : ∀ (b : β), Membership.mem.{u_2, u_2} t b → LT.lt.{0} 0 (m b))
+  (hle :
+    ∀ (b : β),
+      Membership.mem.{u_2, u_2} t b →
+        LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b))
+  (htotal : Eq.{1} (∑ a ∈ s, w a) (∑ b ∈ t, m b)) (b : β) :
+  Membership.mem.{u_2, u_2} t b → ∃ a, And (Membership.mem.{u_1, u_1} s a) (Eq.{u_2 + 1} (c a) b)
+'BfgsVerification.RootClusterConservation.every_label_hit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RootClusterConservation.label_bijOn_of_card_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  {w : α → Nat} {m : β → Nat} (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a))
+  (hm : ∀ (b : β), Membership.mem.{u_2, u_2} t b → LT.lt.{0} 0 (m b))
+  (hle :
+    ∀ (b : β),
+      Membership.mem.{u_2, u_2} t b →
+        LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b))
+  (htotal : Eq.{1} (∑ a ∈ s, w a) (∑ b ∈ t, m b)) (hcard : Eq.{1} (Finset.card.{u_1} s) (Finset.card.{u_2} t)) :
+  Set.BijOn.{u_1, u_2} c ↑s ↑t
+'BfgsVerification.RootClusterConservation.label_bijOn_of_card_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.fiber_singleton_of_card_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  {w : α → Nat} {m : β → Nat} (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a))
+  (hm : ∀ (b : β), Membership.mem.{u_2, u_2} t b → LT.lt.{0} 0 (m b))
+  (hle :
+    ∀ (b : β),
+      Membership.mem.{u_2, u_2} t b →
+        LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b))
+  (htotal : Eq.{1} (∑ a ∈ s, w a) (∑ b ∈ t, m b)) (hcard : Eq.{1} (Finset.card.{u_1} s) (Finset.card.{u_2} t)) {a : α}
+  (ha : Membership.mem.{u_1, u_1} s a) : Eq.{u_1 + 1} ({a' ∈ s | Eq.{u_2 + 1} (c a') (c a)}) (singleton.{u_1, u_1} a)
+'BfgsVerification.RootClusterConservation.fiber_singleton_of_card_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.sole_weight_eq_capacity.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] {s : Finset.{u_1} α} {t : Finset.{u_2} β} {c : α → β}
+  {w : α → Nat} {m : β → Nat} (hc : ∀ (a : α), Membership.mem.{u_1, u_1} s a → Membership.mem.{u_2, u_2} t (c a))
+  (hm : ∀ (b : β), Membership.mem.{u_2, u_2} t b → LT.lt.{0} 0 (m b))
+  (hle :
+    ∀ (b : β),
+      Membership.mem.{u_2, u_2} t b →
+        LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} s c w b) (m b))
+  (htotal : Eq.{1} (∑ a ∈ s, w a) (∑ b ∈ t, m b)) (hcard : Eq.{1} (Finset.card.{u_1} s) (Finset.card.{u_2} t)) {a : α}
+  (ha : Membership.mem.{u_1, u_1} s a) : Eq.{1} (w a) (m (c a))
+'BfgsVerification.RootClusterConservation.sole_weight_eq_capacity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.fintype_bijective_and_weights.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  [DecidableEq.{u_1 + 1} α] [DecidableEq.{u_2 + 1} β] [Fintype.{u_1} α] [Fintype.{u_2} β] {c : α → β} {w : α → Nat}
+  {m : β → Nat} (hm : ∀ (b : β), LT.lt.{0} 0 (m b))
+  (hle :
+    ∀ (b : β),
+      LE.le.{0} (BfgsVerification.RootClusterConservation.fiberWeight.{u_1, u_2} Finset.univ.{u_1} c w b) (m b))
+  (htotal : Eq.{1} (∑ a, w a) (∑ b, m b)) (hcard : Eq.{1} (Fintype.card.{u_1} α) (Fintype.card.{u_2} β)) :
+  And (Function.Bijective.{u_1 + 1, u_2 + 1} c) (∀ (a : α), Eq.{1} (w a) (m (c a)))
+'BfgsVerification.RootClusterConservation.fintype_bijective_and_weights' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.FiniteConservationTarget : Prop
+'BfgsVerification.RootClusterConservation.FiniteConservationTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.finiteConservation :
+  BfgsVerification.RootClusterConservation.FiniteConservationTarget
+'BfgsVerification.RootClusterConservation.finiteConservation' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RootClusterConservation.FiniteBijectionTarget : Prop
+'BfgsVerification.RootClusterConservation.FiniteBijectionTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootClusterConservation.finiteBijection :
+  BfgsVerification.RootClusterConservation.FiniteBijectionTarget
+'BfgsVerification.RootClusterConservation.finiteBijection' depends on axioms: [propext, Classical.choice, Quot.sound]

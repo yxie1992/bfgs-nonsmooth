@@ -1,0 +1,9 @@
+# Independent finite-cluster conservation review
+
+Verdict: PASS. Reviewed both frozen modules, all 13 declared definitions/theorems and both exact target types. Independently checked both SHA-256 source hashes, reran all actual type/transitive-axiom reports and the two strict `Meta.isDefEq` contracts. Evidence: `peer_axioms.log`, `peer_contracts.log`, `peer_validation.log`.
+
+`fiberWeight` is the actual finite filtered sum, not an abstract supplied budget. The sum-over-fibers identity uses the explicit maps-to premise. Termwise natural-number inequalities and exact equality of the total sums force each fiber weight to equal its capacity. Strict positivity is required only for target capacities; no missing point-weight positivity premise is needed. The empty finite sets are handled correctly. Positive capacities and conservation imply every target fiber is nonempty; equal source/target cardinality then makes the actual label map bijective. The source theorem exports `Set.BijOn`, singleton filtered fibers, and the actual sole point's weight equal to its capacity.
+
+The Fintype wrapper and two Fin-indexed contracts retain the exact quantifiers, equality of total weights, and cardinality premise. They do not assert polynomial root continuity or a semialgebraic decomposition. I have independently instantiated the finite-set API in `root_continuity/ActualRootMatching.lean`, where actual polynomial roots and root multiplicities discharge all capacity/conservation premises and produce exact ordered-root matching.
+
+One reproducibility cleanup was requested and applied without changing any Lean source or source hash: the copied verifier's unrelated DEmbeddingTarget build was replaced by the exact Mathlib dependency, and scope variables were renamed. No mathematical or contract defect was found.

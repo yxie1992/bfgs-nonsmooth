@@ -1,0 +1,101 @@
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} {E : Type u_1} [NormedAddCommGroup.{u_1} E]
+  [NormedSpace.{0, u_1} Real E] (S : Set.{u_1} E) (x : E) : Set.{u_1} E
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_subset.{u_1} {E : Type u_1} [NormedAddCommGroup.{u_1} E]
+  [NormedSpace.{0, u_1} Real E] (S : Set.{u_1} E) (x : E) :
+  Subset.{u_1} (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x) S
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_subset' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_eq_of_path.{u_1} {E : Type u_1}
+  [NormedAddCommGroup.{u_1} E] [NormedSpace.{0, u_1} Real E] {S : Set.{u_1} E} {x y : E}
+  (hxy : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.{u_1} S x y) :
+  Eq.{u_1 + 1} (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x)
+    (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S y)
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_eq_of_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.prefix.{u_1} {E : Type u_1} [NormedAddCommGroup.{u_1} E]
+  [NormedSpace.{0, u_1} Real E] {S : Set.{u_1} E} {x y : E}
+  (p : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.{u_1} S x y) {t : Real}
+  (ht : Membership.mem.{0, 0} (Set.Icc.{0} 0 1) t) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.{u_1} S x
+    (BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve.{u_1} p t)
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.prefix' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.in_component.{u_1} {E : Type u_1}
+  [NormedAddCommGroup.{u_1} E] [NormedSpace.{0, u_1} Real E] {S : Set.{u_1} E} {x y : E}
+  (p : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.{u_1} S x y) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.{u_1}
+    (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x) x y
+'BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.in_component' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_piecewiseSmoothConnected.{u_1} {E : Type u_1}
+  [NormedAddCommGroup.{u_1} E] [NormedSpace.{0, u_1} Real E] (S : Set.{u_1} E) (x : E) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.{u_1}
+    (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x)
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_piecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_eq_union_cover.{u_1} {E : Type u_1}
+  [NormedAddCommGroup.{u_1} E] [NormedSpace.{0, u_1} Real E] {m : Nat} {S : Set.{u_1} E} (C : Fin m → Set.{u_1} E)
+  (hcover : Eq.{u_1 + 1} S (⋃ i, C i))
+  (hC : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.{u_1} (C i)) (x : E) :
+  Eq.{u_1 + 1} (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x)
+    (⋃ i,
+      ⋃ (_ :
+        Membership.mem.{0, 0}
+          {i |
+            Set.Nonempty.{u_1}
+              (Inter.inter.{u_1} (C i) (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x))}
+          i),
+        C i)
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_eq_union_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_smooth_components_of_finite_smooth_cover.{u_1} {E : Type u_1}
+  [NormedAddCommGroup.{u_1} E] [NormedSpace.{0, u_1} Real E] {m : Nat} {S : Set.{u_1} E} (C : Fin m → Set.{u_1} E)
+  (hcover : Eq.{u_1 + 1} S (⋃ i, C i))
+  (hC : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.{u_1} (C i)) :
+  Set.Finite.{u_1} (Set.image.{u_1, u_1} (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S) S)
+'BfgsVerification.RealAlgebraicGeometry.finite_smooth_components_of_finite_smooth_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_semialgebraic_of_finite_smooth_cover.{u_2}
+  {σ : Type u_2} [Fintype.{u_2} σ] {m : Nat} {S : Set.{u_2} (σ → Real)} (C : Fin m → Set.{u_2} (σ → Real))
+  (hcover : Eq.{u_2 + 1} S (⋃ i, C i))
+  (hC : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.{u_2} (C i))
+  (hSA : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_2} (C i)) (x : σ → Real) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_2}
+    (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_2} S x)
+'BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent_semialgebraic_of_finite_smooth_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_smooth_components.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {m : Nat} {S : Set.{u_1} (σ → Real)} (C : Fin m → Set.{u_1} (σ → Real)) (hcover : Eq.{u_1 + 1} S (⋃ i, C i))
+  (hC :
+    ∀ (i : Fin m),
+      And (BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} (C i))
+        (BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.{u_1} (C i))) :
+  And
+    (Set.Finite.{u_1}
+      (Set.image.{u_1, u_1} (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S) S))
+    (∀ (x : σ → Real),
+      And
+        (BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+          (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x))
+        (BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.{u_1}
+          (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent.{u_1} S x)))
+'BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_smooth_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.FiniteSmoothComponentsTarget : Prop
+'BfgsVerification.FiniteSmoothComponentsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finiteSmoothComponents : BfgsVerification.FiniteSmoothComponentsTarget
+'BfgsVerification.finiteSmoothComponents' depends on axioms: [propext, Classical.choice, Quot.sound]
+SMOOTH_COMPONENT_PEER_EXACT_OK BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_smooth_components
+SMOOTH_COMPONENT_PEER_EXACT_OK BfgsVerification.finiteSmoothComponents

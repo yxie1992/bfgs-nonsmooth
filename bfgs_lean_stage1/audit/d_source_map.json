@@ -65,7 +65,7 @@
       "first": 34,
       "last": 35,
       "claim": "Strictness, non-strict-test equivalence, all actual queried points differentiable",
-      "status": "pending_literal_export",
+      "status": "covered",
       "references": [
         [
           "AlgebraicSeedOrbitData",
@@ -78,9 +78,41 @@
         [
           "DEmbeddingRun",
           "run_all_trials_differentiable"
+        ],
+        [
+          "NonStrictLineSearch",
+          "Armijo"
+        ],
+        [
+          "NonStrictLineSearch",
+          "Wolfe"
+        ],
+        [
+          "NonStrictLineSearch",
+          "search"
+        ],
+        [
+          "DNonStrictObjectives",
+          "seed_fromMetric"
+        ],
+        [
+          "DNonStrictObjectives",
+          "coercive_fromMetric"
+        ],
+        [
+          "DNonStrictObjectives",
+          "embedding_fromMetric"
+        ],
+        [
+          "DNonStrictObjectives",
+          "embedding_same_search"
+        ],
+        [
+          "DLiteralTargets",
+          "nonStrictRun"
         ]
       ],
-      "note": "Every tested branch is strictly on the indicated side of both relevant comparisons. Non-strict decisions are the same by these inequalities and induction on the finite histories; a separate non-strict interpreter theorem is not exported. A separate supplementary Lean wrapper is being developed for the literal non-strict interpreter, polynomial iff, convex-hull or affine-weight assertion; prose consequence reasoning is not counted as an exported formal theorem."
+      "note": "The actual non-strict Armijo/weak-Wolfe interpreter returns the same accepted length and entire strict trial history at every iteration of each actual seed, coercive and D embedding run, for every original admissible c1,c2. Rejected non-strict comparisons follow from strict rejection at c1/2 and the derived negative actual directional product; the interpreter itself uses the original constants. All six delivered sources, 31 declarations and both exact targets passed the scoped gate."
     },
     {
       "first": 36,
@@ -508,7 +540,7 @@
       "first": 163,
       "last": 168,
       "claim": "Root equations give beta=1/4,gamma=1/16; exact rho-difference identity",
-      "status": "pending_literal_export",
+      "status": "covered",
       "references": [
         [
           "AlgebraicSeedCycle",
@@ -525,9 +557,25 @@
         [
           "AlgebraicSeedCycle",
           "source_parameters"
+        ],
+        [
+          "DLiteralIdentities",
+          "beta_quarter_iff"
+        ],
+        [
+          "DLiteralIdentities",
+          "gamma_sixteenth_iff"
+        ],
+        [
+          "DLiteralIdentities",
+          "original_box_polynomial_iff"
+        ],
+        [
+          "DLiteralTargets",
+          "literalIdentities"
         ]
       ],
-      "note": "The converse equivalence with each root equation follows by nonzero-denominator multiplication; these exported implications suffice for the exact source closure. A separate supplementary Lean wrapper is being developed for the literal non-strict interpreter, polynomial iff, convex-hull or affine-weight assertion; prose consequence reasoning is not counted as an exported formal theorem."
+      "note": "Both rational-polynomial equivalences are explicit Lean theorems. The wrapper on the whole original closed box derives every denominator condition and proves P(x)=0 iff beta(x)=1/4 and gamma(x)=1/16. The exact rho-difference identity remains separately referenced."
     },
     {
       "first": 169,
@@ -720,7 +768,7 @@
       "first": 224,
       "last": 230,
       "claim": "Explicit downhill separator, exact negative ray, nonstationary finite-value limit and zero excluded from convex gradient hull",
-      "status": "pending_literal_export",
+      "status": "covered",
       "references": [
         [
           "AlgebraicSeedFailure",
@@ -733,15 +781,23 @@
         [
           "AlgebraicSeedFailure",
           "limit_not_stationary"
+        ],
+        [
+          "DLiteralIdentities",
+          "gradient_support_zero"
+        ],
+        [
+          "DLiteralIdentities",
+          "zero_not_mem_gradient_hull"
         ]
       ],
-      "note": "The convex-hull exclusion follows by applying the fixed separating linear functional to the actual finite convex hull; the actual subdifferential exclusion is explicitly exported. A separate supplementary Lean wrapper is being developed for the literal non-strict interpreter, polynomial iff, convex-hull or affine-weight assertion; prose consequence reasoning is not counted as an exported formal theorem."
+      "note": "The three literal source gradients are derived global supports of the actual maximum objective. Their actual convex hull lies in the subdifferential, and the proved nonstationarity yields the explicit zero-exclusion theorem. The original downhill ray and finite-value failure remain unchanged."
     },
     {
       "first": 231,
       "last": 236,
       "claim": "Literal four-affine coercive global failure, inactive fourth piece, exact minimum -1 at(-1,16), unique minimizer, compact sublevels",
-      "status": "pending_literal_export",
+      "status": "covered",
       "references": [
         [
           "AlgebraicSeedCoercive",
@@ -770,9 +826,17 @@
         [
           "AlgebraicSeedCoercive",
           "actual_coercive_deterministic_failure"
+        ],
+        [
+          "DLiteralIdentities",
+          "coercive_exact_affine_combination"
+        ],
+        [
+          "DLiteralIdentities",
+          "coercive_weights_convex"
         ]
       ],
-      "note": "The explicit weights8/17,8/17,1/17 sum to one and yield constant -1 by direct linear algebra; the proof derives the same lower bound from the three coordinate inequalities. This preliminary example is not claimed to refute local convergence at its own minimizer. A separate supplementary Lean wrapper is being developed for the literal non-strict interpreter, polynomial iff, convex-hull or affine-weight assertion; prose consequence reasoning is not counted as an exported formal theorem."
+      "note": "The literal positive weights 8/17,8/17,1/17 sum to one and their weighted sum of the actual coercive affine branches is identically -1. These exact identities are included in the audited literal-identities target. This preliminary global example is not claimed to refute local convergence at its own minimizer."
     },
     {
       "first": 237,
@@ -1417,6 +1481,9 @@
     "BfgsVerification/AlgebraicSeedOrbitData.lean": "33f0a25873ac6c0a6c07b16de82755d0d44900c592c089e5106e0404ef08e412",
     "BfgsVerification/AlgebraicSeedDeterministicTrace.lean": "00031758b71208a387cc93fd69178e8832609a7868e03be75cbb063c6b6ce0f0",
     "BfgsVerification/DEmbeddingRun.lean": "2b37369307857a1928955d7bce11e8048d2311acd59d6e52223c35350994ef2b",
+    "BfgsVerification/NonStrictLineSearch.lean": "eaab65bd6719809755a307decf5283cf7d47ba127f486e5bdca1c630bff839e1",
+    "BfgsVerification/DNonStrictObjectives.lean": "566a58deb337cca7194ea1447b94eb5e024764dd4c0934a25398313cadaa124a",
+    "BfgsVerification/DLiteralTargets.lean": "de93c5f5457a1c02f9ce84b2b06d5a0d483c9479faee363d0555df940f53cc4e",
     "BfgsVerification/ReportEmbeddingTargets.lean": "203545c3e2a2b72c2547fd38baae330c8c6d959818c972c8d6dd437810e7f290",
     "BfgsVerification/AlgebraicSeedData.lean": "f9728276ec344c78e9b4871c810a51e782ff168381dee423172b2727d8740795",
     "BfgsVerification/AlgebraicSeedRoot.lean": "03d727b17cc013bcbd8390a00c5df7c4498b2d21db621eb3451595d1157d6e87",
@@ -1427,6 +1494,7 @@
     "BfgsVerification/AlgebraicSeedOrbitGeometry.lean": "3341033c3d8b8517dac6f19709a5bdcd9e3524574b5257ee652f4c5e97592627",
     "BfgsVerification/AlgebraicSeedFiniteCycle.lean": "7864582701aa76ff70535a9c6e975cd7e4303bb94b967b997d82f4045a4883ad",
     "BfgsVerification/PlanarBFGSUpdate.lean": "99f3ea00c947dabfcf69b06323cfb2411c1dd19df932ddbd5bacb1396eb56933",
+    "BfgsVerification/DLiteralIdentities.lean": "b6b1814f2e254a7a44d281b55ed89d66bf7af7b964ad0a873aa526259e5dd3ca",
     "BfgsVerification/HessianUpdate.lean": "f6c9d0b89a66c34ccfefab8b994e46f7425fe661b0866e4b88cf8a6ad19941d8",
     "BfgsVerification/AlgebraicSeedInfiniteOrbit.lean": "2143fb8fbccb356c2d183fcca6268d22db28600fc66a274a799c6bfad0937366",
     "BfgsVerification/AlgebraicSeedFailure.lean": "58f9da1f1d732c09a9c9b572d9c2ba64402df6738fb75d6a59a302f1bcef2c37",

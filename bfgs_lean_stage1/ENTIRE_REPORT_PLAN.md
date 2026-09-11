@@ -462,3 +462,25 @@ nearest-rounding corrections; four immediate literal exports await the next
 central gate. I's complete source reconciliation and E's historical-evidence
 classification distinguish checked mathematics from absent original run records.
 The entire report remains incomplete. Original research sources are unchanged.
+
+
+## Sixteenth milestone: actual finite geometry, critical values and planar tame basins
+
+The frozen pinned build and transitive audit passed 5,002 explicit theorems,
+7,486 total theorem declarations, 233 exact targets and 693 frozen Lean files.
+Only propext, Classical.choice and Quot.sound occur. Actual logs and frozen
+hashes are report_tame_geometry_check.log, STATUS.json and their companions.
+
+The actual arbitrary-dimensional semialgebraic finite smooth cover is proved
+from polynomial root analysis and finite sign refinements. It yields actual
+finite ordinary/smooth-path components, finite affine-critical values, the
+original low gap and the planar tame convergence basins, without any assumed
+geometric decomposition or convergence. D's literal non-strict search and
+remaining finite-algebra identities also pass; all453 D lines are reconciled.
+
+The stronger literal A assertions about semialgebraic path graphs and general
+piecewise-C1 composition remain in a separate active proof scope. Historical E
+jobs/counts/timings/archive identities and R's unidentified older four-piece
+numerical claim remain unresolved. The latter is a mathematical attribution
+exception, not merely execution history. No original claim is silently retired.
+All original research sources are unchanged; the entire report flag is false.

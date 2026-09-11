@@ -1,0 +1,234 @@
+BfgsVerification.NonStrictLineSearch.Armijo {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (x p g : BfgsVerification.Vec n) (c₁ a : Real) : Prop
+'BfgsVerification.NonStrictLineSearch.Armijo' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.NonStrictLineSearch.Wolfe {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (x p g : BfgsVerification.Vec n) (c₂ a : Real) : Prop
+'BfgsVerification.NonStrictLineSearch.Wolfe' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.NonStrictLineSearch.nextTrial (l : Real) (h : Option.{0} Real) : Real
+'BfgsVerification.NonStrictLineSearch.nextTrial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.NonStrictLineSearch.search {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (x p g : BfgsVerification.Vec n) (c₁ c₂ : Real) (fuel : Nat) (l : Real) (h : Option.{0} Real) (a : Real) :
+  Prod.{0, 0} (Option.{0} Real) (List.{0} Real)
+'BfgsVerification.NonStrictLineSearch.search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.NonStrictLineSearch.fromMetric {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (x : BfgsVerification.Vec n) (H : BfgsVerification.Mat n) (c₁ c₂ : Real) (fuel : Nat) :
+  Prod.{0, 0} (Option.{0} Real) (List.{0} Real)
+'BfgsVerification.NonStrictLineSearch.fromMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.NonStrictLineSearch.search_accept {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {x p g : BfgsVerification.Vec n} {c₁ c₂ a l : Real} {h : Option.{0} Real} (fuel : Nat)
+  (ha : BfgsVerification.NonStrictLineSearch.Armijo F x p g c₁ a)
+  (hw : BfgsVerification.NonStrictLineSearch.Wolfe F x p g c₂ a) :
+  Eq.{1} (BfgsVerification.NonStrictLineSearch.search F x p g c₁ c₂ (HAdd.hAdd.{0, 0, 0} fuel 1) l h a)
+    (Prod.mk.{0, 0} (some.{0} a) (List.cons.{0} a List.nil.{0}))
+'BfgsVerification.NonStrictLineSearch.search_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.NonStrictLineSearch.search_armijo_reject {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {x p g : BfgsVerification.Vec n} {c₁ c₂ a l : Real} {h : Option.{0} Real} (fuel : Nat)
+  (ha : Not (BfgsVerification.NonStrictLineSearch.Armijo F x p g c₁ a)) :
+  Eq.{1} (BfgsVerification.NonStrictLineSearch.search F x p g c₁ c₂ (HAdd.hAdd.{0, 0, 0} fuel 1) l h a)
+    (let r :=
+      BfgsVerification.NonStrictLineSearch.search F x p g c₁ c₂ fuel l (some.{0} a)
+        (HDiv.hDiv.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} l a) 2);
+    Prod.mk.{0, 0} r.1 (List.cons.{0} a r.2))
+'BfgsVerification.NonStrictLineSearch.search_armijo_reject' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralIdentities.beta_quarter_iff {c d : Real} (hU : Ne.{1} (BfgsVerification.AlgebraicSeed.U c d) 0)
+  (hV : Ne.{1} (BfgsVerification.AlgebraicSeed.V c d) 0)
+  (hA : Ne.{1} (HAdd.hAdd.{0, 0, 0} (BfgsVerification.AlgebraicSeed.U c d) 129) 0) :
+  Iff (Eq.{1} (BfgsVerification.SeedCycle.beta c d) (1 / 4))
+    (Eq.{1}
+      (HSub.hSub.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} 264192 (BfgsVerification.AlgebraicSeed.R c d))
+          (BfgsVerification.AlgebraicSeed.K c d))
+        (HMul.hMul.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (BfgsVerification.AlgebraicSeed.U c d) (BfgsVerification.AlgebraicSeed.V c d))
+          (HAdd.hAdd.{0, 0, 0} (BfgsVerification.AlgebraicSeed.U c d) 129)))
+      0)
+'BfgsVerification.DLiteralIdentities.beta_quarter_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralIdentities.gamma_sixteenth_iff {c d : Real}
+  (hU : Ne.{1} (BfgsVerification.AlgebraicSeed.U c d) 0) (hR : Ne.{1} (BfgsVerification.AlgebraicSeed.R c d) 0)
+  (hY : Ne.{1} (BfgsVerification.AlgebraicSeed.Y c d) 0) :
+  Iff (Eq.{1} (BfgsVerification.SeedCycle.gamma c d) (1 / 16))
+    (Eq.{1}
+      (HSub.hSub.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} 16 (BfgsVerification.AlgebraicSeed.V c d))
+            (BfgsVerification.AlgebraicSeed.T c d))
+          (BfgsVerification.AlgebraicSeed.K c d))
+        (HMul.hMul.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (BfgsVerification.AlgebraicSeed.R c d) (BfgsVerification.AlgebraicSeed.U c d))
+          (BfgsVerification.AlgebraicSeed.Y c d)))
+      0)
+'BfgsVerification.DLiteralIdentities.gamma_sixteenth_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralIdentities.original_box_polynomial_iff {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius) :
+  Iff (Eq.{1} (BfgsVerification.AlgebraicSeed.P x) 0)
+    (And (Eq.{1} (BfgsVerification.SeedCycle.beta (x 0) (x 1)) (1 / 4))
+      (Eq.{1} (BfgsVerification.SeedCycle.gamma (x 0) (x 1)) (1 / 16)))
+'BfgsVerification.DLiteralIdentities.original_box_polynomial_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DLiteralIdentities.gradient_support_zero (j : Fin 3) :
+  Membership.mem.{0, 0}
+    (BfgsVerification.ConvexSubdifferential.subdifferential
+      (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD) 0)
+    (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+'BfgsVerification.DLiteralIdentities.gradient_support_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralIdentities.zero_not_mem_gradient_hull :
+  0 ∉
+    (convexHull.{0, 0} Real)
+      (Set.range.{0, 1}
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD))
+'BfgsVerification.DLiteralIdentities.zero_not_mem_gradient_hull' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DLiteralIdentities.coercive_exact_affine_combination (x : BfgsVerification.Vec 2) :
+  Eq.{1}
+    (HAdd.hAdd.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0} (8 / 17)
+          (BfgsVerification.MaxAffine.Family.branch BfgsVerification.SeedOrbit.coerciveFamily 0 x))
+        (HMul.hMul.{0, 0, 0} (8 / 17)
+          (BfgsVerification.MaxAffine.Family.branch BfgsVerification.SeedOrbit.coerciveFamily 1 x)))
+      (HMul.hMul.{0, 0, 0} (1 / 17)
+        (BfgsVerification.MaxAffine.Family.branch BfgsVerification.SeedOrbit.coerciveFamily 3 x)))
+    (-1)
+'BfgsVerification.DLiteralIdentities.coercive_exact_affine_combination' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DLiteralIdentities.coercive_weights_convex :
+  And (LT.lt.{0} 0 (8 / 17))
+    (And (LT.lt.{0} 0 (1 / 17)) (Eq.{1} (HAdd.hAdd.{0, 0, 0} (HAdd.hAdd.{0, 0, 0} (8 / 17) (8 / 17)) (1 / 17)) 1))
+'BfgsVerification.DLiteralIdentities.coercive_weights_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.trial_accept {F : BfgsVerification.Vec 2 → Real} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.phase k))
+  (ha : Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) true) :
+  And
+    (BfgsVerification.NonStrictLineSearch.Armijo F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ (BfgsVerification.SeedOrbit.trialLength q))
+    (BfgsVerification.NonStrictLineSearch.Wolfe F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₂ (BfgsVerification.SeedOrbit.trialLength q))
+'BfgsVerification.SeedEmbedding.NonStrict.trial_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.trial_reject {F : BfgsVerification.Vec 2 → Real} {p : BfgsVerification.Vec 2}
+  {t A c₁ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁)
+  (k : Nat) (q : Fin 9) (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.phase k))
+  (ha : Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) false) :
+  Not
+    (BfgsVerification.NonStrictLineSearch.Armijo F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ (BfgsVerification.SeedOrbit.trialLength q))
+'BfgsVerification.SeedEmbedding.NonStrict.trial_reject' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.search_zero {F : BfgsVerification.Vec 2 → Real} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat)
+  (hphase : Eq.{1} (BfgsVerification.SeedOrbit.phase k) 0) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} 1) (List.cons.{0} 1 List.nil.{0}))
+'BfgsVerification.SeedEmbedding.NonStrict.search_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.search_one {F : BfgsVerification.Vec 2 → Real} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat)
+  (hphase : Eq.{1} (BfgsVerification.SeedOrbit.phase k) 1) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} (1 / 4)) (List.cons.{0} 1 (List.cons.{0} (1 / 2) (List.cons.{0} (1 / 4) List.nil.{0}))))
+'BfgsVerification.SeedEmbedding.NonStrict.search_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.search_two {F : BfgsVerification.Vec 2 → Real} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat)
+  (hphase : Eq.{1} (BfgsVerification.SeedOrbit.phase k) 2) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} (1 / 16))
+      (List.cons.{0} 1
+        (List.cons.{0} (1 / 2) (List.cons.{0} (1 / 4) (List.cons.{0} (1 / 8) (List.cons.{0} (1 / 16) List.nil.{0}))))))
+'BfgsVerification.SeedEmbedding.NonStrict.search_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.search_all_phases {F : BfgsVerification.Vec 2 → Real}
+  {p : BfgsVerification.Vec 2} {t A c₁ c₂ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A)
+  (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁) (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} (BfgsVerification.SeedOrbit.orbitLength k))
+      (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)))
+'BfgsVerification.SeedEmbedding.NonStrict.search_all_phases' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.NonStrict.fromMetric_exact {F : BfgsVerification.Vec 2 → Real}
+  {p : BfgsVerification.Vec 2} {t A c₁ c₂ : Real} (h : BfgsVerification.SeedEmbedding.OracleData F p t A)
+  (ht : LT.lt.{0} 0 t) (hc₁ : LT.lt.{0} 0 c₁) (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.fromMetric F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.SeedOrbit.orbitMetric k) c₁ c₂ 5)
+    (Prod.mk.{0, 0} (some.{0} (BfgsVerification.SeedOrbit.orbitLength k))
+      (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)))
+'BfgsVerification.SeedEmbedding.NonStrict.fromMetric_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DNonStrictObjectives.seedOracleData :
+  BfgsVerification.SeedEmbedding.OracleData
+    (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD) 0 1 0
+'BfgsVerification.DNonStrictObjectives.seedOracleData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DNonStrictObjectives.coerciveOracleData :
+  BfgsVerification.SeedEmbedding.OracleData BfgsVerification.SeedOrbit.coerciveObjective 0 1 0
+'BfgsVerification.DNonStrictObjectives.coerciveOracleData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DNonStrictObjectives.seed_fromMetric {c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.fromMetric
+      (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+      (BfgsVerification.SeedOrbit.orbitPoint k) (BfgsVerification.SeedOrbit.orbitMetric k) c₁ c₂ 5)
+    (Prod.mk.{0, 0} (some.{0} (BfgsVerification.SeedOrbit.orbitLength k))
+      (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)))
+'BfgsVerification.DNonStrictObjectives.seed_fromMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DNonStrictObjectives.coercive_fromMetric {c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (k : Nat) :
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.fromMetric BfgsVerification.SeedOrbit.coerciveObjective
+      (BfgsVerification.SeedOrbit.orbitPoint k) (BfgsVerification.SeedOrbit.orbitMetric k) c₁ c₂ 5)
+    (Prod.mk.{0, 0} (some.{0} (BfgsVerification.SeedOrbit.orbitLength k))
+      (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)))
+'BfgsVerification.DNonStrictObjectives.coercive_fromMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DNonStrictObjectives.embedding_fromMetric {n : Nat} (hn : LE.le.{0} 1 n) {c₁ c₂ : Real}
+  (hc₁ : LT.lt.{0} 0 c₁) (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc : LT.lt.{0} c₁ c₂) (hc₂ : LT.lt.{0} c₂ 1) (k : Nat) :
+  let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.fromMetric BfgsVerification.DEmbedding.objective
+      (BfgsVerification.AdmissibleBFGSRun.x R k) (BfgsVerification.AdmissibleBFGSRun.H R k) c₁ c₂ 5)
+    (Prod.mk.{0, 0} (some.{0} (BfgsVerification.AdmissibleBFGSRun.α R k))
+      (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)))
+'BfgsVerification.DNonStrictObjectives.embedding_fromMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DNonStrictObjectives.embedding_same_search {n : Nat} (hn : LE.le.{0} 1 n) {c₁ c₂ : Real}
+  (hc₁ : LT.lt.{0} 0 c₁) (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc : LT.lt.{0} c₁ c₂) (hc₂ : LT.lt.{0} c₂ 1) (k : Nat) :
+  let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+  Eq.{1}
+    (BfgsVerification.NonStrictLineSearch.fromMetric BfgsVerification.DEmbedding.objective
+      (BfgsVerification.AdmissibleBFGSRun.x R k) (BfgsVerification.AdmissibleBFGSRun.H R k) c₁ c₂ 5)
+    (BfgsVerification.DeterministicLineSearch.fromMetric BfgsVerification.DEmbedding.objective
+      (BfgsVerification.AdmissibleBFGSRun.x R k) (BfgsVerification.AdmissibleBFGSRun.H R k) c₁ c₂ 5)
+'BfgsVerification.DNonStrictObjectives.embedding_same_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralTargets.LiteralIdentitiesTarget : Prop
+'BfgsVerification.DLiteralTargets.LiteralIdentitiesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralTargets.literalIdentities : BfgsVerification.DLiteralTargets.LiteralIdentitiesTarget
+'BfgsVerification.DLiteralTargets.literalIdentities' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralTargets.NonStrictRunTarget : Prop
+'BfgsVerification.DLiteralTargets.NonStrictRunTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DLiteralTargets.nonStrictRun : BfgsVerification.DLiteralTargets.NonStrictRunTarget
+'BfgsVerification.DLiteralTargets.nonStrictRun' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.DLiteralTargets.literalIdentities
+EXACT_TARGET_OK BfgsVerification.DLiteralTargets.nonStrictRun

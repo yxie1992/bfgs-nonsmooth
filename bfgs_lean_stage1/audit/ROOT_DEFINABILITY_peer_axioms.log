@@ -1,0 +1,257 @@
+BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_actualRootSignCount.{u_1} {σ : Type u_1} [Finite.{u_1 + 1} σ]
+  {m : Nat} (p : Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real))
+  (q : Fin m → Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real)) (ω : Fin m → SignType) :
+  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.{u_1, 0} fun x =>
+    BfgsVerification.RealAlgebraicGeometry.rootSignCount (Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} x) p)
+      (fun i => Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} x) (q i)) ω
+'BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_actualRootSignCount' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_distinctRealRootCount.{u_1} {σ : Type u_1}
+  [Finite.{u_1 + 1} σ] (p : Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real)) :
+  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.{u_1, 0} fun x =>
+    Finset.card.{0}
+      (Multiset.toFinset.{0} (Polynomial.roots.{0} (Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} x) p)))
+'BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_distinctRealRootCount' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.derivative_prefix_zero_iff {p : Polynomial.{0} Real} (hp : Ne.{1} p 0) (t : Real)
+  (k : Nat) :
+  Iff
+    (∀ (j : Fin (HAdd.hAdd.{0, 0, 0} k 1)),
+      Eq.{1} (Polynomial.eval.{0} t (Nat.iterate.{1} (⇑Polynomial.derivative.{0}) (↑j) p)) 0)
+    (LT.lt.{0} k (Polynomial.rootMultiplicity.{0} t p))
+'BfgsVerification.RealAlgebraicGeometry.derivative_prefix_zero_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.derivative_zero_sign_count (p : Polynomial.{0} Real) (k : Nat) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.rootSignCount p
+      (fun j => Nat.iterate.{1} (⇑Polynomial.derivative.{0}) (↑j) p) fun x => 0)
+    (Finset.card.{0}
+      ({t ∈ Multiset.toFinset.{0} (Polynomial.roots.{0} p) | LT.lt.{0} k (Polynomial.rootMultiplicity.{0} t p)}))
+'BfgsVerification.RealAlgebraicGeometry.derivative_zero_sign_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootCount_sum_actual_multiplicities (p : Polynomial.{0} Real) :
+  Eq.{1} (∑ t ∈ Multiset.toFinset.{0} (Polynomial.roots.{0} p), Polynomial.rootMultiplicity.{0} t p)
+    (Multiset.card.{0} (Polynomial.roots.{0} p))
+'BfgsVerification.RealAlgebraicGeometry.rootCount_sum_actual_multiplicities' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.real_root_multiplicity_sum_counts (p : Polynomial.{0} Real) (D : Nat)
+  (hD : LE.le.{0} (Polynomial.natDegree.{0} p) D) :
+  Eq.{1} (Multiset.card.{0} (Polynomial.roots.{0} p))
+    (∑ k ∈ Finset.range D,
+      BfgsVerification.RealAlgebraicGeometry.rootSignCount p
+        (fun j => Nat.iterate.{1} (⇑Polynomial.derivative.{0}) (↑j) p) fun x => 0)
+'BfgsVerification.RealAlgebraicGeometry.real_root_multiplicity_sum_counts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_totalRealRootMultiplicity.{u_1} {σ : Type u_1}
+  [Finite.{u_1 + 1} σ] (p : Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real)) :
+  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.{u_1, 0} fun x =>
+    Multiset.card.{0} (Polynomial.roots.{0} (Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} x) p))
+'BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_totalRealRootMultiplicity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootBelowCount (p : Polynomial.{0} Real) (t : Real) : Nat
+'BfgsVerification.RealAlgebraicGeometry.rootBelowCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finset_card_below_orderEmb.{u_1} {α : Type u_1} [LinearOrder.{u_1} α]
+  (S : Finset.{u_1} α) (i : Fin (Finset.card.{u_1} S)) :
+  Eq.{1} (Finset.card.{u_1} ({a ∈ S | LT.lt.{u_1} a ((Finset.orderEmbOfFin.{u_1} S ⋯) i)})) ↑i
+'BfgsVerification.RealAlgebraicGeometry.finset_card_below_orderEmb' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootBelowCount_orderedRealRoot (p : Polynomial.{0} Real) {k : Nat}
+  (hk : LT.lt.{0} k (Finset.card.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p)))) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.rootBelowCount p
+      (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k))
+    k
+'BfgsVerification.RealAlgebraicGeometry.rootBelowCount_orderedRealRoot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff (p : Polynomial.{0} Real) (k : Nat) (t : Real) :
+  Iff
+    (And (LT.lt.{0} k (Finset.card.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p))))
+      (Eq.{1} t (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k)))
+    (And (Membership.mem.{0, 0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p)) t)
+      (Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootBelowCount p t) k))
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff_root (p : Polynomial.{0} Real) (k : Nat) (t : Real) :
+  Iff
+    (And (LT.lt.{0} k (Finset.card.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p))))
+      (Eq.{1} t (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k)))
+    (And (Ne.{1} p 0)
+      (And (Eq.{1} (Polynomial.eval.{0} t p) 0) (Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootBelowCount p t) k)))
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_total_iff (p : Polynomial.{0} Real) (k : Nat) (t : Real) :
+  Iff (Eq.{1} t (BfgsVerification.RealAlgebraicGeometry.orderedRealRoot p k))
+    (Or
+      (And (Ne.{1} p 0)
+        (And (Eq.{1} (Polynomial.eval.{0} t p) 0)
+          (Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootBelowCount p t) k)))
+      (And (LE.le.{0} (Finset.card.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p))) k) (Eq.{1} t 0)))
+'BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_total_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.reindex.{u_1, u_2, u_3} {σ : Type u_1} {τ : Type u_2}
+  [Finite.{u_1 + 1} σ] [Finite.{u_2 + 1} τ] {α : Type u_3} {f : (σ → Real) → α}
+  (hf : BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.{u_1, u_3} f) (r : σ → τ) :
+  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.{u_2, u_3} fun x => f fun i => x (r i)
+'BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.reindex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootBelowCount_eq_sign_count (p : Polynomial.{0} Real) (t : Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootBelowCount p t)
+    (BfgsVerification.RealAlgebraicGeometry.rootSignCount p
+      (fun x => HSub.hSub.{0, 0, 0} Polynomial.X.{0} (Polynomial.C.{0} t)) fun x => -1)
+'BfgsVerification.RealAlgebraicGeometry.rootBelowCount_eq_sign_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial.{u_1} {σ : Type u_1}
+  (p : Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real)) : Polynomial.{u_1} (MvPolynomial.{u_1, 0} (Option.{u_1} σ) Real)
+'BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial_specialize.{u_1} {σ : Type u_1}
+  (p : Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real)) (v : Option.{u_1} σ → Real) :
+  Eq.{1}
+    (Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} v)
+      (BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial.{u_1} p))
+    (Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} fun i => v (some.{u_1} i)) p)
+'BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial_specialize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootBelowCount.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (p : Polynomial.{u_1} (MvPolynomial.{u_1, 0} σ Real)) :
+  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.{u_1, 0} fun v =>
+    BfgsVerification.RealAlgebraicGeometry.rootBelowCount
+      (Polynomial.map.{u_1, 0} (MvPolynomial.eval.{0, u_1} fun i => v (some.{u_1} i)) p) (v none.{u_1})
+'BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootBelowCount' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_semialgebraic {n : Nat}
+  (p : Polynomial.{0} (MvPolynomial.{0, 0} (Fin n) Real)) (a : BfgsVerification.Vec n) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum p a)
+'BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_valid_graph_semialgebraic {n : Nat}
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (k : Nat) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      And
+        (LT.lt.{0} k
+          (Finset.card.{0}
+            (Multiset.toFinset.{0}
+              (Polynomial.roots.{0}
+                (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p fun i => v (some.{0} i))))))
+        (Eq.{1} (v none.{0}) (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k fun i => v (some.{0} i))))
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_valid_graph_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_semialgebraic {n : Nat}
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (k : Nat) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      Eq.{1} (v none.{0}) (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k fun i => v (some.{0} i)))
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_on_semialgebraic {n : Nat}
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (k : Nat) {S : Set.{0} (BfgsVerification.Vec n)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      And (Membership.mem.{0, 0} S fun i => v (some.{0} i))
+        (Eq.{1} (v none.{0}) (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k fun i => v (some.{0} i))))
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_on_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_below_of_graph.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {f : (σ → Real) → Real}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+      (setOf.{u_1} fun v => Eq.{1} (v none.{u_1}) (f fun i => v (some.{u_1} i)))) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+    (setOf.{u_1} fun v => LT.lt.{0} (v none.{u_1}) (f fun i => v (some.{u_1} i)))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_below_of_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {f : (σ → Real) → Real}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+      (setOf.{u_1} fun v => Eq.{1} (v none.{u_1}) (f fun i => v (some.{u_1} i)))) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+    (setOf.{u_1} fun v => LT.lt.{0} (f fun i => v (some.{u_1} i)) (v none.{u_1}))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_below_semialgebraic {n : Nat}
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (k : Nat) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      LT.lt.{0} (v none.{0}) (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k fun i => v (some.{0} i)))
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_below_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic {n : Nat}
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (k : Nat) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      LT.lt.{0} (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k fun i => v (some.{0} i)) (v none.{0}))
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_band_semialgebraic {n : Nat}
+  (p q : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (j k : Nat) {S : Set.{0} (BfgsVerification.Vec n)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v =>
+      And (Membership.mem.{0, 0} S fun i => v (some.{0} i))
+        (And
+          (LT.lt.{0} (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p j fun i => v (some.{0} i)) (v none.{0}))
+          (LT.lt.{0} (v none.{0})
+            (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot q k fun i => v (some.{0} i)))))
+'BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_band_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actualRootCounts : BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget
+'BfgsVerification.RealAlgebraicGeometry.actualRootCounts' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actualRootSignature :
+  BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget
+'BfgsVerification.RealAlgebraicGeometry.actualRootSignature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph :
+  BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget
+'BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands :
+  BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget
+'BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

@@ -1,0 +1,836 @@
+{
+  "log_prefix": "tame_geometry",
+  "audit_driver": "audit/TameGeometryAudit.lean",
+  "scopes": [
+    {
+      "id": "root_delineability",
+      "label": "ROOT_CLUSTER_BOUNDS",
+      "sources": [
+        {
+          "module": "BfgsVerification.ParameterRootBounds",
+          "path": "BfgsVerification/ParameterRootBounds.lean",
+          "sha256": "7865864803de379ca621d19f0169a9a37e893a5f2c8a89504bb36aa4867537de",
+          "reviewed_source": "audit/scratch/root_delineability/ParameterRootBounds.lean",
+          "reviewed_sha256": "7865864803de379ca621d19f0169a9a37e893a5f2c8a89504bb36aa4867537de"
+        },
+        {
+          "module": "BfgsVerification.ParameterRootPersistence",
+          "path": "BfgsVerification/ParameterRootPersistence.lean",
+          "sha256": "4ca576002b0c4a373ba568d5e2ee3d53a3a56846273a87c18cfc390a0fd60f4c",
+          "reviewed_source": "audit/scratch/root_delineability/ParameterRootPersistence.lean",
+          "reviewed_sha256": "b468af8f50513cc1c736311a2bc26ad4a63f46d8613facea6c07d01b86087c1c"
+        },
+        {
+          "module": "BfgsVerification.RootMultiplicityRolle",
+          "path": "BfgsVerification/RootMultiplicityRolle.lean",
+          "sha256": "889739c8ce72fa7386837baf1e830e8006344965b5a4f5fc1bffe806162e786b",
+          "reviewed_source": "audit/scratch/root_delineability/RootMultiplicityRolle.lean",
+          "reviewed_sha256": "f898a03f5bb7f31b9e6cd3930f1a74b993f5b3a5421d94e5a7a92009ed91b4ca"
+        },
+        {
+          "module": "BfgsVerification.RootMultiplicityCluster",
+          "path": "BfgsVerification/RootMultiplicityCluster.lean",
+          "sha256": "d8a979fd9e6135348a7032e300c73d0d756a37b23af48918d4f2fbe88b25fedd",
+          "reviewed_source": "audit/scratch/root_delineability/RootMultiplicityCluster.lean",
+          "reviewed_sha256": "4fbe563e392ea8a39747f124ba589579bf02c99055a9f23cfacffd0ea4cfa375"
+        },
+        {
+          "module": "BfgsVerification.ParameterDegreeRootPersistence",
+          "path": "BfgsVerification/ParameterDegreeRootPersistence.lean",
+          "sha256": "e98cfeaaa90f3b8170ac1cb808469a485e2b223450de8391cbd7bf367e2277a5",
+          "reviewed_source": "audit/scratch/root_delineability/ParameterDegreeRootPersistence.lean",
+          "reviewed_sha256": "21afe3684160f6d4c5078e164f6b8e8dceaa38f26b07e6a5b58ee443c96892a8"
+        },
+        {
+          "module": "BfgsVerification.FiniteRootNeighborhoods",
+          "path": "BfgsVerification/FiniteRootNeighborhoods.lean",
+          "sha256": "eb2dc35c672e1f435f59d78c9775f74437d025671e8272fc2aedc591066d6b84",
+          "reviewed_source": "audit/scratch/root_delineability/FiniteRootNeighborhoods.lean",
+          "reviewed_sha256": "a8c1e28ccd264c08a54760c331b67014f09558a86c256ff74d7dcc5500234baa"
+        },
+        {
+          "module": "BfgsVerification.ParameterRootClusters",
+          "path": "BfgsVerification/ParameterRootClusters.lean",
+          "sha256": "71bcd56e5d01420a5a09bedc811b24ac629078e5bb6719f35266acdfc8355762",
+          "reviewed_source": "audit/scratch/root_delineability/ParameterRootClusters.lean",
+          "reviewed_sha256": "f6b312a4f812b124ee540ba60dc5a8884c3f27850de909ec9d7e9445a20c0c17"
+        },
+        {
+          "module": "BfgsVerification.RootClusterBoundsTargets",
+          "path": "BfgsVerification/RootClusterBoundsTargets.lean",
+          "sha256": "2a86b10e6f2425d3ba11ebf8dc3f50cd53e121d418533a7942ed180c8b1ca85f",
+          "reviewed_source": "audit/scratch/root_delineability/RootClusterBoundsTargets.lean",
+          "reviewed_sha256": "042f98e7ae16926161673d5e74194369c338944e0ae378eb80cedd2bcf7dc61c"
+        }
+      ],
+      "declarations": [
+        "BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound",
+        "BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_specialize",
+        "BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_continuousAt",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_roots_eventually_bounded",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eval_continuous",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eventually_nonzero_on_compact",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous",
+        "BfgsVerification.RealAlgebraicGeometry.rootsIn",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn",
+        "BfgsVerification.RealAlgebraicGeometry.rootsIn_derivative_interleaving_bound",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_derivative_add_one",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_iterated_derivative_add",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_eq_zero_of_eval_ne_zero",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_of_derivative_nonzero",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_root_multiplicity_cluster_bound",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_roots_bounded_on_degree_stratum",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous_degree_stratum",
+        "BfgsVerification.RealAlgebraicGeometry.finite_root_separating_radius",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_mono",
+        "BfgsVerification.RealAlgebraicGeometry.disjoint_closed_root_intervals",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_root_clusters",
+        "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_univ",
+        "BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget",
+        "BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound",
+        "BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget",
+        "BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle",
+        "BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget",
+        "BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster",
+        "BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget",
+        "BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover"
+      ],
+      "targets": [
+        [
+          "BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound",
+          "BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle",
+          "BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster",
+          "BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover",
+          "BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget"
+        ]
+      ],
+      "review_evidence": [
+        "audit/ROOT_CLUSTER_BOUNDS_STATEMENT_REVIEW.md",
+        "audit/ROOT_CLUSTER_BOUNDS_INDEPENDENT_PEER_REVIEW.md",
+        "audit/ROOT_CLUSTER_BOUNDS_peer_axioms_contracts.log",
+        "audit/ROOT_CLUSTER_BOUNDS_peer_validation.log"
+      ]
+    },
+    {
+      "id": "root_cluster_conservation",
+      "label": "ROOT_CLUSTER_CONSERVATION",
+      "sources": [
+        {
+          "module": "BfgsVerification.RootClusterConservation",
+          "path": "BfgsVerification/RootClusterConservation.lean",
+          "sha256": "ab658cca0a8e031aa259688d14e8b44b9fd9502a7705d8a99938293e9613f4c0",
+          "reviewed_source": "audit/scratch/root_cluster_conservation/RootClusterConservation.lean",
+          "reviewed_sha256": "ab658cca0a8e031aa259688d14e8b44b9fd9502a7705d8a99938293e9613f4c0"
+        },
+        {
+          "module": "BfgsVerification.RootClusterConservationTargets",
+          "path": "BfgsVerification/RootClusterConservationTargets.lean",
+          "sha256": "f43157f3710d67c4286774c936fac5e2abfc7943f551cfd754cffc7355c1951d",
+          "reviewed_source": "audit/scratch/root_cluster_conservation/RootClusterConservationTargets.lean",
+          "reviewed_sha256": "452e96b593862b063e41b94bb62bce47107629552bd2d217e1b64607fde0e499"
+        }
+      ],
+      "declarations": [
+        "BfgsVerification.RootClusterConservation.fiberWeight",
+        "BfgsVerification.RootClusterConservation.sum_fiberWeight",
+        "BfgsVerification.RootClusterConservation.fiberWeight_eq_capacity",
+        "BfgsVerification.RootClusterConservation.every_fiber_nonempty",
+        "BfgsVerification.RootClusterConservation.every_label_hit",
+        "BfgsVerification.RootClusterConservation.label_bijOn_of_card_eq",
+        "BfgsVerification.RootClusterConservation.fiber_singleton_of_card_eq",
+        "BfgsVerification.RootClusterConservation.sole_weight_eq_capacity",
+        "BfgsVerification.RootClusterConservation.fintype_bijective_and_weights",
+        "BfgsVerification.RootClusterConservation.FiniteConservationTarget",
+        "BfgsVerification.RootClusterConservation.finiteConservation",
+        "BfgsVerification.RootClusterConservation.FiniteBijectionTarget",
+        "BfgsVerification.RootClusterConservation.finiteBijection"
+      ],
+      "targets": [
+        [
+          "BfgsVerification.RootClusterConservation.finiteConservation",
+          "BfgsVerification.RootClusterConservation.FiniteConservationTarget"
+        ],
+        [
+          "BfgsVerification.RootClusterConservation.finiteBijection",
+          "BfgsVerification.RootClusterConservation.FiniteBijectionTarget"
+        ]
+      ],
+      "review_evidence": [
+        "audit/ROOT_CLUSTER_CONSERVATION_STATEMENT_REVIEW.md",
+        "audit/ROOT_CLUSTER_CONSERVATION_INDEPENDENT_PEER_REVIEW.md",
+        "audit/ROOT_CLUSTER_CONSERVATION_peer_axioms.log",
+        "audit/ROOT_CLUSTER_CONSERVATION_peer_contracts.log",
+        "audit/ROOT_CLUSTER_CONSERVATION_peer_validation.log"
+      ]
+    },
+    {
+      "id": "root_continuity",
+      "label": "ORDERED_ROOT_CONTINUITY",
+      "sources": [
+        {
+          "module": "BfgsVerification.FiniteClusterOrder",
+          "path": "BfgsVerification/FiniteClusterOrder.lean",
+          "sha256": "2021a0308748e9bf54d9858b1a107a34a8c597009faa2117e07487dceb028ba7",
+          "reviewed_source": "audit/scratch/root_continuity/FiniteClusterOrder.lean",
+          "reviewed_sha256": "466a9ee7f1c4385543ae6bde7e1a3ec0d3dab8151691297170410e983e405480"
+        },
+        {
+          "module": "BfgsVerification.ActualRootMatching",
+          "path": "BfgsVerification/ActualRootMatching.lean",
+          "sha256": "54ccaed30c6a048621845f1b8810e1e1bd86884c37e0b40d01e52cd0952f39c6",
+          "reviewed_source": "audit/scratch/root_continuity/ActualRootMatching.lean",
+          "reviewed_sha256": "22bf17d38a302b1ff593055ae5b9bbc5060bc842d03107fa6fcdae750ef46044"
+        },
+        {
+          "module": "BfgsVerification.OrderedRealRoots",
+          "path": "BfgsVerification/OrderedRealRoots.lean",
+          "sha256": "6f334b49f612d81e4f2d4dedd94a82427d24c4dec0c03577d51d2f0994f39044",
+          "reviewed_source": "audit/scratch/root_continuity/OrderedRealRoots.lean",
+          "reviewed_sha256": "eaca8c087de2d56a6533e2c42f9e1e26a8b8595c3d66cecec61473b45066aeb4"
+        },
+        {
+          "module": "BfgsVerification.ParameterOrderedRootContinuity",
+          "path": "BfgsVerification/ParameterOrderedRootContinuity.lean",
+          "sha256": "815dfaf8119166652fb35813b7c960a1f56584a82ec61b3415e1658afcc397de",
+          "reviewed_source": "audit/scratch/root_continuity/ParameterOrderedRootContinuity.lean",
+          "reviewed_sha256": "1ff5ce6e4598dc6b6db12106beae70906d977fdc5a04e5687a704945d3615415"
+        },
+        {
+          "module": "BfgsVerification.OrderedRootSmoothCharts",
+          "path": "BfgsVerification/OrderedRootSmoothCharts.lean",
+          "sha256": "c0bfaeb037cd6a6e458e1201e31a27dea890f258d70e6af8d1f341c0a182fad6",
+          "reviewed_source": "audit/scratch/root_continuity/OrderedRootSmoothCharts.lean",
+          "reviewed_sha256": "1eeb2af5bdfb22148ca3707bf8c38fea8be9028258944d333fd232a0c6d0d331"
+        },
+        {
+          "module": "BfgsVerification.OrderedRootBranches",
+          "path": "BfgsVerification/OrderedRootBranches.lean",
+          "sha256": "bd7bda31e9d1bc957f90377a7daf4acab20fb6fb45ba2d5f6a0c83a7216b4d55",
+          "reviewed_source": "audit/scratch/root_continuity/OrderedRootBranches.lean",
+          "reviewed_sha256": "9fe0497858e8decf57a50b7d0fffeb279c3d59613bf172b18d2ceb6b59b578db"
+        },
+        {
+          "module": "BfgsVerification.OrderedRootContinuityTargets",
+          "path": "BfgsVerification/OrderedRootContinuityTargets.lean",
+          "sha256": "1b814c6a6297a86c3393518ec0faf892b43e86ada0b910f6cf03ab0e8ce10416",
+          "reviewed_source": "audit/scratch/root_continuity/OrderedRootContinuityTargets.lean",
+          "reviewed_sha256": "6bf80ba42e4e8bd4e593e21181c992917b7d52746a67e1f8bd0274d14f0a14b5"
+        }
+      ],
+      "declarations": [
+        "BfgsVerification.RealAlgebraicGeometry.finite_cluster_assignment",
+        "BfgsVerification.RealAlgebraicGeometry.cluster_assignment_strictMonoOn",
+        "BfgsVerification.RealAlgebraicGeometry.ordered_cluster_assignment",
+        "BfgsVerification.RealAlgebraicGeometry.sum_actual_root_multiplicities",
+        "BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_matching",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_eq_orderEmb",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_mem",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_isRoot",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_matching",
+        "BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_eventually_near",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_continuousWithinAt",
+        "BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_multiplicity_locally_constant",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_local_smooth_extension",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffWithinAt",
+        "BfgsVerification.RealAlgebraicGeometry.mem_rootSignatureStratum_self",
+        "BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_eq_of_mem",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffOn_signature",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_strictMono",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_lt",
+        "BfgsVerification.RealAlgebraicGeometry.isRoot_iff_exists_orderedRealRoot",
+        "BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity",
+        "BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity",
+        "BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches"
+      ],
+      "targets": [
+        [
+          "BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity",
+          "BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity",
+          "BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches",
+          "BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget"
+        ]
+      ],
+      "review_evidence": [
+        "audit/ORDERED_ROOT_CONTINUITY_STATEMENT_REVIEW.md",
+        "audit/ORDERED_ROOT_CONTINUITY_INDEPENDENT_PEER_REVIEW.md",
+        "audit/ORDERED_ROOT_CONTINUITY_peer_axioms_contracts.log",
+        "audit/ORDERED_ROOT_CONTINUITY_peer_validation.log"
+      ]
+    },
+    {
+      "id": "smooth_cylindrical_paths",
+      "label": "SMOOTH_CYLINDRICAL_PATHS",
+      "sources": [
+        {
+          "module": "BfgsVerification.PiecewiseSmoothPaths",
+          "path": "BfgsVerification/PiecewiseSmoothPaths.lean",
+          "sha256": "62d4ba0d98976f0d147de0c1fe95c4bd2f08b24929bbeea0a9322568f80290f6",
+          "reviewed_source": "audit/scratch/smooth_cylindrical_paths/PiecewiseSmoothPaths.lean",
+          "reviewed_sha256": "62d4ba0d98976f0d147de0c1fe95c4bd2f08b24929bbeea0a9322568f80290f6"
+        },
+        {
+          "module": "BfgsVerification.PiecewiseSmoothConcatenation",
+          "path": "BfgsVerification/PiecewiseSmoothConcatenation.lean",
+          "sha256": "97a6046a961f041e40025b1085f68a88a108d5436647d9cfc41ddcdae2384213",
+          "reviewed_source": "audit/scratch/smooth_cylindrical_paths/PiecewiseSmoothConcatenation.lean",
+          "reviewed_sha256": "1260a8d9c19ffee9106393db728e92e3265feeff4fefa049bbc0d809ee994b62"
+        },
+        {
+          "module": "BfgsVerification.SmoothCylindricalConnectivity",
+          "path": "BfgsVerification/SmoothCylindricalConnectivity.lean",
+          "sha256": "b94a3f88700ecc4a642ac15fd13da52a219b2ce45136fb1defb28e42b5f2010f",
+          "reviewed_source": "audit/scratch/smooth_cylindrical_paths/SmoothCylindricalConnectivity.lean",
+          "reviewed_sha256": "e40df4b04e5ebf781dc600246596a3a7610abf50bf7de8f7e5f7843fdd39155c"
+        },
+        {
+          "module": "BfgsVerification.SmoothObjectiveGraphPaths",
+          "path": "BfgsVerification/SmoothObjectiveGraphPaths.lean",
+          "sha256": "103ac0310ea76efe171d1c82f21eacf42ecd5117b0bc223c6bad5ec8850001f0",
+          "reviewed_source": "audit/scratch/smooth_cylindrical_paths/SmoothObjectiveGraphPaths.lean",
+          "reviewed_sha256": "362cc77a55aef207d9e106110aa225ce5740974dba48df9275abc352a46a5e26"
+        },
+        {
+          "module": "BfgsVerification.SmoothPathTargets",
+          "path": "BfgsVerification/SmoothPathTargets.lean",
+          "sha256": "127021ef3b19a461dc50ac6e3e9c97bba5e8ee51badabe794ba72d9879f42764",
+          "reviewed_source": "audit/scratch/smooth_cylindrical_paths/SmoothPathTargets.lean",
+          "reviewed_sha256": "3e8fcd5bbb764a7d958b7c3257fa4e5763ea96a432d85d6926470d1829fa7c7a"
+        }
+      ],
+      "declarations": [
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mk",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.continuousOn",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.source",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.target",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mapsTo",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.exceptions",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.smoothAt",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mem",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.refl",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mono",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.symm",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.segment",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.joinedIn",
+        "BfgsVerification.RealAlgebraicGeometry.joinedCurve",
+        "BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected",
+        "BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothPathIn_equivalence",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPathConnected",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPreconnected",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.image",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.graph",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.cylinder_of_section",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.open_band",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.upper_band",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.lower_band",
+        "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.full_cylinder",
+        "BfgsVerification.RealAlgebraicGeometry.objectiveLift",
+        "BfgsVerification.RealAlgebraicGeometry.objectiveLift_mem_graph",
+        "BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath",
+        "BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project",
+        "BfgsVerification.RealAlgebraicGeometry.objective_eq_of_smooth_criticalGraph_path",
+        "BfgsVerification.SmoothPathCompositionTarget",
+        "BfgsVerification.smoothPathComposition",
+        "BfgsVerification.SmoothPathMappingTarget",
+        "BfgsVerification.smoothPathMapping",
+        "BfgsVerification.SmoothCylindersTarget",
+        "BfgsVerification.smoothCylinders",
+        "BfgsVerification.LiftedObjectivePathTarget",
+        "BfgsVerification.liftedObjectivePath"
+      ],
+      "targets": [
+        [
+          "BfgsVerification.smoothPathComposition",
+          "BfgsVerification.SmoothPathCompositionTarget"
+        ],
+        [
+          "BfgsVerification.smoothPathMapping",
+          "BfgsVerification.SmoothPathMappingTarget"
+        ],
+        [
+          "BfgsVerification.liftedObjectivePath",
+          "BfgsVerification.LiftedObjectivePathTarget"
+        ],
+        [
+          "BfgsVerification.smoothCylinders",
+          "BfgsVerification.SmoothCylindersTarget"
+        ]
+      ],
+      "review_evidence": [
+        "audit/SMOOTH_CYLINDRICAL_PATHS_STATEMENT_REVIEW.md",
+        "audit/SMOOTH_CYLINDRICAL_PATHS_INDEPENDENT_PEER_REVIEW.md",
+        "audit/SMOOTH_CYLINDRICAL_PATHS_peer_axioms_contracts.log",
+        "audit/SMOOTH_CYLINDRICAL_PATHS_peer_validation.log"
+      ]
+    },
+    {
+      "id": "ordered_cylindrical_cells",
+      "label": "ORDERED_CYLINDRICAL_CELLS",
+      "sources": [
+        {
+          "module": "BfgsVerification.OrderedCylindricalCover",
+          "path": "BfgsVerification/OrderedCylindricalCover.lean",
+          "sha256": "93ecdb1bef0e1c195707d38a95a1fe372aef588ed3eeb993a0b1d88a30963fc4",
+          "reviewed_source": "audit/scratch/ordered_cylindrical_cells/OrderedCylindricalCover.lean",
+          "reviewed_sha256": "93ecdb1bef0e1c195707d38a95a1fe372aef588ed3eeb993a0b1d88a30963fc4"
+        },
+        {
+          "module": "BfgsVerification.OrderedGapConnectivity",
+          "path": "BfgsVerification/OrderedGapConnectivity.lean",
+          "sha256": "4703caabda8e7a43d66e7caecf9ef9f53fbdd150a6f8adbfe0aa10f3a36ed385",
+          "reviewed_source": "audit/scratch/ordered_cylindrical_cells/OrderedGapConnectivity.lean",
+          "reviewed_sha256": "4db524e04e19f08e907c5810c7493068e95ffd7a6362bfb7c0d416cc425e0332"
+        },
+        {
+          "module": "BfgsVerification.OrderedCellsSemialgebraic",
+          "path": "BfgsVerification/OrderedCellsSemialgebraic.lean",
+          "sha256": "65e110a307f49d9a42035a00f16b06998d346875827748dc9a3b4f92f212e260",
+          "reviewed_source": "audit/scratch/ordered_cylindrical_cells/OrderedCellsSemialgebraic.lean",
+          "reviewed_sha256": "91da6ce54b4c2ed3607d2db294eda44ac037e9bda3b0108c0883c5fde1960468"
+        },
+        {
+          "module": "BfgsVerification.OrderedCylindricalTargets",
+          "path": "BfgsVerification/OrderedCylindricalTargets.lean",
+          "sha256": "756f27421b32748101427e9a74470a05ad9c9f4a0e4cd152109f5a7e40fca145",
+          "reviewed_source": "audit/scratch/ordered_cylindrical_cells/OrderedCylindricalTargets.lean",
+          "reviewed_sha256": "48baa2addfe09dab9f33b2016434f94a87a0b4e01c1716077edcfeb401f1b899"
+        }
+      ],
+      "declarations": [
+        "BfgsVerification.RealAlgebraicGeometry.orderedGraphCell",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell",
+        "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell",
+        "BfgsVerification.RealAlgebraicGeometry.ordered_gap_contains_nonboundary",
+        "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_cover",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGraphCell_disjoint_gap",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_disjoint",
+        "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_pairwise_disjoint",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_empty",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_bottom",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_middle",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_piecewiseSmoothConnected",
+        "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_piecewiseSmoothConnected",
+        "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder",
+        "BfgsVerification.RealAlgebraicGeometry.restricted_graph_sides_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count",
+        "BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition",
+        "BfgsVerification.OrderedSmoothPartitionTarget",
+        "BfgsVerification.orderedSmoothPartition",
+        "BfgsVerification.OrderedSemialgebraicCellsTarget",
+        "BfgsVerification.orderedSemialgebraicCells"
+      ],
+      "targets": [
+        [
+          "BfgsVerification.orderedSmoothPartition",
+          "BfgsVerification.OrderedSmoothPartitionTarget"
+        ],
+        [
+          "BfgsVerification.orderedSemialgebraicCells",
+          "BfgsVerification.OrderedSemialgebraicCellsTarget"
+        ]
+      ],
+      "review_evidence": [
+        "audit/ORDERED_CYLINDRICAL_CELLS_STATEMENT_REVIEW.md",
+        "audit/ORDERED_CYLINDRICAL_CELLS_INDEPENDENT_PEER_REVIEW.md",
+        "audit/ORDERED_CYLINDRICAL_CELLS_peer_axioms_contracts.log",
+        "audit/ORDERED_CYLINDRICAL_CELLS_peer_validation.log"
+      ]
+    },
+    {
+      "id": "root_definability",
+      "label": "ROOT_DEFINABILITY",
+      "sources": [
+        {
+          "module": "BfgsVerification.ParameterRootCounts",
+          "path": "BfgsVerification/ParameterRootCounts.lean",
+          "sha256": "9cd5d086bde91547c1725fd9a3507d5517b31d5022b1a5d30b77dee29983ac97",
+          "reviewed_source": "audit/scratch/root_definability/ParameterRootCounts.lean",
+          "reviewed_sha256": "9cd5d086bde91547c1725fd9a3507d5517b31d5022b1a5d30b77dee29983ac97"
+        },
+        {
+          "module": "BfgsVerification.OrderedRootRanks",
+          "path": "BfgsVerification/OrderedRootRanks.lean",
+          "sha256": "2c31267176c4ec1292d8f3f27490e72a1e68f1b54d571fe28160d957df4e1c7f",
+          "reviewed_source": "audit/scratch/root_definability/OrderedRootRanks.lean",
+          "reviewed_sha256": "2028ecfecc8135a28e7936ecbc73532db18970955495826eb5e4271b43e16144"
+        },
+        {
+          "module": "BfgsVerification.ParameterRootRanks",
+          "path": "BfgsVerification/ParameterRootRanks.lean",
+          "sha256": "aa7f0e8fffffaaaf9710ed5334a6aa6d7dbcc3b3befe71f56dd25f98db93acfe",
+          "reviewed_source": "audit/scratch/root_definability/ParameterRootRanks.lean",
+          "reviewed_sha256": "4e4f639951a01d03d64a8afc82a4d0d6a0ab7de19e17fc3531899edacd96335c"
+        },
+        {
+          "module": "BfgsVerification.OrderedRootDefinability",
+          "path": "BfgsVerification/OrderedRootDefinability.lean",
+          "sha256": "9ae41533183590c011985e870b42efc61b30b84dac2d39af5cf4ad3a3974e3fc",
+          "reviewed_source": "audit/scratch/root_definability/OrderedRootDefinability.lean",
+          "reviewed_sha256": "4690aa5e5c5fcf5db102b52f05d588f034ff470e1e152b5bbd3b324b622742cc"
+        },
+        {
+          "module": "BfgsVerification.SemialgebraicRootBands",
+          "path": "BfgsVerification/SemialgebraicRootBands.lean",
+          "sha256": "5eec0ed1dcf2976b6c071204be46d4eac04c15dbfc8b15966aed96111e0c3ef6",
+          "reviewed_source": "audit/scratch/root_definability/SemialgebraicRootBands.lean",
+          "reviewed_sha256": "cb61514ef6d5ce3a85dce36863c9738cd40af0f243afecb6f265182a9804fd82"
+        },
+        {
+          "module": "BfgsVerification.RootDefinabilityTargets",
+          "path": "BfgsVerification/RootDefinabilityTargets.lean",
+          "sha256": "4d0b0284f060dcd233bc77901f129e516a91f2f79c9bf2f71543bb2f1f489e41",
+          "reviewed_source": "audit/scratch/root_definability/RootDefinabilityTargets.lean",
+          "reviewed_sha256": "44f27548ea888acdfe8754c4552c8edb9050fd15361700265d752f1a9ae77010"
+        }
+      ],
+      "declarations": [
+        "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_actualRootSignCount",
+        "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_distinctRealRootCount",
+        "BfgsVerification.RealAlgebraicGeometry.derivative_prefix_zero_iff",
+        "BfgsVerification.RealAlgebraicGeometry.derivative_zero_sign_count",
+        "BfgsVerification.RealAlgebraicGeometry.rootCount_sum_actual_multiplicities",
+        "BfgsVerification.RealAlgebraicGeometry.real_root_multiplicity_sum_counts",
+        "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_totalRealRootMultiplicity",
+        "BfgsVerification.RealAlgebraicGeometry.rootBelowCount",
+        "BfgsVerification.RealAlgebraicGeometry.finset_card_below_orderEmb",
+        "BfgsVerification.RealAlgebraicGeometry.rootBelowCount_orderedRealRoot",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff_root",
+        "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_total_iff",
+        "BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.reindex",
+        "BfgsVerification.RealAlgebraicGeometry.rootBelowCount_eq_sign_count",
+        "BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial",
+        "BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial_specialize",
+        "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootBelowCount",
+        "BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_valid_graph_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_on_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.semialgebraic_below_of_graph",
+        "BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_below_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_band_semialgebraic",
+        "BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget",
+        "BfgsVerification.RealAlgebraicGeometry.actualRootCounts",
+        "BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget",
+        "BfgsVerification.RealAlgebraicGeometry.actualRootSignature",
+        "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget",
+        "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph",
+        "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget",
+        "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands"
+      ],
+      "targets": [
+        [
+          "BfgsVerification.RealAlgebraicGeometry.actualRootCounts",
+          "BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.actualRootSignature",
+          "BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph",
+          "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget"
+        ],
+        [
+          "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands",
+          "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget"
+        ]
+      ],
+      "review_evidence": [
+        "audit/ROOT_DEFINABILITY_STATEMENT_REVIEW.md",
+        "audit/ROOT_DEFINABILITY_INDEPENDENT_PEER_REVIEW.md",
+        "audit/ROOT_DEFINABILITY_peer_axioms.log",
+        "audit/ROOT_DEFINABILITY_peer_contracts.log",
+        "audit/ROOT_DEFINABILITY_peer_validation.log"
+      ]
+    }
+  ],
+  "declarations": [
+    "BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound",
+    "BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_specialize",
+    "BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_continuousAt",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_roots_eventually_bounded",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eval_continuous",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eventually_nonzero_on_compact",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous",
+    "BfgsVerification.RealAlgebraicGeometry.rootsIn",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn",
+    "BfgsVerification.RealAlgebraicGeometry.rootsIn_derivative_interleaving_bound",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_derivative_add_one",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_iterated_derivative_add",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_eq_zero_of_eval_ne_zero",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_of_derivative_nonzero",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_root_multiplicity_cluster_bound",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_roots_bounded_on_degree_stratum",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous_degree_stratum",
+    "BfgsVerification.RealAlgebraicGeometry.finite_root_separating_radius",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_mono",
+    "BfgsVerification.RealAlgebraicGeometry.disjoint_closed_root_intervals",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_root_clusters",
+    "BfgsVerification.RealAlgebraicGeometry.rootWeightIn_univ",
+    "BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget",
+    "BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound",
+    "BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget",
+    "BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle",
+    "BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget",
+    "BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster",
+    "BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget",
+    "BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover",
+    "BfgsVerification.RootClusterConservation.fiberWeight",
+    "BfgsVerification.RootClusterConservation.sum_fiberWeight",
+    "BfgsVerification.RootClusterConservation.fiberWeight_eq_capacity",
+    "BfgsVerification.RootClusterConservation.every_fiber_nonempty",
+    "BfgsVerification.RootClusterConservation.every_label_hit",
+    "BfgsVerification.RootClusterConservation.label_bijOn_of_card_eq",
+    "BfgsVerification.RootClusterConservation.fiber_singleton_of_card_eq",
+    "BfgsVerification.RootClusterConservation.sole_weight_eq_capacity",
+    "BfgsVerification.RootClusterConservation.fintype_bijective_and_weights",
+    "BfgsVerification.RootClusterConservation.FiniteConservationTarget",
+    "BfgsVerification.RootClusterConservation.finiteConservation",
+    "BfgsVerification.RootClusterConservation.FiniteBijectionTarget",
+    "BfgsVerification.RootClusterConservation.finiteBijection",
+    "BfgsVerification.RealAlgebraicGeometry.finite_cluster_assignment",
+    "BfgsVerification.RealAlgebraicGeometry.cluster_assignment_strictMonoOn",
+    "BfgsVerification.RealAlgebraicGeometry.ordered_cluster_assignment",
+    "BfgsVerification.RealAlgebraicGeometry.sum_actual_root_multiplicities",
+    "BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_matching",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_eq_orderEmb",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_mem",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_isRoot",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_matching",
+    "BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_eventually_near",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_continuousWithinAt",
+    "BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_multiplicity_locally_constant",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_local_smooth_extension",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffWithinAt",
+    "BfgsVerification.RealAlgebraicGeometry.mem_rootSignatureStratum_self",
+    "BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_eq_of_mem",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffOn_signature",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_strictMono",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_lt",
+    "BfgsVerification.RealAlgebraicGeometry.isRoot_iff_exists_orderedRealRoot",
+    "BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity",
+    "BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity",
+    "BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mk",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.continuousOn",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.source",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.target",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mapsTo",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.exceptions",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.smoothAt",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mem",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.refl",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mono",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.symm",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.segment",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.joinedIn",
+    "BfgsVerification.RealAlgebraicGeometry.joinedCurve",
+    "BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected",
+    "BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothPathIn_equivalence",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPathConnected",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPreconnected",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.image",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.graph",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.cylinder_of_section",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.open_band",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.upper_band",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.lower_band",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.full_cylinder",
+    "BfgsVerification.RealAlgebraicGeometry.objectiveLift",
+    "BfgsVerification.RealAlgebraicGeometry.objectiveLift_mem_graph",
+    "BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath",
+    "BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project",
+    "BfgsVerification.RealAlgebraicGeometry.objective_eq_of_smooth_criticalGraph_path",
+    "BfgsVerification.SmoothPathCompositionTarget",
+    "BfgsVerification.smoothPathComposition",
+    "BfgsVerification.SmoothPathMappingTarget",
+    "BfgsVerification.smoothPathMapping",
+    "BfgsVerification.SmoothCylindersTarget",
+    "BfgsVerification.smoothCylinders",
+    "BfgsVerification.LiftedObjectivePathTarget",
+    "BfgsVerification.liftedObjectivePath",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGraphCell",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell",
+    "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell",
+    "BfgsVerification.RealAlgebraicGeometry.ordered_gap_contains_nonboundary",
+    "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_cover",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGraphCell_disjoint_gap",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_disjoint",
+    "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_pairwise_disjoint",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_empty",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_bottom",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_middle",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_piecewiseSmoothConnected",
+    "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_piecewiseSmoothConnected",
+    "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder",
+    "BfgsVerification.RealAlgebraicGeometry.restricted_graph_sides_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count",
+    "BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition",
+    "BfgsVerification.OrderedSmoothPartitionTarget",
+    "BfgsVerification.orderedSmoothPartition",
+    "BfgsVerification.OrderedSemialgebraicCellsTarget",
+    "BfgsVerification.orderedSemialgebraicCells",
+    "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_actualRootSignCount",
+    "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_distinctRealRootCount",
+    "BfgsVerification.RealAlgebraicGeometry.derivative_prefix_zero_iff",
+    "BfgsVerification.RealAlgebraicGeometry.derivative_zero_sign_count",
+    "BfgsVerification.RealAlgebraicGeometry.rootCount_sum_actual_multiplicities",
+    "BfgsVerification.RealAlgebraicGeometry.real_root_multiplicity_sum_counts",
+    "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_totalRealRootMultiplicity",
+    "BfgsVerification.RealAlgebraicGeometry.rootBelowCount",
+    "BfgsVerification.RealAlgebraicGeometry.finset_card_below_orderEmb",
+    "BfgsVerification.RealAlgebraicGeometry.rootBelowCount_orderedRealRoot",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff_root",
+    "BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_total_iff",
+    "BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.reindex",
+    "BfgsVerification.RealAlgebraicGeometry.rootBelowCount_eq_sign_count",
+    "BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial",
+    "BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial_specialize",
+    "BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootBelowCount",
+    "BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_valid_graph_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_on_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_below_of_graph",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_below_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_band_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget",
+    "BfgsVerification.RealAlgebraicGeometry.actualRootCounts",
+    "BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget",
+    "BfgsVerification.RealAlgebraicGeometry.actualRootSignature",
+    "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget",
+    "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph",
+    "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget",
+    "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands"
+  ],
+  "targets": [
+    [
+      "BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound",
+      "BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle",
+      "BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster",
+      "BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover",
+      "BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget"
+    ],
+    [
+      "BfgsVerification.RootClusterConservation.finiteConservation",
+      "BfgsVerification.RootClusterConservation.FiniteConservationTarget"
+    ],
+    [
+      "BfgsVerification.RootClusterConservation.finiteBijection",
+      "BfgsVerification.RootClusterConservation.FiniteBijectionTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity",
+      "BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity",
+      "BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches",
+      "BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget"
+    ],
+    [
+      "BfgsVerification.smoothPathComposition",
+      "BfgsVerification.SmoothPathCompositionTarget"
+    ],
+    [
+      "BfgsVerification.smoothPathMapping",
+      "BfgsVerification.SmoothPathMappingTarget"
+    ],
+    [
+      "BfgsVerification.liftedObjectivePath",
+      "BfgsVerification.LiftedObjectivePathTarget"
+    ],
+    [
+      "BfgsVerification.smoothCylinders",
+      "BfgsVerification.SmoothCylindersTarget"
+    ],
+    [
+      "BfgsVerification.orderedSmoothPartition",
+      "BfgsVerification.OrderedSmoothPartitionTarget"
+    ],
+    [
+      "BfgsVerification.orderedSemialgebraicCells",
+      "BfgsVerification.OrderedSemialgebraicCellsTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.actualRootCounts",
+      "BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.actualRootSignature",
+      "BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph",
+      "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget"
+    ],
+    [
+      "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands",
+      "BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget"
+    ]
+  ]
+}

@@ -1,0 +1,243 @@
+@BfgsVerification.AffineSupportPath.finite_components_of_finite_preconnected_cover : ∀ {X : Type u_1}
+  [inst : TopologicalSpace X] {m : ℕ} {S : Set X} (C : Fin m → Set X),
+  S = ⋃ i, C i → (∀ (i : Fin m), IsPreconnected (C i)) → (connectedComponentIn S '' S).Finite
+'BfgsVerification.AffineSupportPath.finite_components_of_finite_preconnected_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.AffineSupportPath.image_subsingleton_of_preconnected_finite_image : ∀ {X : Type u_1}
+  [inst : TopologicalSpace X] {S : Set X} {f : X → ℝ},
+  IsPreconnected S → ContinuousOn f S → (f '' S).Finite → (f '' S).Subsingleton
+'BfgsVerification.AffineSupportPath.image_subsingleton_of_preconnected_finite_image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.AffineSupportPath.objective_eq_on_affineCritical_component_of_finite_values : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    (F '' {p | BfgsVerification.AffineCriticalObjective.IsAffineCritical F p}).Finite →
+      ∀ {x p q : BfgsVerification.Vec n},
+        p ∈ connectedComponentIn {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x →
+          q ∈ connectedComponentIn {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x → F p = F q
+'BfgsVerification.AffineSupportPath.objective_eq_on_affineCritical_component_of_finite_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_eq_union_cover : ∀ {X : Type u_1}
+  [inst : TopologicalSpace X] {m : ℕ} {S : Set X} (C : Fin m → Set X),
+  S = ⋃ i, C i →
+    (∀ (i : Fin m), IsPreconnected (C i)) →
+      ∀ (x : X), connectedComponentIn S x = ⋃ i ∈ {i | (C i ∩ connectedComponentIn S x).Nonempty}, C i
+'BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_eq_union_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_semialgebraic_of_finite_preconnected_cover : ∀
+  {σ : Type u_1} [inst : Finite σ] {m : ℕ} {S : Set (σ → ℝ)} (C : Fin m → Set (σ → ℝ)),
+  S = ⋃ i, C i →
+    (∀ (i : Fin m), IsPreconnected (C i)) →
+      (∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i)) →
+        ∀ (x : σ → ℝ), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (connectedComponentIn S x)
+'BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_semialgebraic_of_finite_preconnected_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.finset_cover_enumeration : ∀ {X : Type u_1} (C : Finset (Set X)),
+  ∃ m D, (∀ (i : Fin m), D i ∈ C) ∧ ⋃ T ∈ C, T = ⋃ i, D i
+'BfgsVerification.RealAlgebraicGeometry.finset_cover_enumeration' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.critical_values_eq_graph_image : ∀ {n : ℕ} (F : BfgsVerification.Vec n → ℝ),
+  F '' {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x} =
+    (fun z => z none) '' BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph F
+'BfgsVerification.RealAlgebraicGeometry.critical_values_eq_graph_image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    ∀ (C : Finset (Set (Option (Fin n) → ℝ))),
+      (∀ T ∈ C, BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected T) →
+        ⋃ T ∈ C, T = BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph F →
+          (F '' {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x}).Finite
+'BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_components_of_smooth_cover : ∀ {σ : Type u_1}
+  [inst : Fintype σ] {S : Set (σ → ℝ)} (C : Finset (Set (σ → ℝ))),
+  (∀ T ∈ C,
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T ∧
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected T) →
+    ⋃ T ∈ C, T = S →
+      (connectedComponentIn S '' S).Finite ∧
+        ∀ (x : σ → ℝ), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (connectedComponentIn S x)
+'BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_components_of_smooth_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.planar_low_basin_of_finite_critical_values : ∀ {F : BfgsVerification.Vec 2 → ℝ},
+  ConvexOn ℝ Set.univ F →
+    (F '' {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x}).Finite →
+      ∀ (star : BfgsVerification.Vec 2),
+        (∀ (z : BfgsVerification.Vec 2), F star ≤ F z) →
+          ∀ {b : ℝ},
+            F star < b →
+              IsCompact {x | F x ≤ b} →
+                (∀ (ℓ : ℝ),
+                    F star < ℓ →
+                      ℓ ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+                  (∀ (p : BfgsVerification.Vec 2),
+                      F p ≤ b →
+                        ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+                          ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p) →
+                    ∃ ε,
+                      0 < ε ∧
+                        ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+                          F (R.x 0) ≤ F star + ε →
+                            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                              Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F)) Filter.atTop
+                                  (nhds 0) ∧
+                                Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k))
+                                    Filter.atTop (nhds 0) ∧
+                                  ((∀ (z : BfgsVerification.Vec 2), F z = F star → z = star) →
+                                    Filter.Tendsto R.x Filter.atTop (nhds star))
+'BfgsVerification.RealAlgebraicGeometry.planar_low_basin_of_finite_critical_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.planar_local_basin_of_finite_critical_values : ∀
+  {F : BfgsVerification.Vec 2 → ℝ},
+  ConvexOn ℝ Set.univ F →
+    (F '' {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x}).Finite →
+      ∀ (star : BfgsVerification.Vec 2),
+        (∀ (z : BfgsVerification.Vec 2), F star ≤ F z) →
+          (∀ (z : BfgsVerification.Vec 2), F z = F star → z = star) →
+            ∀ {Ω : Set (BfgsVerification.Vec 2)},
+              IsOpen Ω →
+                star ∈ Ω →
+                  (∀ p ∈ Ω,
+                      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+                        ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p) →
+                    ∀ {b : ℝ},
+                      F star < b →
+                        (∀ (ℓ : ℝ),
+                            F star < ℓ →
+                              ℓ ≤ b →
+                                ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+                          ∃ ε,
+                            0 < ε ∧
+                              ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+                                F (R.x 0) < F star + ε →
+                                  Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                    Filter.Tendsto R.x Filter.atTop (nhds star)
+'BfgsVerification.RealAlgebraicGeometry.planar_local_basin_of_finite_critical_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      (F '' {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x}).Finite
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+    (connectedComponentIn {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x} ''
+          {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x}).Finite ∧
+      ∀ (p : Fin n → ℝ),
+        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (connectedComponentIn {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x} p)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      ∀ {x p q : BfgsVerification.Vec n},
+        p ∈ connectedComponentIn {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x →
+          q ∈ connectedComponentIn {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x → F p = F q
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      ∀ (star : BfgsVerification.Vec n),
+        (∀ (x : BfgsVerification.Vec n), F star ≤ F x) →
+          ∃ ε,
+            0 < ε ∧
+              ∀ (p : BfgsVerification.Vec n),
+                F p < F star + ε →
+                  BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+                    0 ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin : ∀ {F : BfgsVerification.Vec 2 → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      ∀ (star : BfgsVerification.Vec 2),
+        (∀ (z : BfgsVerification.Vec 2), F star ≤ F z) →
+          ∀ {b : ℝ},
+            F star < b →
+              IsCompact {x | F x ≤ b} →
+                (∀ (ℓ : ℝ),
+                    F star < ℓ →
+                      ℓ ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+                  (∀ (p : BfgsVerification.Vec 2),
+                      F p ≤ b →
+                        ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+                          ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p) →
+                    ∃ ε,
+                      0 < ε ∧
+                        ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+                          F (R.x 0) ≤ F star + ε →
+                            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                              Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F)) Filter.atTop
+                                  (nhds 0) ∧
+                                Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k))
+                                    Filter.atTop (nhds 0) ∧
+                                  ((∀ (z : BfgsVerification.Vec 2), F z = F star → z = star) →
+                                    Filter.Tendsto R.x Filter.atTop (nhds star))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin : ∀ {F : BfgsVerification.Vec 2 → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      ∀ (star : BfgsVerification.Vec 2),
+        (∀ (z : BfgsVerification.Vec 2), F star ≤ F z) →
+          (∀ (z : BfgsVerification.Vec 2), F z = F star → z = star) →
+            ∀ {Ω : Set (BfgsVerification.Vec 2)},
+              IsOpen Ω →
+                star ∈ Ω →
+                  (∀ p ∈ Ω,
+                      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+                        ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p) →
+                    ∀ {b : ℝ},
+                      F star < b →
+                        (∀ (ℓ : ℝ),
+                            F star < ℓ →
+                              ℓ ≤ b →
+                                ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) →
+                          ∃ ε,
+                            0 < ε ∧
+                              ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+                                F (R.x 0) < F star + ε →
+                                  Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                    Filter.Tendsto R.x Filter.atTop (nhds star)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicAffineCriticalTarget : Prop
+'BfgsVerification.SemialgebraicAffineCriticalTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.semialgebraicAffineCritical : BfgsVerification.SemialgebraicAffineCriticalTarget
+'BfgsVerification.semialgebraicAffineCritical' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicPlanarBasinTarget : Prop
+'BfgsVerification.SemialgebraicPlanarBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.semialgebraicPlanarBasin : BfgsVerification.SemialgebraicPlanarBasinTarget
+'BfgsVerification.semialgebraicPlanarBasin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicPlanarLocalBasinTarget : Prop
+'BfgsVerification.SemialgebraicPlanarLocalBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.semialgebraicPlanarLocalBasin : BfgsVerification.SemialgebraicPlanarLocalBasinTarget
+'BfgsVerification.semialgebraicPlanarLocalBasin' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.semialgebraicAffineCritical
+EXACT_TARGET_OK BfgsVerification.semialgebraicPlanarBasin
+EXACT_TARGET_OK BfgsVerification.semialgebraicPlanarLocalBasin

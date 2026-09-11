@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 4,768 explicit
-theorems and 7,134 theorem declarations including generated auxiliaries. All 205
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 5,002 explicit
+theorems and 7,486 theorem declarations including generated auxiliaries. All 233
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_algebra_completion_check.log`.
+`audit/report_tame_geometry_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -66,8 +66,12 @@ supporting/affine-critical graph definability, H's concrete cardinality sharpnes
 I's literal ridge supersession, and D's actual display precision, original-box
 denominators and exact Euclidean locality. See
 [audit/REPORT_ALGEBRA_COMPLETION_STATEMENT_REVIEW.md](audit/REPORT_ALGEBRA_COMPLETION_STATEMENT_REVIEW.md).
-A's finite smooth-path/component/critical-value closure and dependent C alternative,
-D's last literal wrappers, and final source/evidence reconciliation remain open.
+The sixteenth tranche proves actual finite smooth covers in arbitrary dimension,
+finite ordinary and smooth-path components, finite critical values, the original
+low gap, C's tame basins and D's last literal consequences. See
+[audit/REPORT_TAME_GEOMETRY_STATEMENT_REVIEW.md](audit/REPORT_TAME_GEOMETRY_STATEMENT_REVIEW.md).
+A's stronger literal semialgebraic-path/general-composition ingredient remains
+active; historical execution/source-attribution exceptions remain unverified.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
 
@@ -118,8 +122,8 @@ finite polyhedral/PLQ basins and the actual five-piece finite line-search obstru
 See [audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md](audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md).
 The actual finite-smooth-max subdifferential and local affine-correctness bridge
 were completed in the seventh tranche. Conditional energy/frame helpers remain
-separately classified. The latest source register records the remaining A/C path/value,
-D literal-export and historical-evidence obligations.
+separately classified. The latest source register records the remaining literal A path/composition
+and historical/source-attribution obligations.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed

@@ -1,0 +1,64 @@
+import BfgsVerification.SemialgebraicCriticalTargets
+import Lean
+open Lean Elab Command Meta
+#check @BfgsVerification.AffineSupportPath.finite_components_of_finite_preconnected_cover
+#print axioms BfgsVerification.AffineSupportPath.finite_components_of_finite_preconnected_cover
+#check @BfgsVerification.AffineSupportPath.image_subsingleton_of_preconnected_finite_image
+#print axioms BfgsVerification.AffineSupportPath.image_subsingleton_of_preconnected_finite_image
+#check @BfgsVerification.AffineSupportPath.objective_eq_on_affineCritical_component_of_finite_values
+#print axioms BfgsVerification.AffineSupportPath.objective_eq_on_affineCritical_component_of_finite_values
+#check @BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_eq_union_cover
+#print axioms BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_eq_union_cover
+#check @BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_semialgebraic_of_finite_preconnected_cover
+#print axioms BfgsVerification.RealAlgebraicGeometry.connectedComponentIn_semialgebraic_of_finite_preconnected_cover
+#check @BfgsVerification.RealAlgebraicGeometry.finset_cover_enumeration
+#print axioms BfgsVerification.RealAlgebraicGeometry.finset_cover_enumeration
+#check @BfgsVerification.RealAlgebraicGeometry.critical_values_eq_graph_image
+#print axioms BfgsVerification.RealAlgebraicGeometry.critical_values_eq_graph_image
+#check @BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover
+#print axioms BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover
+#check @BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_components_of_smooth_cover
+#print axioms BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_components_of_smooth_cover
+#check @BfgsVerification.RealAlgebraicGeometry.planar_low_basin_of_finite_critical_values
+#print axioms BfgsVerification.RealAlgebraicGeometry.planar_low_basin_of_finite_critical_values
+#check @BfgsVerification.RealAlgebraicGeometry.planar_local_basin_of_finite_critical_values
+#print axioms BfgsVerification.RealAlgebraicGeometry.planar_local_basin_of_finite_critical_values
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin
+#check @BfgsVerification.SemialgebraicAffineCriticalTarget
+#print axioms BfgsVerification.SemialgebraicAffineCriticalTarget
+#check @BfgsVerification.semialgebraicAffineCritical
+#print axioms BfgsVerification.semialgebraicAffineCritical
+#check @BfgsVerification.SemialgebraicPlanarBasinTarget
+#print axioms BfgsVerification.SemialgebraicPlanarBasinTarget
+#check @BfgsVerification.semialgebraicPlanarBasin
+#print axioms BfgsVerification.semialgebraicPlanarBasin
+#check @BfgsVerification.SemialgebraicPlanarLocalBasinTarget
+#print axioms BfgsVerification.SemialgebraicPlanarLocalBasinTarget
+#check @BfgsVerification.semialgebraicPlanarLocalBasin
+#print axioms BfgsVerification.semialgebraicPlanarLocalBasin
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.semialgebraicAffineCritical
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SemialgebraicAffineCriticalTarget)
+  unless ok do throwError "exact critical geometry target mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.semialgebraicAffineCritical"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.semialgebraicPlanarBasin
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SemialgebraicPlanarBasinTarget)
+  unless ok do throwError "exact critical geometry target mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.semialgebraicPlanarBasin"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.semialgebraicPlanarLocalBasin
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SemialgebraicPlanarLocalBasinTarget)
+  unless ok do throwError "exact critical geometry target mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.semialgebraicPlanarLocalBasin"

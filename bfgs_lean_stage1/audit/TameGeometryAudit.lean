@@ -1,0 +1,481 @@
+import BfgsVerification.ActualRootMatching
+import BfgsVerification.FiniteClusterOrder
+import BfgsVerification.FiniteRootNeighborhoods
+import BfgsVerification.OrderedCellsSemialgebraic
+import BfgsVerification.OrderedCylindricalCover
+import BfgsVerification.OrderedCylindricalTargets
+import BfgsVerification.OrderedGapConnectivity
+import BfgsVerification.OrderedRealRoots
+import BfgsVerification.OrderedRootBranches
+import BfgsVerification.OrderedRootContinuityTargets
+import BfgsVerification.OrderedRootDefinability
+import BfgsVerification.OrderedRootRanks
+import BfgsVerification.OrderedRootSmoothCharts
+import BfgsVerification.ParameterDegreeRootPersistence
+import BfgsVerification.ParameterOrderedRootContinuity
+import BfgsVerification.ParameterRootBounds
+import BfgsVerification.ParameterRootClusters
+import BfgsVerification.ParameterRootCounts
+import BfgsVerification.ParameterRootPersistence
+import BfgsVerification.ParameterRootRanks
+import BfgsVerification.PiecewiseSmoothConcatenation
+import BfgsVerification.PiecewiseSmoothPaths
+import BfgsVerification.RootClusterBoundsTargets
+import BfgsVerification.RootClusterConservation
+import BfgsVerification.RootClusterConservationTargets
+import BfgsVerification.RootDefinabilityTargets
+import BfgsVerification.RootMultiplicityCluster
+import BfgsVerification.RootMultiplicityRolle
+import BfgsVerification.SemialgebraicRootBands
+import BfgsVerification.SmoothCylindricalConnectivity
+import BfgsVerification.SmoothObjectiveGraphPaths
+import BfgsVerification.SmoothPathTargets
+import Lean
+open Lean Elab Command Meta
+#check @BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound
+#check @BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_specialize
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_specialize
+#check @BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_continuousAt
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterCauchyBound_continuousAt
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_roots_eventually_bounded
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_roots_eventually_bounded
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eval_continuous
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eval_continuous
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eventually_nonzero_on_compact
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_polynomial_eventually_nonzero_on_compact
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous
+#check @BfgsVerification.RealAlgebraicGeometry.rootsIn
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootsIn
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn
+#check @BfgsVerification.RealAlgebraicGeometry.rootsIn_derivative_interleaving_bound
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootsIn_derivative_interleaving_bound
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_derivative_add_one
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_derivative_add_one
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_iterated_derivative_add
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_iterated_derivative_add
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn_eq_zero_of_eval_ne_zero
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn_eq_zero_of_eval_ne_zero
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_of_derivative_nonzero
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn_le_of_derivative_nonzero
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_root_multiplicity_cluster_bound
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_root_multiplicity_cluster_bound
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_roots_bounded_on_degree_stratum
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_roots_bounded_on_degree_stratum
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous_degree_stratum
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_roots_upper_semicontinuous_degree_stratum
+#check @BfgsVerification.RealAlgebraicGeometry.finite_root_separating_radius
+#print axioms BfgsVerification.RealAlgebraicGeometry.finite_root_separating_radius
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn_mono
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn_mono
+#check @BfgsVerification.RealAlgebraicGeometry.disjoint_closed_root_intervals
+#print axioms BfgsVerification.RealAlgebraicGeometry.disjoint_closed_root_intervals
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_root_clusters
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_root_clusters
+#check @BfgsVerification.RealAlgebraicGeometry.rootWeightIn_univ
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootWeightIn_univ
+#check @BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget
+#check @BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound
+#check @BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget
+#check @BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle
+#print axioms BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle
+#check @BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget
+#check @BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster
+#check @BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget
+#check @BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover
+#check @BfgsVerification.RootClusterConservation.fiberWeight
+#print axioms BfgsVerification.RootClusterConservation.fiberWeight
+#check @BfgsVerification.RootClusterConservation.sum_fiberWeight
+#print axioms BfgsVerification.RootClusterConservation.sum_fiberWeight
+#check @BfgsVerification.RootClusterConservation.fiberWeight_eq_capacity
+#print axioms BfgsVerification.RootClusterConservation.fiberWeight_eq_capacity
+#check @BfgsVerification.RootClusterConservation.every_fiber_nonempty
+#print axioms BfgsVerification.RootClusterConservation.every_fiber_nonempty
+#check @BfgsVerification.RootClusterConservation.every_label_hit
+#print axioms BfgsVerification.RootClusterConservation.every_label_hit
+#check @BfgsVerification.RootClusterConservation.label_bijOn_of_card_eq
+#print axioms BfgsVerification.RootClusterConservation.label_bijOn_of_card_eq
+#check @BfgsVerification.RootClusterConservation.fiber_singleton_of_card_eq
+#print axioms BfgsVerification.RootClusterConservation.fiber_singleton_of_card_eq
+#check @BfgsVerification.RootClusterConservation.sole_weight_eq_capacity
+#print axioms BfgsVerification.RootClusterConservation.sole_weight_eq_capacity
+#check @BfgsVerification.RootClusterConservation.fintype_bijective_and_weights
+#print axioms BfgsVerification.RootClusterConservation.fintype_bijective_and_weights
+#check @BfgsVerification.RootClusterConservation.FiniteConservationTarget
+#print axioms BfgsVerification.RootClusterConservation.FiniteConservationTarget
+#check @BfgsVerification.RootClusterConservation.finiteConservation
+#print axioms BfgsVerification.RootClusterConservation.finiteConservation
+#check @BfgsVerification.RootClusterConservation.FiniteBijectionTarget
+#print axioms BfgsVerification.RootClusterConservation.FiniteBijectionTarget
+#check @BfgsVerification.RootClusterConservation.finiteBijection
+#print axioms BfgsVerification.RootClusterConservation.finiteBijection
+#check @BfgsVerification.RealAlgebraicGeometry.finite_cluster_assignment
+#print axioms BfgsVerification.RealAlgebraicGeometry.finite_cluster_assignment
+#check @BfgsVerification.RealAlgebraicGeometry.cluster_assignment_strictMonoOn
+#print axioms BfgsVerification.RealAlgebraicGeometry.cluster_assignment_strictMonoOn
+#check @BfgsVerification.RealAlgebraicGeometry.ordered_cluster_assignment
+#print axioms BfgsVerification.RealAlgebraicGeometry.ordered_cluster_assignment
+#check @BfgsVerification.RealAlgebraicGeometry.sum_actual_root_multiplicities
+#print axioms BfgsVerification.RealAlgebraicGeometry.sum_actual_root_multiplicities
+#check @BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_matching
+#print axioms BfgsVerification.RealAlgebraicGeometry.actual_ordered_root_matching
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_eq_orderEmb
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_eq_orderEmb
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_mem
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_mem
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_isRoot
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_isRoot
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_matching
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_matching
+#check @BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_eventually_near
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_eventually_near
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_continuousWithinAt
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_continuousWithinAt
+#check @BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_multiplicity_locally_constant
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameter_ordered_root_multiplicity_locally_constant
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_local_smooth_extension
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_local_smooth_extension
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffWithinAt
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffWithinAt
+#check @BfgsVerification.RealAlgebraicGeometry.mem_rootSignatureStratum_self
+#print axioms BfgsVerification.RealAlgebraicGeometry.mem_rootSignatureStratum_self
+#check @BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_eq_of_mem
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_eq_of_mem
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffOn_signature
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_contDiffOn_signature
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_strictMono
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_strictMono
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_lt
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_lt
+#check @BfgsVerification.RealAlgebraicGeometry.isRoot_iff_exists_orderedRealRoot
+#print axioms BfgsVerification.RealAlgebraicGeometry.isRoot_iff_exists_orderedRealRoot
+#check @BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity
+#check @BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity
+#check @BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mk
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mk
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.curve
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.continuousOn
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.continuousOn
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.source
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.source
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.target
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.target
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mapsTo
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.mapsTo
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.exceptions
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.exceptions
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.smoothAt
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath.smoothAt
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mem
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mem
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.refl
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.refl
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mono
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.mono
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.map
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.symm
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.symm
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.segment
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.segment
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.joinedIn
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.joinedIn
+#check @BfgsVerification.RealAlgebraicGeometry.joinedCurve
+#print axioms BfgsVerification.RealAlgebraicGeometry.joinedCurve
+#check @BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn
+#print axioms BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn.trans
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+#check @BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothPathIn_equivalence
+#print axioms BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothPathIn_equivalence
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPathConnected
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPathConnected
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPreconnected
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.isPreconnected
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.image
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.image
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.graph
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.graph
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.cylinder_of_section
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.cylinder_of_section
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.open_band
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.open_band
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.upper_band
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.upper_band
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.lower_band
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.lower_band
+#check @BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.full_cylinder
+#print axioms BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.full_cylinder
+#check @BfgsVerification.RealAlgebraicGeometry.objectiveLift
+#print axioms BfgsVerification.RealAlgebraicGeometry.objectiveLift
+#check @BfgsVerification.RealAlgebraicGeometry.objectiveLift_mem_graph
+#print axioms BfgsVerification.RealAlgebraicGeometry.objectiveLift_mem_graph
+#check @BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath
+#print axioms BfgsVerification.RealAlgebraicGeometry.lifted_graph_piecewiseDifferentiablePath
+#check @BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project
+#print axioms BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_path_project
+#check @BfgsVerification.RealAlgebraicGeometry.objective_eq_of_smooth_criticalGraph_path
+#print axioms BfgsVerification.RealAlgebraicGeometry.objective_eq_of_smooth_criticalGraph_path
+#check @BfgsVerification.SmoothPathCompositionTarget
+#print axioms BfgsVerification.SmoothPathCompositionTarget
+#check @BfgsVerification.smoothPathComposition
+#print axioms BfgsVerification.smoothPathComposition
+#check @BfgsVerification.SmoothPathMappingTarget
+#print axioms BfgsVerification.SmoothPathMappingTarget
+#check @BfgsVerification.smoothPathMapping
+#print axioms BfgsVerification.smoothPathMapping
+#check @BfgsVerification.SmoothCylindersTarget
+#print axioms BfgsVerification.SmoothCylindersTarget
+#check @BfgsVerification.smoothCylinders
+#print axioms BfgsVerification.smoothCylinders
+#check @BfgsVerification.LiftedObjectivePathTarget
+#print axioms BfgsVerification.LiftedObjectivePathTarget
+#check @BfgsVerification.liftedObjectivePath
+#print axioms BfgsVerification.liftedObjectivePath
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGraphCell
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGraphCell
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell
+#check @BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell
+#check @BfgsVerification.RealAlgebraicGeometry.ordered_gap_contains_nonboundary
+#print axioms BfgsVerification.RealAlgebraicGeometry.ordered_gap_contains_nonboundary
+#check @BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_cover
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_cover
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGraphCell_disjoint_gap
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGraphCell_disjoint_gap
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_disjoint
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_disjoint
+#check @BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_pairwise_disjoint
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_pairwise_disjoint
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_empty
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_empty
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_bottom
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_bottom
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_middle
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_middle
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_piecewiseSmoothConnected
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_piecewiseSmoothConnected
+#check @BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_piecewiseSmoothConnected
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_piecewiseSmoothConnected
+#check @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+#print axioms BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCylinder
+#check @BfgsVerification.RealAlgebraicGeometry.restricted_graph_sides_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.restricted_graph_sides_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count
+#check @BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition
+#print axioms BfgsVerification.RealAlgebraicGeometry.ordered_cylindrical_smooth_partition
+#check @BfgsVerification.OrderedSmoothPartitionTarget
+#print axioms BfgsVerification.OrderedSmoothPartitionTarget
+#check @BfgsVerification.orderedSmoothPartition
+#print axioms BfgsVerification.orderedSmoothPartition
+#check @BfgsVerification.OrderedSemialgebraicCellsTarget
+#print axioms BfgsVerification.OrderedSemialgebraicCellsTarget
+#check @BfgsVerification.orderedSemialgebraicCells
+#print axioms BfgsVerification.orderedSemialgebraicCells
+#check @BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_actualRootSignCount
+#print axioms BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_actualRootSignCount
+#check @BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_distinctRealRootCount
+#print axioms BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_distinctRealRootCount
+#check @BfgsVerification.RealAlgebraicGeometry.derivative_prefix_zero_iff
+#print axioms BfgsVerification.RealAlgebraicGeometry.derivative_prefix_zero_iff
+#check @BfgsVerification.RealAlgebraicGeometry.derivative_zero_sign_count
+#print axioms BfgsVerification.RealAlgebraicGeometry.derivative_zero_sign_count
+#check @BfgsVerification.RealAlgebraicGeometry.rootCount_sum_actual_multiplicities
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootCount_sum_actual_multiplicities
+#check @BfgsVerification.RealAlgebraicGeometry.real_root_multiplicity_sum_counts
+#print axioms BfgsVerification.RealAlgebraicGeometry.real_root_multiplicity_sum_counts
+#check @BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_totalRealRootMultiplicity
+#print axioms BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_totalRealRootMultiplicity
+#check @BfgsVerification.RealAlgebraicGeometry.rootBelowCount
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootBelowCount
+#check @BfgsVerification.RealAlgebraicGeometry.finset_card_below_orderEmb
+#print axioms BfgsVerification.RealAlgebraicGeometry.finset_card_below_orderEmb
+#check @BfgsVerification.RealAlgebraicGeometry.rootBelowCount_orderedRealRoot
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootBelowCount_orderedRealRoot
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff_root
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_valid_iff_root
+#check @BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_total_iff
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRealRoot_total_iff
+#check @BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.reindex
+#print axioms BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.reindex
+#check @BfgsVerification.RealAlgebraicGeometry.rootBelowCount_eq_sign_count
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootBelowCount_eq_sign_count
+#check @BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial
+#print axioms BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial
+#check @BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial_specialize
+#print axioms BfgsVerification.RealAlgebraicGeometry.liftRootParameterPolynomial_specialize
+#check @BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootBelowCount
+#print axioms BfgsVerification.RealAlgebraicGeometry.finiteSemialgebraic_rootBelowCount
+#check @BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_valid_graph_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_valid_graph_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_on_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_graph_on_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_below_of_graph
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_below_of_graph
+#check @BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_below_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_below_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_band_semialgebraic
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_band_semialgebraic
+#check @BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget
+#check @BfgsVerification.RealAlgebraicGeometry.actualRootCounts
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualRootCounts
+#check @BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget
+#check @BfgsVerification.RealAlgebraicGeometry.actualRootSignature
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualRootSignature
+#check @BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget
+#check @BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph
+#check @BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget
+#print axioms BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget
+#check @BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RootClusterConservation.finiteConservation
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RootClusterConservation.FiniteConservationTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RootClusterConservation.finiteConservation"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RootClusterConservation.finiteConservation"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RootClusterConservation.finiteBijection
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RootClusterConservation.FiniteBijectionTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RootClusterConservation.finiteBijection"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RootClusterConservation.finiteBijection"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.smoothPathComposition
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SmoothPathCompositionTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.smoothPathComposition"
+  logInfo "EXACT_TARGET_OK BfgsVerification.smoothPathComposition"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.smoothPathMapping
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SmoothPathMappingTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.smoothPathMapping"
+  logInfo "EXACT_TARGET_OK BfgsVerification.smoothPathMapping"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.liftedObjectivePath
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.LiftedObjectivePathTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.liftedObjectivePath"
+  logInfo "EXACT_TARGET_OK BfgsVerification.liftedObjectivePath"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.smoothCylinders
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SmoothCylindersTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.smoothCylinders"
+  logInfo "EXACT_TARGET_OK BfgsVerification.smoothCylinders"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.orderedSmoothPartition
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.OrderedSmoothPartitionTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.orderedSmoothPartition"
+  logInfo "EXACT_TARGET_OK BfgsVerification.orderedSmoothPartition"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.orderedSemialgebraicCells
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.OrderedSemialgebraicCellsTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.orderedSemialgebraicCells"
+  logInfo "EXACT_TARGET_OK BfgsVerification.orderedSemialgebraicCells"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.actualRootCounts
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.actualRootCounts"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.actualRootCounts"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.actualRootSignature
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.actualRootSignature"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.actualRootSignature"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph"
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget)
+  unless ok do throwError "exact target mismatch: BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands"
+  logInfo "EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands"
