@@ -9,9 +9,10 @@ remain indexed for formal implementation. This register does not claim full veri
 | Positive-band RS sufficient for full-BFGS convergence | Compiled in RadialConvergence.lean; actual correction budget derived; compact/nonunique/Euclidean conclusions in ReportCoreEndToEnd.lean |
 | T=D(z,x)+D(x,z), nonnegative errors | Exact identity and convex nonnegativity compiled |
 | T≤4GR on bounded K with all subgradients bounded | Compiled: secantCurvature_le_four_mul with derived compact Euclidean radius/gradient bounds |
-| R:thm:equiv IR⇔RS | Forward IR→RS compiled, including signed probes and exact scalar optimization. Both-differentiable reverse pair estimate and convex supporting-vector/gradient limit theorem compiled. Joint differentiable approximation and band preservation remain open; inner differentiability may not be added to the final theorem |
+| R:thm:equiv IR⇔RS | Full same-sublevel iff compiled in RadialReverse.lean, using derived joint differentiability and boundary-safe approximation. No inner derivative or gradient-continuity assumption; exact target radialInwardEquivalence |
 | Radial norm-scaled convention equivalence | Open; positive-band lower radius η/G and upper radius R |
-| Derivative-free central second-difference equivalence | Open; nested bands and admissible outward dilation scope must remain explicit |
+| Derivative-free central second-difference equivalence | Compiled in RadialCentralDifference.lean: exact 5C estimate, all sampled derivatives removed, and local equivalence with an explicitly smaller sublevel in the reverse direction |
+| Infinitesimal radial Hessian interpretation and singular radial curvature caveat | Remain to be explicitly formalized; the central-difference theorem does not by itself verify these explanatory assertions |
 | Optimizer-intercept identity R:eq:intercept | Compiled exactly |
 | RS⇔SP with constants 2C+2Tmax | Full pair-quantified equivalence and Tmax bound compiled in RadialEquivalence.lean; constants exactly 2C+2Tmax |
 | Homogeneous, u²+abs(v), degree-p intercept examples | Open instantiations; degree-one Euler already available in H |

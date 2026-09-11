@@ -223,3 +223,25 @@ precision issues in C's oriented determinant, U's non-additive example at c=0,
 and C's use of smooth for C1 fields; these are recorded in
 `audit/PLANAR_FIXED_NORMAL_INVENTORY.md` for exact formal correction. Original
 research sources remain unchanged.
+
+
+## Entire-report execution: third tranche
+
+The complete audit passes for 760 explicit / 1,069 total theorem declarations
+and all 36 exact targets, with only standard axioms and matching Lean source
+hashes. The ten new targets are reviewed in
+`audit/REPORT_CONTINUATION_STATEMENT_REVIEW.md`; independent radial, local-rate,
+affine, scalar-example and finite-pair reviews accompany actual compiler logs.
+
+Full RS-to-IR and its local derivative-free central counterpart are now proved.
+Affine projection constructs an actual reduced full-BFGS run; lifting transfers
+the source's explicit projected limit and uniquely characterizes the initial-
+metric fiber projection. Nonunique minimizers now have the full neighborhood
+basin result. Finite and little-o rates retain their actual correction premises;
+the homogeneous rates derive their budgets. The logarithmic criterion is proved
+but its quadratic-gauge correction application remains open. Both literal scalar
+nonnecessity examples and finite-sample/individual-pair claims are checked.
+
+No original research source was changed. The broader family/geometric/negative
+construction and synthesis obligations remain recorded; entire_report_verified
+is still false. Proof designs in audit/scratch are outside this verified tranche.

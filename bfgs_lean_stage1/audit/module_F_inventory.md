@@ -1,8 +1,8 @@
 # Module F retained-claim inventory
 
 Source `BFGS_MASTER_REPORT_LaTeX/report/chapters/families.tex` read in full. No
-original source edited. This inventory is a plan; no complete F theorem has yet
-been exported or marked verified.
+original source edited. This inventory records retained obligations. The third-tranche updates below
+identify the compiled lifting and rate statements; other F claims remain open.
 
 | Source claim | Precise obligation / dependencies |
 |---|---|
@@ -29,3 +29,5 @@ sufficient criterion are dependencies, not a verification of these applications.
 Projection/lifting overlaps H.C's planned invariant-subspace work and will be
 shared rather than duplicated. The all-ray obstruction is a finite failure to
 continue, not a counterexample consisting of an infinite admissible run.
+
+Third tranche: F:lifting is proved by the genuine projected run and fixed affine/metric-fiber identity (see AFFINE_LIFTING_VERIFICATION.md). The first two rate paragraphs, including finite bounds, are proved in ObjectiveRates.lean. HarmonicRates/ObjectiveLogRates prove the logarithmic rate criterion from an actual correction bound; the quadratic-gauge derivation of that bound remains open. The centered and other structural families are not marked complete.

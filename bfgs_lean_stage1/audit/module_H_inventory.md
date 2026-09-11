@@ -123,3 +123,5 @@ at least three, without the relative-interior/coercive-on-span condition, is
 unresolved. Formalization must not promote that question into a theorem. Source
 references to previous examples and the external two-piece finite-termination
 paper are provenance/comparison claims, not proofs supplied by Module H.
+
+Third tranche: AffineProjection/AffineCompression/AffineLifting and their run/fiber wrappers prove exact projected updates and arbitrary-tail fixed lifting (H.7.1). H.C endpoint and planar finite-value convergence remain open. ObjectiveRates.lean also proves the homogeneous finite weighted-sum and o(1/N) rates used in F, including derived Euclidean coercive norm bounds.

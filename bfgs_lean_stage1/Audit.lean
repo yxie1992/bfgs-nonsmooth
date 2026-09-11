@@ -190,3 +190,50 @@ example : BfgsVerification.ScalarCertificateCharacterizationTarget := BfgsVerifi
 #check @BfgsVerification.TransportedCertificate.basis_limit_no_visibility_secant
 #check @BfgsVerification.RadialCertificate.inward_error_le_of_pair_radial
 #check @BfgsVerification.convex_gradients_tendsto_at_differentiable
+
+-- Third report tranche: radial equivalences, lifting, rates and explicit examples.
+#print BfgsVerification.RadialCertificate.HasNestedCentralBounds
+#print BfgsVerification.AffineProjection.FullRowRank
+#print BfgsVerification.AffineProjection.compress
+#print BfgsVerification.AffineProjection.lift
+#print BfgsVerification.AffineProjection.fiberPoint
+#print BfgsVerification.AffineProjection.projectRun
+#print BfgsVerification.AdmissibleBFGSRun.valueCorrectionBudget
+#print BfgsVerification.TransportedCertificate.realizingMetric
+#print BfgsVerification.ScalarCounterexamples.shiftedAbs
+#print BfgsVerification.AccumulatingKinks.knot
+#print BfgsVerification.AccumulatingKinks.kinkSum
+#print BfgsVerification.AccumulatingKinks.objective
+#print BfgsVerification.RadialInwardEquivalenceTarget
+example : BfgsVerification.RadialInwardEquivalenceTarget := BfgsVerification.radialInwardEquivalence
+#print BfgsVerification.LocalRadialCentralEquivalenceTarget
+example : BfgsVerification.LocalRadialCentralEquivalenceTarget := BfgsVerification.localRadialCentralEquivalence
+#print BfgsVerification.LinearImageLiftingTarget
+example : BfgsVerification.LinearImageLiftingTarget := BfgsVerification.linearImageLifting
+#print BfgsVerification.NonuniqueSolutionBasinTarget
+example : BfgsVerification.NonuniqueSolutionBasinTarget := BfgsVerification.nonuniqueSolutionBasin
+#print BfgsVerification.LinearCorrectionRateTarget
+example : BfgsVerification.LinearCorrectionRateTarget := BfgsVerification.linearCorrectionRate
+#print BfgsVerification.HomogeneousRatesTarget
+example : BfgsVerification.HomogeneousRatesTarget := BfgsVerification.homogeneousRates
+#print BfgsVerification.ScalarGlobalCertificateNonnecessityTarget
+example : BfgsVerification.ScalarGlobalCertificateNonnecessityTarget := BfgsVerification.scalarGlobalCertificateNonnecessity
+#print BfgsVerification.ScalarLocalCertificateNonnecessityTarget
+example : BfgsVerification.ScalarLocalCertificateNonnecessityTarget := BfgsVerification.scalarLocalCertificateNonnecessity
+#print BfgsVerification.EligiblePairRealizabilityTarget
+example : BfgsVerification.EligiblePairRealizabilityTarget := BfgsVerification.eligiblePairRealizability
+#print BfgsVerification.FiniteSampleFeasibilityTarget
+example : BfgsVerification.FiniteSampleFeasibilityTarget := BfgsVerification.finiteSampleFeasibility
+#check @BfgsVerification.RadialCertificate.inward_iff_intercept_on_compact_sublevel
+#check @BfgsVerification.RadialCertificate.central_of_radial_on_sublevel
+#check @BfgsVerification.RadialCertificate.radial_of_central_on_smaller_sublevel
+#check @BfgsVerification.AffineProjection.matrix_lift_invariant
+#check @BfgsVerification.AffineProjection.fiberPoint_minimizer_unique
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_sum_bound
+#check @BfgsVerification.Homogeneous.coercive_euclidean_lower_bound
+#check @BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound
+#check @BfgsVerification.HarmonicRates.self_budget_value_log_orders
+#check @BfgsVerification.ScalarCounterexamples.crossing_quotient_tendsto
+#check @BfgsVerification.AccumulatingKinks.crossing_quotient_tendsto
+#check @BfgsVerification.AccumulatingKinks.series_uniform_on_compact
+#check @BfgsVerification.AccumulatingKinks.objective_coercive

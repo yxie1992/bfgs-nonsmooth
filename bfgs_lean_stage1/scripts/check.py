@@ -86,7 +86,29 @@ REPORT_GEOMETRY_TARGETS = {
     "scalar_certificate_characterization_verified":
         ("BfgsVerification.scalarCertificateCharacterization", "BfgsVerification.ScalarCertificateCharacterizationTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS
+REPORT_CONTINUATION_TARGETS = {
+    "radial_inward_equivalence_verified":
+        ("BfgsVerification.radialInwardEquivalence", "BfgsVerification.RadialInwardEquivalenceTarget"),
+    "local_radial_central_equivalence_verified":
+        ("BfgsVerification.localRadialCentralEquivalence", "BfgsVerification.LocalRadialCentralEquivalenceTarget"),
+    "actual_linear_image_lifting_verified":
+        ("BfgsVerification.linearImageLifting", "BfgsVerification.LinearImageLiftingTarget"),
+    "nonunique_solution_basin_verified":
+        ("BfgsVerification.nonuniqueSolutionBasin", "BfgsVerification.NonuniqueSolutionBasinTarget"),
+    "linear_correction_rate_verified":
+        ("BfgsVerification.linearCorrectionRate", "BfgsVerification.LinearCorrectionRateTarget"),
+    "homogeneous_rates_verified":
+        ("BfgsVerification.homogeneousRates", "BfgsVerification.HomogeneousRatesTarget"),
+    "scalar_global_certificate_nonnecessity_verified":
+        ("BfgsVerification.scalarGlobalCertificateNonnecessity", "BfgsVerification.ScalarGlobalCertificateNonnecessityTarget"),
+    "scalar_local_certificate_nonnecessity_verified":
+        ("BfgsVerification.scalarLocalCertificateNonnecessity", "BfgsVerification.ScalarLocalCertificateNonnecessityTarget"),
+    "eligible_pair_realizability_verified":
+        ("BfgsVerification.eligiblePairRealizability", "BfgsVerification.EligiblePairRealizabilityTarget"),
+    "finite_sample_feasibility_verified":
+        ("BfgsVerification.finiteSampleFeasibility", "BfgsVerification.FiniteSampleFeasibilityTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -343,6 +365,8 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
+                ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; quadratic-gauge derivation remains separate"),
+                ("BfgsVerification.linearCorrectionRate", "Actual linear cumulative reference-correction budget"),
                 ("BfgsVerification.EnergyBudget.energy_gap_tendsto_zero", "Scalar energy recurrence and negligible cumulative corrections"),
                 ("BfgsVerification.ResidualBudget.residual_recurrence_incompatible", "Scalar residual recurrence; discharged in residualFrameCriterion"),
                 ("BfgsVerification.quadraticCorrectionConvergence", "Actual cumulative reference-correction budget; not derived for every finite convex objective"),
@@ -359,7 +383,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Affine covariance and examples in T/G, H.C, full RS-to-IR and radial applications, and the other report modules; see REPORT_STATUS.json",
+            "Affine covariance and remaining G geometry, H.C, structural/radial applications, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -368,7 +392,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_GEOMETRY_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_CONTINUATION_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

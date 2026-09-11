@@ -186,3 +186,11 @@ remains open. Incoming-jump obstruction and scalar characterization are checked;
 G examples, feasibility and geometric interpretations remain open. Inventories
 now include F, A, C/U and proof designs for D/L. Entire-report completion remains
 false; the 26-target success is not a claim that every chapter is verified.
+
+Third tranche: 36 exact targets pass (760 explicit / 1,069 total declarations).
+RS/IR and local central equivalence, nonunique basin, exact affine lifting,
+homogeneous and linear-correction rates, both scalar examples and finite pair
+claims are checked. The logarithmic rate criterion retains an actual correction
+bound; the quadratic-gauge family is not yet discharged. F/R structural
+applications, T affine covariance/Q separation, G remaining geometry, H.C,
+C/U/A, D/L and the synthesis closure remain explicit obligations.

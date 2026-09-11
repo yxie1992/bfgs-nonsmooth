@@ -1,0 +1,122 @@
+BfgsVerification.Localization.compact_solution_neighborhood_basin.{u_1} {E : Type u_1} [TopologicalSpace E] {F : E → ℝ}
+  (hF : Continuous F) (star : E) (hmin : ∀ (x : E), F star ≤ F x) (b : ℝ) (hb : F star < b)
+  (hK : IsCompact {x | F x ≤ b}) {U : Set E} (hU : ∀ (x : E), F x = F star → U ∈ nhds x) :
+  ∃ δ, 0 < δ ∧ F star + δ ≤ b ∧ {x | F x ≤ F star + δ} ⊆ U
+'BfgsVerification.Localization.compact_solution_neighborhood_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TransportedCertificate.local_transported_certificate_basin_of_compact_solution_set {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), F star ≤ F x) (b : ℝ) (hb : F star < b) (hK : IsCompact {x | F x ≤ b})
+  {U : Set (BfgsVerification.Vec n)} (hU : ∀ (x : BfgsVerification.Vec n), F x = F star → U ∈ nhds x) {c₁ c₂ : ℝ}
+  (hcert : BfgsVerification.TransportedCertificate.HasBandCertificates F ({x | F x ≤ b} ∩ U) (F star) c₁ c₂) :
+  ∃ δ,
+    0 < δ ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+        R.c₁ = c₁ →
+          R.c₂ = c₂ →
+            F (R.x 0) ≤ F star + δ →
+              (∀ (k : ℕ), F (R.x k) ≤ b ∧ R.x k ∈ U) ∧
+                Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                  Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k)) Filter.atTop (nhds 0) ∧
+                    ((∀ (x : BfgsVerification.Vec n), F x = F star → x = star) →
+                      Filter.Tendsto R.x Filter.atTop (nhds star))
+'BfgsVerification.TransportedCertificate.local_transported_certificate_basin_of_compact_solution_set' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RateBudgets.sqrt_bound {a S E : ℝ} (hS : 0 < S) (h : a ^ 2 * S ≤ E) : a ≤ √(E / S)
+'BfgsVerification.RateBudgets.sqrt_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RateBudgets.scaled_gap_tendsto_zero {a S : ℕ → ℝ} (ha : ∀ (N : ℕ), 0 ≤ a N)
+  (hS : Filter.Tendsto (fun N => S N / ↑N ^ 2) Filter.atTop Filter.atTop) (C : ℝ)
+  (hb : ∀ᶠ (N : ℕ) in Filter.atTop, a N ^ 2 * S N ≤ C * ↑N ^ 2) : Filter.Tendsto a Filter.atTop (nhds 0)
+'BfgsVerification.RateBudgets.scaled_gap_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RateBudgets.linear_budget_rate {gap S T : ℕ → ℝ} {E C : ℝ} (hg : ∀ (N : ℕ), 0 ≤ gap N)
+  (hb : ∀ (N : ℕ), gap N ^ 2 * S N ≤ E + T N) (hT : ∀ᶠ (N : ℕ) in Filter.atTop, T N ≤ C * ↑N)
+  (hS : Filter.Tendsto (fun N => S N / ↑N ^ 2) Filter.atTop Filter.atTop) :
+  Filter.Tendsto (fun N => √↑N * gap N) Filter.atTop (nhds 0)
+'BfgsVerification.RateBudgets.linear_budget_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RateBudgets.bounded_budget_rate {gap S : ℕ → ℝ} {E : ℝ} (hg : ∀ (N : ℕ), 0 ≤ gap N)
+  (hb : ∀ (N : ℕ), gap N ^ 2 * S N ≤ E) (hS : Filter.Tendsto (fun N => S N / ↑N ^ 2) Filter.atTop Filter.atTop) :
+  Filter.Tendsto (fun N => ↑N * gap N) Filter.atTop (nhds 0)
+'BfgsVerification.RateBudgets.bounded_budget_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.reciprocal_sum_pos {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) {N : ℕ} (hN : 0 < N) : 0 < ∑ k ∈ Finset.range N, (R.q k)⁻¹
+'BfgsVerification.AdmissibleBFGSRun.reciprocal_sum_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.reference_linear_budget_sqrt_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), F star ≤ F x) (C : ℝ) {N : ℕ} (hN : 0 < N)
+  (hC : ∑ k ∈ Finset.range N, R.referenceCorrection star k ≤ C * ↑N) :
+  F (R.x N) - F star ≤ √((R.referenceEnergy star 0 + C * ↑N) / ∑ k ∈ Finset.range N, (R.q k)⁻¹)
+'BfgsVerification.AdmissibleBFGSRun.reference_linear_budget_sqrt_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.value_rate_of_linear_corrections {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), F star ≤ F x) (G : ℝ) (hG : 0 < G)
+  (hg : ∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) (C : ℝ)
+  (hC : ∀ᶠ (N : ℕ) in Filter.atTop, ∑ k ∈ Finset.range N, R.referenceCorrection star k ≤ C * ↑N) :
+  Filter.Tendsto (fun N => √↑N * (F (R.x N) - F star)) Filter.atTop (nhds 0)
+'BfgsVerification.AdmissibleBFGSRun.value_rate_of_linear_corrections' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.compact_value_rate_of_linear_corrections {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), F star ≤ F x) (hK : IsCompact R.initialSublevel) (C : ℝ)
+  (hC : ∀ᶠ (N : ℕ) in Filter.atTop, ∑ k ∈ Finset.range N, R.referenceCorrection star k ≤ C * ↑N) :
+  Filter.Tendsto (fun N => √↑N * (F (R.x N) - F star)) Filter.atTop (nhds 0)
+'BfgsVerification.AdmissibleBFGSRun.compact_value_rate_of_linear_corrections' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.compact_value_rate_of_bounded_corrections {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), F star ≤ F x) (hK : IsCompact R.initialSublevel) (C : ℝ)
+  (hC : ∀ (k : ℕ), R.referenceCorrection star k ≤ C) :
+  Filter.Tendsto (fun N => √↑N * (F (R.x N) - F star)) Filter.atTop (nhds 0)
+'BfgsVerification.AdmissibleBFGSRun.compact_value_rate_of_bounded_corrections' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_potential_nonneg {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hv : ∀ (k : ℕ), 0 ≤ F (R.x k)) (k : ℕ) : 0 ≤ R.homogeneousPotential k
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_potential_nonneg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_sum_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hF : BfgsVerification.Homogeneous.PositiveDegreeOne F)
+  (hv : ∀ (k : ℕ), 0 ≤ F (R.x k)) (N : ℕ) : ∑ k ∈ Finset.range N, F (R.x k) ^ 2 / R.q k ≤ R.homogeneousPotential 0
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_sum_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_gap_sq_sum_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hF : BfgsVerification.Homogeneous.PositiveDegreeOne F)
+  (hv : ∀ (k : ℕ), 0 ≤ F (R.x k)) (N : ℕ) : F (R.x N) ^ 2 * ∑ k ∈ Finset.range N, (R.q k)⁻¹ ≤ R.homogeneousPotential 0
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_gap_sq_sum_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_sqrt_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hF : BfgsVerification.Homogeneous.PositiveDegreeOne F)
+  (hv : ∀ (k : ℕ), 0 ≤ F (R.x k)) {N : ℕ} (hN : 0 < N) :
+  F (R.x N) ≤ √(R.homogeneousPotential 0 / ∑ k ∈ Finset.range N, (R.q k)⁻¹)
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_sqrt_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_value_rate {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hF : BfgsVerification.Homogeneous.PositiveDegreeOne F) (L : ℝ)
+  (hL : ∀ (k : ℕ), L ≤ F (R.x k)) : Filter.Tendsto (fun N => ↑N * F (R.x N)) Filter.atTop (nhds 0)
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_value_rate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_sqrt_bound_of_lower_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hF : BfgsVerification.Homogeneous.PositiveDegreeOne F) (L : ℝ)
+  (hL : ∀ (k : ℕ), L ≤ F (R.x k)) {N : ℕ} (hN : 0 < N) :
+  F (R.x N) ≤ √(R.homogeneousPotential 0 / ∑ k ∈ Finset.range N, (R.q k)⁻¹)
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_sqrt_bound_of_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.Homogeneous.coercive_euclidean_lower_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (hh : BfgsVerification.Homogeneous.PositiveDegreeOne F)
+  (hc : Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop) :
+  ∃ μ, 0 < μ ∧ ∀ (x : BfgsVerification.Vec n), μ * ‖BfgsVerification.euclideanVector x‖ ≤ F x
+'BfgsVerification.Homogeneous.coercive_euclidean_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_norm_rate {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hF : BfgsVerification.Homogeneous.PositiveDegreeOne F)
+  (hc : Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop) :
+  Filter.Tendsto (fun N => ↑N * ‖BfgsVerification.euclideanVector (R.x N)‖) Filter.atTop (nhds 0)
+'BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_norm_rate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

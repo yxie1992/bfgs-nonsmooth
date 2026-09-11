@@ -1,0 +1,214 @@
+BfgsVerification.RadialCertificate.outwardPoint {n : Nat} (star x : BfgsVerification.Vec n) (t : Real) :
+  BfgsVerification.Vec n
+'BfgsVerification.RadialCertificate.outwardPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.centralDifference {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (star x : BfgsVerification.Vec n) (t : Real) : Real
+'BfgsVerification.RadialCertificate.centralDifference' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.outwardPoint_eq_homothety {n : Nat} (star x : BfgsVerification.Vec n) (t : Real) :
+  Eq.{1} (BfgsVerification.RadialCertificate.outwardPoint star x t)
+    ((AffineMap.homothety.{0, 0, 0} star (HAdd.hAdd.{0, 0, 0} 1 t)) x)
+'BfgsVerification.RadialCertificate.outwardPoint_eq_homothety' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.continuous_outwardPoint {n : Nat} (star : BfgsVerification.Vec n) (t : Real) :
+  Continuous.{0, 0} fun x => BfgsVerification.RadialCertificate.outwardPoint star x t
+'BfgsVerification.RadialCertificate.continuous_outwardPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.centralDifference_eq_errors {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (star x g : BfgsVerification.Vec n) (t : Real) :
+  Eq.{1} (BfgsVerification.RadialCertificate.centralDifference F star x t)
+    (HAdd.hAdd.{0, 0, 0}
+      (BfgsVerification.RadialCertificate.supportingError F x g
+        (BfgsVerification.RadialCertificate.outwardPoint star x t))
+      (BfgsVerification.RadialCertificate.supportingError F x g
+        (BfgsVerification.RadialCertificate.inwardPoint star x t)))
+'BfgsVerification.RadialCertificate.centralDifference_eq_errors' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.inwardPoint_outwardPoint {n : Nat} (star x : BfgsVerification.Vec n) {t : Real}
+  (ht : LE.le.{0} 0 t) :
+  Eq.{1}
+    (BfgsVerification.RadialCertificate.inwardPoint star (BfgsVerification.RadialCertificate.outwardPoint star x t)
+      (HDiv.hDiv.{0, 0, 0} t (HAdd.hAdd.{0, 0, 0} 1 t)))
+    x
+'BfgsVerification.RadialCertificate.inwardPoint_outwardPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.outward_value_ge {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x)) (x : BfgsVerification.Vec n) {t : Real}
+  (ht : LE.le.{0} 0 t) : LE.le.{0} (F x) (F (BfgsVerification.RadialCertificate.outwardPoint star x t))
+'BfgsVerification.RadialCertificate.outward_value_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.outward_secant_identities {n : Nat} (star x g h : BfgsVerification.Vec n)
+  (t : Real) :
+  And
+    (Eq.{1}
+      (BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.RadialCertificate.outwardPoint star x t) x h
+        g)
+      (HMul.hMul.{0, 0, 0} t (BfgsVerification.dot (HSub.hSub.{0, 0, 0} h g) (HSub.hSub.{0, 0, 0} x star))))
+    (Eq.{1} (BfgsVerification.RadialCertificate.radialNumerator star x h g)
+      (Neg.neg.{0} (BfgsVerification.dot (HSub.hSub.{0, 0, 0} h g) (HSub.hSub.{0, 0, 0} x star))))
+'BfgsVerification.RadialCertificate.outward_secant_identities' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.outward_error_le_of_pair_radial {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star x g h : BfgsVerification.Vec n) (t C : Real) (ht : LE.le.{0} 0 t)
+  (hC : LE.le.{0} 0 C) (hg : HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional g) x)
+  (hh :
+    HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional h)
+      (BfgsVerification.RadialCertificate.outwardPoint star x t))
+  (hRS :
+    LT.lt.{0} 0
+        (BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.RadialCertificate.outwardPoint star x t) x
+          h g) →
+      LE.le.{0} (HPow.hPow.{0, 0, 0} (BfgsVerification.RadialCertificate.radialNumerator star x h g) 2)
+        (HMul.hMul.{0, 0, 0} C
+          (BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.RadialCertificate.outwardPoint star x t)
+            x h g))) :
+  LE.le.{0}
+    (BfgsVerification.RadialCertificate.supportingError F x g
+      (BfgsVerification.RadialCertificate.outwardPoint star x t))
+    (HMul.hMul.{0, 0, 0} C (HPow.hPow.{0, 0, 0} t 2))
+'BfgsVerification.RadialCertificate.outward_error_le_of_pair_radial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.central_difference_le_five_of_pair_radial {n : Nat}
+  {F : BfgsVerification.Vec n → Real} (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F)
+  (star x go gm gi : BfgsVerification.Vec n) (t C : Real) (ht0 : LE.le.{0} 0 t) (ht : LE.le.{0} t (1 / 2))
+  (hC : LE.le.{0} 0 C)
+  (ho :
+    HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional go)
+      (BfgsVerification.RadialCertificate.outwardPoint star x t))
+  (hm : HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional gm) x)
+  (hi :
+    HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional gi)
+      (BfgsVerification.RadialCertificate.inwardPoint star x t))
+  (hRSo :
+    LT.lt.{0} 0
+        (BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.RadialCertificate.outwardPoint star x t) x
+          go gm) →
+      LE.le.{0} (HPow.hPow.{0, 0, 0} (BfgsVerification.RadialCertificate.radialNumerator star x go gm) 2)
+        (HMul.hMul.{0, 0, 0} C
+          (BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.RadialCertificate.outwardPoint star x t)
+            x go gm)))
+  (hRSi :
+    LT.lt.{0} 0
+        (BfgsVerification.RadialCertificate.secantCurvature x (BfgsVerification.RadialCertificate.inwardPoint star x t)
+          gm gi) →
+      LE.le.{0}
+        (HPow.hPow.{0, 0, 0}
+          (BfgsVerification.RadialCertificate.radialNumerator star
+            (BfgsVerification.RadialCertificate.inwardPoint star x t) gm gi)
+          2)
+        (HMul.hMul.{0, 0, 0} C
+          (BfgsVerification.RadialCertificate.secantCurvature x
+            (BfgsVerification.RadialCertificate.inwardPoint star x t) gm gi))) :
+  LE.le.{0} (BfgsVerification.RadialCertificate.centralDifference F star x t)
+    (HMul.hMul.{0, 0, 0} (HMul.hMul.{0, 0, 0} 5 C) (HPow.hPow.{0, 0, 0} t 2))
+'BfgsVerification.RadialCertificate.central_difference_le_five_of_pair_radial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.inward_error_le_central {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star x g : BfgsVerification.Vec n) (t : Real)
+  (hg : HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional g) x) :
+  LE.le.{0}
+    (BfgsVerification.RadialCertificate.supportingError F x g (BfgsVerification.RadialCertificate.inwardPoint star x t))
+    (BfgsVerification.RadialCertificate.centralDifference F star x t)
+'BfgsVerification.RadialCertificate.inward_error_le_central' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.HasNestedCentralBounds {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (star : BfgsVerification.Vec n) (b : Real) : Prop
+'BfgsVerification.RadialCertificate.HasNestedCentralBounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RadialCertificate.dense_radial_differentiable_triples {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n) {t : Real} (ht0 : LE.le.{0} 0 t)
+  (ht1 : LT.lt.{0} t 1) :
+  Dense.{0}
+    (setOf.{0} fun x =>
+      And (DifferentiableAt.{0, 0, 0} Real F (BfgsVerification.RadialCertificate.outwardPoint star x t))
+        (And (DifferentiableAt.{0, 0, 0} Real F x)
+          (DifferentiableAt.{0, 0, 0} Real F (BfgsVerification.RadialCertificate.inwardPoint star x t))))
+'BfgsVerification.RadialCertificate.dense_radial_differentiable_triples' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.exists_dense_sublevel_approximation {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n) (b : Real) (hb : LT.lt.{0} (F star) b)
+  (x : BfgsVerification.Vec n) (hx : LE.le.{0} (F x) b) {O D : Set.{0} (BfgsVerification.Vec n)} (hO : IsOpen.{0} O)
+  (hxO : Membership.mem.{0, 0} O x) (hD : Dense.{0} D) :
+  ∃ u,
+    And (Filter.Tendsto.{0, 0} u Filter.atTop.{0} (nhds.{0} x))
+      (∀ (j : Nat), And (LE.le.{0} (F (u j)) b) (And (Membership.mem.{0, 0} O (u j)) (Membership.mem.{0, 0} D (u j))))
+'BfgsVerification.RadialCertificate.exists_dense_sublevel_approximation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.central_of_radial_on_sublevel {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x)) (b : Real) (hb : LT.lt.{0} (F star) b)
+  (hRS : BfgsVerification.RadialCertificate.HasRadialSecantBounds F (setOf.{0} fun x => LE.le.{0} (F x) b) star) :
+  BfgsVerification.RadialCertificate.HasNestedCentralBounds F star b
+'BfgsVerification.RadialCertificate.central_of_radial_on_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.outward_value_interpolation {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star x : BfgsVerification.Vec n) {t : Real} (ht0 : LE.le.{0} 0 t)
+  (ht1 : LE.le.{0} t 1) :
+  LE.le.{0} (F (BfgsVerification.RadialCertificate.outwardPoint star x t))
+    (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} 1 t) (F x))
+      (HMul.hMul.{0, 0, 0} t (F (BfgsVerification.RadialCertificate.outwardPoint star x 1))))
+'BfgsVerification.RadialCertificate.outward_value_interpolation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.inward_of_central_on_smaller_sublevel {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x)) (b b' : Real) (hbb : LT.lt.{0} b' b)
+  (hK : IsCompact.{0} (setOf.{0} fun x => LE.le.{0} (F x) b))
+  (hcentral : BfgsVerification.RadialCertificate.HasNestedCentralBounds F star b) :
+  BfgsVerification.RadialCertificate.HasInwardTaylorBounds F (setOf.{0} fun x => LE.le.{0} (F x) b') star
+'BfgsVerification.RadialCertificate.inward_of_central_on_smaller_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.radial_of_central_on_smaller_sublevel {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x)) (b b' : Real) (hbb : LT.lt.{0} b' b)
+  (hK : IsCompact.{0} (setOf.{0} fun x => LE.le.{0} (F x) b))
+  (hcentral : BfgsVerification.RadialCertificate.HasNestedCentralBounds F star b) :
+  BfgsVerification.RadialCertificate.HasRadialSecantBounds F (setOf.{0} fun x => LE.le.{0} (F x) b') star
+'BfgsVerification.RadialCertificate.radial_of_central_on_smaller_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RadialCertificate.local_radial_iff_nested_central {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF : ConvexOn.{0, 0, 0} Real Set.univ.{0} F) (star : BfgsVerification.Vec n)
+  (hmin : ∀ (x : BfgsVerification.Vec n), LE.le.{0} (F star) (F x)) :
+  Iff
+    (∃ b,
+      And (LT.lt.{0} (F star) b)
+        (And (IsCompact.{0} (setOf.{0} fun x => LE.le.{0} (F x) b))
+          (BfgsVerification.RadialCertificate.HasRadialSecantBounds F (setOf.{0} fun x => LE.le.{0} (F x) b) star)))
+    (∃ b,
+      And (LT.lt.{0} (F star) b)
+        (And (IsCompact.{0} (setOf.{0} fun x => LE.le.{0} (F x) b))
+          (BfgsVerification.RadialCertificate.HasNestedCentralBounds F star b)))
+'BfgsVerification.RadialCertificate.local_radial_iff_nested_central' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+def BfgsVerification.RadialCertificate.HasNestedCentralBounds : {n : Nat} →
+  (BfgsVerification.Vec n → Real) → BfgsVerification.Vec n → Real → Prop :=
+fun {n} F star b =>
+  ∀ (η : Real),
+    LT.lt.{0} 0 η →
+      ∃ C θ,
+        And (LT.lt.{0} 0 θ)
+          (And (LE.le.{0} θ (1 / 2))
+            (∀ (x : BfgsVerification.Vec n) (t : Real),
+              LE.le.{0} 0 t →
+                LE.le.{0} t θ →
+                  LE.le.{0} (F (BfgsVerification.RadialCertificate.outwardPoint star x t)) b →
+                    LE.le.{0} (HAdd.hAdd.{0, 0, 0} (F star) η)
+                        (F (BfgsVerification.RadialCertificate.inwardPoint star x t)) →
+                      LE.le.{0} (BfgsVerification.RadialCertificate.centralDifference F star x t)
+                        (HMul.hMul.{0, 0, 0} C (HPow.hPow.{0, 0, 0} t 2))))
+def BfgsVerification.RadialCertificate.centralDifference : {n : Nat} →
+  (BfgsVerification.Vec n → Real) → BfgsVerification.Vec n → BfgsVerification.Vec n → Real → Real :=
+fun {n} F star x t =>
+  HSub.hSub.{0, 0, 0}
+    (HAdd.hAdd.{0, 0, 0} (F (BfgsVerification.RadialCertificate.outwardPoint star x t))
+      (F (BfgsVerification.RadialCertificate.inwardPoint star x t)))
+    (HMul.hMul.{0, 0, 0} 2 (F x))
+def BfgsVerification.RadialCertificate.outwardPoint : {n : Nat} →
+  BfgsVerification.Vec n → BfgsVerification.Vec n → Real → BfgsVerification.Vec n :=
+fun {n} star x t => BfgsVerification.RadialCertificate.inwardPoint star x (Neg.neg.{0} t)

@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 528 explicit
-theorems and 768 theorem declarations including generated auxiliaries. All 26
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 760 explicit
+theorems and 1,069 theorem declarations including generated auxiliaries. All 36
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_geometry_check.log`.
+`audit/report_continuation_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -48,7 +48,12 @@ The second tranche checks normalization and variants in T/G, H.B recurrent
 affine geometry, incoming-jump obstruction and scalar characterization in G,
 and R supporting-intercept equivalence and inward sufficiency. See
 [audit/REPORT_GEOMETRY_STATEMENT_REVIEW.md](audit/REPORT_GEOMETRY_STATEMENT_REVIEW.md).
-Full RS-to-IR, H.C, geometric applications and other report claims remain open.
+The third tranche proves full same-sublevel RS/IR equivalence, local derivative-free
+central equivalence, actual affine lifting, nonunique solution basins, finite and
+asymptotic rate statements, both scalar nonnecessity examples, individual pair
+realizability, and finite-sample feasibility. See
+[audit/REPORT_CONTINUATION_STATEMENT_REVIEW.md](audit/REPORT_CONTINUATION_STATEMENT_REVIEW.md).
+H.C, structural families, remaining geometry, C/U/A, D/L and synthesis remain open.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed

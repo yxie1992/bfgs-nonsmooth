@@ -107,3 +107,10 @@ and their secondary consequences. Next independent tasks are full RS-to-IR
 approximation, affine projection/lifting followed by H.C, remaining G examples,
 and F rates/structural families. Read-only inventories now cover every retained
 claim in A, F, C and U; D/L infrastructure obligations are documented.
+
+Third tranche passed: 36 exact targets, 760 explicit / 1,069 total theorem
+declarations, complete transitive standard-axiom audit. The next parallel
+implementation tranche is F centered smooth-plus-sublinear (including derived
+local smoothness and the source correction bound), quadratic-plus-gauge
+corrections followed by H.C, and G ellipsoid/pointwise/tangent geometry. Root
+continues integration and remaining affine-covariance/application work.

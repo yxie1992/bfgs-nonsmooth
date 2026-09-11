@@ -2,6 +2,8 @@
 
 Status: read-only design, after inspecting the pinned mathlib sources and the compiled project lemmas. No new Lean source or compiler claims are made in this design. Source target is `report/chapters/R.tex`, lines 99–129, the missing direction of R:thm:equiv. The original research source is unchanged.
 
+Implementation follow-up: this design has now been carried through in `ConvexDifferentiability.lean`, `RadialApproximation.lean`, and `RadialReverse.lean`. All 18 new declarations compile and pass the transitive axiom audit. See `audit/RADIAL_REVERSE_STATEMENT_REVIEW.md` for the final exact scope and evidence; the design below is retained as the pre-implementation record.
+
 ## Exact intended endpoint
 
 ```lean
