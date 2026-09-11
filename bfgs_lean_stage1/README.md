@@ -1,17 +1,19 @@
 # Full BFGS research report: Lean verification
 
-**Module M and the primary transported-certificate, homogeneous-value,
-scalar-convergence, and radial-certificate theorems are compiler-checked.**
-The entire report is still in progress. The execution plan is
-[ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
-claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
+**The corrected and reconstructed report is Lean-verified.** Read
+[CORRECTED_REPORT.md](CORRECTED_REPORT.md) with the preserved original report.
+It states every mathematical correction and explicit source reconstruction.
+The original unsupported execution history remains unverified.
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 5,126 explicit
-theorems and 7,704 theorem declarations including generated auxiliaries. All 251
-registered exact targets passed. Only `propext`, `Classical.choice`, and
-`Quot.sound` occur; no placeholders or unchecked mathematical computations are
-used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_literal_foundation_check.log`.
+The pinned Lean 4.19.0 build and complete transitive audit checked 5,195
+explicit theorems, 7,813 total theorem declarations and 255 exact targets,
+across 737 frozen Lean sources. Only `propext`, `Classical.choice` and `Quot.sound`
+occur. There are no proof placeholders or unchecked mathematical computations.
+The new 19-job suite passed 107 strict literal type/axiom checks across 93 distinct
+theorems. See [source status](audit/REPORT_STATUS.json),
+[full compiler log](audit/report_reconstruction_check.log),
+[all axiom reports](audit/axioms.log) and
+[actual new job results](verification/reconstructed/fresh/SUMMARY.json).
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -77,9 +79,9 @@ The eighteenth tranche closes M's literal Gram-sum identity and sharp potential
 degree/root limit. The complete audit uses the independently checked shared
 dependency graph and preserves the ordinary target/axiom checks. See
 [audit/REPORT_LITERAL_FOUNDATION_STATEMENT_REVIEW.md](audit/REPORT_LITERAL_FOUNDATION_STATEMENT_REVIEW.md).
-Historical execution/source-attribution exceptions remain unverified.
-R's old four-piece numerical attribution remains explicitly unresolved; the
-supporting-plane interpretation is proved for the actual current D objective.
+The nineteenth tranche explicitly reconstructs the R example and new execution evidence. Original historical assertions remain unsupported and are superseded in the corrected edition.
+The old attribution is not recovered; the new explicit R objective now has its
+own actual full-BFGS failure and supporting-plane interpretation.
 
 ## Results and exact scope
 
@@ -128,7 +130,7 @@ finite polyhedral/PLQ basins and the actual five-piece finite line-search obstru
 See [audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md](audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md).
 The actual finite-smooth-max subdifferential and local affine-correctness bridge
 were completed in the seventh tranche. Conditional energy/frame helpers remain
-separately classified. The latest source register records the remaining historical/source-attribution obligations.
+separately classified. The latest source register distinguishes the completed corrected edition from unsupported original historical assertions.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed
@@ -146,8 +148,8 @@ exports retain their stated gradient/value bounds. No smoothness away from accep
 iterates or continuity of gradients is assumed.
 
 The energy and frame results are **trajectory criteria**. The transported and radial objective conditions now derive their actual trace or
-correction bounds. The remaining specific objective families and geometric
-certificate constructions are tracked separately in the report register. No unconditional convergence for
+correction bounds. The verified specific objective families and geometric
+certificate constructions are recorded with their actual hypotheses in the report register. No unconditional convergence for
 arbitrary finite convex nonsmooth objectives or universal step-existence theorem
 is claimed. See
 [MATHEMATICAL_REVIEW.md](MATHEMATICAL_REVIEW.md) and
@@ -254,7 +256,7 @@ the geometric consequences. `MovingFrame` handles exact transport;
 `ResidualSourceForm` handle imperfect transport. `FoundationEndToEnd` inhabits the
 seven explicit additional propositions in `FoundationTargets`.
 
-## Fourth report milestone
+## Fourth report milestone (historical record)
 
 The full audit now includes centered smooth-plus-sublinear convergence and
 recentring, the actual quadratic-plus-gauge logarithmic rates, invertible affine
@@ -267,5 +269,38 @@ G's accessible-jump discussion required an explicit qualification: accessible
 jumps need not span all active-gradient differences. The corrected accessible
 projection implication and a limited algebraic countermodel are proved; the
 original unqualified inference is not marked verified. The source is unchanged.
-Q's calibrated transport and full convergence theorem remain open, as do the
-other obligations in the report register.
+Q's calibrated transport and full convergence theorem were subsequently proved.
+The nineteenth milestone below records completion of the corrected report.
+
+
+## Nineteenth milestone: reconstructed and corrected report completed
+
+The corrected edition is [CORRECTED_REPORT.md](CORRECTED_REPORT.md), read together
+with the unchanged original master report. All retained mathematics is checked:
+5,195 explicit/7,813 total theorem declarations, 255 exact targets and 737
+frozen Lean files. The new nineteen-job package passed 107 strict literal
+type/axiom checks across 93 distinct theorems. All earlier 727 proof files and 7,704
+theorem types/transitive axiom sets remain unchanged. The permitted axioms are
+propext, Classical.choice and Quot.sound; there are no proof placeholders or
+unchecked external mathematical computations.
+
+The new R objective realizes the printed optimizer and supporting errors, with
+an actual transformed full-BFGS failure run and direct SP/RS contradiction.
+The new E package supplies actual execution evidence. Original unsupported
+historical runs and the older unidentified objective attribution are explicitly
+superseded, with precise numerical-category/auxiliary substitutions. The nine
+earlier mathematical corrections and all 22 original research artifacts remain.
+
+The report-level `corrected_report_verified` is true. Legacy
+`entire_report_verified` and `original_snapshot_all_assertions_verified` remain
+false for the unamended original snapshot. Explicit open research questions and
+conditional criterion hypotheses remain accurately classified. The remaining
+input requests in earlier milestone entries are historical and are resolved
+for the corrected edition by the user's authorized reconstruction.
+
+Evidence: audit/report_reconstruction_check.log, audit/axioms.log,
+audit/REPORT_STATUS.json, verification/reconstructed/fresh/SUMMARY.json, and
+audit/report_reconstruction_documentation_validation.log. Reproduce the pinned
+build with scripts/bootstrap.sh, the nineteen jobs with
+verification/reconstructed/run_all.py, and the completed release gate with
+scripts/validate_report_reconstruction_19.py.

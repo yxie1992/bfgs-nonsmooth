@@ -1,6 +1,6 @@
 {
-  "timestamp_utc": "2026-09-11T13:40:28.965290+00:00",
-  "status": "MODULE_M_AND_REPORT_LITERAL_FOUNDATION_TARGETS_VERIFIED",
+  "timestamp_utc": "2026-09-11T18:22:02.413955+00:00",
+  "status": "MODULE_M_AND_REPORT_RECONSTRUCTION_TARGETS_VERIFIED",
   "lean_typechecking_performed": true,
   "end_to_end_principal_minor_hierarchy_verified": true,
   "end_to_end_bfgs_reciprocal_growth_verified": true,
@@ -253,6 +253,10 @@
   "affineCriticalSemialgebraicPathComponents_verified": true,
   "principalGramSumIdentity_verified": true,
   "sharpPrincipalPotential_verified": true,
+  "objectiveValueScaling_verified": true,
+  "reconstructedFourPieceFailure_verified": true,
+  "reconstructedSupportingPlane_verified": true,
+  "EReconstruction_reconstructedFacts_verified": true,
   "objective_level_model_formalized": true,
   "entire_report_verified": false,
   "verified_declarations": [
@@ -13905,6 +13909,66 @@
         "propext"
       ],
       "source": "BfgsVerification/DeterministicLineSearch.lean"
+    },
+    {
+      "theorem": "BfgsVerification.EReconstruction.eventually_below_tolerance",
+      "signature": "\u2200 (f : \u2115 \u2192 \u211d), Filter.Tendsto f Filter.atTop (nhds 0) \u2192 \u2200 {\u03b5 : \u211d}, 0 < \u03b5 \u2192 \u2203 N, \u2200 k \u2265 N, f k < \u03b5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/EReconstructionFacts.lean"
+    },
+    {
+      "theorem": "BfgsVerification.EReconstruction.hessian_update_secant",
+      "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (s y : BfgsVerification.Vec n),\n      0 < BfgsVerification.dot y s \u2192 Matrix.mulVec (BfgsVerification.inverseBFGS H s y)\u207b\u00b9 s = y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/EReconstructionFacts.lean"
+    },
+    {
+      "theorem": "BfgsVerification.EReconstruction.inverse_update_secant",
+      "signature": "\u2200 {n : \u2115} (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n),\n  BfgsVerification.dot y s \u2260 0 \u2192 Matrix.mulVec (BfgsVerification.inverseBFGS H s y) y = s",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/EReconstructionFacts.lean"
+    },
+    {
+      "theorem": "BfgsVerification.EReconstruction.planar_eventual_printed_tolerance",
+      "signature": "\u2200 (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.PlanarQuadraticExample.objective),\n  BfgsVerification.PlanarQuadraticExample.objective (R.x 0) < 1 / 100 \u2192\n    \u2203 N, \u2200 k \u2265 N, BfgsVerification.PlanarQuadraticExample.objective (R.x k) < 10 ^ (-45)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/EReconstructionFacts.lean"
+    },
+    {
+      "theorem": "BfgsVerification.EReconstruction.reconstructedFacts",
+      "signature": "BfgsVerification.EReconstruction.ReconstructedFactsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/EReconstructionFacts.lean"
+    },
+    {
+      "theorem": "BfgsVerification.EReconstruction.spike_eventual_printed_tolerance",
+      "signature": "\u2200 {n : \u2115} (a : BfgsVerification.Vec n),\n  BfgsVerification.sqNorm a = 1 \u2192\n    \u2200 (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.NormalSpike.objective a)),\n      \u2203 N, \u2200 k \u2265 N, BfgsVerification.NormalSpike.objective a (R.x k) < 10 ^ (-28)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/EReconstructionFacts.lean"
     },
     {
       "theorem": "BfgsVerification.EnergyBudget.energy_gap_tendsto_zero",
@@ -29537,6 +29601,216 @@
       "source": "BfgsVerification/NuclearRotatedPairs.lean"
     },
     {
+      "theorem": "BfgsVerification.ObjectiveValueScale.convex",
+      "signature": "\u2200 {n : \u2115} (a b : \u211d),\n  0 \u2264 a \u2192\n    \u2200 {F : BfgsVerification.Vec n \u2192 \u211d},\n      ConvexOn \u211d Set.univ F \u2192 ConvexOn \u211d Set.univ (BfgsVerification.ObjectiveValueScale.objective a b F)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.energy",
+      "signature": "\u2200 {n : \u2115} (a : \u211d),\n  a \u2260 0 \u2192\n    \u2200 (H : BfgsVerification.Mat n) (g : BfgsVerification.Vec n),\n      BfgsVerification.metricEnergy (a\u207b\u00b9 \u2022 H) (a \u2022 g) = a * BfgsVerification.metricEnergy H g",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.gradientFunctional_scale",
+      "signature": "\u2200 {n : \u2115} (a : \u211d) (g : BfgsVerification.Vec n),\n  BfgsVerification.gradientFunctional (a \u2022 g) = a \u2022 BfgsVerification.gradientFunctional g",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.hasGradient",
+      "signature": "\u2200 {n : \u2115} (a b : \u211d) {F : BfgsVerification.Vec n \u2192 \u211d} {x g : BfgsVerification.Vec n},\n  HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192\n    HasFDerivAt (BfgsVerification.ObjectiveValueScale.objective a b F) (BfgsVerification.gradientFunctional (a \u2022 g)) x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.optimizerIntercept",
+      "signature": "\u2200 {n : \u2115} (a b : \u211d) (F : BfgsVerification.Vec n \u2192 \u211d) (star x g : BfgsVerification.Vec n),\n  BfgsVerification.RadialCertificate.optimizerIntercept (BfgsVerification.ObjectiveValueScale.objective a b F) star x\n      (a \u2022 g) =\n    a * BfgsVerification.RadialCertificate.optimizerIntercept F star x g",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.posDef",
+      "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n}, Matrix.PosDef H \u2192 \u2200 {a : \u211d}, 0 < a \u2192 Matrix.PosDef (a \u2022 H)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_H",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).H k = a\u207b\u00b9 \u2022 R.H k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_alpha",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).\u03b1 k = R.\u03b1 k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_c1",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).c\u2081 = R.c\u2081",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_c2",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).c\u2082 = R.c\u2082",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_curvature",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).curvature k = a * R.curvature k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_d",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).d k = a * R.d k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_displacement",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).displacement k = R.displacement k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_g",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).g k = a \u2022 R.g k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_gradientChange",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).gradientChange k = a \u2022 R.gradientChange k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_q",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).q k = a * R.q k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_value",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  BfgsVerification.ObjectiveValueScale.objective a b F ((BfgsVerification.ObjectiveValueScale.run a b ha R).x k) =\n    a * F (R.x k) + b",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.run_x",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (a b : \u211d) (ha : 0 < a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (BfgsVerification.ObjectiveValueScale.run a b ha R).x k = R.x k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.secantCurvature",
+      "signature": "\u2200 {n : \u2115} (a : \u211d) (x z g h : BfgsVerification.Vec n),\n  BfgsVerification.RadialCertificate.secantCurvature x z (a \u2022 g) (a \u2022 h) =\n    a * BfgsVerification.RadialCertificate.secantCurvature x z g h",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.step",
+      "signature": "\u2200 {n : \u2115} (a : \u211d),\n  a \u2260 0 \u2192\n    \u2200 (H : BfgsVerification.Mat n) (g : BfgsVerification.Vec n) (\u03b1 : \u211d),\n      BfgsVerification.bfgsStep (a\u207b\u00b9 \u2022 H) (a \u2022 g) \u03b1 = BfgsVerification.bfgsStep H g \u03b1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ObjectiveValueScale.update",
+      "signature": "\u2200 {n : \u2115} (a : \u211d),\n  a \u2260 0 \u2192\n    \u2200 (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n),\n      BfgsVerification.inverseBFGS (a\u207b\u00b9 \u2022 H) s (a \u2022 y) = a\u207b\u00b9 \u2022 BfgsVerification.inverseBFGS H s y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScaling.lean"
+    },
+    {
       "theorem": "BfgsVerification.OneDimensional.embed_apply",
       "signature": "\u2200 (t : \u211d) (i : Fin 1), BfgsVerification.OneDimensional.embed t i = t",
       "axioms": [
@@ -42407,6 +42681,396 @@
       "source": "BfgsVerification/ReciprocalGrowth.lean"
     },
     {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.branch_formula",
+      "signature": "\u2200 (i : Fin 4) (z : BfgsVerification.Vec 2),\n  BfgsVerification.ReconstructedFourPiece.family.branch i z =\n    BfgsVerification.ReconstructedFourPiece.valueScale *\n        BfgsVerification.SeedOrbit.coerciveFamily.branch i\n          (Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate z) +\n      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.branches_at_optimizer",
+      "signature": "\u2200 (i : Fin 3),\n  BfgsVerification.ReconstructedFourPiece.family.branch i.castSucc BfgsVerification.ReconstructedFourPiece.optimizer =\n    ![-1, -1, -29 / 4] i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.coordinate_apply",
+      "signature": "\u2200 (z : BfgsVerification.Vec 2),\n  Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate z = ![z 0, 16 / 5 * z 1]",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.coordinate_det_ne",
+      "signature": "Matrix.det BfgsVerification.ReconstructedFourPiece.coordinate \u2260 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.coordinate_optimizer",
+      "signature": "Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate BfgsVerification.ReconstructedFourPiece.optimizer =\n  BfgsVerification.SeedOrbit.coerciveOptimizer",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.family_gradient",
+      "signature": "\u2200 (i : Fin 3),\n  BfgsVerification.ReconstructedFourPiece.family.a i.castSucc =\n    BfgsVerification.ReconstructedFourPiece.valueScale \u2022\n      BfgsVerification.AffineWhitening.gradient BfgsVerification.ReconstructedFourPiece.coordinate\n        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.gap_pos",
+      "signature": "0 < BfgsVerification.ReconstructedFourPiece.gap",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.limit_not_stationary",
+      "signature": "0 \u2209 BfgsVerification.ConvexSubdifferential.subdifferential BfgsVerification.ReconstructedFourPiece.objective 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.literal_branches",
+      "signature": "\u2200 (i : Fin 4) (z : BfgsVerification.Vec 2),\n  BfgsVerification.ReconstructedFourPiece.family.branch i z =\n    ![BfgsVerification.ReconstructedFourPiece.valueScale * z 0 + BfgsVerification.ReconstructedFourPiece.valueScale - 1,\n        BfgsVerification.ReconstructedFourPiece.valueScale * (-z 0 - 2 / 5 * z 1) +\n            BfgsVerification.ReconstructedFourPiece.valueScale -\n          1,\n        BfgsVerification.ReconstructedFourPiece.valueScale *\n              (BfgsVerification.SeedOrbit.seedC * z 0 + 16 / 5 * BfgsVerification.SeedOrbit.seedD * z 1) +\n            BfgsVerification.ReconstructedFourPiece.valueScale -\n          1,\n        16 / 5 * BfgsVerification.ReconstructedFourPiece.valueScale * z 1 -\n            16 * BfgsVerification.ReconstructedFourPiece.valueScale -\n          1]\n      i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.lower_bound",
+      "signature": "\u2200 (z : BfgsVerification.Vec 2), -1 \u2264 BfgsVerification.ReconstructedFourPiece.objective z",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.map_point",
+      "signature": "\u2200 (k : \u2115),\n  Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate (BfgsVerification.ReconstructedFourPiece.point k) =\n    BfgsVerification.SeedOrbit.orbitPoint k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.minimum_value",
+      "signature": "BfgsVerification.ReconstructedFourPiece.objective BfgsVerification.ReconstructedFourPiece.optimizer = -1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.no_intercept_bounds",
+      "signature": "\u00acBfgsVerification.RadialCertificate.HasInterceptBounds BfgsVerification.ReconstructedFourPiece.objective\n    {z |\n      BfgsVerification.ReconstructedFourPiece.objective z \u2264\n        BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point 0)}\n    BfgsVerification.ReconstructedFourPiece.optimizer",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.no_radial_bounds",
+      "signature": "\u00acBfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.ReconstructedFourPiece.objective\n    {z |\n      BfgsVerification.ReconstructedFourPiece.objective z \u2264\n        BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point 0)}\n    BfgsVerification.ReconstructedFourPiece.optimizer",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.objective_convex",
+      "signature": "ConvexOn \u211d Set.univ BfgsVerification.ReconstructedFourPiece.objective",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.objective_formula",
+      "signature": "\u2200 (z : BfgsVerification.Vec 2),\n  BfgsVerification.ReconstructedFourPiece.objective z =\n    BfgsVerification.ReconstructedFourPiece.valueScale *\n        BfgsVerification.SeedOrbit.coerciveObjective\n          (Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate z) +\n      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_hasGradient",
+      "signature": "\u2200 (k : \u2115),\n  HasFDerivAt BfgsVerification.ReconstructedFourPiece.objective\n    (BfgsVerification.gradientFunctional (BfgsVerification.ReconstructedFourPiece.gradient k))\n    (BfgsVerification.ReconstructedFourPiece.point k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_intercepts",
+      "signature": "\u2200 (k : \u2115),\n  BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.ReconstructedFourPiece.objective\n      BfgsVerification.ReconstructedFourPiece.optimizer (BfgsVerification.ReconstructedFourPiece.point k)\n      (BfgsVerification.ReconstructedFourPiece.gradient k) =\n    ![0, 0, 25 / 4] (BfgsVerification.SeedOrbit.phase k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_optimizer",
+      "signature": "BfgsVerification.AffineWhitening.point BfgsVerification.ReconstructedFourPiece.coordinate\n    BfgsVerification.SeedOrbit.coerciveOptimizer =\n  BfgsVerification.ReconstructedFourPiece.optimizer",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_phase_intercepts",
+      "signature": "\u2200 (m : \u2115) (j : Fin 3),\n  BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.ReconstructedFourPiece.objective\n      BfgsVerification.ReconstructedFourPiece.optimizer (BfgsVerification.ReconstructedFourPiece.point (3 * m + \u2191j))\n      (BfgsVerification.ReconstructedFourPiece.gradient (3 * m + \u2191j)) =\n    ![0, 0, 25 / 4] j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_strict_active",
+      "signature": "\u2200 (k : \u2115) (j : Fin 4),\n  j \u2260 (BfgsVerification.SeedOrbit.phase k).castSucc \u2192\n    BfgsVerification.ReconstructedFourPiece.family.branch j (BfgsVerification.ReconstructedFourPiece.point k) <\n      BfgsVerification.ReconstructedFourPiece.family.branch (BfgsVerification.SeedOrbit.phase k).castSucc\n        (BfgsVerification.ReconstructedFourPiece.point k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_tendsto",
+      "signature": "Filter.Tendsto BfgsVerification.ReconstructedFourPiece.point Filter.atTop (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_value",
+      "signature": "\u2200 (k : \u2115),\n  BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point k) =\n    BfgsVerification.ReconstructedFourPiece.valueScale *\n        BfgsVerification.SeedOrbit.coerciveObjective (BfgsVerification.SeedOrbit.orbitPoint k) +\n      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_value_above_limit",
+      "signature": "\u2200 (k : \u2115),\n  BfgsVerification.ReconstructedFourPiece.valueScale - 1 <\n    BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.point_values_tendsto",
+      "signature": "Filter.Tendsto\n  (fun k => BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point k))\n  Filter.atTop (nhds (BfgsVerification.ReconstructedFourPiece.valueScale - 1))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.run_H",
+      "signature": "\u2200 {c\u2081 c\u2082 : \u211d} (hc\u2081 : 0 < c\u2081) (hc\u2081' : c\u2081 \u2264 1 / 3) (hc : c\u2081 < c\u2082) (hc\u2082 : c\u2082 < 1) (k : \u2115),\n  (BfgsVerification.ReconstructedFourPiece.run hc\u2081 hc\u2081' hc hc\u2082).H k =\n    BfgsVerification.ReconstructedFourPiece.valueScale\u207b\u00b9 \u2022\n      BfgsVerification.AffineWhitening.metric BfgsVerification.ReconstructedFourPiece.coordinate\n        (BfgsVerification.SeedOrbit.orbitMetric k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.run_alpha",
+      "signature": "\u2200 {c\u2081 c\u2082 : \u211d} (hc\u2081 : 0 < c\u2081) (hc\u2081' : c\u2081 \u2264 1 / 3) (hc : c\u2081 < c\u2082) (hc\u2082 : c\u2082 < 1) (k : \u2115),\n  (BfgsVerification.ReconstructedFourPiece.run hc\u2081 hc\u2081' hc hc\u2082).\u03b1 k = BfgsVerification.SeedOrbit.orbitLength k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.run_g",
+      "signature": "\u2200 {c\u2081 c\u2082 : \u211d} (hc\u2081 : 0 < c\u2081) (hc\u2081' : c\u2081 \u2264 1 / 3) (hc : c\u2081 < c\u2082) (hc\u2082 : c\u2082 < 1) (k : \u2115),\n  (BfgsVerification.ReconstructedFourPiece.run hc\u2081 hc\u2081' hc hc\u2082).g k = BfgsVerification.ReconstructedFourPiece.gradient k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.run_x",
+      "signature": "\u2200 {c\u2081 c\u2082 : \u211d} (hc\u2081 : 0 < c\u2081) (hc\u2081' : c\u2081 \u2264 1 / 3) (hc : c\u2081 < c\u2082) (hc\u2082 : c\u2082 < 1) (k : \u2115),\n  (BfgsVerification.ReconstructedFourPiece.run hc\u2081 hc\u2081' hc hc\u2082).x k = BfgsVerification.ReconstructedFourPiece.point k",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.scaled_branch_intercepts",
+      "signature": "\u2200 (i : Fin 3),\n  BfgsVerification.ReconstructedFourPiece.valueScale * BfgsVerification.SeedOrbit.coerciveBranchIntercept i =\n    ![0, 0, 25 / 4] i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.secant_pos",
+      "signature": "\u2200 (k : \u2115),\n  0 <\n    BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)\n      (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)\n      (BfgsVerification.ReconstructedFourPiece.gradient (k + 1))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.secant_scale",
+      "signature": "\u2200 (k : \u2115),\n  BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)\n      (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)\n      (BfgsVerification.ReconstructedFourPiece.gradient (k + 1)) =\n    BfgsVerification.ReconstructedFourPiece.valueScale *\n      BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.SeedOrbit.orbitPoint k)\n        (BfgsVerification.SeedOrbit.orbitPoint (k + 1)) (BfgsVerification.SeedOrbit.orbitGradient k)\n        (BfgsVerification.SeedOrbit.orbitGradient (k + 1))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero",
+      "signature": "Filter.Tendsto\n  (fun k =>\n    BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)\n      (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)\n      (BfgsVerification.ReconstructedFourPiece.gradient (k + 1)))\n  Filter.atTop (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceOrbit.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.sublevels_compact",
+      "signature": "\u2200 (a : \u211d), IsCompact {z | BfgsVerification.ReconstructedFourPiece.objective z \u2264 a}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.transported_objective",
+      "signature": "BfgsVerification.ObjectiveValueScale.objective BfgsVerification.ReconstructedFourPiece.valueScale\n    (BfgsVerification.ReconstructedFourPiece.valueScale - 1)\n    (BfgsVerification.AffineWhitening.objective BfgsVerification.ReconstructedFourPiece.coordinate\n      BfgsVerification.SeedOrbit.coerciveObjective) =\n  BfgsVerification.ReconstructedFourPiece.objective",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.unique_optimizer",
+      "signature": "\u2200 {z : BfgsVerification.Vec 2},\n  BfgsVerification.ReconstructedFourPiece.objective z = -1 \u2192 z = BfgsVerification.ReconstructedFourPiece.optimizer",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.valueScale_mul_gap",
+      "signature": "BfgsVerification.ReconstructedFourPiece.valueScale * BfgsVerification.ReconstructedFourPiece.gap = 25 / 4",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.valueScale_pos",
+      "signature": "0 < BfgsVerification.ReconstructedFourPiece.valueScale",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ReconstructedFourPiece.zero_value",
+      "signature": "BfgsVerification.ReconstructedFourPiece.objective 0 = BfgsVerification.ReconstructedFourPiece.valueScale - 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceObjective.lean"
+    },
+    {
       "theorem": "BfgsVerification.RectangularNuclear.column_inner",
       "signature": "\u2200 {m n : \u2115} (A B : Matrix (Fin m) (Fin n) \u211d) (i : Fin n),\n  (A.transpose * B) i i =\n    inner (BfgsVerification.RectangularNuclear.column A i) (BfgsVerification.RectangularNuclear.column B i)",
       "axioms": [
@@ -50155,6 +50819,16 @@
       "source": "BfgsVerification/ObjectiveSemialgebraicCompositionTargets.lean"
     },
     {
+      "theorem": "BfgsVerification.objectiveValueScaling",
+      "signature": "BfgsVerification.ObjectiveValueScalingTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveValueScalingTargets.lean"
+    },
+    {
       "theorem": "BfgsVerification.orderedSemialgebraicCells",
       "signature": "BfgsVerification.OrderedSemialgebraicCellsTarget",
       "axioms": [
@@ -50875,6 +51549,26 @@
       "source": "BfgsVerification/Normalization.lean"
     },
     {
+      "theorem": "BfgsVerification.reconstructedFourPieceFailure",
+      "signature": "BfgsVerification.ReconstructedFourPieceFailureTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.reconstructedSupportingPlane",
+      "signature": "BfgsVerification.ReconstructedSupportingPlaneTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReconstructedFourPieceTargets.lean"
+    },
+    {
       "theorem": "BfgsVerification.rectangularNuclearNorm",
       "signature": "BfgsVerification.RectangularNuclearNormTarget",
       "axioms": [
@@ -51515,15 +52209,15 @@
       "source": "BfgsVerification/RootSignTargets.lean"
     }
   ],
-  "warning": "Claims concern the exact Module M and registered report-tranche targets printed in axioms.log. The entire report remains incomplete. Energy convergence criteria retain explicit correction budgets; frame theorems exclude certificates whose construction remains objective-specific. No unconditional BFGS convergence or all-ray step-existence theorem is claimed.",
+  "warning": "Claims concern the exact Module M and registered report-tranche targets printed in axioms.log. Original-snapshot historical assertions remain unverified; corrected-report completion is recorded separately in REPORT_STATUS.json. Energy convergence criteria retain explicit correction budgets; frame theorems exclude certificates whose construction remains objective-specific. No unconditional BFGS convergence or all-ray step-existence theorem is claimed.",
   "sources": [
     {
       "path": "BfgsVerification.lean",
-      "sha256": "a16a8f1a56cd35076e8b9fa9f718690a1da3dcfeadf29295897adefa0c135225"
+      "sha256": "d5d76327de377f53b9021d2bf5c31976e03443fa7442a053bb02627de09aeea4"
     },
     {
       "path": "Audit.lean",
-      "sha256": "366022802f207e3f9918c0eac847fc1eb72feaba2a3270dbe80e11d53d579c27"
+      "sha256": "5cbe59c4ae658a591856312825a0039499492dbd31d16c36014922efcc1f5840"
     },
     {
       "path": "BfgsVerification/AccessibleCurvatureBridge.lean",
@@ -52128,6 +52822,10 @@
     {
       "path": "BfgsVerification/DeterministicLineSearch.lean",
       "sha256": "18940d2ff2bf2950d79dae12cb31327f79f5c844af4567815b0458a2130c7cac"
+    },
+    {
+      "path": "BfgsVerification/EReconstructionFacts.lean",
+      "sha256": "ac4b0344fea64cf21950d36271efb332bd957c86ac70e3fab98dc85c0b18e679"
     },
     {
       "path": "BfgsVerification/EndToEnd.lean",
@@ -53110,6 +53808,14 @@
       "sha256": "ca58875869838a69c8290403e60a23c1c26dc98ab4d65cfdcdc5de57a8fcf3cb"
     },
     {
+      "path": "BfgsVerification/ObjectiveValueScaling.lean",
+      "sha256": "17539f27eca9252e13b323ec819a738292be7138adfcdd59b07c7e10eb32d425"
+    },
+    {
+      "path": "BfgsVerification/ObjectiveValueScalingTargets.lean",
+      "sha256": "5019f0ed7736c55db17b93ea4db594538d0d424f234c79779fdc1ff284f7724d"
+    },
+    {
       "path": "BfgsVerification/OptimizerInterceptExamples.lean",
       "sha256": "ec2d559c66b7a61d2c1cf1e11dc513f5a864ef67a305eabcc5e88b2aa578ca16"
     },
@@ -53830,6 +54536,26 @@
       "sha256": "1c39c521aee9a6473cf73cd96336c71ccad9520b71c5f78804bd311a5e2baa7f"
     },
     {
+      "path": "BfgsVerification/ReconstructedFourPieceObjective.lean",
+      "sha256": "b2513099b9ab26ad93925f9a2f0ec9082a3c1ef7b9cc86614202f0ecdc320e53"
+    },
+    {
+      "path": "BfgsVerification/ReconstructedFourPieceOrbit.lean",
+      "sha256": "a3a4eede19c165e553b8b46645a33c67e45bb635f930b5ac954c71d791ffe769"
+    },
+    {
+      "path": "BfgsVerification/ReconstructedFourPieceRun.lean",
+      "sha256": "9891efbbf02c53c75b58a26a9515846346c4cda4ee7bd5896896f89e47b32de6"
+    },
+    {
+      "path": "BfgsVerification/ReconstructedFourPieceSeparation.lean",
+      "sha256": "0f6c9f58be6b46f13f5bf45b2d12bc04dc80d04593e6213c8f885e297573ab39"
+    },
+    {
+      "path": "BfgsVerification/ReconstructedFourPieceTargets.lean",
+      "sha256": "dfb972b7577efaef2ddf4d357e6dad50003f344c39379f224aa6dc76f17b835c"
+    },
+    {
       "path": "BfgsVerification/RectangularNuclearTargets.lean",
       "sha256": "c5fbf5d591a96be879ff3b009494e3fae7da9400900d999b0570382a044ba823"
     },
@@ -54434,7 +55160,7 @@
       "sha256": "8a1c00552f1ba1000c0d1eaabd44ceb2f08e6045bea25b4026fb91b76b3a1f81"
     }
   ],
-  "explicit_theorem_declarations": 5126,
+  "explicit_theorem_declarations": 5195,
   "static_scan_passed": true,
   "static_scan_problems": [],
   "report_sources_preserved": true,
@@ -54508,7 +55234,7 @@
       "verified": true
     }
   ],
-  "audited_declaration_count": 7704,
+  "audited_declaration_count": 7813,
   "unexpected_axioms": [],
   "missing_axiom_reports": [],
   "conditional_results": [
@@ -54636,7 +55362,7 @@
   "euclidean_operator_norm_bridge_verified": true,
   "arbitrary_subspace_basis_bridge_verified": true,
   "outside_verified_scope": [
-    "The literal A geometric ingredients are now proved: actual semialgebraic witness paths, finite actual continuous-semialgebraic path components, and continuous objective composition smooth outside finitely many interior parameters. Historical E jobs/counts/timings/environment/archive identities remain unverified without the original inputs. R182\u2013187's numerical attribution to an unidentified older four-piece objective remains a mathematical source-attribution obligation; the verified current D objective does not identify that older objective. See REPORT_STATUS.json",
+    "The literal A geometric ingredients and an explicit R182\u2013187 reconstruction are proved, including actual transformed full-BFGS failure and supporting errors. New E mathematical facts and reconstructed verification evidence are separate from unsupported attribution to original historical jobs, counts, timings, environments or archive identities. The original historical attribution is not recovered by these new proofs or runs. The core entire_report_verified flag remains false; corrected_report_verified is a separate report-level conjunction with its own evidence checks. See REPORT_STATUS.json",
     "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
     "Existence of admissible steps on every search ray"
   ],

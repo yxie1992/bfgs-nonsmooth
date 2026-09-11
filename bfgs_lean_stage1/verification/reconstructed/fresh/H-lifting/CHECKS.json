@@ -1,0 +1,57 @@
+[
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob07.Contract01",
+    "signature": "\u2200 {n r : \u2115} (A : Matrix (Fin r) (Fin n) \u211d),\n  BfgsVerification.AffineProjection.FullRowRank A \u2192\n    \u2200 (F : BfgsVerification.Vec r \u2192 \u211d) (R : BfgsVerification.AdmissibleBFGSRun n fun x => F (A.mulVec x)) (k : \u2115),\n      BfgsVerification.AffineProjection.compress A (R.H (k + 1)) =\n        BfgsVerification.inverseBFGS (BfgsVerification.AffineProjection.compress A (R.H k))\n          (BfgsVerification.bfgsStep (BfgsVerification.AffineProjection.compress A (R.H k))\n            (BfgsVerification.AffineProjection.projectedGradient A F R k) (R.\u03b1 k))\n          (BfgsVerification.AffineProjection.projectedGradient A F R (k + 1) -\n            BfgsVerification.AffineProjection.projectedGradient A F R k)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AffineProjection.projected_update"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob07.Contract02",
+    "signature": "BfgsVerification.AffineProjection.ActualImageRangeTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AffineProjection.actualImageRange"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob07.Contract03",
+    "signature": "BfgsVerification.LinearImageLiftingTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.linearImageLifting"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob07.Contract04",
+    "signature": "\u2200 {n r : \u2115} (A : Matrix (Fin r) (Fin n) \u211d) (H : BfgsVerification.Mat n) (s : BfgsVerification.Vec n)\n  (y : BfgsVerification.Vec r),\n  BfgsVerification.AffineProjection.compress A (BfgsVerification.inverseBFGS H s (A.transpose.mulVec y)) =\n    BfgsVerification.inverseBFGS (BfgsVerification.AffineProjection.compress A H) (A.mulVec s) y",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AffineProjection.inverseBFGS_compress"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob07.Contract05",
+    "signature": "\u2200 {n r : \u2115} (A : Matrix (Fin r) (Fin n) \u211d),\n  BfgsVerification.AffineProjection.FullRowRank A \u2192\n    \u2200 (R : BfgsVerification.FullBFGSRun n) (gbar : \u2115 \u2192 BfgsVerification.Vec r),\n      (\u2200 (k : \u2115), A.transpose.mulVec (gbar k) = R.g k) \u2192\n        \u2200 (k : \u2115),\n          R.H k * A.transpose =\n            BfgsVerification.AffineProjection.lift A (R.H 0) * BfgsVerification.AffineProjection.compress A (R.H k)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AffineProjection.matrix_lift_invariant"
+  }
+]

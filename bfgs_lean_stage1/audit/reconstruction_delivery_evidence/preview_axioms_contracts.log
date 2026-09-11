@@ -1,0 +1,474 @@
+BfgsVerification.ObjectiveValueScale.objective {n : ℕ} (a b : ℝ) (F : BfgsVerification.Vec n → ℝ) :
+  BfgsVerification.Vec n → ℝ
+'BfgsVerification.ObjectiveValueScale.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.convex {n : ℕ} (a b : ℝ) (ha : 0 ≤ a) {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) : ConvexOn ℝ Set.univ (BfgsVerification.ObjectiveValueScale.objective a b F)
+'BfgsVerification.ObjectiveValueScale.convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.gradientFunctional_scale {n : ℕ} (a : ℝ) (g : BfgsVerification.Vec n) :
+  BfgsVerification.gradientFunctional (a • g) = a • BfgsVerification.gradientFunctional g
+'BfgsVerification.ObjectiveValueScale.gradientFunctional_scale' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ObjectiveValueScale.hasGradient {n : ℕ} (a b : ℝ) {F : BfgsVerification.Vec n → ℝ}
+  {x g : BfgsVerification.Vec n} (h : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  HasFDerivAt (BfgsVerification.ObjectiveValueScale.objective a b F) (BfgsVerification.gradientFunctional (a • g)) x
+'BfgsVerification.ObjectiveValueScale.hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.step {n : ℕ} (a : ℝ) (ha : a ≠ 0) (H : BfgsVerification.Mat n)
+  (g : BfgsVerification.Vec n) (α : ℝ) : BfgsVerification.bfgsStep (a⁻¹ • H) (a • g) α = BfgsVerification.bfgsStep H g α
+'BfgsVerification.ObjectiveValueScale.step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.update {n : ℕ} (a : ℝ) (ha : a ≠ 0) (H : BfgsVerification.Mat n)
+  (s y : BfgsVerification.Vec n) :
+  BfgsVerification.inverseBFGS (a⁻¹ • H) s (a • y) = a⁻¹ • BfgsVerification.inverseBFGS H s y
+'BfgsVerification.ObjectiveValueScale.update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.posDef {n : ℕ} {H : BfgsVerification.Mat n} (hH : Matrix.PosDef H) {a : ℝ}
+  (ha : 0 < a) : Matrix.PosDef (a • H)
+'BfgsVerification.ObjectiveValueScale.posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.energy {n : ℕ} (a : ℝ) (ha : a ≠ 0) (H : BfgsVerification.Mat n)
+  (g : BfgsVerification.Vec n) : BfgsVerification.metricEnergy (a⁻¹ • H) (a • g) = a * BfgsVerification.metricEnergy H g
+'BfgsVerification.ObjectiveValueScale.energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) :
+  BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.ObjectiveValueScale.objective a b F)
+'BfgsVerification.ObjectiveValueScale.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_x {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) : (BfgsVerification.ObjectiveValueScale.run a b ha R).x k = R.x k
+'BfgsVerification.ObjectiveValueScale.run_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_H {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).H k = a⁻¹ • R.H k
+'BfgsVerification.ObjectiveValueScale.run_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_g {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).g k = a • R.g k
+'BfgsVerification.ObjectiveValueScale.run_g' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_alpha {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) : (BfgsVerification.ObjectiveValueScale.run a b ha R).α k = R.α k
+'BfgsVerification.ObjectiveValueScale.run_alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_c1 {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) : (BfgsVerification.ObjectiveValueScale.run a b ha R).c₁ = R.c₁
+'BfgsVerification.ObjectiveValueScale.run_c1' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_c2 {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) : (BfgsVerification.ObjectiveValueScale.run a b ha R).c₂ = R.c₂
+'BfgsVerification.ObjectiveValueScale.run_c2' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_value {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  BfgsVerification.ObjectiveValueScale.objective a b F ((BfgsVerification.ObjectiveValueScale.run a b ha R).x k) =
+    a * F (R.x k) + b
+'BfgsVerification.ObjectiveValueScale.run_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_q {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).q k = a * R.q k
+'BfgsVerification.ObjectiveValueScale.run_q' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_d {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).d k = a * R.d k
+'BfgsVerification.ObjectiveValueScale.run_d' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_displacement {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).displacement k = R.displacement k
+'BfgsVerification.ObjectiveValueScale.run_displacement' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_gradientChange {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).gradientChange k = a • R.gradientChange k
+'BfgsVerification.ObjectiveValueScale.run_gradientChange' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.run_curvature {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (a b : ℝ) (ha : 0 < a)
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  (BfgsVerification.ObjectiveValueScale.run a b ha R).curvature k = a * R.curvature k
+'BfgsVerification.ObjectiveValueScale.run_curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.optimizerIntercept {n : ℕ} (a b : ℝ) (F : BfgsVerification.Vec n → ℝ)
+  (star x g : BfgsVerification.Vec n) :
+  BfgsVerification.RadialCertificate.optimizerIntercept (BfgsVerification.ObjectiveValueScale.objective a b F) star x
+      (a • g) =
+    a * BfgsVerification.RadialCertificate.optimizerIntercept F star x g
+'BfgsVerification.ObjectiveValueScale.optimizerIntercept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScale.secantCurvature {n : ℕ} (a : ℝ) (x z g h : BfgsVerification.Vec n) :
+  BfgsVerification.RadialCertificate.secantCurvature x z (a • g) (a • h) =
+    a * BfgsVerification.RadialCertificate.secantCurvature x z g h
+'BfgsVerification.ObjectiveValueScale.secantCurvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScalingTarget : Prop
+'BfgsVerification.ObjectiveValueScalingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveValueScaling : BfgsVerification.ObjectiveValueScalingTarget
+'BfgsVerification.objectiveValueScaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.gap : ℝ
+'BfgsVerification.ReconstructedFourPiece.gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.valueScale : ℝ
+'BfgsVerification.ReconstructedFourPiece.valueScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.coordinate : BfgsVerification.Mat 2
+'BfgsVerification.ReconstructedFourPiece.coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.optimizer : BfgsVerification.Vec 2
+'BfgsVerification.ReconstructedFourPiece.optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.gap_pos : 0 < BfgsVerification.ReconstructedFourPiece.gap
+'BfgsVerification.ReconstructedFourPiece.gap_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.valueScale_pos : 0 < BfgsVerification.ReconstructedFourPiece.valueScale
+'BfgsVerification.ReconstructedFourPiece.valueScale_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.valueScale_mul_gap :
+  BfgsVerification.ReconstructedFourPiece.valueScale * BfgsVerification.ReconstructedFourPiece.gap = 25 / 4
+'BfgsVerification.ReconstructedFourPiece.valueScale_mul_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.coordinate_det_ne :
+  Matrix.det BfgsVerification.ReconstructedFourPiece.coordinate ≠ 0
+'BfgsVerification.ReconstructedFourPiece.coordinate_det_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.coordinate_apply (z : BfgsVerification.Vec 2) :
+  Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate z = ![z 0, 16 / 5 * z 1]
+'BfgsVerification.ReconstructedFourPiece.coordinate_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.coordinate_optimizer :
+  Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate BfgsVerification.ReconstructedFourPiece.optimizer =
+    BfgsVerification.SeedOrbit.coerciveOptimizer
+'BfgsVerification.ReconstructedFourPiece.coordinate_optimizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.family : BfgsVerification.MaxAffine.Family 2 4
+'BfgsVerification.ReconstructedFourPiece.family' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.objective : BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.ReconstructedFourPiece.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.branch_formula (i : Fin 4) (z : BfgsVerification.Vec 2) :
+  BfgsVerification.ReconstructedFourPiece.family.branch i z =
+    BfgsVerification.ReconstructedFourPiece.valueScale *
+        BfgsVerification.SeedOrbit.coerciveFamily.branch i
+          (Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate z) +
+      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)
+'BfgsVerification.ReconstructedFourPiece.branch_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.literal_branches (i : Fin 4) (z : BfgsVerification.Vec 2) :
+  BfgsVerification.ReconstructedFourPiece.family.branch i z =
+    ![BfgsVerification.ReconstructedFourPiece.valueScale * z 0 + BfgsVerification.ReconstructedFourPiece.valueScale - 1,
+        BfgsVerification.ReconstructedFourPiece.valueScale * (-z 0 - 2 / 5 * z 1) +
+            BfgsVerification.ReconstructedFourPiece.valueScale -
+          1,
+        BfgsVerification.ReconstructedFourPiece.valueScale *
+              (BfgsVerification.SeedOrbit.seedC * z 0 + 16 / 5 * BfgsVerification.SeedOrbit.seedD * z 1) +
+            BfgsVerification.ReconstructedFourPiece.valueScale -
+          1,
+        16 / 5 * BfgsVerification.ReconstructedFourPiece.valueScale * z 1 -
+            16 * BfgsVerification.ReconstructedFourPiece.valueScale -
+          1]
+      i
+'BfgsVerification.ReconstructedFourPiece.literal_branches' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.objective_formula (z : BfgsVerification.Vec 2) :
+  BfgsVerification.ReconstructedFourPiece.objective z =
+    BfgsVerification.ReconstructedFourPiece.valueScale *
+        BfgsVerification.SeedOrbit.coerciveObjective
+          (Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate z) +
+      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)
+'BfgsVerification.ReconstructedFourPiece.objective_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.objective_convex :
+  ConvexOn ℝ Set.univ BfgsVerification.ReconstructedFourPiece.objective
+'BfgsVerification.ReconstructedFourPiece.objective_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.minimum_value :
+  BfgsVerification.ReconstructedFourPiece.objective BfgsVerification.ReconstructedFourPiece.optimizer = -1
+'BfgsVerification.ReconstructedFourPiece.minimum_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.lower_bound (z : BfgsVerification.Vec 2) :
+  -1 ≤ BfgsVerification.ReconstructedFourPiece.objective z
+'BfgsVerification.ReconstructedFourPiece.lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.unique_optimizer {z : BfgsVerification.Vec 2}
+  (hz : BfgsVerification.ReconstructedFourPiece.objective z = -1) :
+  z = BfgsVerification.ReconstructedFourPiece.optimizer
+'BfgsVerification.ReconstructedFourPiece.unique_optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.sublevels_compact (a : ℝ) :
+  IsCompact {z | BfgsVerification.ReconstructedFourPiece.objective z ≤ a}
+'BfgsVerification.ReconstructedFourPiece.sublevels_compact' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.scaled_branch_intercepts (i : Fin 3) :
+  BfgsVerification.ReconstructedFourPiece.valueScale * BfgsVerification.SeedOrbit.coerciveBranchIntercept i =
+    ![0, 0, 25 / 4] i
+'BfgsVerification.ReconstructedFourPiece.scaled_branch_intercepts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.branches_at_optimizer (i : Fin 3) :
+  BfgsVerification.ReconstructedFourPiece.family.branch i.castSucc BfgsVerification.ReconstructedFourPiece.optimizer =
+    ![-1, -1, -29 / 4] i
+'BfgsVerification.ReconstructedFourPiece.branches_at_optimizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.zero_value :
+  BfgsVerification.ReconstructedFourPiece.objective 0 = BfgsVerification.ReconstructedFourPiece.valueScale - 1
+'BfgsVerification.ReconstructedFourPiece.zero_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.limit_not_stationary :
+  0 ∉ BfgsVerification.ConvexSubdifferential.subdifferential BfgsVerification.ReconstructedFourPiece.objective 0
+'BfgsVerification.ReconstructedFourPiece.limit_not_stationary' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point (k : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.ReconstructedFourPiece.point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.gradient (k : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.ReconstructedFourPiece.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.map_point (k : ℕ) :
+  Matrix.mulVec BfgsVerification.ReconstructedFourPiece.coordinate (BfgsVerification.ReconstructedFourPiece.point k) =
+    BfgsVerification.SeedOrbit.orbitPoint k
+'BfgsVerification.ReconstructedFourPiece.map_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_optimizer :
+  BfgsVerification.AffineWhitening.point BfgsVerification.ReconstructedFourPiece.coordinate
+      BfgsVerification.SeedOrbit.coerciveOptimizer =
+    BfgsVerification.ReconstructedFourPiece.optimizer
+'BfgsVerification.ReconstructedFourPiece.point_optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_tendsto :
+  Filter.Tendsto BfgsVerification.ReconstructedFourPiece.point Filter.atTop (nhds 0)
+'BfgsVerification.ReconstructedFourPiece.point_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_value (k : ℕ) :
+  BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point k) =
+    BfgsVerification.ReconstructedFourPiece.valueScale *
+        BfgsVerification.SeedOrbit.coerciveObjective (BfgsVerification.SeedOrbit.orbitPoint k) +
+      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)
+'BfgsVerification.ReconstructedFourPiece.point_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_values_tendsto :
+  Filter.Tendsto
+    (fun k => BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point k))
+    Filter.atTop (nhds (BfgsVerification.ReconstructedFourPiece.valueScale - 1))
+'BfgsVerification.ReconstructedFourPiece.point_values_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_value_above_limit (k : ℕ) :
+  BfgsVerification.ReconstructedFourPiece.valueScale - 1 <
+    BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point k)
+'BfgsVerification.ReconstructedFourPiece.point_value_above_limit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.family_gradient (i : Fin 3) :
+  BfgsVerification.ReconstructedFourPiece.family.a i.castSucc =
+    BfgsVerification.ReconstructedFourPiece.valueScale •
+      BfgsVerification.AffineWhitening.gradient BfgsVerification.ReconstructedFourPiece.coordinate
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+'BfgsVerification.ReconstructedFourPiece.family_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_strict_active (k : ℕ) (j : Fin 4) :
+  j ≠ (BfgsVerification.SeedOrbit.phase k).castSucc →
+    BfgsVerification.ReconstructedFourPiece.family.branch j (BfgsVerification.ReconstructedFourPiece.point k) <
+      BfgsVerification.ReconstructedFourPiece.family.branch (BfgsVerification.SeedOrbit.phase k).castSucc
+        (BfgsVerification.ReconstructedFourPiece.point k)
+'BfgsVerification.ReconstructedFourPiece.point_strict_active' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_hasGradient (k : ℕ) :
+  HasFDerivAt BfgsVerification.ReconstructedFourPiece.objective
+    (BfgsVerification.gradientFunctional (BfgsVerification.ReconstructedFourPiece.gradient k))
+    (BfgsVerification.ReconstructedFourPiece.point k)
+'BfgsVerification.ReconstructedFourPiece.point_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_intercepts (k : ℕ) :
+  BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.ReconstructedFourPiece.objective
+      BfgsVerification.ReconstructedFourPiece.optimizer (BfgsVerification.ReconstructedFourPiece.point k)
+      (BfgsVerification.ReconstructedFourPiece.gradient k) =
+    ![0, 0, 25 / 4] (BfgsVerification.SeedOrbit.phase k)
+'BfgsVerification.ReconstructedFourPiece.point_intercepts' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.point_phase_intercepts (m : ℕ) (j : Fin 3) :
+  BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.ReconstructedFourPiece.objective
+      BfgsVerification.ReconstructedFourPiece.optimizer (BfgsVerification.ReconstructedFourPiece.point (3 * m + ↑j))
+      (BfgsVerification.ReconstructedFourPiece.gradient (3 * m + ↑j)) =
+    ![0, 0, 25 / 4] j
+'BfgsVerification.ReconstructedFourPiece.point_phase_intercepts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.secant_scale (k : ℕ) :
+  BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)
+      (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)
+      (BfgsVerification.ReconstructedFourPiece.gradient (k + 1)) =
+    BfgsVerification.ReconstructedFourPiece.valueScale *
+      BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.SeedOrbit.orbitPoint k)
+        (BfgsVerification.SeedOrbit.orbitPoint (k + 1)) (BfgsVerification.SeedOrbit.orbitGradient k)
+        (BfgsVerification.SeedOrbit.orbitGradient (k + 1))
+'BfgsVerification.ReconstructedFourPiece.secant_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero :
+  Filter.Tendsto
+    (fun k =>
+      BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)
+        (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)
+        (BfgsVerification.ReconstructedFourPiece.gradient (k + 1)))
+    Filter.atTop (nhds 0)
+'BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.transportedRun {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) :
+  BfgsVerification.AdmissibleBFGSRun 2
+    (BfgsVerification.ObjectiveValueScale.objective BfgsVerification.ReconstructedFourPiece.valueScale
+      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)
+      (BfgsVerification.AffineWhitening.objective BfgsVerification.ReconstructedFourPiece.coordinate
+        BfgsVerification.SeedOrbit.coerciveObjective))
+'BfgsVerification.ReconstructedFourPiece.transportedRun' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.transported_objective :
+  BfgsVerification.ObjectiveValueScale.objective BfgsVerification.ReconstructedFourPiece.valueScale
+      (BfgsVerification.ReconstructedFourPiece.valueScale - 1)
+      (BfgsVerification.AffineWhitening.objective BfgsVerification.ReconstructedFourPiece.coordinate
+        BfgsVerification.SeedOrbit.coerciveObjective) =
+    BfgsVerification.ReconstructedFourPiece.objective
+'BfgsVerification.ReconstructedFourPiece.transported_objective' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ReconstructedFourPiece.run {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.ReconstructedFourPiece.objective
+'BfgsVerification.ReconstructedFourPiece.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.run_x {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) (k : ℕ) :
+  (BfgsVerification.ReconstructedFourPiece.run hc₁ hc₁' hc hc₂).x k = BfgsVerification.ReconstructedFourPiece.point k
+'BfgsVerification.ReconstructedFourPiece.run_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.run_g {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) (k : ℕ) :
+  (BfgsVerification.ReconstructedFourPiece.run hc₁ hc₁' hc hc₂).g k = BfgsVerification.ReconstructedFourPiece.gradient k
+'BfgsVerification.ReconstructedFourPiece.run_g' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.run_H {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) (k : ℕ) :
+  (BfgsVerification.ReconstructedFourPiece.run hc₁ hc₁' hc hc₂).H k =
+    BfgsVerification.ReconstructedFourPiece.valueScale⁻¹ •
+      BfgsVerification.AffineWhitening.metric BfgsVerification.ReconstructedFourPiece.coordinate
+        (BfgsVerification.SeedOrbit.orbitMetric k)
+'BfgsVerification.ReconstructedFourPiece.run_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.run_alpha {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) (k : ℕ) :
+  (BfgsVerification.ReconstructedFourPiece.run hc₁ hc₁' hc hc₂).α k = BfgsVerification.SeedOrbit.orbitLength k
+'BfgsVerification.ReconstructedFourPiece.run_alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.secant_pos (k : ℕ) :
+  0 <
+    BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)
+      (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)
+      (BfgsVerification.ReconstructedFourPiece.gradient (k + 1))
+'BfgsVerification.ReconstructedFourPiece.secant_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.no_intercept_bounds :
+  ¬BfgsVerification.RadialCertificate.HasInterceptBounds BfgsVerification.ReconstructedFourPiece.objective
+      {z |
+        BfgsVerification.ReconstructedFourPiece.objective z ≤
+          BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point 0)}
+      BfgsVerification.ReconstructedFourPiece.optimizer
+'BfgsVerification.ReconstructedFourPiece.no_intercept_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPiece.no_radial_bounds :
+  ¬BfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.ReconstructedFourPiece.objective
+      {z |
+        BfgsVerification.ReconstructedFourPiece.objective z ≤
+          BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point 0)}
+      BfgsVerification.ReconstructedFourPiece.optimizer
+'BfgsVerification.ReconstructedFourPiece.no_radial_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedFourPieceFailureTarget : Prop
+'BfgsVerification.ReconstructedFourPieceFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.reconstructedFourPieceFailure : BfgsVerification.ReconstructedFourPieceFailureTarget
+'BfgsVerification.reconstructedFourPieceFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ReconstructedSupportingPlaneTarget : Prop
+'BfgsVerification.ReconstructedSupportingPlaneTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.reconstructedSupportingPlane : BfgsVerification.ReconstructedSupportingPlaneTarget
+'BfgsVerification.reconstructedSupportingPlane' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.EReconstruction.eventually_below_tolerance (f : ℕ → ℝ) (hf : Filter.Tendsto f Filter.atTop (nhds 0))
+  {ε : ℝ} (hε : 0 < ε) : ∃ N, ∀ k ≥ N, f k < ε
+'BfgsVerification.EReconstruction.eventually_below_tolerance' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.EReconstruction.planar_eventual_printed_tolerance
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.PlanarQuadraticExample.objective)
+  (hstart : BfgsVerification.PlanarQuadraticExample.objective (R.x 0) < 1 / 100) :
+  ∃ N, ∀ k ≥ N, BfgsVerification.PlanarQuadraticExample.objective (R.x k) < 10 ^ (-45)
+'BfgsVerification.EReconstruction.planar_eventual_printed_tolerance' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.EReconstruction.spike_eventual_printed_tolerance {n : ℕ} (a : BfgsVerification.Vec n)
+  (ha : BfgsVerification.sqNorm a = 1)
+  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.NormalSpike.objective a)) :
+  ∃ N, ∀ k ≥ N, BfgsVerification.NormalSpike.objective a (R.x k) < 10 ^ (-28)
+'BfgsVerification.EReconstruction.spike_eventual_printed_tolerance' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.EReconstruction.inverse_update_secant {n : ℕ} (H : BfgsVerification.Mat n)
+  (s y : BfgsVerification.Vec n) (ht : BfgsVerification.dot y s ≠ 0) :
+  Matrix.mulVec (BfgsVerification.inverseBFGS H s y) y = s
+'BfgsVerification.EReconstruction.inverse_update_secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.EReconstruction.hessian_update_secant {n : ℕ} {H : BfgsVerification.Mat n} (hH : Matrix.PosDef H)
+  (s y : BfgsVerification.Vec n) (ht : 0 < BfgsVerification.dot y s) :
+  Matrix.mulVec (BfgsVerification.inverseBFGS H s y)⁻¹ s = y
+'BfgsVerification.EReconstruction.hessian_update_secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.EReconstruction.ReconstructedFactsTarget : Prop
+'BfgsVerification.EReconstruction.ReconstructedFactsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.EReconstruction.reconstructedFacts : BfgsVerification.EReconstruction.ReconstructedFactsTarget
+'BfgsVerification.EReconstruction.reconstructedFacts' depends on axioms: [propext, Classical.choice, Quot.sound]
+def BfgsVerification.ObjectiveValueScalingTarget : Prop :=
+∀ (n : ℕ) (F : BfgsVerification.Vec n → ℝ) (a b : ℝ),
+  0 < a →
+    ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+      ∃ S,
+        S.c₁ = R.c₁ ∧
+          S.c₂ = R.c₂ ∧
+            ∀ (k : ℕ),
+              S.x k = R.x k ∧
+                S.H k = a⁻¹ • R.H k ∧
+                  S.g k = a • R.g k ∧ S.α k = R.α k ∧ S.d k = a * R.d k ∧ S.curvature k = a * R.curvature k
+EXACT_TARGET_OK BfgsVerification.objectiveValueScaling
+def BfgsVerification.ReconstructedFourPieceFailureTarget : Prop :=
+ConvexOn ℝ Set.univ BfgsVerification.ReconstructedFourPiece.objective ∧
+  (∀ (b : ℝ), IsCompact {z | BfgsVerification.ReconstructedFourPiece.objective z ≤ b}) ∧
+    BfgsVerification.ReconstructedFourPiece.optimizer = ![-1, 5] ∧
+      BfgsVerification.ReconstructedFourPiece.objective BfgsVerification.ReconstructedFourPiece.optimizer = -1 ∧
+        (∀ (z : BfgsVerification.Vec 2), -1 ≤ BfgsVerification.ReconstructedFourPiece.objective z) ∧
+          (∀ (z : BfgsVerification.Vec 2),
+              BfgsVerification.ReconstructedFourPiece.objective z = -1 →
+                z = BfgsVerification.ReconstructedFourPiece.optimizer) ∧
+            (∀ (i : Fin 3),
+                BfgsVerification.ReconstructedFourPiece.family.branch i.castSucc
+                    BfgsVerification.ReconstructedFourPiece.optimizer =
+                  ![-1, -1, -29 / 4] i) ∧
+              0 ∉
+                  BfgsVerification.ConvexSubdifferential.subdifferential
+                    BfgsVerification.ReconstructedFourPiece.objective 0 ∧
+                ∀ (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂) (hc₂ : c₂ < 1),
+                  let R := BfgsVerification.ReconstructedFourPiece.run hc₁ hc₁' hc hc₂;
+                  R.c₁ = c₁ ∧
+                    R.c₂ = c₂ ∧
+                      (∀ (k : ℕ),
+                          R.x k =
+                            BfgsVerification.AffineWhitening.point BfgsVerification.ReconstructedFourPiece.coordinate
+                              (BfgsVerification.SeedOrbit.orbitPoint k)) ∧
+                        (∀ (k : ℕ),
+                            R.H k =
+                              BfgsVerification.ReconstructedFourPiece.valueScale⁻¹ •
+                                BfgsVerification.AffineWhitening.metric
+                                  BfgsVerification.ReconstructedFourPiece.coordinate
+                                  (BfgsVerification.SeedOrbit.orbitMetric k)) ∧
+                          (∀ (k : ℕ),
+                              R.g k =
+                                BfgsVerification.ReconstructedFourPiece.valueScale •
+                                  BfgsVerification.AffineWhitening.gradient
+                                    BfgsVerification.ReconstructedFourPiece.coordinate
+                                    (BfgsVerification.SeedOrbit.orbitGradient k)) ∧
+                            (∀ (k : ℕ), R.α k = BfgsVerification.SeedOrbit.orbitLength k) ∧
+                              Filter.Tendsto R.x Filter.atTop (nhds 0) ∧
+                                Filter.Tendsto (fun k => BfgsVerification.ReconstructedFourPiece.objective (R.x k))
+                                    Filter.atTop (nhds (BfgsVerification.ReconstructedFourPiece.valueScale - 1)) ∧
+                                  -1 < BfgsVerification.ReconstructedFourPiece.valueScale - 1 ∧
+                                    (∀ (k : ℕ),
+                                        BfgsVerification.ReconstructedFourPiece.valueScale - 1 <
+                                          BfgsVerification.ReconstructedFourPiece.objective (R.x k)) ∧
+                                      ∀ (k : ℕ),
+                                        BfgsVerification.ReconstructedFourPiece.objective (R.x (k + 1)) <
+                                          BfgsVerification.ReconstructedFourPiece.objective (R.x k)
+EXACT_TARGET_OK BfgsVerification.reconstructedFourPieceFailure
+def BfgsVerification.ReconstructedSupportingPlaneTarget : Prop :=
+(∀ (m : ℕ) (j : Fin 3),
+    BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.ReconstructedFourPiece.objective
+        BfgsVerification.ReconstructedFourPiece.optimizer (BfgsVerification.ReconstructedFourPiece.point (3 * m + ↑j))
+        (BfgsVerification.ReconstructedFourPiece.gradient (3 * m + ↑j)) =
+      ![0, 0, 25 / 4] j) ∧
+  (∀ (k : ℕ),
+      HasFDerivAt BfgsVerification.ReconstructedFourPiece.objective
+        (BfgsVerification.gradientFunctional (BfgsVerification.ReconstructedFourPiece.gradient k))
+        (BfgsVerification.ReconstructedFourPiece.point k)) ∧
+    (∀ (k : ℕ),
+        0 <
+          BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)
+            (BfgsVerification.ReconstructedFourPiece.point (k + 1)) (BfgsVerification.ReconstructedFourPiece.gradient k)
+            (BfgsVerification.ReconstructedFourPiece.gradient (k + 1))) ∧
+      Filter.Tendsto
+          (fun k =>
+            BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.ReconstructedFourPiece.point k)
+              (BfgsVerification.ReconstructedFourPiece.point (k + 1))
+              (BfgsVerification.ReconstructedFourPiece.gradient k)
+              (BfgsVerification.ReconstructedFourPiece.gradient (k + 1)))
+          Filter.atTop (nhds 0) ∧
+        ¬BfgsVerification.RadialCertificate.HasInterceptBounds BfgsVerification.ReconstructedFourPiece.objective
+              {z |
+                BfgsVerification.ReconstructedFourPiece.objective z ≤
+                  BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point 0)}
+              BfgsVerification.ReconstructedFourPiece.optimizer ∧
+          ¬BfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.ReconstructedFourPiece.objective
+              {z |
+                BfgsVerification.ReconstructedFourPiece.objective z ≤
+                  BfgsVerification.ReconstructedFourPiece.objective (BfgsVerification.ReconstructedFourPiece.point 0)}
+              BfgsVerification.ReconstructedFourPiece.optimizer
+EXACT_TARGET_OK BfgsVerification.reconstructedSupportingPlane
+def BfgsVerification.EReconstruction.ReconstructedFactsTarget : Prop :=
+(∀ (n : ℕ) (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n),
+    BfgsVerification.dot y s ≠ 0 → Matrix.mulVec (BfgsVerification.inverseBFGS H s y) y = s) ∧
+  (∀ (n : ℕ) (H : BfgsVerification.Mat n),
+      Matrix.PosDef H →
+        ∀ (s y : BfgsVerification.Vec n),
+          0 < BfgsVerification.dot y s → Matrix.mulVec (BfgsVerification.inverseBFGS H s y)⁻¹ s = y) ∧
+    (∀ (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.PlanarQuadraticExample.objective),
+        BfgsVerification.PlanarQuadraticExample.objective (R.x 0) < 1 / 100 →
+          ∃ N, ∀ k ≥ N, BfgsVerification.PlanarQuadraticExample.objective (R.x k) < 10 ^ (-45)) ∧
+      ∀ (n : ℕ) (a : BfgsVerification.Vec n),
+        BfgsVerification.sqNorm a = 1 →
+          ∀ (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.NormalSpike.objective a)),
+            ∃ N, ∀ k ≥ N, BfgsVerification.NormalSpike.objective a (R.x k) < 10 ^ (-28)
+EXACT_TARGET_OK BfgsVerification.EReconstruction.reconstructedFacts

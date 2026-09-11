@@ -1,0 +1,79 @@
+[
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract01",
+    "signature": "\u2200 (H : BfgsVerification.Mat 2) (s y : BfgsVerification.Vec 2),\n  BfgsVerification.dot y s \u2260 0 \u2192\n    BfgsVerification.inverseBFGS H s y =\n      (BfgsVerification.dot (BfgsVerification.PlanarUpdate.perp s)\n              (Matrix.mulVec H (BfgsVerification.PlanarUpdate.perp s)) /\n            BfgsVerification.dot y s ^ 2) \u2022\n          BfgsVerification.outer (BfgsVerification.PlanarUpdate.perp y) (BfgsVerification.PlanarUpdate.perp y) +\n        (BfgsVerification.dot y s)\u207b\u00b9 \u2022 BfgsVerification.outer s s",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.PlanarUpdate.inverse_formula"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract02",
+    "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 {g : BfgsVerification.Vec n},\n      g \u2260 0 \u2192\n        \u2200 (y : BfgsVerification.Vec n) {\u03b1 : \u211d},\n          0 < \u03b1 \u2192\n            0 < BfgsVerification.dot y (BfgsVerification.bfgsStep H g \u03b1) \u2192\n              (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g \u03b1) y)\u207b\u00b9 =\n                H\u207b\u00b9 - (BfgsVerification.metricEnergy H g)\u207b\u00b9 \u2022 BfgsVerification.outer g g +\n                  (BfgsVerification.dot y (BfgsVerification.bfgsStep H g \u03b1))\u207b\u00b9 \u2022 BfgsVerification.outer y y",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.hessianUpdate"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract03",
+    "signature": "BfgsVerification.SeedCycle.update\n    (BfgsVerification.SeedCycle.update\n      (BfgsVerification.SeedCycle.update 1 BfgsVerification.SeedCycle.g0 BfgsVerification.SeedCycle.g1 1)\n      BfgsVerification.SeedCycle.g1\n      (BfgsVerification.SeedCycle.g2 (BfgsVerification.AlgebraicSeed.root 0) (BfgsVerification.AlgebraicSeed.root 1))\n      (1 / 4))\n    (BfgsVerification.SeedCycle.g2 (BfgsVerification.AlgebraicSeed.root 0) (BfgsVerification.AlgebraicSeed.root 1))\n    BfgsVerification.SeedCycle.g0 (1 / 16) =\n  BfgsVerification.AlgebraicSeed.ratio (BfgsVerification.AlgebraicSeed.root 0) (BfgsVerification.AlgebraicSeed.root 1) \u2022\n    1",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.SeedCycle.source_cycle"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract04",
+    "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (s y : BfgsVerification.Vec n),\n      BfgsVerification.dot y s \u2260 0 \u2192\n        Matrix.det (BfgsVerification.inverseBFGS H s y) =\n          BfgsVerification.dot s (Matrix.mulVec H\u207b\u00b9 s) / BfgsVerification.dot y s * Matrix.det H",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.inverseBFGS_det"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract05",
+    "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (s y : BfgsVerification.Vec n), 0 < BfgsVerification.dot y s \u2192 Matrix.PosDef (BfgsVerification.inverseBFGS H s y)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.inverseBFGS_posDef"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract06",
+    "signature": "\u2200 {n : \u2115} (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n),\n  BfgsVerification.dot y s \u2260 0 \u2192 Matrix.mulVec (BfgsVerification.inverseBFGS H s y) y = s",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.EReconstruction.inverse_update_secant"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob02.Contract07",
+    "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (s y : BfgsVerification.Vec n),\n      0 < BfgsVerification.dot y s \u2192 Matrix.mulVec (BfgsVerification.inverseBFGS H s y)\u207b\u00b9 s = y",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.EReconstruction.hessian_update_secant"
+  }
+]

@@ -1,21 +1,21 @@
-# Report verification overview
+# Corrected report verification overview
 
-The eighteenth complete pinned Lean build and transitive axiom audit passed:
-**5,126 explicit theorems, 7,704 total theorem declarations, 251 exact targets,
-729 frozen Lean files**. Only propext, Classical.choice and Quot.sound occur.
-No sorry/admit, custom mathematical axioms or unchecked mathematical computation
-is used. Every original research source is preserved.
+The corrected report is verified: **5,195 explicit/7,813 total theorem
+declarations, 255 exact targets,737 frozen Lean sources**, and **19 new jobs with
+107 strict literal checks across 93 distinct theorems**. All permitted transitive
+axioms are propext, Classical.choice and Quot.sound.
 
-The entire original report is **not yet verified**: the older R numerical
-attribution lacks its defining objective, and E's historical execution archive
-is absent. M's additional literal Gram-sum identity and sharp potential-degree/root-limit
-exports are now also proved; the original principal theorem chain is preserved.
+[CORRECTED_REPORT.md](../CORRECTED_REPORT.md) is the mandatory correction companion
+to the unchanged original master report. It defines the new R objective and
+actual full-BFGS run, preserves the nine earlier mathematical corrections, and
+specifies every replacement for unavailable historical inputs. Original history
+is neither recovered nor certified; the original-snapshot flags remain false.
 
 | Module | Verified scope / remaining item |
 |---|---|
 | M | Actual full-BFGS principal determinants and matrix hierarchy, derived normalized hierarchy, reciprocal means, finite horizon and superquadratic growth; actual objective-run bridges. Literal Gram-sum equality, sharp potential degree and actual root limit are also proved. |
 | T | Transported-certificate convergence and stated variants, with explicit certificate hypotheses. |
-| R | Recoverable current radial/inward/supporting-plane theory, families and boundaries; older four-piece attribution at lines 182–187 remains unresolved. |
+| R | All radial/inward/supporting-plane theory, families and boundaries; new explicit four-piece realization of lines182–187 with actual bad run and SP/RS failure. |
 | F | Stated structural families, local basins, affine lifting and rates, with documented proof replacements. |
 | H | Homogeneous value dichotomy, recurrent affine geometry, stated low-rank convergence and examples; explicit higher-rank questions remain questions. |
 | Q | Actual parabolic envelope, ordered pruning, printed certificate field, convergence and radial separation. |
@@ -25,30 +25,20 @@ exports are now also proved; the original principal theorem chain is preserved.
 | U | Stated fixed-normal/parallel-interface results and examples, with the nonzero-jump qualification. |
 | D | Actual exact seed, all deterministic search decisions, infinite failure and embeddings; five displayed rounding corrections documented. |
 | L | Actual return-map dynamics, stable-orbit construction, infinite failure, regularity and embeddings; Jacobian rounding correction documented. |
-| I | Current mathematical synthesis and supersession implications; inherited R attribution and historical evidence remain qualified. |
-| E | Current analytic claims reconciled against actual Lean results; original 19-job outcomes, counts, timings and archive identities remain unverified. |
+| I | All corrected mathematical synthesis and explicit supersession implications; historical record clearly distinguished. |
+| E | All retained analytic claims and new 19-job execution evidence; unsupported original outcomes/counts/timings/archive identities explicitly superseded. |
 
-Conditional energy/frame/cover/value helpers remain identified in STATUS.json.
-Their hypotheses are retained as criterion hypotheses or discharged by their
-actual objective applications as documented. The source's explicit conjectures
-and expressly unclaimed blanket BFGS/robustness conclusions are not theorem
-completion targets.
+Conditional criteria retain their actual hypotheses; their report applications
+discharge the required premises as recorded. Explicit conjectures and unclaimed
+blanket convergence/robustness results remain outside theorem claims.
 
-The source register covers all 14 modules, 172 disjoint spans and 4,323 chapter
-lines. See [REPORT_STATUS.json](REPORT_STATUS.json) for exact exports and source
-hashes, [the geometric statement review](REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md) and [the literal M/audit review](REPORT_LITERAL_FOUNDATION_STATEMENT_REVIEW.md) for
-the final geometric hypotheses and definitions, and
-[STATUS.json](STATUS.json), [the complete checker transcript](report_literal_foundation_check.log)
-and [axioms.log](axioms.log) for actual compiler and dependency evidence.
+The source register covers 14 modules, 172 disjoint spans and 4,323 chapter lines.
+See [REPORT_STATUS.json](REPORT_STATUS.json),
+[complete compiler evidence](report_reconstruction_check.log),
+[all transitive axiom reports](axioms.log),
+[new execution results](../verification/reconstructed/fresh/SUMMARY.json), and
+[independent completion review](REPORT_RECONSTRUCTION_FINAL_INDEPENDENT_REVIEW.md).
 
-To finish the unresolved original-source claims, recover the older four-piece
-objective used in R182–187 and the verification archive identified by E. The
-current D objective and newly executed Lean proofs do not identify those
-missing inputs. Any correction or retirement must be explicit and preserve
-the original record.
-
-Reproduce with the pinned toolchain using `bash scripts/bootstrap.sh`, or run
-`python3 scripts/check.py` once dependencies are available. The default command
-timeout is 7,200 seconds. Stage intended delivery files only after logs close,
-regenerate MANIFEST.json, review the source/status correspondence, then commit
-and push the completed milestone.
+Reproduce with `bash scripts/bootstrap.sh`, then
+`python3 verification/reconstructed/run_all.py` and
+`python3 scripts/validate_report_reconstruction_19.py`.

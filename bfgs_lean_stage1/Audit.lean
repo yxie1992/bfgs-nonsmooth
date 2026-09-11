@@ -1083,3 +1083,17 @@ example : BfgsVerification.PrincipalGramSumIdentityTarget := BfgsVerification.pr
 #print BfgsVerification.SharpPrincipalPotentialTarget
 example : BfgsVerification.SharpPrincipalPotentialTarget := BfgsVerification.sharpPrincipalPotential
 #print axioms BfgsVerification.sharpPrincipalPotential
+
+/- Nineteenth milestone: explicit R reconstruction and new E mathematical facts. -/
+#print BfgsVerification.ObjectiveValueScalingTarget
+example : BfgsVerification.ObjectiveValueScalingTarget := BfgsVerification.objectiveValueScaling
+#print axioms BfgsVerification.objectiveValueScaling
+#print BfgsVerification.ReconstructedFourPieceFailureTarget
+example : BfgsVerification.ReconstructedFourPieceFailureTarget := BfgsVerification.reconstructedFourPieceFailure
+#print axioms BfgsVerification.reconstructedFourPieceFailure
+#print BfgsVerification.ReconstructedSupportingPlaneTarget
+example : BfgsVerification.ReconstructedSupportingPlaneTarget := BfgsVerification.reconstructedSupportingPlane
+#print axioms BfgsVerification.reconstructedSupportingPlane
+#print BfgsVerification.EReconstruction.ReconstructedFactsTarget
+example : BfgsVerification.EReconstruction.ReconstructedFactsTarget := BfgsVerification.EReconstruction.reconstructedFacts
+#print axioms BfgsVerification.EReconstruction.reconstructedFacts

@@ -568,7 +568,17 @@ REPORT_LITERAL_FOUNDATION_TARGETS = {
     "sharpPrincipalPotential_verified":
         ("BfgsVerification.sharpPrincipalPotential", "BfgsVerification.SharpPrincipalPotentialTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS | REPORT_TAME_GEOMETRY_TARGETS | REPORT_SEMIALGEBRAIC_PATH_TARGETS | REPORT_LITERAL_FOUNDATION_TARGETS
+REPORT_RECONSTRUCTION_TARGETS = {
+    "objectiveValueScaling_verified":
+        ("BfgsVerification.objectiveValueScaling", "BfgsVerification.ObjectiveValueScalingTarget"),
+    "reconstructedFourPieceFailure_verified":
+        ("BfgsVerification.reconstructedFourPieceFailure", "BfgsVerification.ReconstructedFourPieceFailureTarget"),
+    "reconstructedSupportingPlane_verified":
+        ("BfgsVerification.reconstructedSupportingPlane", "BfgsVerification.ReconstructedSupportingPlaneTarget"),
+    "EReconstruction_reconstructedFacts_verified":
+        ("BfgsVerification.EReconstruction.reconstructedFacts", "BfgsVerification.EReconstruction.ReconstructedFactsTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS | REPORT_TAME_GEOMETRY_TARGETS | REPORT_SEMIALGEBRAIC_PATH_TARGETS | REPORT_LITERAL_FOUNDATION_TARGETS | REPORT_RECONSTRUCTION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -857,7 +867,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "The literal A geometric ingredients are now proved: actual semialgebraic witness paths, finite actual continuous-semialgebraic path components, and continuous objective composition smooth outside finitely many interior parameters. Historical E jobs/counts/timings/environment/archive identities remain unverified without the original inputs. R182–187's numerical attribution to an unidentified older four-piece objective remains a mathematical source-attribution obligation; the verified current D objective does not identify that older objective. See REPORT_STATUS.json",
+            "The literal A geometric ingredients and an explicit R182–187 reconstruction are proved, including actual transformed full-BFGS failure and supporting errors. New E mathematical facts and reconstructed verification evidence are separate from unsupported attribution to original historical jobs, counts, timings, environments or archive identities. The original historical attribution is not recovered by these new proofs or runs. The core entire_report_verified flag remains false; corrected_report_verified is a separate report-level conjunction with its own evidence checks. See REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -866,11 +876,11 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_LITERAL_FOUNDATION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_RECONSTRUCTION_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
-        status["warning"] = ("Claims concern the exact Module M and registered report-tranche targets printed in axioms.log. The entire report remains incomplete. "
+        status["warning"] = ("Claims concern the exact Module M and registered report-tranche targets printed in axioms.log. Original-snapshot historical assertions remain unverified; corrected-report completion is recorded separately in REPORT_STATUS.json. "
                              "Energy convergence criteria retain explicit correction budgets; frame theorems exclude "
                              "certificates whose construction remains objective-specific. No unconditional BFGS "
                              "convergence or all-ray step-existence theorem is claimed.")

@@ -1,0 +1,46 @@
+[
+  {
+    "axioms": [
+      "Quot.sound",
+      "propext",
+      "Classical.choice"
+    ],
+    "contract": "EJob12.Contract01",
+    "signature": "\u2200 {\u03b9 : Type u_1} {l : Filter \u03b9} [inst : l.NeBot] {n r : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d}\n  {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d},\n  c\u2082 < 1 \u2192\n    \u2200 (z h : \u03b9 \u2192 BfgsVerification.Vec n) (x g : \u03b9 \u2192 Fin r \u2192 BfgsVerification.Vec n) (coeff : \u03b9 \u2192 Fin r \u2192 \u211d),\n      (\u2200 (a : \u03b9), z a \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7) \u2192\n        (\u2200 (a : \u03b9) (j : Fin r), x a j \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7) \u2192\n          (\u2200 (a : \u03b9), HasFDerivAt F (BfgsVerification.gradientFunctional (h a)) (z a)) \u2192\n            (\u2200 (a : \u03b9) (j : Fin r),\n                BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 (x a j) (z a) (g a j) (h a)) \u2192\n              (\u2200 (j : Fin r),\n                  Filter.Tendsto (fun a => BfgsVerification.TransportedCertificate.pairDecrease (x a j) (z a) (g a j)) l\n                    (\ud835\udcdd 0)) \u2192\n                (\u2200\u1da0 (a : \u03b9) in l, h a = \u2211 j, coeff a j \u2022 (h a - g a j)) \u2192\n                  Filter.Tendsto\n                      (fun a =>\n                        \u2211 j,\n                          |coeff a j| *\n                            \u221a(BfgsVerification.TransportedCertificate.pairCurvature (x a j) (z a) (g a j) (h a)))\n                      l (\ud835\udcdd 0) \u2192\n                    \u00acNonempty (BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.TransportedCertificate.incoming_jump_no_band_certificate"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob12.Contract02",
+    "signature": "BfgsVerification.EligiblePairRealizabilityTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.eligiblePairRealizability"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob12.Contract03",
+    "signature": "\u2200 {K : Set (BfgsVerification.Vec 1)},\n  K \u2208 \ud835\udcdd 0 \u2192\n    \u00acBfgsVerification.TransportedCertificate.HasBandCertificates BfgsVerification.AccumulatingKinks.coordinateObjective\n        K 0 (1 / 4) (1 / 2)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AccumulatingKinks.every_neighborhood_no_certificates"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob12.Contract04",
+    "signature": "\u2200 {n : \u2115} (F : BfgsVerification.Vec n \u2192 \u211d) (K : Set (BfgsVerification.Vec n)) (fstar c\u2081 c\u2082 \u03b7 \u03b4 : \u211d),\n  c\u2082 < 1 \u2192\n    0 < \u03b4 \u2192 ((\u2203 B, B.\u03b4 = \u03b4) \u2194 0 < \u2a05 z, BfgsVerification.PointwiseFeasibility.sourceCapacity F K fstar c\u2081 c\u2082 \u03b7 \u03b4 z)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.PointwiseFeasibility.visibility_secant_iff_source_capacity"
+  }
+]

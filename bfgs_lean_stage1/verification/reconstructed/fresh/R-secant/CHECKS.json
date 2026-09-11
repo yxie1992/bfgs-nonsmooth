@@ -1,0 +1,68 @@
+[
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob10.Contract01",
+    "signature": "BfgsVerification.FiniteMaxRadialBasinTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.finiteMaxRadialBasin"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob10.Contract02",
+    "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9] {m : \u03b9 \u2192 \u2115} {F \u03c8 : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 (\u03b3 : (j : \u03b9) \u2192 BfgsVerification.Vec (m j) \u2192 \u211d),\n      (\u2200 (j : \u03b9), ConvexOn \u211d Set.univ (\u03b3 j)) \u2192\n        (\u2200 (j : \u03b9), BfgsVerification.Homogeneous.PositiveDegreeOne (\u03b3 j)) \u2192\n          (\u2200 (j : \u03b9) (x : BfgsVerification.Vec (m j)), 0 \u2264 \u03b3 j x) \u2192\n            \u2200 (A : (j : \u03b9) \u2192 BfgsVerification.Vec n \u2192\u2097[\u211d] BfgsVerification.Vec (m j)) (p : \u03b9 \u2192 \u211d),\n              (\u2200 (j : \u03b9), 1 \u2264 p j) \u2192\n                \u2200 (star : BfgsVerification.Vec n) {U K : Set (BfgsVerification.Vec n)},\n                  IsOpen U \u2192\n                    BfgsVerification.CenteredSmoothSublinear.LocallyC11On U \u03c8 \u2192\n                      IsCompact K \u2192\n                        K \u2286 U \u2192\n                          (\u2200 x \u2208 U, F x = \u03c8 x + \u2211 j, \u03b3 j ((A j) (x - star)) ^ p j) \u2192\n                            BfgsVerification.RadialCertificate.HasRadialSecantBounds F K star",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.RadialPower.mixed_linear_powers_radial"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob10.Contract03",
+    "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9] {F \u03c8 : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 {\u0393 : \u03b9 \u2192 BfgsVerification.Vec n \u2192 \u211d},\n      (\u2200 (j : \u03b9), ConvexOn \u211d Set.univ (\u0393 j)) \u2192\n        (\u2200 (j : \u03b9), BfgsVerification.Homogeneous.PositiveDegreeOne (\u0393 j)) \u2192\n          (\u2200 (j : \u03b9) (x : BfgsVerification.Vec n), 0 \u2264 \u0393 j x) \u2192\n            \u2200 (p : \u03b9 \u2192 \u211d),\n              (\u2200 (j : \u03b9), 1 \u2264 p j) \u2192\n                \u2200 (star : BfgsVerification.Vec n) {U K : Set (BfgsVerification.Vec n)},\n                  IsOpen U \u2192\n                    BfgsVerification.CenteredSmoothSublinear.LocallyC11On U \u03c8 \u2192\n                      IsCompact K \u2192\n                        K \u2286 U \u2192\n                          (\u2200 x \u2208 U, F x = \u03c8 x + BfgsVerification.RadialPower.sumObjective \u0393 p star x) \u2192\n                            BfgsVerification.RadialCertificate.HasRadialSecantBounds F K star",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.RadialPower.mixed_powers_radial"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob10.Contract04",
+    "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9] {F \u03c8 : BfgsVerification.Vec n \u2192 \u211d}\n  (R : BfgsVerification.AdmissibleBFGSRun n F) {\u0393 : \u03b9 \u2192 BfgsVerification.Vec n \u2192 \u211d},\n  (\u2200 (j : \u03b9), ConvexOn \u211d Set.univ (\u0393 j)) \u2192\n    (\u2200 (j : \u03b9), BfgsVerification.Homogeneous.PositiveDegreeOne (\u0393 j)) \u2192\n      (\u2200 (j : \u03b9) (x : BfgsVerification.Vec n), 0 \u2264 \u0393 j x) \u2192\n        \u2200 (p : \u03b9 \u2192 \u211d),\n          (\u2200 (j : \u03b9), 1 \u2264 p j) \u2192\n            \u2200 (star : BfgsVerification.Vec n),\n              (\u2200 (x : BfgsVerification.Vec n), F star \u2264 F x) \u2192\n                \u2200 {U : Set (BfgsVerification.Vec n)},\n                  IsOpen U \u2192\n                    BfgsVerification.CenteredSmoothSublinear.LocallyC11On U \u03c8 \u2192\n                      IsCompact R.initialSublevel \u2192\n                        R.initialSublevel \u2286 U \u2192\n                          (\u2200 x \u2208 U, F x = \u03c8 x + BfgsVerification.RadialPower.sumObjective \u0393 p star x) \u2192\n                            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (\ud835\udcdd (F star)) \u2227\n                              Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k))\n                                  Filter.atTop (\ud835\udcdd 0) \u2227\n                                ((\u2200 (x : BfgsVerification.Vec n), F x = F star \u2192 x = star) \u2192\n                                  Filter.Tendsto R.x Filter.atTop (\ud835\udcdd star))",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.mixed_powers_convergence"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob10.Contract05",
+    "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9] {\u0393 : \u03b9 \u2192 BfgsVerification.Vec n \u2192 \u211d},\n  (\u2200 (j : \u03b9), BfgsVerification.Homogeneous.PositiveDegreeOne (\u0393 j)) \u2192\n    (\u2200 (j : \u03b9) (x : BfgsVerification.Vec n), 0 \u2264 \u0393 j x) \u2192\n      \u2200 (p : \u03b9 \u2192 \u211d) (star x : BfgsVerification.Vec n) {t : \u211d},\n        t \u2264 1 \u2192\n          BfgsVerification.RadialPower.sumObjective \u0393 p star (BfgsVerification.RadialCertificate.inwardPoint star x t) =\n            \u2211 j,\n              BfgsVerification.RadialPower.profile (p j) t * BfgsVerification.RadialPower.powered (\u0393 j) (p j) (x - star)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.RadialPower.sumObjective_inward"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob10.Contract06",
+    "signature": "\u2200 {n m : \u2115} {\u03b3 : BfgsVerification.Vec m \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n    \u2200 (A : BfgsVerification.Vec n \u2192\u2097[\u211d] BfgsVerification.Vec m), BfgsVerification.Homogeneous.PositiveDegreeOne (\u03b3 \u2218 \u21d1A)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.RadialPower.composed_gauge_homogeneous"
+  }
+]

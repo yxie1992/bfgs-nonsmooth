@@ -1,0 +1,79 @@
+[
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract01",
+    "signature": "BfgsVerification.TransportedCertificateTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.transportedCertificateConvergence"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract02",
+    "signature": "BfgsVerification.CertificateNormalizationTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.certificateNormalization"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract03",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) {r : \u2115}\n  (V : \u2115 \u2192 Matrix (Fin n) (Fin r) \u211d) (T P : \u2115 \u2192 BfgsVerification.Mat r) (b : \u2115 \u2192 BfgsVerification.Vec r),\n  (\u2200 (k : \u2115), Matrix.det (P k) \u2260 0) \u2192\n    (\u2200 (k : \u2115), P (k + 1) = P k * T k) \u2192\n      (\u2200 (k : \u2115), V (k + 1) = V k * T k + BfgsVerification.EnergyIdentities.rectOuter (R.displacement k) (b k)) \u2192\n        \u2200 (k : \u2115),\n          R.normalizedFrameEnergy V P (k + 1) =\n            R.normalizedFrameEnergy V P k -\n                BfgsVerification.sqNorm ((P k)\u207b\u00b9.transpose.mulVec ((V k).transpose.mulVec (R.g k))) / R.q k +\n              BfgsVerification.sqNorm\n                  ((P (k + 1))\u207b\u00b9.transpose.mulVec ((V (k + 1)).transpose.mulVec (R.gradientChange k))) /\n                R.curvature k",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.normalized_frame_trace_recurrence"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract04",
+    "signature": "BfgsVerification.ScalarGlobalCertificateNonnecessityTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.scalarGlobalCertificateNonnecessity"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract05",
+    "signature": "\u2200 {n : \u2115} (M : BfgsVerification.Mat n),\n  Matrix.PosSemidef M \u2192\n    \u2200 (s : BfgsVerification.Vec n),\n      Matrix.mulVec M s = 0 \u2192\n        \u2200 (W Z : BfgsVerification.Mat n) (a : \u211d),\n          (a \u2022\n                  (BfgsVerification.TransportedCertificate.stepProjector s * W *\n                    BfgsVerification.TransportedCertificate.stepProjector s) -\n                BfgsVerification.TransportedCertificate.stepProjector s * Z *\n                  BfgsVerification.TransportedCertificate.stepProjector s).PosSemidef \u2192\n            (M * Z).trace \u2264 a * (M * W).trace",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.TransportedCertificate.projected_transport_trace"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract06",
+    "signature": "\u2200 {n : \u2115} (W : BfgsVerification.Mat n) (s v : BfgsVerification.Vec n),\n  BfgsVerification.metricEnergy\n      (BfgsVerification.TransportedCertificate.stepProjector s * W *\n        BfgsVerification.TransportedCertificate.stepProjector s)\n      v =\n    BfgsVerification.metricEnergy W (Matrix.mulVec (BfgsVerification.TransportedCertificate.stepProjector s) v)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.TransportedCertificate.projected_energy"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob14.Contract07",
+    "signature": "\u2200 {L c\u2081 d fx fz fstar : \u211d},\n  0 \u2264 L \u2192 0 < c\u2081 \u2192 c\u2081 * d \u2264 fx - fz \u2192 Real.exp (L / c\u2081 * (fz - fstar)) * (1 + L * d) \u2264 Real.exp (L / c\u2081 * (fx - fstar))",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.TransportedCertificate.value_weight_transport"
+  }
+]

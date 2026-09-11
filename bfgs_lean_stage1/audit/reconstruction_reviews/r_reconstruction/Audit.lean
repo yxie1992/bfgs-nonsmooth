@@ -1,0 +1,127 @@
+import ReconstructedFourPieceTargets
+import Lean
+
+#check BfgsVerification.ReconstructedFourPiece.gap
+#print axioms BfgsVerification.ReconstructedFourPiece.gap
+#check BfgsVerification.ReconstructedFourPiece.valueScale
+#print axioms BfgsVerification.ReconstructedFourPiece.valueScale
+#check BfgsVerification.ReconstructedFourPiece.coordinate
+#print axioms BfgsVerification.ReconstructedFourPiece.coordinate
+#check BfgsVerification.ReconstructedFourPiece.optimizer
+#print axioms BfgsVerification.ReconstructedFourPiece.optimizer
+#check BfgsVerification.ReconstructedFourPiece.gap_pos
+#print axioms BfgsVerification.ReconstructedFourPiece.gap_pos
+#check BfgsVerification.ReconstructedFourPiece.valueScale_pos
+#print axioms BfgsVerification.ReconstructedFourPiece.valueScale_pos
+#check BfgsVerification.ReconstructedFourPiece.valueScale_mul_gap
+#print axioms BfgsVerification.ReconstructedFourPiece.valueScale_mul_gap
+#check BfgsVerification.ReconstructedFourPiece.coordinate_det_ne
+#print axioms BfgsVerification.ReconstructedFourPiece.coordinate_det_ne
+#check BfgsVerification.ReconstructedFourPiece.coordinate_apply
+#print axioms BfgsVerification.ReconstructedFourPiece.coordinate_apply
+#check BfgsVerification.ReconstructedFourPiece.coordinate_optimizer
+#print axioms BfgsVerification.ReconstructedFourPiece.coordinate_optimizer
+#check BfgsVerification.ReconstructedFourPiece.family
+#print axioms BfgsVerification.ReconstructedFourPiece.family
+#check BfgsVerification.ReconstructedFourPiece.objective
+#print axioms BfgsVerification.ReconstructedFourPiece.objective
+#check BfgsVerification.ReconstructedFourPiece.branch_formula
+#print axioms BfgsVerification.ReconstructedFourPiece.branch_formula
+#check BfgsVerification.ReconstructedFourPiece.literal_branches
+#print axioms BfgsVerification.ReconstructedFourPiece.literal_branches
+#check BfgsVerification.ReconstructedFourPiece.objective_formula
+#print axioms BfgsVerification.ReconstructedFourPiece.objective_formula
+#check BfgsVerification.ReconstructedFourPiece.objective_convex
+#print axioms BfgsVerification.ReconstructedFourPiece.objective_convex
+#check BfgsVerification.ReconstructedFourPiece.minimum_value
+#print axioms BfgsVerification.ReconstructedFourPiece.minimum_value
+#check BfgsVerification.ReconstructedFourPiece.lower_bound
+#print axioms BfgsVerification.ReconstructedFourPiece.lower_bound
+#check BfgsVerification.ReconstructedFourPiece.unique_optimizer
+#print axioms BfgsVerification.ReconstructedFourPiece.unique_optimizer
+#check BfgsVerification.ReconstructedFourPiece.sublevels_compact
+#print axioms BfgsVerification.ReconstructedFourPiece.sublevels_compact
+#check BfgsVerification.ReconstructedFourPiece.scaled_branch_intercepts
+#print axioms BfgsVerification.ReconstructedFourPiece.scaled_branch_intercepts
+#check BfgsVerification.ReconstructedFourPiece.branches_at_optimizer
+#print axioms BfgsVerification.ReconstructedFourPiece.branches_at_optimizer
+#check BfgsVerification.ReconstructedFourPiece.zero_value
+#print axioms BfgsVerification.ReconstructedFourPiece.zero_value
+#check BfgsVerification.ReconstructedFourPiece.limit_not_stationary
+#print axioms BfgsVerification.ReconstructedFourPiece.limit_not_stationary
+#check BfgsVerification.ReconstructedFourPiece.point
+#print axioms BfgsVerification.ReconstructedFourPiece.point
+#check BfgsVerification.ReconstructedFourPiece.gradient
+#print axioms BfgsVerification.ReconstructedFourPiece.gradient
+#check BfgsVerification.ReconstructedFourPiece.map_point
+#print axioms BfgsVerification.ReconstructedFourPiece.map_point
+#check BfgsVerification.ReconstructedFourPiece.point_optimizer
+#print axioms BfgsVerification.ReconstructedFourPiece.point_optimizer
+#check BfgsVerification.ReconstructedFourPiece.point_tendsto
+#print axioms BfgsVerification.ReconstructedFourPiece.point_tendsto
+#check BfgsVerification.ReconstructedFourPiece.point_value
+#print axioms BfgsVerification.ReconstructedFourPiece.point_value
+#check BfgsVerification.ReconstructedFourPiece.point_values_tendsto
+#print axioms BfgsVerification.ReconstructedFourPiece.point_values_tendsto
+#check BfgsVerification.ReconstructedFourPiece.point_value_above_limit
+#print axioms BfgsVerification.ReconstructedFourPiece.point_value_above_limit
+#check BfgsVerification.ReconstructedFourPiece.family_gradient
+#print axioms BfgsVerification.ReconstructedFourPiece.family_gradient
+#check BfgsVerification.ReconstructedFourPiece.point_strict_active
+#print axioms BfgsVerification.ReconstructedFourPiece.point_strict_active
+#check BfgsVerification.ReconstructedFourPiece.point_hasGradient
+#print axioms BfgsVerification.ReconstructedFourPiece.point_hasGradient
+#check BfgsVerification.ReconstructedFourPiece.point_intercepts
+#print axioms BfgsVerification.ReconstructedFourPiece.point_intercepts
+#check BfgsVerification.ReconstructedFourPiece.point_phase_intercepts
+#print axioms BfgsVerification.ReconstructedFourPiece.point_phase_intercepts
+#check BfgsVerification.ReconstructedFourPiece.secant_scale
+#print axioms BfgsVerification.ReconstructedFourPiece.secant_scale
+#check BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero
+#print axioms BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero
+#check BfgsVerification.ReconstructedFourPiece.transportedRun
+#print axioms BfgsVerification.ReconstructedFourPiece.transportedRun
+#check BfgsVerification.ReconstructedFourPiece.transported_objective
+#print axioms BfgsVerification.ReconstructedFourPiece.transported_objective
+#check BfgsVerification.ReconstructedFourPiece.run
+#print axioms BfgsVerification.ReconstructedFourPiece.run
+#check BfgsVerification.ReconstructedFourPiece.run_x
+#print axioms BfgsVerification.ReconstructedFourPiece.run_x
+#check BfgsVerification.ReconstructedFourPiece.run_g
+#print axioms BfgsVerification.ReconstructedFourPiece.run_g
+#check BfgsVerification.ReconstructedFourPiece.run_H
+#print axioms BfgsVerification.ReconstructedFourPiece.run_H
+#check BfgsVerification.ReconstructedFourPiece.run_alpha
+#print axioms BfgsVerification.ReconstructedFourPiece.run_alpha
+#check BfgsVerification.ReconstructedFourPiece.secant_pos
+#print axioms BfgsVerification.ReconstructedFourPiece.secant_pos
+#check BfgsVerification.ReconstructedFourPiece.no_intercept_bounds
+#print axioms BfgsVerification.ReconstructedFourPiece.no_intercept_bounds
+#check BfgsVerification.ReconstructedFourPiece.no_radial_bounds
+#print axioms BfgsVerification.ReconstructedFourPiece.no_radial_bounds
+#check BfgsVerification.ReconstructedFourPieceFailureTarget
+#print axioms BfgsVerification.ReconstructedFourPieceFailureTarget
+#check BfgsVerification.reconstructedFourPieceFailure
+#print axioms BfgsVerification.reconstructedFourPieceFailure
+#check BfgsVerification.ReconstructedSupportingPlaneTarget
+#print axioms BfgsVerification.ReconstructedSupportingPlaneTarget
+#check BfgsVerification.reconstructedSupportingPlane
+#print axioms BfgsVerification.reconstructedSupportingPlane
+
+#print BfgsVerification.ReconstructedFourPieceFailureTarget
+example : BfgsVerification.ReconstructedFourPieceFailureTarget := BfgsVerification.reconstructedFourPieceFailure
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.reconstructedFourPieceFailure
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.ReconstructedFourPieceFailureTarget)
+  unless ok do throwError "Exact target type mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.reconstructedFourPieceFailure"
+
+#print BfgsVerification.ReconstructedSupportingPlaneTarget
+example : BfgsVerification.ReconstructedSupportingPlaneTarget := BfgsVerification.reconstructedSupportingPlane
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.reconstructedSupportingPlane
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.ReconstructedSupportingPlaneTarget)
+  unless ok do throwError "Exact target type mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.reconstructedSupportingPlane"

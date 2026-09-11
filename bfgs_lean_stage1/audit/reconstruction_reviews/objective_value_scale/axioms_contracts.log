@@ -1,0 +1,149 @@
+@BfgsVerification.ObjectiveValueScale.objective : {n : Nat} →
+  Real → Real → (BfgsVerification.Vec n → Real) → BfgsVerification.Vec n → Real
+'BfgsVerification.ObjectiveValueScale.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.convex : ∀ {n : Nat} (a b : Real),
+  LE.le.{0} 0 a →
+    ∀ {F : BfgsVerification.Vec n → Real},
+      ConvexOn.{0, 0, 0} Real Set.univ.{0} F →
+        ConvexOn.{0, 0, 0} Real Set.univ.{0} (BfgsVerification.ObjectiveValueScale.objective a b F)
+'BfgsVerification.ObjectiveValueScale.convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.gradientFunctional_scale : ∀ {n : Nat} (a : Real) (g : BfgsVerification.Vec n),
+  Eq.{1} (BfgsVerification.gradientFunctional (HSMul.hSMul.{0, 0, 0} a g))
+    (HSMul.hSMul.{0, 0, 0} a (BfgsVerification.gradientFunctional g))
+'BfgsVerification.ObjectiveValueScale.gradientFunctional_scale' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.ObjectiveValueScale.hasGradient : ∀ {n : Nat} (a b : Real) {F : BfgsVerification.Vec n → Real}
+  {x g : BfgsVerification.Vec n},
+  HasFDerivAt.{0, 0, 0} F (BfgsVerification.gradientFunctional g) x →
+    HasFDerivAt.{0, 0, 0} (BfgsVerification.ObjectiveValueScale.objective a b F)
+      (BfgsVerification.gradientFunctional (HSMul.hSMul.{0, 0, 0} a g)) x
+'BfgsVerification.ObjectiveValueScale.hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.step : ∀ {n : Nat} (a : Real),
+  Ne.{1} a 0 →
+    ∀ (H : BfgsVerification.Mat n) (g : BfgsVerification.Vec n) (α : Real),
+      Eq.{1} (BfgsVerification.bfgsStep (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} a) H) (HSMul.hSMul.{0, 0, 0} a g) α)
+        (BfgsVerification.bfgsStep H g α)
+'BfgsVerification.ObjectiveValueScale.step' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.update : ∀ {n : Nat} (a : Real),
+  Ne.{1} a 0 →
+    ∀ (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n),
+      Eq.{1} (BfgsVerification.inverseBFGS (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} a) H) s (HSMul.hSMul.{0, 0, 0} a y))
+        (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} a) (BfgsVerification.inverseBFGS H s y))
+'BfgsVerification.ObjectiveValueScale.update' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.posDef : ∀ {n : Nat} {H : BfgsVerification.Mat n},
+  Matrix.PosDef.{0, 0} H → ∀ {a : Real}, LT.lt.{0} 0 a → Matrix.PosDef.{0, 0} (HSMul.hSMul.{0, 0, 0} a H)
+'BfgsVerification.ObjectiveValueScale.posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.energy : ∀ {n : Nat} (a : Real),
+  Ne.{1} a 0 →
+    ∀ (H : BfgsVerification.Mat n) (g : BfgsVerification.Vec n),
+      Eq.{1} (BfgsVerification.metricEnergy (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} a) H) (HSMul.hSMul.{0, 0, 0} a g))
+        (HMul.hMul.{0, 0, 0} a (BfgsVerification.metricEnergy H g))
+'BfgsVerification.ObjectiveValueScale.energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run : {n : Nat} →
+  {F : BfgsVerification.Vec n → Real} →
+    (a b : Real) →
+      LT.lt.{0} 0 a →
+        BfgsVerification.AdmissibleBFGSRun n F →
+          BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.ObjectiveValueScale.objective a b F)
+'BfgsVerification.ObjectiveValueScale.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_x : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.x (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (BfgsVerification.AdmissibleBFGSRun.x R k)
+'BfgsVerification.ObjectiveValueScale.run_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_H : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.H (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} a) (BfgsVerification.AdmissibleBFGSRun.H R k))
+'BfgsVerification.ObjectiveValueScale.run_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_g : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.g (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (HSMul.hSMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.g R k))
+'BfgsVerification.ObjectiveValueScale.run_g' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_alpha : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.α (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (BfgsVerification.AdmissibleBFGSRun.α R k)
+'BfgsVerification.ObjectiveValueScale.run_alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_c1 : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₁ (BfgsVerification.ObjectiveValueScale.run a b ha R))
+    (BfgsVerification.AdmissibleBFGSRun.c₁ R)
+'BfgsVerification.ObjectiveValueScale.run_c1' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_c2 : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₂ (BfgsVerification.ObjectiveValueScale.run a b ha R))
+    (BfgsVerification.AdmissibleBFGSRun.c₂ R)
+'BfgsVerification.ObjectiveValueScale.run_c2' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_value : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1}
+    (BfgsVerification.ObjectiveValueScale.objective a b F
+      (BfgsVerification.AdmissibleBFGSRun.x (BfgsVerification.ObjectiveValueScale.run a b ha R) k))
+    (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} a (F (BfgsVerification.AdmissibleBFGSRun.x R k))) b)
+'BfgsVerification.ObjectiveValueScale.run_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_q : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.q (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (HMul.hMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.q R k))
+'BfgsVerification.ObjectiveValueScale.run_q' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_d : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.d (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (HMul.hMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.d R k))
+'BfgsVerification.ObjectiveValueScale.run_d' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_displacement : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.displacement (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (BfgsVerification.AdmissibleBFGSRun.displacement R k)
+'BfgsVerification.ObjectiveValueScale.run_displacement' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_gradientChange : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.gradientChange (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (HSMul.hSMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.gradientChange R k))
+'BfgsVerification.ObjectiveValueScale.run_gradientChange' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.run_curvature : ∀ {n : Nat} {F : BfgsVerification.Vec n → Real} (a b : Real)
+  (ha : LT.lt.{0} 0 a) (R : BfgsVerification.AdmissibleBFGSRun n F) (k : Nat),
+  Eq.{1} (BfgsVerification.AdmissibleBFGSRun.curvature (BfgsVerification.ObjectiveValueScale.run a b ha R) k)
+    (HMul.hMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.curvature R k))
+'BfgsVerification.ObjectiveValueScale.run_curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.optimizerIntercept : ∀ {n : Nat} (a b : Real) (F : BfgsVerification.Vec n → Real)
+  (star x g : BfgsVerification.Vec n),
+  Eq.{1}
+    (BfgsVerification.RadialCertificate.optimizerIntercept (BfgsVerification.ObjectiveValueScale.objective a b F) star x
+      (HSMul.hSMul.{0, 0, 0} a g))
+    (HMul.hMul.{0, 0, 0} a (BfgsVerification.RadialCertificate.optimizerIntercept F star x g))
+'BfgsVerification.ObjectiveValueScale.optimizerIntercept' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.ObjectiveValueScale.secantCurvature : ∀ {n : Nat} (a : Real) (x z g h : BfgsVerification.Vec n),
+  Eq.{1}
+    (BfgsVerification.RadialCertificate.secantCurvature x z (HSMul.hSMul.{0, 0, 0} a g) (HSMul.hSMul.{0, 0, 0} a h))
+    (HMul.hMul.{0, 0, 0} a (BfgsVerification.RadialCertificate.secantCurvature x z g h))
+'BfgsVerification.ObjectiveValueScale.secantCurvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ObjectiveValueScalingTarget : Prop
+'BfgsVerification.ObjectiveValueScalingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveValueScaling : BfgsVerification.ObjectiveValueScalingTarget
+'BfgsVerification.objectiveValueScaling' depends on axioms: [propext, Classical.choice, Quot.sound]
+def BfgsVerification.ObjectiveValueScalingTarget : Prop :=
+∀ (n : Nat) (F : BfgsVerification.Vec n → Real) (a b : Real),
+  LT.lt.{0} 0 a →
+    ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+      ∃ S,
+        And (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₁ S) (BfgsVerification.AdmissibleBFGSRun.c₁ R))
+          (And (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.c₂ S) (BfgsVerification.AdmissibleBFGSRun.c₂ R))
+            (∀ (k : Nat),
+              And (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.x S k) (BfgsVerification.AdmissibleBFGSRun.x R k))
+                (And
+                  (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.H S k)
+                    (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} a) (BfgsVerification.AdmissibleBFGSRun.H R k)))
+                  (And
+                    (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.g S k)
+                      (HSMul.hSMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.g R k)))
+                    (And (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.α S k) (BfgsVerification.AdmissibleBFGSRun.α R k))
+                      (And
+                        (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.d S k)
+                          (HMul.hMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.d R k)))
+                        (Eq.{1} (BfgsVerification.AdmissibleBFGSRun.curvature S k)
+                          (HMul.hMul.{0, 0, 0} a (BfgsVerification.AdmissibleBFGSRun.curvature R k)))))))))
+EXACT_TARGET_OK BfgsVerification.objectiveValueScaling

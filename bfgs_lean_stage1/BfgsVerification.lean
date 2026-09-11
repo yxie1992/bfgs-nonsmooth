@@ -149,6 +149,7 @@ import BfgsVerification.DScalarTarget
 import BfgsVerification.Definitions
 import BfgsVerification.DescentBudget
 import BfgsVerification.DeterministicLineSearch
+import BfgsVerification.EReconstructionFacts
 import BfgsVerification.EndToEnd
 import BfgsVerification.EnergyBudget
 import BfgsVerification.EnergyIdentities
@@ -394,6 +395,8 @@ import BfgsVerification.ObjectiveRun
 import BfgsVerification.ObjectiveSemialgebraicComposition
 import BfgsVerification.ObjectiveSemialgebraicCompositionTargets
 import BfgsVerification.ObjectiveTargets
+import BfgsVerification.ObjectiveValueScaling
+import BfgsVerification.ObjectiveValueScalingTargets
 import BfgsVerification.OptimizerInterceptExamples
 import BfgsVerification.OrderedCellsSemialgebraic
 import BfgsVerification.OrderedCylindricalCover
@@ -574,6 +577,11 @@ import BfgsVerification.RationalRootOrder
 import BfgsVerification.RealQuadraticElimination
 import BfgsVerification.RealSignQuerySampling
 import BfgsVerification.ReciprocalGrowth
+import BfgsVerification.ReconstructedFourPieceObjective
+import BfgsVerification.ReconstructedFourPieceOrbit
+import BfgsVerification.ReconstructedFourPieceRun
+import BfgsVerification.ReconstructedFourPieceSeparation
+import BfgsVerification.ReconstructedFourPieceTargets
 import BfgsVerification.RectangularNuclearTargets
 import BfgsVerification.ReindexedSmoothCovers
 import BfgsVerification.ReportAnalyticEndToEnd

@@ -1,0 +1,101 @@
+[
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract01",
+    "signature": "BfgsVerification.FixedNormalHyperplaneTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.fixedNormalHyperplane"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract02",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) {r p : \u2115} (J : \u2115) (G : \u211d),\n  0 < G \u2192\n    (\u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2) \u2192\n      Summable R.d \u2192\n        \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n          U.transpose * U = 1 \u2192\n            \u2200 (L m C\u2080 C_T C_R : \u211d),\n              0 < m \u2192\n                (\u2200 (k : \u2115),\n                    BfgsVerification.sqNorm (U.transpose.mulVec ((R.shift J).gradientChange k)) \u2264\n                      L * (R.shift J).curvature k) \u2192\n                  \u2200 (V Z : \u2115 \u2192 Matrix (Fin n) (Fin p) \u211d) (T : \u2115 \u2192 BfgsVerification.Mat p)\n                    (b : \u2115 \u2192 BfgsVerification.Vec p),\n                    (\u2200 (k : \u2115), m \u2264 BfgsVerification.sqNorm ((V k).transpose.mulVec ((R.shift J).g k))) \u2192\n                      (\u2200 (k : \u2115),\n                          BfgsVerification.sqNorm ((V (k + 1)).transpose.mulVec ((R.shift J).gradientChange k)) \u2264\n                            C\u2080 * (R.shift J).curvature k) \u2192\n                        (\u2200 (k : \u2115),\n                            V (k + 1) =\n                              V k * T k +\n                                  BfgsVerification.EnergyIdentities.rectOuter ((R.shift J).displacement k) (b k) +\n                                Z k) \u2192\n                          (\u2200 (k : \u2115), BfgsVerification.FrameBounds.OperatorSqBound (T k) (1 + C_T * (R.shift J).d k)) \u2192\n                            (\u2200 (k : \u2115), U * U.transpose * Z k = Z k) \u2192\n                              (\u2200 (k : \u2115), BfgsVerification.SmoothSubspace.frobSq (Z k) \u2264 C_R * (R.shift J).d k) \u2192 False",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible_source"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract03",
+    "signature": "\u2200 {n : \u2115} (R : BfgsVerification.FullBFGSRun n) (G c : \u211d),\n  0 < G \u2192\n    0 < c \u2192\n      (\u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2) \u2192\n        (\u2200 (k : \u2115), c \u2264 R.beta k) \u2192\n          Summable R.d \u2192\n            \u2200 (J m : \u2115),\n              0 < m \u2192\n                \u2200 (\u03b7 : \u211d),\n                  0 < \u03b7 \u2192\n                    let D := \u2211' (i : \u2115), R.d (J + i);\n                    let V :=\n                      BfgsVerification.ScalarHierarchy.weightedPotential n (4 * G ^ 2 / c ^ 2 / \u03b7)\n                        (BfgsVerification.principalSum (R.H J));\n                    \u2191(m + 1) * (G ^ 2 * V) ^ (-1 / \u2191(m + 1)) * (\u03b7 + D / (c * \u2191m)) ^ (-\u2191m / \u2191(m + 1)) \u2264\n                      \u2211 i \u2208 Finset.range (m + 1), (R.q (J + i))\u207b\u00b9",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.finiteHorizon"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract04",
+    "signature": "BfgsVerification.NormalSpike.SourceSpikePropertiesTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.NormalSpike.sourceSpikeProperties"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract05",
+    "signature": "BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.NormalSpike.spikeObjectiveConvergence"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract06",
+    "signature": "\u2200 {n r : \u2115} (U : Matrix (Fin n) (Fin r) \u211d) (a x z : BfgsVerification.Vec n) (b : \u211d) (\u03c4 : \u211d \u2192 \u211d),\n  let \u03b2 := BfgsVerification.FixedNormal.cutoffSlope \u03c4 (BfgsVerification.dot a x - b) (BfgsVerification.dot a z - b);\n  BfgsVerification.FixedNormal.cutoffFrame U a (\u03c4 (BfgsVerification.dot a z - b)) =\n    BfgsVerification.FixedNormal.cutoffFrame U a (\u03c4 (BfgsVerification.dot a x - b)) * 1 +\n        BfgsVerification.EnergyIdentities.rectOuter (z - x) (BfgsVerification.FixedNormal.normalCoefficient \u03b2) +\n      BfgsVerification.FixedNormal.cutoffResidual a (z - x) \u03b2",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.FixedNormal.cutoffFrame_transport"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract07",
+    "signature": "BfgsVerification.NormalSpike.RationalSpikeOracleTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.NormalSpike.rationalSpikeOracle"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract08",
+    "signature": "\u2200 (N : \u2115),\n  deriv (deriv BfgsVerification.NormalSpike.sourcePrimitive) (BfgsVerification.NormalSpike.scale N) =\n    (BfgsVerification.NormalSpike.scale N ^ 3)\u207b\u00b9",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_peak"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob16.Contract09",
+    "signature": "BfgsVerification.PrincipalMinorHierarchyTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.principalMinorHierarchy"
+  }
+]

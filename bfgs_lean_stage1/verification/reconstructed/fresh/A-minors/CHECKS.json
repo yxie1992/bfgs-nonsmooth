@@ -1,0 +1,57 @@
+[
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob06.Contract01",
+    "signature": "BfgsVerification.PrincipalMinorHierarchyTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.principalMinorHierarchy"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob06.Contract02",
+    "signature": "\u2200 (\u0394 q u r z \u03ba w : \u211d), q * (\u0394 * (r - z)) - \u0394 * ((q - u) * (r - z) - (\u03ba - w) ^ 2) = \u0394 * ((\u03ba - w) ^ 2 + u * (r - z))",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.CompressionAlgebra.gram_numerator_identity"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob06.Contract03",
+    "signature": "BfgsVerification.PrincipalGramSumIdentityTarget",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.principalGramSumIdentity"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob06.Contract04",
+    "signature": "\u2200 {n m : \u2115} (H : BfgsVerification.Mat n) (Z : Matrix (Fin n) (Fin m) \u211d) (g y : BfgsVerification.Vec n) (\u03b1 : \u211d),\n  Matrix.IsSymm H \u2192\n    \u03b1 \u2260 0 \u2192\n      BfgsVerification.metricEnergy H g \u2260 0 \u2192\n        -BfgsVerification.dot y (Matrix.mulVec H g) / BfgsVerification.metricEnergy H g \u2260 0 \u2192\n          let q := BfgsVerification.metricEnergy H g;\n          let \u03b2 := -BfgsVerification.dot y (Matrix.mulVec H g) / q;\n          Z.transpose * BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g \u03b1) y * Z =\n            BfgsVerification.CompressionDeterminant.compression (Z.transpose * H * Z)\n                (Z.transpose.mulVec (Matrix.mulVec H g)) (Z.transpose.mulVec (Matrix.mulVec H y)) (-\u03b2 * q)\n                (BfgsVerification.dot y (Matrix.mulVec H y)) +\n              (\u03b1 / (\u03b2 * q)) \u2022\n                BfgsVerification.outer (Z.transpose.mulVec (Matrix.mulVec H g)) (Z.transpose.mulVec (Matrix.mulVec H g))",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.BFGSCompression.inverseBFGS_compression"
+  },
+  {
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "contract": "EJob06.Contract05",
+    "signature": "\u2200 {n : \u2115} (A : BfgsVerification.Mat n) (a b : BfgsVerification.Vec n) (\u03ba r \u03c1 : \u211d),\n  IsUnit (Matrix.det A) \u2192\n    Matrix.IsSymm A \u2192\n      Matrix.det (BfgsVerification.CompressionDeterminant.compression A a b \u03ba r + \u03c1 \u2022 BfgsVerification.outer a a) =\n        Matrix.det (BfgsVerification.CompressionDeterminant.compression A a b \u03ba r) +\n          \u03c1 * Matrix.det A * BfgsVerification.dot a (Matrix.mulVec A\u207b\u00b9 a)",
+    "strict_definitional_type_check": true,
+    "theorem": "BfgsVerification.CompressionDeterminant.compression_add_rank_one_det"
+  }
+]

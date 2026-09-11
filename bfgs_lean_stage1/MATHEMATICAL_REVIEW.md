@@ -1,5 +1,10 @@
 # Mathematical and statement review
 
+Current status: the [corrected report](CORRECTED_REPORT.md) is verified.
+The original historical record remains unverified. The initial plan and
+milestones 1–18 below are historical snapshots: their pending-work statements
+are superseded by the final nineteenth milestone, which records completed scope.
+
 The original M.1–M.3 matrix-run targets and objective-level bridge are compiled with the pinned toolchain
 and transitively axiom-audited. This replaces the uncompiled-draft status. Original
 target definitions are unchanged apart from documentation comments. Independent
@@ -660,3 +665,36 @@ R's unidentified older four-piece numerical objective and E's absent original
 current Lean executions establishes those missing original inputs. The entire
 original report remains unverified pending their explicit resolution. All
 research originals, documented corrections and explicit questions are preserved.
+
+
+## Nineteenth milestone: reconstructed and corrected report completed
+
+The corrected edition is [CORRECTED_REPORT.md](CORRECTED_REPORT.md), read together
+with the unchanged original master report. All retained mathematics is checked:
+5,195 explicit/7,813 total theorem declarations, 255 exact targets and 737
+frozen Lean files. The new nineteen-job package passed 107 strict literal
+type/axiom checks across 93 distinct theorems. All earlier 727 proof files and 7,704
+theorem types/transitive axiom sets remain unchanged. The permitted axioms are
+propext, Classical.choice and Quot.sound; there are no proof placeholders or
+unchecked external mathematical computations.
+
+The new R objective realizes the printed optimizer and supporting errors, with
+an actual transformed full-BFGS failure run and direct SP/RS contradiction.
+The new E package supplies actual execution evidence. Original unsupported
+historical runs and the older unidentified objective attribution are explicitly
+superseded, with precise numerical-category/auxiliary substitutions. The nine
+earlier mathematical corrections and all 22 original research artifacts remain.
+
+The report-level `corrected_report_verified` is true. Legacy
+`entire_report_verified` and `original_snapshot_all_assertions_verified` remain
+false for the unamended original snapshot. Explicit open research questions and
+conditional criterion hypotheses remain accurately classified. The remaining
+input requests in earlier milestone entries are historical and are resolved
+for the corrected edition by the user's authorized reconstruction.
+
+Evidence: audit/report_reconstruction_check.log, audit/axioms.log,
+audit/REPORT_STATUS.json, verification/reconstructed/fresh/SUMMARY.json, and
+audit/report_reconstruction_documentation_validation.log. Reproduce the pinned
+build with scripts/bootstrap.sh, the nineteen jobs with
+verification/reconstructed/run_all.py, and the completed release gate with
+scripts/validate_report_reconstruction_19.py.
