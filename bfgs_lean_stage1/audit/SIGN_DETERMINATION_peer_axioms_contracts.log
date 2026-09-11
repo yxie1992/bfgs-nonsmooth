@@ -1,0 +1,195 @@
+BfgsVerification.RealAlgebraicGeometry.signIndicatorCoeff (σ : SignType) (e : Fin 3) : ℚ
+'BfgsVerification.RealAlgebraicGeometry.signIndicatorCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_indicator_identity (σ τ : SignType) :
+  ∑ e, BfgsVerification.RealAlgebraicGeometry.signIndicatorCoeff σ e * ↑τ ^ ↑e = if τ = σ then 1 else 0
+'BfgsVerification.RealAlgebraicGeometry.sign_indicator_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signPatternCoeff {m : ℕ} (σ : Fin m → SignType) (e : Fin m → Fin 3) : ℚ
+'BfgsVerification.RealAlgebraicGeometry.signPatternCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_pattern_indicator {m : ℕ} (σ τ : Fin m → SignType) :
+  ∑ e, BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e * ∏ i, ↑(τ i) ^ ↑(e i) = if τ = σ then 1 else 0
+'BfgsVerification.RealAlgebraicGeometry.sign_pattern_indicator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signPatternCoeff_empty (σ : Fin 0 → SignType) (e : Fin 0 → Fin 3) :
+  BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e = 1
+'BfgsVerification.RealAlgebraicGeometry.signPatternCoeff_empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_product_powers {m : ℕ} (a : Fin m → ℝ) (e : Fin m → Fin 3) :
+  SignType.sign (∏ i, a i ^ ↑(e i)) = ∏ i, SignType.sign (a i) ^ ↑(e i)
+'BfgsVerification.RealAlgebraicGeometry.sign_product_powers' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_product_powers_rat {m : ℕ} (a : Fin m → ℝ) (e : Fin m → Fin 3) :
+  ↑↑(SignType.sign (∏ i, a i ^ ↑(e i))) = ∏ i, ↑(SignType.sign (a i)) ^ ↑(e i)
+'BfgsVerification.RealAlgebraicGeometry.sign_product_powers_rat' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} {α : Type u_1} {m : ℕ} (S : Finset α)
+  (h : α → Fin m → SignType) (σ : Fin m → SignType) : ℕ
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{u_1} {α : Type u_1} {m : ℕ} (S : Finset α)
+  (h : α → Fin m → SignType) (e : Fin m → Fin 3) : ℚ
+'BfgsVerification.RealAlgebraicGeometry.finiteSignMoment' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_sign_count_from_moments.{u_1} {α : Type u_1} {m : ℕ} (S : Finset α)
+  (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  ↑(BfgsVerification.RealAlgebraicGeometry.finiteSignCount S h σ) =
+    ∑ e,
+      BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e *
+        BfgsVerification.RealAlgebraicGeometry.finiteSignMoment S h e
+'BfgsVerification.RealAlgebraicGeometry.finite_sign_count_from_moments' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount_pos_iff.{u_1} {α : Type u_1} {m : ℕ} (S : Finset α)
+  (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  0 < BfgsVerification.RealAlgebraicGeometry.finiteSignCount S h σ ↔ ∃ a ∈ S, h a = σ
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount_pos_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_sign_pattern_iff_moment_positive.{u_1} {α : Type u_1} {m : ℕ}
+  (S : Finset α) (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  (∃ a ∈ S, h a = σ) ↔
+    0 <
+      ∑ e,
+        BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e *
+          BfgsVerification.RealAlgebraicGeometry.finiteSignMoment S h e
+'BfgsVerification.RealAlgebraicGeometry.exists_sign_pattern_iff_moment_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_sign_counts_eq_of_moments_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  {m : ℕ} (S : Finset α) (T : Finset β) (h : α → Fin m → SignType) (k : β → Fin m → SignType)
+  (he :
+    ∀ (e : Fin m → Fin 3),
+      BfgsVerification.RealAlgebraicGeometry.finiteSignMoment S h e =
+        BfgsVerification.RealAlgebraicGeometry.finiteSignMoment T k e)
+  (σ : Fin m → SignType) :
+  BfgsVerification.RealAlgebraicGeometry.finiteSignCount S h σ =
+    BfgsVerification.RealAlgebraicGeometry.finiteSignCount T k σ
+'BfgsVerification.RealAlgebraicGeometry.finite_sign_counts_eq_of_moments_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_pattern.{u_1} {α : Type u_1} (S : Finset α)
+  (h : α → Fin 0 → SignType) (σ : Fin 0 → SignType) :
+  BfgsVerification.RealAlgebraicGeometry.finiteSignCount S h σ = S.card
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_pattern' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_set.{u_1} {α : Type u_1} {m : ℕ} (h : α → Fin m → SignType)
+  (σ : Fin m → SignType) : BfgsVerification.RealAlgebraicGeometry.finiteSignCount ∅ h σ = 0
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_set' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount {m : ℕ} (p : Polynomial ℝ) (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) : ℕ
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial {m : ℕ} (q : Fin m → Polynomial ℝ) (e : Fin m → Fin 3) :
+  Polynomial ℝ
+'BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_moment_eq_tarskiQuery {m : ℕ} (p : Polynomial ℝ)
+  (q : Fin m → Polynomial ℝ) (e : Fin m → Fin 3) :
+  BfgsVerification.RealAlgebraicGeometry.finiteSignMoment p.roots.toFinset
+      (fun a i => SignType.sign (Polynomial.eval a (q i))) e =
+    ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+        (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))
+'BfgsVerification.RealAlgebraicGeometry.root_sign_moment_eq_tarskiQuery' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_count_from_tarskiQueries {m : ℕ} (p : Polynomial ℝ)
+  (q : Fin m → Polynomial ℝ) (σ : Fin m → SignType) :
+  ↑(BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ) =
+    ∑ e,
+      BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e *
+        ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+            (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))
+'BfgsVerification.RealAlgebraicGeometry.root_sign_count_from_tarskiQueries' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_pos_iff {m : ℕ} {p : Polynomial ℝ} (hp : p ≠ 0)
+  (q : Fin m → Polynomial ℝ) (σ : Fin m → SignType) :
+  0 < BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ ↔
+    ∃ a, Polynomial.eval a p = 0 ∧ ∀ (i : Fin m), SignType.sign (Polynomial.eval a (q i)) = σ i
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_pos_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_root_sign_pattern_iff_query_positive {m : ℕ} {p : Polynomial ℝ}
+  (hp : p ≠ 0) (q : Fin m → Polynomial ℝ) (σ : Fin m → SignType) :
+  (∃ a, Polynomial.eval a p = 0 ∧ ∀ (i : Fin m), SignType.sign (Polynomial.eval a (q i)) = σ i) ↔
+    0 <
+      ∑ e,
+        BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e *
+          ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+              (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))
+'BfgsVerification.RealAlgebraicGeometry.exists_root_sign_pattern_iff_query_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_counts_eq_of_queries_eq {m : ℕ} (p p' : Polynomial ℝ)
+  (q q' : Fin m → Polynomial ℝ)
+  (he :
+    ∀ (e : Fin m → Fin 3),
+      BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+          (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e) =
+        BfgsVerification.RealAlgebraicGeometry.tarskiQuery p'
+          (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q' e))
+  (σ : Fin m → SignType) :
+  BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ =
+    BfgsVerification.RealAlgebraicGeometry.rootSignCount p' q' σ
+'BfgsVerification.RealAlgebraicGeometry.root_sign_counts_eq_of_queries_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_zero_polynomial {m : ℕ} (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) : BfgsVerification.RealAlgebraicGeometry.rootSignCount 0 q σ = 0
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_zero_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_empty_pattern (p : Polynomial ℝ) (q : Fin 0 → Polynomial ℝ)
+  (σ : Fin 0 → SignType) : BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ = p.roots.toFinset.card
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_empty_pattern' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial_empty (q : Fin 0 → Polynomial ℝ) (e : Fin 0 → Fin 3) :
+  BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e = 1
+'BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial_empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_le_natDegree {m : ℕ} (p : Polynomial ℝ) (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) : BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ ≤ p.natDegree
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_le_natDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_expression_bounds {m : ℕ} (p : Polynomial ℝ) (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) :
+  0 ≤
+      ∑ e,
+        BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e *
+          ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+              (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e)) ∧
+    ∑ e,
+        BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e *
+          ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+              (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e)) ≤
+      ↑p.natDegree
+'BfgsVerification.RealAlgebraicGeometry.root_sign_expression_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.card_sign_query_indices (m : ℕ) : Fintype.card (Fin m → Fin 3) = 3 ^ m
+'BfgsVerification.RealAlgebraicGeometry.card_sign_query_indices' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootSignReconstructionTarget : Prop
+'BfgsVerification.RootSignReconstructionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.rootSignReconstruction : BfgsVerification.RootSignReconstructionTarget
+'BfgsVerification.rootSignReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SimultaneousRootSignsTarget : Prop
+'BfgsVerification.SimultaneousRootSignsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.simultaneousRootSigns : BfgsVerification.SimultaneousRootSignsTarget
+'BfgsVerification.simultaneousRootSigns' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SignQueryDeterminationTarget : Prop
+'BfgsVerification.SignQueryDeterminationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.signQueryDetermination : BfgsVerification.SignQueryDeterminationTarget
+'BfgsVerification.signQueryDetermination' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.root_sign_count_from_tarskiQueries
+EXACT_TARGET_OK BfgsVerification.rootSignReconstruction
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.exists_root_sign_pattern_iff_query_positive
+EXACT_TARGET_OK BfgsVerification.simultaneousRootSigns
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.root_sign_counts_eq_of_queries_eq
+EXACT_TARGET_OK BfgsVerification.signQueryDetermination

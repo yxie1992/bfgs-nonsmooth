@@ -772,3 +772,86 @@ example : BfgsVerification.PseudoDivisionSpecializationTarget := BfgsVerificatio
 #print BfgsVerification.FiniteRootRemaindersTarget
 example : BfgsVerification.FiniteRootRemaindersTarget := BfgsVerification.finiteRootRemainders
 #print axioms BfgsVerification.finiteRootRemainders
+
+/- Fifteenth milestone: actual general semialgebraic projection, critical-set definability, and source precision/corollaries. -/
+#print BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget
+example : BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget := BfgsVerification.SeedOrbit.sharpRecurrentCardinality
+#print axioms BfgsVerification.SeedOrbit.sharpRecurrentCardinality
+#print BfgsVerification.RidgeSupersession.RidgeSupersessionTarget
+example : BfgsVerification.RidgeSupersession.RidgeSupersessionTarget := BfgsVerification.RidgeSupersession.ridgeSupersession
+#print axioms BfgsVerification.RidgeSupersession.ridgeSupersession
+#print BfgsVerification.PolynomialOneSidedSignsTarget
+example : BfgsVerification.PolynomialOneSidedSignsTarget := BfgsVerification.polynomialOneSidedSigns
+#print axioms BfgsVerification.polynomialOneSidedSigns
+#print BfgsVerification.PolynomialLogarithmicResidueTarget
+example : BfgsVerification.PolynomialLogarithmicResidueTarget := BfgsVerification.polynomialLogarithmicResidue
+#print axioms BfgsVerification.polynomialLogarithmicResidue
+#print BfgsVerification.WeightedLogarithmicPoleTarget
+example : BfgsVerification.WeightedLogarithmicPoleTarget := BfgsVerification.weightedLogarithmicPole
+#print axioms BfgsVerification.weightedLogarithmicPole
+#print BfgsVerification.TarskiCauchyLocalIdentityTarget
+example : BfgsVerification.TarskiCauchyLocalIdentityTarget := BfgsVerification.tarskiCauchyLocalIdentity
+#print axioms BfgsVerification.tarskiCauchyLocalIdentity
+#print BfgsVerification.FiniteJumpTelescopingTarget
+example : BfgsVerification.FiniteJumpTelescopingTarget := BfgsVerification.finiteJumpTelescoping
+#print axioms BfgsVerification.finiteJumpTelescoping
+#print BfgsVerification.PolynomialSignJumpTarget
+example : BfgsVerification.PolynomialSignJumpTarget := BfgsVerification.polynomialSignJump
+#print axioms BfgsVerification.polynomialSignJump
+#print BfgsVerification.RationalIndexReciprocityTarget
+example : BfgsVerification.RationalIndexReciprocityTarget := BfgsVerification.rationalIndexReciprocity
+#print axioms BfgsVerification.rationalIndexReciprocity
+#print BfgsVerification.RationalIndexRemainderTarget
+example : BfgsVerification.RationalIndexRemainderTarget := BfgsVerification.rationalIndexRemainder
+#print axioms BfgsVerification.rationalIndexRemainder
+#print BfgsVerification.EuclideanIndexComputationTarget
+example : BfgsVerification.EuclideanIndexComputationTarget := BfgsVerification.euclideanIndexComputation
+#print axioms BfgsVerification.euclideanIndexComputation
+#print BfgsVerification.RootSignReconstructionTarget
+example : BfgsVerification.RootSignReconstructionTarget := BfgsVerification.rootSignReconstruction
+#print axioms BfgsVerification.rootSignReconstruction
+#print BfgsVerification.SimultaneousRootSignsTarget
+example : BfgsVerification.SimultaneousRootSignsTarget := BfgsVerification.simultaneousRootSigns
+#print axioms BfgsVerification.simultaneousRootSigns
+#print BfgsVerification.SignQueryDeterminationTarget
+example : BfgsVerification.SignQueryDeterminationTarget := BfgsVerification.signQueryDetermination
+#print axioms BfgsVerification.signQueryDetermination
+#print BfgsVerification.FinitePolynomialSignSamplingTarget
+example : BfgsVerification.FinitePolynomialSignSamplingTarget := BfgsVerification.finitePolynomialSignSampling
+#print axioms BfgsVerification.finitePolynomialSignSampling
+#print BfgsVerification.PolynomialTailSamplesTarget
+example : BfgsVerification.PolynomialTailSamplesTarget := BfgsVerification.polynomialTailSamples
+#print axioms BfgsVerification.polynomialTailSamples
+#print BfgsVerification.RealPolynomialSignReductionTarget
+example : BfgsVerification.RealPolynomialSignReductionTarget := BfgsVerification.realPolynomialSignReduction
+#print axioms BfgsVerification.realPolynomialSignReduction
+#print BfgsVerification.PositivePseudoIndexSpecializationTarget
+example : BfgsVerification.PositivePseudoIndexSpecializationTarget := BfgsVerification.positivePseudoIndexSpecialization
+#print axioms BfgsVerification.positivePseudoIndexSpecialization
+#print BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget
+example : BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget := BfgsVerification.DDisplayPrecision.printedPrecision
+#print axioms BfgsVerification.DDisplayPrecision.printedPrecision
+#print BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget
+example : BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget := BfgsVerification.DBoxDenominators.sourceBoxDenominators
+#print axioms BfgsVerification.DBoxDenominators.sourceBoxDenominators
+#print BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget
+example : BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget := BfgsVerification.DEuclideanLocality.euclideanLocality
+#print axioms BfgsVerification.DEuclideanLocality.euclideanLocality
+#print BfgsVerification.RationalIndexParameterTarget
+example : BfgsVerification.RationalIndexParameterTarget := BfgsVerification.rationalIndexParameter
+#print axioms BfgsVerification.rationalIndexParameter
+#print BfgsVerification.TarskiQueryParameterTarget
+example : BfgsVerification.TarskiQueryParameterTarget := BfgsVerification.tarskiQueryParameter
+#print axioms BfgsVerification.tarskiQueryParameter
+#print BfgsVerification.SimultaneousPolynomialProjectionTarget
+example : BfgsVerification.SimultaneousPolynomialProjectionTarget := BfgsVerification.simultaneousPolynomialProjection
+#print axioms BfgsVerification.simultaneousPolynomialProjection
+#print BfgsVerification.BooleanScalarProjectionTarget
+example : BfgsVerification.BooleanScalarProjectionTarget := BfgsVerification.booleanScalarProjection
+#print axioms BfgsVerification.booleanScalarProjection
+#print BfgsVerification.GeneralCoordinateProjectionTarget
+example : BfgsVerification.GeneralCoordinateProjectionTarget := BfgsVerification.generalCoordinateProjection
+#print axioms BfgsVerification.generalCoordinateProjection
+#print BfgsVerification.AffineCriticalSemialgebraicTarget
+example : BfgsVerification.AffineCriticalSemialgebraicTarget := BfgsVerification.affineCriticalSemialgebraic
+#print axioms BfgsVerification.affineCriticalSemialgebraic

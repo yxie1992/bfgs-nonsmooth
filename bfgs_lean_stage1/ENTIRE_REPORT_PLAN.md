@@ -438,3 +438,27 @@ specialization. These fragments do not establish general Boolean projection.
 General semialgebraic elimination and finite smooth paths, the dependent C
 alternative, D numerical-display precision and final synthesis/evidence
 reconciliation remain active. The entire report is not yet verified.
+
+
+## Fifteenth milestone: general projection, critical definability and source conclusions
+
+The frozen pinned build and full transitive audit passed 4,768 explicit theorems,
+7,134 total theorem declarations, 205 exact targets and 633 frozen Lean files.
+Only propext, Classical.choice and Quot.sound occur. Evidence is in
+audit/report_algebra_completion_check.log, STATUS.json and the accompanying
+source hashes, actual compiler/axiom logs and statement/independent reviews.
+
+Actual arbitrary-degree Boolean and finite-coordinate semialgebraic projection
+is now proved through actual root-index recursion, sign determination and finite
+sampling. Actual supporting/affine-critical set/graph definability follows.
+The finite semialgebraic smooth-path argument, finite critical values and low gap,
+and C's dependent alternative remain open; conditional path-cover statements
+are not a proof of those premises.
+
+H's actual three-gradient rank-two sharpness and I's literal ridge supersession
+are proved. D's actual numerical precision, original-box update denominators and
+literal Euclidean nine-query locality bound are proved, with five documented
+nearest-rounding corrections; four immediate literal exports await the next
+central gate. I's complete source reconciliation and E's historical-evidence
+classification distinguish checked mathematics from absent original run records.
+The entire report remains incomplete. Original research sources are unchanged.

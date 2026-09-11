@@ -1,0 +1,60 @@
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_const_mul_pos (f : ℝ → ℝ) (a : ℝ) {c : ℝ} (hc : 0 < c) :
+  BfgsVerification.RealAlgebraicGeometry.localCauchyIndex (fun x => c * f x) a =
+    BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_const_mul_pos' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_C_mul_pos (p q : Polynomial ℝ) {c : ℝ} (hc : 0 < c) :
+  BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (Polynomial.C c * p) q =
+    BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_C_mul_pos' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_eq {p q Q r : Polynomial ℝ} {c : ℝ} (hc : 0 < c)
+  (he : Polynomial.C c * p = q * Q + r) (hq : q ≠ 0) :
+  BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q =
+    BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex r q
+'BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_zero {p q Q r : Polynomial ℝ} {c : ℝ} (hc : 0 < c)
+  (he : Polynomial.C c * p = q * Q + r) (hq : q ≠ 0) (hr : r = 0) :
+  BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q = 0
+'BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_recurrence {p q Q r : Polynomial ℝ} {c : ℝ} (hc : 0 < c)
+  (he : Polynomial.C c * p = q * Q + r) (hq : q ≠ 0) (hr : r ≠ 0) :
+  BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q =
+    BfgsVerification.RealAlgebraicGeometry.infinityVariation r q -
+      BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex q r
+'BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_recurrence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.infinityVariation_eq_odd (p q : Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.infinityVariation p q =
+    if Odd (p * q).natDegree then ↑(SignType.sign (p * q).leadingCoeff) else 0
+'BfgsVerification.RealAlgebraicGeometry.infinityVariation_eq_odd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.infinityVariation_mem_three (p q : Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.infinityVariation p q ∈ {-1, 0, 1}
+'BfgsVerification.RealAlgebraicGeometry.infinityVariation_mem_three' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_specialize.{u_1} {R : Type u_1} [CommRing R]
+  {p q Q r : Polynomial R} {k : ℕ} (he : Polynomial.C q.leadingCoeff ^ (2 * k) * p = q * Q + r) (f : R →+* ℝ)
+  (hf : f q.leadingCoeff ≠ 0) :
+  BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (Polynomial.map f p) (Polynomial.map f q) =
+    if Polynomial.map f r = 0 then 0
+    else
+      BfgsVerification.RealAlgebraicGeometry.infinityVariation (Polynomial.map f r) (Polynomial.map f q) -
+        BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (Polynomial.map f q) (Polynomial.map f r)
+'BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_specialize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PositivePseudoIndexSpecializationTarget : Prop
+'BfgsVerification.PositivePseudoIndexSpecializationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.positivePseudoIndexSpecialization : BfgsVerification.PositivePseudoIndexSpecializationTarget
+'BfgsVerification.positivePseudoIndexSpecialization' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK positivePseudoIndexSpecialization

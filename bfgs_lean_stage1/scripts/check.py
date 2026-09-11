@@ -414,7 +414,63 @@ REPORT_GEOMETRY_COMPLETION_TARGETS = {
     "finiteRootRemainders_verified":
         ("BfgsVerification.finiteRootRemainders", "BfgsVerification.FiniteRootRemaindersTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS
+REPORT_ALGEBRA_COMPLETION_TARGETS = {
+    "SeedOrbit_sharpRecurrentCardinality_verified":
+        ("BfgsVerification.SeedOrbit.sharpRecurrentCardinality", "BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget"),
+    "RidgeSupersession_ridgeSupersession_verified":
+        ("BfgsVerification.RidgeSupersession.ridgeSupersession", "BfgsVerification.RidgeSupersession.RidgeSupersessionTarget"),
+    "polynomialOneSidedSigns_verified":
+        ("BfgsVerification.polynomialOneSidedSigns", "BfgsVerification.PolynomialOneSidedSignsTarget"),
+    "polynomialLogarithmicResidue_verified":
+        ("BfgsVerification.polynomialLogarithmicResidue", "BfgsVerification.PolynomialLogarithmicResidueTarget"),
+    "weightedLogarithmicPole_verified":
+        ("BfgsVerification.weightedLogarithmicPole", "BfgsVerification.WeightedLogarithmicPoleTarget"),
+    "tarskiCauchyLocalIdentity_verified":
+        ("BfgsVerification.tarskiCauchyLocalIdentity", "BfgsVerification.TarskiCauchyLocalIdentityTarget"),
+    "finiteJumpTelescoping_verified":
+        ("BfgsVerification.finiteJumpTelescoping", "BfgsVerification.FiniteJumpTelescopingTarget"),
+    "polynomialSignJump_verified":
+        ("BfgsVerification.polynomialSignJump", "BfgsVerification.PolynomialSignJumpTarget"),
+    "rationalIndexReciprocity_verified":
+        ("BfgsVerification.rationalIndexReciprocity", "BfgsVerification.RationalIndexReciprocityTarget"),
+    "rationalIndexRemainder_verified":
+        ("BfgsVerification.rationalIndexRemainder", "BfgsVerification.RationalIndexRemainderTarget"),
+    "euclideanIndexComputation_verified":
+        ("BfgsVerification.euclideanIndexComputation", "BfgsVerification.EuclideanIndexComputationTarget"),
+    "rootSignReconstruction_verified":
+        ("BfgsVerification.rootSignReconstruction", "BfgsVerification.RootSignReconstructionTarget"),
+    "simultaneousRootSigns_verified":
+        ("BfgsVerification.simultaneousRootSigns", "BfgsVerification.SimultaneousRootSignsTarget"),
+    "signQueryDetermination_verified":
+        ("BfgsVerification.signQueryDetermination", "BfgsVerification.SignQueryDeterminationTarget"),
+    "finitePolynomialSignSampling_verified":
+        ("BfgsVerification.finitePolynomialSignSampling", "BfgsVerification.FinitePolynomialSignSamplingTarget"),
+    "polynomialTailSamples_verified":
+        ("BfgsVerification.polynomialTailSamples", "BfgsVerification.PolynomialTailSamplesTarget"),
+    "realPolynomialSignReduction_verified":
+        ("BfgsVerification.realPolynomialSignReduction", "BfgsVerification.RealPolynomialSignReductionTarget"),
+    "positivePseudoIndexSpecialization_verified":
+        ("BfgsVerification.positivePseudoIndexSpecialization", "BfgsVerification.PositivePseudoIndexSpecializationTarget"),
+    "DDisplayPrecision_printedPrecision_verified":
+        ("BfgsVerification.DDisplayPrecision.printedPrecision", "BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget"),
+    "DBoxDenominators_sourceBoxDenominators_verified":
+        ("BfgsVerification.DBoxDenominators.sourceBoxDenominators", "BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget"),
+    "DEuclideanLocality_euclideanLocality_verified":
+        ("BfgsVerification.DEuclideanLocality.euclideanLocality", "BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget"),
+    "rationalIndexParameter_verified":
+        ("BfgsVerification.rationalIndexParameter", "BfgsVerification.RationalIndexParameterTarget"),
+    "tarskiQueryParameter_verified":
+        ("BfgsVerification.tarskiQueryParameter", "BfgsVerification.TarskiQueryParameterTarget"),
+    "simultaneousPolynomialProjection_verified":
+        ("BfgsVerification.simultaneousPolynomialProjection", "BfgsVerification.SimultaneousPolynomialProjectionTarget"),
+    "booleanScalarProjection_verified":
+        ("BfgsVerification.booleanScalarProjection", "BfgsVerification.BooleanScalarProjectionTarget"),
+    "generalCoordinateProjection_verified":
+        ("BfgsVerification.generalCoordinateProjection", "BfgsVerification.GeneralCoordinateProjectionTarget"),
+    "affineCriticalSemialgebraic_verified":
+        ("BfgsVerification.affineCriticalSemialgebraic", "BfgsVerification.AffineCriticalSemialgebraicTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -671,6 +727,9 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
+                ("BfgsVerification.RealAlgebraicGeometry.supportGraph_semialgebraic_of_projection", "Explicit projection premise in this reusable bridge is now discharged by actual general coordinate projection in supportGraph_semialgebraic"),
+                ("BfgsVerification.AffineSupportPath.finite_values_of_finite_path_cover", "Finite actual affine-critical path cover is explicit and remains to be derived from semialgebraicity"),
+                ("BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_values", "Finite actual affine-critical value set is explicit; the general semialgebraic finite-value application remains pending"),
                 ("BfgsVerification.LocalStableOrbit.stableOrbit", "Actual strict derivative with contractive stable block and inverse-contracting unstable block; constructs a forward orbit without assuming one. The actual L spectral application and source orbit are now derived in LReturnStableOrbit/LGlobalFailure."),
                 ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "Same actual derivative/contraction hypotheses plus a positive stable functional direction; proves positive initial scale. Actual L positive scale preservation is now derived from its return recurrence in source_oracle_orbit."),
                 ("BfgsVerification.LBlockSplitting.positive_orbit_of_block", "Actual strict derivative, literal upper-block equations and two actual characteristic roots with stated ordering; all coordinates and the forward orbit are constructed. The actual L spectrum and global-run application are now discharged in LGlobalTargets."),
@@ -696,7 +755,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "A general nonlinear Boolean semialgebraic projection/path/critical-value closure and the dependent C semialgebraic alternative; final source/synthesis/evidence reconciliation. Actual C arbitrary-dimensional constant-rank C1 field/secant theorem, L Jacobian precision, two-piece termination and arbitrary-dimensional no-infinite-continuation, and A multiplicity/quadratic-projection/positive-pseudo-division infrastructure are now checked. The finite polynomial fragments do not prove general quantifier elimination; see REPORT_STATUS.json",
+            "A finite semialgebraic smooth path/component decomposition and critical-value closure, with the dependent C semialgebraic alternative; D literal non-strict-interpreter and immediate finite-algebra corollary wrappers; final source/synthesis and historical evidence reconciliation. General arbitrary-degree Boolean/finite-coordinate semialgebraic projection and actual supporting/affine-critical graph definability are now proved, together with actual root-sign/Euclidean-index computation. D actual numerical precision, original-box update denominators and exact Euclidean nine-query bound, H actual recurrent-cardinality sharpness and I actual ridge supersession are checked; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -705,7 +764,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_GEOMETRY_COMPLETION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_ALGEBRA_COMPLETION_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

@@ -1,0 +1,191 @@
+BfgsVerification.RidgeSupersession.strictConvex_of_second_pos_except {a : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (u : ℝ)
+  (hpos : ∀ (x : ℝ), x ≠ u → 0 < deriv (deriv a) x) : StrictConvexOn ℝ Set.univ a
+'BfgsVerification.RidgeSupersession.strictConvex_of_second_pos_except' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.profile (a b : ℝ → ℝ) (p q u : ℝ) : ℝ
+'BfgsVerification.RidgeSupersession.profile' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.ridge (a b : ℝ → ℝ) (p q u : ℝ) : ℝ
+'BfgsVerification.RidgeSupersession.ridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch (a b : ℝ → ℝ) (p q : ℝ) : Fin 2 → BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.RidgeSupersession.branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.objective (a b : ℝ → ℝ) (p q : ℝ) (x : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.RidgeSupersession.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.optimizer (a b : ℝ → ℝ) (p q u : ℝ) : BfgsVerification.Vec 2
+'BfgsVerification.RidgeSupersession.optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch_convex {a b : ℝ → ℝ} (ha : ConvexOn ℝ Set.univ a) (hb : ConvexOn ℝ Set.univ b)
+  (p q : ℝ) (i : Fin 2) : ConvexOn ℝ Set.univ (BfgsVerification.RidgeSupersession.branch a b p q i)
+'BfgsVerification.RidgeSupersession.branch_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.objective_convex {a b : ℝ → ℝ} (ha : ConvexOn ℝ Set.univ a)
+  (hb : ConvexOn ℝ Set.univ b) (p q : ℝ) : ConvexOn ℝ Set.univ (BfgsVerification.RidgeSupersession.objective a b p q)
+'BfgsVerification.RidgeSupersession.objective_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.ridge_values {a b : ℝ → ℝ} {p q : ℝ} (hpq : p + q ≠ 0) (u : ℝ) :
+  a u + p * BfgsVerification.RidgeSupersession.ridge a b p q u = BfgsVerification.RidgeSupersession.profile a b p q u ∧
+    b u - q * BfgsVerification.RidgeSupersession.ridge a b p q u = BfgsVerification.RidgeSupersession.profile a b p q u
+'BfgsVerification.RidgeSupersession.ridge_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.objective_optimizer {a b : ℝ → ℝ} {p q : ℝ} (hpq : p + q ≠ 0) (u : ℝ) :
+  BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.RidgeSupersession.optimizer a b p q u) =
+    BfgsVerification.RidgeSupersession.profile a b p q u
+'BfgsVerification.RidgeSupersession.objective_optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_le_objective {a b : ℝ → ℝ} {p q : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (x : BfgsVerification.Vec 2) :
+  BfgsVerification.RidgeSupersession.profile a b p q (x 0) ≤ BfgsVerification.RidgeSupersession.objective a b p q x
+'BfgsVerification.RidgeSupersession.profile_le_objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.optimizer_minimum {a b : ℝ → ℝ} {p q u : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (hmin :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q u ≤ BfgsVerification.RidgeSupersession.profile a b p q t)
+  (x : BfgsVerification.Vec 2) :
+  BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.RidgeSupersession.optimizer a b p q u) ≤
+    BfgsVerification.RidgeSupersession.objective a b p q x
+'BfgsVerification.RidgeSupersession.optimizer_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.optimizer_unique {a b : ℝ → ℝ} {p q u : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (hmin :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q u ≤ BfgsVerification.RidgeSupersession.profile a b p q t)
+  (hunique :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q t = BfgsVerification.RidgeSupersession.profile a b p q u →
+        t = u)
+  (x : BfgsVerification.Vec 2)
+  (hx :
+    BfgsVerification.RidgeSupersession.objective a b p q x =
+      BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.RidgeSupersession.optimizer a b p q u)) :
+  x = BfgsVerification.RidgeSupersession.optimizer a b p q u
+'BfgsVerification.RidgeSupersession.optimizer_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.gradient (a b : ℝ → ℝ) (p q : ℝ) (x : BfgsVerification.Vec 2) :
+  Fin 2 → BfgsVerification.Vec 2
+'BfgsVerification.RidgeSupersession.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch_C2 {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (hb : ContDiff ℝ 2 b) (p q : ℝ)
+  (i : Fin 2) : ContDiff ℝ 2 (BfgsVerification.RidgeSupersession.branch a b p q i)
+'BfgsVerification.RidgeSupersession.branch_C2' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch_hasGradient {a b : ℝ → ℝ} (ha : Differentiable ℝ a) (hb : Differentiable ℝ b)
+  (p q : ℝ) (x : BfgsVerification.Vec 2) (i : Fin 2) :
+  HasFDerivAt (BfgsVerification.RidgeSupersession.branch a b p q i)
+    (BfgsVerification.gradientFunctional (BfgsVerification.RidgeSupersession.gradient a b p q x i)) x
+'BfgsVerification.RidgeSupersession.branch_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.coordinateGradient_eq {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (hb : ContDiff ℝ 2 b)
+  (p q : ℝ) (x : BfgsVerification.Vec 2) (i : Fin 2) :
+  BfgsVerification.coordinateGradient (BfgsVerification.RidgeSupersession.branch a b p q i) x =
+    BfgsVerification.RidgeSupersession.gradient a b p q x i
+'BfgsVerification.RidgeSupersession.coordinateGradient_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.localFiniteMax (a b : ℝ → ℝ) (p q : ℝ) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.ConvexSubdifferential.LocalFiniteMax (BfgsVerification.RidgeSupersession.objective a b p q)
+    (BfgsVerification.RidgeSupersession.branch a b p q) x
+'BfgsVerification.RidgeSupersession.localFiniteMax' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.gradients_affineIndependent {a b : ℝ → ℝ} {p q : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (x : BfgsVerification.Vec 2) : AffineIndependent ℝ (BfgsVerification.RidgeSupersession.gradient a b p q x)
+'BfgsVerification.RidgeSupersession.gradients_affineIndependent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.source_regular {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (hb : ContDiff ℝ 2 b)
+  (hca : ConvexOn ℝ Set.univ a) (hcb : ConvexOn ℝ Set.univ b) {p q : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (x : BfgsVerification.Vec 2)
+  (hn :
+    ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical (BfgsVerification.RidgeSupersession.objective a b p q)
+        x) :
+  ContDiffAt ℝ 2 (BfgsVerification.RidgeSupersession.objective a b p q) x ∨
+    BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt (BfgsVerification.RidgeSupersession.objective a b p q)
+      x
+'BfgsVerification.RidgeSupersession.source_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_hasDerivAt {a b : ℝ → ℝ} (ha : Differentiable ℝ a) (hb : Differentiable ℝ b)
+  (p q u : ℝ) :
+  HasDerivAt (BfgsVerification.RidgeSupersession.profile a b p q) ((q * deriv a u + p * deriv b u) / (p + q)) u
+'BfgsVerification.RidgeSupersession.profile_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.actual_gradient_determinant {a b : ℝ → ℝ} (ha : Differentiable ℝ a)
+  (hb : Differentiable ℝ b) {p q : ℝ} (hpq : p + q ≠ 0) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.HomogeneousPlanar.pairDet (BfgsVerification.RidgeSupersession.gradient a b p q x 0)
+      (BfgsVerification.RidgeSupersession.gradient a b p q x 1) =
+    -(p + q) * deriv (BfgsVerification.RidgeSupersession.profile a b p q) (x 0)
+'BfgsVerification.RidgeSupersession.actual_gradient_determinant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.midpoint_below_level {a b : ℝ → ℝ} (ha : StrictConvexOn ℝ Set.univ a)
+  (hb : StrictConvexOn ℝ Set.univ b) {p q : ℝ} (hp : 0 < p) (hq : 0 < q) {x y : BfgsVerification.Vec 2} (hne : x ≠ y)
+  {level : ℝ} (hx : BfgsVerification.RidgeSupersession.objective a b p q x ≤ level)
+  (hy : BfgsVerification.RidgeSupersession.objective a b p q y ≤ level) :
+  BfgsVerification.RidgeSupersession.objective a b p q ((1 / 2) • x + (1 / 2) • y) < level
+'BfgsVerification.RidgeSupersession.midpoint_below_level' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.strict_contours {a b : ℝ → ℝ} (ha : StrictConvexOn ℝ Set.univ a)
+  (hb : StrictConvexOn ℝ Set.univ b) {p q : ℝ} (hp : 0 < p) (hq : 0 < q) (level : ℝ) (x y : BfgsVerification.Vec 2)
+  (hseg : segment ℝ x y ⊆ frontier {z | BfgsVerification.RidgeSupersession.objective a b p q z ≤ level}) : x = y
+'BfgsVerification.RidgeSupersession.strict_contours' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_convex {a b : ℝ → ℝ} (ha : ConvexOn ℝ Set.univ a)
+  (hb : ConvexOn ℝ Set.univ b) {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
+  ConvexOn ℝ Set.univ (BfgsVerification.RidgeSupersession.profile a b p q)
+'BfgsVerification.RidgeSupersession.profile_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_deriv_zero_implies_optimizer {a b : ℝ → ℝ} (ha : Differentiable ℝ a)
+  (hb : Differentiable ℝ b) (hca : ConvexOn ℝ Set.univ a) (hcb : ConvexOn ℝ Set.univ b) {p q u : ℝ} (hp : 0 < p)
+  (hq : 0 < q)
+  (hmin :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q u ≤ BfgsVerification.RidgeSupersession.profile a b p q t)
+  (hunique :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q t = BfgsVerification.RidgeSupersession.profile a b p q u →
+        t = u)
+  (t : ℝ) (ht : deriv (BfgsVerification.RidgeSupersession.profile a b p q) t = 0) : t = u
+'BfgsVerification.RidgeSupersession.profile_deriv_zero_implies_optimizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.tie_point {a b : ℝ → ℝ} {p q : ℝ} (hpq : p + q ≠ 0) (x : BfgsVerification.Vec 2)
+  (htie :
+    BfgsVerification.RidgeSupersession.branch a b p q 0 x = BfgsVerification.RidgeSupersession.branch a b p q 1 x) :
+  x = BfgsVerification.RidgeSupersession.optimizer a b p q (x 0)
+'BfgsVerification.RidgeSupersession.tie_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.source_affineCorrect {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (hb : ContDiff ℝ 2 b)
+  (hca : ConvexOn ℝ Set.univ a) (hcb : ConvexOn ℝ Set.univ b) {p q u : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (hmin :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q u ≤ BfgsVerification.RidgeSupersession.profile a b p q t)
+  (hunique :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q t = BfgsVerification.RidgeSupersession.profile a b p q u →
+        t = u)
+  (x : BfgsVerification.Vec 2) :
+  BfgsVerification.AffineCriticalObjective.AffineCorrectAt (BfgsVerification.RidgeSupersession.objective a b p q) x
+'BfgsVerification.RidgeSupersession.source_affineCorrect' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.fullBFGS_convergence {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (hb : ContDiff ℝ 2 b)
+  (hca : ConvexOn ℝ Set.univ a) (hcb : ConvexOn ℝ Set.univ b) {p q u : ℝ} (hp : 0 < p) (hq : 0 < q)
+  (hmin :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q u ≤ BfgsVerification.RidgeSupersession.profile a b p q t)
+  (hunique :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q t = BfgsVerification.RidgeSupersession.profile a b p q u →
+        t = u)
+  (ha'' : ∀ (t : ℝ), t ≠ u → 0 < deriv (deriv a) t) (hb'' : ∀ (t : ℝ), t ≠ u → 0 < deriv (deriv b) t)
+  (R : BfgsVerification.AdmissibleBFGSRun 2 (BfgsVerification.RidgeSupersession.objective a b p q)) :
+  Filter.Tendsto (fun k => BfgsVerification.RidgeSupersession.objective a b p q (R.x k)) Filter.atTop
+      (nhds (BfgsVerification.RidgeSupersession.profile a b p q u)) ∧
+    Filter.Tendsto R.x Filter.atTop (nhds (BfgsVerification.RidgeSupersession.optimizer a b p q u))
+'BfgsVerification.RidgeSupersession.fullBFGS_convergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.localized_fullBFGS_convergence {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a)
+  (hb : ContDiff ℝ 2 b) (hca : ConvexOn ℝ Set.univ a) (hcb : ConvexOn ℝ Set.univ b) {p q u : ℝ} (hp : 0 < p)
+  (hq : 0 < q)
+  (hmin :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q u ≤ BfgsVerification.RidgeSupersession.profile a b p q t)
+  (hunique :
+    ∀ (t : ℝ),
+      BfgsVerification.RidgeSupersession.profile a b p q t = BfgsVerification.RidgeSupersession.profile a b p q u →
+        t = u)
+  (ha'' : ∀ (t : ℝ), t ≠ u → 0 < deriv (deriv a) t) (hb'' : ∀ (t : ℝ), t ≠ u → 0 < deriv (deriv b) t)
+  (U : Set (BfgsVerification.Vec 2)) (hU : U ∈ nhds (BfgsVerification.RidgeSupersession.optimizer a b p q u)) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 (BfgsVerification.RidgeSupersession.objective a b p q)),
+        BfgsVerification.RidgeSupersession.objective a b p q (R.x 0) ≤
+            BfgsVerification.RidgeSupersession.profile a b p q u + ε →
+          (∀ (k : ℕ), R.x k ∈ U) ∧
+            Filter.Tendsto (fun k => BfgsVerification.RidgeSupersession.objective a b p q (R.x k)) Filter.atTop
+                (nhds (BfgsVerification.RidgeSupersession.profile a b p q u)) ∧
+              Filter.Tendsto R.x Filter.atTop (nhds (BfgsVerification.RidgeSupersession.optimizer a b p q u))
+'BfgsVerification.RidgeSupersession.localized_fullBFGS_convergence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.RidgeSupersessionTarget : Prop
+'BfgsVerification.RidgeSupersession.RidgeSupersessionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.ridgeSupersession : BfgsVerification.RidgeSupersession.RidgeSupersessionTarget
+'BfgsVerification.RidgeSupersession.ridgeSupersession' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK

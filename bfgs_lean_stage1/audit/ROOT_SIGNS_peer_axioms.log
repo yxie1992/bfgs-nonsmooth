@@ -1,0 +1,192 @@
+BfgsVerification.RealAlgebraicGeometry.rootFactor (p : Polynomial ℝ) (a : ℝ) : Polynomial ℝ
+'BfgsVerification.RealAlgebraicGeometry.rootFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_factorization (p : Polynomial ℝ) (a x : ℝ) :
+  Polynomial.eval x p =
+    (x - a) ^ Polynomial.rootMultiplicity a p *
+      Polynomial.eval x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)
+'BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_factorization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_ne_zero {p : Polynomial ℝ} (hp : p ≠ 0) (a : ℝ) :
+  Polynomial.eval a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuous_eventually_sign_eq {f : ℝ → ℝ} {a : ℝ} (hf : ContinuousAt f a)
+  (hne : f a ≠ 0) : ∀ᶠ (x : ℝ) in nhds a, SignType.sign (f x) = SignType.sign (f a)
+'BfgsVerification.RealAlgebraicGeometry.continuous_eventually_sign_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_eventually_sign_eq {p : Polynomial ℝ} {a : ℝ}
+  (hne : Polynomial.eval a p ≠ 0) :
+  ∀ᶠ (x : ℝ) in nhds a, SignType.sign (Polynomial.eval x p) = SignType.sign (Polynomial.eval a p)
+'BfgsVerification.RealAlgebraicGeometry.polynomial_eventually_sign_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_right_of_rootMultiplicity {p : Polynomial ℝ} (hp : p ≠ 0)
+  (a : ℝ) :
+  ∀ᶠ (x : ℝ) in nhdsWithin a (Set.Ioi a),
+    SignType.sign (Polynomial.eval x p) =
+      SignType.sign (Polynomial.eval a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_right_of_rootMultiplicity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_left_of_rootMultiplicity {p : Polynomial ℝ} (hp : p ≠ 0)
+  (a : ℝ) :
+  ∀ᶠ (x : ℝ) in nhdsWithin a (Set.Iio a),
+    SignType.sign (Polynomial.eval x p) =
+      (-1) ^ Polynomial.rootMultiplicity a p *
+        SignType.sign (Polynomial.eval a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_left_of_rootMultiplicity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_logDerivative_identity (p : Polynomial ℝ) (a x : ℝ) :
+  (x - a) * Polynomial.eval x (Polynomial.derivative p) =
+    ↑(Polynomial.rootMultiplicity a p) * Polynomial.eval x p +
+      (x - a) ^ (Polynomial.rootMultiplicity a p + 1) *
+        Polynomial.eval x (Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_logDerivative_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_eq (p : Polynomial ℝ) (a x : ℝ) (hx : x ≠ a)
+  (hr : Polynomial.eval x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a) ≠ 0) :
+  (x - a) * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p =
+    ↑(Polynomial.rootMultiplicity a p) +
+      (x - a) * Polynomial.eval x (Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)) /
+        Polynomial.eval x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)
+'BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_tendsto {p : Polynomial ℝ} (hp : p ≠ 0)
+  (a : ℝ) :
+  Filter.Tendsto (fun x => (x - a) * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p)
+    (nhdsWithin a {a}ᶜ) (nhds ↑(Polynomial.rootMultiplicity a p))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_normalized_logDerivative_tendsto {p : Polynomial ℝ} (hp : p ≠ 0)
+  (q : Polynomial ℝ) (a : ℝ) :
+  Filter.Tendsto
+    (fun x => (x - a) * (Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p))
+    (nhdsWithin a {a}ᶜ) (nhds (↑(Polynomial.rootMultiplicity a p) * Polynomial.eval a q))
+'BfgsVerification.RealAlgebraicGeometry.weighted_normalized_logDerivative_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_right (a : ℝ) :
+  Filter.Tendsto (fun x => (x - a)⁻¹) (nhdsWithin a (Set.Ioi a)) Filter.atTop
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_right' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_left (a : ℝ) :
+  Filter.Tendsto (fun x => (x - a)⁻¹) (nhdsWithin a (Set.Iio a)) Filter.atBot
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_left' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_pole_pos {f : ℝ → ℝ} {a c : ℝ} (hc : 0 < c)
+  (h : Filter.Tendsto (fun x => (x - a) * f x) (nhdsWithin a {a}ᶜ) (nhds c)) :
+  Filter.Tendsto f (nhdsWithin a (Set.Ioi a)) Filter.atTop ∧ Filter.Tendsto f (nhdsWithin a (Set.Iio a)) Filter.atBot
+'BfgsVerification.RealAlgebraicGeometry.normalized_pole_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_pole_neg {f : ℝ → ℝ} {a c : ℝ} (hc : c < 0)
+  (h : Filter.Tendsto (fun x => (x - a) * f x) (nhdsWithin a {a}ᶜ) (nhds c)) :
+  Filter.Tendsto f (nhdsWithin a (Set.Ioi a)) Filter.atBot ∧ Filter.Tendsto f (nhdsWithin a (Set.Iio a)) Filter.atTop
+'BfgsVerification.RealAlgebraicGeometry.normalized_pole_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_positive_pole {p q : Polynomial ℝ} {a : ℝ} (hp : p ≠ 0)
+  (ha : p.IsRoot a) (hq : 0 < Polynomial.eval a q) :
+  Filter.Tendsto (fun x => Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p)
+      (nhdsWithin a (Set.Ioi a)) Filter.atTop ∧
+    Filter.Tendsto (fun x => Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p)
+      (nhdsWithin a (Set.Iio a)) Filter.atBot
+'BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_positive_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_negative_pole {p q : Polynomial ℝ} {a : ℝ} (hp : p ≠ 0)
+  (ha : p.IsRoot a) (hq : Polynomial.eval a q < 0) :
+  Filter.Tendsto (fun x => Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p)
+      (nhdsWithin a (Set.Ioi a)) Filter.atBot ∧
+    Filter.Tendsto (fun x => Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p)
+      (nhdsWithin a (Set.Iio a)) Filter.atTop
+'BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_negative_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_finite_of_weight_root {p q : Polynomial ℝ} {a : ℝ}
+  (hp : p ≠ 0) (hq : q.IsRoot a) :
+  Filter.Tendsto (fun x => Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p)
+    (nhdsWithin a {a}ᶜ)
+    (nhds (↑(Polynomial.rootMultiplicity a p) * Polynomial.eval a (q /ₘ (Polynomial.X - Polynomial.C a))))
+'BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_finite_of_weight_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex (f : ℝ → ℝ) (a : ℝ) : ℤ
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_positive_pole {f : ℝ → ℝ} {a : ℝ}
+  (hr : Filter.Tendsto f (nhdsWithin a (Set.Ioi a)) Filter.atTop)
+  (hl : Filter.Tendsto f (nhdsWithin a (Set.Iio a)) Filter.atBot) :
+  BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a = 1
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_positive_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_negative_pole {f : ℝ → ℝ} {a : ℝ}
+  (hr : Filter.Tendsto f (nhdsWithin a (Set.Ioi a)) Filter.atBot)
+  (hl : Filter.Tendsto f (nhdsWithin a (Set.Iio a)) Filter.atTop) :
+  BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a = -1
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_negative_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_finite_left_limit {f : ℝ → ℝ} {a b : ℝ}
+  (h : Filter.Tendsto f (nhdsWithin a (Set.Iio a)) (nhds b)) :
+  BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a = 0
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_finite_left_limit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_weighted_logDerivative {p q : Polynomial ℝ} {a : ℝ} (hp : p ≠ 0)
+  (ha : p.IsRoot a) :
+  BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+      (fun x => Polynomial.eval x q * Polynomial.eval x (Polynomial.derivative p) / Polynomial.eval x p) a =
+    ↑(SignType.sign (Polynomial.eval a q))
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_weighted_logDerivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (numerator denominator : Polynomial ℝ) : ℤ
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery (p q : Polynomial ℝ) : ℤ
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_rationalCauchyIndex {p : Polynomial ℝ} (hp : p ≠ 0)
+  (q : Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.tarskiQuery p q =
+    BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (q * Polynomial.derivative p) p
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_rationalCauchyIndex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_cast_eq_indicators (r : ℝ) :
+  ↑(SignType.sign r) = (if 0 < r then 1 else 0) - if r < 0 then 1 else 0
+'BfgsVerification.RealAlgebraicGeometry.sign_cast_eq_indicators' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_positive_card_sub_negative_card (p q : Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.tarskiQuery p q =
+    ↑{a ∈ p.roots.toFinset | 0 < Polynomial.eval a q}.card - ↑{a ∈ p.roots.toFinset | Polynomial.eval a q < 0}.card
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_positive_card_sub_negative_card' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_one (p : Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.tarskiQuery p 1 = ↑p.roots.toFinset.card
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_zero (p : Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.tarskiQuery p 0 = 0
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialOneSidedSignsTarget : Prop
+'BfgsVerification.PolynomialOneSidedSignsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialOneSidedSigns : BfgsVerification.PolynomialOneSidedSignsTarget
+'BfgsVerification.polynomialOneSidedSigns' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialLogarithmicResidueTarget : Prop
+'BfgsVerification.PolynomialLogarithmicResidueTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialLogarithmicResidue : BfgsVerification.PolynomialLogarithmicResidueTarget
+'BfgsVerification.polynomialLogarithmicResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.WeightedLogarithmicPoleTarget : Prop
+'BfgsVerification.WeightedLogarithmicPoleTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.weightedLogarithmicPole : BfgsVerification.WeightedLogarithmicPoleTarget
+'BfgsVerification.weightedLogarithmicPole' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TarskiCauchyLocalIdentityTarget : Prop
+'BfgsVerification.TarskiCauchyLocalIdentityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.tarskiCauchyLocalIdentity : BfgsVerification.TarskiCauchyLocalIdentityTarget
+'BfgsVerification.tarskiCauchyLocalIdentity' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,1477 @@
+BfgsVerification.SeedOrbit.actual_recurrent_gradients :
+  Eq.{1} (BfgsVerification.Homogeneous.recurrentValues.{0} BfgsVerification.SeedOrbit.orbitGradient)
+    (Set.range.{0, 1}
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD))
+'BfgsVerification.SeedOrbit.actual_recurrent_gradients' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.seed_gradient_injective :
+  Function.Injective.{1, 1}
+    (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+'BfgsVerification.SeedOrbit.seed_gradient_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.actual_recurrent_cardinality :
+  Eq.{1} (Set.ncard.{0} (BfgsVerification.Homogeneous.recurrentValues.{0} BfgsVerification.SeedOrbit.orbitGradient)) 3
+'BfgsVerification.SeedOrbit.actual_recurrent_cardinality' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.actual_recurrent_span :
+  Eq.{1}
+    (Submodule.span.{0, 0} Real
+      (BfgsVerification.Homogeneous.recurrentValues.{0} BfgsVerification.SeedOrbit.orbitGradient))
+    Top.top.{0}
+'BfgsVerification.SeedOrbit.actual_recurrent_span' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.actual_recurrent_rank :
+  Eq.{1}
+    (Module.finrank.{0, 0} Real
+      ↥(Submodule.span.{0, 0} Real
+          (BfgsVerification.Homogeneous.recurrentValues.{0} BfgsVerification.SeedOrbit.orbitGradient)))
+    2
+'BfgsVerification.SeedOrbit.actual_recurrent_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget : Prop
+'BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.sharpRecurrentCardinality : BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget
+'BfgsVerification.SeedOrbit.sharpRecurrentCardinality' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.strictConvex_of_second_pos_except {a : Real → Real}
+  (ha : ContDiff.{0, 0, 0} Real 2 a) (u : Real)
+  (hpos : ∀ (x : Real), Ne.{1} x u → LT.lt.{0} 0 (deriv.{0, 0} (deriv.{0, 0} a) x)) :
+  StrictConvexOn.{0, 0, 0} Real Set.univ.{0} a
+'BfgsVerification.RidgeSupersession.strictConvex_of_second_pos_except' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.profile (a b : Real → Real) (p q u : Real) : Real
+'BfgsVerification.RidgeSupersession.profile' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.ridge (a b : Real → Real) (p q u : Real) : Real
+'BfgsVerification.RidgeSupersession.ridge' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch (a b : Real → Real) (p q : Real) : Fin 2 → BfgsVerification.Vec 2 → Real
+'BfgsVerification.RidgeSupersession.branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.objective (a b : Real → Real) (p q : Real) (x : BfgsVerification.Vec 2) : Real
+'BfgsVerification.RidgeSupersession.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.optimizer (a b : Real → Real) (p q u : Real) : BfgsVerification.Vec 2
+'BfgsVerification.RidgeSupersession.optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch_convex {a b : Real → Real} (ha : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) (p q : Real) (i : Fin 2) :
+  ConvexOn.{0, 0, 0} Real Set.univ.{0} (BfgsVerification.RidgeSupersession.branch a b p q i)
+'BfgsVerification.RidgeSupersession.branch_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.objective_convex {a b : Real → Real} (ha : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) (p q : Real) :
+  ConvexOn.{0, 0, 0} Real Set.univ.{0} (BfgsVerification.RidgeSupersession.objective a b p q)
+'BfgsVerification.RidgeSupersession.objective_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.ridge_values {a b : Real → Real} {p q : Real}
+  (hpq : Ne.{1} (HAdd.hAdd.{0, 0, 0} p q) 0) (u : Real) :
+  And
+    (Eq.{1} (HAdd.hAdd.{0, 0, 0} (a u) (HMul.hMul.{0, 0, 0} p (BfgsVerification.RidgeSupersession.ridge a b p q u)))
+      (BfgsVerification.RidgeSupersession.profile a b p q u))
+    (Eq.{1} (HSub.hSub.{0, 0, 0} (b u) (HMul.hMul.{0, 0, 0} q (BfgsVerification.RidgeSupersession.ridge a b p q u)))
+      (BfgsVerification.RidgeSupersession.profile a b p q u))
+'BfgsVerification.RidgeSupersession.ridge_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.objective_optimizer {a b : Real → Real} {p q : Real}
+  (hpq : Ne.{1} (HAdd.hAdd.{0, 0, 0} p q) 0) (u : Real) :
+  Eq.{1} (BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.RidgeSupersession.optimizer a b p q u))
+    (BfgsVerification.RidgeSupersession.profile a b p q u)
+'BfgsVerification.RidgeSupersession.objective_optimizer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_le_objective {a b : Real → Real} {p q : Real} (hp : LT.lt.{0} 0 p)
+  (hq : LT.lt.{0} 0 q) (x : BfgsVerification.Vec 2) :
+  LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q (x 0))
+    (BfgsVerification.RidgeSupersession.objective a b p q x)
+'BfgsVerification.RidgeSupersession.profile_le_objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.optimizer_minimum {a b : Real → Real} {p q u : Real} (hp : LT.lt.{0} 0 p)
+  (hq : LT.lt.{0} 0 q)
+  (hmin :
+    ∀ (t : Real),
+      LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)
+        (BfgsVerification.RidgeSupersession.profile a b p q t))
+  (x : BfgsVerification.Vec 2) :
+  LE.le.{0}
+    (BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.RidgeSupersession.optimizer a b p q u))
+    (BfgsVerification.RidgeSupersession.objective a b p q x)
+'BfgsVerification.RidgeSupersession.optimizer_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.optimizer_unique {a b : Real → Real} {p q u : Real} (hp : LT.lt.{0} 0 p)
+  (hq : LT.lt.{0} 0 q)
+  (hmin :
+    ∀ (t : Real),
+      LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)
+        (BfgsVerification.RidgeSupersession.profile a b p q t))
+  (hunique :
+    ∀ (t : Real),
+      Eq.{1} (BfgsVerification.RidgeSupersession.profile a b p q t)
+          (BfgsVerification.RidgeSupersession.profile a b p q u) →
+        Eq.{1} t u)
+  (x : BfgsVerification.Vec 2)
+  (hx :
+    Eq.{1} (BfgsVerification.RidgeSupersession.objective a b p q x)
+      (BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.RidgeSupersession.optimizer a b p q u))) :
+  Eq.{1} x (BfgsVerification.RidgeSupersession.optimizer a b p q u)
+'BfgsVerification.RidgeSupersession.optimizer_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.gradient (a b : Real → Real) (p q : Real) (x : BfgsVerification.Vec 2) :
+  Fin 2 → BfgsVerification.Vec 2
+'BfgsVerification.RidgeSupersession.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch_C2 {a b : Real → Real} (ha : ContDiff.{0, 0, 0} Real 2 a)
+  (hb : ContDiff.{0, 0, 0} Real 2 b) (p q : Real) (i : Fin 2) :
+  ContDiff.{0, 0, 0} Real 2 (BfgsVerification.RidgeSupersession.branch a b p q i)
+'BfgsVerification.RidgeSupersession.branch_C2' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.branch_hasGradient {a b : Real → Real} (ha : Differentiable.{0, 0, 0} Real a)
+  (hb : Differentiable.{0, 0, 0} Real b) (p q : Real) (x : BfgsVerification.Vec 2) (i : Fin 2) :
+  HasFDerivAt.{0, 0, 0} (BfgsVerification.RidgeSupersession.branch a b p q i)
+    (BfgsVerification.gradientFunctional (BfgsVerification.RidgeSupersession.gradient a b p q x i)) x
+'BfgsVerification.RidgeSupersession.branch_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.coordinateGradient_eq {a b : Real → Real} (ha : ContDiff.{0, 0, 0} Real 2 a)
+  (hb : ContDiff.{0, 0, 0} Real 2 b) (p q : Real) (x : BfgsVerification.Vec 2) (i : Fin 2) :
+  Eq.{1} (BfgsVerification.coordinateGradient (BfgsVerification.RidgeSupersession.branch a b p q i) x)
+    (BfgsVerification.RidgeSupersession.gradient a b p q x i)
+'BfgsVerification.RidgeSupersession.coordinateGradient_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.localFiniteMax (a b : Real → Real) (p q : Real) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.ConvexSubdifferential.LocalFiniteMax (BfgsVerification.RidgeSupersession.objective a b p q)
+    (BfgsVerification.RidgeSupersession.branch a b p q) x
+'BfgsVerification.RidgeSupersession.localFiniteMax' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.gradients_affineIndependent {a b : Real → Real} {p q : Real} (hp : LT.lt.{0} 0 p)
+  (hq : LT.lt.{0} 0 q) (x : BfgsVerification.Vec 2) :
+  AffineIndependent.{0, 0, 0, 0} Real (BfgsVerification.RidgeSupersession.gradient a b p q x)
+'BfgsVerification.RidgeSupersession.gradients_affineIndependent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.source_regular {a b : Real → Real} (ha : ContDiff.{0, 0, 0} Real 2 a)
+  (hb : ContDiff.{0, 0, 0} Real 2 b) (hca : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hcb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q : Real} (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q)
+  (x : BfgsVerification.Vec 2)
+  (hn :
+    Not
+      (BfgsVerification.AffineCriticalObjective.IsAffineCritical (BfgsVerification.RidgeSupersession.objective a b p q)
+        x)) :
+  Or (ContDiffAt.{0, 0, 0} Real 2 (BfgsVerification.RidgeSupersession.objective a b p q) x)
+    (BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt (BfgsVerification.RidgeSupersession.objective a b p q)
+      x)
+'BfgsVerification.RidgeSupersession.source_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_hasDerivAt {a b : Real → Real} (ha : Differentiable.{0, 0, 0} Real a)
+  (hb : Differentiable.{0, 0, 0} Real b) (p q u : Real) :
+  HasDerivAt.{0, 0} (BfgsVerification.RidgeSupersession.profile a b p q)
+    (HDiv.hDiv.{0, 0, 0}
+      (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} q (deriv.{0, 0} a u)) (HMul.hMul.{0, 0, 0} p (deriv.{0, 0} b u)))
+      (HAdd.hAdd.{0, 0, 0} p q))
+    u
+'BfgsVerification.RidgeSupersession.profile_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.actual_gradient_determinant {a b : Real → Real}
+  (ha : Differentiable.{0, 0, 0} Real a) (hb : Differentiable.{0, 0, 0} Real b) {p q : Real}
+  (hpq : Ne.{1} (HAdd.hAdd.{0, 0, 0} p q) 0) (x : BfgsVerification.Vec 2) :
+  Eq.{1}
+    (BfgsVerification.HomogeneousPlanar.pairDet (BfgsVerification.RidgeSupersession.gradient a b p q x 0)
+      (BfgsVerification.RidgeSupersession.gradient a b p q x 1))
+    (HMul.hMul.{0, 0, 0} (Neg.neg.{0} (HAdd.hAdd.{0, 0, 0} p q))
+      (deriv.{0, 0} (BfgsVerification.RidgeSupersession.profile a b p q) (x 0)))
+'BfgsVerification.RidgeSupersession.actual_gradient_determinant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.midpoint_below_level {a b : Real → Real}
+  (ha : StrictConvexOn.{0, 0, 0} Real Set.univ.{0} a) (hb : StrictConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q : Real}
+  (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q) {x y : BfgsVerification.Vec 2} (hne : Ne.{1} x y) {level : Real}
+  (hx : LE.le.{0} (BfgsVerification.RidgeSupersession.objective a b p q x) level)
+  (hy : LE.le.{0} (BfgsVerification.RidgeSupersession.objective a b p q y) level) :
+  LT.lt.{0}
+    (BfgsVerification.RidgeSupersession.objective a b p q
+      (HAdd.hAdd.{0, 0, 0} (HSMul.hSMul.{0, 0, 0} (1 / 2) x) (HSMul.hSMul.{0, 0, 0} (1 / 2) y)))
+    level
+'BfgsVerification.RidgeSupersession.midpoint_below_level' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.strict_contours {a b : Real → Real}
+  (ha : StrictConvexOn.{0, 0, 0} Real Set.univ.{0} a) (hb : StrictConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q : Real}
+  (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q) (level : Real) (x y : BfgsVerification.Vec 2)
+  (hseg :
+    HasSubset.Subset.{0} (segment.{0, 0} Real x y)
+      (frontier.{0} (setOf.{0} fun z => LE.le.{0} (BfgsVerification.RidgeSupersession.objective a b p q z) level))) :
+  Eq.{1} x y
+'BfgsVerification.RidgeSupersession.strict_contours' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_convex {a b : Real → Real} (ha : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q : Real} (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q) :
+  ConvexOn.{0, 0, 0} Real Set.univ.{0} (BfgsVerification.RidgeSupersession.profile a b p q)
+'BfgsVerification.RidgeSupersession.profile_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.profile_deriv_zero_implies_optimizer {a b : Real → Real}
+  (ha : Differentiable.{0, 0, 0} Real a) (hb : Differentiable.{0, 0, 0} Real b)
+  (hca : ConvexOn.{0, 0, 0} Real Set.univ.{0} a) (hcb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q u : Real}
+  (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q)
+  (hmin :
+    ∀ (t : Real),
+      LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)
+        (BfgsVerification.RidgeSupersession.profile a b p q t))
+  (hunique :
+    ∀ (t : Real),
+      Eq.{1} (BfgsVerification.RidgeSupersession.profile a b p q t)
+          (BfgsVerification.RidgeSupersession.profile a b p q u) →
+        Eq.{1} t u)
+  (t : Real) (ht : Eq.{1} (deriv.{0, 0} (BfgsVerification.RidgeSupersession.profile a b p q) t) 0) : Eq.{1} t u
+'BfgsVerification.RidgeSupersession.profile_deriv_zero_implies_optimizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.tie_point {a b : Real → Real} {p q : Real} (hpq : Ne.{1} (HAdd.hAdd.{0, 0, 0} p q) 0)
+  (x : BfgsVerification.Vec 2)
+  (htie :
+    Eq.{1} (BfgsVerification.RidgeSupersession.branch a b p q 0 x)
+      (BfgsVerification.RidgeSupersession.branch a b p q 1 x)) :
+  Eq.{1} x (BfgsVerification.RidgeSupersession.optimizer a b p q (x 0))
+'BfgsVerification.RidgeSupersession.tie_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.source_affineCorrect {a b : Real → Real} (ha : ContDiff.{0, 0, 0} Real 2 a)
+  (hb : ContDiff.{0, 0, 0} Real 2 b) (hca : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hcb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q u : Real} (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q)
+  (hmin :
+    ∀ (t : Real),
+      LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)
+        (BfgsVerification.RidgeSupersession.profile a b p q t))
+  (hunique :
+    ∀ (t : Real),
+      Eq.{1} (BfgsVerification.RidgeSupersession.profile a b p q t)
+          (BfgsVerification.RidgeSupersession.profile a b p q u) →
+        Eq.{1} t u)
+  (x : BfgsVerification.Vec 2) :
+  BfgsVerification.AffineCriticalObjective.AffineCorrectAt (BfgsVerification.RidgeSupersession.objective a b p q) x
+'BfgsVerification.RidgeSupersession.source_affineCorrect' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.fullBFGS_convergence {a b : Real → Real} (ha : ContDiff.{0, 0, 0} Real 2 a)
+  (hb : ContDiff.{0, 0, 0} Real 2 b) (hca : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hcb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q u : Real} (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q)
+  (hmin :
+    ∀ (t : Real),
+      LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)
+        (BfgsVerification.RidgeSupersession.profile a b p q t))
+  (hunique :
+    ∀ (t : Real),
+      Eq.{1} (BfgsVerification.RidgeSupersession.profile a b p q t)
+          (BfgsVerification.RidgeSupersession.profile a b p q u) →
+        Eq.{1} t u)
+  (ha'' : ∀ (t : Real), Ne.{1} t u → LT.lt.{0} 0 (deriv.{0, 0} (deriv.{0, 0} a) t))
+  (hb'' : ∀ (t : Real), Ne.{1} t u → LT.lt.{0} 0 (deriv.{0, 0} (deriv.{0, 0} b) t))
+  (R : BfgsVerification.AdmissibleBFGSRun 2 (BfgsVerification.RidgeSupersession.objective a b p q)) :
+  And
+    (Filter.Tendsto.{0, 0}
+      (fun k => BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.AdmissibleBFGSRun.x R k))
+      Filter.atTop.{0} (nhds.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)))
+    (Filter.Tendsto.{0, 0} (BfgsVerification.AdmissibleBFGSRun.x R) Filter.atTop.{0}
+      (nhds.{0} (BfgsVerification.RidgeSupersession.optimizer a b p q u)))
+'BfgsVerification.RidgeSupersession.fullBFGS_convergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.localized_fullBFGS_convergence {a b : Real → Real} (ha : ContDiff.{0, 0, 0} Real 2 a)
+  (hb : ContDiff.{0, 0, 0} Real 2 b) (hca : ConvexOn.{0, 0, 0} Real Set.univ.{0} a)
+  (hcb : ConvexOn.{0, 0, 0} Real Set.univ.{0} b) {p q u : Real} (hp : LT.lt.{0} 0 p) (hq : LT.lt.{0} 0 q)
+  (hmin :
+    ∀ (t : Real),
+      LE.le.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)
+        (BfgsVerification.RidgeSupersession.profile a b p q t))
+  (hunique :
+    ∀ (t : Real),
+      Eq.{1} (BfgsVerification.RidgeSupersession.profile a b p q t)
+          (BfgsVerification.RidgeSupersession.profile a b p q u) →
+        Eq.{1} t u)
+  (ha'' : ∀ (t : Real), Ne.{1} t u → LT.lt.{0} 0 (deriv.{0, 0} (deriv.{0, 0} a) t))
+  (hb'' : ∀ (t : Real), Ne.{1} t u → LT.lt.{0} 0 (deriv.{0, 0} (deriv.{0, 0} b) t))
+  (U : Set.{0} (BfgsVerification.Vec 2))
+  (hU : Membership.mem.{0, 0} (nhds.{0} (BfgsVerification.RidgeSupersession.optimizer a b p q u)) U) :
+  ∃ ε,
+    And (LT.lt.{0} 0 ε)
+      (∀ (R : BfgsVerification.AdmissibleBFGSRun 2 (BfgsVerification.RidgeSupersession.objective a b p q)),
+        LE.le.{0} (BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.AdmissibleBFGSRun.x R 0))
+            (HAdd.hAdd.{0, 0, 0} (BfgsVerification.RidgeSupersession.profile a b p q u) ε) →
+          And (∀ (k : Nat), Membership.mem.{0, 0} U (BfgsVerification.AdmissibleBFGSRun.x R k))
+            (And
+              (Filter.Tendsto.{0, 0}
+                (fun k =>
+                  BfgsVerification.RidgeSupersession.objective a b p q (BfgsVerification.AdmissibleBFGSRun.x R k))
+                Filter.atTop.{0} (nhds.{0} (BfgsVerification.RidgeSupersession.profile a b p q u)))
+              (Filter.Tendsto.{0, 0} (BfgsVerification.AdmissibleBFGSRun.x R) Filter.atTop.{0}
+                (nhds.{0} (BfgsVerification.RidgeSupersession.optimizer a b p q u)))))
+'BfgsVerification.RidgeSupersession.localized_fullBFGS_convergence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RidgeSupersession.RidgeSupersessionTarget : Prop
+'BfgsVerification.RidgeSupersession.RidgeSupersessionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RidgeSupersession.ridgeSupersession : BfgsVerification.RidgeSupersession.RidgeSupersessionTarget
+'BfgsVerification.RidgeSupersession.ridgeSupersession' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFactor (p : Polynomial.{0} Real) (a : Real) : Polynomial.{0} Real
+'BfgsVerification.RealAlgebraicGeometry.rootFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_factorization (p : Polynomial.{0} Real) (a x : Real) :
+  Eq.{1} (Polynomial.eval.{0} x p)
+    (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (Polynomial.rootMultiplicity.{0} a p))
+      (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)))
+'BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_factorization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_ne_zero {p : Polynomial.{0} Real} (hp : Ne.{1} p 0) (a : Real) :
+  Ne.{1} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)) 0
+'BfgsVerification.RealAlgebraicGeometry.rootFactor_eval_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuous_eventually_sign_eq {f : Real → Real} {a : Real}
+  (hf : ContinuousAt.{0, 0} f a) (hne : Ne.{1} (f a) 0) :
+  ∀ᶠ (x : Real) in nhds.{0} a, Eq.{1} (SignType.sign.{0} (f x)) (SignType.sign.{0} (f a))
+'BfgsVerification.RealAlgebraicGeometry.continuous_eventually_sign_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_eventually_sign_eq {p : Polynomial.{0} Real} {a : Real}
+  (hne : Ne.{1} (Polynomial.eval.{0} a p) 0) :
+  ∀ᶠ (x : Real) in nhds.{0} a,
+    Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x p)) (SignType.sign.{0} (Polynomial.eval.{0} a p))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_eventually_sign_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_right_of_rootMultiplicity {p : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (a : Real) :
+  ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Ioi.{0} a),
+    Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x p))
+      (SignType.sign.{0} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_right_of_rootMultiplicity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_left_of_rootMultiplicity {p : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (a : Real) :
+  ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Iio.{0} a),
+    Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x p))
+      (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.rootMultiplicity.{0} a p))
+        (SignType.sign.{0} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_left_of_rootMultiplicity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_logDerivative_identity (p : Polynomial.{0} Real) (a x : Real) :
+  Eq.{1} (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+    (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} (↑(Polynomial.rootMultiplicity.{0} a p)) (Polynomial.eval.{0} x p))
+      (HMul.hMul.{0, 0, 0}
+        (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (HAdd.hAdd.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a p) 1))
+        (Polynomial.eval.{0} x (Polynomial.derivative.{0} (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)))))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_logDerivative_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_eq (p : Polynomial.{0} Real) (a x : Real)
+  (hx : Ne.{1} x a) (hr : Ne.{1} (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a)) 0) :
+  Eq.{1}
+    (HDiv.hDiv.{0, 0, 0}
+      (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+      (Polynomial.eval.{0} x p))
+    (HAdd.hAdd.{0, 0, 0} (↑(Polynomial.rootMultiplicity.{0} a p))
+      (HDiv.hDiv.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a)
+          (Polynomial.eval.{0} x (Polynomial.derivative.{0} (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))))
+        (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_tendsto {p : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (a : Real) :
+  Filter.Tendsto.{0, 0}
+    (fun x =>
+      HDiv.hDiv.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+        (Polynomial.eval.{0} x p))
+    (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a)))
+    (nhds.{0} ↑(Polynomial.rootMultiplicity.{0} a p))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_normalized_logDerivative_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_normalized_logDerivative_tendsto {p : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (q : Polynomial.{0} Real) (a : Real) :
+  Filter.Tendsto.{0, 0}
+    (fun x =>
+      HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a)
+        (HDiv.hDiv.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+          (Polynomial.eval.{0} x p)))
+    (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a)))
+    (nhds.{0} (HMul.hMul.{0, 0, 0} (↑(Polynomial.rootMultiplicity.{0} a p)) (Polynomial.eval.{0} a q)))
+'BfgsVerification.RealAlgebraicGeometry.weighted_normalized_logDerivative_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_right (a : Real) :
+  Filter.Tendsto.{0, 0} (fun x => Inv.inv.{0} (HSub.hSub.{0, 0, 0} x a)) (nhdsWithin.{0} a (Set.Ioi.{0} a))
+    Filter.atTop.{0}
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_right' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_left (a : Real) :
+  Filter.Tendsto.{0, 0} (fun x => Inv.inv.{0} (HSub.hSub.{0, 0, 0} x a)) (nhdsWithin.{0} a (Set.Iio.{0} a))
+    Filter.atBot.{0}
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_tendsto_left' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_pole_pos {f : Real → Real} {a c : Real} (hc : LT.lt.{0} 0 c)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  And (Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atTop.{0})
+    (Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0})
+'BfgsVerification.RealAlgebraicGeometry.normalized_pole_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_pole_neg {f : Real → Real} {a c : Real} (hc : LT.lt.{0} c 0)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  And (Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atBot.{0})
+    (Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0})
+'BfgsVerification.RealAlgebraicGeometry.normalized_pole_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_positive_pole {p q : Polynomial.{0} Real} {a : Real}
+  (hp : Ne.{1} p 0) (ha : Polynomial.IsRoot.{0} p a) (hq : LT.lt.{0} 0 (Polynomial.eval.{0} a q)) :
+  And
+    (Filter.Tendsto.{0, 0}
+      (fun x =>
+        HDiv.hDiv.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+          (Polynomial.eval.{0} x p))
+      (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atTop.{0})
+    (Filter.Tendsto.{0, 0}
+      (fun x =>
+        HDiv.hDiv.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+          (Polynomial.eval.{0} x p))
+      (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0})
+'BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_positive_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_negative_pole {p q : Polynomial.{0} Real} {a : Real}
+  (hp : Ne.{1} p 0) (ha : Polynomial.IsRoot.{0} p a) (hq : LT.lt.{0} (Polynomial.eval.{0} a q) 0) :
+  And
+    (Filter.Tendsto.{0, 0}
+      (fun x =>
+        HDiv.hDiv.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+          (Polynomial.eval.{0} x p))
+      (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atBot.{0})
+    (Filter.Tendsto.{0, 0}
+      (fun x =>
+        HDiv.hDiv.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+          (Polynomial.eval.{0} x p))
+      (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0})
+'BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_negative_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_finite_of_weight_root {p q : Polynomial.{0} Real}
+  {a : Real} (hp : Ne.{1} p 0) (hq : Polynomial.IsRoot.{0} q a) :
+  Filter.Tendsto.{0, 0}
+    (fun x =>
+      HDiv.hDiv.{0, 0, 0}
+        (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+        (Polynomial.eval.{0} x p))
+    (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a)))
+    (nhds.{0}
+      (HMul.hMul.{0, 0, 0} (↑(Polynomial.rootMultiplicity.{0} a p))
+        (Polynomial.eval.{0} a
+          (Polynomial.divByMonic.{0} q (HSub.hSub.{0, 0, 0} Polynomial.X.{0} (Polynomial.C.{0} a))))))
+'BfgsVerification.RealAlgebraicGeometry.weighted_logDerivative_finite_of_weight_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex (f : Real → Real) (a : Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_positive_pole {f : Real → Real} {a : Real}
+  (hr : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atTop.{0})
+  (hl : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0}) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a) 1
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_positive_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_negative_pole {f : Real → Real} {a : Real}
+  (hr : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atBot.{0})
+  (hl : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0}) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a) (-1)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_negative_pole' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_finite_left_limit {f : Real → Real} {a b : Real}
+  (h : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) (nhds.{0} b)) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a) 0
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_finite_left_limit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_weighted_logDerivative {p q : Polynomial.{0} Real} {a : Real}
+  (hp : Ne.{1} p 0) (ha : Polynomial.IsRoot.{0} p a) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+      (fun x =>
+        HDiv.hDiv.{0, 0, 0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x (Polynomial.derivative.{0} p)))
+          (Polynomial.eval.{0} x p))
+      a)
+    ↑(SignType.sign.{0} (Polynomial.eval.{0} a q))
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_weighted_logDerivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (numerator denominator : Polynomial.{0} Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery (p q : Polynomial.{0} Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_rationalCauchyIndex {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (q : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p q)
+    (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (HMul.hMul.{0, 0, 0} q (Polynomial.derivative.{0} p)) p)
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_rationalCauchyIndex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_cast_eq_indicators (r : Real) :
+  Eq.{1} (↑(SignType.sign.{0} r)) (HSub.hSub.{0, 0, 0} (ite.{1} (LT.lt.{0} 0 r) 1 0) (ite.{1} (LT.lt.{0} r 0) 1 0))
+'BfgsVerification.RealAlgebraicGeometry.sign_cast_eq_indicators' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_positive_card_sub_negative_card (p q : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p q)
+    (HSub.hSub.{0, 0, 0}
+      ↑(Finset.card.{0} ({a ∈ Multiset.toFinset.{0} (Polynomial.roots.{0} p) | LT.lt.{0} 0 (Polynomial.eval.{0} a q)}))
+      ↑(Finset.card.{0} ({a ∈ Multiset.toFinset.{0} (Polynomial.roots.{0} p) | LT.lt.{0} (Polynomial.eval.{0} a q) 0})))
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_positive_card_sub_negative_card' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_one (p : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p 1)
+    ↑(Finset.card.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p)))
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_zero (p : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p 0) 0
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialOneSidedSignsTarget : Prop
+'BfgsVerification.PolynomialOneSidedSignsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialOneSidedSigns : BfgsVerification.PolynomialOneSidedSignsTarget
+'BfgsVerification.polynomialOneSidedSigns' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialLogarithmicResidueTarget : Prop
+'BfgsVerification.PolynomialLogarithmicResidueTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialLogarithmicResidue : BfgsVerification.PolynomialLogarithmicResidueTarget
+'BfgsVerification.polynomialLogarithmicResidue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.WeightedLogarithmicPoleTarget : Prop
+'BfgsVerification.WeightedLogarithmicPoleTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.weightedLogarithmicPole : BfgsVerification.WeightedLogarithmicPoleTarget
+'BfgsVerification.weightedLogarithmicPole' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TarskiCauchyLocalIdentityTarget : Prop
+'BfgsVerification.TarskiCauchyLocalIdentityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.tarskiCauchyLocalIdentity : BfgsVerification.TarskiCauchyLocalIdentityTarget
+'BfgsVerification.tarskiCauchyLocalIdentity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rational_eval_of_order_le (p q : Polynomial.{0} Real) (a x : Real)
+  (horder : LE.le.{0} (Polynomial.rootMultiplicity.{0} a q) (Polynomial.rootMultiplicity.{0} a p)) (hx : Ne.{1} x a)
+  (hq : Ne.{1} (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor q a)) 0) :
+  Eq.{1} (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q))
+    (HMul.hMul.{0, 0, 0}
+      (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a)
+        (HSub.hSub.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a p) (Polynomial.rootMultiplicity.{0} a q)))
+      (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+        (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor q a))))
+'BfgsVerification.RealAlgebraicGeometry.rational_eval_of_order_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_rational_eval_of_order_le (p q : Polynomial.{0} Real) (a x : Real)
+  (horder : LE.le.{0} (Polynomial.rootMultiplicity.{0} a p) (Polynomial.rootMultiplicity.{0} a q)) (hx : Ne.{1} x a)
+  (hq : Ne.{1} (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor q a)) 0) :
+  Eq.{1}
+    (HMul.hMul.{0, 0, 0}
+      (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a)
+        (HSub.hSub.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a q) (Polynomial.rootMultiplicity.{0} a p)))
+      (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)))
+    (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+      (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.rootFactor q a)))
+'BfgsVerification.RealAlgebraicGeometry.normalized_rational_eval_of_order_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rational_finite_limit_of_order_le (p : Polynomial.{0} Real)
+  {q : Polynomial.{0} Real} (hq : Ne.{1} q 0) (a : Real)
+  (horder : LE.le.{0} (Polynomial.rootMultiplicity.{0} a q) (Polynomial.rootMultiplicity.{0} a p)) :
+  Filter.Tendsto.{0, 0} (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q))
+    (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a)))
+    (nhds.{0}
+      (HMul.hMul.{0, 0, 0}
+        (HPow.hPow.{0, 0, 0} 0
+          (HSub.hSub.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a p) (Polynomial.rootMultiplicity.{0} a q)))
+        (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+          (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor q a)))))
+'BfgsVerification.RealAlgebraicGeometry.rational_finite_limit_of_order_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_rational_limit_of_order_le (p : Polynomial.{0} Real)
+  {q : Polynomial.{0} Real} (hq : Ne.{1} q 0) (a : Real)
+  (horder : LE.le.{0} (Polynomial.rootMultiplicity.{0} a p) (Polynomial.rootMultiplicity.{0} a q)) :
+  Filter.Tendsto.{0, 0}
+    (fun x =>
+      HMul.hMul.{0, 0, 0}
+        (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a)
+          (HSub.hSub.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a q) (Polynomial.rootMultiplicity.{0} a p)))
+        (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)))
+    (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a)))
+    (nhds.{0}
+      (HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+        (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor q a))))
+'BfgsVerification.RealAlgebraicGeometry.normalized_rational_limit_of_order_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_zero_of_order_le (p : Polynomial.{0} Real)
+  {q : Polynomial.{0} Real} (hq : Ne.{1} q 0) (a : Real)
+  (horder : LE.le.{0} (Polynomial.rootMultiplicity.{0} a q) (Polynomial.rootMultiplicity.{0} a p)) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+      (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)) a)
+    0
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_zero_of_order_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_pow_tendsto_right (a : Real) {m : Nat} (hm : Ne.{1} m 0) :
+  Filter.Tendsto.{0, 0} (fun x => HPow.hPow.{0, 0, 0} (Inv.inv.{0} (HSub.hSub.{0, 0, 0} x a)) m)
+    (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atTop.{0}
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_pow_tendsto_right' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_pow_tendsto_left_even (a : Real) {m : Nat} (hm : Ne.{1} m 0)
+  (he : Even.{0} m) :
+  Filter.Tendsto.{0, 0} (fun x => HPow.hPow.{0, 0, 0} (Inv.inv.{0} (HSub.hSub.{0, 0, 0} x a)) m)
+    (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0}
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_pow_tendsto_left_even' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.inverse_sub_pow_tendsto_left_odd (a : Real) {m : Nat} (ho : Odd.{0} m) :
+  Filter.Tendsto.{0, 0} (fun x => HPow.hPow.{0, 0, 0} (Inv.inv.{0} (HSub.hSub.{0, 0, 0} x a)) m)
+    (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0}
+'BfgsVerification.RealAlgebraicGeometry.inverse_sub_pow_tendsto_left_odd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_same_atTop {f : Real → Real} {a : Real}
+  (hr : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atTop.{0})
+  (hl : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0}) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a) 0
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_same_atTop' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_same_atBot {f : Real → Real} {a : Real}
+  (hr : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atBot.{0})
+  (hl : Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0}) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a) 0
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_of_same_atBot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_pos_right {f : Real → Real} {a c : Real} {m : Nat}
+  (hm : Ne.{1} m 0) (hc : LT.lt.{0} 0 c)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atTop.{0}
+'BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_pos_right' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_neg_right {f : Real → Real} {a c : Real} {m : Nat}
+  (hm : Ne.{1} m 0) (hc : LT.lt.{0} c 0)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Ioi.{0} a)) Filter.atBot.{0}
+'BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_neg_right' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_pos_left_even {f : Real → Real} {a c : Real} {m : Nat}
+  (hm : Ne.{1} m 0) (he : Even.{0} m) (hc : LT.lt.{0} 0 c)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0}
+'BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_pos_left_even' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_neg_left_even {f : Real → Real} {a c : Real} {m : Nat}
+  (hm : Ne.{1} m 0) (he : Even.{0} m) (hc : LT.lt.{0} c 0)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0}
+'BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_neg_left_even' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_pos_left_odd {f : Real → Real} {a c : Real} {m : Nat}
+  (ho : Odd.{0} m) (hc : LT.lt.{0} 0 c)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atBot.{0}
+'BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_pos_left_odd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_neg_left_odd {f : Real → Real} {a c : Real} {m : Nat}
+  (ho : Odd.{0} m) (hc : LT.lt.{0} c 0)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Filter.Tendsto.{0, 0} f (nhdsWithin.{0} a (Set.Iio.{0} a)) Filter.atTop.{0}
+'BfgsVerification.RealAlgebraicGeometry.normalized_power_pole_neg_left_odd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_normalized_power {f : Real → Real} {a c : Real} {m : Nat}
+  (hm : Ne.{1} m 0) (hc : Ne.{1} c 0)
+  (h :
+    Filter.Tendsto.{0, 0} (fun x => HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (HSub.hSub.{0, 0, 0} x a) m) (f x))
+      (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) (nhds.{0} c)) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a) (ite.{1} (Odd.{0} m) (↑(SignType.sign.{0} c)) 0)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_normalized_power' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_div_eq_sign_mul (x y : Real) :
+  Eq.{1} (SignType.sign.{0} (HDiv.hDiv.{0, 0, 0} x y)) (SignType.sign.{0} (HMul.hMul.{0, 0, 0} x y))
+'BfgsVerification.RealAlgebraicGeometry.sign_div_eq_sign_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_rational_order {p q : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (hq : Ne.{1} q 0) (a : Real) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+      (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)) a)
+    (ite.{1}
+      (And (LT.lt.{0} (Polynomial.rootMultiplicity.{0} a p) (Polynomial.rootMultiplicity.{0} a q))
+        (Odd.{0} (HSub.hSub.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a q) (Polynomial.rootMultiplicity.{0} a p))))
+      (↑(SignType.sign.{0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+            (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor q a)))))
+      0)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_rational_order' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.odd_sub_iff_odd_add {m n : Nat} (h : LE.le.{0} m n) :
+  Iff (Odd.{0} (HSub.hSub.{0, 0, 0} n m)) (Odd.{0} (HAdd.hAdd.{0, 0, 0} n m))
+'BfgsVerification.RealAlgebraicGeometry.odd_sub_iff_odd_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_rational_reciprocity {p q : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (hq : Ne.{1} q 0) (a : Real) :
+  Eq.{1}
+    (HAdd.hAdd.{0, 0, 0}
+      (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+        (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)) a)
+      (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+        (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x p)) a))
+    (ite.{1} (Odd.{0} (HAdd.hAdd.{0, 0, 0} (Polynomial.rootMultiplicity.{0} a p) (Polynomial.rootMultiplicity.{0} a q)))
+      (↑(SignType.sign.{0}
+          (HMul.hMul.{0, 0, 0} (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor p a))
+            (Polynomial.eval.{0} a (BfgsVerification.RealAlgebraicGeometry.rootFactor q a)))))
+      0)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_rational_reciprocity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_eventually_ne_punctured {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (a : Real) :
+  ∀ᶠ (x : Real) in nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a)),
+    Ne.{1} (Polynomial.eval.{0} x p) 0
+'BfgsVerification.RealAlgebraicGeometry.polynomial_eventually_ne_punctured' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tendsto_add_finite_atTop_iff {f g : Real → Real} {l : Filter.{0} Real} {b : Real}
+  (hg : Filter.Tendsto.{0, 0} g l (nhds.{0} b)) :
+  Iff (Filter.Tendsto.{0, 0} (fun x => HAdd.hAdd.{0, 0, 0} (f x) (g x)) l Filter.atTop.{0})
+    (Filter.Tendsto.{0, 0} f l Filter.atTop.{0})
+'BfgsVerification.RealAlgebraicGeometry.tendsto_add_finite_atTop_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tendsto_add_finite_atBot_iff {f g : Real → Real} {l : Filter.{0} Real} {b : Real}
+  (hg : Filter.Tendsto.{0, 0} g l (nhds.{0} b)) :
+  Iff (Filter.Tendsto.{0, 0} (fun x => HAdd.hAdd.{0, 0, 0} (f x) (g x)) l Filter.atBot.{0})
+    (Filter.Tendsto.{0, 0} f l Filter.atBot.{0})
+'BfgsVerification.RealAlgebraicGeometry.tendsto_add_finite_atBot_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_eventuallyEq {f g : Real → Real} {a : Real}
+  (h : Filter.EventuallyEq.{0, 0} (nhdsWithin.{0} a (HasCompl.compl.{0} (Singleton.singleton.{0, 0} a))) f g) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a)
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex g a)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_eventuallyEq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_add_of_continuousAt (f g : Real → Real) (a : Real)
+  (hg : ContinuousAt.{0, 0} g a) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex (fun x => HAdd.hAdd.{0, 0, 0} (f x) (g x)) a)
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex f a)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_add_of_continuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_polynomial_add_mul (p r : Polynomial.{0} Real)
+  {q : Polynomial.{0} Real} (hq : Ne.{1} q 0) (a : Real) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+      (fun x =>
+        HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x (HAdd.hAdd.{0, 0, 0} p (HMul.hMul.{0, 0, 0} q r)))
+          (Polynomial.eval.{0} x q))
+      a)
+    (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+      (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)) a)
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_polynomial_add_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_add_mul (p r : Polynomial.{0} Real) {q : Polynomial.{0} Real}
+  (hq : Ne.{1} q 0) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (HAdd.hAdd.{0, 0, 0} p (HMul.hMul.{0, 0, 0} q r)) q)
+    (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_add_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_mod (p : Polynomial.{0} Real) {q : Polynomial.{0} Real}
+  (hq : Ne.{1} q 0) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+    (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex (HMod.hMod.{0, 0, 0} p q) q)
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_mod' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_atTop (p : Polynomial.{0} Real) :
+  ∀ᶠ (x : Real) in Filter.atTop.{0},
+    Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x p)) (SignType.sign.{0} (Polynomial.leadingCoeff.{0} p))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_atTop' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_atBot (p : Polynomial.{0} Real) :
+  ∀ᶠ (x : Real) in Filter.atBot.{0},
+    Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x p))
+      (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.natDegree.{0} p))
+        (SignType.sign.{0} (Polynomial.leadingCoeff.{0} p)))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_atBot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteStepSum (B : Finset.{0} Real) (j : Real → Int) (x : Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.finiteStepSum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteStepSum_erase (B : Finset.{0} Real) (j : Real → Int) (a x : Real)
+  (hj : a ∉ B → Eq.{1} (j a) 0) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteStepSum B j x)
+    (HAdd.hAdd.{0, 0, 0} (ite.{1} (LE.le.{0} a x) (j a) 0)
+      (BfgsVerification.RealAlgebraicGeometry.finiteStepSum (Finset.erase.{0} B a) j x))
+'BfgsVerification.RealAlgebraicGeometry.finiteStepSum_erase' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteStepSum_eventuallyEq_of_not_mem (B : Finset.{0} Real) (j : Real → Int)
+  {a : Real} (ha : a ∉ B) :
+  ∀ᶠ (x : Real) in nhds.{0} a,
+    Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteStepSum B j x)
+      (BfgsVerification.RealAlgebraicGeometry.finiteStepSum B j a)
+'BfgsVerification.RealAlgebraicGeometry.finiteStepSum_eventuallyEq_of_not_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteStepSum_eventually_atTop (B : Finset.{0} Real) (j : Real → Int) :
+  ∀ᶠ (x : Real) in Filter.atTop.{0}, Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteStepSum B j x) (∑ b ∈ B, j b)
+'BfgsVerification.RealAlgebraicGeometry.finiteStepSum_eventually_atTop' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteStepSum_eventually_atBot (B : Finset.{0} Real) (j : Real → Int) :
+  ∀ᶠ (x : Real) in Filter.atBot.{0}, Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteStepSum B j x) 0
+'BfgsVerification.RealAlgebraicGeometry.finiteStepSum_eventually_atBot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_jump_corrected_locallyConstant (B : Finset.{0} Real) (f L : Real → Int)
+  (hleft : ∀ (a : Real), ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Iio.{0} a), Eq.{1} (f x) (L a))
+  (hright : ∀ (a : Real), ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Ici.{0} a), Eq.{1} (f x) (f a))
+  (hout : ∀ a ∉ B, Eq.{1} (L a) (f a)) :
+  IsLocallyConstant.{0, 0} fun x =>
+    HSub.hSub.{0, 0, 0} (f x)
+      (BfgsVerification.RealAlgebraicGeometry.finiteStepSum B (fun a => HSub.hSub.{0, 0, 0} (f a) (L a)) x)
+'BfgsVerification.RealAlgebraicGeometry.finite_jump_corrected_locallyConstant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_jump_telescope (B : Finset.{0} Real) (f L : Real → Int)
+  (hleft : ∀ (a : Real), ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Iio.{0} a), Eq.{1} (f x) (L a))
+  (hright : ∀ (a : Real), ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Ici.{0} a), Eq.{1} (f x) (f a))
+  (hout : ∀ a ∉ B, Eq.{1} (L a) (f a)) (leftTail rightTail : Int)
+  (hl : ∀ᶠ (x : Real) in Filter.atBot.{0}, Eq.{1} (f x) leftTail)
+  (hr : ∀ᶠ (x : Real) in Filter.atTop.{0}, Eq.{1} (f x) rightTail) :
+  Eq.{1} (∑ a ∈ B, HSub.hSub.{0, 0, 0} (f a) (L a)) (HSub.hSub.{0, 0, 0} rightTail leftTail)
+'BfgsVerification.RealAlgebraicGeometry.finite_jump_telescope' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign (p : Polynomial.{0} Real) (a : Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign (p : Polynomial.{0} Real) (a : Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_of_ne_zero {p : Polynomial.{0} Real} {a : Real}
+  (ha : Ne.{1} (Polynomial.eval.{0} a p) 0) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p a) ↑(SignType.sign.{0} (Polynomial.eval.{0} a p))
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_of_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_right_germ {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (a : Real) :
+  ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Ioi.{0} a),
+    Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p x)
+      (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p a)
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_right_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_closed_right_germ {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (a : Real) :
+  ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Ici.{0} a),
+    Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p x)
+      (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p a)
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_closed_right_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_left_germ {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (a : Real) :
+  ∀ᶠ (x : Real) in nhdsWithin.{0} a (Set.Iio.{0} a),
+    Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p x)
+      (BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign p a)
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_left_germ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign_eq_right_of_not_root {p : Polynomial.{0} Real} {a : Real}
+  (ha : Ne.{1} (Polynomial.eval.{0} a p) 0) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign p a)
+    (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p a)
+'BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign_eq_right_of_not_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_atTop {p : Polynomial.{0} Real} (hp : Ne.{1} p 0) :
+  ∀ᶠ (x : Real) in Filter.atTop.{0},
+    Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p x)
+      ↑(SignType.sign.{0} (Polynomial.leadingCoeff.{0} p))
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_atTop' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_atBot {p : Polynomial.{0} Real} (hp : Ne.{1} p 0) :
+  ∀ᶠ (x : Real) in Filter.atBot.{0},
+    Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p x)
+      (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.natDegree.{0} p))
+        ↑(SignType.sign.{0} (Polynomial.leadingCoeff.{0} p)))
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_atBot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomial_sign_jump_sum {p : Polynomial.{0} Real} (hp : Ne.{1} p 0) :
+  Eq.{1}
+    (∑ a ∈ Multiset.toFinset.{0} (Polynomial.roots.{0} p),
+      HSub.hSub.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p a)
+        (BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign p a))
+    (HSub.hSub.{0, 0, 0} (↑(SignType.sign.{0} (Polynomial.leadingCoeff.{0} p)))
+      (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.natDegree.{0} p))
+        ↑(SignType.sign.{0} (Polynomial.leadingCoeff.{0} p))))
+'BfgsVerification.RealAlgebraicGeometry.polynomial_sign_jump_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_mul {p q : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (hq : Ne.{1} q 0) (a : Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign (HMul.hMul.{0, 0, 0} p q) a)
+    (HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign p a)
+      (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign q a))
+'BfgsVerification.RealAlgebraicGeometry.polynomialRightSign_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_reciprocity_twice {p q : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (hq : Ne.{1} q 0) (a : Real) :
+  Eq.{1}
+    (HMul.hMul.{0, 0, 0} 2
+      (HAdd.hAdd.{0, 0, 0}
+        (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+          (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)) a)
+        (BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+          (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x q) (Polynomial.eval.{0} x p)) a)))
+    (HSub.hSub.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.polynomialRightSign (HMul.hMul.{0, 0, 0} p q) a)
+      (BfgsVerification.RealAlgebraicGeometry.polynomialLeftSign (HMul.hMul.{0, 0, 0} p q) a))
+'BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_reciprocity_twice' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_extend_roots {p q : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (hq : Ne.{1} q 0) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+    (∑ a ∈ Multiset.toFinset.{0} (Polynomial.roots.{0} (HMul.hMul.{0, 0, 0} p q)),
+      BfgsVerification.RealAlgebraicGeometry.localCauchyIndex
+        (fun x => HDiv.hDiv.{0, 0, 0} (Polynomial.eval.{0} x p) (Polynomial.eval.{0} x q)) a)
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_extend_roots' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_reciprocity_twice {p q : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (hq : Ne.{1} q 0) :
+  Eq.{1}
+    (HMul.hMul.{0, 0, 0} 2
+      (HAdd.hAdd.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+        (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex q p)))
+    (HSub.hSub.{0, 0, 0} (↑(SignType.sign.{0} (Polynomial.leadingCoeff.{0} (HMul.hMul.{0, 0, 0} p q))))
+      (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.natDegree.{0} (HMul.hMul.{0, 0, 0} p q)))
+        ↑(SignType.sign.{0} (Polynomial.leadingCoeff.{0} (HMul.hMul.{0, 0, 0} p q)))))
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_reciprocity_twice' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.infinityVariation (p q : Polynomial.{0} Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.infinityVariation' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_reciprocity {p q : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (hq : Ne.{1} q 0) :
+  Eq.{1}
+    (HAdd.hAdd.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+      (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex q p))
+    (BfgsVerification.RealAlgebraicGeometry.infinityVariation p q)
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_reciprocity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_zero_numerator (q : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex 0 q) 0
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_zero_numerator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_zero_denominator (p : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p 0) 0
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_zero_denominator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_euclidean_recurrence (p : Polynomial.{0} Real)
+  {q : Polynomial.{0} Real} (hq : Ne.{1} q 0) (hr : Ne.{1} (HMod.hMod.{0, 0, 0} p q) 0) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+    (HSub.hSub.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.infinityVariation (HMod.hMod.{0, 0, 0} p q) q)
+      (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex q (HMod.hMod.{0, 0, 0} p q)))
+'BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_euclidean_recurrence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.euclideanIndexAux : Nat → Polynomial.{0} Real → Polynomial.{0} Real → Int
+'BfgsVerification.RealAlgebraicGeometry.euclideanIndexAux' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.euclideanIndexAux_correct (k : Nat) (p q : Polynomial.{0} Real)
+  (hk : LT.lt.{0} (Polynomial.natDegree.{0} q) k) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.euclideanIndexAux k p q)
+    (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+'BfgsVerification.RealAlgebraicGeometry.euclideanIndexAux_correct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.euclideanIndex (p q : Polynomial.{0} Real) : Int
+'BfgsVerification.RealAlgebraicGeometry.euclideanIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.euclideanIndex_correct (p q : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.euclideanIndex p q)
+    (BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex p q)
+'BfgsVerification.RealAlgebraicGeometry.euclideanIndex_correct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_euclideanIndex {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (q : Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p q)
+    (BfgsVerification.RealAlgebraicGeometry.euclideanIndex (HMul.hMul.{0, 0, 0} q (Polynomial.derivative.{0} p)) p)
+'BfgsVerification.RealAlgebraicGeometry.tarskiQuery_eq_euclideanIndex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.FiniteJumpTelescopingTarget : Prop
+'BfgsVerification.FiniteJumpTelescopingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finiteJumpTelescoping : BfgsVerification.FiniteJumpTelescopingTarget
+'BfgsVerification.finiteJumpTelescoping' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialSignJumpTarget : Prop
+'BfgsVerification.PolynomialSignJumpTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialSignJump : BfgsVerification.PolynomialSignJumpTarget
+'BfgsVerification.polynomialSignJump' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RationalIndexReciprocityTarget : Prop
+'BfgsVerification.RationalIndexReciprocityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.rationalIndexReciprocity : BfgsVerification.RationalIndexReciprocityTarget
+'BfgsVerification.rationalIndexReciprocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RationalIndexRemainderTarget : Prop
+'BfgsVerification.RationalIndexRemainderTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.rationalIndexRemainder : BfgsVerification.RationalIndexRemainderTarget
+'BfgsVerification.rationalIndexRemainder' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.EuclideanIndexComputationTarget : Prop
+'BfgsVerification.EuclideanIndexComputationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.euclideanIndexComputation : BfgsVerification.EuclideanIndexComputationTarget
+'BfgsVerification.euclideanIndexComputation' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signIndicatorCoeff (σ : SignType) (e : Fin 3) : Rat
+'BfgsVerification.RealAlgebraicGeometry.signIndicatorCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_indicator_identity (σ τ : SignType) :
+  Eq.{1}
+    (∑ e,
+      HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signIndicatorCoeff σ e) (HPow.hPow.{0, 0, 0} ↑τ ↑e))
+    (ite.{1} (Eq.{1} τ σ) 1 0)
+'BfgsVerification.RealAlgebraicGeometry.sign_indicator_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signPatternCoeff {m : Nat} (σ : Fin m → SignType) (e : Fin m → Fin 3) : Rat
+'BfgsVerification.RealAlgebraicGeometry.signPatternCoeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_pattern_indicator {m : Nat} (σ τ : Fin m → SignType) :
+  Eq.{1}
+    (∑ e,
+      HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+        (∏ i, HPow.hPow.{0, 0, 0} ↑(τ i) ↑(e i)))
+    (ite.{1} (Eq.{1} τ σ) 1 0)
+'BfgsVerification.RealAlgebraicGeometry.sign_pattern_indicator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signPatternCoeff_empty (σ : Fin 0 → SignType) (e : Fin 0 → Fin 3) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e) 1
+'BfgsVerification.RealAlgebraicGeometry.signPatternCoeff_empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_product_powers {m : Nat} (a : Fin m → Real) (e : Fin m → Fin 3) :
+  Eq.{1} (SignType.sign.{0} (∏ i, HPow.hPow.{0, 0, 0} (a i) ↑(e i)))
+    (∏ i, HPow.hPow.{0, 0, 0} (SignType.sign.{0} (a i)) ↑(e i))
+'BfgsVerification.RealAlgebraicGeometry.sign_product_powers' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_product_powers_rat {m : Nat} (a : Fin m → Real) (e : Fin m → Fin 3) :
+  Eq.{1} (↑↑(SignType.sign.{0} (∏ i, HPow.hPow.{0, 0, 0} (a i) ↑(e i))))
+    (∏ i, HPow.hPow.{0, 0, 0} ↑(SignType.sign.{0} (a i)) ↑(e i))
+'BfgsVerification.RealAlgebraicGeometry.sign_product_powers_rat' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} {α : Type u_1} {m : Nat} (S : Finset.{u_1} α)
+  (h : α → Fin m → SignType) (σ : Fin m → SignType) : Nat
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{u_1} {α : Type u_1} {m : Nat} (S : Finset.{u_1} α)
+  (h : α → Fin m → SignType) (e : Fin m → Fin 3) : Rat
+'BfgsVerification.RealAlgebraicGeometry.finiteSignMoment' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_sign_count_from_moments.{u_1} {α : Type u_1} {m : Nat}
+  (S : Finset.{u_1} α) (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  Eq.{1} (↑(BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} S h σ))
+    (∑ e,
+      HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+        (BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{u_1} S h e))
+'BfgsVerification.RealAlgebraicGeometry.finite_sign_count_from_moments' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount_pos_iff.{u_1} {α : Type u_1} {m : Nat} (S : Finset.{u_1} α)
+  (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  Iff (LT.lt.{0} 0 (BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} S h σ))
+    (∃ a, And (Membership.mem.{u_1, u_1} S a) (Eq.{1} (h a) σ))
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount_pos_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_sign_pattern_iff_moment_positive.{u_1} {α : Type u_1} {m : Nat}
+  (S : Finset.{u_1} α) (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  Iff (∃ a, And (Membership.mem.{u_1, u_1} S a) (Eq.{1} (h a) σ))
+    (LT.lt.{0} 0
+      (∑ e,
+        HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+          (BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{u_1} S h e)))
+'BfgsVerification.RealAlgebraicGeometry.exists_sign_pattern_iff_moment_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_sign_counts_eq_of_moments_eq.{u_1, u_2} {α : Type u_1} {β : Type u_2}
+  {m : Nat} (S : Finset.{u_1} α) (T : Finset.{u_2} β) (h : α → Fin m → SignType) (k : β → Fin m → SignType)
+  (he :
+    ∀ (e : Fin m → Fin 3),
+      Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{u_1} S h e)
+        (BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{u_2} T k e))
+  (σ : Fin m → SignType) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} S h σ)
+    (BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_2} T k σ)
+'BfgsVerification.RealAlgebraicGeometry.finite_sign_counts_eq_of_moments_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_pattern.{u_1} {α : Type u_1} (S : Finset.{u_1} α)
+  (h : α → Fin 0 → SignType) (σ : Fin 0 → SignType) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} S h σ) (Finset.card.{u_1} S)
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_pattern' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_set.{u_1} {α : Type u_1} {m : Nat}
+  (h : α → Fin m → SignType) (σ : Fin m → SignType) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.finiteSignCount.{u_1} EmptyCollection.emptyCollection.{u_1} h σ) 0
+'BfgsVerification.RealAlgebraicGeometry.finiteSignCount_empty_set' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) : Nat
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial {m : Nat} (q : Fin m → Polynomial.{0} Real)
+  (e : Fin m → Fin 3) : Polynomial.{0} Real
+'BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_moment_eq_tarskiQuery {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (e : Fin m → Fin 3) :
+  Eq.{1}
+    (BfgsVerification.RealAlgebraicGeometry.finiteSignMoment.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p))
+      (fun a i => SignType.sign.{0} (Polynomial.eval.{0} a (q i))) e)
+    ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+        (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))
+'BfgsVerification.RealAlgebraicGeometry.root_sign_moment_eq_tarskiQuery' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_count_from_tarskiQueries {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  Eq.{1} (↑(BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ))
+    (∑ e,
+      HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+        ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+            (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e)))
+'BfgsVerification.RealAlgebraicGeometry.root_sign_count_from_tarskiQueries' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_pos_iff {m : Nat} {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  Iff (LT.lt.{0} 0 (BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ))
+    (∃ a,
+      And (Eq.{1} (Polynomial.eval.{0} a p) 0)
+        (∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} a (q i))) (σ i)))
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_pos_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_root_sign_pattern_iff_query_positive {m : Nat} {p : Polynomial.{0} Real}
+  (hp : Ne.{1} p 0) (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  Iff
+    (∃ a,
+      And (Eq.{1} (Polynomial.eval.{0} a p) 0)
+        (∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} a (q i))) (σ i)))
+    (LT.lt.{0} 0
+      (∑ e,
+        HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+          ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+              (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))))
+'BfgsVerification.RealAlgebraicGeometry.exists_root_sign_pattern_iff_query_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_counts_eq_of_queries_eq {m : Nat} (p p' : Polynomial.{0} Real)
+  (q q' : Fin m → Polynomial.{0} Real)
+  (he :
+    ∀ (e : Fin m → Fin 3),
+      Eq.{1}
+        (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+          (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))
+        (BfgsVerification.RealAlgebraicGeometry.tarskiQuery p'
+          (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q' e)))
+  (σ : Fin m → SignType) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ)
+    (BfgsVerification.RealAlgebraicGeometry.rootSignCount p' q' σ)
+'BfgsVerification.RealAlgebraicGeometry.root_sign_counts_eq_of_queries_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_zero_polynomial {m : Nat} (q : Fin m → Polynomial.{0} Real)
+  (σ : Fin m → SignType) : Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootSignCount 0 q σ) 0
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_zero_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_empty_pattern (p : Polynomial.{0} Real)
+  (q : Fin 0 → Polynomial.{0} Real) (σ : Fin 0 → SignType) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ)
+    (Finset.card.{0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p)))
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_empty_pattern' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial_empty (q : Fin 0 → Polynomial.{0} Real) (e : Fin 0 → Fin 3) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e) 1
+'BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial_empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootSignCount_le_natDegree {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  LE.le.{0} (BfgsVerification.RealAlgebraicGeometry.rootSignCount p q σ) (Polynomial.natDegree.{0} p)
+'BfgsVerification.RealAlgebraicGeometry.rootSignCount_le_natDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_sign_expression_bounds {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  And
+    (LE.le.{0} 0
+      (∑ e,
+        HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+          ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+              (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e))))
+    (LE.le.{0}
+      (∑ e,
+        HMul.hMul.{0, 0, 0} (BfgsVerification.RealAlgebraicGeometry.signPatternCoeff σ e)
+          ↑(BfgsVerification.RealAlgebraicGeometry.tarskiQuery p
+              (BfgsVerification.RealAlgebraicGeometry.signQueryPolynomial q e)))
+      ↑(Polynomial.natDegree.{0} p))
+'BfgsVerification.RealAlgebraicGeometry.root_sign_expression_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.card_sign_query_indices (m : Nat) :
+  Eq.{1} (Fintype.card.{0} (Fin m → Fin 3)) (HPow.hPow.{0, 0, 0} 3 m)
+'BfgsVerification.RealAlgebraicGeometry.card_sign_query_indices' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RootSignReconstructionTarget : Prop
+'BfgsVerification.RootSignReconstructionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.rootSignReconstruction : BfgsVerification.RootSignReconstructionTarget
+'BfgsVerification.rootSignReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SimultaneousRootSignsTarget : Prop
+'BfgsVerification.SimultaneousRootSignsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.simultaneousRootSigns : BfgsVerification.SimultaneousRootSignsTarget
+'BfgsVerification.simultaneousRootSigns' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SignQueryDeterminationTarget : Prop
+'BfgsVerification.SignQueryDeterminationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.signQueryDetermination : BfgsVerification.SignQueryDeterminationTarget
+'BfgsVerification.signQueryDetermination' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius (B : Finset.{0} Real) : Real
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius_pos (B : Finset.{0} Real) :
+  LT.lt.{0} 0 (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B)
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.mem_lt_signSampleRadius {B : Finset.{0} Real} {b : Real}
+  (hb : Membership.mem.{0, 0} B b) :
+  And (LT.lt.{0} (Neg.neg.{0} (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B)) b)
+    (LT.lt.{0} b (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B))
+'BfgsVerification.RealAlgebraicGeometry.mem_lt_signSampleRadius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius_not_mem (B : Finset.{0} Real) :
+  And (Neg.neg.{0} (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B) ∉ B)
+    (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B ∉ B)
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius_not_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius_profiles (B : Finset.{0} Real) :
+  And
+    (Eq.{1}
+      (BfgsVerification.RealAlgebraicGeometry.cutProfile B
+        (Neg.neg.{0} (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B)))
+      EmptyCollection.emptyCollection.{0})
+    (Eq.{1}
+      (BfgsVerification.RealAlgebraicGeometry.cutProfile B (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B))
+      B)
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius_profiles' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_boundary_gap {B : Finset.{0} Real} {x : Real} (hx : x ∉ B)
+  (hleft : ∃ b, And (Membership.mem.{0, 0} B b) (LT.lt.{0} b x))
+  (hright : ∃ b, And (Membership.mem.{0, 0} B b) (LT.lt.{0} x b)) :
+  ∃ l u,
+    And (Membership.mem.{0, 0} B l)
+      (And (Membership.mem.{0, 0} B u)
+        (And (LT.lt.{0} l x)
+          (And (LT.lt.{0} x u)
+            (∀ (z : Real),
+              Membership.mem.{0, 0} (Set.Ioo.{0} l u) z →
+                And (z ∉ B)
+                  (Eq.{1} (BfgsVerification.RealAlgebraicGeometry.cutProfile B z)
+                    (BfgsVerification.RealAlgebraicGeometry.cutProfile B x))))))
+'BfgsVerification.RealAlgebraicGeometry.finite_boundary_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct {m : Nat} (q : Fin m → Polynomial.{0} Real) :
+  Polynomial.{0} Real
+'BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_ne_zero {m : Nat} (q : Fin m → Polynomial.{0} Real) :
+  Ne.{1} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q) 0
+'BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_eval_zero_iff {m : Nat} (q : Fin m → Polynomial.{0} Real)
+  (x : Real) :
+  Iff (Eq.{1} (Polynomial.eval.{0} x (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)) 0)
+    (∃ i, And (Ne.{1} (q i) 0) (Eq.{1} (Polynomial.eval.{0} x (q i)) 0))
+'BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_eval_zero_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootBoundary_eq_nonzeroFamilyProduct_roots {m : Nat}
+  (q : Fin m → Polynomial.{0} Real) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.rootBoundary (Finset.image.{0, 0} q Finset.univ.{0}))
+    (Multiset.toFinset.{0} (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)))
+'BfgsVerification.RealAlgebraicGeometry.rootBoundary_eq_nonzeroFamilyProduct_roots' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_eq_of_zero_positive_iff {a b : Real} (hz : Iff (Eq.{1} a 0) (Eq.{1} b 0))
+  (hp : Iff (LT.lt.{0} 0 a) (LT.lt.{0} 0 b)) : Eq.{1} (SignType.sign.{0} a) (SignType.sign.{0} b)
+'BfgsVerification.RealAlgebraicGeometry.sign_eq_of_zero_positive_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.family_signs_eq_of_product_profile {m : Nat} (q : Fin m → Polynomial.{0} Real)
+  {x y : Real}
+  (hx :
+    x ∉ Multiset.toFinset.{0} (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)))
+  (hy :
+    y ∉ Multiset.toFinset.{0} (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)))
+  (hp :
+    Eq.{1}
+      (BfgsVerification.RealAlgebraicGeometry.cutProfile
+        (Multiset.toFinset.{0} (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)))
+        x)
+      (BfgsVerification.RealAlgebraicGeometry.cutProfile
+        (Multiset.toFinset.{0} (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)))
+        y))
+  (i : Fin m) :
+  Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x (q i))) (SignType.sign.{0} (Polynomial.eval.{0} y (q i)))
+'BfgsVerification.RealAlgebraicGeometry.family_signs_eq_of_product_profile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples (p : Polynomial.{0} Real) : Finset.{0} Real
+'BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.derivative_ne_zero_of_real_root {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  {a : Real} (ha : Eq.{1} (Polynomial.eval.{0} a p) 0) : Ne.{1} (Polynomial.derivative.{0} p) 0
+'BfgsVerification.RealAlgebraicGeometry.derivative_ne_zero_of_real_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_sample_same_or_profile {p : Polynomial.{0} Real} (hp : Ne.{1} p 0)
+  (x : Real) :
+  ∃ y,
+    And (Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples p) y)
+      (Or (Eq.{1} y x)
+        (And (x ∉ Multiset.toFinset.{0} (Polynomial.roots.{0} p))
+          (And (y ∉ Multiset.toFinset.{0} (Polynomial.roots.{0} p))
+            (Eq.{1}
+              (BfgsVerification.RealAlgebraicGeometry.cutProfile (Multiset.toFinset.{0} (Polynomial.roots.{0} p)) x)
+              (BfgsVerification.RealAlgebraicGeometry.cutProfile (Multiset.toFinset.{0} (Polynomial.roots.{0} p)) y)))))
+'BfgsVerification.RealAlgebraicGeometry.exists_sample_same_or_profile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_sample_with_same_family_signs {m : Nat} (q : Fin m → Polynomial.{0} Real)
+  (x : Real) :
+  ∃ y,
+    And
+      (Membership.mem.{0, 0}
+        (BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples
+          (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q))
+        y)
+      (∀ (i : Fin m),
+        Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} y (q i))) (SignType.sign.{0} (Polynomial.eval.{0} x (q i))))
+'BfgsVerification.RealAlgebraicGeometry.exists_sample_with_same_family_signs' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_family_signs_iff_sample {m : Nat} (q : Fin m → Polynomial.{0} Real)
+  (σ : Fin m → SignType) :
+  Iff (∃ x, ∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x (q i))) (σ i))
+    (∃ y,
+      And
+        (Membership.mem.{0, 0}
+          (BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples
+            (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q))
+          y)
+        (∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} y (q i))) (σ i)))
+'BfgsVerification.RealAlgebraicGeometry.exists_family_signs_iff_sample' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.right_tail_sample_sign {m : Nat} (q : Fin m → Polynomial.{0} Real) (i : Fin m) :
+  Eq.{1}
+    (SignType.sign.{0}
+      (Polynomial.eval.{0}
+        (BfgsVerification.RealAlgebraicGeometry.signSampleRadius
+          (Multiset.toFinset.{0}
+            (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q))))
+        (q i)))
+    (SignType.sign.{0} (Polynomial.leadingCoeff.{0} (q i)))
+'BfgsVerification.RealAlgebraicGeometry.right_tail_sample_sign' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.left_tail_sample_sign {m : Nat} (q : Fin m → Polynomial.{0} Real) (i : Fin m) :
+  Eq.{1}
+    (SignType.sign.{0}
+      (Polynomial.eval.{0}
+        (Neg.neg.{0}
+          (BfgsVerification.RealAlgebraicGeometry.signSampleRadius
+            (Multiset.toFinset.{0}
+              (Polynomial.roots.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)))))
+        (q i)))
+    (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.natDegree.{0} (q i)))
+      (SignType.sign.{0} (Polynomial.leadingCoeff.{0} (q i))))
+'BfgsVerification.RealAlgebraicGeometry.left_tail_sample_sign' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryExpression {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) : Rat
+'BfgsVerification.RealAlgebraicGeometry.signQueryExpression' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryExpression_positive_iff_rootList {m : Nat} (p : Polynomial.{0} Real)
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  Iff (LT.lt.{0} 0 (BfgsVerification.RealAlgebraicGeometry.signQueryExpression p q σ))
+    (∃ a,
+      And (Membership.mem.{0, 0} (Multiset.toFinset.{0} (Polynomial.roots.{0} p)) a)
+        (∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} a (q i))) (σ i)))
+'BfgsVerification.RealAlgebraicGeometry.signQueryExpression_positive_iff_rootList' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_real_sign_pattern_iff_queries_and_tails {m : Nat}
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  Iff (∃ x, ∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.eval.{0} x (q i))) (σ i))
+    (Or
+      (LT.lt.{0} 0
+        (BfgsVerification.RealAlgebraicGeometry.signQueryExpression
+          (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q) q σ))
+      (Or
+        (LT.lt.{0} 0
+          (BfgsVerification.RealAlgebraicGeometry.signQueryExpression
+            (Polynomial.derivative.{0} (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)) q σ))
+        (Or
+          (∀ (i : Fin m),
+            Eq.{1}
+              (HMul.hMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (-1) (Polynomial.natDegree.{0} (q i)))
+                (SignType.sign.{0} (Polynomial.leadingCoeff.{0} (q i))))
+              (σ i))
+          (∀ (i : Fin m), Eq.{1} (SignType.sign.{0} (Polynomial.leadingCoeff.{0} (q i))) (σ i)))))
+'BfgsVerification.RealAlgebraicGeometry.exists_real_sign_pattern_iff_queries_and_tails' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryExpression_zero_root_polynomial {m : Nat}
+  (q : Fin m → Polynomial.{0} Real) (σ : Fin m → SignType) :
+  Eq.{1} (BfgsVerification.RealAlgebraicGeometry.signQueryExpression 0 q σ) 0
+'BfgsVerification.RealAlgebraicGeometry.signQueryExpression_zero_root_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.FinitePolynomialSignSamplingTarget : Prop
+'BfgsVerification.FinitePolynomialSignSamplingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finitePolynomialSignSampling : BfgsVerification.FinitePolynomialSignSamplingTarget
+'BfgsVerification.finitePolynomialSignSampling' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialTailSamplesTarget : Prop
+'BfgsVerification.PolynomialTailSamplesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialTailSamples : BfgsVerification.PolynomialTailSamplesTarget
+'BfgsVerification.polynomialTailSamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealPolynomialSignReductionTarget : Prop
+'BfgsVerification.RealPolynomialSignReductionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.realPolynomialSignReduction : BfgsVerification.RealPolynomialSignReductionTarget
+'BfgsVerification.realPolynomialSignReduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.SeedOrbit.sharpRecurrentCardinality
+EXACT_TARGET_OK BfgsVerification.RidgeSupersession.ridgeSupersession
+EXACT_TARGET_OK BfgsVerification.polynomialOneSidedSigns
+EXACT_TARGET_OK BfgsVerification.polynomialLogarithmicResidue
+EXACT_TARGET_OK BfgsVerification.weightedLogarithmicPole
+EXACT_TARGET_OK BfgsVerification.tarskiCauchyLocalIdentity
+EXACT_TARGET_OK BfgsVerification.finiteJumpTelescoping
+EXACT_TARGET_OK BfgsVerification.polynomialSignJump
+EXACT_TARGET_OK BfgsVerification.rationalIndexReciprocity
+EXACT_TARGET_OK BfgsVerification.rationalIndexRemainder
+EXACT_TARGET_OK BfgsVerification.euclideanIndexComputation
+EXACT_TARGET_OK BfgsVerification.rootSignReconstruction
+EXACT_TARGET_OK BfgsVerification.simultaneousRootSigns
+EXACT_TARGET_OK BfgsVerification.signQueryDetermination
+EXACT_TARGET_OK BfgsVerification.finitePolynomialSignSampling
+EXACT_TARGET_OK BfgsVerification.polynomialTailSamples
+EXACT_TARGET_OK BfgsVerification.realPolynomialSignReduction

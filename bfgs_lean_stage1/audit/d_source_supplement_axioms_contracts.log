@@ -1,0 +1,490 @@
+BfgsVerification.DDisplayRaw.values (c d : Real) : Fin 33 → Real
+'BfgsVerification.DDisplayRaw.values' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayRaw.lower : Fin 33 → Real
+'BfgsVerification.DDisplayRaw.lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayRaw.upper : Fin 33 → Real
+'BfgsVerification.DDisplayRaw.upper' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayRaw.values_bounds {c d : Real}
+  (hc :
+    BfgsVerification.IntervalBounds.Bounds (318481427627118630646451312501 / 1000000000000000000000000000000) c
+      (39810178453389828830806414063 / 125000000000000000000000000000))
+  (hd :
+    BfgsVerification.IntervalBounds.Bounds (-205046423935149745096270174003 / 200000000000000000000000000000) d
+      (-256308029918937181370337717503 / 250000000000000000000000000000))
+  (i : Fin 33) :
+  BfgsVerification.IntervalBounds.Bounds (BfgsVerification.DDisplayRaw.lower i)
+    (BfgsVerification.DDisplayRaw.values c d i) (BfgsVerification.DDisplayRaw.upper i)
+'BfgsVerification.DDisplayRaw.values_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.basePoint : Fin 4 → BfgsVerification.Vec 2
+'BfgsVerification.DDisplayActual.basePoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.baseValue (j : Fin 3) : Real
+'BfgsVerification.DDisplayActual.baseValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.actualStep (j : Fin 3) (a : Real) : BfgsVerification.Vec 2
+'BfgsVerification.DDisplayActual.actualStep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.trialValue (q : Fin 9) : Real
+'BfgsVerification.DDisplayActual.trialValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.armijoRatio (j : Fin 3) : Real
+'BfgsVerification.DDisplayActual.armijoRatio' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.wolfeRatio (j : Fin 3) : Real
+'BfgsVerification.DDisplayActual.wolfeRatio' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.values : Fin 33 → Real
+'BfgsVerification.DDisplayActual.values' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.baseValue_eq (j : Fin 3) :
+  Eq.{1} (BfgsVerification.DDisplayActual.baseValue j)
+    (BfgsVerification.dot
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio j))
+'BfgsVerification.DDisplayActual.baseValue_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.actualStep_eq (j : Fin 3) (a : Real) :
+  Eq.{1} (BfgsVerification.DDisplayActual.actualStep j a)
+    (HSMul.hSMul.{0, 0, 0} a
+      (BfgsVerification.SeedOrbit.direction BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio j))
+'BfgsVerification.DDisplayActual.actualStep_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.trialValue_eq (q : Fin 9) :
+  Eq.{1} (BfgsVerification.DDisplayActual.trialValue q)
+    (BfgsVerification.dot
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.SeedOrbit.trialActive q))
+      (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio (BfgsVerification.SeedOrbit.trialPhase q)
+        (BfgsVerification.SeedOrbit.trialLength q)))
+'BfgsVerification.DDisplayActual.trialValue_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.acceptedValue_eq (j : Fin 3) :
+  Eq.{1}
+    (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      (HAdd.hAdd.{0, 0, 0}
+        (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          BfgsVerification.SeedOrbit.seedRatio j)
+        (BfgsVerification.DDisplayActual.actualStep j (BfgsVerification.SeedOrbit.length j))))
+    (BfgsVerification.dot
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.SeedOrbit.nextPhase j))
+      (BfgsVerification.DDisplayActual.basePoint (Fin.succ j)))
+'BfgsVerification.DDisplayActual.acceptedValue_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.basePoint_last :
+  Eq.{1} (BfgsVerification.DDisplayActual.basePoint 3)
+    (HSMul.hSMul.{0, 0, 0} BfgsVerification.SeedOrbit.seedRatio
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio 0))
+'BfgsVerification.DDisplayActual.basePoint_last' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_0_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 0)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0)
+'BfgsVerification.DDisplayActual.value_0_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_1_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 1)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1)
+'BfgsVerification.DDisplayActual.value_1_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_2_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 2)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 2)
+'BfgsVerification.DDisplayActual.value_2_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_3_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 3)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 3)
+'BfgsVerification.DDisplayActual.value_3_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_4_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 4)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 4)
+'BfgsVerification.DDisplayActual.value_4_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_5_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 5)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 5)
+'BfgsVerification.DDisplayActual.value_5_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_6_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 6)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 6)
+'BfgsVerification.DDisplayActual.value_6_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_7_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 7)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 7)
+'BfgsVerification.DDisplayActual.value_7_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_8_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 8)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 8)
+'BfgsVerification.DDisplayActual.value_8_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_9_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 9)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 9)
+'BfgsVerification.DDisplayActual.value_9_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_10_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 10)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 10)
+'BfgsVerification.DDisplayActual.value_10_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_11_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 11)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 11)
+'BfgsVerification.DDisplayActual.value_11_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_12_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 12)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 12)
+'BfgsVerification.DDisplayActual.value_12_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_13_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 13)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 13)
+'BfgsVerification.DDisplayActual.value_13_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_14_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 14)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 14)
+'BfgsVerification.DDisplayActual.value_14_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_15_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 15)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 15)
+'BfgsVerification.DDisplayActual.value_15_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_16_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 16)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 16)
+'BfgsVerification.DDisplayActual.value_16_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_17_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 17)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 17)
+'BfgsVerification.DDisplayActual.value_17_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_18_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 18)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 18)
+'BfgsVerification.DDisplayActual.value_18_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_19_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 19)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 19)
+'BfgsVerification.DDisplayActual.value_19_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_20_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 20)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 20)
+'BfgsVerification.DDisplayActual.value_20_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_21_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 21)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 21)
+'BfgsVerification.DDisplayActual.value_21_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_22_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 22)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 22)
+'BfgsVerification.DDisplayActual.value_22_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_23_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 23)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 23)
+'BfgsVerification.DDisplayActual.value_23_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_24_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 24)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 24)
+'BfgsVerification.DDisplayActual.value_24_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_25_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 25)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 25)
+'BfgsVerification.DDisplayActual.value_25_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_26_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 26)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 26)
+'BfgsVerification.DDisplayActual.value_26_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_27_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 27)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 27)
+'BfgsVerification.DDisplayActual.value_27_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_28_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 28)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 28)
+'BfgsVerification.DDisplayActual.value_28_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_29_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 29)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 29)
+'BfgsVerification.DDisplayActual.value_29_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_30_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 30)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 30)
+'BfgsVerification.DDisplayActual.value_30_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_31_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 31)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 31)
+'BfgsVerification.DDisplayActual.value_31_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.value_32_eq_raw :
+  Eq.{1} (BfgsVerification.DDisplayActual.values 32)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 32)
+'BfgsVerification.DDisplayActual.value_32_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayActual.values_eq_raw (i : Fin 33) :
+  Eq.{1} (BfgsVerification.DDisplayActual.values i)
+    (BfgsVerification.DDisplayRaw.values BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+'BfgsVerification.DDisplayActual.values_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.box_of_original_ball {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius) :
+  And
+    (BfgsVerification.IntervalBounds.Bounds
+      (HDiv.hDiv.{0, 0, 0} 318481427627118630646451312501 (HPow.hPow.{0, 0, 0} 10 30)) (x 0)
+      (HDiv.hDiv.{0, 0, 0} 318481427627118630646451312504 (HPow.hPow.{0, 0, 0} 10 30)))
+    (BfgsVerification.IntervalBounds.Bounds
+      (HDiv.hDiv.{0, 0, 0} (-1025232119675748725481350870015) (HPow.hPow.{0, 0, 0} 10 30)) (x 1)
+      (HDiv.hDiv.{0, 0, 0} (-1025232119675748725481350870012) (HPow.hPow.{0, 0, 0} 10 30)))
+'BfgsVerification.DDisplayPrecision.box_of_original_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.original : Fin 33 → Real
+'BfgsVerification.DDisplayPrecision.original' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.corrected : Fin 33 → Real
+'BfgsVerification.DDisplayPrecision.corrected' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.unit (i : Fin 33) : Real
+'BfgsVerification.DDisplayPrecision.unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.changed : Finset.{0} (Fin 33)
+'BfgsVerification.DDisplayPrecision.changed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.raw_bounds_on_original_ball {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius)
+  (i : Fin 33) :
+  BfgsVerification.IntervalBounds.Bounds (BfgsVerification.DDisplayRaw.lower i)
+    (BfgsVerification.DDisplayRaw.values (x 0) (x 1) i) (BfgsVerification.DDisplayRaw.upper i)
+'BfgsVerification.DDisplayPrecision.raw_bounds_on_original_ball' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DDisplayPrecision.actual_bounds (i : Fin 33) :
+  BfgsVerification.IntervalBounds.Bounds (BfgsVerification.DDisplayRaw.lower i)
+    (BfgsVerification.DDisplayActual.values i) (BfgsVerification.DDisplayRaw.upper i)
+'BfgsVerification.DDisplayPrecision.actual_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.corrected_interval (i : Fin 33) :
+  And
+    (LT.lt.{0}
+      (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayPrecision.corrected i)
+        (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2))
+      (BfgsVerification.DDisplayRaw.lower i))
+    (LT.lt.{0} (BfgsVerification.DDisplayRaw.upper i)
+      (HAdd.hAdd.{0, 0, 0} (BfgsVerification.DDisplayPrecision.corrected i)
+        (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2)))
+'BfgsVerification.DDisplayPrecision.corrected_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.original_interval (i : Fin 33) :
+  And
+    (LT.lt.{0}
+      (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayPrecision.original i) (BfgsVerification.DDisplayPrecision.unit i))
+      (BfgsVerification.DDisplayRaw.lower i))
+    (LT.lt.{0} (BfgsVerification.DDisplayRaw.upper i)
+      (HAdd.hAdd.{0, 0, 0} (BfgsVerification.DDisplayPrecision.original i) (BfgsVerification.DDisplayPrecision.unit i)))
+'BfgsVerification.DDisplayPrecision.original_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.corrected_error (i : Fin 33) :
+  LT.lt.{0}
+    (abs.{0}
+      (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayActual.values i) (BfgsVerification.DDisplayPrecision.corrected i)))
+    (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2)
+'BfgsVerification.DDisplayPrecision.corrected_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.original_error (i : Fin 33) :
+  LT.lt.{0}
+    (abs.{0}
+      (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayActual.values i) (BfgsVerification.DDisplayPrecision.original i)))
+    (BfgsVerification.DDisplayPrecision.unit i)
+'BfgsVerification.DDisplayPrecision.original_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.rounding_intervals (i : Fin 33) :
+  ite.{1} (Membership.mem.{0, 0} BfgsVerification.DDisplayPrecision.changed i)
+    (Or
+      (LT.lt.{0} (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2)
+        (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayRaw.lower i) (BfgsVerification.DDisplayPrecision.original i)))
+      (LT.lt.{0} (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2)
+        (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayPrecision.original i) (BfgsVerification.DDisplayRaw.upper i))))
+    (And
+      (LT.lt.{0}
+        (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayPrecision.original i)
+          (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2))
+        (BfgsVerification.DDisplayRaw.lower i))
+      (LT.lt.{0} (BfgsVerification.DDisplayRaw.upper i)
+        (HAdd.hAdd.{0, 0, 0} (BfgsVerification.DDisplayPrecision.original i)
+          (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2))))
+'BfgsVerification.DDisplayPrecision.rounding_intervals' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.rounding_classification (i : Fin 33) :
+  ite.{1} (Membership.mem.{0, 0} BfgsVerification.DDisplayPrecision.changed i)
+    (LT.lt.{0} (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2)
+      (abs.{0}
+        (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayActual.values i)
+          (BfgsVerification.DDisplayPrecision.original i))))
+    (LT.lt.{0}
+      (abs.{0}
+        (HSub.hSub.{0, 0, 0} (BfgsVerification.DDisplayActual.values i)
+          (BfgsVerification.DDisplayPrecision.original i)))
+      (HDiv.hDiv.{0, 0, 0} (BfgsVerification.DDisplayPrecision.unit i) 2))
+'BfgsVerification.DDisplayPrecision.rounding_classification' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget : Prop
+'BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DDisplayPrecision.printedPrecision : BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget
+'BfgsVerification.DDisplayPrecision.printedPrecision' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DAuxiliaryRaw.initial_square (c d : Real) : Real
+'BfgsVerification.DAuxiliaryRaw.initial_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DAuxiliaryRaw.trial_four_square (c d : Real) : Real
+'BfgsVerification.DAuxiliaryRaw.trial_four_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DAuxiliaryRaw.last_curvature (c d : Real) : Real
+'BfgsVerification.DAuxiliaryRaw.last_curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DAuxiliaryRaw.bounds {c d : Real}
+  (hc :
+    BfgsVerification.IntervalBounds.Bounds (318481427627118630646451312501 / 1000000000000000000000000000000) c
+      (39810178453389828830806414063 / 125000000000000000000000000000))
+  (hd :
+    BfgsVerification.IntervalBounds.Bounds (-205046423935149745096270174003 / 200000000000000000000000000000) d
+      (-256308029918937181370337717503 / 250000000000000000000000000000)) :
+  And (LT.lt.{0} (BfgsVerification.DAuxiliaryRaw.initial_square c d) 1)
+    (And (LT.lt.{0} 1 (BfgsVerification.DAuxiliaryRaw.trial_four_square c d))
+      (LT.lt.{0} (1 / 100) (BfgsVerification.DAuxiliaryRaw.last_curvature c d)))
+'BfgsVerification.DAuxiliaryRaw.bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DBoxDenominators.fine_box {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius) :
+  And
+    (BfgsVerification.IntervalBounds.Bounds
+      (HDiv.hDiv.{0, 0, 0} 318481427627118630646451312501 (HPow.hPow.{0, 0, 0} 10 30)) (x 0)
+      (HDiv.hDiv.{0, 0, 0} 318481427627118630646451312504 (HPow.hPow.{0, 0, 0} 10 30)))
+    (BfgsVerification.IntervalBounds.Bounds
+      (HDiv.hDiv.{0, 0, 0} (-1025232119675748725481350870015) (HPow.hPow.{0, 0, 0} 10 30)) (x 1)
+      (HDiv.hDiv.{0, 0, 0} (-1025232119675748725481350870012) (HPow.hPow.{0, 0, 0} 10 30)))
+'BfgsVerification.DBoxDenominators.fine_box' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DBoxDenominators.auxiliary_bounds {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius) :
+  And (LT.lt.{0} (BfgsVerification.DAuxiliaryRaw.initial_square (x 0) (x 1)) 1)
+    (And (LT.lt.{0} 1 (BfgsVerification.DAuxiliaryRaw.trial_four_square (x 0) (x 1)))
+      (LT.lt.{0} (1 / 100) (BfgsVerification.DAuxiliaryRaw.last_curvature (x 0) (x 1))))
+'BfgsVerification.DBoxDenominators.auxiliary_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DBoxDenominators.lastCurvature (c d : Real) : Real
+'BfgsVerification.DBoxDenominators.lastCurvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DBoxDenominators.lastCurvature_eq_raw {c d : Real}
+  (hA : Ne.{1} (HAdd.hAdd.{0, 0, 0} (BfgsVerification.AlgebraicSeed.U c d) 129) 0) :
+  Eq.{1} (BfgsVerification.DBoxDenominators.lastCurvature c d) (BfgsVerification.DAuxiliaryRaw.last_curvature c d)
+'BfgsVerification.DBoxDenominators.lastCurvature_eq_raw' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DBoxDenominators.original_box_last_curvature {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius) :
+  LT.lt.{0} (1 / 100) (BfgsVerification.DBoxDenominators.lastCurvature (x 0) (x 1))
+'BfgsVerification.DBoxDenominators.original_box_last_curvature' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DBoxDenominators.original_box_metrics_posDef {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius)
+  (j : Fin 3) : Matrix.PosDef.{0, 0} (BfgsVerification.SeedOrbit.metric (x 0) (x 1) j)
+'BfgsVerification.DBoxDenominators.original_box_metrics_posDef' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DBoxDenominators.original_box_final_posDef {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius) :
+  Matrix.PosDef.{0, 0}
+    (BfgsVerification.SeedCycle.update (BfgsVerification.SeedOrbit.metric (x 0) (x 1) 2)
+      (BfgsVerification.SeedCycle.g2 (x 0) (x 1)) BfgsVerification.SeedCycle.g0 (1 / 16))
+'BfgsVerification.DBoxDenominators.original_box_final_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DBoxDenominators.original_box_gradient_nonzero {x : BfgsVerification.Vec 2}
+  (hx :
+    LE.le.{0} (norm.{0} (HSub.hSub.{0, 0, 0} x BfgsVerification.AlgebraicSeed.center))
+      BfgsVerification.AlgebraicSeed.radius)
+  (j : Fin 3) : Ne.{1} (BfgsVerification.SeedOrbit.gradient (x 0) (x 1) j) 0
+'BfgsVerification.DBoxDenominators.original_box_gradient_nonzero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget : Prop
+'BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DBoxDenominators.sourceBoxDenominators : BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget
+'BfgsVerification.DBoxDenominators.sourceBoxDenominators' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.euclidean_add (x y : BfgsVerification.Vec 2) :
+  Eq.{1} (BfgsVerification.euclideanVector (HAdd.hAdd.{0, 0, 0} x y))
+    (HAdd.hAdd.{0, 0, 0} (BfgsVerification.euclideanVector x) (BfgsVerification.euclideanVector y))
+'BfgsVerification.DEuclideanLocality.euclidean_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.euclidean_smul (t : Real) (x : BfgsVerification.Vec 2) :
+  Eq.{1} (BfgsVerification.euclideanVector (HSMul.hSMul.{0, 0, 0} t x))
+    (HSMul.hSMul.{0, 0, 0} t (BfgsVerification.euclideanVector x))
+'BfgsVerification.DEuclideanLocality.euclidean_smul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.maxTrialNorm : Real
+'BfgsVerification.DEuclideanLocality.maxTrialNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.trial_le_max (q : Fin 9) :
+  LE.le.{0}
+    (norm.{0}
+      (BfgsVerification.euclideanVector
+        (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          BfgsVerification.SeedOrbit.seedRatio (BfgsVerification.SeedOrbit.trialPhase q)
+          (BfgsVerification.SeedOrbit.trialLength q))))
+    BfgsVerification.DEuclideanLocality.maxTrialNorm
+'BfgsVerification.DEuclideanLocality.trial_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.max_nonneg : LE.le.{0} 0 BfgsVerification.DEuclideanLocality.maxTrialNorm
+'BfgsVerification.DEuclideanLocality.max_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.initial_sq_eq :
+  Eq.{1}
+    (HPow.hPow.{0, 0, 0}
+      (norm.{0}
+        (BfgsVerification.euclideanVector
+          (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+            BfgsVerification.SeedOrbit.seedRatio 0)))
+      2)
+    (BfgsVerification.DAuxiliaryRaw.initial_square BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+'BfgsVerification.DEuclideanLocality.initial_sq_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.fourth_trial_sq_eq :
+  Eq.{1}
+    (HPow.hPow.{0, 0, 0}
+      (norm.{0}
+        (BfgsVerification.euclideanVector
+          (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+            BfgsVerification.SeedOrbit.seedRatio 2 1)))
+      2)
+    (BfgsVerification.DAuxiliaryRaw.trial_four_square BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+'BfgsVerification.DEuclideanLocality.fourth_trial_sq_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.initial_norm_lt_fourth_trial :
+  LT.lt.{0}
+    (norm.{0}
+      (BfgsVerification.euclideanVector
+        (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          BfgsVerification.SeedOrbit.seedRatio 0)))
+    (norm.{0}
+      (BfgsVerification.euclideanVector
+        (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          BfgsVerification.SeedOrbit.seedRatio 2 1)))
+'BfgsVerification.DEuclideanLocality.initial_norm_lt_fourth_trial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.DEuclideanLocality.base_le_max (j : Fin 3) :
+  LE.le.{0}
+    (norm.{0}
+      (BfgsVerification.euclideanVector
+        (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          BfgsVerification.SeedOrbit.seedRatio j)))
+    BfgsVerification.DEuclideanLocality.maxTrialNorm
+'BfgsVerification.DEuclideanLocality.base_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.scaled_le {x : BfgsVerification.Vec 2} {t : Real} (ht : LE.le.{0} 0 t)
+  (hu : LE.le.{0} t 1)
+  (hx : LE.le.{0} (norm.{0} (BfgsVerification.euclideanVector x)) BfgsVerification.DEuclideanLocality.maxTrialNorm) :
+  LE.le.{0} (norm.{0} (BfgsVerification.euclideanVector (HSMul.hSMul.{0, 0, 0} t x)))
+    BfgsVerification.DEuclideanLocality.maxTrialNorm
+'BfgsVerification.DEuclideanLocality.scaled_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.orbit_le_max (k : Nat) :
+  LE.le.{0} (norm.{0} (BfgsVerification.euclideanVector (BfgsVerification.SeedOrbit.orbitPoint k)))
+    BfgsVerification.DEuclideanLocality.maxTrialNorm
+'BfgsVerification.DEuclideanLocality.orbit_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.actual_trial_eq_scaled (k : Nat) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.phase k)) :
+  Eq.{1} (BfgsVerification.SeedEmbedding.trialPoint k q)
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.SeedOrbit.orbitScale k)
+      (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio (BfgsVerification.SeedOrbit.trialPhase q)
+        (BfgsVerification.SeedOrbit.trialLength q)))
+'BfgsVerification.DEuclideanLocality.actual_trial_eq_scaled' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.actual_trial_le_max (k : Nat) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.phase k)) :
+  LE.le.{0} (norm.{0} (BfgsVerification.euclideanVector (BfgsVerification.SeedEmbedding.trialPoint k q)))
+    BfgsVerification.DEuclideanLocality.maxTrialNorm
+'BfgsVerification.DEuclideanLocality.actual_trial_le_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.sourceBound (n : Nat) : Real
+'BfgsVerification.DEuclideanLocality.sourceBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.translated_bound (n : Nat) {z : BfgsVerification.Vec 2}
+  (hz : LE.le.{0} (norm.{0} (BfgsVerification.euclideanVector z)) BfgsVerification.DEuclideanLocality.maxTrialNorm) :
+  LE.le.{0}
+    (norm.{0}
+      (BfgsVerification.euclideanVector
+        (HAdd.hAdd.{0, 0, 0} (BfgsVerification.DEmbedding.center n)
+          (HSMul.hSMul.{0, 0, 0} (HPow.hPow.{0, 0, 0} (BfgsVerification.DScalarGeometric.scale n) 2) z))))
+    (BfgsVerification.DEuclideanLocality.sourceBound n)
+'BfgsVerification.DEuclideanLocality.translated_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.source_bound_tendsto :
+  Filter.Tendsto.{0, 0} BfgsVerification.DEuclideanLocality.sourceBound Filter.atTop.{0} (nhds.{0} 0)
+'BfgsVerification.DEuclideanLocality.source_bound_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget : Prop
+'BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEuclideanLocality.euclideanLocality : BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget
+'BfgsVerification.DEuclideanLocality.euclideanLocality' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.DDisplayPrecision.printedPrecision
+EXACT_TARGET_OK BfgsVerification.DBoxDenominators.sourceBoxDenominators
+EXACT_TARGET_OK BfgsVerification.DEuclideanLocality.euclideanLocality

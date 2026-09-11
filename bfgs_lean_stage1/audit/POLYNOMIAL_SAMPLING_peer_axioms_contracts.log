@@ -1,0 +1,176 @@
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius (B : Finset ℝ) : ℝ
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius_pos (B : Finset ℝ) :
+  0 < BfgsVerification.RealAlgebraicGeometry.signSampleRadius B
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.mem_lt_signSampleRadius {B : Finset ℝ} {b : ℝ} (hb : b ∈ B) :
+  -BfgsVerification.RealAlgebraicGeometry.signSampleRadius B < b ∧
+    b < BfgsVerification.RealAlgebraicGeometry.signSampleRadius B
+'BfgsVerification.RealAlgebraicGeometry.mem_lt_signSampleRadius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius_not_mem (B : Finset ℝ) :
+  -BfgsVerification.RealAlgebraicGeometry.signSampleRadius B ∉ B ∧
+    BfgsVerification.RealAlgebraicGeometry.signSampleRadius B ∉ B
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius_not_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signSampleRadius_profiles (B : Finset ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.cutProfile B (-BfgsVerification.RealAlgebraicGeometry.signSampleRadius B) = ∅ ∧
+    BfgsVerification.RealAlgebraicGeometry.cutProfile B (BfgsVerification.RealAlgebraicGeometry.signSampleRadius B) = B
+'BfgsVerification.RealAlgebraicGeometry.signSampleRadius_profiles' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_boundary_gap {B : Finset ℝ} {x : ℝ} (hx : x ∉ B) (hleft : ∃ b ∈ B, b < x)
+  (hright : ∃ b ∈ B, x < b) :
+  ∃ l u,
+    l ∈ B ∧
+      u ∈ B ∧
+        l < x ∧
+          x < u ∧
+            ∀ z ∈ Set.Ioo l u,
+              z ∉ B ∧
+                BfgsVerification.RealAlgebraicGeometry.cutProfile B z =
+                  BfgsVerification.RealAlgebraicGeometry.cutProfile B x
+'BfgsVerification.RealAlgebraicGeometry.finite_boundary_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct {m : ℕ} (q : Fin m → Polynomial ℝ) : Polynomial ℝ
+'BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_ne_zero {m : ℕ} (q : Fin m → Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_eval_zero_iff {m : ℕ} (q : Fin m → Polynomial ℝ) (x : ℝ) :
+  Polynomial.eval x (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q) = 0 ↔
+    ∃ i, q i ≠ 0 ∧ Polynomial.eval x (q i) = 0
+'BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct_eval_zero_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootBoundary_eq_nonzeroFamilyProduct_roots {m : ℕ} (q : Fin m → Polynomial ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.rootBoundary (Finset.image q Finset.univ) =
+    (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset
+'BfgsVerification.RealAlgebraicGeometry.rootBoundary_eq_nonzeroFamilyProduct_roots' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.sign_eq_of_zero_positive_iff {a b : ℝ} (hz : a = 0 ↔ b = 0)
+  (hp : 0 < a ↔ 0 < b) : SignType.sign a = SignType.sign b
+'BfgsVerification.RealAlgebraicGeometry.sign_eq_of_zero_positive_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.family_signs_eq_of_product_profile {m : ℕ} (q : Fin m → Polynomial ℝ) {x y : ℝ}
+  (hx : x ∉ (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset)
+  (hy : y ∉ (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset)
+  (hp :
+    BfgsVerification.RealAlgebraicGeometry.cutProfile
+        (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset x =
+      BfgsVerification.RealAlgebraicGeometry.cutProfile
+        (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset y)
+  (i : Fin m) : SignType.sign (Polynomial.eval x (q i)) = SignType.sign (Polynomial.eval y (q i))
+'BfgsVerification.RealAlgebraicGeometry.family_signs_eq_of_product_profile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples (p : Polynomial ℝ) : Finset ℝ
+'BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.derivative_ne_zero_of_real_root {p : Polynomial ℝ} (hp : p ≠ 0) {a : ℝ}
+  (ha : Polynomial.eval a p = 0) : Polynomial.derivative p ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.derivative_ne_zero_of_real_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_sample_same_or_profile {p : Polynomial ℝ} (hp : p ≠ 0) (x : ℝ) :
+  ∃ y ∈ BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples p,
+    y = x ∨
+      x ∉ p.roots.toFinset ∧
+        y ∉ p.roots.toFinset ∧
+          BfgsVerification.RealAlgebraicGeometry.cutProfile p.roots.toFinset x =
+            BfgsVerification.RealAlgebraicGeometry.cutProfile p.roots.toFinset y
+'BfgsVerification.RealAlgebraicGeometry.exists_sample_same_or_profile' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_sample_with_same_family_signs {m : ℕ} (q : Fin m → Polynomial ℝ) (x : ℝ) :
+  ∃
+    y ∈
+      BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples
+        (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q),
+    ∀ (i : Fin m), SignType.sign (Polynomial.eval y (q i)) = SignType.sign (Polynomial.eval x (q i))
+'BfgsVerification.RealAlgebraicGeometry.exists_sample_with_same_family_signs' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_family_signs_iff_sample {m : ℕ} (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) :
+  (∃ x, ∀ (i : Fin m), SignType.sign (Polynomial.eval x (q i)) = σ i) ↔
+    ∃
+      y ∈
+        BfgsVerification.RealAlgebraicGeometry.polynomialSignSamples
+          (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q),
+      ∀ (i : Fin m), SignType.sign (Polynomial.eval y (q i)) = σ i
+'BfgsVerification.RealAlgebraicGeometry.exists_family_signs_iff_sample' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.right_tail_sample_sign {m : ℕ} (q : Fin m → Polynomial ℝ) (i : Fin m) :
+  SignType.sign
+      (Polynomial.eval
+        (BfgsVerification.RealAlgebraicGeometry.signSampleRadius
+          (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset)
+        (q i)) =
+    SignType.sign (q i).leadingCoeff
+'BfgsVerification.RealAlgebraicGeometry.right_tail_sample_sign' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.left_tail_sample_sign {m : ℕ} (q : Fin m → Polynomial ℝ) (i : Fin m) :
+  SignType.sign
+      (Polynomial.eval
+        (-BfgsVerification.RealAlgebraicGeometry.signSampleRadius
+            (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q).roots.toFinset)
+        (q i)) =
+    (-1) ^ (q i).natDegree * SignType.sign (q i).leadingCoeff
+'BfgsVerification.RealAlgebraicGeometry.left_tail_sample_sign' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryExpression {m : ℕ} (p : Polynomial ℝ) (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) : ℚ
+'BfgsVerification.RealAlgebraicGeometry.signQueryExpression' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryExpression_positive_iff_rootList {m : ℕ} (p : Polynomial ℝ)
+  (q : Fin m → Polynomial ℝ) (σ : Fin m → SignType) :
+  0 < BfgsVerification.RealAlgebraicGeometry.signQueryExpression p q σ ↔
+    ∃ a ∈ p.roots.toFinset, ∀ (i : Fin m), SignType.sign (Polynomial.eval a (q i)) = σ i
+'BfgsVerification.RealAlgebraicGeometry.signQueryExpression_positive_iff_rootList' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_real_sign_pattern_iff_queries_and_tails {m : ℕ} (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) :
+  (∃ x, ∀ (i : Fin m), SignType.sign (Polynomial.eval x (q i)) = σ i) ↔
+    0 <
+        BfgsVerification.RealAlgebraicGeometry.signQueryExpression
+          (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q) q σ ∨
+      0 <
+          BfgsVerification.RealAlgebraicGeometry.signQueryExpression
+            (Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.nonzeroFamilyProduct q)) q σ ∨
+        (∀ (i : Fin m), (-1) ^ (q i).natDegree * SignType.sign (q i).leadingCoeff = σ i) ∨
+          ∀ (i : Fin m), SignType.sign (q i).leadingCoeff = σ i
+'BfgsVerification.RealAlgebraicGeometry.exists_real_sign_pattern_iff_queries_and_tails' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.signQueryExpression_zero_root_polynomial {m : ℕ} (q : Fin m → Polynomial ℝ)
+  (σ : Fin m → SignType) : BfgsVerification.RealAlgebraicGeometry.signQueryExpression 0 q σ = 0
+'BfgsVerification.RealAlgebraicGeometry.signQueryExpression_zero_root_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.FinitePolynomialSignSamplingTarget : Prop
+'BfgsVerification.FinitePolynomialSignSamplingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finitePolynomialSignSampling : BfgsVerification.FinitePolynomialSignSamplingTarget
+'BfgsVerification.finitePolynomialSignSampling' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialTailSamplesTarget : Prop
+'BfgsVerification.PolynomialTailSamplesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialTailSamples : BfgsVerification.PolynomialTailSamplesTarget
+'BfgsVerification.polynomialTailSamples' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealPolynomialSignReductionTarget : Prop
+'BfgsVerification.RealPolynomialSignReductionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.realPolynomialSignReduction : BfgsVerification.RealPolynomialSignReductionTarget
+'BfgsVerification.realPolynomialSignReduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.exists_sample_with_same_family_signs
+EXACT_TARGET_OK BfgsVerification.finitePolynomialSignSampling
+EXACT_TARGET_OK BfgsVerification.polynomialTailSamples
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.exists_real_sign_pattern_iff_queries_and_tails
+EXACT_TARGET_OK BfgsVerification.realPolynomialSignReduction

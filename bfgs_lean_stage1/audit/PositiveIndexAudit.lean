@@ -1,0 +1,28 @@
+import BfgsVerification.PositivePseudoIndexSpecialization
+#check BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_const_mul_pos
+#print axioms BfgsVerification.RealAlgebraicGeometry.localCauchyIndex_const_mul_pos
+#check BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_C_mul_pos
+#print axioms BfgsVerification.RealAlgebraicGeometry.rationalCauchyIndex_C_mul_pos
+#check BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_eq
+#print axioms BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_eq
+#check BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_zero
+#print axioms BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_zero
+#check BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_recurrence
+#print axioms BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_recurrence
+#check BfgsVerification.RealAlgebraicGeometry.infinityVariation_eq_odd
+#print axioms BfgsVerification.RealAlgebraicGeometry.infinityVariation_eq_odd
+#check BfgsVerification.RealAlgebraicGeometry.infinityVariation_mem_three
+#print axioms BfgsVerification.RealAlgebraicGeometry.infinityVariation_mem_three
+#check BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_specialize
+#print axioms BfgsVerification.RealAlgebraicGeometry.positive_pseudo_index_specialize
+#check BfgsVerification.PositivePseudoIndexSpecializationTarget
+#print axioms BfgsVerification.PositivePseudoIndexSpecializationTarget
+#check BfgsVerification.positivePseudoIndexSpecialization
+#print axioms BfgsVerification.positivePseudoIndexSpecialization
+
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.positivePseudoIndexSpecialization
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.PositivePseudoIndexSpecializationTarget)
+  unless ok do throwError "type mismatch"
+  logInfo "EXACT_TARGET_OK positivePseudoIndexSpecialization"
