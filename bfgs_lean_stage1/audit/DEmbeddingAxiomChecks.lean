@@ -1,0 +1,159 @@
+import BfgsVerification.DScalarPlateauDerivative
+import BfgsVerification.SeedEmbeddingRun
+import BfgsVerification.SeedEmbeddingOracle
+import BfgsVerification.SeedEmbeddingSearch
+import BfgsVerification.DEmbeddingLocal
+import BfgsVerification.DEmbeddingOracle
+import BfgsVerification.DEmbeddingRun
+import BfgsVerification.DEmbeddingLocalization
+import BfgsVerification.DEmbeddingCenter
+import BfgsVerification.DEmbeddingTarget
+
+#check BfgsVerification.DScalar.phi_hasDerivAt_plateau
+#print axioms BfgsVerification.DScalar.phi_hasDerivAt_plateau
+#check BfgsVerification.DScalar.phiFirst_plateau
+#print axioms BfgsVerification.DScalar.phiFirst_plateau
+#check BfgsVerification.SeedEmbedding.point
+#print axioms BfgsVerification.SeedEmbedding.point
+#check BfgsVerification.SeedEmbedding.gradient
+#print axioms BfgsVerification.SeedEmbedding.gradient
+#check BfgsVerification.SeedEmbedding.Data
+#print axioms BfgsVerification.SeedEmbedding.Data
+#check BfgsVerification.SeedEmbedding.point_step
+#print axioms BfgsVerification.SeedEmbedding.point_step
+#check BfgsVerification.SeedEmbedding.metric_update
+#print axioms BfgsVerification.SeedEmbedding.metric_update
+#check BfgsVerification.SeedEmbedding.strict_accept
+#print axioms BfgsVerification.SeedEmbedding.strict_accept
+#check BfgsVerification.SeedEmbedding.run
+#print axioms BfgsVerification.SeedEmbedding.run
+#check BfgsVerification.SeedEmbedding.point_tendsto
+#print axioms BfgsVerification.SeedEmbedding.point_tendsto
+#check BfgsVerification.SeedEmbedding.values_tendsto
+#print axioms BfgsVerification.SeedEmbedding.values_tendsto
+#check BfgsVerification.SeedEmbedding.center_value
+#print axioms BfgsVerification.SeedEmbedding.center_value
+#check BfgsVerification.SeedEmbedding.center_nonstationary
+#print axioms BfgsVerification.SeedEmbedding.center_nonstationary
+#check BfgsVerification.SeedEmbedding.trialPoint
+#print axioms BfgsVerification.SeedEmbedding.trialPoint
+#check BfgsVerification.SeedEmbedding.OracleData
+#print axioms BfgsVerification.SeedEmbedding.OracleData
+#check BfgsVerification.SeedEmbedding.translated_trial
+#print axioms BfgsVerification.SeedEmbedding.translated_trial
+#check BfgsVerification.SeedEmbedding.source_trial_gradient
+#print axioms BfgsVerification.SeedEmbedding.source_trial_gradient
+#check BfgsVerification.SeedEmbedding.trial_predicates
+#print axioms BfgsVerification.SeedEmbedding.trial_predicates
+#check BfgsVerification.SeedEmbedding.source_orbit_accept
+#print axioms BfgsVerification.SeedEmbedding.source_orbit_accept
+#check BfgsVerification.SeedEmbedding.source_orbit_reject
+#print axioms BfgsVerification.SeedEmbedding.source_orbit_reject
+#check BfgsVerification.SeedEmbedding.trial_accept
+#print axioms BfgsVerification.SeedEmbedding.trial_accept
+#check BfgsVerification.SeedEmbedding.trial_reject
+#print axioms BfgsVerification.SeedEmbedding.trial_reject
+#check BfgsVerification.SeedEmbedding.search_zero
+#print axioms BfgsVerification.SeedEmbedding.search_zero
+#check BfgsVerification.SeedEmbedding.search_one
+#print axioms BfgsVerification.SeedEmbedding.search_one
+#check BfgsVerification.SeedEmbedding.search_two
+#print axioms BfgsVerification.SeedEmbedding.search_two
+#check BfgsVerification.SeedEmbedding.search_all_phases
+#print axioms BfgsVerification.SeedEmbedding.search_all_phases
+#check BfgsVerification.SeedEmbedding.fromMetric_exact
+#print axioms BfgsVerification.SeedEmbedding.fromMetric_exact
+#check BfgsVerification.DEmbedding.center
+#print axioms BfgsVerification.DEmbedding.center
+#check BfgsVerification.DEmbedding.center_argument
+#print axioms BfgsVerification.DEmbedding.center_argument
+#check BfgsVerification.DEmbedding.translated_argument
+#print axioms BfgsVerification.DEmbedding.translated_argument
+#check BfgsVerification.DEmbedding.branch_plateau
+#print axioms BfgsVerification.DEmbedding.branch_plateau
+#check BfgsVerification.DEmbedding.slab_vertical
+#print axioms BfgsVerification.DEmbedding.slab_vertical
+#check BfgsVerification.DEmbedding.last_branch_negative
+#print axioms BfgsVerification.DEmbedding.last_branch_negative
+#check BfgsVerification.DEmbedding.branch_plateau_positive
+#print axioms BfgsVerification.DEmbedding.branch_plateau_positive
+#check BfgsVerification.DEmbedding.objective_eq_of_dom
+#print axioms BfgsVerification.DEmbedding.objective_eq_of_dom
+#check BfgsVerification.DEmbedding.local_cone
+#print axioms BfgsVerification.DEmbedding.local_cone
+#check BfgsVerification.DEmbedding.objective_hasGradient_of_strict
+#print axioms BfgsVerification.DEmbedding.objective_hasGradient_of_strict
+#check BfgsVerification.DEmbedding.strict_active_plateau
+#print axioms BfgsVerification.DEmbedding.strict_active_plateau
+#check BfgsVerification.DEmbedding.branch_hasGradient_plateau
+#print axioms BfgsVerification.DEmbedding.branch_hasGradient_plateau
+#check BfgsVerification.DEmbedding.objective_hasGradient_plateau
+#print axioms BfgsVerification.DEmbedding.objective_hasGradient_plateau
+#check BfgsVerification.DEmbedding.scale_le_sixteenth
+#print axioms BfgsVerification.DEmbedding.scale_le_sixteenth
+#check BfgsVerification.DEmbedding.certified_plateau
+#print axioms BfgsVerification.DEmbedding.certified_plateau
+#check BfgsVerification.DEmbedding.certified_value
+#print axioms BfgsVerification.DEmbedding.certified_value
+#check BfgsVerification.DEmbedding.certified_hasGradient
+#print axioms BfgsVerification.DEmbedding.certified_hasGradient
+#check BfgsVerification.DEmbedding.orbit_certificate
+#print axioms BfgsVerification.DEmbedding.orbit_certificate
+#check BfgsVerification.DEmbedding.actualData
+#print axioms BfgsVerification.DEmbedding.actualData
+#check BfgsVerification.DEmbedding.actualOracleData
+#print axioms BfgsVerification.DEmbedding.actualOracleData
+#check BfgsVerification.DEmbedding.run
+#print axioms BfgsVerification.DEmbedding.run
+#check BfgsVerification.DEmbedding.center_value
+#print axioms BfgsVerification.DEmbedding.center_value
+#check BfgsVerification.DEmbedding.center_positive
+#print axioms BfgsVerification.DEmbedding.center_positive
+#check BfgsVerification.DEmbedding.center_ne_zero
+#print axioms BfgsVerification.DEmbedding.center_ne_zero
+#check BfgsVerification.DEmbedding.center_nonstationary
+#print axioms BfgsVerification.DEmbedding.center_nonstationary
+#check BfgsVerification.DEmbedding.run_initial_matrix
+#print axioms BfgsVerification.DEmbedding.run_initial_matrix
+#check BfgsVerification.DEmbedding.run_point_tendsto
+#print axioms BfgsVerification.DEmbedding.run_point_tendsto
+#check BfgsVerification.DEmbedding.run_value_tendsto
+#print axioms BfgsVerification.DEmbedding.run_value_tendsto
+#check BfgsVerification.DEmbedding.run_value_above_center
+#print axioms BfgsVerification.DEmbedding.run_value_above_center
+#check BfgsVerification.DEmbedding.run_value_strict_decrease
+#print axioms BfgsVerification.DEmbedding.run_value_strict_decrease
+#check BfgsVerification.DEmbedding.run_search
+#print axioms BfgsVerification.DEmbedding.run_search
+#check BfgsVerification.DEmbedding.run_all_trials_differentiable
+#print axioms BfgsVerification.DEmbedding.run_all_trials_differentiable
+#check BfgsVerification.DEmbedding.run_phase_parameters
+#print axioms BfgsVerification.DEmbedding.run_phase_parameters
+#check BfgsVerification.DEmbedding.scale_tendsto
+#print axioms BfgsVerification.DEmbedding.scale_tendsto
+#check BfgsVerification.DEmbedding.center_tendsto
+#print axioms BfgsVerification.DEmbedding.center_tendsto
+#check BfgsVerification.DEmbedding.initial_points_tendsto
+#print axioms BfgsVerification.DEmbedding.initial_points_tendsto
+#check BfgsVerification.DEmbedding.certificate_norm_bound
+#print axioms BfgsVerification.DEmbedding.certificate_norm_bound
+#check BfgsVerification.DEmbedding.center_norm_bound
+#print axioms BfgsVerification.DEmbedding.center_norm_bound
+#check BfgsVerification.DEmbedding.embedded_certificate_norm_bound
+#print axioms BfgsVerification.DEmbedding.embedded_certificate_norm_bound
+#check BfgsVerification.DEmbedding.accepted_norm_bound
+#print axioms BfgsVerification.DEmbedding.accepted_norm_bound
+#check BfgsVerification.DEmbedding.trial_norm_bound
+#print axioms BfgsVerification.DEmbedding.trial_norm_bound
+#check BfgsVerification.DEmbedding.trajectories_uniformly_small
+#print axioms BfgsVerification.DEmbedding.trajectories_uniformly_small
+#check BfgsVerification.DEmbedding.descentDirection
+#print axioms BfgsVerification.DEmbedding.descentDirection
+#check BfgsVerification.DEmbedding.seed_descent_ray
+#print axioms BfgsVerification.DEmbedding.seed_descent_ray
+#check BfgsVerification.DEmbedding.center_directional_derivative
+#print axioms BfgsVerification.DEmbedding.center_directional_derivative
+#check BfgsVerification.DEmbedding.initial_values_tendsto
+#print axioms BfgsVerification.DEmbedding.initial_values_tendsto
+#check BfgsVerification.DEmbedding.deterministic_embedding_failure
+#print axioms BfgsVerification.DEmbedding.deterministic_embedding_failure

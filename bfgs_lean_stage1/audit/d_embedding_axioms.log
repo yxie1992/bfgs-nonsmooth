@@ -1,0 +1,587 @@
+BfgsVerification.DScalar.phi_hasDerivAt_plateau {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hh : |h| < BfgsVerification.DScalarGeometric.scale m / 2) :
+  HasDerivAt (BfgsVerification.DScalar.phi b) (BfgsVerification.DScalarGeometric.scale m ^ 2)
+    (b * BfgsVerification.DScalarGeometric.scale m + h)
+'BfgsVerification.DScalar.phi_hasDerivAt_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.phiFirst_plateau {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hh : |h| < BfgsVerification.DScalarGeometric.scale m / 2) :
+  BfgsVerification.DScalar.phiFirst b (b * BfgsVerification.DScalarGeometric.scale m + h) =
+    BfgsVerification.DScalarGeometric.scale m ^ 2
+'BfgsVerification.DScalar.phiFirst_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.point (p : BfgsVerification.Vec 2) (t : ℝ) (k : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.SeedEmbedding.point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.gradient (t : ℝ) (k : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.SeedEmbedding.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.Data (F : BfgsVerification.Vec 2 → ℝ) (p : BfgsVerification.Vec 2) (t A : ℝ) : Prop
+'BfgsVerification.SeedEmbedding.Data' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.point_step (p : BfgsVerification.Vec 2) (t : ℝ) (k : ℕ) :
+  BfgsVerification.SeedEmbedding.point p t (k + 1) =
+    BfgsVerification.SeedEmbedding.point p t k +
+      BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k) (BfgsVerification.SeedEmbedding.gradient t k)
+        (BfgsVerification.SeedOrbit.orbitLength k)
+'BfgsVerification.SeedEmbedding.point_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.metric_update {t : ℝ} (ht : t ≠ 0) (k : ℕ) :
+  BfgsVerification.SeedOrbit.orbitMetric (k + 1) =
+    BfgsVerification.inverseBFGS (BfgsVerification.SeedOrbit.orbitMetric k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) (BfgsVerification.SeedOrbit.orbitLength k))
+      (BfgsVerification.SeedEmbedding.gradient t (k + 1) - BfgsVerification.SeedEmbedding.gradient t k)
+'BfgsVerification.SeedEmbedding.metric_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.strict_accept {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : ℝ} (h : BfgsVerification.SeedEmbedding.Data F p t A) (ht : 0 < t) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc₂ : 0 < c₂) (k : ℕ) :
+  F (BfgsVerification.SeedEmbedding.point p t (k + 1)) <
+      F (BfgsVerification.SeedEmbedding.point p t k) +
+        c₁ *
+          BfgsVerification.dot (BfgsVerification.SeedEmbedding.gradient t k)
+            (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+              (BfgsVerification.SeedEmbedding.gradient t k) (BfgsVerification.SeedOrbit.orbitLength k)) ∧
+    c₂ *
+        BfgsVerification.dot (BfgsVerification.SeedEmbedding.gradient t k)
+          (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+            (BfgsVerification.SeedEmbedding.gradient t k) (BfgsVerification.SeedOrbit.orbitLength k)) <
+      BfgsVerification.dot (BfgsVerification.SeedEmbedding.gradient t (k + 1))
+        (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+          (BfgsVerification.SeedEmbedding.gradient t k) (BfgsVerification.SeedOrbit.orbitLength k))
+'BfgsVerification.SeedEmbedding.strict_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.run {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A : ℝ}
+  (h : BfgsVerification.SeedEmbedding.Data F p t A) (ht : 0 < t) (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) : BfgsVerification.AdmissibleBFGSRun 2 F
+'BfgsVerification.SeedEmbedding.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.point_tendsto (p : BfgsVerification.Vec 2) (t : ℝ) :
+  Filter.Tendsto (BfgsVerification.SeedEmbedding.point p t) Filter.atTop (nhds p)
+'BfgsVerification.SeedEmbedding.point_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.values_tendsto {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A : ℝ}
+  (h : BfgsVerification.SeedEmbedding.Data F p t A) :
+  Filter.Tendsto (fun k => F (BfgsVerification.SeedEmbedding.point p t k)) Filter.atTop (nhds A)
+'BfgsVerification.SeedEmbedding.values_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.center_value {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A : ℝ}
+  (h : BfgsVerification.SeedEmbedding.Data F p t A) : F p = A
+'BfgsVerification.SeedEmbedding.center_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.center_nonstationary {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {t A : ℝ} (h : BfgsVerification.SeedEmbedding.Data F p t A) (hbelow : ∃ z, F z < A) :
+  0 ∉ BfgsVerification.ConvexSubdifferential.subdifferential F p
+'BfgsVerification.SeedEmbedding.center_nonstationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.trialPoint (k : ℕ) (q : Fin 9) : BfgsVerification.Vec 2
+'BfgsVerification.SeedEmbedding.trialPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.OracleData (F : BfgsVerification.Vec 2 → ℝ) (p : BfgsVerification.Vec 2) (t A : ℝ) : Prop
+'BfgsVerification.SeedEmbedding.OracleData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.translated_trial (p : BfgsVerification.Vec 2) (t : ℝ) (k : ℕ) (q : Fin 9) :
+  BfgsVerification.SeedEmbedding.point p t k +
+      BfgsVerification.SeedOrbit.trialLength q •
+        BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+          (BfgsVerification.SeedEmbedding.gradient t k) 1 =
+    p + t • BfgsVerification.SeedEmbedding.trialPoint k q
+'BfgsVerification.SeedEmbedding.translated_trial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.source_trial_gradient (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  BfgsVerification.coordinateGradient
+      (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+      (BfgsVerification.SeedEmbedding.trialPoint k q) =
+    BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      (BfgsVerification.SeedOrbit.trialActive q)
+'BfgsVerification.SeedEmbedding.source_trial_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.trial_predicates {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A : ℝ}
+  (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) (c₁ c₂ : ℝ) :
+  (BfgsVerification.DeterministicLineSearch.Armijo F (BfgsVerification.SeedEmbedding.point p t k)
+        (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+          (BfgsVerification.SeedEmbedding.gradient t k) 1)
+        (BfgsVerification.SeedEmbedding.gradient t k) c₁ (BfgsVerification.SeedOrbit.trialLength q) ↔
+      BfgsVerification.DeterministicLineSearch.Armijo
+        (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+        (BfgsVerification.SeedOrbit.orbitPoint k)
+        (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+          (BfgsVerification.SeedOrbit.orbitGradient k) 1)
+        (BfgsVerification.SeedOrbit.orbitGradient k) c₁ (BfgsVerification.SeedOrbit.trialLength q)) ∧
+    (BfgsVerification.DeterministicLineSearch.Wolfe F (BfgsVerification.SeedEmbedding.point p t k)
+        (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+          (BfgsVerification.SeedEmbedding.gradient t k) 1)
+        (BfgsVerification.SeedEmbedding.gradient t k) c₂ (BfgsVerification.SeedOrbit.trialLength q) ↔
+      BfgsVerification.DeterministicLineSearch.Wolfe
+        (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+        (BfgsVerification.SeedOrbit.orbitPoint k)
+        (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+          (BfgsVerification.SeedOrbit.orbitGradient k) 1)
+        (BfgsVerification.SeedOrbit.orbitGradient k) c₂ (BfgsVerification.SeedOrbit.trialLength q))
+'BfgsVerification.SeedEmbedding.trial_predicates' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.source_orbit_accept {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂) (k : ℕ)
+  (q : Fin 9) (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k)
+  (ha : BfgsVerification.SeedOrbit.trialAccept q = true) :
+  BfgsVerification.DeterministicLineSearch.Armijo
+      (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+      (BfgsVerification.SeedOrbit.orbitPoint k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k) (BfgsVerification.SeedOrbit.orbitGradient k)
+        1)
+      (BfgsVerification.SeedOrbit.orbitGradient k) c₁ (BfgsVerification.SeedOrbit.trialLength q) ∧
+    BfgsVerification.DeterministicLineSearch.Wolfe
+      (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+      (BfgsVerification.SeedOrbit.orbitPoint k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k) (BfgsVerification.SeedOrbit.orbitGradient k)
+        1)
+      (BfgsVerification.SeedOrbit.orbitGradient k) c₂ (BfgsVerification.SeedOrbit.trialLength q)
+'BfgsVerification.SeedEmbedding.source_orbit_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.source_orbit_reject {c₁ : ℝ} (hc₁ : 0 < c₁) (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k)
+  (ha : BfgsVerification.SeedOrbit.trialAccept q = false) :
+  ¬BfgsVerification.DeterministicLineSearch.Armijo
+      (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+      (BfgsVerification.SeedOrbit.orbitPoint k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k) (BfgsVerification.SeedOrbit.orbitGradient k)
+        1)
+      (BfgsVerification.SeedOrbit.orbitGradient k) c₁ (BfgsVerification.SeedOrbit.trialLength q)
+'BfgsVerification.SeedEmbedding.source_orbit_reject' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.trial_accept {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : ℝ} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁)
+  (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂) (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k)
+  (ha : BfgsVerification.SeedOrbit.trialAccept q = true) :
+  BfgsVerification.DeterministicLineSearch.Armijo F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ (BfgsVerification.SeedOrbit.trialLength q) ∧
+    BfgsVerification.DeterministicLineSearch.Wolfe F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₂ (BfgsVerification.SeedOrbit.trialLength q)
+'BfgsVerification.SeedEmbedding.trial_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.trial_reject {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A c₁ : ℝ}
+  (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁) (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k)
+  (ha : BfgsVerification.SeedOrbit.trialAccept q = false) :
+  ¬BfgsVerification.DeterministicLineSearch.Armijo F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ (BfgsVerification.SeedOrbit.trialLength q)
+'BfgsVerification.SeedEmbedding.trial_reject' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.search_zero {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A c₁ c₂ : ℝ}
+  (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂)
+  (k : ℕ) (hphase : BfgsVerification.SeedOrbit.phase k = 0) :
+  BfgsVerification.DeterministicLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none 1 =
+    (some 1, [1])
+'BfgsVerification.SeedEmbedding.search_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.search_one {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A c₁ c₂ : ℝ}
+  (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂)
+  (k : ℕ) (hphase : BfgsVerification.SeedOrbit.phase k = 1) :
+  BfgsVerification.DeterministicLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none 1 =
+    (some (1 / 4), [1, 1 / 2, 1 / 4])
+'BfgsVerification.SeedEmbedding.search_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.search_two {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2} {t A c₁ c₂ : ℝ}
+  (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂)
+  (k : ℕ) (hphase : BfgsVerification.SeedOrbit.phase k = 2) :
+  BfgsVerification.DeterministicLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none 1 =
+    (some (1 / 16), [1, 1 / 2, 1 / 4, 1 / 8, 1 / 16])
+'BfgsVerification.SeedEmbedding.search_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.search_all_phases {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : ℝ} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁)
+  (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂) (k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.search F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.bfgsStep (BfgsVerification.SeedOrbit.orbitMetric k)
+        (BfgsVerification.SeedEmbedding.gradient t k) 1)
+      (BfgsVerification.SeedEmbedding.gradient t k) c₁ c₂ 5 0 none 1 =
+    (some (BfgsVerification.SeedOrbit.orbitLength k),
+      BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.SeedEmbedding.search_all_phases' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedEmbedding.fromMetric_exact {F : BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {t A c₁ c₂ : ℝ} (h : BfgsVerification.SeedEmbedding.OracleData F p t A) (ht : 0 < t) (hc₁ : 0 < c₁)
+  (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂) (k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric F (BfgsVerification.SeedEmbedding.point p t k)
+      (BfgsVerification.SeedOrbit.orbitMetric k) c₁ c₂ 5 =
+    (some (BfgsVerification.SeedOrbit.orbitLength k),
+      BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.SeedEmbedding.fromMetric_exact' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center (n : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.DEmbedding.center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_argument (n : ℕ) (i : Fin 3) :
+  BfgsVerification.dot
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+      (BfgsVerification.DEmbedding.center n) =
+    BfgsVerification.DEmbedding.parameter i * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DEmbedding.center_argument' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.translated_argument (n : ℕ) (i : Fin 3) (h : BfgsVerification.Vec 2) :
+  BfgsVerification.dot
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+      (BfgsVerification.DEmbedding.center n + h) =
+    BfgsVerification.DEmbedding.parameter i * BfgsVerification.DScalarGeometric.scale n +
+      BfgsVerification.dot
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) h
+'BfgsVerification.DEmbedding.translated_argument' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.branch_plateau (n : ℕ) (i : Fin 3) {h : BfgsVerification.Vec 2}
+  (hh :
+    |BfgsVerification.dot
+          (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) h| ≤
+      BfgsVerification.DScalarGeometric.scale n / 2) :
+  BfgsVerification.DEmbedding.branch i.castSucc (BfgsVerification.DEmbedding.center n + h) =
+    BfgsVerification.DScalarGeometric.scale n ^ 3 +
+      BfgsVerification.DScalarGeometric.scale n ^ 2 *
+        BfgsVerification.dot
+          (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) h
+'BfgsVerification.DEmbedding.branch_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.slab_vertical (n : ℕ) {h : BfgsVerification.Vec 2}
+  (hh :
+    ∀ (i : Fin 3),
+      |BfgsVerification.dot
+            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+            h| ≤
+        BfgsVerification.DScalarGeometric.scale n / 2) :
+  |h 1| ≤ 8 * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DEmbedding.slab_vertical' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.last_branch_negative (n : ℕ) {h : BfgsVerification.Vec 2}
+  (hh :
+    ∀ (i : Fin 3),
+      |BfgsVerification.dot
+            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+            h| ≤
+        BfgsVerification.DScalarGeometric.scale n / 2) :
+  BfgsVerification.DEmbedding.branch 3 (BfgsVerification.DEmbedding.center n + h) < 0
+'BfgsVerification.DEmbedding.last_branch_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.branch_plateau_positive (n : ℕ) (i : Fin 3) {h : BfgsVerification.Vec 2}
+  (hh :
+    |BfgsVerification.dot
+          (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) h| ≤
+      BfgsVerification.DScalarGeometric.scale n / 2) :
+  0 < BfgsVerification.DEmbedding.branch i.castSucc (BfgsVerification.DEmbedding.center n + h)
+'BfgsVerification.DEmbedding.branch_plateau_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.objective_eq_of_dom (i : Fin 4) (x : BfgsVerification.Vec 2)
+  (hi : ∀ (j : Fin 4), BfgsVerification.DEmbedding.branch j x ≤ BfgsVerification.DEmbedding.branch i x) :
+  BfgsVerification.DEmbedding.objective x = BfgsVerification.DEmbedding.branch i x
+'BfgsVerification.DEmbedding.objective_eq_of_dom' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.local_cone (n : ℕ) {h : BfgsVerification.Vec 2}
+  (hh :
+    ∀ (i : Fin 3),
+      |BfgsVerification.dot
+            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+            h| ≤
+        BfgsVerification.DScalarGeometric.scale n / 2) :
+  BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n + h) =
+    BfgsVerification.DScalarGeometric.scale n ^ 3 +
+      BfgsVerification.DScalarGeometric.scale n ^ 2 *
+        BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD h
+'BfgsVerification.DEmbedding.local_cone' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.objective_hasGradient_of_strict {x : BfgsVerification.Vec 2} {i : Fin 4}
+  {g : BfgsVerification.Vec 2}
+  (hi : ∀ (j : Fin 4), j ≠ i → BfgsVerification.DEmbedding.branch j x < BfgsVerification.DEmbedding.branch i x)
+  (hg : HasFDerivAt (BfgsVerification.DEmbedding.branch i) (BfgsVerification.gradientFunctional g) x) :
+  HasFDerivAt BfgsVerification.DEmbedding.objective (BfgsVerification.gradientFunctional g) x
+'BfgsVerification.DEmbedding.objective_hasGradient_of_strict' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.strict_active_plateau {n : ℕ} {h : BfgsVerification.Vec 2} {i : Fin 3}
+  (hh :
+    ∀ (j : Fin 3),
+      |BfgsVerification.dot
+            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+            h| ≤
+        BfgsVerification.DScalarGeometric.scale n / 2)
+  (hi : BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD h i)
+  (j : Fin 4) :
+  j ≠ i.castSucc →
+    BfgsVerification.DEmbedding.branch j (BfgsVerification.DEmbedding.center n + h) <
+      BfgsVerification.DEmbedding.branch i.castSucc (BfgsVerification.DEmbedding.center n + h)
+'BfgsVerification.DEmbedding.strict_active_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.branch_hasGradient_plateau (n : ℕ) (i : Fin 3) {h : BfgsVerification.Vec 2}
+  (hh :
+    |BfgsVerification.dot
+          (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) h| <
+      BfgsVerification.DScalarGeometric.scale n / 2) :
+  HasFDerivAt (BfgsVerification.DEmbedding.branch i.castSucc)
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.DScalarGeometric.scale n ^ 2 •
+        BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i))
+    (BfgsVerification.DEmbedding.center n + h)
+'BfgsVerification.DEmbedding.branch_hasGradient_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.objective_hasGradient_plateau {n : ℕ} {h : BfgsVerification.Vec 2} {i : Fin 3}
+  (hh :
+    ∀ (j : Fin 3),
+      |BfgsVerification.dot
+            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+            h| <
+        BfgsVerification.DScalarGeometric.scale n / 2)
+  (hi : BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD h i) :
+  HasFDerivAt BfgsVerification.DEmbedding.objective
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.DScalarGeometric.scale n ^ 2 •
+        BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i))
+    (BfgsVerification.DEmbedding.center n + h)
+'BfgsVerification.DEmbedding.objective_hasGradient_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.scale_le_sixteenth {n : ℕ} (hn : 1 ≤ n) : BfgsVerification.DScalarGeometric.scale n ≤ 1 / 16
+'BfgsVerification.DEmbedding.scale_le_sixteenth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.certified_plateau {n : ℕ} (hn : 1 ≤ n) {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hz :
+    BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i)
+  (j : Fin 3) :
+  |BfgsVerification.dot
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+        (BfgsVerification.DScalarGeometric.scale n ^ 2 • z)| <
+    BfgsVerification.DScalarGeometric.scale n / 2
+'BfgsVerification.DEmbedding.certified_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.certified_value {n : ℕ} (hn : 1 ≤ n) {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hz :
+    BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i) :
+  BfgsVerification.DEmbedding.objective
+      (BfgsVerification.DEmbedding.center n + BfgsVerification.DScalarGeometric.scale n ^ 2 • z) =
+    BfgsVerification.DScalarGeometric.scale n ^ 3 +
+      (BfgsVerification.DScalarGeometric.scale n ^ 2) ^ 2 *
+        BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z
+'BfgsVerification.DEmbedding.certified_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.certified_hasGradient {n : ℕ} (hn : 1 ≤ n) {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hz :
+    BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i) :
+  HasFDerivAt BfgsVerification.DEmbedding.objective
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.DScalarGeometric.scale n ^ 2 •
+        BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i))
+    (BfgsVerification.DEmbedding.center n + BfgsVerification.DScalarGeometric.scale n ^ 2 • z)
+'BfgsVerification.DEmbedding.certified_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.orbit_certificate (k : ℕ) :
+  BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+    (BfgsVerification.SeedOrbit.orbitPoint k) (BfgsVerification.SeedOrbit.phase k)
+'BfgsVerification.DEmbedding.orbit_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.actualData {n : ℕ} (hn : 1 ≤ n) :
+  BfgsVerification.SeedEmbedding.Data BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)
+    (BfgsVerification.DScalarGeometric.scale n ^ 2) (BfgsVerification.DScalarGeometric.scale n ^ 3)
+'BfgsVerification.DEmbedding.actualData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.actualOracleData {n : ℕ} (hn : 1 ≤ n) :
+  BfgsVerification.SeedEmbedding.OracleData BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)
+    (BfgsVerification.DScalarGeometric.scale n ^ 2) (BfgsVerification.DScalarGeometric.scale n ^ 3)
+'BfgsVerification.DEmbedding.actualOracleData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run {n : ℕ} (hn : 1 ≤ n) (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
+  (hc₂ : c₂ < 1) : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.DEmbedding.objective
+'BfgsVerification.DEmbedding.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_value (n : ℕ) :
+  BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) =
+    BfgsVerification.DScalarGeometric.scale n ^ 3
+'BfgsVerification.DEmbedding.center_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_positive (n : ℕ) :
+  0 < BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)
+'BfgsVerification.DEmbedding.center_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_ne_zero (n : ℕ) : BfgsVerification.DEmbedding.center n ≠ 0
+'BfgsVerification.DEmbedding.center_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_nonstationary (n : ℕ) :
+  0 ∉
+    BfgsVerification.ConvexSubdifferential.subdifferential BfgsVerification.DEmbedding.objective
+      (BfgsVerification.DEmbedding.center n)
+'BfgsVerification.DEmbedding.center_nonstationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_initial_matrix {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) : (BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂).H 0 = 1
+'BfgsVerification.DEmbedding.run_initial_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_point_tendsto {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) :
+  Filter.Tendsto (BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂).x Filter.atTop
+    (nhds (BfgsVerification.DEmbedding.center n))
+'BfgsVerification.DEmbedding.run_point_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_value_tendsto {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) :
+  Filter.Tendsto
+    (fun k => BfgsVerification.DEmbedding.objective ((BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂).x k))
+    Filter.atTop (nhds (BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)))
+'BfgsVerification.DEmbedding.run_value_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_value_above_center {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) (k : ℕ) :
+  BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) <
+    BfgsVerification.DEmbedding.objective ((BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂).x k)
+'BfgsVerification.DEmbedding.run_value_above_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_value_strict_decrease {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁)
+  (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂) (hc₂ : c₂ < 1) (k : ℕ) :
+  BfgsVerification.DEmbedding.objective ((BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂).x (k + 1)) <
+    BfgsVerification.DEmbedding.objective ((BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂).x k)
+'BfgsVerification.DEmbedding.run_value_strict_decrease' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_search {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) (k : ℕ) :
+  let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+  BfgsVerification.DeterministicLineSearch.fromMetric BfgsVerification.DEmbedding.objective (R.x k) (R.H k) c₁ c₂ 5 =
+    (some (R.α k), BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.DEmbedding.run_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_all_trials_differentiable {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁)
+  (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂) (hc₂ : c₂ < 1) (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+  HasFDerivAt BfgsVerification.DEmbedding.objective
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.DScalarGeometric.scale n ^ 2 •
+        BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          (BfgsVerification.SeedOrbit.trialActive q)))
+    (R.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+'BfgsVerification.DEmbedding.run_all_trials_differentiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.run_phase_parameters {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) (m : ℕ) (j : Fin 3) :
+  let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+  R.x (3 * m + ↑j) =
+      BfgsVerification.DEmbedding.center n +
+        BfgsVerification.DScalarGeometric.scale n ^ 2 •
+          BfgsVerification.SeedOrbit.seedRatio ^ m •
+            BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+              BfgsVerification.SeedOrbit.seedRatio j ∧
+    R.H (3 * m + ↑j) =
+        BfgsVerification.SeedOrbit.seedRatio ^ m •
+          BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j ∧
+      R.g (3 * m + ↑j) =
+          BfgsVerification.DScalarGeometric.scale n ^ 2 •
+            BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j ∧
+        R.α (3 * m + ↑j) = BfgsVerification.SeedOrbit.length j
+'BfgsVerification.DEmbedding.run_phase_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.scale_tendsto : Filter.Tendsto BfgsVerification.DScalarGeometric.scale Filter.atTop (nhds 0)
+'BfgsVerification.DEmbedding.scale_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_tendsto : Filter.Tendsto BfgsVerification.DEmbedding.center Filter.atTop (nhds 0)
+'BfgsVerification.DEmbedding.center_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.initial_points_tendsto :
+  Filter.Tendsto
+    (fun n =>
+      BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+        (BfgsVerification.DScalarGeometric.scale n ^ 2) 0)
+    Filter.atTop (nhds 0)
+'BfgsVerification.DEmbedding.initial_points_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.certificate_norm_bound {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hz :
+    BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i) :
+  ‖z‖ ≤ 48
+'BfgsVerification.DEmbedding.certificate_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_norm_bound (n : ℕ) :
+  ‖BfgsVerification.DEmbedding.center n‖ ≤ 32 * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DEmbedding.center_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.embedded_certificate_norm_bound (n : ℕ) {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hz :
+    BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i) :
+  ‖BfgsVerification.DEmbedding.center n + BfgsVerification.DScalarGeometric.scale n ^ 2 • z‖ ≤
+    80 * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DEmbedding.embedded_certificate_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.accepted_norm_bound (n k : ℕ) :
+  ‖BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+        (BfgsVerification.DScalarGeometric.scale n ^ 2) k‖ ≤
+    80 * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DEmbedding.accepted_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.trial_norm_bound (n k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  ‖BfgsVerification.DEmbedding.center n +
+        BfgsVerification.DScalarGeometric.scale n ^ 2 • BfgsVerification.SeedEmbedding.trialPoint k q‖ ≤
+    80 * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DEmbedding.trial_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.trajectories_uniformly_small {V : Set (BfgsVerification.Vec 2)} (hV : V ∈ nhds 0) :
+  ∀ᶠ (n : ℕ) in Filter.atTop,
+    (∀ (k : ℕ),
+        BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+            (BfgsVerification.DScalarGeometric.scale n ^ 2) k ∈
+          V) ∧
+      ∀ (k : ℕ) (q : Fin 9),
+        BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+          BfgsVerification.DEmbedding.center n +
+              BfgsVerification.DScalarGeometric.scale n ^ 2 • BfgsVerification.SeedEmbedding.trialPoint k q ∈
+            V
+'BfgsVerification.DEmbedding.trajectories_uniformly_small' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.descentDirection : BfgsVerification.Vec 2
+'BfgsVerification.DEmbedding.descentDirection' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.seed_descent_ray {t : ℝ} (ht : 0 ≤ t) :
+  BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      (t • BfgsVerification.DEmbedding.descentDirection) =
+    -t
+'BfgsVerification.DEmbedding.seed_descent_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_directional_derivative (n : ℕ) :
+  Filter.Tendsto
+    (fun t =>
+      (BfgsVerification.DEmbedding.objective
+            (BfgsVerification.DEmbedding.center n + t • BfgsVerification.DEmbedding.descentDirection) -
+          BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)) /
+        t)
+    (nhdsWithin 0 (Set.Ioi 0)) (nhds (-BfgsVerification.DScalarGeometric.scale n ^ 2))
+'BfgsVerification.DEmbedding.center_directional_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.initial_values_tendsto :
+  Filter.Tendsto
+    (fun n =>
+      BfgsVerification.DEmbedding.objective
+        (BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+          (BfgsVerification.DScalarGeometric.scale n ^ 2) 0))
+    Filter.atTop (nhds 0)
+'BfgsVerification.DEmbedding.initial_values_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.deterministic_embedding_failure :
+  Filter.Tendsto
+      (fun n =>
+        BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+          (BfgsVerification.DScalarGeometric.scale n ^ 2) 0)
+      Filter.atTop (nhds 0) ∧
+    Filter.Tendsto
+        (fun n =>
+          BfgsVerification.DEmbedding.objective
+            (BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+              (BfgsVerification.DScalarGeometric.scale n ^ 2) 0))
+        Filter.atTop (nhds 0) ∧
+      (∀ (n : ℕ),
+          BfgsVerification.DEmbedding.center n ≠ 0 ∧
+            BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) =
+                BfgsVerification.DScalarGeometric.scale n ^ 3 ∧
+              0 < BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) ∧
+                0 ∉
+                    BfgsVerification.ConvexSubdifferential.subdifferential BfgsVerification.DEmbedding.objective
+                      (BfgsVerification.DEmbedding.center n) ∧
+                  Filter.Tendsto
+                    (fun t =>
+                      (BfgsVerification.DEmbedding.objective
+                            (BfgsVerification.DEmbedding.center n + t • BfgsVerification.DEmbedding.descentDirection) -
+                          BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)) /
+                        t)
+                    (nhdsWithin 0 (Set.Ioi 0)) (nhds (-BfgsVerification.DScalarGeometric.scale n ^ 2))) ∧
+        (∀ V ∈ nhds 0,
+            ∀ᶠ (n : ℕ) in Filter.atTop,
+              (∀ (k : ℕ),
+                  BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)
+                      (BfgsVerification.DScalarGeometric.scale n ^ 2) k ∈
+                    V) ∧
+                ∀ (k : ℕ) (q : Fin 9),
+                  BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                    BfgsVerification.DEmbedding.center n +
+                        BfgsVerification.DScalarGeometric.scale n ^ 2 • BfgsVerification.SeedEmbedding.trialPoint k q ∈
+                      V) ∧
+          ∀ (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂) (hc₂ : c₂ < 1) (n : ℕ) (hn : 1 ≤ n),
+            let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+            R.H 0 = 1 ∧
+              (∀ (k : ℕ), Matrix.PosDef (R.H k)) ∧
+                Filter.Tendsto R.x Filter.atTop (nhds (BfgsVerification.DEmbedding.center n)) ∧
+                  Filter.Tendsto (fun k => BfgsVerification.DEmbedding.objective (R.x k)) Filter.atTop
+                      (nhds (BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n))) ∧
+                    (∀ (k : ℕ),
+                        BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) <
+                          BfgsVerification.DEmbedding.objective (R.x k)) ∧
+                      (∀ (k : ℕ),
+                          BfgsVerification.DEmbedding.objective (R.x (k + 1)) <
+                            BfgsVerification.DEmbedding.objective (R.x k)) ∧
+                        (∀ (k : ℕ),
+                            BfgsVerification.DeterministicLineSearch.fromMetric BfgsVerification.DEmbedding.objective
+                                (R.x k) (R.H k) c₁ c₂ 5 =
+                              (some (R.α k),
+                                BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+                          (∀ (k : ℕ),
+                              (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)).length ≤
+                                5) ∧
+                            (∀ (k : ℕ) (q : Fin 9),
+                                BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                                  HasFDerivAt BfgsVerification.DEmbedding.objective
+                                    (BfgsVerification.gradientFunctional
+                                      (BfgsVerification.DScalarGeometric.scale n ^ 2 •
+                                        BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC
+                                          BfgsVerification.SeedOrbit.seedD (BfgsVerification.SeedOrbit.trialActive q)))
+                                    (R.x k +
+                                      BfgsVerification.SeedOrbit.trialLength q •
+                                        BfgsVerification.bfgsStep (R.H k) (R.g k) 1)) ∧
+                              ∀ (m : ℕ) (j : Fin 3),
+                                R.x (3 * m + ↑j) =
+                                    BfgsVerification.DEmbedding.center n +
+                                      BfgsVerification.DScalarGeometric.scale n ^ 2 •
+                                        BfgsVerification.SeedOrbit.seedRatio ^ m •
+                                          BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC
+                                            BfgsVerification.SeedOrbit.seedD BfgsVerification.SeedOrbit.seedRatio j ∧
+                                  R.H (3 * m + ↑j) =
+                                      BfgsVerification.SeedOrbit.seedRatio ^ m •
+                                        BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC
+                                          BfgsVerification.SeedOrbit.seedD j ∧
+                                    R.g (3 * m + ↑j) =
+                                        BfgsVerification.DScalarGeometric.scale n ^ 2 •
+                                          BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC
+                                            BfgsVerification.SeedOrbit.seedD j ∧
+                                      R.α (3 * m + ↑j) = BfgsVerification.SeedOrbit.length j
+'BfgsVerification.DEmbedding.deterministic_embedding_failure' depends on axioms: [propext, Classical.choice, Quot.sound]

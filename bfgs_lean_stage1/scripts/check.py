@@ -238,7 +238,31 @@ REPORT_CONSTRUCTION_TARGETS = {
     'rationalSpikeOracle_verified':
         ('BfgsVerification.NormalSpike.rationalSpikeOracle', 'BfgsVerification.NormalSpike.RationalSpikeOracleTarget'),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS
+REPORT_EMBEDDING_TARGETS = {
+    'dEmbeddingObjective_verified':
+        ('BfgsVerification.DEmbedding.objectiveGeometry', 'BfgsVerification.DEmbedding.ObjectiveGeometryTarget'),
+    'dEmbeddingFailure_verified':
+        ('BfgsVerification.DEmbedding.embeddingFailure', 'BfgsVerification.DEmbedding.EmbeddingFailureTarget'),
+    'lQuadraticSeed_verified':
+        ('BfgsVerification.LQuadraticSeed.quadraticSeed', 'BfgsVerification.LQuadraticSeed.QuadraticSeedTarget'),
+    'planarAffineCriticalCluster_verified':
+        ('BfgsVerification.planarAffineCriticalCluster', 'BfgsVerification.PlanarAffineCriticalClusterTarget'),
+    'planarConvergence_verified':
+        ('BfgsVerification.planarConvergence', 'BfgsVerification.PlanarConvergenceTarget'),
+    'planarLocalBasin_verified':
+        ('BfgsVerification.planarLocalBasin', 'BfgsVerification.PlanarLocalBasinTarget'),
+    'variableSpikeConvergence_verified':
+        ('BfgsVerification.NormalSpike.variableSpikeConvergence', 'BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget'),
+    'variableSpikeSeparation_verified':
+        ('BfgsVerification.NormalSpike.variableSpikeSeparation', 'BfgsVerification.NormalSpike.VariableSpikeSeparationTarget'),
+    'variableSpikeNonsplitting_verified':
+        ('BfgsVerification.NormalSpike.variableSpikeNonsplitting', 'BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget'),
+    'variableSpikeGeometry_verified':
+        ('BfgsVerification.NormalSpike.variableSpikeGeometry', 'BfgsVerification.NormalSpike.VariableSpikeGeometryTarget'),
+    'variableSpikeHessian_verified':
+        ('BfgsVerification.NormalSpike.variableSpikeHessian', 'BfgsVerification.NormalSpike.VariableSpikeHessianTarget'),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -495,6 +519,7 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
+                ("BfgsVerification.SeedEmbedding.fromMetric_exact", "Conditional translated/scaled objective value and derivative interface; every field is discharged for the actual D objective in DEmbedding.actualOracleData and embeddingFailure"),
                 ("BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full", "Continuous finite gradient data, affine independence and positive base weights; the actual finite-C1-max subdifferential bridge and original-family application are now discharged in localAffineCorrectness"),
                 ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; discharged for the actual quadratic-gauge family in quadraticGaugeRates"),
                 ("BfgsVerification.linearCorrectionRate", "Actual linear cumulative reference-correction budget; derived for centered smooth-plus-sublinear objectives"),
@@ -516,7 +541,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Remaining R nuclear/interpretive details and F descriptive identities, A semialgebraic critical values and compact affine-gap analysis, C secant/main conclusions beyond verified tail transport, U variable-jump example, D local embedding beyond verified scalar construction, L persistence/embeddings, and final synthesis; see REPORT_STATUS.json",
+            "Remaining R nuclear/interpretive details and F descriptive identities, A semialgebraic critical values and compact affine-gap analysis, C source example/interpretive closure, L persistence and local embeddings, and final synthesis; D actual deterministic embedding and C principal/U variable-jump targets are checked; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -525,7 +550,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_CONSTRUCTION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_EMBEDDING_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

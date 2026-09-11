@@ -1,0 +1,86 @@
+def BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget : Prop :=
+∀ (n : ℕ) (c : BfgsVerification.Vec (n + 1)),
+  √(BfgsVerification.sqNorm c) < 1 →
+    ∃ ε,
+      0 < ε ∧
+        ∀ (R : BfgsVerification.AdmissibleBFGSRun (n + 2) (BfgsVerification.NormalSpike.printedVariableObjective n c)),
+          BfgsVerification.NormalSpike.printedVariableObjective n c (R.x 0) < ε →
+            Filter.Tendsto (fun k => BfgsVerification.NormalSpike.printedVariableObjective n c (R.x k)) Filter.atTop
+                (nhds 0) ∧
+              Filter.Tendsto R.x Filter.atTop (nhds 0)
+BfgsVerification.NormalSpike.variableSpikeConvergence : BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget
+def BfgsVerification.NormalSpike.VariableSpikeSeparationTarget : Prop :=
+∀ (n : ℕ) (c : BfgsVerification.Vec (n + 1)),
+  √(BfgsVerification.sqNorm c) < 1 →
+    ∀ K ∈ nhds 0,
+      ¬BfgsVerification.RadialCertificate.HasRadialSecantBounds
+          (BfgsVerification.NormalSpike.printedVariableObjective n c) K 0
+BfgsVerification.NormalSpike.variableSpikeSeparation : BfgsVerification.NormalSpike.VariableSpikeSeparationTarget
+def BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget : Prop :=
+∀ (n : ℕ) (c : BfgsVerification.Vec (n + 1)),
+  √(BfgsVerification.sqNorm c) < 1 →
+    c ≠ 0 →
+      ∀ (U : Set (BfgsVerification.Vec (n + 2))),
+        IsOpen U →
+          0 ∈ U →
+            ∀ (S : BfgsVerification.Vec (n + 2) → ℝ) (h : ℝ → ℝ),
+              DifferentiableOn ℝ S U →
+                ¬∀ x ∈ U, BfgsVerification.NormalSpike.printedVariableObjective n c x = S x + h (x 0)
+BfgsVerification.NormalSpike.variableSpikeNonsplitting : BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget
+def BfgsVerification.NormalSpike.VariableSpikeGeometryTarget : Prop :=
+∀ (n : ℕ) (c : BfgsVerification.Vec (n + 1)),
+  √(BfgsVerification.sqNorm c) < 1 →
+    ConvexOn ℝ Set.univ (BfgsVerification.NormalSpike.printedVariableObjective n c) ∧
+      BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ (1 - √(BfgsVerification.sqNorm c))
+          (BfgsVerification.NormalSpike.printedVariableObjective n c) ∧
+        BfgsVerification.NormalSpike.printedVariableObjective n c 0 = 0 ∧
+          (∀ (x : BfgsVerification.Vec (n + 2)),
+              BfgsVerification.NormalSpike.printedVariableObjective n c 0 ≤
+                BfgsVerification.NormalSpike.printedVariableObjective n c x) ∧
+            (∀ (x : BfgsVerification.Vec (n + 2)),
+                BfgsVerification.NormalSpike.printedVariableObjective n c x =
+                    BfgsVerification.NormalSpike.printedVariableObjective n c 0 →
+                  x = 0) ∧
+              (∀ x ∈ BfgsVerification.NormalSpike.variableRegion (Fin.cons 0 c),
+                  DifferentiableAt ℝ (BfgsVerification.NormalSpike.printedVariableObjective n c) x ↔ x 0 ≠ 0) ∧
+                (∀ x ∈ BfgsVerification.NormalSpike.variableRegion (Fin.cons 0 c),
+                    ∀ (g : BfgsVerification.Vec (n + 2)),
+                      BfgsVerification.Homogeneous.Supports (BfgsVerification.NormalSpike.printedVariableObjective n c)
+                          x g →
+                        BfgsVerification.FixedNormal.tangentProjection (BfgsVerification.NormalSpike.normal n) g =
+                          BfgsVerification.NormalSpike.variableTangent (BfgsVerification.NormalSpike.normal n)
+                            (Fin.cons 0 c) x) ∧
+                  (∀ (u : BfgsVerification.Vec (n + 1)) (v : ℝ),
+                      BfgsVerification.NormalSpike.printedVariableObjective n c (Fin.cons v u) =
+                        1 / 2 * (BfgsVerification.sqNorm u + v ^ 2) + |(1 + BfgsVerification.dot c u) * v| +
+                          BfgsVerification.NormalSpike.sourcePrimitive v) ∧
+                    ∀ (u : BfgsVerification.Vec (n + 1)) (v : ℝ),
+                      BfgsVerification.NormalSpike.variableTangent (BfgsVerification.NormalSpike.normal n)
+                          (Fin.cons 0 c) (Fin.cons v u) =
+                        Fin.cons 0 (u + |v| • c)
+BfgsVerification.NormalSpike.variableSpikeGeometry : BfgsVerification.NormalSpike.VariableSpikeGeometryTarget
+def BfgsVerification.NormalSpike.VariableSpikeHessianTarget : Prop :=
+∀ (n : ℕ) (c : BfgsVerification.Vec (n + 1)) (x : BfgsVerification.Vec (n + 2)) (σ : ℝ),
+  BfgsVerification.RadialHessian.matrix
+        (BfgsVerification.NormalSpike.variableQuadraticBranch (BfgsVerification.NormalSpike.normal n) (Fin.cons 0 c) σ)
+        x =
+      1 +
+        σ •
+          (BfgsVerification.outer (Fin.cons 0 c) (BfgsVerification.NormalSpike.normal n) +
+            BfgsVerification.outer (BfgsVerification.NormalSpike.normal n) (Fin.cons 0 c)) ∧
+    (|σ| ≤ 1 →
+      ∀ (v : BfgsVerification.Vec (n + 2)),
+        (1 - √(BfgsVerification.sqNorm c)) * BfgsVerification.sqNorm v ≤
+          BfgsVerification.dot v
+            (Matrix.mulVec
+              (BfgsVerification.RadialHessian.matrix
+                (BfgsVerification.NormalSpike.variableQuadraticBranch (BfgsVerification.NormalSpike.normal n)
+                  (Fin.cons 0 c) σ)
+                x)
+              v))
+BfgsVerification.NormalSpike.variableSpikeHessian : BfgsVerification.NormalSpike.VariableSpikeHessianTarget
+EXACT_TARGET_OK variableSpikeConvergence VariableSpikeConvergenceTarget
+EXACT_TARGET_OK variableSpikeSeparation VariableSpikeSeparationTarget
+EXACT_TARGET_OK variableSpikeNonsplitting VariableSpikeNonsplittingTarget
+EXACT_TARGET_OK variableSpikeGeometry VariableSpikeGeometryTarget
+EXACT_TARGET_OK variableSpikeHessian VariableSpikeHessianTarget

@@ -284,3 +284,29 @@ queries; C's secant and main/local consequences; U's variable-jump example;
 L's genuine return-map persistence and embeddings; A's remaining compact
 gap/semialgebraic infrastructure; remaining nuclear/descriptive identities,
 historical references and final synthesis. The entire report remains incomplete.
+
+
+## Tenth execution milestone: actual D embedding and C principal theorem
+
+Full pinned audit: **3,004 explicit / 4,254 total theorem declarations**,
+**106 exact targets**, and **354 frozen Lean source hashes**.
+Only propext, Classical.choice and Quot.sound occur. Actual logs are
+`audit/report_embedding_check.log`, `audit/build.log`, and `audit/axioms.log`;
+exact statement and independent reviews are linked in
+`audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md`.
+
+D's complete actual four-branch C2,1 construction now produces the claimed full
+BFGS run with all actual search histories, derivatives, SPD matrices, nonstationary
+limits and uniform whole-trajectory localization. C's uniform all-pair secant
+bound and actual-run log transport feed the principal affine-critical cluster
+theorem and convergence/local-basin consequences. U's variable-jump objective,
+actual Hessians, local full-BFGS convergence, every-neighborhood RS failure and
+corrected c!=0 nonsplitting are checked. L's actual quadratic-seed geometry is
+proved without assuming a perturbed orbit.
+
+Next independent tasks: L's actual five-dimensional return map, derivative and
+spectral enclosure, constructive nonlinear stable orbit and local embeddings;
+A compact affine-gap/semialgebraic infrastructure; C finite-max application and
+explicit examples; general rectangular nuclear norm and named family closure;
+final source/synthesis/evidence review. D/U retained construction proofs have no
+undischarged premise, but the entire report remains incomplete.

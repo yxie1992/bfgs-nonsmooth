@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 2,718 explicit
-theorems and 3,841 theorem declarations including generated auxiliaries. All 95
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 3,004 explicit
+theorems and 4,254 theorem declarations including generated auxiliaries. All 106
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_construction_check.log`.
+`audit/report_embedding_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -36,9 +36,14 @@ all-dimensional convergence/radial separation and executable exact rational
 oracle, C's actual tail logarithmic transport, and the rectangular spectral-norm
 and singular-curvature interpretations in R. See
 [audit/REPORT_CONSTRUCTION_STATEMENT_REVIEW.md](audit/REPORT_CONSTRUCTION_STATEMENT_REVIEW.md).
-D's local two-dimensional embedding, L's persistence/embeddings, C's secant/main
-conclusions, U's variable-jump example, A's remaining infrastructure, nuclear and
-descriptive family identifications, and final source reconciliation remain open.
+The tenth tranche closes D's actual two-dimensional C2,1 embedding and every
+accepted/rejected deterministic query, C's principal affine-critical cluster and
+convergence/local-basin theorems, and U's variable-jump example. L's exact
+quadratic seed geometry is checked. See
+[audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md](audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md).
+L's nonlinear persistence/embeddings, A's remaining infrastructure, C's further
+applications/examples and uniform transport statement, general nuclear/descriptive
+identities, and final source reconciliation remain open.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
 

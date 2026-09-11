@@ -338,3 +338,20 @@ R's older four-piece numerical reference is not verified for the current
 objective. The actual current D supporting heights and secant limit, and
 RS/SP failure on its initial sublevel, are checked and explicitly documented.
 Original research sources remain unchanged. Entire-report completion is false.
+
+
+## Tenth whole-report tranche
+
+The full audit passes 3,004 explicit / 4,254 total theorem declarations and
+106 exact targets. D's actual local objective now discharges every generic
+translated/scaled value, derivative and oracle interface. C's principal theorem
+uses an actual coherently constructed field with derived secant/transport bounds.
+U's literal variable-jump example is proved including the documented c!=0
+qualification for nonsplitting. L's concrete quadratic objective/minimizer is
+verified; its nonlinear stable orbit is not yet established.
+
+See `audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md` and `audit/REPORT_STATUS.json`.
+Remaining obligations include A's semialgebraic/compact-gap work, C's application
+and example closures, R's general nuclear/interpretive details, L dynamics and
+embeddings, and final synthesis/evidence reconciliation. Entire-report
+completion is false, and original sources remain preserved.

@@ -1,0 +1,53 @@
+BfgsVerification.DScalar.positiveSlope_nonnegative (b x : ℝ) : 0 ≤ BfgsVerification.DScalar.positiveSlope b x
+'BfgsVerification.DScalar.positiveSlope_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_monotone {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) :
+  Monotone (BfgsVerification.DScalar.positivePart b)
+'BfgsVerification.DScalar.positivePart_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positive_small_bounds {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : 0 < x) (hxb : x ≤ b) :
+  0 ≤ BfgsVerification.DScalar.phi b x ∧
+    BfgsVerification.DScalar.phi b x ≤ (x / (b * BfgsVerification.DScalarGeometric.theta)) ^ 3 ∧
+      0 ≤ BfgsVerification.DScalar.phiFirst b x ∧
+        BfgsVerification.DScalar.phiFirst b x ≤ (x / (b * BfgsVerification.DScalarGeometric.theta)) ^ 2 ∧
+          0 ≤ BfgsVerification.DScalar.phiSecond b x ∧
+            BfgsVerification.DScalar.phiSecond b x ≤ 102 / b * (x / (b * BfgsVerification.DScalarGeometric.theta))
+'BfgsVerification.DScalar.positive_small_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positive_asymptotic_orders {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) :
+  (BfgsVerification.DScalar.phi b =O[nhdsWithin 0 (Set.Ioi 0)] fun x => x ^ 3) ∧
+    (BfgsVerification.DScalar.phiFirst b =O[nhdsWithin 0 (Set.Ioi 0)] fun x => x ^ 2) ∧
+      BfgsVerification.DScalar.phiSecond b =O[nhdsWithin 0 (Set.Ioi 0)] fun x => x
+'BfgsVerification.DScalar.positive_asymptotic_orders' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.slab_horizontal (n : ℕ) {h : BfgsVerification.Vec 2}
+  (hh :
+    ∀ (i : Fin 3),
+      |BfgsVerification.dot
+            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+            h| ≤
+        BfgsVerification.DScalarGeometric.scale n / 2) :
+  |h 0| ≤ BfgsVerification.DScalarGeometric.scale n / 2
+'BfgsVerification.DEmbedding.slab_horizontal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.branch_plateau_lower_bound (n : ℕ) (i : Fin 3) {h : BfgsVerification.Vec 2}
+  (hh :
+    |BfgsVerification.dot
+          (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) h| ≤
+      BfgsVerification.DScalarGeometric.scale n / 2) :
+  BfgsVerification.DScalarGeometric.scale n ^ 3 / 2 ≤
+    BfgsVerification.DEmbedding.branch i.castSucc (BfgsVerification.DEmbedding.center n + h)
+'BfgsVerification.DEmbedding.branch_plateau_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.center_active_branches (n : ℕ) :
+  (∀ (i : Fin 3),
+      BfgsVerification.DEmbedding.branch i.castSucc (BfgsVerification.DEmbedding.center n) =
+        BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)) ∧
+    BfgsVerification.DEmbedding.branch 3 (BfgsVerification.DEmbedding.center n) <
+      BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)
+'BfgsVerification.DEmbedding.center_active_branches' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DEmbedding.all_actual_trial_values {n : ℕ} (hn : 1 ≤ n) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  let R := BfgsVerification.DEmbedding.run hn c₁ c₂ hc₁ hc₁' hc hc₂;
+  BfgsVerification.DEmbedding.objective
+      (R.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (R.H k) (R.g k) 1) =
+    BfgsVerification.DScalarGeometric.scale n ^ 3 +
+      BfgsVerification.DScalarGeometric.scale n ^ 4 *
+        BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          (BfgsVerification.SeedEmbedding.trialPoint k q)
+'BfgsVerification.DEmbedding.all_actual_trial_values' depends on axioms: [propext, Classical.choice, Quot.sound]

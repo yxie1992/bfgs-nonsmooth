@@ -497,3 +497,48 @@ example : BfgsVerification.NormalSpike.RationalSpikeOracleTarget := BfgsVerifica
 #print BfgsVerification.CenteredSpectral.matrix
 #print BfgsVerification.NormalSpike.sourcePrimitive
 #print BfgsVerification.NormalSpike.objective
+
+-- Tenth tranche: actual D embedding, C principal theorem, U variable jump and L seed geometry.
+#print BfgsVerification.DEmbedding.ObjectiveGeometryTarget
+example : BfgsVerification.DEmbedding.ObjectiveGeometryTarget := BfgsVerification.DEmbedding.objectiveGeometry
+#print axioms BfgsVerification.DEmbedding.objectiveGeometry
+#print BfgsVerification.DEmbedding.EmbeddingFailureTarget
+example : BfgsVerification.DEmbedding.EmbeddingFailureTarget := BfgsVerification.DEmbedding.embeddingFailure
+#print axioms BfgsVerification.DEmbedding.embeddingFailure
+#print BfgsVerification.LQuadraticSeed.QuadraticSeedTarget
+example : BfgsVerification.LQuadraticSeed.QuadraticSeedTarget := BfgsVerification.LQuadraticSeed.quadraticSeed
+#print axioms BfgsVerification.LQuadraticSeed.quadraticSeed
+#print BfgsVerification.PlanarAffineCriticalClusterTarget
+example : BfgsVerification.PlanarAffineCriticalClusterTarget := BfgsVerification.planarAffineCriticalCluster
+#print axioms BfgsVerification.planarAffineCriticalCluster
+#print BfgsVerification.PlanarConvergenceTarget
+example : BfgsVerification.PlanarConvergenceTarget := BfgsVerification.planarConvergence
+#print axioms BfgsVerification.planarConvergence
+#print BfgsVerification.PlanarLocalBasinTarget
+example : BfgsVerification.PlanarLocalBasinTarget := BfgsVerification.planarLocalBasin
+#print axioms BfgsVerification.planarLocalBasin
+#print BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget
+example : BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget := BfgsVerification.NormalSpike.variableSpikeConvergence
+#print axioms BfgsVerification.NormalSpike.variableSpikeConvergence
+#print BfgsVerification.NormalSpike.VariableSpikeSeparationTarget
+example : BfgsVerification.NormalSpike.VariableSpikeSeparationTarget := BfgsVerification.NormalSpike.variableSpikeSeparation
+#print axioms BfgsVerification.NormalSpike.variableSpikeSeparation
+#print BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget
+example : BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget := BfgsVerification.NormalSpike.variableSpikeNonsplitting
+#print axioms BfgsVerification.NormalSpike.variableSpikeNonsplitting
+#print BfgsVerification.NormalSpike.VariableSpikeGeometryTarget
+example : BfgsVerification.NormalSpike.VariableSpikeGeometryTarget := BfgsVerification.NormalSpike.variableSpikeGeometry
+#print axioms BfgsVerification.NormalSpike.variableSpikeGeometry
+#print BfgsVerification.NormalSpike.VariableSpikeHessianTarget
+example : BfgsVerification.NormalSpike.VariableSpikeHessianTarget := BfgsVerification.NormalSpike.variableSpikeHessian
+#print axioms BfgsVerification.NormalSpike.variableSpikeHessian
+#print BfgsVerification.DEmbedding.branch
+#print BfgsVerification.DEmbedding.objective
+#print BfgsVerification.DEmbedding.center
+#print BfgsVerification.DEmbedding.actualOracleData
+#print BfgsVerification.DEmbedding.run
+#print BfgsVerification.SeedEmbedding.Data
+#print BfgsVerification.SeedEmbedding.OracleData
+#print BfgsVerification.LQuadraticSeed.objective
+#print BfgsVerification.LQuadraticSeed.minimizer
+#print BfgsVerification.NormalSpike.printedVariableObjective

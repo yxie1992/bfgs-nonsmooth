@@ -414,3 +414,27 @@ objective has optimizer(-1,16), heights0,0,-1+c-16d, and actual RS/SP failure;
 the discrepancy and its checked correction are explicit in
 `audit/COERCIVE_SEED_INTERCEPT_CORRECTION.md`. No original source was overwritten.
 The remaining entire-report obligations are retained in `audit/REPORT_STATUS.json`.
+
+
+## Tenth report statement review
+
+The frozen compiled-environment audit passes 3,004 explicit / 4,254 total
+theorem declarations and 106 exact targets. D's geometry target uses actual
+Frechet Hessians and the literal four scalar-composed branches; its dynamics
+target has no assumed local model or search history. The proved slab identity
+supplies all accepted and rejected trial values and gradients. All matrices are
+those of the actual full update, and all limits are derived. Literal right-zero
+Big-O estimates and source plateau bounds are separately checked.
+
+C's source chart convexity remains explicit. Actual branch gradients, a genuine
+tie point and exact support-jump cancellation yield the uniform all-eligible-pair
+secant estimate. One actual field supplies that estimate and late log transport,
+so the original-objective principal theorem has no certificate assumption.
+Its stronger all-pair transport statement remains a distinct obligation.
+
+U's nonsplitting proof allows an arbitrary scalar function; only the proposed
+smooth term is differentiable. The necessary c!=0 qualification is explicit.
+L's least-norm hull point and optimizer are actual objective calculations and
+make no persistence assertion. All scope and independent reviews are linked in
+`audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md`. Historical R attribution remains
+unresolved as documented; no original research source was overwritten.

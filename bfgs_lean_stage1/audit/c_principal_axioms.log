@@ -1,0 +1,456 @@
+BfgsVerification.PlanarCrossing.abs_dot_le_euclidean_norm (u v : BfgsVerification.Vec 2) :
+  |BfgsVerification.dot u v| ≤ ‖BfgsVerification.euclideanVector u‖ * ‖BfgsVerification.euclideanVector v‖
+'BfgsVerification.PlanarCrossing.abs_dot_le_euclidean_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.crossing_numerator_bound {y ri rj jump wz wp : BfgsVerification.Vec 2} {L G H B r : ℝ}
+  (hL : 0 ≤ L) (hG : 0 ≤ G) (hH : 0 ≤ H) (hB : 0 ≤ B) (hr : 0 ≤ r) (hy : y = rj + jump + ri)
+  (horth : BfgsVerification.dot jump wp = 0) (hi : ‖BfgsVerification.euclideanVector ri‖ ≤ L * r)
+  (hj : ‖BfgsVerification.euclideanVector rj‖ ≤ L * r) (hw : ‖BfgsVerification.euclideanVector wz‖ ≤ G)
+  (hjump : ‖BfgsVerification.euclideanVector jump‖ ≤ H)
+  (hchange : ‖BfgsVerification.euclideanVector (wz - wp)‖ ≤ B * r) :
+  |BfgsVerification.dot y wz| ≤ (2 * L * G + H * B) * r
+'BfgsVerification.PlanarCrossing.crossing_numerator_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.crossing_inverse_step_bound {a b s r : BfgsVerification.Vec 2} {A E d t : ℝ}
+  (hdet : BfgsVerification.HomogeneousPlanar.pairDet a b ≠ 0) (hA : 0 ≤ A) (hE : 0 ≤ E) (hd : 0 ≤ d) (ht : 0 ≤ t)
+  (hinv : ‖BfgsVerification.AffineProjection.matrixCLM (BfgsVerification.HomogeneousPlanar.pairMatrix a b)⁻¹‖ ≤ A)
+  (ha : BfgsVerification.dot a s = -d) (hb : BfgsVerification.dot b s = t - d - BfgsVerification.dot r s)
+  (hr : |BfgsVerification.dot r s| ≤ E * ‖s‖ ^ 2) : ‖s‖ ≤ A * (2 * d + t + E * ‖s‖ ^ 2)
+'BfgsVerification.PlanarCrossing.crossing_inverse_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.crossing_linear_curvature {r A L σ d t : ℝ} (hr : 0 ≤ r) (hA : 0 < A) (hσ : 0 < σ)
+  (hstep : r ≤ A * (2 * d + t + L * r ^ 2)) (hsmall : A * L * r ≤ 1 / 2) (hwolfe : σ * d ≤ t) :
+  r ≤ 2 * A * (1 + 2 / σ) * t
+'BfgsVerification.PlanarCrossing.crossing_linear_curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.crossing_secant_correction {num B C r t : ℝ} (hB : 0 ≤ B) (hC : 0 ≤ C) (hr : 0 ≤ r)
+  (ht : 0 < t) (hnum : |num| ≤ B * r) (hcurv : r ≤ C * t) : num ^ 2 / t ≤ B ^ 2 * C * r
+'BfgsVerification.PlanarCrossing.crossing_secant_correction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt (F : BfgsVerification.Vec 2 → ℝ)
+  (x : BfgsVerification.Vec 2) : Prop
+'BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt.to_regular {F : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (hx : BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x) :
+  BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x
+'BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt.to_regular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.ConvexCornerChart (F : BfgsVerification.Vec 2 → ℝ) (x : BfgsVerification.Vec 2) :
+  Type
+'BfgsVerification.PlanarCornerCharts.ConvexCornerChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.nonempty_convexCornerChart {F : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (hx : BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x) :
+  Nonempty (BfgsVerification.PlanarCornerCharts.ConvexCornerChart F x)
+'BfgsVerification.PlanarCornerCharts.nonempty_convexCornerChart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.exists_finite_convexCornerCharts {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x) :
+  ∃ m points charts,
+    Function.Injective points ∧
+      (∀ (i : Fin m), points i ∈ K ∧ ¬DifferentiableAt ℝ F (points i)) ∧ ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ∃ i, x = points i
+'BfgsVerification.PlanarCornerCharts.exists_finite_convexCornerCharts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.ConvexCornerChart.commonRate_near {F : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F x) :
+  ∀ᶠ (t : ℝ) in nhds (F x),
+    ∀ (i : Fin 2),
+      BfgsVerification.dot (BfgsVerification.coordinateGradient (c.branches i) (c.curve t)) (deriv c.curve t) = 1
+'BfgsVerification.PlanarCornerCharts.ConvexCornerChart.commonRate_near' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.ConvexCornerChart.tie_point_on_curve {F : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F x) :
+  ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, c.branches 0 z = c.branches 1 z → z = c.curve (F z)
+'BfgsVerification.PlanarCornerCharts.ConvexCornerChart.tie_point_on_curve' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.ConvexCornerChart.common_pairing_near {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {x : BfgsVerification.Vec 2}
+  (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F x) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hW : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, W z = deriv c.curve (F z)) :
+  ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F z,
+      ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F z,
+        BfgsVerification.dot g (W z) = BfgsVerification.dot h (W z)
+'BfgsVerification.PlanarCornerCharts.ConvexCornerChart.common_pairing_near' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.actual_gradient_eq_active_branch {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ} {x g : BfgsVerification.Vec n}
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x) (hf : ∀ (i : Fin m), DifferentiableAt ℝ (f i) x)
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) {i : Fin m} (hi : f i x = F x) :
+  BfgsVerification.coordinateGradient (f i) x = g
+'BfgsVerification.PlanarCrossing.actual_gradient_eq_active_branch' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.exists_actual_active_gradient {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ} {x g : BfgsVerification.Vec n}
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x) (hf : ∀ (i : Fin m), DifferentiableAt ℝ (f i) x)
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  ∃ i, f i x = F x ∧ BfgsVerification.coordinateGradient (f i) x = g
+'BfgsVerification.PlanarCrossing.exists_actual_active_gradient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.pi_norm_le_euclidean_norm (v : BfgsVerification.Vec 2) :
+  ‖v‖ ≤ ‖BfgsVerification.euclideanVector v‖
+'BfgsVerification.PlanarCrossing.pi_norm_le_euclidean_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.euclidean_norm_le_two_pi_norm (v : BfgsVerification.Vec 2) :
+  ‖BfgsVerification.euclideanVector v‖ ≤ 2 * ‖v‖
+'BfgsVerification.PlanarCrossing.euclidean_norm_le_two_pi_norm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.exists_tie_on_segment {F f₀ f₁ : BfgsVerification.Vec 2 → ℝ}
+  {x z : BfgsVerification.Vec 2} (hc₀ : ContinuousOn f₀ (segment ℝ x z)) (hc₁ : ContinuousOn f₁ (segment ℝ x z))
+  (hx : f₁ x ≤ f₀ x) (hz : f₀ z ≤ f₁ z) : ∃ p ∈ segment ℝ x z, f₀ p = f₁ p
+'BfgsVerification.PlanarCrossing.exists_tie_on_segment' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.segment_sub_norm_le {x z p : BfgsVerification.Vec 2} (hp : p ∈ segment ℝ x z) :
+  ‖p - x‖ ≤ ‖z - x‖ ∧ ‖z - p‖ ≤ ‖z - x‖
+'BfgsVerification.PlanarCrossing.segment_sub_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.matrixCLM_continuous : Continuous BfgsVerification.AffineProjection.matrixCLM
+'BfgsVerification.PlanarCrossing.matrixCLM_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.pairMatrix_continuous {a b : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (ha : ContinuousAt a x) (hb : ContinuousAt b x) :
+  ContinuousAt (fun z => BfgsVerification.HomogeneousPlanar.pairMatrix (a z) (b z)) x
+'BfgsVerification.PlanarCrossing.pairMatrix_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.eventually_actual_pair_control {a b : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (ha : ContinuousAt a x) (hb : ContinuousAt b x)
+  (hd : BfgsVerification.HomogeneousPlanar.pairDet (a x) (b x) ≠ 0) :
+  ∃ A,
+    0 < A ∧
+      ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+        BfgsVerification.HomogeneousPlanar.pairDet (a z) (b z) ≠ 0 ∧
+          ∀ (s : BfgsVerification.Vec 2), ‖s‖ ≤ A * (|BfgsVerification.dot (a z) s| + |BfgsVerification.dot (b z) s|)
+'BfgsVerification.PlanarCrossing.eventually_actual_pair_control' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.convexCornerChart_eventually_pair_control {F : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F x) :
+  ∃ A,
+    0 < A ∧
+      ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+        ∀ (s : BfgsVerification.Vec 2),
+          ‖s‖ ≤
+            A *
+              (|BfgsVerification.dot (BfgsVerification.coordinateGradient (c.branches 0) z) s| +
+                |BfgsVerification.dot (BfgsVerification.coordinateGradient (c.branches 1) z) s|)
+'BfgsVerification.PlanarCrossing.convexCornerChart_eventually_pair_control' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.abs_dot_le_four_pi_norm (u v : BfgsVerification.Vec 2) :
+  |BfgsVerification.dot u v| ≤ 4 * ‖u‖ * ‖v‖
+'BfgsVerification.PlanarCrossing.abs_dot_le_four_pi_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.crossing_step_bound {a b s r : BfgsVerification.Vec 2} {A L d t : ℝ} (hA : 0 ≤ A)
+  (hL : 0 ≤ L) (hd : 0 ≤ d) (ht : 0 ≤ t)
+  (hpair : ∀ (v : BfgsVerification.Vec 2), ‖v‖ ≤ A * (|BfgsVerification.dot a v| + |BfgsVerification.dot b v|))
+  (ha : BfgsVerification.dot a s = -d) (hb : BfgsVerification.dot b s = t - d - BfgsVerification.dot r s)
+  (hr : ‖r‖ ≤ L * ‖s‖) : ‖s‖ ≤ A * (2 * d + t + 4 * L * ‖s‖ ^ 2)
+'BfgsVerification.PlanarCrossing.crossing_step_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.actual_crossing_secant_bound {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {V : Set (BfgsVerification.Vec 2)} (hV : Convex ℝ V)
+  (hrep : ∀ x ∈ V, BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hdiff : ∀ (i : Fin 2), ∀ x ∈ V, DifferentiableAt ℝ (f i) x) {L G H B A σ : ℝ} (hL : 0 ≤ L) (hG : 0 ≤ G) (hH : 0 ≤ H)
+  (hB : 0 ≤ B) (hA : 0 < A) (hσ : 0 < σ)
+  (hgradLip :
+    ∀ (i : Fin 2),
+      ∀ x ∈ V,
+        ∀ z ∈ V,
+          ‖BfgsVerification.coordinateGradient (f i) z - BfgsVerification.coordinateGradient (f i) x‖ ≤ L * ‖z - x‖)
+  (hWBound : ∀ x ∈ V, ‖W x‖ ≤ G)
+  (hgradBound : ∀ (i : Fin 2), ∀ x ∈ V, ‖BfgsVerification.coordinateGradient (f i) x‖ ≤ H)
+  (hWLip : ∀ x ∈ V, ∀ z ∈ V, ‖W z - W x‖ ≤ B * ‖z - x‖)
+  (hcommon :
+    ∀ p ∈ V,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+          BfgsVerification.dot g (W p) = BfgsVerification.dot h (W p))
+  (hpair :
+    ∀ x ∈ V,
+      ∀ (v : BfgsVerification.Vec 2),
+        ‖v‖ ≤
+          A *
+            (|BfgsVerification.dot (BfgsVerification.coordinateGradient (f 0) x) v| +
+              |BfgsVerification.dot (BfgsVerification.coordinateGradient (f 1) x) v|))
+  {x z g h : BfgsVerification.Vec 2} (hx : x ∈ V) (hz : z ∈ V)
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x)
+  (hh : HasFDerivAt F (BfgsVerification.gradientFunctional h) z) {i j : Fin 2} (hij : i ≠ j) (hi : f i x = F x)
+  (hj : f j z = F z) {d t : ℝ} (hd : 0 ≤ d) (ht : 0 < t) (hdescent : BfgsVerification.dot g (z - x) = -d)
+  (hcurv : t = BfgsVerification.dot (h - g) (z - x)) (hwolfe : σ * d ≤ t) (hsmall : A * (4 * L) * ‖z - x‖ ≤ 1 / 2) :
+  BfgsVerification.dot (h - g) (W z) ^ 2 / t ≤ (8 * (L * G + H * B)) ^ 2 * (2 * A * (1 + 2 / σ)) * ‖z - x‖
+'BfgsVerification.PlanarCrossing.actual_crossing_secant_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.contDiffAt_coordinateGradient {f : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (hf : ContDiffAt ℝ 2 f x) : ContDiffAt ℝ 1 (BfgsVerification.coordinateGradient f) x
+'BfgsVerification.PlanarCrossing.contDiffAt_coordinateGradient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.locallyC11_of_contDiffOn {f : BfgsVerification.Vec 2 → ℝ}
+  {U : Set (BfgsVerification.Vec 2)} (hU : IsOpen U) (hf : ContDiffOn ℝ 2 f U) :
+  BfgsVerification.CenteredSmoothSublinear.LocallyC11On U f
+'BfgsVerification.PlanarCrossing.locallyC11_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.CornerSecantData (F : BfgsVerification.Vec 2 → ℝ) (c : BfgsVerification.Vec 2)
+  (f : Fin 2 → BfgsVerification.Vec 2 → ℝ) (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2) : Type
+'BfgsVerification.PlanarCrossing.CornerSecantData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.convexCornerChart_nonempty_secantData {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {x : BfgsVerification.Vec 2}
+  (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F x) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hW : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, W z = deriv c.curve (F z))
+  (hWLip : ∃ B, ∃ U ∈ nhds x, LipschitzOnWith B W U) :
+  Nonempty (BfgsVerification.PlanarCrossing.CornerSecantData F x c.branches W)
+'BfgsVerification.PlanarCrossing.convexCornerChart_nonempty_secantData' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.smooth_secant_correction {g h w s : BfgsVerification.Vec 2} {D G t : ℝ} (hD : 0 ≤ D)
+  (hG : 0 ≤ G) (ht : 0 < t) (hcurv : t = BfgsVerification.dot (h - g) s)
+  (hcoco : BfgsVerification.sqNorm (h - g) ≤ D * BfgsVerification.dot (h - g) s) (hw : ‖w‖ ≤ G) :
+  BfgsVerification.dot (h - g) w ^ 2 / t ≤ 4 * D * G ^ 2
+'BfgsVerification.PlanarCrossing.smooth_secant_correction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.cornerData_secant_bound {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  {p : BfgsVerification.Vec 2} {f : Fin 2 → BfgsVerification.Vec 2 → ℝ}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} (c : BfgsVerification.PlanarCrossing.CornerSecantData F p f W)
+  {σ : ℝ} (hσ : 0 < σ) :
+  ∃ δ C,
+    0 < δ ∧
+      0 ≤ C ∧
+        ∀ (x z g h : BfgsVerification.Vec 2),
+          x ∈ Metric.closedBall p c.radius →
+            z ∈ Metric.closedBall p c.radius →
+              ‖z - x‖ ≤ δ →
+                HasFDerivAt F (BfgsVerification.gradientFunctional g) x →
+                  HasFDerivAt F (BfgsVerification.gradientFunctional h) z →
+                    ∀ (d t : ℝ),
+                      0 ≤ d →
+                        0 < t →
+                          BfgsVerification.dot g (z - x) = -d →
+                            t = BfgsVerification.dot (h - g) (z - x) →
+                              σ * d ≤ t → BfgsVerification.dot (h - g) (W z) ^ 2 / t ≤ C
+'BfgsVerification.PlanarCrossing.cornerData_secant_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.convexCornerChart_local_secant {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {p : BfgsVerification.Vec 2}
+  (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F p) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hW : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds p, W z = deriv c.curve (F z))
+  (hWLip : ∃ B, ∃ U ∈ nhds p, LipschitzOnWith B W U) {σ : ℝ} (hσ : 0 < σ) :
+  ∃ r δ C,
+    0 < r ∧
+      0 < δ ∧
+        0 ≤ C ∧
+          ∀ (x z g h : BfgsVerification.Vec 2),
+            x ∈ Metric.ball p r →
+              z ∈ Metric.ball p r →
+                ‖z - x‖ ≤ δ →
+                  HasFDerivAt F (BfgsVerification.gradientFunctional g) x →
+                    HasFDerivAt F (BfgsVerification.gradientFunctional h) z →
+                      ∀ (d t : ℝ),
+                        0 ≤ d →
+                          0 < t →
+                            BfgsVerification.dot g (z - x) = -d →
+                              t = BfgsVerification.dot (h - g) (z - x) →
+                                σ * d ≤ t → BfgsVerification.dot (h - g) (W z) ^ 2 / t ≤ C
+'BfgsVerification.PlanarCrossing.convexCornerChart_local_secant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.smooth_local_secant {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  {p : BfgsVerification.Vec 2} (hC : ContDiffAt ℝ 2 F p) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hWLip : ∃ B, ∃ U ∈ nhds p, LipschitzOnWith B W U) :
+  ∃ r C,
+    0 < r ∧
+      0 ≤ C ∧
+        ∀ (x z g h : BfgsVerification.Vec 2),
+          x ∈ Metric.ball p r →
+            z ∈ Metric.ball p r →
+              HasFDerivAt F (BfgsVerification.gradientFunctional g) x →
+                HasFDerivAt F (BfgsVerification.gradientFunctional h) z →
+                  ∀ (t : ℝ),
+                    0 < t → t = BfgsVerification.dot (h - g) (z - x) → BfgsVerification.dot (h - g) (W z) ^ 2 / t ≤ C
+'BfgsVerification.PlanarCrossing.smooth_local_secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.PairSecantBound (F : BfgsVerification.Vec 2 → ℝ)
+  (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2) (σ C : ℝ) (x z : BfgsVerification.Vec 2) : Prop
+'BfgsVerification.PlanarCrossing.PairSecantBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.LocalSecantControl (F : BfgsVerification.Vec 2 → ℝ)
+  (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2) (σ : ℝ) (p : BfgsVerification.Vec 2) : Prop
+'BfgsVerification.PlanarCrossing.LocalSecantControl' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.pairSecantBound_mono {F : BfgsVerification.Vec 2 → ℝ}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {σ C D : ℝ} (hCD : C ≤ D) {x z : BfgsVerification.Vec 2}
+  (h : BfgsVerification.PlanarCrossing.PairSecantBound F W σ C x z) :
+  BfgsVerification.PlanarCrossing.PairSecantBound F W σ D x z
+'BfgsVerification.PlanarCrossing.pairSecantBound_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCrossing.localSecantControl_of_corner {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {p : BfgsVerification.Vec 2}
+  (c : BfgsVerification.PlanarCornerCharts.ConvexCornerChart F p) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hW : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds p, W z = deriv c.curve (F z))
+  (hWLip : ∃ B, ∃ U ∈ nhds p, LipschitzOnWith B W U) {σ : ℝ} (hσ : 0 < σ) :
+  BfgsVerification.PlanarCrossing.LocalSecantControl F W σ p
+'BfgsVerification.PlanarCrossing.localSecantControl_of_corner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.localSecantControl_of_smooth {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {p : BfgsVerification.Vec 2} (hC : ContDiffAt ℝ 2 F p)
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} (hWLip : ∃ B, ∃ U ∈ nhds p, LipschitzOnWith B W U) (σ : ℝ) :
+  BfgsVerification.PlanarCrossing.LocalSecantControl F W σ p
+'BfgsVerification.PlanarCrossing.localSecantControl_of_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCrossing.compact_uniform_secant {F : BfgsVerification.Vec 2 → ℝ}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {σ : ℝ} {K : Set (BfgsVerification.Vec 2)} (hK : IsCompact K)
+  (hlocal : ∀ p ∈ K, BfgsVerification.PlanarCrossing.LocalSecantControl F W σ p) :
+  ∃ N δ C,
+    IsOpen N ∧
+      K ⊆ N ∧
+        0 < δ ∧
+          0 ≤ C ∧
+            ∀ x ∈ N,
+              ∀ (z : BfgsVerification.Vec 2), ‖z - x‖ ≤ δ → BfgsVerification.PlanarCrossing.PairSecantBound F W σ C x z
+'BfgsVerification.PlanarCrossing.compact_uniform_secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_secant_structured_visible_field {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) {σ : ℝ} (hσ : 0 < σ) :
+  ∃ m χ v,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      ∃ N η,
+        0 < η ∧
+          IsOpen N ∧
+            K ⊆ N ∧
+              (∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) U) ∧
+                (∀ x ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                      η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                  (∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) ∧
+                    (∀ x ∈ N,
+                        ContDiffAt ℝ 2 F x ∨
+                          ∃ i,
+                            ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+                              BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z)) ∧
+                      (∀ x ∈ K,
+                          ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                            ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                              BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+                                BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                        ∀ p ∈ K,
+                          BfgsVerification.PlanarCrossing.LocalSecantControl F
+                            (BfgsVerification.PlanarObjectiveField.field hF χ v) σ p
+'BfgsVerification.PlanarObjectiveField.exists_secant_structured_visible_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.eventually_planar_field_secant {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (hsteps : Filter.Tendsto R.displacement Filter.atTop (nhds 0)) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hlocal :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      BfgsVerification.PlanarCrossing.LocalSecantControl F W (1 - R.c₂) p) :
+  ∃ C0,
+    0 ≤ C0 ∧
+      ∃ J, ∀ (k : ℕ), J ≤ k → BfgsVerification.dot (R.gradientChange k) (W (R.x (k + 1))) ^ 2 / R.curvature k ≤ C0
+'BfgsVerification.AdmissibleBFGSRun.eventually_planar_field_secant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.structured_secant_field_incompatible {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (hsteps : Filter.Tendsto R.displacement Filter.atTop (nhds 0)) {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  {v : Fin m → ℝ → BfgsVerification.Vec 2} (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i))
+  {N : Set (BfgsVerification.Vec 2)} (hN : IsOpen N) (hΓN : BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N)
+  {η : ℝ} (hη : 0 < η)
+  (hLip : ∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field ⋯ χ v) U)
+  (hvis :
+    ∀ x ∈ N,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field ⋯ χ v x))
+  (hv : ∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x))
+  (hstruct :
+    ∀ x ∈ N,
+      ContDiffAt ℝ 2 F x ∨
+        ∃ i, ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, BfgsVerification.PlanarObjectiveField.field ⋯ χ v z = v i (F z))
+  (hcommon :
+    ∀ x ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+          BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field ⋯ χ v x) =
+            BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field ⋯ χ v x))
+  (hlocal :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      BfgsVerification.PlanarCrossing.LocalSecantControl F (BfgsVerification.PlanarObjectiveField.field ⋯ χ v)
+        (1 - R.c₂) p) :
+  False
+'BfgsVerification.AdmissibleBFGSRun.structured_secant_field_incompatible' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel) (star : BfgsVerification.Vec 2)
+  (hmin : ∀ (z : BfgsVerification.Vec 2), F star ≤ F z)
+  (hstrict :
+    ∀ (ℓ : ℝ),
+      F star < ℓ → ℓ ≤ F (R.x 0) → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+        ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p) :
+  ∃ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+    BfgsVerification.AffineCriticalObjective.IsAffineCritical F p
+'BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster_on_sublevel {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (star : BfgsVerification.Vec 2)
+  (hmin : ∀ (z : BfgsVerification.Vec 2), F star ≤ F z) (b : ℝ) (hK : IsCompact {x | F x ≤ b}) (hstart : F (R.x 0) ≤ b)
+  (hstrict :
+    ∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ (p : BfgsVerification.Vec 2),
+      F p ≤ b →
+        ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+          ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p) :
+  ∃ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+    F p ≤ b ∧ BfgsVerification.AffineCriticalObjective.IsAffineCritical F p
+'BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster_on_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.planar_convergence_on_sublevel {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (star : BfgsVerification.Vec 2)
+  (hmin : ∀ (z : BfgsVerification.Vec 2), F star ≤ F z) (b : ℝ) (hK : IsCompact {x | F x ≤ b}) (hstart : F (R.x 0) ≤ b)
+  (hstrict :
+    ∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ (p : BfgsVerification.Vec 2),
+      F p ≤ b →
+        ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+          ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p)
+  (hcorrect : ∀ (p : BfgsVerification.Vec 2), F p ≤ b → BfgsVerification.AffineCriticalObjective.AffineCorrectAt F p) :
+  Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+    Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F)) Filter.atTop (nhds 0) ∧
+      Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k)) Filter.atTop (nhds 0) ∧
+        ((∀ (z : BfgsVerification.Vec 2), F z = F star → z = star) → Filter.Tendsto R.x Filter.atTop (nhds star))
+'BfgsVerification.AdmissibleBFGSRun.planar_convergence_on_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarConvergence.local_convergence_basin {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (star : BfgsVerification.Vec 2) (hmin : ∀ (z : BfgsVerification.Vec 2), F star ≤ F z)
+  (hunique : ∀ (z : BfgsVerification.Vec 2), F z = F star → z = star) {Ω : Set (BfgsVerification.Vec 2)} (hΩ : IsOpen Ω)
+  (hstar : star ∈ Ω)
+  (hregular :
+    ∀ p ∈ Ω,
+      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p →
+        ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p)
+  (hcorrect : ∀ p ∈ Ω, BfgsVerification.AffineCriticalObjective.AffineCorrectAt F p) {b : ℝ} (hb : F star < b)
+  (hstrict :
+    ∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+        F (R.x 0) < F star + ε →
+          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧ Filter.Tendsto R.x Filter.atTop (nhds star)
+'BfgsVerification.PlanarConvergence.local_convergence_basin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAffineCriticalClusterTarget : Prop
+'BfgsVerification.PlanarAffineCriticalClusterTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarConvergenceTarget : Prop
+'BfgsVerification.PlanarConvergenceTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarLocalBasinTarget : Prop
+'BfgsVerification.PlanarLocalBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.planarAffineCriticalCluster : BfgsVerification.PlanarAffineCriticalClusterTarget
+'BfgsVerification.planarAffineCriticalCluster' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.planarConvergence : BfgsVerification.PlanarConvergenceTarget
+'BfgsVerification.planarConvergence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.planarLocalBasin : BfgsVerification.PlanarLocalBasinTarget
+'BfgsVerification.planarLocalBasin' depends on axioms: [propext, Classical.choice, Quot.sound]

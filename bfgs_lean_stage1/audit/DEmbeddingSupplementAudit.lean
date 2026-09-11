@@ -1,0 +1,19 @@
+import BfgsVerification.DScalarSmallBounds
+import BfgsVerification.DEmbeddingBounds
+
+#check BfgsVerification.DScalar.positiveSlope_nonnegative
+#print axioms BfgsVerification.DScalar.positiveSlope_nonnegative
+#check BfgsVerification.DScalar.positivePart_monotone
+#print axioms BfgsVerification.DScalar.positivePart_monotone
+#check BfgsVerification.DScalar.positive_small_bounds
+#print axioms BfgsVerification.DScalar.positive_small_bounds
+#check BfgsVerification.DScalar.positive_asymptotic_orders
+#print axioms BfgsVerification.DScalar.positive_asymptotic_orders
+#check BfgsVerification.DEmbedding.slab_horizontal
+#print axioms BfgsVerification.DEmbedding.slab_horizontal
+#check BfgsVerification.DEmbedding.branch_plateau_lower_bound
+#print axioms BfgsVerification.DEmbedding.branch_plateau_lower_bound
+#check BfgsVerification.DEmbedding.center_active_branches
+#print axioms BfgsVerification.DEmbedding.center_active_branches
+#check BfgsVerification.DEmbedding.all_actual_trial_values
+#print axioms BfgsVerification.DEmbedding.all_actual_trial_values
