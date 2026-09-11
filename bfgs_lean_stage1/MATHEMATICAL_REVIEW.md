@@ -174,3 +174,27 @@ the exact regrouping equality; the potential bound uses degree n instead of n−
 These disclosed proof choices change no requested conclusion or constant.
 Original research sources and `reference/foundation.tex` are unchanged.
 `PROOF_OBLIGATIONS.md` records the verified/unformalized boundary.
+
+
+## Entire-report execution: first tranche
+
+The original Module M proof chain remains intact. The five exact report-level
+exports in `ReportCoreTargets.lean` are now compiled and transitively audited:
+T's primary transported-certificate theorem, H.A's unrestricted homogeneous
+value dichotomy, G's scalar theorem with arbitrary positive metrics and its
+actual full-BFGS specialization, and convergence under R's radial condition.
+Shared compact analysis supplies nonunique solution-set distance, with an exact
+Euclidean realization in the public targets. The 19-target audit passes for all
+417 explicit / 594 total theorem declarations.
+
+See `audit/REPORT_CORE_STATEMENT_REVIEW.md` and the separate T, H and compact/radial
+peer reviews for the exact quantifier and proof-dependency checks. No substantive
+correction to these primary source statements was needed. T/H use the stronger
+proved reciprocal-sum theorem after deriving its summability requirements; T's
+unused strict top-sublevel inequality is removed in a proved generalization.
+
+The full report is not verified. `ENTIRE_REPORT_PLAN.md` and
+`audit/REPORT_STATUS.json` cover the remaining modules. Initial investigation of
+Q records that its printed eligible separation pair covers only c1≤2/3; a
+parameterized generalization is proposed for all c1<1 and still requires Lean
+verification. This observation is not used to overclaim the example's scope.

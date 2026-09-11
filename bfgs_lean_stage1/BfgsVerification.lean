@@ -14,8 +14,9 @@ import BfgsVerification.EndToEnd
 import BfgsVerification.ObjectiveEndToEnd
 import BfgsVerification.FoundationEndToEnd
 import BfgsVerification.FrameNorms
+import BfgsVerification.ReportCoreEndToEnd
 
 /-!
-Module M's matrix hierarchy, objective bridge, growth, localization and frame criteria. Consult
+Module M and the primary transported, homogeneous, scalar and radial theorems. Consult
 audit/STATUS.json for current build status and audited theorem statements.
 -/

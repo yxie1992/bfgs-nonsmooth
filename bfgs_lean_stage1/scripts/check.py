@@ -58,7 +58,19 @@ FOUNDATION_TARGETS = {
     "residual_frame_criterion_verified":
         ("BfgsVerification.residualFrameCriterion", "BfgsVerification.ResidualFrameCriterionTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS
+REPORT_CORE_TARGETS = {
+    "transported_certificate_primary_theorem_verified":
+        ("BfgsVerification.transportedCertificateConvergence", "BfgsVerification.TransportedCertificateTarget"),
+    "homogeneous_value_dichotomy_verified":
+        ("BfgsVerification.homogeneousDichotomy", "BfgsVerification.HomogeneousDichotomyTarget"),
+    "scalar_arbitrary_metric_convergence_verified":
+        ("BfgsVerification.scalarMetricConvergence", "BfgsVerification.ScalarMetricConvergenceTarget"),
+    "scalar_actual_bfgs_convergence_verified":
+        ("BfgsVerification.scalarBFGSConvergence", "BfgsVerification.ScalarBFGSConvergenceTarget"),
+    "radial_certificate_convergence_verified":
+        ("BfgsVerification.radialCertificateConvergence", "BfgsVerification.RadialCertificateConvergenceTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -187,6 +199,7 @@ def main() -> int:
         "lean_typechecking_performed": False,
         **{flag: False for flag in ALL_TARGETS},
         "objective_level_model_formalized": False,
+        "entire_report_verified": False,
         "verified_declarations": [],
         "warning": "Verification is pending for this invocation; success requires the complete build and axiom audit.",
     }
@@ -223,6 +236,12 @@ def main() -> int:
         print(json.dumps(status, indent=2))
         return 0
     record(status)
+    source_check = run([sys.executable, "scripts/report_inventory.py"], "report_source_check.log", args.timeout)
+    status["report_sources_preserved"] = source_check.returncode == 0
+    if source_check.returncode:
+        status["status"] = "REPORT_SOURCE_COVERAGE_FAILED"
+        record(status)
+        return 1
     lake = shutil.which("lake")
     lean = shutil.which("lean")
     status["executables"] = {"lake": lake, "lean": lean}
@@ -324,7 +343,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Other research modules and their objective-specific certificate constructions",
+            "Secondary claims of T/G, H.B/H.C, radial equivalence and applications, and the other report modules; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -333,11 +352,11 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_FOUNDATION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_CORE_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
-        status["warning"] = ("Claims concern the exact Module M targets printed in axioms.log. "
+        status["warning"] = ("Claims concern the exact Module M and first report-tranche targets printed in axioms.log. The entire report remains incomplete. "
                              "Energy convergence criteria retain explicit correction budgets; frame theorems exclude "
                              "certificates whose construction remains objective-specific. No unconditional BFGS "
                              "convergence or all-ray step-existence theorem is claimed.")

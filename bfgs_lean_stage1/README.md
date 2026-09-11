@@ -1,12 +1,17 @@
-# Full BFGS: principal minors and reciprocal growth in Lean
+# Full BFGS research report: Lean verification
 
-**Module M's original matrix-run targets, objective bridge, localization,
-energy identities, and frame criteria are compiler-checked.**
-The pinned Lean 4.19.0 build and transitive axiom audit succeeded on 10 September
-2026. All 320 explicit theorem declarations and 440 theorem declarations including
-Lean-generated auxiliaries were audited. Only `propext`, `Classical.choice`, and
-`Quot.sound` occur. There are no `sorry`, `admit`, custom mathematical axioms, or
-unchecked external mathematical computations.
+**Module M and the primary transported-certificate, homogeneous-value,
+scalar-convergence, and radial-certificate theorems are compiler-checked.**
+The entire report is still in progress. The execution plan is
+[ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
+claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
+
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 417 explicit
+theorems and 594 theorem declarations including generated auxiliaries. All 19
+registered exact targets passed. Only `propext`, `Classical.choice`, and
+`Quot.sound` occur; no placeholders or unchecked mathematical computations are
+used. Current logs are `audit/build.log`, `audit/axioms.log`, and
+`audit/report_core_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -32,6 +37,15 @@ previous runtime, not the current proof status.
 | `movingFrameCriterion` | Excludes exact frame certificates with bounded cumulative transports and inverse transports, using only vanishing predicted decreases |
 | `residualFrameCriterion` | Excludes imperfect frame certificates in a fixed smooth subspace, deriving the subspace Hessian budget from the actual update |
 
+New exact exports are `transportedCertificateConvergence` (T primary theorem,
+including actual Euclidean distance to the full solution set),
+`homogeneousDichotomy` (H.A without bounded iterates),
+`scalarMetricConvergence` (G with arbitrary positive scalar metrics),
+`scalarBFGSConvergence` (actual dimension-one specialization), and
+`radialCertificateConvergence` (RS sufficient condition). Their statement review
+is [audit/REPORT_CORE_STATEMENT_REVIEW.md](audit/REPORT_CORE_STATEMENT_REVIEW.md).
+Secondary claims in these modules and the other report modules remain open.
+
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed
 lower bound on beta. The accepted-step weak-Wolfe inequality implies this beta
@@ -47,9 +61,9 @@ Compact-sublevel exports derive their gradient and budget bounds; the more gener
 exports retain their stated gradient/value bounds. No smoothness away from accepted
 iterates or continuity of gradients is assumed.
 
-The energy and frame results are **trajectory criteria**. Deriving their
-correction budgets or certificates for the specific objective classes in the
-other research modules remains open in Lean. No unconditional convergence for
+The energy and frame results are **trajectory criteria**. The transported and radial objective conditions now derive their actual trace or
+correction bounds. The remaining specific objective families and geometric
+certificate constructions are tracked separately in the report register. No unconditional convergence for
 arbitrary finite convex nonsmooth objectives or universal step-existence theorem
 is claimed. See
 [MATHEMATICAL_REVIEW.md](MATHEMATICAL_REVIEW.md) and

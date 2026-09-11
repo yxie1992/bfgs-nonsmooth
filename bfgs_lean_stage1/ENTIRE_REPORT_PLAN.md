@@ -1,0 +1,102 @@
+# Entire-report Lean verification plan
+
+Active scope: every retained mathematical assertion in the canonical
+`BFGS_MASTER_REPORT_LaTeX/report/master.tex` and its included chapters. The source
+record is preserved. This plan continues the completed Module M milestone at
+commit `6c29cff`; it does not label the rest of the report verified.
+
+## Completion standard
+
+Each theorem, lemma, proposition, corollary, mathematical example, and substantive
+unnumbered deduction needs a source-to-Lean statement review and an exported
+kernel-checked proof. Definitions must model the actual objectives, derivatives,
+accepted steps, full BFGS matrices, determinants, and deterministic oracle
+choices. General sequence lemmas and conditional criteria are useful dependencies,
+not substitutes for their objective-level applications. No assumed matrix or
+iterate convergence, modified update, or extra regularity is allowed.
+
+Explicit conjectures and questions are recorded as such, not counted as proved
+assertions. Historical numerical/reproducibility claims are recorded as evidence;
+the finite exact claims on which the mathematical conclusions depend must also
+be proved in Lean. Floating-point runs cannot verify continuum or infinite-run
+claims. Any false or incomplete source assertion receives a documented correction,
+a counterexample where possible, and a distinct status; it is never silently
+weakened. Original sources remain unchanged.
+
+`audit/REPORT_STATUS.json` is the report-level register, separate from the existing
+Module M declaration audit in `audit/STATUS.json`. Its source spans cover every
+chapter line, including prose outside named theorem environments. Initial spans
+are coverage units, not a claim that their contents have already been reviewed.
+As each module is read, its detailed inventory identifies every retained claim,
+its exact quantifiers, proof dependencies, and corresponding Lean exports.
+
+## Dependency-ordered milestones
+
+| Milestone | Scope and required conclusions | Dependencies / status |
+|---|---|---|
+| M | Actual principal-minor hierarchy; normalized scalar hierarchy; reciprocal means, finite horizon and superquadratic growth; actual objective run; localization, energy, exact and residual frames | Complete, compiled and audited at `6c29cff` |
+| Shared compact analysis | Attained minimum from compact sublevel; monotone value limit; distance to solution set from optimal values without uniqueness; zero-gradient termination | M; in progress |
+| T | Projected PSD transport and eligibility from actual accepted pairs; positive-band/small-pair certificate convergence; solution-set distance and unique-minimizer upgrade; local and shell variants; rank-one, rescaling, radial and affine specializations | M + compact analysis; in progress |
+| H core | Degree-one Euler/support identities; global gradient bound without bounded iterates; energy/potential; value dichotomy zero or minus infinity | M; in progress independently of compact geometry |
+| G scalar | Arbitrary positive scalar metrics with Armijo–weak-Wolfe converge; actual dimension-one BFGS specialization | M + scalar convex analysis; in progress |
+| R | Radial secant bound iff inward Taylor remainder, including derivative-free and optimum formulations; finite polyhedral partitions; gauges, penalties and examples; stated boundaries | T + convex directional calculus |
+| F | Centered smooth-plus-sublinear and transformed-gauge classes; explicit max-affine basin; affine lifting; little-o rates; exact limits of matrix and line-search claims | M + R + compact analysis |
+| Q | Arbitrary finite parabolic max branches, visibility and projected transport including zero slopes/flat contours; explicit strict separation from radial smoothness | T + max-branch calculus |
+| G remaining | Exact certificate normalization, ellipsoid/range/pointwise feasibility, incoming-jump obstruction, scalar characterization and nonnecessity examples, finite-sample feasibility distinction | T + Q + scalar result |
+| A | Equal-rate affine criticality, rank-loss example, barycentric stability; finite semialgebraic critical values | Finite linear algebra + semialgebraic/path decomposition infrastructure |
+| C | Planar forced affine-critical cluster theorem, local consequences, joining/transversality/transport/endpoint bounds, examples and scope boundaries | M frames + A + finite max-branch geometry |
+| U | Single exceptional hyperplane and parallel interfaces in arbitrary dimension; cutoff frames, tangential and residual estimates; nonsplitting/oracle/infinite-spike examples | M residual frames + max-branch calculus |
+| H remaining | Recurrent-gradient affine-hull obstruction; effective dimension at most two iterate convergence; endpoint/unbounded cases and flat fibers | H core + affine/subspace geometry |
+| D | Exact algebraic root and full matrix cycle; every accepted/rejected deterministic line-search decision; scalar interpolation and coercive globally C^{2,1} max-branch embedding; all stated constants and starts | M algebra + exact ordered-field/interval proofs + interpolation |
+| L | Positive-lower-curvature persistence; true stable-manifold existence for the actual return map; all oracle decisions; C^{1,1} embedding and its failure to be C²; countably affine variant | D + differentiable dynamics/stable manifold + interpolation |
+| I/E closure | Verify each synthesis implication and supersession against the proved statements; classify conjectures; reproduce evidence; replace every proof-bearing numerical shortcut by a Lean proof; final all-source coverage review | All preceding milestones |
+
+Work is parallelized only across independent files. Common interfaces and exact
+end-to-end targets are reviewed centrally before integration. Module order may
+change when a dependency becomes available; the completion standard does not.
+
+## First execution tranche
+
+1. Complete and integrate shared compact analysis, Module T's general value
+   theorem, Module H's value dichotomy, and Module G's scalar theorem.
+2. Extend the audit with exact end-to-end targets for these theorems. Review all
+   hypotheses, the source quantifiers, generated theorem dependencies, and the
+   distinction between arbitrary scalar metrics and the full BFGS specialization.
+3. Run the pinned build and full transitive axiom audit, preserve logs, refresh the
+   status and delivery hashes, review the diff, commit, and push.
+4. Continue with the radial/family/parabolic applications and parallel affine
+   geometry work. Investigate the formal infrastructure needed by D/L and the
+   semialgebraic claim early; a missing library theorem creates a proof obligation,
+   not permission to add a mathematical axiom.
+
+## Audit and release gate for every milestone
+
+- Preserve pinned Lean, mathlib and transitive dependency revisions; run actual
+  compilation after proof edits and a full checked build at integration.
+- Scan every project Lean file for prohibited placeholders and unchecked proof
+  mechanisms. Audit every theorem transitively, including generated auxiliaries;
+  only `propext`, `Classical.choice`, and `Quot.sound` are permitted.
+- Link source claims to fully qualified exports with exact statement reviews;
+  inspect assumptions and definitions, not merely successful compilation.
+- Record conditional helpers separately from completed source theorems and open
+  obligations. Keep failed/intermediate logs distinct from current evidence.
+- Stage only intended project artifacts, generate and check the delivery manifest,
+  confirm original source hashes, review, commit and push. Preserve unrelated
+  untracked files.
+
+The final gate is a clean reproducible build from the pinned dependencies, a full
+axiom audit, complete coverage of all retained report assertions and synthesis
+implications, no unresolved proof obligations for those assertions, and an honest
+register of explicit conjectures and historical evidence. Until that gate passes,
+the entire report is **not Lean-verified**.
+
+
+## Execution record
+
+First tranche passed: 19 exact targets, 417 explicit theorems, 594 total theorem
+declarations including generated auxiliaries; only the three standard allowed
+axioms. All five new objective-level targets have statement and dependency
+reviews. Next: T normalization/rank-one/RS/local variants, H finite max-linear
+and recurrent affine-hull obstruction, G incoming-jump/scalar certificate claims,
+and R inward-radial and supporting-intercept equivalences. Independent inventories
+also map Q and the negative constructions before their proof implementation.

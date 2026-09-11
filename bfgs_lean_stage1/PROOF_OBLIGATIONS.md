@@ -167,3 +167,14 @@ no universal admissible-step existence theorem. Infinite-run results retain the
 source's nonzero-gradient convention; a separate finite-termination theorem is
 not exported. Conditional criteria must not be presented as unconditional
 convergence of full BFGS.
+
+
+## Entire-report continuation
+
+This file retains the completed Module M source-to-proof map. The user expanded
+the task to the entire report; see `ENTIRE_REPORT_PLAN.md` and
+`audit/REPORT_STATUS.json` for that larger dependency and coverage register.
+The first tranche adds five audited exact targets covering T's primary theorem,
+H.A, scalar positive-metric convergence and actual scalar BFGS, and the radial
+sufficient condition. Detailed inventories identify secondary claims still open.
+The entire-report completion flag remains false.

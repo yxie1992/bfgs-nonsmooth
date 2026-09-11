@@ -18,8 +18,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.gradient_ne",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115), self.g k \u2260 0",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.initialSublevel_compact_of_unique_minimizer",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  (xStar : BfgsVerification.Vec n),\n  (\u2200 (x : BfgsVerification.Vec n), F xStar \u2264 F x) \u2192\n    (\u2200 (x : BfgsVerification.Vec n), F x = F xStar \u2192 x = xStar) \u2192 IsCompact R.initialSublevel",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.objective_antitone",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f), Antitone fun k => f (R.x k)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -89,6 +107,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.radial_certificate_convergence_on_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (b : \u211d),\n  IsCompact {x | F x \u2264 b} \u2192\n    \u2200 (star : BfgsVerification.Vec n),\n      (\u2200 (x : BfgsVerification.Vec n), F star \u2264 F x) \u2192\n        F (R.x 0) \u2264 b \u2192\n          BfgsVerification.RadialCertificate.HasRadialSecantBounds F {x | F x \u2264 b} star \u2192\n            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) \u2227\n              Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F)) Filter.atTop (nhds 0) \u2227\n                ((\u2200 (x : BfgsVerification.Vec n), F x = F star \u2192 x = star) \u2192\n                  Filter.Tendsto R.x Filter.atTop (nhds star))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.convex",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d}, BfgsVerification.AdmissibleBFGSRun n F \u2192 ConvexOn \u211d Set.univ F",
     "axioms": [
@@ -116,6 +143,33 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.armijo",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115),\n  f (self.x (k + 1)) \u2264 f (self.x k) + self.c\u2081 * self.g k * (self.x (k + 1) - self.x k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.Homogeneous.global_supporting_bound",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n      \u2203 G,\n        0 < G \u2227\n          \u2200 (x g : BfgsVerification.Vec n),\n            BfgsVerification.Homogeneous.Supports F x g \u2192 BfgsVerification.sqNorm g \u2264 G ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.trace_mul_mono",
+    "signature": "\u2200 {n : \u2115} {M A B : BfgsVerification.Mat n},\n  Matrix.PosSemidef M \u2192 Matrix.PosSemidef (B - A) \u2192 (M * A).trace \u2264 (M * B).trace",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.moving_frame_energy",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) {r : \u2115} (k : \u2115)\n  (V W : Matrix (Fin n) (Fin r) \u211d) (T : BfgsVerification.Mat r) (b : BfgsVerification.Vec r),\n  W = V * T + BfgsVerification.EnergyIdentities.rectOuter (R.displacement k) b \u2192\n    BfgsVerification.metricGram (R.hessian (k + 1)) W =\n      Matrix.transpose T *\n            (BfgsVerification.metricGram (R.hessian k) V -\n              (R.q k)\u207b\u00b9 \u2022 BfgsVerification.outer (V.transpose.mulVec (R.g k)) (V.transpose.mulVec (R.g k))) *\n          T +\n        (R.curvature k)\u207b\u00b9 \u2022\n          BfgsVerification.outer (W.transpose.mulVec (R.gradientChange k)) (W.transpose.mulVec (R.gradientChange k))",
     "axioms": [
@@ -125,8 +179,35 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.band_certificate_incompatible",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  {K : Set (BfgsVerification.Vec n)} {fstar \u03b7 : \u211d}\n  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar R.c\u2081 R.c\u2082 \u03b7),\n  (\u2200 (k : \u2115), R.x k \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7) \u2192\n    (\u2200 (k : \u2115), R.d k \u2264 C.\u03b4) \u2192\n      \u2200 (G : \u211d), 0 < G \u2192 (\u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2) \u2192 Summable R.d \u2192 False",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq",
     "signature": "\u2200 {r : \u2115} (T : BfgsVerification.Mat r) (a : \u211d),\n  0 \u2264 a \u2192 (BfgsVerification.FrameBounds.OperatorSqBound T a \u2194 BfgsVerification.FrameNorms.euclideanOpNorm T ^ 2 \u2264 a)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_6",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115), 0 < R.H k 0 0",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.EligiblePair.decrease_pos",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {x z g h : BfgsVerification.Vec n},\n  BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n    0 < BfgsVerification.TransportedCertificate.pairDecrease x z g",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -152,6 +233,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.no_uniform_positive_gap",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f),\n  IsCompact R.initialSublevel \u2192\n    \u2200 (xStar : \u211d), (\u2200 (x : \u211d), f xStar \u2264 f x) \u2192 \u2200 (L : \u211d), 0 < L \u2192 (\u2200 (k : \u2115), L \u2264 f (R.x k) - f xStar) \u2192 False",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ResidualFrameCertificate.visible",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {R : BfgsVerification.AdmissibleBFGSRun n F}\n  (self : BfgsVerification.ResidualFrameCertificate R) (k : \u2115),\n  self.m \u2264 BfgsVerification.sqNorm ((self.V k).transpose.mulVec ((R.shift self.J).g k))",
     "axioms": [
@@ -170,6 +260,33 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_dichotomy",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds 0) \u2228\n      Filter.Tendsto (fun k => F (R.x k)) Filter.atTop Filter.atBot",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.summable_step_dist_of_gradient_lower",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f),\n  Summable R.d \u2192 \u2200 (m : \u211d), 0 < m \u2192 (\u2200 (k : \u2115), m \u2264 |R.g k|) \u2192 Summable fun k => dist (R.x k) (R.x (k + 1))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.radialCertificateConvergence",
+    "signature": "BfgsVerification.RadialCertificateConvergenceTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.EnergyBudget.tendsto_atTop_of_superquadratic",
     "signature": "\u2200 {S : \u2115 \u2192 \u211d},\n  Filter.Tendsto (fun N => S N / \u2191N ^ 2) Filter.atTop Filter.atTop \u2192 Filter.Tendsto S Filter.atTop Filter.atTop",
     "axioms": [
@@ -179,8 +296,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.transported_certificate_values_on_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (b : \u211d),\n  IsCompact {x | F x \u2264 b} \u2192\n    \u2200 (xstar : BfgsVerification.Vec n),\n      (\u2200 (x : BfgsVerification.Vec n), F xstar \u2264 F x) \u2192\n        F (R.x 0) \u2264 b \u2192\n          BfgsVerification.TransportedCertificate.HasBandCertificates F {x | F x \u2264 b} (F xstar) R.c\u2081 R.c\u2082 \u2192\n            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.FullBFGSRun.dimension_pos",
     "signature": "\u2200 {n : \u2115}, BfgsVerification.FullBFGSRun n \u2192 0 < n",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_referenceCorrection_le_pairing",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), R.referenceCorrection 0 k \u2264 BfgsVerification.dot (R.gradientChange k) (R.x (k + 1))",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -206,6 +341,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun.eq_1",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F),\n  R.toScalarMetricRun =\n    { convex := \u22ef, x := fun k => R.x k 0, g := fun k => R.g k 0, metric := fun k => R.H k 0 0, \u03b1 := R.\u03b1, c\u2081 := R.c\u2081,\n      c\u2082 := R.c\u2082, c\u2081_pos := \u22ef, c\u2081_lt_c\u2082 := \u22ef, c\u2082_lt_one := \u22ef, metric_pos := \u22ef, alpha_pos := \u22ef, gradient_ne := \u22ef,\n      hasDeriv := \u22ef, step := \u22ef, armijo := \u22ef, weak_wolfe := \u22ef }",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.smooth_subspace_projection_trace_update",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) {r : \u2115}\n  (U : Matrix (Fin n) (Fin r) \u211d),\n  U.transpose * U = 1 \u2192\n    \u2200 (k : \u2115),\n      (U * U.transpose * R.hessian (k + 1)).trace =\n        (U * U.transpose * R.hessian k).trace - BfgsVerification.sqNorm ((U * U.transpose).mulVec (R.g k)) / R.q k +\n          BfgsVerification.sqNorm ((U * U.transpose).mulVec (R.gradientChange k)) / R.curvature k",
     "axioms": [
@@ -220,6 +364,15 @@
     "axioms": [
       "propext",
       "Quot.sound"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.mk.injEq",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (W : BfgsVerification.Vec n \u2192 BfgsVerification.Mat n) (m C L \u03b4 : \u211d) (m_pos : 0 < m) (L_nonneg : 0 \u2264 L)\n  (delta_pos : 0 < \u03b4)\n  (positive_semidefinite :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      DifferentiableAt \u211d F x \u2192 Matrix.PosSemidef (W x))\n  (visibility :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      \u2200 (g : BfgsVerification.Vec n),\n        HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192 m \u2264 BfgsVerification.metricEnergy (W x) g)\n  (secant :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n              BfgsVerification.metricEnergy (W z) (h - g) \u2264\n                C * BfgsVerification.TransportedCertificate.pairCurvature x z g h)\n  (transport :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n              ((1 + L * BfgsVerification.TransportedCertificate.pairDecrease x z g) \u2022\n                    (BfgsVerification.TransportedCertificate.stepProjector\n                          (BfgsVerification.TransportedCertificate.pairStep x z) *\n                        W x *\n                      BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z)) -\n                  BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z) *\n                      W z *\n                    BfgsVerification.TransportedCertificate.stepProjector\n                      (BfgsVerification.TransportedCertificate.pairStep x z)).PosSemidef)\n  (W_1 : BfgsVerification.Vec n \u2192 BfgsVerification.Mat n) (m_1 C_1 L_1 \u03b4_1 : \u211d) (m_pos_1 : 0 < m_1)\n  (L_nonneg_1 : 0 \u2264 L_1) (delta_pos_1 : 0 < \u03b4_1)\n  (positive_semidefinite_1 :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      DifferentiableAt \u211d F x \u2192 Matrix.PosSemidef (W_1 x))\n  (visibility_1 :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      \u2200 (g : BfgsVerification.Vec n),\n        HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192 m_1 \u2264 BfgsVerification.metricEnergy (W_1 x) g)\n  (secant_1 :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4_1 \u2192\n              BfgsVerification.metricEnergy (W_1 z) (h - g) \u2264\n                C_1 * BfgsVerification.TransportedCertificate.pairCurvature x z g h)\n  (transport_1 :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4_1 \u2192\n              ((1 + L_1 * BfgsVerification.TransportedCertificate.pairDecrease x z g) \u2022\n                    (BfgsVerification.TransportedCertificate.stepProjector\n                          (BfgsVerification.TransportedCertificate.pairStep x z) *\n                        W_1 x *\n                      BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z)) -\n                  BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z) *\n                      W_1 z *\n                    BfgsVerification.TransportedCertificate.stepProjector\n                      (BfgsVerification.TransportedCertificate.pairStep x z)).PosSemidef),\n  ({ W := W, m := m, C := C, L := L, \u03b4 := \u03b4, m_pos := m_pos, L_nonneg := L_nonneg, delta_pos := delta_pos,\n        positive_semidefinite := positive_semidefinite, visibility := visibility, secant := secant,\n        transport := transport } =\n      { W := W_1, m := m_1, C := C_1, L := L_1, \u03b4 := \u03b4_1, m_pos := m_pos_1, L_nonneg := L_nonneg_1,\n        delta_pos := delta_pos_1, positive_semidefinite := positive_semidefinite_1, visibility := visibility_1,\n        secant := secant_1, transport := transport_1 }) =\n    (W = W_1 \u2227 m = m_1 \u2227 C = C_1 \u2227 L = L_1 \u2227 \u03b4 = \u03b4_1)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
     ]
   },
   {
@@ -267,6 +420,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.convex",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d}, BfgsVerification.ScalarMetricRun f \u2192 ConvexOn \u211d Set.univ f",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.inverseBFGS_posDef",
     "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (s y : BfgsVerification.Vec n), 0 < BfgsVerification.dot y s \u2192 Matrix.PosDef (BfgsVerification.inverseBFGS H s y)",
     "axioms": [
@@ -285,6 +447,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.accepted_pair_eligible",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  BfgsVerification.TransportedCertificate.EligiblePair F R.c\u2081 R.c\u2082 (R.x k) (R.x (k + 1)) (R.g k) (R.g (k + 1))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.SmoothSubspace.gram_trace_le_frobSq_mul_trace",
     "signature": "\u2200 {n r : \u2115} {B : BfgsVerification.Mat n},\n  Matrix.PosSemidef B \u2192\n    \u2200 (W : Matrix (Fin n) (Fin r) \u211d),\n      (BfgsVerification.metricGram B W).trace \u2264 BfgsVerification.SmoothSubspace.frobSq W * Matrix.trace B",
     "axioms": [
@@ -296,6 +467,33 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift._proof_4",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115),\n  HasFDerivAt F (BfgsVerification.gradientFunctional (R.g (J + k))) (R.x (J + k))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.d_eq_abs_gradient_mul_abs_step",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115), R.d k = |R.g k| * |R.x (k + 1) - R.x k|",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_euler",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192 \u2200 (k : \u2115), BfgsVerification.dot (R.g k) (R.x k) = F (R.x k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.accepted_pair_curvature",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  BfgsVerification.TransportedCertificate.pairCurvature (R.x k) (R.x (k + 1)) (R.g k) (R.g (k + 1)) = R.curvature k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -330,11 +528,29 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.L_nonneg",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7), 0 \u2264 self.L",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ResidualBudget.residual_reciprocal_sum_le._proof_1",
     "signature": "\u2200 {\u03b9 : Type u_1} {\u03b1 : Type u_3} [inst : NonUnitalNonAssocSemiring \u03b1] (s : Finset \u03b9) (f : \u03b9 \u2192 \u03b1) (a : \u03b1),\n  \u2211 i \u2208 s, a * f i = a * \u2211 i \u2208 s, f i",
     "axioms": [
       "propext",
       "Quot.sound"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_referenceCorrection_le_drop",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), R.referenceCorrection 0 k \u2264 (1 - R.c\u2081) / R.c\u2081 * (F (R.x k) - F (R.x (k + 1)))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
     ]
   },
   {
@@ -398,6 +614,24 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192 Filter.Tendsto R.x Filter.atTop (nhds 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_4",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F), R.c\u2081 < R.c\u2082",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ReciprocalGrowth.sum_prefix_tail",
     "signature": "\u2200 (f : \u2115 \u2192 \u211d) (J m : \u2115), \u2211 k \u2208 Finset.range (J + m), f k = \u2211 k \u2208 Finset.range J, f k + \u2211 k \u2208 Finset.range m, f (J + k)",
     "axioms": [
@@ -409,6 +643,15 @@
   {
     "theorem": "BfgsVerification.FrameNorms.euclideanOpNorm._proof_3",
     "signature": "\u2200 {r : \u2115}, ContinuousConstSMul \u211d (EuclideanSpace \u211d (Fin r))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.RadialCertificate.radial_bound_of_intercept",
+    "signature": "\u2200 {N D T C Tmax : \u211d}, 0 \u2264 D \u2192 D \u2264 T \u2192 T \u2264 Tmax \u2192 (N - D) ^ 2 \u2264 C * T \u2192 N ^ 2 \u2264 (2 * C + 2 * Tmax) * T",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -434,6 +677,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.trace_projected",
+    "signature": "\u2200 {n : \u2115} (M : BfgsVerification.Mat n),\n  Matrix.IsSymm M \u2192\n    \u2200 (s : BfgsVerification.Vec n),\n      Matrix.mulVec M s = 0 \u2192\n        \u2200 (W : BfgsVerification.Mat n),\n          (M *\n                (BfgsVerification.TransportedCertificate.stepProjector s * W *\n                  BfgsVerification.TransportedCertificate.stepProjector s)).trace =\n            (M * W).trace",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.FrameBounds.gram_trace_square",
     "signature": "\u2200 {n r : \u2115} (C : BfgsVerification.Mat n) (V : Matrix (Fin n) (Fin r) \u211d),\n  (BfgsVerification.metricGram (Matrix.transpose C * C) V).trace = \u2211 i, BfgsVerification.sqNorm fun j => (C * V) i j",
     "axioms": [
@@ -448,6 +700,15 @@
     "axioms": [
       "propext",
       "Quot.sound"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.Homogeneous.positive_of_bounded_zero_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Bornology.IsBounded {x | F x \u2264 0} \u2192 \u2200 {x : BfgsVerification.Vec n}, x \u2260 0 \u2192 0 < F x",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
     ]
   },
   {
@@ -469,8 +730,44 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.RadialCertificate.radialNumerator.eq_1",
+    "signature": "\u2200 {n : \u2115} (star z g h : BfgsVerification.Vec n),\n  BfgsVerification.RadialCertificate.radialNumerator star z g h = BfgsVerification.dot (h - g) (z - star)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.movingFrameCriterion",
     "signature": "BfgsVerification.MovingFrameCriterionTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.scalarBFGSConvergence",
+    "signature": "BfgsVerification.ScalarBFGSConvergenceTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.weak_wolfe",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115),\n  self.c\u2082 * self.g k * (self.x (k + 1) - self.x k) \u2264 self.g (k + 1) * (self.x (k + 1) - self.x k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.mul_stepProjector",
+    "signature": "\u2200 {n : \u2115} (M : BfgsVerification.Mat n) (s : BfgsVerification.Vec n),\n  Matrix.mulVec M s = 0 \u2192 M * BfgsVerification.TransportedCertificate.stepProjector s = M",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -577,6 +874,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.abs_gradient_contracts_of_same_sign",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115),\n  0 < R.g k \u2227 0 < R.g (k + 1) \u2228 R.g k < 0 \u2227 R.g (k + 1) < 0 \u2192 |R.g (k + 1)| \u2264 R.c\u2082 * |R.g k|",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift_q",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115),\n  (R.shift J).q k = R.q (J + k)",
     "axioms": [
@@ -604,8 +910,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.summable_d_of_minimizer",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (xStar : \u211d), (\u2200 (x : \u211d), f xStar \u2264 f x) \u2192 Summable R.d",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ScalarHierarchy.hierarchy_tail_potentials",
     "signature": "\u2200 {n : \u2115} {E : \u2115 \u2192 \u2115 \u2192 \u211d} {q \u03b4 : \u2115 \u2192 \u211d} {K C : \u211d},\n  BfgsVerification.ScalarHierarchy.NormalizedHierarchy n E q \u03b4 K C \u2192\n    BfgsVerification.ScalarHierarchy.UpperNull \u03b4 \u2192\n      \u2200 (A : \u211d),\n        0 < A \u2192 \u2203 J V, (\u2200 (k : \u2115), 0 < V k) \u2227 (\u2200 (k : \u2115), J \u2264 k \u2192 q k * V (k + 1) \u2264 A * V k) \u2227 \u2200 (k : \u2115), q k \u2264 C * V k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.pairCurvature.eq_1",
+    "signature": "\u2200 {n : \u2115} (x z g h : BfgsVerification.Vec n),\n  BfgsVerification.TransportedCertificate.pairCurvature x z g h =\n    BfgsVerification.dot (h - g) (BfgsVerification.TransportedCertificate.pairStep x z)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -642,6 +966,15 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift_curvature",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115),\n  (R.shift J).curvature k = R.curvature (J + k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.metric_pos",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115), 0 < self.metric k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -703,6 +1036,13 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.Homogeneous.bounded_zero_sublevel_of_coercive._proof_2",
+    "signature": "\u2200 {\u03b1 : Type u_1} [inst : LinearOrder \u03b1] {a b : \u03b1}, (\u00aca < b) = (b \u2264 a)",
+    "axioms": [
+      "propext"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.coordinateMatrix_gram",
     "signature": "\u2200 {n : \u2115} (H : BfgsVerification.Mat n) (I : Finset (Fin n)),\n  BfgsVerification.metricGram H (BfgsVerification.coordinateMatrix I) = Matrix.submatrix H Subtype.val Subtype.val",
     "axioms": [
@@ -750,6 +1090,15 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun_beta",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F), R.toFullBFGSRun.beta = R.beta",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.trace_outer_mul",
+    "signature": "\u2200 {n : \u2115} (g : BfgsVerification.Vec n) (W : BfgsVerification.Mat n),\n  (BfgsVerification.outer g g * W).trace = BfgsVerification.metricEnergy W g",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -836,6 +1185,24 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.EligiblePair.armijo",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {x z g h : BfgsVerification.Vec n},\n  BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n    c\u2081 * BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 F x - F z",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.hessian_trace_update",
+    "signature": "\u2200 {n : \u2115} (B W : BfgsVerification.Mat n) (g y : BfgsVerification.Vec n) (q t : \u211d),\n  ((B - q\u207b\u00b9 \u2022 BfgsVerification.outer g g + t\u207b\u00b9 \u2022 BfgsVerification.outer y y) * W).trace =\n    (B * W).trace - BfgsVerification.metricEnergy W g / q + BfgsVerification.metricEnergy W y / t",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ScalarHierarchy.weightedPotential.eq_1",
     "signature": "\u2200 (n : \u2115) (r : \u211d) (e : \u2115 \u2192 \u211d),\n  BfgsVerification.ScalarHierarchy.weightedPotential n r e = \u2211 j \u2208 Finset.range n, r ^ j * e (j + 1)",
     "axioms": [
@@ -872,6 +1239,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.m_pos",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7), 0 < self.m",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.dot_smul_right",
     "signature": "\u2200 {n : \u2115} (a : \u211d) (x y : BfgsVerification.Vec n), BfgsVerification.dot x (a \u2022 y) = a * BfgsVerification.dot x y",
     "axioms": [
@@ -886,6 +1262,15 @@
     "axioms": [
       "propext",
       "Quot.sound"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.mapped_distance_to_argmin_of_values",
+    "signature": "\u2200 {E : Type u_1} {Y : Type u_2} [inst : MetricSpace E] [inst_1 : MetricSpace Y] {F : E \u2192 \u211d},\n  Continuous F \u2192\n    \u2200 (\u03c8 : E \u2192 Y),\n      Continuous \u03c8 \u2192\n        \u2200 (xStar : E),\n          (\u2200 (y : E), F xStar \u2264 F y) \u2192\n            \u2200 {K : Set E},\n              IsCompact K \u2192\n                \u2200 {x : \u2115 \u2192 E},\n                  (\u2200 (k : \u2115), x k \u2208 K) \u2192\n                    Filter.Tendsto (fun k => F (x k)) Filter.atTop (nhds (F xStar)) \u2192\n                      Filter.Tendsto (fun k => Metric.infDist (\u03c8 (x k)) (\u03c8 '' BfgsVerification.argmin F)) Filter.atTop\n                        (nhds 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
     ]
   },
   {
@@ -934,6 +1319,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_old_pairing_nonpos",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192 \u2200 (k : \u2115), BfgsVerification.dot (R.gradientChange k) (R.x k) \u2264 0",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.DescentBudget.armijo_tail_tsum_le_of_tendsto",
     "signature": "\u2200 {f d : \u2115 \u2192 \u211d} {c\u2081 L : \u211d},\n  0 < c\u2081 \u2192\n    (\u2200 (k : \u2115), 0 \u2264 d k) \u2192\n      (\u2200 (k : \u2115), c\u2081 * d k \u2264 f k - f (k + 1)) \u2192\n        Filter.Tendsto f Filter.atTop (nhds L) \u2192 \u2200 (J : \u2115), \u2211' (i : \u2115), d (J + i) \u2264 (f J - L) / c\u2081",
     "axioms": [
@@ -945,6 +1339,15 @@
   {
     "theorem": "BfgsVerification.QuantitativeGrowth.normalizedLower.eq_1",
     "signature": "\u2200 (A D : \u211d) (n m : \u2115),\n  BfgsVerification.QuantitativeGrowth.normalizedLower A D n m =\n    \u2191m / (\u2191m + 1) * Real.exp (-(Real.log A + (\u2191n + 1) * Real.log \u2191m) / (\u2191m + 1) - \u2191m / (\u2191m + 1) * Real.log (2 * D))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_5",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F), R.c\u2082 < 1",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -981,6 +1384,15 @@
   {
     "theorem": "BfgsVerification.principalSum_eq_zero_of_dimension_lt",
     "signature": "\u2200 {n j : \u2115} (H : BfgsVerification.Mat n), n < j \u2192 BfgsVerification.principalSum H j = 0",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_new_pairing_nonneg",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), 0 \u2264 BfgsVerification.dot (R.gradientChange k) (R.x (k + 1))",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1113,8 +1525,44 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_10",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115),\n  HasDerivAt (BfgsVerification.OneDimensional.objective F) (R.g k 0) (R.x k 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.referenceEnergy_nonneg",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (xstar : BfgsVerification.Vec n)\n  (k : \u2115), 0 \u2264 R.referenceEnergy xstar k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.certificateEnergy_nonneg",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  {K : Set (BfgsVerification.Vec n)} {fstar \u03b7 : \u211d}\n  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar R.c\u2081 R.c\u2082 \u03b7) (k : \u2115),\n  R.x k \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192 0 \u2264 R.certificateEnergy C.W k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.abs_gradient_lower_of_gap._proof_1",
+    "signature": "\u2200 {\u03b1 : Type u} [inst : PseudoMetricSpace \u03b1] {x y : \u03b1} {\u03b5 : \u211d}, (y \u2208 Metric.closedBall x \u03b5) = (dist y x \u2264 \u03b5)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.EligiblePair.gradient_z",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {x z g h : BfgsVerification.Vec n},\n  BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n    HasFDerivAt F (BfgsVerification.gradientFunctional h) z",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1149,8 +1597,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.pairStep.eq_1",
+    "signature": "\u2200 {n : \u2115} (x z : BfgsVerification.Vec n), BfgsVerification.TransportedCertificate.pairStep x z = z - x",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.DescentBudget.armijo_tail_tsum_le",
     "signature": "\u2200 {f d : \u2115 \u2192 \u211d} {c\u2081 L : \u211d},\n  0 < c\u2081 \u2192\n    (\u2200 (k : \u2115), 0 \u2264 d k) \u2192\n      (\u2200 (k : \u2115), c\u2081 * d k \u2264 f k - f (k + 1)) \u2192 (\u2200 (k : \u2115), L \u2264 f k) \u2192 \u2200 (J : \u2115), \u2211' (i : \u2115), d (J + i) \u2264 (f J - L) / c\u2081",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_11",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115),\n  R.x (k + 1) 0 = R.x k 0 - R.\u03b1 k * R.H k 0 0 * R.g k 0",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1178,6 +1644,15 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.referenceCorrection_nonneg",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (xstar : BfgsVerification.Vec n)\n  (k : \u2115), 0 \u2264 R.referenceCorrection xstar k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_1",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d},\n  BfgsVerification.AdmissibleBFGSRun 1 F \u2192\n    ConvexOn \u211d (\u21d1\u2191BfgsVerification.OneDimensional.embed \u207b\u00b9' Set.univ) (F \u2218 \u21d1\u2191BfgsVerification.OneDimensional.embed)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1214,6 +1689,15 @@
   {
     "theorem": "BfgsVerification.objectiveLowerBoundGrowth",
     "signature": "BfgsVerification.ObjectiveLowerBoundGrowthTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.EligiblePair.curvature",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {x z g h : BfgsVerification.Vec n},\n  BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n    (1 - c\u2082) * BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264\n      BfgsVerification.TransportedCertificate.pairCurvature x z g h",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1275,6 +1759,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.homogeneousDichotomy",
+    "signature": "BfgsVerification.HomogeneousDichotomyTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift_displacement",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115),\n  (R.shift J).displacement k = R.displacement (J + k)",
     "axioms": [
@@ -1286,6 +1779,24 @@
   {
     "theorem": "BfgsVerification.FrameBounds.gram_trace_nonneg",
     "signature": "\u2200 {n r : \u2115} {B : BfgsVerification.Mat n},\n  Matrix.PosSemidef B \u2192 \u2200 (V : Matrix (Fin n) (Fin r) \u211d), 0 \u2264 (BfgsVerification.metricGram B V).trace",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.gap_le_gradient_pairing",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (xStar : \u211d) (k : \u2115),\n  f (R.x k) - f xStar \u2264 R.g k * (R.x k - xStar)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_7",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115), 0 < R.\u03b1 k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1311,6 +1822,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.hasDeriv",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115), HasDerivAt f (self.g k) (self.x k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.EnergyIdentities.gram_transport",
     "signature": "\u2200 {n r : \u2115} (B : BfgsVerification.Mat n) (V : Matrix (Fin n) (Fin r) \u211d) (T : BfgsVerification.Mat r),\n  BfgsVerification.metricGram B (V * T) = Matrix.transpose T * BfgsVerification.metricGram B V * T",
     "axioms": [
@@ -1320,8 +1840,34 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.no_uniform_positive_gap._proof_1",
+    "signature": "\u2200 (J k : \u2115), k \u2265 J \u2192 \u00ack + 1 \u2265 J \u2192 False",
+    "axioms": [
+      "propext",
+      "Quot.sound"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.FullBFGSRun.d_pos",
     "signature": "\u2200 {n : \u2115} (R : BfgsVerification.FullBFGSRun n) (k : \u2115), 0 < R.d k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_iterates_zero_of_bounded_zero_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Bornology.IsBounded {x | F x \u2264 0} \u2192 Filter.Tendsto R.x Filter.atTop (nhds 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.radial_correction_bound",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)\n  {K : Set (BfgsVerification.Vec n)},\n  (\u2200 (k : \u2115), R.x k \u2208 K) \u2192\n    \u2200 (\u03b7 C : \u211d),\n      (\u2200 (k : \u2115), F star + \u03b7 \u2264 F (R.x k)) \u2192\n        (\u2200 (x z g h : BfgsVerification.Vec n),\n            x \u2208 K \u2192\n              z \u2208 K \u2192\n                F star + \u03b7 \u2264 F z \u2192\n                  F z \u2264 F x \u2192\n                    HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192\n                      HasFDerivAt F (BfgsVerification.gradientFunctional h) z \u2192\n                        0 < BfgsVerification.RadialCertificate.secantCurvature x z g h \u2192\n                          BfgsVerification.RadialCertificate.radialNumerator star z g h ^ 2 \u2264\n                            C * BfgsVerification.RadialCertificate.secantCurvature x z g h) \u2192\n          \u2200 (k : \u2115), R.referenceCorrection star k \u2264 C",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1357,6 +1903,15 @@
   {
     "theorem": "BfgsVerification.inverseBFGS_step_det",
     "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (g y : BfgsVerification.Vec n) (\u03b1 : \u211d),\n      BfgsVerification.dot y (BfgsVerification.bfgsStep H g \u03b1) \u2260 0 \u2192\n        Matrix.det (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g \u03b1) y) =\n          \u03b1 ^ 2 * BfgsVerification.metricEnergy H g / BfgsVerification.dot y (BfgsVerification.bfgsStep H g \u03b1) *\n            Matrix.det H",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_correction_ratio_zero",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Summable R.d \u2192\n      Filter.Tendsto (fun N => \u2211 k \u2208 Finset.range N, (R.q k)\u207b\u00b9) Filter.atTop Filter.atTop \u2192\n        Filter.Tendsto (fun N => (\u2211 k \u2208 Finset.range N, R.referenceCorrection 0 k) / \u2211 k \u2208 Finset.range N, (R.q k)\u207b\u00b9)\n          Filter.atTop (nhds 0)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1427,8 +1982,35 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.pairDecrease.eq_1",
+    "signature": "\u2200 {n : \u2115} (x z g : BfgsVerification.Vec n),\n  BfgsVerification.TransportedCertificate.pairDecrease x z g =\n    -BfgsVerification.dot g (BfgsVerification.TransportedCertificate.pairStep x z)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.FrameBounds.scalar_young",
     "signature": "\u2200 (x y d : \u211d), 0 < d \u2192 (x + y) ^ 2 \u2264 (1 + d) * x ^ 2 + (1 + d\u207b\u00b9) * y ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.stepProjector.eq_1",
+    "signature": "\u2200 {n : \u2115} (s : BfgsVerification.Vec n),\n  BfgsVerification.TransportedCertificate.stepProjector s =\n    1 - (BfgsVerification.sqNorm s)\u207b\u00b9 \u2022 BfgsVerification.outer s s",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_3",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F), 0 < R.c\u2081",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1472,6 +2054,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.annihilated_projector",
+    "signature": "\u2200 {n : \u2115} (M : BfgsVerification.Mat n),\n  Matrix.IsSymm M \u2192\n    \u2200 (s : BfgsVerification.Vec n),\n      Matrix.mulVec M s = 0 \u2192\n        BfgsVerification.TransportedCertificate.stepProjector s * M *\n            BfgsVerification.TransportedCertificate.stepProjector s =\n          M",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.coordinateMatrix_mulVec_at._proof_1",
     "signature": "\u2200 {\u03b1 : Sort u_1} {a b : \u03b1}, (a = b) = (b = a)",
     "axioms": [
@@ -1481,6 +2072,24 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift._proof_7",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115),\n  F (R.x (J + k + 1)) \u2264\n    F (R.x (J + k)) +\n      R.c\u2081 * BfgsVerification.dot (R.g (J + k)) (BfgsVerification.bfgsStep (R.H (J + k)) (R.g (J + k)) (R.\u03b1 (J + k)))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.RadialCertificate.optimizerIntercept_eq_error",
+    "signature": "\u2200 {n : \u2115} (F : BfgsVerification.Vec n \u2192 \u211d) (star x g : BfgsVerification.Vec n),\n  BfgsVerification.RadialCertificate.optimizerIntercept F star x g =\n    BfgsVerification.RadialCertificate.supportingError F x g star",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_new_pairing",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), BfgsVerification.dot (R.gradientChange k) (R.x (k + 1)) = R.d k - (F (R.x k) - F (R.x (k + 1)))",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1524,8 +2133,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.supporting",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115) (y : \u211d), R.g k * (y - R.x k) \u2264 f y - f (R.x k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.sum_transformed_coordinate_grams",
     "signature": "\u2200 {n : \u2115} (H U : BfgsVerification.Mat n),\n  Matrix.transpose U * U = 1 \u2192\n    \u2200 (j : \u2115),\n      \u2211 I \u2208 Finset.powersetCard j Finset.univ,\n          (BfgsVerification.metricGram H (U * BfgsVerification.coordinateMatrix I)).det =\n        BfgsVerification.principalSum H j",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.mk.sizeOf_spec",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (convex : ConvexOn \u211d Set.univ f) (x g metric \u03b1 : \u2115 \u2192 \u211d) (c\u2081 c\u2082 : \u211d) (c\u2081_pos : 0 < c\u2081) (c\u2081_lt_c\u2082 : c\u2081 < c\u2082)\n  (c\u2082_lt_one : c\u2082 < 1) (metric_pos : \u2200 (k : \u2115), 0 < metric k) (alpha_pos : \u2200 (k : \u2115), 0 < \u03b1 k)\n  (gradient_ne : \u2200 (k : \u2115), g k \u2260 0) (hasDeriv : \u2200 (k : \u2115), HasDerivAt f (g k) (x k))\n  (step : \u2200 (k : \u2115), x (k + 1) = x k - \u03b1 k * metric k * g k)\n  (armijo : \u2200 (k : \u2115), f (x (k + 1)) \u2264 f (x k) + c\u2081 * g k * (x (k + 1) - x k))\n  (weak_wolfe : \u2200 (k : \u2115), c\u2082 * g k * (x (k + 1) - x k) \u2264 g (k + 1) * (x (k + 1) - x k)),\n  sizeOf\n      { convex := convex, x := x, g := g, metric := metric, \u03b1 := \u03b1, c\u2081 := c\u2081, c\u2082 := c\u2082, c\u2081_pos := c\u2081_pos,\n        c\u2081_lt_c\u2082 := c\u2081_lt_c\u2082, c\u2082_lt_one := c\u2082_lt_one, metric_pos := metric_pos, alpha_pos := alpha_pos,\n        gradient_ne := gradient_ne, hasDeriv := hasDeriv, step := step, armijo := armijo, weak_wolfe := weak_wolfe } =\n    1 + sizeOf convex + sizeOf c\u2081 + sizeOf c\u2082 + sizeOf c\u2081_pos + sizeOf c\u2081_lt_c\u2082 + sizeOf c\u2082_lt_one",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1578,6 +2205,24 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.projected_transport_trace",
+    "signature": "\u2200 {n : \u2115} (M : BfgsVerification.Mat n),\n  Matrix.PosSemidef M \u2192\n    \u2200 (s : BfgsVerification.Vec n),\n      Matrix.mulVec M s = 0 \u2192\n        \u2200 (W Z : BfgsVerification.Mat n) (a : \u211d),\n          (a \u2022\n                  (BfgsVerification.TransportedCertificate.stepProjector s * W *\n                    BfgsVerification.TransportedCertificate.stepProjector s) -\n                BfgsVerification.TransportedCertificate.stepProjector s * Z *\n                  BfgsVerification.TransportedCertificate.stepProjector s).PosSemidef \u2192\n            (M * Z).trace \u2264 a * (M * W).trace",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.certificate_trace_step",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  {K : Set (BfgsVerification.Vec n)} {fstar \u03b7 : \u211d}\n  (C : BfgsVerification.TransportedCertificate.BandCertificate F K fstar R.c\u2081 R.c\u2082 \u03b7) (k : \u2115),\n  R.x k \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n    R.x (k + 1) \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n      R.d k \u2264 C.\u03b4 \u2192\n        R.certificateEnergy C.W (k + 1) \u2264 (1 + C.L * R.d k) * (R.certificateEnergy C.W k - C.m / R.q k) + C.C",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  (1 - R.c\u2082) * R.d k \u2264 BfgsVerification.dot (R.g (k + 1) - R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.\u03b1 k))",
     "axioms": [
@@ -1589,6 +2234,15 @@
   {
     "theorem": "BfgsVerification.diagonal_coordinate_gram_det",
     "signature": "\u2200 {n : \u2115} (lam : Fin n \u2192 \u211d),\n  (\u2200 (i : Fin n), 0 < lam i) \u2192\n    \u2200 (y : BfgsVerification.Vec n) (I : Finset (Fin n)),\n      (BfgsVerification.metricGram (Matrix.diagonal lam)\n            ((Matrix.replicateCol Unit y).fromCols (BfgsVerification.coordinateMatrix I))).det =\n        (\u220f i \u2208 I, lam i) * \u2211 k \u2208 Finset.univ \\ I, lam k * y k ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.RadialCertificate.radialNumerator_eq_error_intercepts",
+    "signature": "\u2200 {n : \u2115} (F : BfgsVerification.Vec n \u2192 \u211d) (star x z g h : BfgsVerification.Vec n),\n  BfgsVerification.RadialCertificate.radialNumerator star z g h =\n    BfgsVerification.RadialCertificate.supportingError F x g z +\n        BfgsVerification.RadialCertificate.optimizerIntercept F star z h -\n      BfgsVerification.RadialCertificate.optimizerIntercept F star x g",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1624,6 +2278,24 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.step",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (self : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  self.x (k + 1) = self.x k + BfgsVerification.bfgsStep (self.H k) (self.g k) (self.\u03b1 k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_9",
+    "signature": "ContinuousSMul \u211d \u211d",
+    "axioms": [
+      "Quot.sound",
+      "propext",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.d_pos",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115), 0 < R.d k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1694,8 +2366,44 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.wolfe_gradient_product",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115), R.g (k + 1) * R.g k \u2264 R.c\u2082 * R.g k ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.alpha_pos",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115), 0 < self.\u03b1 k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.transported_certificate_iterates_of_unique_minimizer",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  (K : Set (BfgsVerification.Vec n)),\n  IsCompact K \u2192\n    (\u2200 (k : \u2115), R.x k \u2208 K) \u2192\n      \u2200 (xstar : BfgsVerification.Vec n),\n        (\u2200 (x : BfgsVerification.Vec n), F xstar \u2264 F x) \u2192\n          (\u2200 (x : BfgsVerification.Vec n), F x = F xstar \u2192 x = xstar) \u2192\n            BfgsVerification.TransportedCertificate.HasBandCertificates F K (F xstar) R.c\u2081 R.c\u2082 \u2192\n              Filter.Tendsto R.x Filter.atTop (nhds xstar)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.transformed_coordinateMatrix_injective",
     "signature": "\u2200 {n : \u2115} (U : BfgsVerification.Mat n),\n  Matrix.transpose U * U = 1 \u2192\n    \u2200 (I : Finset (Fin n)), Function.Injective (U * BfgsVerification.coordinateMatrix I).mulVec",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.c\u2081_lt_c\u2082",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f), self.c\u2081 < self.c\u2082",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1750,6 +2458,15 @@
   {
     "theorem": "BfgsVerification.objectiveFiniteHorizon_of_lower_bound",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (G L : \u211d),\n  0 < G \u2192\n    (\u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2) \u2192\n      (\u2200 (k : \u2115), L \u2264 F (R.x k)) \u2192 BfgsVerification.ObjectiveFiniteHorizonBound R G",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.iterate_mem_initialSublevel",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115), R.x k \u2208 R.initialSublevel",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1856,6 +2573,24 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.Homogeneous.supporting_linear_le",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 {x g : BfgsVerification.Vec n},\n      BfgsVerification.Homogeneous.Supports F x g \u2192 \u2200 (z : BfgsVerification.Vec n), BfgsVerification.dot g z \u2264 F z",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_potential_step",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), R.homogeneousPotential (k + 1) \u2264 R.homogeneousPotential k - F (R.x k) ^ 2 / R.q k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.EnergyIdentities.rectOuter.eq_1",
     "signature": "\u2200 {n r : \u2115} (s : BfgsVerification.Vec n) (b : BfgsVerification.Vec r) (i : Fin n) (j : Fin r),\n  BfgsVerification.EnergyIdentities.rectOuter s b i j = s i * b j",
     "axioms": [
@@ -1903,6 +2638,24 @@
   {
     "theorem": "BfgsVerification.BFGSCompression.outer_mul",
     "signature": "\u2200 {n : \u2115} (A : BfgsVerification.Mat n) (a b : BfgsVerification.Vec n),\n  BfgsVerification.outer a b * A = BfgsVerification.outer a ((Matrix.transpose A).mulVec b)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.radial_certificate_values",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  (K : Set (BfgsVerification.Vec n)),\n  IsCompact K \u2192\n    (\u2200 (k : \u2115), R.x k \u2208 K) \u2192\n      \u2200 (star : BfgsVerification.Vec n),\n        (\u2200 (x : BfgsVerification.Vec n), F star \u2264 F x) \u2192\n          BfgsVerification.RadialCertificate.HasRadialSecantBounds F K star \u2192\n            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.Homogeneous.value_zero",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d}, BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192 F 0 = 0",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -1960,6 +2713,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.global_minimum_of_zero_gradient",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 {x : BfgsVerification.Vec n},\n      HasFDerivAt F (BfgsVerification.gradientFunctional 0) x \u2192 x \u2208 BfgsVerification.argmin F",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.SmoothSubspace.gram_trace",
     "signature": "\u2200 {n r : \u2115} (B : BfgsVerification.Mat n) (W : Matrix (Fin n) (Fin r) \u211d),\n  (BfgsVerification.metricGram B W).trace = \u2211 j, BfgsVerification.metricEnergy B fun i => W i j",
     "axioms": [
@@ -2004,6 +2766,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.Homogeneous.supporting_euler",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 {x g : BfgsVerification.Vec n}, BfgsVerification.Homogeneous.Supports F x g \u2192 BfgsVerification.dot g x = F x",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.CompressionAlgebra.rank_one_increment_upper_bound",
     "signature": "\u2200 (\u03b1 \u03b2 q \u0394 u : \u211d), 0 \u2264 \u03b1 \u2192 0 < \u03b2 \u2192 0 < q \u2192 0 \u2264 \u0394 \u2192 u \u2264 q \u2192 \u03b1 / (\u03b2 * q) * \u0394 * u \u2264 \u03b1 / \u03b2 * \u0394",
     "axioms": [
@@ -2015,6 +2786,15 @@
   {
     "theorem": "BfgsVerification.metricGram_det_append_one",
     "signature": "\u2200 {n j : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (y : BfgsVerification.Vec n) (Z : Matrix (Fin n) (Fin j) \u211d),\n      Function.Injective Z.mulVec \u2192\n        (BfgsVerification.metricGram H ((Matrix.replicateCol Unit y).fromCols Z)).det =\n          (BfgsVerification.metricGram H Z).det *\n            (BfgsVerification.metricEnergy H y -\n              BfgsVerification.dot (Z.transpose.mulVec (Matrix.mulVec H y))\n                ((BfgsVerification.metricGram H Z)\u207b\u00b9.mulVec (Z.transpose.mulVec (Matrix.mulVec H y))))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.accepted_pair_decrease",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  BfgsVerification.TransportedCertificate.pairDecrease (R.x k) (R.x (k + 1)) (R.g k) = R.d k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2049,6 +2829,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.EligiblePair.convex_decrease",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {x z g h : BfgsVerification.Vec n},\n  BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n    F x - F z \u2264 BfgsVerification.TransportedCertificate.pairDecrease x z g",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.BFGSCompression.projected_compression",
     "signature": "\u2200 {n m : \u2115} (H : BfgsVerification.Mat n) (Z : Matrix (Fin n) (Fin m) \u211d) (v y : BfgsVerification.Vec n) (\u03ba : \u211d),\n  Matrix.IsSymm H \u2192\n    Z.transpose * ((1 - \u03ba\u207b\u00b9 \u2022 BfgsVerification.outer v y) * H * (1 - \u03ba\u207b\u00b9 \u2022 BfgsVerification.outer v y).transpose) * Z =\n      BfgsVerification.CompressionDeterminant.compression (Z.transpose * H * Z) (Z.transpose.mulVec v)\n        (Z.transpose.mulVec (Matrix.mulVec H y)) \u03ba (BfgsVerification.dot y (Matrix.mulVec H y))",
     "axioms": [
@@ -2060,6 +2849,15 @@
   {
     "theorem": "BfgsVerification.sqNorm.eq_1",
     "signature": "\u2200 {n : \u2115} (x : BfgsVerification.Vec n), BfgsVerification.sqNorm x = \u2211 i, x i ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.stepProjector_isSymm",
+    "signature": "\u2200 {n : \u2115} (s : BfgsVerification.Vec n), Matrix.IsSymm (BfgsVerification.TransportedCertificate.stepProjector s)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2085,8 +2883,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.EligiblePair.gradient_x",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {x z g h : BfgsVerification.Vec n},\n  BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n    HasFDerivAt F (BfgsVerification.gradientFunctional g) x",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.compact_objective_tendsto_min_of_quadratic_corrections",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  (xstar : BfgsVerification.Vec n),\n  (\u2200 (z : BfgsVerification.Vec n), F xstar \u2264 F z) \u2192\n    IsCompact R.initialSublevel \u2192\n      \u2200 (C : \u211d),\n        (\u2200\u1da0 (N : \u2115) in Filter.atTop, \u2211 k \u2208 Finset.range N, R.referenceCorrection xstar k \u2264 C * \u2191N ^ 2) \u2192\n          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.exists_global_minimum_of_compact_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  IsCompact R.initialSublevel \u2192 \u2203 xStar \u2208 R.initialSublevel, \u2200 (y : BfgsVerification.Vec n), F xStar \u2264 F y",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2110,6 +2926,11 @@
       "Quot.sound",
       "Classical.choice"
     ]
+  },
+  {
+    "theorem": "BfgsVerification.euclideanVector._proof_1",
+    "signature": "(0 + 2).AtLeastTwo",
+    "axioms": []
   },
   {
     "theorem": "BfgsVerification.ScalarHierarchy.weighted_step._proof_1",
@@ -2157,6 +2978,15 @@
   {
     "theorem": "BfgsVerification.FrameNorms.continuous_operator_sq_le_iff",
     "signature": "\u2200 {r : \u2115} (A : EuclideanSpace \u211d (Fin r) \u2192L[\u211d] EuclideanSpace \u211d (Fin r)) (a : \u211d),\n  0 \u2264 a \u2192 (\u2016A\u2016 ^ 2 \u2264 a \u2194 \u2200 (v : EuclideanSpace \u211d (Fin r)), \u2016A v\u2016 ^ 2 \u2264 a * \u2016v\u2016 ^ 2)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.RadialCertificate.supportingError_nonneg",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 {x g : BfgsVerification.Vec n},\n      HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192\n        \u2200 (z : BfgsVerification.Vec n), 0 \u2264 BfgsVerification.RadialCertificate.supportingError F x g z",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2245,6 +3075,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_pairing_le_curvature",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), BfgsVerification.dot (R.gradientChange k) (R.x (k + 1)) \u2264 R.curvature k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ResidualFrameCertificate.smooth",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {R : BfgsVerification.AdmissibleBFGSRun n F}\n  (self : BfgsVerification.ResidualFrameCertificate R) (k : \u2115),\n  BfgsVerification.sqNorm (self.U.transpose.mulVec ((R.shift self.J).gradientChange k)) \u2264\n    self.L * (R.shift self.J).curvature k",
     "axioms": [
@@ -2265,6 +3104,24 @@
   {
     "theorem": "BfgsVerification.principal_product_augmented_sum_le",
     "signature": "\u2200 {n : \u2115} (lam : Fin n \u2192 \u211d),\n  (\u2200 (i : Fin n), 0 \u2264 lam i) \u2192\n    \u2200 (y : BfgsVerification.Vec n) (j : \u2115),\n      \u2211 I \u2208 Finset.powersetCard j Finset.univ, (\u220f i \u2208 I, lam i) * \u2211 k \u2208 Finset.univ \\ I, lam k * y k ^ 2 \u2264\n        BfgsVerification.sqNorm y * \u2211 J \u2208 Finset.powersetCard (j + 1) Finset.univ, \u220f i \u2208 J, lam i",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.scalarMetricConvergence",
+    "signature": "BfgsVerification.ScalarMetricConvergenceTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.delta_pos",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7), 0 < self.\u03b4",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2335,6 +3192,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.transportedCertificateConvergence",
+    "signature": "BfgsVerification.TransportedCertificateTarget",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.PrincipalInvariance.principalSum_orthogonal_conjugate",
     "signature": "\u2200 {n : \u2115} (Q H : BfgsVerification.Mat n),\n  Q * Matrix.transpose Q = 1 \u2192\n    \u2200 (j : \u2115), BfgsVerification.principalSum (Matrix.transpose Q * H * Q) j = BfgsVerification.principalSum H j",
     "axioms": [
@@ -2346,6 +3212,15 @@
   {
     "theorem": "BfgsVerification.EnergyIdentities.gram_smul",
     "signature": "\u2200 {n r : \u2115} (a : \u211d) (B : BfgsVerification.Mat n) (V : Matrix (Fin n) (Fin r) \u211d),\n  BfgsVerification.metricGram (a \u2022 B) V = a \u2022 BfgsVerification.metricGram B V",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.RadialCertificate.intercept_bound_of_radial",
+    "signature": "\u2200 {N D T C Tmax : \u211d}, 0 \u2264 D \u2192 D \u2264 T \u2192 T \u2264 Tmax \u2192 N ^ 2 \u2264 C * T \u2192 (N - D) ^ 2 \u2264 (2 * C + 2 * Tmax) * T",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2371,8 +3246,80 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.continuous_objective",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d}, BfgsVerification.ScalarMetricRun f \u2192 Continuous f",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_energy_identity",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), R.referenceEnergy 0 (k + 1) = R.referenceEnergy 0 k - F (R.x k) ^ 2 / R.q k + R.referenceCorrection 0 k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.objective_value_limit_of_compact_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  IsCompact R.initialSublevel \u2192 \u2203 \u2113, Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds \u2113)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.scalar_convergence",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F),\n  IsCompact R.initialSublevel \u2192\n    \u2200 (xStar : BfgsVerification.Vec 1),\n      (\u2200 (x : BfgsVerification.Vec 1), F xStar \u2264 F x) \u2192\n        (\u2200 (x : BfgsVerification.Vec 1), F x = F xStar \u2192 x = xStar) \u2192\n          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xStar)) \u2227\n            Filter.Tendsto R.x Filter.atTop (nhds xStar)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.distance_to_argmin_of_values",
+    "signature": "\u2200 {E : Type u_1} [inst : MetricSpace E] {F : E \u2192 \u211d},\n  Continuous F \u2192\n    \u2200 (xStar : E),\n      (\u2200 (y : E), F xStar \u2264 F y) \u2192\n        \u2200 {K : Set E},\n          IsCompact K \u2192\n            \u2200 {x : \u2115 \u2192 E},\n              (\u2200 (k : \u2115), x k \u2208 K) \u2192\n                Filter.Tendsto (fun k => F (x k)) Filter.atTop (nhds (F xStar)) \u2192\n                  Filter.Tendsto (fun k => Metric.infDist (x k) (BfgsVerification.argmin F)) Filter.atTop (nhds 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_8",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115), R.g k 0 = 0 \u2192 False",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.SmoothSubspace.projection_isSymm",
     "signature": "\u2200 {n r : \u2115} (U : Matrix (Fin n) (Fin r) \u211d), (U * U.transpose).IsSymm",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.Homogeneous.nonneg_of_bounded_below",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (L : \u211d), (\u2200 (x : BfgsVerification.Vec n), L \u2264 F x) \u2192 \u2200 (x : BfgsVerification.Vec n), 0 \u2264 F x",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_support",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115) (z : BfgsVerification.Vec n), BfgsVerification.dot (R.g k) z \u2264 F z",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2425,6 +3372,42 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.accepted_pair_step",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  BfgsVerification.TransportedCertificate.pairStep (R.x k) (R.x (k + 1)) = R.displacement k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.quadratic_corrections_of_uniform_bound",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)\n  (C : \u211d),\n  (\u2200 (k : \u2115), R.referenceCorrection star k \u2264 C) \u2192\n    \u2200 (N : \u2115), \u2211 k \u2208 Finset.range N, R.referenceCorrection star k \u2264 max C 0 * \u2191N ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.accepted_displacement_ne_zero",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115), R.displacement k \u2260 0",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.displacement.eq_1",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115),\n  R.displacement k = BfgsVerification.bfgsStep (R.H k) (R.g k) (R.\u03b1 k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.d.eq_1",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115), R.d k = R.\u03b1 k * R.q k",
     "axioms": [
@@ -2463,6 +3446,15 @@
   {
     "theorem": "BfgsVerification.Localization.sphere_gap",
     "signature": "\u2200 {E : Type u_1} [inst : NormedAddCommGroup E] [inst_1 : NormedSpace \u211d E] [inst_2 : FiniteDimensional \u211d E]\n  [inst_3 : Nontrivial E] {F : E \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 (xStar : E),\n      (\u2200 (x : E), F xStar \u2264 F x) \u2192\n        (\u2200 (x : E), F x = F xStar \u2192 x = xStar) \u2192\n          \u2200 {r : \u211d},\n            0 < r \u2192\n              \u2203 \u03c9, 0 < \u03c9 \u2227 (\u2203 z, dist z xStar = r \u2227 F z - F xStar = \u03c9) \u2227 \u2200 (z : E), dist z xStar = r \u2192 \u03c9 \u2264 F z - F xStar",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.mk.sizeOf_spec",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  [inst : (a : BfgsVerification.Vec n) \u2192 SizeOf (K a)] (W : BfgsVerification.Vec n \u2192 BfgsVerification.Mat n)\n  (m C L \u03b4 : \u211d) (m_pos : 0 < m) (L_nonneg : 0 \u2264 L) (delta_pos : 0 < \u03b4)\n  (positive_semidefinite :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      DifferentiableAt \u211d F x \u2192 Matrix.PosSemidef (W x))\n  (visibility :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      \u2200 (g : BfgsVerification.Vec n),\n        HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192 m \u2264 BfgsVerification.metricEnergy (W x) g)\n  (secant :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n              BfgsVerification.metricEnergy (W z) (h - g) \u2264\n                C * BfgsVerification.TransportedCertificate.pairCurvature x z g h)\n  (transport :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n              ((1 + L * BfgsVerification.TransportedCertificate.pairDecrease x z g) \u2022\n                    (BfgsVerification.TransportedCertificate.stepProjector\n                          (BfgsVerification.TransportedCertificate.pairStep x z) *\n                        W x *\n                      BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z)) -\n                  BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z) *\n                      W z *\n                    BfgsVerification.TransportedCertificate.stepProjector\n                      (BfgsVerification.TransportedCertificate.pairStep x z)).PosSemidef),\n  sizeOf\n      { W := W, m := m, C := C, L := L, \u03b4 := \u03b4, m_pos := m_pos, L_nonneg := L_nonneg, delta_pos := delta_pos,\n        positive_semidefinite := positive_semidefinite, visibility := visibility, secant := secant,\n        transport := transport } =\n    1 + sizeOf m + sizeOf C + sizeOf L + sizeOf \u03b4 + sizeOf m_pos + sizeOf L_nonneg + sizeOf delta_pos",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2596,6 +3588,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.transported_certificate_convergence_on_sublevel",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (b : \u211d),\n  IsCompact {x | F x \u2264 b} \u2192\n    \u2200 (xstar : BfgsVerification.Vec n),\n      (\u2200 (x : BfgsVerification.Vec n), F xstar \u2264 F x) \u2192\n        F (R.x 0) \u2264 b \u2192\n          BfgsVerification.TransportedCertificate.HasBandCertificates F {x | F x \u2264 b} (F xstar) R.c\u2081 R.c\u2082 \u2192\n            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar)) \u2227\n              Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F)) Filter.atTop (nhds 0) \u2227\n                ((\u2200 (x : BfgsVerification.Vec n), F x = F xstar \u2192 x = xstar) \u2192\n                  Filter.Tendsto R.x Filter.atTop (nhds xstar))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (L : \u211d),\n  (\u2200 (k : \u2115), L \u2264 F (R.x k)) \u2192 Summable R.d",
     "axioms": [
@@ -2607,6 +3608,15 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift_gradientChange",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115),\n  (R.shift J).gradientChange k = R.gradientChange (J + k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.transport",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7) (x z g h : BfgsVerification.Vec n),\n  x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n    z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n      BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n        BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 self.\u03b4 \u2192\n          ((1 + self.L * BfgsVerification.TransportedCertificate.pairDecrease x z g) \u2022\n                (BfgsVerification.TransportedCertificate.stepProjector\n                      (BfgsVerification.TransportedCertificate.pairStep x z) *\n                    self.W x *\n                  BfgsVerification.TransportedCertificate.stepProjector\n                    (BfgsVerification.TransportedCertificate.pairStep x z)) -\n              BfgsVerification.TransportedCertificate.stepProjector\n                    (BfgsVerification.TransportedCertificate.pairStep x z) *\n                  self.W z *\n                BfgsVerification.TransportedCertificate.stepProjector\n                  (BfgsVerification.TransportedCertificate.pairStep x z)).PosSemidef",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2643,6 +3653,24 @@
   {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.d_pos",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115), 0 < R.d k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_nonpositive_forces_escape",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (k : \u2115), F (R.x k) \u2264 0 \u2192 Filter.Tendsto (fun j => F (R.x j)) Filter.atTop Filter.atBot",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.euclidean_distance_to_argmin_of_values",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  Continuous F \u2192\n    \u2200 (xStar : BfgsVerification.Vec n),\n      (\u2200 (y : BfgsVerification.Vec n), F xStar \u2264 F y) \u2192\n        \u2200 {K : Set (BfgsVerification.Vec n)},\n          IsCompact K \u2192\n            \u2200 {x : \u2115 \u2192 BfgsVerification.Vec n},\n              (\u2200 (k : \u2115), x k \u2208 K) \u2192\n                Filter.Tendsto (fun k => F (x k)) Filter.atTop (nhds (F xStar)) \u2192\n                  Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (x k)) Filter.atTop (nhds 0)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2713,11 +3741,29 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.c\u2082_lt_one",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f), self.c\u2082 < 1",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ReciprocalGrowth.global_log_product_upper._proof_1",
     "signature": "\u2200 (J N : \u2115), J + 1 \u2264 N \u2192 \u00acN = J + (N - (J + 1) + 1) \u2192 False",
     "axioms": [
       "propext",
       "Quot.sound"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.OneDimensional.objective.eq_1",
+    "signature": "\u2200 (F : BfgsVerification.Vec 1 \u2192 \u211d) (t : \u211d),\n  BfgsVerification.OneDimensional.objective F t = F (BfgsVerification.OneDimensional.embed t)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
     ]
   },
   {
@@ -2756,6 +3802,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_12",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115),\n  BfgsVerification.OneDimensional.objective F (R.x (k + 1) 0) \u2264\n    BfgsVerification.OneDimensional.objective F (R.x k 0) + R.c\u2081 * R.g k 0 * (R.x (k + 1) 0 - R.x k 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible_source",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) {r p : \u2115} (J : \u2115) (G : \u211d),\n  0 < G \u2192\n    (\u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2) \u2192\n      Summable R.d \u2192\n        \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n          U.transpose * U = 1 \u2192\n            \u2200 (L m C\u2080 C_T C_R : \u211d),\n              0 < m \u2192\n                (\u2200 (k : \u2115),\n                    BfgsVerification.sqNorm (U.transpose.mulVec ((R.shift J).gradientChange k)) \u2264\n                      L * (R.shift J).curvature k) \u2192\n                  \u2200 (V Z : \u2115 \u2192 Matrix (Fin n) (Fin p) \u211d) (T : \u2115 \u2192 BfgsVerification.Mat p)\n                    (b : \u2115 \u2192 BfgsVerification.Vec p),\n                    (\u2200 (k : \u2115), m \u2264 BfgsVerification.sqNorm ((V k).transpose.mulVec ((R.shift J).g k))) \u2192\n                      (\u2200 (k : \u2115),\n                          BfgsVerification.sqNorm ((V (k + 1)).transpose.mulVec ((R.shift J).gradientChange k)) \u2264\n                            C\u2080 * (R.shift J).curvature k) \u2192\n                        (\u2200 (k : \u2115),\n                            V (k + 1) =\n                              V k * T k +\n                                  BfgsVerification.EnergyIdentities.rectOuter ((R.shift J).displacement k) (b k) +\n                                Z k) \u2192\n                          (\u2200 (k : \u2115), BfgsVerification.FrameBounds.OperatorSqBound (T k) (1 + C_T * (R.shift J).d k)) \u2192\n                            (\u2200 (k : \u2115), U * U.transpose * Z k = Z k) \u2192\n                              (\u2200 (k : \u2115), BfgsVerification.SmoothSubspace.frobSq (Z k) \u2264 C_R * (R.shift J).d k) \u2192 False",
     "axioms": [
@@ -2767,6 +3822,33 @@
   {
     "theorem": "BfgsVerification.PrincipalInvariance.principalSum_conjugate",
     "signature": "\u2200 {n : \u2115} (U V H : BfgsVerification.Mat n),\n  U * V = 1 \u2192 \u2200 (j : \u2115), BfgsVerification.principalSum (U * H * V) j = BfgsVerification.principalSum H j",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.convergence",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f),\n  IsCompact R.initialSublevel \u2192\n    \u2200 (xStar : \u211d),\n      (\u2200 (x : \u211d), f xStar \u2264 f x) \u2192\n        (\u2200 (x : \u211d), f x = f xStar \u2192 x = xStar) \u2192\n          Filter.Tendsto (fun k => f (R.x k)) Filter.atTop (nhds (f xStar)) \u2227\n            Filter.Tendsto R.x Filter.atTop (nhds xStar)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.step",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f) (k : \u2115),\n  self.x (k + 1) = self.x k - self.\u03b1 k * self.metric k * self.g k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.armijo_decrease",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115), R.c\u2081 * R.d k \u2264 f (R.x k) - f (R.x (k + 1))",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2846,6 +3928,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_zero_of_lower_bound",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (L : \u211d), (\u2200 (k : \u2115), L \u2264 F (R.x k)) \u2192 Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.FullBFGSRun.energy_pos",
     "signature": "\u2200 {n : \u2115} (self : BfgsVerification.FullBFGSRun n) (k : \u2115), 0 < BfgsVerification.metricEnergy (self.H k) (self.g k)",
     "axioms": [
@@ -2855,8 +3946,35 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.abs_gradient_lower_of_gap",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f),\n  IsCompact R.initialSublevel \u2192\n    \u2200 (xStar L : \u211d), 0 < L \u2192 (\u2200 (k : \u2115), L \u2264 f (R.x k) - f xStar) \u2192 \u2203 m, 0 < m \u2227 \u2200 (k : \u2115), m \u2264 |R.g k|",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.SmoothSubspace.projection_idempotent",
     "signature": "\u2200 {n r : \u2115} (U : Matrix (Fin n) (Fin r) \u211d), U.transpose * U = 1 \u2192 U * U.transpose * (U * U.transpose) = U * U.transpose",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.referencePairing.eq_1",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (xstar : BfgsVerification.Vec n)\n  (k : \u2115), R.referencePairing xstar k = BfgsVerification.dot (R.g k) (R.x k - xstar)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_13",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F) (k : \u2115),\n  R.c\u2082 * R.g k 0 * (R.x (k + 1) 0 - R.x k 0) \u2264 R.g (k + 1) 0 * (R.x (k + 1) 0 - R.x k 0)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2884,6 +4002,15 @@
   {
     "theorem": "BfgsVerification.ScalarHierarchy.shift_identity",
     "signature": "\u2200 (n : \u2115) (r : \u211d) (e : \u2115 \u2192 \u211d),\n  r * BfgsVerification.ScalarHierarchy.shiftedPotential n r e + e 1 =\n    BfgsVerification.ScalarHierarchy.weightedPotential n r e + r ^ n * e (n + 1)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_finite_value_limit_zero",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (L : \u211d), Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds L) \u2192 L = 0",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -2963,12 +4090,28 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.secant",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7) (x z g h : BfgsVerification.Vec n),\n  x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n    z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n      BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n        BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 self.\u03b4 \u2192\n          BfgsVerification.metricEnergy (self.W z) (h - g) \u2264\n            self.C * BfgsVerification.TransportedCertificate.pairCurvature x z g h",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.referenceEnergy.eq_1",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (xstar : BfgsVerification.Vec n)\n  (k : \u2115), R.referenceEnergy xstar k = BfgsVerification.metricEnergy (R.hessian k) (R.x k - xstar)",
     "axioms": [
       "propext",
       "Quot.sound",
       "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.Homogeneous.bounded_zero_sublevel_of_coercive._proof_1",
+    "signature": "\u2200 {\u03b1 : Type u} (s : Set \u03b1) (x : \u03b1), (x \u2208 s\u1d9c) = (x \u2209 s)",
+    "axioms": [
+      "propext"
     ]
   },
   {
@@ -3052,6 +4195,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.scalar_initialSublevel_compact",
+    "signature": "\u2200 {F : BfgsVerification.Vec 1 \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun 1 F),\n  IsCompact R.initialSublevel \u2192 IsCompact R.toScalarMetricRun.initialSublevel",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ReciprocalGrowth.global_log_product_upper",
     "signature": "\u2200 (q V : \u2115 \u2192 \u211d) (A C : \u211d) (J : \u2115),\n  (\u2200 (k : \u2115), 0 < q k) \u2192\n    (\u2200 (k : \u2115), 0 < V k) \u2192\n      0 < A \u2192\n        0 < C \u2192\n          (\u2200 (k : \u2115), J \u2264 k \u2192 q k * V (k + 1) \u2264 A * V k) \u2192\n            (\u2200 (k : \u2115), q k \u2264 C * V k) \u2192\n              \u2203 B, \u2200 (N : \u2115), J + 1 \u2264 N \u2192 \u2211 k \u2208 Finset.range N, Real.log (q k) \u2264 B + \u2191N * Real.log A",
     "axioms": [
@@ -3088,8 +4240,35 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_global_gradient_bound",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192 \u2203 G, 0 < G \u2227 \u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.fullBFGS_normalizedHierarchy",
     "signature": "\u2200 {n : \u2115} (R : BfgsVerification.FullBFGSRun n) (G c : \u211d),\n  0 < G \u2192\n    0 < c \u2192\n      (\u2200 (k : \u2115), BfgsVerification.sqNorm (R.g k) \u2264 G ^ 2) \u2192\n        (\u2200 (k : \u2115), c \u2264 R.beta k) \u2192\n          BfgsVerification.ScalarHierarchy.NormalizedHierarchy n (fun k => BfgsVerification.principalSum (R.H k)) R.q\n            (fun k => R.d k / c) (4 * G ^ 2 / c ^ 2) (G ^ 2)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_finite_branch_positive",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (L : \u211d), Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds L) \u2192 \u2200 (k : \u2115), 0 < F (R.x k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_referenceCorrection_le_d",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192 \u2200 (k : \u2115), R.referenceCorrection 0 k \u2264 R.d k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3126,6 +4305,15 @@
   {
     "theorem": "BfgsVerification.ExactFrameCertificate.K_pos",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {R : BfgsVerification.AdmissibleBFGSRun n F}\n  (self : BfgsVerification.ExactFrameCertificate R), 0 < self.K",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.gradient_step",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (k : \u2115), R.g k * (R.x (k + 1) - R.x k) = -R.d k",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3240,6 +4428,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.mk.inj",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} {convex : ConvexOn \u211d Set.univ f} {x g metric \u03b1 : \u2115 \u2192 \u211d} {c\u2081 c\u2082 : \u211d} {c\u2081_pos : 0 < c\u2081} {c\u2081_lt_c\u2082 : c\u2081 < c\u2082}\n  {c\u2082_lt_one : c\u2082 < 1} {metric_pos : \u2200 (k : \u2115), 0 < metric k} {alpha_pos : \u2200 (k : \u2115), 0 < \u03b1 k}\n  {gradient_ne : \u2200 (k : \u2115), g k \u2260 0} {hasDeriv : \u2200 (k : \u2115), HasDerivAt f (g k) (x k)}\n  {step : \u2200 (k : \u2115), x (k + 1) = x k - \u03b1 k * metric k * g k}\n  {armijo : \u2200 (k : \u2115), f (x (k + 1)) \u2264 f (x k) + c\u2081 * g k * (x (k + 1) - x k)}\n  {weak_wolfe : \u2200 (k : \u2115), c\u2082 * g k * (x (k + 1) - x k) \u2264 g (k + 1) * (x (k + 1) - x k)}\n  {convex_1 : ConvexOn \u211d Set.univ f} {x_1 g_1 metric_1 \u03b1_1 : \u2115 \u2192 \u211d} {c\u2081_1 c\u2082_1 : \u211d} {c\u2081_pos_1 : 0 < c\u2081_1}\n  {c\u2081_lt_c\u2082_1 : c\u2081_1 < c\u2082_1} {c\u2082_lt_one_1 : c\u2082_1 < 1} {metric_pos_1 : \u2200 (k : \u2115), 0 < metric_1 k}\n  {alpha_pos_1 : \u2200 (k : \u2115), 0 < \u03b1_1 k} {gradient_ne_1 : \u2200 (k : \u2115), g_1 k \u2260 0}\n  {hasDeriv_1 : \u2200 (k : \u2115), HasDerivAt f (g_1 k) (x_1 k)}\n  {step_1 : \u2200 (k : \u2115), x_1 (k + 1) = x_1 k - \u03b1_1 k * metric_1 k * g_1 k}\n  {armijo_1 : \u2200 (k : \u2115), f (x_1 (k + 1)) \u2264 f (x_1 k) + c\u2081_1 * g_1 k * (x_1 (k + 1) - x_1 k)}\n  {weak_wolfe_1 : \u2200 (k : \u2115), c\u2082_1 * g_1 k * (x_1 (k + 1) - x_1 k) \u2264 g_1 (k + 1) * (x_1 (k + 1) - x_1 k)},\n  { convex := convex, x := x, g := g, metric := metric, \u03b1 := \u03b1, c\u2081 := c\u2081, c\u2082 := c\u2082, c\u2081_pos := c\u2081_pos,\n        c\u2081_lt_c\u2082 := c\u2081_lt_c\u2082, c\u2082_lt_one := c\u2082_lt_one, metric_pos := metric_pos, alpha_pos := alpha_pos,\n        gradient_ne := gradient_ne, hasDeriv := hasDeriv, step := step, armijo := armijo, weak_wolfe := weak_wolfe } =\n      { convex := convex_1, x := x_1, g := g_1, metric := metric_1, \u03b1 := \u03b1_1, c\u2081 := c\u2081_1, c\u2082 := c\u2082_1,\n        c\u2081_pos := c\u2081_pos_1, c\u2081_lt_c\u2082 := c\u2081_lt_c\u2082_1, c\u2082_lt_one := c\u2082_lt_one_1, metric_pos := metric_pos_1,\n        alpha_pos := alpha_pos_1, gradient_ne := gradient_ne_1, hasDeriv := hasDeriv_1, step := step_1,\n        armijo := armijo_1, weak_wolfe := weak_wolfe_1 } \u2192\n    x = x_1 \u2227 g = g_1 \u2227 metric = metric_1 \u2227 \u03b1 = \u03b1_1 \u2227 c\u2081 = c\u2081_1 \u2227 c\u2082 = c\u2082_1",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.metricGram_det_append_one_generic._proof_1",
     "signature": "\u2200 {m : Type u_2} {n : Type u_3} {\u03b1 : Type v} {\u03b9 : Type u_6} [inst : Fintype n] [inst_1 : NonUnitalNonAssocSemiring \u03b1]\n  (M : Matrix m n \u03b1) (v : n \u2192 \u03b1), M * Matrix.replicateCol \u03b9 v = Matrix.replicateCol \u03b9 (M.mulVec v)",
     "axioms": [
@@ -3320,6 +4517,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.Homogeneous.bounded_zero_sublevel_of_coercive",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192 Bornology.IsBounded {x | F x \u2264 0}",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.shift._proof_2",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (J k : \u2115), 0 < R.\u03b1 (J + k)",
     "axioms": [
@@ -3347,8 +4553,35 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.stepProjector_mul",
+    "signature": "\u2200 {n : \u2115} (M : BfgsVerification.Mat n),\n  Matrix.IsSymm M \u2192\n    \u2200 (s : BfgsVerification.Vec n),\n      Matrix.mulVec M s = 0 \u2192 BfgsVerification.TransportedCertificate.stepProjector s * M = M",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.inverseBFGS_step_det_beta",
     "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 {g : BfgsVerification.Vec n},\n      g \u2260 0 \u2192\n        \u2200 (y : BfgsVerification.Vec n) {\u03b1 : \u211d},\n          0 < \u03b1 \u2192\n            0 < BfgsVerification.dot y (BfgsVerification.bfgsStep H g \u03b1) \u2192\n              Matrix.det (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g \u03b1) y) =\n                \u03b1 / (-BfgsVerification.dot y (Matrix.mulVec H g) / BfgsVerification.metricEnergy H g) * Matrix.det H",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.transported_certificate_values",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  (K : Set (BfgsVerification.Vec n)),\n  IsCompact K \u2192\n    (\u2200 (k : \u2115), R.x k \u2208 K) \u2192\n      \u2200 (xstar : BfgsVerification.Vec n),\n        (\u2200 (x : BfgsVerification.Vec n), F xstar \u2264 F x) \u2192\n          BfgsVerification.TransportedCertificate.HasBandCertificates F K (F xstar) R.c\u2081 R.c\u2082 \u2192\n            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.mk.injEq",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (convex : ConvexOn \u211d Set.univ f) (x g metric \u03b1 : \u2115 \u2192 \u211d) (c\u2081 c\u2082 : \u211d) (c\u2081_pos : 0 < c\u2081) (c\u2081_lt_c\u2082 : c\u2081 < c\u2082)\n  (c\u2082_lt_one : c\u2082 < 1) (metric_pos : \u2200 (k : \u2115), 0 < metric k) (alpha_pos : \u2200 (k : \u2115), 0 < \u03b1 k)\n  (gradient_ne : \u2200 (k : \u2115), g k \u2260 0) (hasDeriv : \u2200 (k : \u2115), HasDerivAt f (g k) (x k))\n  (step : \u2200 (k : \u2115), x (k + 1) = x k - \u03b1 k * metric k * g k)\n  (armijo : \u2200 (k : \u2115), f (x (k + 1)) \u2264 f (x k) + c\u2081 * g k * (x (k + 1) - x k))\n  (weak_wolfe : \u2200 (k : \u2115), c\u2082 * g k * (x (k + 1) - x k) \u2264 g (k + 1) * (x (k + 1) - x k))\n  (convex_1 : ConvexOn \u211d Set.univ f) (x_1 g_1 metric_1 \u03b1_1 : \u2115 \u2192 \u211d) (c\u2081_1 c\u2082_1 : \u211d) (c\u2081_pos_1 : 0 < c\u2081_1)\n  (c\u2081_lt_c\u2082_1 : c\u2081_1 < c\u2082_1) (c\u2082_lt_one_1 : c\u2082_1 < 1) (metric_pos_1 : \u2200 (k : \u2115), 0 < metric_1 k)\n  (alpha_pos_1 : \u2200 (k : \u2115), 0 < \u03b1_1 k) (gradient_ne_1 : \u2200 (k : \u2115), g_1 k \u2260 0)\n  (hasDeriv_1 : \u2200 (k : \u2115), HasDerivAt f (g_1 k) (x_1 k))\n  (step_1 : \u2200 (k : \u2115), x_1 (k + 1) = x_1 k - \u03b1_1 k * metric_1 k * g_1 k)\n  (armijo_1 : \u2200 (k : \u2115), f (x_1 (k + 1)) \u2264 f (x_1 k) + c\u2081_1 * g_1 k * (x_1 (k + 1) - x_1 k))\n  (weak_wolfe_1 : \u2200 (k : \u2115), c\u2082_1 * g_1 k * (x_1 (k + 1) - x_1 k) \u2264 g_1 (k + 1) * (x_1 (k + 1) - x_1 k)),\n  ({ convex := convex, x := x, g := g, metric := metric, \u03b1 := \u03b1, c\u2081 := c\u2081, c\u2082 := c\u2082, c\u2081_pos := c\u2081_pos,\n        c\u2081_lt_c\u2082 := c\u2081_lt_c\u2082, c\u2082_lt_one := c\u2082_lt_one, metric_pos := metric_pos, alpha_pos := alpha_pos,\n        gradient_ne := gradient_ne, hasDeriv := hasDeriv, step := step, armijo := armijo, weak_wolfe := weak_wolfe } =\n      { convex := convex_1, x := x_1, g := g_1, metric := metric_1, \u03b1 := \u03b1_1, c\u2081 := c\u2081_1, c\u2082 := c\u2082_1,\n        c\u2081_pos := c\u2081_pos_1, c\u2081_lt_c\u2082 := c\u2081_lt_c\u2082_1, c\u2082_lt_one := c\u2082_lt_one_1, metric_pos := metric_pos_1,\n        alpha_pos := alpha_pos_1, gradient_ne := gradient_ne_1, hasDeriv := hasDeriv_1, step := step_1,\n        armijo := armijo_1, weak_wolfe := weak_wolfe_1 }) =\n    (x = x_1 \u2227 g = g_1 \u2227 metric = metric_1 \u2227 \u03b1 = \u03b1_1 \u2227 c\u2081 = c\u2081_1 \u2227 c\u2082 = c\u2082_1)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3372,6 +4605,24 @@
   {
     "theorem": "BfgsVerification.inverseBFGS_det",
     "signature": "\u2200 {n : \u2115} {H : BfgsVerification.Mat n},\n  Matrix.PosDef H \u2192\n    \u2200 (s y : BfgsVerification.Vec n),\n      BfgsVerification.dot y s \u2260 0 \u2192\n        Matrix.det (BfgsVerification.inverseBFGS H s y) =\n          BfgsVerification.dot s (Matrix.mulVec H\u207b\u00b9 s) / BfgsVerification.dot y s * Matrix.det H",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.objective_value_limit_of_lower_bound",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (L : \u211d),\n  (\u2200 (k : \u2115), L \u2264 F (R.x k)) \u2192 \u2203 \u2113, Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds \u2113)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.visibility",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7),\n  \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n    \u2200 (g : BfgsVerification.Vec n),\n      HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192 self.m \u2264 BfgsVerification.metricEnergy (self.W x) g",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3415,6 +4666,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.OneDimensional.embed_apply",
+    "signature": "\u2200 (t : \u211d) (i : Fin 1), BfgsVerification.OneDimensional.embed t i = t",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.BFGSCompression.metricGram_det_reindex",
     "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} {\u03ba : Type u_2} [inst : Fintype \u03b9] [inst_1 : Fintype \u03ba] [inst_2 : DecidableEq \u03b9]\n  [inst_3 : DecidableEq \u03ba] (H : BfgsVerification.Mat n) (Z : Matrix (Fin n) \u03b9 \u211d) (e : \u03ba \u2243 \u03b9),\n  (BfgsVerification.metricGram H (Z.submatrix id \u21d1e)).det = (BfgsVerification.metricGram H Z).det",
     "axioms": [
@@ -3433,8 +4693,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.values_tendsto_min",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f),\n  IsCompact R.initialSublevel \u2192\n    \u2200 (xStar : \u211d), (\u2200 (x : \u211d), f xStar \u2264 f x) \u2192 Filter.Tendsto (fun k => f (R.x k)) Filter.atTop (nhds (f xStar))",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.AdmissibleBFGSRun.q_pos",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (k : \u2115), 0 < R.q k",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_bounded_below_convergence",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 (L : \u211d),\n      (\u2200 (x : BfgsVerification.Vec n), L \u2264 F x) \u2192\n        (\u2200 (x : BfgsVerification.Vec n), F 0 \u2264 F x) \u2227\n          F 0 = 0 \u2227 Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds 0)",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3460,8 +4738,35 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.ScalarMetricRun.gradient_sign_of_gap",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (R : BfgsVerification.ScalarMetricRun f) (xStar : \u211d) (k : \u2115),\n  0 < f (R.x k) - f xStar \u2192 (R.x k < xStar \u2192 R.g k < 0) \u2227 (xStar < R.x k \u2192 0 < R.g k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ExactFrameCertificate.m_pos",
     "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {R : BfgsVerification.AdmissibleBFGSRun n F}\n  (self : BfgsVerification.ExactFrameCertificate R), 0 < self.m",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.OneDimensional.embed_eval",
+    "signature": "\u2200 (v : BfgsVerification.Vec 1), BfgsVerification.OneDimensional.embed (v 0) = v",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.ScalarMetricRun.c\u2081_pos",
+    "signature": "\u2200 {f : \u211d \u2192 \u211d} (self : BfgsVerification.ScalarMetricRun f), 0 < self.c\u2081",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3584,8 +4889,26 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.positive_semidefinite",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  (self : BfgsVerification.TransportedCertificate.BandCertificate F K fstar c\u2081 c\u2082 \u03b7),\n  \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n    DifferentiableAt \u211d F x \u2192 Matrix.PosSemidef (self.W x)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.SmoothSubspace.gram_trace_annihilated_le",
     "signature": "\u2200 {n r : \u2115} (B : BfgsVerification.Mat n) (g : BfgsVerification.Vec n) (q : \u211d),\n  0 \u2264 q \u2192\n    \u2200 (W : Matrix (Fin n) (Fin r) \u211d),\n      (BfgsVerification.metricGram (B - q\u207b\u00b9 \u2022 BfgsVerification.outer g g) W).trace \u2264\n        (BfgsVerification.metricGram B W).trace",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.RadialCertificate.secantCurvature_eq_errors",
+    "signature": "\u2200 {n : \u2115} (F : BfgsVerification.Vec n \u2192 \u211d) (x z g h : BfgsVerification.Vec n),\n  BfgsVerification.RadialCertificate.secantCurvature x z g h =\n    BfgsVerification.RadialCertificate.supportingError F x g z +\n      BfgsVerification.RadialCertificate.supportingError F z h x",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3620,6 +4943,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.TransportedCertificate.trace_mul_nonneg",
+    "signature": "\u2200 {n : \u2115} {B W : BfgsVerification.Mat n}, Matrix.PosSemidef B \u2192 Matrix.PosSemidef W \u2192 0 \u2264 (B * W).trace",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.compactObjectiveFiniteHorizon",
     "signature": "BfgsVerification.CompactObjectiveFiniteHorizonTarget",
     "axioms": [
@@ -3640,6 +4972,15 @@
   {
     "theorem": "BfgsVerification.SmoothSubspace.frobSq_mul_orthonormal",
     "signature": "\u2200 {n r p : \u2115} (U : Matrix (Fin n) (Fin r) \u211d),\n  U.transpose * U = 1 \u2192\n    \u2200 (A : Matrix (Fin r) (Fin p) \u211d),\n      BfgsVerification.SmoothSubspace.frobSq (U * A) = BfgsVerification.SmoothSubspace.frobSq A",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.Homogeneous.supports_at_zero",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    \u2200 {x g : BfgsVerification.Vec n},\n      BfgsVerification.Homogeneous.Supports F x g \u2192 BfgsVerification.Homogeneous.Supports F 0 g",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3679,6 +5020,15 @@
     ]
   },
   {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.homogeneous_corrections_summable",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192 Summable R.d \u2192 Summable (R.referenceCorrection 0)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
     "theorem": "BfgsVerification.ScalarHierarchy.NormalizedHierarchy.C_pos",
     "signature": "\u2200 {n : \u2115} {E : \u2115 \u2192 \u2115 \u2192 \u211d} {q \u03b4 : \u2115 \u2192 \u211d} {K C : \u211d},\n  BfgsVerification.ScalarHierarchy.NormalizedHierarchy n E q \u03b4 K C \u2192 0 < C",
     "axioms": [
@@ -3694,6 +5044,13 @@
       "propext",
       "Quot.sound",
       "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun._proof_2",
+    "signature": "NeZero (0 + 1)",
+    "axioms": [
+      "propext"
     ]
   },
   {
@@ -3726,6 +5083,15 @@
   {
     "theorem": "BfgsVerification.ResidualBudget.driftProduct.eq_1",
     "signature": "\u2200 (u : \u2115 \u2192 \u211d) (N : \u2115), BfgsVerification.ResidualBudget.driftProduct u N = \u220f k \u2208 Finset.range N, (1 + u k)",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.mk.inj",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {K : Set (BfgsVerification.Vec n)} {fstar c\u2081 c\u2082 \u03b7 : \u211d}\n  {W : BfgsVerification.Vec n \u2192 BfgsVerification.Mat n} {m C L \u03b4 : \u211d} {m_pos : 0 < m} {L_nonneg : 0 \u2264 L}\n  {delta_pos : 0 < \u03b4}\n  {positive_semidefinite :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      DifferentiableAt \u211d F x \u2192 Matrix.PosSemidef (W x)}\n  {visibility :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      \u2200 (g : BfgsVerification.Vec n),\n        HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192 m \u2264 BfgsVerification.metricEnergy (W x) g}\n  {secant :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n              BfgsVerification.metricEnergy (W z) (h - g) \u2264\n                C * BfgsVerification.TransportedCertificate.pairCurvature x z g h}\n  {transport :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n              ((1 + L * BfgsVerification.TransportedCertificate.pairDecrease x z g) \u2022\n                    (BfgsVerification.TransportedCertificate.stepProjector\n                          (BfgsVerification.TransportedCertificate.pairStep x z) *\n                        W x *\n                      BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z)) -\n                  BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z) *\n                      W z *\n                    BfgsVerification.TransportedCertificate.stepProjector\n                      (BfgsVerification.TransportedCertificate.pairStep x z)).PosSemidef}\n  {W_1 : BfgsVerification.Vec n \u2192 BfgsVerification.Mat n} {m_1 C_1 L_1 \u03b4_1 : \u211d} {m_pos_1 : 0 < m_1}\n  {L_nonneg_1 : 0 \u2264 L_1} {delta_pos_1 : 0 < \u03b4_1}\n  {positive_semidefinite_1 :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      DifferentiableAt \u211d F x \u2192 Matrix.PosSemidef (W_1 x)}\n  {visibility_1 :\n    \u2200 x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7,\n      \u2200 (g : BfgsVerification.Vec n),\n        HasFDerivAt F (BfgsVerification.gradientFunctional g) x \u2192 m_1 \u2264 BfgsVerification.metricEnergy (W_1 x) g}\n  {secant_1 :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4_1 \u2192\n              BfgsVerification.metricEnergy (W_1 z) (h - g) \u2264\n                C_1 * BfgsVerification.TransportedCertificate.pairCurvature x z g h}\n  {transport_1 :\n    \u2200 (x z g h : BfgsVerification.Vec n),\n      x \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n        z \u2208 BfgsVerification.TransportedCertificate.positiveBand F K fstar \u03b7 \u2192\n          BfgsVerification.TransportedCertificate.EligiblePair F c\u2081 c\u2082 x z g h \u2192\n            BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4_1 \u2192\n              ((1 + L_1 * BfgsVerification.TransportedCertificate.pairDecrease x z g) \u2022\n                    (BfgsVerification.TransportedCertificate.stepProjector\n                          (BfgsVerification.TransportedCertificate.pairStep x z) *\n                        W_1 x *\n                      BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z)) -\n                  BfgsVerification.TransportedCertificate.stepProjector\n                        (BfgsVerification.TransportedCertificate.pairStep x z) *\n                      W_1 z *\n                    BfgsVerification.TransportedCertificate.stepProjector\n                      (BfgsVerification.TransportedCertificate.pairStep x z)).PosSemidef},\n  { W := W, m := m, C := C, L := L, \u03b4 := \u03b4, m_pos := m_pos, L_nonneg := L_nonneg, delta_pos := delta_pos,\n        positive_semidefinite := positive_semidefinite, visibility := visibility, secant := secant,\n        transport := transport } =\n      { W := W_1, m := m_1, C := C_1, L := L_1, \u03b4 := \u03b4_1, m_pos := m_pos_1, L_nonneg := L_nonneg_1,\n        delta_pos := delta_pos_1, positive_semidefinite := positive_semidefinite_1, visibility := visibility_1,\n        secant := secant_1, transport := transport_1 } \u2192\n    W = W_1 \u2227 m = m_1 \u2227 C = C_1 \u2227 L = L_1 \u2227 \u03b4 = \u03b4_1",
     "axioms": [
       "propext",
       "Quot.sound",
@@ -3798,6 +5164,15 @@
   {
     "theorem": "BfgsVerification.DescentBudget.armijo_summable_of_tendsto",
     "signature": "\u2200 {f d : \u2115 \u2192 \u211d} {c\u2081 L : \u211d},\n  0 < c\u2081 \u2192\n    (\u2200 (k : \u2115), 0 \u2264 d k) \u2192 (\u2200 (k : \u2115), c\u2081 * d k \u2264 f k - f (k + 1)) \u2192 Filter.Tendsto f Filter.atTop (nhds L) \u2192 Summable d",
+    "axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ]
+  },
+  {
+    "theorem": "BfgsVerification.AdmissibleBFGSRun.distance_to_argmin_of_values",
+    "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F)\n  (xStar : BfgsVerification.Vec n),\n  (\u2200 (y : BfgsVerification.Vec n), F xStar \u2264 F y) \u2192\n    \u2200 {K : Set (BfgsVerification.Vec n)},\n      IsCompact K \u2192\n        (\u2200 (k : \u2115), R.x k \u2208 K) \u2192\n          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xStar)) \u2192\n            Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F)) Filter.atTop (nhds 0)",
     "axioms": [
       "propext",
       "Quot.sound",

@@ -124,3 +124,32 @@ example : BfgsVerification.ResidualFrameCriterionTarget := BfgsVerification.resi
 #check @BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible_source
 #check @BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq
 #check @BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace
+
+-- First entire-report tranche: exact objective hypotheses and source conclusions.
+#print BfgsVerification.argmin
+#print BfgsVerification.euclideanVector
+#print BfgsVerification.euclideanSolutionDistance
+#print BfgsVerification.TransportedCertificate.EligiblePair
+#print BfgsVerification.TransportedCertificate.stepProjector
+#print BfgsVerification.TransportedCertificate.BandCertificate
+#print BfgsVerification.TransportedCertificate.HasBandCertificates
+#print BfgsVerification.Homogeneous.PositiveDegreeOne
+#print BfgsVerification.ScalarMetricRun
+#print BfgsVerification.RadialCertificate.HasRadialSecantBounds
+#print BfgsVerification.TransportedCertificateTarget
+#print BfgsVerification.HomogeneousDichotomyTarget
+#print BfgsVerification.ScalarMetricConvergenceTarget
+#print BfgsVerification.ScalarBFGSConvergenceTarget
+#print BfgsVerification.RadialCertificateConvergenceTarget
+example : BfgsVerification.TransportedCertificateTarget := BfgsVerification.transportedCertificateConvergence
+example : BfgsVerification.HomogeneousDichotomyTarget := BfgsVerification.homogeneousDichotomy
+example : BfgsVerification.ScalarMetricConvergenceTarget := BfgsVerification.scalarMetricConvergence
+example : BfgsVerification.ScalarBFGSConvergenceTarget := BfgsVerification.scalarBFGSConvergence
+example : BfgsVerification.RadialCertificateConvergenceTarget := BfgsVerification.radialCertificateConvergence
+#check @BfgsVerification.AdmissibleBFGSRun.accepted_pair_eligible
+#check @BfgsVerification.AdmissibleBFGSRun.certificate_trace_step
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_global_gradient_bound
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero
+#check @BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun
+#check @BfgsVerification.AdmissibleBFGSRun.radial_correction_bound
+#check @BfgsVerification.global_minimum_of_zero_gradient
