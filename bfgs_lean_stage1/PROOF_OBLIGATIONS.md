@@ -515,3 +515,31 @@ jobs/counts/timings/archive identities and R's unidentified older four-piece
 numerical claim remain unresolved. The latter is a mathematical attribution
 exception, not merely execution history. No original claim is silently retired.
 All original research sources are unchanged; the entire report flag is false.
+
+
+## Seventeenth milestone: literal semialgebraic paths and composition
+
+The pinned full build and transitive audit passed 5,111 explicit theorems,
+7,684 total theorem declarations, 249 exact targets and 726 frozen Lean files.
+Only propext, Classical.choice and Quot.sound occur. Actual closed evidence is
+in report_semialgebraic_path_check.log, STATUS.json and the source/hash records.
+
+Actual semialgebraic path graphs, a finite cover in arbitrary dimension,
+finite actual continuous-semialgebraic path classes, same-curve regularity and
+actual objective composition now close A's literal geometric proof ingredients.
+Continuity includes the closed interval; smoothness is asserted off a finite
+set of interior parameters, without endpoint derivative claims. C's literal
+smooth-path constancy and I's synthesis are covered. All earlier mathematical
+corrections remain explicit and the original research sources are unchanged.
+
+M's principal theorems remain verified. The source's additional exact Gram-sum
+identity and sharp degree-n−1 potential bound were found to need explicit
+exports beyond the sufficient inequalities used in those proofs. They remain
+a separate active scope until their delivered compiler/audit gate passes.
+
+R182–187's older four-piece objective is unidentified, so its printed numerical
+attribution remains a mathematical obligation. E's original 19-job archive,
+counts, timings and execution identities remain unverified. Current D's proved
+correction and current universal Lean proofs do not establish those missing
+source facts. The entire original report flag remains false pending resolution;
+no claim has been silently dropped or replaced by an added assumption.

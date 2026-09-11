@@ -1,0 +1,131 @@
+Lean (version 4.19.0, arm64-apple-darwin23.6.0, commit 6caaee842e94, Release)
+BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_neighborhood_except_finite {S : Set.{0} Real}
+  (hS :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (BfgsVerification.RealAlgebraicGeometry.univariateLift S)) :
+  ∃ B, ∀ (t : Real), Membership.mem.{0, 0} S t → t ∉ B → Membership.mem.{0, 0} (nhds.{0} t) S
+'BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_neighborhood_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.vec_one_semialgebraic_neighborhood_except_finite
+  {S : Set.{0} (BfgsVerification.Vec 1)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S) :
+  ∃ B,
+    ∀ (t : Real),
+      (Membership.mem.{0, 0} S fun x => t) →
+        t ∉ B → Membership.mem.{0, 0} (nhds.{0} t) (setOf.{0} fun u => Membership.mem.{0, 0} S fun x => u)
+'BfgsVerification.RealAlgebraicGeometry.vec_one_semialgebraic_neighborhood_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isolated_formula_fiber_has_nonzero_atom_root {n m : Nat}
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.{0} (Option.{0} (Fin n)))
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real)
+  (hP :
+    ∀ (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real),
+      Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.atomPolynomials.{0} f) p →
+        ∃ i, Eq.{1} (P i) p)
+  (x : BfgsVerification.Vec n) (t : Real)
+  (ht :
+    BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{0} f
+      (BfgsVerification.RealAlgebraicGeometry.parameterPoint x t))
+  (hunique :
+    ∀ (u : Real),
+      BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{0} f
+          (BfgsVerification.RealAlgebraicGeometry.parameterPoint x u) →
+        Eq.{1} u t) :
+  ∃ i,
+    And (Ne.{1} (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x) 0)
+      (Polynomial.IsRoot.{0} (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x) t)
+'BfgsVerification.RealAlgebraicGeometry.isolated_formula_fiber_has_nonzero_atom_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.singleton_formula_fiber_is_surviving_root {n m : Nat}
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.{0} (Option.{0} (Fin n)))
+  (P : Fin m → MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real)
+  (hP :
+    ∀ (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real),
+      Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.atomPolynomials.{0} f) p →
+        ∃ i, Eq.{1} (P i) p)
+  (Z : Finset.{0} (Fin m)) (x : BfgsVerification.Vec n)
+  (hx : Membership.mem.{0, 0} (BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z) x) (t : Real)
+  (ht :
+    BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{0} f
+      (BfgsVerification.RealAlgebraicGeometry.parameterPoint x t))
+  (hunique :
+    ∀ (u : Real),
+      BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{0} f
+          (BfgsVerification.RealAlgebraicGeometry.parameterPoint x u) →
+        Eq.{1} u t) :
+  Polynomial.IsRoot.{0}
+    (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+      (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x)
+    t
+'BfgsVerification.RealAlgebraicGeometry.singleton_formula_fiber_is_surviving_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_root_equality {n : Nat}
+  {F : BfgsVerification.Vec n → Real} {D : Set.{0} (BfgsVerification.Vec n)}
+  (hF :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (setOf.{0} fun v =>
+        And (Membership.mem.{0, 0} D fun i => v (some.{0} i)) (Eq.{1} (v none.{0}) (F fun i => v (some.{0} i)))))
+  (p : MvPolynomial.{0, 0} (Option.{0} (Fin n)) Real) (k : Nat) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun x =>
+      And (Membership.mem.{0, 0} D x) (Eq.{1} (F x) (BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k x)))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_root_equality' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_finite_smooth_pieces {n : Nat}
+  {F : BfgsVerification.Vec n → Real} {D : Set.{0} (BfgsVerification.Vec n)}
+  (hF :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (setOf.{0} fun v =>
+        And (Membership.mem.{0, 0} D fun i => v (some.{0} i)) (Eq.{1} (v none.{0}) (F fun i => v (some.{0} i))))) :
+  ∃ C,
+    And
+      (∀ (S : Set.{0} (BfgsVerification.Vec n)),
+        Membership.mem.{0, 0} C S →
+          And (BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0} S)
+            (ContDiffOn.{0, 0, 0} Real (↑Top.top.{0}) F S))
+      (Eq.{1} (⋃ S, ⋃ (_ : Membership.mem.{0, 0} C S), S) D)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_finite_smooth_pieces' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_smooth_except_finite {f : Real → Real} {D : Set.{0} Real}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (setOf.{0} fun v => And (Membership.mem.{0, 0} D (v (some.{0} 0))) (Eq.{1} (v none.{0}) (f (v (some.{0} 0)))))) :
+  ∃ E, ∀ (t : Real), Membership.mem.{0, 0} D t → t ∉ E → ContDiffAt.{0, 0, 0} Real (↑Top.top.{0}) f t
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_smooth_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_interval_piecewise_smooth {f : Real → Real} {a b : Real}
+  (hc : ContinuousOn.{0, 0} f (Set.Icc.{0} a b))
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (setOf.{0} fun v =>
+        And (Membership.mem.{0, 0} (Set.Icc.{0} a b) (v (some.{0} 0))) (Eq.{1} (v none.{0}) (f (v (some.{0} 0)))))) :
+  ∃ E,
+    And (ContinuousOn.{0, 0} f (Set.Icc.{0} a b))
+      (∀ (t : Real), Membership.mem.{0, 0} (Set.Ioo.{0} a b) t → t ∉ E → ContDiffAt.{0, 0, 0} Real (↑Top.top.{0}) f t)
+'BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_interval_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicFunctionPiecesTarget : Prop
+'BfgsVerification.SemialgebraicFunctionPiecesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicFunctionPieces : BfgsVerification.SemialgebraicFunctionPiecesTarget
+'BfgsVerification.semialgebraicFunctionPieces' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicScalarSmoothTarget : Prop
+'BfgsVerification.SemialgebraicScalarSmoothTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicScalarSmooth : BfgsVerification.SemialgebraicScalarSmoothTarget
+'BfgsVerification.semialgebraicScalarSmooth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicIntervalSmoothTarget : Prop
+'BfgsVerification.SemialgebraicIntervalSmoothTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicIntervalSmooth : BfgsVerification.SemialgebraicIntervalSmoothTarget
+'BfgsVerification.semialgebraicIntervalSmooth' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.semialgebraicFunctionPieces
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_finite_smooth_pieces
+EXACT_TARGET_OK BfgsVerification.semialgebraicScalarSmooth
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_smooth_except_finite
+EXACT_TARGET_OK BfgsVerification.semialgebraicIntervalSmooth
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_interval_piecewise_smooth

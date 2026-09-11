@@ -1,0 +1,15 @@
+# Semialgebraic path graph operations
+
+This five-file, 22-declaration scope is a bounded prerequisite for the literal semialgebraic-path assertion in Module A. It does not yet assert semialgebraic path existence for every semialgebraic set. The previously audited ordinary piecewise smooth cover is unchanged.
+
+`IsSemialgebraicMapOn G S` means that the actual graph of G restricted to S, encoded in the finite sum of its input and output coordinate types, has an actual Boolean-polynomial formula. `IsSemialgebraicCurveOn p J` means that the actual graph of p over its parameter set J, with the parameter in the Option none coordinate and values in the some coordinates, has such a formula. For a path, J is the closed unit interval. No condition is imposed on the irrelevant extension of p outside its domain. Neither definition assumes projection or any desired geometric theorem.
+
+`SemialgebraicMapGraphs` proves genuine map graphs for polynomial coordinate maps, domain restriction, map composition, and coordinatewise assembly. The composition proof projects the conjunction of the two actual graphs; the eliminated values equal the intermediate actual function value. The maps-to assumption is the precise domain condition. Finite output types may be empty; the coordinatewise theorem separately retains semialgebraicity of the domain.
+
+`SemialgebraicCurveGraphs` proves genuine curve graphs for affine and constant curves, actual line segments, composition with a graph-certified map, and affine reparameterizations that map the closed unit interval into itself. Reversal is a special case. Its map theorem allows arbitrary parameter domains, preserving the actual graph-domain restriction.
+
+`SemialgebraicScalarGraphArithmetic` gives polynomial/constant scalar graphs, the literal Option-coordinate lift x ↦ (x,f(x)), and every affine combination af+bg+c of two functions on the same domain. The latter uses two eliminated coordinates whose values are exactly f and g, followed by the literal linear equation. It supplies midpoint and shifted boundary sections without a smoothness or continuity assumption.
+
+`SemialgebraicCurveJoining` proves that the actual `joinedCurve` graph on the closed unit interval is semialgebraic. It uses the two polynomial affine preimages and their actual half-interval restrictions. The common midpoint belongs to the left branch exactly as in the existing definition. No endpoint-matching assumption is necessary for graph semialgebraicity; the enriched analytic path constructor must supply endpoint matching separately to prove continuity. There is no claim of continuity from semialgebraicity alone.
+
+The two strict targets expose the graph operations and scalar graph-lift/arithmetic. All proof arithmetic is kernel checked. The reproducer builds only delivered main prerequisites and these five sources, recompiles all sources, audits every definition/theorem type and transitive axioms, checks strict target equality, and verifies the five source and 79 transitive project dependency hashes. Only propext, Classical.choice, and Quot.sound are allowed.

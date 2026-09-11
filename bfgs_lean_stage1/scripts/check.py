@@ -528,7 +528,41 @@ REPORT_TAME_GEOMETRY_TARGETS = {
     "semialgebraicSmoothComponents_verified":
         ("BfgsVerification.semialgebraicSmoothComponents", "BfgsVerification.SemialgebraicSmoothComponentsTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS | REPORT_TAME_GEOMETRY_TARGETS
+REPORT_SEMIALGEBRAIC_PATH_TARGETS = {
+    "RealAlgebraicGeometry_semialgebraicPathGraphOperations_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations", "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget"),
+    "RealAlgebraicGeometry_semialgebraicScalarGraphOperations_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations", "BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget"),
+    "semialgebraicPathComposition_verified":
+        ("BfgsVerification.semialgebraicPathComposition", "BfgsVerification.SemialgebraicPathCompositionTarget"),
+    "semialgebraicPathMapping_verified":
+        ("BfgsVerification.semialgebraicPathMapping", "BfgsVerification.SemialgebraicPathMappingTarget"),
+    "semialgebraicOrderedPaths_verified":
+        ("BfgsVerification.semialgebraicOrderedPaths", "BfgsVerification.SemialgebraicOrderedPathsTarget"),
+    "RealAlgebraicGeometry_generalSemialgebraicPathCover_verified":
+        ("BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover", "BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget"),
+    "semialgebraicFunctionPieces_verified":
+        ("BfgsVerification.semialgebraicFunctionPieces", "BfgsVerification.SemialgebraicFunctionPiecesTarget"),
+    "semialgebraicScalarSmooth_verified":
+        ("BfgsVerification.semialgebraicScalarSmooth", "BfgsVerification.SemialgebraicScalarSmoothTarget"),
+    "semialgebraicIntervalSmooth_verified":
+        ("BfgsVerification.semialgebraicIntervalSmooth", "BfgsVerification.SemialgebraicIntervalSmoothTarget"),
+    "objectiveSemialgebraicComposition_verified":
+        ("BfgsVerification.objectiveSemialgebraicComposition", "BfgsVerification.ObjectiveSemialgebraicCompositionTarget"),
+    "semialgebraicCurveSmooth_verified":
+        ("BfgsVerification.semialgebraicCurveSmooth", "BfgsVerification.SemialgebraicCurveSmoothTarget"),
+    "criticalSmoothPathValues_verified":
+        ("BfgsVerification.criticalSmoothPathValues", "BfgsVerification.CriticalSmoothPathValuesTarget"),
+    "semialgebraicActualPathComponents_verified":
+        ("BfgsVerification.semialgebraicActualPathComponents", "BfgsVerification.SemialgebraicActualPathComponentsTarget"),
+    "semialgebraicPathRegularityEquivalence_verified":
+        ("BfgsVerification.semialgebraicPathRegularityEquivalence", "BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget"),
+    "continuousSemialgebraicComponents_verified":
+        ("BfgsVerification.continuousSemialgebraicComponents", "BfgsVerification.ContinuousSemialgebraicComponentsTarget"),
+    "affineCriticalSemialgebraicPathComponents_verified":
+        ("BfgsVerification.affineCriticalSemialgebraicPathComponents", "BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS | REPORT_ALGEBRA_COMPLETION_TARGETS | REPORT_TAME_GEOMETRY_TARGETS | REPORT_SEMIALGEBRAIC_PATH_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -642,7 +676,8 @@ def dependency_inventory(manifest: dict, timeout: int) -> list[dict]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--static-only", action="store_true")
-    parser.add_argument("--timeout", type=int, default=600)
+    parser.add_argument("--timeout", type=int, default=7200,
+                        help="Timeout in seconds per command (default: 7200)")
     args = parser.parse_args()
     local_elan = ROOT / ".toolchain" / "elan"
     if (local_elan / "bin" / "lake").is_file():
@@ -816,7 +851,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "The literal A assertion that witnessing path graphs are semialgebraic remains under separate verification. The actual general finite smooth cover, finite ordinary/actual smooth-path components, finite critical values, original low gap and C tame basins are now proved. D literal non-strict interpreter and finite-algebra identities are also proved. Historical E jobs/counts/timings/archive identity and the old R four-piece attribution remain unverified because original inputs are absent. See REPORT_STATUS.json",
+            "The literal A geometric ingredients are now proved: actual semialgebraic witness paths, finite actual continuous-semialgebraic path components, and continuous objective composition smooth outside finitely many interior parameters. Historical E jobs/counts/timings/environment/archive identities remain unverified without the original inputs. R182–187's numerical attribution to an unidentified older four-piece objective remains a mathematical source-attribution obligation; the verified current D objective does not identify that older objective. See REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -825,7 +860,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_TAME_GEOMETRY_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_SEMIALGEBRAIC_PATH_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

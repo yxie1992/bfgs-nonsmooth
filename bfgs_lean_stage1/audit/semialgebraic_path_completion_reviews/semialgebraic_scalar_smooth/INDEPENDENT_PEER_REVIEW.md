@@ -1,0 +1,13 @@
+# Independent review: actual semialgebraic scalar regularity
+
+PASS. I read all five frozen source files and all three exact targets against the literal one-variable piecewise-C1 claim in Module A, then freshly compiled all five into an independent object directory and reran every type, transitive-axiom and exact-contract check. All 14 declarations, including target definitions, have only the three standard permitted axioms. All six strict source/wrapper type equalities passed. Five own and 149 main dependency hashes matched after the independent run.
+
+The local vertical-sign argument is sound: for a genuine singleton Boolean-polynomial fiber, if no nonzero atom vanishes at its height, every actual atom sign is locally constant. The entire formula then holds at a distinct neighboring real height, contradicting uniqueness. Zero fibers are kept explicitly and do not contribute roots. The derived surviving-product root is not a premise or an opaque choice of an algebraic representation.
+
+The finite function-piece theorem uses all actual zero patterns, attained root signatures, and valid ordered root indices. Its equality refinement is a genuine graph-intersection/projection set. Every domain point is in some piece because the singleton height is an actual surviving-product root. The actual function agrees on the piece with the proved ambient-smooth ordered root branch. This gives actual ContDiffOn, including lower-dimensional pieces; no global continuity or constant-degree assumption is smuggled in.
+
+In one variable, the finite root boundaries of the actual piece formulas contain all points at which piece membership fails to yield an ambient neighborhood. The union of those finite boundaries supplies the exceptional set. Hence at each remaining domain point the actual total scalar function is smooth on a real neighborhood, even though its behavior outside the original domain was unrestricted. Boundary and isolated domain points may be exceptional. The argument handles empty domains and zero-dimensional/empty-index pieces.
+
+The interval corollary preserves the supplied continuity at both endpoints and asserts smoothness only at nonexceptional interior points. Empty and singleton intervals are included; endpoint differentiability is not assumed or inferred. This is stronger than the source's required C1 regularity. The scope correctly leaves semialgebraicity of an actual chosen path and its objective composition to the separate graph-construction wrapper. No defect, extra regularity premise or claimed BFGS conclusion was found.
+
+Evidence: `peer_axioms_contracts.log`, `peer_validation.log`, owner `source_hashes.json` and `dependency_hashes.json`. Owner sources and logs are unchanged.

@@ -1,0 +1,50 @@
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_objective_curve_scalar_graph {n : Nat}
+  {F : BfgsVerification.Vec n → Real} (hF : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F)
+  {p : Real → BfgsVerification.Vec n} {J : Set.{0} Real}
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{0} p J) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v => And (Membership.mem.{0, 0} J (v (some.{0} 0))) (Eq.{1} (v none.{0}) (F (p (v (some.{0} 0))))))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_objective_curve_scalar_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth {n : Nat}
+  {F : BfgsVerification.Vec n → Real} (hconv : ConvexOn.{0, 0, 0} Real Set.univ.{0} F)
+  (hF : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F) {p : Real → BfgsVerification.Vec n}
+  (hc : ContinuousOn.{0, 0} p (Set.Icc.{0} 0 1))
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{0} p (Set.Icc.{0} 0 1)) :
+  And
+    (BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+      (setOf.{0} fun v =>
+        And (Membership.mem.{0, 0} (Set.Icc.{0} 0 1) (v (some.{0} 0)))
+          (Eq.{1} (v none.{0}) (Function.comp.{1, 1, 1} F p (v (some.{0} 0))))))
+    (And (ContinuousOn.{0, 0} (Function.comp.{1, 1, 1} F p) (Set.Icc.{0} 0 1))
+      (∃ E,
+        ∀ (t : Real),
+          Membership.mem.{0, 0} (Set.Ioo.{0} 0 1) t →
+            t ∉ E → ContDiffAt.{0, 0, 0} Real (↑Top.top.{0}) (Function.comp.{1, 1, 1} F p) t))
+'BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_coordinate_scalar_graph.{u_1} {σ : Type u_1}
+  [Fintype.{u_1} σ] {p : Real → σ → Real} {J : Set.{0} Real}
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} p J) (i : σ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{0}
+    (setOf.{0} fun v => And (Membership.mem.{0, 0} J (v (some.{0} 0))) (Eq.{1} (v none.{0}) (p (v (some.{0} 0)) i)))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_coordinate_scalar_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_smooth_except_finite.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {p : Real → σ → Real} {J : Set.{0} Real}
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} p J) :
+  ∃ E, ∀ (t : Real), Membership.mem.{0, 0} J t → t ∉ E → ContDiffAt.{0, 0, u_1} Real (↑Top.top.{0}) p t
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_smooth_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ObjectiveSemialgebraicCompositionTarget : Prop
+'BfgsVerification.ObjectiveSemialgebraicCompositionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveSemialgebraicComposition : BfgsVerification.ObjectiveSemialgebraicCompositionTarget
+'BfgsVerification.objectiveSemialgebraicComposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicCurveSmoothTarget : Prop
+'BfgsVerification.SemialgebraicCurveSmoothTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicCurveSmooth : BfgsVerification.SemialgebraicCurveSmoothTarget
+'BfgsVerification.semialgebraicCurveSmooth' depends on axioms: [propext, Classical.choice, Quot.sound]

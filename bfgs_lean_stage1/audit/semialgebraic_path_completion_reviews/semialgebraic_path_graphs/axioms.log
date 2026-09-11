@@ -1,0 +1,181 @@
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} {σ : Type u_1} {τ : Type u_2} [Fintype.{u_1} σ]
+  [Fintype.{u_2} τ] (G : (σ → Real) → τ → Real) (S : Set.{u_1} (σ → Real)) : Prop
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.polynomial.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype.{u_1} σ] [Fintype.{u_2} τ] (P : τ → MvPolynomial.{u_1, 0} σ Real) {S : Set.{u_1} (σ → Real)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2}
+    (fun x j => (MvPolynomial.eval.{0, u_1} x) (P j)) S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.mono.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype.{u_1} σ] [Fintype.{u_2} τ] {G : (σ → Real) → τ → Real} {S T : Set.{u_1} (σ → Real)}
+  (hG : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} G S)
+  (hT : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} T) (hTS : Subset.{u_1} T S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} G T
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.comp.{u_1, u_2, u_3} {σ : Type u_1} {τ : Type u_2}
+  {υ : Type u_3} [Fintype.{u_1} σ] [Fintype.{u_2} τ] [Fintype.{u_3} υ] {G : (σ → Real) → τ → Real}
+  {H : (τ → Real) → υ → Real} {S : Set.{u_1} (σ → Real)} {T : Set.{u_2} (τ → Real)}
+  (hG : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} G S)
+  (hH : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_2, u_3} H T)
+  (hGT : Set.MapsTo.{u_1, u_2} G S T) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_3} (Function.comp.{u_1 + 1, u_2 + 1, u_3 + 1} H G)
+    S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.comp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.coordinatewise.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype.{u_1} σ] [Fintype.{u_2} τ] {G : (σ → Real) → τ → Real} {S : Set.{u_1} (σ → Real)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} S)
+  (hG :
+    ∀ (j : τ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+        (setOf.{u_1} fun v =>
+          And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i))
+            (Eq.{1} (v none.{u_1}) (G (fun i => v (some.{u_1} i)) j)))) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} G S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.coordinatewise' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (p : Real → σ → Real) (J : Set.{0} Real) : Prop
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_interval.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (a b : Real) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+    (setOf.{u_1} fun v => Membership.mem.{0, 0} (Set.Icc.{0} a b) (v none.{u_1}))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_interval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (a b : σ → Real) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1}
+    (fun t i => HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} (a i) t) (b i)) (Set.Icc.{0} 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.const.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (x : σ → Real) : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} (fun x_1 => x) (Set.Icc.{0} 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.segment.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (x y : σ → Real) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1}
+    (fun t =>
+      HAdd.hAdd.{u_1, u_1, u_1} (HSMul.hSMul.{0, u_1, u_1} (HSub.hSub.{0, 0, 0} 1 t) x) (HSMul.hSMul.{0, u_1, u_1} t y))
+    (Set.Icc.{0} 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.segment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.map.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype.{u_1} σ] [Fintype.{u_2} τ] {p : Real → σ → Real} {J : Set.{0} Real}
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} p J) {G : (σ → Real) → τ → Real}
+  {S : Set.{u_1} (σ → Real)} (hG : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} G S)
+  (hpS : Set.MapsTo.{0, u_1} p J S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_2} (Function.comp.{1, u_1 + 1, u_2 + 1} G p) J
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine_precomp.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {p : Real → σ → Real} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} p (Set.Icc.{0} 0 1))
+  (a b : Real)
+  (hm :
+    Set.MapsTo.{0, 0} (fun t => HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} a t) b) (Set.Icc.{0} 0 1) (Set.Icc.{0} 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1}
+    (fun t => p (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} a t) b)) (Set.Icc.{0} 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine_precomp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.symm.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {p : Real → σ → Real} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} p (Set.Icc.{0} 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} (fun t => p (HSub.hSub.{0, 0, 0} 1 t))
+    (Set.Icc.{0} 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.symm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_polynomial.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  (p : MvPolynomial.{u_1, 0} σ Real) {S : Set.{u_1} (σ → Real)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+    (setOf.{u_1} fun v =>
+      And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i))
+        (Eq.{1} (v none.{u_1}) ((MvPolynomial.eval.{0, u_1} fun i => v (some.{u_1} i)) p)))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_const.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {S : Set.{u_1} (σ → Real)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} S) (c : Real) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+    (setOf.{u_1} fun v => And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i)) (Eq.{1} (v none.{u_1}) c))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.graph_lift.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {S : Set.{u_1} (σ → Real)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} S)
+  {f : (σ → Real) → Real}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+      (setOf.{u_1} fun v =>
+        And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i))
+          (Eq.{1} (v none.{u_1}) (f fun i => v (some.{u_1} i))))) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_1} (fun x j => Option.elim.{u_1, 1} j (f x) x) S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.graph_lift' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_affine.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {S : Set.{u_1} (σ → Real)} {f g : (σ → Real) → Real}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+      (setOf.{u_1} fun v =>
+        And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i))
+          (Eq.{1} (v none.{u_1}) (f fun i => v (some.{u_1} i)))))
+  (hg :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+      (setOf.{u_1} fun v =>
+        And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i))
+          (Eq.{1} (v none.{u_1}) (g fun i => v (some.{u_1} i)))))
+  (a b c : Real) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1}
+    (setOf.{u_1} fun v =>
+      And (Membership.mem.{u_1, u_1} S fun i => v (some.{u_1} i))
+        (Eq.{1} (v none.{u_1})
+          (HAdd.hAdd.{0, 0, 0}
+            (HAdd.hAdd.{0, 0, 0} (HMul.hMul.{0, 0, 0} a (f fun i => v (some.{u_1} i)))
+              (HMul.hMul.{0, 0, 0} b (g fun i => v (some.{u_1} i))))
+            c)))
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_affine' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.joinedCurve.{u_1} {σ : Type u_1} [Fintype.{u_1} σ]
+  {p q : Real → σ → Real} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} p (Set.Icc.{0} 0 1))
+  (hq : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} q (Set.Icc.{0} 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1}
+    (BfgsVerification.RealAlgebraicGeometry.joinedCurve.{u_1} p q) (Set.Icc.{0} 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.joinedCurve' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

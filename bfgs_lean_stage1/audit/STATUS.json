@@ -1,6 +1,6 @@
 {
-  "timestamp_utc": "2026-09-11T12:18:41.347914+00:00",
-  "status": "MODULE_M_AND_REPORT_TAME_GEOMETRY_TARGETS_VERIFIED",
+  "timestamp_utc": "2026-09-11T13:02:26.021668+00:00",
+  "status": "MODULE_M_AND_REPORT_SEMIALGEBRAIC_PATH_TARGETS_VERIFIED",
   "lean_typechecking_performed": true,
   "end_to_end_principal_minor_hierarchy_verified": true,
   "end_to_end_bfgs_reciprocal_growth_verified": true,
@@ -235,6 +235,22 @@
   "semialgebraicPlanarLocalBasin_verified": true,
   "finiteSmoothComponents_verified": true,
   "semialgebraicSmoothComponents_verified": true,
+  "RealAlgebraicGeometry_semialgebraicPathGraphOperations_verified": true,
+  "RealAlgebraicGeometry_semialgebraicScalarGraphOperations_verified": true,
+  "semialgebraicPathComposition_verified": true,
+  "semialgebraicPathMapping_verified": true,
+  "semialgebraicOrderedPaths_verified": true,
+  "RealAlgebraicGeometry_generalSemialgebraicPathCover_verified": true,
+  "semialgebraicFunctionPieces_verified": true,
+  "semialgebraicScalarSmooth_verified": true,
+  "semialgebraicIntervalSmooth_verified": true,
+  "objectiveSemialgebraicComposition_verified": true,
+  "semialgebraicCurveSmooth_verified": true,
+  "criticalSmoothPathValues_verified": true,
+  "semialgebraicActualPathComponents_verified": true,
+  "semialgebraicPathRegularityEquivalence_verified": true,
+  "continuousSemialgebraicComponents_verified": true,
+  "affineCriticalSemialgebraicPathComponents_verified": true,
   "objective_level_model_formalized": true,
   "entire_report_verified": false,
   "verified_declarations": [
@@ -36389,6 +36405,26 @@
       "source": "BfgsVerification/AffineBooleanFormula.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.mem",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y \u2192 x \u2208 S \u2227 y \u2208 S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.toSemialgebraicPiecewiseSmoothPathIn",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction.const",
       "signature": "\u2200 {\u03c3 : Type u_1} {\u03b1 : Type u_2} [inst : Finite \u03c3] (a : \u03b1),\n  BfgsVerification.RealAlgebraicGeometry.FiniteSemialgebraicFunction fun x => a",
       "axioms": [
@@ -36477,6 +36513,46 @@
         "propext"
       ],
       "source": "BfgsVerification/FiniteSemialgebraicFunctions.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.empty",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3], BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover \u2205",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathFiniteCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.iUnion",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {\u03b9 : Type u_2} [inst_1 : Fintype \u03b9] {S : \u03b9 \u2192 Set (\u03c3 \u2192 \u211d)},\n  (\u2200 (i : \u03b9), BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover (S i)) \u2192\n    BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover (\u22c3 i, S i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathFiniteCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.of_connected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n      BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathFiniteCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.reindex",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S \u2192\n    \u2200 (e : \u03c3 \u2243 \u03c4), BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {y | (fun i => y (e i)) \u2208 S}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathReindexing.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover.empty",
@@ -36577,6 +36653,126 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicSyntax.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (a b : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t i => a i * t + b i) (Set.Icc 0 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine_precomp",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {p : \u211d \u2192 \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1) \u2192\n    \u2200 (a b : \u211d),\n      Set.MapsTo (fun t => a * t + b) (Set.Icc 0 1) (Set.Icc 0 1) \u2192\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t => p (a * t + b)) (Set.Icc 0 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.const",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (x : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun x_1 => x) (Set.Icc 0 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.joinedCurve",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {p q : \u211d \u2192 \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1) \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn q (Set.Icc 0 1) \u2192\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn\n        (BfgsVerification.RealAlgebraicGeometry.joinedCurve p q) (Set.Icc 0 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveJoining.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.map",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {p : \u211d \u2192 \u03c3 \u2192 \u211d} {J : Set \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J \u2192\n    \u2200 {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d} {S : Set (\u03c3 \u2192 \u211d)},\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S \u2192\n        Set.MapsTo p J S \u2192 BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (G \u2218 p) J",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.segment",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (x y : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t => (1 - t) \u2022 x + t \u2022 y) (Set.Icc 0 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.symm",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {p : \u211d \u2192 \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1) \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t => p (1 - t)) (Set.Icc 0 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.comp",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} {\u03c5 : Type u_3} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] [inst_2 : Fintype \u03c5]\n  {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d} {H : (\u03c4 \u2192 \u211d) \u2192 \u03c5 \u2192 \u211d} {S : Set (\u03c3 \u2192 \u211d)} {T : Set (\u03c4 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn H T \u2192\n      Set.MapsTo G S T \u2192 BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn (H \u2218 G) S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicMapGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.coordinatewise",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d} {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    (\u2200 (j : \u03c4),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n          {v | (fun i => v (some i)) \u2208 S \u2227 v none = G (fun i => v (some i)) j}) \u2192\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicMapGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.graph_lift",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    \u2200 {f : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n          {v | (fun i => v (some i)) \u2208 S \u2227 v none = f fun i => v (some i)} \u2192\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn (fun x j => j.elim (f x) x) S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicScalarGraphArithmetic.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.mono",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d} {S T : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T \u2192\n      T \u2286 S \u2192 BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G T",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicMapGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.polynomial",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] (P : \u03c4 \u2192 MvPolynomial \u03c3 \u211d) {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn (fun x j => (MvPolynomial.eval x) (P j)) S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicMapGraphs.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected.convex",
@@ -36809,6 +37005,16 @@
       "source": "BfgsVerification/UnivariateCellTargets.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_semialgebraic_path_cover_of_sign_cover",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula \u03c3)\n  (C : Finset (Set (\u03c3 \u2192 \u211d))),\n  (\u2200 T \u2208 C,\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T \u2227\n        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected T) \u2192\n    \u22c3 T \u2208 C, T = Set.univ \u2192\n      (\u2200 T \u2208 C,\n          \u2200 x \u2208 T,\n            \u2200 y \u2208 T,\n              \u2200 p \u2208 f.atomPolynomials,\n                SignType.sign ((MvPolynomial.eval x) p) = SignType.sign ((MvPolynomial.eval y) p)) \u2192\n        BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {x | f.Holds x}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathFiniteCovers.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_smooth_cover_of_sign_cover",
       "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula \u03c3)\n  (C : Finset (Set (\u03c3 \u2192 \u211d))),\n  (\u2200 T \u2208 C,\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T \u2227\n        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected T) \u2192\n    \u22c3 T \u2208 C, T = Set.univ \u2192\n      (\u2200 T \u2208 C,\n          \u2200 x \u2208 T,\n            \u2200 y \u2208 T,\n              \u2200 p \u2208 f.atomPolynomials,\n                SignType.sign ((MvPolynomial.eval x) p) = SignType.sign ((MvPolynomial.eval y) p)) \u2192\n        BfgsVerification.RealAlgebraicGeometry.HasFiniteSmoothSemialgebraicCover {x | f.Holds x}",
       "axioms": [
@@ -36877,6 +37083,226 @@
         "propext"
       ],
       "source": "BfgsVerification/BooleanPolynomialProjection.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.convex",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  Convex \u211d S \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.cylinder_of_section",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {T : Set (Option \u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      \u2200 {f : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n        ContDiffOn \u211d (\u2191\u22a4) f S \u2192\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              {v | (fun i => v (some i)) \u2208 S \u2227 v none = f fun i => v (some i)} \u2192\n            (\u2200 x \u2208 S, (fun j => j.elim (f x) x) \u2208 T) \u2192\n              (\u2200 z \u2208 T, (fun i => z (some i)) \u2208 S) \u2192\n                (\u2200 x \u2208 S, Convex \u211d {t | (fun j => j.elim t x) \u2208 T}) \u2192\n                  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected T",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.full_cylinder",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected {v | (fun i => v (some i)) \u2208 S}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.graph",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      \u2200 {f : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n        ContDiffOn \u211d (\u2191\u22a4) f S \u2192\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              {v | (fun i => v (some i)) \u2208 S \u2227 v none = f fun i => v (some i)} \u2192\n            BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n              {v | (fun i => v (some i)) \u2208 S \u2227 v none = f fun i => v (some i)}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.image",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    \u2200 {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d},\n      ContDiffOn \u211d (\u2191\u22a4) G S \u2192\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S \u2192\n          BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (G '' S)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.lower_band",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      \u2200 {b : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n        ContDiffOn \u211d (\u2191\u22a4) b S \u2192\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              {v | (fun i => v (some i)) \u2208 S \u2227 v none = b fun i => v (some i)} \u2192\n            BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n              {v | (fun i => v (some i)) \u2208 S \u2227 v none < b fun i => v (some i)}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.open_band",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      \u2200 {a b : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n        ContDiffOn \u211d (\u2191\u22a4) a S \u2192\n          ContDiffOn \u211d (\u2191\u22a4) b S \u2192\n            BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n                {v | (fun i => v (some i)) \u2208 S \u2227 v none = a fun i => v (some i)} \u2192\n              BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n                  {v | (fun i => v (some i)) \u2208 S \u2227 v none = b fun i => v (some i)} \u2192\n                (\u2200 x \u2208 S, a x < b x) \u2192\n                  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n                    {v | (fun i => v (some i)) \u2208 S \u2227 (a fun i => v (some i)) < v none \u2227 v none < b fun i => v (some i)}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.toContinuousSemialgebraicPathConnected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.toPiecewiseSmoothConnected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.upper_band",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      \u2200 {a : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n        ContDiffOn \u211d (\u2191\u22a4) a S \u2192\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              {v | (fun i => v (some i)) \u2208 S \u2227 v none = a fun i => v (some i)} \u2192\n            BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n              {v | (fun i => v (some i)) \u2208 S \u2227 (a fun i => v (some i)) < v none}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.in_component",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn\n      (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x) x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.prefix",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d}\n  (p : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y) {t : \u211d},\n  t \u2208 Set.Icc 0 1 \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x (p.path.curve t)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.forget",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.map",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {S : Set (\u03c3 \u2192 \u211d)} {T : Set (\u03c4 \u2192 \u211d)}\n  {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    \u2200 {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d},\n      ContDiffOn \u211d (\u2191\u22a4) G S \u2192\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S \u2192\n          Set.MapsTo G S T \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T (G x) (G y)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mapOn",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {S U : Set (\u03c3 \u2192 \u211d)} {T : Set (\u03c4 \u2192 \u211d)}\n  {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    \u2200 {G : (\u03c3 \u2192 \u211d) \u2192 \u03c4 \u2192 \u211d},\n      ContDiffOn \u211d (\u2191\u22a4) G S \u2192\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G U \u2192\n          S \u2286 U \u2192\n            Set.MapsTo G S T \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T (G x) (G y)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mem",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192 x \u2208 S \u2227 y \u2208 S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mono",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S T : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    S \u2286 T \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.refl",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x : \u03c3 \u2192 \u211d},\n  x \u2208 S \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.segment",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  Convex \u211d S \u2192\n    \u2200 {x y : \u03c3 \u2192 \u211d}, x \u2208 S \u2192 y \u2208 S \u2192 BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.symm",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S y x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.toContinuousSemialgebraicPathIn",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicPaths.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.trans",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y z : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S y z \u2192\n      BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x z",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConcatenation.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands",
@@ -37049,6 +37475,16 @@
       "source": "BfgsVerification/SemialgebraicAffineBooleanProjection.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent\n              {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} ''\n            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z}).Finite \u2227\n        \u2200 (x : Fin n \u2192 \u211d),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent\n                {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) \u2227\n            BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected\n                (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent\n                  {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) \u2227\n              \u2200\n                p \u2208\n                  BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent\n                    {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,\n                \u2200\n                  q \u2208\n                    BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent\n                      {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,\n                  F p = F q",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/AffineCriticalSemialgebraicPathComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.affine_dnf_projection_semialgebraic",
       "signature": "\u2200 {\u03c3 : Type u_1} [inst : Finite \u03c3] (D : BfgsVerification.RealAlgebraicGeometry.AffineDNF \u03c3),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {x | \u2203 t, D.Holds x t}",
       "axioms": [
@@ -37189,6 +37625,36 @@
       "source": "BfgsVerification/SemialgebraicComponents.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent_connected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)) (x : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n    (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent_eq",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)) (x : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x =\n    BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicPathIn_equivalence",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)),\n  Equivalence fun x y => BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S \u2191x \u2191y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.continuous_eventually_sign_eq",
       "signature": "\u2200 {f : \u211d \u2192 \u211d} {a : \u211d}, ContinuousAt f a \u2192 f a \u2260 0 \u2192 \u2200\u1da0 (x : \u211d) in nhds a, SignType.sign (f x) = SignType.sign (f a)",
       "axioms": [
@@ -37197,6 +37663,46 @@
         "propext"
       ],
       "source": "BfgsVerification/PolynomialRootSigns.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_components",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S '' S).Finite \u2227\n      \u2200 (x : \u03c3 \u2192 \u211d),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n            (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x) \u2227\n          BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected\n              (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x) \u2227\n            BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n              (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_interval_piecewise_smooth",
+      "signature": "\u2200 {f : \u211d \u2192 \u211d} {a b : \u211d},\n  ContinuousOn f (Set.Icc a b) \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) \u2208 Set.Icc a b \u2227 v none = f (v (some 0))} \u2192\n      \u2203 E, ContinuousOn f (Set.Icc a b) \u2227 \u2200 t \u2208 Set.Ioo a b, t \u2209 E \u2192 ContDiffAt \u211d (\u2191\u22a4) f t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicScalarSmooth.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_path_iff_piecewise_smooth",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)) (x y : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y \u2194\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      \u2200 {p : \u211d \u2192 BfgsVerification.Vec n},\n        ContinuousOn p (Set.Icc 0 1) \u2192\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1) \u2192\n            BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n                {v | v (some 0) \u2208 Set.Icc 0 1 \u2227 v none = (F \u2218 p) (v (some 0))} \u2227\n              ContinuousOn (F \u2218 p) (Set.Icc 0 1) \u2227 \u2203 E, \u2200 t \u2208 Set.Ioo 0 1, t \u2209 E \u2192 ContDiffAt \u211d (\u2191\u22a4) (F \u2218 p) t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveSemialgebraicComposition.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.coordinate_projection_semialgebraic",
@@ -38119,6 +38625,46 @@
       "source": "BfgsVerification/FiniteCriticalGraphValues.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_components_of_cover",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {m : \u2115} {S : Set (\u03c3 \u2192 \u211d)} (C : Fin m \u2192 Set (\u03c3 \u2192 \u211d)),\n  S = \u22c3 i, C i \u2192\n    (\u2200 (i : Fin m),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i) \u2227\n          BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) \u2192\n      (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S '' S).Finite \u2227\n        \u2200 (x : \u03c3 \u2192 \u211d),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x) \u2227\n            BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n              (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicActualPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_components_of_finite_path_cover",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {m : \u2115} {S : Set (\u03c3 \u2192 \u211d)} (C : Fin m \u2192 Set (\u03c3 \u2192 \u211d)),\n  S = \u22c3 i, C i \u2192\n    (\u2200 (i : Fin m), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) \u2192\n      (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S '' S).Finite",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_cover_dimension_zero",
+      "signature": "\u2200 {S : Set (Fin 0 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathFiniteCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_cover_select",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (C : Finset (Set (\u03c3 \u2192 \u211d))),\n  (\u2200 T \u2208 C,\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T \u2227\n        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected T) \u2192\n    \u2200 {S : Set (\u03c3 \u2192 \u211d)},\n      S \u2286 \u22c3 T \u2208 C, T \u2192\n        (\u2200 T \u2208 C, \u2200 x \u2208 T, \u2200 y \u2208 T, x \u2208 S \u2194 y \u2208 S) \u2192\n          BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathFiniteCovers.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_smooth_components",
       "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {m : \u2115} {S : Set (\u03c3 \u2192 \u211d)} (C : Fin m \u2192 Set (\u03c3 \u2192 \u211d)),\n  S = \u22c3 i, C i \u2192\n    (\u2200 (i : Fin m),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i) \u2227\n          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected (C i)) \u2192\n      (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent S '' S).Finite \u2227\n        \u2200 (x : \u03c3 \u2192 \u211d),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent S x) \u2227\n            BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected\n              (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent S x)",
       "axioms": [
@@ -38269,6 +38815,66 @@
       "source": "BfgsVerification/SemialgebraicSmoothCover.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_from_signed_cells",
+      "signature": "\u2200 {n m : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9]\n  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n  (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n  (\u2200 p \u2208 f.atomPolynomials, \u2203 j, P j = p) \u2192\n    \u2200 (C : \u03b9 \u2192 Set (Option (Fin n) \u2192 \u211d)) (S : Set (BfgsVerification.Vec n)),\n      (\u2200 (i : \u03b9), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i)) \u2192\n        (\u2200 (i : \u03b9), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) \u2192\n          \u22c3 i, C i = {v | (fun j => v (some j)) \u2208 S} \u2192\n            (\u2200 (i : \u03b9),\n                \u2200 x \u2208 C i,\n                  \u2200 y \u2208 C i,\n                    \u2200 (j : Fin m),\n                      SignType.sign ((MvPolynomial.eval x) (P j)) = SignType.sign ((MvPolynomial.eval y) (P j))) \u2192\n              BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n                {v | (fun i => v (some i)) \u2208 S \u2227 f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCellCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_of_lower_dimension",
+      "signature": "\u2200 {n : \u2115},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n \u2192\n    \u2200 (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n))),\n      BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {v | f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCover.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_boundary_refinement",
+      "signature": "\u2200 {n m : \u2115},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n \u2192\n    \u2200 (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n      (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n      (\u2200 p \u2208 f.atomPolynomials, \u2203 j, P j = p) \u2192\n        \u2200 (Z : Finset (Fin m)) (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n)),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n            S \u2286 BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z \u2192\n              S \u2286\n                  BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum\n                    ((MvPolynomial.optionEquivLeft \u211d (Fin n))\n                      (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))\n                    a \u2192\n                \u2200\n                  (signs :\n                    Fin m \u2192\n                      Fin\n                          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial\n                                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z)\n                                  a).roots.toFinset.card \u2192\n                        SignType),\n                  (\u2200 x \u2208 S,\n                      \u2200 (j : Fin m)\n                        (i :\n                          Fin\n                            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial\n                                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z)\n                                    a).roots.toFinset.card),\n                        SignType.sign\n                            (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)\n                              (x,\n                                BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot\n                                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (\u2191i) x)) =\n                          signs j i) \u2192\n                    BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n                      {v | (fun i => v (some i)) \u2208 S \u2227 f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathSignatureCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_root_component",
+      "signature": "\u2200 {n m : \u2115} (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n  (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n  (\u2200 p \u2208 f.atomPolynomials, \u2203 j, P j = p) \u2192\n    \u2200 (Z : Finset (Fin m)) (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n)),\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n          S \u2286 BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z \u2192\n            S \u2286\n                BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum\n                  ((MvPolynomial.optionEquivLeft \u211d (Fin n))\n                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))\n                  a \u2192\n              \u2200\n                (signs :\n                  Fin m \u2192\n                    Fin\n                        (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial\n                                (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z)\n                                a).roots.toFinset.card \u2192\n                      SignType),\n                (\u2200 x \u2208 S,\n                    \u2200 (j : Fin m)\n                      (i :\n                        Fin\n                          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial\n                                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z)\n                                  a).roots.toFinset.card),\n                      SignType.sign\n                          (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)\n                            (x,\n                              BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot\n                                (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (\u2191i) x)) =\n                        signs j i) \u2192\n                  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n                    {v | (fun i => v (some i)) \u2208 S \u2227 f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathSignatureCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_root_signature",
+      "signature": "\u2200 {n m : \u2115},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n \u2192\n    \u2200 (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n      (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n      (\u2200 p \u2208 f.atomPolynomials, \u2203 j, P j = p) \u2192\n        \u2200 (Z : Finset (Fin m)) (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n)),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n            S \u2286 BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z \u2192\n              S \u2286\n                  BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum\n                    ((MvPolynomial.optionEquivLeft \u211d (Fin n))\n                      (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))\n                    a \u2192\n                BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n                  {v | (fun i => v (some i)) \u2208 S \u2227 f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathSignatureCovers.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_zero_pattern",
+      "signature": "\u2200 {n m : \u2115},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n \u2192\n    \u2200 (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n      (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n      (\u2200 p \u2208 f.atomPolynomials, \u2203 j, P j = p) \u2192\n        \u2200 (Z : Finset (Fin m)),\n          BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n            {v | (fun i => v (some i)) \u2208 BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z \u2227 f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCover.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.gap_of_equal_cutProfile",
       "signature": "\u2200 {B : Finset \u211d} {x y : \u211d},\n  x \u2264 y \u2192\n    y \u2209 B \u2192\n      BfgsVerification.RealAlgebraicGeometry.cutProfile B x = BfgsVerification.RealAlgebraicGeometry.cutProfile B y \u2192\n        \u2200 z \u2208 Set.Icc x y, z \u2209 B",
       "axioms": [
@@ -38277,6 +38883,16 @@
         "propext"
       ],
       "source": "BfgsVerification/UnivariateSignCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover",
+      "signature": "BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCoverTargets.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover",
@@ -38517,6 +39133,16 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicSyntax.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.isolated_formula_fiber_has_nonzero_atom_root",
+      "signature": "\u2200 {n m : \u2115} (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n  (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n  (\u2200 p \u2208 f.atomPolynomials, \u2203 i, P i = p) \u2192\n    \u2200 (x : BfgsVerification.Vec n) (t : \u211d),\n      f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x t) \u2192\n        (\u2200 (u : \u211d), f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x u) \u2192 u = t) \u2192\n          \u2203 i,\n            BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x \u2260 0 \u2227\n              (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x).IsRoot t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarGraphRoots.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.joinedCurve_continuousOn",
@@ -39109,6 +39735,26 @@
       "source": "BfgsVerification/GeneralCoordinateProjection.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.option_coordinate_eta",
+      "signature": "\u2200 {\u03c3 : Type u_1} (v : Option \u03c3 \u2192 \u211d), (fun j => j.elim (v none) fun i => v (some i)) = v",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.option_graph_lift_contDiffOn",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {f : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n  ContDiffOn \u211d (\u2191\u22a4) f S \u2192 ContDiffOn \u211d (\u2191\u22a4) (fun x j => j.elim (f x) x) S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_count",
       "signature": "\u2200 (r : \u2115), Fintype.card (Fin r \u2295 Fin (r + 1)) = 2 * r + 1",
       "axioms": [
@@ -39157,6 +39803,16 @@
         "propext"
       ],
       "source": "BfgsVerification/OrderedCellsSemialgebraic.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraicPiecewiseSmoothConnected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {r : \u2115} (S : Set (\u03c3 \u2192 \u211d)) (f : Fin r \u2192 (\u03c3 \u2192 \u211d) \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n      (\u2200 (i : Fin r), ContDiffOn \u211d (\u2191\u22a4) (f i) S) \u2192\n        (\u2200 x \u2208 S, StrictMono fun i => f i x) \u2192\n          (\u2200 (i : Fin r),\n              BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n                {v | (fun k => v (some k)) \u2208 S \u2227 v none = f i fun k => v (some k)}) \u2192\n            \u2200 (i : Fin r \u2295 Fin (r + 1)),\n              BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n                {v |\n                  (fun k => v (some k), v none) \u2208 BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicOrderedCells.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot_above_semialgebraic",
@@ -39307,6 +39963,16 @@
         "propext"
       ],
       "source": "BfgsVerification/OrderedCellsSemialgebraic.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraicPiecewiseSmoothConnected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {r : \u2115} (S : Set (\u03c3 \u2192 \u211d)) (f : Fin r \u2192 (\u03c3 \u2192 \u211d) \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n      (\u2200 (i : Fin r), ContDiffOn \u211d (\u2191\u22a4) (f i) S) \u2192\n        (\u2200 x \u2208 S, StrictMono fun i => f i x) \u2192\n          (\u2200 (i : Fin r),\n              BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n                {v | (fun k => v (some k)) \u2208 S \u2227 v none = f i fun k => v (some k)}) \u2192\n            \u2200 (j : Fin (r + 1)),\n              BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n                {v | (fun k => v (some k), v none) \u2208 BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicOrderedCells.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.orderedGapCell_top",
@@ -40399,6 +41065,16 @@
       "source": "BfgsVerification/FiniteCoverOnSignature.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.restricted_formula_semialgebraic_path_cover_iUnion",
+      "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9]\n  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n  (S : \u03b9 \u2192 Set (BfgsVerification.Vec n)),\n  (\u2200 (i : \u03b9),\n      BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n        {v | (fun j => v (some j)) \u2208 S i \u2227 f.Holds v}) \u2192\n    BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover\n      {v | (fun j => v (some j)) \u2208 \u22c3 i, S i \u2227 f.Holds v}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathSignatureCovers.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.restricted_graph_polynomial_sign_semialgebraic",
       "signature": "\u2200 {n : \u2115} (p : MvPolynomial (Option (Fin n)) \u211d) {S : Set (BfgsVerification.Vec n)} {f : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n      {v | (fun i => v (some i)) \u2208 S \u2227 v none = f fun i => v (some i)} \u2192\n    \u2200 (s : SignType),\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n        {x | x \u2208 S \u2227 SignType.sign (BfgsVerification.RealAlgebraicGeometry.parameterEval p (x, f x)) = s}",
       "axioms": [
@@ -40789,6 +41465,106 @@
       "source": "BfgsVerification/RootMultiplicityRolle.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicPathCoverDimension_succ",
+      "signature": "\u2200 {n : \u2115},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n \u2192\n    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension (n + 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCover.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations",
+      "signature": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathGraphTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicPiecewiseSmoothConnected_reindex",
+      "signature": "\u2200 {\u03c3 : Type u_1} {\u03c4 : Type u_2} [inst : Fintype \u03c3] [inst_1 : Fintype \u03c4] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n      \u2200 (e : \u03c3 \u2243 \u03c4),\n        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected {y | (fun i => y (e i)) \u2208 S}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathReindexing.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicPiecewiseSmoothPathIn_equivalence",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)),\n  Equivalence fun x y => BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S \u2191x \u2191y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations",
+      "signature": "BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathGraphTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_connected",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)) (x : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n    (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_eq_of_path",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {x y : \u03c3 \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y \u2192\n    BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x =\n      BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S y",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_eq_union_cover",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {m : \u2115} {S : Set (\u03c3 \u2192 \u211d)} (C : Fin m \u2192 Set (\u03c3 \u2192 \u211d)),\n  S = \u22c3 i, C i \u2192\n    (\u2200 (i : Fin m), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) \u2192\n      \u2200 (x : \u03c3 \u2192 \u211d),\n        BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x =\n          \u22c3 i \u2208 {i | (C i \u2229 BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x).Nonempty}, C i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_semialgebraic_of_finite_path_cover",
+      "signature": "\u2200 {\u03c4 : Type u_2} [inst : Fintype \u03c4] {m : \u2115} {S : Set (\u03c4 \u2192 \u211d)} (C : Fin m \u2192 Set (\u03c4 \u2192 \u211d)),\n  S = \u22c3 i, C i \u2192\n    (\u2200 (i : Fin m), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) \u2192\n      (\u2200 (i : Fin m), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i)) \u2192\n        \u2200 (x : \u03c4 \u2192 \u211d),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n            (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_subset",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (S : Set (\u03c3 \u2192 \u211d)) (x : \u03c3 \u2192 \u211d),\n  BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x \u2286 S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_above_of_graph",
       "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {f : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v none = f fun i => v (some i)} \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | (f fun i => v (some i)) < v none}",
       "axioms": [
@@ -40797,6 +41573,16 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicRootBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_actual_path_components",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S '' S).Finite \u2227\n      \u2200 (x : \u03c3 \u2192 \u211d),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n            (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x) \u2227\n          BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected\n            (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicActualPathComponents.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant",
@@ -40819,6 +41605,36 @@
       "source": "BfgsVerification/SemialgebraicCriticalGeometry.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      \u2200 {x y : BfgsVerification.Vec n}\n        (p :\n          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath\n            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x y),\n        \u2200 t \u2208 Set.Icc 0 1, F (p.curve t) = F x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/CriticalSmoothPathValues.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_hasDerivAt_zero",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      \u2200 {x y : BfgsVerification.Vec n}\n        (p :\n          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath\n            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x y)\n        {t : \u211d}, t \u2208 Set.Ioo 0 1 \u2192 HasDerivAt (fun u => F (p.curve u)) 0 t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/CriticalSmoothPathValues.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent\n              {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} ''\n            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z}).Finite \u2227\n        \u2200 (x : Fin n \u2192 \u211d),\n          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n              (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent\n                {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) \u2227\n            BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected\n                (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent\n                  {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) \u2227\n              \u2200\n                p \u2208\n                  BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent\n                    {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,\n                \u2200\n                  q \u2208\n                    BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent\n                      {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,\n                  F p = F q",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/CriticalSmoothPathValues.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values",
       "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      (F '' {x | BfgsVerification.AffineCriticalObjective.IsAffineCritical F x}).Finite",
       "axioms": [
@@ -40837,6 +41653,56 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicRootBands.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_coordinate_scalar_graph",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {p : \u211d \u2192 \u03c3 \u2192 \u211d} {J : Set \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J \u2192\n    \u2200 (i : \u03c3), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) \u2208 J \u2227 v none = p (v (some 0)) i}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveSmooth.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_interval",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (a b : \u211d),\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v none \u2208 Set.Icc a b}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveGraphs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_smooth_except_finite",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {p : \u211d \u2192 \u03c3 \u2192 \u211d} {J : Set \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J \u2192 \u2203 E, \u2200 t \u2208 J, t \u2209 E \u2192 ContDiffAt \u211d (\u2191\u22a4) p t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicCurveSmooth.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCover.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover_fin",
+      "signature": "\u2200 (n : \u2115), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicPathCover.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover",
@@ -40859,6 +41725,26 @@
       "source": "BfgsVerification/SemialgebraicSmoothCover.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_finite_smooth_pieces",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {D : Set (BfgsVerification.Vec n)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n      {v | (fun i => v (some i)) \u2208 D \u2227 v none = F fun i => v (some i)} \u2192\n    \u2203 C, (\u2200 S \u2208 C, BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2227 ContDiffOn \u211d (\u2191\u22a4) F S) \u2227 \u22c3 S \u2208 C, S = D",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicFunctionPieces.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_root_equality",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} {D : Set (BfgsVerification.Vec n)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n      {v | (fun i => v (some i)) \u2208 D \u2227 v none = F fun i => v (some i)} \u2192\n    \u2200 (p : MvPolynomial (Option (Fin n)) \u211d) (k : \u2115),\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n        {x | x \u2208 D \u2227 F x = BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k x}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicFunctionPieces.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap",
       "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n      \u2200 (star : BfgsVerification.Vec n),\n        (\u2200 (x : BfgsVerification.Vec n), F star \u2264 F x) \u2192\n          \u2203 \u03b5,\n            0 < \u03b5 \u2227\n              \u2200 (p : BfgsVerification.Vec n),\n                F p < F star + \u03b5 \u2192\n                  BfgsVerification.AffineCriticalObjective.IsAffineCritical F p \u2192\n                    0 \u2208 BfgsVerification.ConvexSubdifferential.subdifferential F p",
       "axioms": [
@@ -40867,6 +41753,16 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicCriticalGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_objective_curve_scalar_graph",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F \u2192\n    \u2200 {p : \u211d \u2192 BfgsVerification.Vec n} {J : Set \u211d},\n      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J \u2192\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) \u2208 J \u2227 v none = F (p (v (some 0)))}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveSemialgebraicComposition.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin",
@@ -40889,6 +41785,46 @@
       "source": "BfgsVerification/SemialgebraicCriticalGeometry.lean"
     },
     {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_affine",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)} {f g : (\u03c3 \u2192 \u211d) \u2192 \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n      {v | (fun i => v (some i)) \u2208 S \u2227 v none = f fun i => v (some i)} \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n        {v | (fun i => v (some i)) \u2208 S \u2227 v none = g fun i => v (some i)} \u2192\n      \u2200 (a b c : \u211d),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n          {v | (fun i => v (some i)) \u2208 S \u2227 v none = ((a * f fun i => v (some i)) + b * g fun i => v (some i)) + c}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicScalarGraphArithmetic.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_const",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    \u2200 (c : \u211d), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | (fun i => v (some i)) \u2208 S \u2227 v none = c}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicScalarGraphArithmetic.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_polynomial",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] (p : MvPolynomial \u03c3 \u211d) {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n      {v | (fun i => v (some i)) \u2208 S \u2227 v none = (MvPolynomial.eval fun i => v (some i)) p}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicScalarGraphArithmetic.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_smooth_except_finite",
+      "signature": "\u2200 {f : \u211d \u2192 \u211d} {D : Set \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) \u2208 D \u2227 v none = f (v (some 0))} \u2192\n    \u2203 E, \u2200 t \u2208 D, t \u2209 E \u2192 ContDiffAt \u211d (\u2191\u22a4) f t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicScalarSmooth.lean"
+    },
+    {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_smooth_components",
       "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {S : Set (\u03c3 \u2192 \u211d)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent S '' S).Finite \u2227\n      \u2200 (x : \u03c3 \u2192 \u211d),\n        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic\n            (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent S x) \u2227\n          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected\n            (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent S x)",
       "axioms": [
@@ -40897,6 +41833,16 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicSmoothComponents.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.semialgebraic_vertical_path",
+      "signature": "\u2200 {\u03c3 : Type u_1} [inst : Fintype \u03c3] {T : Set (Option \u03c3 \u2192 \u211d)} (x : \u03c3 \u2192 \u211d),\n  Convex \u211d {t | (fun j => j.elim t x) \u2208 T} \u2192\n    \u2200 {t u : \u211d},\n      (fun j => j.elim t x) \u2208 T \u2192\n        (fun j => j.elim u x) \u2208 T \u2192\n          BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T (fun j => j.elim t x) fun j =>\n            j.elim u x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothConnectivity.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.signPatternCoeff_empty",
@@ -41047,6 +41993,16 @@
         "propext"
       ],
       "source": "BfgsVerification/SignPatternIndicators.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.singleton_formula_fiber_is_surviving_root",
+      "signature": "\u2200 {n m : \u2115} (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))\n  (P : Fin m \u2192 MvPolynomial (Option (Fin n)) \u211d),\n  (\u2200 p \u2208 f.atomPolynomials, \u2203 i, P i = p) \u2192\n    \u2200 (Z : Finset (Fin m)),\n      \u2200 x \u2208 BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z,\n        \u2200 (t : \u211d),\n          f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x t) \u2192\n            (\u2200 (u : \u211d), f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x u) \u2192 u = t) \u2192\n              (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial\n                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x).IsRoot\n                t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarGraphRoots.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.smoothCoverDimension_succ",
@@ -41227,6 +42183,26 @@
         "propext"
       ],
       "source": "BfgsVerification/UnivariateSemialgebraicCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_neighborhood_except_finite",
+      "signature": "\u2200 {S : Set \u211d},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (BfgsVerification.RealAlgebraicGeometry.univariateLift S) \u2192\n    \u2203 B, \u2200 t \u2208 S, t \u2209 B \u2192 S \u2208 nhds t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarSemialgebraicBoundary.lean"
+    },
+    {
+      "theorem": "BfgsVerification.RealAlgebraicGeometry.vec_one_semialgebraic_neighborhood_except_finite",
+      "signature": "\u2200 {S : Set (BfgsVerification.Vec 1)},\n  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S \u2192\n    \u2203 B, \u2200 (t : \u211d), (fun x => t) \u2208 S \u2192 t \u2209 B \u2192 {u | (fun x => u) \u2208 S} \u2208 nhds t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarSemialgebraicBoundary.lean"
     },
     {
       "theorem": "BfgsVerification.RealAlgebraicGeometry.verticalDerivative_eval",
@@ -47587,6 +48563,16 @@
       "source": "BfgsVerification/AffineCriticalDefinability.lean"
     },
     {
+      "theorem": "BfgsVerification.affineCriticalSemialgebraicPathComponents",
+      "signature": "BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/AffineCriticalSemialgebraicPathComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.affineRankLoss",
       "signature": "BfgsVerification.AffineRankLossTarget",
       "axioms": [
@@ -47807,6 +48793,16 @@
       "source": "BfgsVerification/GramSchur.lean"
     },
     {
+      "theorem": "BfgsVerification.continuousSemialgebraicComponents",
+      "signature": "BfgsVerification.ContinuousSemialgebraicComponentsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.continuous_dot",
       "signature": "\u2200 {n : \u2115}, Continuous fun p => BfgsVerification.dot p.1 p.2",
       "axioms": [
@@ -47945,6 +48941,16 @@
         "propext"
       ],
       "source": "BfgsVerification/CoordinateGram.lean"
+    },
+    {
+      "theorem": "BfgsVerification.criticalSmoothPathValues",
+      "signature": "BfgsVerification.CriticalSmoothPathValuesTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/CriticalSmoothPathTargets.lean"
     },
     {
       "theorem": "BfgsVerification.curvature_eq_alpha_beta_q",
@@ -49027,6 +50033,16 @@
       "source": "BfgsVerification/ObjectiveEndToEnd.lean"
     },
     {
+      "theorem": "BfgsVerification.objectiveSemialgebraicComposition",
+      "signature": "BfgsVerification.ObjectiveSemialgebraicCompositionTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveSemialgebraicCompositionTargets.lean"
+    },
+    {
       "theorem": "BfgsVerification.orderedSemialgebraicCells",
       "signature": "BfgsVerification.OrderedSemialgebraicCellsTarget",
       "axioms": [
@@ -49857,6 +50873,16 @@
       "source": "BfgsVerification/ReportCoreEndToEnd.lean"
     },
     {
+      "theorem": "BfgsVerification.semialgebraicActualPathComponents",
+      "signature": "BfgsVerification.SemialgebraicActualPathComponentsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicActualPathComponents.lean"
+    },
+    {
       "theorem": "BfgsVerification.semialgebraicAffineCritical",
       "signature": "BfgsVerification.SemialgebraicAffineCriticalTarget",
       "axioms": [
@@ -49865,6 +50891,76 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicCriticalTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicCurveSmooth",
+      "signature": "BfgsVerification.SemialgebraicCurveSmoothTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ObjectiveSemialgebraicCompositionTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicFunctionPieces",
+      "signature": "BfgsVerification.SemialgebraicFunctionPiecesTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarSmoothTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicIntervalSmooth",
+      "signature": "BfgsVerification.SemialgebraicIntervalSmoothTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarSmoothTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicOrderedPaths",
+      "signature": "BfgsVerification.SemialgebraicOrderedPathsTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPathTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicPathComposition",
+      "signature": "BfgsVerification.SemialgebraicPathCompositionTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPathTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicPathMapping",
+      "signature": "BfgsVerification.SemialgebraicPathMappingTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SemialgebraicSmoothPathTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicPathRegularityEquivalence",
+      "signature": "BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ContinuousSemialgebraicComponents.lean"
     },
     {
       "theorem": "BfgsVerification.semialgebraicPlanarBasin",
@@ -49885,6 +50981,16 @@
         "propext"
       ],
       "source": "BfgsVerification/SemialgebraicCriticalTargets.lean"
+    },
+    {
+      "theorem": "BfgsVerification.semialgebraicScalarSmooth",
+      "signature": "BfgsVerification.SemialgebraicScalarSmoothTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ScalarSmoothTargets.lean"
     },
     {
       "theorem": "BfgsVerification.semialgebraicSmoothComponents",
@@ -50261,11 +51367,11 @@
   "sources": [
     {
       "path": "BfgsVerification.lean",
-      "sha256": "7ed8d302dfba36b71b62db1ce7bbcba18a9dd1502898c8b6c153346d4ddd7e9b"
+      "sha256": "468bd6dc09caa683e9c43e6e226f78d2ae89fcb483035967bba3fa10db376209"
     },
     {
       "path": "Audit.lean",
-      "sha256": "787422b87dd70d3923e63c225657f43470ed95ad626aeb51be30d3a3f3ebc68f"
+      "sha256": "add7eee3115c2d0e6f7bc3f47e2e512b727893d8c4922b73d8cb716c4449f997"
     },
     {
       "path": "BfgsVerification/AccessibleCurvatureBridge.lean",
@@ -50346,6 +51452,10 @@
     {
       "path": "BfgsVerification/AffineCriticalPathCover.lean",
       "sha256": "b58573e21e72f16c583c46aff7c20d4b88960549715ab9b7af90235b0c2b0403"
+    },
+    {
+      "path": "BfgsVerification/AffineCriticalSemialgebraicPathComponents.lean",
+      "sha256": "034e8f3329975f590f3e4002d0ed8f5fbdb99387b17ac774f455b03b9841d8ec"
     },
     {
       "path": "BfgsVerification/AffineCriticalWitness.lean",
@@ -50688,6 +51798,14 @@
       "sha256": "a9d2ca142e35f93cd2ab3ed69278510252af1d36ba7a3e87ceee7ace48160326"
     },
     {
+      "path": "BfgsVerification/ContinuousSemialgebraicComponents.lean",
+      "sha256": "5cdb75e772119e657009732ca95d047c92dfd4e31651aed8b08885c718633219"
+    },
+    {
+      "path": "BfgsVerification/ContinuousSemialgebraicPaths.lean",
+      "sha256": "7156421545317839d48445e9254d09027bbe20cf2368437d593b746c304cfe43"
+    },
+    {
       "path": "BfgsVerification/ConvexAnalysis.lean",
       "sha256": "4e898e358efc74cd005734a92558f90f93e8adb59c7470f23ef1e061698747e2"
     },
@@ -50710,6 +51828,14 @@
     {
       "path": "BfgsVerification/CoordinateGram.lean",
       "sha256": "54bc1a2a1ef0117385229123466e9968aca44c84bdd47c615c1a731214e26056"
+    },
+    {
+      "path": "BfgsVerification/CriticalSmoothPathTargets.lean",
+      "sha256": "5e13aebdf2d85c6ba13b3a52cfa18b27e372ddc0482b93a8f1d9b95ac0225871"
+    },
+    {
+      "path": "BfgsVerification/CriticalSmoothPathValues.lean",
+      "sha256": "ad936c9c4098e72df4c7af4c51dfcdc002a063a59b2e3deae6d561c7c55b6f5d"
     },
     {
       "path": "BfgsVerification/CylinderCoordinateCovers.lean",
@@ -51820,6 +52946,14 @@
       "sha256": "f4fbedf49b2502b444aa9599c204b01dbb5bc1106279d387791e6669ac5da467"
     },
     {
+      "path": "BfgsVerification/ObjectiveSemialgebraicComposition.lean",
+      "sha256": "5f8d20eff11fb86a8e20c256d3558888a33038d3ecc6c7603408439d5caf5adf"
+    },
+    {
+      "path": "BfgsVerification/ObjectiveSemialgebraicCompositionTargets.lean",
+      "sha256": "74fe61ae96c8170bf46911d27f0b01348ed02cc2555aa1e8b87a877af41594e9"
+    },
+    {
       "path": "BfgsVerification/ObjectiveTargets.lean",
       "sha256": "ca58875869838a69c8290403e60a23c1c26dc98ab4d65cfdcdc5de57a8fcf3cb"
     },
@@ -52708,12 +53842,24 @@
       "sha256": "952173630611906c1f51576aff3c4a7ed369d0296882e31d0d66a09017a3126f"
     },
     {
+      "path": "BfgsVerification/ScalarGraphRoots.lean",
+      "sha256": "18ff6449cfabd792ac98015373f0641ebe5d34ac3720076850ab0cfa12bfb2e5"
+    },
+    {
       "path": "BfgsVerification/ScalarHierarchy.lean",
       "sha256": "478455fbce62af3c7c7bb1df827772ce0d006a505edc9054af7ebc6e201862c4"
     },
     {
       "path": "BfgsVerification/ScalarResidualFamilies.lean",
       "sha256": "0643898e2ec42fa99326b8c2229e0b46811ab6669db9c2e5ff685d5b9e3493eb"
+    },
+    {
+      "path": "BfgsVerification/ScalarSemialgebraicBoundary.lean",
+      "sha256": "6e3a28d2efe64de1fed0d3c7a7b7df60224be8df194163971c3c0276ef5f7f61"
+    },
+    {
+      "path": "BfgsVerification/ScalarSmoothTargets.lean",
+      "sha256": "6a18d2efbc2978297299aecbe9d3dc76e3b0ecbde7efa7d1ab09851d5f340a63"
     },
     {
       "path": "BfgsVerification/ScalarTransportEnergy.lean",
@@ -52744,6 +53890,10 @@
       "sha256": "3cf65b8368b6116c5665676690a378aeab86facbe8ee5a008b2e43506c99cc43"
     },
     {
+      "path": "BfgsVerification/SemialgebraicActualPathComponents.lean",
+      "sha256": "7d748b45307e8a0c1bb1067dd1d8ce21d5aa492d8ac4a22cdab4372ff404983f"
+    },
+    {
       "path": "BfgsVerification/SemialgebraicAffineBooleanProjection.lean",
       "sha256": "0e7854310886181de35cde72c21cae53f7b25c4e920322cb17fa5c85540c80fb"
     },
@@ -52764,6 +53914,22 @@
       "sha256": "2f499af1a9af732e0afc4fb4d87981be5c06cc872575f44f1ff9bf84602d055c"
     },
     {
+      "path": "BfgsVerification/SemialgebraicCurveGraphs.lean",
+      "sha256": "2e58eb1ab9343313a831497d87fd2f2d0528e1e506ddf9ae383eefc2adcbc8c0"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicCurveJoining.lean",
+      "sha256": "f38e29d07527374f9f7db55a563e8ad108825bbea27306cd3db48288ec7d6fb7"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicCurveSmooth.lean",
+      "sha256": "c150db0dfb83e1a341a9a204a40c5c97be86f8f07c8f130ed895fb726605a30d"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicFunctionPieces.lean",
+      "sha256": "7f98822cd153b98662146cfc4fe07dc195b4a0587d6bac18c6dc9b72ff996354"
+    },
+    {
       "path": "BfgsVerification/SemialgebraicGraphs.lean",
       "sha256": "d07a3ee4a60ffd8cb5a89c4a44c4dc9dd7659ef5e16c6cd9dadd6ed3a96b275f"
     },
@@ -52776,8 +53942,48 @@
       "sha256": "a915059c2473b9edf684c84983091f173441731988dbbc89b6b6c06d1da89c05"
     },
     {
+      "path": "BfgsVerification/SemialgebraicMapGraphs.lean",
+      "sha256": "8d857dce81477c581386601a938486b701f63554849cb0570882cea0de0faddf"
+    },
+    {
       "path": "BfgsVerification/SemialgebraicMixedProjection.lean",
       "sha256": "58a1dee7249dca34e86f7307a2e82be874af1597137ccbf1778efed4f832af4e"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicOrderedCells.lean",
+      "sha256": "82e14cd5676dcc96fe5fd371800cb7628f8876ac876571472b53a3e378490b3e"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathCellCovers.lean",
+      "sha256": "d8b90b602682ec25dce3670ab2825bb22eb247fcc1706311cf43c3cdbd55adac"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathComponents.lean",
+      "sha256": "7d345337bff6116d5e311a39b6eb16033244a26915686291de242ce5d1c8b882"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathCover.lean",
+      "sha256": "655515039063c25c57b067b64d173de9276892475661b37fc940f21d032b447d"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathCoverTargets.lean",
+      "sha256": "18b972b74e4334d70be4c79814b26d246325f7f15f612a0aa831885f3390502b"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathFiniteCovers.lean",
+      "sha256": "3965a71d84636f9d7668adfcbc6d3752cf738087434893d7531481ec24d5684f"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathGraphTargets.lean",
+      "sha256": "84cad01faee029ca21c2238dc3265acacbb8e71350f962c6154c45fab393e277"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathReindexing.lean",
+      "sha256": "648f4a36369afb4743774f941aeae8dc59c2da838d5b162eead36b672a220e9e"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicPathSignatureCovers.lean",
+      "sha256": "a27863e246c2efa8e290191473c42bc15b1dda0a973103d25b289fdf78ecc55b"
     },
     {
       "path": "BfgsVerification/SemialgebraicQuadraticProjection.lean",
@@ -52792,12 +53998,40 @@
       "sha256": "174e1f9e98f9cbaac9d5c38acc0350ecf7eea9a1d9d9fe689b2c3dbfbdb22e50"
     },
     {
+      "path": "BfgsVerification/SemialgebraicScalarGraphArithmetic.lean",
+      "sha256": "41f5329dbd9a81e7892f2c8437b334f55b1db1a98831645b052160dc8891f832"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicScalarSmooth.lean",
+      "sha256": "2bcf26013979332cc7ce15ca9717717b1bca462af3450c63cf534c98ba34294c"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicSmoothBands.lean",
+      "sha256": "d8d9637bcd42ddf1ca2e93c37a0f131a0546d7a12bf8a051910fb19a9389fb08"
+    },
+    {
       "path": "BfgsVerification/SemialgebraicSmoothComponents.lean",
       "sha256": "a989abf9b30290726e30b1f624269010da7b43ae2a70da8195969aed6b3d62fe"
     },
     {
+      "path": "BfgsVerification/SemialgebraicSmoothConcatenation.lean",
+      "sha256": "4882a104552ba225d70bf9db44bd596349ba5e36789dd296aea5aa8f7391255f"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicSmoothConnectivity.lean",
+      "sha256": "3d04c954c53d4d47ef8511ac4339ca0264a5cc4e1290b56e12748da23500d533"
+    },
+    {
       "path": "BfgsVerification/SemialgebraicSmoothCover.lean",
       "sha256": "dff5e756daa0dc1086aca4a3bb9ee6adf487d8fcc29e96a5eb0582da0de3f331"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicSmoothPathTargets.lean",
+      "sha256": "6f86414d73c68f049a1d9c768ad5e230c5e82b7e7508a99d7ee3be695541959c"
+    },
+    {
+      "path": "BfgsVerification/SemialgebraicSmoothPaths.lean",
+      "sha256": "5d0e07bfa55680bba04a42d52ed7571e291ede7944be0ca3e71087049da66011"
     },
     {
       "path": "BfgsVerification/SemialgebraicSupportProjection.lean",
@@ -52846,6 +54080,10 @@
     {
       "path": "BfgsVerification/SmoothPathTargets.lean",
       "sha256": "127021ef3b19a461dc50ac6e3e9c97bba5e8ee51badabe794ba72d9879f42764"
+    },
+    {
+      "path": "BfgsVerification/SmoothPathWitnesses.lean",
+      "sha256": "96d33084f81e1b2abc6eab5e04e5d64984ba33b9a21fd7a0faecbe6bf34ea80f"
     },
     {
       "path": "BfgsVerification/SmoothSubspace.lean",
@@ -53032,7 +54270,7 @@
       "sha256": "8a1c00552f1ba1000c0d1eaabd44ceb2f08e6045bea25b4026fb91b76b3a1f81"
     }
   ],
-  "explicit_theorem_declarations": 5002,
+  "explicit_theorem_declarations": 5111,
   "static_scan_passed": true,
   "static_scan_problems": [],
   "report_sources_preserved": true,
@@ -53106,7 +54344,7 @@
       "verified": true
     }
   ],
-  "audited_declaration_count": 7486,
+  "audited_declaration_count": 7684,
   "unexpected_axioms": [],
   "missing_axiom_reports": [],
   "conditional_results": [
@@ -53234,7 +54472,7 @@
   "euclidean_operator_norm_bridge_verified": true,
   "arbitrary_subspace_basis_bridge_verified": true,
   "outside_verified_scope": [
-    "The literal A assertion that witnessing path graphs are semialgebraic remains under separate verification. The actual general finite smooth cover, finite ordinary/actual smooth-path components, finite critical values, original low gap and C tame basins are now proved. D literal non-strict interpreter and finite-algebra identities are also proved. Historical E jobs/counts/timings/archive identity and the old R four-piece attribution remain unverified because original inputs are absent. See REPORT_STATUS.json",
+    "The literal A geometric ingredients are now proved: actual semialgebraic witness paths, finite actual continuous-semialgebraic path components, and continuous objective composition smooth outside finitely many interior parameters. Historical E jobs/counts/timings/environment/archive identities remain unverified without the original inputs. R182\u2013187's numerical attribution to an unidentified older four-piece objective remains a mathematical source-attribution obligation; the verified current D objective does not identify that older objective. See REPORT_STATUS.json",
     "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
     "Existence of admissible steps on every search ray"
   ],

@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 5,002 explicit
-theorems and 7,486 theorem declarations including generated auxiliaries. All 233
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 5,111 explicit
+theorems and 7,684 theorem declarations including generated auxiliaries. All 249
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_tame_geometry_check.log`.
+`audit/report_semialgebraic_path_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -70,8 +70,10 @@ The sixteenth tranche proves actual finite smooth covers in arbitrary dimension,
 finite ordinary and smooth-path components, finite critical values, the original
 low gap, C's tame basins and D's last literal consequences. See
 [audit/REPORT_TAME_GEOMETRY_STATEMENT_REVIEW.md](audit/REPORT_TAME_GEOMETRY_STATEMENT_REVIEW.md).
-A's stronger literal semialgebraic-path/general-composition ingredient remains
-active; historical execution/source-attribution exceptions remain unverified.
+The seventeenth tranche proves A's literal semialgebraic path graphs, actual
+path classes and general objective-composition regularity. See
+[audit/REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md](audit/REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md).
+Historical execution/source-attribution exceptions remain unverified.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
 
@@ -122,8 +124,7 @@ finite polyhedral/PLQ basins and the actual five-piece finite line-search obstru
 See [audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md](audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md).
 The actual finite-smooth-max subdifferential and local affine-correctness bridge
 were completed in the seventh tranche. Conditional energy/frame helpers remain
-separately classified. The latest source register records the remaining literal A path/composition
-and historical/source-attribution obligations.
+separately classified. The latest source register records the remaining historical/source-attribution obligations.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed
@@ -199,6 +200,10 @@ For subsequent checks:
 ```bash
 python3 scripts/check.py
 ```
+
+The checker allows up to 7,200 seconds per build or audit command. The
+complete inventory takes substantially longer than the former ten-minute
+default; use `--timeout SECONDS` to change the limit.
 
 After the audit output log has closed and intended delivery files have been
 staged in Git, `python3 scripts/manifest.py` regenerates their artifact hashes in

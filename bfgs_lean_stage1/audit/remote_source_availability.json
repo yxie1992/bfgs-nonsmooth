@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-09-11T13:15:41.430516+00:00",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "--heads",
+        "--tags",
+        "origin"
+      ],
+      "exit_code": 0,
+      "stdout": "e0a3c3e33aadbba06615dbe770b8978ace7d2c4e\trefs/heads/main\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/yxie1992/bfgs-nonsmooth/releases",
+        "--jq",
+        "[.[] | {tag_name,name,assets: [.assets[] | {name,size,browser_download_url}]}]"
+      ],
+      "exit_code": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gh",
+        "api",
+        "repos/yxie1992/bfgs-nonsmooth/actions/artifacts",
+        "--jq",
+        "{total_count,artifacts: [.artifacts[] | {name,expired,created_at}]}"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"artifacts\":[],\"total_count\":0}\n",
+      "stderr": ""
+    }
+  ]
+}

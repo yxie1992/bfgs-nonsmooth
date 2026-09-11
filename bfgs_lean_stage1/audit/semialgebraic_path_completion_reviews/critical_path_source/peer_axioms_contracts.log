@@ -1,0 +1,57 @@
+Lean (version 4.19.0, arm64-apple-darwin23.6.0, commit 6caaee842e94, Release)
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+              {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} ''
+            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z}).Finite ∧
+        ∀ (x : Fin n → ℝ),
+          BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+              (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+                {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) ∧
+            BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+                (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+                  {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) ∧
+              ∀
+                p ∈
+                  BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+                    {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,
+                ∀
+                  q ∈
+                    BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+                      {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,
+                  F p = F q
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      ∀ {x y : BfgsVerification.Vec n}
+        (p :
+          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath
+            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x y),
+        ∀ t ∈ Set.Icc 0 1, F (p.curve t) = F x
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_hasDerivAt_zero : ∀ {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F →
+      ∀ {x y : BfgsVerification.Vec n}
+        (p :
+          BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath
+            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x y)
+        {t : ℝ}, t ∈ Set.Ioo 0 1 → HasDerivAt (fun u => F (p.curve u)) 0 t
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_hasDerivAt_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.CriticalSmoothPathValuesTarget : Prop
+'BfgsVerification.CriticalSmoothPathValuesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.criticalSmoothPathValues : BfgsVerification.CriticalSmoothPathValuesTarget
+'BfgsVerification.criticalSmoothPathValues' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.criticalSmoothPathValues
+INDEPENDENT_SOURCE_OK actualDerivativeZero
