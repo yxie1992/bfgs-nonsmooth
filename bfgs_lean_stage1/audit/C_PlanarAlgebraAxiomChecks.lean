@@ -1,0 +1,34 @@
+import BfgsVerification.PlanarTransportAlgebra
+import BfgsVerification.PlanarActiveGeometry
+import BfgsVerification.ScalarTransportEnergy
+
+#print axioms BfgsVerification.PlanarTransport.normal
+#print axioms BfgsVerification.PlanarTransport.tangent
+#print axioms BfgsVerification.PlanarTransport.angularFrame
+#print axioms BfgsVerification.PlanarTransport.normal_norm_sq
+#print axioms BfgsVerification.PlanarTransport.tangent_norm_sq
+#print axioms BfgsVerification.PlanarTransport.normal_dot_tangent
+#print axioms BfgsVerification.PlanarTransport.tangent_normal_det
+#print axioms BfgsVerification.PlanarTransport.reconstruct
+#print axioms BfgsVerification.PlanarTransport.angularFrame_eq_constant
+#print axioms BfgsVerification.PlanarTransport.normal_pairing_angularFrame
+#print axioms BfgsVerification.PlanarTransport.normal_hasDerivAt
+#print axioms BfgsVerification.PlanarTransport.tangent_hasDerivAt
+#print axioms BfgsVerification.PlanarTransport.angularFrame_hasDerivAt
+#print axioms BfgsVerification.PlanarTransport.triangular_determinant
+#print axioms BfgsVerification.PlanarTransport.determinant_transport
+#print axioms BfgsVerification.PlanarTransport.determinant_transport_positive
+#print axioms BfgsVerification.AffineCriticalObjective.isAffineCritical_iff_coordinate_affineSpan
+#print axioms BfgsVerification.PlanarActiveGeometry.cardinal_le_two_of_affineIndependent_not_critical
+#print axioms BfgsVerification.PlanarActiveGeometry.affine_zero_of_pairDet_zero
+#print axioms BfgsVerification.PlanarActiveGeometry.pairDet_ne_zero_of_not_critical
+#print axioms BfgsVerification.PlanarActiveGeometry.inverse_common_rate
+#print axioms BfgsVerification.ScalarTransport.energy_smul_vector
+#print axioms BfgsVerification.ScalarTransport.square_le_of_log_bound
+#print axioms BfgsVerification.ScalarTransport.reciprocal_sum_le
+#print axioms BfgsVerification.AdmissibleBFGSRun.scalar_frame_residual_nonneg
+#print axioms BfgsVerification.AdmissibleBFGSRun.scalar_frame_energy
+#print axioms BfgsVerification.AdmissibleBFGSRun.scalar_frame_reciprocal_sum_bound
+#print axioms BfgsVerification.AdmissibleBFGSRun.scalar_frame_incompatible
+#print axioms BfgsVerification.AdmissibleBFGSRun.scalar_frame_tail_incompatible
+#print axioms BfgsVerification.AdmissibleBFGSRun.scalar_log_transport_tail_incompatible

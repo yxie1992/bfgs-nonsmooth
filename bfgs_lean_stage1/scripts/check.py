@@ -164,7 +164,43 @@ REPORT_STRUCTURE_TARGETS = {
     "fivePieceObstruction_verified":
         ("BfgsVerification.fivePieceObstruction", "BfgsVerification.FivePieceObstructionTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS
+REPORT_ANALYTIC_TARGETS = {
+    "actualFiniteMaxSubdifferential_verified":
+        ("BfgsVerification.actualFiniteMaxSubdifferential", "BfgsVerification.ActualFiniteMaxSubdifferentialTarget"),
+    "localAffineCorrectness_verified":
+        ("BfgsVerification.localAffineCorrectness", "BfgsVerification.LocalAffineCorrectnessTarget"),
+    "finiteMaxRadialBasin_verified":
+        ("BfgsVerification.finiteMaxRadialBasin", "BfgsVerification.FiniteMaxRadialBasinTarget"),
+    "euclideanResidualBasin_verified":
+        ("BfgsVerification.euclideanResidualBasin", "BfgsVerification.EuclideanResidualBasinTarget"),
+    "finiteRayStep_verified":
+        ("BfgsVerification.finiteRayStep", "BfgsVerification.FiniteRayStepTarget"),
+    "unexcitedMetric_verified":
+        ("BfgsVerification.unexcitedMetric", "BfgsVerification.UnexcitedMetricTarget"),
+    "parabolicRadialBoundary_verified":
+        ("BfgsVerification.parabolicRadialBoundary", "BfgsVerification.ParabolicRadialBoundaryTarget"),
+    "algebraicSeedRoot_verified":
+        ("BfgsVerification.algebraicSeedRoot", "BfgsVerification.AlgebraicSeedRootTarget"),
+    "algebraicSeedBounds_verified":
+        ("BfgsVerification.algebraicSeedBounds", "BfgsVerification.AlgebraicSeedBoundsTarget"),
+    "affineRankLoss_verified":
+        ("BfgsVerification.affineRankLoss", "BfgsVerification.AffineRankLossTarget"),
+    "algebraicJacobianCertificate_verified":
+        ("BfgsVerification.algebraicJacobianCertificate", "BfgsVerification.AlgebraicJacobianCertificateTarget"),
+    "nuclearBoundary_verified":
+        ("BfgsVerification.nuclearBoundary", "BfgsVerification.NuclearBoundaryTarget"),
+    "fixedNormalHyperplane_verified":
+        ("BfgsVerification.fixedNormalHyperplane", "BfgsVerification.FixedNormalHyperplaneTarget"),
+    "parallelInterfacesCluster_verified":
+        ("BfgsVerification.parallelInterfacesCluster", "BfgsVerification.ParallelInterfacesClusterTarget"),
+    "parallelInterfacesConvergence_verified":
+        ("BfgsVerification.parallelInterfacesConvergence", "BfgsVerification.ParallelInterfacesConvergenceTarget"),
+    "fixedNormalLocalBasin_verified":
+        ("BfgsVerification.fixedNormalLocalBasin", "BfgsVerification.FixedNormalLocalBasinTarget"),
+    "parallelInterfacesLocalBasin_verified":
+        ("BfgsVerification.parallelInterfacesLocalBasin", "BfgsVerification.ParallelInterfacesLocalBasinTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -421,7 +457,7 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
-                ("BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full", "Continuous finite gradient data, affine independence and positive base weights; the actual finite-C1-max subdifferential bridge remains a separate A application obligation"),
+                ("BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full", "Continuous finite gradient data, affine independence and positive base weights; the actual finite-C1-max subdifferential bridge and original-family application are now discharged in localAffineCorrectness"),
                 ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; discharged for the actual quadratic-gauge family in quadraticGaugeRates"),
                 ("BfgsVerification.linearCorrectionRate", "Actual linear cumulative reference-correction budget; derived for centered smooth-plus-sublinear objectives"),
                 ("BfgsVerification.linearImageLifting", "Explicit source premise: the projected actual run converges; full-space convergence and metric fiber selection are derived"),
@@ -442,7 +478,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Remaining F residual/matrix/line-search constructions, R branch/spectral cases and interpretive details, G interpretations, C/U/A, D/L, cross-referenced examples and synthesis; see REPORT_STATUS.json",
+            "Remaining named F ray-class bridges and R interpretive details, A semialgebraic critical values, full C field construction, weaker U.6 and source examples, D/L dynamics beyond the verified exact seed, cross-referenced examples and synthesis; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -451,7 +487,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_STRUCTURE_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_ANALYTIC_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

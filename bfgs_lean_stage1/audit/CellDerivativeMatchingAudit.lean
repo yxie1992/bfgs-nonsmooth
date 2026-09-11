@@ -1,0 +1,4 @@
+import BfgsVerification.CellDerivativeMatching
+
+#print axioms BfgsVerification.ConvexCellRadial.full_derivative_eq_on_cell
+#print axioms BfgsVerification.ConvexCellRadial.actual_gradients_eq_on_cell

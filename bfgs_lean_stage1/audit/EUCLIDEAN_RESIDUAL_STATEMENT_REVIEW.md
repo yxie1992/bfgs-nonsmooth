@@ -1,0 +1,15 @@
+# Euclidean affine-residual source bridge
+
+Source: Module F “Residual penalties and affine-fiber lifting,” first paragraph, and Module R “Affine Euclidean group residuals.” After the sixth milestone was pushed, this compiler-clean development was copied to `BfgsVerification/EuclideanResidualRadial.lean` and its actual main import build passed. A 13-declaration scoped main axiom audit accompanies it; it is not yet counted in the previous sixth milestone whole-project audit.
+
+The actual objective is represented locally as `F x = ψ x + ∑ i, ‖euclideanVector ((A i).mulVec x-b i)‖`, with arbitrary rectangular matrices, varying output dimensions, and a finite index set. It is finite and convex. At the attained unique minimizer `star`, the smooth summand is locally C1,1 on the supplied open neighborhood. The conclusion derives a positive starting level before selecting the actual full-BFGS run and gives objective/iterate convergence and containment in the original neighborhood.
+
+No individual residual is assumed nonzero or zero. The proof partitions the actual finite family by its actual value at `star`. Terms with zero value are exactly centered Euclidean norms of the linear image. Their finite sum is proved nonnegative, convex, and positively homogeneous, including all null directions and singular maps. Terms with nonzero value are proved C2 on a common neighborhood using continuity of the actual affine residual and the standard inner-product-space norm derivative theorem away from zero. Finiteness supplies that common neighborhood. The full exact decomposition is an algebraic identity, valid globally, even though only the nonzero-residual smoothness is local.
+
+The finite-dimensional model uses `EuclideanSpace ℝ (Fin m)` and its actual Euclidean norm. `matrixEuclideanCLM` derives the continuous linear map from the source matrix and the finite-dimensional coordinate equivalence; `matrix_residual` checks its exact residual is the explicitly Euclidean coordinate vector. It does not accidentally use the default Pi/sup norm on `Vec m`.
+
+The source's overlapping groups and sums of distances are included through arbitrary, independent rectangular matrices and offsets; no disjointness, rank, injectivity, surjectivity, or individual coercivity is required. No nonlinear objective invariance is invoked. The full objective's convexity suffices for the radial argument; separate convexity of the smooth summand is unnecessary, so the result contains the stated convex-smooth source case.
+
+The theorem remains a local low-start result under uniqueness, exactly as the source states. It does not cover arbitrary nonzero spectral or nuclear-norm residuals: the norm smoothness lemma specifically requires an inner-product-space norm and cannot be transferred to a general gauge or nuclear norm.
+
+Concrete `ℓ1`, hinge and quantile affine formula wrappers are separate named statements; the matrix Euclidean theorem includes one-dimensional absolute residuals, but it does not silently equate a one-dimensional model or a quantile formula without a bridge.

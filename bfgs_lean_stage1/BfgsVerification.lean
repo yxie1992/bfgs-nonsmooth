@@ -22,6 +22,9 @@ import BfgsVerification.ReportFamiliesEndToEnd
 import BfgsVerification.ReportStructuresEndToEnd
 import BfgsVerification.AccessibleCurvatureBridge
 
+import BfgsVerification.ReportAnalyticEndToEnd
+import BfgsVerification.FixedNormalEndToEnd
+
 /-!
 Module M and the primary transported, homogeneous, scalar and radial theorems. Consult
 audit/STATUS.json for current build status and audited theorem statements.

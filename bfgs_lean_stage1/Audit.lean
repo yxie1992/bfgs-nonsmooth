@@ -370,3 +370,55 @@ example : BfgsVerification.FivePieceObstructionTarget := BfgsVerification.fivePi
 
 #print BfgsVerification.SmoothPLQBasinTarget
 example : BfgsVerification.SmoothPLQBasinTarget := BfgsVerification.smoothPLQBasin
+
+-- Seventh milestone: actual analytic families, fixed interfaces, and exact algebraic seed.
+#print BfgsVerification.ActualFiniteMaxSubdifferentialTarget
+example : BfgsVerification.ActualFiniteMaxSubdifferentialTarget := BfgsVerification.actualFiniteMaxSubdifferential
+#print BfgsVerification.LocalAffineCorrectnessTarget
+example : BfgsVerification.LocalAffineCorrectnessTarget := BfgsVerification.localAffineCorrectness
+#print BfgsVerification.FiniteMaxRadialBasinTarget
+example : BfgsVerification.FiniteMaxRadialBasinTarget := BfgsVerification.finiteMaxRadialBasin
+#print BfgsVerification.EuclideanResidualBasinTarget
+example : BfgsVerification.EuclideanResidualBasinTarget := BfgsVerification.euclideanResidualBasin
+#print BfgsVerification.FiniteRayStepTarget
+example : BfgsVerification.FiniteRayStepTarget := BfgsVerification.finiteRayStep
+#print BfgsVerification.UnexcitedMetricTarget
+example : BfgsVerification.UnexcitedMetricTarget := BfgsVerification.unexcitedMetric
+#print BfgsVerification.ParabolicRadialBoundaryTarget
+example : BfgsVerification.ParabolicRadialBoundaryTarget := BfgsVerification.parabolicRadialBoundary
+#print BfgsVerification.AlgebraicSeedRootTarget
+example : BfgsVerification.AlgebraicSeedRootTarget := BfgsVerification.algebraicSeedRoot
+#print BfgsVerification.AlgebraicSeedBoundsTarget
+example : BfgsVerification.AlgebraicSeedBoundsTarget := BfgsVerification.algebraicSeedBounds
+#print BfgsVerification.AffineRankLossTarget
+example : BfgsVerification.AffineRankLossTarget := BfgsVerification.affineRankLoss
+#print BfgsVerification.AlgebraicJacobianCertificateTarget
+example : BfgsVerification.AlgebraicJacobianCertificateTarget := BfgsVerification.algebraicJacobianCertificate
+#print BfgsVerification.NuclearBoundaryTarget
+example : BfgsVerification.NuclearBoundaryTarget := BfgsVerification.nuclearBoundary
+#print BfgsVerification.FixedNormalHyperplaneTarget
+example : BfgsVerification.FixedNormalHyperplaneTarget := BfgsVerification.fixedNormalHyperplane
+#print BfgsVerification.ParallelInterfacesClusterTarget
+example : BfgsVerification.ParallelInterfacesClusterTarget := BfgsVerification.parallelInterfacesCluster
+#print BfgsVerification.ParallelInterfacesConvergenceTarget
+example : BfgsVerification.ParallelInterfacesConvergenceTarget := BfgsVerification.parallelInterfacesConvergence
+#print BfgsVerification.FixedNormalLocalBasinTarget
+example : BfgsVerification.FixedNormalLocalBasinTarget := BfgsVerification.fixedNormalLocalBasin
+#print BfgsVerification.ParallelInterfacesLocalBasinTarget
+example : BfgsVerification.ParallelInterfacesLocalBasinTarget := BfgsVerification.parallelInterfacesLocalBasin
+#print BfgsVerification.UnexcitedMetric.run
+#print axioms BfgsVerification.UnexcitedMetric.run
+#print BfgsVerification.NuclearSymmetric2.nuclear
+#print axioms BfgsVerification.NuclearSymmetric2.nuclear
+#print BfgsVerification.NuclearSymmetric2.objective
+#print axioms BfgsVerification.NuclearSymmetric2.objective
+#print BfgsVerification.NuclearSymmetric2.matrix
+#print axioms BfgsVerification.NuclearSymmetric2.matrix
+#print BfgsVerification.ConvexSubdifferential.subdifferential
+#print axioms BfgsVerification.ConvexSubdifferential.subdifferential
+#print BfgsVerification.AlgebraicSeed.center
+#print axioms BfgsVerification.AlgebraicSeed.center
+#print BfgsVerification.AlgebraicSeed.P
+#print axioms BfgsVerification.AlgebraicSeed.P
+#print BfgsVerification.AlgebraicSeed.root
+#print axioms BfgsVerification.AlgebraicSeed.root

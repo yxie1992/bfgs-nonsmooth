@@ -1,0 +1,21 @@
+# Actual subdifferential and local finite-max verification
+
+Scope: four compiler-clean modules, 30 explicit declarations, four exact contract examples. The pinned Lean 4.19.0 compiler and per-declaration transitive `#print axioms` audit pass. Every dependency set is contained in `propext`, `Classical.choice`, and `Quot.sound`. After the sixth release freeze lifted, all four source modules were copied into the main package and rebuilt successfully, and the 30-declaration/four-contract audit was rerun against main imports. Scratch backups and historical compiler logs remain. Whole-project release integration remains separate.
+
+## Mathematical statements
+
+- `subdifferential F x` is exactly `{g | ∀z, dot g (z-x) ≤ F z-F x}`, the existing `Homogeneous.Supports` predicate. The name does not introduce a homogeneity assumption.
+- Finite convexity on the whole `Vec n` derives nonemptiness and compactness at every point, and convexity/closedness need no regularity premise. Nonemptiness follows from the previously verified a.e. differentiability theorem, actual coordinate gradients, local support bounds, and an actual compactness subsequence. The proof works for arbitrary natural `n`, including zero.
+- Closedness of the supporting graph assumes only continuity of F. Zero support is equivalent to an actual global minimum.
+- Singleton subdifferential is equivalent to `HasFDerivAt F (gradientFunctional g) x`. The reverse direction chooses supports using proved nonemptiness, derives convergence from the closed graph and local compact bound, then squeezes the true derivative remainder using the actual continuous-linear-map norm. No continuity assumption on a selected support is present. Nondifferentiability therefore implies two distinct actual subgradients.
+- `LocalFiniteMax F f x` is exact neighborhood attainment and domination: eventually each F(z) is the greatest element of the range of the original finite branch values. The contract expands this to `(∃i, f_i(z)=F(z)) ∧ ∀i, f_i(z)≤F(z)`. It neither assumes a global representation nor silently removes branches.
+- `subdifferential_eq_active_convexHull` uses only derivatives of each branch at x and global finite convexity of F. Individual branches may be nonconvex. The inclusion from active gradients follows from a differentiable local lower contact and a convex chord argument. The reverse inclusion follows from geometric separation and small positive directional increments. No finite-max differentiability or subdifferential rule is assumed. Original indices and duplicate gradients are retained; local attainment derives active nonemptiness even when no `m>0` premise is supplied.
+- `local_affine_critical_correctness_original_family` formalizes Module A's local nondegenerate smooth-max assertion. Continuity proves positive inactive gaps persist. A derived enumeration restricts to exactly the originally active indices. Actual gradient continuity, affine independence of that active family, and the source's positive zero barycentric weights feed the independently checked augmented-matrix theorem. The conclusion is the actual local equivalence `0∈aff ∂F(p) ↔ F(p)≤F(z) for every z`, without an assumed hull formula or restricted representation.
+
+## Source scope and remaining obligations
+
+This closes the shared subdifferential prerequisites for Modules A/C/U and Module A's nondegenerate local affine-critical correctness argument. It does not prove the semialgebraic affine-critical gap, the lower-semicontinuity assertion about affine distance, or a BFGS convergence theorem merely from local affine-critical correctness. Those remain separate report claims. No research source was changed and no mathematical correction was required for these statements.
+
+## Reproduction
+
+From `bfgs_lean_stage1`, source `scripts/env.sh` with bash; run `lake build BfgsVerification.FiniteMaxLocalCorrectness BfgsVerification.SubdifferentialDifferentiability`, then `lake env lean audit/CONVEX_SUBDIFFERENTIAL_AXIOMS.lean` and `lake env lean audit/CONVEX_SUBDIFFERENTIAL_CONTRACTS.lean`. Main build, axiom, exact-contract and validation logs use the `audit/convex_subdifferential_*` prefix. Historical scratch compiler feedback remains in `audit/scratch/convex_subdifferential`.

@@ -6,16 +6,28 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 1,445 explicit
-theorems and 2,014 theorem declarations including generated auxiliaries. All 61
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 1,848 explicit
+theorems and 2,636 theorem declarations including generated auxiliaries. All 78
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_structures_check.log`.
+`audit/report_analytic_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
 previous runtime, not the current proof status.
+
+
+The seventh tranche adds actual finite-max subdifferentials and local affine
+correctness, the rank-loss objective, Euclidean residual and finite-max radial
+basins, both literal parabolic/nuclear radial boundary examples, the actual
+unexcited-matrix run, finite-ray strict step existence, U.1/U.2 fixed-interface
+convergence and uniform local basins, and D/L's exact unique algebraic root with
+its actual Jacobian/residual certificate. See
+[audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md](audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md).
+The remaining C construction, U weaker-curvature/examples, A semialgebraic
+claim, D/L cycle/search/embeddings and source interpretation obligations remain
+explicitly open. This is not a claim that the whole report is verified.
 
 ## Results and exact scope
 

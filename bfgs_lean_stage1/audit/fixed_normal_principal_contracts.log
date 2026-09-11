@@ -1,0 +1,168 @@
+def BfgsVerification.FixedNormalHyperplaneTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F)
+  {Ω : Set (BfgsVerification.Vec n)},
+  IsOpen Ω →
+    IsCompact R.initialSublevel →
+      R.initialSublevel ⊆ Ω →
+        ∀ {μ : ℝ},
+          0 < μ →
+            BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+              ∀ {a : BfgsVerification.Vec n},
+                BfgsVerification.sqNorm a = 1 →
+                  ∀ (b : ℝ) {A : BfgsVerification.Vec n → BfgsVerification.Vec n},
+                    (∀ x ∈ Ω,
+                        ∀ (g : BfgsVerification.Vec n),
+                          BfgsVerification.Homogeneous.Supports F x g →
+                            BfgsVerification.FixedNormal.tangentProjection a g = A x) →
+                      ∀ {L : NNReal},
+                        LipschitzOnWith L A Ω →
+                          BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+                              (BfgsVerification.FixedNormal.regularRegion Ω a b {0}) F →
+                            ∀ (star : BfgsVerification.Vec n),
+                              (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+                                (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+                                  BfgsVerification.dot a star = b →
+                                    Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                      Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.fixedNormalHyperplane : BfgsVerification.FixedNormalHyperplaneTarget
+def BfgsVerification.ParallelInterfacesClusterTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F)
+  {Ω : Set (BfgsVerification.Vec n)},
+  IsOpen Ω →
+    IsCompact R.initialSublevel →
+      R.initialSublevel ⊆ Ω →
+        ∀ {μ : ℝ},
+          0 < μ →
+            BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+              ∀ {a : BfgsVerification.Vec n},
+                BfgsVerification.sqNorm a = 1 →
+                  ∀ (b : ℝ) {A : BfgsVerification.Vec n → BfgsVerification.Vec n},
+                    (∀ x ∈ Ω,
+                        ∀ (g : BfgsVerification.Vec n),
+                          BfgsVerification.Homogeneous.Supports F x g →
+                            BfgsVerification.FixedNormal.tangentProjection a g = A x) →
+                      ∀ {L : NNReal},
+                        LipschitzOnWith L A Ω →
+                          ∀ {E : Set ℝ},
+                            IsClosed E →
+                              BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+                                  (BfgsVerification.FixedNormal.regularRegion Ω a b E) F →
+                                (∀ p ∈ Ω,
+                                    BfgsVerification.FixedNormal.normalCoordinate a b p ∈ E → ¬DifferentiableAt ℝ F p) →
+                                  ∃ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+                                    0 ∈ affineSpan ℝ (BfgsVerification.ConvexSubdifferential.subdifferential F p)
+@BfgsVerification.parallelInterfacesCluster : BfgsVerification.ParallelInterfacesClusterTarget
+def BfgsVerification.ParallelInterfacesConvergenceTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F)
+  {Ω : Set (BfgsVerification.Vec n)},
+  IsOpen Ω →
+    IsCompact R.initialSublevel →
+      R.initialSublevel ⊆ Ω →
+        ∀ {μ : ℝ},
+          0 < μ →
+            BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+              ∀ {a : BfgsVerification.Vec n},
+                BfgsVerification.sqNorm a = 1 →
+                  ∀ (b : ℝ) {A : BfgsVerification.Vec n → BfgsVerification.Vec n},
+                    (∀ x ∈ Ω,
+                        ∀ (g : BfgsVerification.Vec n),
+                          BfgsVerification.Homogeneous.Supports F x g →
+                            BfgsVerification.FixedNormal.tangentProjection a g = A x) →
+                      ∀ {L : NNReal},
+                        LipschitzOnWith L A Ω →
+                          ∀ {E : Set ℝ},
+                            IsClosed E →
+                              BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+                                  (BfgsVerification.FixedNormal.regularRegion Ω a b E) F →
+                                (∀ p ∈ Ω,
+                                    BfgsVerification.FixedNormal.normalCoordinate a b p ∈ E → ¬DifferentiableAt ℝ F p) →
+                                  (∀ p ∈ R.initialSublevel,
+                                      0 ∈ affineSpan ℝ (BfgsVerification.ConvexSubdifferential.subdifferential F p) →
+                                        BfgsVerification.Homogeneous.Supports F p 0) →
+                                    ∀ (star : BfgsVerification.Vec n),
+                                      (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+                                        Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                          Filter.Tendsto (fun k => Metric.infDist (R.x k) (BfgsVerification.argmin F))
+                                              Filter.atTop (nhds 0) ∧
+                                            ((∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+                                              Filter.Tendsto R.x Filter.atTop (nhds star))
+@BfgsVerification.parallelInterfacesConvergence : BfgsVerification.ParallelInterfacesConvergenceTarget
+def BfgsVerification.FixedNormalLocalBasinTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    ∀ (star : BfgsVerification.Vec n),
+      (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+        (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+          ∀ {Ω : Set (BfgsVerification.Vec n)},
+            IsOpen Ω →
+              star ∈ Ω →
+                ∀ {μ : ℝ},
+                  0 < μ →
+                    BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+                      ∀ {a : BfgsVerification.Vec n},
+                        BfgsVerification.sqNorm a = 1 →
+                          ∀ (b : ℝ),
+                            BfgsVerification.dot a star = b →
+                              ∀ {A : BfgsVerification.Vec n → BfgsVerification.Vec n},
+                                (∀ x ∈ Ω,
+                                    ∀ (g : BfgsVerification.Vec n),
+                                      BfgsVerification.Homogeneous.Supports F x g →
+                                        BfgsVerification.FixedNormal.tangentProjection a g = A x) →
+                                  ∀ {L : NNReal},
+                                    LipschitzOnWith L A Ω →
+                                      BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+                                          (BfgsVerification.FixedNormal.regularRegion Ω a b {0}) F →
+                                        ∃ ε,
+                                          0 < ε ∧
+                                            ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+                                              F (R.x 0) < F star + ε →
+                                                Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                                  Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.fixedNormalLocalBasin : BfgsVerification.FixedNormalLocalBasinTarget
+def BfgsVerification.ParallelInterfacesLocalBasinTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ},
+  ConvexOn ℝ Set.univ F →
+    ∀ (star : BfgsVerification.Vec n),
+      (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+        (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+          ∀ {Ω : Set (BfgsVerification.Vec n)},
+            IsOpen Ω →
+              star ∈ Ω →
+                ∀ {μ : ℝ},
+                  0 < μ →
+                    BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+                      ∀ {a : BfgsVerification.Vec n},
+                        BfgsVerification.sqNorm a = 1 →
+                          ∀ (b : ℝ) {A : BfgsVerification.Vec n → BfgsVerification.Vec n},
+                            (∀ x ∈ Ω,
+                                ∀ (g : BfgsVerification.Vec n),
+                                  BfgsVerification.Homogeneous.Supports F x g →
+                                    BfgsVerification.FixedNormal.tangentProjection a g = A x) →
+                              ∀ {L : NNReal},
+                                LipschitzOnWith L A Ω →
+                                  ∀ {E : Set ℝ},
+                                    IsClosed E →
+                                      BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+                                          (BfgsVerification.FixedNormal.regularRegion Ω a b E) F →
+                                        (∀ p ∈ Ω,
+                                            BfgsVerification.FixedNormal.normalCoordinate a b p ∈ E →
+                                              ¬DifferentiableAt ℝ F p) →
+                                          (∀ p ∈ Ω,
+                                              0 ∈
+                                                  affineSpan ℝ
+                                                    (BfgsVerification.ConvexSubdifferential.subdifferential F p) →
+                                                BfgsVerification.Homogeneous.Supports F p 0) →
+                                            ∃ ε,
+                                              0 < ε ∧
+                                                ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+                                                  F (R.x 0) < F star + ε →
+                                                    Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                                      Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.parallelInterfacesLocalBasin : BfgsVerification.ParallelInterfacesLocalBasinTarget
+EXACT_TARGET_OK fixedNormalHyperplane FixedNormalHyperplaneTarget
+EXACT_TARGET_OK parallelInterfacesCluster ParallelInterfacesClusterTarget
+EXACT_TARGET_OK parallelInterfacesConvergence ParallelInterfacesConvergenceTarget
+EXACT_TARGET_OK fixedNormalLocalBasin FixedNormalLocalBasinTarget
+EXACT_TARGET_OK parallelInterfacesLocalBasin ParallelInterfacesLocalBasinTarget
+audit/FIXED_NORMAL_PRINCIPAL_CONTRACTS.lean:25:6: warning: unused variable `env`
+note: this linter can be disabled with `set_option linter.unusedVariables false`

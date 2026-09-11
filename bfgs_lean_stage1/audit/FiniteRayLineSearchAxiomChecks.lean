@@ -1,0 +1,8 @@
+import BfgsVerification.FiniteRayLineSearch
+#print axioms BfgsVerification.FiniteRayLineSearch.negative_derivative_descends
+#print axioms BfgsVerification.FiniteRayLineSearch.acceptable_interval
+#print axioms BfgsVerification.FiniteRayLineSearch.ray_convex
+#print axioms BfgsVerification.FiniteRayLineSearch.ray_hasDerivAt
+#print axioms BfgsVerification.FiniteRayLineSearch.finite_nondifferentiability_step
+#print axioms BfgsVerification.FiniteRayLineSearch.bfgsStep_scaling
+#print axioms BfgsVerification.FiniteRayLineSearch.fullBFGS_step_exists

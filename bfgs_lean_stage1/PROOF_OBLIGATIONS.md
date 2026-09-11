@@ -286,3 +286,22 @@ Entire-report verification remains false. Continue with the explicit matrix-limi
 run, finite-ray-singularity step existence, residual decompositions, R branch and
 spectral boundary cases, A/C/U, D/L and source synthesis. Review and push the
 milestone, then continue these independent proof chains autonomously.
+
+## Seventh report milestone
+
+All 78 registered targets passed the full build and audit (1,848 explicit,
+2,636 total theorem declarations). New exact contracts and source scope are
+reviewed in audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md. The detailed report
+register now marks U.1/U.2 and local basins complete while retaining U.6/examples;
+it marks D/L's exact root certificate complete while retaining all cycle,
+deterministic line-search and embedding obligations. Actual subdifferential
+and original-family local correctness discharge the earlier A barycentric
+application premise. Local lower semicontinuity and semialgebraic finite values
+remain open. C's frame algebra/energy core remains conditional until actual
+objective fields and endpoint estimates are constructed.
+
+The literal parabolic and shifted nuclear examples now prove fixed-positive-band
+failure of RS in every neighborhood using actual derivatives; neither is claimed
+as a bad BFGS trajectory. The source's centered nuclear aside, finite-max exact
+central asymptotic, named scalar residual classes and interpretive claims remain
+separately tracked for subsequent integration.

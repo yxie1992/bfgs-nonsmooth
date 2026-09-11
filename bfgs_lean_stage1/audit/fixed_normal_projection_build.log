@@ -1,0 +1,206 @@
+⚠ [6654/6697] Replayed BfgsVerification.BFGSUpdate
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: this tactic is never executed
+note: this linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: 'ring' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:57:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:65:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:72:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6662/6697] Replayed BfgsVerification.Normalization
+warning: ././././BfgsVerification/Normalization.lean:59:2: try 'simp at h' instead of 'simpa using h'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ././././BfgsVerification/Normalization.lean:117:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6667/6697] Replayed BfgsVerification.CompressionAlgebra
+warning: ././././BfgsVerification/CompressionAlgebra.lean:64:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✖ [6697/6697] Building BfgsVerification.FixedNormalProjection
+trace: .> LEAN_PATH=././.lake/packages/Cli/.lake/build/lib/lean:././.lake/packages/batteries/.lake/build/lib/lean:././.lake/packages/Qq/.lake/build/lib/lean:././.lake/packages/aesop/.lake/build/lib/lean:././.lake/packages/proofwidgets/.lake/build/lib/lean:././.lake/packages/importGraph/.lake/build/lib/lean:././.lake/packages/LeanSearchClient/.lake/build/lib/lean:././.lake/packages/plausible/.lake/build/lib/lean:././.lake/packages/mathlib/.lake/build/lib/lean:././.lake/build/lib/lean /Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/.toolchain/elan/toolchains/leanprover--lean4---v4.19.0/bin/lean ././././BfgsVerification/FixedNormalProjection.lean -R ./././. -o ././.lake/build/lib/lean/BfgsVerification/FixedNormalProjection.olean -i ././.lake/build/lib/lean/BfgsVerification/FixedNormalProjection.ilean -c ././.lake/build/ir/BfgsVerification/FixedNormalProjection.c --json
+error: ././././BfgsVerification/FixedNormalProjection.lean:23:4: ring failed, ring expressions not equal
+n : ℕ
+a v w : Vec n
+⊢ -(a ⬝ᵥ v) - a ⬝ᵥ w = -dot a v - dot a w
+error: ././././BfgsVerification/FixedNormalProjection.lean:30:4: ring failed, ring expressions not equal
+n : ℕ
+a : Vec n
+c : ℝ
+v : Vec n
+⊢ c = id c
+info: ././././BfgsVerification/FixedNormalProjection.lean:47:2: Try this: ring_nf
+error: ././././BfgsVerification/FixedNormalProjection.lean:41:41: unsolved goals
+n : ℕ
+a : Vec n
+ha : sqNorm a = 1
+v : Vec n
+haa : a ⬝ᵥ a = 1
+⊢ a ⬝ᵥ v - ∑ x, a x * v x = 0
+error: ././././BfgsVerification/FixedNormalProjection.lean:81:4: type mismatch, term
+  he
+after simplification has type
+  (WithLp.equiv 2 (Fin n → ℝ)) ((WithLp.equiv 2 (Vec n)).symm v) ⬝ᵥ
+        (WithLp.equiv 2 (Fin n → ℝ)) ((WithLp.equiv 2 (Vec n)).symm a) =
+      0 ↔
+    ∃ a_1, U *ᵥ a_1 = fun i => (WithLp.equiv 2 (Vec n)).symm v i : Prop
+but is expected to have type
+  dot a v = 0 ↔ ∃ c, U *ᵥ c = v : Prop
+error: ././././BfgsVerification/FixedNormalProjection.lean:99:36: type mismatch
+  mulVec_mulVec ?m.1338531 ?m.1338532 ?m.1338533
+has type
+  ?m.1338532 *ᵥ ?m.1338533 *ᵥ ?m.1338531 = (?m.1338532 * ?m.1338533) *ᵥ ?m.1338531 : Prop
+but is expected to have type
+  (Uᵀ * U) *ᵥ c = Uᵀ *ᵥ U *ᵥ c : Prop
+error: ././././BfgsVerification/FixedNormalProjection.lean:101:6: tactic 'rewrite' failed, did not find instance of the pattern in the target expression
+  ?M *ᵥ ?N *ᵥ ?v
+case intro.intro.intro
+n : ℕ
+a : Vec n
+ha : sqNorm a = 1
+ae : EuclideanSpace ℝ (Fin n) := (WithLp.equiv 2 (Vec n)).symm a
+S : Submodule ℝ (EuclideanSpace ℝ (Fin n)) := (Submodule.span ℝ {ae})ᗮ
+U : Matrix (Fin n) (Fin (Module.finrank ℝ ↥S)) ℝ
+hU : Uᵀ * U = 1
+hrange : ∀ (x : EuclideanSpace ℝ (Fin n)), x ∈ S ↔ ∃ a, U *ᵥ a = fun i => x i
+hr : ∀ (v : Vec n), dot a v = 0 ↔ ∃ c, U *ᵥ c = v
+hUa : Uᵀ *ᵥ a = 0
+v : Vec n
+c : Fin (Module.finrank ℝ ↥S) → ℝ
+hc : U *ᵥ c = tangentProjection a v
+hUv : Uᵀ *ᵥ tangentProjection a v = Uᵀ *ᵥ v
+he : c = Uᵀ *ᵥ v
+⊢ (U * Uᵀ) *ᵥ v = tangentProjection a v
+error: ././././BfgsVerification/FixedNormalProjection.lean:145:6: no goals to be solved
+error: ././././BfgsVerification/FixedNormalProjection.lean:146:8: tactic 'rewrite' failed, did not find instance of the pattern in the target expression
+  -dot a g / (dot a h - dot a g) * (dot a h - dot a g) + dot a g
+n : ℕ
+a : Vec n
+G : Set (Vec n)
+hG : ∀ g ∈ G, tangentProjection a g = 0
+g h : Vec n
+hg : g ∈ G
+hh : h ∈ G
+hne : g ≠ h
+hge : g = dot a g • a
+hhe : h = dot a h • a
+hd : dot a h - dot a g ≠ 0
+hmem : (-dot a g / (dot a h - dot a g)) • (h -ᵥ g) +ᵥ g ∈ (affineSpan ℝ G).carrier
+hc : -dot a g / (dot a h - dot a g) * (dot a h - dot a g) + dot a g = 0
+⊢ (-dot a (dot a g • a) / (dot a (dot a h • a) - dot a (dot a g • a)) * (dot a h - dot a g) + dot a g) • a = 0
+error: ././././BfgsVerification/FixedNormalProjection.lean:159:4: type mismatch, term
+  Eq.symm he
+after simplification has type
+  A = -(dot a 0 • a) : Prop
+but is expected to have type
+  A = 0 : Prop
+error: Lean exited with code 1
+Some required builds logged failures:
+- BfgsVerification.FixedNormalProjection
+error: build failed
+⚠ [6654/6697] Replayed BfgsVerification.BFGSUpdate
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: this tactic is never executed
+note: this linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: 'ring' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:57:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:65:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:72:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6662/6697] Replayed BfgsVerification.Normalization
+warning: ././././BfgsVerification/Normalization.lean:59:2: try 'simp at h' instead of 'simpa using h'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ././././BfgsVerification/Normalization.lean:117:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6667/6697] Replayed BfgsVerification.CompressionAlgebra
+warning: ././././BfgsVerification/CompressionAlgebra.lean:64:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✖ [6697/6697] Building BfgsVerification.FixedNormalProjection
+trace: .> LEAN_PATH=././.lake/packages/Cli/.lake/build/lib/lean:././.lake/packages/batteries/.lake/build/lib/lean:././.lake/packages/Qq/.lake/build/lib/lean:././.lake/packages/aesop/.lake/build/lib/lean:././.lake/packages/proofwidgets/.lake/build/lib/lean:././.lake/packages/importGraph/.lake/build/lib/lean:././.lake/packages/LeanSearchClient/.lake/build/lib/lean:././.lake/packages/plausible/.lake/build/lib/lean:././.lake/packages/mathlib/.lake/build/lib/lean:././.lake/build/lib/lean /Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/.toolchain/elan/toolchains/leanprover--lean4---v4.19.0/bin/lean ././././BfgsVerification/FixedNormalProjection.lean -R ./././. -o ././.lake/build/lib/lean/BfgsVerification/FixedNormalProjection.olean -i ././.lake/build/lib/lean/BfgsVerification/FixedNormalProjection.ilean -c ././.lake/build/ir/BfgsVerification/FixedNormalProjection.c --json
+error: ././././BfgsVerification/FixedNormalProjection.lean:24:4: ring failed, ring expressions not equal
+n : ℕ
+a v w : Vec n
+⊢ -(a ⬝ᵥ v) - a ⬝ᵥ w = -∑ i, a i * v i - ∑ i, a i * w i
+error: ././././BfgsVerification/FixedNormalProjection.lean:32:4: ring failed, ring expressions not equal
+n : ℕ
+a : Vec n
+c : ℝ
+v : Vec n
+⊢ c = id c
+error: Lean exited with code 1
+Some required builds logged failures:
+- BfgsVerification.FixedNormalProjection
+error: build failed
+⚠ [6654/6697] Replayed BfgsVerification.BFGSUpdate
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: this tactic is never executed
+note: this linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: 'ring' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:57:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:65:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:72:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6662/6697] Replayed BfgsVerification.Normalization
+warning: ././././BfgsVerification/Normalization.lean:59:2: try 'simp at h' instead of 'simpa using h'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ././././BfgsVerification/Normalization.lean:117:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6667/6697] Replayed BfgsVerification.CompressionAlgebra
+warning: ././././BfgsVerification/CompressionAlgebra.lean:64:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [6697/6697] Built BfgsVerification.FixedNormalProjection
+Build completed successfully.
+⚠ [6654/6700] Replayed BfgsVerification.BFGSUpdate
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: this tactic is never executed
+note: this linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: 'ring' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:57:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:65:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:72:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6662/6700] Replayed BfgsVerification.Normalization
+warning: ././././BfgsVerification/Normalization.lean:59:2: try 'simp at h' instead of 'simpa using h'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ././././BfgsVerification/Normalization.lean:117:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6667/6700] Replayed BfgsVerification.CompressionAlgebra
+warning: ././././BfgsVerification/CompressionAlgebra.lean:64:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✖ [6699/6700] Building BfgsVerification.FixedNormalProjection
+trace: .> LEAN_PATH=././.lake/packages/Cli/.lake/build/lib/lean:././.lake/packages/batteries/.lake/build/lib/lean:././.lake/packages/Qq/.lake/build/lib/lean:././.lake/packages/aesop/.lake/build/lib/lean:././.lake/packages/proofwidgets/.lake/build/lib/lean:././.lake/packages/importGraph/.lake/build/lib/lean:././.lake/packages/LeanSearchClient/.lake/build/lib/lean:././.lake/packages/plausible/.lake/build/lib/lean:././.lake/packages/mathlib/.lake/build/lib/lean:././.lake/build/lib/lean /Users/yxie/Documents/ChatGPT/BFGS-non-smooth/bfgs_lean_stage1/.toolchain/elan/toolchains/leanprover--lean4---v4.19.0/bin/lean ././././BfgsVerification/FixedNormalProjection.lean -R ./././. -o ././.lake/build/lib/lean/BfgsVerification/FixedNormalProjection.olean -i ././.lake/build/lib/lean/BfgsVerification/FixedNormalProjection.ilean -c ././.lake/build/ir/BfgsVerification/FixedNormalProjection.c --json
+error: ././././BfgsVerification/FixedNormalProjection.lean:199:39: unknown identifier 'mul_nonpos_iff_of_pos_left'
+error: Lean exited with code 1
+Some required builds logged failures:
+- BfgsVerification.FixedNormalProjection
+error: build failed
+⚠ [6654/6700] Replayed BfgsVerification.BFGSUpdate
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: this tactic is never executed
+note: this linter can be disabled with `set_option linter.unreachableTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:25:6: 'ring' tactic does nothing
+note: this linter can be disabled with `set_option linter.unusedTactic false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:57:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:65:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: ././././BfgsVerification/BFGSUpdate.lean:72:4: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6662/6700] Replayed BfgsVerification.Normalization
+warning: ././././BfgsVerification/Normalization.lean:59:2: try 'simp at h' instead of 'simpa using h'
+note: this linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: ././././BfgsVerification/Normalization.lean:117:8: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [6667/6700] Replayed BfgsVerification.CompressionAlgebra
+warning: ././././BfgsVerification/CompressionAlgebra.lean:64:6: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [6699/6700] Built BfgsVerification.FixedNormalProjection
+⚠ [6700/6700] Built BfgsVerification.FixedNormalFrame
+warning: ././././BfgsVerification/FixedNormalFrame.lean:84:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+note: this linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+Build completed successfully.

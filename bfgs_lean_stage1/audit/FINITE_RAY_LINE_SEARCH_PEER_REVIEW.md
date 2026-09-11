@@ -1,0 +1,15 @@
+# Independent finite-ray line-search statement review
+
+Reviewed all seven theorems in `BfgsVerification/FiniteRayLineSearch.lean` against `families.tex`, the finite-ray-singularity paragraph at line 159. This is independent mathematical/source review, separate from the root build and axiom logs.
+
+No mathematical or hypothesis defect found in the delivered existence theorems.
+
+- `acceptable_interval` uses an actual finite convex scalar restriction, an actual strictly negative derivative at zero, fixed parameters `0<c1<c2<1`, and a lower bound on the nonnegative ray. No differentiability or finite switching on the rest of that scalar ray is assumed.
+- The tilted objective uses a slope strictly between the Armijo and Wolfe slopes. Its initial derivative is negative; the lower bound on the original objective makes its far endpoint exceed the value at zero. A compact-interval minimum is therefore strictly interior and below the initial value. Strict Armijo at that minimum persists on a nonempty open interval immediately to its right. The minimizing inequality gives a secant slope above the tilt, and convexity bounds every actual derivative there from below by that secant slope. This proves strict weak Wolfe. The argument avoids any unsupported first-crossing/right-derivative assertion.
+- The interval theorem quantifies over **every actual scalar derivative** at each point; it does not infer differentiability of the full objective from differentiability of the restriction. `finite_nondifferentiability_step` explicitly excludes the finite set of full-space nondifferentiable positive ray times and then derives an actual coordinate gradient at the selected point.
+- The Armijo and Wolfe comparisons are converted with the same positive step length and actual displacement. The final inequalities are strict, which is stronger than ordinary Armijo–weak-Wolfe acceptance.
+- `fullBFGS_step_exists` uses an arbitrary actual SPD matrix and a nonzero actual gradient. Positive metric energy derives the negative initial slope, and `bfgsStep_scaling` checks exact equality of the trial displacement with the ray parametrization. No matrix update, restart, metric adjustment, limiting matrix or convergent sequence is assumed.
+
+Scope retained: this proves existence of an acceptable point under the finite full-space bad-time hypothesis. It is not a complexity or termination theorem for a particular trial-search implementation and does not say every nonsmooth objective has finitely many bad ray times. The named affine absolute-value/hinge and suitable Euclidean-residual classes still require their concrete finite-bad-set bridges. The general maximum-function obstruction remains consistent with this theorem because its ray can consist entirely of full-space nondifferentiable points after the scalar kink.
+
+The literal source proof's first-time/right-derivative construction is not separately exported; the tilted-minimum proof establishes the stated existence conclusion under the same hypotheses and gives the stronger strict-acceptance interval. No source correction is needed for that alternate proof.

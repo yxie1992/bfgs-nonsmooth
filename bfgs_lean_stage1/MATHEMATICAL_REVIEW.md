@@ -337,3 +337,28 @@ Entire-report verification remains false. Continue with the explicit matrix-limi
 run, finite-ray-singularity step existence, residual decompositions, R branch and
 spectral boundary cases, A/C/U, D/L and source synthesis. Review and push the
 milestone, then continue these independent proof chains autonomously.
+
+## Seventh report statement review
+
+The full frozen audit passes 1,848 explicit theorems, 2,636 total declarations and
+78 exact targets, standard axioms only. See audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md
+and its linked scoped/independent reviews. Actual convex subdifferentials, real
+Frechet derivatives, full BFGS matrices, actual closed-box polynomial roots and
+actual Hermitian eigenvalues are modeled, rather than supplied as certificate
+premises. The generated rational seed candidates are checked by Lean ring and
+norm_num proof terms; the generator is not a mathematical oracle.
+
+U.1/U.2's smooth-strip bound uses local derivative Lipschitzness together with
+full strong curvature. This replaces a source cocoercivity argument without
+adding assumptions or changing the unspecified constant. It does not establish
+the weaker tangential-only U.6 extension. The C orientation algebra and U's
+variable-jump non-additive assertion have separately recorded source corrections:
+the signed determinant changes sign when det(T,n)=-1 (absolute estimates are
+unchanged), and non-additivity requires c≠0 because the printed norm(c)<1 permits
+zero. Original research sources remain unchanged; see the report correction
+register and the C/U scoped reviews.
+
+D/L's exact source root box, inverse-Jacobian identification, residual bound and
+strict actual Jacobian supremum bound are proved, including box boundaries.
+Every later update-specific denominator and every deterministic accepted/rejected
+trial remains an independent obligation until the actual cycle is formalized.

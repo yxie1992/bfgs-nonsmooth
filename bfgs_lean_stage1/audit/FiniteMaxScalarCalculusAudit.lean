@@ -1,0 +1,15 @@
+import BfgsVerification.FiniteMaxScalarCalculus
+
+#print axioms BfgsVerification.FiniteMaxRadial.maximum
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_eq_common
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_hasDerivAt_common
+#print axioms BfgsVerification.FiniteMaxRadial.activeIndices
+#print axioms BfgsVerification.FiniteMaxRadial.activeIndices_nonempty
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_eventually_eq_active
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_hasDerivAt_of_active_agreement
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_deriv_eq_active
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_deriv_centered_bound
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_deriv_continuousOn
+#print axioms BfgsVerification.FiniteMaxRadial.sub_le_of_centered_local_bound
+#print axioms BfgsVerification.FiniteMaxRadial.norm_sub_le_of_centered_local_bound
+#print axioms BfgsVerification.FiniteMaxRadial.maximum_deriv_lipschitzOn

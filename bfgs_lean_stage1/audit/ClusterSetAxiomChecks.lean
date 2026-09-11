@@ -1,0 +1,9 @@
+import BfgsVerification.ClusterSetGeometry
+#print axioms BfgsVerification.ClusterSetGeometry.clusterSet
+#print axioms BfgsVerification.ClusterSetGeometry.isClosed_clusterSet
+#print axioms BfgsVerification.ClusterSetGeometry.clusterSet_subset_of_closed
+#print axioms BfgsVerification.ClusterSetGeometry.isCompact_clusterSet
+#print axioms BfgsVerification.ClusterSetGeometry.clusterSet_nonempty
+#print axioms BfgsVerification.ClusterSetGeometry.eventually_mem_of_open_superset
+#print axioms BfgsVerification.ClusterSetGeometry.distance_tendsto_zero
+#print axioms BfgsVerification.AdmissibleBFGSRun.positive_limit_of_no_affineCritical_cluster

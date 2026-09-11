@@ -1,0 +1,8 @@
+import BfgsVerification.FiniteMaxRadialObstruction
+
+#print axioms BfgsVerification.FiniteMaxRadial.supporting_on
+#print axioms BfgsVerification.FiniteMaxRadial.active_gap_central_lower
+#print axioms BfgsVerification.FiniteMaxRadial.no_quadratic_bound_of_linear_lower
+#print axioms BfgsVerification.FiniteMaxRadial.active_gap_forbids_central_bound
+#print axioms BfgsVerification.FiniteMaxRadial.local_central_bound_of_nested
+#print axioms BfgsVerification.FiniteMaxRadial.active_gap_forbids_radial

@@ -1,0 +1,15 @@
+import BfgsVerification.EuclideanResidualRadial
+
+#print axioms BfgsVerification.EuclideanResidual.residual
+#print axioms BfgsVerification.EuclideanResidual.centeredGauge
+#print axioms BfgsVerification.EuclideanResidual.smoothPart
+#print axioms BfgsVerification.EuclideanResidual.residual_contDiff
+#print axioms BfgsVerification.EuclideanResidual.centeredGauge_nonneg
+#print axioms BfgsVerification.EuclideanResidual.centeredGauge_homogeneous
+#print axioms BfgsVerification.EuclideanResidual.centeredGauge_convex
+#print axioms BfgsVerification.EuclideanResidual.exact_decomposition
+#print axioms BfgsVerification.EuclideanResidual.smooth_neighborhood
+#print axioms BfgsVerification.EuclideanResidual.local_euclidean_residual_basin
+#print axioms BfgsVerification.EuclideanResidual.matrixEuclideanCLM
+#print axioms BfgsVerification.EuclideanResidual.matrix_residual
+#print axioms BfgsVerification.EuclideanResidual.local_matrix_euclidean_residual_basin

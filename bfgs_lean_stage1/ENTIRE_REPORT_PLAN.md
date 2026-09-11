@@ -206,3 +206,25 @@ Entire-report verification remains false. Continue with the explicit matrix-limi
 run, finite-ray-singularity step existence, residual decompositions, R branch and
 spectral boundary cases, A/C/U, D/L and source synthesis. Review and push the
 milestone, then continue these independent proof chains autonomously.
+
+## Seventh execution milestone — completed
+
+The pinned full build and audit checked 1,848 explicit theorems, 2,636 theorem
+declarations including generated auxiliaries, and all 78 exact targets.
+The added source contracts are in ReportAnalyticTargets and FixedNormalTargets;
+see audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md and audit/report_analytic_check.log.
+Original source files remain preserved.
+
+Completed: actual finite-max subdifferentials and nondegenerate local affine
+correctness; exact affine rank-loss geometry; Euclidean residual decomposition
+and basin; finite-max radial compatibility and obstruction; adjacent-cell full
+gradient matching; literal parabolic and actual spectral nuclear examples;
+actual unexcited full-BFGS run; finite-ray strict step existence; U.1/U.2 and
+uniform local basins; exact D/L closed-box root and Jacobian certificate.
+
+Next: actual D/L BFGS cycle and every deterministic trial, then their embeddings
+and perturbation dynamics; C's objective comparison field and endpoint estimates;
+U.6 and its explicit series/variable-jump examples; A's lower-semicontinuity and
+semialgebraic finite-value infrastructure; R/F named family and interpretation
+closures. Independently audited new scratch work is integrated only after this
+milestone's freeze ends. The whole-report completion gate remains unchanged.

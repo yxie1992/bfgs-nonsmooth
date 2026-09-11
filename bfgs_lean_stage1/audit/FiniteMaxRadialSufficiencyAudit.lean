@@ -1,0 +1,11 @@
+import BfgsVerification.FiniteMaxRadialSufficiency
+
+#print axioms BfgsVerification.FiniteMaxRadial.finite_branch_neighborhood
+#print axioms BfgsVerification.FiniteMaxRadial.inward_curve_hasDerivAt
+#print axioms BfgsVerification.FiniteMaxRadial.inward_curve_mem_ball
+#print axioms BfgsVerification.FiniteMaxRadial.radial_branch_derivative_lipschitz
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_inward_error
+#print axioms BfgsVerification.FiniteMaxRadial.local_finite_max_inward
+#print axioms BfgsVerification.FiniteMaxRadial.local_finite_max_radial
+#print axioms BfgsVerification.FiniteMaxRadial.local_finite_max_basin
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_compact_basin
