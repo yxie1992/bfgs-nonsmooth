@@ -17,6 +17,8 @@ import BfgsVerification.FrameNorms
 import BfgsVerification.ReportCoreEndToEnd
 import BfgsVerification.ReportGeometryEndToEnd
 import BfgsVerification.ReportContinuationEndToEnd
+import BfgsVerification.ReportApplicationsEndToEnd
+import BfgsVerification.AccessibleCurvatureBridge
 
 /-!
 Module M and the primary transported, homogeneous, scalar and radial theorems. Consult

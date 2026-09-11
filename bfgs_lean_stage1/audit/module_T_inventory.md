@@ -66,3 +66,9 @@ The initial formal field may be represented as a total function `Vec n → Mat n
 The table distinguishes the verified primary chain from secondary claims still open. The primary proof invokes Module M's stronger summable-budget reciprocal theorem instead of the source's arithmetic-mean contradiction; this changes the proof route only, since summability is derived under the same compact-sublevel hypotheses. The source assumption `b > F*` is unnecessary in the exported sublevel theorem, which remains valid when `b ≤ F*`; this is a proved generalization, not an added assumption or weakened conclusion. No objective-pair certificate condition is imposed on rejected trials or on arbitrary chains as if they were BFGS runs.
 
 The third tranche completes the nonunique entire-solution-set neighborhood-to-basin deduction in CompactSolutionBasin.lean. Affine covariance and Q strict separation remain open.
+
+Fourth milestone: full invertible affine covariance is now compiled in the
+three AffineCertificate*.lean/AffineCovariance modules, preserving actual
+derivatives, every eligible pair, image bands, all constants, and both
+existence directions. The explicit Q strict-separation application remains
+open; see AFFINE_CERTIFICATE_STATEMENT_REVIEW.md.

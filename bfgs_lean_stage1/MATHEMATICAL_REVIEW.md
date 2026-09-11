@@ -245,3 +245,26 @@ nonnecessity examples and finite-sample/individual-pair claims are checked.
 No original research source was changed. The broader family/geometric/negative
 construction and synthesis obligations remain recorded; entire_report_verified
 is still false. Proof designs in audit/scratch are outside this verified tranche.
+
+## Fourth milestone: structural applications and geometric scope
+
+The pinned full build and transitive audit pass for 996 explicit / 1,384 total
+theorem declarations and all 44 exact targets. The fourth tranche adds the
+actual centered and quadratic-gauge families, affine covariance, main planar
+H.C, G ellipsoid/pointwise/accessibility geometry, and Q foundations through
+Q.13. Statement and peer reviews are collected in
+`audit/REPORT_APPLICATIONS_STATEMENT_REVIEW.md`; actual logs are
+`audit/report_applications_check.log`, `audit/build.log` and `audit/axioms.log`.
+
+The G.4 correction distinguishes accessible and all-active jump spans. Its
+precise accessible-span consequence is proved, the full-active version keeps
+its necessary qualification explicit, and the algebraic countermodel is not
+misrepresented as an objective example. Original research sources remain
+unchanged. `audit/REPORT_STATUS.json` records this separately.
+
+Next independent work is Q's derived finite-envelope calibration and uniform
+compensated transport, H's remaining block/low-rank/relative-interior clauses,
+and F's transformed-gauge family. Remaining R/F applications, C/U/A and D/L
+constructions, and synthesis/evidence closure are still obligations. Entire-report
+verification remains false; no generic conditional criterion is counted as its
+undischarged objective-specific application.

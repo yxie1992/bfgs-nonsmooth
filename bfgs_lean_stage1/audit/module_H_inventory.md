@@ -1,7 +1,7 @@
 # Module H formalization inventory
 
 Source: `BFGS_MASTER_REPORT_LaTeX/report/chapters/H.tex` (read in full).
-Original sources are preserved. This inventory separates the checked H.A and H.B tranches
+Original sources are preserved. This inventory separates the checked H.A, H.B, and main planar H.C tranches
 from later obligations; complete project verification is recorded by the root audit. All statements concern unmodified full BFGS with fixed Armijo–weak
 Wolfe and nonzero gradients at differentiable accepted iterates.
 
@@ -93,21 +93,41 @@ lifted slopes `(1,b)`. This is a coordinate permutation only. No matrix/iterate
 convergence, bounded steps, finite lengths, field regularity, or finite
 termination assumptions enter. Original research sources remain unchanged.
 
-## Later H.C / Sections 7–8 obligations: projected and low-dimensional iterates
+## H.C main planar theorem — compiled and individually axiom-audited
+
+`HomogeneousPlanarAlgebra.lean`, `HomogeneousPlanarEndpoints.lean`, and
+`HomogeneousPlanarEscape.lean` prove Theorem H.C for the actual globally
+unbounded-below planar finite maximum, including mutually exclusive branches,
+strict decrease and positivity on the zero branch, Euclidean norm escape, and
+nonstationarity at every point. They also prove the independent-transition
+anchor observation without a bounded-run hypothesis.
+
+There are 20 public theorems and two concrete definitions. Reproduce with
+`lake build BfgsVerification.HomogeneousPlanarEscape` and
+`lake env lean audit/H_C_PlanarAxiomChecks.lean`. Actual logs are
+`audit/homogeneous_planar_full_build.log` and `audit/homogeneous_planar_axioms.log`;
+all 22 axiom closures use only the three standard axioms.
+`audit/H_C_PLANAR_VERIFICATION.md` records exact assumptions and source mapping.
+
+## Sections 7–8 claim register and remaining obligations
 
 9. Exact projected full-BFGS update on a gradient subspace; q,d,t and line-search
    inequalities are preserved. All later steps lie in the fixed image `H_K S`.
    Derive the actual lift `H_K U (Uᵀ H_K U)⁻¹`, and the source limit formula.
    The projected Hessian is `(Uᵀ H_k U)⁻¹`, not `Uᵀ B_k U`.
-10. Homogeneous endpoint pairings tend to zero. Finitely many independent slope
+10. **Checked.** Homogeneous endpoint pairings tend to zero. Finitely many independent slope
     pairs in dimension two give uniform inverse bounds at transition endpoints.
-11. Exclude unchanged/positively proportional active transitions on the positive
+11. **Partially checked.** Unchanged gradients are excluded generally. A direct
+    determinant argument excludes all dependent transitions when a common
+    negative objective direction exists. General exclusion of positively proportional
+    active transitions on the positive
     branch; dependent transitions must have opposite slopes. Unbounded-below
     max-linear objectives cannot contain an opposite slope pair.
-12. H.C: planar unbounded-below finite maxima have exactly the two source branches
+12. **Checked.** H.C: planar unbounded-below finite maxima have exactly the two source branches
     (iterate→zero, value↓zero) or (value→−infinity, norm→infinity). The zero limit
     is nonstationary. No directional convergence in the escaping branch.
-13. General planar finite-value branch: independent-transition anchors→zero;
+13. **Partially checked.** Independent-transition anchors→zero is proved.
+    Remaining general planar finite-value branch:
     opposite-gradient blocks are collinear, with the explicit uniformly bounded
     interpolation coefficient. Finitely many anchors instead give a fixed-line
     limit. Projection/lifting extends convergence to recurrent span dimension≤2.
@@ -124,4 +144,4 @@ unresolved. Formalization must not promote that question into a theorem. Source
 references to previous examples and the external two-piece finite-termination
 paper are provenance/comparison claims, not proofs supplied by Module H.
 
-Third tranche: AffineProjection/AffineCompression/AffineLifting and their run/fiber wrappers prove exact projected updates and arbitrary-tail fixed lifting (H.7.1). H.C endpoint and planar finite-value convergence remain open. ObjectiveRates.lean also proves the homogeneous finite weighted-sum and o(1/N) rates used in F, including derived Euclidean coercive norm bounds.
+Third tranche: AffineProjection/AffineCompression/AffineLifting and their run/fiber wrappers prove exact projected updates and arbitrary-tail fixed lifting (H.7.1). H.C endpoint and the planar unbounded-below theorem are now checked in the fourth tranche; the general opposing-gradient block argument remains open. ObjectiveRates.lean also proves the homogeneous finite weighted-sum and o(1/N) rates used in F, including derived Euclidean coercive norm bounds.

@@ -31,3 +31,10 @@ shared rather than duplicated. The all-ray obstruction is a finite failure to
 continue, not a counterexample consisting of an infinite admissible run.
 
 Third tranche: F:lifting is proved by the genuine projected run and fixed affine/metric-fiber identity (see AFFINE_LIFTING_VERIFICATION.md). The first two rate paragraphs, including finite bounds, are proved in ObjectiveRates.lean. HarmonicRates/ObjectiveLogRates prove the logarithmic rate criterion from an actual correction bound; the quadratic-gauge derivation of that bound remains open. The centered and other structural families are not marked complete.
+
+Fourth milestone: F:centered, exact correction, recentering and local-basin
+clauses are compiled in Centered*.lean; the concrete quadratic-gauge correction
+and rate chain are compiled in QuadraticGauge*.lean. The transformed-gauge,
+max-affine basin, residual descriptions and line-search/matrix examples remain
+separate obligations. See CENTERED_STATEMENT_REVIEW.md and
+QUADRATIC_GAUGE_VERIFICATION.md.

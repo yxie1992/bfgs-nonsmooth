@@ -1,0 +1,60 @@
+@CenteredSmoothSublinear.exists_pair_correction_bound : ∀ {n : ℕ} {F ψ γ : Vec n → ℝ} (star : Vec n)
+  {U K : Set (Vec n)},
+  IsOpen U →
+    ConvexOn ℝ U ψ →
+      CenteredSmoothSublinear.LocallyC11On U ψ →
+        ConvexOn ℝ univ γ →
+          Homogeneous.PositiveDegreeOne γ →
+            (∀ x ∈ U, F x = ψ x + γ (x - star)) →
+              IsCompact K →
+                K ⊆ U →
+                  ∃ L G R,
+                    0 < L ∧
+                      0 < G ∧
+                        0 < R ∧
+                          (∀ x ∈ K,
+                              ∀ y ∈ K,
+                                sqNorm (coordinateGradient ψ y - coordinateGradient ψ x) ≤
+                                  L * dot (coordinateGradient ψ y - coordinateGradient ψ x) (y - x)) ∧
+                            (∀ (x g : Vec n), Homogeneous.Supports γ x g → sqNorm g ≤ G ^ 2) ∧
+                              (∀ x ∈ K, sqNorm (x - star) ≤ R ^ 2) ∧
+                                ∀ x ∈ K,
+                                  ∀ y ∈ K,
+                                    ∀ (g g' : Vec n),
+                                      HasFDerivAt F (gradientFunctional g) x →
+                                        HasFDerivAt F (gradientFunctional g') y →
+                                          0 < dot (g' - g) (y - x) →
+                                            dot (g' - g) (y - star) ^ 2 / dot (g' - g) (y - x) ≤ L * R ^ 2 + 2 * G * R
+@AdmissibleBFGSRun.centered_uniform_correction : ∀ {n : ℕ} {F : Vec n → ℝ} (A : AdmissibleBFGSRun n F) (star : Vec n)
+  {ψ γ : Vec n → ℝ} {U : Set (Vec n)},
+  IsOpen U →
+    ConvexOn ℝ U ψ →
+      CenteredSmoothSublinear.LocallyC11On U ψ →
+        ConvexOn ℝ univ γ →
+          Homogeneous.PositiveDegreeOne γ →
+            (∀ x ∈ U, F x = ψ x + γ (x - star)) →
+              IsCompact A.initialSublevel →
+                A.initialSublevel ⊆ U →
+                  ∃ L G R, 0 < L ∧ 0 < G ∧ 0 < R ∧ ∀ (k : ℕ), A.referenceCorrection star k ≤ L * R ^ 2 + 2 * G * R
+@CenteredSmoothSublinear.centered_rewriting : ∀ {n : ℕ} {F ψ γ : Vec n → ℝ} (star : Vec n),
+  (∀ (x : Vec n), F star ≤ F x) →
+    ∀ {U : Set (Vec n)},
+      IsOpen U →
+        star ∈ U →
+          ConvexOn ℝ U ψ →
+            Homogeneous.PositiveDegreeOne γ →
+              (∀ x ∈ U, F x = ψ x + γ (x - star)) →
+                ∀ {p : Vec n},
+                  HasFDerivAt ψ (gradientFunctional p) star →
+                    (∀ x ∈ U, 0 ≤ CenteredSmoothSublinear.smoothRemainder ψ star p x) ∧
+                      CenteredSmoothSublinear.smoothRemainder ψ star p star = 0 ∧
+                        (∀ (z : Vec n), 0 ≤ CenteredSmoothSublinear.recenteredHomogeneous γ p z) ∧
+                          CenteredSmoothSublinear.recenteredHomogeneous γ p 0 = 0 ∧
+                            ∀ x ∈ U,
+                              F x - F star =
+                                CenteredSmoothSublinear.smoothRemainder ψ star p x +
+                                  CenteredSmoothSublinear.recenteredHomogeneous γ p (x - star)
+@CenteredSmoothSublinear.smoothRemainder_locallyC11 : ∀ {n : ℕ} {ψ : Vec n → ℝ} {U : Set (Vec n)},
+  IsOpen U →
+    CenteredSmoothSublinear.LocallyC11On U ψ →
+      ∀ (star p : Vec n), CenteredSmoothSublinear.LocallyC11On U (CenteredSmoothSublinear.smoothRemainder ψ star p)

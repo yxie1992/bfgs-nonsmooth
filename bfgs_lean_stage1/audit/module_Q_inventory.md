@@ -97,3 +97,13 @@ There is **no zero-visibility defect** on a positive band: `g·r=2F≥2η`. If b
 6. `calibrated_band_certificate`: constructs the existing `BandCertificate` with actual W=θ²rrᵀ.
 7. `parabolic_run_convergence`: invokes the already verified T primary theorem.
 8. Explicit three-branch branch regions, theta bounds, generalized one-step eligible pairs, radial divergence, and transported correction/log identities; then exact RS failure on every neighborhood for the intended fixed-parameter scope.
+
+## Fourth milestone progress
+
+ParabolicFamily, ParabolicPairs, ParabolicDenominatorAlgebra, ParabolicDenominator
+and ParabolicUniformSecant now have 43 compiled theorems and 12 audited
+definitions. Compactness/unique minimum, actual active gradients, Q.9--Q.14,
+uniform Q.13 with derived D!=0, and unscaled visibility/secant estimates are
+verified. See PARABOLIC_FOUNDATION_REVIEW.md and parabolic_foundation_axioms.log.
+The finite-envelope calibration, Q.15--Q.17, main convergence theorem and
+explicit separation remain open in this released milestone.

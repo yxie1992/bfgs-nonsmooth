@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 760 explicit
-theorems and 1,069 theorem declarations including generated auxiliaries. All 36
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 996 explicit
+theorems and 1,384 theorem declarations including generated auxiliaries. All 44
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_continuation_check.log`.
+`audit/report_applications_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -53,7 +53,7 @@ central equivalence, actual affine lifting, nonunique solution basins, finite an
 asymptotic rate statements, both scalar nonnecessity examples, individual pair
 realizability, and finite-sample feasibility. See
 [audit/REPORT_CONTINUATION_STATEMENT_REVIEW.md](audit/REPORT_CONTINUATION_STATEMENT_REVIEW.md).
-H.C, structural families, remaining geometry, C/U/A, D/L and synthesis remain open.
+The remaining F/R families, Q transport/separation, H.7.4/H.8, C/U/A, D/L and synthesis remain open.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed
@@ -173,3 +173,19 @@ the geometric consequences. `MovingFrame` handles exact transport;
 `SmoothSubspace`, `FrameBounds`, `ResidualBudget`, `ResidualFrames`, and
 `ResidualSourceForm` handle imperfect transport. `FoundationEndToEnd` inhabits the
 seven explicit additional propositions in `FoundationTargets`.
+
+## Fourth report milestone
+
+The full audit now includes centered smooth-plus-sublinear convergence and
+recentring, the actual quadratic-plus-gauge logarithmic rates, invertible affine
+certificate covariance, G's ellipsoid/range and exact pointwise-capacity geometry,
+the main planar H.C dichotomy, and Q's arbitrary-finite-family foundation through
+the uniform nonzero denominator theorem. See
+[audit/REPORT_APPLICATIONS_STATEMENT_REVIEW.md](audit/REPORT_APPLICATIONS_STATEMENT_REVIEW.md).
+
+G's accessible-jump discussion required an explicit qualification: accessible
+jumps need not span all active-gradient differences. The corrected accessible
+projection implication and a limited algebraic countermodel are proved; the
+original unqualified inference is not marked verified. The source is unchanged.
+Q's calibrated transport and full convergence theorem remain open, as do the
+other obligations in the report register.

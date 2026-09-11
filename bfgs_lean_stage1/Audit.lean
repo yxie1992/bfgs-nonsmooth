@@ -237,3 +237,69 @@ example : BfgsVerification.FiniteSampleFeasibilityTarget := BfgsVerification.fin
 #check @BfgsVerification.AccumulatingKinks.crossing_quotient_tendsto
 #check @BfgsVerification.AccumulatingKinks.series_uniform_on_compact
 #check @BfgsVerification.AccumulatingKinks.objective_coercive
+
+-- Fourth report tranche: actual structural families and geometric criteria.
+#print BfgsVerification.AffineCertificateCovarianceTarget
+example : BfgsVerification.AffineCertificateCovarianceTarget := BfgsVerification.affineCertificateCovariance
+#print BfgsVerification.CenteredSmoothConvergenceTarget
+example : BfgsVerification.CenteredSmoothConvergenceTarget := BfgsVerification.centeredSmoothConvergence
+#print BfgsVerification.CenteredLocalBasinTarget
+example : BfgsVerification.CenteredLocalBasinTarget := BfgsVerification.centeredLocalBasin
+#print BfgsVerification.QuadraticGaugeRatesTarget
+example : BfgsVerification.QuadraticGaugeRatesTarget := BfgsVerification.quadraticGaugeRates
+#print BfgsVerification.EllipsoidCertificateGeometryTarget
+example : BfgsVerification.EllipsoidCertificateGeometryTarget := BfgsVerification.ellipsoidCertificateGeometry
+#print BfgsVerification.PointwiseCertificateCapacityTarget
+example : BfgsVerification.PointwiseCertificateCapacityTarget := BfgsVerification.pointwiseCertificateCapacity
+#print BfgsVerification.PlanarHomogeneousEscapeTarget
+example : BfgsVerification.PlanarHomogeneousEscapeTarget := BfgsVerification.planarHomogeneousEscape
+#print BfgsVerification.ParabolicDenominatorTarget
+example : BfgsVerification.ParabolicDenominatorTarget := BfgsVerification.parabolicDenominator
+#print BfgsVerification.AffineCertificate.forward
+#print BfgsVerification.AffineCertificate.backward
+#print BfgsVerification.AffineCertificate.objective
+#print BfgsVerification.AffineCertificate.field
+#print BfgsVerification.AffineCertificate.transform
+#print BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+#print BfgsVerification.CenteredSmoothSublinear.smoothRemainder
+#print BfgsVerification.CenteredSmoothSublinear.recenteredHomogeneous
+#print BfgsVerification.QuadraticGauge.objective
+#print BfgsVerification.QuadraticGauge.correctionConstant
+#print BfgsVerification.CertificateGeometry.euclideanUnitBall
+#print BfgsVerification.CertificateGeometry.ellipsoid
+#print BfgsVerification.PointwiseFeasibility.sourceCapacity
+#print BfgsVerification.PointwiseFeasibility.BandPoint
+#print BfgsVerification.PointwiseFeasibility.IncomingPoint
+#print BfgsVerification.Parabolic.Family
+#print BfgsVerification.Parabolic.Family.objective
+#print BfgsVerification.Parabolic.Family.Active
+#print BfgsVerification.Parabolic.Family.branchGradient
+#print BfgsVerification.Parabolic.Family.stepDeterminant
+#check @BfgsVerification.AffineCertificate.eligible_pair_affine_iff
+#check @BfgsVerification.AffineCertificate.transform_constants
+#check @BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact
+#check @BfgsVerification.CenteredSmoothSublinear.exists_pair_correction_bound
+#check @BfgsVerification.CenteredSmoothSublinear.center_support
+#check @BfgsVerification.CenteredSmoothSublinear.centered_rewriting
+#check @BfgsVerification.CenteredSmoothSublinear.smoothRemainder_locallyC11
+#check @BfgsVerification.AdmissibleBFGSRun.quadraticGauge_finite_budget
+#check @BfgsVerification.AdmissibleBFGSRun.quadraticGauge_finite_sqrt_bound
+#check @BfgsVerification.AdmissibleBFGSRun.quadraticGauge_sqrt_budget_log_rate
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_endpoint_pairings_tendsto_zero
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_independent_anchors_tendsto_zero
+#check @BfgsVerification.Parabolic.Family.sublevel_compact
+#check @BfgsVerification.Parabolic.Family.active_eq_gradient
+#check @BfgsVerification.Parabolic.Family.secant_quotient_bound
+#check @BfgsVerification.Parabolic.Family.exists_uniform_secant_bound
+#check @BfgsVerification.Parabolic.Family.positive_visibility
+#check @BfgsVerification.CertificateGeometry.projected_matrixRange
+#check @BfgsVerification.CertificateGeometry.range_le_sup_span_of_projected_order
+#check @BfgsVerification.PointwiseFeasibility.uniformPSD_iff_capacity
+#check @BfgsVerification.PointwiseFeasibility.sourceIncomingPolar_eq_closedHull_polar
+#check @BfgsVerification.AccessibleJumpGeometry.common_tangential_projection
+#check @BfgsVerification.AccessibleJumpGeometry.tangent_projection_zero_iff_zero_mem_affineSpan
+#check @BfgsVerification.AccessibleJumpGeometry.accessible_jump_annihilated_of_continuousAt
+#check @BfgsVerification.AccessibleJumpGeometry.visible_accessible_projection_ne_zero
+#check @BfgsVerification.AccessibleJumpGeometry.visible_tangent_projection_ne_zero
+#check @BfgsVerification.AccessibleJumpGeometry.active_accessible_span_countermodel
+#check @BfgsVerification.AccessibleJumpGeometry.accessible_curvature_annihilated_of_continuousAt

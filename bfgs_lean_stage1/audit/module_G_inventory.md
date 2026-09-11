@@ -29,3 +29,12 @@ complexity is claimed. Source section-number gaps are preserved; they do not
 represent missing pages or omitted retained claims.
 
 Third tranche: individual eligible-pair realization and free-constant finite sample feasibility are compiled in PairRealizability/FiniteSampleCertificates. Both literal scalar nonnecessity examples are compiled in ScalarCounterexamples/AccumulatingKinks, including strong convexity, exact crossing quotients and all-run convergence; the accumulating example fails certificates in every neighborhood. See SCALAR_NONNECESSITY_REVIEW.md and G_PAIR_FINITE_SAMPLE_PEER_REVIEW.md. The ellipsoid/range, pointwise feasibility and tangent/normal claims remain open.
+
+Fourth milestone: literal Euclidean ellipsoid/range geometry, extended-real
+pointwise capacity and closed absolutely convex hull polar, and precise
+accessible-limit/tangent implications are compiled and fully audited. The G.4
+all-active versus accessible-span qualification is documented in
+MODULE_G_GEOMETRY_STATEMENT_REVIEW.md. The source's illustrative/partly-smooth
+narrative is not silently relabeled as a general theorem. Root
+AccessibleCurvatureBridge derives d→0 from t→0, so the actual continuous-field
+annihilation wrapper retains only the source curvature-limit premise.

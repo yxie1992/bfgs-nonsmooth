@@ -108,7 +108,25 @@ REPORT_CONTINUATION_TARGETS = {
     "finite_sample_feasibility_verified":
         ("BfgsVerification.finiteSampleFeasibility", "BfgsVerification.FiniteSampleFeasibilityTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS
+REPORT_APPLICATION_TARGETS = {
+    'affine_certificate_covariance_verified':
+        ("BfgsVerification.affineCertificateCovariance", "BfgsVerification.AffineCertificateCovarianceTarget"),
+    'centered_smooth_convergence_verified':
+        ("BfgsVerification.centeredSmoothConvergence", "BfgsVerification.CenteredSmoothConvergenceTarget"),
+    'centered_local_basin_verified':
+        ("BfgsVerification.centeredLocalBasin", "BfgsVerification.CenteredLocalBasinTarget"),
+    'quadratic_gauge_rates_verified':
+        ("BfgsVerification.quadraticGaugeRates", "BfgsVerification.QuadraticGaugeRatesTarget"),
+    'ellipsoid_certificate_geometry_verified':
+        ("BfgsVerification.ellipsoidCertificateGeometry", "BfgsVerification.EllipsoidCertificateGeometryTarget"),
+    'pointwise_certificate_capacity_verified':
+        ("BfgsVerification.pointwiseCertificateCapacity", "BfgsVerification.PointwiseCertificateCapacityTarget"),
+    'planar_homogeneous_escape_verified':
+        ("BfgsVerification.planarHomogeneousEscape", "BfgsVerification.PlanarHomogeneousEscapeTarget"),
+    'parabolic_denominator_verified':
+        ("BfgsVerification.parabolicDenominator", "BfgsVerification.ParabolicDenominatorTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -365,8 +383,10 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
-                ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; quadratic-gauge derivation remains separate"),
-                ("BfgsVerification.linearCorrectionRate", "Actual linear cumulative reference-correction budget"),
+                ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; discharged for the actual quadratic-gauge family in quadraticGaugeRates"),
+                ("BfgsVerification.linearCorrectionRate", "Actual linear cumulative reference-correction budget; derived for centered smooth-plus-sublinear objectives"),
+                ("BfgsVerification.linearImageLifting", "Explicit source premise: the projected actual run converges; full-space convergence and metric fiber selection are derived"),
+                ("BfgsVerification.AccessibleJumpGeometry.visible_tangent_projection_ne_zero", "Full active-gradient tangent conclusion requires annihilation of all differences; accessible-span projection is proved separately"),
                 ("BfgsVerification.EnergyBudget.energy_gap_tendsto_zero", "Scalar energy recurrence and negligible cumulative corrections"),
                 ("BfgsVerification.ResidualBudget.residual_recurrence_incompatible", "Scalar residual recurrence; discharged in residualFrameCriterion"),
                 ("BfgsVerification.quadraticCorrectionConvergence", "Actual cumulative reference-correction budget; not derived for every finite convex objective"),
@@ -383,7 +403,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Affine covariance and remaining G geometry, H.C, structural/radial applications, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
+            "Remaining F/R applications, Q calibrated transport and separation, H.7.4/H.8, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -392,7 +412,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_CONTINUATION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_APPLICATION_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
