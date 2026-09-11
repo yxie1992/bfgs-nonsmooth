@@ -38,3 +38,11 @@ and rate chain are compiled in QuadraticGauge*.lean. The transformed-gauge,
 max-affine basin, residual descriptions and line-search/matrix examples remain
 separate obligations. See CENTERED_STATEMENT_REVIEW.md and
 QUADRATIC_GAUGE_VERIFICATION.md.
+
+Fifth milestone: F:transform, its exact scalar correction coefficient, actual
+inverse/Theta derivative, endpoint gauge differentiability, compact sublevels
+and coercivity are now proved in TransformedGauge/TransformedGaugeInverse.
+The exact every-run target is transformedGaugeConvergence. Remaining F claims
+are the max-affine basin, residual descriptions, matrix/line-search examples,
+and source-linked powered-gauge classes in R. See
+TRANSFORMED_GAUGE_STATEMENT_REVIEW.md.

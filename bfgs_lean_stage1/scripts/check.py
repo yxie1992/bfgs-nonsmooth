@@ -126,7 +126,25 @@ REPORT_APPLICATION_TARGETS = {
     'parabolic_denominator_verified':
         ("BfgsVerification.parabolicDenominator", "BfgsVerification.ParabolicDenominatorTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS
+REPORT_FAMILY_TARGETS = {
+    "accessible_active_objective_separation_verified":
+        ("BfgsVerification.accessibleActiveSeparation", "BfgsVerification.AccessibleActiveSeparationTarget"),
+    "parabolic_eligible_separation_verified":
+        ("BfgsVerification.parabolicEligibleSeparation", "BfgsVerification.ParabolicEligibleSeparationTarget"),
+    "parabolic_radial_nonnecessity_verified":
+        ("BfgsVerification.parabolicNonnecessity", "BfgsVerification.ParabolicNonnecessityTarget"),
+    "parabolic_certificate_verified":
+        ("BfgsVerification.parabolicCertificate", "BfgsVerification.ParabolicCertificateTarget"),
+    "parabolic_convergence_verified":
+        ("BfgsVerification.parabolicConvergence", "BfgsVerification.ParabolicConvergenceTarget"),
+    "transformed_gauge_convergence_verified":
+        ("BfgsVerification.transformedGaugeConvergence", "BfgsVerification.TransformedGaugeConvergenceTarget"),
+    "relative_interior_convergence_verified":
+        ("BfgsVerification.relativeInteriorConvergence", "BfgsVerification.RelativeInteriorConvergenceTarget"),
+    "recurrent_relative_interior_verified":
+        ("BfgsVerification.recurrentRelativeInterior", "BfgsVerification.RecurrentRelativeInteriorTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -403,7 +421,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Remaining F/R applications, Q calibrated transport and separation, H.7.4/H.8, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
+            "Remaining F/R applications, Q explicit scaling/ordered-envelope bookkeeping, H.7.4 and H.8 class specializations, remaining G interpretations, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -412,7 +430,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_APPLICATION_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_FAMILY_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

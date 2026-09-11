@@ -217,3 +217,37 @@ and F's transformed-gauge family. Remaining R/F applications, C/U/A and D/L
 constructions, and synthesis/evidence closure are still obligations. Entire-report
 verification remains false; no generic conditional criterion is counted as its
 undischarged objective-specific application.
+
+## Fifth milestone: parabolic and transformed families, H.8, and G.4 correction
+
+The pinned full build and compiled-environment axiom audit pass for 1,202
+explicit / 1,675 total theorem declarations and all 52 exact targets. Logs are
+`audit/report_families_check.log`, `audit/build.log` and `audit/axioms.log`.
+Only propext, Classical.choice and Quot.sound occur; every audited source hash
+matches. See `audit/REPORT_FAMILIES_STATEMENT_REVIEW.md` and its linked reviews.
+
+Q's arbitrary original finite family now has a derived actual θ²rrᵀ certificate
+and full-BFGS value/iterate convergence. Uniform calibration, denominator,
+logarithm and transport data are proved before all eligible pairs. The explicit
+three-branch objective has actual SPD first-step witnesses, arbitrarily small
+eligible decreases and unbounded radial quotients on a fixed positive band in
+every neighborhood. The printed c1≤2/3 pair scope and the all-c1 rho extension
+are distinguished. Literal ordered pruning and printed-field identification
+remain separately tracked source-description obligations.
+
+F:transform is proved including literal inverse/Theta' formulas and endpoint
+gauge differentiability. H.8 has both the full-slope and actual recurrent-tail
+convergence conclusions, derived coordinates and exact initial/current metric
+fiber limits. H.7.4 and remaining H class bookkeeping are next-tranche work.
+
+G.4's missing accessibility qualification now has an actual convex-objective
+counterexample: shiftedAbs with (c1,c2)=(1/8,1/4), a continuous constant-I band
+certificate and genuine limiting gradients whose full-active tangent is zero.
+Accessible jumps are zero for these constants. The qualified accessible-span
+statement remains valid. Original sources are unchanged; the correction and
+example scope are recorded in `audit/G4_ACTUAL_OBJECTIVE_CORRECTION_REVIEW.md`.
+
+Entire-report verification remains false. Remaining F/R applications, G
+interpretations, C/U/A, D/L constructions and final synthesis/evidence coverage
+remain explicit obligations. Next-tranche drafts live only under audit/scratch
+and are excluded from this release manifest until fully integrated and audited.

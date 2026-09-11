@@ -1,6 +1,6 @@
 # Module Q inventory and proof design
 
-Source `BFGS_MASTER_REPORT_LaTeX/report/chapters/Q.tex` was read in full. This is a design/review inventory, **not a formal-verification claim**. No Lean source is introduced in this tranche and the research source is unchanged.
+Source `BFGS_MASTER_REPORT_LaTeX/report/chapters/Q.tex` was read in full. This inventory preserves the initial proof design and records completed exports in the milestone entries below. The research source is unchanged.
 
 ## Exact objective class and primary conclusion
 
@@ -107,3 +107,24 @@ uniform Q.13 with derived D!=0, and unscaled visibility/secant estimates are
 verified. See PARABOLIC_FOUNDATION_REVIEW.md and parabolic_foundation_axioms.log.
 The finite-envelope calibration, Q.15--Q.17, main convergence theorem and
 explicit separation remain open in this released milestone.
+
+## Fifth milestone progress
+
+The arbitrary-family principal theorem and actual θ²rrᵀ certificate are now
+compiled and scoped-audited, through derived calibration, uniform logarithmic
+transport and exact projected Loewner comparison. Exports are
+`parabolicCertificate` and `parabolicConvergence`. See
+PARABOLIC_CONVERGENCE_STATEMENT_REVIEW.md. The normalized-cell ramp construction
+covers all original branches and proves Q.7/Q.16 directly; no envelope/pruning
+witness is assumed. The separate literal ordered-pruning description remains a
+source bookkeeping obligation.
+
+The explicit three-branch example now has actual branch gradients, exact SPD
+unit-step metrics, eligibility, positive-band/neighborhood radial divergence,
+RS failure and every-run convergence. The generalized rho family covers every
+allowed fixed c1. Printed scalar bounds and endpoint compensated-log and
+transported-correction identities are proved. See
+PARABOLIC_EXAMPLE_STATEMENT_REVIEW.md and PARABOLIC_EXAMPLE_SOURCE_SCOPE.md.
+Remaining Q description obligations are the printed field's full continuity /
+identification with the generic calibration and the ordered-pruning facts.
+These do not appear as assumptions in the completed principal theorem.

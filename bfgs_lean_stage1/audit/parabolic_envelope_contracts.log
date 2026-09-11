@@ -1,0 +1,16 @@
+@Parabolic.Family.calibration_interface_identity : ∀ {m : ℕ} (P : Parabolic.Family m) (ξ : ℝ) {i j : Fin m},
+  P.Active i ![1, ξ] →
+    P.Active j ![1, ξ] → P.calibration j - P.calibration i = -(P.a j - P.a i) / (2 * P.objective ![1, ξ])
+@Parabolic.Family.active_retained_representative : ∀ {m : ℕ} (P : Parabolic.Family m) {j : Fin m} {x : Vec 2},
+  P.Active j x → 0 < P.objective x → ∃ i ∈ P.retainedCells, P.Active i x ∧ P.branchGradient i x = P.branchGradient j x
+@Parabolic.Family.exists_calibration_deficit_bound : ∀ {m : ℕ} (P : Parabolic.Family m),
+  ∃ C,
+    0 < C ∧
+      ∀ (i j : Fin m) (z : Vec 2),
+        P.Active j z →
+          0 < P.objective z →
+            |(P.a j - P.a i) * z 0 ^ 2 / (2 * P.objective z) + P.calibration j - P.calibration i| ≤
+              C * P.deficit i z / P.objective z
+@Parabolic.Family.calibratedScale_uniform_bounds : ∀ {m : ℕ} (P : Parabolic.Family m),
+  ∃ θmin θmax,
+    0 < θmin ∧ 0 < θmax ∧ ∀ (x : Vec 2), 0 < P.objective x → θmin ≤ P.calibratedScale x ∧ P.calibratedScale x ≤ θmax

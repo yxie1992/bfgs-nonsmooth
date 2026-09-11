@@ -18,6 +18,7 @@ import BfgsVerification.ReportCoreEndToEnd
 import BfgsVerification.ReportGeometryEndToEnd
 import BfgsVerification.ReportContinuationEndToEnd
 import BfgsVerification.ReportApplicationsEndToEnd
+import BfgsVerification.ReportFamiliesEndToEnd
 import BfgsVerification.AccessibleCurvatureBridge
 
 /-!

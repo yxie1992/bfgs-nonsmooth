@@ -1,0 +1,27 @@
+import BfgsVerification.TransformedGaugeInverse
+
+#print axioms BfgsVerification.TransformedGauge.transform_tendsto_atTop
+#print axioms BfgsVerification.TransformedGauge.transform_nonneg
+#print axioms BfgsVerification.TransformedGauge.transform_positive
+#print axioms BfgsVerification.TransformedGauge.transform_surjOn
+#print axioms BfgsVerification.TransformedGauge.inverse
+#print axioms BfgsVerification.TransformedGauge.inverse_nonneg
+#print axioms BfgsVerification.TransformedGauge.transform_inverse
+#print axioms BfgsVerification.TransformedGauge.inverse_transform
+#print axioms BfgsVerification.TransformedGauge.inverse_positive
+#print axioms BfgsVerification.TransformedGauge.inverse_strictMonoOn
+#print axioms BfgsVerification.TransformedGauge.inverse_image
+#print axioms BfgsVerification.TransformedGauge.inverse_continuousAt
+#print axioms BfgsVerification.TransformedGauge.inverse_hasDerivAt
+#print axioms BfgsVerification.TransformedGauge.theta
+#print axioms BfgsVerification.TransformedGauge.radialPairing_hasDerivAt
+#print axioms BfgsVerification.TransformedGauge.theta_hasDerivAt
+#print axioms BfgsVerification.TransformedGauge.actual_gradient_eq_theta
+#print axioms BfgsVerification.TransformedGauge.theta_derivative_continuousOn
+#print axioms BfgsVerification.TransformedGauge.theta_derivative_bounded
+#print axioms BfgsVerification.TransformedGauge.theta_lipschitz_on_positive_interval
+#print axioms BfgsVerification.TransformedGauge.gauge_hasFDerivAt_of_objective
+#print axioms BfgsVerification.TransformedGauge.objective_coercive
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_radius_pos
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_euler
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_actual_gauge_derivative

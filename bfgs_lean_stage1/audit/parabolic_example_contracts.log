@@ -1,0 +1,22 @@
+@printed_armijo_iff : ∀ {u ε c₁ : ℝ},
+  0 < ε →
+    ε < 6 * u ^ 2 →
+      (c₁ * pairDecrease (oldPoint u ε) (newPoint u (1 / 2) ε) (oldGradient u) ≤
+          objective (oldPoint u ε) - objective (newPoint u (1 / 2) ε) ↔
+        c₁ ≤ 2 / 3)
+@radial_quotient_tendsto : ∀ {u ρ : ℝ},
+  u ≠ 0 →
+    0 < ρ →
+      Tendsto
+        (fun ε =>
+          radialNumerator 0 (newPoint u ρ ε) (oldGradient u) (newGradient u) ^ 2 /
+            pairCurvature (oldPoint u ε) (newPoint u ρ ε) (oldGradient u) (newGradient u))
+        (𝓝[>] 0) atTop
+@source_compensated_log : ∀ {u ρ ε : ℝ},
+  0 < ρ →
+    0 < ε →
+      ρ * ε < 3 * u ^ 2 →
+        Real.log
+            (sourceScale (newPoint u ρ ε) * Parabolic.Family.quotientMultiplier (oldPoint u ε) (newPoint u ρ ε) /
+              sourceScale (oldPoint u ε)) =
+          ε / (6 * (3 * u ^ 2 + ε))

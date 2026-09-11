@@ -54,3 +54,9 @@ Historical successful logs do not certify later source changes. Current status
 and its full compiler/axiom transcripts certify the delivered source state.
 Binary toolchain, cache, and build artifacts stay in ignored project directories;
 version pins and source/audit artifacts are tracked by Git.
+
+Fifth report milestone: report_families_check.log certifies 1,202 explicit /
+1,675 total theorem declarations and 52 exact targets. Separate envelope,
+transport, explicit example, transformed-gauge, H.8 and actual G.4 correction
+logs accompany reviewed source statements. Earlier successful logs remain
+historical snapshots; current STATUS.json hashes identify this source state.

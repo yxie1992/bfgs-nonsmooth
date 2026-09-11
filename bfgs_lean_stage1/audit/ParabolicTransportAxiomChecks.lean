@@ -1,0 +1,25 @@
+import BfgsVerification.ParabolicCertificate
+#print axioms BfgsVerification.Parabolic.Family.radial_direction_transport
+#print axioms BfgsVerification.Parabolic.Family.quotient_cancellation
+#print axioms BfgsVerification.Parabolic.Family.exponent_increment
+#print axioms BfgsVerification.Parabolic.log_remainder_bound
+#print axioms BfgsVerification.Parabolic.compensation_square_bound
+#print axioms BfgsVerification.Parabolic.compensation_log_bound
+#print axioms BfgsVerification.Parabolic.exp_mul_le_one_add
+#print axioms BfgsVerification.Parabolic.squared_multiplier_bound
+#print axioms BfgsVerification.Parabolic.ratio_bound
+#print axioms BfgsVerification.Parabolic.cancellation_residual_bound
+#print axioms BfgsVerification.Parabolic.exponent_remainder_bound
+#print axioms BfgsVerification.Parabolic.close_multiplier_of_small_decrease
+#print axioms BfgsVerification.Parabolic.Family.calibrated_vector_transport
+#print axioms BfgsVerification.Parabolic.Family.exists_uniform_log_transport
+#print axioms BfgsVerification.Parabolic.Family.exists_uniform_vector_transport
+#print axioms BfgsVerification.Parabolic.Family.exists_bandCertificate
+#print axioms BfgsVerification.Parabolic.Family.hasBandCertificates
+#print axioms BfgsVerification.Parabolic.Family.calibratedVector_continuousOn
+#print axioms BfgsVerification.Parabolic.Family.certificateField_continuousOn
+#print axioms BfgsVerification.AdmissibleBFGSRun.parabolic_convergence
+#print axioms BfgsVerification.Parabolic.Family.quotientMultiplier
+#print axioms BfgsVerification.Parabolic.Family.stepMultiplier
+#print axioms BfgsVerification.Parabolic.Family.calibratedVector
+#print axioms BfgsVerification.Parabolic.Family.compensatedMultiplier

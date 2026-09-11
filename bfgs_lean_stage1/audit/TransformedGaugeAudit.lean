@@ -1,0 +1,23 @@
+import BfgsVerification.TransformedGauge
+
+#print axioms BfgsVerification.TransformedGauge.IncreasingTransform
+#print axioms BfgsVerification.TransformedGauge.objective
+#print axioms BfgsVerification.TransformedGauge.gauge_nonneg
+#print axioms BfgsVerification.TransformedGauge.objective_at_center
+#print axioms BfgsVerification.TransformedGauge.objective_nonneg
+#print axioms BfgsVerification.TransformedGauge.objective_eq_zero_iff
+#print axioms BfgsVerification.TransformedGauge.objective_convex
+#print axioms BfgsVerification.TransformedGauge.objective_sublevel_compact
+#print axioms BfgsVerification.TransformedGauge.transform_hasDerivAt
+#print axioms BfgsVerification.TransformedGauge.actual_gradient_euler
+#print axioms BfgsVerification.TransformedGauge.radialPairing
+#print axioms BfgsVerification.TransformedGauge.radialPairing_contDiff
+#print axioms BfgsVerification.TransformedGauge.radialPairing_variation_on_annulus
+#print axioms BfgsVerification.TransformedGauge.exists_gauge_annulus_on_positive_band
+#print axioms BfgsVerification.TransformedGauge.actual_pairing_variation_on_positive_band
+#print axioms BfgsVerification.TransformedGauge.correction_numeric
+#print axioms BfgsVerification.AdmissibleBFGSRun.reference_new_pairing_difference
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_correction_on_positive_band
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_corrections_summable_on_positive_band
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_values
+#print axioms BfgsVerification.AdmissibleBFGSRun.transformedGauge_convergence

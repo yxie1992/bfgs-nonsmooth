@@ -145,3 +145,17 @@ references to previous examples and the external two-piece finite-termination
 paper are provenance/comparison claims, not proofs supplied by Module H.
 
 Third tranche: AffineProjection/AffineCompression/AffineLifting and their run/fiber wrappers prove exact projected updates and arbitrary-tail fixed lifting (H.7.1). H.C endpoint and the planar unbounded-below theorem are now checked in the fourth tranche; the general opposing-gradient block argument remains open. ObjectiveRates.lean also proves the homogeneous finite weighted-sum and o(1/N) rates used in F, including derived Euclidean coercive norm bounds.
+
+## H.8 relative-interior tranche — compiled and individually audited
+
+Item 14 is now checked in `HomogeneousRelativeInteriorConvergence.lean` and its
+three new supporting modules. The actual relative-interior hypothesis derives
+coercivity on the full slope span, an orthonormal coordinate representation,
+zero-fiber equality, full point convergence to the initial-metric projection,
+and its unique metric-minimizer property. The recurrent-tail version proves
+local derivative preservation and all accepted-value/run identities when
+nonrecurrent slopes are removed, then proves the original full sequence's
+current-metric formula and original objective optimality. No global original
+factorization follows merely from recurrent slope membership, and none is used.
+See `audit/H_RELATIVE_INTERIOR_VERIFICATION.md` and the 31-declaration actual
+compiler/axiom logs. General H.7.4 block stitching and rank≤2 are still pending.

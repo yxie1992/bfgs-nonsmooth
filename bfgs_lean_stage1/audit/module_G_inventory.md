@@ -38,3 +38,12 @@ MODULE_G_GEOMETRY_STATEMENT_REVIEW.md. The source's illustrative/partly-smooth
 narrative is not silently relabeled as a general theorem. Root
 AccessibleCurvatureBridge derives d→0 from t→0, so the actual continuous-field
 annihilation wrapper retains only the source curvature-limit premise.
+
+Fifth milestone: the G.4 full-active versus accessible-span distinction now has
+an actual objective counterexample in ShiftedAbsAccessibility. For shiftedAbs
+and (c1,c2)=(1/8,1/4), all sufficiently small eligible pairs remain on one smooth
+side, yielding constant-I certificates on every compact positive band. Actual
+limiting gradients 1 and 3 at the nonoptimal kink have zero full-active tangent
+projection and positive I energy. Every accessible limiting jump is zero.
+This does not contradict the earlier no-certificate result at (1/4,1/2).
+See G4_ACTUAL_OBJECTIVE_CORRECTION_REVIEW.md and exact accessibleActiveSeparation.

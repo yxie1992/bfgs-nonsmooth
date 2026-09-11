@@ -303,3 +303,42 @@ example : BfgsVerification.ParabolicDenominatorTarget := BfgsVerification.parabo
 #check @BfgsVerification.AccessibleJumpGeometry.visible_tangent_projection_ne_zero
 #check @BfgsVerification.AccessibleJumpGeometry.active_accessible_span_countermodel
 #check @BfgsVerification.AccessibleJumpGeometry.accessible_curvature_annihilated_of_continuousAt
+
+-- Fifth milestone: original-family Q, transformed gauges, and H.8.
+#print BfgsVerification.Parabolic.Family
+#print BfgsVerification.Parabolic.Family.calibratedScale
+#print BfgsVerification.Parabolic.Family.calibratedVector
+#print BfgsVerification.TransformedGauge.IncreasingTransform
+#print BfgsVerification.TransformedGauge.objective
+#print BfgsVerification.TransformedGauge.inverse
+#print BfgsVerification.TransformedGauge.theta
+#print BfgsVerification.Homogeneous.RelativeInteriorZero
+#print BfgsVerification.ParabolicCertificateTarget
+#print BfgsVerification.ParabolicConvergenceTarget
+#print BfgsVerification.TransformedGaugeConvergenceTarget
+#print BfgsVerification.RelativeInteriorConvergenceTarget
+#print BfgsVerification.RecurrentRelativeInteriorTarget
+example : BfgsVerification.ParabolicCertificateTarget := BfgsVerification.parabolicCertificate
+example : BfgsVerification.ParabolicConvergenceTarget := BfgsVerification.parabolicConvergence
+example : BfgsVerification.TransformedGaugeConvergenceTarget := BfgsVerification.transformedGaugeConvergence
+example : BfgsVerification.RelativeInteriorConvergenceTarget := BfgsVerification.relativeInteriorConvergence
+example : BfgsVerification.RecurrentRelativeInteriorTarget := BfgsVerification.recurrentRelativeInterior
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_complete
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_convergence
+#check @BfgsVerification.TransformedGauge.theta_hasDerivAt
+#check @BfgsVerification.AdmissibleBFGSRun.transformedGauge_actual_gauge_derivative
+
+#print BfgsVerification.Parabolic.Example.objective
+#print BfgsVerification.Parabolic.Example.initialMetric
+#print BfgsVerification.ParabolicEligibleSeparationTarget
+#print BfgsVerification.ParabolicNonnecessityTarget
+example : BfgsVerification.ParabolicEligibleSeparationTarget := BfgsVerification.parabolicEligibleSeparation
+example : BfgsVerification.ParabolicNonnecessityTarget := BfgsVerification.parabolicNonnecessity
+#check @BfgsVerification.Parabolic.Example.printed_armijo_iff
+#check @BfgsVerification.Parabolic.Example.source_compensated_log
+
+#print BfgsVerification.AccessibleActiveSeparationTarget
+example : BfgsVerification.AccessibleActiveSeparationTarget := BfgsVerification.accessibleActiveSeparation
+#check @BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero
+#check @BfgsVerification.ShiftedAbsAccessibility.full_active_tangent_space_eq_bot
+#check @BfgsVerification.ShiftedAbsAccessibility.shifted_all_compact_band_certificates

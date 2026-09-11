@@ -1,6 +1,6 @@
 {
-  "timestamp_utc": "2026-09-11T02:41:07.871687+00:00",
-  "status": "MODULE_M_AND_REPORT_APPLICATION_TARGETS_VERIFIED",
+  "timestamp_utc": "2026-09-11T03:12:39.859335+00:00",
+  "status": "MODULE_M_AND_REPORT_FAMILY_TARGETS_VERIFIED",
   "lean_typechecking_performed": true,
   "end_to_end_principal_minor_hierarchy_verified": true,
   "end_to_end_bfgs_reciprocal_growth_verified": true,
@@ -46,6 +46,14 @@
   "pointwise_certificate_capacity_verified": true,
   "planar_homogeneous_escape_verified": true,
   "parabolic_denominator_verified": true,
+  "accessible_active_objective_separation_verified": true,
+  "parabolic_eligible_separation_verified": true,
+  "parabolic_radial_nonnecessity_verified": true,
+  "parabolic_certificate_verified": true,
+  "parabolic_convergence_verified": true,
+  "transformed_gauge_convergence_verified": true,
+  "relative_interior_convergence_verified": true,
+  "recurrent_relative_interior_verified": true,
   "objective_level_model_formalized": true,
   "entire_report_verified": false,
   "verified_declarations": [
@@ -1240,6 +1248,26 @@
       "source": "BfgsVerification/CompactConvergence.lean"
     },
     {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.exists_recurrent_maxLinear_run",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n  \u2203 J B,\n    \u2203 (hB : B.Nonempty),\n      \u2203 Q,\n        \u2191B = BfgsVerification.Homogeneous.recurrentValues R.g \u2227\n          B \u2286 A \u2227\n            (Q.x = fun k => R.x (J + k)) \u2227\n              (Q.H = fun k => R.H (J + k)) \u2227\n                (Q.g = fun k => R.g (J + k)) \u2227\n                  (Q.\u03b1 = fun k => R.\u03b1 (J + k)) \u2227\n                    Q.c\u2081 = R.c\u2081 \u2227\n                      Q.c\u2082 = R.c\u2082 \u2227\n                        \u2200 (k : \u2115),\n                          BfgsVerification.Homogeneous.finiteMaxLinear B hB (Q.x k) =\n                            BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x (J + k))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.exists_recurrent_slope_subset",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n  \u2203 J B, B.Nonempty \u2227 \u2191B = BfgsVerification.Homogeneous.recurrentValues R.g \u2227 B \u2286 A \u2227 \u2200 (k : \u2115), R.g (J + k) \u2208 B",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
       "theorem": "BfgsVerification.AdmissibleBFGSRun.finite_budget_le",
       "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (L : \u211d),\n  (\u2200 (k : \u2115), L \u2264 F (R.x k)) \u2192 \u2200 (J N : \u2115), \u2211 i \u2208 Finset.range N, R.d (J + i) \u2264 (F (R.x J) - L) / R.c\u2081",
       "axioms": [
@@ -1820,6 +1848,56 @@
       "source": "BfgsVerification/HomogeneousCardinality.lean"
     },
     {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_convergence",
+      "signature": "\u2200 {n r : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  B.Nonempty \u2192\n    \u2200 (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n      \u2191B = BfgsVerification.Homogeneous.recurrentValues R.g \u2192\n        BfgsVerification.Homogeneous.RelativeInteriorZero B \u2192\n          \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n            U.transpose * U = 1 \u2192\n              (\u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191B \u2194 \u2203 z, U.mulVec z = x) \u2192\n                \u2203 J,\n                  Filter.Tendsto R.x Filter.atTop\n                      (nhds (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H J) (R.x J) 0)) \u2227\n                    Filter.Tendsto (fun k => BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)) Filter.atTop\n                        (nhds 0) \u2227\n                      BfgsVerification.Homogeneous.finiteMaxLinear A hA\n                          (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H J) (R.x J) 0) =\n                        0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorConvergence.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_has_limit",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  B.Nonempty \u2192\n    \u2200 (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n      \u2191B = BfgsVerification.Homogeneous.recurrentValues R.g \u2192\n        BfgsVerification.Homogeneous.RelativeInteriorZero B \u2192\n          \u2203 xstar,\n            Filter.Tendsto R.x Filter.atTop (nhds xstar) \u2227 BfgsVerification.Homogeneous.finiteMaxLinear A hA xstar = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorConvergence.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_complete",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n      U.transpose * U = 1 \u2192\n        (\u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191A \u2194 \u2203 z, U.mulVec z = x) \u2192\n          Filter.Tendsto (fun k => BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)) Filter.atTop (nhds 0) \u2227\n            Filter.Tendsto R.x Filter.atTop\n                (nhds (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H 0) (R.x 0) 0)) \u2227\n              BfgsVerification.Homogeneous.finiteMaxLinear A hA\n                    (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H 0) (R.x 0) 0) =\n                  0 \u2227\n                (\u2200 (x : BfgsVerification.Vec n),\n                    BfgsVerification.Homogeneous.finiteMaxLinear A hA x = 0 \u2194 U.transpose.mulVec x = 0) \u2227\n                  \u2200 (x : BfgsVerification.Vec n),\n                    BfgsVerification.Homogeneous.finiteMaxLinear A hA x = 0 \u2192\n                      BfgsVerification.metricEnergy (R.H 0)\u207b\u00b9\n                            (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H 0) (R.x 0) 0 - R.x 0) \u2264\n                          BfgsVerification.metricEnergy (R.H 0)\u207b\u00b9 (x - R.x 0) \u2227\n                        (BfgsVerification.metricEnergy (R.H 0)\u207b\u00b9 (x - R.x 0) =\n                            BfgsVerification.metricEnergy (R.H 0)\u207b\u00b9\n                              (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H 0) (R.x 0) 0 - R.x 0) \u2194\n                          x = BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H 0) (R.x 0) 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorConvergence.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_convergence",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n      U.transpose * U = 1 \u2192\n        (\u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191A \u2194 \u2203 z, U.mulVec z = x) \u2192\n          Filter.Tendsto (fun k => U.transpose.mulVec (R.x k)) Filter.atTop (nhds 0) \u2227\n            Filter.Tendsto R.x Filter.atTop\n              (nhds (BfgsVerification.AffineProjection.fiberPoint U.transpose (R.H 0) (R.x 0) 0))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_has_limit",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2203 xstar, Filter.Tendsto R.x Filter.atTop (nhds xstar) \u2227 BfgsVerification.Homogeneous.finiteMaxLinear A hA xstar = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorConvergence.lean"
+    },
+    {
       "theorem": "BfgsVerification.AdmissibleBFGSRun.maxLinear_value_dichotomy",
       "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n  Filter.Tendsto (fun k => BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)) Filter.atTop (nhds 0) \u2228\n    Filter.Tendsto (fun k => BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)) Filter.atTop Filter.atBot",
       "axioms": [
@@ -1968,6 +2046,16 @@
         "propext"
       ],
       "source": "BfgsVerification/CompactConvergence.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.parabolic_convergence",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (R : BfgsVerification.AdmissibleBFGSRun 2 P.objective),\n  Filter.Tendsto (fun k => P.objective (R.x k)) Filter.atTop (nhds 0) \u2227 Filter.Tendsto R.x Filter.atTop (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicCertificate.lean"
     },
     {
       "theorem": "BfgsVerification.AdmissibleBFGSRun.positive_definite",
@@ -2230,6 +2318,16 @@
       "source": "BfgsVerification/ObjectiveRates.lean"
     },
     {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.reference_new_pairing_difference",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n)\n  (k : \u2115),\n  BfgsVerification.dot (R.gradientChange k) (R.x (k + 1) - star) =\n    R.d k + (R.referencePairing star (k + 1) - R.referencePairing star k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
       "theorem": "BfgsVerification.AdmissibleBFGSRun.reference_value_budget_bound",
       "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F) (star : BfgsVerification.Vec n),\n  (\u2200 (x : BfgsVerification.Vec n), F star \u2264 F x) \u2192\n    \u2200 (C : \u211d),\n      (\u2200 (k : \u2115), R.referenceCorrection star k \u2264 C * (F (R.x (k + 1)) - F star)) \u2192\n        \u2200 (N : \u2115), (F (R.x N) - F star) ^ 2 * \u2211 k \u2208 Finset.range N, (R.q k)\u207b\u00b9 \u2264 R.valueCorrectionBudget star C N",
       "axioms": [
@@ -2278,6 +2376,56 @@
         "propext"
       ],
       "source": "BfgsVerification/ResidualSourceForm.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear_H",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty) (hBA : B \u2286 A)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA))\n  (hg : \u2200 (k : \u2115), R.g k \u2208 B), (BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear A B hA hB hBA R hg).H = R.H",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear_alpha",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty) (hBA : B \u2286 A)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA))\n  (hg : \u2200 (k : \u2115), R.g k \u2208 B), (BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear A B hA hB hBA R hg).\u03b1 = R.\u03b1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear_g",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty) (hBA : B \u2286 A)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA))\n  (hg : \u2200 (k : \u2115), R.g k \u2208 B), (BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear A B hA hB hBA R hg).g = R.g",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear_value",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty) (hBA : B \u2286 A)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA))\n  (hg : \u2200 (k : \u2115), R.g k \u2208 B) (k : \u2115),\n  BfgsVerification.Homogeneous.finiteMaxLinear B hB\n      ((BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear A B hA hB hBA R hg).x k) =\n    BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear_x",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty) (hBA : B \u2286 A)\n  (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA))\n  (hg : \u2200 (k : \u2115), R.g k \u2208 B), (BfgsVerification.AdmissibleBFGSRun.restrictMaxLinear A B hA hB hBA R hg).x = R.x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
     },
     {
       "theorem": "BfgsVerification.AdmissibleBFGSRun.scalar_convergence",
@@ -2538,6 +2686,76 @@
         "propext"
       ],
       "source": "BfgsVerification/ObjectiveRun.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_actual_gauge_derivative",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n        \u2200 (star : BfgsVerification.Vec n)\n          (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)) (k : \u2115),\n          HasFDerivAt \u03b3 ((deriv \u03a6 (\u03b3 (R.x k - star)))\u207b\u00b9 \u2022 BfgsVerification.gradientFunctional (R.g k)) (R.x k - star)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_convergence",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n)\n            (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)),\n            Filter.Tendsto (fun k => BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x k)) Filter.atTop\n                (nhds 0) \u2227\n              Filter.Tendsto R.x Filter.atTop (nhds star)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_correction_on_positive_band",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n)\n            (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)) {\u03b7 : \u211d},\n            0 < \u03b7 \u2192\n              (\u2200 (k : \u2115), \u03b7 \u2264 BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x k)) \u2192\n                \u2203 C,\n                  0 < C \u2227\n                    \u2200 (k : \u2115),\n                      R.referenceCorrection star k \u2264\n                        (1 + C) ^ 2 / ((1 - R.c\u2082) * R.c\u2081) *\n                          (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x k) -\n                            BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x (k + 1)))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_corrections_summable_on_positive_band",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n)\n            (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)) {\u03b7 : \u211d},\n            0 < \u03b7 \u2192\n              (\u2200 (k : \u2115), \u03b7 \u2264 BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x k)) \u2192\n                Summable (R.referenceCorrection star)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_euler",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n        \u2200 (star : BfgsVerification.Vec n)\n          (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)) (k : \u2115),\n          R.referencePairing star k = \u03b3 (R.x k - star) * deriv \u03a6 (\u03b3 (R.x k - star)) \u2227\n            R.referencePairing star k =\n              BfgsVerification.TransformedGauge.theta \u03a6 (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x k))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_radius_pos",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n        \u2200 (star : BfgsVerification.Vec n)\n          (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)) (k : \u2115),\n          0 < \u03b3 (R.x k - star)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.AdmissibleBFGSRun.transformedGauge_values",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n)\n            (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)),\n            Filter.Tendsto (fun k => BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star (R.x k)) Filter.atTop (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
     },
     {
       "theorem": "BfgsVerification.AdmissibleBFGSRun.transported_certificate_convergence_on_sublevel",
@@ -5020,6 +5238,16 @@
       "source": "BfgsVerification/HomogeneousCommonTilt.lean"
     },
     {
+      "theorem": "BfgsVerification.Homogeneous.dot_convexHull_le_finiteMaxLinear",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (x y : BfgsVerification.Vec n),\n  y \u2208 (convexHull \u211d) \u2191A \u2192 BfgsVerification.dot y x \u2264 BfgsVerification.Homogeneous.finiteMaxLinear A hA x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
       "theorem": "BfgsVerification.Homogeneous.eventually_mem_recurrentValues",
       "signature": "\u2200 {\u03b1 : Type u_1} (g : \u2115 \u2192 \u03b1),\n  (Set.range g).Finite \u2192 \u2200\u1da0 (k : \u2115) in Filter.atTop, g k \u2208 BfgsVerification.Homogeneous.recurrentValues g",
       "axioms": [
@@ -5028,6 +5256,16 @@
         "propext"
       ],
       "source": "BfgsVerification/HomogeneousAffineGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.exists_slope_span_coordinates",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)),\n  \u2203 r U, U.transpose * U = 1 \u2227 \u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191A \u2194 \u2203 z, U.mulVec z = x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean"
     },
     {
       "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_abs_euclidean_bound",
@@ -5070,6 +5308,26 @@
       "source": "BfgsVerification/HomogeneousMaxLinear.lean"
     },
     {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_comp_convex",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (U : Matrix (Fin n) (Fin r) \u211d),\n  ConvexOn \u211d Set.univ fun z => BfgsVerification.Homogeneous.finiteMaxLinear A hA (U.mulVec z)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_comp_homogeneous",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (U : Matrix (Fin n) (Fin r) \u211d),\n  BfgsVerification.Homogeneous.PositiveDegreeOne fun z => BfgsVerification.Homogeneous.finiteMaxLinear A hA (U.mulVec z)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean"
+    },
+    {
       "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_convex",
       "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  ConvexOn \u211d Set.univ (BfgsVerification.Homogeneous.finiteMaxLinear A hA)",
       "axioms": [
@@ -5098,6 +5356,56 @@
         "propext"
       ],
       "source": "BfgsVerification/HomogeneousMaxLinear.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_locally_eq_gradient",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) {x g : BfgsVerification.Vec n},\n  HasFDerivAt (BfgsVerification.Homogeneous.finiteMaxLinear A hA) (BfgsVerification.gradientFunctional g) x \u2192\n    BfgsVerification.Homogeneous.finiteMaxLinear A hA =\u1da0[nhds x] fun z => BfgsVerification.dot g z",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_projection_eq",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (U : Matrix (Fin n) (Fin r) \u211d),\n  U.transpose * U = 1 \u2192\n    (\u2200 a \u2208 A, \u2203 z, U.mulVec z = a) \u2192\n      \u2200 (x : BfgsVerification.Vec n),\n        BfgsVerification.Homogeneous.finiteMaxLinear A hA (U.mulVec (U.transpose.mulVec x)) =\n          BfgsVerification.Homogeneous.finiteMaxLinear A hA x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_restriction_eventuallyEq",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty),\n  B \u2286 A \u2192\n    \u2200 {x g : BfgsVerification.Vec n},\n      HasFDerivAt (BfgsVerification.Homogeneous.finiteMaxLinear A hA) (BfgsVerification.gradientFunctional g) x \u2192\n        g \u2208 B \u2192\n          BfgsVerification.Homogeneous.finiteMaxLinear B hB =\u1da0[nhds x] BfgsVerification.Homogeneous.finiteMaxLinear A hA",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_restriction_hasGradient",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty),\n  B \u2286 A \u2192\n    \u2200 {x g : BfgsVerification.Vec n},\n      HasFDerivAt (BfgsVerification.Homogeneous.finiteMaxLinear A hA) (BfgsVerification.gradientFunctional g) x \u2192\n        g \u2208 B \u2192\n          HasFDerivAt (BfgsVerification.Homogeneous.finiteMaxLinear B hB) (BfgsVerification.gradientFunctional g) x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_restriction_value",
+      "signature": "\u2200 {n : \u2115} (A B : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty) (hB : B.Nonempty),\n  B \u2286 A \u2192\n    \u2200 {x g : BfgsVerification.Vec n},\n      HasFDerivAt (BfgsVerification.Homogeneous.finiteMaxLinear A hA) (BfgsVerification.gradientFunctional g) x \u2192\n        g \u2208 B \u2192\n          BfgsVerification.Homogeneous.finiteMaxLinear B hB x = BfgsVerification.Homogeneous.finiteMaxLinear A hA x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousLowRankRestriction.lean"
     },
     {
       "theorem": "BfgsVerification.Homogeneous.finiteMaxLinear_value_escape_norm",
@@ -5170,6 +5478,36 @@
       "source": "BfgsVerification/HomogeneousConsequences.lean"
     },
     {
+      "theorem": "BfgsVerification.Homogeneous.orthonormal_projection_on_range",
+      "signature": "\u2200 {n r : \u2115} (U : Matrix (Fin n) (Fin r) \u211d),\n  U.transpose * U = 1 \u2192 \u2200 (x : BfgsVerification.Vec n), (\u2203 z, U.mulVec z = x) \u2192 U.mulVec (U.transpose.mulVec x) = x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.orthonormal_transpose_fullRowRank",
+      "signature": "\u2200 {n r : \u2115} (U : Matrix (Fin n) (Fin r) \u211d),\n  U.transpose * U = 1 \u2192 BfgsVerification.AffineProjection.FullRowRank U.transpose",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.positive_homogeneous_euclidean_lower_bound",
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n      (\u2200 (x : BfgsVerification.Vec n), x \u2260 0 \u2192 0 < F x) \u2192\n        \u2203 \u03bc, 0 < \u03bc \u2227 \u2200 (x : BfgsVerification.Vec n), \u03bc * \u2016BfgsVerification.euclideanVector x\u2016 \u2264 F x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean"
+    },
+    {
       "theorem": "BfgsVerification.Homogeneous.positive_of_bounded_zero_sublevel",
       "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Bornology.IsBounded {x | F x \u2264 0} \u2192 \u2200 {x : BfgsVerification.Vec n}, x \u2260 0 \u2192 0 < F x",
       "axioms": [
@@ -5208,6 +5546,56 @@
         "propext"
       ],
       "source": "BfgsVerification/HomogeneousAffineGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.relativeInteriorZero_nonneg",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 (x : BfgsVerification.Vec n), 0 \u2264 BfgsVerification.Homogeneous.finiteMaxLinear A hA x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.relativeInteriorZero_positive_on_span",
+      "signature": "\u2200 {n : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 x \u2208 Submodule.span \u211d \u2191A, x \u2260 0 \u2192 0 < BfgsVerification.Homogeneous.finiteMaxLinear A hA x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.relativeInterior_euclidean_projection_bound",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n      U.transpose * U = 1 \u2192\n        (\u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191A \u2194 \u2203 z, U.mulVec z = x) \u2192\n          \u2203 \u03bc,\n            0 < \u03bc \u2227\n              \u2200 (x : Fin n \u2192 \u211d),\n                \u03bc * \u2016BfgsVerification.euclideanVector (U.transpose.mulVec x)\u2016 \u2264\n                  BfgsVerification.Homogeneous.finiteMaxLinear A hA x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.relativeInterior_projected_positive",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n      U.transpose * U = 1 \u2192\n        (\u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191A \u2194 \u2203 z, U.mulVec z = x) \u2192\n          \u2200 (z : BfgsVerification.Vec r), z \u2260 0 \u2192 0 < BfgsVerification.Homogeneous.finiteMaxLinear A hA (U.mulVec z)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Homogeneous.relativeInterior_value_zero_iff_projection_zero",
+      "signature": "\u2200 {n r : \u2115} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  BfgsVerification.Homogeneous.RelativeInteriorZero A \u2192\n    \u2200 (U : Matrix (Fin n) (Fin r) \u211d),\n      U.transpose * U = 1 \u2192\n        (\u2200 (x : BfgsVerification.Vec n), x \u2208 Submodule.span \u211d \u2191A \u2194 \u2203 z, U.mulVec z = x) \u2192\n          \u2200 (x : BfgsVerification.Vec n),\n            BfgsVerification.Homogeneous.finiteMaxLinear A hA x = 0 \u2194 U.transpose.mulVec x = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean"
     },
     {
       "theorem": "BfgsVerification.Homogeneous.slope_le_finiteMaxLinear",
@@ -5600,6 +5988,396 @@
       "source": "BfgsVerification/ScalarConvergence.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Envelope.affine_deficit_bound",
+      "signature": "\u2200 (l r d\u2080 d\u2081 e\u2080 e\u2081 : \u211d),\n  l \u2264 r \u2192\n    (\u2200 v \u2208 Set.Icc l r, 0 \u2264 d\u2080 + d\u2081 * v) \u2192\n      (\u2200 v \u2208 Set.Icc l r, d\u2080 + d\u2081 * v = 0 \u2192 e\u2080 + e\u2081 * v = 0) \u2192\n        \u2203 C, 0 < C \u2227 \u2200 v \u2208 Set.Icc l r, |e\u2080 + e\u2081 * v| \u2264 C * (d\u2080 + d\u2081 * v)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Envelope.intervals_ordered_of_subsingleton",
+      "signature": "\u2200 {l r p q : \u211d}, l < r \u2192 p < q \u2192 (Set.Icc l r \u2229 Set.Icc p q).Subsingleton \u2192 r \u2264 p \u2228 q \u2264 l",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Envelope.ramp_constant_on_cell",
+      "signature": "\u2200 {l r p q : \u211d},\n  l \u2264 r \u2192\n    p \u2264 q \u2192\n      (Set.Icc l r \u2229 Set.Icc p q).Subsingleton \u2192\n        \u2200 {v w : \u211d},\n          v \u2208 Set.Icc l r \u2192\n            w \u2208 Set.Icc l r \u2192\n              BfgsVerification.Parabolic.Envelope.ramp p q v = BfgsVerification.Parabolic.Envelope.ramp p q w",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Envelope.ramp_degenerate",
+      "signature": "\u2200 (p v : \u211d), BfgsVerification.Parabolic.Envelope.ramp p p v = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Envelope.ramp_of_le_left",
+      "signature": "\u2200 {l r v : \u211d}, v \u2264 l \u2192 BfgsVerification.Parabolic.Envelope.ramp l r v = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Envelope.ramp_of_mem",
+      "signature": "\u2200 {l r v : \u211d}, v \u2208 Set.Icc l r \u2192 BfgsVerification.Parabolic.Envelope.ramp l r v = v - l",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Envelope.ramp_of_right_le",
+      "signature": "\u2200 {l r v : \u211d}, l \u2264 r \u2192 r \u2264 v \u2192 BfgsVerification.Parabolic.Envelope.ramp l r v = r - l",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeIntervals.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.armijo_iff",
+      "signature": "\u2200 {u \u03c1 \u03b5 c\u2081 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      \u03c1 * \u03b5 < 3 * u ^ 2 \u2192\n        (c\u2081 *\n              BfgsVerification.TransportedCertificate.pairDecrease (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n                (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u) \u2264\n            BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.oldPoint u \u03b5) -\n              BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) \u2194\n          c\u2081 * (1 + \u03c1) \u2264 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.converges_without_radial_secant",
+      "signature": "\u2200 {K : Set (BfgsVerification.Vec 2)},\n  K \u2208 nhds 0 \u2192\n    (\u2200 (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.Parabolic.Example.objective),\n        Filter.Tendsto (fun k => BfgsVerification.Parabolic.Example.objective (R.x k)) Filter.atTop (nhds 0) \u2227\n          Filter.Tendsto R.x Filter.atTop (nhds 0)) \u2227\n      \u00acBfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.Parabolic.Example.objective K 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.eligible_radial_unbounded_on_neighborhood",
+      "signature": "\u2200 {K : Set (BfgsVerification.Vec 2)},\n  K \u2208 nhds 0 \u2192\n    \u2200 {c\u2081 c\u2082 : \u211d},\n      c\u2081 < 1 \u2192\n        0 \u2264 c\u2082 \u2192\n          \u2203 \u03b7,\n            0 < \u03b7 \u2227\n              \u2200 (\u03b4 : \u211d),\n                0 < \u03b4 \u2192\n                  \u2200 (C : \u211d),\n                    \u2203 x z g h H,\n                      x \u2208 K \u2227\n                        z \u2208 K \u2227\n                          \u03b7 \u2264 BfgsVerification.Parabolic.Example.objective z \u2227\n                            BfgsVerification.Parabolic.Example.objective z \u2264\n                                BfgsVerification.Parabolic.Example.objective x \u2227\n                              BfgsVerification.TransportedCertificate.EligiblePair\n                                  BfgsVerification.Parabolic.Example.objective c\u2081 c\u2082 x z g h \u2227\n                                BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2227\n                                  Matrix.PosDef H \u2227\n                                    BfgsVerification.bfgsStep H g 1 =\n                                        BfgsVerification.TransportedCertificate.pairStep x z \u2227\n                                      C * BfgsVerification.TransportedCertificate.pairCurvature x z g h <\n                                        BfgsVerification.RadialCertificate.radialNumerator 0 z g h ^ 2",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.exists_nonzero_base_in_neighborhood",
+      "signature": "\u2200 {K : Set (BfgsVerification.Vec 2)},\n  K \u2208 nhds 0 \u2192 \u2203 u, u \u2260 0 \u2227 K \u2208 nhds (BfgsVerification.Parabolic.Example.oldPoint u 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.exists_small_eligible_excess_at_base",
+      "signature": "\u2200 {u \u03c1 c\u2081 c\u2082 A : \u211d} {K : Set (BfgsVerification.Vec 2)},\n  u \u2260 0 \u2192\n    0 < \u03c1 \u2192\n      c\u2081 * (1 + \u03c1) \u2264 1 \u2192\n        0 \u2264 c\u2082 \u2192\n          0 < A \u2192\n            K \u2208 nhds (BfgsVerification.Parabolic.Example.oldPoint u 0) \u2192\n              \u2200 {\u03b4 : \u211d},\n                0 < \u03b4 \u2192\n                  \u2200 (C : \u211d),\n                    \u2203 \u03b5,\n                      0 < \u03b5 \u2227\n                        \u03c1 * \u03b5 < 3 * u ^ 2 \u2227\n                          BfgsVerification.Parabolic.Example.oldPoint u \u03b5 \u2208 K \u2227\n                            BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5 \u2208 K \u2227\n                              BfgsVerification.TransportedCertificate.EligiblePair\n                                  BfgsVerification.Parabolic.Example.objective c\u2081 c\u2082\n                                  (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n                                  (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n                                  (BfgsVerification.Parabolic.Example.oldGradient u)\n                                  (BfgsVerification.Parabolic.Example.newGradient u) \u2227\n                                BfgsVerification.TransportedCertificate.pairDecrease\n                                      (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n                                      (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n                                      (BfgsVerification.Parabolic.Example.oldGradient u) \u2264\n                                    \u03b4 \u2227\n                                  C *\n                                        BfgsVerification.TransportedCertificate.pairCurvature\n                                          (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n                                          (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n                                          (BfgsVerification.Parabolic.Example.oldGradient u)\n                                          (BfgsVerification.Parabolic.Example.newGradient u) <\n                                      BfgsVerification.RadialCertificate.radialNumerator 0\n                                          (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n                                          (BfgsVerification.Parabolic.Example.oldGradient u)\n                                          (BfgsVerification.Parabolic.Example.newGradient u) ^\n                                        2 \u2227\n                                    Matrix.PosDef (BfgsVerification.Parabolic.Example.initialMetric u A \u03c1 \u03b5) \u2227\n                                      BfgsVerification.bfgsStep\n                                          (BfgsVerification.Parabolic.Example.initialMetric u A \u03c1 \u03b5)\n                                          (BfgsVerification.Parabolic.Example.oldGradient u) 1 =\n                                        BfgsVerification.TransportedCertificate.pairStep\n                                          (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n                                          (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.exists_strict_armijo_parameter",
+      "signature": "\u2200 {c\u2081 : \u211d}, c\u2081 < 1 \u2192 \u2203 \u03c1, 0 < \u03c1 \u2227 c\u2081 * (1 + \u03c1) < 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.initialMetric_posDef",
+      "signature": "\u2200 {u A \u03c1 \u03b5 : \u211d}, 0 < A \u2192 0 < \u03c1 \u2192 0 < \u03b5 \u2192 Matrix.PosDef (BfgsVerification.Parabolic.Example.initialMetric u A \u03c1 \u03b5)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.initialMetric_step",
+      "signature": "\u2200 (u A \u03c1 \u03b5 : \u211d),\n  BfgsVerification.bfgsStep (BfgsVerification.Parabolic.Example.initialMetric u A \u03c1 \u03b5)\n      (BfgsVerification.Parabolic.Example.oldGradient u) 1 =\n    BfgsVerification.TransportedCertificate.pairStep (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n      (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.middle_hasGradient",
+      "signature": "\u2200 {x : BfgsVerification.Vec 2},\n  -x 0 ^ 2 < x 1 \u2192\n    x 1 < 2 * x 0 ^ 2 \u2192\n      HasFDerivAt BfgsVerification.Parabolic.Example.objective\n        (BfgsVerification.gradientFunctional (BfgsVerification.Parabolic.Example.newGradient (x 0))) x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.not_radial_secant_on_neighborhood",
+      "signature": "\u2200 {K : Set (BfgsVerification.Vec 2)},\n  K \u2208 nhds 0 \u2192\n    \u00acBfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.Parabolic.Example.objective K 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.not_radial_secant_on_sublevel",
+      "signature": "\u2200 {B : \u211d},\n  0 < B \u2192\n    \u00acBfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.Parabolic.Example.objective\n        {x | BfgsVerification.Parabolic.Example.objective x \u2264 B} 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.objective_eq_max",
+      "signature": "\u2200 (x : BfgsVerification.Vec 2),\n  BfgsVerification.Parabolic.Example.objective x = max (max (x 0 ^ 2 + x 1) (3 * x 0 ^ 2)) (2 * x 0 ^ 2 - x 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.objective_middle_region",
+      "signature": "\u2200 {x : BfgsVerification.Vec 2},\n  -x 0 ^ 2 < x 1 \u2192\n    x 1 < 2 * x 0 ^ 2 \u2192\n      BfgsVerification.Parabolic.Example.objective x = BfgsVerification.Parabolic.Example.family.branch 1 x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.objective_upper_region",
+      "signature": "\u2200 {x : BfgsVerification.Vec 2},\n  2 * x 0 ^ 2 < x 1 \u2192\n    BfgsVerification.Parabolic.Example.objective x = BfgsVerification.Parabolic.Example.family.branch 0 x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_curvature",
+      "signature": "\u2200 (u \u03c1 \u03b5 : \u211d),\n  BfgsVerification.TransportedCertificate.pairCurvature (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n      (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u)\n      (BfgsVerification.Parabolic.Example.newGradient u) =\n    (1 + \u03c1) * \u03b5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_decrease",
+      "signature": "\u2200 (u \u03c1 \u03b5 : \u211d),\n  BfgsVerification.TransportedCertificate.pairDecrease (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n      (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u) =\n    (1 + \u03c1) * \u03b5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_decrease_tendsto",
+      "signature": "\u2200 (u \u03c1 : \u211d),\n  Filter.Tendsto\n    (fun \u03b5 =>\n      BfgsVerification.TransportedCertificate.pairDecrease (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n        (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u))\n    (nhdsWithin 0 (Set.Ioi 0)) (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_eligible",
+      "signature": "\u2200 {u \u03c1 \u03b5 c\u2081 c\u2082 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      \u03c1 * \u03b5 < 3 * u ^ 2 \u2192\n        c\u2081 * (1 + \u03c1) \u2264 1 \u2192\n          0 \u2264 c\u2082 \u2192\n            BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.Parabolic.Example.objective c\u2081 c\u2082\n              (BfgsVerification.Parabolic.Example.oldPoint u \u03b5) (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n              (BfgsVerification.Parabolic.Example.oldGradient u) (BfgsVerification.Parabolic.Example.newGradient u)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_gradients",
+      "signature": "\u2200 {u \u03c1 \u03b5 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      \u03c1 * \u03b5 < 3 * u ^ 2 \u2192\n        HasFDerivAt BfgsVerification.Parabolic.Example.objective\n            (BfgsVerification.gradientFunctional (BfgsVerification.Parabolic.Example.oldGradient u))\n            (BfgsVerification.Parabolic.Example.oldPoint u \u03b5) \u2227\n          HasFDerivAt BfgsVerification.Parabolic.Example.objective\n            (BfgsVerification.gradientFunctional (BfgsVerification.Parabolic.Example.newGradient u))\n            (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_points_tendsto",
+      "signature": "\u2200 (u \u03c1 : \u211d),\n  Filter.Tendsto (BfgsVerification.Parabolic.Example.oldPoint u) (nhdsWithin 0 (Set.Ioi 0))\n      (nhds (BfgsVerification.Parabolic.Example.oldPoint u 0)) \u2227\n    Filter.Tendsto (BfgsVerification.Parabolic.Example.newPoint u \u03c1) (nhdsWithin 0 (Set.Ioi 0))\n      (nhds (BfgsVerification.Parabolic.Example.oldPoint u 0))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.pair_values",
+      "signature": "\u2200 {u \u03c1 \u03b5 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      \u03c1 * \u03b5 < 3 * u ^ 2 \u2192\n        BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.oldPoint u \u03b5) = 3 * u ^ 2 + \u03b5 \u2227\n          BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) = 3 * u ^ 2",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.printed_armijo_iff",
+      "signature": "\u2200 {u \u03b5 c\u2081 : \u211d},\n  0 < \u03b5 \u2192\n    \u03b5 < 6 * u ^ 2 \u2192\n      (c\u2081 *\n            BfgsVerification.TransportedCertificate.pairDecrease (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n              (BfgsVerification.Parabolic.Example.newPoint u (1 / 2) \u03b5)\n              (BfgsVerification.Parabolic.Example.oldGradient u) \u2264\n          BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.oldPoint u \u03b5) -\n            BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.newPoint u (1 / 2) \u03b5) \u2194\n        c\u2081 \u2264 2 / 3)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.quotientMultiplier_eq_one",
+      "signature": "\u2200 (u \u03c1 \u03b5 : \u211d),\n  BfgsVerification.Parabolic.Family.quotientMultiplier (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n      (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) =\n    1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.radial_numerator",
+      "signature": "\u2200 (u \u03c1 \u03b5 : \u211d),\n  BfgsVerification.RadialCertificate.radialNumerator 0 (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n      (BfgsVerification.Parabolic.Example.oldGradient u) (BfgsVerification.Parabolic.Example.newGradient u) =\n    2 * u ^ 2 + \u03c1 * \u03b5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.radial_quotient_tendsto",
+      "signature": "\u2200 {u \u03c1 : \u211d},\n  u \u2260 0 \u2192\n    0 < \u03c1 \u2192\n      Filter.Tendsto\n        (fun \u03b5 =>\n          BfgsVerification.RadialCertificate.radialNumerator 0 (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)\n                (BfgsVerification.Parabolic.Example.oldGradient u) (BfgsVerification.Parabolic.Example.newGradient u) ^\n              2 /\n            BfgsVerification.TransportedCertificate.pairCurvature (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n              (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u)\n              (BfgsVerification.Parabolic.Example.newGradient u))\n        (nhdsWithin 0 (Set.Ioi 0)) Filter.atTop",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleSeparation.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.sourceScale_bounds",
+      "signature": "\u2200 {x : BfgsVerification.Vec 2},\n  0 < BfgsVerification.Parabolic.Example.objective x \u2192\n    Real.exp (-1 / 3) \u2264 BfgsVerification.Parabolic.Example.sourceScale x \u2227\n      BfgsVerification.Parabolic.Example.sourceScale x \u2264 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.sourceScale_pair",
+      "signature": "\u2200 {u \u03c1 \u03b5 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      \u03c1 * \u03b5 < 3 * u ^ 2 \u2192\n        BfgsVerification.Parabolic.Example.sourceScale (BfgsVerification.Parabolic.Example.oldPoint u \u03b5) =\n            Real.exp (u ^ 2 / (2 * (3 * u ^ 2 + \u03b5)) - 1 / 6) \u2227\n          BfgsVerification.Parabolic.Example.sourceScale (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) = 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.source_compensated_log",
+      "signature": "\u2200 {u \u03c1 \u03b5 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      \u03c1 * \u03b5 < 3 * u ^ 2 \u2192\n        Real.log\n            (BfgsVerification.Parabolic.Example.sourceScale (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) *\n                BfgsVerification.Parabolic.Family.quotientMultiplier (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n                  (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) /\n              BfgsVerification.Parabolic.Example.sourceScale (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)) =\n          \u03b5 / (6 * (3 * u ^ 2 + \u03b5))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.transported_numerator",
+      "signature": "\u2200 (u \u03c1 \u03b5 : \u211d),\n  BfgsVerification.dot\n      (BfgsVerification.Parabolic.Example.newGradient u - BfgsVerification.Parabolic.Example.oldGradient u)\n      (BfgsVerification.Parabolic.Family.radialDirection (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)) =\n    2 * \u03c1 * \u03b5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.transported_quotient",
+      "signature": "\u2200 {u \u03c1 \u03b5 : \u211d},\n  0 < \u03c1 \u2192\n    0 < \u03b5 \u2192\n      BfgsVerification.dot\n              (BfgsVerification.Parabolic.Example.newGradient u - BfgsVerification.Parabolic.Example.oldGradient u)\n              (BfgsVerification.Parabolic.Family.radialDirection (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)) ^\n            2 /\n          BfgsVerification.TransportedCertificate.pairCurvature (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n            (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u)\n            (BfgsVerification.Parabolic.Example.newGradient u) =\n        4 * \u03c1 ^ 2 / (1 + \u03c1) * \u03b5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.transported_quotient_tendsto",
+      "signature": "\u2200 (u : \u211d) {\u03c1 : \u211d},\n  0 < \u03c1 \u2192\n    Filter.Tendsto\n      (fun \u03b5 =>\n        BfgsVerification.dot\n              (BfgsVerification.Parabolic.Example.newGradient u - BfgsVerification.Parabolic.Example.oldGradient u)\n              (BfgsVerification.Parabolic.Family.radialDirection (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5)) ^\n            2 /\n          BfgsVerification.TransportedCertificate.pairCurvature (BfgsVerification.Parabolic.Example.oldPoint u \u03b5)\n            (BfgsVerification.Parabolic.Example.newPoint u \u03c1 \u03b5) (BfgsVerification.Parabolic.Example.oldGradient u)\n            (BfgsVerification.Parabolic.Example.newGradient u))\n      (nhdsWithin 0 (Set.Ioi 0)) (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExampleContrast.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Example.upper_hasGradient",
+      "signature": "\u2200 {x : BfgsVerification.Vec 2},\n  2 * x 0 ^ 2 < x 1 \u2192\n    HasFDerivAt BfgsVerification.Parabolic.Example.objective\n      (BfgsVerification.gradientFunctional (BfgsVerification.Parabolic.Example.oldGradient (x 0))) x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicExamplePairs.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.active_eq_gradient",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {x g : BfgsVerification.Vec 2},\n  P.Active i x \u2192 HasFDerivAt P.objective (BfgsVerification.gradientFunctional g) x \u2192 P.branchGradient i x = g",
       "axioms": [
@@ -5608,6 +6386,26 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicFamily.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.active_normalized_cell",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {j : Fin m} {x : BfgsVerification.Vec 2},\n  P.Active j x \u2192\n    0 < P.objective x \u2192\n      P.normalizedQuadratic j (x 1 / P.objective x) = x 0 ^ 2 / P.objective x \u2227 x 1 / P.objective x \u2208 P.envelopeCell j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.active_retained_representative",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {j : Fin m} {x : BfgsVerification.Vec 2},\n  P.Active j x \u2192 0 < P.objective x \u2192 \u2203 i \u2208 P.retainedCells, P.Active i x \u2227 P.branchGradient i x = P.branchGradient j x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.active_supports",
@@ -5658,6 +6456,236 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicFamily.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedExponent_continuousOn",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), ContinuousOn P.calibratedExponent {x | 0 < P.objective x}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedExponent_eq_active",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {x : BfgsVerification.Vec 2},\n  P.Active i x \u2192 0 < P.objective x \u2192 P.calibratedExponent x = P.a i * x 0 ^ 2 / (2 * P.objective x) + P.calibration i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedScale_continuousOn",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), ContinuousOn P.calibratedScale {x | 0 < P.objective x}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedScale_eq_active",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {x : BfgsVerification.Vec 2},\n  P.Active i x \u2192\n    0 < P.objective x \u2192 P.calibratedScale x = Real.exp (P.a i * x 0 ^ 2 / (2 * P.objective x) + P.calibration i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedScale_pos",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (x : BfgsVerification.Vec 2), 0 < P.calibratedScale x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedScale_uniform_bounds",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m),\n  \u2203 \u03b8min \u03b8max,\n    0 < \u03b8min \u2227\n      0 < \u03b8max \u2227\n        \u2200 (x : BfgsVerification.Vec 2), 0 < P.objective x \u2192 \u03b8min \u2264 P.calibratedScale x \u2227 P.calibratedScale x \u2264 \u03b8max",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibratedVector_continuousOn",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), ContinuousOn P.calibratedVector {x | 0 < P.objective x}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicCertificate.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibrated_vector_transport",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {x z : BfgsVerification.Vec 2},\n  BfgsVerification.Parabolic.Family.stepDeterminant x z \u2260 0 \u2192\n    P.calibratedVector z =\n      P.compensatedMultiplier x z \u2022 P.calibratedVector x +\n        (P.calibratedScale z * BfgsVerification.Parabolic.Family.stepMultiplier x z) \u2022\n          BfgsVerification.TransportedCertificate.pairStep x z",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicUniformTransport.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibration_active_eq",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m} {x : BfgsVerification.Vec 2},\n  P.Active i x \u2192\n    P.Active j x \u2192\n      0 < P.objective x \u2192\n        P.a i * x 0 ^ 2 / (2 * P.objective x) + P.calibration i =\n          P.a j * x 0 ^ 2 / (2 * P.objective x) + P.calibration j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCalibration.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibration_interface_identity",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (\u03be : \u211d) {i j : Fin m},\n  P.Active i ![1, \u03be] \u2192\n    P.Active j ![1, \u03be] \u2192 P.calibration j - P.calibration i = -(P.a j - P.a i) / (2 * P.objective ![1, \u03be])",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCalibration.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibration_matches_cell",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {v : \u211d},\n  v \u2208 P.envelopeCell i \u2192 P.envelopePotential v = P.a i * P.normalizedQuadratic i v / 2 + P.calibration i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCalibration.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.calibration_matches_tie",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m} {v : \u211d},\n  v \u2208 P.envelopeCell i \u2192\n    v \u2208 P.envelopeCell j \u2192 (P.a j - P.a i) * P.normalizedQuadratic j v / 2 + P.calibration j - P.calibration i = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCalibration.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.canonicalIndex_canonical",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m), P.Canonical (P.canonicalIndex i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.canonicalIndex_coefficients",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m),\n  P.a (P.canonicalIndex i) = P.a i \u2227 P.b (P.canonicalIndex i) = P.b i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.canonicalIndex_mem_retained",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {v : \u211d},\n  v \u2208 P.envelopeCell i \u2192 P.canonicalIndex i \u2208 P.retainedCells",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.canonical_unique",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m},\n  P.Canonical i \u2192 P.Canonical j \u2192 P.a i = P.a j \u2192 P.b i = P.b j \u2192 i = j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.cellLeft_le_right",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m},\n  (P.envelopeCell i).Nonempty \u2192 P.cellLeft i \u2264 P.cellRight i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.cellLeft_mem",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m},\n  (P.envelopeCell i).Nonempty \u2192 P.cellLeft i \u2208 P.envelopeCell i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.cellRight_mem",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m},\n  (P.envelopeCell i).Nonempty \u2192 P.cellRight i \u2208 P.envelopeCell i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.cell_pair_deficit_bound",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i j : Fin m),\n  \u2203 C, 0 < C \u2227 \u2200 v \u2208 P.envelopeCell j, |P.envelopeExponentDifference i j v| \u2264 C * P.envelopeDeficit i j v",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.certificateField_continuousOn",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m),\n  ContinuousOn (fun x => BfgsVerification.outer (P.calibratedVector x) (P.calibratedVector x)) {x | 0 < P.objective x}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicCertificate.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.coefficientFiber_nonempty",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m), (P.coefficientFiber i).Nonempty",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.coefficients_eq_of_two_cell_points",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m} {v w : \u211d},\n  v \u2208 P.envelopeCell i \u2229 P.envelopeCell j \u2192\n    w \u2208 P.envelopeCell i \u2229 P.envelopeCell j \u2192 v \u2260 w \u2192 P.a i = P.a j \u2227 P.b i = P.b j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.curvature_identity",
@@ -5720,6 +6748,106 @@
       "source": "BfgsVerification/ParabolicPairs.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeCell_closed",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m), IsClosed (P.envelopeCell i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeCell_compact",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m), IsCompact (P.envelopeCell i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeCell_convex",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m), Convex \u211d (P.envelopeCell i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeCell_eq_interval",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m},\n  (P.envelopeCell i).Nonempty \u2192 P.envelopeCell i = Set.Icc (P.cellLeft i) (P.cellRight i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeCell_eq_of_coefficients",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m},\n  P.a i = P.a j \u2192 P.b i = P.b j \u2192 P.envelopeCell i = P.envelopeCell j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeDeficit_affine",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i j : Fin m) (v : \u211d),\n  P.envelopeDeficit i j v = 1 - P.a i / P.a j + (P.a i * P.b j / P.a j - P.b i) * v",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeDeficit_nonneg",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m) {j : Fin m} {v : \u211d},\n  v \u2208 P.envelopeCell j \u2192 0 \u2264 P.envelopeDeficit i j v",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeExponentDifference_affine",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i j : Fin m) (v : \u211d),\n  P.envelopeExponentDifference i j v =\n    (P.a j - P.a i) / 2 / P.a j + P.calibration j - P.calibration i + -(P.a j - P.a i) / 2 * (P.b j / P.a j) * v",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopeExponentDifference_zero_of_deficit_zero",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m} {v : \u211d},\n  v \u2208 P.envelopeCell j \u2192 P.envelopeDeficit i j v = 0 \u2192 P.envelopeExponentDifference i j v = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.envelopePotential_continuous",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), Continuous P.envelopePotential",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.exists_active",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (x : BfgsVerification.Vec 2), \u2203 i, P.Active i x",
       "axioms": [
@@ -5728,6 +6856,26 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicFamily.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.exists_bandCertificate",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {K : Set (BfgsVerification.Vec 2)},\n  IsCompact K \u2192\n    \u2200 {\u03b7 c\u2081 c\u2082 : \u211d},\n      0 < \u03b7 \u2192\n        0 \u2264 c\u2081 \u2192\n          c\u2082 < 1 \u2192\n            \u2203 B,\n              \u2200 (x : BfgsVerification.Vec 2),\n                B.W x = BfgsVerification.outer (P.calibratedVector x) (P.calibratedVector x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicCertificate.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.exists_calibration_deficit_bound",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m),\n  \u2203 C,\n    0 < C \u2227\n      \u2200 (i j : Fin m) (z : BfgsVerification.Vec 2),\n        P.Active j z \u2192\n          0 < P.objective z \u2192\n            |(P.a j - P.a i) * z 0 ^ 2 / (2 * P.objective z) + P.calibration j - P.calibration i| \u2264\n              C * P.deficit i z / P.objective z",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.exists_small_denominator_bounds",
@@ -5740,6 +6888,26 @@
       "source": "BfgsVerification/ParabolicDenominator.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Family.exists_uniform_cell_deficit_bound",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m),\n  \u2203 C,\n    0 < C \u2227 \u2200 (i j : Fin m), \u2200 v \u2208 P.envelopeCell j, |P.envelopeExponentDifference i j v| \u2264 C * P.envelopeDeficit i j v",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeBound.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.exists_uniform_log_transport",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {K : Set (BfgsVerification.Vec 2)},\n  IsCompact K \u2192\n    \u2200 {\u03b7 c\u2081 c\u2082 : \u211d},\n      0 < \u03b7 \u2192\n        0 \u2264 c\u2081 \u2192\n          c\u2082 < 1 \u2192\n            \u2203 C \u03b4,\n              0 < C \u2227\n                0 < \u03b4 \u2227\n                  \u03b4 \u2264 1 \u2227\n                    \u2200 x \u2208 K,\n                      \u2200 z \u2208 K,\n                        \u2200 (g h : BfgsVerification.Vec 2),\n                          BfgsVerification.TransportedCertificate.EligiblePair P.objective c\u2081 c\u2082 x z g h \u2192\n                            \u03b7 \u2264 P.objective x \u2192\n                              \u03b7 \u2264 P.objective z \u2192\n                                BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n                                  BfgsVerification.Parabolic.Family.stepDeterminant x z \u2260 0 \u2227\n                                    0 < P.compensatedMultiplier x z \u2227\n                                      |Real.log (P.compensatedMultiplier x z)| \u2264\n                                        C * BfgsVerification.TransportedCertificate.pairDecrease x z g",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicUniformTransport.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.exists_uniform_secant_bound",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {K : Set (BfgsVerification.Vec 2)},\n  IsCompact K \u2192\n    \u2200 {c\u2081 c\u2082 : \u211d},\n      0 \u2264 c\u2081 \u2192\n        c\u2082 < 1 \u2192\n          \u2203 C,\n            0 < C \u2227\n              \u2200 x \u2208 K,\n                \u2200 z \u2208 K,\n                  \u2200 (g h : BfgsVerification.Vec 2),\n                    BfgsVerification.TransportedCertificate.EligiblePair P.objective c\u2081 c\u2082 x z g h \u2192\n                      BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 1 \u2192\n                        BfgsVerification.dot (h - g) (BfgsVerification.Parabolic.Family.radialDirection z) ^ 2 \u2264\n                          C * BfgsVerification.TransportedCertificate.pairCurvature x z g h",
       "axioms": [
@@ -5750,6 +6918,26 @@
       "source": "BfgsVerification/ParabolicUniformSecant.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Family.exists_uniform_vector_transport",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {K : Set (BfgsVerification.Vec 2)},\n  IsCompact K \u2192\n    \u2200 {\u03b7 c\u2081 c\u2082 : \u211d},\n      0 < \u03b7 \u2192\n        0 \u2264 c\u2081 \u2192\n          c\u2082 < 1 \u2192\n            \u2203 L \u03b4,\n              0 \u2264 L \u2227\n                0 < \u03b4 \u2227\n                  \u03b4 \u2264 1 \u2227\n                    \u2200 x \u2208 K,\n                      \u2200 z \u2208 K,\n                        \u2200 (g h : BfgsVerification.Vec 2),\n                          BfgsVerification.TransportedCertificate.EligiblePair P.objective c\u2081 c\u2082 x z g h \u2192\n                            \u03b7 \u2264 P.objective x \u2192\n                              \u03b7 \u2264 P.objective z \u2192\n                                BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 \u03b4 \u2192\n                                  \u2203 ell \u03b2,\n                                    P.calibratedVector z =\n                                        ell \u2022 P.calibratedVector x +\n                                          \u03b2 \u2022 BfgsVerification.TransportedCertificate.pairStep x z \u2227\n                                      ell ^ 2 \u2264 1 + L * BfgsVerification.TransportedCertificate.pairDecrease x z g",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicUniformTransport.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.exponent_increment",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {x z : BfgsVerification.Vec 2},\n  P.objective x \u2260 0 \u2192\n    P.objective z \u2260 0 \u2192\n      P.a i * z 0 ^ 2 / (2 * P.objective z) - P.a i * x 0 ^ 2 / (2 * P.objective x) -\n          P.a i * x 0 / P.objective x * BfgsVerification.Parabolic.Family.horizontalStep x z =\n        P.a i * BfgsVerification.Parabolic.Family.horizontalStep x z ^ 2 / (2 * P.objective x) +\n          P.a i * z 0 ^ 2 * (P.objective x - P.objective z) / (2 * P.objective x * P.objective z)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicTransportAlgebra.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.gradient_from_active",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {x g : BfgsVerification.Vec 2},\n  HasFDerivAt P.objective (BfgsVerification.gradientFunctional g) x \u2192 \u2203 i, P.Active i x \u2227 g = P.branchGradient i x",
       "axioms": [
@@ -5758,6 +6946,16 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicFamily.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.hasBandCertificates",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {K : Set (BfgsVerification.Vec 2)},\n  IsCompact K \u2192\n    \u2200 {c\u2081 c\u2082 : \u211d}, 0 \u2264 c\u2081 \u2192 c\u2082 < 1 \u2192 BfgsVerification.TransportedCertificate.HasBandCertificates P.objective K 0 c\u2081 c\u2082",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicCertificate.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.indices_nonempty",
@@ -5780,6 +6978,16 @@
       "source": "BfgsVerification/ParabolicDenominator.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Family.log_calibratedScale",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (x : BfgsVerification.Vec 2),\n  Real.log (P.calibratedScale x) = P.calibratedExponent x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeScale.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.maxQuadratic_pos",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), 0 < P.maxQuadratic",
       "axioms": [
@@ -5788,6 +6996,16 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicDenominator.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.mem_retainedCells",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m},\n  i \u2208 P.retainedCells \u2194 P.Canonical i \u2227 (P.envelopeCell i).Nonempty",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.minQuadratic_le",
@@ -5808,6 +7026,76 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicFamily.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalLeft_neg",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), P.normalLeft < 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalRight_pos",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m), 0 < P.normalRight",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalizedQuadratic_combo",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m) (v w \u03b1 \u03b2 : \u211d),\n  \u03b1 + \u03b2 = 1 \u2192 P.normalizedQuadratic i (\u03b1 * v + \u03b2 * w) = \u03b1 * P.normalizedQuadratic i v + \u03b2 * P.normalizedQuadratic i w",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalizedQuadratic_continuous",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m), Continuous (P.normalizedQuadratic i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalizedQuadratic_identity",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) (i : Fin m) (v : \u211d),\n  P.a i * P.normalizedQuadratic i v + P.b i * v = 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalized_cell_of_active",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {t v : \u211d},\n  0 \u2264 t \u2192\n    (\u2200 (i : Fin m), P.a i * t + P.b i * v \u2264 1) \u2192\n      \u2200 {j : Fin m}, P.a j * t + P.b j * v = 1 \u2192 P.normalizedQuadratic j v = t \u2227 v \u2208 P.envelopeCell j",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.normalized_normal_bounds",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {t v : \u211d},\n  0 \u2264 t \u2192 (\u2200 (i : Fin m), P.a i * t + P.b i * v \u2264 1) \u2192 v \u2208 Set.Icc P.normalLeft P.normalRight",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.objective_continuous",
@@ -5870,6 +7158,26 @@
       "source": "BfgsVerification/ParabolicUniformSecant.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Family.potential_difference_on_cell",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {v w : \u211d},\n  v \u2208 P.envelopeCell i \u2192 w \u2208 P.envelopeCell i \u2192 P.envelopePotential v - P.envelopePotential w = -P.b i / 2 * (v - w)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCalibration.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.potential_difference_on_retained_cell",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m},\n  i \u2208 P.retainedCells \u2192\n    \u2200 {v w : \u211d},\n      v \u2208 P.envelopeCell i \u2192 w \u2208 P.envelopeCell i \u2192 P.envelopePotential v - P.envelopePotential w = -P.b i / 2 * (v - w)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCalibration.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.quadratic_lower_bound",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {a\u2080 : \u211d},\n  (\u2200 (i : Fin m), a\u2080 \u2264 P.a i) \u2192 \u2200 (x : BfgsVerification.Vec 2), a\u2080 * x 0 ^ 2 \u2264 P.objective x",
       "axioms": [
@@ -5880,6 +7188,26 @@
       "source": "BfgsVerification/ParabolicFamily.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.Family.quotient_cancellation",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i : Fin m} {x z : BfgsVerification.Vec 2},\n  P.Active i x \u2192\n    P.objective x \u2260 0 \u2192\n      BfgsVerification.Parabolic.Family.stepDeterminant x z \u2260 0 \u2192\n        BfgsVerification.Parabolic.Family.quotientMultiplier x z - 1 +\n            P.a i * x 0 / P.objective x * BfgsVerification.Parabolic.Family.horizontalStep x z =\n          -x 1 * BfgsVerification.Parabolic.Family.horizontalStep x z *\n              BfgsVerification.TransportedCertificate.pairDecrease x z (P.branchGradient i x) /\n            (P.objective x * BfgsVerification.Parabolic.Family.stepDeterminant x z)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicTransportAlgebra.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.radial_direction_transport",
+      "signature": "\u2200 {x z : BfgsVerification.Vec 2},\n  BfgsVerification.Parabolic.Family.stepDeterminant x z \u2260 0 \u2192\n    BfgsVerification.Parabolic.Family.radialDirection z =\n      BfgsVerification.Parabolic.Family.quotientMultiplier x z \u2022 BfgsVerification.Parabolic.Family.radialDirection x +\n        BfgsVerification.Parabolic.Family.stepMultiplier x z \u2022 BfgsVerification.TransportedCertificate.pairStep x z",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicTransportAlgebra.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.Family.radial_error_bound",
       "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m} {x z : BfgsVerification.Vec 2} {G R d : \u211d},\n  0 \u2264 G \u2192\n    0 \u2264 R \u2192\n      0 \u2264 d \u2192\n        |z 0| \u2264 R \u2192\n          |P.branchGradient i x 0| \u2264 G \u2192\n            |P.branchGradient j z 0| \u2264 G \u2192\n              P.deficit i z \u2264 d \u2192\n                |2 * P.a i * BfgsVerification.Parabolic.Family.horizontalStep x z * z 0 + 2 * P.deficit i z +\n                      (P.branchGradient j z 0 - P.branchGradient i x 0) *\n                        BfgsVerification.Parabolic.Family.horizontalStep x z| \u2264\n                  (2 * P.maxQuadratic * R + 2 * G + 2) * (|BfgsVerification.Parabolic.Family.horizontalStep x z| + d)",
       "axioms": [
@@ -5888,6 +7216,16 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicDenominator.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.Family.retained_cell_inter_subsingleton",
+      "signature": "\u2200 {m : \u2115} (P : BfgsVerification.Parabolic.Family m) {i j : Fin m},\n  i \u2208 P.retainedCells \u2192 j \u2208 P.retainedCells \u2192 i \u2260 j \u2192 (P.envelopeCell i \u2229 P.envelopeCell j).Subsingleton",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicEnvelopeCells.lean"
     },
     {
       "theorem": "BfgsVerification.Parabolic.Family.secant_coefficient_le",
@@ -5990,6 +7328,46 @@
       "source": "BfgsVerification/ParabolicDenominatorAlgebra.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.cancellation_residual_bound",
+      "signature": "\u2200 {r \u03b1 h d u F D R C \u03b7 : \u211d},\n  0 < \u03b7 \u2192\n    \u03b7 \u2264 F \u2192\n      D \u2260 0 \u2192\n        0 \u2264 R \u2192\n          0 \u2264 C \u2192\n            0 \u2264 d \u2192 |u| \u2264 R \u2192 |h| \u2264 C * |D| \u2192 r - 1 + \u03b1 * h = -u * h * d / (F * D) \u2192 |r - 1 + \u03b1 * h| \u2264 R * C / \u03b7 * d",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicQuantitativeAlgebra.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.close_multiplier_of_small_decrease",
+      "signature": "\u2200 {r K d : \u211d}, 0 \u2264 K \u2192 0 \u2264 d \u2192 d \u2264 1 / (4 * (K + 1)) \u2192 (r - 1) ^ 2 \u2264 K * d \u2192 |r - 1| \u2264 1 / 2 \u2227 0 < r",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicQuantitativeAlgebra.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.compensation_log_bound",
+      "signature": "\u2200 {r \u03b1 h d K B : \u211d},\n  0 \u2264 d \u2192 |r - 1| \u2264 1 / 2 \u2192 (r - 1) ^ 2 \u2264 K * d \u2192 |r - 1 + \u03b1 * h| \u2264 B * d \u2192 |Real.log r + \u03b1 * h| \u2264 (2 * K + B) * d",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicScalarTransport.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.compensation_square_bound",
+      "signature": "\u2200 {r \u03b1 h d a A B : \u211d},\n  0 < a \u2192\n    0 \u2264 A \u2192\n      0 \u2264 B \u2192\n        0 \u2264 d \u2192\n          d \u2264 1 \u2192 |\u03b1| \u2264 A \u2192 h ^ 2 \u2264 d / a \u2192 |r - 1 + \u03b1 * h| \u2264 B * d \u2192 (r - 1) ^ 2 \u2264 (2 * A ^ 2 / a + 2 * B ^ 2) * d",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicScalarTransport.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.denominator_absorption",
       "signature": "\u2200 {\u03b7 \u03ba E K a d t F D h : \u211d},\n  0 < \u03b7 \u2192\n    0 < \u03ba \u2192\n      0 < E \u2192\n        0 < a \u2192\n          0 < d \u2192\n            \u03ba * d \u2264 t \u2192\n              \u03b7 \u2264 F \u2192\n                d \u2264 \u03b7 / 2 \u2192\n                  d \u2264 a * (\u03b7 * \u03ba / (4 * E)) ^ 2 \u2192\n                    d \u2264 \u03b7 * \u03ba / (4 * E) \u2192\n                      h ^ 2 \u2264 d / a \u2192 (2 * F - 2 * d) * t \u2264 K * |D| + E * d * (|h| + d) \u2192 d \u2264 2 * K / (\u03b7 * \u03ba) * |D|",
       "axioms": [
@@ -6020,6 +7398,26 @@
       "source": "BfgsVerification/ParabolicDenominatorAlgebra.lean"
     },
     {
+      "theorem": "BfgsVerification.Parabolic.exp_mul_le_one_add",
+      "signature": "\u2200 {C d : \u211d}, 0 \u2264 d \u2192 d \u2264 1 \u2192 Real.exp (C * d) \u2264 1 + (Real.exp C - 1) * d",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicScalarTransport.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.exponent_remainder_bound",
+      "signature": "\u2200 {a A u h d \u0394 F Z \u03b7 amin R : \u211d},\n  0 \u2264 a \u2192\n    a \u2264 A \u2192\n      0 < \u03b7 \u2192\n        \u03b7 \u2264 F \u2192\n          \u03b7 \u2264 Z \u2192\n            0 < amin \u2192\n              0 \u2264 d \u2192\n                0 \u2264 \u0394 \u2192\n                  \u0394 \u2264 d \u2192\n                    h ^ 2 \u2264 d / amin \u2192\n                      u ^ 2 \u2264 R ^ 2 \u2192\n                        |a * h ^ 2 / (2 * F) + a * u ^ 2 * \u0394 / (2 * F * Z)| \u2264\n                          (A / (2 * \u03b7 * amin) + A * R ^ 2 / (2 * \u03b7 ^ 2)) * d",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicQuantitativeAlgebra.lean"
+    },
+    {
       "theorem": "BfgsVerification.Parabolic.horizontal_from_determinant",
       "signature": "\u2200 {\u03b7 F b D h u d G R C : \u211d},\n  0 < \u03b7 \u2192\n    \u03b7 \u2264 F \u2192\n      0 \u2264 d \u2192 |b| \u2264 G \u2192 |u| \u2264 R \u2192 0 \u2264 R \u2192 d \u2264 C * |D| \u2192 b * D = 2 * F * h + u * d \u2192 |h| \u2264 (G + R * C) / (2 * \u03b7) * |D|",
       "axioms": [
@@ -6028,6 +7426,36 @@
         "propext"
       ],
       "source": "BfgsVerification/ParabolicDenominatorAlgebra.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.log_remainder_bound",
+      "signature": "\u2200 {r : \u211d}, |r - 1| \u2264 1 / 2 \u2192 |Real.log r - (r - 1)| \u2264 2 * (r - 1) ^ 2",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicTransportAlgebra.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.ratio_bound",
+      "signature": "\u2200 {n N b B : \u211d}, 0 \u2264 n \u2192 n \u2264 N \u2192 0 < b \u2192 b \u2264 B \u2192 n / B \u2264 N / b",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicQuantitativeAlgebra.lean"
+    },
+    {
+      "theorem": "BfgsVerification.Parabolic.squared_multiplier_bound",
+      "signature": "\u2200 {r C d : \u211d}, 0 < r \u2192 Real.log r \u2264 C * d \u2192 0 \u2264 d \u2192 d \u2264 1 \u2192 r ^ 2 \u2264 1 + (Real.exp (2 * C) - 1) * d",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ParabolicScalarTransport.lean"
     },
     {
       "theorem": "BfgsVerification.PointwiseFeasibility.coordinateGradient_eq",
@@ -7860,6 +9288,236 @@
       "source": "BfgsVerification/ScalarConvergence.lean"
     },
     {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero",
+      "signature": "\u2200 {\u03b9 : Type u_1} {l : Filter \u03b9} [inst : l.NeBot] {c\u2081 : \u211d},\n  0 < c\u2081 \u2192\n    \u2200 (x z g h : \u03b9 \u2192 BfgsVerification.Vec 1) (p jump : BfgsVerification.Vec 1),\n      (\u2200\u1da0 (a : \u03b9) in l,\n          BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.ScalarCounterexamples.shiftedObjective\n            c\u2081 (1 / 4) (x a) (z a) (g a) (h a)) \u2192\n        Filter.Tendsto x l (nhds p) \u2192\n          Filter.Tendsto z l (nhds p) \u2192\n            Filter.Tendsto (fun a => BfgsVerification.TransportedCertificate.pairCurvature (x a) (z a) (g a) (h a)) l\n                (nhds 0) \u2192\n              Filter.Tendsto (fun a => h a - g a) l (nhds jump) \u2192 jump = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.active_approach_actual_gradient",
+      "signature": "\u2200 (i : Fin 2) (k : \u2115),\n  HasFDerivAt BfgsVerification.ScalarCounterexamples.shiftedObjective\n    (BfgsVerification.gradientFunctional (BfgsVerification.ShiftedAbsAccessibility.activeGradientApproach i k))\n    (BfgsVerification.ShiftedAbsAccessibility.activeApproach i k)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.active_approach_in_band",
+      "signature": "\u2200 (i : Fin 2) (k : \u2115),\n  BfgsVerification.ShiftedAbsAccessibility.activeApproach i k \u2208\n    BfgsVerification.TransportedCertificate.positiveBand BfgsVerification.ScalarCounterexamples.shiftedObjective\n      {x | BfgsVerification.ScalarCounterexamples.shiftedObjective x \u2264 3}\n      (BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.OneDimensional.embed (-1))) (1 / 4)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.active_approach_tendsto",
+      "signature": "\u2200 (i : Fin 2), Filter.Tendsto (BfgsVerification.ShiftedAbsAccessibility.activeApproach i) Filter.atTop (nhds 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.active_common_tangent_zero",
+      "signature": "\u2200 (i : Fin 2),\n  (BfgsVerification.AccessibleJumpGeometry.tangentSpace fun j =>\n          BfgsVerification.euclideanVector\n            (BfgsVerification.ShiftedAbsAccessibility.activeGradients j)).orthogonalProjection\n      (BfgsVerification.euclideanVector (BfgsVerification.ShiftedAbsAccessibility.activeGradients i)) =\n    0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.active_gradient_approach_tendsto",
+      "signature": "\u2200 (i : Fin 2),\n  Filter.Tendsto (BfgsVerification.ShiftedAbsAccessibility.activeGradientApproach i) Filter.atTop\n    (nhds (BfgsVerification.ShiftedAbsAccessibility.activeGradients i))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.active_gradient_identity_visibility",
+      "signature": "\u2200 (i : Fin 2), 0 < BfgsVerification.metricEnergy 1 (BfgsVerification.ShiftedAbsAccessibility.activeGradients i)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.actual_endpoint_ne_zero",
+      "signature": "\u2200 {x g : BfgsVerification.Vec 1},\n  HasFDerivAt BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.gradientFunctional g) x \u2192\n    x 0 \u2260 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.actual_gradient_neg",
+      "signature": "\u2200 {x g : BfgsVerification.Vec 1},\n  HasFDerivAt BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.gradientFunctional g) x \u2192\n    x 0 < 0 \u2192 g 0 = x 0 + 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.actual_gradient_pos",
+      "signature": "\u2200 {x g : BfgsVerification.Vec 1},\n  HasFDerivAt BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.gradientFunctional g) x \u2192\n    0 < x 0 \u2192 g 0 = x 0 + 3",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.actual_scalar_derivative",
+      "signature": "\u2200 {x g : BfgsVerification.Vec 1},\n  HasFDerivAt BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.gradientFunctional g) x \u2192\n    HasDerivAt BfgsVerification.ScalarCounterexamples.shiftedAbs (g 0) (x 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.full_active_tangent_space_eq_bot",
+      "signature": "(BfgsVerification.AccessibleJumpGeometry.tangentSpace fun j =>\n    BfgsVerification.euclideanVector (BfgsVerification.ShiftedAbsAccessibility.activeGradients j)) =\n  \u22a5",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.identityCertificate_field",
+      "signature": "\u2200 {K : Set (BfgsVerification.Vec 1)} (hK : IsCompact K) {\u03b7 : \u211d} (h\u03b7 : 0 < \u03b7) {c\u2081 : \u211d} (hc\u2081 : 0 < c\u2081),\n  (BfgsVerification.ShiftedAbsAccessibility.identityCertificate hK h\u03b7 hc\u2081).W = fun x => 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.kink_nondifferentiable",
+      "signature": "\u00acDifferentiableAt \u211d BfgsVerification.ScalarCounterexamples.shiftedObjective 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.kink_nonoptimal",
+      "signature": "BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.OneDimensional.embed (-1)) <\n  BfgsVerification.ScalarCounterexamples.shiftedObjective 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.kink_positive_band",
+      "signature": "0 \u2208\n  BfgsVerification.TransportedCertificate.positiveBand BfgsVerification.ScalarCounterexamples.shiftedObjective\n    {x | BfgsVerification.ScalarCounterexamples.shiftedObjective x \u2264 3}\n    (BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.OneDimensional.embed (-1))) (1 / 4)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.no_small_left_right_crossing",
+      "signature": "\u2200 {c\u2081 : \u211d},\n  0 < c\u2081 \u2192\n    \u2200 {x z g h : BfgsVerification.Vec 1},\n      BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.ScalarCounterexamples.shiftedObjective c\u2081\n          (1 / 4) x z g h \u2192\n        BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 1 / 4 \u2192 x 0 < 0 \u2192 0 < z 0 \u2192 False",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.no_small_right_left_crossing",
+      "signature": "\u2200 {c\u2081 : \u211d} {x z g h : BfgsVerification.Vec 1},\n  BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.ScalarCounterexamples.shiftedObjective c\u2081\n      (1 / 4) x z g h \u2192\n    BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 1 / 4 \u2192 0 < x 0 \u2192 z 0 < 0 \u2192 False",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.objective_level_accessibility_counterexample",
+      "signature": "\u2203 B,\n  (B.W = fun x => 1) \u2227\n    Continuous B.W \u2227\n      (\u2200 (i : Fin 2) (k : \u2115),\n          HasFDerivAt BfgsVerification.ScalarCounterexamples.shiftedObjective\n            (BfgsVerification.gradientFunctional (BfgsVerification.ShiftedAbsAccessibility.activeGradientApproach i k))\n            (BfgsVerification.ShiftedAbsAccessibility.activeApproach i k)) \u2227\n        (\u2200 (i : Fin 2),\n            Filter.Tendsto (BfgsVerification.ShiftedAbsAccessibility.activeApproach i) Filter.atTop (nhds 0) \u2227\n              Filter.Tendsto (BfgsVerification.ShiftedAbsAccessibility.activeGradientApproach i) Filter.atTop\n                (nhds (BfgsVerification.ShiftedAbsAccessibility.activeGradients i))) \u2227\n          (\u2200 (i : Fin 2) (k : \u2115),\n              BfgsVerification.ShiftedAbsAccessibility.activeApproach i k \u2208\n                BfgsVerification.TransportedCertificate.positiveBand\n                  BfgsVerification.ScalarCounterexamples.shiftedObjective\n                  {x | BfgsVerification.ScalarCounterexamples.shiftedObjective x \u2264 3}\n                  (BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.OneDimensional.embed (-1)))\n                  (1 / 4)) \u2227\n            (\u2200 (i : Fin 2),\n                0 <\n                  BfgsVerification.metricEnergy (B.W 0) (BfgsVerification.ShiftedAbsAccessibility.activeGradients i)) \u2227\n              \u2200 (i : Fin 2),\n                (BfgsVerification.AccessibleJumpGeometry.tangentSpace fun j =>\n                        BfgsVerification.euclideanVector\n                          (BfgsVerification.ShiftedAbsAccessibility.activeGradients j)).orthogonalProjection\n                    (BfgsVerification.euclideanVector (BfgsVerification.ShiftedAbsAccessibility.activeGradients i)) =\n                  0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.shiftedAbs_not_differentiable_zero",
+      "signature": "\u00acDifferentiableAt \u211d BfgsVerification.ScalarCounterexamples.shiftedAbs 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.shifted_all_compact_band_certificates",
+      "signature": "\u2200 {K : Set (BfgsVerification.Vec 1)},\n  IsCompact K \u2192\n    \u2200 {c\u2081 : \u211d},\n      0 < c\u2081 \u2192\n        BfgsVerification.TransportedCertificate.HasBandCertificates\n          BfgsVerification.ScalarCounterexamples.shiftedObjective K\n          (BfgsVerification.ScalarCounterexamples.shiftedObjective (BfgsVerification.OneDimensional.embed (-1))) c\u2081\n          (1 / 4)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.small_eligible_gradient_change",
+      "signature": "\u2200 {c\u2081 : \u211d},\n  0 < c\u2081 \u2192\n    \u2200 {x z g h : BfgsVerification.Vec 1},\n      BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.ScalarCounterexamples.shiftedObjective c\u2081\n          (1 / 4) x z g h \u2192\n        BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 1 / 4 \u2192 h - g = z - x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
+      "theorem": "BfgsVerification.ShiftedAbsAccessibility.small_eligible_same_side",
+      "signature": "\u2200 {c\u2081 : \u211d},\n  0 < c\u2081 \u2192\n    \u2200 {x z g h : BfgsVerification.Vec 1},\n      BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.ScalarCounterexamples.shiftedObjective c\u2081\n          (1 / 4) x z g h \u2192\n        BfgsVerification.TransportedCertificate.pairDecrease x z g \u2264 1 / 4 \u2192 0 < x 0 \u2227 0 < z 0 \u2228 x 0 < 0 \u2227 z 0 < 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ShiftedAbsAccessibility.lean"
+    },
+    {
       "theorem": "BfgsVerification.SmoothSubspace.frobSq_eq_sum_columns",
       "signature": "\u2200 {n r : \u2115} (W : Matrix (Fin n) (Fin r) \u211d),\n  BfgsVerification.SmoothSubspace.frobSq W = \u2211 j, BfgsVerification.sqNorm fun i => W i j",
       "axioms": [
@@ -8058,6 +9716,336 @@
         "propext"
       ],
       "source": "BfgsVerification/StrictContours.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.actual_gradient_eq_theta",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      \u2200 (star x g : BfgsVerification.Vec n),\n        0 < \u03b3 (x - star) \u2192\n          HasFDerivAt (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star) (BfgsVerification.gradientFunctional g) x \u2192\n            BfgsVerification.dot g (x - star) =\n              BfgsVerification.TransformedGauge.theta \u03a6 (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.actual_gradient_euler",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      \u2200 (star x g : BfgsVerification.Vec n),\n        0 < \u03b3 (x - star) \u2192\n          HasFDerivAt (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star) (BfgsVerification.gradientFunctional g) x \u2192\n            BfgsVerification.dot g (x - star) = \u03b3 (x - star) * deriv \u03a6 (\u03b3 (x - star))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.actual_pairing_variation_on_positive_band",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n) {K : Set (BfgsVerification.Vec n)},\n            IsCompact K \u2192\n              \u2200 {\u03b7 : \u211d},\n                0 < \u03b7 \u2192\n                  \u2203 C,\n                    0 < C \u2227\n                      \u2200 x \u2208 K,\n                        \u2200 z \u2208 K,\n                          \u03b7 \u2264 BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star z \u2192\n                            BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star z \u2264\n                                BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x \u2192\n                              \u2200 (g h : BfgsVerification.Vec n),\n                                HasFDerivAt (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)\n                                    (BfgsVerification.gradientFunctional g) x \u2192\n                                  HasFDerivAt (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)\n                                      (BfgsVerification.gradientFunctional h) z \u2192\n                                    |BfgsVerification.dot h (z - star) - BfgsVerification.dot g (x - star)| \u2264\n                                      C *\n                                        (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x -\n                                          BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star z)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.correction_numeric",
+      "signature": "\u2200 {d t \u0394 e C \u03ba c : \u211d},\n  0 < d \u2192\n    0 < \u03ba \u2192 0 < c \u2192 0 \u2264 C \u2192 \u0394 \u2264 d \u2192 c * d \u2264 \u0394 \u2192 \u03ba * d \u2264 t \u2192 |e| \u2264 C * \u0394 \u2192 (d + e) ^ 2 / t \u2264 (1 + C) ^ 2 / (\u03ba * c) * \u0394",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.exists_gauge_annulus_on_positive_band",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n) {K : Set (BfgsVerification.Vec n)},\n            IsCompact K \u2192\n              \u2200 {\u03b7 : \u211d},\n                0 < \u03b7 \u2192\n                  \u2203 a b,\n                    0 < a \u2227\n                      \u2200 x \u2208 K, \u03b7 \u2264 BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x \u2192 \u03b3 (x - star) \u2208 Set.Icc a b",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.gauge_hasFDerivAt_of_objective",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n        \u2200 (star x g : BfgsVerification.Vec n),\n          0 < \u03b3 (x - star) \u2192\n            HasFDerivAt (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star) (BfgsVerification.gradientFunctional g)\n                x \u2192\n              HasFDerivAt \u03b3 ((deriv \u03a6 (\u03b3 (x - star)))\u207b\u00b9 \u2022 BfgsVerification.gradientFunctional g) (x - star)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.gauge_nonneg",
+      "signature": "\u2200 {n : \u2115} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n    Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192 \u2200 (x : BfgsVerification.Vec n), 0 \u2264 \u03b3 x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_continuousAt",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {t : \u211d}, 0 < t \u2192 ContinuousAt (BfgsVerification.TransformedGauge.inverse \u03a6) t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_hasDerivAt",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {t : \u211d},\n      0 < t \u2192\n        HasDerivAt (BfgsVerification.TransformedGauge.inverse \u03a6)\n          (deriv \u03a6 (BfgsVerification.TransformedGauge.inverse \u03a6 t))\u207b\u00b9 t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_image",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.TransformedGauge.inverse \u03a6 '' Set.Ici 0 = Set.Ici 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_nonneg",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {t : \u211d}, 0 \u2264 t \u2192 0 \u2264 BfgsVerification.TransformedGauge.inverse \u03a6 t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_positive",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {t : \u211d}, 0 < t \u2192 0 < BfgsVerification.TransformedGauge.inverse \u03a6 t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_strictMonoOn",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    StrictMonoOn (BfgsVerification.TransformedGauge.inverse \u03a6) (Set.Ici 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.inverse_transform",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {r : \u211d}, 0 \u2264 r \u2192 BfgsVerification.TransformedGauge.inverse \u03a6 (\u03a6 r) = r",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.objective_at_center",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      \u2200 (star : BfgsVerification.Vec n), BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star star = 0",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.objective_coercive",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n),\n            Filter.Tendsto (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)\n              (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.objective_convex",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n), ConvexOn \u211d Set.univ (BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.objective_eq_zero_iff",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n        \u2200 (star x : BfgsVerification.Vec n), BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x = 0 \u2194 x = star",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.objective_nonneg",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n      Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n        \u2200 (star x : BfgsVerification.Vec n), 0 \u2264 BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.objective_sublevel_compact",
+      "signature": "\u2200 {n : \u2115} {\u03a6 : \u211d \u2192 \u211d} {\u03b3 : BfgsVerification.Vec n \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ConvexOn \u211d Set.univ \u03b3 \u2192\n      BfgsVerification.Homogeneous.PositiveDegreeOne \u03b3 \u2192\n        Filter.Tendsto \u03b3 (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192\n          \u2200 (star : BfgsVerification.Vec n) (a : \u211d),\n            IsCompact {x | BfgsVerification.TransformedGauge.objective \u03a6 \u03b3 star x \u2264 a}",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.radialPairing_contDiff",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ContDiffOn \u211d 1 (BfgsVerification.TransformedGauge.radialPairing \u03a6) (Set.Ioi 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.radialPairing_hasDerivAt",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {r : \u211d},\n      0 < r \u2192 HasDerivAt (BfgsVerification.TransformedGauge.radialPairing \u03a6) (deriv \u03a6 r + r * deriv (deriv \u03a6) r) r",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.radialPairing_variation_on_annulus",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {a b : \u211d},\n      0 < a \u2192\n        \u2203 C,\n          0 < C \u2227\n            \u2200 r \u2208 Set.Icc a b,\n              \u2200 s \u2208 Set.Icc a b,\n                s \u2264 r \u2192\n                  |BfgsVerification.TransformedGauge.radialPairing \u03a6 s -\n                        BfgsVerification.TransformedGauge.radialPairing \u03a6 r| \u2264\n                    C * (\u03a6 r - \u03a6 s)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.theta_derivative_bounded",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {a b : \u211d}, 0 < a \u2192 \u2203 C, 0 < C \u2227 \u2200 t \u2208 Set.Icc a b, |deriv (BfgsVerification.TransformedGauge.theta \u03a6) t| \u2264 C",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.theta_derivative_continuousOn",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    ContinuousOn (deriv (BfgsVerification.TransformedGauge.theta \u03a6)) (Set.Ioi 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.theta_hasDerivAt",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {t : \u211d},\n      0 < t \u2192\n        HasDerivAt (BfgsVerification.TransformedGauge.theta \u03a6)\n          (1 +\n            BfgsVerification.TransformedGauge.inverse \u03a6 t *\n                deriv (deriv \u03a6) (BfgsVerification.TransformedGauge.inverse \u03a6 t) /\n              deriv \u03a6 (BfgsVerification.TransformedGauge.inverse \u03a6 t))\n          t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.theta_lipschitz_on_positive_interval",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {a b : \u211d},\n      0 < a \u2192\n        \u2203 C,\n          0 < C \u2227\n            \u2200 t \u2208 Set.Icc a b,\n              \u2200 u \u2208 Set.Icc a b,\n                |BfgsVerification.TransformedGauge.theta \u03a6 u - BfgsVerification.TransformedGauge.theta \u03a6 t| \u2264\n                  C * |u - t|",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.transform_hasDerivAt",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d}, BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192 \u2200 {r : \u211d}, 0 < r \u2192 HasDerivAt \u03a6 (deriv \u03a6 r) r",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGauge.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.transform_inverse",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d},\n  BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192\n    \u2200 {t : \u211d}, 0 \u2264 t \u2192 \u03a6 (BfgsVerification.TransformedGauge.inverse \u03a6 t) = t",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.transform_nonneg",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d}, BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192 \u2200 {r : \u211d}, 0 \u2264 r \u2192 0 \u2264 \u03a6 r",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.transform_positive",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d}, BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192 \u2200 {r : \u211d}, 0 < r \u2192 0 < \u03a6 r",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.transform_surjOn",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d}, BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192 Set.SurjOn \u03a6 (Set.Ici 0) (Set.Ici 0)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
+    },
+    {
+      "theorem": "BfgsVerification.TransformedGauge.transform_tendsto_atTop",
+      "signature": "\u2200 {\u03a6 : \u211d \u2192 \u211d}, BfgsVerification.TransformedGauge.IncreasingTransform \u03a6 \u2192 Filter.Tendsto \u03a6 Filter.atTop Filter.atTop",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/TransformedGaugeInverse.lean"
     },
     {
       "theorem": "BfgsVerification.TransportedCertificate.BandCertificate.normalize_budget",
@@ -8638,6 +10626,16 @@
         "propext"
       ],
       "source": "BfgsVerification/EuclideanEstimates.lean"
+    },
+    {
+      "theorem": "BfgsVerification.accessibleActiveSeparation",
+      "signature": "BfgsVerification.AccessibleActiveSeparationTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
     },
     {
       "theorem": "BfgsVerification.affineCertificateCovariance",
@@ -9590,6 +11588,26 @@
       "source": "BfgsVerification/PositiveUpdate.lean"
     },
     {
+      "theorem": "BfgsVerification.parabolicCertificate",
+      "signature": "BfgsVerification.ParabolicCertificateTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
+    },
+    {
+      "theorem": "BfgsVerification.parabolicConvergence",
+      "signature": "BfgsVerification.ParabolicConvergenceTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
+    },
+    {
       "theorem": "BfgsVerification.parabolicDenominator",
       "signature": "BfgsVerification.ParabolicDenominatorTarget",
       "axioms": [
@@ -9598,6 +11616,26 @@
         "propext"
       ],
       "source": "BfgsVerification/ReportApplicationsEndToEnd.lean"
+    },
+    {
+      "theorem": "BfgsVerification.parabolicEligibleSeparation",
+      "signature": "BfgsVerification.ParabolicEligibleSeparationTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
+    },
+    {
+      "theorem": "BfgsVerification.parabolicNonnecessity",
+      "signature": "BfgsVerification.ParabolicNonnecessityTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
     },
     {
       "theorem": "BfgsVerification.planarHomogeneousEscape",
@@ -9800,6 +11838,16 @@
       "source": "BfgsVerification/ReportGeometryEndToEnd.lean"
     },
     {
+      "theorem": "BfgsVerification.recurrentRelativeInterior",
+      "signature": "BfgsVerification.RecurrentRelativeInteriorTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
+    },
+    {
       "theorem": "BfgsVerification.referenceEnergy",
       "signature": "BfgsVerification.ReferenceEnergyTarget",
       "axioms": [
@@ -9808,6 +11856,16 @@
         "propext"
       ],
       "source": "BfgsVerification/FoundationEndToEnd.lean"
+    },
+    {
+      "theorem": "BfgsVerification.relativeInteriorConvergence",
+      "signature": "BfgsVerification.RelativeInteriorConvergenceTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
     },
     {
       "theorem": "BfgsVerification.residualFrameCriterion",
@@ -9990,6 +12048,16 @@
       "source": "BfgsVerification/PrincipalMinors.lean"
     },
     {
+      "theorem": "BfgsVerification.transformedGaugeConvergence",
+      "signature": "BfgsVerification.TransformedGaugeConvergenceTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/ReportFamiliesEndToEnd.lean"
+    },
+    {
       "theorem": "BfgsVerification.transformed_coordinateMatrix_injective",
       "signature": "\u2200 {n : \u2115} (U : BfgsVerification.Mat n),\n  Matrix.transpose U * U = 1 \u2192\n    \u2200 (I : Finset (Fin n)), Function.Injective (U * BfgsVerification.coordinateMatrix I).mulVec",
       "axioms": [
@@ -10014,11 +12082,11 @@
   "sources": [
     {
       "path": "BfgsVerification.lean",
-      "sha256": "6511f8673b9067eea9550ee0c3eaaa399377476064b062fc19424731358f94d5"
+      "sha256": "6ecd93eb8102cdc01689eb3035f0c4be8bcbd4074b2538641a8c1f6463e848a7"
     },
     {
       "path": "Audit.lean",
-      "sha256": "51cde5ebdd10a9fdde8b0597fc1b9200e165ee6cbb0fa2c952f0631967f3b2a2"
+      "sha256": "8768778d87e81e7371a4de7233a205538ee97a2d7e7edfbc489d20c934b87b33"
     },
     {
       "path": "BfgsVerification/AccessibleCurvatureBridge.lean",
@@ -10221,6 +12289,10 @@
       "sha256": "354e775949d3dc6410f22f79e9c7a2a8550c03f373222f30d96f6a53e2277567"
     },
     {
+      "path": "BfgsVerification/HomogeneousLowRankRestriction.lean",
+      "sha256": "36b9d33afb256de7af04ed95a8681043056f447e9174b9746a8c05bddd367c2f"
+    },
+    {
       "path": "BfgsVerification/HomogeneousMaxLinear.lean",
       "sha256": "da6691791637d875f21ab092e3f5d4c3464effefcaf4da3965ea0068c3b81bbd"
     },
@@ -10235,6 +12307,18 @@
     {
       "path": "BfgsVerification/HomogeneousPlanarEscape.lean",
       "sha256": "98f0d888c88442395aa9978015a7a4b27b74a690e2d4ee19a871b6c26e262b79"
+    },
+    {
+      "path": "BfgsVerification/HomogeneousRelativeInteriorBounds.lean",
+      "sha256": "c639bafed7a60de1a3f7d1f0dd007b48a23ade1663b4554b348206a79635755d"
+    },
+    {
+      "path": "BfgsVerification/HomogeneousRelativeInteriorConvergence.lean",
+      "sha256": "28e7d18e1c0687dd91bb4f4deeafcc31aab9bd2c7dd71fe35d6832092643ab77"
+    },
+    {
+      "path": "BfgsVerification/HomogeneousRelativeInteriorGeometry.lean",
+      "sha256": "fe9a11718ccfec322ab16d51528e33f8f576280c2fe69a2aa99cdfe4095d304b"
     },
     {
       "path": "BfgsVerification/IncomingJumpObstruction.lean",
@@ -10305,12 +12389,48 @@
       "sha256": "e822213c026bb0491676a14a35a8aa37d7a6747081c2dfe721dc42e586cb64bb"
     },
     {
+      "path": "BfgsVerification/ParabolicCertificate.lean",
+      "sha256": "aa32c4dcd14374ff629d2fac3f71c9848964b8ee9d80e1dea36f96f7aef23b6a"
+    },
+    {
       "path": "BfgsVerification/ParabolicDenominator.lean",
       "sha256": "75ab5c4106d118b5d3f07d13371305b72a57d2d9d79c260d87dc38ad68f55991"
     },
     {
       "path": "BfgsVerification/ParabolicDenominatorAlgebra.lean",
       "sha256": "2ebd5045d3e3a37f4eb840b88caa0a5dfe9a98f1c5070637c6a240373f53c0b0"
+    },
+    {
+      "path": "BfgsVerification/ParabolicEnvelopeBound.lean",
+      "sha256": "196874a79d1ed99eb30b742bfe9a23243afe151977c4a94b904a877b5d210f93"
+    },
+    {
+      "path": "BfgsVerification/ParabolicEnvelopeCalibration.lean",
+      "sha256": "6733add4e19522f85dc0fe42e692de3bd9d4e21a2008b82b606ccae7a8ae9442"
+    },
+    {
+      "path": "BfgsVerification/ParabolicEnvelopeCells.lean",
+      "sha256": "d8c22e6e507063372809531fec919831212b475968ceeae7f12d7ddef00adbd4"
+    },
+    {
+      "path": "BfgsVerification/ParabolicEnvelopeIntervals.lean",
+      "sha256": "b853f0cee070cf7c59c41e2b99e3979808fb58426415a0e6fa471b35e37fdb8b"
+    },
+    {
+      "path": "BfgsVerification/ParabolicEnvelopeScale.lean",
+      "sha256": "92a55752068af14c074707404c99cbb741a8ef10a6c32449b678d0208a7ad24e"
+    },
+    {
+      "path": "BfgsVerification/ParabolicExampleContrast.lean",
+      "sha256": "b41226add42ea6de7972fa36eef3b3e5f12badd53f2b8878ad6a8a35eb348e3c"
+    },
+    {
+      "path": "BfgsVerification/ParabolicExamplePairs.lean",
+      "sha256": "c1e613f7bc3c89ca9e124e2e57f9c85f8f68643c79eb74f3dd3bf8c9872df6e8"
+    },
+    {
+      "path": "BfgsVerification/ParabolicExampleSeparation.lean",
+      "sha256": "5a73686b551f9abfff8d2cb9e4d74c188e7cdf71bc3764996771293a78ca09ee"
     },
     {
       "path": "BfgsVerification/ParabolicFamily.lean",
@@ -10321,8 +12441,24 @@
       "sha256": "57057bfeeecfc52d99ee56dd888ca726fab56803244b362ee43509d907e022fc"
     },
     {
+      "path": "BfgsVerification/ParabolicQuantitativeAlgebra.lean",
+      "sha256": "0823e0dcf6610176bc8500a7b5c94e5da3802c7ed3dedfb72fd19773306b69d1"
+    },
+    {
+      "path": "BfgsVerification/ParabolicScalarTransport.lean",
+      "sha256": "4fc57c07dbb25bddf0fd7c67b8064fdcd49721f133f26d72dbc0856a20d55250"
+    },
+    {
+      "path": "BfgsVerification/ParabolicTransportAlgebra.lean",
+      "sha256": "8de779a9bf41b0b6440c7dbe52cdcfde2c85f921a17c89cc52a82a1f6cdd260c"
+    },
+    {
       "path": "BfgsVerification/ParabolicUniformSecant.lean",
       "sha256": "8620d7d2386862551de2c441631947eca0fd4a1bdc8f751160515c18ae0ec19d"
+    },
+    {
+      "path": "BfgsVerification/ParabolicUniformTransport.lean",
+      "sha256": "eb2479513a21a854546d1d1d800ef82e877c9859683efcaa3e8fe7567ce306f5"
     },
     {
       "path": "BfgsVerification/PointwiseCertificateFeasibility.lean",
@@ -10437,6 +12573,14 @@
       "sha256": "029647d8167c8fc47bde7d1e282e7a5bd4a389aada9a6b66a1943e8d1a904431"
     },
     {
+      "path": "BfgsVerification/ReportFamiliesEndToEnd.lean",
+      "sha256": "ac51869e4ce66971d05c413b2df8907acc0e134ad57c07c406b8f57827175aeb"
+    },
+    {
+      "path": "BfgsVerification/ReportFamiliesTargets.lean",
+      "sha256": "1d75c259dbea2bf0811c603773ccb09ac8d91118c54ea9d92a4a2ab9c80bac44"
+    },
+    {
       "path": "BfgsVerification/ReportGeometryEndToEnd.lean",
       "sha256": "ca9524bc3209852e66d36136e54bea6f41b4f7d6e36e26da7555acc23c023ab4"
     },
@@ -10477,12 +12621,24 @@
       "sha256": "478455fbce62af3c7c7bb1df827772ce0d006a505edc9054af7ebc6e201862c4"
     },
     {
+      "path": "BfgsVerification/ShiftedAbsAccessibility.lean",
+      "sha256": "199c6f0f615ae8d54243079558d2dff387a0bc3f16ac3bbded7f18ec334f8f34"
+    },
+    {
       "path": "BfgsVerification/SmoothSubspace.lean",
       "sha256": "797963cfc24b29057068a9b36253a8d45cdc193f1d3c9cb656892512296fccda"
     },
     {
       "path": "BfgsVerification/StrictContours.lean",
       "sha256": "4b70efc314e66c392eb6177de025d9d37bd8a180b19c6a1543f57ec1bcc30ee4"
+    },
+    {
+      "path": "BfgsVerification/TransformedGauge.lean",
+      "sha256": "0f214176120f7aa7b05aeabd8035649c5fd5dfe87bc83400d6db866889e610a1"
+    },
+    {
+      "path": "BfgsVerification/TransformedGaugeInverse.lean",
+      "sha256": "2c8b4c6cff5dd418ec3e9c23e56a2fbbd02f2167278339496bda4f9389f20272"
     },
     {
       "path": "BfgsVerification/TransportedCertificateAlgebra.lean",
@@ -10509,7 +12665,7 @@
       "sha256": "1d1fb13057a5920cda29ff17887b0c6b4384d4eb97eb651e2aab98bace80fb88"
     }
   ],
-  "explicit_theorem_declarations": 996,
+  "explicit_theorem_declarations": 1202,
   "static_scan_passed": true,
   "static_scan_problems": [],
   "report_sources_preserved": true,
@@ -10583,7 +12739,7 @@
       "verified": true
     }
   ],
-  "audited_declaration_count": 1384,
+  "audited_declaration_count": 1675,
   "unexpected_axioms": [],
   "missing_axiom_reports": [],
   "conditional_results": [
@@ -10656,7 +12812,7 @@
   "euclidean_operator_norm_bridge_verified": true,
   "arbitrary_subspace_basis_bridge_verified": true,
   "outside_verified_scope": [
-    "Remaining F/R applications, Q calibrated transport and separation, H.7.4/H.8, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
+    "Remaining F/R applications, Q explicit scaling/ordered-envelope bookkeeping, H.7.4 and H.8 class specializations, remaining G interpretations, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
     "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
     "Existence of admissible steps on every search ray"
   ],
