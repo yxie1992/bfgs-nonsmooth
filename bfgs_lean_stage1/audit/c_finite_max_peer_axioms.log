@@ -1,0 +1,122 @@
+BfgsVerification.PlanarMaxRegular.regular_of_all_active_independent {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {m : ℕ} {f : Fin m → BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {U : Set (BfgsVerification.Vec 2)} (hU : IsOpen U) (hpU : p ∈ U)
+  (hf : ∀ (i : Fin m), ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f p) (hact : ∀ (i : Fin m), f i p = F p)
+  (hind : AffineIndependent ℝ fun i => BfgsVerification.coordinateGradient (f i) p)
+  (hn : ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p) :
+  ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p
+'BfgsVerification.PlanarMaxRegular.regular_of_all_active_independent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarMaxRegular.regular_of_finite_max_independent {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {m : ℕ} {f : Fin m → BfgsVerification.Vec 2 → ℝ} {p : BfgsVerification.Vec 2}
+  {U : Set (BfgsVerification.Vec 2)} (hU : IsOpen U) (hpU : p ∈ U)
+  (hf : ∀ (i : Fin m), ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f p)
+  (hind : AffineIndependent ℝ fun i => BfgsVerification.coordinateGradient (f i) p)
+  (hn : ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p) :
+  ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.ConvexTwoBranchRegularAt F p
+'BfgsVerification.PlanarMaxRegular.regular_of_finite_max_independent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarMaxRegular.finite_max_local_basin {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (star : BfgsVerification.Vec 2) (hmin : ∀ (x : BfgsVerification.Vec 2), F star ≤ F x)
+  (hunique : ∀ (x : BfgsVerification.Vec 2), F x = F star → x = star) {m : ℕ} {f : Fin m → BfgsVerification.Vec 2 → ℝ}
+  {U : Set (BfgsVerification.Vec 2)} (hU : IsOpen U) (hstar : star ∈ U)
+  (hf : ∀ (i : Fin m), ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f star)
+  (hind :
+    AffineIndependent ℝ fun i =>
+      BfgsVerification.coordinateGradient (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i)) star)
+  (w : BfgsVerification.Vec (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card)
+  (hw : ∀ (i : Fin (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card), 0 < w i) (hsum : ∑ i, w i = 1)
+  (hzero :
+    ∑ i,
+        w i •
+          BfgsVerification.coordinateGradient (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i))
+            star =
+      0)
+  {b : ℝ} (hb : F star < b)
+  (hstrict :
+    ∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {z | F z ≤ ℓ} → x = y) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+        F (R.x 0) < F star + ε →
+          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧ Filter.Tendsto R.x Filter.atTop (nhds star)
+'BfgsVerification.PlanarMaxRegular.finite_max_local_basin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.HessianGeometry.ray_second_derivative_at {n : ℕ} {f : BfgsVerification.Vec n → ℝ}
+  (x v : BfgsVerification.Vec n) (t : ℝ) (hf : ContDiffAt ℝ 2 f (BfgsVerification.RadialHessian.ray x v t)) :
+  deriv (deriv fun s => f (BfgsVerification.RadialHessian.ray x v s)) t =
+    BfgsVerification.dot v
+      (Matrix.mulVec (BfgsVerification.RadialHessian.matrix f (BfgsVerification.RadialHessian.ray x v t)) v)
+'BfgsVerification.HessianGeometry.ray_second_derivative_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.HessianGeometry.strictConvexOn_of_positive_hessian {n : ℕ} {f : BfgsVerification.Vec n → ℝ}
+  {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U) (hUc : Convex ℝ U) (hf : ContDiffOn ℝ 2 f U)
+  (hh :
+    ∀ x ∈ U,
+      ∀ (v : BfgsVerification.Vec n),
+        v ≠ 0 → 0 < BfgsVerification.dot v (Matrix.mulVec (BfgsVerification.RadialHessian.matrix f x) v)) :
+  StrictConvexOn ℝ U f
+'BfgsVerification.HessianGeometry.strictConvexOn_of_positive_hessian' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarMaxRegular.strictConvexOn_of_hessian_lower_bound {n : ℕ} {f : BfgsVerification.Vec n → ℝ}
+  {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U) (hUc : Convex ℝ U) (hf : ContDiffOn ℝ 2 f U) {μ : ℝ} (hμ : 0 < μ)
+  (hh : ∀ x ∈ U, Matrix.PosSemidef (BfgsVerification.RadialHessian.matrix f x - μ • 1)) : StrictConvexOn ℝ U f
+'BfgsVerification.PlanarMaxRegular.strictConvexOn_of_hessian_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarMaxRegular.strictConvexOn_finite_max {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  {f : Fin m → BfgsVerification.Vec n → ℝ} {U : Set (BfgsVerification.Vec n)} (hU : Convex ℝ U)
+  (hf : ∀ (i : Fin m), StrictConvexOn ℝ U (f i)) (hrep : ∀ p ∈ U, IsGreatest (Set.range fun i => f i p) (F p)) :
+  StrictConvexOn ℝ U F
+'BfgsVerification.PlanarMaxRegular.strictConvexOn_finite_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarMaxRegular.no_segment_frontier_of_local_strictConvex {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : Continuous F) {U : Set (BfgsVerification.Vec n)} (hstrict : StrictConvexOn ℝ U F) {ℓ : ℝ}
+  (hsub : {p | F p ≤ ℓ} ⊆ U) (x y : BfgsVerification.Vec n) (hs : segment ℝ x y ⊆ frontier {p | F p ≤ ℓ}) : x = y
+'BfgsVerification.PlanarMaxRegular.no_segment_frontier_of_local_strictConvex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarMaxRegular.finite_max_hessian_local_basin {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (star : BfgsVerification.Vec 2) (hmin : ∀ (x : BfgsVerification.Vec 2), F star ≤ F x)
+  (hunique : ∀ (x : BfgsVerification.Vec 2), F x = F star → x = star) {m : ℕ} {f : Fin m → BfgsVerification.Vec 2 → ℝ}
+  {U : Set (BfgsVerification.Vec 2)} (hU : IsOpen U) (hstar : star ∈ U)
+  (hf : ∀ (i : Fin m), ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f star)
+  (hind :
+    AffineIndependent ℝ fun i =>
+      BfgsVerification.coordinateGradient (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i)) star)
+  (w : BfgsVerification.Vec (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card)
+  (hw : ∀ (i : Fin (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card), 0 < w i) (hsum : ∑ i, w i = 1)
+  (hzero :
+    ∑ i,
+        w i •
+          BfgsVerification.coordinateGradient (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i))
+            star =
+      0)
+  {μ : ℝ} (hμ : 0 < μ)
+  (hh :
+    ∀ (i : Fin (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card),
+      ∀ x ∈ U,
+        Matrix.PosSemidef
+          (BfgsVerification.RadialHessian.matrix (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i))
+              x -
+            μ • 1)) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+        F (R.x 0) < F star + ε →
+          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧ Filter.Tendsto R.x Filter.atTop (nhds star)
+'BfgsVerification.PlanarMaxRegular.finite_max_hessian_local_basin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarFiniteMaxLocalBasinTarget : Prop
+'BfgsVerification.PlanarFiniteMaxLocalBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.planarFiniteMaxLocalBasin : BfgsVerification.PlanarFiniteMaxLocalBasinTarget
+'BfgsVerification.planarFiniteMaxLocalBasin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarFiniteMaxHessianBasinTarget : Prop
+'BfgsVerification.PlanarFiniteMaxHessianBasinTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.planarFiniteMaxHessianBasin : BfgsVerification.PlanarFiniteMaxHessianBasinTarget
+'BfgsVerification.planarFiniteMaxHessianBasin' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -542,3 +542,53 @@ example : BfgsVerification.NormalSpike.VariableSpikeHessianTarget := BfgsVerific
 #print BfgsVerification.LQuadraticSeed.objective
 #print BfgsVerification.LQuadraticSeed.minimizer
 #print BfgsVerification.NormalSpike.printedVariableObjective
+
+-- Eleventh tranche: actual A/C/R structural claims and explicit conditional dynamics criteria.
+#print BfgsVerification.FiniteC1MaxAffineGapTarget
+example : BfgsVerification.FiniteC1MaxAffineGapTarget := BfgsVerification.finiteC1MaxAffineGap
+#print axioms BfgsVerification.finiteC1MaxAffineGap
+#print BfgsVerification.PlanarFiniteMaxLocalBasinTarget
+example : BfgsVerification.PlanarFiniteMaxLocalBasinTarget := BfgsVerification.planarFiniteMaxLocalBasin
+#print axioms BfgsVerification.planarFiniteMaxLocalBasin
+#print BfgsVerification.PlanarFiniteMaxHessianBasinTarget
+example : BfgsVerification.PlanarFiniteMaxHessianBasinTarget := BfgsVerification.planarFiniteMaxHessianBasin
+#print axioms BfgsVerification.planarFiniteMaxHessianBasin
+#print BfgsVerification.RectangularNuclearNormTarget
+example : BfgsVerification.RectangularNuclearNormTarget := BfgsVerification.rectangularNuclearNorm
+#print axioms BfgsVerification.rectangularNuclearNorm
+#print BfgsVerification.CenteredRectangularNuclearTarget
+example : BfgsVerification.CenteredRectangularNuclearTarget := BfgsVerification.centeredRectangularNuclear
+#print axioms BfgsVerification.centeredRectangularNuclear
+#print BfgsVerification.MixedNuclearPowersTarget
+example : BfgsVerification.MixedNuclearPowersTarget := BfgsVerification.mixedNuclearPowers
+#print axioms BfgsVerification.mixedNuclearPowers
+#print BfgsVerification.FirstDifferenceBasinTarget
+example : BfgsVerification.FirstDifferenceBasinTarget := BfgsVerification.firstDifferenceBasin
+#print axioms BfgsVerification.firstDifferenceBasin
+#print BfgsVerification.PlanarQuadraticModelTarget
+example : BfgsVerification.PlanarQuadraticModelTarget := BfgsVerification.planarQuadraticModel
+#print axioms BfgsVerification.planarQuadraticModel
+#print BfgsVerification.PlanarQuadraticCoefficientsTarget
+example : BfgsVerification.PlanarQuadraticCoefficientsTarget := BfgsVerification.planarQuadraticCoefficients
+#print axioms BfgsVerification.planarQuadraticCoefficients
+#print BfgsVerification.PlanarQuadraticBasinTarget
+example : BfgsVerification.PlanarQuadraticBasinTarget := BfgsVerification.planarQuadraticBasin
+#print axioms BfgsVerification.planarQuadraticBasin
+#print BfgsVerification.PlanarQuadraticCurveTarget
+example : BfgsVerification.PlanarQuadraticCurveTarget := BfgsVerification.planarQuadraticCurve
+#print axioms BfgsVerification.planarQuadraticCurve
+#print BfgsVerification.PlanarQuadraticSeparationTarget
+example : BfgsVerification.PlanarQuadraticSeparationTarget := BfgsVerification.planarQuadraticSeparation
+#print axioms BfgsVerification.planarQuadraticSeparation
+#print BfgsVerification.LocalStableOrbit.StableOrbitTarget
+example : BfgsVerification.LocalStableOrbit.StableOrbitTarget := BfgsVerification.LocalStableOrbit.stableOrbit
+#print axioms BfgsVerification.LocalStableOrbit.stableOrbit
+#print BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget
+example : BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget := BfgsVerification.LocalStableOrbit.positiveStableOrbit
+#print axioms BfgsVerification.LocalStableOrbit.positiveStableOrbit
+#print BfgsVerification.LNormalizedReturn.returnMap
+#print BfgsVerification.LNormalizedReturn.normalized_return_contract
+#print BfgsVerification.LNormalizedOracle.actual_implementation_neighborhood
+#print BfgsVerification.LBlockSplitting.BlockForm
+#print BfgsVerification.LBlockSplitting.block_splitting
+#print BfgsVerification.LBlockSplitting.positive_orbit_of_block

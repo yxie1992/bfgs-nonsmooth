@@ -1,0 +1,168 @@
+BfgsVerification.LocalStableOrbit.Sequence.{u_3, u_4} (S : Type u_3) (U : Type u_4) [NormedAddCommGroup S]
+  [NormedAddCommGroup U] : Type (max u_4 u_3)
+'BfgsVerification.LocalStableOrbit.Sequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequence_tendsto.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (w : BfgsVerification.LocalStableOrbit.Sequence S U) :
+  Filter.Tendsto (⇑w) Filter.atTop (nhds 0)
+'BfgsVerification.LocalStableOrbit.sequence_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequence_norm_apply.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (w : BfgsVerification.LocalStableOrbit.Sequence S U)
+  (n : ℕ) : ‖w n‖ ≤ ‖w‖
+'BfgsVerification.LocalStableOrbit.sequence_norm_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequence_norm_le.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] {w : BfgsVerification.LocalStableOrbit.Sequence S U}
+  {R : ℝ} (hR : 0 ≤ R) : ‖w‖ ≤ R ↔ ∀ (n : ℕ), ‖w n‖ ≤ R
+'BfgsVerification.LocalStableOrbit.sequence_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.stablePart.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] (A : S →L[ℝ] S) (N : S × U → S × U) (a : S)
+  (w : BfgsVerification.LocalStableOrbit.Sequence S U) : ℕ → S
+'BfgsVerification.LocalStableOrbit.stablePart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequenceMap.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (a : S)
+  (hN : ContinuousAt N 0) (hN0 : N 0 = 0) (w : BfgsVerification.LocalStableOrbit.Sequence S U) :
+  BfgsVerification.LocalStableOrbit.Sequence S U
+'BfgsVerification.LocalStableOrbit.sequenceMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequenceMap_fst_zero.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (a : S)
+  (hN : ContinuousAt N 0) (hN0 : N 0 = 0) (w : BfgsVerification.LocalStableOrbit.Sequence S U) :
+  ((BfgsVerification.LocalStableOrbit.sequenceMap A B N a hN hN0 w) 0).1 = a
+'BfgsVerification.LocalStableOrbit.sequenceMap_fst_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequenceMap_fst_succ.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (a : S)
+  (hN : ContinuousAt N 0) (hN0 : N 0 = 0) (w : BfgsVerification.LocalStableOrbit.Sequence S U) (n : ℕ) :
+  ((BfgsVerification.LocalStableOrbit.sequenceMap A B N a hN hN0 w) (n + 1)).1 = A (w n).1 + (N (w n)).1
+'BfgsVerification.LocalStableOrbit.sequenceMap_fst_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequenceMap_snd.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (a : S)
+  (hN : ContinuousAt N 0) (hN0 : N 0 = 0) (w : BfgsVerification.LocalStableOrbit.Sequence S U) (n : ℕ) :
+  ((BfgsVerification.LocalStableOrbit.sequenceMap A B N a hN hN0 w) n).2 = B ((w (n + 1)).2 - (N (w n)).2)
+'BfgsVerification.LocalStableOrbit.sequenceMap_snd' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.remainder_norm_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] {N : S × U → S × U} {R δ : ℝ} (hR : 0 ≤ R) (hN0 : N 0 = 0)
+  (hLip : ∀ (x y : S × U), ‖x‖ ≤ R → ‖y‖ ≤ R → ‖N x - N y‖ ≤ δ * ‖x - y‖) {x : S × U} (hx : ‖x‖ ≤ R) : ‖N x‖ ≤ δ * ‖x‖
+'BfgsVerification.LocalStableOrbit.remainder_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.stable_expression_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) {x y : S × U}
+  {D δ : ℝ} (hδ : 0 ≤ δ) (hx : ‖x‖ ≤ D) (hy : ‖y‖ ≤ δ * D) : ‖A x.1 + y.1‖ ≤ (‖A‖ + δ) * D
+'BfgsVerification.LocalStableOrbit.stable_expression_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.unstable_expression_bound.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (B : U →L[ℝ] U) {x y : S × U}
+  {D δ : ℝ} (hx : ‖x‖ ≤ D) (hy : ‖y‖ ≤ δ * D) : ‖B (x.2 - y.2)‖ ≤ ‖B‖ * (1 + δ) * D
+'BfgsVerification.LocalStableOrbit.unstable_expression_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequenceMap_ball.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (a : S)
+  (hN : ContinuousAt N 0) (hN0 : N 0 = 0) {R δ : ℝ} (hR : 0 ≤ R) (hδ : 0 ≤ δ) (ha : ‖a‖ ≤ R) (hA : ‖A‖ + δ ≤ 1)
+  (hB : ‖B‖ * (1 + δ) ≤ 1) (hLip : ∀ (x y : S × U), ‖x‖ ≤ R → ‖y‖ ≤ R → ‖N x - N y‖ ≤ δ * ‖x - y‖)
+  {w : BfgsVerification.LocalStableOrbit.Sequence S U} (hw : ‖w‖ ≤ R) :
+  ‖BfgsVerification.LocalStableOrbit.sequenceMap A B N a hN hN0 w‖ ≤ R
+'BfgsVerification.LocalStableOrbit.sequenceMap_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.sequenceMap_difference.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [NormedAddCommGroup U] [NormedSpace ℝ U] (A : S →L[ℝ] S) (B : U →L[ℝ] U) (N : S × U → S × U) (a : S)
+  (hN : ContinuousAt N 0) (hN0 : N 0 = 0) {R δ K : ℝ} (hδ : 0 ≤ δ) (hK : 0 ≤ K) (hA : ‖A‖ + δ ≤ K)
+  (hB : ‖B‖ * (1 + δ) ≤ K) (hLip : ∀ (x y : S × U), ‖x‖ ≤ R → ‖y‖ ≤ R → ‖N x - N y‖ ≤ δ * ‖x - y‖)
+  {w v : BfgsVerification.LocalStableOrbit.Sequence S U} (hw : ‖w‖ ≤ R) (hv : ‖v‖ ≤ R) :
+  ‖BfgsVerification.LocalStableOrbit.sequenceMap A B N a hN hN0 w -
+        BfgsVerification.LocalStableOrbit.sequenceMap A B N a hN hN0 v‖ ≤
+    K * ‖w - v‖
+'BfgsVerification.LocalStableOrbit.sequenceMap_difference' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.stable_sequence_exists.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U] (A : S →L[ℝ] S)
+  (B : U →L[ℝ] U) (N : S × U → S × U) (a : S) (hN : ContinuousAt N 0) (hN0 : N 0 = 0) {R δ : ℝ} {K : NNReal}
+  (hR : 0 ≤ R) (hδ : 0 ≤ δ) (hK : K < 1) (ha : ‖a‖ ≤ R) (hA : ‖A‖ + δ ≤ ↑K) (hB : ‖B‖ * (1 + δ) ≤ ↑K)
+  (hLip : ∀ (x y : S × U), ‖x‖ ≤ R → ‖y‖ ≤ R → ‖N x - N y‖ ≤ δ * ‖x - y‖) :
+  ∃ w,
+    ‖w‖ ≤ R ∧
+      (w 0).1 = a ∧ ∀ (n : ℕ), (w (n + 1)).1 = A (w n).1 + (N (w n)).1 ∧ (w n).2 = B ((w (n + 1)).2 - (N (w n)).2)
+'BfgsVerification.LocalStableOrbit.stable_sequence_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.nonlinear_stable_orbit.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U] (A : S →L[ℝ] S)
+  (L : U ≃L[ℝ] U) (N : S × U → S × U) (a : S) (hN : ContinuousAt N 0) (hN0 : N 0 = 0) {R δ : ℝ} {K : NNReal}
+  (hR : 0 ≤ R) (hδ : 0 ≤ δ) (hK : K < 1) (ha : ‖a‖ ≤ R) (hA : ‖A‖ + δ ≤ ↑K) (hB : ‖↑L.symm‖ * (1 + δ) ≤ ↑K)
+  (hLip : ∀ (x y : S × U), ‖x‖ ≤ R → ‖y‖ ≤ R → ‖N x - N y‖ ≤ δ * ‖x - y‖) :
+  ∃ w,
+    (∀ (n : ℕ), ‖w n‖ ≤ R) ∧
+      Filter.Tendsto w Filter.atTop (nhds 0) ∧ (w 0).1 = a ∧ ∀ (n : ℕ), w (n + 1) = (A (w n).1, L (w n).2) + N (w n)
+'BfgsVerification.LocalStableOrbit.nonlinear_stable_orbit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.small_lipschitz_ball.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U] {N : S × U → S × U}
+  (hN : HasStrictFDerivAt N 0 0) {δ r : ℝ} (hδ : 0 < δ) (hr : 0 < r) :
+  ∃ R, 0 < R ∧ R ≤ r ∧ ∀ (x y : S × U), ‖x‖ ≤ R → ‖y‖ ≤ R → ‖N x - N y‖ ≤ δ * ‖x - y‖
+'BfgsVerification.LocalStableOrbit.small_lipschitz_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.contraction_parameters.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U] (A : S →L[ℝ] S)
+  (B : U →L[ℝ] U) (hA : ‖A‖ < 1) (hB : ‖B‖ < 1) : ∃ δ, 0 < δ ∧ ∃ K < 1, ‖A‖ + δ ≤ ↑K ∧ ‖B‖ * (1 + δ) ≤ ↑K
+'BfgsVerification.LocalStableOrbit.contraction_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.local_stable_orbits_from_remainder.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (N : S × U → S × U) (hN : HasStrictFDerivAt N 0 0) (hN0 : N 0 = 0) (hA : ‖A‖ < 1)
+  (hB : ‖↑L.symm‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ R,
+    0 < R ∧
+      ∀ (a : S),
+        ‖a‖ ≤ R →
+          ∃ w,
+            (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+              Filter.Tendsto w Filter.atTop (nhds 0) ∧
+                (w 0).1 = a ∧ ∀ (n : ℕ), w (n + 1) = (A (w n).1, L (w n).2) + N (w n)
+'BfgsVerification.LocalStableOrbit.local_stable_orbits_from_remainder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LocalStableOrbit.local_stable_orbits.{u_1, u_2} {S : Type u_1} {U : Type u_2} [NormedAddCommGroup S]
+  [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U] (A : S →L[ℝ] S)
+  (L : U ≃L[ℝ] U) (T : S × U → S × U) (hT0 : T 0 = 0) (hT : HasStrictFDerivAt T (A.prodMap ↑L) 0) (hA : ‖A‖ < 1)
+  (hB : ‖↑L.symm‖ < 1) {r : ℝ} (hr : 0 < r) :
+  ∃ R,
+    0 < R ∧
+      ∀ (a : S),
+        ‖a‖ ≤ R →
+          ∃ w,
+            (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+              Filter.Tendsto w Filter.atTop (nhds 0) ∧ (w 0).1 = a ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+'BfgsVerification.LocalStableOrbit.local_stable_orbits' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.positive_stable_direction.{u_1, u_2} {S : Type u_1} {U : Type u_2}
+  [NormedAddCommGroup S] [NormedSpace ℝ S] [CompleteSpace S] [NormedAddCommGroup U] [NormedSpace ℝ U] [CompleteSpace U]
+  (A : S →L[ℝ] S) (L : U ≃L[ℝ] U) (T : S × U → S × U) (hT0 : T 0 = 0) (hT : HasStrictFDerivAt T (A.prodMap ↑L) 0)
+  (hA : ‖A‖ < 1) (hB : ‖↑L.symm‖ < 1) (lambda : S →L[ℝ] ℝ) (e : S) (he : 0 < lambda e) {r : ℝ} (hr : 0 < r) :
+  ∃ w,
+    (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+      Filter.Tendsto w Filter.atTop (nhds 0) ∧ 0 < lambda (w 0).1 ∧ w 0 ≠ 0 ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+'BfgsVerification.LocalStableOrbit.positive_stable_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.StableOrbitTarget : Prop
+'BfgsVerification.LocalStableOrbit.StableOrbitTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget : Prop
+'BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.stableOrbit : BfgsVerification.LocalStableOrbit.StableOrbitTarget
+'BfgsVerification.LocalStableOrbit.stableOrbit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LocalStableOrbit.positiveStableOrbit : BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget
+'BfgsVerification.LocalStableOrbit.positiveStableOrbit' depends on axioms: [propext, Classical.choice, Quot.sound]
+def BfgsVerification.LocalStableOrbit.StableOrbitTarget : Prop :=
+∀ (A : (Fin 2 → ℝ) →L[ℝ] Fin 2 → ℝ) (L : (Fin 3 → ℝ) ≃L[ℝ] Fin 3 → ℝ)
+  (T : (Fin 2 → ℝ) × (Fin 3 → ℝ) → (Fin 2 → ℝ) × (Fin 3 → ℝ)),
+  T 0 = 0 →
+    HasStrictFDerivAt T (A.prodMap ↑L) 0 →
+      ‖A‖ < 1 →
+        ‖↑L.symm‖ < 1 →
+          ∀ (r : ℝ),
+            0 < r →
+              ∃ R,
+                0 < R ∧
+                  ∀ (a : Fin 2 → ℝ),
+                    ‖a‖ ≤ R →
+                      ∃ w,
+                        (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+                          Filter.Tendsto w Filter.atTop (nhds 0) ∧ (w 0).1 = a ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+def BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget : Prop :=
+∀ (A : (Fin 2 → ℝ) →L[ℝ] Fin 2 → ℝ) (L : (Fin 3 → ℝ) ≃L[ℝ] Fin 3 → ℝ)
+  (T : (Fin 2 → ℝ) × (Fin 3 → ℝ) → (Fin 2 → ℝ) × (Fin 3 → ℝ)),
+  T 0 = 0 →
+    HasStrictFDerivAt T (A.prodMap ↑L) 0 →
+      ‖A‖ < 1 →
+        ‖↑L.symm‖ < 1 →
+          ∀ (lambda : (Fin 2 → ℝ) →L[ℝ] ℝ) (e : Fin 2 → ℝ),
+            0 < lambda e →
+              ∀ (r : ℝ),
+                0 < r →
+                  ∃ w,
+                    (∀ (n : ℕ), ‖w n‖ ≤ r) ∧
+                      Filter.Tendsto w Filter.atTop (nhds 0) ∧
+                        0 < lambda (w 0).1 ∧ w 0 ≠ 0 ∧ ∀ (n : ℕ), w (n + 1) = T (w n)

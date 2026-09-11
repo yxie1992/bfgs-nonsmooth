@@ -310,3 +310,37 @@ A compact affine-gap/semialgebraic infrastructure; C finite-max application and
 explicit examples; general rectangular nuclear norm and named family closure;
 final source/synthesis/evidence review. D/U retained construction proofs have no
 undischarged premise, but the entire report remains incomplete.
+
+
+## Eleventh execution milestone: affine gap, planar applications, matrix families
+
+The frozen pinned build and full transitive audit pass **3,346 explicit / 4,762
+total theorem declarations**, **120 exact targets**, and **394 source hashes**.
+Only propext, Classical.choice and Quot.sound occur. Logs are
+`audit/report_structural_closure_check.log`, `audit/build.log` and `audit/axioms.log`;
+statement/independent reviews are linked in
+`audit/REPORT_STRUCTURAL_CLOSURE_STATEMENT_REVIEW.md`.
+
+A now has actual local affine-distance lower semicontinuity and an attained
+positive compact-band gap under its original-active nondegeneracy hypotheses.
+C's finite-max corollary, actual positive branch-Hessian sufficient condition,
+and every literal three-quadratic example calculation are checked, including
+the exact F(x0)<1/100 all-run basin and fixed-band every-neighborhood RS exclusion.
+R's arbitrary rectangular nuclear norm is proved from actual Gram eigenvalues,
+with its variational formula, zero-safe polar witness, norm properties, centered
+and mixed-power applications. Literal weighted first differences have the actual
+nonzero-solution local basin.
+
+L's actual analytic three-step return and deterministic oracle agreement are
+checked. A constructive contraction on C0 sequences produces actual local stable
+orbits; explicit five-dimensional eigenvectors/inverse coordinates convert the
+stated block spectral data to this criterion. The two new stable-orbit exact
+targets are conditional dynamics infrastructure. The actual J certificate and
+infinite physical perturbed-run application are still separate obligations.
+The direct orbit proof replaces the source's manifold route for trajectory
+existence, without asserting the stronger smooth-manifold/tangency claim.
+
+Next work continues in L's actual shape spectrum/global run and degree-two scalar
+and local embeddings, A's actual path calculus and semialgebraic infrastructure,
+C's remaining higher-dimensional and uniform transport assertions, and final
+all-source/synthesis/evidence review. Entire-report verification remains false.

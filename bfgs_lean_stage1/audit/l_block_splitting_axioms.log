@@ -1,0 +1,203 @@
+BfgsVerification.LBlockSplitting.State : Type
+'BfgsVerification.LBlockSplitting.State' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.Coordinates : Type
+'BfgsVerification.LBlockSplitting.Coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.basisMap (vs vr vu : BfgsVerification.LBlockSplitting.State) :
+  BfgsVerification.LBlockSplitting.Coordinates →L[ℝ] BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.basisMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeUnstable (a b ls lu : ℝ) (vr w : BfgsVerification.LBlockSplitting.State) : ℝ
+'BfgsVerification.LBlockSplitting.shapeUnstable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeStable (a b ls lu : ℝ) (vr w : BfgsVerification.LBlockSplitting.State) : ℝ
+'BfgsVerification.LBlockSplitting.shapeStable' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.inverseMap (a b ls lu : ℝ) (vs vr vu : BfgsVerification.LBlockSplitting.State) :
+  BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.Coordinates
+'BfgsVerification.LBlockSplitting.inverseMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.inverse_basis {a b ls lu : ℝ} {vs vr vu : BfgsVerification.LBlockSplitting.State}
+  (hb : b ≠ 0) (hls : lu - ls ≠ 0) (hs2 : vs 2 = b) (hs3 : vs 3 = ls - a) (hs4 : vs 4 = 0) (hu2 : vu 2 = b)
+  (hu3 : vu 3 = lu - a) (hu4 : vu 4 = 0) (hr4 : vr 4 = 1) :
+  Function.LeftInverse ⇑(BfgsVerification.LBlockSplitting.inverseMap a b ls lu vs vr vu)
+    ⇑(BfgsVerification.LBlockSplitting.basisMap vs vr vu)
+'BfgsVerification.LBlockSplitting.inverse_basis' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.basis_inverse {a b ls lu : ℝ} {vs vr vu : BfgsVerification.LBlockSplitting.State}
+  (hb : b ≠ 0) (hls : lu - ls ≠ 0) (hs2 : vs 2 = b) (hs3 : vs 3 = ls - a) (hs4 : vs 4 = 0) (hu2 : vu 2 = b)
+  (hu3 : vu 3 = lu - a) (hu4 : vu 4 = 0) (hr4 : vr 4 = 1) :
+  Function.RightInverse ⇑(BfgsVerification.LBlockSplitting.inverseMap a b ls lu vs vr vu)
+    ⇑(BfgsVerification.LBlockSplitting.basisMap vs vr vu)
+'BfgsVerification.LBlockSplitting.basis_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.basisEquiv {a b ls lu : ℝ} {vs vr vu : BfgsVerification.LBlockSplitting.State}
+  (hb : b ≠ 0) (hls : lu - ls ≠ 0) (hs2 : vs 2 = b) (hs3 : vs 3 = ls - a) (hs4 : vs 4 = 0) (hu2 : vu 2 = b)
+  (hu3 : vu 3 = lu - a) (hu4 : vu 4 = 0) (hr4 : vr 4 = 1) :
+  BfgsVerification.LBlockSplitting.Coordinates ≃L[ℝ] BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.basisEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.diagonalMap {n : ℕ} (d : BfgsVerification.Vec n) :
+  BfgsVerification.Vec n →L[ℝ] BfgsVerification.Vec n
+'BfgsVerification.LBlockSplitting.diagonalMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.diagonalMap_apply {n : ℕ} (d x : BfgsVerification.Vec n) (i : Fin n) :
+  (BfgsVerification.LBlockSplitting.diagonalMap d) x i = d i * x i
+'BfgsVerification.LBlockSplitting.diagonalMap_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.diagonalEquiv {n : ℕ} (d : BfgsVerification.Vec n) (hd : ∀ (i : Fin n), d i ≠ 0) :
+  BfgsVerification.Vec n ≃L[ℝ] BfgsVerification.Vec n
+'BfgsVerification.LBlockSplitting.diagonalEquiv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.diagonalEquiv_apply {n : ℕ} (d : BfgsVerification.Vec n) (hd : ∀ (i : Fin n), d i ≠ 0)
+  (x : BfgsVerification.Vec n) :
+  (BfgsVerification.LBlockSplitting.diagonalEquiv d hd) x = (BfgsVerification.LBlockSplitting.diagonalMap d) x
+'BfgsVerification.LBlockSplitting.diagonalEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.diagonalEquiv_symm_apply {n : ℕ} (d : BfgsVerification.Vec n)
+  (hd : ∀ (i : Fin n), d i ≠ 0) (x : BfgsVerification.Vec n) :
+  (BfgsVerification.LBlockSplitting.diagonalEquiv d hd).symm x =
+    (BfgsVerification.LBlockSplitting.diagonalMap fun i => (d i)⁻¹) x
+'BfgsVerification.LBlockSplitting.diagonalEquiv_symm_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.diagonalMap_norm_bound {n : ℕ} (d : BfgsVerification.Vec n) {r : ℝ} (hr : 0 ≤ r)
+  (hd : ∀ (i : Fin n), |d i| ≤ r) : ‖BfgsVerification.LBlockSplitting.diagonalMap d‖ ≤ r
+'BfgsVerification.LBlockSplitting.diagonalMap_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.stable_diagonal_contraction {ls rho : ℝ} (hs0 : 0 < ls) (hs1 : ls < 1) (hr0 : 0 < rho)
+  (hr1 : rho < 1) : ‖BfgsVerification.LBlockSplitting.diagonalMap ![ls, rho]‖ < 1
+'BfgsVerification.LBlockSplitting.stable_diagonal_contraction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LBlockSplitting.unstable_diagonal_inverse_contraction {rho lu : ℝ} (hr0 : 0 < rho) (hr1 : rho < 1)
+  (hu : 1 < lu) (hd : ∀ (i : Fin (Nat.succ 2)), ![rho⁻¹, rho⁻¹, lu] i ≠ 0) :
+  ‖↑(BfgsVerification.LBlockSplitting.diagonalEquiv ![rho⁻¹, rho⁻¹, lu] hd).symm‖ < 1
+'BfgsVerification.LBlockSplitting.unstable_diagonal_inverse_contraction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LBlockSplitting.BlockForm
+  (F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State) (alpha rho a b c d : ℝ)
+  (p q h k : BfgsVerification.Vec 2) : Prop
+'BfgsVerification.LBlockSplitting.BlockForm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeEigen (alpha a b : ℝ) (p q : BfgsVerification.Vec 2) (lambda : ℝ) :
+  BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.shapeEigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.scaleEigen (alpha rho u v : ℝ) (p q h : BfgsVerification.Vec 2) :
+  BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.scaleEigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shape_eigen
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State}
+  {alpha rho a b c d lambda : ℝ} {p q h k : BfgsVerification.Vec 2}
+  (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k) (hl : lambda - alpha ≠ 0)
+  (hroot : (lambda - a) * (lambda - d) = b * c) :
+  F (BfgsVerification.LBlockSplitting.shapeEigen alpha a b p q lambda) =
+    lambda • BfgsVerification.LBlockSplitting.shapeEigen alpha a b p q lambda
+'BfgsVerification.LBlockSplitting.shape_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.scale_eigen
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho a b c d u v : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k)
+  (hr : rho - alpha ≠ 0) (hu : a * u + b * v + k 0 = rho * u) (hv : c * u + d * v + k 1 = rho * v) :
+  F (BfgsVerification.LBlockSplitting.scaleEigen alpha rho u v p q h) =
+    rho • BfgsVerification.LBlockSplitting.scaleEigen alpha rho u v p q h
+'BfgsVerification.LBlockSplitting.scale_eigen' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.scale_shape_exists {rho a b c d : ℝ} (k : BfgsVerification.Vec 2)
+  (hdet : (rho - a) * (rho - d) - b * c ≠ 0) : ∃ u v, a * u + b * v + k 0 = rho * u ∧ c * u + d * v + k 1 = rho * v
+'BfgsVerification.LBlockSplitting.scale_shape_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.characteristic_factorization {a b c d ls lu : ℝ} (hs : (ls - a) * (ls - d) = b * c)
+  (hu : (lu - a) * (lu - d) = b * c) (hne : ls ≠ lu) (t : ℝ) : (t - a) * (t - d) - b * c = (t - ls) * (t - lu)
+'BfgsVerification.LBlockSplitting.characteristic_factorization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LBlockSplitting.pointZero : BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.pointZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.pointOne : BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.pointOne' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.block_point_zero
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho a b c d : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k) :
+  F BfgsVerification.LBlockSplitting.pointZero = alpha • BfgsVerification.LBlockSplitting.pointZero
+'BfgsVerification.LBlockSplitting.block_point_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.block_point_one
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho a b c d : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k) :
+  F BfgsVerification.LBlockSplitting.pointOne = alpha • BfgsVerification.LBlockSplitting.pointOne
+'BfgsVerification.LBlockSplitting.block_point_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.basisMap_eq (vs vr vu : BfgsVerification.LBlockSplitting.State)
+  (w : BfgsVerification.LBlockSplitting.Coordinates) :
+  (BfgsVerification.LBlockSplitting.basisMap vs vr vu) w =
+    w.1 0 • vs + w.1 1 • vr + w.2 0 • BfgsVerification.LBlockSplitting.pointZero +
+        w.2 1 • BfgsVerification.LBlockSplitting.pointOne +
+      w.2 2 • vu
+'BfgsVerification.LBlockSplitting.basisMap_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.basisMap_scale {vs vr vu : BfgsVerification.LBlockSplitting.State} (hs : vs 4 = 0)
+  (hr : vr 4 = 1) (hu : vu 4 = 0) (w : BfgsVerification.LBlockSplitting.Coordinates) :
+  (BfgsVerification.LBlockSplitting.basisMap vs vr vu) w 4 = w.1 1
+'BfgsVerification.LBlockSplitting.basisMap_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.basis_diagonal
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho ls lu : ℝ}
+  {vs vr vu : BfgsVerification.LBlockSplitting.State} (hs : F vs = ls • vs) (hr : F vr = rho • vr) (hu : F vu = lu • vu)
+  (h0 : F BfgsVerification.LBlockSplitting.pointZero = alpha • BfgsVerification.LBlockSplitting.pointZero)
+  (h1 : F BfgsVerification.LBlockSplitting.pointOne = alpha • BfgsVerification.LBlockSplitting.pointOne)
+  (w : BfgsVerification.LBlockSplitting.Coordinates) :
+  F ((BfgsVerification.LBlockSplitting.basisMap vs vr vu) w) =
+    (BfgsVerification.LBlockSplitting.basisMap vs vr vu)
+      ((BfgsVerification.LBlockSplitting.diagonalMap ![ls, rho]) w.1,
+        (BfgsVerification.LBlockSplitting.diagonalMap ![alpha, alpha, lu]) w.2)
+'BfgsVerification.LBlockSplitting.basis_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.block_splitting
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {rho a b c d ls lu : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F rho⁻¹ rho a b c d p q h k)
+  (hr0 : 0 < rho) (hr1 : rho < 1) (hs0 : 0 < ls) (hsr : ls < rho) (hu1 : 1 < lu) (hua : lu < rho⁻¹) (hb : b ≠ 0)
+  (hsroot : (ls - a) * (ls - d) = b * c) (huroot : (lu - a) * (lu - d) = b * c) :
+  ∃ E,
+    (∀ (w : BfgsVerification.LBlockSplitting.Coordinates), E w 4 = w.1 1) ∧
+      ∃ A L, ‖A‖ < 1 ∧ ‖↑L.symm‖ < 1 ∧ F.comp ↑E = (↑E).comp (A.prodMap ↑L)
+'BfgsVerification.LBlockSplitting.block_splitting' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeZero : BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.shapeZero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeOne : BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.shapeOne' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.scaleUnit : BfgsVerification.LBlockSplitting.State
+'BfgsVerification.LBlockSplitting.scaleUnit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.coordinate_decomposition (w : BfgsVerification.LBlockSplitting.State) :
+  w =
+    w 0 • BfgsVerification.LBlockSplitting.pointZero + w 1 • BfgsVerification.LBlockSplitting.pointOne +
+          w 2 • BfgsVerification.LBlockSplitting.shapeZero +
+        w 3 • BfgsVerification.LBlockSplitting.shapeOne +
+      w 4 • BfgsVerification.LBlockSplitting.scaleUnit
+'BfgsVerification.LBlockSplitting.coordinate_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.blockForm_of_columns
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho : ℝ}
+  (h0 : F BfgsVerification.LBlockSplitting.pointZero = alpha • BfgsVerification.LBlockSplitting.pointZero)
+  (h1 : F BfgsVerification.LBlockSplitting.pointOne = alpha • BfgsVerification.LBlockSplitting.pointOne)
+  (h4 : ∀ (w : BfgsVerification.LBlockSplitting.State), F w 4 = rho * w 4) :
+  BfgsVerification.LBlockSplitting.BlockForm F alpha rho (F BfgsVerification.LBlockSplitting.shapeZero 2)
+    (F BfgsVerification.LBlockSplitting.shapeOne 2) (F BfgsVerification.LBlockSplitting.shapeZero 3)
+    (F BfgsVerification.LBlockSplitting.shapeOne 3)
+    ![F BfgsVerification.LBlockSplitting.shapeZero 0, F BfgsVerification.LBlockSplitting.shapeZero 1]
+    ![F BfgsVerification.LBlockSplitting.shapeOne 0, F BfgsVerification.LBlockSplitting.shapeOne 1]
+    ![F BfgsVerification.LBlockSplitting.scaleUnit 0, F BfgsVerification.LBlockSplitting.scaleUnit 1]
+    ![F BfgsVerification.LBlockSplitting.scaleUnit 2, F BfgsVerification.LBlockSplitting.scaleUnit 3]
+'BfgsVerification.LBlockSplitting.blockForm_of_columns' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeZero_single : BfgsVerification.LBlockSplitting.shapeZero = Pi.single 2 1
+'BfgsVerification.LBlockSplitting.shapeZero_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.shapeOne_single : BfgsVerification.LBlockSplitting.shapeOne = Pi.single 3 1
+'BfgsVerification.LBlockSplitting.shapeOne_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.scaleUnit_single : BfgsVerification.LBlockSplitting.scaleUnit = Pi.single 4 1
+'BfgsVerification.LBlockSplitting.scaleUnit_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.positive_orbit_of_splitting
+  {T : BfgsVerification.LBlockSplitting.State → BfgsVerification.LBlockSplitting.State}
+  {P : BfgsVerification.LBlockSplitting.State}
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} (hfix : T P = P)
+  (hderiv : HasStrictFDerivAt T F P) (hP : P 4 = 0)
+  (E : BfgsVerification.LBlockSplitting.Coordinates ≃L[ℝ] BfgsVerification.LBlockSplitting.State)
+  (hscale : ∀ (w : BfgsVerification.LBlockSplitting.Coordinates), E w 4 = w.1 1)
+  (A : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2) (L : BfgsVerification.Vec 3 ≃L[ℝ] BfgsVerification.Vec 3)
+  (hA : ‖A‖ < 1) (hL : ‖↑L.symm‖ < 1) (hconj : F.comp ↑E = (↑E).comp (A.prodMap ↑L))
+  (V : Set BfgsVerification.LBlockSplitting.State) (hV : V ∈ nhds P) :
+  ∃ w, (∀ (n : ℕ), w n ∈ V) ∧ Filter.Tendsto w Filter.atTop (nhds P) ∧ 0 < w 0 4 ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+'BfgsVerification.LBlockSplitting.positive_orbit_of_splitting' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LBlockSplitting.positive_orbit_of_block
+  {T : BfgsVerification.LBlockSplitting.State → BfgsVerification.LBlockSplitting.State}
+  {P : BfgsVerification.LBlockSplitting.State}
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} (hfix : T P = P)
+  (hderiv : HasStrictFDerivAt T F P) (hP : P 4 = 0) {rho a b c d ls lu : ℝ} {p q h k : BfgsVerification.Vec 2}
+  (hF : BfgsVerification.LBlockSplitting.BlockForm F rho⁻¹ rho a b c d p q h k) (hr0 : 0 < rho) (hr1 : rho < 1)
+  (hs0 : 0 < ls) (hsr : ls < rho) (hu1 : 1 < lu) (hua : lu < rho⁻¹) (hb : b ≠ 0) (hsroot : (ls - a) * (ls - d) = b * c)
+  (huroot : (lu - a) * (lu - d) = b * c) (V : Set BfgsVerification.LBlockSplitting.State) (hV : V ∈ nhds P) :
+  ∃ w, (∀ (n : ℕ), w n ∈ V) ∧ Filter.Tendsto w Filter.atTop (nhds P) ∧ 0 < w 0 4 ∧ ∀ (n : ℕ), w (n + 1) = T (w n)
+'BfgsVerification.LBlockSplitting.positive_orbit_of_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockSplitting.positive_scale_along_orbit
+  {T : BfgsVerification.LBlockSplitting.State → BfgsVerification.LBlockSplitting.State}
+  {V : Set BfgsVerification.LBlockSplitting.State} {w : ℕ → BfgsVerification.LBlockSplitting.State}
+  (hw : ∀ (n : ℕ), w n ∈ V) (h0 : 0 < w 0 4) (hrec : ∀ (n : ℕ), w (n + 1) = T (w n))
+  (hpres : ∀ x ∈ V, 0 < x 4 → 0 < T x 4) (n : ℕ) : 0 < w n 4
+'BfgsVerification.LBlockSplitting.positive_scale_along_orbit' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -438,3 +438,31 @@ L's least-norm hull point and optimizer are actual objective calculations and
 make no persistence assertion. All scope and independent reviews are linked in
 `audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md`. Historical R attribution remains
 unresolved as documented; no original research source was overwritten.
+
+
+## Eleventh report statement review
+
+The full audit passes 3,346 explicit / 4,762 total theorem declarations and
+120 exact targets. A's distance is the actual Euclidean distance to the affine
+hull of the actual subdifferential, not a surrogate gap. C's finite-max application
+only requires original-active independence and positive weights, and its common
+Hessian premise is on actual second Frechet derivatives. The literal quadratic
+example has actual eligible/SPD-realized pairs and eta chosen before every
+smallness parameter and proposed radial constant; its convergence theorem does
+not infer divergence from those pairs.
+
+The rectangular nuclear construction uses actual Gram eigenvalues, square-root
+trace and an attaining spectral-contraction witness in arbitrary dimensions,
+including rank zero. All named objective applications derive norm properties
+before applying convergence criteria. L's actual normalized return holds input
+tau fixed through all three substeps, and its positive-scale neighborhood derives
+all actual search decisions and point/matrix updates.
+
+The nonlinear orbit is constructed by a contraction on the complete space of
+sequences tending to zero, after proving the operator maps that space to itself;
+no convergent orbit is assumed. Explicit inverse coordinates and conjugacy give
+the required stable/inverse-unstable norm bounds from the stated actual block
+roots. Actual spectral inputs and global BFGS application remain open in this
+release; smooth-manifold regularity is not implied by orbit existence. All exact
+scopes and independent reviews are linked in
+`audit/REPORT_STRUCTURAL_CLOSURE_STATEMENT_REVIEW.md`.

@@ -1,0 +1,626 @@
+BfgsVerification.LNormalizedOracle.phasePoint (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedOracle.phasePoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phaseMetric (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  BfgsVerification.Mat 2
+'BfgsVerification.LNormalizedOracle.phaseMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phaseGradient (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedOracle.phaseGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.direction (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedOracle.direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.trialPoint (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3)
+  (a : Real) : BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedOracle.trialPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.trialGradient (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3)
+  (a : Real) (i : Fin 3) : BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedOracle.trialGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.normalizedValue (μ τ : Real) (z : BfgsVerification.Vec 2) : Real
+'BfgsVerification.LNormalizedOracle.normalizedValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phaseValue (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  Real
+'BfgsVerification.LNormalizedOracle.phaseValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.trialValue (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3)
+  (a : Real) : Real
+'BfgsVerification.LNormalizedOracle.trialValue' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.armijoMargin (μ c₁ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3)
+  (a : Real) : Real
+'BfgsVerification.LNormalizedOracle.armijoMargin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.wolfeMargin (μ c₂ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3)
+  (a : Real) (i : Fin 3) : Real
+'BfgsVerification.LNormalizedOracle.wolfeMargin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.objective_hasGradient_of_active (μ : Real) {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hi : BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i) :
+  HasFDerivAt.{0, 0, 0} (BfgsVerification.LQuadraticSeed.objective μ)
+    (BfgsVerification.gradientFunctional (BfgsVerification.LQuadraticSeed.branchGradient μ z i)) z
+'BfgsVerification.LNormalizedOracle.objective_hasGradient_of_active' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.physical_value_of_active (μ : Real) {τ : Real} (hτ : LT.lt.{0} 0 τ)
+  {z : BfgsVerification.Vec 2} {i : Fin 3}
+  (hi : BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD z i) :
+  Eq.{1} (BfgsVerification.LQuadraticSeed.objective μ (HSMul.hSMul.{0, 0, 0} τ z))
+    (HMul.hMul.{0, 0, 0} τ (BfgsVerification.LNormalizedOracle.normalizedValue μ τ z))
+'BfgsVerification.LNormalizedOracle.physical_value_of_active' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phasePoint_seed (μ : Real) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.phasePoint μ BfgsVerification.LNormalizedReturn.seed j)
+    (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      BfgsVerification.SeedOrbit.seedRatio j)
+'BfgsVerification.LNormalizedOracle.phasePoint_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phaseMetric_seed (μ : Real) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.phaseMetric μ BfgsVerification.LNormalizedReturn.seed j)
+    (BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+'BfgsVerification.LNormalizedOracle.phaseMetric_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phaseGradient_seed (μ : Real) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.phaseGradient μ BfgsVerification.LNormalizedReturn.seed j)
+    (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+'BfgsVerification.LNormalizedOracle.phaseGradient_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.direction_seed (μ : Real) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.direction μ BfgsVerification.LNormalizedReturn.seed j)
+    (BfgsVerification.SeedOrbit.direction BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      BfgsVerification.SeedOrbit.seedRatio j)
+'BfgsVerification.LNormalizedOracle.direction_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.trialPoint_seed (μ : Real) (j : Fin 3) (a : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.trialPoint μ BfgsVerification.LNormalizedReturn.seed j a)
+    (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      BfgsVerification.SeedOrbit.seedRatio j a)
+'BfgsVerification.LNormalizedOracle.trialPoint_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.trialGradient_seed (μ : Real) (j i : Fin 3) (a : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.trialGradient μ BfgsVerification.LNormalizedReturn.seed j a i)
+    (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+'BfgsVerification.LNormalizedOracle.trialGradient_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.phaseValue_seed (μ : Real) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.phaseValue μ BfgsVerification.LNormalizedReturn.seed j)
+    (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio j))
+'BfgsVerification.LNormalizedOracle.phaseValue_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.trialValue_seed (μ : Real) (j : Fin 3) (a : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.trialValue μ BfgsVerification.LNormalizedReturn.seed j a)
+    (BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      (BfgsVerification.SeedOrbit.trial BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio j a))
+'BfgsVerification.LNormalizedOracle.trialValue_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.analytic_phasePoint_seed (μ : Real) (j : Fin 3) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedOracle.phasePoint μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.analytic_phasePoint_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.analytic_phaseMetric_seed (μ : Real) (j : Fin 3) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedOracle.phaseMetric μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.analytic_phaseMetric_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.analytic_phaseGradient_seed (μ : Real) (j : Fin 3) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedOracle.phaseGradient μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.analytic_phaseGradient_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.analytic_direction_seed (μ : Real) (j : Fin 3) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedOracle.direction μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.analytic_direction_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.analytic_trialPoint_seed (μ : Real) (j : Fin 3) (a : Real) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedOracle.trialPoint μ w j a)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.analytic_trialPoint_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.analytic_trialGradient_seed (μ : Real) (j i : Fin 3) (a : Real) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedOracle.trialGradient μ w j a i)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.analytic_trialGradient_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.continuous_normalizedValue (μ : Real)
+  {f : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2}
+  (hf : ContinuousAt.{0, 0} f BfgsVerification.LNormalizedReturn.seed) :
+  ContinuousAt.{0, 0}
+    (fun w => BfgsVerification.LNormalizedOracle.normalizedValue μ (BfgsVerification.LNormalizedReturn.scale w) (f w))
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.continuous_normalizedValue' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.continuous_phaseValue_seed (μ : Real) (j : Fin 3) :
+  ContinuousAt.{0, 0} (fun w => BfgsVerification.LNormalizedOracle.phaseValue μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.continuous_phaseValue_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.continuous_trialValue_seed (μ : Real) (j : Fin 3) (a : Real) :
+  ContinuousAt.{0, 0} (fun w => BfgsVerification.LNormalizedOracle.trialValue μ w j a)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.continuous_trialValue_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.continuous_armijoMargin_seed (μ c₁ : Real) (j : Fin 3) (a : Real) :
+  ContinuousAt.{0, 0} (fun w => BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ w j a)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.continuous_armijoMargin_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.continuous_wolfeMargin_seed (μ c₂ : Real) (j i : Fin 3) (a : Real) :
+  ContinuousAt.{0, 0} (fun w => BfgsVerification.LNormalizedOracle.wolfeMargin μ c₂ w j a i)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedOracle.continuous_wolfeMargin_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.seed_accept_margins (μ : Real) {c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) true) :
+  And
+    (LT.lt.{0} 0
+      (BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ BfgsVerification.LNormalizedReturn.seed
+        (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.trialLength q)))
+    (LT.lt.{0} 0
+      (BfgsVerification.LNormalizedOracle.wolfeMargin μ c₂ BfgsVerification.LNormalizedReturn.seed
+        (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.trialLength q)
+        (BfgsVerification.SeedOrbit.trialActive q)))
+'BfgsVerification.LNormalizedOracle.seed_accept_margins' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.seed_reject_margin (μ : Real) {c₁ : Real} (hc₁ : LT.lt.{0} 0 c₁) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) false) :
+  LT.lt.{0}
+    (BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ BfgsVerification.LNormalizedReturn.seed
+      (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.trialLength q))
+    0
+'BfgsVerification.LNormalizedOracle.seed_reject_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.strictActive_eventually
+  {f : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2}
+  (hf : ContinuousAt.{0, 0} f BfgsVerification.LNormalizedReturn.seed) {i : Fin 3}
+  (hi :
+    BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      (f BfgsVerification.LNormalizedReturn.seed) i) :
+  ∀ᶠ (w : BfgsVerification.LNormalizedReturn.State) in nhds.{0} BfgsVerification.LNormalizedReturn.seed,
+    BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD (f w) i
+'BfgsVerification.LNormalizedOracle.strictActive_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions (μ c₁ c₂ : Real) (w : BfgsVerification.LNormalizedReturn.State) : Prop
+'BfgsVerification.LNormalizedOracle.Conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.conditions_eventually (μ : Real) {c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) :
+  ∀ᶠ (w : BfgsVerification.LNormalizedReturn.State) in nhds.{0} BfgsVerification.LNormalizedReturn.seed,
+    BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w
+'BfgsVerification.LNormalizedOracle.conditions_eventually' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.oracle_neighborhood (μ : Real) {c₁ c₂ : Real} (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) :
+  ∃ U,
+    And (IsOpen.{0} U)
+      (And (Membership.mem.{0, 0} U BfgsVerification.LNormalizedReturn.seed)
+        (And
+          (∀ (w : BfgsVerification.LNormalizedReturn.State),
+            Membership.mem.{0, 0} U w → BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+          (AnalyticOnNhd.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) U)))
+'BfgsVerification.LNormalizedOracle.oracle_neighborhood' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.physicalPoint (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedOracle.physicalPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.physicalMetric (μ : Real) (w : BfgsVerification.LNormalizedReturn.State)
+  (j : Fin 3) : BfgsVerification.Mat 2
+'BfgsVerification.LNormalizedOracle.physicalMetric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.physical_direction (μ : Real) (w : BfgsVerification.LNormalizedReturn.State)
+  (j : Fin 3) :
+  Eq.{1}
+    (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w j) 1)
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedOracle.direction μ w j))
+'BfgsVerification.LNormalizedOracle.physical_direction' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.physical_trial (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3)
+  (a : Real) :
+  Eq.{1}
+    (HAdd.hAdd.{0, 0, 0} (BfgsVerification.LNormalizedOracle.physicalPoint μ w j)
+      (HSMul.hSMul.{0, 0, 0} a
+        (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+          (BfgsVerification.LNormalizedOracle.phaseGradient μ w j) 1)))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedOracle.trialPoint μ w j a))
+'BfgsVerification.LNormalizedOracle.physical_trial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.phase_hasGradient {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  HasFDerivAt.{0, 0, 0} (BfgsVerification.LQuadraticSeed.objective μ)
+    (BfgsVerification.gradientFunctional (BfgsVerification.LNormalizedOracle.phaseGradient μ w j))
+    (BfgsVerification.LNormalizedOracle.physicalPoint μ w j)
+'BfgsVerification.LNormalizedOracle.Conditions.phase_hasGradient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.trial_hasGradient {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (q : Fin 9) :
+  HasFDerivAt.{0, 0, 0} (BfgsVerification.LQuadraticSeed.objective μ)
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.LNormalizedOracle.trialGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)
+        (BfgsVerification.SeedOrbit.trialLength q) (BfgsVerification.SeedOrbit.trialActive q)))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedOracle.trialPoint μ w (BfgsVerification.SeedOrbit.trialPhase q)
+        (BfgsVerification.SeedOrbit.trialLength q)))
+'BfgsVerification.LNormalizedOracle.Conditions.trial_hasGradient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.physical_accept {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) true) :
+  And
+    (BfgsVerification.DeterministicLineSearch.Armijo (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w (BfgsVerification.SeedOrbit.trialPhase q))
+      (BfgsVerification.bfgsStep
+        (BfgsVerification.LNormalizedOracle.physicalMetric μ w (BfgsVerification.SeedOrbit.trialPhase q))
+        (BfgsVerification.LNormalizedOracle.phaseGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)) 1)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)) c₁
+      (BfgsVerification.SeedOrbit.trialLength q))
+    (BfgsVerification.DeterministicLineSearch.Wolfe (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w (BfgsVerification.SeedOrbit.trialPhase q))
+      (BfgsVerification.bfgsStep
+        (BfgsVerification.LNormalizedOracle.physicalMetric μ w (BfgsVerification.SeedOrbit.trialPhase q))
+        (BfgsVerification.LNormalizedOracle.phaseGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)) 1)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)) c₂
+      (BfgsVerification.SeedOrbit.trialLength q))
+'BfgsVerification.LNormalizedOracle.Conditions.physical_accept' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.physical_reject {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (q : Fin 9)
+  (hq : Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) false) :
+  Not
+    (BfgsVerification.DeterministicLineSearch.Armijo (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w (BfgsVerification.SeedOrbit.trialPhase q))
+      (BfgsVerification.bfgsStep
+        (BfgsVerification.LNormalizedOracle.physicalMetric μ w (BfgsVerification.SeedOrbit.trialPhase q))
+        (BfgsVerification.LNormalizedOracle.phaseGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)) 1)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w (BfgsVerification.SeedOrbit.trialPhase q)) c₁
+      (BfgsVerification.SeedOrbit.trialLength q))
+'BfgsVerification.LNormalizedOracle.Conditions.physical_reject' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.search_zero {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) :
+  Eq.{1}
+    (BfgsVerification.DeterministicLineSearch.search (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w 0)
+      (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w 0)
+        (BfgsVerification.LNormalizedOracle.phaseGradient μ w 0) 1)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w 0) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} 1) (List.cons.{0} 1 List.nil.{0}))
+'BfgsVerification.LNormalizedOracle.Conditions.search_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.search_one {μ c₁ c₂ : Real} {w : BfgsVerification.LNormalizedReturn.State}
+  (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) :
+  Eq.{1}
+    (BfgsVerification.DeterministicLineSearch.search (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w 1)
+      (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w 1)
+        (BfgsVerification.LNormalizedOracle.phaseGradient μ w 1) 1)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w 1) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} (1 / 4)) (List.cons.{0} 1 (List.cons.{0} (1 / 2) (List.cons.{0} (1 / 4) List.nil.{0}))))
+'BfgsVerification.LNormalizedOracle.Conditions.search_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.search_two {μ c₁ c₂ : Real} {w : BfgsVerification.LNormalizedReturn.State}
+  (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) :
+  Eq.{1}
+    (BfgsVerification.DeterministicLineSearch.search (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w 2)
+      (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w 2)
+        (BfgsVerification.LNormalizedOracle.phaseGradient μ w 2) 1)
+      (BfgsVerification.LNormalizedOracle.phaseGradient μ w 2) c₁ c₂ 5 0 none.{0} 1)
+    (Prod.mk.{0, 0} (some.{0} (1 / 16))
+      (List.cons.{0} 1
+        (List.cons.{0} (1 / 2) (List.cons.{0} (1 / 4) (List.cons.{0} (1 / 8) (List.cons.{0} (1 / 16) List.nil.{0}))))))
+'BfgsVerification.LNormalizedOracle.Conditions.search_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.fromMetric_search {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  Eq.{1}
+    (BfgsVerification.DeterministicLineSearch.fromMetric (BfgsVerification.LQuadraticSeed.objective μ)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w j) (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+      c₁ c₂ 5)
+    (Prod.mk.{0, 0} (some.{0} (BfgsVerification.SeedOrbit.length j)) (BfgsVerification.SeedOrbit.trialHistory j))
+'BfgsVerification.LNormalizedOracle.Conditions.fromMetric_search' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.all_trials_differentiable {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (q : Fin 9) :
+  DifferentiableAt.{0, 0, 0} Real (BfgsVerification.LQuadraticSeed.objective μ)
+    (HAdd.hAdd.{0, 0, 0}
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w (BfgsVerification.SeedOrbit.trialPhase q))
+      (HSMul.hSMul.{0, 0, 0} (BfgsVerification.SeedOrbit.trialLength q)
+        (BfgsVerification.bfgsStep
+          (BfgsVerification.LNormalizedOracle.physicalMetric μ w (BfgsVerification.SeedOrbit.trialPhase q))
+          (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+            (BfgsVerification.LNormalizedOracle.physicalPoint μ w (BfgsVerification.SeedOrbit.trialPhase q)))
+          1)))
+'BfgsVerification.LNormalizedOracle.Conditions.all_trials_differentiable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.acceptedQuery (j : Fin 3) : Fin 9
+'BfgsVerification.LNormalizedOracle.acceptedQuery' depends on axioms: [propext]
+BfgsVerification.LNormalizedOracle.acceptedQuery_spec (j : Fin 3) :
+  And (Eq.{1} (BfgsVerification.SeedOrbit.trialPhase (BfgsVerification.LNormalizedOracle.acceptedQuery j)) j)
+    (And
+      (Eq.{1} (BfgsVerification.SeedOrbit.trialLength (BfgsVerification.LNormalizedOracle.acceptedQuery j))
+        (BfgsVerification.SeedOrbit.length j))
+      (And
+        (Eq.{1} (BfgsVerification.SeedOrbit.trialActive (BfgsVerification.LNormalizedOracle.acceptedQuery j))
+          (BfgsVerification.SeedOrbit.nextPhase j))
+        (Eq.{1} (BfgsVerification.SeedOrbit.trialAccept (BfgsVerification.LNormalizedOracle.acceptedQuery j)) true)))
+'BfgsVerification.LNormalizedOracle.acceptedQuery_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.internal_next (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1))
+    (BfgsVerification.LNormalizedReturn.substep μ (BfgsVerification.LNormalizedReturn.scale w) j
+      (BfgsVerification.LNormalizedReturn.internal μ w ↑j))
+'BfgsVerification.LNormalizedOracle.internal_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.accepted_trialPoint (μ : Real) (w : BfgsVerification.LNormalizedReturn.State)
+  (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedOracle.trialPoint μ w j (BfgsVerification.SeedOrbit.length j))
+    (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1
+'BfgsVerification.LNormalizedOracle.accepted_trialPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.accepted_hasGradient {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  HasFDerivAt.{0, 0, 0} (BfgsVerification.LQuadraticSeed.objective μ)
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.LQuadraticSeed.branchGradient μ
+        (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+          (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+        (BfgsVerification.SeedOrbit.nextPhase j)))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+'BfgsVerification.LNormalizedOracle.Conditions.accepted_hasGradient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.accepted_displacement (μ : Real) (w : BfgsVerification.LNormalizedReturn.State)
+  (j : Fin 3) :
+  Eq.{1}
+    (HSub.hSub.{0, 0, 0}
+      (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+        (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+      (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.step μ (BfgsVerification.LNormalizedReturn.scale w) j
+        (BfgsVerification.LNormalizedReturn.internal μ w ↑j)))
+'BfgsVerification.LNormalizedOracle.accepted_displacement' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.actual_point_update {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  Eq.{1}
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+    (HAdd.hAdd.{0, 0, 0} (BfgsVerification.LNormalizedOracle.physicalPoint μ w j)
+      (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+        (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+          (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+        (BfgsVerification.SeedOrbit.length j)))
+'BfgsVerification.LNormalizedOracle.Conditions.actual_point_update' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.actual_matrix_update {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  Eq.{1}
+    (BfgsVerification.inverseBFGS (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+      (HSub.hSub.{0, 0, 0}
+        (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+          (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+        (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+      (HSub.hSub.{0, 0, 0}
+        (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+          (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+            (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1))
+        (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+          (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).2)
+'BfgsVerification.LNormalizedOracle.Conditions.actual_matrix_update' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.positive_smul_posDef {n : Nat} {H : BfgsVerification.Mat n}
+  (hH : Matrix.PosDef.{0, 0} H) {r : Real} (hr : LT.lt.{0} 0 r) : Matrix.PosDef.{0, 0} (HSMul.hSMul.{0, 0, 0} r H)
+'BfgsVerification.LNormalizedOracle.positive_smul_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.physicalMetric_posDef {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  Matrix.PosDef.{0, 0} (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+'BfgsVerification.LNormalizedOracle.Conditions.physicalMetric_posDef' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.physical_phase_positive {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (j : Fin 3) :
+  LT.lt.{0} 0 (BfgsVerification.LQuadraticSeed.objective μ (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+'BfgsVerification.LNormalizedOracle.Conditions.physical_phase_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.physical_trial_positive {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (hτ : LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w)) (q : Fin 9) :
+  LT.lt.{0} 0
+    (BfgsVerification.LQuadraticSeed.objective μ
+      (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+        (BfgsVerification.LNormalizedOracle.trialPoint μ w (BfgsVerification.SeedOrbit.trialPhase q)
+          (BfgsVerification.SeedOrbit.trialLength q))))
+'BfgsVerification.LNormalizedOracle.Conditions.physical_trial_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.actual_implementation_neighborhood (μ c₁ c₂ : Real) (hc₁ : LT.lt.{0} 0 c₁)
+  (hc₁' : LE.le.{0} c₁ (1 / 3)) (hc₂ : LT.lt.{0} 0 c₂) :
+  ∃ U,
+    And (IsOpen.{0} U)
+      (And (Membership.mem.{0, 0} U BfgsVerification.LNormalizedReturn.seed)
+        (And (AnalyticOnNhd.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) U)
+          (∀ (w : BfgsVerification.LNormalizedReturn.State),
+            Membership.mem.{0, 0} U w →
+              LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.scale w) →
+                And
+                  (∀ (j : Fin 3),
+                    And (Matrix.PosDef.{0, 0} (BfgsVerification.LNormalizedOracle.physicalMetric μ w j))
+                      (And
+                        (HasFDerivAt.{0, 0, 0} (BfgsVerification.LQuadraticSeed.objective μ)
+                          (BfgsVerification.gradientFunctional (BfgsVerification.LNormalizedOracle.phaseGradient μ w j))
+                          (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+                        (And
+                          (LT.lt.{0} 0
+                            (BfgsVerification.LQuadraticSeed.objective μ
+                              (BfgsVerification.LNormalizedOracle.physicalPoint μ w j)))
+                          (And
+                            (Eq.{1}
+                              (BfgsVerification.DeterministicLineSearch.fromMetric
+                                (BfgsVerification.LQuadraticSeed.objective μ)
+                                (BfgsVerification.LNormalizedOracle.physicalPoint μ w j)
+                                (BfgsVerification.LNormalizedOracle.physicalMetric μ w j) c₁ c₂ 5)
+                              (Prod.mk.{0, 0} (some.{0} (BfgsVerification.SeedOrbit.length j))
+                                (BfgsVerification.SeedOrbit.trialHistory j)))
+                            (And
+                              (Eq.{1}
+                                (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                                  (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+                                (HAdd.hAdd.{0, 0, 0} (BfgsVerification.LNormalizedOracle.physicalPoint μ w j)
+                                  (BfgsVerification.bfgsStep (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+                                    (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+                                      (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+                                    (BfgsVerification.SeedOrbit.length j))))
+                              (Eq.{1}
+                                (BfgsVerification.inverseBFGS (BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+                                  (HSub.hSub.{0, 0, 0}
+                                    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                                      (BfgsVerification.LNormalizedReturn.internal μ w (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1)
+                                    (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))
+                                  (HSub.hSub.{0, 0, 0}
+                                    (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+                                      (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                                        (BfgsVerification.LNormalizedReturn.internal μ w
+                                            (HAdd.hAdd.{0, 0, 0} (↑j) 1)).1))
+                                    (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+                                      (BfgsVerification.LNormalizedOracle.physicalPoint μ w j))))
+                                (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                                  (BfgsVerification.LNormalizedReturn.internal μ w
+                                      (HAdd.hAdd.{0, 0, 0} (↑j) 1)).2)))))))
+                  (And
+                    (∀ (q : Fin 9),
+                      DifferentiableAt.{0, 0, 0} Real (BfgsVerification.LQuadraticSeed.objective μ)
+                        (HAdd.hAdd.{0, 0, 0}
+                          (BfgsVerification.LNormalizedOracle.physicalPoint μ w
+                            (BfgsVerification.SeedOrbit.trialPhase q))
+                          (HSMul.hSMul.{0, 0, 0} (BfgsVerification.SeedOrbit.trialLength q)
+                            (BfgsVerification.bfgsStep
+                              (BfgsVerification.LNormalizedOracle.physicalMetric μ w
+                                (BfgsVerification.SeedOrbit.trialPhase q))
+                              (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+                                (BfgsVerification.LNormalizedOracle.physicalPoint μ w
+                                  (BfgsVerification.SeedOrbit.trialPhase q)))
+                              1))))
+                    (And
+                      (∀ (q : Fin 9),
+                        LT.lt.{0} 0
+                          (BfgsVerification.LQuadraticSeed.objective μ
+                            (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                              (BfgsVerification.LNormalizedOracle.trialPoint μ w
+                                (BfgsVerification.SeedOrbit.trialPhase q) (BfgsVerification.SeedOrbit.trialLength q)))))
+                      (And (LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.returnFactor μ w))
+                        (And
+                          (Eq.{1}
+                            (HSMul.hSMul.{0, 0, 0}
+                              (BfgsVerification.LNormalizedReturn.scale
+                                (BfgsVerification.LNormalizedReturn.returnMap μ w))
+                              (BfgsVerification.LNormalizedReturn.point
+                                (BfgsVerification.LNormalizedReturn.returnMap μ w)))
+                            (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                              (BfgsVerification.LNormalizedReturn.internal μ w 3).1))
+                          (Eq.{1}
+                            (HSMul.hSMul.{0, 0, 0}
+                              (BfgsVerification.LNormalizedReturn.scale
+                                (BfgsVerification.LNormalizedReturn.returnMap μ w))
+                              (BfgsVerification.LNormalizedReturn.shape
+                                (BfgsVerification.LNormalizedReturn.returnMap μ w)))
+                            (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                              (BfgsVerification.LNormalizedReturn.internal μ w 3).2)))))))))
+'BfgsVerification.LNormalizedOracle.actual_implementation_neighborhood' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.mk {μ c₁ c₂ : Real} {w : BfgsVerification.LNormalizedReturn.State}
+  (regular : BfgsVerification.LNormalizedReturn.Regular μ w)
+  (base_active :
+    ∀ (j : Fin 3),
+      BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.LNormalizedOracle.phasePoint μ w j) j)
+  (trial_active :
+    ∀ (q : Fin 9),
+      BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.LNormalizedOracle.trialPoint μ w (BfgsVerification.SeedOrbit.trialPhase q)
+          (BfgsVerification.SeedOrbit.trialLength q))
+        (BfgsVerification.SeedOrbit.trialActive q))
+  (base_positive : ∀ (j : Fin 3), LT.lt.{0} 0 (BfgsVerification.LNormalizedOracle.phaseValue μ w j))
+  (trial_positive :
+    ∀ (q : Fin 9),
+      LT.lt.{0} 0
+        (BfgsVerification.LNormalizedOracle.trialValue μ w (BfgsVerification.SeedOrbit.trialPhase q)
+          (BfgsVerification.SeedOrbit.trialLength q)))
+  (accepts :
+    ∀ (q : Fin 9),
+      Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) true →
+        And
+          (LT.lt.{0} 0
+            (BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ w (BfgsVerification.SeedOrbit.trialPhase q)
+              (BfgsVerification.SeedOrbit.trialLength q)))
+          (LT.lt.{0} 0
+            (BfgsVerification.LNormalizedOracle.wolfeMargin μ c₂ w (BfgsVerification.SeedOrbit.trialPhase q)
+              (BfgsVerification.SeedOrbit.trialLength q) (BfgsVerification.SeedOrbit.trialActive q))))
+  (rejects :
+    ∀ (q : Fin 9),
+      Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) false →
+        LT.lt.{0}
+          (BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ w (BfgsVerification.SeedOrbit.trialPhase q)
+            (BfgsVerification.SeedOrbit.trialLength q))
+          0) :
+  BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w
+'BfgsVerification.LNormalizedOracle.Conditions.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.regular {μ c₁ c₂ : Real} {w : BfgsVerification.LNormalizedReturn.State}
+  (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w) : BfgsVerification.LNormalizedReturn.Regular μ w
+'BfgsVerification.LNormalizedOracle.Conditions.regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.base_active {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (j : Fin 3) :
+  BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+    (BfgsVerification.LNormalizedOracle.phasePoint μ w j) j
+'BfgsVerification.LNormalizedOracle.Conditions.base_active' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.trial_active {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (q : Fin 9) :
+  BfgsVerification.SeedOrbit.StrictActive BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+    (BfgsVerification.LNormalizedOracle.trialPoint μ w (BfgsVerification.SeedOrbit.trialPhase q)
+      (BfgsVerification.SeedOrbit.trialLength q))
+    (BfgsVerification.SeedOrbit.trialActive q)
+'BfgsVerification.LNormalizedOracle.Conditions.trial_active' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.base_positive {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (j : Fin 3) : LT.lt.{0} 0 (BfgsVerification.LNormalizedOracle.phaseValue μ w j)
+'BfgsVerification.LNormalizedOracle.Conditions.base_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.trial_positive {μ c₁ c₂ : Real}
+  {w : BfgsVerification.LNormalizedReturn.State} (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w)
+  (q : Fin 9) :
+  LT.lt.{0} 0
+    (BfgsVerification.LNormalizedOracle.trialValue μ w (BfgsVerification.SeedOrbit.trialPhase q)
+      (BfgsVerification.SeedOrbit.trialLength q))
+'BfgsVerification.LNormalizedOracle.Conditions.trial_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.accepts {μ c₁ c₂ : Real} {w : BfgsVerification.LNormalizedReturn.State}
+  (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w) (q : Fin 9) :
+  Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) true →
+    And
+      (LT.lt.{0} 0
+        (BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ w (BfgsVerification.SeedOrbit.trialPhase q)
+          (BfgsVerification.SeedOrbit.trialLength q)))
+      (LT.lt.{0} 0
+        (BfgsVerification.LNormalizedOracle.wolfeMargin μ c₂ w (BfgsVerification.SeedOrbit.trialPhase q)
+          (BfgsVerification.SeedOrbit.trialLength q) (BfgsVerification.SeedOrbit.trialActive q)))
+'BfgsVerification.LNormalizedOracle.Conditions.accepts' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedOracle.Conditions.rejects {μ c₁ c₂ : Real} {w : BfgsVerification.LNormalizedReturn.State}
+  (self : BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w) (q : Fin 9) :
+  Eq.{1} (BfgsVerification.SeedOrbit.trialAccept q) false →
+    LT.lt.{0}
+      (BfgsVerification.LNormalizedOracle.armijoMargin μ c₁ w (BfgsVerification.SeedOrbit.trialPhase q)
+        (BfgsVerification.SeedOrbit.trialLength q))
+      0
+'BfgsVerification.LNormalizedOracle.Conditions.rejects' depends on axioms: [propext, Classical.choice, Quot.sound]

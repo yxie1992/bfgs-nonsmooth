@@ -1,0 +1,146 @@
+import BfgsVerification.LNormalizedOracle
+set_option pp.universes true
+#check BfgsVerification.LNormalizedOracle.phasePoint
+#print axioms BfgsVerification.LNormalizedOracle.phasePoint
+#check BfgsVerification.LNormalizedOracle.phaseMetric
+#print axioms BfgsVerification.LNormalizedOracle.phaseMetric
+#check BfgsVerification.LNormalizedOracle.phaseGradient
+#print axioms BfgsVerification.LNormalizedOracle.phaseGradient
+#check BfgsVerification.LNormalizedOracle.direction
+#print axioms BfgsVerification.LNormalizedOracle.direction
+#check BfgsVerification.LNormalizedOracle.trialPoint
+#print axioms BfgsVerification.LNormalizedOracle.trialPoint
+#check BfgsVerification.LNormalizedOracle.trialGradient
+#print axioms BfgsVerification.LNormalizedOracle.trialGradient
+#check BfgsVerification.LNormalizedOracle.normalizedValue
+#print axioms BfgsVerification.LNormalizedOracle.normalizedValue
+#check BfgsVerification.LNormalizedOracle.phaseValue
+#print axioms BfgsVerification.LNormalizedOracle.phaseValue
+#check BfgsVerification.LNormalizedOracle.trialValue
+#print axioms BfgsVerification.LNormalizedOracle.trialValue
+#check BfgsVerification.LNormalizedOracle.armijoMargin
+#print axioms BfgsVerification.LNormalizedOracle.armijoMargin
+#check BfgsVerification.LNormalizedOracle.wolfeMargin
+#print axioms BfgsVerification.LNormalizedOracle.wolfeMargin
+#check BfgsVerification.LNormalizedOracle.objective_hasGradient_of_active
+#print axioms BfgsVerification.LNormalizedOracle.objective_hasGradient_of_active
+#check BfgsVerification.LNormalizedOracle.physical_value_of_active
+#print axioms BfgsVerification.LNormalizedOracle.physical_value_of_active
+#check BfgsVerification.LNormalizedOracle.phasePoint_seed
+#print axioms BfgsVerification.LNormalizedOracle.phasePoint_seed
+#check BfgsVerification.LNormalizedOracle.phaseMetric_seed
+#print axioms BfgsVerification.LNormalizedOracle.phaseMetric_seed
+#check BfgsVerification.LNormalizedOracle.phaseGradient_seed
+#print axioms BfgsVerification.LNormalizedOracle.phaseGradient_seed
+#check BfgsVerification.LNormalizedOracle.direction_seed
+#print axioms BfgsVerification.LNormalizedOracle.direction_seed
+#check BfgsVerification.LNormalizedOracle.trialPoint_seed
+#print axioms BfgsVerification.LNormalizedOracle.trialPoint_seed
+#check BfgsVerification.LNormalizedOracle.trialGradient_seed
+#print axioms BfgsVerification.LNormalizedOracle.trialGradient_seed
+#check BfgsVerification.LNormalizedOracle.phaseValue_seed
+#print axioms BfgsVerification.LNormalizedOracle.phaseValue_seed
+#check BfgsVerification.LNormalizedOracle.trialValue_seed
+#print axioms BfgsVerification.LNormalizedOracle.trialValue_seed
+#check BfgsVerification.LNormalizedOracle.analytic_phasePoint_seed
+#print axioms BfgsVerification.LNormalizedOracle.analytic_phasePoint_seed
+#check BfgsVerification.LNormalizedOracle.analytic_phaseMetric_seed
+#print axioms BfgsVerification.LNormalizedOracle.analytic_phaseMetric_seed
+#check BfgsVerification.LNormalizedOracle.analytic_phaseGradient_seed
+#print axioms BfgsVerification.LNormalizedOracle.analytic_phaseGradient_seed
+#check BfgsVerification.LNormalizedOracle.analytic_direction_seed
+#print axioms BfgsVerification.LNormalizedOracle.analytic_direction_seed
+#check BfgsVerification.LNormalizedOracle.analytic_trialPoint_seed
+#print axioms BfgsVerification.LNormalizedOracle.analytic_trialPoint_seed
+#check BfgsVerification.LNormalizedOracle.analytic_trialGradient_seed
+#print axioms BfgsVerification.LNormalizedOracle.analytic_trialGradient_seed
+#check BfgsVerification.LNormalizedOracle.continuous_normalizedValue
+#print axioms BfgsVerification.LNormalizedOracle.continuous_normalizedValue
+#check BfgsVerification.LNormalizedOracle.continuous_phaseValue_seed
+#print axioms BfgsVerification.LNormalizedOracle.continuous_phaseValue_seed
+#check BfgsVerification.LNormalizedOracle.continuous_trialValue_seed
+#print axioms BfgsVerification.LNormalizedOracle.continuous_trialValue_seed
+#check BfgsVerification.LNormalizedOracle.continuous_armijoMargin_seed
+#print axioms BfgsVerification.LNormalizedOracle.continuous_armijoMargin_seed
+#check BfgsVerification.LNormalizedOracle.continuous_wolfeMargin_seed
+#print axioms BfgsVerification.LNormalizedOracle.continuous_wolfeMargin_seed
+#check BfgsVerification.LNormalizedOracle.seed_accept_margins
+#print axioms BfgsVerification.LNormalizedOracle.seed_accept_margins
+#check BfgsVerification.LNormalizedOracle.seed_reject_margin
+#print axioms BfgsVerification.LNormalizedOracle.seed_reject_margin
+#check BfgsVerification.LNormalizedOracle.strictActive_eventually
+#print axioms BfgsVerification.LNormalizedOracle.strictActive_eventually
+#check BfgsVerification.LNormalizedOracle.Conditions
+#print axioms BfgsVerification.LNormalizedOracle.Conditions
+#check BfgsVerification.LNormalizedOracle.conditions_eventually
+#print axioms BfgsVerification.LNormalizedOracle.conditions_eventually
+#check BfgsVerification.LNormalizedOracle.oracle_neighborhood
+#print axioms BfgsVerification.LNormalizedOracle.oracle_neighborhood
+#check BfgsVerification.LNormalizedOracle.physicalPoint
+#print axioms BfgsVerification.LNormalizedOracle.physicalPoint
+#check BfgsVerification.LNormalizedOracle.physicalMetric
+#print axioms BfgsVerification.LNormalizedOracle.physicalMetric
+#check BfgsVerification.LNormalizedOracle.physical_direction
+#print axioms BfgsVerification.LNormalizedOracle.physical_direction
+#check BfgsVerification.LNormalizedOracle.physical_trial
+#print axioms BfgsVerification.LNormalizedOracle.physical_trial
+#check BfgsVerification.LNormalizedOracle.Conditions.phase_hasGradient
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.phase_hasGradient
+#check BfgsVerification.LNormalizedOracle.Conditions.trial_hasGradient
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.trial_hasGradient
+#check BfgsVerification.LNormalizedOracle.Conditions.physical_accept
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.physical_accept
+#check BfgsVerification.LNormalizedOracle.Conditions.physical_reject
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.physical_reject
+#check BfgsVerification.LNormalizedOracle.Conditions.search_zero
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.search_zero
+#check BfgsVerification.LNormalizedOracle.Conditions.search_one
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.search_one
+#check BfgsVerification.LNormalizedOracle.Conditions.search_two
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.search_two
+#check BfgsVerification.LNormalizedOracle.Conditions.fromMetric_search
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.fromMetric_search
+#check BfgsVerification.LNormalizedOracle.Conditions.all_trials_differentiable
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.all_trials_differentiable
+#check BfgsVerification.LNormalizedOracle.acceptedQuery
+#print axioms BfgsVerification.LNormalizedOracle.acceptedQuery
+#check BfgsVerification.LNormalizedOracle.acceptedQuery_spec
+#print axioms BfgsVerification.LNormalizedOracle.acceptedQuery_spec
+#check BfgsVerification.LNormalizedOracle.internal_next
+#print axioms BfgsVerification.LNormalizedOracle.internal_next
+#check BfgsVerification.LNormalizedOracle.accepted_trialPoint
+#print axioms BfgsVerification.LNormalizedOracle.accepted_trialPoint
+#check BfgsVerification.LNormalizedOracle.Conditions.accepted_hasGradient
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.accepted_hasGradient
+#check BfgsVerification.LNormalizedOracle.accepted_displacement
+#print axioms BfgsVerification.LNormalizedOracle.accepted_displacement
+#check BfgsVerification.LNormalizedOracle.Conditions.actual_point_update
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.actual_point_update
+#check BfgsVerification.LNormalizedOracle.Conditions.actual_matrix_update
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.actual_matrix_update
+#check BfgsVerification.LNormalizedOracle.positive_smul_posDef
+#print axioms BfgsVerification.LNormalizedOracle.positive_smul_posDef
+#check BfgsVerification.LNormalizedOracle.Conditions.physicalMetric_posDef
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.physicalMetric_posDef
+#check BfgsVerification.LNormalizedOracle.Conditions.physical_phase_positive
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.physical_phase_positive
+#check BfgsVerification.LNormalizedOracle.Conditions.physical_trial_positive
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.physical_trial_positive
+#check BfgsVerification.LNormalizedOracle.actual_implementation_neighborhood
+#print axioms BfgsVerification.LNormalizedOracle.actual_implementation_neighborhood
+#check BfgsVerification.LNormalizedOracle.Conditions.mk
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.mk
+#check BfgsVerification.LNormalizedOracle.Conditions.regular
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.regular
+#check BfgsVerification.LNormalizedOracle.Conditions.base_active
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.base_active
+#check BfgsVerification.LNormalizedOracle.Conditions.trial_active
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.trial_active
+#check BfgsVerification.LNormalizedOracle.Conditions.base_positive
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.base_positive
+#check BfgsVerification.LNormalizedOracle.Conditions.trial_positive
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.trial_positive
+#check BfgsVerification.LNormalizedOracle.Conditions.accepts
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.accepts
+#check BfgsVerification.LNormalizedOracle.Conditions.rejects
+#print axioms BfgsVerification.LNormalizedOracle.Conditions.rejects

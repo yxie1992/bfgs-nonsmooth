@@ -262,7 +262,37 @@ REPORT_EMBEDDING_TARGETS = {
     'variableSpikeHessian_verified':
         ('BfgsVerification.NormalSpike.variableSpikeHessian', 'BfgsVerification.NormalSpike.VariableSpikeHessianTarget'),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS
+REPORT_STRUCTURAL_CLOSURE_TARGETS = {
+    "finiteC1MaxAffineGap_verified":
+        ("BfgsVerification.finiteC1MaxAffineGap", "BfgsVerification.FiniteC1MaxAffineGapTarget"),
+    "planarFiniteMaxLocalBasin_verified":
+        ("BfgsVerification.planarFiniteMaxLocalBasin", "BfgsVerification.PlanarFiniteMaxLocalBasinTarget"),
+    "planarFiniteMaxHessianBasin_verified":
+        ("BfgsVerification.planarFiniteMaxHessianBasin", "BfgsVerification.PlanarFiniteMaxHessianBasinTarget"),
+    "rectangularNuclearNorm_verified":
+        ("BfgsVerification.rectangularNuclearNorm", "BfgsVerification.RectangularNuclearNormTarget"),
+    "centeredRectangularNuclear_verified":
+        ("BfgsVerification.centeredRectangularNuclear", "BfgsVerification.CenteredRectangularNuclearTarget"),
+    "mixedNuclearPowers_verified":
+        ("BfgsVerification.mixedNuclearPowers", "BfgsVerification.MixedNuclearPowersTarget"),
+    "firstDifferenceBasin_verified":
+        ("BfgsVerification.firstDifferenceBasin", "BfgsVerification.FirstDifferenceBasinTarget"),
+    "planarQuadraticModel_verified":
+        ("BfgsVerification.planarQuadraticModel", "BfgsVerification.PlanarQuadraticModelTarget"),
+    "planarQuadraticCoefficients_verified":
+        ("BfgsVerification.planarQuadraticCoefficients", "BfgsVerification.PlanarQuadraticCoefficientsTarget"),
+    "planarQuadraticBasin_verified":
+        ("BfgsVerification.planarQuadraticBasin", "BfgsVerification.PlanarQuadraticBasinTarget"),
+    "planarQuadraticCurve_verified":
+        ("BfgsVerification.planarQuadraticCurve", "BfgsVerification.PlanarQuadraticCurveTarget"),
+    "planarQuadraticSeparation_verified":
+        ("BfgsVerification.planarQuadraticSeparation", "BfgsVerification.PlanarQuadraticSeparationTarget"),
+    "stableOrbitCriterion_verified":
+        ("BfgsVerification.LocalStableOrbit.stableOrbit", "BfgsVerification.LocalStableOrbit.StableOrbitTarget"),
+    "positiveStableOrbitCriterion_verified":
+        ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -519,6 +549,9 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
+                ("BfgsVerification.LocalStableOrbit.stableOrbit", "Actual strict derivative with contractive stable block and inverse-contracting unstable block; constructs a forward orbit without assuming one. Source-specific L spectral application remains pending."),
+                ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "Same actual derivative/contraction hypotheses plus a positive stable functional direction; proves positive initial scale. Later scale preservation needs the actual recurrence."),
+                ("BfgsVerification.LBlockSplitting.positive_orbit_of_block", "Actual strict derivative, literal upper-block equations and two actual characteristic roots with stated ordering; all coordinates and the forward orbit are constructed. Actual L spectrum/global-run application remains pending."),
                 ("BfgsVerification.SeedEmbedding.fromMetric_exact", "Conditional translated/scaled objective value and derivative interface; every field is discharged for the actual D objective in DEmbedding.actualOracleData and embeddingFailure"),
                 ("BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full", "Continuous finite gradient data, affine independence and positive base weights; the actual finite-C1-max subdifferential bridge and original-family application are now discharged in localAffineCorrectness"),
                 ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; discharged for the actual quadratic-gauge family in quadraticGaugeRates"),
@@ -541,7 +574,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Remaining R nuclear/interpretive details and F descriptive identities, A semialgebraic critical values and compact affine-gap analysis, C source example/interpretive closure, L persistence and local embeddings, and final synthesis; D actual deterministic embedding and C principal/U variable-jump targets are checked; see REPORT_STATUS.json",
+            "A semialgebraic critical values and rank-loss source closure; C stronger uniform transport and higher-dimensional partial/warning assertions; L actual spectral/global-run application, smooth-manifold regularity and local embeddings; remaining family/source/synthesis/evidence reconciliation. A compact affine gap, C finite-max/quadratic applications and arbitrary rectangular nuclear families are now checked; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -550,7 +583,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_EMBEDDING_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_STRUCTURAL_CLOSURE_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

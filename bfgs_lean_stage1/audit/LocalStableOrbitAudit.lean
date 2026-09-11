@@ -1,0 +1,62 @@
+import BfgsVerification.StableSequenceTransform
+import BfgsVerification.StableSequenceEstimates
+import BfgsVerification.StableSequence
+import BfgsVerification.LocalStableOrbit
+import BfgsVerification.StablePositiveDirection
+import BfgsVerification.StableOrbitTargets
+
+#check BfgsVerification.LocalStableOrbit.Sequence
+#print axioms BfgsVerification.LocalStableOrbit.Sequence
+#check BfgsVerification.LocalStableOrbit.sequence_tendsto
+#print axioms BfgsVerification.LocalStableOrbit.sequence_tendsto
+#check BfgsVerification.LocalStableOrbit.sequence_norm_apply
+#print axioms BfgsVerification.LocalStableOrbit.sequence_norm_apply
+#check BfgsVerification.LocalStableOrbit.sequence_norm_le
+#print axioms BfgsVerification.LocalStableOrbit.sequence_norm_le
+#check BfgsVerification.LocalStableOrbit.stablePart
+#print axioms BfgsVerification.LocalStableOrbit.stablePart
+#check BfgsVerification.LocalStableOrbit.sequenceMap
+#print axioms BfgsVerification.LocalStableOrbit.sequenceMap
+#check BfgsVerification.LocalStableOrbit.sequenceMap_fst_zero
+#print axioms BfgsVerification.LocalStableOrbit.sequenceMap_fst_zero
+#check BfgsVerification.LocalStableOrbit.sequenceMap_fst_succ
+#print axioms BfgsVerification.LocalStableOrbit.sequenceMap_fst_succ
+#check BfgsVerification.LocalStableOrbit.sequenceMap_snd
+#print axioms BfgsVerification.LocalStableOrbit.sequenceMap_snd
+#check BfgsVerification.LocalStableOrbit.remainder_norm_bound
+#print axioms BfgsVerification.LocalStableOrbit.remainder_norm_bound
+#check BfgsVerification.LocalStableOrbit.stable_expression_bound
+#print axioms BfgsVerification.LocalStableOrbit.stable_expression_bound
+#check BfgsVerification.LocalStableOrbit.unstable_expression_bound
+#print axioms BfgsVerification.LocalStableOrbit.unstable_expression_bound
+#check BfgsVerification.LocalStableOrbit.sequenceMap_ball
+#print axioms BfgsVerification.LocalStableOrbit.sequenceMap_ball
+#check BfgsVerification.LocalStableOrbit.sequenceMap_difference
+#print axioms BfgsVerification.LocalStableOrbit.sequenceMap_difference
+#check BfgsVerification.LocalStableOrbit.stable_sequence_exists
+#print axioms BfgsVerification.LocalStableOrbit.stable_sequence_exists
+#check BfgsVerification.LocalStableOrbit.nonlinear_stable_orbit
+#print axioms BfgsVerification.LocalStableOrbit.nonlinear_stable_orbit
+#check BfgsVerification.LocalStableOrbit.small_lipschitz_ball
+#print axioms BfgsVerification.LocalStableOrbit.small_lipschitz_ball
+#check BfgsVerification.LocalStableOrbit.contraction_parameters
+#print axioms BfgsVerification.LocalStableOrbit.contraction_parameters
+#check BfgsVerification.LocalStableOrbit.local_stable_orbits_from_remainder
+#print axioms BfgsVerification.LocalStableOrbit.local_stable_orbits_from_remainder
+#check BfgsVerification.LocalStableOrbit.local_stable_orbits
+#print axioms BfgsVerification.LocalStableOrbit.local_stable_orbits
+#check BfgsVerification.LocalStableOrbit.positive_stable_direction
+#print axioms BfgsVerification.LocalStableOrbit.positive_stable_direction
+#check BfgsVerification.LocalStableOrbit.StableOrbitTarget
+#print axioms BfgsVerification.LocalStableOrbit.StableOrbitTarget
+#check BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget
+#print axioms BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget
+#check BfgsVerification.LocalStableOrbit.stableOrbit
+#print axioms BfgsVerification.LocalStableOrbit.stableOrbit
+#check BfgsVerification.LocalStableOrbit.positiveStableOrbit
+#print axioms BfgsVerification.LocalStableOrbit.positiveStableOrbit
+
+#print BfgsVerification.LocalStableOrbit.StableOrbitTarget
+#print BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget
+example : BfgsVerification.LocalStableOrbit.StableOrbitTarget := BfgsVerification.LocalStableOrbit.stableOrbit
+example : BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget := BfgsVerification.LocalStableOrbit.positiveStableOrbit

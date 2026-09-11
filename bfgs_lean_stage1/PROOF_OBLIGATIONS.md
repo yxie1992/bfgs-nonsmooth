@@ -355,3 +355,23 @@ Remaining obligations include A's semialgebraic/compact-gap work, C's applicatio
 and example closures, R's general nuclear/interpretive details, L dynamics and
 embeddings, and final synthesis/evidence reconciliation. Entire-report
 completion is false, and original sources remain preserved.
+
+
+## Eleventh whole-report tranche
+
+The audit passes 3,346 explicit / 4,762 total theorem declarations and all
+120 exact targets. A's compact affine gap, C's nondegenerate finite-max corollary
+and Hessian replacement, the literal three-quadratic example, and R's arbitrary
+rectangular nuclear norm/mixed powers/first-difference family have no remaining
+proof premise in their stated targets.
+
+L's actual return and oracle neighborhood are proved, as are the constructive
+stable-orbit and explicit spectral-splitting criteria. These criteria retain
+actual derivative/root premises and are not counted as an unconditional BFGS
+failure result. Actual J intervals and the infinite physical run remain to link.
+The source's stronger smooth stable-manifold/tangency assertion and local
+analytic diffeomorphism are separate obligations, alongside L's C1,1/countably
+affine embeddings and identity initialization. A's semialgebraic theorem, C's
+remaining higher-dimensional/uniform transport claims, historical R attribution
+and final synthesis remain open. See `audit/REPORT_STATUS.json` and the eleventh
+statement review. No original source was changed.

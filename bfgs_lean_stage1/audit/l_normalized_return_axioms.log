@@ -1,0 +1,501 @@
+BfgsVerification.LNormalizedReturn.State : Type
+'BfgsVerification.LNormalizedReturn.State' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.PhaseState : Type
+'BfgsVerification.LNormalizedReturn.PhaseState' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.point (w : BfgsVerification.LNormalizedReturn.State) : BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedReturn.point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.shape (w : BfgsVerification.LNormalizedReturn.State) : BfgsVerification.Mat 2
+'BfgsVerification.LNormalizedReturn.shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.scale (w : BfgsVerification.LNormalizedReturn.State) : Real
+'BfgsVerification.LNormalizedReturn.scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.initial (w : BfgsVerification.LNormalizedReturn.State) :
+  BfgsVerification.LNormalizedReturn.PhaseState
+'BfgsVerification.LNormalizedReturn.initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.currentGradient (μ τ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) : BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedReturn.currentGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.step (μ τ : Real) (j : Fin 3) (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedReturn.step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.secant (μ τ : Real) (j : Fin 3) (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LNormalizedReturn.secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.curvature (μ τ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) : Real
+'BfgsVerification.LNormalizedReturn.curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.substep (μ τ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) : BfgsVerification.LNormalizedReturn.PhaseState
+'BfgsVerification.LNormalizedReturn.substep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) :
+  Nat → BfgsVerification.LNormalizedReturn.PhaseState
+'BfgsVerification.LNormalizedReturn.internal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.denominator (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (j : Fin 3) :
+  Real
+'BfgsVerification.LNormalizedReturn.denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.returnFactor (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) : Real
+'BfgsVerification.LNormalizedReturn.returnFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.returnMap (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) :
+  BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LNormalizedReturn.returnMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed : BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LNormalizedReturn.seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.Regular (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) : Prop
+'BfgsVerification.LNormalizedReturn.Regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.currentGradient_zero (μ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.currentGradient μ 0 j s)
+    (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+'BfgsVerification.LNormalizedReturn.currentGradient_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.step_zero (μ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.step μ 0 j s)
+    (BfgsVerification.bfgsStep s.2
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+      (BfgsVerification.SeedOrbit.length j))
+'BfgsVerification.LNormalizedReturn.step_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.secant_zero (μ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.secant μ 0 j s)
+    (HSub.hSub.{0, 0, 0}
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.SeedOrbit.nextPhase j))
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j))
+'BfgsVerification.LNormalizedReturn.secant_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.substep_zero (μ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.substep μ 0 j s)
+    (Prod.mk.{0, 0}
+      (HAdd.hAdd.{0, 0, 0} s.1
+        (BfgsVerification.bfgsStep s.2
+          (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+          (BfgsVerification.SeedOrbit.length j)))
+      (BfgsVerification.SeedCycle.update s.2
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          (BfgsVerification.SeedOrbit.nextPhase j))
+        (BfgsVerification.SeedOrbit.length j)))
+'BfgsVerification.LNormalizedReturn.substep_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_point :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.point BfgsVerification.LNormalizedReturn.seed)
+    (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      BfgsVerification.SeedOrbit.seedRatio 0)
+'BfgsVerification.LNormalizedReturn.seed_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_shape :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.shape BfgsVerification.LNormalizedReturn.seed) 1
+'BfgsVerification.LNormalizedReturn.seed_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_scale :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.scale BfgsVerification.LNormalizedReturn.seed) 0
+'BfgsVerification.LNormalizedReturn.seed_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_seed_zero (μ : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ BfgsVerification.LNormalizedReturn.seed 0)
+    (Prod.mk.{0, 0}
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio 0)
+      (BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0))
+'BfgsVerification.LNormalizedReturn.internal_seed_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_seed_one (μ : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ BfgsVerification.LNormalizedReturn.seed 1)
+    (Prod.mk.{0, 0}
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio 1)
+      (BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1))
+'BfgsVerification.LNormalizedReturn.internal_seed_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_seed_two (μ : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ BfgsVerification.LNormalizedReturn.seed 2)
+    (Prod.mk.{0, 0}
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio 2)
+      (BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 2))
+'BfgsVerification.LNormalizedReturn.internal_seed_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_seed_three (μ : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ BfgsVerification.LNormalizedReturn.seed 3)
+    (Prod.mk.{0, 0}
+      (HSMul.hSMul.{0, 0, 0} BfgsVerification.SeedOrbit.seedRatio
+        (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          BfgsVerification.SeedOrbit.seedRatio 0))
+      (HSMul.hSMul.{0, 0, 0} BfgsVerification.SeedOrbit.seedRatio 1))
+'BfgsVerification.LNormalizedReturn.internal_seed_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_seed_phase (μ : Real) (j : Fin 3) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ BfgsVerification.LNormalizedReturn.seed ↑j)
+    (Prod.mk.{0, 0}
+      (BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        BfgsVerification.SeedOrbit.seedRatio j)
+      (BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j))
+'BfgsVerification.LNormalizedReturn.internal_seed_phase' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_curvature_positive (j : Fin 3) :
+  LT.lt.{0} 0
+    (BfgsVerification.dot
+      (HSub.hSub.{0, 0, 0}
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+          (BfgsVerification.SeedOrbit.nextPhase j))
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j))
+      (BfgsVerification.bfgsStep
+        (BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+        (BfgsVerification.SeedOrbit.length j)))
+'BfgsVerification.LNormalizedReturn.seed_curvature_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_denominator_positive (μ : Real) (j : Fin 3) :
+  LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.denominator μ BfgsVerification.LNormalizedReturn.seed j)
+'BfgsVerification.LNormalizedReturn.seed_denominator_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_returnFactor (μ : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ BfgsVerification.LNormalizedReturn.seed)
+    BfgsVerification.SeedOrbit.seedRatio
+'BfgsVerification.LNormalizedReturn.seed_returnFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_regular (μ : Real) :
+  BfgsVerification.LNormalizedReturn.Regular μ BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.seed_regular' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.seed_fixed (μ : Real) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.returnMap μ BfgsVerification.LNormalizedReturn.seed)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.seed_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_coordinate (w : BfgsVerification.LNormalizedReturn.State) (i : Fin 5) :
+  AnalyticAt.{0, 0, 0} Real (fun z => z i) w
+'BfgsVerification.LNormalizedReturn.analytic_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_point (w : BfgsVerification.LNormalizedReturn.State) :
+  AnalyticAt.{0, 0, 0} Real BfgsVerification.LNormalizedReturn.point w
+'BfgsVerification.LNormalizedReturn.analytic_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_shape (w : BfgsVerification.LNormalizedReturn.State) :
+  AnalyticAt.{0, 0, 0} Real BfgsVerification.LNormalizedReturn.shape w
+'BfgsVerification.LNormalizedReturn.analytic_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_scale (w : BfgsVerification.LNormalizedReturn.State) :
+  AnalyticAt.{0, 0, 0} Real BfgsVerification.LNormalizedReturn.scale w
+'BfgsVerification.LNormalizedReturn.analytic_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_initial (w : BfgsVerification.LNormalizedReturn.State) :
+  AnalyticAt.{0, 0, 0} Real BfgsVerification.LNormalizedReturn.initial w
+'BfgsVerification.LNormalizedReturn.analytic_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_vec_entry
+  {f : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2} {w : BfgsVerification.LNormalizedReturn.State}
+  (hf : AnalyticAt.{0, 0, 0} Real f w) (i : Fin 2) : AnalyticAt.{0, 0, 0} Real (fun z => f z i) w
+'BfgsVerification.LNormalizedReturn.analytic_vec_entry' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_matrix_entry
+  {f : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Mat 2} {w : BfgsVerification.LNormalizedReturn.State}
+  (hf : AnalyticAt.{0, 0, 0} Real f w) (i j : Fin 2) : AnalyticAt.{0, 0, 0} Real (fun z => f z i j) w
+'BfgsVerification.LNormalizedReturn.analytic_matrix_entry' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_dot
+  {f g : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2}
+  {w : BfgsVerification.LNormalizedReturn.State} (hf : AnalyticAt.{0, 0, 0} Real f w)
+  (hg : AnalyticAt.{0, 0, 0} Real g w) : AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.dot (f z) (g z)) w
+'BfgsVerification.LNormalizedReturn.analytic_dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_outer
+  {f g : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2}
+  {w : BfgsVerification.LNormalizedReturn.State} (hf : AnalyticAt.{0, 0, 0} Real f w)
+  (hg : AnalyticAt.{0, 0, 0} Real g w) : AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.outer (f z) (g z)) w
+'BfgsVerification.LNormalizedReturn.analytic_outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_matrix_mul
+  {f g : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Mat 2}
+  {w : BfgsVerification.LNormalizedReturn.State} (hf : AnalyticAt.{0, 0, 0} Real f w)
+  (hg : AnalyticAt.{0, 0, 0} Real g w) : AnalyticAt.{0, 0, 0} Real (fun z => HMul.hMul.{0, 0, 0} (f z) (g z)) w
+'BfgsVerification.LNormalizedReturn.analytic_matrix_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_mulVec
+  {f : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Mat 2}
+  {g : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2} {w : BfgsVerification.LNormalizedReturn.State}
+  (hf : AnalyticAt.{0, 0, 0} Real f w) (hg : AnalyticAt.{0, 0, 0} Real g w) :
+  AnalyticAt.{0, 0, 0} Real (fun z => Matrix.mulVec.{0, 0, 0} (f z) (g z)) w
+'BfgsVerification.LNormalizedReturn.analytic_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_inverseBFGS
+  {H : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Mat 2}
+  {s y : BfgsVerification.LNormalizedReturn.State → BfgsVerification.Vec 2}
+  {w : BfgsVerification.LNormalizedReturn.State} (hH : AnalyticAt.{0, 0, 0} Real H w)
+  (hs : AnalyticAt.{0, 0, 0} Real s w) (hy : AnalyticAt.{0, 0, 0} Real y w)
+  (ht : Ne.{1} (BfgsVerification.dot (y w) (s w)) 0) :
+  AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.inverseBFGS (H z) (s z) (y z)) w
+'BfgsVerification.LNormalizedReturn.analytic_inverseBFGS' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_currentGradient (μ : Real) (j : Fin 3)
+  {τ : BfgsVerification.LNormalizedReturn.State → Real}
+  {s : BfgsVerification.LNormalizedReturn.State → BfgsVerification.LNormalizedReturn.PhaseState}
+  {w : BfgsVerification.LNormalizedReturn.State} (hτ : AnalyticAt.{0, 0, 0} Real τ w)
+  (hs : AnalyticAt.{0, 0, 0} Real s w) :
+  AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.LNormalizedReturn.currentGradient μ (τ z) j (s z)) w
+'BfgsVerification.LNormalizedReturn.analytic_currentGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_step (μ : Real) (j : Fin 3)
+  {τ : BfgsVerification.LNormalizedReturn.State → Real}
+  {s : BfgsVerification.LNormalizedReturn.State → BfgsVerification.LNormalizedReturn.PhaseState}
+  {w : BfgsVerification.LNormalizedReturn.State} (hτ : AnalyticAt.{0, 0, 0} Real τ w)
+  (hs : AnalyticAt.{0, 0, 0} Real s w) :
+  AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.LNormalizedReturn.step μ (τ z) j (s z)) w
+'BfgsVerification.LNormalizedReturn.analytic_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_secant (μ : Real) (j : Fin 3)
+  {τ : BfgsVerification.LNormalizedReturn.State → Real}
+  {s : BfgsVerification.LNormalizedReturn.State → BfgsVerification.LNormalizedReturn.PhaseState}
+  {w : BfgsVerification.LNormalizedReturn.State} (hτ : AnalyticAt.{0, 0, 0} Real τ w)
+  (hs : AnalyticAt.{0, 0, 0} Real s w) :
+  AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.LNormalizedReturn.secant μ (τ z) j (s z)) w
+'BfgsVerification.LNormalizedReturn.analytic_secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_curvature (μ : Real) (j : Fin 3)
+  {τ : BfgsVerification.LNormalizedReturn.State → Real}
+  {s : BfgsVerification.LNormalizedReturn.State → BfgsVerification.LNormalizedReturn.PhaseState}
+  {w : BfgsVerification.LNormalizedReturn.State} (hτ : AnalyticAt.{0, 0, 0} Real τ w)
+  (hs : AnalyticAt.{0, 0, 0} Real s w) :
+  AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.LNormalizedReturn.curvature μ (τ z) j (s z)) w
+'BfgsVerification.LNormalizedReturn.analytic_curvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_substep (μ : Real) (j : Fin 3)
+  {τ : BfgsVerification.LNormalizedReturn.State → Real}
+  {s : BfgsVerification.LNormalizedReturn.State → BfgsVerification.LNormalizedReturn.PhaseState}
+  {w : BfgsVerification.LNormalizedReturn.State} (hτ : AnalyticAt.{0, 0, 0} Real τ w)
+  (hs : AnalyticAt.{0, 0, 0} Real s w) (ht : Ne.{1} (BfgsVerification.LNormalizedReturn.curvature μ (τ w) j (s w)) 0) :
+  AnalyticAt.{0, 0, 0} Real (fun z => BfgsVerification.LNormalizedReturn.substep μ (τ z) j (s z)) w
+'BfgsVerification.LNormalizedReturn.analytic_substep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_internal_seed (μ : Real) (k : Nat) (hk : LE.le.{0} k 3) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedReturn.internal μ w k)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.analytic_internal_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_denominator_seed (μ : Real) (j : Fin 3) :
+  AnalyticAt.{0, 0, 0} Real (fun w => BfgsVerification.LNormalizedReturn.denominator μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.analytic_denominator_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_returnFactor_seed (μ : Real) :
+  AnalyticAt.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnFactor μ) BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.analytic_returnFactor_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.analytic_returnMap_seed (μ : Real) :
+  AnalyticAt.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.analytic_returnMap_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.regular_analytic_neighborhood (μ : Real) :
+  ∃ U,
+    And (IsOpen.{0} U)
+      (And (Membership.mem.{0, 0} U BfgsVerification.LNormalizedReturn.seed)
+        (And
+          (∀ (w : BfgsVerification.LNormalizedReturn.State),
+            Membership.mem.{0, 0} U w → BfgsVerification.LNormalizedReturn.Regular μ w)
+          (AnalyticOnNhd.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) U)))
+'BfgsVerification.LNormalizedReturn.regular_analytic_neighborhood' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.inverseBFGS_isSymm {H : BfgsVerification.Mat 2} (hH : Matrix.IsSymm.{0, 0} H)
+  (s y : BfgsVerification.Vec 2) : Matrix.IsSymm.{0, 0} (BfgsVerification.inverseBFGS H s y)
+'BfgsVerification.LNormalizedReturn.inverseBFGS_isSymm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.shape_isSymm (w : BfgsVerification.LNormalizedReturn.State) :
+  Matrix.IsSymm.{0, 0} (BfgsVerification.LNormalizedReturn.shape w)
+'BfgsVerification.LNormalizedReturn.shape_isSymm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_isSymm (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) (k : Nat) :
+  Matrix.IsSymm.{0, 0} (BfgsVerification.LNormalizedReturn.internal μ w k).2
+'BfgsVerification.LNormalizedReturn.internal_isSymm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.return_scale (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.returnMap μ w))
+    (HMul.hMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.returnFactor μ w))
+'BfgsVerification.LNormalizedReturn.return_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.return_point (μ : Real) (w : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.point (BfgsVerification.LNormalizedReturn.returnMap μ w))
+    (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} (BfgsVerification.LNormalizedReturn.returnFactor μ w))
+      (BfgsVerification.LNormalizedReturn.internal μ w 3).1)
+'BfgsVerification.LNormalizedReturn.return_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.return_shape (μ : Real) (w : BfgsVerification.LNormalizedReturn.State)
+  (hr : Ne.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ w) 0) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.shape (BfgsVerification.LNormalizedReturn.returnMap μ w))
+    (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} (BfgsVerification.LNormalizedReturn.returnFactor μ w))
+      (BfgsVerification.LNormalizedReturn.internal μ w 3).2)
+'BfgsVerification.LNormalizedReturn.return_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.normalization_preserves_point (μ : Real)
+  (w : BfgsVerification.LNormalizedReturn.State) (hr : Ne.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ w) 0) :
+  Eq.{1}
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.returnMap μ w))
+      (BfgsVerification.LNormalizedReturn.point (BfgsVerification.LNormalizedReturn.returnMap μ w)))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.internal μ w 3).1)
+'BfgsVerification.LNormalizedReturn.normalization_preserves_point' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.normalization_preserves_metric (μ : Real)
+  (w : BfgsVerification.LNormalizedReturn.State) (hr : Ne.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ w) 0) :
+  Eq.{1}
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.returnMap μ w))
+      (BfgsVerification.LNormalizedReturn.shape (BfgsVerification.LNormalizedReturn.returnMap μ w)))
+    (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+      (BfgsVerification.LNormalizedReturn.internal μ w 3).2)
+'BfgsVerification.LNormalizedReturn.normalization_preserves_metric' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.physical_branch_gradient (μ τ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1} (BfgsVerification.LQuadraticSeed.branchGradient μ (HSMul.hSMul.{0, 0, 0} τ s.1) j)
+    (BfgsVerification.LNormalizedReturn.currentGradient μ τ j s)
+'BfgsVerification.LNormalizedReturn.physical_branch_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.physical_step (μ τ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1}
+    (BfgsVerification.bfgsStep (HSMul.hSMul.{0, 0, 0} τ s.2)
+      (BfgsVerification.LQuadraticSeed.branchGradient μ (HSMul.hSMul.{0, 0, 0} τ s.1) j)
+      (BfgsVerification.SeedOrbit.length j))
+    (HSMul.hSMul.{0, 0, 0} τ (BfgsVerification.LNormalizedReturn.step μ τ j s))
+'BfgsVerification.LNormalizedReturn.physical_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.physical_secant (μ τ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1}
+    (HSub.hSub.{0, 0, 0}
+      (BfgsVerification.LQuadraticSeed.branchGradient μ
+        (HSMul.hSMul.{0, 0, 0} τ (BfgsVerification.LNormalizedReturn.substep μ τ j s).1)
+        (BfgsVerification.SeedOrbit.nextPhase j))
+      (BfgsVerification.LQuadraticSeed.branchGradient μ (HSMul.hSMul.{0, 0, 0} τ s.1) j))
+    (BfgsVerification.LNormalizedReturn.secant μ τ j s)
+'BfgsVerification.LNormalizedReturn.physical_secant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.physical_update (μ : Real) {τ : Real} (hτ : Ne.{1} τ 0) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  Eq.{1}
+    (BfgsVerification.inverseBFGS (HSMul.hSMul.{0, 0, 0} τ s.2)
+      (HSMul.hSMul.{0, 0, 0} τ (BfgsVerification.LNormalizedReturn.step μ τ j s))
+      (BfgsVerification.LNormalizedReturn.secant μ τ j s))
+    (HSMul.hSMul.{0, 0, 0} τ (BfgsVerification.LNormalizedReturn.substep μ τ j s).2)
+'BfgsVerification.LNormalizedReturn.physical_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.return_scale_hasFDerivAt_seed (μ : Real) :
+  HasFDerivAt.{0, 0, 0}
+    (fun w => BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.returnMap μ w))
+    (HSMul.hSMul.{0, 0, 0} BfgsVerification.SeedOrbit.seedRatio (ContinuousLinearMap.proj.{0, 0, 0} 4))
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LNormalizedReturn.return_scale_hasFDerivAt_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.shiftPoint (v : BfgsVerification.Vec 2)
+  (w : BfgsVerification.LNormalizedReturn.State) : BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LNormalizedReturn.shiftPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.point_shiftPoint (v : BfgsVerification.Vec 2)
+  (w : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.point (BfgsVerification.LNormalizedReturn.shiftPoint v w))
+    (HAdd.hAdd.{0, 0, 0} (BfgsVerification.LNormalizedReturn.point w) v)
+'BfgsVerification.LNormalizedReturn.point_shiftPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.shape_shiftPoint (v : BfgsVerification.Vec 2)
+  (w : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.shape (BfgsVerification.LNormalizedReturn.shiftPoint v w))
+    (BfgsVerification.LNormalizedReturn.shape w)
+'BfgsVerification.LNormalizedReturn.shape_shiftPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.scale_shiftPoint (v : BfgsVerification.Vec 2)
+  (w : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.shiftPoint v w))
+    (BfgsVerification.LNormalizedReturn.scale w)
+'BfgsVerification.LNormalizedReturn.scale_shiftPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.substep_zero_translate (μ : Real) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) (v : BfgsVerification.Vec 2) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.substep μ 0 j (Prod.mk.{0, 0} (HAdd.hAdd.{0, 0, 0} s.1 v) s.2))
+    (Prod.mk.{0, 0} (HAdd.hAdd.{0, 0, 0} (BfgsVerification.LNormalizedReturn.substep μ 0 j s).1 v)
+      (BfgsVerification.LNormalizedReturn.substep μ 0 j s).2)
+'BfgsVerification.LNormalizedReturn.substep_zero_translate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_boundary_translate (μ : Real) {w : BfgsVerification.LNormalizedReturn.State}
+  (hw : Eq.{1} (BfgsVerification.LNormalizedReturn.scale w) 0) (v : BfgsVerification.Vec 2) (k : Nat) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.internal μ (BfgsVerification.LNormalizedReturn.shiftPoint v w) k)
+    (Prod.mk.{0, 0} (HAdd.hAdd.{0, 0, 0} (BfgsVerification.LNormalizedReturn.internal μ w k).1 v)
+      (BfgsVerification.LNormalizedReturn.internal μ w k).2)
+'BfgsVerification.LNormalizedReturn.internal_boundary_translate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.returnFactor_boundary_translate (μ : Real)
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : Eq.{1} (BfgsVerification.LNormalizedReturn.scale w) 0)
+  (v : BfgsVerification.Vec 2) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ (BfgsVerification.LNormalizedReturn.shiftPoint v w))
+    (BfgsVerification.LNormalizedReturn.returnFactor μ w)
+'BfgsVerification.LNormalizedReturn.returnFactor_boundary_translate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.returnMap_boundary_translate (μ : Real)
+  {w : BfgsVerification.LNormalizedReturn.State} (hw : Eq.{1} (BfgsVerification.LNormalizedReturn.scale w) 0)
+  (v : BfgsVerification.Vec 2) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.returnMap μ (BfgsVerification.LNormalizedReturn.shiftPoint v w))
+    (BfgsVerification.LNormalizedReturn.shiftPoint
+      (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} (BfgsVerification.LNormalizedReturn.returnFactor μ w)) v)
+      (BfgsVerification.LNormalizedReturn.returnMap μ w))
+'BfgsVerification.LNormalizedReturn.returnMap_boundary_translate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.pointLift :
+  ContinuousLinearMap.{0, 0, 0, 0} (RingHom.id.{0} Real) (BfgsVerification.Vec 2)
+    BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LNormalizedReturn.pointLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.shiftPoint_add (v : BfgsVerification.Vec 2)
+  (w : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1} (BfgsVerification.LNormalizedReturn.shiftPoint v w)
+    (HAdd.hAdd.{0, 0, 0} w (BfgsVerification.LNormalizedReturn.pointLift v))
+'BfgsVerification.LNormalizedReturn.shiftPoint_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.return_restricted_point_hasFDerivAt_seed (μ : Real) :
+  HasFDerivAt.{0, 0, 0}
+    (fun v =>
+      BfgsVerification.LNormalizedReturn.returnMap μ
+        (BfgsVerification.LNormalizedReturn.shiftPoint v BfgsVerification.LNormalizedReturn.seed))
+    (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} BfgsVerification.SeedOrbit.seedRatio)
+      BfgsVerification.LNormalizedReturn.pointLift)
+    0
+'BfgsVerification.LNormalizedReturn.return_restricted_point_hasFDerivAt_seed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.return_derivative_point_columns (μ : Real) (v : BfgsVerification.Vec 2) :
+  Eq.{1}
+    ((fderiv.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+      (BfgsVerification.LNormalizedReturn.pointLift v))
+    (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} BfgsVerification.SeedOrbit.seedRatio)
+      (BfgsVerification.LNormalizedReturn.pointLift v))
+'BfgsVerification.LNormalizedReturn.return_derivative_point_columns' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.return_derivative_last_row (μ : Real)
+  (v : BfgsVerification.LNormalizedReturn.State) :
+  Eq.{1}
+    ((fderiv.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed) v
+      4)
+    (HMul.hMul.{0, 0, 0} BfgsVerification.SeedOrbit.seedRatio (v 4))
+'BfgsVerification.LNormalizedReturn.return_derivative_last_row' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.shape_posDef {w : BfgsVerification.LNormalizedReturn.State}
+  (hw : LT.lt.{0} (HPow.hPow.{0, 0, 0} (w 2) 2) (w 3)) :
+  Matrix.PosDef.{0, 0} (BfgsVerification.LNormalizedReturn.shape w)
+'BfgsVerification.LNormalizedReturn.shape_posDef' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LNormalizedReturn.internal_posDef_of_regular (μ : Real) {w : BfgsVerification.LNormalizedReturn.State}
+  (hw : BfgsVerification.LNormalizedReturn.Regular μ w) (k : Nat) (hk : LE.le.{0} k 3) :
+  Matrix.PosDef.{0, 0} (BfgsVerification.LNormalizedReturn.internal μ w k).2
+'BfgsVerification.LNormalizedReturn.internal_posDef_of_regular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LNormalizedReturn.normalized_return_contract (μ : Real) :
+  And
+    (Eq.{1} (BfgsVerification.LNormalizedReturn.returnMap μ BfgsVerification.LNormalizedReturn.seed)
+      BfgsVerification.LNormalizedReturn.seed)
+    (And
+      (∀ (j : Fin 3),
+        LT.lt.{0} 0 (BfgsVerification.LNormalizedReturn.denominator μ BfgsVerification.LNormalizedReturn.seed j))
+      (And
+        (Eq.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ BfgsVerification.LNormalizedReturn.seed)
+          BfgsVerification.SeedOrbit.seedRatio)
+        (And
+          (∃ U,
+            And (IsOpen.{0} U)
+              (And (Membership.mem.{0, 0} U BfgsVerification.LNormalizedReturn.seed)
+                (And
+                  (∀ (w : BfgsVerification.LNormalizedReturn.State),
+                    Membership.mem.{0, 0} U w → BfgsVerification.LNormalizedReturn.Regular μ w)
+                  (AnalyticOnNhd.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ) U))))
+          (And
+            (∀ (v : BfgsVerification.Vec 2),
+              Eq.{1}
+                ((fderiv.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ)
+                    BfgsVerification.LNormalizedReturn.seed)
+                  (BfgsVerification.LNormalizedReturn.pointLift v))
+                (HSMul.hSMul.{0, 0, 0} (Inv.inv.{0} BfgsVerification.SeedOrbit.seedRatio)
+                  (BfgsVerification.LNormalizedReturn.pointLift v)))
+            (And
+              (∀ (v : BfgsVerification.LNormalizedReturn.State),
+                Eq.{1}
+                  ((fderiv.{0, 0, 0} Real (BfgsVerification.LNormalizedReturn.returnMap μ)
+                      BfgsVerification.LNormalizedReturn.seed)
+                    v 4)
+                  (HMul.hMul.{0, 0, 0} BfgsVerification.SeedOrbit.seedRatio (v 4)))
+              (∀ (w : BfgsVerification.LNormalizedReturn.State),
+                Ne.{1} (BfgsVerification.LNormalizedReturn.returnFactor μ w) 0 →
+                  And
+                    (Eq.{1}
+                      (HSMul.hSMul.{0, 0, 0}
+                        (BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.returnMap μ w))
+                        (BfgsVerification.LNormalizedReturn.point (BfgsVerification.LNormalizedReturn.returnMap μ w)))
+                      (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                        (BfgsVerification.LNormalizedReturn.internal μ w 3).1))
+                    (Eq.{1}
+                      (HSMul.hSMul.{0, 0, 0}
+                        (BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LNormalizedReturn.returnMap μ w))
+                        (BfgsVerification.LNormalizedReturn.shape (BfgsVerification.LNormalizedReturn.returnMap μ w)))
+                      (HSMul.hSMul.{0, 0, 0} (BfgsVerification.LNormalizedReturn.scale w)
+                        (BfgsVerification.LNormalizedReturn.internal μ w 3).2))))))))
+'BfgsVerification.LNormalizedReturn.normalized_return_contract' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

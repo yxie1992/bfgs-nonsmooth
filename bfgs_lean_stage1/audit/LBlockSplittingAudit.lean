@@ -1,0 +1,88 @@
+import BfgsVerification.LBlockStableOrbit
+
+#check BfgsVerification.LBlockSplitting.State
+#print axioms BfgsVerification.LBlockSplitting.State
+#check BfgsVerification.LBlockSplitting.Coordinates
+#print axioms BfgsVerification.LBlockSplitting.Coordinates
+#check BfgsVerification.LBlockSplitting.basisMap
+#print axioms BfgsVerification.LBlockSplitting.basisMap
+#check BfgsVerification.LBlockSplitting.shapeUnstable
+#print axioms BfgsVerification.LBlockSplitting.shapeUnstable
+#check BfgsVerification.LBlockSplitting.shapeStable
+#print axioms BfgsVerification.LBlockSplitting.shapeStable
+#check BfgsVerification.LBlockSplitting.inverseMap
+#print axioms BfgsVerification.LBlockSplitting.inverseMap
+#check BfgsVerification.LBlockSplitting.inverse_basis
+#print axioms BfgsVerification.LBlockSplitting.inverse_basis
+#check BfgsVerification.LBlockSplitting.basis_inverse
+#print axioms BfgsVerification.LBlockSplitting.basis_inverse
+#check BfgsVerification.LBlockSplitting.basisEquiv
+#print axioms BfgsVerification.LBlockSplitting.basisEquiv
+#check BfgsVerification.LBlockSplitting.diagonalMap
+#print axioms BfgsVerification.LBlockSplitting.diagonalMap
+#check BfgsVerification.LBlockSplitting.diagonalMap_apply
+#print axioms BfgsVerification.LBlockSplitting.diagonalMap_apply
+#check BfgsVerification.LBlockSplitting.diagonalEquiv
+#print axioms BfgsVerification.LBlockSplitting.diagonalEquiv
+#check BfgsVerification.LBlockSplitting.diagonalEquiv_apply
+#print axioms BfgsVerification.LBlockSplitting.diagonalEquiv_apply
+#check BfgsVerification.LBlockSplitting.diagonalEquiv_symm_apply
+#print axioms BfgsVerification.LBlockSplitting.diagonalEquiv_symm_apply
+#check BfgsVerification.LBlockSplitting.diagonalMap_norm_bound
+#print axioms BfgsVerification.LBlockSplitting.diagonalMap_norm_bound
+#check BfgsVerification.LBlockSplitting.stable_diagonal_contraction
+#print axioms BfgsVerification.LBlockSplitting.stable_diagonal_contraction
+#check BfgsVerification.LBlockSplitting.unstable_diagonal_inverse_contraction
+#print axioms BfgsVerification.LBlockSplitting.unstable_diagonal_inverse_contraction
+#check BfgsVerification.LBlockSplitting.BlockForm
+#print axioms BfgsVerification.LBlockSplitting.BlockForm
+#check BfgsVerification.LBlockSplitting.shapeEigen
+#print axioms BfgsVerification.LBlockSplitting.shapeEigen
+#check BfgsVerification.LBlockSplitting.scaleEigen
+#print axioms BfgsVerification.LBlockSplitting.scaleEigen
+#check BfgsVerification.LBlockSplitting.shape_eigen
+#print axioms BfgsVerification.LBlockSplitting.shape_eigen
+#check BfgsVerification.LBlockSplitting.scale_eigen
+#print axioms BfgsVerification.LBlockSplitting.scale_eigen
+#check BfgsVerification.LBlockSplitting.scale_shape_exists
+#print axioms BfgsVerification.LBlockSplitting.scale_shape_exists
+#check BfgsVerification.LBlockSplitting.characteristic_factorization
+#print axioms BfgsVerification.LBlockSplitting.characteristic_factorization
+#check BfgsVerification.LBlockSplitting.pointZero
+#print axioms BfgsVerification.LBlockSplitting.pointZero
+#check BfgsVerification.LBlockSplitting.pointOne
+#print axioms BfgsVerification.LBlockSplitting.pointOne
+#check BfgsVerification.LBlockSplitting.block_point_zero
+#print axioms BfgsVerification.LBlockSplitting.block_point_zero
+#check BfgsVerification.LBlockSplitting.block_point_one
+#print axioms BfgsVerification.LBlockSplitting.block_point_one
+#check BfgsVerification.LBlockSplitting.basisMap_eq
+#print axioms BfgsVerification.LBlockSplitting.basisMap_eq
+#check BfgsVerification.LBlockSplitting.basisMap_scale
+#print axioms BfgsVerification.LBlockSplitting.basisMap_scale
+#check BfgsVerification.LBlockSplitting.basis_diagonal
+#print axioms BfgsVerification.LBlockSplitting.basis_diagonal
+#check BfgsVerification.LBlockSplitting.block_splitting
+#print axioms BfgsVerification.LBlockSplitting.block_splitting
+#check BfgsVerification.LBlockSplitting.shapeZero
+#print axioms BfgsVerification.LBlockSplitting.shapeZero
+#check BfgsVerification.LBlockSplitting.shapeOne
+#print axioms BfgsVerification.LBlockSplitting.shapeOne
+#check BfgsVerification.LBlockSplitting.scaleUnit
+#print axioms BfgsVerification.LBlockSplitting.scaleUnit
+#check BfgsVerification.LBlockSplitting.coordinate_decomposition
+#print axioms BfgsVerification.LBlockSplitting.coordinate_decomposition
+#check BfgsVerification.LBlockSplitting.blockForm_of_columns
+#print axioms BfgsVerification.LBlockSplitting.blockForm_of_columns
+#check BfgsVerification.LBlockSplitting.shapeZero_single
+#print axioms BfgsVerification.LBlockSplitting.shapeZero_single
+#check BfgsVerification.LBlockSplitting.shapeOne_single
+#print axioms BfgsVerification.LBlockSplitting.shapeOne_single
+#check BfgsVerification.LBlockSplitting.scaleUnit_single
+#print axioms BfgsVerification.LBlockSplitting.scaleUnit_single
+#check BfgsVerification.LBlockSplitting.positive_orbit_of_splitting
+#print axioms BfgsVerification.LBlockSplitting.positive_orbit_of_splitting
+#check BfgsVerification.LBlockSplitting.positive_orbit_of_block
+#print axioms BfgsVerification.LBlockSplitting.positive_orbit_of_block
+#check BfgsVerification.LBlockSplitting.positive_scale_along_orbit
+#print axioms BfgsVerification.LBlockSplitting.positive_scale_along_orbit

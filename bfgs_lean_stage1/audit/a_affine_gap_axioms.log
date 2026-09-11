@@ -1,0 +1,223 @@
+BfgsVerification.AffineDistance.inverseOnes {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) : BfgsVerification.Vec m
+'BfgsVerification.AffineDistance.inverseOnes' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.denominator {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) : ℝ
+'BfgsVerification.AffineDistance.denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.weights {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) : BfgsVerification.Vec m
+'BfgsVerification.AffineDistance.weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.formulaPoint {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) : EuclideanSpace ℝ (Fin n)
+'BfgsVerification.AffineDistance.formulaPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.denominator_pos {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (i : Fin m)
+  (hg : AffineIndependent ℝ g) : 0 < BfgsVerification.AffineDistance.denominator g
+'BfgsVerification.AffineDistance.denominator_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.weights_sum {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (i : Fin m)
+  (hg : AffineIndependent ℝ g) : ∑ j, BfgsVerification.AffineDistance.weights g j = 1
+'BfgsVerification.AffineDistance.weights_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.gram_weights {n m : ℕ} (g : Fin m → BfgsVerification.Vec n)
+  (hg : AffineIndependent ℝ g) :
+  Matrix.mulVec (BfgsVerification.AffineBarycentric.gram (BfgsVerification.AffineBarycentric.augmented g))
+      (BfgsVerification.AffineDistance.weights g) =
+    (BfgsVerification.AffineDistance.denominator g)⁻¹ • fun x => 1
+'BfgsVerification.AffineDistance.gram_weights' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.augmented_gram_pairing {n m : ℕ} (g : Fin m → BfgsVerification.Vec n)
+  (w : BfgsVerification.Vec m) (i : Fin m) :
+  Matrix.mulVec (BfgsVerification.AffineBarycentric.gram (BfgsVerification.AffineBarycentric.augmented g)) w i =
+    ∑ j, w j + inner (BfgsVerification.euclideanVector (g i)) (∑ j, w j • BfgsVerification.euclideanVector (g j))
+'BfgsVerification.AffineDistance.augmented_gram_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.formulaPoint_mem_affineSpan {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (i : Fin m)
+  (hg : AffineIndependent ℝ g) :
+  BfgsVerification.AffineDistance.formulaPoint g ∈
+    affineSpan ℝ (Set.range fun j => BfgsVerification.euclideanVector (g j))
+'BfgsVerification.AffineDistance.formulaPoint_mem_affineSpan' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.formulaPoint_pairing_constant {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (i : Fin m)
+  (hg : AffineIndependent ℝ g) (j : Fin m) :
+  inner (BfgsVerification.euclideanVector (g j)) (BfgsVerification.AffineDistance.formulaPoint g) =
+    (BfgsVerification.AffineDistance.denominator g)⁻¹ - 1
+'BfgsVerification.AffineDistance.formulaPoint_pairing_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.formulaPoint_eq_closest {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (i : Fin m)
+  (hg : AffineIndependent ℝ g) :
+  BfgsVerification.AffineDistance.formulaPoint g =
+    BfgsVerification.AffineCriticalGeometry.closestAffinePoint (fun j => BfgsVerification.euclideanVector (g j)) i
+'BfgsVerification.AffineDistance.formulaPoint_eq_closest' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.affine_distance_eq_formula {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (i : Fin m)
+  (hg : AffineIndependent ℝ g) :
+  Metric.infDist 0 ↑(affineSpan ℝ (Set.range fun j => BfgsVerification.euclideanVector (g j))) =
+    ‖BfgsVerification.AffineDistance.formulaPoint g‖
+'BfgsVerification.AffineDistance.affine_distance_eq_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.formulaPoint_continuousAt.{u_1} {X : Type u_1} [TopologicalSpace X] {n m : ℕ}
+  (g : X → Fin m → BfgsVerification.Vec n) (x : X) (i : Fin m) (hc : ∀ (j : Fin m), ContinuousAt (fun p => g p j) x)
+  (hg : AffineIndependent ℝ (g x)) : ContinuousAt (fun p => BfgsVerification.AffineDistance.formulaPoint (g p)) x
+'BfgsVerification.AffineDistance.formulaPoint_continuousAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.affine_distance_continuousAt.{u_1} {X : Type u_1} [TopologicalSpace X] {n m : ℕ}
+  (g : X → Fin m → BfgsVerification.Vec n) (x : X) (i : Fin m) (hc : ∀ (j : Fin m), ContinuousAt (fun p => g p j) x)
+  (hg : AffineIndependent ℝ (g x)) :
+  ContinuousAt (fun p => Metric.infDist 0 ↑(affineSpan ℝ (Set.range fun j => BfgsVerification.euclideanVector (g p j))))
+    x
+'BfgsVerification.AffineDistance.affine_distance_continuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.subfamilyDistance {n m : ℕ} (g : Fin m → BfgsVerification.Vec n) (J : Finset (Fin m)) :
+  ℝ
+'BfgsVerification.AffineDistance.subfamilyDistance' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.objectiveDistance {n : ℕ} (F : BfgsVerification.Vec n → ℝ)
+  (p : BfgsVerification.Vec n) : ℝ
+'BfgsVerification.AffineDistance.objectiveDistance' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.subfamilyDistance_continuousAt.{u_1} {X : Type u_1} [TopologicalSpace X] {n m : ℕ}
+  (g : X → Fin m → BfgsVerification.Vec n) (x : X) (J : Finset (Fin m)) (hJ : J.Nonempty)
+  (hc : ∀ (j : Fin m), ContinuousAt (fun p => g p j) x) (hg : AffineIndependent ℝ (g x)) :
+  ContinuousAt (fun p => BfgsVerification.AffineDistance.subfamilyDistance (g p) J) x
+'BfgsVerification.AffineDistance.subfamilyDistance_continuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.subfamilyDistance_antitone {n m : ℕ} (g : Fin m → BfgsVerification.Vec n)
+  {J K : Finset (Fin m)} (hJ : J.Nonempty) (hJK : J ⊆ K) :
+  BfgsVerification.AffineDistance.subfamilyDistance g K ≤ BfgsVerification.AffineDistance.subfamilyDistance g J
+'BfgsVerification.AffineDistance.subfamilyDistance_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.active_subfamily_lowerSemicontinuousAt.{u_1} {X : Type u_1} [TopologicalSpace X]
+  {n m : ℕ} (g : X → Fin m → BfgsVerification.Vec n) (J : X → Finset (Fin m)) (x : X)
+  (hc : ∀ (j : Fin m), ContinuousAt (fun p => g p j) x) (hg : AffineIndependent ℝ (g x))
+  (hJ : ∀ᶠ (p : X) in nhds x, (J p).Nonempty ∧ J p ⊆ J x) :
+  LowerSemicontinuousAt (fun p => BfgsVerification.AffineDistance.subfamilyDistance (g p) (J p)) x
+'BfgsVerification.AffineDistance.active_subfamily_lowerSemicontinuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.objectiveDistance_eq_active {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ} {p : BfgsVerification.Vec n}
+  {g : Fin m → BfgsVerification.Vec n} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f p)
+  (hg : ∀ (i : Fin m), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g i)) p) :
+  BfgsVerification.AffineDistance.objectiveDistance F p =
+    BfgsVerification.AffineDistance.subfamilyDistance g (BfgsVerification.ConvexSubdifferential.activeIndices F f p)
+'BfgsVerification.AffineDistance.objectiveDistance_eq_active' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.objectiveDistance_lowerSemicontinuousAt {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ}
+  (g : BfgsVerification.Vec n → Fin m → BfgsVerification.Vec n) (x : BfgsVerification.Vec n)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg :
+    ∀ᶠ (p : BfgsVerification.Vec n) in nhds x,
+      ∀ (i : Fin m), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g p i)) p)
+  (hc : ∀ (i : Fin m), ContinuousAt (fun p => g p i) x) (hind : AffineIndependent ℝ (g x)) :
+  LowerSemicontinuousAt (BfgsVerification.AffineDistance.objectiveDistance F) x
+'BfgsVerification.AffineDistance.objectiveDistance_lowerSemicontinuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.compact_nonnegative_lowerSemicontinuous_minimum.{u_1} {X : Type u_1}
+  [TopologicalSpace X] {K : Set X} (hK : IsCompact K) (hne : K.Nonempty) (f : X → ℝ) (hn : ∀ x ∈ K, 0 ≤ f x)
+  (hl : ∀ x ∈ K, LowerSemicontinuousAt f x) : ∃ x ∈ K, ∀ y ∈ K, f x ≤ f y
+'BfgsVerification.AffineDistance.compact_nonnegative_lowerSemicontinuous_minimum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.objectiveDistance_nonnegative {n : ℕ} (F : BfgsVerification.Vec n → ℝ)
+  (x : BfgsVerification.Vec n) : 0 ≤ BfgsVerification.AffineDistance.objectiveDistance F x
+'BfgsVerification.AffineDistance.objectiveDistance_nonnegative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.objectiveDistance_pos_iff {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (x : BfgsVerification.Vec n) :
+  0 < BfgsVerification.AffineDistance.objectiveDistance F x ↔
+    ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x
+'BfgsVerification.AffineDistance.objectiveDistance_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineDistance.compact_positive_objectiveDistance_minimum {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec n)} (hK : IsCompact K) (hne : K.Nonempty)
+  (hl : ∀ x ∈ K, LowerSemicontinuousAt (BfgsVerification.AffineDistance.objectiveDistance F) x)
+  (hn : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) :
+  ∃ x ∈ K,
+    0 < BfgsVerification.AffineDistance.objectiveDistance F x ∧
+      ∀ y ∈ K,
+        BfgsVerification.AffineDistance.objectiveDistance F x ≤ BfgsVerification.AffineDistance.objectiveDistance F y
+'BfgsVerification.AffineDistance.compact_positive_objectiveDistance_minimum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.finite_max_compact_positive_band {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ}
+  (g : BfgsVerification.Vec n → Fin m → BfgsVerification.Vec n) (star : BfgsVerification.Vec n)
+  {K : Set (BfgsVerification.Vec n)} (hK : IsCompact K) (hne : K.Nonempty)
+  (hrep : ∀ p ∈ K, BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f p)
+  (hg :
+    ∀ p ∈ K,
+      ∀ᶠ (q : BfgsVerification.Vec n) in nhds p,
+        ∀ (i : Fin m), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g q i)) q)
+  (hc : ∀ p ∈ K, ∀ (i : Fin m), ContinuousAt (fun q => g q i) p) (hind : ∀ p ∈ K, AffineIndependent ℝ (g p))
+  (hcorrect : ∀ p ∈ K, BfgsVerification.AffineCriticalObjective.AffineCorrectAt F p)
+  (hpositive : ∀ p ∈ K, F star < F p) :
+  ∃ p ∈ K,
+    0 < BfgsVerification.AffineDistance.objectiveDistance F p ∧
+      ∀ q ∈ K,
+        BfgsVerification.AffineDistance.objectiveDistance F p ≤ BfgsVerification.AffineDistance.objectiveDistance F q
+'BfgsVerification.AffineDistance.finite_max_compact_positive_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.coordinateGradient_continuousAt_of_contDiffAt {n : ℕ} {f : BfgsVerification.Vec n → ℝ}
+  {x : BfgsVerification.Vec n} (hf : ContDiffAt ℝ 1 f x) : ContinuousAt (BfgsVerification.coordinateGradient f) x
+'BfgsVerification.AffineDistance.coordinateGradient_continuousAt_of_contDiffAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.neighborhood_gap_of_positive_barycentric {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ}
+  (g : BfgsVerification.Vec n → Fin m → BfgsVerification.Vec n) (star : BfgsVerification.Vec n)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f star)
+  (hg :
+    ∀ᶠ (p : BfgsVerification.Vec n) in nhds star,
+      ∀ (i : Fin m), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g p i)) p)
+  (hc : ∀ᶠ (p : BfgsVerification.Vec n) in nhds star, ∀ (i : Fin m), ContinuousAt (fun q => g q i) p)
+  (hind : AffineIndependent ℝ (g star)) (w : BfgsVerification.Vec m) (hw : ∀ (i : Fin m), 0 < w i) (hsum : ∑ i, w i = 1)
+  (hzero : ∑ i, w i • g star i = 0) :
+  ∃ V,
+    IsOpen V ∧
+      star ∈ V ∧
+        (∀ p ∈ V,
+            LowerSemicontinuousAt (BfgsVerification.AffineDistance.objectiveDistance F) p ∧
+              (BfgsVerification.AffineCriticalObjective.IsAffineCritical F p ↔
+                ∀ (z : BfgsVerification.Vec n), F p ≤ F z)) ∧
+          ∀ (K : Set (BfgsVerification.Vec n)),
+            IsCompact K →
+              K.Nonempty →
+                K ⊆ V →
+                  (∀ p ∈ K, F star < F p) →
+                    ∃ p ∈ K,
+                      0 < BfgsVerification.AffineDistance.objectiveDistance F p ∧
+                        ∀ q ∈ K,
+                          BfgsVerification.AffineDistance.objectiveDistance F p ≤
+                            BfgsVerification.AffineDistance.objectiveDistance F q
+'BfgsVerification.AffineDistance.neighborhood_gap_of_positive_barycentric' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineDistance.finite_C1_max_neighborhood_gap {n m : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin m → BfgsVerification.Vec n → ℝ} {U : Set (BfgsVerification.Vec n)}
+  (hU : IsOpen U) (star : BfgsVerification.Vec n) (hstar : star ∈ U) (hf : ∀ (i : Fin m), ContDiffOn ℝ 1 (f i) U)
+  (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f star)
+  (hind :
+    AffineIndependent ℝ fun i =>
+      BfgsVerification.coordinateGradient (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i)) star)
+  (w : BfgsVerification.Vec (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card)
+  (hw : ∀ (i : Fin (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card), 0 < w i) (hsum : ∑ i, w i = 1)
+  (hzero :
+    ∑ i,
+        w i •
+          BfgsVerification.coordinateGradient (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i))
+            star =
+      0) :
+  ∃ V,
+    IsOpen V ∧
+      star ∈ V ∧
+        (∀ p ∈ V,
+            LowerSemicontinuousAt (BfgsVerification.AffineDistance.objectiveDistance F) p ∧
+              (BfgsVerification.AffineCriticalObjective.IsAffineCritical F p ↔
+                ∀ (z : BfgsVerification.Vec n), F p ≤ F z)) ∧
+          ∀ (K : Set (BfgsVerification.Vec n)),
+            IsCompact K →
+              K.Nonempty →
+                K ⊆ V →
+                  (∀ p ∈ K, F star < F p) →
+                    ∃ p ∈ K,
+                      0 < BfgsVerification.AffineDistance.objectiveDistance F p ∧
+                        ∀ q ∈ K,
+                          BfgsVerification.AffineDistance.objectiveDistance F p ≤
+                            BfgsVerification.AffineDistance.objectiveDistance F q
+'BfgsVerification.AffineDistance.finite_C1_max_neighborhood_gap' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.FiniteC1MaxAffineGapTarget : Prop
+'BfgsVerification.FiniteC1MaxAffineGapTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finiteC1MaxAffineGap : BfgsVerification.FiniteC1MaxAffineGapTarget
+'BfgsVerification.finiteC1MaxAffineGap' depends on axioms: [propext, Classical.choice, Quot.sound]

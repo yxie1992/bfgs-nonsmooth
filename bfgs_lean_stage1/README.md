@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 3,004 explicit
-theorems and 4,254 theorem declarations including generated auxiliaries. All 106
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 3,346 explicit
+theorems and 4,762 theorem declarations including generated auxiliaries. All 120
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_embedding_check.log`.
+`audit/report_structural_closure_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -41,9 +41,15 @@ accepted/rejected deterministic query, C's principal affine-critical cluster and
 convergence/local-basin theorems, and U's variable-jump example. L's exact
 quadratic seed geometry is checked. See
 [audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md](audit/REPORT_EMBEDDING_STATEMENT_REVIEW.md).
-L's nonlinear persistence/embeddings, A's remaining infrastructure, C's further
-applications/examples and uniform transport statement, general nuclear/descriptive
-identities, and final source reconciliation remain open.
+The eleventh tranche closes A's actual compact affine gap, C's nondegenerate
+finite-max and explicit three-quadratic basin/radial-separation results, and R's
+arbitrary rectangular nuclear norm and literal first-difference family. L's actual
+return/oracle neighborhood and constructive conditional stable-orbit/splitting
+criteria are checked. See
+[audit/REPORT_STRUCTURAL_CLOSURE_STATEMENT_REVIEW.md](audit/REPORT_STRUCTURAL_CLOSURE_STATEMENT_REVIEW.md).
+L's actual spectral application and embeddings, A's semialgebraic infrastructure,
+C's remaining uniform-transport and higher-dimensional assertions, stronger
+smooth-manifold regularity, and final source reconciliation remain open.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
 

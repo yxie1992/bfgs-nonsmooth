@@ -1,6 +1,6 @@
 # Remaining semialgebraic affine-critical-value infrastructure
 
-The compact affine-gap paragraph is now independently compiler-checked in the six-file scratch tranche described by `audit/scratch/affine_gap/STATEMENT_REVIEW.md`. The next unproved retained claim in Module A is proposition `A:semialgebraic`: a finite convex semialgebraic objective attaining its minimum has an interval above that value containing no nonoptimal affine-critical values. This claim must not be replaced by an assumed finite decomposition or by an assumed finite set of critical values.
+The compact affine-gap paragraph is now independently compiler-checked in the six-file main tranche described by `audit/A_AFFINE_GAP_VERIFICATION.md`. The next unproved retained claim in Module A is proposition `A:semialgebraic`: a finite convex semialgebraic objective attaining its minimum has an interval above that value containing no nonoptimal affine-critical values. This claim must not be replaced by an assumed finite decomposition or by an assumed finite set of critical values.
 
 ## Precise source proof dependencies
 

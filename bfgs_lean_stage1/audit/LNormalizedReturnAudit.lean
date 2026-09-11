@@ -1,0 +1,172 @@
+import BfgsVerification.LNormalizedReturn
+set_option pp.universes true
+#check BfgsVerification.LNormalizedReturn.State
+#print axioms BfgsVerification.LNormalizedReturn.State
+#check BfgsVerification.LNormalizedReturn.PhaseState
+#print axioms BfgsVerification.LNormalizedReturn.PhaseState
+#check BfgsVerification.LNormalizedReturn.point
+#print axioms BfgsVerification.LNormalizedReturn.point
+#check BfgsVerification.LNormalizedReturn.shape
+#print axioms BfgsVerification.LNormalizedReturn.shape
+#check BfgsVerification.LNormalizedReturn.scale
+#print axioms BfgsVerification.LNormalizedReturn.scale
+#check BfgsVerification.LNormalizedReturn.initial
+#print axioms BfgsVerification.LNormalizedReturn.initial
+#check BfgsVerification.LNormalizedReturn.currentGradient
+#print axioms BfgsVerification.LNormalizedReturn.currentGradient
+#check BfgsVerification.LNormalizedReturn.step
+#print axioms BfgsVerification.LNormalizedReturn.step
+#check BfgsVerification.LNormalizedReturn.secant
+#print axioms BfgsVerification.LNormalizedReturn.secant
+#check BfgsVerification.LNormalizedReturn.curvature
+#print axioms BfgsVerification.LNormalizedReturn.curvature
+#check BfgsVerification.LNormalizedReturn.substep
+#print axioms BfgsVerification.LNormalizedReturn.substep
+#check BfgsVerification.LNormalizedReturn.internal
+#print axioms BfgsVerification.LNormalizedReturn.internal
+#check BfgsVerification.LNormalizedReturn.denominator
+#print axioms BfgsVerification.LNormalizedReturn.denominator
+#check BfgsVerification.LNormalizedReturn.returnFactor
+#print axioms BfgsVerification.LNormalizedReturn.returnFactor
+#check BfgsVerification.LNormalizedReturn.returnMap
+#print axioms BfgsVerification.LNormalizedReturn.returnMap
+#check BfgsVerification.LNormalizedReturn.seed
+#print axioms BfgsVerification.LNormalizedReturn.seed
+#check BfgsVerification.LNormalizedReturn.Regular
+#print axioms BfgsVerification.LNormalizedReturn.Regular
+#check BfgsVerification.LNormalizedReturn.currentGradient_zero
+#print axioms BfgsVerification.LNormalizedReturn.currentGradient_zero
+#check BfgsVerification.LNormalizedReturn.step_zero
+#print axioms BfgsVerification.LNormalizedReturn.step_zero
+#check BfgsVerification.LNormalizedReturn.secant_zero
+#print axioms BfgsVerification.LNormalizedReturn.secant_zero
+#check BfgsVerification.LNormalizedReturn.substep_zero
+#print axioms BfgsVerification.LNormalizedReturn.substep_zero
+#check BfgsVerification.LNormalizedReturn.seed_point
+#print axioms BfgsVerification.LNormalizedReturn.seed_point
+#check BfgsVerification.LNormalizedReturn.seed_shape
+#print axioms BfgsVerification.LNormalizedReturn.seed_shape
+#check BfgsVerification.LNormalizedReturn.seed_scale
+#print axioms BfgsVerification.LNormalizedReturn.seed_scale
+#check BfgsVerification.LNormalizedReturn.internal_seed_zero
+#print axioms BfgsVerification.LNormalizedReturn.internal_seed_zero
+#check BfgsVerification.LNormalizedReturn.internal_seed_one
+#print axioms BfgsVerification.LNormalizedReturn.internal_seed_one
+#check BfgsVerification.LNormalizedReturn.internal_seed_two
+#print axioms BfgsVerification.LNormalizedReturn.internal_seed_two
+#check BfgsVerification.LNormalizedReturn.internal_seed_three
+#print axioms BfgsVerification.LNormalizedReturn.internal_seed_three
+#check BfgsVerification.LNormalizedReturn.internal_seed_phase
+#print axioms BfgsVerification.LNormalizedReturn.internal_seed_phase
+#check BfgsVerification.LNormalizedReturn.seed_curvature_positive
+#print axioms BfgsVerification.LNormalizedReturn.seed_curvature_positive
+#check BfgsVerification.LNormalizedReturn.seed_denominator_positive
+#print axioms BfgsVerification.LNormalizedReturn.seed_denominator_positive
+#check BfgsVerification.LNormalizedReturn.seed_returnFactor
+#print axioms BfgsVerification.LNormalizedReturn.seed_returnFactor
+#check BfgsVerification.LNormalizedReturn.seed_regular
+#print axioms BfgsVerification.LNormalizedReturn.seed_regular
+#check BfgsVerification.LNormalizedReturn.seed_fixed
+#print axioms BfgsVerification.LNormalizedReturn.seed_fixed
+#check BfgsVerification.LNormalizedReturn.analytic_coordinate
+#print axioms BfgsVerification.LNormalizedReturn.analytic_coordinate
+#check BfgsVerification.LNormalizedReturn.analytic_point
+#print axioms BfgsVerification.LNormalizedReturn.analytic_point
+#check BfgsVerification.LNormalizedReturn.analytic_shape
+#print axioms BfgsVerification.LNormalizedReturn.analytic_shape
+#check BfgsVerification.LNormalizedReturn.analytic_scale
+#print axioms BfgsVerification.LNormalizedReturn.analytic_scale
+#check BfgsVerification.LNormalizedReturn.analytic_initial
+#print axioms BfgsVerification.LNormalizedReturn.analytic_initial
+#check BfgsVerification.LNormalizedReturn.analytic_vec_entry
+#print axioms BfgsVerification.LNormalizedReturn.analytic_vec_entry
+#check BfgsVerification.LNormalizedReturn.analytic_matrix_entry
+#print axioms BfgsVerification.LNormalizedReturn.analytic_matrix_entry
+#check BfgsVerification.LNormalizedReturn.analytic_dot
+#print axioms BfgsVerification.LNormalizedReturn.analytic_dot
+#check BfgsVerification.LNormalizedReturn.analytic_outer
+#print axioms BfgsVerification.LNormalizedReturn.analytic_outer
+#check BfgsVerification.LNormalizedReturn.analytic_matrix_mul
+#print axioms BfgsVerification.LNormalizedReturn.analytic_matrix_mul
+#check BfgsVerification.LNormalizedReturn.analytic_mulVec
+#print axioms BfgsVerification.LNormalizedReturn.analytic_mulVec
+#check BfgsVerification.LNormalizedReturn.analytic_inverseBFGS
+#print axioms BfgsVerification.LNormalizedReturn.analytic_inverseBFGS
+#check BfgsVerification.LNormalizedReturn.analytic_currentGradient
+#print axioms BfgsVerification.LNormalizedReturn.analytic_currentGradient
+#check BfgsVerification.LNormalizedReturn.analytic_step
+#print axioms BfgsVerification.LNormalizedReturn.analytic_step
+#check BfgsVerification.LNormalizedReturn.analytic_secant
+#print axioms BfgsVerification.LNormalizedReturn.analytic_secant
+#check BfgsVerification.LNormalizedReturn.analytic_curvature
+#print axioms BfgsVerification.LNormalizedReturn.analytic_curvature
+#check BfgsVerification.LNormalizedReturn.analytic_substep
+#print axioms BfgsVerification.LNormalizedReturn.analytic_substep
+#check BfgsVerification.LNormalizedReturn.analytic_internal_seed
+#print axioms BfgsVerification.LNormalizedReturn.analytic_internal_seed
+#check BfgsVerification.LNormalizedReturn.analytic_denominator_seed
+#print axioms BfgsVerification.LNormalizedReturn.analytic_denominator_seed
+#check BfgsVerification.LNormalizedReturn.analytic_returnFactor_seed
+#print axioms BfgsVerification.LNormalizedReturn.analytic_returnFactor_seed
+#check BfgsVerification.LNormalizedReturn.analytic_returnMap_seed
+#print axioms BfgsVerification.LNormalizedReturn.analytic_returnMap_seed
+#check BfgsVerification.LNormalizedReturn.regular_analytic_neighborhood
+#print axioms BfgsVerification.LNormalizedReturn.regular_analytic_neighborhood
+#check BfgsVerification.LNormalizedReturn.inverseBFGS_isSymm
+#print axioms BfgsVerification.LNormalizedReturn.inverseBFGS_isSymm
+#check BfgsVerification.LNormalizedReturn.shape_isSymm
+#print axioms BfgsVerification.LNormalizedReturn.shape_isSymm
+#check BfgsVerification.LNormalizedReturn.internal_isSymm
+#print axioms BfgsVerification.LNormalizedReturn.internal_isSymm
+#check BfgsVerification.LNormalizedReturn.return_scale
+#print axioms BfgsVerification.LNormalizedReturn.return_scale
+#check BfgsVerification.LNormalizedReturn.return_point
+#print axioms BfgsVerification.LNormalizedReturn.return_point
+#check BfgsVerification.LNormalizedReturn.return_shape
+#print axioms BfgsVerification.LNormalizedReturn.return_shape
+#check BfgsVerification.LNormalizedReturn.normalization_preserves_point
+#print axioms BfgsVerification.LNormalizedReturn.normalization_preserves_point
+#check BfgsVerification.LNormalizedReturn.normalization_preserves_metric
+#print axioms BfgsVerification.LNormalizedReturn.normalization_preserves_metric
+#check BfgsVerification.LNormalizedReturn.physical_branch_gradient
+#print axioms BfgsVerification.LNormalizedReturn.physical_branch_gradient
+#check BfgsVerification.LNormalizedReturn.physical_step
+#print axioms BfgsVerification.LNormalizedReturn.physical_step
+#check BfgsVerification.LNormalizedReturn.physical_secant
+#print axioms BfgsVerification.LNormalizedReturn.physical_secant
+#check BfgsVerification.LNormalizedReturn.physical_update
+#print axioms BfgsVerification.LNormalizedReturn.physical_update
+#check BfgsVerification.LNormalizedReturn.return_scale_hasFDerivAt_seed
+#print axioms BfgsVerification.LNormalizedReturn.return_scale_hasFDerivAt_seed
+#check BfgsVerification.LNormalizedReturn.shiftPoint
+#print axioms BfgsVerification.LNormalizedReturn.shiftPoint
+#check BfgsVerification.LNormalizedReturn.point_shiftPoint
+#print axioms BfgsVerification.LNormalizedReturn.point_shiftPoint
+#check BfgsVerification.LNormalizedReturn.shape_shiftPoint
+#print axioms BfgsVerification.LNormalizedReturn.shape_shiftPoint
+#check BfgsVerification.LNormalizedReturn.scale_shiftPoint
+#print axioms BfgsVerification.LNormalizedReturn.scale_shiftPoint
+#check BfgsVerification.LNormalizedReturn.substep_zero_translate
+#print axioms BfgsVerification.LNormalizedReturn.substep_zero_translate
+#check BfgsVerification.LNormalizedReturn.internal_boundary_translate
+#print axioms BfgsVerification.LNormalizedReturn.internal_boundary_translate
+#check BfgsVerification.LNormalizedReturn.returnFactor_boundary_translate
+#print axioms BfgsVerification.LNormalizedReturn.returnFactor_boundary_translate
+#check BfgsVerification.LNormalizedReturn.returnMap_boundary_translate
+#print axioms BfgsVerification.LNormalizedReturn.returnMap_boundary_translate
+#check BfgsVerification.LNormalizedReturn.pointLift
+#print axioms BfgsVerification.LNormalizedReturn.pointLift
+#check BfgsVerification.LNormalizedReturn.shiftPoint_add
+#print axioms BfgsVerification.LNormalizedReturn.shiftPoint_add
+#check BfgsVerification.LNormalizedReturn.return_restricted_point_hasFDerivAt_seed
+#print axioms BfgsVerification.LNormalizedReturn.return_restricted_point_hasFDerivAt_seed
+#check BfgsVerification.LNormalizedReturn.return_derivative_point_columns
+#print axioms BfgsVerification.LNormalizedReturn.return_derivative_point_columns
+#check BfgsVerification.LNormalizedReturn.return_derivative_last_row
+#print axioms BfgsVerification.LNormalizedReturn.return_derivative_last_row
+#check BfgsVerification.LNormalizedReturn.shape_posDef
+#print axioms BfgsVerification.LNormalizedReturn.shape_posDef
+#check BfgsVerification.LNormalizedReturn.internal_posDef_of_regular
+#print axioms BfgsVerification.LNormalizedReturn.internal_posDef_of_regular
+#check BfgsVerification.LNormalizedReturn.normalized_return_contract
+#print axioms BfgsVerification.LNormalizedReturn.normalized_return_contract
