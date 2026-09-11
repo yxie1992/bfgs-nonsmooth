@@ -42,7 +42,23 @@ OBJECTIVE_TARGETS = {
     "compact_objective_finite_horizon_verified":
         ("BfgsVerification.compactObjectiveFiniteHorizon", "BfgsVerification.CompactObjectiveFiniteHorizonTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS
+FOUNDATION_TARGETS = {
+    "hessian_invariants_and_exact_determinant_verified":
+        ("BfgsVerification.hessianInvariants", "BfgsVerification.HessianInvariantTarget"),
+    "localization_verified":
+        ("BfgsVerification.localization", "BfgsVerification.LocalizationTarget"),
+    "strict_contour_steps_verified":
+        ("BfgsVerification.strictContourSteps", "BfgsVerification.StrictContourTarget"),
+    "reference_energy_verified":
+        ("BfgsVerification.referenceEnergy", "BfgsVerification.ReferenceEnergyTarget"),
+    "quadratic_correction_criterion_verified":
+        ("BfgsVerification.quadraticCorrectionConvergence", "BfgsVerification.QuadraticCorrectionTarget"),
+    "moving_frame_criterion_verified":
+        ("BfgsVerification.movingFrameCriterion", "BfgsVerification.MovingFrameCriterionTarget"),
+    "residual_frame_criterion_verified":
+        ("BfgsVerification.residualFrameCriterion", "BfgsVerification.ResidualFrameCriterionTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -125,6 +141,34 @@ def run(command: list[str], logfile: str, timeout: int) -> subprocess.CompletedP
     return result
 
 
+def dependency_inventory(manifest: dict, timeout: int) -> list[dict]:
+    """Check every pinned Git dependency, including tracked worktree changes."""
+    reports = []
+    transcript = []
+    for package in manifest["packages"]:
+        if package["type"] != "git":
+            raise ValueError(f"Unpinned dependency kind: {package['name']}")
+        directory = str(Path(manifest["packagesDir"]) / package["name"])
+        results = []
+        for git_args in (["rev-parse", "HEAD"],
+                         ["status", "--porcelain", "--untracked-files=no"]):
+            command = ["git", "-C", directory, *git_args]
+            result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, timeout=timeout)
+            transcript.append("$ " + " ".join(command) + "\n" + result.stdout + result.stderr
+                              + f"exit_code={result.returncode}\n")
+            results.append(result)
+        revision, worktree = results
+        reports.append({
+            "package": package["name"], "expected_revision": package["rev"],
+            "actual_revision": revision.stdout.strip(),
+            "tracked_worktree_clean": worktree.returncode == 0 and not worktree.stdout.strip(),
+            "verified": revision.returncode == 0 and revision.stdout.strip() == package["rev"]
+                        and worktree.returncode == 0 and not worktree.stdout.strip(),
+        })
+    (AUDIT / "dependencies.log").write_text("\n".join(transcript))
+    return reports
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--static-only", action="store_true")
@@ -197,6 +241,11 @@ def main() -> int:
             record(status)
             return 1
         status["mathlib_revision"] = EXPECTED_MATHLIB
+        status["dependencies"] = dependency_inventory(manifest, args.timeout)
+        if not all(package["verified"] for package in status["dependencies"]):
+            status["status"] = "DEPENDENCY_CHECKOUT_FAILED"
+            record(status)
+            return 1
         version = run([lake, "env", "lean", "--version"], "lean_version.log", args.timeout)
         if version.returncode or not re.search(r"version " + re.escape(EXPECTED_LEAN) + r"(?:,|\s|\))", version.stdout):
             status["status"] = "TOOLCHAIN_VERSION_FAILED"
@@ -256,27 +305,42 @@ def main() -> int:
                 "BfgsVerification.QuantitativeGrowth.hierarchy_superquadratic_growth",
             ]
         ]
+        status["conditional_results"] += [
+            {"theorem": name, "verified": name in inventory, "condition": condition}
+            for name, condition in [
+                ("BfgsVerification.EnergyBudget.energy_gap_tendsto_zero", "Scalar energy recurrence and negligible cumulative corrections"),
+                ("BfgsVerification.ResidualBudget.residual_recurrence_incompatible", "Scalar residual recurrence; discharged in residualFrameCriterion"),
+                ("BfgsVerification.quadraticCorrectionConvergence", "Actual cumulative reference-correction budget; not derived for every finite convex objective"),
+                ("BfgsVerification.movingFrameCriterion", "Excludes exact frame certificates; constructing them from a given objective remains objective-specific"),
+                ("BfgsVerification.residualFrameCriterion", "Excludes fixed-smooth-subspace residual certificates; constructing them remains objective-specific"),
+            ]
+        ]
         status["matrix_to_normalized_hierarchy_verified"] = "BfgsVerification.fullBFGS_normalizedHierarchy" in inventory
         status["finite_horizon_verified"] = "BfgsVerification.finiteHorizon" in inventory
         status["positive_definiteness_from_initial_matrix_verified"] = "BfgsVerification.fullBFGS_positive_invariants" in inventory
         status["armijo_summability_verified"] = "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound" in inventory
         status["compact_gradient_bound_verified"] = "BfgsVerification.convex_gradient_bound_on_compact" in inventory
         status["objective_level_model_formalized"] = all(status[flag] for flag in OBJECTIVE_TARGETS)
+        status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
+        status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Other Module M energy, localization and residual lemmas",
-            "Other research modules and an overall optimal-value convergence theorem",
+            "Other research modules and their objective-specific certificate constructions",
+            "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
         status["remaining_target_obligations"] = [name for flag, (name, _) in ALL_TARGETS.items()
                                                   if not status[flag]]
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
-        status["status"] = ("MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if complete
+        objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
+        status["status"] = ("MODULE_M_FOUNDATION_TARGETS_VERIFIED" if complete
+                            else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
-        status["warning"] = ("Claims concern the exact matrix-run and objective-level targets printed in axioms.log. "
-                             "Compactness, gradient bounds, and value bounds remain explicit where used; "
-                             "no overall optimal-value, iterate or matrix convergence theorem is claimed.")
+        status["warning"] = ("Claims concern the exact Module M targets printed in axioms.log. "
+                             "Energy convergence criteria retain explicit correction budgets; frame theorems exclude "
+                             "certificates whose construction remains objective-specific. No unconditional BFGS "
+                             "convergence or all-ray step-existence theorem is claimed.")
         status["verified_declarations"] = accepted
         record(status)
         print(json.dumps(status, indent=2))

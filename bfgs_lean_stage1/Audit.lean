@@ -85,3 +85,42 @@ example : BfgsVerification.CompactObjectiveFiniteHorizonTarget := BfgsVerificati
 #check @BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound
 #check @BfgsVerification.objectiveFiniteHorizon_of_lower_bound
 #check @BfgsVerification.objectiveGrowth_of_value_limit
+
+-- Actual Hessian/energy definitions and exact frame hypotheses remain visible.
+#print BfgsVerification.AdmissibleBFGSRun.hessian
+#print BfgsVerification.AdmissibleBFGSRun.displacement
+#print BfgsVerification.AdmissibleBFGSRun.gradientChange
+#print BfgsVerification.AdmissibleBFGSRun.curvature
+#print BfgsVerification.AdmissibleBFGSRun.referenceEnergy
+#print BfgsVerification.AdmissibleBFGSRun.referencePairing
+#print BfgsVerification.AdmissibleBFGSRun.referenceCorrection
+#print BfgsVerification.EnergyIdentities.rectOuter
+#print BfgsVerification.FrameBounds.OperatorSqBound
+#print BfgsVerification.FrameNorms.euclideanOpNorm
+#print BfgsVerification.SmoothSubspace.frobSq
+#print BfgsVerification.ExactFrameCertificate
+#print BfgsVerification.ResidualFrameCertificate
+#print BfgsVerification.HessianInvariantTarget
+#print BfgsVerification.LocalizationTarget
+#print BfgsVerification.StrictContourTarget
+#print BfgsVerification.ReferenceEnergyTarget
+#print BfgsVerification.QuadraticCorrectionTarget
+#print BfgsVerification.MovingFrameCriterionTarget
+#print BfgsVerification.ResidualFrameCriterionTarget
+
+example : BfgsVerification.HessianInvariantTarget := BfgsVerification.hessianInvariants
+example : BfgsVerification.LocalizationTarget := BfgsVerification.localization
+example : BfgsVerification.StrictContourTarget := BfgsVerification.strictContourSteps
+example : BfgsVerification.ReferenceEnergyTarget := BfgsVerification.referenceEnergy
+example : BfgsVerification.QuadraticCorrectionTarget := BfgsVerification.quadraticCorrectionConvergence
+example : BfgsVerification.MovingFrameCriterionTarget := BfgsVerification.movingFrameCriterion
+example : BfgsVerification.ResidualFrameCriterionTarget := BfgsVerification.residualFrameCriterion
+#check @BfgsVerification.Localization.sphere_gap
+#check @BfgsVerification.Localization.radial_lower_bound
+#check @BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_negligible_corrections
+#check @BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_quadratic_corrections
+#check @BfgsVerification.AdmissibleBFGSRun.moving_frame_energy
+#check @BfgsVerification.AdmissibleBFGSRun.moving_frame_tail_criterion
+#check @BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible_source
+#check @BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq
+#check @BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace

@@ -34,6 +34,21 @@ Source hashes tie that status to the checked files.
 - `objective_source_preservation.log` confirms the original research sources,
   preserved reference, matrix formulas, and original target statements still
   match the initial checkpoint.
+- Commit `29ffa55` completed the objective bridge, with 178 explicit and 251
+  total audited theorem declarations. The current foundation inventory extends it.
+- `FOUNDATION_STATEMENT_REVIEW.md` records independent review of the remaining
+  Module M statements, exact certificate definitions, and representation bridges.
+- Named Hessian, energy, localization, frame, and residual logs record intermediate
+  compiler feedback and milestones. An intermediate failure is not a current
+  verification result; the integrated and clean-build transcripts supersede it.
+- `foundation_check.log` records the first integrated 14-target audit.
+- `foundation_bootstrap_final.log` records a clean-project bootstrap and audit;
+  `foundation_final_check.log` includes the subsequent dependency-worktree check.
+- `dependencies.log` records all locked Git dependency revisions and tracked
+  worktree cleanliness, in addition to the original pinned mathlib version check.
+- `foundation_source_preservation.log` compares original research sources and
+  Lean target code with the initial pushed checkpoint. Delivery checks also
+  confirm that audited source hashes still match the delivered Lean files.
 
 Historical successful logs do not certify later source changes. Current status
 and its full compiler/axiom transcripts certify the delivered source state.

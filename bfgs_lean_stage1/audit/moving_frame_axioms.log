@@ -1,0 +1,39 @@
+'BfgsVerification.MovingFrame.rectOuter_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.MovingFrame.transport_cancel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.MovingFrame.normalized_frame_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.MovingFrame.inverse_transpose_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.MovingFrame.trace_outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.MovingFrame.gram_trace_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.AdmissibleBFGSRun.normalizedFrameEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.AdmissibleBFGSRun.normalizedFrameEnergy_nonneg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BfgsVerification.AdmissibleBFGSRun.normalized_frame_trace_recurrence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BfgsVerification.AdmissibleBFGSRun.moving_frame_reciprocal_sum_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BfgsVerification.AdmissibleBFGSRun.moving_frame_criterion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.AdmissibleBFGSRun.moving_frame_tail_criterion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.moving_frame_tail_criterion {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) {r : ℕ} (J : ℕ) (V : ℕ → Matrix (Fin n) (Fin r) ℝ)
+  (T P : ℕ → BfgsVerification.Mat r) (b : ℕ → BfgsVerification.Vec r) (hP : ∀ (k : ℕ), J ≤ k → Matrix.det (P k) ≠ 0)
+  (hprod : ∀ (k : ℕ), J ≤ k → P (k + 1) = P k * T k)
+  (hframe :
+    ∀ (k : ℕ), J ≤ k → V (k + 1) = V k * T k + BfgsVerification.EnergyIdentities.rectOuter (R.displacement k) (b k))
+  (m K L C : ℝ) (hm : 0 < m) (hK : 0 < K) (hL : 0 ≤ L)
+  (hvisible : ∀ (k : ℕ), J ≤ k → m ≤ BfgsVerification.sqNorm ((V k).transpose.mulVec (R.g k)))
+  (hcor :
+    ∀ (k : ℕ), J ≤ k → BfgsVerification.sqNorm ((V (k + 1)).transpose.mulVec (R.gradientChange k)) / R.curvature k ≤ C)
+  (htransport :
+    ∀ (k : ℕ),
+      J ≤ k →
+        ∀ (v : Fin r → ℝ), BfgsVerification.sqNorm ((Matrix.transpose (P k)).mulVec v) ≤ K * BfgsVerification.sqNorm v)
+  (hinverse :
+    ∀ (k : ℕ),
+      J ≤ k → ∀ (v : Fin r → ℝ), BfgsVerification.sqNorm ((P k)⁻¹.transpose.mulVec v) ≤ L * BfgsVerification.sqNorm v)
+  (G : ℝ) (hG : 0 < G) (hg : ∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2)
+  (hd : Filter.Tendsto R.d Filter.atTop (nhds 0)) : False

@@ -1,6 +1,6 @@
 # Module M source-to-proof register
 
-**All original M.1–M.3 matrix-run targets are proved, compiled, and axiom-audited.**
+**All 14 registered Module M targets are proved, compiled, and axiom-audited.**
 See `audit/STATUS.json` for the actual run and declaration inventory. The original
 draft targets in `Definitions.lean` have not been altered.
 
@@ -98,17 +98,72 @@ The compact-sublevel variants derive gradient and budget hypotheses. The general
 variants retain explicit gradient/value bounds; the qualitative variant retains
 the weaker vanishing-decrease condition. No iterate or matrix limit is assumed.
 
-## 6. Remaining scope, distinct from completed targets
+## 6. Hessian, energy, and exact determinant identities — complete
 
-There are **no remaining obligations for the three original targets or the
-requested finite-horizon matrix-run bound or the objective bridge above**. Reusable conditional helpers are
-labeled as such in the status register and their signatures.
+| Source statement | Checked implementation |
+|---|---|
+| M:hessian actual Hessian recurrence | `hessianUpdate`, `AdmissibleBFGSRun.hessian_update` |
+| M:annihilation PSD and actual step kernel | `annihilatedMatrix_projection`, `annihilatedMatrix_posSemidef`, `annihilatedMatrix_mul_step` |
+| Exact top determinant equality | `inverseBFGS_step_det_beta`; included in `hessianInvariants : HessianInvariantTarget` |
+| M:fixedenergy exact reference identity | `AdmissibleBFGSRun.fixed_reference_energy`; actual q, t, H⁻¹, and correction definitions |
+| M:energybound finite objective-gap inequality | `fixed_reference_energy_bound`; `referenceEnergy : ReferenceEnergyTarget` |
+| Negligible cumulative corrections imply value convergence | `objective_tendsto_min_of_negligible_corrections` |
+| Quadratic cumulative corrections imply value convergence | `objective_tendsto_min_of_quadratic_corrections`, without uniqueness |
+| Unique-minimizer upgrade to iterate convergence | `quadraticCorrectionConvergence : QuadraticCorrectionTarget` |
 
-Other Module M energy, localization, and residual statements and the other
-research modules remain outside this verification. There is no theorem of
-admissible-step existence on every search ray or of overall optimal-value
-convergence. Infinite-run results assume nonzero gradients at all accepted
-iterates; a separate finite-termination theorem is not exported. The source's
-separate exact top-determinant update
-identity is not an exported result here; the requested hierarchy includes its
-top-degree inequality.
+The convergence criteria keep their actual correction-budget condition explicit.
+They do not prove that this budget holds for every finite convex objective.
+
+## 7. Localization and strict contours — complete
+
+| Source statement | Checked implementation |
+|---|---|
+| Positive attained sphere gap | `Localization.sphere_gap`, with nonempty sphere justified by nontriviality |
+| Radial lower bound and low-sublevel trapping | `radial_lower_bound`, `low_sublevel_subset_ball`, `trapped_in_ball_of_sphere_gap` |
+| Every sublevel compact at an attained unique minimizer | `sublevel_compact`, including zero dimension |
+| Any structural neighborhood contains an invariant low basin | `neighborhood_basin`, `local_basin_of_unique_minimizer`; `localization : LocalizationTarget` |
+| M:strictcontours vanishing actual steps | `steps_tendsto_zero_of_strict_contour`; `strictContourSteps : StrictContourTarget` |
+| Value convergence lifts to unique-minimizer point convergence | `tendsto_unique_minimizer_of_values`, `iterates_tendsto_unique_min_of_values` |
+
+The strict-contour theorem proves the level-to-frontier implication and derives
+d→0 from Armijo. It assumes no gradient subsequence or iterate convergence.
+Generic localization includes Euclidean normed spaces; explicit balls on the
+coordinate type `Vec n` use its default Pi norm, as recorded in the review.
+
+## 8. Moving-frame and residual criteria — complete
+
+| Source statement | Checked implementation |
+|---|---|
+| M:frameidentity actual moving-frame matrix identity | `moving_frame_energy` |
+| Exact inverse-congruence trace and O(N) reciprocal bound | `normalized_frame_trace_recurrence`, `moving_frame_reciprocal_sum_bound` |
+| Exact-transport arbitrary-tail contradiction | `moving_frame_tail_criterion`; `movingFrameCriterion : MovingFrameCriterionTarget` |
+| Derived fixed-smooth-subspace linear Hessian trace bound | `smooth_subspace_projection_trace_update`, `smooth_subspace_projection_trace_bound` |
+| Derived actual residual metric-energy bound | `smooth_subspace_residual_energy_le`, `smooth_subspace_residual_budget` |
+| PSD Young and actual operator transport estimates | `FrameBounds.gram_trace_add_le`, `gram_trace_transport_le` |
+| Scalar summable drift normalization and contradiction | `ResidualBudget.residual_reciprocal_sum_le`, `residual_recurrence_incompatible` |
+| Actual matrix recurrence discharges the scalar hypotheses | `residual_frame_step`, `residual_frames_incompatible` |
+| M:residualtheorem arbitrary-tail, source-form contradiction | `residual_frames_on_tail_incompatible_source`; `residualFrameCriterion : ResidualFrameCriterionTarget` |
+| Exact Euclidean operator-norm and arbitrary-subspace representation | `FrameNorms.operatorSqBound_iff_opNorm_sq`, `orthonormal_matrix_for_subspace` |
+
+Exact transport uses only d→0, retaining the weaker qualitative theorem. Residual
+transport uses summability. The final source-form residual target adds no sign
+premises, frame-rank assumption, invertible T, or whole-Hessian bound. The frame
+certificate structures contain actual geometry, not an assumed scalar recurrence.
+
+## 9. Remaining research scope
+
+There are **no remaining obligations for the 14 registered targets or the
+Module M statements mapped above**. Reusable conditional helpers are labeled as
+such in the status register and their signatures.
+
+The next work is outside the common foundation: derive the correction budgets,
+exact-frame certificates, or fixed-smooth-subspace residual certificates for the
+objective classes in the other research modules. Their geometric joining,
+cutoff, affine-critical, and counterexample arguments remain unformalized.
+
+There is no unconditional convergence theorem for arbitrary finite convex
+nonsmooth objectives, and the source itself records negative examples. There is
+no universal admissible-step existence theorem. Infinite-run results retain the
+source's nonzero-gradient convention; a separate finite-termination theorem is
+not exported. Conditional criteria must not be presented as unconditional
+convergence of full BFGS.

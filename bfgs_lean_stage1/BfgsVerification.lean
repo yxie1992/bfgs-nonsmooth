@@ -12,8 +12,10 @@ import BfgsVerification.QuantitativeGrowth
 import BfgsVerification.Normalization
 import BfgsVerification.EndToEnd
 import BfgsVerification.ObjectiveEndToEnd
+import BfgsVerification.FoundationEndToEnd
+import BfgsVerification.FrameNorms
 
 /-!
-Module M's actual matrix hierarchy, objective bridge and reciprocal-growth chain. Consult
+Module M's matrix hierarchy, objective bridge, growth, localization and frame criteria. Consult
 audit/STATUS.json for current build status and audited theorem statements.
 -/

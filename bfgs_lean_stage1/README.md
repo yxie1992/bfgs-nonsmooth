@@ -1,9 +1,9 @@
 # Full BFGS: principal minors and reciprocal growth in Lean
 
-**Module M.1–M.3's original matrix-run targets and their objective-level bridge
-are compiler-checked.**
+**Module M's original matrix-run targets, objective bridge, localization,
+energy identities, and frame criteria are compiler-checked.**
 The pinned Lean 4.19.0 build and transitive axiom audit succeeded on 10 September
-2026. All 178 explicit theorem declarations and 251 theorem declarations including
+2026. All 320 explicit theorem declarations and 440 theorem declarations including
 Lean-generated auxiliaries were audited. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur. There are no `sorry`, `admit`, custom mathematical axioms, or
 unchecked external mathematical computations.
@@ -25,6 +25,12 @@ previous runtime, not the current proof status.
 | `objectiveLowerBoundGrowth` | Armijo derives summability from lower-bounded values along the run; bounded gradients then give both mean divergences and superquadratic reciprocal sums |
 | `compactObjectiveGrowth` | Initial-sublevel compactness supplies the gradient and value bounds, so summability and all three growth conclusions follow |
 | `objectiveFiniteHorizon_of_lower_bound`, `compactObjectiveFiniteHorizon` | The exact finite-horizon bound for objective runs, with actual principal determinants and predicted-decrease tail sums |
+| `hessianInvariants` | Actual Hessian update, PSD annihilated part, step annihilation, and exact determinant update |
+| `localization`, `strictContourSteps` | Compact sublevels and local basins at a unique attained minimizer; vanishing accepted steps on a positive strict contour |
+| `referenceEnergy` | Exact fixed-reference energy identity and finite objective-gap bound |
+| `quadraticCorrectionConvergence` | Value and iterate convergence at a unique minimizer under the explicit quadratic cumulative-correction budget |
+| `movingFrameCriterion` | Excludes exact frame certificates with bounded cumulative transports and inverse transports, using only vanishing predicted decreases |
+| `residualFrameCriterion` | Excludes imperfect frame certificates in a fixed smooth subspace, deriving the subspace Hessian budget from the actual update |
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed
@@ -41,13 +47,23 @@ Compact-sublevel exports derive their gradient and budget bounds; the more gener
 exports retain their stated gradient/value bounds. No smoothness away from accepted
 iterates or continuity of gradients is assumed.
 
-The other Module M energy/localization/residual lemmas and other research modules
-remain outside this verification. No universal step-existence or overall
-optimal-value convergence theorem is claimed. See
+The energy and frame results are **trajectory criteria**. Deriving their
+correction budgets or certificates for the specific objective classes in the
+other research modules remains open in Lean. No unconditional convergence for
+arbitrary finite convex nonsmooth objectives or universal step-existence theorem
+is claimed. See
 [MATHEMATICAL_REVIEW.md](MATHEMATICAL_REVIEW.md) and
 [audit/STATEMENT_REVIEW.md](audit/STATEMENT_REVIEW.md) and
 [audit/OBJECTIVE_STATEMENT_REVIEW.md](audit/OBJECTIVE_STATEMENT_REVIEW.md) for the
-statement reviews.
+earlier statement reviews, and
+[audit/FOUNDATION_STATEMENT_REVIEW.md](audit/FOUNDATION_STATEMENT_REVIEW.md) for the
+localization, energy, and frame review.
+
+Squared norms in the matrix estimates are Euclidean sums of squares.
+`FrameNorms` verifies both the Euclidean operator-norm interpretation and the
+orthonormal matrix representation of every subspace. Generic localization holds
+in any finite-dimensional real normed space, including Euclidean space; displayed
+`Metric.ball` corollaries on `Vec n` use its default Pi norm at that radius.
 
 ## Reproduce
 
@@ -91,11 +107,13 @@ For subsequent checks:
 python3 scripts/check.py
 ```
 
-After the audit output log has closed, `python3 scripts/manifest.py` regenerates
-the delivered artifact hashes in `MANIFEST.json`.
+After the audit output log has closed and intended delivery files have been
+staged in Git, `python3 scripts/manifest.py` regenerates their artifact hashes in
+`MANIFEST.json`. Untracked local notes are excluded from the delivery manifest.
 
 `--static-only` is explicitly **not** Lean verification. The default checker
-verifies the compiler and mathlib revision, builds the library, enumerates the
+verifies the compiler, every locked dependency revision and clean tracked
+dependency checkouts, builds the library, enumerates the
 compiled environment, checks every explicit source theorem has an axiom report,
 and rejects unexpected transitive axioms. `Audit.lean` additionally requires
 terms of the exact original and objective-level targets and prints their definitions and full key
@@ -110,6 +128,8 @@ signatures. Verification is not inferred from names or compilation alone.
   compiler and complete axiom/type audit transcripts.
 - [audit/lean_version.log](audit/lean_version.log),
   [audit/mathlib_revision.log](audit/mathlib_revision.log): actual pinned versions.
+- [audit/dependencies.log](audit/dependencies.log): all locked dependency
+  revisions and tracked worktree checks.
 - [audit/declarations.json](audit/declarations.json): all audited theorem records.
 - [PROOF_OBLIGATIONS.md](PROOF_OBLIGATIONS.md): source-to-proof completion map.
 - [audit/HISTORY.md](audit/HISTORY.md): historical versus current evidence.
@@ -124,3 +144,9 @@ matrix-run results. Conditional helper premises are discharged in `EndToEnd`.
 and objective consequences. `ObjectiveRun` constructs the actual matrix run;
 `ObjectiveEndToEnd` exports the objective-level growth results against the explicit
 propositions in `ObjectiveTargets`.
+`HessianUpdate`, `ObjectiveEnergy`, and `EnergyBudget` establish the fixed-reference
+chain. `Localization`, `StrictContours`, and `LocalizationCorollaries` establish
+the geometric consequences. `MovingFrame` handles exact transport;
+`SmoothSubspace`, `FrameBounds`, `ResidualBudget`, `ResidualFrames`, and
+`ResidualSourceForm` handle imperfect transport. `FoundationEndToEnd` inhabits the
+seven explicit additional propositions in `FoundationTargets`.

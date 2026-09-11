@@ -3,8 +3,9 @@
 The original M.1–M.3 matrix-run targets and objective-level bridge are compiled with the pinned toolchain
 and transitively axiom-audited. This replaces the uncompiled-draft status. Original
 target definitions are unchanged apart from documentation comments. Independent
-agent reviews appear in `audit/STATEMENT_REVIEW.md` and
-`audit/OBJECTIVE_STATEMENT_REVIEW.md`; these are not external peer reviews.
+agent reviews appear in `audit/STATEMENT_REVIEW.md`,
+`audit/OBJECTIVE_STATEMENT_REVIEW.md`, and `audit/FOUNDATION_STATEMENT_REVIEW.md`;
+these are not external peer reviews.
 
 ## Actual matrices and original assumptions
 
@@ -100,9 +101,74 @@ prefix and factor ((m+1)/(J+m+1))²→1 are handled explicitly. Only then does
 summability make the tail budget arbitrarily small. No bound on H_J uniform in J
 is required.
 
+## Hessian, fixed-reference energy, and correction criteria
+
+`hessianUpdate` proves the displayed candidate is an actual left inverse of the
+full inverse-BFGS update. It does not assume the Hessian recurrence. The
+annihilated part is an actual congruence of `H⁻¹`, hence PSD, and kills the actual
+step. The determinant equality `det H_next=(alpha/beta) det H` is also proved,
+closing the separate exact top-degree identity beyond the original inequality.
+
+Fixed-reference energy uses exactly `B_k=(H_k)⁻¹` and the original correction
+`(y_kᵀ(x_(k+1)−xstar))²/t_k`. Annihilation proves the cancellation, and telescoping
+retains the terminal nonnegative energy. The gap comparison uses nonnegative
+monotone objective gaps before squaring. Both the negligible-correction and
+quadratic-correction convergence criteria are proved, with those correction
+conditions explicit. Unique-minimizer value convergence is then lifted to point
+convergence by the proved local basin; no iterate limit is assumed.
+
+## Localization and strict contours
+
+The positive sphere minimum is attained on a compact nonempty sphere. Its exact
+minimum statement explicitly requires a nontrivial space. Separate proofs cover
+zero-dimensional compactness and neighborhood basins, and actual infinite runs
+already imply positive dimension. Radial convexity proves the outside-sphere
+lower bound, low-sublevel trapping, and compactness of every sublevel.
+
+The generic localization theorems hold in every finite-dimensional real normed
+space. `Vec n` has the default Pi norm, so its displayed ball radius refers to
+that norm. Euclidean localization is an instance of the generic theorem; no
+equality between Pi and Euclidean balls of the same radius is asserted.
+
+For strict contours, the formal proof uses compact endpoint pairs rather than
+extracting a convergent gradient subsequence. Supporting inequalities and d→0
+force every point on a limiting segment to have value ℓ. The proof explicitly
+shows that such a level point lies on the frontier when some point has value
+strictly below ℓ. This supplies the step omitted from the short source proof,
+without a new assumption. The positive-level hypothesis is stated as
+`∃ y, F y < ℓ`, avoiding an unnecessary attained-minimum assumption.
+
+## Exact and imperfect frame transports
+
+For exact transport, normalizing the frame by `P_k⁻¹` removes `T_k` in the correct
+order `P_(k+1)=P_k*T_k`. The actual trace recurrence yields an O(N) reciprocal-sum
+bound, contradicting qualitative reciprocal-mean growth. The proof does not
+replace d→0 with the stronger summability assumption. Rectangular frames need
+not have full rank. Invertibility concerns the cumulative transport matrices,
+as in the source, and never a new constraint on BFGS matrices.
+
+For imperfect transport, `UᵀU=I` defines the actual fixed projection `UUᵀ`.
+Projection identities, projected squared norms, and the equivalence of fixed
+residual columns with subspace membership are proved. The Hessian update derives
+`tr(P_S B_k) ≤ tr(P_S B_0)+L*k`. The residual-energy estimate and PSD Young bound
+then derive the scalar recurrence, before any scalar contradiction is invoked.
+No whole-Hessian bound, frame rank, or invertible T is assumed.
+
+The source uses a tail with d≤1. The formal proof instead uses the finite global
+bound `D=sum d`, obtaining drift coefficient `1+C_T+C_T*D` and additive constant
+`C_R*(1+D)*(tr(P_S B_0)+L)+C_0`. This changes no conclusion or hypothesis.
+The source-form wrapper derives the nonnegativity of L, C_0, and C_R from their
+actual norm bounds and enlarges C_T to `max C_T 0`; its final statement adds no
+sign premises. All tail versions use the actual shifted run and derive its SPD.
+
+`FrameNorms` proves that the quadratic transpose-action bound is exactly the
+squared Euclidean operator-norm bound and that every Euclidean subspace has an
+orthonormal matrix representation, including zero-dimensional subspaces.
+
 ## Corrections and unformalized conclusions
 
-No correction to the requested M.1–M.3 statements or objective bridge was needed. The principal-product
+No substantive correction to Module M was needed. Sphere nonemptiness and the
+level-to-frontier step are now explicit. The principal-product
 inequality is proved directly using an insertion injection instead of exporting
 the exact regrouping equality; the potential bound uses degree n instead of n−1.
 These disclosed proof choices change no requested conclusion or constant.
