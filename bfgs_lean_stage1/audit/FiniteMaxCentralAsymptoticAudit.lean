@@ -1,0 +1,18 @@
+import BfgsVerification.FiniteMaxCentralAsymptotic
+
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_taylor_positive
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_taylor_negative
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_central_positive
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_central_absolute
+#print axioms BfgsVerification.FiniteMaxRadial.finite_branch_radial_remainders
+#print axioms BfgsVerification.FiniteMaxRadial.activeRadialSet
+#print axioms BfgsVerification.FiniteMaxRadial.activeRadialSet_nonempty
+#print axioms BfgsVerification.FiniteMaxRadial.activeRadialJump
+#print axioms BfgsVerification.FiniteMaxRadial.activeRadialJump_nonneg
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_central_remainder
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_central_isBigO
+#print axioms BfgsVerification.FiniteMaxRadial.mem_activeRadialSet_iff
+#print axioms BfgsVerification.FiniteMaxRadial.activeRadialJump_zero_iff
+#print axioms BfgsVerification.FiniteMaxRadial.not_isBigO_of_linear_abs_remainder
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_central_not_isBigO
+#print axioms BfgsVerification.FiniteMaxRadial.finite_max_central_quadratic_iff

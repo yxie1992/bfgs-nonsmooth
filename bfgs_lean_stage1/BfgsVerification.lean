@@ -25,6 +25,18 @@ import BfgsVerification.AccessibleCurvatureBridge
 import BfgsVerification.ReportAnalyticEndToEnd
 import BfgsVerification.FixedNormalEndToEnd
 
+import BfgsVerification.ReportDynamicsEndToEnd
+import BfgsVerification.FixedNormalSegments
+import BfgsVerification.PlanarFieldVisibility
+import BfgsVerification.PlanarCornerData
+import BfgsVerification.PlanarJoinedFrame
+import BfgsVerification.CenteredNuclear
+import BfgsVerification.FiniteMaxCentralAsymptotic
+import BfgsVerification.ScalarResidualFamilies
+import BfgsVerification.EuclideanResidualLineSearch
+import BfgsVerification.OptimizerInterceptExamples
+import BfgsVerification.RadialHessian
+
 /-!
 Module M and the primary transported, homogeneous, scalar and radial theorems. Consult
 audit/STATUS.json for current build status and audited theorem statements.

@@ -1,0 +1,12 @@
+import BfgsVerification.CenteredNuclear
+
+#print axioms BfgsVerification.NuclearSymmetric2.nuclearCoords_homogeneous
+#print axioms BfgsVerification.NuclearSymmetric2.nuclearCoords_zero
+#print axioms BfgsVerification.NuclearSymmetric2.nuclearCoords_unique_zero
+#print axioms BfgsVerification.NuclearSymmetric2.nuclearCoords_minimum
+#print axioms BfgsVerification.NuclearSymmetric2.nuclearCoords_sublevel_compact
+#print axioms BfgsVerification.NuclearSymmetric2.nuclearCoords_inward_error_zero
+#print axioms BfgsVerification.NuclearSymmetric2.centered_nuclear_convergence
+#print axioms BfgsVerification.NuclearSymmetric2.minimizer_matrix_rank
+#print axioms BfgsVerification.NuclearSymmetric2.centered_nuclear_inward
+#print axioms BfgsVerification.NuclearSymmetric2.centered_nuclear_radial

@@ -1,0 +1,144 @@
+BfgsVerification.PlanarCornerCharts.CornerChart (F : BfgsVerification.Vec 2 → ℝ) (x : BfgsVerification.Vec 2) : Type
+'BfgsVerification.PlanarCornerCharts.CornerChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.nonempty_cornerChart {F : BfgsVerification.Vec 2 → ℝ} {x : BfgsVerification.Vec 2}
+  (hx : BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x) :
+  Nonempty (BfgsVerification.PlanarCornerCharts.CornerChart F x)
+'BfgsVerification.PlanarCornerCharts.nonempty_cornerChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.CornerChart.hasGradient {F : BfgsVerification.Vec 2 → ℝ}
+  {x : BfgsVerification.Vec 2} (c : BfgsVerification.PlanarCornerCharts.CornerChart F x) (i : Fin 2) :
+  HasFDerivAt (c.branches i)
+    (BfgsVerification.gradientFunctional (BfgsVerification.coordinateGradient (c.branches i) x)) x
+'BfgsVerification.PlanarCornerCharts.CornerChart.hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.CornerChart.supports {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  {x : BfgsVerification.Vec 2} (c : BfgsVerification.PlanarCornerCharts.CornerChart F x) (i : Fin 2) :
+  BfgsVerification.Homogeneous.Supports F x (BfgsVerification.coordinateGradient (c.branches i) x)
+'BfgsVerification.PlanarCornerCharts.CornerChart.supports' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.CornerChart.velocityC1 {F : BfgsVerification.Vec 2 → ℝ} {x : BfgsVerification.Vec 2}
+  (c : BfgsVerification.PlanarCornerCharts.CornerChart F x) : ContDiffAt ℝ 1 (deriv c.curve) (F x)
+'BfgsVerification.PlanarCornerCharts.CornerChart.velocityC1' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarCornerCharts.twoBranchRegular_not_differentiable {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {x : BfgsVerification.Vec 2}
+  (hx : BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x) : ¬DifferentiableAt ℝ F x
+'BfgsVerification.PlanarCornerCharts.twoBranchRegular_not_differentiable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarCornerCharts.exists_finite_cornerCharts {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x) :
+  ∃ m points charts,
+    Function.Injective points ∧
+      (∀ (i : Fin m), points i ∈ K ∧ ¬DifferentiableAt ℝ F (points i)) ∧ ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ∃ i, x = points i
+'BfgsVerification.PlanarCornerCharts.exists_finite_cornerCharts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_from_actual_cornerCharts {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hne : ∀ x ∈ K, DifferentiableAt ℝ F x → BfgsVerification.coordinateGradient F x ≠ 0) {m : ℕ}
+  (points : Fin m → BfgsVerification.Vec 2)
+  (charts : (i : Fin m) → BfgsVerification.PlanarCornerCharts.CornerChart F (points i))
+  (hinj : Function.Injective points) (hpoint : ∀ (i : Fin m), points i ∈ K)
+  (hcover : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ∃ i, x = points i) :
+  ∃ χ,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      (∀ (i : Fin m) (w : BfgsVerification.Vec 2), χ i w ∈ Set.Icc 0 1) ∧
+        (Pairwise fun i j => Disjoint (tsupport (χ i)) (tsupport (χ j))) ∧
+          (∀ (i : Fin m),
+              ∀ᶠ (z : BfgsVerification.Vec 2) in nhds (points i),
+                BfgsVerification.PlanarObjectiveField.field hF χ (fun j => deriv (charts j).curve) z =
+                  deriv (charts i).curve (F z)) ∧
+            ∀ x ∈ K,
+              (∃ L,
+                  ∃ U ∈ nhds x,
+                    LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ fun j => deriv (charts j).curve)
+                      U) ∧
+                ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                  0 <
+                    BfgsVerification.dot g
+                      (BfgsVerification.PlanarObjectiveField.field hF χ (fun j => deriv (charts j).curve) x)
+'BfgsVerification.PlanarObjectiveField.field_from_actual_cornerCharts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.common_pairing_from_actual_cornerCharts {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {m : ℕ} (points : Fin m → BfgsVerification.Vec 2)
+  (charts : (i : Fin m) → BfgsVerification.PlanarCornerCharts.CornerChart F (points i))
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  (hfield : ∀ (i : Fin m), W (points i) = deriv (charts i).curve (F (points i)))
+  (hcover : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ∃ i, x = points i) (x : BfgsVerification.Vec 2) :
+  x ∈ K →
+    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+      ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        BfgsVerification.dot g (W x) = BfgsVerification.dot h (W x)
+'BfgsVerification.PlanarObjectiveField.common_pairing_from_actual_cornerCharts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_comparison_field_on_compact_level {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) :
+  ∃ W,
+    ∀ x ∈ K,
+      (∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U) ∧
+        (∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x, 0 < BfgsVerification.dot g (W x)) ∧
+          ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+            ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+              BfgsVerification.dot g (W x) = BfgsVerification.dot h (W x)
+'BfgsVerification.PlanarObjectiveField.exists_comparison_field_on_compact_level' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.supports_pairing_positive_near {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {W : BfgsVerification.Vec n → BfgsVerification.Vec n} {x : BfgsVerification.Vec n}
+  (hW : ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U)
+  (hpos : ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x, 0 < BfgsVerification.dot g (W x)) :
+  ∃ η,
+    0 < η ∧
+      ∀ᶠ (z : BfgsVerification.Vec n) in nhds x,
+        ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F z, η ≤ BfgsVerification.dot g (W z)
+'BfgsVerification.PlanarObjectiveField.supports_pairing_positive_near' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_uniform_supports_visibility {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {W : BfgsVerification.Vec n → BfgsVerification.Vec n} {K : Set (BfgsVerification.Vec n)}
+  (hK : IsCompact K)
+  (hW :
+    ∀ x ∈ K,
+      (∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U) ∧
+        ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x, 0 < BfgsVerification.dot g (W x)) :
+  ∃ η,
+    0 < η ∧
+      ∃ N,
+        IsOpen N ∧
+          K ⊆ N ∧
+            ∀ x ∈ N, ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x, η ≤ BfgsVerification.dot g (W x)
+'BfgsVerification.PlanarObjectiveField.exists_uniform_supports_visibility' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_open_local_lipschitz_extension {n : ℕ}
+  {W : BfgsVerification.Vec n → BfgsVerification.Vec n} {K : Set (BfgsVerification.Vec n)}
+  (hW : ∀ x ∈ K, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U) :
+  ∃ N, IsOpen N ∧ K ⊆ N ∧ ∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U
+'BfgsVerification.PlanarObjectiveField.exists_open_local_lipschitz_extension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_visible_comparison_field_on_compact_level {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) :
+  ∃ W,
+    (∀ x ∈ K,
+        ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+          ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+            BfgsVerification.dot g (W x) = BfgsVerification.dot h (W x)) ∧
+      ∃ η,
+        0 < η ∧
+          ∃ N,
+            IsOpen N ∧
+              K ⊆ N ∧
+                (∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U) ∧
+                  ∀ x ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x, η ≤ BfgsVerification.dot g (W x)
+'BfgsVerification.PlanarObjectiveField.exists_visible_comparison_field_on_compact_level' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

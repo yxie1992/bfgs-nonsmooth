@@ -228,3 +228,34 @@ U.6 and its explicit series/variable-jump examples; A's lower-semicontinuity and
 semialgebraic finite-value infrastructure; R/F named family and interpretation
 closures. Independently audited new scratch work is integrated only after this
 milestone's freeze ends. The whole-report completion gate remains unchanged.
+
+## Eighth execution milestone — completed
+
+The pinned full build and transitive axiom audit checked **2,193 explicit theorems**,
+**3,134 total theorem declarations** including generated auxiliaries, and all
+**85 exact targets**. The frozen source set has 265 library files plus the root
+import and Audit.lean. Actual logs and source/axiom reviews are linked in
+audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md. Only standard Lean axioms occur.
+
+Completed: U.6 tangential-only convergence and the separately coupled strongly
+convex composite family, their uniform local basins and literal segment geometry;
+C's actual finite-corner comparison field and whole-level neighborhood visibility;
+R/F named scalar and rectangular Euclidean residual basins/finite-ray steps,
+centered actual 2x2 nuclear convergence, literal finite-max central asymptotic,
+actual Hessian/ray identities and normalized intercept formulas.
+
+D/L's inherited seed now has exact ordinary three-update closure, intermediate
+SPD, every actual gradient and all nine strict trial decisions. An actual
+AdmissibleBFGSRun has the literal rho-powered phase data; its nonstationary zero
+limit is derived. The exact bracket interpreter returns its lengths at every
+iterate, with complete trial histories and actual differentiability/bounds.
+This closes the homogeneous deterministic seed, not the later coercive/local
+C2 or C1,1 counterexample embeddings.
+
+Next: C buffered derivatives and endpoint transport/secant estimates, then C
+convergence/local consequences; U spike/variable-jump examples; D's four-piece
+coercive completion and scalar embedding, then L return-map/stable-manifold and
+curvature constructions; A lower-semicontinuity/semialgebraic finite values;
+remaining R norm-model/interpretation and source synthesis obligations. Scratch
+proofs developed during the frozen audit remain excluded until integrated in a
+later reviewed release. Entire-report verification remains false.

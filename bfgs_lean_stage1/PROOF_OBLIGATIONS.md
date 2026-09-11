@@ -305,3 +305,20 @@ failure of RS in every neighborhood using actual derivatives; neither is claimed
 as a bad BFGS trajectory. The source's centered nuclear aside, finite-max exact
 central asymptotic, named scalar residual classes and interpretive claims remain
 separately tracked for subsequent integration.
+
+## Eighth whole-report tranche
+
+Full audit: 2,193 explicit/3,134 total theorem declarations; 85 exact targets.
+Module M's original matrix/determinant, normalization and growth targets remain
+unchanged. New exact contracts are four actual U composite global/local results,
+exactSeedCycle, deterministicSeedFailure and allSeedTrials. They discharge actual
+objective/matrix/gradient and deterministic algorithm premises, with source scope
+reviewed in audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md.
+
+The report register now maps D's exact homogeneous seed separately from D's still
+open coercive/local embedding; L's inherited seed separately from its return-map
+and curvature persistence; C's constructed actual field separately from pending
+endpoint estimates; and U's actual weaker-curvature theorem separately from its
+explicit examples. Original source spans and hashes are preserved. Remaining
+A/R/F interpretation, semialgebraic, historical-reference and synthesis claims
+remain obligations until their own actual statements are proved or corrected.

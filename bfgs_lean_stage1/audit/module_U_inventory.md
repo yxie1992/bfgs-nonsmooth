@@ -1,6 +1,6 @@
 # Module U inventory and implementation boundaries
 
-Source read in full: `BFGS_MASTER_REPORT_LaTeX/report/chapters/U.tex`. This register distinguishes the checked principal U.1/U.2 tranche from secondary source obligations. The principal tranche is scoped-audited separately before seventh-release integration; it is not a claim that every assertion in Module U is verified.
+Source read in full: `BFGS_MASTER_REPORT_LaTeX/report/chapters/U.tex`. This register distinguishes the checked principal U.1/U.2 tranche from secondary source obligations. The principal U.1/U.2 tranche was included in seventh release f820c46. The subsequent composite/literal-geometry tranche has separate scoped compiler, exact-target and axiom evidence; it is not a claim that every assertion in Module U is verified.
 
 ## Exact primary results
 
@@ -11,9 +11,9 @@ Source read in full: `BFGS_MASTER_REPORT_LaTeX/report/chapters/U.tex`. This regi
 ## Proof-chain coverage
 
 - **Checked:** U.10: strong supporting inequality, strong gradient monotonicity, summable squared displacement, and actual steps tending to zero. Use Euclidean `sqNorm`, not the default finite-Pi norm in mathlib's `StrongConvexOn`. An exact coordinate definition is convexity of `F - (mu/2)*sqNorm`; prove the supporting inequalities from it.
-- **U.11 checked; composite U.17 remains:** derive tangential secant bounds from the actual gradient and common projection field. Composite U.17 uses the checked `CenteredCocoercivity.exists_cocoercivity_constant_on_compact` and scalar supporting monotonicity.
+- **Checked:** U.11/U.17: derive tangential secant bounds from the actual gradient and common projection field. Composite U.17 uses the checked `CenteredCocoercivity.exists_cocoercivity_constant_on_compact` and scalar supporting monotonicity.
 - The compact cluster set and eventual neighborhood containment are derived for the actual trajectory. Existing CompactConvergence gives the objective limit and point/value conclusions; StrictContours gives step convergence under strict contours. Do not assume a chosen iterate limit.
-- On genuinely exceptional points, compact convex nonempty actual subdifferentials and the singleton/differentiability criterion are now checked in the four-file Supports tranche. A common codimension-one tangential projection plus derived distinct supports now gives the affine-zero iff A=0 statement; the literal full affine-line/compact-segment description remains tracked below.
+- On genuinely exceptional points, compact convex nonempty actual subdifferentials and the singleton/differentiability criterion are now checked in the four-file Supports tranche. A common codimension-one tangential projection plus derived distinct supports now gives the affine-zero iff A=0 statement; the literal full affine-line/compact-segment description is now checked in `FixedNormalSegments`.
 - **Checked:** derive a Lipschitz scalar cutoff from positive separation between the compact image of tangential-zero cluster points and the closed exceptional level set. Include empty exceptional-set and empty tangential-zero-set cases.
 - **Checked:** U.12: use an actual orthonormal-column basis of the normal complement, available via `FrameNorms.orthonormal_matrix_for_subspace`; derive projection identities. The frame `[U,tau*a]` has unrestricted tangential dimension and no rank premise when the cutoff vanishes.
 - **Checked:** derive uniform late visibility on the entire cluster set, using continuity of the cutoff-masked actual gradient. A discontinuous raw gradient selector at the exceptional set cannot be used as if globally continuous.
@@ -45,10 +45,21 @@ The principal U.1/U.2 proofs and local/source wrappers compile in eleven main `F
 | U.13 eventual actual smooth-strip secant estimate | `FixedNormalSmoothStrip.lean`; local Lipschitz plus full strong curvature derives the required constant |
 | U.12/U.14/U.15 actual basis, frame pairing, transport and residual | `FixedNormalProjection.lean`, `FixedNormalFrame.lean`, `FixedNormalRunBounds.lean` |
 | U.2 actual nonsmooth affine-zero iff tangent-zero | `FixedNormal.affine_critical_iff_tangent_zero` |
-| Literal nontrivial compact segment and full affine-line equality | Remaining source-description obligation; sufficient distinct-support/affine-zero statements are checked |
-| U.1.1 composite representation and weaker U.6 tangential curvature | Remaining objective-family/analytic obligation |
+| Literal nontrivial compact segment and full affine-line equality | `FixedNormal.nonsmooth_subdifferential_parallel_segment` |
+| U.1.1 fully coupled strongly convex composite family | `AdmissibleBFGSRun.strongly_convex_composite_convergence`; full strong convexity concerns F, not psi |
+| U.1.1 local composite basin | `FixedNormal.local_strongly_convex_composite_basin` |
+| U.6 weaker tangential curvature | `AdmissibleBFGSRun.tangential_composite_convergence`, with strict convexity only for relevant positive sublevels |
+| U.6 local basin | `FixedNormal.local_tangential_composite_basin`, uniform over SPD initialization and valid fixed line search |
+| U.16 projected supporting and displacement inequality | `FixedNormalTangentialStrong.lean` |
+| U.17 actual scalar/smooth split and tangential secant | `FixedNormalCompositeCalculus.lean` |
+| Derived composite off-interface local C1,1 | `FixedNormalCompositeSmooth.lean` |
+| Cutoff-strip secant without full strong curvature | `FixedNormalCocoercivity.lean`, `FixedNormalTangentialFrames.lean` |
 | U.18–U.21 actual spike series, derivative bounds and radial failure | Remaining exact-series obligation |
 | U.7.1 exact oracle formulas | Remaining exact-integration obligation |
 | U.7.2 variable jump example and non-additive claim | Remaining example obligation; non-additive assertion requires `c != 0` |
 
 The source review `FIXED_NORMAL_PRINCIPAL_STATEMENT_REVIEW.md` records exact assumptions and the internal derivation of all frame/hierarchy inputs. No iterate or matrix convergence, assumed hierarchy, or algorithm modification is used. The historical core audit is retained as a narrower preliminary verification record, superseded for primary convergence coverage by the principal audit. Original research sources remain unchanged.
+
+## Post-seventh composite tranche
+
+Eleven additional main modules contain 39 explicit declarations and four exact target/inhabitant pairs. `FixedNormalCompositeEndToEnd` imports the global/local U.1.1 and U.6 proofs. `FixedNormalSegments` completes the literal exceptional-subdifferential description. The exact assumptions, separation of the two curvature alternatives, and derived full-BFGS proof chain are reviewed in `FIXED_NORMAL_COMPOSITE_STATEMENT_REVIEW.md`. Compiler/axiom/contract evidence is in `fixed_normal_composite_*` logs; independent review is `FIXED_NORMAL_COMPOSITE_PEER_REVIEW.md`. The historical prerequisite logs remain explicitly narrower in scope. The exact series/oracle/radial-failure/variable-jump assertions above remain obligations.

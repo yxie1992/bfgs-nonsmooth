@@ -422,3 +422,35 @@ example : BfgsVerification.ParallelInterfacesLocalBasinTarget := BfgsVerificatio
 #print axioms BfgsVerification.AlgebraicSeed.P
 #print BfgsVerification.AlgebraicSeed.root
 #print axioms BfgsVerification.AlgebraicSeed.root
+
+/- Eighth milestone: exact weaker-curvature/composite and actual deterministic seed targets. -/
+#print BfgsVerification.TangentialCompositeConvergenceTarget
+example : BfgsVerification.TangentialCompositeConvergenceTarget := BfgsVerification.tangentialCompositeConvergence
+#print BfgsVerification.TangentialCompositeLocalBasinTarget
+example : BfgsVerification.TangentialCompositeLocalBasinTarget := BfgsVerification.tangentialCompositeLocalBasin
+#print BfgsVerification.StrongCompositeConvergenceTarget
+example : BfgsVerification.StrongCompositeConvergenceTarget := BfgsVerification.strongCompositeConvergence
+#print BfgsVerification.StrongCompositeLocalBasinTarget
+example : BfgsVerification.StrongCompositeLocalBasinTarget := BfgsVerification.strongCompositeLocalBasin
+#print BfgsVerification.ExactSeedCycleTarget
+example : BfgsVerification.ExactSeedCycleTarget := BfgsVerification.exactSeedCycle
+#print BfgsVerification.DeterministicSeedFailureTarget
+example : BfgsVerification.DeterministicSeedFailureTarget := BfgsVerification.deterministicSeedFailure
+#print BfgsVerification.AllSeedTrialsTarget
+example : BfgsVerification.AllSeedTrialsTarget := BfgsVerification.allSeedTrials
+#print BfgsVerification.SeedOrbit.run
+#print axioms BfgsVerification.SeedOrbit.run
+#print BfgsVerification.DeterministicLineSearch.search
+#print axioms BfgsVerification.DeterministicLineSearch.search
+#print BfgsVerification.DeterministicLineSearch.fromMetric
+#print axioms BfgsVerification.DeterministicLineSearch.fromMetric
+#print BfgsVerification.SeedOrbit.family
+#print axioms BfgsVerification.SeedOrbit.family
+#print BfgsVerification.SeedOrbit.trialPhase
+#print axioms BfgsVerification.SeedOrbit.trialPhase
+#print BfgsVerification.SeedOrbit.trialLength
+#print axioms BfgsVerification.SeedOrbit.trialLength
+#print BfgsVerification.SeedOrbit.trialActive
+#print axioms BfgsVerification.SeedOrbit.trialActive
+#print BfgsVerification.SeedOrbit.trialAccept
+#print axioms BfgsVerification.SeedOrbit.trialAccept

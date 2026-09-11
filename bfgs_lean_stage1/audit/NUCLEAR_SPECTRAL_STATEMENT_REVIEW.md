@@ -50,3 +50,5 @@ No mathematical correction to this source counterexample was needed. The finite-
 - 80 explicit theorems, 20 actual definitions and one structure: 101 scoped declarations. Every returned name matches the audit request, and every transitive dependency is within `{propext, Classical.choice, Quot.sound}`. No forbidden proof placeholders, mathematical axioms or unchecked evaluators occur in either file.
 
 The scoped audit is not a substitute for the pending whole-project audit or a claim that all of Module R/the report is verified.
+
+Post-seventh addendum: `CenteredNuclear.lean` now closes the centered-at-zero comparison for this actual symmetric 2×2 norm and explicitly proves the shifted minimizer has matrix rank one. Its separate ten-theorem build/audit is in `CENTERED_NUCLEAR_STATEMENT_REVIEW.md`; it does not alter the frozen 101-declaration counterexample audit. General-dimensional nuclear/spectral norm identifications remain separate.

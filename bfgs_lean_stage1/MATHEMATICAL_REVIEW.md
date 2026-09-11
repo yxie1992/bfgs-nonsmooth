@@ -362,3 +362,29 @@ D/L's exact source root box, inverse-Jacobian identification, residual bound and
 strict actual Jacobian supremum bound are proved, including box boundaries.
 Every later update-specific denominator and every deterministic accepted/rejected
 trial remains an independent obligation until the actual cycle is formalized.
+
+## Eighth report statement review
+
+The frozen pinned build and complete transitive axiom audit pass 2,193 explicit
+and 3,134 total theorem declarations, with 85 exact targets and only
+propext, Classical.choice and Quot.sound. See
+audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md and its independent peer reviews.
+
+The deterministic seed is now a genuine full-BFGS trajectory: its exact update
+closure, point cycle, actual derivatives, all strict oracle decisions and exact
+bracket-search execution are proved. Limits follow from the rho-powered orbit;
+nonstationarity follows from the actual supporting-subgradient inequality. No
+iterate/matrix convergence or accepted-length oracle was inserted as a premise.
+The seed objective is not the final coercive/local D or L construction.
+
+U.6 now uses only source tangential curvature and relevant strict contours; its
+frame, secants, support split and vanishing steps are derived. C's actual field
+is constructed with common all-support pairing and neighborhood visibility,
+while endpoint transport/secant and final consequences remain open.
+
+R's general-degree optimizer intercept has the exact term +F(0). Positive degree
+forces F(0)=0, but degree-zero positive constants show the unqualified simplified
+formula needs normalization. The correction is recorded without editing sources.
+The inherited C orientation and U c!=0 qualifications remain explicit. Actual
+Hessian/ray identities do not justify an a.e.-only radial-curvature criterion;
+that separate caveat remains pending in this frozen snapshot.

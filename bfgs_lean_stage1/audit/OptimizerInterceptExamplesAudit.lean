@@ -1,0 +1,9 @@
+import BfgsVerification.OptimizerInterceptExamples
+#print axioms BfgsVerification.InterceptExamples.homogeneous_intercept_zero
+#print axioms BfgsVerification.InterceptExamples.PositiveDegree
+#print axioms BfgsVerification.InterceptExamples.degree_euler
+#print axioms BfgsVerification.InterceptExamples.degree_intercept_with_zero_value
+#print axioms BfgsVerification.InterceptExamples.degree_value_zero
+#print axioms BfgsVerification.InterceptExamples.degree_intercept
+#print axioms BfgsVerification.InterceptExamples.quadratic_absolute_radial_pairing
+#print axioms BfgsVerification.InterceptExamples.quadratic_absolute_intercept

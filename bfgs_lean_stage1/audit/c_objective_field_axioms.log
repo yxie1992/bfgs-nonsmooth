@@ -1,0 +1,254 @@
+BfgsVerification.PlanarNormalGeometry.normalized {n : ℕ} (g : BfgsVerification.Vec n) : BfgsVerification.Vec n
+'BfgsVerification.PlanarNormalGeometry.normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarNormalGeometry.normalized_continuousAt {n : ℕ} {g : BfgsVerification.Vec n} (hg : g ≠ 0) :
+  ContinuousAt BfgsVerification.PlanarNormalGeometry.normalized g
+'BfgsVerification.PlanarNormalGeometry.normalized_continuousAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarNormalGeometry.supports_eventually_subset_open {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {x : BfgsVerification.Vec n} {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U)
+  (hsub : BfgsVerification.ConvexSubdifferential.subdifferential F x ⊆ U) :
+  ∀ᶠ (z : BfgsVerification.Vec n) in nhds x, BfgsVerification.ConvexSubdifferential.subdifferential F z ⊆ U
+'BfgsVerification.PlanarNormalGeometry.supports_eventually_subset_open' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarNormalGeometry.normalized_supports_eventually_mem {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {x : BfgsVerification.Vec n} {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U)
+  (hne : ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x, g ≠ 0)
+  (hsub :
+    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+      BfgsVerification.PlanarNormalGeometry.normalized g ∈ U) :
+  ∀ᶠ (z : BfgsVerification.Vec n) in nhds x,
+    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F z,
+      g ≠ 0 ∧ BfgsVerification.PlanarNormalGeometry.normalized g ∈ U
+'BfgsVerification.PlanarNormalGeometry.normalized_supports_eventually_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarNormalGeometry.two_branch_subdifferential_eq_segment {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (i : Fin 2), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g i)) x)
+  (hact : ∀ (i : Fin 2), f i x = F x) :
+  BfgsVerification.ConvexSubdifferential.subdifferential F x = segment ℝ (g 0) (g 1)
+'BfgsVerification.PlanarNormalGeometry.two_branch_subdifferential_eq_segment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarNormalGeometry.normalSector_eq_actual_normals {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (i : Fin 2), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g i)) x)
+  (hact : ∀ (i : Fin 2), f i x = F x) :
+  BfgsVerification.PlanarNormalGeometry.normalized '' BfgsVerification.ConvexSubdifferential.subdifferential F x =
+    BfgsVerification.PlanarNormalGeometry.normalSector (g 0) (g 1)
+'BfgsVerification.PlanarNormalGeometry.normalSector_eq_actual_normals' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarNormalGeometry.two_branch_support_pairing {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x v : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (i : Fin 2), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g i)) x)
+  (hact : ∀ (i : Fin 2), f i x = F x) (hv : ∀ (i : Fin 2), BfgsVerification.dot (g i) v = 1)
+  (a : BfgsVerification.Vec 2) :
+  a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x → BfgsVerification.dot a v = 1
+'BfgsVerification.PlanarNormalGeometry.two_branch_support_pairing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarNormalGeometry.all_supports_in_corner_plateau {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x v : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (i : Fin 2), HasFDerivAt (f i) (BfgsVerification.gradientFunctional (g i)) x)
+  (hact : ∀ (i : Fin 2), f i x = F x) (hv : ∀ (i : Fin 2), BfgsVerification.dot (g i) v = 1)
+  {χ : BfgsVerification.Vec 2 → ℝ}
+  (hχ :
+    ∀ᶠ (w : BfgsVerification.Vec 2) in nhdsSet (BfgsVerification.PlanarNormalGeometry.normalSector (g 0) (g 1)),
+      χ w = 1) :
+  ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+    ∀ a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F z,
+      a ≠ 0 ∧ ∀ᶠ (w : BfgsVerification.Vec 2) in nhds (BfgsVerification.PlanarNormalGeometry.normalized a), χ w = 1
+'BfgsVerification.PlanarNormalGeometry.all_supports_in_corner_plateau' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAmbientFrame.rotate (w : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.PlanarAmbientFrame.rotate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.height {m : ℕ} (χ : Fin m → BfgsVerification.Vec 2 → ℝ)
+  (v : Fin m → BfgsVerification.Vec 2) (w : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.PlanarAmbientFrame.height' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.angularSlope {m : ℕ} (χ : Fin m → BfgsVerification.Vec 2 → ℝ)
+  (v : Fin m → BfgsVerification.Vec 2) (w : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.PlanarAmbientFrame.angularSlope' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.frame {m : ℕ} (χ : Fin m → BfgsVerification.Vec 2 → ℝ)
+  (v : Fin m → BfgsVerification.Vec 2) (w : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.PlanarAmbientFrame.frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.rotate_normal (θ : ℝ) :
+  BfgsVerification.PlanarAmbientFrame.rotate (BfgsVerification.PlanarTransport.normal θ) =
+    BfgsVerification.PlanarTransport.tangent θ
+'BfgsVerification.PlanarAmbientFrame.rotate_normal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.rotate_orthogonal (w : BfgsVerification.Vec 2) :
+  BfgsVerification.dot w (BfgsVerification.PlanarAmbientFrame.rotate w) = 0
+'BfgsVerification.PlanarAmbientFrame.rotate_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.reconstruct {w : BfgsVerification.Vec 2} (hw : BfgsVerification.sqNorm w = 1)
+  (v : BfgsVerification.Vec 2) :
+  BfgsVerification.dot w v • w +
+      BfgsVerification.dot (BfgsVerification.PlanarAmbientFrame.rotate w) v •
+        BfgsVerification.PlanarAmbientFrame.rotate w =
+    v
+'BfgsVerification.PlanarAmbientFrame.reconstruct' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.angularSlope_eq_deriv {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (v : Fin m → BfgsVerification.Vec 2) (hχ : ∀ (i : Fin m), Differentiable ℝ (χ i)) (θ : ℝ) :
+  BfgsVerification.PlanarAmbientFrame.angularSlope χ v (BfgsVerification.PlanarTransport.normal θ) =
+    deriv (BfgsVerification.PlanarJoinedFrame.height χ v) θ
+'BfgsVerification.PlanarAmbientFrame.angularSlope_eq_deriv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.frame_eq_angular_frame {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (v : Fin m → BfgsVerification.Vec 2) (hχ : ∀ (i : Fin m), Differentiable ℝ (χ i)) (θ : ℝ) :
+  BfgsVerification.PlanarAmbientFrame.frame χ v (BfgsVerification.PlanarTransport.normal θ) =
+    BfgsVerification.PlanarJoinedFrame.frame χ v θ
+'BfgsVerification.PlanarAmbientFrame.frame_eq_angular_frame' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.cutoff_derivatives_zero_on_plateau {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (hd : Pairwise fun i j => Disjoint (Function.support (χ i)) (Function.support (χ j))) {i : Fin m}
+  {w : BfgsVerification.Vec 2} (hi : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds w, χ i z = 1) (j : Fin m) :
+  fderiv ℝ (χ j) w = 0
+'BfgsVerification.PlanarAmbientFrame.cutoff_derivatives_zero_on_plateau' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarAmbientFrame.frame_eq_velocity {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (v : Fin m → BfgsVerification.Vec 2)
+  (hd : Pairwise fun i j => Disjoint (Function.support (χ i)) (Function.support (χ j))) {i : Fin m}
+  {w : BfgsVerification.Vec 2} (hw : BfgsVerification.sqNorm w = 1)
+  (hi : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds w, χ i z = 1) : BfgsVerification.PlanarAmbientFrame.frame χ v w = v i
+'BfgsVerification.PlanarAmbientFrame.frame_eq_velocity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.normal_pairing {m : ℕ} (χ : Fin m → BfgsVerification.Vec 2 → ℝ)
+  (v : Fin m → BfgsVerification.Vec 2) {w : BfgsVerification.Vec 2} (hw : BfgsVerification.sqNorm w = 1) :
+  BfgsVerification.dot w (BfgsVerification.PlanarAmbientFrame.frame χ v w) =
+    BfgsVerification.PlanarAmbientFrame.height χ v w
+'BfgsVerification.PlanarAmbientFrame.normal_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarAmbientFrame.height_pos {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (v : Fin m → BfgsVerification.Vec 2) (hχ : ∀ (i : Fin m) (w : BfgsVerification.Vec 2), χ i w ∈ Set.Icc 0 1)
+  (hd : Pairwise fun i j => Disjoint (Function.support (χ i)) (Function.support (χ j))) {w : BfgsVerification.Vec 2}
+  (hpos : ∀ (i : Fin m), χ i w ≠ 0 → 0 < BfgsVerification.dot w (v i)) :
+  0 < BfgsVerification.PlanarAmbientFrame.height χ v w
+'BfgsVerification.PlanarAmbientFrame.height_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.selectedSupport {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (x : BfgsVerification.Vec n) : BfgsVerification.Vec n
+'BfgsVerification.PlanarObjectiveField.selectedSupport' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.selectedSupport_mem {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (x : BfgsVerification.Vec n) :
+  BfgsVerification.PlanarObjectiveField.selectedSupport hF x ∈
+    BfgsVerification.ConvexSubdifferential.subdifferential F x
+'BfgsVerification.PlanarObjectiveField.selectedSupport_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.selectedSupport_eq_gradient {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {x g : BfgsVerification.Vec n}
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  BfgsVerification.PlanarObjectiveField.selectedSupport hF x = g
+'BfgsVerification.PlanarObjectiveField.selectedSupport_eq_gradient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.normalized_sqNorm {n : ℕ} {g : BfgsVerification.Vec n} (hg : g ≠ 0) :
+  BfgsVerification.sqNorm (BfgsVerification.PlanarNormalGeometry.normalized g) = 1
+'BfgsVerification.PlanarObjectiveField.normalized_sqNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.field {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (χ : Fin m → BfgsVerification.Vec 2 → ℝ) (v : Fin m → ℝ → BfgsVerification.Vec 2) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.Vec 2
+'BfgsVerification.PlanarObjectiveField.field' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_eq_gradient_formula {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (χ : Fin m → BfgsVerification.Vec 2 → ℝ) (v : Fin m → ℝ → BfgsVerification.Vec 2)
+  {x g : BfgsVerification.Vec 2} (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  BfgsVerification.PlanarObjectiveField.field hF χ v x =
+    BfgsVerification.PlanarAmbientFrame.frame χ (fun i => v i (F x))
+      (BfgsVerification.PlanarNormalGeometry.normalized g)
+'BfgsVerification.PlanarObjectiveField.field_eq_gradient_formula' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_eventually_eq_corner_velocity {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x u : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (j : Fin 2), HasFDerivAt (f j) (BfgsVerification.gradientFunctional (g j)) x)
+  (hact : ∀ (j : Fin 2), f j x = F x) (hu : ∀ (j : Fin 2), BfgsVerification.dot (g j) u = 1)
+  {χ : Fin m → BfgsVerification.Vec 2 → ℝ} (v : Fin m → ℝ → BfgsVerification.Vec 2)
+  (hd : Pairwise fun i j => Disjoint (Function.support (χ i)) (Function.support (χ j))) {i : Fin m}
+  (hχ :
+    ∀ᶠ (w : BfgsVerification.Vec 2) in nhdsSet (BfgsVerification.PlanarNormalGeometry.normalSector (g 0) (g 1)),
+      χ i w = 1) :
+  ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z)
+'BfgsVerification.PlanarObjectiveField.field_eventually_eq_corner_velocity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.lipschitz_near_of_eq_level_velocity {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {v : ℝ → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (hv : ContDiffAt ℝ 1 v (F x))
+  (hW : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, W z = v (F z)) : ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L W U
+'BfgsVerification.PlanarObjectiveField.lipschitz_near_of_eq_level_velocity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_continuousAt_corner {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {χ : Fin m → BfgsVerification.Vec 2 → ℝ} {v : Fin m → ℝ → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} {i : Fin m} (hv : ContinuousAt (v i) (F x))
+  (hfield :
+    ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z)) :
+  ContinuousAt (BfgsVerification.PlanarObjectiveField.field hF χ v) x
+'BfgsVerification.PlanarObjectiveField.field_continuousAt_corner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_supports_pairing_corner {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x u : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (j : Fin 2), HasFDerivAt (f j) (BfgsVerification.gradientFunctional (g j)) x)
+  (hact : ∀ (j : Fin 2), f j x = F x) (hu : ∀ (j : Fin 2), BfgsVerification.dot (g j) u = 1)
+  {χ : Fin m → BfgsVerification.Vec 2 → ℝ} (v : Fin m → ℝ → BfgsVerification.Vec 2)
+  (hd : Pairwise fun i j => Disjoint (Function.support (χ i)) (Function.support (χ j))) {i : Fin m}
+  (hχ :
+    ∀ᶠ (w : BfgsVerification.Vec 2) in nhdsSet (BfgsVerification.PlanarNormalGeometry.normalSector (g 0) (g 1)),
+      χ i w = 1)
+  (hv : v i (F x) = u) (a : BfgsVerification.Vec 2) :
+  a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x →
+    BfgsVerification.dot a (BfgsVerification.PlanarObjectiveField.field hF χ v x) = 1
+'BfgsVerification.PlanarObjectiveField.field_supports_pairing_corner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_gradient_pairing {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (χ : Fin m → BfgsVerification.Vec 2 → ℝ) (v : Fin m → ℝ → BfgsVerification.Vec 2)
+  {x g : BfgsVerification.Vec 2} (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) (hne : g ≠ 0) :
+  BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+    ‖BfgsVerification.euclideanVector g‖ *
+      BfgsVerification.PlanarAmbientFrame.height χ (fun i => v i (F x))
+        (BfgsVerification.PlanarNormalGeometry.normalized g)
+'BfgsVerification.PlanarObjectiveField.field_gradient_pairing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.normalized_contDiffAt {n : ℕ} {g : BfgsVerification.Vec n} (hg : g ≠ 0) :
+  ContDiffAt ℝ (↑⊤) BfgsVerification.PlanarNormalGeometry.normalized g
+'BfgsVerification.PlanarObjectiveField.normalized_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.dot_contDiffAt {u v : BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (hu : ContDiffAt ℝ 1 u x) (hv : ContDiffAt ℝ 1 v x) :
+  ContDiffAt ℝ 1 (fun z => BfgsVerification.dot (u z) (v z)) x
+'BfgsVerification.PlanarObjectiveField.dot_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.ambient_frame_contDiffAt {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) {v : Fin m → BfgsVerification.Vec 2 → BfgsVerification.Vec 2}
+  {w : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {x : BfgsVerification.Vec 2}
+  (hv : ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) x) (hw : ContDiffAt ℝ 1 w x) :
+  ContDiffAt ℝ 1 (fun z => BfgsVerification.PlanarAmbientFrame.frame χ (fun i => v i z) (w z)) x
+'BfgsVerification.PlanarObjectiveField.ambient_frame_contDiffAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_contDiffAt_smooth {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {χ : Fin m → BfgsVerification.Vec 2 → ℝ} (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i))
+  {v : Fin m → ℝ → BfgsVerification.Vec 2} {x : BfgsVerification.Vec 2} (hv : ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x))
+  (hFx : ContDiffAt ℝ 2 F x) (hne : BfgsVerification.coordinateGradient F x ≠ 0) :
+  ContDiffAt ℝ 1 (BfgsVerification.PlanarObjectiveField.field hF χ v) x
+'BfgsVerification.PlanarObjectiveField.field_contDiffAt_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_lipschitz_near_corner {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {f : Fin 2 → BfgsVerification.Vec 2 → ℝ} {g : Fin 2 → BfgsVerification.Vec 2}
+  {x u : BfgsVerification.Vec 2} (hrep : BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f x)
+  (hg : ∀ (j : Fin 2), HasFDerivAt (f j) (BfgsVerification.gradientFunctional (g j)) x)
+  (hact : ∀ (j : Fin 2), f j x = F x) (hu : ∀ (j : Fin 2), BfgsVerification.dot (g j) u = 1)
+  {χ : Fin m → BfgsVerification.Vec 2 → ℝ} (v : Fin m → ℝ → BfgsVerification.Vec 2)
+  (hd : Pairwise fun i j => Disjoint (Function.support (χ i)) (Function.support (χ j))) {i : Fin m}
+  (hχ :
+    ∀ᶠ (w : BfgsVerification.Vec 2) in nhdsSet (BfgsVerification.PlanarNormalGeometry.normalSector (g 0) (g 1)),
+      χ i w = 1)
+  (hv : ContDiffAt ℝ 1 (v i) (F x)) :
+  ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) U
+'BfgsVerification.PlanarObjectiveField.field_lipschitz_near_corner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

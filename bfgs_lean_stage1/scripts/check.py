@@ -200,7 +200,23 @@ REPORT_ANALYTIC_TARGETS = {
     "parallelInterfacesLocalBasin_verified":
         ("BfgsVerification.parallelInterfacesLocalBasin", "BfgsVerification.ParallelInterfacesLocalBasinTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS
+REPORT_DYNAMICS_TARGETS = {
+    "tangentialCompositeConvergence_verified":
+        ("BfgsVerification.tangentialCompositeConvergence", "BfgsVerification.TangentialCompositeConvergenceTarget"),
+    "tangentialCompositeLocalBasin_verified":
+        ("BfgsVerification.tangentialCompositeLocalBasin", "BfgsVerification.TangentialCompositeLocalBasinTarget"),
+    "strongCompositeConvergence_verified":
+        ("BfgsVerification.strongCompositeConvergence", "BfgsVerification.StrongCompositeConvergenceTarget"),
+    "strongCompositeLocalBasin_verified":
+        ("BfgsVerification.strongCompositeLocalBasin", "BfgsVerification.StrongCompositeLocalBasinTarget"),
+    "exactSeedCycle_verified":
+        ("BfgsVerification.exactSeedCycle", "BfgsVerification.ExactSeedCycleTarget"),
+    "deterministicSeedFailure_verified":
+        ("BfgsVerification.deterministicSeedFailure", "BfgsVerification.DeterministicSeedFailureTarget"),
+    "allSeedTrials_verified":
+        ("BfgsVerification.allSeedTrials", "BfgsVerification.AllSeedTrialsTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -487,7 +503,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_ANALYTIC_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_DYNAMICS_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

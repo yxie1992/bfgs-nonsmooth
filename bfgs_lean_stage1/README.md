@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 1,848 explicit
-theorems and 2,636 theorem declarations including generated auxiliaries. All 78
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 2,193 explicit
+theorems and 3,134 theorem declarations including generated auxiliaries. All 85
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_analytic_check.log`.
+`audit/report_dynamics_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -25,9 +25,14 @@ unexcited-matrix run, finite-ray strict step existence, U.1/U.2 fixed-interface
 convergence and uniform local basins, and D/L's exact unique algebraic root with
 its actual Jacobian/residual certificate. See
 [audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md](audit/REPORT_ANALYTIC_STATEMENT_REVIEW.md).
-The remaining C construction, U weaker-curvature/examples, A semialgebraic
-claim, D/L cycle/search/embeddings and source interpretation obligations remain
-explicitly open. This is not a claim that the whole report is verified.
+The eighth tranche adds U.6 and the coupled composite/local theorems, actual C
+comparison-field construction and neighborhood visibility, named scalar/Euclidean
+residual families and radial interpretations, and the exact D/L seed as an actual
+deterministic full-BFGS run with every trial certified and a nonstationary limit.
+See [audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md](audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md).
+C endpoint/main conclusions, U examples, A semialgebraic infrastructure, D/L
+coercive/local embeddings and return-map dynamics, and final source reconciliation
+remain open. The homogeneous seed is not the final coercive/local D counterexample.
 
 ## Results and exact scope
 
@@ -74,9 +79,10 @@ The sixth tranche closes Q's literal pruning/printed-scale claims and H's intern
 low-rank/class theorems, and verifies the max-affine threshold, mixed gauge powers,
 finite polyhedral/PLQ basins and the actual five-piece finite line-search obstruction.
 See [audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md](audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md).
-A barycentric geometry is audited with its objective application still explicitly
-conditional in this release. Remaining F/R concrete applications, C/U/A, D/L,
-source cross-references and synthesis remain open.
+The actual finite-smooth-max subdifferential and local affine-correctness bridge
+were completed in the seventh tranche. Conditional energy/frame helpers remain
+separately classified. The latest source register records the remaining C/U/A,
+D/L, interpretation, cross-reference and synthesis obligations.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed

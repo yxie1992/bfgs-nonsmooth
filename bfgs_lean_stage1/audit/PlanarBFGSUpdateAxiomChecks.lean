@@ -1,0 +1,6 @@
+import BfgsVerification.PlanarBFGSUpdate
+#print axioms BfgsVerification.PlanarUpdate.perp
+#print axioms BfgsVerification.PlanarUpdate.dot_scale_left
+#print axioms BfgsVerification.PlanarUpdate.projector_formula
+#print axioms BfgsVerification.PlanarUpdate.inverse_formula
+#print axioms BfgsVerification.PlanarUpdate.aligned_identity

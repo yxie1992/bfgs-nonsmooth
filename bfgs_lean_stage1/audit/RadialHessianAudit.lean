@@ -1,0 +1,8 @@
+import BfgsVerification.RadialHessian
+#print axioms BfgsVerification.RadialHessian.ray
+#print axioms BfgsVerification.RadialHessian.ray_hasDerivAt
+#print axioms BfgsVerification.RadialHessian.ray_second_derivative
+#print axioms BfgsVerification.RadialHessian.bilinearMatrix
+#print axioms BfgsVerification.RadialHessian.bilinearMatrix_quadratic
+#print axioms BfgsVerification.RadialHessian.matrix
+#print axioms BfgsVerification.RadialHessian.ray_second_derivative_matrix

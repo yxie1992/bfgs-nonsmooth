@@ -1,0 +1,12 @@
+import BfgsVerification.EuclideanResidualLineSearch
+#print axioms BfgsVerification.EuclideanResidual.norm_residual_convex
+#print axioms BfgsVerification.EuclideanResidual.normSupportVector
+#print axioms BfgsVerification.EuclideanResidual.normSupportVector_dot
+#print axioms BfgsVerification.EuclideanResidual.norm_support_at_zero
+#print axioms BfgsVerification.EuclideanResidual.normPenalty
+#print axioms BfgsVerification.EuclideanResidual.initial_norm_residual_ne_zero
+#print axioms BfgsVerification.EuclideanResidual.norm_residual_on_ray
+#print axioms BfgsVerification.EuclideanResidual.normPenalty_finite_bad_ray
+#print axioms BfgsVerification.EuclideanResidual.norm_objective_finite_bad_ray
+#print axioms BfgsVerification.EuclideanResidual.euclidean_residual_fullBFGS_step_exists
+#print axioms BfgsVerification.EuclideanResidual.matrix_euclidean_residual_fullBFGS_step_exists

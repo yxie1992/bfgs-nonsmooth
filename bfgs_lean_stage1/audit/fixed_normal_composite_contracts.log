@@ -1,0 +1,113 @@
+def BfgsVerification.TangentialCompositeConvergenceTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) {ψ : BfgsVerification.Vec n → ℝ}
+  {h : ℝ → ℝ} {Ω : Set (BfgsVerification.Vec n)},
+  IsOpen Ω →
+    IsCompact R.initialSublevel →
+      R.initialSublevel ⊆ Ω →
+        ConvexOn ℝ Ω ψ →
+          BfgsVerification.CenteredSmoothSublinear.LocallyC11On Ω ψ →
+            ConvexOn ℝ Set.univ h →
+              BfgsVerification.FixedNormal.ScalarLocallyC11On {0}ᶜ h →
+                ∀ {a : BfgsVerification.Vec n},
+                  BfgsVerification.sqNorm a = 1 →
+                    ∀ (b : ℝ) {μ : ℝ},
+                      0 < μ →
+                        (ConvexOn ℝ Ω fun x =>
+                            ψ x -
+                              μ / 2 * BfgsVerification.sqNorm (BfgsVerification.FixedNormal.tangentProjection a x)) →
+                          (∀ x ∈ Ω, F x = ψ x + h (BfgsVerification.FixedNormal.normalCoordinate a b x)) →
+                            ∀ (star : BfgsVerification.Vec n),
+                              (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+                                (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+                                  BfgsVerification.dot a star = b →
+                                    (∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ F (R.x 0) → StrictConvex ℝ {x | F x ≤ ℓ}) →
+                                      Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                        Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.tangentialCompositeConvergence : BfgsVerification.TangentialCompositeConvergenceTarget
+def BfgsVerification.TangentialCompositeLocalBasinTarget : Prop :=
+∀ {n : ℕ} {F ψ : BfgsVerification.Vec n → ℝ} {h : ℝ → ℝ},
+  ConvexOn ℝ Set.univ F →
+    ∀ (star : BfgsVerification.Vec n),
+      (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+        (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+          ∀ {Ω : Set (BfgsVerification.Vec n)},
+            IsOpen Ω →
+              star ∈ Ω →
+                ConvexOn ℝ Ω ψ →
+                  BfgsVerification.CenteredSmoothSublinear.LocallyC11On Ω ψ →
+                    ConvexOn ℝ Set.univ h →
+                      BfgsVerification.FixedNormal.ScalarLocallyC11On {0}ᶜ h →
+                        ∀ {a : BfgsVerification.Vec n},
+                          BfgsVerification.sqNorm a = 1 →
+                            ∀ (b : ℝ) {μ : ℝ},
+                              0 < μ →
+                                (ConvexOn ℝ Ω fun x =>
+                                    ψ x -
+                                      μ / 2 *
+                                        BfgsVerification.sqNorm (BfgsVerification.FixedNormal.tangentProjection a x)) →
+                                  (∀ x ∈ Ω, F x = ψ x + h (BfgsVerification.FixedNormal.normalCoordinate a b x)) →
+                                    BfgsVerification.dot a star = b →
+                                      ∀ {c : ℝ},
+                                        F star < c →
+                                          (∀ (ℓ : ℝ), F star < ℓ → ℓ ≤ c → StrictConvex ℝ {x | F x ≤ ℓ}) →
+                                            ∃ ε,
+                                              0 < ε ∧
+                                                ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+                                                  F (R.x 0) < F star + ε →
+                                                    Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                                      Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.tangentialCompositeLocalBasin : BfgsVerification.TangentialCompositeLocalBasinTarget
+def BfgsVerification.StrongCompositeConvergenceTarget : Prop :=
+∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F) {ψ : BfgsVerification.Vec n → ℝ}
+  {h : ℝ → ℝ} {Ω : Set (BfgsVerification.Vec n)},
+  IsOpen Ω →
+    IsCompact R.initialSublevel →
+      R.initialSublevel ⊆ Ω →
+        ConvexOn ℝ Ω ψ →
+          BfgsVerification.CenteredSmoothSublinear.LocallyC11On Ω ψ →
+            ConvexOn ℝ Set.univ h →
+              BfgsVerification.FixedNormal.ScalarLocallyC11On {0}ᶜ h →
+                ∀ {a : BfgsVerification.Vec n},
+                  BfgsVerification.sqNorm a = 1 →
+                    ∀ (b : ℝ) {μ : ℝ},
+                      0 < μ →
+                        BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+                          (∀ x ∈ Ω, F x = ψ x + h (BfgsVerification.FixedNormal.normalCoordinate a b x)) →
+                            ∀ (star : BfgsVerification.Vec n),
+                              (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+                                (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+                                  BfgsVerification.dot a star = b →
+                                    Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                      Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.strongCompositeConvergence : BfgsVerification.StrongCompositeConvergenceTarget
+def BfgsVerification.StrongCompositeLocalBasinTarget : Prop :=
+∀ {n : ℕ} {F ψ : BfgsVerification.Vec n → ℝ} {h : ℝ → ℝ},
+  ConvexOn ℝ Set.univ F →
+    ∀ (star : BfgsVerification.Vec n),
+      (∀ (z : BfgsVerification.Vec n), F star ≤ F z) →
+        (∀ (z : BfgsVerification.Vec n), F z = F star → z = star) →
+          ∀ {Ω : Set (BfgsVerification.Vec n)},
+            IsOpen Ω →
+              star ∈ Ω →
+                ConvexOn ℝ Ω ψ →
+                  BfgsVerification.CenteredSmoothSublinear.LocallyC11On Ω ψ →
+                    ConvexOn ℝ Set.univ h →
+                      BfgsVerification.FixedNormal.ScalarLocallyC11On {0}ᶜ h →
+                        ∀ {a : BfgsVerification.Vec n},
+                          BfgsVerification.sqNorm a = 1 →
+                            ∀ (b : ℝ) {μ : ℝ},
+                              0 < μ →
+                                BfgsVerification.FixedNormal.EuclideanStrongConvexOn Ω μ F →
+                                  (∀ x ∈ Ω, F x = ψ x + h (BfgsVerification.FixedNormal.normalCoordinate a b x)) →
+                                    BfgsVerification.dot a star = b →
+                                      ∃ ε,
+                                        0 < ε ∧
+                                          ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+                                            F (R.x 0) < F star + ε →
+                                              Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) ∧
+                                                Filter.Tendsto R.x Filter.atTop (nhds star)
+@BfgsVerification.strongCompositeLocalBasin : BfgsVerification.StrongCompositeLocalBasinTarget
+EXACT_TARGET_OK tangentialCompositeConvergence TangentialCompositeConvergenceTarget
+EXACT_TARGET_OK tangentialCompositeLocalBasin TangentialCompositeLocalBasinTarget
+EXACT_TARGET_OK strongCompositeConvergence StrongCompositeConvergenceTarget
+EXACT_TARGET_OK strongCompositeLocalBasin StrongCompositeLocalBasinTarget

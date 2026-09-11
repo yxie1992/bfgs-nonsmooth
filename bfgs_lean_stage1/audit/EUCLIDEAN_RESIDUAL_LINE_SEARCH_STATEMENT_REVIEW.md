@@ -1,0 +1,15 @@
+# Euclidean residual finite-ray bridge
+
+Source: original `report/chapters/families.tex`, line 159, the statement that suitable Euclidean residual sums have finite full-space bad-ray sets and therefore differentiable acceptable points. Source unchanged.
+
+`EuclideanResidualLineSearch.lean` imports the already checked actual Euclidean residual model and finite-ray theorem, together with the finite convex sum supporting-vector uniqueness lemma. All norm codomains are actual `EuclideanSpace ℝ (Fin m)`; no default Pi norm is substituted for the source Euclidean norm.
+
+`norm_residual_convex` proves convexity from the affine data and the norm triangle inequality. `norm_support_at_zero` constructs actual supporting vectors from every unit-ball Euclidean dual vector, with the coordinate-functional identity proved in `normSupportVector_dot`. Differentiability of the whole convex norm sum forces each such supporting vector to agree with its zero supporting vector. Choosing the normalized image of a direction of a nonzero map gives `initial_norm_residual_ne_zero`. Thus no initial nonzero-residual premise or separate component differentiability premise is imposed.
+
+`normPenalty_finite_bad_ray` bounds the actual full-space nondifferentiability times by the finite range of explicit scalar times `-inner(A_i p, A_i x-b_i)/norm(A_i p)^2`. Nonzero initial residuals ensure that any zero reached later has nonzero ray slope, making this formula legitimate at every relevant time. Zero maps are constant smooth terms. Parallel rays, singular/rectangular maps, overlaps, zero-dimensional groups and empty finite families are all included.
+
+`norm_objective_finite_bad_ray` adds a globally differentiable smooth loss. It requires no separate convexity of that loss. The primary source consequence, `euclidean_residual_fullBFGS_step_exists`, assumes the finite full objective is convex, the initial actual gradient is nonzero, H is actual SPD, 0<c1<c2<1 and the nonnegative search ray is bounded below. It constructs a positive length, an actual full-space Fréchet derivative at the endpoint, and strict Armijo and strict weak-Wolfe inequalities. `matrix_euclidean_residual_fullBFGS_step_exists` exports the literal sum `norm(euclideanVector(A_i.mulVec x-b_i))` for arbitrary actual rectangular matrices.
+
+The class-specific finite bad-time property is derived, not supplied as a hypothesis. This is existence, not a complexity bound for an implementation, nor an assertion of differentiable acceptable-point existence at a zero gradient. It makes no spectral/non-Euclidean residual smoothness claim. The local convergence basins remain in the earlier `EuclideanResidualRadial` module and retain their minimum/local hypotheses.
+
+The main import build passed. `EuclideanResidualLineSearchAudit.lean` prints all 11 explicit declarations (9 theorems, 2 definitions), whose transitive axioms are only propext, Classical.choice and Quot.sound. Actual logs and hashes are in `euclidean_residual_line_search_{build,axioms,validation}.log`. This addition is after seventh whole-project milestone f820c46.
