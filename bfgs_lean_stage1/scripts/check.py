@@ -216,7 +216,29 @@ REPORT_DYNAMICS_TARGETS = {
     "allSeedTrials_verified":
         ("BfgsVerification.allSeedTrials", "BfgsVerification.AllSeedTrialsTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS
+REPORT_CONSTRUCTION_TARGETS = {
+    'coerciveSeedFailure_verified':
+        ('BfgsVerification.coerciveSeedFailure', 'BfgsVerification.CoerciveSeedFailureTarget'),
+    'dScalarFunction_verified':
+        ('BfgsVerification.dScalarFunction', 'BfgsVerification.DScalarFunctionTarget'),
+    'centeredSpectralConvergence_verified':
+        ('BfgsVerification.centeredSpectralConvergence', 'BfgsVerification.CenteredSpectralConvergenceTarget'),
+    'singularCurvatureCounterexample_verified':
+        ('BfgsVerification.singularCurvatureCounterexample', 'BfgsVerification.SingularCurvatureCounterexampleTarget'),
+    'sourceSpikeProperties_verified':
+        ('BfgsVerification.NormalSpike.sourceSpikeProperties', 'BfgsVerification.NormalSpike.SourceSpikePropertiesTarget'),
+    'spikeObjectiveConvergence_verified':
+        ('BfgsVerification.NormalSpike.spikeObjectiveConvergence', 'BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget'),
+    'spikeRadialSeparation_verified':
+        ('BfgsVerification.NormalSpike.spikeRadialSeparation', 'BfgsVerification.NormalSpike.SpikeRadialSeparationTarget'),
+    'spikeObjectiveGeometry_verified':
+        ('BfgsVerification.NormalSpike.spikeObjectiveGeometry', 'BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget'),
+    'spikeHessianPeaks_verified':
+        ('BfgsVerification.NormalSpike.spikeHessianPeaks', 'BfgsVerification.NormalSpike.SpikeHessianPeakTarget'),
+    'rationalSpikeOracle_verified':
+        ('BfgsVerification.NormalSpike.rationalSpikeOracle', 'BfgsVerification.NormalSpike.RationalSpikeOracleTarget'),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -494,7 +516,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Remaining named F ray-class bridges and R interpretive details, A semialgebraic critical values, full C field construction, weaker U.6 and source examples, D/L dynamics beyond the verified exact seed, cross-referenced examples and synthesis; see REPORT_STATUS.json",
+            "Remaining R nuclear/interpretive details and F descriptive identities, A semialgebraic critical values and compact affine-gap analysis, C secant/main conclusions beyond verified tail transport, U variable-jump example, D local embedding beyond verified scalar construction, L persistence/embeddings, and final synthesis; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -503,7 +525,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_DYNAMICS_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_CONSTRUCTION_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

@@ -1,0 +1,61 @@
+import BfgsVerification.AlgebraicSeedCoercive
+#print BfgsVerification.SeedOrbit.coerciveFamily
+#print axioms BfgsVerification.SeedOrbit.coerciveFamily
+#print BfgsVerification.SeedOrbit.coerciveObjective
+#print axioms BfgsVerification.SeedOrbit.coerciveObjective
+#print BfgsVerification.SeedOrbit.coercive_branch_old
+#print axioms BfgsVerification.SeedOrbit.coercive_branch_old
+#print BfgsVerification.SeedOrbit.coercive_branch_last
+#print axioms BfgsVerification.SeedOrbit.coercive_branch_last
+#print BfgsVerification.SeedOrbit.coercive_strict_active
+#print axioms BfgsVerification.SeedOrbit.coercive_strict_active
+#print BfgsVerification.SeedOrbit.coercive_value_eq
+#print axioms BfgsVerification.SeedOrbit.coercive_value_eq
+#print BfgsVerification.SeedOrbit.coercive_hasGradient
+#print axioms BfgsVerification.SeedOrbit.coercive_hasGradient
+#print BfgsVerification.SeedOrbit.coerciveOptimizer
+#print axioms BfgsVerification.SeedOrbit.coerciveOptimizer
+#print BfgsVerification.SeedOrbit.coercive_minimum_value
+#print axioms BfgsVerification.SeedOrbit.coercive_minimum_value
+#print BfgsVerification.SeedOrbit.coercive_coordinate_bounds
+#print axioms BfgsVerification.SeedOrbit.coercive_coordinate_bounds
+#print BfgsVerification.SeedOrbit.coercive_lower_bound
+#print axioms BfgsVerification.SeedOrbit.coercive_lower_bound
+#print BfgsVerification.SeedOrbit.coercive_unique_optimizer
+#print axioms BfgsVerification.SeedOrbit.coercive_unique_optimizer
+#print BfgsVerification.SeedOrbit.coercive_sublevels_compact
+#print axioms BfgsVerification.SeedOrbit.coercive_sublevels_compact
+#print BfgsVerification.SeedOrbit.coercive_orbit_certificate
+#print axioms BfgsVerification.SeedOrbit.coercive_orbit_certificate
+#print BfgsVerification.SeedOrbit.coercive_orbit_value
+#print axioms BfgsVerification.SeedOrbit.coercive_orbit_value
+#print BfgsVerification.SeedOrbit.coercive_orbit_hasGradient
+#print axioms BfgsVerification.SeedOrbit.coercive_orbit_hasGradient
+#print BfgsVerification.SeedOrbit.coerciveRun
+#print axioms BfgsVerification.SeedOrbit.coerciveRun
+#print BfgsVerification.SeedOrbit.coercive_scaled_predicates
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_predicates
+#print BfgsVerification.SeedOrbit.coercive_scaled_accept
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_accept
+#print BfgsVerification.SeedOrbit.coercive_scaled_reject
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_reject
+#print BfgsVerification.SeedOrbit.coercive_scaled_search_zero
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_search_zero
+#print BfgsVerification.SeedOrbit.coercive_scaled_search_one
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_search_one
+#print BfgsVerification.SeedOrbit.coercive_scaled_search_two
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_search_two
+#print BfgsVerification.SeedOrbit.coercive_scaled_search
+#print axioms BfgsVerification.SeedOrbit.coercive_scaled_search
+#print BfgsVerification.SeedOrbit.coercive_orbit_search
+#print axioms BfgsVerification.SeedOrbit.coercive_orbit_search
+#print BfgsVerification.SeedOrbit.coercive_orbit_values_tendsto
+#print axioms BfgsVerification.SeedOrbit.coercive_orbit_values_tendsto
+#print BfgsVerification.SeedOrbit.coercive_zero_value
+#print axioms BfgsVerification.SeedOrbit.coercive_zero_value
+#print BfgsVerification.SeedOrbit.coercive_limit_not_stationary
+#print axioms BfgsVerification.SeedOrbit.coercive_limit_not_stationary
+#print BfgsVerification.SeedOrbit.coercive_all_trials_hasGradient
+#print axioms BfgsVerification.SeedOrbit.coercive_all_trials_hasGradient
+#print BfgsVerification.SeedOrbit.actual_coercive_deterministic_failure
+#print axioms BfgsVerification.SeedOrbit.actual_coercive_deterministic_failure

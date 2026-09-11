@@ -1,0 +1,91 @@
+BfgsVerification.PlanarObjectiveField.exists_compact_uniform_field_buffer {n : ℕ}
+  {W : BfgsVerification.Vec n → BfgsVerification.Vec n} {K N : Set (BfgsVerification.Vec n)} (hK : IsCompact K)
+  (hN : IsOpen N) (hKN : K ⊆ N) (hLip : ∀ p ∈ N, ∃ L, ∃ U ∈ nhds p, LipschitzOnWith L W U) :
+  ∃ V Q,
+    IsOpen V ∧
+      K ⊆ V ∧
+        closure V ⊆ Q ∧
+          IsCompact Q ∧
+            Q ⊆ N ∧
+              ∃ M ρ,
+                0 < ρ ∧
+                  ∃ G,
+                    0 < G ∧
+                      (∀ p ∈ Q, Metric.ball p ρ ⊆ N ∧ LipschitzOnWith M W (Metric.ball p ρ)) ∧
+                        (∀ p ∈ Q, BfgsVerification.sqNorm (W p) ≤ G ^ 2) ∧ ∀ p ∈ Q, ‖fderiv ℝ W p‖ ≤ ↑M
+'BfgsVerification.PlanarObjectiveField.exists_compact_uniform_field_buffer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_buffered_visible_comparison_field {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) :
+  ∃ W V Q N,
+    IsOpen V ∧
+      K ⊆ V ∧
+        closure V ⊆ Q ∧
+          IsCompact Q ∧
+            Q ⊆ N ∧
+              IsOpen N ∧
+                ∃ η,
+                  0 < η ∧
+                    ∃ M ρ,
+                      0 < ρ ∧
+                        ∃ G,
+                          0 < G ∧
+                            (∀ p ∈ Q, Metric.ball p ρ ⊆ N ∧ LipschitzOnWith M W (Metric.ball p ρ)) ∧
+                              (∀ p ∈ Q, BfgsVerification.sqNorm (W p) ≤ G ^ 2) ∧
+                                (∀ p ∈ Q, ‖fderiv ℝ W p‖ ≤ ↑M) ∧
+                                  (∀ p ∈ N,
+                                      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+                                        η ≤ BfgsVerification.dot g (W p)) ∧
+                                    ∀ p ∈ K,
+                                      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+                                        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+                                          BfgsVerification.dot g (W p) = BfgsVerification.dot h (W p)
+'BfgsVerification.PlanarObjectiveField.exists_buffered_visible_comparison_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.dot_smul_first (r : ℝ) (a b : BfgsVerification.Vec 2) :
+  BfgsVerification.dot (r • a) b = r * BfgsVerification.dot a b
+'BfgsVerification.PlanarObjectiveField.dot_smul_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.dot_hasDerivAt {a b : ℝ → BfgsVerification.Vec 2} {a' b' : BfgsVerification.Vec 2}
+  {t : ℝ} (ha : HasDerivAt a a' t) (hb : HasDerivAt b b' t) :
+  HasDerivAt (fun s => BfgsVerification.dot (a s) (b s)) (BfgsVerification.dot a' (b t) + BfgsVerification.dot (a t) b')
+    t
+'BfgsVerification.PlanarObjectiveField.dot_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.unit_curve_derivative_orthogonal {a : ℝ → BfgsVerification.Vec 2}
+  {a' : BfgsVerification.Vec 2} {t : ℝ} (ha : HasDerivAt a a' t)
+  (hu : ∀ᶠ (s : ℝ) in nhds t, BfgsVerification.sqNorm (a s) = 1) : BfgsVerification.dot (a t) a' = 0
+'BfgsVerification.PlanarObjectiveField.unit_curve_derivative_orthogonal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.tangent_vector_eq_rotate {w u : BfgsVerification.Vec 2}
+  (hw : BfgsVerification.sqNorm w = 1) (hu : BfgsVerification.dot w u = 0) :
+  u =
+    BfgsVerification.dot (BfgsVerification.PlanarAmbientFrame.rotate w) u • BfgsVerification.PlanarAmbientFrame.rotate w
+'BfgsVerification.PlanarObjectiveField.tangent_vector_eq_rotate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.joined_frame_derivative_tangent {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  (hχ : ∀ (i : Fin m), Differentiable ℝ (χ i)) {v : Fin m → ℝ → BfgsVerification.Vec 2} {a : ℝ → BfgsVerification.Vec 2}
+  {t : ℝ} {a' W' : BfgsVerification.Vec 2} (ha : HasDerivAt a a' t) (hv : ∀ (i : Fin m), HasDerivAt (v i) 0 t)
+  (hu : ∀ᶠ (s : ℝ) in nhds t, BfgsVerification.sqNorm (a s) = 1)
+  (hframe : HasDerivAt (fun s => BfgsVerification.PlanarAmbientFrame.frame χ (fun i => v i s) (a s)) W' t) :
+  BfgsVerification.dot (a t) W' = 0
+'BfgsVerification.PlanarObjectiveField.joined_frame_derivative_tangent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.actual_field_derivative_preserves_tangent {m : ℕ} {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {χ : Fin m → BfgsVerification.Vec 2 → ℝ} (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i))
+  {v : Fin m → ℝ → BfgsVerification.Vec 2} {x s : BfgsVerification.Vec 2}
+  (hv : ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) (hFx : ContDiffAt ℝ 2 F x)
+  (hne : BfgsVerification.coordinateGradient F x ≠ 0)
+  (hs : BfgsVerification.dot (BfgsVerification.coordinateGradient F x) s = 0) :
+  BfgsVerification.dot (BfgsVerification.coordinateGradient F x)
+      ((fderiv ℝ (BfgsVerification.PlanarObjectiveField.field hF χ v) x) s) =
+    0
+'BfgsVerification.PlanarObjectiveField.actual_field_derivative_preserves_tangent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

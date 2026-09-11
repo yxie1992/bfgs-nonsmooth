@@ -1,0 +1,29 @@
+def BfgsVerification.NormalSpike.SourceSpikePropertiesTarget : Prop :=
+ConvexOn ℝ Set.univ BfgsVerification.NormalSpike.sourcePrimitive ∧
+  ContDiff ℝ 1 BfgsVerification.NormalSpike.sourcePrimitive ∧
+    ContDiffOn ℝ 3 BfgsVerification.NormalSpike.sourcePrimitive {0}ᶜ ∧
+      (∀ (v : ℝ), 0 ≤ BfgsVerification.NormalSpike.sourcePrimitive v) ∧
+        (∀ v ≤ 0, BfgsVerification.NormalSpike.sourcePrimitive v = 0) ∧
+          (∀ v ≥ 0,
+              0 ≤ deriv BfgsVerification.NormalSpike.sourcePrimitive v ∧
+                deriv BfgsVerification.NormalSpike.sourcePrimitive v ≤ 6 * v ^ 2 ∧
+                  BfgsVerification.NormalSpike.sourcePrimitive v ≤ 6 * v ^ 3) ∧
+            HasDerivAt (deriv BfgsVerification.NormalSpike.sourcePrimitive) 0 0 ∧
+              deriv (deriv BfgsVerification.NormalSpike.sourcePrimitive) 0 = 0 ∧
+                (∀ (N : ℕ),
+                    BfgsVerification.NormalSpike.sourcePrimitive (BfgsVerification.NormalSpike.scale N) =
+                        64 / 315 * BfgsVerification.NormalSpike.scale N ^ 3 +
+                          1 / 6 * BfgsVerification.NormalSpike.scale N ^ 7 ∧
+                      deriv BfgsVerification.NormalSpike.sourcePrimitive (BfgsVerification.NormalSpike.scale N) =
+                          8 / 9 * BfgsVerification.NormalSpike.scale N ^ 2 ∧
+                        deriv (deriv BfgsVerification.NormalSpike.sourcePrimitive)
+                            (BfgsVerification.NormalSpike.scale N) =
+                          (BfgsVerification.NormalSpike.scale N ^ 3)⁻¹) ∧
+                  Filter.Tendsto
+                      (fun N =>
+                        deriv (deriv BfgsVerification.NormalSpike.sourcePrimitive)
+                          (BfgsVerification.NormalSpike.scale N))
+                      Filter.atTop Filter.atTop ∧
+                    ¬ContinuousAt (deriv (deriv BfgsVerification.NormalSpike.sourcePrimitive)) 0
+BfgsVerification.NormalSpike.sourceSpikeProperties : BfgsVerification.NormalSpike.SourceSpikePropertiesTarget
+EXACT_TARGET_OK sourceSpikeProperties SourceSpikePropertiesTarget

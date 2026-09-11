@@ -1,0 +1,127 @@
+BfgsVerification.PlanarObjectiveField.unit_basis_triangular_determinant {w : BfgsVerification.Vec 2}
+  (hw : BfgsVerification.sqNorm w = 1) (sT sn a b e : ℝ) :
+  BfgsVerification.HomogeneousPlanar.pairDet (sT • BfgsVerification.PlanarAmbientFrame.rotate w + sn • w)
+      ((a * sT + b * sn) • BfgsVerification.PlanarAmbientFrame.rotate w + (e * sn) • w) =
+    sn * ((a - e) * sT + b * sn)
+'BfgsVerification.PlanarObjectiveField.unit_basis_triangular_determinant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.actual_tangent_map_determinant {w : BfgsVerification.Vec 2}
+  (hw : BfgsVerification.sqNorm w = 1) (L : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2)
+  (ht : BfgsVerification.dot w (L (BfgsVerification.PlanarAmbientFrame.rotate w)) = 0) (s : BfgsVerification.Vec 2) :
+  BfgsVerification.HomogeneousPlanar.pairDet s (L s) =
+    BfgsVerification.dot w s *
+      ((BfgsVerification.dot (BfgsVerification.PlanarAmbientFrame.rotate w)
+              (L (BfgsVerification.PlanarAmbientFrame.rotate w)) -
+            BfgsVerification.dot w (L w)) *
+          BfgsVerification.dot (BfgsVerification.PlanarAmbientFrame.rotate w) s +
+        BfgsVerification.dot (BfgsVerification.PlanarAmbientFrame.rotate w) (L w) * BfgsVerification.dot w s)
+'BfgsVerification.PlanarObjectiveField.actual_tangent_map_determinant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.rotate_sqNorm (w : BfgsVerification.Vec 2) :
+  BfgsVerification.sqNorm (BfgsVerification.PlanarAmbientFrame.rotate w) = BfgsVerification.sqNorm w
+'BfgsVerification.PlanarObjectiveField.rotate_sqNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.abs_dot_unit_le_euclidean_norm {w : BfgsVerification.Vec 2}
+  (hw : BfgsVerification.sqNorm w = 1) (s : BfgsVerification.Vec 2) :
+  |BfgsVerification.dot w s| ≤ ‖BfgsVerification.euclideanVector s‖
+'BfgsVerification.PlanarObjectiveField.abs_dot_unit_le_euclidean_norm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.abs_dot_unit_map_le {u v : BfgsVerification.Vec 2}
+  (hu : BfgsVerification.sqNorm u = 1) (hv : BfgsVerification.sqNorm v = 1)
+  (L : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2) : |BfgsVerification.dot u (L v)| ≤ 2 * ‖L‖
+'BfgsVerification.PlanarObjectiveField.abs_dot_unit_map_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PlanarObjectiveField.actual_tangent_map_determinant_bound {w : BfgsVerification.Vec 2}
+  (hw : BfgsVerification.sqNorm w = 1) (L : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2)
+  (ht : BfgsVerification.dot w (L (BfgsVerification.PlanarAmbientFrame.rotate w)) = 0) (s : BfgsVerification.Vec 2) :
+  |BfgsVerification.HomogeneousPlanar.pairDet s (L s)| ≤
+    6 * ‖L‖ * ‖BfgsVerification.euclideanVector s‖ * |BfgsVerification.dot w s|
+'BfgsVerification.PlanarObjectiveField.actual_tangent_map_determinant_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.actual_gradient_tangent_map_bound {g : BfgsVerification.Vec 2} (hg : g ≠ 0)
+  (L : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2)
+  (ht : ∀ (u : BfgsVerification.Vec 2), BfgsVerification.dot g u = 0 → BfgsVerification.dot g (L u) = 0)
+  (s : BfgsVerification.Vec 2) :
+  |BfgsVerification.HomogeneousPlanar.pairDet s (L s)| ≤
+    6 * ‖L‖ * ‖BfgsVerification.euclideanVector s‖ * |BfgsVerification.dot g s| / ‖BfgsVerification.euclideanVector g‖
+'BfgsVerification.PlanarObjectiveField.actual_gradient_tangent_map_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.actual_field_determinant_derivative_bound {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ} {v : Fin m → ℝ → BfgsVerification.Vec 2}
+  {x : BfgsVerification.Vec 2} (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i))
+  (hv : ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) (hFx : ContDiffAt ℝ 2 F x)
+  (hne : BfgsVerification.coordinateGradient F x ≠ 0) (s : BfgsVerification.Vec 2) :
+  |BfgsVerification.HomogeneousPlanar.pairDet s ((fderiv ℝ (BfgsVerification.PlanarObjectiveField.field hF χ v) x) s)| ≤
+    6 * ‖fderiv ℝ (BfgsVerification.PlanarObjectiveField.field hF χ v) x‖ * ‖BfgsVerification.euclideanVector s‖ *
+        |BfgsVerification.dot (BfgsVerification.coordinateGradient F x) s| /
+      ‖BfgsVerification.euclideanVector (BfgsVerification.coordinateGradient F x)‖
+'BfgsVerification.PlanarObjectiveField.actual_field_determinant_derivative_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.gradient_norm_lower_of_visibility {g w : BfgsVerification.Vec 2} {η G : ℝ}
+  (hG : 0 < G) (hw : BfgsVerification.sqNorm w ≤ G ^ 2) (hvis : η ≤ BfgsVerification.dot g w) :
+  η / G ≤ ‖BfgsVerification.euclideanVector g‖
+'BfgsVerification.PlanarObjectiveField.gradient_norm_lower_of_visibility' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.tangent_determinant_quotient_bound {g s : BfgsVerification.Vec 2} (hg : g ≠ 0)
+  (hs : s ≠ 0) (L : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2)
+  (ht : ∀ (u : BfgsVerification.Vec 2), BfgsVerification.dot g u = 0 → BfgsVerification.dot g (L u) = 0) {M κ μ D : ℝ}
+  (hM : ‖L‖ ≤ M) (hκ : 0 < κ) (hμ : 0 < μ) (hgμ : μ ≤ ‖BfgsVerification.euclideanVector g‖)
+  (hD : κ * ‖BfgsVerification.euclideanVector s‖ ≤ |D|) :
+  |BfgsVerification.HomogeneousPlanar.pairDet s (L s) / D| ≤ 6 * M / (κ * μ) * |BfgsVerification.dot g s|
+'BfgsVerification.PlanarObjectiveField.tangent_determinant_quotient_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarScalarTransport.right_derivative_transport_budget {φ h φ' h' : ℝ → ℝ} {C d : ℝ} (hC : 0 ≤ C)
+  (hd : 0 ≤ d) (hφ : ContinuousOn φ (Set.Icc 0 1)) (hh : ContinuousOn h (Set.Icc 0 1))
+  (hφ' : ∀ t ∈ Set.Ico 0 1, HasDerivWithinAt φ (φ' t) (Set.Ici t) t)
+  (hh' : ∀ t ∈ Set.Ico 0 1, HasDerivWithinAt h (h' t) (Set.Ici t) t) (hlower : ∀ t ∈ Set.Ico 0 1, -d ≤ φ' t)
+  (hbound : ∀ t ∈ Set.Ico 0 1, |h' t| ≤ C * |φ' t|) (hdescent : φ 1 ≤ φ 0) : |h 1 - h 0| ≤ 2 * C * d
+'BfgsVerification.PlanarScalarTransport.right_derivative_transport_budget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarScalarTransport.convex_right_derivative_lower {φ : ℝ → ℝ} (hφ : ConvexOn ℝ Set.univ φ) {d : ℝ}
+  (h0 : HasDerivAt φ (-d) 0) {t : ℝ} (ht : 0 ≤ t) : -d ≤ derivWithin φ (Set.Ioi t) t
+'BfgsVerification.PlanarScalarTransport.convex_right_derivative_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarScalarTransport.convex_transport_budget {φ h h' : ℝ → ℝ} {C d : ℝ} (hC : 0 ≤ C) (hd : 0 ≤ d)
+  (hφ : ConvexOn ℝ Set.univ φ) (h0 : HasDerivAt φ (-d) 0) (hh : ContinuousOn h (Set.Icc 0 1))
+  (hh' : ∀ t ∈ Set.Ico 0 1, HasDerivWithinAt h (h' t) (Set.Ici t) t)
+  (hbound : ∀ t ∈ Set.Ico 0 1, |h' t| ≤ C * |derivWithin φ (Set.Ioi t) t|) (hdescent : φ 1 ≤ φ 0) :
+  |h 1 - h 0| ≤ 2 * C * d
+'BfgsVerification.PlanarScalarTransport.convex_transport_budget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarScalarTransport.positive_endpoint_ratio {D : ℝ → ℝ} (hD : ContinuousOn D (Set.Icc 0 1))
+  (hne : ∀ t ∈ Set.Icc 0 1, D t ≠ 0) : 0 < D 1 / D 0
+'BfgsVerification.PlanarScalarTransport.positive_endpoint_ratio' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarScalarTransport.convex_log_determinant_budget {φ D D' : ℝ → ℝ} {C d : ℝ} (hC : 0 ≤ C)
+  (hd : 0 ≤ d) (hφ : ConvexOn ℝ Set.univ φ) (h0 : HasDerivAt φ (-d) 0) (hD : ContinuousOn D (Set.Icc 0 1))
+  (hne : ∀ t ∈ Set.Icc 0 1, D t ≠ 0) (hD' : ∀ t ∈ Set.Ico 0 1, HasDerivWithinAt D (D' t) (Set.Ici t) t)
+  (hbound : ∀ t ∈ Set.Ico 0 1, |D' t / D t| ≤ C * |derivWithin φ (Set.Ioi t) t|) (hdescent : φ 1 ≤ φ 0) :
+  0 < D 1 / D 0 ∧ |Real.log (D 1 / D 0)| ≤ 2 * C * d
+'BfgsVerification.PlanarScalarTransport.convex_log_determinant_budget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarScalarTransport.planar_transport_from_right_derivative_budget {φ : ℝ → ℝ}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {x s : BfgsVerification.Vec 2} {D' : ℝ → ℝ} {C d : ℝ}
+  (hC : 0 ≤ C) (hd : 0 ≤ d) (hφ : ConvexOn ℝ Set.univ φ) (h0 : HasDerivAt φ (-d) 0)
+  (hD : ContinuousOn (fun t => BfgsVerification.HomogeneousPlanar.pairDet s (W (x + t • s))) (Set.Icc 0 1))
+  (hne : ∀ t ∈ Set.Icc 0 1, BfgsVerification.HomogeneousPlanar.pairDet s (W (x + t • s)) ≠ 0)
+  (hD' :
+    ∀ t ∈ Set.Ico 0 1,
+      HasDerivWithinAt (fun t => BfgsVerification.HomogeneousPlanar.pairDet s (W (x + t • s))) (D' t) (Set.Ici t) t)
+  (hbound :
+    ∀ t ∈ Set.Ico 0 1,
+      |D' t / BfgsVerification.HomogeneousPlanar.pairDet s (W (x + t • s))| ≤ C * |derivWithin φ (Set.Ioi t) t|)
+  (hdescent : φ 1 ≤ φ 0) : ∃ lam β, 0 < lam ∧ W (x + s) = lam • W x + β • s ∧ |Real.log lam| ≤ 2 * C * d
+'BfgsVerification.PlanarScalarTransport.planar_transport_from_right_derivative_budget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

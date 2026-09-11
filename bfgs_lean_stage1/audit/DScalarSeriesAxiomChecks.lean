@@ -1,0 +1,173 @@
+import BfgsVerification.BFGSGradientScaling
+import BfgsVerification.DScalarGeometric
+import BfgsVerification.DScalarSeries
+import BfgsVerification.DScalarIntervals
+import BfgsVerification.DScalarCurvature
+import BfgsVerification.DScalarJets
+import BfgsVerification.DScalarPlateaus
+
+
+#check BfgsVerification.bfgsStep_scale_gradient
+#print axioms BfgsVerification.bfgsStep_scale_gradient
+#check BfgsVerification.inverseBFGS_scale_secant_pair
+#print axioms BfgsVerification.inverseBFGS_scale_secant_pair
+#check BfgsVerification.DScalarGeometric.theta
+#print axioms BfgsVerification.DScalarGeometric.theta
+#check BfgsVerification.DScalarGeometric.scale
+#print axioms BfgsVerification.DScalarGeometric.scale
+#check BfgsVerification.DScalarGeometric.coordinate
+#print axioms BfgsVerification.DScalarGeometric.coordinate
+#check BfgsVerification.DScalarGeometric.theta_pos
+#print axioms BfgsVerification.DScalarGeometric.theta_pos
+#check BfgsVerification.DScalarGeometric.theta_lt_one
+#print axioms BfgsVerification.DScalarGeometric.theta_lt_one
+#check BfgsVerification.DScalarGeometric.scale_pos
+#print axioms BfgsVerification.DScalarGeometric.scale_pos
+#check BfgsVerification.DScalarGeometric.scale_le_one
+#print axioms BfgsVerification.DScalarGeometric.scale_le_one
+#check BfgsVerification.DScalarGeometric.scale_zero
+#print axioms BfgsVerification.DScalarGeometric.scale_zero
+#check BfgsVerification.DScalarGeometric.scale_add
+#print axioms BfgsVerification.DScalarGeometric.scale_add
+#check BfgsVerification.DScalarGeometric.scale_succ
+#print axioms BfgsVerification.DScalarGeometric.scale_succ
+#check BfgsVerification.DScalarGeometric.scale_antitone
+#print axioms BfgsVerification.DScalarGeometric.scale_antitone
+#check BfgsVerification.DScalarGeometric.summable_scale_power
+#print axioms BfgsVerification.DScalarGeometric.summable_scale_power
+#check BfgsVerification.DScalarGeometric.tsum_scale_power
+#print axioms BfgsVerification.DScalarGeometric.tsum_scale_power
+#check BfgsVerification.DScalarGeometric.tsum_tail_power
+#print axioms BfgsVerification.DScalarGeometric.tsum_tail_power
+#check BfgsVerification.DScalarGeometric.positive_interval_cover
+#print axioms BfgsVerification.DScalarGeometric.positive_interval_cover
+#check BfgsVerification.DScalarGeometric.coordinate_nonpos_iff
+#print axioms BfgsVerification.DScalarGeometric.coordinate_nonpos_iff
+#check BfgsVerification.DScalarGeometric.coordinate_ge_one_iff
+#print axioms BfgsVerification.DScalarGeometric.coordinate_ge_one_iff
+#check BfgsVerification.DScalarGeometric.earlier_coordinate_nonpos
+#print axioms BfgsVerification.DScalarGeometric.earlier_coordinate_nonpos
+#check BfgsVerification.DScalarGeometric.later_coordinate_ge_one
+#print axioms BfgsVerification.DScalarGeometric.later_coordinate_ge_one
+#check BfgsVerification.DScalar.component
+#print axioms BfgsVerification.DScalar.component
+#check BfgsVerification.DScalar.slopeComponent
+#print axioms BfgsVerification.DScalar.slopeComponent
+#check BfgsVerification.DScalar.curvatureComponent
+#print axioms BfgsVerification.DScalar.curvatureComponent
+#check BfgsVerification.DScalar.positivePart
+#print axioms BfgsVerification.DScalar.positivePart
+#check BfgsVerification.DScalar.positiveSlope
+#print axioms BfgsVerification.DScalar.positiveSlope
+#check BfgsVerification.DScalar.positiveCurvature
+#print axioms BfgsVerification.DScalar.positiveCurvature
+#check BfgsVerification.DScalar.component_hasDerivAt
+#print axioms BfgsVerification.DScalar.component_hasDerivAt
+#check BfgsVerification.DScalar.slopeComponent_hasDerivAt
+#print axioms BfgsVerification.DScalar.slopeComponent_hasDerivAt
+#check BfgsVerification.DScalar.slopeComponent_bounds
+#print axioms BfgsVerification.DScalar.slopeComponent_bounds
+#check BfgsVerification.DScalar.curvatureComponent_bounds
+#print axioms BfgsVerification.DScalar.curvatureComponent_bounds
+#check BfgsVerification.DScalar.summable_slope_majorant
+#print axioms BfgsVerification.DScalar.summable_slope_majorant
+#check BfgsVerification.DScalar.summable_curvature_majorant
+#print axioms BfgsVerification.DScalar.summable_curvature_majorant
+#check BfgsVerification.DScalar.component_nonpos
+#print axioms BfgsVerification.DScalar.component_nonpos
+#check BfgsVerification.DScalar.summable_slopeComponent
+#print axioms BfgsVerification.DScalar.summable_slopeComponent
+#check BfgsVerification.DScalar.summable_curvatureComponent
+#print axioms BfgsVerification.DScalar.summable_curvatureComponent
+#check BfgsVerification.DScalar.component_norm_bound
+#print axioms BfgsVerification.DScalar.component_norm_bound
+#check BfgsVerification.DScalar.summable_component
+#print axioms BfgsVerification.DScalar.summable_component
+#check BfgsVerification.DScalar.positivePart_hasDerivAt
+#print axioms BfgsVerification.DScalar.positivePart_hasDerivAt
+#check BfgsVerification.DScalar.positiveSlope_hasDerivAt
+#print axioms BfgsVerification.DScalar.positiveSlope_hasDerivAt
+#check BfgsVerification.DScalar.positiveCurvature_continuous
+#print axioms BfgsVerification.DScalar.positiveCurvature_continuous
+#check BfgsVerification.DScalar.positivePart_contDiff
+#print axioms BfgsVerification.DScalar.positivePart_contDiff
+#check BfgsVerification.DScalar.earlier_component_zero
+#print axioms BfgsVerification.DScalar.earlier_component_zero
+#check BfgsVerification.DScalar.component_affine
+#print axioms BfgsVerification.DScalar.component_affine
+#check BfgsVerification.DScalar.later_component_affine
+#print axioms BfgsVerification.DScalar.later_component_affine
+#check BfgsVerification.DScalar.tail_components
+#print axioms BfgsVerification.DScalar.tail_components
+#check BfgsVerification.DScalar.positivePart_interval
+#print axioms BfgsVerification.DScalar.positivePart_interval
+#check BfgsVerification.DScalar.positivePart_outer
+#print axioms BfgsVerification.DScalar.positivePart_outer
+#check BfgsVerification.DScalar.slopeComponent_nonpos
+#print axioms BfgsVerification.DScalar.slopeComponent_nonpos
+#check BfgsVerification.DScalar.curvatureComponent_nonpos
+#print axioms BfgsVerification.DScalar.curvatureComponent_nonpos
+#check BfgsVerification.DScalar.positivePart_nonpos
+#print axioms BfgsVerification.DScalar.positivePart_nonpos
+#check BfgsVerification.DScalar.positiveSlope_nonpos
+#print axioms BfgsVerification.DScalar.positiveSlope_nonpos
+#check BfgsVerification.DScalar.positiveCurvature_nonpos
+#print axioms BfgsVerification.DScalar.positiveCurvature_nonpos
+#check BfgsVerification.DScalar.positivePart_nonnegative
+#print axioms BfgsVerification.DScalar.positivePart_nonnegative
+#check BfgsVerification.DScalar.positiveCurvature_nonnegative
+#print axioms BfgsVerification.DScalar.positiveCurvature_nonnegative
+#check BfgsVerification.DScalar.positiveSlope_monotone
+#print axioms BfgsVerification.DScalar.positiveSlope_monotone
+#check BfgsVerification.DScalar.positivePart_convex
+#print axioms BfgsVerification.DScalar.positivePart_convex
+#check BfgsVerification.DScalar.curvatureComponent_outer_zero
+#print axioms BfgsVerification.DScalar.curvatureComponent_outer_zero
+#check BfgsVerification.DScalar.positiveCurvature_outer
+#print axioms BfgsVerification.DScalar.positiveCurvature_outer
+#check BfgsVerification.DScalar.curvatureComponent_other_zero
+#print axioms BfgsVerification.DScalar.curvatureComponent_other_zero
+#check BfgsVerification.DScalar.positiveCurvature_interval
+#print axioms BfgsVerification.DScalar.positiveCurvature_interval
+#check BfgsVerification.DScalar.positiveCurvature_bounds
+#print axioms BfgsVerification.DScalar.positiveCurvature_bounds
+#check BfgsVerification.DScalar.coordinate_node
+#print axioms BfgsVerification.DScalar.coordinate_node
+#check BfgsVerification.DScalar.positivePart_node
+#print axioms BfgsVerification.DScalar.positivePart_node
+#check BfgsVerification.DScalar.positivePart_positive
+#print axioms BfgsVerification.DScalar.positivePart_positive
+#check BfgsVerification.DScalar.earlier_slope_zero
+#print axioms BfgsVerification.DScalar.earlier_slope_zero
+#check BfgsVerification.DScalar.later_slope_constant
+#print axioms BfgsVerification.DScalar.later_slope_constant
+#check BfgsVerification.DScalar.positiveSlope_interval
+#print axioms BfgsVerification.DScalar.positiveSlope_interval
+#check BfgsVerification.DScalar.positiveSlope_node
+#print axioms BfgsVerification.DScalar.positiveSlope_node
+#check BfgsVerification.DScalar.positiveCurvature_node
+#print axioms BfgsVerification.DScalar.positiveCurvature_node
+#check BfgsVerification.DScalar.coordinate_le_iff
+#print axioms BfgsVerification.DScalar.coordinate_le_iff
+#check BfgsVerification.DScalar.coordinate_ge_iff
+#print axioms BfgsVerification.DScalar.coordinate_ge_iff
+#check BfgsVerification.DScalar.lower_threshold_identity
+#print axioms BfgsVerification.DScalar.lower_threshold_identity
+#check BfgsVerification.DScalar.upper_threshold_identity
+#print axioms BfgsVerification.DScalar.upper_threshold_identity
+#check BfgsVerification.DScalar.lower_threshold_positive
+#print axioms BfgsVerification.DScalar.lower_threshold_positive
+#check BfgsVerification.DScalar.plateau_earlier_coordinate
+#print axioms BfgsVerification.DScalar.plateau_earlier_coordinate
+#check BfgsVerification.DScalar.plateau_later_coordinate
+#print axioms BfgsVerification.DScalar.plateau_later_coordinate
+#check BfgsVerification.DScalar.plateau_earlier_component
+#print axioms BfgsVerification.DScalar.plateau_earlier_component
+#check BfgsVerification.DScalar.component_affine_of_coordinate
+#print axioms BfgsVerification.DScalar.component_affine_of_coordinate
+#check BfgsVerification.DScalar.positivePart_plateau
+#print axioms BfgsVerification.DScalar.positivePart_plateau
+#print BfgsVerification.DScalar.component
+#print BfgsVerification.DScalar.positivePart
+#print BfgsVerification.DScalar.positiveSlope
+#print BfgsVerification.DScalar.positiveCurvature

@@ -1,0 +1,35 @@
+import BfgsVerification.DScalarNegative
+
+#print axioms BfgsVerification.DScalarNegative.quadratic
+#print axioms BfgsVerification.DScalarNegative.quadraticDerivative
+#print axioms BfgsVerification.DScalarNegative.negative
+#print axioms BfgsVerification.DScalarNegative.first
+#print axioms BfgsVerification.DScalarNegative.second
+#print axioms BfgsVerification.DScalarNegative.quadratic_hasDerivAt
+#print axioms BfgsVerification.DScalarNegative.quadraticDerivative_hasDerivAt
+#print axioms BfgsVerification.DScalarNegative.negative_hasDerivAt
+#print axioms BfgsVerification.DScalarNegative.first_hasDerivAt
+#print axioms BfgsVerification.DScalarNegative.deriv_negative
+#print axioms BfgsVerification.DScalarNegative.deriv_first
+#print axioms BfgsVerification.DScalarNegative.second_eq_clip
+#print axioms BfgsVerification.DScalarNegative.second_continuous
+#print axioms BfgsVerification.DScalarNegative.first_contDiff
+#print axioms BfgsVerification.DScalarNegative.negative_contDiff
+#print axioms BfgsVerification.DScalarNegative.second_bounds
+#print axioms BfgsVerification.DScalarNegative.actual_second_derivative_bounds
+#print axioms BfgsVerification.DScalarNegative.negative_convex
+#print axioms BfgsVerification.DScalarNegative.negative_eq_quadratic
+#print axioms BfgsVerification.DScalarNegative.negative_eq_cubic
+#print axioms BfgsVerification.DScalarNegative.negative_eq_zero
+#print axioms BfgsVerification.DScalarNegative.negative_pos
+#print axioms BfgsVerification.DScalarNegative.negative_nonnegative
+#print axioms BfgsVerification.DScalarNegative.negative_zero_iff
+#print axioms BfgsVerification.DScalarNegative.first_eq_zero
+#print axioms BfgsVerification.DScalarNegative.second_eq_zero
+#print axioms BfgsVerification.DScalarNegative.first_negative
+#print axioms BfgsVerification.DScalarNegative.second_abs_sub_le
+#print axioms BfgsVerification.DScalarNegative.second_lipschitz
+#print axioms BfgsVerification.DScalarNegative.actual_second_derivative_lipschitz
+#print axioms BfgsVerification.DScalarNegative.negative_lower_bound_left
+#print axioms BfgsVerification.DScalarNegative.negative_coercive_atBot
+#print axioms BfgsVerification.DScalarNegative.negative_join_data

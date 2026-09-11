@@ -1,0 +1,306 @@
+BfgsVerification.bfgsStep_scale_gradient {n : ℕ} (r a : ℝ) (H : BfgsVerification.Mat n) (g : BfgsVerification.Vec n) :
+  BfgsVerification.bfgsStep H (r • g) a = r • BfgsVerification.bfgsStep H g a
+'BfgsVerification.bfgsStep_scale_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.inverseBFGS_scale_secant_pair {n : ℕ} (H : BfgsVerification.Mat n) (s y : BfgsVerification.Vec n)
+  {r : ℝ} (hr : r ≠ 0) : BfgsVerification.inverseBFGS H (r • s) (r • y) = BfgsVerification.inverseBFGS H s y
+'BfgsVerification.inverseBFGS_scale_secant_pair' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.theta : ℝ
+'BfgsVerification.DScalarGeometric.theta' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale (n : ℕ) : ℝ
+'BfgsVerification.DScalarGeometric.scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.coordinate (b a x : ℝ) : ℝ
+'BfgsVerification.DScalarGeometric.coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.theta_pos : 0 < BfgsVerification.DScalarGeometric.theta
+'BfgsVerification.DScalarGeometric.theta_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.theta_lt_one : BfgsVerification.DScalarGeometric.theta < 1
+'BfgsVerification.DScalarGeometric.theta_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale_pos (n : ℕ) : 0 < BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DScalarGeometric.scale_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale_le_one (n : ℕ) : BfgsVerification.DScalarGeometric.scale n ≤ 1
+'BfgsVerification.DScalarGeometric.scale_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale_zero : BfgsVerification.DScalarGeometric.scale 0 = 1
+'BfgsVerification.DScalarGeometric.scale_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale_add (m n : ℕ) :
+  BfgsVerification.DScalarGeometric.scale (m + n) =
+    BfgsVerification.DScalarGeometric.scale m * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DScalarGeometric.scale_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale_succ (n : ℕ) :
+  BfgsVerification.DScalarGeometric.scale (n + 1) =
+    BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DScalarGeometric.scale_succ' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.scale_antitone : Antitone BfgsVerification.DScalarGeometric.scale
+'BfgsVerification.DScalarGeometric.scale_antitone' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.summable_scale_power {p : ℕ} (hp : 0 < p) :
+  Summable fun n => BfgsVerification.DScalarGeometric.scale n ^ p
+'BfgsVerification.DScalarGeometric.summable_scale_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.tsum_scale_power {p : ℕ} (hp : 0 < p) :
+  ∑' (n : ℕ), BfgsVerification.DScalarGeometric.scale n ^ p = (1 - BfgsVerification.DScalarGeometric.theta ^ p)⁻¹
+'BfgsVerification.DScalarGeometric.tsum_scale_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.tsum_tail_power {p : ℕ} (hp : 0 < p) (k : ℕ) :
+  ∑' (n : ℕ), BfgsVerification.DScalarGeometric.scale (n + k) ^ p =
+    BfgsVerification.DScalarGeometric.scale k ^ p / (1 - BfgsVerification.DScalarGeometric.theta ^ p)
+'BfgsVerification.DScalarGeometric.tsum_tail_power' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.positive_interval_cover {b x : ℝ} (hb : 0 < b) (hx : 0 < x) (hxb : x ≤ b) :
+  ∃ n,
+    b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale n < x ∧
+      x ≤ b * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DScalarGeometric.positive_interval_cover' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.coordinate_nonpos_iff {b a x : ℝ} (hb : 0 < b) (ha : 0 < a) :
+  BfgsVerification.DScalarGeometric.coordinate b a x ≤ 0 ↔ x ≤ b * BfgsVerification.DScalarGeometric.theta * a
+'BfgsVerification.DScalarGeometric.coordinate_nonpos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.coordinate_ge_one_iff {b a x : ℝ} (hb : 0 < b) (ha : 0 < a) :
+  1 ≤ BfgsVerification.DScalarGeometric.coordinate b a x ↔ b * a ≤ x
+'BfgsVerification.DScalarGeometric.coordinate_ge_one_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.earlier_coordinate_nonpos {b x : ℝ} (hb : 0 < b) {m n : ℕ} (hnm : n < m)
+  (hx : x ≤ b * BfgsVerification.DScalarGeometric.scale m) :
+  BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale n) x ≤ 0
+'BfgsVerification.DScalarGeometric.earlier_coordinate_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalarGeometric.later_coordinate_ge_one {b x : ℝ} (hb : 0 < b) {m n : ℕ} (hmn : m < n)
+  (hx : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x) :
+  1 ≤ BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale n) x
+'BfgsVerification.DScalarGeometric.later_coordinate_ge_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.component (b : ℝ) (n : ℕ) (x : ℝ) : ℝ
+'BfgsVerification.DScalar.component' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.slopeComponent (b : ℝ) (n : ℕ) (x : ℝ) : ℝ
+'BfgsVerification.DScalar.slopeComponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.curvatureComponent (b : ℝ) (n : ℕ) (x : ℝ) : ℝ
+'BfgsVerification.DScalar.curvatureComponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart (b x : ℝ) : ℝ
+'BfgsVerification.DScalar.positivePart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveSlope (b x : ℝ) : ℝ
+'BfgsVerification.DScalar.positiveSlope' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature (b x : ℝ) : ℝ
+'BfgsVerification.DScalar.positiveCurvature' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.component_hasDerivAt {b : ℝ} (hb : 0 < b) (n : ℕ) (x : ℝ) :
+  HasDerivAt (BfgsVerification.DScalar.component b n) (BfgsVerification.DScalar.slopeComponent b n x) x
+'BfgsVerification.DScalar.component_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.slopeComponent_hasDerivAt {b : ℝ} (hb : 0 < b) (n : ℕ) (x : ℝ) :
+  HasDerivAt (BfgsVerification.DScalar.slopeComponent b n) (BfgsVerification.DScalar.curvatureComponent b n x) x
+'BfgsVerification.DScalar.slopeComponent_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.slopeComponent_bounds (b : ℝ) (n : ℕ) (x : ℝ) :
+  0 ≤ BfgsVerification.DScalar.slopeComponent b n x ∧
+    BfgsVerification.DScalar.slopeComponent b n x ≤
+      BfgsVerification.DScalarGeometric.scale n ^ 2 * (1 - BfgsVerification.DScalarGeometric.theta ^ 2)
+'BfgsVerification.DScalar.slopeComponent_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.curvatureComponent_bounds {b : ℝ} (hb : 0 < b) (n : ℕ) (x : ℝ) :
+  0 ≤ BfgsVerification.DScalar.curvatureComponent b n x ∧
+    BfgsVerification.DScalar.curvatureComponent b n x ≤ 102 / b * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DScalar.curvatureComponent_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.summable_slope_majorant :
+  Summable fun n => BfgsVerification.DScalarGeometric.scale n ^ 2 * (1 - BfgsVerification.DScalarGeometric.theta ^ 2)
+'BfgsVerification.DScalar.summable_slope_majorant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.summable_curvature_majorant (b : ℝ) :
+  Summable fun n => 102 / b * BfgsVerification.DScalarGeometric.scale n
+'BfgsVerification.DScalar.summable_curvature_majorant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.component_nonpos {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : x ≤ 0) (n : ℕ) :
+  BfgsVerification.DScalar.component b n x = 0
+'BfgsVerification.DScalar.component_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.summable_slopeComponent (b x : ℝ) :
+  Summable fun n => BfgsVerification.DScalar.slopeComponent b n x
+'BfgsVerification.DScalar.summable_slopeComponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.summable_curvatureComponent {b : ℝ} (hb : 0 < b) (x : ℝ) :
+  Summable fun n => BfgsVerification.DScalar.curvatureComponent b n x
+'BfgsVerification.DScalar.summable_curvatureComponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.component_norm_bound {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (n : ℕ) (x : ℝ) :
+  ‖BfgsVerification.DScalar.component b n x‖ ≤
+    BfgsVerification.DScalarGeometric.scale n ^ 2 * (1 - BfgsVerification.DScalarGeometric.theta ^ 2) * ‖x‖
+'BfgsVerification.DScalar.component_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.summable_component {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (x : ℝ) :
+  Summable fun n => BfgsVerification.DScalar.component b n x
+'BfgsVerification.DScalar.summable_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_hasDerivAt {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (x : ℝ) :
+  HasDerivAt (BfgsVerification.DScalar.positivePart b) (BfgsVerification.DScalar.positiveSlope b x) x
+'BfgsVerification.DScalar.positivePart_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveSlope_hasDerivAt {b : ℝ} (hb : 0 < b) (x : ℝ) :
+  HasDerivAt (BfgsVerification.DScalar.positiveSlope b) (BfgsVerification.DScalar.positiveCurvature b x) x
+'BfgsVerification.DScalar.positiveSlope_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_continuous {b : ℝ} (hb : 0 < b) :
+  Continuous (BfgsVerification.DScalar.positiveCurvature b)
+'BfgsVerification.DScalar.positiveCurvature_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_contDiff {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) :
+  ContDiff ℝ 2 (BfgsVerification.DScalar.positivePart b)
+'BfgsVerification.DScalar.positivePart_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.earlier_component_zero {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) {m n : ℕ} (hnm : n < m)
+  (hx : x ≤ b * BfgsVerification.DScalarGeometric.scale m) : BfgsVerification.DScalar.component b n x = 0
+'BfgsVerification.DScalar.earlier_component_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.component_affine {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (n : ℕ)
+  (hx : b * BfgsVerification.DScalarGeometric.scale n ≤ x) :
+  BfgsVerification.DScalar.component b n x =
+    (1 - BfgsVerification.DScalarGeometric.theta ^ 2) * BfgsVerification.DScalarGeometric.scale n ^ 2 * x +
+      (1 - b) * (1 - BfgsVerification.DScalarGeometric.theta ^ 3) * BfgsVerification.DScalarGeometric.scale n ^ 3
+'BfgsVerification.DScalar.component_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.later_component_affine {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) {m n : ℕ} (hmn : m < n)
+  (hx : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x) :
+  BfgsVerification.DScalar.component b n x =
+    (1 - BfgsVerification.DScalarGeometric.theta ^ 2) * BfgsVerification.DScalarGeometric.scale n ^ 2 * x +
+      (1 - b) * (1 - BfgsVerification.DScalarGeometric.theta ^ 3) * BfgsVerification.DScalarGeometric.scale n ^ 3
+'BfgsVerification.DScalar.later_component_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.tail_components {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hx : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x) :
+  ∑' (n : ℕ), BfgsVerification.DScalar.component b (n + (m + 1)) x =
+    (BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m) ^ 2 * x +
+      (1 - b) * (BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m) ^ 3
+'BfgsVerification.DScalar.tail_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_interval {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hxlo : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x)
+  (hxhi : x ≤ b * BfgsVerification.DScalarGeometric.scale m) :
+  BfgsVerification.DScalar.positivePart b x =
+    (BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m) ^ 3 +
+      b * BfgsVerification.DScalarGeometric.scale m ^ 3 * (1 - BfgsVerification.DScalarGeometric.theta) *
+        (BfgsVerification.DScalarGeometric.theta ^ 2 *
+            BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale m) x +
+          (1 - BfgsVerification.DScalarGeometric.theta ^ 2) *
+            BfgsVerification.DScalarRamp.primitive b
+              (BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale m) x))
+'BfgsVerification.DScalar.positivePart_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_outer {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : b ≤ x) :
+  BfgsVerification.DScalar.positivePart b x = 1 + x - b
+'BfgsVerification.DScalar.positivePart_outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.slopeComponent_nonpos {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : x ≤ 0) (n : ℕ) :
+  BfgsVerification.DScalar.slopeComponent b n x = 0
+'BfgsVerification.DScalar.slopeComponent_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.curvatureComponent_nonpos {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : x ≤ 0) (n : ℕ) :
+  BfgsVerification.DScalar.curvatureComponent b n x = 0
+'BfgsVerification.DScalar.curvatureComponent_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_nonpos {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : x ≤ 0) :
+  BfgsVerification.DScalar.positivePart b x = 0
+'BfgsVerification.DScalar.positivePart_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveSlope_nonpos {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : x ≤ 0) :
+  BfgsVerification.DScalar.positiveSlope b x = 0
+'BfgsVerification.DScalar.positiveSlope_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_nonpos {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : x ≤ 0) :
+  BfgsVerification.DScalar.positiveCurvature b x = 0
+'BfgsVerification.DScalar.positiveCurvature_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_nonnegative {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (x : ℝ) :
+  0 ≤ BfgsVerification.DScalar.positivePart b x
+'BfgsVerification.DScalar.positivePart_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_nonnegative {b : ℝ} (hb : 0 < b) (x : ℝ) :
+  0 ≤ BfgsVerification.DScalar.positiveCurvature b x
+'BfgsVerification.DScalar.positiveCurvature_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveSlope_monotone {b : ℝ} (hb : 0 < b) :
+  Monotone (BfgsVerification.DScalar.positiveSlope b)
+'BfgsVerification.DScalar.positiveSlope_monotone' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_convex {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) :
+  ConvexOn ℝ Set.univ (BfgsVerification.DScalar.positivePart b)
+'BfgsVerification.DScalar.positivePart_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.curvatureComponent_outer_zero {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (n : ℕ)
+  (hx : b * BfgsVerification.DScalarGeometric.scale n ≤ x) : BfgsVerification.DScalar.curvatureComponent b n x = 0
+'BfgsVerification.DScalar.curvatureComponent_outer_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_outer {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : b ≤ x) :
+  BfgsVerification.DScalar.positiveCurvature b x = 0
+'BfgsVerification.DScalar.positiveCurvature_outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.curvatureComponent_other_zero {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) {m n : ℕ} (hnm : n ≠ m)
+  (hxlo : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x)
+  (hxhi : x ≤ b * BfgsVerification.DScalarGeometric.scale m) : BfgsVerification.DScalar.curvatureComponent b n x = 0
+'BfgsVerification.DScalar.curvatureComponent_other_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_interval {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hxlo : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x)
+  (hxhi : x ≤ b * BfgsVerification.DScalarGeometric.scale m) :
+  BfgsVerification.DScalar.positiveCurvature b x = BfgsVerification.DScalar.curvatureComponent b m x
+'BfgsVerification.DScalar.positiveCurvature_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_bounds {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (x : ℝ) :
+  0 ≤ BfgsVerification.DScalar.positiveCurvature b x ∧ BfgsVerification.DScalar.positiveCurvature b x ≤ 102 / b
+'BfgsVerification.DScalar.positiveCurvature_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.coordinate_node {b : ℝ} (hb : 0 < b) (m : ℕ) :
+  BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale m)
+      (b * BfgsVerification.DScalarGeometric.scale m) =
+    1
+'BfgsVerification.DScalar.coordinate_node' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_node {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ) :
+  BfgsVerification.DScalar.positivePart b (b * BfgsVerification.DScalarGeometric.scale m) =
+    BfgsVerification.DScalarGeometric.scale m ^ 3
+'BfgsVerification.DScalar.positivePart_node' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_positive {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (hx : 0 < x) :
+  0 < BfgsVerification.DScalar.positivePart b x
+'BfgsVerification.DScalar.positivePart_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.earlier_slope_zero {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) {m n : ℕ} (hnm : n < m)
+  (hx : x ≤ b * BfgsVerification.DScalarGeometric.scale m) : BfgsVerification.DScalar.slopeComponent b n x = 0
+'BfgsVerification.DScalar.earlier_slope_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.later_slope_constant {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) {m n : ℕ} (hmn : m < n)
+  (hx : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x) :
+  BfgsVerification.DScalar.slopeComponent b n x =
+    BfgsVerification.DScalarGeometric.scale n ^ 2 * (1 - BfgsVerification.DScalarGeometric.theta ^ 2)
+'BfgsVerification.DScalar.later_slope_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveSlope_interval {b x : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hxlo : b * BfgsVerification.DScalarGeometric.theta * BfgsVerification.DScalarGeometric.scale m ≤ x)
+  (hxhi : x ≤ b * BfgsVerification.DScalarGeometric.scale m) :
+  BfgsVerification.DScalar.positiveSlope b x =
+    BfgsVerification.DScalarGeometric.scale m ^ 2 *
+      (BfgsVerification.DScalarGeometric.theta ^ 2 +
+        (1 - BfgsVerification.DScalarGeometric.theta ^ 2) *
+          BfgsVerification.DScalarRamp.ramp b
+            (BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale m) x))
+'BfgsVerification.DScalar.positiveSlope_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveSlope_node {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ) :
+  BfgsVerification.DScalar.positiveSlope b (b * BfgsVerification.DScalarGeometric.scale m) =
+    BfgsVerification.DScalarGeometric.scale m ^ 2
+'BfgsVerification.DScalar.positiveSlope_node' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positiveCurvature_node {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ) :
+  BfgsVerification.DScalar.positiveCurvature b (b * BfgsVerification.DScalarGeometric.scale m) = 0
+'BfgsVerification.DScalar.positiveCurvature_node' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.coordinate_le_iff {b a x : ℝ} (hb : 0 < b) (ha : 0 < a) (q : ℝ) :
+  BfgsVerification.DScalarGeometric.coordinate b a x ≤ q ↔
+    x ≤ b * a * (BfgsVerification.DScalarGeometric.theta + (1 - BfgsVerification.DScalarGeometric.theta) * q)
+'BfgsVerification.DScalar.coordinate_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.coordinate_ge_iff {b a x : ℝ} (hb : 0 < b) (ha : 0 < a) (q : ℝ) :
+  q ≤ BfgsVerification.DScalarGeometric.coordinate b a x ↔
+    b * a * (BfgsVerification.DScalarGeometric.theta + (1 - BfgsVerification.DScalarGeometric.theta) * q) ≤ x
+'BfgsVerification.DScalar.coordinate_ge_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.lower_threshold_identity (b a : ℝ) :
+  b * a *
+      (BfgsVerification.DScalarGeometric.theta +
+        (1 - BfgsVerification.DScalarGeometric.theta) *
+          (BfgsVerification.DScalarRamp.center b + BfgsVerification.DScalarRamp.epsilon)) =
+    (b - BfgsVerification.DScalarRamp.lowerLength b) * a
+'BfgsVerification.DScalar.lower_threshold_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.upper_threshold_identity (b : ℝ) (n : ℕ) :
+  b * BfgsVerification.DScalarGeometric.scale n *
+      (BfgsVerification.DScalarGeometric.theta +
+        (1 - BfgsVerification.DScalarGeometric.theta) *
+          (BfgsVerification.DScalarRamp.center b - BfgsVerification.DScalarRamp.epsilon)) =
+    (b + BfgsVerification.DScalarRamp.upperLength b) * BfgsVerification.DScalarGeometric.scale (n + 1)
+'BfgsVerification.DScalar.upper_threshold_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.lower_threshold_positive {b : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) :
+  0 < b - BfgsVerification.DScalarRamp.lowerLength b
+'BfgsVerification.DScalar.lower_threshold_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.plateau_earlier_coordinate {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hh : |h| ≤ BfgsVerification.DScalarGeometric.scale m / 2) {n : ℕ} (hnm : n < m) :
+  BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale n)
+      (b * BfgsVerification.DScalarGeometric.scale m + h) ≤
+    BfgsVerification.DScalarRamp.center b - BfgsVerification.DScalarRamp.epsilon
+'BfgsVerification.DScalar.plateau_earlier_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.plateau_later_coordinate {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hh : |h| ≤ BfgsVerification.DScalarGeometric.scale m / 2) {n : ℕ} (hmn : m ≤ n) :
+  BfgsVerification.DScalarRamp.center b + BfgsVerification.DScalarRamp.epsilon ≤
+    BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale n)
+      (b * BfgsVerification.DScalarGeometric.scale m + h)
+'BfgsVerification.DScalar.plateau_later_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.plateau_earlier_component {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hh : |h| ≤ BfgsVerification.DScalarGeometric.scale m / 2) {n : ℕ} (hnm : n < m) :
+  BfgsVerification.DScalar.component b n (b * BfgsVerification.DScalarGeometric.scale m + h) = 0
+'BfgsVerification.DScalar.plateau_earlier_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.component_affine_of_coordinate {b x : ℝ} (hb : 0 < b) (n : ℕ)
+  (hx :
+    BfgsVerification.DScalarRamp.center b + BfgsVerification.DScalarRamp.epsilon ≤
+      BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale n) x) :
+  BfgsVerification.DScalar.component b n x =
+    (1 - BfgsVerification.DScalarGeometric.theta ^ 2) * BfgsVerification.DScalarGeometric.scale n ^ 2 * x +
+      (1 - b) * (1 - BfgsVerification.DScalarGeometric.theta ^ 3) * BfgsVerification.DScalarGeometric.scale n ^ 3
+'BfgsVerification.DScalar.component_affine_of_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DScalar.positivePart_plateau {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
+  (hh : |h| ≤ BfgsVerification.DScalarGeometric.scale m / 2) :
+  BfgsVerification.DScalar.positivePart b (b * BfgsVerification.DScalarGeometric.scale m + h) =
+    BfgsVerification.DScalarGeometric.scale m ^ 3 + BfgsVerification.DScalarGeometric.scale m ^ 2 * h
+'BfgsVerification.DScalar.positivePart_plateau' depends on axioms: [propext, Classical.choice, Quot.sound]
+def BfgsVerification.DScalar.component : ℝ → ℕ → ℝ → ℝ :=
+fun b n x =>
+  b * BfgsVerification.DScalarGeometric.scale n ^ 3 * (1 - BfgsVerification.DScalarGeometric.theta) *
+      (1 - BfgsVerification.DScalarGeometric.theta ^ 2) *
+    BfgsVerification.DScalarRamp.primitive b
+      (BfgsVerification.DScalarGeometric.coordinate b (BfgsVerification.DScalarGeometric.scale n) x)
+def BfgsVerification.DScalar.positivePart : ℝ → ℝ → ℝ :=
+fun b x => ∑' (n : ℕ), BfgsVerification.DScalar.component b n x
+def BfgsVerification.DScalar.positiveSlope : ℝ → ℝ → ℝ :=
+fun b x => ∑' (n : ℕ), BfgsVerification.DScalar.slopeComponent b n x
+def BfgsVerification.DScalar.positiveCurvature : ℝ → ℝ → ℝ :=
+fun b x => ∑' (n : ℕ), BfgsVerification.DScalar.curvatureComponent b n x

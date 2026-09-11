@@ -322,3 +322,19 @@ endpoint estimates; and U's actual weaker-curvature theorem separately from its
 explicit examples. Original source spans and hashes are preserved. Remaining
 A/R/F interpretation, semialgebraic, historical-reference and synthesis claims
 remain obligations until their own actual statements are proved or corrected.
+
+
+## Ninth whole-report tranche
+
+Full audit: 2,718 explicit/3,841 total theorem declarations; 95 exact targets.
+The new exact constructions and remaining boundaries are reviewed in
+`audit/REPORT_CONSTRUCTION_STATEMENT_REVIEW.md`. The source register now
+distinguishes the completed D scalar/coercive examples, U spike/oracle,
+C actual tail transport, and R examples from their remaining local embedding,
+secant, variable-jump, nuclear and historical obligations. No actual BFGS
+conclusion is substituted by a sequence hierarchy or an assumed limit.
+
+R's older four-piece numerical reference is not verified for the current
+objective. The actual current D supporting heights and secant limit, and
+RS/SP failure on its initial sublevel, are checked and explicitly documented.
+Original research sources remain unchanged. Entire-report completion is false.

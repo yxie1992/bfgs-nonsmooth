@@ -1,0 +1,15 @@
+# Independent review of D's ramp, negative extension, and scalar assembly
+
+The root agent reviewed the other agent's `DScalarRamp`, `DScalarNegative`, `DScalarAssembly`, and `DScalarTarget` against D.tex, lines 246–357, including their scoped compiler and transitive-axiom evidence. The four files contain 160 explicit declarations (83 + 33 + 43 + 1). No mathematical defect was found. The separate 80-declaration geometric-series chain received an independent review in `D_SCALAR_SERIES_PEER_REVIEW.md`.
+
+The actual nested joins agree with the literal source polynomials at both transition endpoints. `join_hasDerivAt` proves derivative gluing using the union of the two one-sided domains, with both value and derivative matching established. Ramp regularity and primitive regularity therefore include endpoints. The source primitive is identified with its actual interval integral after proving its value at zero; no integral identity is supplied as a premise.
+
+All center and plateau inequalities hold uniformly for `2≤b≤34`, which contains the two source parameters. The exact curvature bound is 96 for the ramp derivative and `102*a/b` after scaling. The global Lipschitz bound for the ramp derivative is proved directly from the clipped polynomial, so no third derivative at a join is assumed. The printed third-derivative estimate is separately proved inside an actual ramp, where that derivative exists.
+
+The negative extension has the actual quadratic and cubic formulas, zero on the positive half-line, and actual matching derivatives at -1 and zero. Its second derivative equals `6*clip(-x)`, proving both the bound 6 and global 6-Lipschitz continuity. Convexity, strict positivity on the negative half-line, and coercivity at negative infinity are consequences of those formulas.
+
+The positive curvature sum attains one of its nonnegative components at each point. A component's value elsewhere is bounded by the full sum, giving the global Lipschitz estimate with the sharp source constant without summing infinitely many Lipschitz constants. The assembled second derivative is the maximum of the positive and negative second derivatives because their supports are on opposite half-lines. This proves the maximum of the two constants, rather than their sum.
+
+The complete scalar target retains actual first and second derivative existence, global C2 regularity, convexity, unique zero, coercivity and compact sublevels, all node jets and closed affine plateaus, and every printed region formula. The proof covers zero, both finite joins, and the infinitely accumulating geometric joins. Source C2,1 regularity is expressed by C2 plus Lipschitz continuity of the actual second derivative. No uniform positive lower curvature or analyticity is inferred.
+
+All scoped audits report only `propext`, `Classical.choice`, and `Quot.sound`. The original research source is unchanged. The actual two-dimensional embedding and its infinite deterministic full-BFGS run remain separate obligations after this scalar milestone.

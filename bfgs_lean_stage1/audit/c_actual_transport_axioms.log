@@ -1,0 +1,248 @@
+BfgsVerification.PlanarObjectiveField.field_structural_neighborhood {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hlevel : ∀ x ∈ K, F x = ℓ) {m : ℕ}
+  {points : Fin m → BfgsVerification.Vec 2} {v : Fin m → ℝ → BfgsVerification.Vec 2}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} (hv : ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) ℓ)
+  (hcorner : ∀ (i : Fin m), ∀ᶠ (z : BfgsVerification.Vec 2) in nhds (points i), W z = v i (F z))
+  (hcover : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ ∃ i, x = points i) :
+  ∃ N,
+    IsOpen N ∧
+      K ⊆ N ∧
+        ∀ x ∈ N,
+          (∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) ∧
+            (ContDiffAt ℝ 2 F x ∨ ∃ i, ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, W z = v i (F z))
+'BfgsVerification.PlanarObjectiveField.field_structural_neighborhood' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.exists_structured_visible_comparison_field {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {K : Set (BfgsVerification.Vec 2)} {ℓ : ℝ} (hK : IsCompact K) (hlevel : ∀ x ∈ K, F x = ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular : ∀ x ∈ K, ContDiffAt ℝ 2 F x ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F x)
+  (hnoncritical : ∀ x ∈ K, ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F x) :
+  ∃ m χ v,
+    (∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) ∧
+      ∃ N η,
+        0 < η ∧
+          IsOpen N ∧
+            K ⊆ N ∧
+              (∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field hF χ v) U) ∧
+                (∀ x ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                      η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x)) ∧
+                  (∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) ∧
+                    (∀ x ∈ N,
+                        ContDiffAt ℝ 2 F x ∨
+                          ∃ i,
+                            ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+                              BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z)) ∧
+                      ∀ x ∈ K,
+                        ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                          ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+                            BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field hF χ v x) =
+                              BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field hF χ v x)
+'BfgsVerification.PlanarObjectiveField.exists_structured_visible_comparison_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.compact_velocity_derivative_bound {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : Continuous F) {m : ℕ} {v : Fin m → ℝ → BfgsVerification.Vec 2} {Q : Set (BfgsVerification.Vec 2)}
+  (hQ : IsCompact Q) (hv : ∀ x ∈ Q, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x)) :
+  ∃ A, 0 < A ∧ ∀ x ∈ Q, ∀ (i : Fin m), ‖BfgsVerification.euclideanVector (deriv (v i) (F x))‖ ≤ A
+'BfgsVerification.PlanarObjectiveField.compact_velocity_derivative_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.pairDet_eq_rotated_dot (s v : BfgsVerification.Vec 2) :
+  BfgsVerification.HomogeneousPlanar.pairDet s v = BfgsVerification.dot (BfgsVerification.PlanarAmbientFrame.rotate s) v
+'BfgsVerification.PlanarObjectiveField.pairDet_eq_rotated_dot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.abs_pairDet_le_euclidean_norm (s v : BfgsVerification.Vec 2) :
+  |BfgsVerification.HomogeneousPlanar.pairDet s v| ≤
+    ‖BfgsVerification.euclideanVector s‖ * ‖BfgsVerification.euclideanVector v‖
+'BfgsVerification.PlanarObjectiveField.abs_pairDet_le_euclidean_norm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.pairDet_hasDerivWithinAt {w : ℝ → BfgsVerification.Vec 2}
+  {w' s : BfgsVerification.Vec 2} {t : ℝ} {U : Set ℝ} (hw : HasDerivWithinAt w w' U t) :
+  HasDerivWithinAt (fun τ => BfgsVerification.HomogeneousPlanar.pairDet s (w τ))
+    (BfgsVerification.HomogeneousPlanar.pairDet s w') U t
+'BfgsVerification.PlanarObjectiveField.pairDet_hasDerivWithinAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.corner_determinant_hasDerivWithinAt {F : BfgsVerification.Vec 2 → ℝ}
+  {W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2} {v : ℝ → BfgsVerification.Vec 2}
+  {v' x s : BfgsVerification.Vec 2} {t a : ℝ} (hv : HasDerivAt v v' (F (x + t • s)))
+  (hφ : HasDerivWithinAt (fun τ => F (x + τ • s)) a (Set.Ici t) t)
+  (hcorner : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds (x + t • s), W z = v (F z)) :
+  HasDerivWithinAt (fun τ => BfgsVerification.HomogeneousPlanar.pairDet s (W (x + τ • s)))
+    (BfgsVerification.HomogeneousPlanar.pairDet s (a • v')) (Set.Ici t) t
+'BfgsVerification.PlanarObjectiveField.corner_determinant_hasDerivWithinAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.corner_determinant_quotient_bound {s v' : BfgsVerification.Vec 2} (hs : s ≠ 0)
+  {a A κ D : ℝ} (hκ : 0 < κ) (hA : ‖BfgsVerification.euclideanVector v'‖ ≤ A)
+  (hD : κ * ‖BfgsVerification.euclideanVector s‖ ≤ |D|) :
+  |BfgsVerification.HomogeneousPlanar.pairDet s (a • v') / D| ≤ A / κ * |a|
+'BfgsVerification.PlanarObjectiveField.corner_determinant_quotient_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.field_determinant_right_derivative_bound {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ} {v : Fin m → ℝ → BfgsVerification.Vec 2}
+  {x s : BfgsVerification.Vec 2} {t a M A κ μ : ℝ} (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) (hs : s ≠ 0)
+  (hv : ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F (x + t • s)))
+  (hstruct :
+    ContDiffAt ℝ 2 F (x + t • s) ∨
+      ∃ i,
+        ∀ᶠ (z : BfgsVerification.Vec 2) in nhds (x + t • s),
+          BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z))
+  (hφ : HasDerivWithinAt (fun τ => F (x + τ • s)) a (Set.Ici t) t) (hκ : 0 < κ) (hμ : 0 < μ)
+  (hgμ :
+    DifferentiableAt ℝ F (x + t • s) →
+      μ ≤ ‖BfgsVerification.euclideanVector (BfgsVerification.coordinateGradient F (x + t • s))‖)
+  (hM : ‖fderiv ℝ (BfgsVerification.PlanarObjectiveField.field hF χ v) (x + t • s)‖ ≤ M)
+  (hA : ∀ (i : Fin m), ‖BfgsVerification.euclideanVector (deriv (v i) (F (x + t • s)))‖ ≤ A)
+  (hD :
+    κ * ‖BfgsVerification.euclideanVector s‖ ≤
+      |BfgsVerification.HomogeneousPlanar.pairDet s (BfgsVerification.PlanarObjectiveField.field hF χ v (x + t • s))|) :
+  ∃ D',
+    HasDerivWithinAt
+        (fun τ =>
+          BfgsVerification.HomogeneousPlanar.pairDet s (BfgsVerification.PlanarObjectiveField.field hF χ v (x + τ • s)))
+        D' (Set.Ici t) t ∧
+      |D' /
+            BfgsVerification.HomogeneousPlanar.pairDet s
+              (BfgsVerification.PlanarObjectiveField.field hF χ v (x + t • s))| ≤
+        max (6 * M / (κ * μ)) (A / κ) * |a|
+'BfgsVerification.PlanarObjectiveField.field_determinant_right_derivative_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarObjectiveField.structured_field_segment_transport {F : BfgsVerification.Vec 2 → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ} {v : Fin m → ℝ → BfgsVerification.Vec 2}
+  {Q : Set (BfgsVerification.Vec 2)} {x s g : BfgsVerification.Vec 2} {η G M A κ d : ℝ}
+  (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i)) (hs : s ≠ 0) (hv : ∀ q ∈ Q, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F q))
+  (hstruct :
+    ∀ q ∈ Q,
+      ContDiffAt ℝ 2 F q ∨
+        ∃ i,
+          ∀ᶠ (z : BfgsVerification.Vec 2) in nhds q, BfgsVerification.PlanarObjectiveField.field hF χ v z = v i (F z))
+  (hcont : ∀ q ∈ Q, ContinuousAt (BfgsVerification.PlanarObjectiveField.field hF χ v) q) (hη : 0 < η) (hG : 0 < G)
+  (hA : 0 ≤ A) (hκ : 0 < κ)
+  (hvis :
+    ∀ q ∈ Q,
+      ∀ a ∈ BfgsVerification.ConvexSubdifferential.subdifferential F q,
+        η ≤ BfgsVerification.dot a (BfgsVerification.PlanarObjectiveField.field hF χ v q))
+  (hW : ∀ q ∈ Q, BfgsVerification.sqNorm (BfgsVerification.PlanarObjectiveField.field hF χ v q) ≤ G ^ 2)
+  (hM : ∀ q ∈ Q, ‖fderiv ℝ (BfgsVerification.PlanarObjectiveField.field hF χ v) q‖ ≤ M)
+  (hvel : ∀ q ∈ Q, ∀ (i : Fin m), ‖BfgsVerification.euclideanVector (deriv (v i) (F q))‖ ≤ A)
+  (hsegment : ∀ t ∈ Set.Icc 0 1, x + t • s ∈ Q)
+  (htrans :
+    ∀ t ∈ Set.Icc 0 1,
+      κ * ‖BfgsVerification.euclideanVector s‖ ≤
+        |BfgsVerification.HomogeneousPlanar.pairDet s (BfgsVerification.PlanarObjectiveField.field hF χ v (x + t • s))|)
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) (hd : 0 ≤ d) (hgd : BfgsVerification.dot g s = -d)
+  (hdescent : F (x + s) ≤ F x) :
+  ∃ lam β,
+    0 < lam ∧
+      BfgsVerification.PlanarObjectiveField.field hF χ v (x + s) =
+          lam • BfgsVerification.PlanarObjectiveField.field hF χ v x + β • s ∧
+        |Real.log lam| ≤ 2 * max (6 * M / (κ * (η / G))) (A / κ) * d
+'BfgsVerification.PlanarObjectiveField.structured_field_segment_transport' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.eventually_segments_in_cluster_neighborhood {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hK : IsCompact R.initialSublevel)
+  (hsteps : Filter.Tendsto R.displacement Filter.atTop (nhds 0)) {N : Set (BfgsVerification.Vec n)} (hN : IsOpen N)
+  (hΓN : BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N) :
+  ∃ J, ∀ (k : ℕ), J ≤ k → ∀ t ∈ Set.Icc 0 1, R.x k + t • R.displacement k ∈ N
+'BfgsVerification.AdmissibleBFGSRun.eventually_segments_in_cluster_neighborhood' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.eventually_structured_field_transport {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (hsteps : Filter.Tendsto R.displacement Filter.atTop (nhds 0)) {m : ℕ} {χ : Fin m → BfgsVerification.Vec 2 → ℝ}
+  {v : Fin m → ℝ → BfgsVerification.Vec 2} (hχ : ∀ (i : Fin m), ContDiff ℝ (↑⊤) (χ i))
+  {N : Set (BfgsVerification.Vec 2)} (hN : IsOpen N) (hΓN : BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N)
+  {η : ℝ} (hη : 0 < η)
+  (hLip : ∀ x ∈ N, ∃ L, ∃ U ∈ nhds x, LipschitzOnWith L (BfgsVerification.PlanarObjectiveField.field ⋯ χ v) U)
+  (hvis :
+    ∀ x ∈ N,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        η ≤ BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field ⋯ χ v x))
+  (hv : ∀ x ∈ N, ∀ (i : Fin m), ContDiffAt ℝ 1 (v i) (F x))
+  (hstruct :
+    ∀ x ∈ N,
+      ContDiffAt ℝ 2 F x ∨
+        ∃ i, ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, BfgsVerification.PlanarObjectiveField.field ⋯ χ v z = v i (F z))
+  (hcommon :
+    ∀ x ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F x,
+          BfgsVerification.dot g (BfgsVerification.PlanarObjectiveField.field ⋯ χ v x) =
+            BfgsVerification.dot h (BfgsVerification.PlanarObjectiveField.field ⋯ χ v x)) :
+  ∃ C,
+    0 ≤ C ∧
+      ∃ J,
+        ∀ (k : ℕ),
+          J ≤ k →
+            ∃ lam β,
+              0 < lam ∧
+                BfgsVerification.PlanarObjectiveField.field ⋯ χ v (R.x (k + 1)) =
+                    lam • BfgsVerification.PlanarObjectiveField.field ⋯ χ v (R.x k) + β • R.displacement k ∧
+                  |Real.log lam| ≤ C * R.d k
+'BfgsVerification.AdmissibleBFGSRun.eventually_structured_field_transport' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.exists_log_transported_planar_field {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel) {ℓ : ℝ}
+  (hlim : Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds ℓ)) (hlower : ∃ y, F y < ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F p)
+  (hnoncritical :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p) :
+  ∃ W,
+    (∃ N η,
+        0 < η ∧
+          IsOpen N ∧
+            BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N ∧
+              (∀ p ∈ N, ∃ L, ∃ U ∈ nhds p, LipschitzOnWith L W U) ∧
+                ∀ p ∈ N,
+                  ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p, η ≤ BfgsVerification.dot g (W p)) ∧
+      ∃ C,
+        0 ≤ C ∧
+          ∃ J,
+            ∀ (k : ℕ),
+              J ≤ k →
+                ∃ lam β, 0 < lam ∧ W (R.x (k + 1)) = lam • W (R.x k) + β • R.displacement k ∧ |Real.log lam| ≤ C * R.d k
+'BfgsVerification.AdmissibleBFGSRun.exists_log_transported_planar_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.exists_log_transported_planar_field_of_no_affineCritical_cluster
+  {F : BfgsVerification.Vec 2 → ℝ} (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (star : BfgsVerification.Vec 2) (hmin : ∀ (z : BfgsVerification.Vec 2), F star ≤ F z)
+  (hstrict :
+    ∀ (ℓ : ℝ),
+      F star < ℓ → ℓ ≤ F (R.x 0) → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F p)
+  (hnoncritical :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p) :
+  ∃ W,
+    (∃ N η,
+        0 < η ∧
+          IsOpen N ∧
+            BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N ∧
+              (∀ p ∈ N, ∃ L, ∃ U ∈ nhds p, LipschitzOnWith L W U) ∧
+                ∀ p ∈ N,
+                  ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p, η ≤ BfgsVerification.dot g (W p)) ∧
+      ∃ C,
+        0 ≤ C ∧
+          ∃ J,
+            ∀ (k : ℕ),
+              J ≤ k →
+                ∃ lam β, 0 < lam ∧ W (R.x (k + 1)) = lam • W (R.x k) + β • R.displacement k ∧ |Real.log lam| ≤ C * R.d k
+'BfgsVerification.AdmissibleBFGSRun.exists_log_transported_planar_field_of_no_affineCritical_cluster' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

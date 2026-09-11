@@ -1,0 +1,5 @@
+import BfgsVerification.RadialNormConvention
+#print axioms BfgsVerification.RadialNormConvention.positive_band_radius_lower
+#print axioms BfgsVerification.RadialNormConvention.compact_positive_band_radii
+#print axioms BfgsVerification.RadialNormConvention.HasNormScaledInwardBounds
+#print axioms BfgsVerification.RadialNormConvention.inward_iff_norm_scaled_on_compact

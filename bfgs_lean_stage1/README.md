@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 2,193 explicit
-theorems and 3,134 theorem declarations including generated auxiliaries. All 85
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 2,718 explicit
+theorems and 3,841 theorem declarations including generated auxiliaries. All 95
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_dynamics_check.log`.
+`audit/report_construction_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -30,9 +30,17 @@ comparison-field construction and neighborhood visibility, named scalar/Euclidea
 residual families and radial interpretations, and the exact D/L seed as an actual
 deterministic full-BFGS run with every trial certified and a nonstationary limit.
 See [audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md](audit/REPORT_DYNAMICS_STATEMENT_REVIEW.md).
-C endpoint/main conclusions, U examples, A semialgebraic infrastructure, D/L
-coercive/local embeddings and return-map dynamics, and final source reconciliation
-remain open. The homogeneous seed is not the final coercive/local D counterexample.
+The ninth tranche proves D's actual coercive deterministic counterexample and
+complete global C2,1 scalar construction, U's literal infinite-spike objective,
+all-dimensional convergence/radial separation and executable exact rational
+oracle, C's actual tail logarithmic transport, and the rectangular spectral-norm
+and singular-curvature interpretations in R. See
+[audit/REPORT_CONSTRUCTION_STATEMENT_REVIEW.md](audit/REPORT_CONSTRUCTION_STATEMENT_REVIEW.md).
+D's local two-dimensional embedding, L's persistence/embeddings, C's secant/main
+conclusions, U's variable-jump example, A's remaining infrastructure, nuclear and
+descriptive family identifications, and final source reconciliation remain open.
+R's old four-piece numerical attribution remains explicitly unresolved; the
+supporting-plane interpretation is proved for the actual current D objective.
 
 ## Results and exact scope
 

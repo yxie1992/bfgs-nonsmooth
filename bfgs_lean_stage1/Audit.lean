@@ -454,3 +454,46 @@ example : BfgsVerification.AllSeedTrialsTarget := BfgsVerification.allSeedTrials
 #print axioms BfgsVerification.SeedOrbit.trialActive
 #print BfgsVerification.SeedOrbit.trialAccept
 #print axioms BfgsVerification.SeedOrbit.trialAccept
+
+-- Ninth tranche: exact construction targets and actual model definitions.
+#print BfgsVerification.CoerciveSeedFailureTarget
+example : BfgsVerification.CoerciveSeedFailureTarget := BfgsVerification.coerciveSeedFailure
+#print axioms BfgsVerification.coerciveSeedFailure
+#print BfgsVerification.DScalarFunctionTarget
+example : BfgsVerification.DScalarFunctionTarget := BfgsVerification.dScalarFunction
+#print axioms BfgsVerification.dScalarFunction
+#print BfgsVerification.CenteredSpectralConvergenceTarget
+example : BfgsVerification.CenteredSpectralConvergenceTarget := BfgsVerification.centeredSpectralConvergence
+#print axioms BfgsVerification.centeredSpectralConvergence
+#print BfgsVerification.SingularCurvatureCounterexampleTarget
+example : BfgsVerification.SingularCurvatureCounterexampleTarget := BfgsVerification.singularCurvatureCounterexample
+#print axioms BfgsVerification.singularCurvatureCounterexample
+#print BfgsVerification.NormalSpike.SourceSpikePropertiesTarget
+example : BfgsVerification.NormalSpike.SourceSpikePropertiesTarget := BfgsVerification.NormalSpike.sourceSpikeProperties
+#print axioms BfgsVerification.NormalSpike.sourceSpikeProperties
+#print BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget
+example : BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget := BfgsVerification.NormalSpike.spikeObjectiveConvergence
+#print axioms BfgsVerification.NormalSpike.spikeObjectiveConvergence
+#print BfgsVerification.NormalSpike.SpikeRadialSeparationTarget
+example : BfgsVerification.NormalSpike.SpikeRadialSeparationTarget := BfgsVerification.NormalSpike.spikeRadialSeparation
+#print axioms BfgsVerification.NormalSpike.spikeRadialSeparation
+#print BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget
+example : BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget := BfgsVerification.NormalSpike.spikeObjectiveGeometry
+#print axioms BfgsVerification.NormalSpike.spikeObjectiveGeometry
+#print BfgsVerification.NormalSpike.SpikeHessianPeakTarget
+example : BfgsVerification.NormalSpike.SpikeHessianPeakTarget := BfgsVerification.NormalSpike.spikeHessianPeaks
+#print axioms BfgsVerification.NormalSpike.spikeHessianPeaks
+#print BfgsVerification.NormalSpike.RationalSpikeOracleTarget
+example : BfgsVerification.NormalSpike.RationalSpikeOracleTarget := BfgsVerification.NormalSpike.rationalSpikeOracle
+#print axioms BfgsVerification.NormalSpike.rationalSpikeOracle
+#print BfgsVerification.SeedOrbit.coerciveFamily
+#print BfgsVerification.SeedOrbit.coerciveRun
+#print BfgsVerification.DScalar.phi
+#print BfgsVerification.DScalar.positivePart
+#print BfgsVerification.DScalar.component
+#print BfgsVerification.DScalarRamp.primitive
+#print BfgsVerification.DScalarNegative.negative
+#print BfgsVerification.CenteredSpectral.objective
+#print BfgsVerification.CenteredSpectral.matrix
+#print BfgsVerification.NormalSpike.sourcePrimitive
+#print BfgsVerification.NormalSpike.objective

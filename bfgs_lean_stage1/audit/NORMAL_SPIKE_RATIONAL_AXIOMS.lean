@@ -1,0 +1,34 @@
+import BfgsVerification.NormalSpikeRational
+
+#print axioms BfgsVerification.NormalSpike.ratScale
+#print axioms BfgsVerification.NormalSpike.ratMassPoly
+#print axioms BfgsVerification.NormalSpike.ratMomentPoly
+#print axioms BfgsVerification.NormalSpike.ratCumulativeMass
+#print axioms BfgsVerification.NormalSpike.ratPrimitive
+#print axioms BfgsVerification.NormalSpike.ratScaledPrimitive
+#print axioms BfgsVerification.NormalSpike.ratScaledMass
+#print axioms BfgsVerification.NormalSpike.ratScale_cast
+#print axioms BfgsVerification.NormalSpike.ratMassPoly_cast
+#print axioms BfgsVerification.NormalSpike.ratMomentPoly_cast
+#print axioms BfgsVerification.NormalSpike.ratCumulativeMass_cast
+#print axioms BfgsVerification.NormalSpike.ratPrimitive_cast
+#print axioms BfgsVerification.NormalSpike.ratScaledPrimitive_cast
+#print axioms BfgsVerification.NormalSpike.ratScaledMass_cast
+#print axioms BfgsVerification.NormalSpike.exists_rat_oracle_index
+#print axioms BfgsVerification.NormalSpike.rationalOracleIndex
+#print axioms BfgsVerification.NormalSpike.rationalValueOracle
+#print axioms BfgsVerification.NormalSpike.rationalDerivativeOracle
+#print axioms BfgsVerification.NormalSpike.rationalOracleIndex_tail_bound
+#print axioms BfgsVerification.NormalSpike.rationalValueOracle_correct
+#print axioms BfgsVerification.NormalSpike.rationalDerivativeOracle_correct
+#print axioms BfgsVerification.NormalSpike.ratBump
+#print axioms BfgsVerification.NormalSpike.ratScaledDensity
+#print axioms BfgsVerification.NormalSpike.rationalSecondDerivativeOracle
+#print axioms BfgsVerification.NormalSpike.ratBump_cast
+#print axioms BfgsVerification.NormalSpike.ratScaledDensity_cast
+#print axioms BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_pos
+#print axioms BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_nonpos
+#print axioms BfgsVerification.NormalSpike.rationalSecondDerivativeOracle_correct
+#print axioms BfgsVerification.NormalSpike.scale_eq_source
+#print axioms BfgsVerification.NormalSpike.RationalSpikeOracleTarget
+#print axioms BfgsVerification.NormalSpike.rationalSpikeOracle

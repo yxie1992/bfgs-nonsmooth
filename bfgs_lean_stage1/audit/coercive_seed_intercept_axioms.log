@@ -1,0 +1,66 @@
+BfgsVerification.SeedOrbit.historical_point_not_current_optimizer :
+  3 / 8 ≤ BfgsVerification.SeedOrbit.coerciveObjective ![-1, 5]
+'BfgsVerification.SeedOrbit.historical_point_not_current_optimizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SeedOrbit.coercive_intercept_at_active {x : BfgsVerification.Vec 2} {i : Fin 3}
+  (h :
+    BfgsVerification.SeedOrbit.PointCertificate BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD x i) :
+  BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.SeedOrbit.coerciveObjective
+      BfgsVerification.SeedOrbit.coerciveOptimizer x
+      (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) =
+    -1 -
+      BfgsVerification.dot
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+        BfgsVerification.SeedOrbit.coerciveOptimizer
+'BfgsVerification.SeedOrbit.coercive_intercept_at_active' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.coerciveBranchIntercept : Fin 3 → ℝ
+'BfgsVerification.SeedOrbit.coerciveBranchIntercept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.coercive_branch_intercepts (i : Fin 3) :
+  -1 -
+      BfgsVerification.dot
+        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)
+        BfgsVerification.SeedOrbit.coerciveOptimizer =
+    BfgsVerification.SeedOrbit.coerciveBranchIntercept i
+'BfgsVerification.SeedOrbit.coercive_branch_intercepts' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.coercive_third_intercept_positive : 0 < BfgsVerification.SeedOrbit.coerciveBranchIntercept 2
+'BfgsVerification.SeedOrbit.coercive_third_intercept_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SeedOrbit.coercive_orbit_intercepts (k : ℕ) :
+  BfgsVerification.RadialCertificate.optimizerIntercept BfgsVerification.SeedOrbit.coerciveObjective
+      BfgsVerification.SeedOrbit.coerciveOptimizer (BfgsVerification.SeedOrbit.orbitPoint k)
+      (BfgsVerification.SeedOrbit.orbitGradient k) =
+    BfgsVerification.SeedOrbit.coerciveBranchIntercept (BfgsVerification.SeedOrbit.phase k)
+'BfgsVerification.SeedOrbit.coercive_orbit_intercepts' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.coerciveSecantFactor (j : Fin 3) : ℝ
+'BfgsVerification.SeedOrbit.coerciveSecantFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.orbit_secant_factor (k : ℕ) :
+  BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.SeedOrbit.orbitPoint k)
+      (BfgsVerification.SeedOrbit.orbitPoint (k + 1)) (BfgsVerification.SeedOrbit.orbitGradient k)
+      (BfgsVerification.SeedOrbit.orbitGradient (k + 1)) =
+    BfgsVerification.SeedOrbit.orbitScale k *
+      BfgsVerification.SeedOrbit.coerciveSecantFactor (BfgsVerification.SeedOrbit.phase k)
+'BfgsVerification.SeedOrbit.orbit_secant_factor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.orbit_secant_tendsto_zero :
+  Filter.Tendsto
+    (fun k =>
+      BfgsVerification.RadialCertificate.secantCurvature (BfgsVerification.SeedOrbit.orbitPoint k)
+        (BfgsVerification.SeedOrbit.orbitPoint (k + 1)) (BfgsVerification.SeedOrbit.orbitGradient k)
+        (BfgsVerification.SeedOrbit.orbitGradient (k + 1)))
+    Filter.atTop (nhds 0)
+'BfgsVerification.SeedOrbit.orbit_secant_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.coercive_no_radial_bounds :
+  ¬BfgsVerification.RadialCertificate.HasRadialSecantBounds BfgsVerification.SeedOrbit.coerciveObjective
+      {x |
+        BfgsVerification.SeedOrbit.coerciveObjective x ≤
+          BfgsVerification.SeedOrbit.coerciveObjective (BfgsVerification.SeedOrbit.orbitPoint 0)}
+      BfgsVerification.SeedOrbit.coerciveOptimizer
+'BfgsVerification.SeedOrbit.coercive_no_radial_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.coercive_no_intercept_bounds :
+  ¬BfgsVerification.RadialCertificate.HasInterceptBounds BfgsVerification.SeedOrbit.coerciveObjective
+      {x |
+        BfgsVerification.SeedOrbit.coerciveObjective x ≤
+          BfgsVerification.SeedOrbit.coerciveObjective (BfgsVerification.SeedOrbit.orbitPoint 0)}
+      BfgsVerification.SeedOrbit.coerciveOptimizer
+'BfgsVerification.SeedOrbit.coercive_no_intercept_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]

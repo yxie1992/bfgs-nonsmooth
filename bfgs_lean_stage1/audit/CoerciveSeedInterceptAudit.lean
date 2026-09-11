@@ -1,0 +1,24 @@
+import BfgsVerification.CoerciveSeedIntercept
+
+#check BfgsVerification.SeedOrbit.historical_point_not_current_optimizer
+#print axioms BfgsVerification.SeedOrbit.historical_point_not_current_optimizer
+#check BfgsVerification.SeedOrbit.coercive_intercept_at_active
+#print axioms BfgsVerification.SeedOrbit.coercive_intercept_at_active
+#check BfgsVerification.SeedOrbit.coerciveBranchIntercept
+#print axioms BfgsVerification.SeedOrbit.coerciveBranchIntercept
+#check BfgsVerification.SeedOrbit.coercive_branch_intercepts
+#print axioms BfgsVerification.SeedOrbit.coercive_branch_intercepts
+#check BfgsVerification.SeedOrbit.coercive_third_intercept_positive
+#print axioms BfgsVerification.SeedOrbit.coercive_third_intercept_positive
+#check BfgsVerification.SeedOrbit.coercive_orbit_intercepts
+#print axioms BfgsVerification.SeedOrbit.coercive_orbit_intercepts
+#check BfgsVerification.SeedOrbit.coerciveSecantFactor
+#print axioms BfgsVerification.SeedOrbit.coerciveSecantFactor
+#check BfgsVerification.SeedOrbit.orbit_secant_factor
+#print axioms BfgsVerification.SeedOrbit.orbit_secant_factor
+#check BfgsVerification.SeedOrbit.orbit_secant_tendsto_zero
+#print axioms BfgsVerification.SeedOrbit.orbit_secant_tendsto_zero
+#check BfgsVerification.SeedOrbit.coercive_no_radial_bounds
+#print axioms BfgsVerification.SeedOrbit.coercive_no_radial_bounds
+#check BfgsVerification.SeedOrbit.coercive_no_intercept_bounds
+#print axioms BfgsVerification.SeedOrbit.coercive_no_intercept_bounds

@@ -1,0 +1,72 @@
+def BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget : Prop :=
+∀ (n : ℕ)
+  (R :
+    BfgsVerification.AdmissibleBFGSRun (n + 2)
+      (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n))),
+  Filter.Tendsto (fun k => BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) (R.x k))
+      Filter.atTop (nhds 0) ∧
+    Filter.Tendsto R.x Filter.atTop (nhds 0)
+BfgsVerification.NormalSpike.spikeObjectiveConvergence : BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget
+def BfgsVerification.NormalSpike.SpikeRadialSeparationTarget : Prop :=
+∀ (n : ℕ),
+  ∀ K ∈ nhds 0,
+    ¬BfgsVerification.RadialCertificate.HasRadialSecantBounds
+        (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n)) K 0
+BfgsVerification.NormalSpike.spikeRadialSeparation : BfgsVerification.NormalSpike.SpikeRadialSeparationTarget
+def BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget : Prop :=
+∀ (n : ℕ),
+  ConvexOn ℝ Set.univ (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n)) ∧
+    BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ 1
+        (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n)) ∧
+      Filter.Tendsto (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n))
+          (Filter.cocompact (BfgsVerification.Vec (n + 2))) Filter.atTop ∧
+        BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) 0 = 0 ∧
+          (∀ (x : BfgsVerification.Vec (n + 2)),
+              BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) 0 ≤
+                  BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) x ∧
+                (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) x =
+                      BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) 0 →
+                    x = 0) ∧
+                  (DifferentiableAt ℝ (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n))
+                      x ↔
+                    x 0 ≠ 0)) ∧
+            (∀ (x g : BfgsVerification.Vec (n + 2)),
+                BfgsVerification.Homogeneous.Supports
+                    (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n)) x g →
+                  BfgsVerification.FixedNormal.tangentProjection (BfgsVerification.NormalSpike.normal n) g =
+                    BfgsVerification.FixedNormal.tangentProjection (BfgsVerification.NormalSpike.normal n) x) ∧
+              LipschitzWith 1 (BfgsVerification.FixedNormal.tangentProjection (BfgsVerification.NormalSpike.normal n)) ∧
+                ∀ (v : ℝ) (u : BfgsVerification.Vec (n + 1)),
+                  BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n) (Fin.cons v u) =
+                    1 / 2 * BfgsVerification.sqNorm u + 1 / 2 * v ^ 2 + |v| +
+                      BfgsVerification.NormalSpike.sourcePrimitive v
+BfgsVerification.NormalSpike.spikeObjectiveGeometry : BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget
+def BfgsVerification.NormalSpike.SpikeHessianPeakTarget : Prop :=
+∀ (n : ℕ) (u : ℝ),
+  (∀ (N : ℕ),
+      BfgsVerification.dot (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N))
+          (Matrix.mulVec
+            (BfgsVerification.RadialHessian.matrix
+              (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n))
+              (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N)))
+            (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N))) =
+        u ^ 2 + BfgsVerification.NormalSpike.scale N ^ 2 + (BfgsVerification.NormalSpike.scale N)⁻¹) ∧
+    Filter.Tendsto
+        (fun N =>
+          BfgsVerification.dot (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N))
+            (Matrix.mulVec
+              (BfgsVerification.RadialHessian.matrix
+                (BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n))
+                (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N)))
+              (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N))))
+        Filter.atTop Filter.atTop ∧
+      Filter.Tendsto
+        (fun N =>
+          BfgsVerification.NormalSpike.objective (BfgsVerification.NormalSpike.normal n)
+            (BfgsVerification.NormalSpike.sample n u (BfgsVerification.NormalSpike.scale N)))
+        Filter.atTop (nhds (1 / 2 * u ^ 2))
+BfgsVerification.NormalSpike.spikeHessianPeaks : BfgsVerification.NormalSpike.SpikeHessianPeakTarget
+EXACT_TARGET_OK spikeObjectiveConvergence SpikeObjectiveConvergenceTarget
+EXACT_TARGET_OK spikeRadialSeparation SpikeRadialSeparationTarget
+EXACT_TARGET_OK spikeObjectiveGeometry SpikeObjectiveGeometryTarget
+EXACT_TARGET_OK spikeHessianPeaks SpikeHessianPeakTarget

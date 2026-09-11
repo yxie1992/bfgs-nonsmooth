@@ -1,0 +1,8 @@
+def BfgsVerification.NormalSpike.RationalSpikeOracleTarget : Prop :=
+∀ (v : ℚ),
+  ↑(BfgsVerification.NormalSpike.rationalValueOracle v) = BfgsVerification.NormalSpike.sourcePrimitive ↑v ∧
+    ↑(BfgsVerification.NormalSpike.rationalDerivativeOracle v) = deriv BfgsVerification.NormalSpike.sourcePrimitive ↑v ∧
+      ↑(BfgsVerification.NormalSpike.rationalSecondDerivativeOracle v) =
+        deriv (deriv BfgsVerification.NormalSpike.sourcePrimitive) ↑v
+BfgsVerification.NormalSpike.rationalSpikeOracle : BfgsVerification.NormalSpike.RationalSpikeOracleTarget
+EXACT_TARGET_OK rationalSpikeOracle RationalSpikeOracleTarget

@@ -388,3 +388,29 @@ formula needs normalization. The correction is recorded without editing sources.
 The inherited C orientation and U c!=0 qualifications remain explicit. Actual
 Hessian/ray identities do not justify an a.e.-only radial-curvature criterion;
 that separate caveat remains pending in this frozen snapshot.
+
+
+## Ninth report statement review
+
+The frozen project audit passed 2,718 explicit and 3,841 total theorem
+declarations and 95 exact targets. `REPORT_CONSTRUCTION_STATEMENT_REVIEW.md`
+records the exact scope, and independent reviews cover the scalar construction,
+actual infinite-spike objective/oracle, and corrected supporting-plane example.
+All derivative interchanges, infinite tails, deterministic search histories,
+and objective-level limits are proved in Lean. Actual derivative existence at
+accumulation points is asserted explicitly where required.
+
+D's positive scalar is implemented as a ramp series proved equal to every
+printed piece. Its second derivative is an attained nonnegative ramp component;
+the Lipschitz proof compares that component with the full sum. Combining the
+positive and negative halves takes the maximum of their second derivatives
+and constants. These proof-route changes preserve the literal construction and
+sharp constants. C's right-derivative comparison avoids assuming a finite
+crossing partition. U's executable rational oracle is universally identified
+with the actual infinite integral, including both derivative outputs.
+
+R's historical(-1,5),25/4 attribution could not be recovered. The currentD
+objective has optimizer(-1,16), heights0,0,-1+c-16d, and actual RS/SP failure;
+the discrepancy and its checked correction are explicit in
+`audit/COERCIVE_SEED_INTERCEPT_CORRECTION.md`. No original source was overwritten.
+The remaining entire-report obligations are retained in `audit/REPORT_STATUS.json`.

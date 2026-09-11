@@ -1,0 +1,149 @@
+BfgsVerification.PlanarTransversality.parallel_pairing_identity (g e w : BfgsVerification.Vec 2)
+  (hd : BfgsVerification.HomogeneousPlanar.pairDet e w = 0) :
+  BfgsVerification.dot g w • e = BfgsVerification.dot g e • w
+'BfgsVerification.PlanarTransversality.parallel_pairing_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarTransversality.no_parallel_weak_wolfe (g h e w : BfgsVerification.Vec 2) {σ : ℝ} (hσ : 0 < σ)
+  (he : e ≠ 0) (hpos : 0 < BfgsVerification.dot g w) (hcommon : BfgsVerification.dot g w = BfgsVerification.dot h w)
+  (hdesc : BfgsVerification.dot g e ≤ 0) (hweak : σ * -BfgsVerification.dot g e ≤ BfgsVerification.dot (h - g) e)
+  (hdet : BfgsVerification.HomogeneousPlanar.pairDet e w = 0) : False
+'BfgsVerification.PlanarTransversality.no_parallel_weak_wolfe' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PlanarTransversality.limiting_determinant_ne_zero.{u_1} {ι : Type u_1} {l : Filter ι} [l.NeBot]
+  (g h e w : ι → BfgsVerification.Vec 2) {g0 h0 e0 w0 : BfgsVerification.Vec 2} (hg : Filter.Tendsto g l (nhds g0))
+  (hh : Filter.Tendsto h l (nhds h0)) (he : Filter.Tendsto e l (nhds e0)) (hw : Filter.Tendsto w l (nhds w0)) {σ : ℝ}
+  (hσ : 0 < σ) (he0 : e0 ≠ 0) (hpos : 0 < BfgsVerification.dot g0 w0)
+  (hcommon : BfgsVerification.dot g0 w0 = BfgsVerification.dot h0 w0)
+  (hdesc : ∀ᶠ (i : ι) in l, BfgsVerification.dot (g i) (e i) ≤ 0)
+  (hweak : ∀ᶠ (i : ι) in l, σ * -BfgsVerification.dot (g i) (e i) ≤ BfgsVerification.dot (h i - g i) (e i)) :
+  BfgsVerification.HomogeneousPlanar.pairDet e0 w0 ≠ 0
+'BfgsVerification.PlanarTransversality.limiting_determinant_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.normalized_displacement_descent {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (k : ℕ) :
+  BfgsVerification.dot (R.g k) (BfgsVerification.PlanarNormalGeometry.normalized (R.displacement k)) ≤ 0
+'BfgsVerification.AdmissibleBFGSRun.normalized_displacement_descent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.normalized_displacement_weak_wolfe {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (k : ℕ) :
+  (1 - R.c₂) * -BfgsVerification.dot (R.g k) (BfgsVerification.PlanarNormalGeometry.normalized (R.displacement k)) ≤
+    BfgsVerification.dot (R.g (k + 1) - R.g k) (BfgsVerification.PlanarNormalGeometry.normalized (R.displacement k))
+'BfgsVerification.AdmissibleBFGSRun.normalized_displacement_weak_wolfe' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.eventually_planar_segment_transverse {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (hsteps : Filter.Tendsto R.displacement Filter.atTop (nhds 0)) (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2)
+  (hW : ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x, ContinuousAt W p)
+  (hpos :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p, 0 < BfgsVerification.dot g (W p))
+  (hcommon :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+          BfgsVerification.dot g (W p) = BfgsVerification.dot h (W p)) :
+  ∃ κ,
+    0 < κ ∧
+      ∃ J,
+        ∀ (k : ℕ),
+          J ≤ k →
+            ∀ θ ∈ Set.Icc 0 1,
+              κ ≤
+                |BfgsVerification.HomogeneousPlanar.pairDet
+                    (BfgsVerification.PlanarNormalGeometry.normalized (R.displacement k))
+                    (W (R.x k + θ • R.displacement k))|
+'BfgsVerification.AdmissibleBFGSRun.eventually_planar_segment_transverse' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.eventually_planar_segment_transverse_length {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (hsteps : Filter.Tendsto R.displacement Filter.atTop (nhds 0)) (W : BfgsVerification.Vec 2 → BfgsVerification.Vec 2)
+  (hW : ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x, ContinuousAt W p)
+  (hpos :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p, 0 < BfgsVerification.dot g (W p))
+  (hcommon :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+        ∀ h ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+          BfgsVerification.dot g (W p) = BfgsVerification.dot h (W p)) :
+  ∃ κ,
+    0 < κ ∧
+      ∃ J,
+        ∀ (k : ℕ),
+          J ≤ k →
+            ∀ θ ∈ Set.Icc 0 1,
+              κ * ‖BfgsVerification.euclideanVector (R.displacement k)‖ ≤
+                |BfgsVerification.HomogeneousPlanar.pairDet (R.displacement k) (W (R.x k + θ • R.displacement k))|
+'BfgsVerification.AdmissibleBFGSRun.eventually_planar_segment_transverse_length' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.exists_visible_transverse_planar_field {F : BfgsVerification.Vec 2 → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel) {ℓ : ℝ}
+  (hlim : Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds ℓ)) (hlower : ∃ y, F y < ℓ)
+  (hstrict : ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F p)
+  (hnoncritical :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p) :
+  ∃ W,
+    (∃ η,
+        0 < η ∧
+          ∃ N,
+            IsOpen N ∧
+              BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N ∧
+                (∀ p ∈ N, ∃ L, ∃ U ∈ nhds p, LipschitzOnWith L W U) ∧
+                  ∀ p ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+                      η ≤ BfgsVerification.dot g (W p)) ∧
+      ∃ κ,
+        0 < κ ∧
+          ∃ J,
+            ∀ (k : ℕ),
+              J ≤ k →
+                ∀ θ ∈ Set.Icc 0 1,
+                  κ * ‖BfgsVerification.euclideanVector (R.displacement k)‖ ≤
+                    |BfgsVerification.HomogeneousPlanar.pairDet (R.displacement k) (W (R.x k + θ • R.displacement k))|
+'BfgsVerification.AdmissibleBFGSRun.exists_visible_transverse_planar_field' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.exists_visible_transverse_planar_field_of_no_affineCritical_cluster
+  {F : BfgsVerification.Vec 2 → ℝ} (R : BfgsVerification.AdmissibleBFGSRun 2 F) (hK : IsCompact R.initialSublevel)
+  (star : BfgsVerification.Vec 2) (hmin : ∀ (z : BfgsVerification.Vec 2), F star ≤ F z)
+  (hstrict :
+    ∀ (ℓ : ℝ),
+      F star < ℓ → ℓ ≤ F (R.x 0) → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {w | F w ≤ ℓ} → x = y)
+  (hregular :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ContDiffAt ℝ 2 F p ∨ BfgsVerification.PlanarCornerCharts.TwoBranchRegularAt F p)
+  (hnoncritical :
+    ∀ p ∈ BfgsVerification.ClusterSetGeometry.clusterSet R.x,
+      ¬BfgsVerification.AffineCriticalObjective.IsAffineCritical F p) :
+  ∃ W,
+    (∃ η,
+        0 < η ∧
+          ∃ N,
+            IsOpen N ∧
+              BfgsVerification.ClusterSetGeometry.clusterSet R.x ⊆ N ∧
+                (∀ p ∈ N, ∃ L, ∃ U ∈ nhds p, LipschitzOnWith L W U) ∧
+                  ∀ p ∈ N,
+                    ∀ g ∈ BfgsVerification.ConvexSubdifferential.subdifferential F p,
+                      η ≤ BfgsVerification.dot g (W p)) ∧
+      ∃ κ,
+        0 < κ ∧
+          ∃ J,
+            ∀ (k : ℕ),
+              J ≤ k →
+                ∀ θ ∈ Set.Icc 0 1,
+                  κ * ‖BfgsVerification.euclideanVector (R.displacement k)‖ ≤
+                    |BfgsVerification.HomogeneousPlanar.pairDet (R.displacement k) (W (R.x k + θ • R.displacement k))|
+'BfgsVerification.AdmissibleBFGSRun.exists_visible_transverse_planar_field_of_no_affineCritical_cluster' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

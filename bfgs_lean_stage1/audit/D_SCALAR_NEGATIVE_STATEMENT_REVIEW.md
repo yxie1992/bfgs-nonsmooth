@@ -1,0 +1,11 @@
+# Literal negative scalar extension for Module D
+
+The module DScalarNegative independently formalizes the negative half of D.tex's phi_b, extended by zero on the nonnegative half-line. Its actual function is 1−3(x+1)+3(x+1)² for x<−1, −x³ for −1≤x≤0, and zero for x≥0. The implementation assigns the quadratic at the shared point −1; the checked value identity proves this is the same function as the source's convention. No original research source was changed.
+
+`negative_hasDerivAt` and `first_hasDerivAt` prove actual global first and second derivatives from the literal polynomial formulas and DScalarRamp.join_hasDerivAt. The derivative jets at −1 are (value,first,second)=(1,−3,6), and those at 0 are (0,0,0). The exact second derivative is `6*clip(-x)` with clip=max(0,min(1,x)). Its continuity proves global C2 regularity through both joins. Its bounds give 0≤N''≤6, and the actual clipped-function Lipschitz proof gives global Lipschitz constant 6 for the actual second derivative. No nonexistent third derivative at −1 or 0 is assumed; the global Lipschitz proof uses finite differences.
+
+Convexity is derived from the actual nonnegative second derivative. The polynomial formulas prove N>0 on x<0 and N=0 exactly on x≥0. Thus N is nonnegative but is not claimed uniquely minimized by itself: its zero set is the full nonnegative half-line. The first derivative is strictly negative for x<0 and zero for x≥0.
+
+`negative_lower_bound_left` proves N(x)≥−x for x≤−1. This supplies the actual filter theorem `negative_coercive_atBot : Tendsto negative atBot atTop`; the function is not claimed coercive at positive infinity, where it is identically zero. The separate positive-ramp series is responsible for that other tail and for the unique minimizer of the complete phi_b.
+
+All 33 explicit declarations (28 theorems and 5 actual definitions) pass the main importing build and complete transitive axiom audit. Evidence: DScalarNegativeAudit.lean, d_scalar_negative_build.log, d_scalar_negative_axioms.log, d_scalar_negative_validation.log, and the exact declarations JSON. Every dependency list contains only propext, Classical.choice and Quot.sound. Scratch source and development evidence are retained in audit/scratch/d_scalar_negative. The eighth whole-project status/manifest/logs remain unchanged; this module awaits the next full integration audit.

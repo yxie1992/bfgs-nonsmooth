@@ -1,0 +1,11 @@
+# Coercive deterministic seed: statement review
+
+This tranche verifies Module D's four-piece max-affine coercive counterexample (D.tex, lines 231–245). `AlgebraicSeedCoercive.lean` defines the actual objective with branches `u`, `-u-v/8`, `c*u+d*v`, and `v-17`, using the previously verified algebraic root `c,d`. It retains the exact full-BFGS matrices and the literal deterministic Armijo–weak-Wolfe search from the homogeneous seed.
+
+The fourth branch is proved strictly inactive at every accepted point and every tested trial: the previously checked point certificates give vertical coordinate below 2 and positive active value, so the new branch is below -15. Actual objective values and Fréchet derivatives therefore transfer by finite-max strict activity. The proof verifies the complete recursive search histories at every scale, including rejected trials. The admissible run uses the actual gradients, steps, and unmodified inverse-BFGS update; no orbit, metric, or value convergence is assumed.
+
+The unique optimizer is the literal point `(-1,16)` with objective value -1. Global branch inequalities prove the lower bound and uniqueness, and finite convexity with a unique optimizer proves compactness of every sublevel. The actual deterministic run starts with the identity matrix, has strictly decreasing positive values, and converges to the origin with value 0. The origin is not stationary because the exhibited optimizer has smaller value. The theorem holds for every `0<c1≤1/3` and `c1<c2<1` and proves the actual search result at every iteration.
+
+`coercive_zero_value` obtains the value at zero from proved continuity and independently proved point/value limits. Those limits are conclusions from the explicit orbit; this is not an assumed-convergence argument. `coercive_all_trials_hasGradient` also covers every trial in the finite source table, with its actual iteration phase.
+
+The scoped build and audit are recorded in `coercive_seed_build.log`, `coercive_seed_axioms.log`, and `coercive_seed_validation.log`; all 30 definitions/theorems have transitive reports containing only the three standard foundational axioms. This tranche does not yet verify D's different C2 scalar embedding with starts arbitrarily near a unique optimizer, or L's persistence construction. The research source is unchanged.

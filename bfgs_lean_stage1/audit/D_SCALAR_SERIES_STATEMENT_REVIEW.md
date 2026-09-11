@@ -1,0 +1,16 @@
+# Module D: exact geometric series and closed affine plateaus
+
+The seven files in `d_scalar_series_declarations.json` contain 80 explicit definitions and theorems. Six implement the positive part of D.tex's scalar construction (lines 246–357); `BFGSGradientScaling` separately proves covariance identities for the actual full inverse-BFGS formula. No modified update is introduced.
+
+The actual function `positivePart` is the infinite sum of
+`b*a_n^3*(1-theta)*(1-theta^2)*J_b((x/(b*a_n)-theta)/(1-theta))`, with the literal `theta=1/16` and the actual polynomial primitive proved in `DScalarRamp`. `positivePart_interval` proves that this sum equals the source's displayed scalar formula on every closed interval `[b*theta*a_n,b*a_n]`. Earlier summands vanish and later summands are evaluated by exact geometric series. `positivePart_outer` proves the printed affine extension `1+x-b` for every `x≥b`. The nonpositive half-line is zero, ready to be added to the separately verified negative extension. This series representation is an implementation choice, not a replacement scalar with assumed interpolation data.
+
+The two derivative series are justified by globally summable bounds proportional to `a_n^2` and `a_n`, respectively. Their actual sums are identified by `HasDerivAt`, and the second derivative is continuous by uniform summation. Thus `positivePart_contDiff` includes the accumulation point zero; differentiability at zero is not inferred from a total `deriv` value. The component norm majorant is derived from the actual derivative bound and its zero value, and convergence is separately proved at every query.
+
+All curvature summands are nonnegative. On each geometric interval every summand except the interval's own ramp is zero, including shared endpoints. `positiveCurvature_bounds` therefore proves the sharp `102/b` bound, rather than a larger sum of overlapping bounds. Convexity is derived from the actual nonnegative second derivative. The positive part is strictly positive for positive arguments. The exact node value, slope, and curvature are respectively `a_n^3`, `a_n^2`, and zero.
+
+`positivePart_plateau` proves the printed affine identity for the entire closed range `|h|≤a_n/2`, uniformly for every `n≥0` and `2≤b≤34`. It uses the independently verified strict bounds on both plateau lengths to classify every summand. There is no omitted `n=0` case or assumed local affine formula. This wider parameter range includes both source values once the exact algebraic root's `33<b_*<34` bound is supplied by the objective construction.
+
+`inverseBFGS_scale_secant_pair` proves that multiplying both actual secant vectors by the same nonzero scalar leaves the ordinary full inverse-BFGS update unchanged; `bfgsStep_scale_gradient` proves the corresponding step scaling. These algebraic identities impose no matrix or iterate limit. Their use in the two-dimensional embedding is a separate obligation.
+
+The scoped compiler/type/axiom evidence is in `DScalarSeriesAxiomChecks.lean`, `d_scalar_series_axioms.log`, and `d_scalar_series_validation.log`, with individual build logs for the main modules. Full scalar assembly, actual two-dimensional objective properties, and its infinite deterministic orbit are tracked separately. The original research sources are unchanged.

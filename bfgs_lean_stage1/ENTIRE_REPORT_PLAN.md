@@ -259,3 +259,28 @@ curvature constructions; A lower-semicontinuity/semialgebraic finite values;
 remaining R norm-model/interpretation and source synthesis obligations. Scratch
 proofs developed during the frozen audit remain excluded until integrated in a
 later reviewed release. Entire-report verification remains false.
+
+
+## Ninth execution milestone — completed
+
+The pinned full build and transitive audit checked **2,718 explicit theorems**,
+**3,841 total theorem declarations** including generated auxiliaries, and
+all **95 exact targets**, with only the three standard foundational axioms.
+There are **313 frozen Lean source hashes** in the status record.
+Evidence: `audit/report_construction_check.log`, `audit/build.log`,
+`audit/axioms.log`, and the scoped source/type/peer reviews linked in
+`audit/REPORT_CONSTRUCTION_STATEMENT_REVIEW.md`.
+
+This milestone adds the actual coercive deterministic seed, D's literal global
+C2,1 scalar functions and all closed plateaus, U's actual infinite spike and
+all-dimensional objective/convergence/RS separation plus terminating exact
+rational oracle, C's actual full-BFGS tail logarithmic transport, and R's
+spectral-norm, norm-convention, singular-curvature and current-model intercept
+checks. The current-model intercept correction preserves the unresolved older
+numerical attribution in the source record.
+
+Next: finish D's actual local two-dimensional embedding and all deterministic
+queries; C's secant and main/local consequences; U's variable-jump example;
+L's genuine return-map persistence and embeddings; A's remaining compact
+gap/semialgebraic infrastructure; remaining nuclear/descriptive identities,
+historical references and final synthesis. The entire report remains incomplete.

@@ -1,0 +1,19 @@
+import BfgsVerification.CenteredSpectral
+#print axioms BfgsVerification.CenteredSpectral.matrix
+#print axioms BfgsVerification.CenteredSpectral.objective
+#print axioms BfgsVerification.CenteredSpectral.objective_operator_norm
+#print axioms BfgsVerification.CenteredSpectral.matrix_add
+#print axioms BfgsVerification.CenteredSpectral.matrix_smul
+#print axioms BfgsVerification.CenteredSpectral.matrix_injective
+#print axioms BfgsVerification.CenteredSpectral.objective_convex
+#print axioms BfgsVerification.CenteredSpectral.objective_homogeneous
+#print axioms BfgsVerification.CenteredSpectral.objective_zero
+#print axioms BfgsVerification.CenteredSpectral.objective_minimum
+#print axioms BfgsVerification.CenteredSpectral.objective_unique_zero
+#print axioms BfgsVerification.CenteredSpectral.objective_sublevel_compact
+#print axioms BfgsVerification.CenteredSpectral.fullBFGS_convergence
+#print axioms BfgsVerification.CenteredSpectral.inward_error_zero
+#print axioms BfgsVerification.CenteredSpectral.matrix_surjective
+#print axioms BfgsVerification.CenteredSpectral.coordinate_pairing_frobenius
+#print axioms BfgsVerification.CenteredSpectral.inward_bounds
+#print axioms BfgsVerification.CenteredSpectral.radial_bounds
