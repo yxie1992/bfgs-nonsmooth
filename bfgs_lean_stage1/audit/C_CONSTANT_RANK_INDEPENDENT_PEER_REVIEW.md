@@ -1,0 +1,13 @@
+# Independent review: actual constant-rank geometry
+
+PASS. Root independently read all twelve frozen proof modules, all target definitions, and original C.tex388–406. Fresh independent audit: `PeerAudit.lean`, `peer_axioms_contracts.log`, `peer_validation.log`; twelve source hashes,52 explicit declarations plus17 structure constructor/projection types, all69 transitive dependencies limited to propext,Classical.choice,Quot.sound. An independently restated source-level contract is implemented by the actual construction and wrapper; strict Meta.isDefEq checks its exact type.
+
+The rank is the rank of the actual gradient-difference matrix, proved equal to affine direction dimension. Selection of an actual spanning affine basis, determinant-based persistence of independence, and actual constant rank derive equality of nearby affine spans. The inverse augmented-Gram formula equals the canonical minimum-norm affine point. No desired smooth selection or fixed spanning family is assumed.
+
+The local hypothesis uses exactly the original active set I(p); inactive pruning is derived. Local C2 branch convexity and non-affine-criticality produce the C1 common-rate chart. A finite buffered partition yields the same globally C1 field throughout the conclusion, bounded on a compact buffer containing an open neighborhood of K. Every nonzero cutoff at the later endpoint has its chart contain both nearby endpoints. Pairing against original active branches and actual subgradients is exact.
+
+The one-sided smooth convex inequality is proved by an actual feasible descent test inside the larger convex chart, with a sufficiently enlarged constant. Its Bregman gap is bounded by actual secant curvature using the represented maximum and the actual endpoint derivative. Cauchy–Schwarz gives the stated uniform correction. Constants precede all endpoint quantifiers. The eligible wrapper derives positive curvature from weak Wolfe and c2<1; its weaker parameter assumptions are a harmless strengthening. The final Euclidean displacement norm is explicitly related to the coordinate norm used for chart buffers.
+
+Source qualification: with C2 branch hypotheses the guaranteed field regularity is C1. The report’s unqualified word smooth cannot be interpreted as C-infinity. This qualification must remain in the correction register; no higher-dimensional projected transport or BFGS convergence follows or is claimed. Empty K and rank-zero/singleton active cases are retained. The source’s sufficient affine-independence case is proved for actual gradients.
+
+No mathematical defect found. Source proofs were not changed during this review. Main integration may normalize owned import paths only, followed by fresh delivered-only scoped checks and the central release audit.

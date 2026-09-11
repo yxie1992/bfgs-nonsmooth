@@ -1,0 +1,459 @@
+BfgsVerification.ConstantRankFields.matrix_det_contDiffAt {d m : ℕ} {k : WithTop ℕ∞} {x : Vec d} {A : Vec d → Mat m}
+  (hA : ContDiffAt ℝ k A x) : ContDiffAt ℝ k (fun z => Matrix.det (A z)) x
+'BfgsVerification.ConstantRankFields.matrix_det_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.matrix_adjugate_contDiffAt {d m : ℕ} {k : WithTop ℕ∞} {x : Vec d}
+  {A : Vec d → Mat m} (hA : ContDiffAt ℝ k A x) : ContDiffAt ℝ k (fun z => Matrix.adjugate (A z)) x
+'BfgsVerification.ConstantRankFields.matrix_adjugate_contDiffAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.matrix_inverse_contDiffAt {d m : ℕ} {k : WithTop ℕ∞} {x : Vec d} {A : Vec d → Mat m}
+  (hA : ContDiffAt ℝ k A x) (hdet : Matrix.det (A x) ≠ 0) : ContDiffAt ℝ k (fun z => (A z)⁻¹) x
+'BfgsVerification.ConstantRankFields.matrix_inverse_contDiffAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.augmented_contDiffAt {d n m : ℕ} {k : WithTop ℕ∞} {x : Vec d}
+  {g : Vec d → Fin m → Vec n} (hg : ∀ (i : Fin m), ContDiffAt ℝ k (fun z => g z i) x) :
+  ContDiffAt ℝ k (fun z => AffineBarycentric.augmented (g z)) x
+'BfgsVerification.ConstantRankFields.augmented_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.gram_contDiffAt {d n m : ℕ} {k : WithTop ℕ∞} {x : Vec d}
+  {A : Vec d → Matrix (Fin n) (Fin m) ℝ} (hA : ContDiffAt ℝ k A x) :
+  ContDiffAt ℝ k (fun z => AffineBarycentric.gram (A z)) x
+'BfgsVerification.ConstantRankFields.gram_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.formulaPoint_contDiffAt {d n m : ℕ} {k : WithTop ℕ∞} {x : Vec d}
+  (g : Vec d → Fin m → Vec n) (i : Fin m) (hc : ∀ (j : Fin m), ContDiffAt ℝ k (fun p => g p j) x)
+  (hg : AffineIndependent ℝ (g x)) : ContDiffAt ℝ k (fun p => AffineDistance.formulaPoint (g p)) x
+'BfgsVerification.ConstantRankFields.formulaPoint_contDiffAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.exists_affine_basis_indices {n m : ℕ} (g : Fin m → Vec n) (i : Fin m) :
+  ∃ r j a, (AffineIndependent ℝ fun q => g (a q)) ∧ affineSpan ℝ (range fun q => g (a q)) = affineSpan ℝ (range g)
+'BfgsVerification.ConstantRankFields.exists_affine_basis_indices' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.fixed_basis_spans_near {d n m r : ℕ} (g : Vec d → Fin m → Vec n) (p : Vec d)
+  (a : Fin r → Fin m) (j : Fin r) (hc : ∀ (i : Fin m), ContinuousAt (fun x => g x i) p)
+  (hind : AffineIndependent ℝ fun q => g p (a q))
+  (hspan : affineSpan ℝ (range fun q => g p (a q)) = affineSpan ℝ (range (g p)))
+  (hrank :
+    ∀ᶠ (x : Vec d) in 𝓝 p,
+      Module.finrank ℝ ↥(vectorSpan ℝ (range (g x))) = Module.finrank ℝ ↥(vectorSpan ℝ (range (g p)))) :
+  ∀ᶠ (x : Vec d) in 𝓝 p,
+    (AffineIndependent ℝ fun q => g x (a q)) ∧ affineSpan ℝ (range fun q => g x (a q)) = affineSpan ℝ (range (g x))
+'BfgsVerification.ConstantRankFields.fixed_basis_spans_near' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.differenceMatrix {n m : ℕ} (g : Fin m → Vec n) (i : Fin m) :
+  Matrix (Fin n) (Fin m) ℝ
+'BfgsVerification.ConstantRankFields.differenceMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.differenceMatrix_rank {n m : ℕ} (g : Fin m → Vec n) (i : Fin m) :
+  (differenceMatrix g i).rank = Module.finrank ℝ ↥(vectorSpan ℝ (range g))
+'BfgsVerification.ConstantRankFields.differenceMatrix_rank' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.euclidean_affineSpan_eq {n m r : ℕ} {g : Fin m → Vec n} {h : Fin r → Vec n}
+  (he : affineSpan ℝ (range g) = affineSpan ℝ (range h)) :
+  affineSpan ℝ (range fun i => euclideanVector (g i)) = affineSpan ℝ (range fun i => euclideanVector (h i))
+'BfgsVerification.ConstantRankFields.euclidean_affineSpan_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.closest_eq_of_affineSpan_eq.{u_1, u_2} {n : ℕ} {α : Type u_1} {β : Type u_2}
+  (g : α → EuclideanSpace ℝ (Fin n)) (h : β → EuclideanSpace ℝ (Fin n)) (i : α) (j : β)
+  (he : affineSpan ℝ (range g) = affineSpan ℝ (range h)) :
+  AffineCriticalGeometry.closestAffinePoint g i = AffineCriticalGeometry.closestAffinePoint h j
+'BfgsVerification.ConstantRankFields.closest_eq_of_affineSpan_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.closest_contDiffAt_of_constant_rank {d n m : ℕ} {k : WithTop ℕ∞}
+  (g : Vec d → Fin m → Vec n) (p : Vec d) (i : Fin m) (hc : ∀ (j : Fin m), ContDiffAt ℝ k (fun x => g x j) p)
+  (hrank : ∀ᶠ (x : Vec d) in 𝓝 p, (differenceMatrix (g x) i).rank = (differenceMatrix (g p) i).rank) :
+  ContDiffAt ℝ k (fun x => AffineCriticalGeometry.closestAffinePoint (fun j => euclideanVector (g x j)) i) p
+'BfgsVerification.ConstantRankFields.closest_contDiffAt_of_constant_rank' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.commonRate {n m : ℕ} (g : Fin m → Vec n) (i : Fin m) : EuclideanSpace ℝ (Fin n)
+'BfgsVerification.ConstantRankFields.commonRate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.commonRate_pairing {n m : ℕ} (g : Fin m → Vec n) (i : Fin m)
+  (hne : AffineCriticalGeometry.closestAffinePoint (fun j => euclideanVector (g j)) i ≠ 0) (j : Fin m) :
+  inner (euclideanVector (g j)) (commonRate g i) = 1
+'BfgsVerification.ConstantRankFields.commonRate_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.commonRate_contDiffAt_of_constant_rank {d n m : ℕ} {k : WithTop ℕ∞}
+  (g : Vec d → Fin m → Vec n) (p : Vec d) (i : Fin m) (hc : ∀ (j : Fin m), ContDiffAt ℝ k (fun x => g x j) p)
+  (hrank : ∀ᶠ (x : Vec d) in 𝓝 p, (differenceMatrix (g x) i).rank = (differenceMatrix (g p) i).rank)
+  (hzero : 0 ∉ affineSpan ℝ (range fun j => euclideanVector (g p j))) : ContDiffAt ℝ k (fun x => commonRate (g x) i) p
+'BfgsVerification.ConstantRankFields.commonRate_contDiffAt_of_constant_rank' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.commonRate_chart {d n m : ℕ} (g : Vec d → Fin m → Vec n) (p : Vec d) (i : Fin m)
+  (hc : ∀ (j : Fin m), ContDiffAt ℝ 1 (fun x => g x j) p)
+  (hrank : ∀ᶠ (x : Vec d) in 𝓝 p, (differenceMatrix (g x) i).rank = (differenceMatrix (g p) i).rank)
+  (hzero : 0 ∉ affineSpan ℝ (range fun j => euclideanVector (g p j))) :
+  ∃ U,
+    IsOpen U ∧
+      p ∈ U ∧
+        ContDiffOn ℝ 1 (fun x => commonRate (g x) i) U ∧
+          ∀ x ∈ U, ∀ (j : Fin m), inner (euclideanVector (g x j)) (commonRate (g x) i) = 1
+'BfgsVerification.ConstantRankFields.commonRate_chart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.commonRateVector {n m : ℕ} (g : Fin m → Vec n) (i : Fin m) : Vec n
+'BfgsVerification.ConstantRankFields.commonRateVector' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.coordinateGradient_contDiffAt {n : ℕ} {f : Vec n → ℝ} {p : Vec n}
+  (hf : ContDiffAt ℝ 2 f p) : ContDiffAt ℝ 1 (coordinateGradient f) p
+'BfgsVerification.ConstantRankFields.coordinateGradient_contDiffAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.commonRateVector_chart {d n m : ℕ} (g : Vec d → Fin m → Vec n) (p : Vec d)
+  (i : Fin m) (hc : ∀ (j : Fin m), ContDiffAt ℝ 1 (fun x => g x j) p)
+  (hrank : ∀ᶠ (x : Vec d) in 𝓝 p, (differenceMatrix (g x) i).rank = (differenceMatrix (g p) i).rank)
+  (hzero : 0 ∉ affineSpan ℝ (range fun j => euclideanVector (g p j))) :
+  ∃ U,
+    IsOpen U ∧
+      p ∈ U ∧
+        ContDiffOn ℝ 1 (fun x => commonRateVector (g x) i) U ∧
+          ∀ x ∈ U, ∀ (j : Fin m), dot (g x j) (commonRateVector (g x) i) = 1
+'BfgsVerification.ConstantRankFields.commonRateVector_chart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.affine_zero_excluded_of_active_family {n m : ℕ} {F : Vec n → ℝ}
+  (hF : ConvexOn ℝ univ F) (f : Fin m → Vec n → ℝ) (p : Vec n) (hrep : LocalFiniteMax F f p)
+  (hall : ∀ (i : Fin m), f i p = F p) (hd : ∀ (i : Fin m), DifferentiableAt ℝ (f i) p) (hnc : ¬IsAffineCritical F p) :
+  0 ∉ affineSpan ℝ (range fun i => euclideanVector (coordinateGradient (f i) p))
+'BfgsVerification.ConstantRankFields.affine_zero_excluded_of_active_family' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.active_family_objective_chart {n m : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
+  (f : Fin m → Vec n → ℝ) (p : Vec n) (i : Fin m) (hrep : LocalFiniteMax F f p) (hall : ∀ (j : Fin m), f j p = F p)
+  (hf : ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) p) (hnc : ¬IsAffineCritical F p)
+  (hrank :
+    ∀ᶠ (x : Vec n) in 𝓝 p,
+      (differenceMatrix (fun j => coordinateGradient (f j) x) i).rank =
+        (differenceMatrix (fun j => coordinateGradient (f j) p) i).rank) :
+  ∃ U v,
+    IsOpen U ∧
+      p ∈ U ∧
+        ContDiffOn ℝ 1 v U ∧
+          (∀ x ∈ U, ∀ (j : Fin m), dot (coordinateGradient (f j) x) (v x) = 1) ∧
+            ∀ x ∈ U, LocalFiniteMax F f x ∧ ∀ (j : Fin m), DifferentiableAt ℝ (f j) x
+'BfgsVerification.ConstantRankFields.active_family_objective_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.dot_constant_on_affineSpan {n m : ℕ} (g : Fin m → Vec n) (v : Vec n) (c : ℝ)
+  (hp : ∀ (i : Fin m), dot (g i) v = c) {a : Vec n} (ha : a ∈ affineSpan ℝ (range g)) : dot a v = c
+'BfgsVerification.ConstantRankFields.dot_constant_on_affineSpan' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.support_pairing_of_branch_pairings {n m : ℕ} {F : Vec n → ℝ}
+  (hF : ConvexOn ℝ univ F) {f : Fin m → Vec n → ℝ} {p v : Vec n} (hrep : LocalFiniteMax F f p)
+  (hd : ∀ (i : Fin m), DifferentiableAt ℝ (f i) p) (hp : ∀ (i : Fin m), dot (coordinateGradient (f i) p) v = 1)
+  (a : Vec n) : a ∈ subdifferential F p → dot a v = 1
+'BfgsVerification.ConstantRankFields.support_pairing_of_branch_pairings' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.original_active_commonRate_chart {n m : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
+  (f : Fin m → Vec n → ℝ) (p : Vec n) (hrep : LocalFiniteMax F f p) (hf : ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) p)
+  (hnc : ¬IsAffineCritical F p) (i : Fin (activeIndices F f p).card)
+  (hrank :
+    ∀ᶠ (x : Vec n) in 𝓝 p,
+      (differenceMatrix (fun j => coordinateGradient (f (activeIndexMap F f p j)) x) i).rank =
+        (differenceMatrix (fun j => coordinateGradient (f (activeIndexMap F f p j)) p) i).rank) :
+  ∃ U v,
+    IsOpen U ∧
+      p ∈ U ∧
+        ContDiffOn ℝ 1 v U ∧
+          (∀ x ∈ U, ∀ j ∈ activeIndices F f p, dot (coordinateGradient (f j) x) (v x) = 1) ∧
+            (∀ x ∈ U, ∀ a ∈ subdifferential F x, dot a (v x) = 1) ∧
+              ∀ x ∈ U,
+                activeIndices F f x ⊆ activeIndices F f p ∧ LocalFiniteMax F f x ∧ ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) x
+'BfgsVerification.ConstantRankFields.original_active_commonRate_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.exists_one_sided_constant_on_compact {n : ℕ} {ψ : Vec n → ℝ} {U K : Set (Vec n)}
+  (hU : IsOpen U) (hconvex : ConvexOn ℝ U ψ) (hsmooth : CenteredSmoothSublinear.LocallyC11On U ψ) (hK : IsCompact K)
+  (hKU : K ⊆ U) :
+  ∃ L,
+    0 < L ∧
+      ∀ x ∈ K,
+        ∀ y ∈ K,
+          sqNorm (coordinateGradient ψ y - coordinateGradient ψ x) ≤
+            2 * L * (ψ y - ψ x - dot (coordinateGradient ψ x) (y - x))
+'BfgsVerification.ConstantRankFields.exists_one_sided_constant_on_compact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.LocallyConstantActiveRank {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → Vec n → ℝ)
+  (p : Vec n) : Prop
+'BfgsVerification.ConstantRankFields.LocallyConstantActiveRank' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.locallyConstantActiveRank_all_bases {n m : ℕ} {F : Vec n → ℝ}
+  {f : Fin m → Vec n → ℝ} {p : Vec n} (h : LocallyConstantActiveRank F f p) (i : Fin (activeIndices F f p).card) :
+  ∀ᶠ (x : Vec n) in 𝓝 p,
+    (differenceMatrix (fun j => coordinateGradient (f (activeIndexMap F f p j)) x) i).rank =
+      (differenceMatrix (fun j => coordinateGradient (f (activeIndexMap F f p j)) p) i).rank
+'BfgsVerification.ConstantRankFields.locallyConstantActiveRank_all_bases' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → Vec n → ℝ) (p : Vec n) : Type
+'BfgsVerification.ConstantRankFields.RateChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.nonempty_rateChart {n m : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
+  (f : Fin m → Vec n → ℝ) (p : Vec n) (hrep : LocalFiniteMax F f p) (hf : ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) p)
+  (hnc : ¬IsAffineCritical F p) (hrank : LocallyConstantActiveRank F f p)
+  (hconv : ∃ V, IsOpen V ∧ p ∈ V ∧ ∀ (j : Fin m), ConvexOn ℝ V (f j)) : Nonempty (RateChart F f p)
+'BfgsVerification.ConstantRankFields.nonempty_rateChart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.locallyC11_of_contDiffOn {n : ℕ} {f : Vec n → ℝ} {U : Set (Vec n)} (hU : IsOpen U)
+  (hf : ContDiffOn ℝ 2 f U) : CenteredSmoothSublinear.LocallyC11On U f
+'BfgsVerification.ConstantRankFields.locallyC11_of_contDiffOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.one_sided_bounds {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {p : Vec n} (c : RateChart F f p) (i : Fin m) :
+  ∃ L,
+    0 < L ∧
+      ∀ x ∈ Metric.closedBall p (c.radius / 2),
+        ∀ z ∈ Metric.closedBall p (c.radius / 2),
+          sqNorm (coordinateGradient (f i) z - coordinateGradient (f i) x) ≤
+            2 * L * (f i z - f i x - dot (coordinateGradient (f i) x) (z - x))
+'BfgsVerification.ConstantRankFields.RateChart.one_sided_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → Vec n → ℝ)
+  (Q : Set (Vec n)) : Type
+'BfgsVerification.ConstantRankFields.FiniteRatePatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.exists_finite_ratePatch {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {K : Set (Vec n)} (hK : IsCompact K) (hc : ∀ p ∈ K, Nonempty (RateChart F f p)) :
+  ∃ V Q, IsOpen V ∧ K ⊆ V ∧ closure V ⊆ Q ∧ IsCompact Q ∧ Nonempty (FiniteRatePatch F f Q)
+'BfgsVerification.ConstantRankFields.exists_finite_ratePatch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.field {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) : Vec n → Vec n
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.field' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.fieldC1 {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) : ContDiff ℝ 1 P.field
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.fieldC1' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.small_of_cutoff_ne_zero {n m : ℕ} {F : Vec n → ℝ}
+  {f : Fin m → Vec n → ℝ} {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) {i : Fin P.size} {x : Vec n}
+  (h : (P.cutoff i) x ≠ 0) : x ∈ Metric.ball (P.center i) ((P.chart i).radius / 4)
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.small_of_cutoff_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.pairing_of_local {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) {x : Vec n} (hx : x ∈ Q) (g : Vec n)
+  (hg : ∀ (i : Fin P.size), (P.cutoff i) x ≠ 0 → dot g ((P.chart i).field x) = 1) : dot g (P.field x) = 1
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.pairing_of_local' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.supportsPairing {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) {x : Vec n} (hx : x ∈ Q) {g : Vec n} (hg : g ∈ subdifferential F x) :
+  dot g (P.field x) = 1
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.supportsPairing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.buffer_radius {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) :
+  ∃ δ,
+    0 < δ ∧
+      ∀ (i : Fin P.size) (x z : Vec n),
+        (P.cutoff i) z ≠ 0 →
+          ‖z - x‖ < δ →
+            x ∈ Metric.closedBall (P.center i) ((P.chart i).radius / 2) ∧
+              z ∈ Metric.closedBall (P.center i) ((P.chart i).radius / 2)
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.buffer_radius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.uniform_one_sided {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) :
+  ∃ L,
+    0 < L ∧
+      ∀ (i : Fin P.size) (j : Fin m),
+        ∀ x ∈ Metric.closedBall (P.center i) ((P.chart i).radius / 2),
+          ∀ z ∈ Metric.closedBall (P.center i) ((P.chart i).radius / 2),
+            sqNorm (coordinateGradient (f j) z - coordinateGradient (f j) x) ≤
+              2 * L * (f j z - f j x - dot (coordinateGradient (f j) x) (z - x))
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.uniform_one_sided' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.field_bound {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) (hQ : IsCompact Q) : ∃ G, 0 < G ∧ ∀ x ∈ Q, sqNorm (P.field x) ≤ G ^ 2
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.field_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.cross_pairing {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) {x z : Vec n} (hz : z ∈ Q)
+  (hbuffer :
+    ∀ (i : Fin P.size),
+      (P.cutoff i) z ≠ 0 →
+        x ∈ Metric.closedBall (P.center i) ((P.chart i).radius / 2) ∧
+          z ∈ Metric.closedBall (P.center i) ((P.chart i).radius / 2))
+  {j : Fin m} (hj : j ∈ activeIndices F f x) : dot (coordinateGradient (f j) z) (P.field z) = 1
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.cross_pairing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.secant_bound {n m : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
+  {f : Fin m → Vec n → ℝ} {Q : Set (Vec n)} (P : FiniteRatePatch F f Q) (hQ : IsCompact Q) :
+  ∃ δ C,
+    0 < δ ∧
+      0 ≤ C ∧
+        ∀ (x z g h : Vec n),
+          x ∈ Q →
+            z ∈ Q →
+              ‖z - x‖ < δ →
+                HasFDerivAt F (gradientFunctional g) x →
+                  HasFDerivAt F (gradientFunctional h) z →
+                    0 < pairCurvature x z g h → dot (h - g) (P.field z) ^ 2 / pairCurvature x z g h ≤ C
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.secant_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.source_common_rate_and_secant {n m : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
+  (f : Fin m → Vec n → ℝ) {K : Set (Vec n)} (hK : IsCompact K) (hrep : ∀ p ∈ K, LocalFiniteMax F f p)
+  (hC2 : ∀ p ∈ K, ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) p)
+  (hconv : ∀ p ∈ K, ∃ V, IsOpen V ∧ p ∈ V ∧ ∀ (j : Fin m), ConvexOn ℝ V (f j)) (hnc : ∀ p ∈ K, ¬IsAffineCritical F p)
+  (hrank : ∀ p ∈ K, LocallyConstantActiveRank F f p) :
+  ∃ v,
+    ContDiff ℝ 1 v ∧
+      ∃ V Q,
+        IsOpen V ∧
+          K ⊆ V ∧
+            closure V ⊆ Q ∧
+              IsCompact Q ∧
+                ∃ G δ C,
+                  0 < G ∧
+                    0 < δ ∧
+                      0 ≤ C ∧
+                        (∀ x ∈ Q, sqNorm (v x) ≤ G ^ 2) ∧
+                          (∀ x ∈ Q, ∀ g ∈ subdifferential F x, dot g (v x) = 1) ∧
+                            ∀ (x z g h : Vec n),
+                              x ∈ Q →
+                                z ∈ Q →
+                                  ‖euclideanVector (z - x)‖ < δ →
+                                    HasFDerivAt F (gradientFunctional g) x →
+                                      HasFDerivAt F (gradientFunctional h) z →
+                                        0 < pairCurvature x z g h → dot (h - g) (v z) ^ 2 / pairCurvature x z g h ≤ C
+'BfgsVerification.ConstantRankFields.source_common_rate_and_secant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.locally_constant_rank_of_affineIndependent {d n m : ℕ} (g : Vec d → Fin m → Vec n)
+  (p : Vec d) (i : Fin m) (hc : ∀ (j : Fin m), ContinuousAt (fun x => g x j) p) (hind : AffineIndependent ℝ (g p)) :
+  ∀ᶠ (x : Vec d) in 𝓝 p, (differenceMatrix (g x) i).rank = (differenceMatrix (g p) i).rank
+'BfgsVerification.ConstantRankFields.locally_constant_rank_of_affineIndependent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.active_affineIndependent_implies_locallyConstantActiveRank {n m : ℕ} {F : Vec n → ℝ}
+  {f : Fin m → Vec n → ℝ} {p : Vec n} (hrep : LocalFiniteMax F f p) (hf : ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) p)
+  (hind : AffineIndependent ℝ fun j => coordinateGradient (f (activeIndexMap F f p j)) p) :
+  LocallyConstantActiveRank F f p
+'BfgsVerification.ConstantRankFields.active_affineIndependent_implies_locallyConstantActiveRank' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.source_eligible_common_rate {n m : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
+  (f : Fin m → Vec n → ℝ) {K : Set (Vec n)} (hK : IsCompact K) (hrep : ∀ p ∈ K, LocalFiniteMax F f p)
+  (hC2 : ∀ p ∈ K, ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) p)
+  (hconv : ∀ p ∈ K, ∃ V, IsOpen V ∧ p ∈ V ∧ ∀ (j : Fin m), ConvexOn ℝ V (f j)) (hnc : ∀ p ∈ K, ¬IsAffineCritical F p)
+  (hrank : ∀ p ∈ K, LocallyConstantActiveRank F f p) {c₁ c₂ : ℝ} (hc₂ : c₂ < 1) :
+  ∃ v,
+    ContDiff ℝ 1 v ∧
+      ∃ V Q,
+        IsOpen V ∧
+          K ⊆ V ∧
+            closure V ⊆ Q ∧
+              IsCompact Q ∧
+                ∃ G δ C,
+                  0 < G ∧
+                    0 < δ ∧
+                      0 ≤ C ∧
+                        (∀ x ∈ Q, sqNorm (v x) ≤ G ^ 2) ∧
+                          (∀ x ∈ Q, ∀ g ∈ subdifferential F x, dot g (v x) = 1) ∧
+                            ∀ (x z g h : Vec n),
+                              x ∈ Q →
+                                z ∈ Q →
+                                  ‖euclideanVector (z - x)‖ < δ →
+                                    EligiblePair F c₁ c₂ x z g h → dot (h - g) (v z) ^ 2 / pairCurvature x z g h ≤ C
+'BfgsVerification.ConstantRankFields.source_eligible_common_rate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.SourceConstantRankTarget : Prop
+'BfgsVerification.ConstantRankFields.SourceConstantRankTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.sourceConstantRank : SourceConstantRankTarget
+'BfgsVerification.ConstantRankFields.sourceConstantRank' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget : Prop
+'BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.sourceConstantRankEligible : SourceConstantRankEligibleTarget
+'BfgsVerification.ConstantRankFields.sourceConstantRankEligible' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.mk {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (radius : ℝ) (radius_pos : 0 < radius) (field : Vec n → Vec n) (fieldC1 : ContDiffOn ℝ 1 field (Metric.ball p radius))
+  (originalPairing :
+    ∀ x ∈ Metric.ball p radius, ∀ j ∈ activeIndices F f p, dot (coordinateGradient (f j) x) (field x) = 1)
+  (supportsPairing : ∀ x ∈ Metric.ball p radius, ∀ a ∈ subdifferential F x, dot a (field x) = 1)
+  (activeSubset : ∀ x ∈ Metric.ball p radius, activeIndices F f x ⊆ activeIndices F f p)
+  (representation : ∀ x ∈ Metric.ball p radius, LocalFiniteMax F f x)
+  (branchC2 : ∀ x ∈ Metric.ball p radius, ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) x)
+  (branchConvex : ∀ (j : Fin m), ConvexOn ℝ (Metric.ball p radius) (f j)) : RateChart F f p
+'BfgsVerification.ConstantRankFields.RateChart.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.radius {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) : ℝ
+'BfgsVerification.ConstantRankFields.RateChart.radius' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.radius_pos {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) : 0 < self.radius
+'BfgsVerification.ConstantRankFields.RateChart.radius_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.field {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) : Vec n → Vec n
+'BfgsVerification.ConstantRankFields.RateChart.field' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.fieldC1 {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) : ContDiffOn ℝ 1 self.field (Metric.ball p self.radius)
+'BfgsVerification.ConstantRankFields.RateChart.fieldC1' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.originalPairing {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {p : Vec n} (self : RateChart F f p) (x : Vec n) :
+  x ∈ Metric.ball p self.radius → ∀ j ∈ activeIndices F f p, dot (coordinateGradient (f j) x) (self.field x) = 1
+'BfgsVerification.ConstantRankFields.RateChart.originalPairing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.supportsPairing {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {p : Vec n} (self : RateChart F f p) (x : Vec n) :
+  x ∈ Metric.ball p self.radius → ∀ a ∈ subdifferential F x, dot a (self.field x) = 1
+'BfgsVerification.ConstantRankFields.RateChart.supportsPairing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.activeSubset {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) (x : Vec n) : x ∈ Metric.ball p self.radius → activeIndices F f x ⊆ activeIndices F f p
+'BfgsVerification.ConstantRankFields.RateChart.activeSubset' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.representation {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {p : Vec n} (self : RateChart F f p) (x : Vec n) : x ∈ Metric.ball p self.radius → LocalFiniteMax F f x
+'BfgsVerification.ConstantRankFields.RateChart.representation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.branchC2 {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) (x : Vec n) : x ∈ Metric.ball p self.radius → ∀ (j : Fin m), ContDiffAt ℝ 2 (f j) x
+'BfgsVerification.ConstantRankFields.RateChart.branchC2' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.RateChart.branchConvex {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ} {p : Vec n}
+  (self : RateChart F f p) (j : Fin m) : ConvexOn ℝ (Metric.ball p self.radius) (f j)
+'BfgsVerification.ConstantRankFields.RateChart.branchConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.mk {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (size : ℕ) (center : Fin size → Vec n) (chart : (i : Fin size) → RateChart F f (center i))
+  (cutoff : SmoothPartitionOfUnity (Fin size) (modelWithCornersSelf ℝ (Vec n)) (Vec n) Q)
+  (subordinate : cutoff.IsSubordinate fun i => Metric.ball (center i) ((chart i).radius / 4)) : FiniteRatePatch F f Q
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.size {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (self : FiniteRatePatch F f Q) : ℕ
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.size' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.center {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (self : FiniteRatePatch F f Q) : Fin self.size → Vec n
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.chart {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (self : FiniteRatePatch F f Q) (i : Fin self.size) : RateChart F f (self.center i)
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.chart' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.cutoff {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (self : FiniteRatePatch F f Q) :
+  SmoothPartitionOfUnity (Fin self.size) (modelWithCornersSelf ℝ (Vec n)) (Vec n) Q
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.cutoff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ConstantRankFields.FiniteRatePatch.subordinate {n m : ℕ} {F : Vec n → ℝ} {f : Fin m → Vec n → ℝ}
+  {Q : Set (Vec n)} (self : FiniteRatePatch F f Q) :
+  self.cutoff.IsSubordinate fun i => Metric.ball (self.center i) ((self.chart i).radius / 4)
+'BfgsVerification.ConstantRankFields.FiniteRatePatch.subordinate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+audit/scratch/c_constant_rank/PeerAudit.lean:146:5: warning: unused variable `hF`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+audit/scratch/c_constant_rank/PeerAudit.lean:147:5: warning: unused variable `hK`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+audit/scratch/c_constant_rank/PeerAudit.lean:147:24: warning: unused variable `hrep`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+audit/scratch/c_constant_rank/PeerAudit.lean:148:5: warning: unused variable `hC2`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+audit/scratch/c_constant_rank/PeerAudit.lean:149:5: warning: unused variable `hconv`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+audit/scratch/c_constant_rank/PeerAudit.lean:150:5: warning: unused variable `hnc`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+audit/scratch/c_constant_rank/PeerAudit.lean:151:5: warning: unused variable `hrank`
+note: this linter can be disabled with `set_option linter.unusedVariables false`
+INDEPENDENT_EXACT_SOURCE_OK

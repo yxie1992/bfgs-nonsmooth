@@ -1,0 +1,31 @@
+# Module C arbitrary-dimensional constant-rank field and correction
+
+Source: `BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex`, lines 388–406. Original sources are unchanged. This twelve-module scratch tranche contains 52 explicit declarations and 17 generated structure constructors/projections. Its final import is `audit.scratch.c_constant_rank.ConstantRankTargets`. A fresh ordered build and all 69 transitive-axiom/type reports are reproduced by `bash audit/scratch/c_constant_rank/verify.sh`; `declarations.json` freezes all twelve source hashes. The status of the running audit is recorded in `validation.log` when complete.
+
+## Exact source hypotheses and actual objects
+
+The final theorem takes a finite convex function on `Vec n`, a fixed finite family of actual scalar branch functions, an arbitrary compact set K, local exact attained maximum representations at all points of K, actual C² branch regularity, local branch convexity, absence of actual affine-criticality, and local constancy of the actual gradient-difference matrix rank for the original active index set at each p. The fixed family is exactly I(p): nearby inactive branches are excluded by a proved continuity argument. No presumed support selection, locally selected rank, matrix limit, trajectory limit, or desired comparison field is an input.
+
+`differenceMatrix` is the actual coordinate matrix with columns g_j−g_i. Its matrix rank is proved equal to the dimension of the affine direction span. `LocallyConstantActiveRank` uses this actual rank. Its base-index witness has no extra mathematical force; `locallyConstantActiveRank_all_bases` proves independence of the choice, and the represented active family is nonempty. `active_affineIndependent_implies_locallyConstantActiveRank` closes the source's stated sufficient affine-independence case using actual gradients.
+
+The canonical `closestAffinePoint` is the existing actual Euclidean orthogonal-projection minimum-norm point. An actual finite affinely independent subfamily spanning the full affine hull is selected from the original gradients. Independence persists by the actual nonzero augmented Gram determinant. Constant rank and dimension equality prove full-span persistence. The explicit inverse-Gram formula is differentiated and proved equal to the canonical full-family point. Thus regularity is derived; it is not assumed as a pseudoinverse oracle. Matrix smoothness uses the finite coordinate norm instances, while all minimum-norm geometry uses the actual Euclidean inner product and explicit coordinate equivalence.
+
+## One field and uniform all-pair bounds
+
+Each actual local rate chart has unit pairing against every fixed original-active gradient and every actual subgradient nearby. The compact set supplies finitely many quarter-radius charts. A smooth partition subordinate to those small balls is constructed on a larger compact buffer Q. The resulting field is globally C¹; its possible extension outside the regular neighborhood is harmless and also proved C¹ by the support condition. Its squared Euclidean norm is uniformly bounded on Q. There is an open V with K⊆V and closure(V)⊆Q.
+
+A single positive radius works for every contributing chart: if its cutoff at z is nonzero and x,z are close, both endpoints belong to that chart's half-radius closed ball. Consequently every branch active at x pairs to one against the patched field at z. This is proved for every contributing chart, not merely for one selected chart. The same patched field has unit pairing against the actual derivative at z.
+
+The local one-sided estimate is proved by the actual convex descent-test argument in the larger convex ball. The constant may be enlarged using compact gradient bounds so the test displacement remains in that ball, even for every pair in the half-radius compact ball. Every branch/chart constant is bounded by one finite uniform constant. Actual finite-max support then bounds its Bregman gap by the actual curvature yᵀs. Cauchy–Schwarz yields the uniform correction bound. No lower Hessian bound is assumed.
+
+`source_common_rate_and_secant` returns one field, one compact buffer and constants before all endpoint quantifiers. Its endpoints require actual derivatives and positive actual curvature; it is stronger than an eligible-pair statement. `source_eligible_common_rate` derives positive curvature from the actual eligible-pair weak-Wolfe condition and c₂<1. Both final radii use the actual Euclidean displacement norm, with the Pi-to-Euclidean norm inequality proved in the application. Dimension zero, empty compact sets, singleton active families, and rank-zero constant families are not silently excluded.
+
+## Source qualification and remaining scope
+
+The source calls the field “smooth” although its branches are only C². The regularity supplied by these hypotheses is C¹, which is the exact exported conclusion. Claiming C∞ would require stronger branch regularity and would in general be false: already in one dimension, a noncritical C² convex branch can have a derivative that is C¹ but not C², and its uniquely determined common-rate field is the reciprocal derivative. The generic canonical-point regularity theorem retains arbitrary available C^k gradient regularity, so stronger input regularity can be used separately. This is an explicit regularity qualification, not a silent weakening.
+
+No projected transport or general higher-dimensional BFGS convergence is claimed. The source explicitly says these do not follow from the field and secant construction. These limitations are preserved in both exact targets. Original sources have not been edited.
+
+## Main delivery
+
+The twelve main source files differ from the frozen, independently reviewed scratch sources only in import normalization. Run `bash audit/verify_c_constant_rank.sh` for a delivered-files-only main build, type and transitive-axiom audit, source hash check, and four strict source/wrapper contract checks. This reproduction does not depend on scratch files. The corresponding main manifest and logs are `audit/c_constant_rank_declarations.json`, `audit/c_constant_rank_build.log`, `audit/c_constant_rank_axioms.log`, and `audit/c_constant_rank_validation.log`.

@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 4,291 explicit
-theorems and 6,264 theorem declarations including generated auxiliaries. All 162
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 4,469 explicit
+theorems and 6,568 theorem declarations including generated auxiliaries. All 178
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_source_closure_check.log`.
+`audit/report_geometry_completion_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -56,9 +56,13 @@ families, the actual smooth locally invariant stable manifold, C's uniform
 same-field endpoint estimates, A's rank-loss spectrum and local semialgebraic
 infrastructure, and T/F source details. See
 [audit/REPORT_SOURCE_CLOSURE_STATEMENT_REVIEW.md](audit/REPORT_SOURCE_CLOSURE_STATEMENT_REVIEW.md).
-A's general semialgebraic closure, C's higher-dimensional partial field/secant
-assertion and A-dependent alternative, and final source/evidence reconciliation
-remain open.
+The fourteenth tranche verifies C's actual arbitrary-dimensional constant-rank
+C1 field/secant theorem, L's Jacobian precision and complete source reconciliation,
+actual two-piece termination and the separate arbitrary-dimensional no-infinite-run
+result, and further polynomial elimination infrastructure. See
+[audit/REPORT_GEOMETRY_COMPLETION_STATEMENT_REVIEW.md](audit/REPORT_GEOMETRY_COMPLETION_STATEMENT_REVIEW.md).
+A's general semialgebraic closure, its dependent C alternative, D's remaining
+display precision, and final source/synthesis/evidence reconciliation remain open.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
 

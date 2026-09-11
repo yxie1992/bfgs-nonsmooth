@@ -1,0 +1,131 @@
+BfgsVerification.RealAlgebraicGeometry.pseudoLeadingTerm.{u_1} {R : Type u_1} [CommRing R] (p q : Polynomial R) :
+  Polynomial R
+'BfgsVerification.RealAlgebraicGeometry.pseudoLeadingTerm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.pseudoStep.{u_1} {R : Type u_1} [CommRing R] (p q : Polynomial R) : Polynomial R
+'BfgsVerification.RealAlgebraicGeometry.pseudoStep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.pseudoStep_degree_lt.{u_1} {R : Type u_1} [CommRing R] [IsDomain R]
+  {p q : Polynomial R} (hp : p ≠ 0) (hq : q ≠ 0) (hd : q.natDegree ≤ p.natDegree) :
+  (BfgsVerification.RealAlgebraicGeometry.pseudoStep p q).degree < p.degree
+'BfgsVerification.RealAlgebraicGeometry.pseudoStep_degree_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_pseudoDivision.{u_1} {R : Type u_1} [CommRing R] [IsDomain R]
+  (p q : Polynomial R) (hq : q ≠ 0) :
+  ∃ k Q r, Polynomial.C q.leadingCoeff ^ k * p = q * Q + r ∧ (r = 0 ∨ r.natDegree < q.natDegree)
+'BfgsVerification.RealAlgebraicGeometry.exists_pseudoDivision' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_positive_pseudoDivision.{u_1} {R : Type u_1} [CommRing R] [IsDomain R]
+  (p q : Polynomial R) (hq : q ≠ 0) :
+  ∃ k Q r, Polynomial.C q.leadingCoeff ^ (2 * k) * p = q * Q + r ∧ (r = 0 ∨ r.natDegree < q.natDegree)
+'BfgsVerification.RealAlgebraicGeometry.exists_positive_pseudoDivision' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.positive_pseudoDivision_specialize.{u_1} {R : Type u_1} [CommRing R] [IsDomain R]
+  {p q Q r : Polynomial R} {k : ℕ} (he : Polynomial.C q.leadingCoeff ^ (2 * k) * p = q * Q + r)
+  (hr : r = 0 ∨ r.natDegree < q.natDegree) (f : R →+* ℝ) (hf : f q.leadingCoeff ≠ 0) :
+  (Polynomial.map f r = 0 ∨ (Polynomial.map f r).natDegree < (Polynomial.map f q).natDegree) ∧
+    ∀ (t : ℝ),
+      Polynomial.eval t (Polynomial.map f q) = 0 →
+        (Polynomial.eval t (Polynomial.map f p) = 0 ↔ Polynomial.eval t (Polynomial.map f r) = 0) ∧
+          (0 < Polynomial.eval t (Polynomial.map f p) ↔ 0 < Polynomial.eval t (Polynomial.map f r)) ∧
+            (0 ≤ Polynomial.eval t (Polynomial.map f p) ↔ 0 ≤ Polynomial.eval t (Polynomial.map f r))
+'BfgsVerification.RealAlgebraicGeometry.positive_pseudoDivision_specialize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_uniform_positive_pseudoDivision.{u_1} {R : Type u_1} [CommRing R]
+  [IsDomain R] (p q : Polynomial R) (hq : q ≠ 0) :
+  ∃ k Q r,
+    Polynomial.C q.leadingCoeff ^ (2 * k) * p = q * Q + r ∧
+      (r = 0 ∨ r.natDegree < q.natDegree) ∧
+        ∀ (f : R →+* ℝ),
+          f q.leadingCoeff ≠ 0 →
+            (Polynomial.map f r = 0 ∨ (Polynomial.map f r).natDegree < (Polynomial.map f q).natDegree) ∧
+              ∀ (t : ℝ),
+                Polynomial.eval t (Polynomial.map f q) = 0 →
+                  (Polynomial.eval t (Polynomial.map f p) = 0 ↔ Polynomial.eval t (Polynomial.map f r) = 0) ∧
+                    (0 < Polynomial.eval t (Polynomial.map f p) ↔ 0 < Polynomial.eval t (Polynomial.map f r)) ∧
+                      (0 ≤ Polynomial.eval t (Polynomial.map f p) ↔ 0 ≤ Polynomial.eval t (Polynomial.map f r))
+'BfgsVerification.RealAlgebraicGeometry.exists_uniform_positive_pseudoDivision' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.eraseLead_map_of_leadingCoeff_zero.{u_1, u_2} {R : Type u_1} {S : Type u_2}
+  [CommRing R] [CommRing S] (p : Polynomial R) (f : R →+* S) (hf : f p.leadingCoeff = 0) :
+  Polynomial.map f p.eraseLead = Polynomial.map f p
+'BfgsVerification.RealAlgebraicGeometry.eraseLead_map_of_leadingCoeff_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.eraseLead_branch_degree.{u_1} {R : Type u_1} [CommRing R] (p : Polynomial R)
+  (hp : p ≠ 0) : p.eraseLead.degree < p.degree
+'BfgsVerification.RealAlgebraicGeometry.eraseLead_branch_degree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.leadingCoeff_zero_semialgebraic.{u_3} {σ : Type u_3} [Finite σ]
+  (q : Polynomial (MvPolynomial σ ℝ)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {x | (MvPolynomial.eval x) q.leadingCoeff = 0}
+'BfgsVerification.RealAlgebraicGeometry.leadingCoeff_zero_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.leadingCoeff_nonzero_semialgebraic.{u_3} {σ : Type u_3} [Finite σ]
+  (q : Polynomial (MvPolynomial σ ℝ)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {x | (MvPolynomial.eval x) q.leadingCoeff ≠ 0}
+'BfgsVerification.RealAlgebraicGeometry.leadingCoeff_nonzero_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.degreePrefix.{u_1} {R : Type u_1} [CommRing R] (q : Polynomial R) (N : ℕ) :
+  Polynomial R
+'BfgsVerification.RealAlgebraicGeometry.degreePrefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.degreePrefix_coeff.{u_1} {R : Type u_1} [CommRing R] (q : Polynomial R)
+  (N j : ℕ) : (BfgsVerification.RealAlgebraicGeometry.degreePrefix q N).coeff j = if j ≤ N then q.coeff j else 0
+'BfgsVerification.RealAlgebraicGeometry.degreePrefix_coeff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.degreePrefix_natDegree_le.{u_1} {R : Type u_1} [CommRing R] (q : Polynomial R)
+  (N : ℕ) : (BfgsVerification.RealAlgebraicGeometry.degreePrefix q N).natDegree ≤ N
+'BfgsVerification.RealAlgebraicGeometry.degreePrefix_natDegree_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.degreePrefix_natDegree.{u_1} {R : Type u_1} [CommRing R] {q : Polynomial R}
+  {N : ℕ} (hN : q.coeff N ≠ 0) : (BfgsVerification.RealAlgebraicGeometry.degreePrefix q N).natDegree = N
+'BfgsVerification.RealAlgebraicGeometry.degreePrefix_natDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.degreePrefix_map.{u_1, u_2} {R : Type u_1} {S : Type u_2} [CommRing R]
+  [CommRing S] (q : Polynomial R) (f : R →+* S) (N : ℕ) (hdeg : (Polynomial.map f q).natDegree ≤ N) :
+  Polynomial.map f (BfgsVerification.RealAlgebraicGeometry.degreePrefix q N) = Polynomial.map f q
+'BfgsVerification.RealAlgebraicGeometry.degreePrefix_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.degreePrefix_leadingCoeff_specialize.{u_1, u_2} {R : Type u_1} {S : Type u_2}
+  [CommRing R] [CommRing S] (q : Polynomial R) (f : R →+* S) (hq : Polynomial.map f q ≠ 0) :
+  f (BfgsVerification.RealAlgebraicGeometry.degreePrefix q (Polynomial.map f q).natDegree).leadingCoeff ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.degreePrefix_leadingCoeff_specialize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_degreePrefix_specialize.{u_1, u_2} {R : Type u_1} {S : Type u_2}
+  [CommRing R] [CommRing S] (q : Polynomial R) (f : R →+* S) (hq : Polynomial.map f q ≠ 0) :
+  ∃ N ∈ Finset.range (q.natDegree + 1),
+    Polynomial.map f (BfgsVerification.RealAlgebraicGeometry.degreePrefix q N) = Polynomial.map f q ∧
+      f (BfgsVerification.RealAlgebraicGeometry.degreePrefix q N).leadingCoeff ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.exists_degreePrefix_specialize' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.RootRemainderSigns (p q r : Polynomial ℝ) : Prop
+'BfgsVerification.RealAlgebraicGeometry.RootRemainderSigns' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_finite_root_remainders.{u_1} {R : Type u_1} [CommRing R] [IsDomain R]
+  (p q : Polynomial R) :
+  ∃ r,
+    ∀ (f : R →+* ℝ),
+      Polynomial.map f q ≠ 0 →
+        ∃ i,
+          BfgsVerification.RealAlgebraicGeometry.RootRemainderSigns (Polynomial.map f p) (Polynomial.map f q)
+            (Polynomial.map f (r i))
+'BfgsVerification.RealAlgebraicGeometry.exists_finite_root_remainders' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PositivePseudoDivisionTarget : Prop
+'BfgsVerification.PositivePseudoDivisionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.positivePseudoDivision : BfgsVerification.PositivePseudoDivisionTarget
+'BfgsVerification.positivePseudoDivision' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PseudoDivisionSpecializationTarget : Prop
+'BfgsVerification.PseudoDivisionSpecializationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.pseudoDivisionSpecialization : BfgsVerification.PseudoDivisionSpecializationTarget
+'BfgsVerification.pseudoDivisionSpecialization' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.FiniteRootRemaindersTarget : Prop
+'BfgsVerification.FiniteRootRemaindersTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finiteRootRemainders : BfgsVerification.FiniteRootRemaindersTarget
+'BfgsVerification.finiteRootRemainders' depends on axioms: [propext, Classical.choice, Quot.sound]

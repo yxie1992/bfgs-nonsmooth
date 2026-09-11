@@ -1,0 +1,34 @@
+import BfgsVerification.LShapePrecision
+set_option pp.universes true
+#check BfgsVerification.LShapeFineCertificate.column_0_bounds
+#print axioms BfgsVerification.LShapeFineCertificate.column_0_bounds
+#check BfgsVerification.LShapeFineCertificate.column_1_bounds
+#print axioms BfgsVerification.LShapeFineCertificate.column_1_bounds
+#check BfgsVerification.LShapeFineCertificate.jacobian_bounds
+#print axioms BfgsVerification.LShapeFineCertificate.jacobian_bounds
+#check BfgsVerification.LShapePrecision.fine_box_of_original_ball
+#print axioms BfgsVerification.LShapePrecision.fine_box_of_original_ball
+#check BfgsVerification.LShapePrecision.display20
+#print axioms BfgsVerification.LShapePrecision.display20
+#check BfgsVerification.LShapePrecision.originalDisplay15
+#print axioms BfgsVerification.LShapePrecision.originalDisplay15
+#check BfgsVerification.LShapePrecision.correctedDisplay15
+#print axioms BfgsVerification.LShapePrecision.correctedDisplay15
+#check BfgsVerification.LShapePrecision.actualEntry
+#print axioms BfgsVerification.LShapePrecision.actualEntry
+#check BfgsVerification.LShapePrecision.actualEntry_eq_jacobian
+#print axioms BfgsVerification.LShapePrecision.actualEntry_eq_jacobian
+#check BfgsVerification.LShapePrecision.jacobian_precision_on_original_ball
+#print axioms BfgsVerification.LShapePrecision.jacobian_precision_on_original_ball
+#check BfgsVerification.LShapePrecision.actual_precision
+#print axioms BfgsVerification.LShapePrecision.actual_precision
+#check BfgsVerification.LShapePrecision.corrected_display_error
+#print axioms BfgsVerification.LShapePrecision.corrected_display_error
+#check BfgsVerification.LShapePrecision.original_display_error
+#print axioms BfgsVerification.LShapePrecision.original_display_error
+#check BfgsVerification.LShapePrecision.original_lower_left_exceeds_half_unit
+#print axioms BfgsVerification.LShapePrecision.original_lower_left_exceeds_half_unit
+#check BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget
+#print axioms BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget
+#check BfgsVerification.LShapePrecision.actualJacobianPrecision
+#print axioms BfgsVerification.LShapePrecision.actualJacobianPrecision

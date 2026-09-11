@@ -1,0 +1,279 @@
+BfgsVerification.RealAlgebraicGeometry.fiberCoefficient {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) (k : ℕ) :
+  MvPolynomial (Fin n) ℝ
+'BfgsVerification.RealAlgebraicGeometry.fiberCoefficient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_eq_map {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x =
+    Polynomial.map (MvPolynomial.eval x) ((MvPolynomial.optionEquivLeft ℝ (Fin n)) p)
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_eq_map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_coeff {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) (k : ℕ) :
+  (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x).coeff k =
+    (MvPolynomial.eval x) (BfgsVerification.RealAlgebraicGeometry.fiberCoefficient p k)
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_coeff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_natDegree_le {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) :
+  (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x).natDegree ≤ MvPolynomial.degreeOf none p
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_natDegree_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_zero_iff {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x = 0 ↔
+    ∀ k ∈ Finset.range (MvPolynomial.degreeOf none p + 1),
+      (MvPolynomial.eval x) (BfgsVerification.RealAlgebraicGeometry.fiberCoefficient p k) = 0
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_zero_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_zero_semialgebraic {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    {x | BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x = 0}
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_zero_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_degree_iff {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) (k : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x ≠ 0 ∧
+      (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x).natDegree = k ↔
+    (MvPolynomial.eval x) (BfgsVerification.RealAlgebraicGeometry.fiberCoefficient p k) ≠ 0 ∧
+      ∀ j ∈ {x ∈ Finset.range (MvPolynomial.degreeOf none p + 1) | k < x},
+        (MvPolynomial.eval x) (BfgsVerification.RealAlgebraicGeometry.fiberCoefficient p j) = 0
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_degree_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_degree_semialgebraic {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (k : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    {x |
+      BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x ≠ 0 ∧
+        (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x).natDegree = k}
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_degree_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_degree_partition {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) :
+  {x | BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x = 0} ∪
+      ⋃ k ∈ Finset.range (MvPolynomial.degreeOf none p + 1),
+        {x |
+          BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x ≠ 0 ∧
+            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x).natDegree = k} =
+    Set.univ
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_degree_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_pderiv {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial ((MvPolynomial.pderiv none) p) x =
+    Polynomial.derivative (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x)
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_pderiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.verticalDerivative {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) (k : ℕ) :
+  MvPolynomial (Option (Fin n)) ℝ
+'BfgsVerification.RealAlgebraicGeometry.verticalDerivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_verticalDerivative {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (x : BfgsVerification.Vec n) (k : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p k)
+      x =
+    (⇑Polynomial.derivative)^[k] (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p x)
+'BfgsVerification.RealAlgebraicGeometry.fiberPolynomial_verticalDerivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.verticalDerivative_eval {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (v : Option (Fin n) → ℝ) (k : ℕ) :
+  (MvPolynomial.eval v) (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p k) =
+    Polynomial.eval (v none)
+      ((⇑Polynomial.derivative)^[k] (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p fun i => v (some i)))
+'BfgsVerification.RealAlgebraicGeometry.verticalDerivative_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.eval_derivative_rootMultiplicity_ne_zero {p : Polynomial ℝ} (hp : p ≠ 0)
+  (t : ℝ) : Polynomial.eval t ((⇑Polynomial.derivative)^[Polynomial.rootMultiplicity t p] p) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.eval_derivative_rootMultiplicity_ne_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootMultiplicity_eq_iff_derivative_tests {p : Polynomial ℝ} (hp : p ≠ 0) (t : ℝ)
+  (m : ℕ) :
+  Polynomial.rootMultiplicity t p = m ↔
+    (∀ j ∈ Finset.range m, Polynomial.eval t ((⇑Polynomial.derivative)^[j] p) = 0) ∧
+      Polynomial.eval t ((⇑Polynomial.derivative)^[m] p) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.rootMultiplicity_eq_iff_derivative_tests' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.rootMultiplicity_le_natDegree {p : Polynomial ℝ} (hp : p ≠ 0) (t : ℝ) :
+  Polynomial.rootMultiplicity t p ≤ p.natDegree
+'BfgsVerification.RealAlgebraicGeometry.rootMultiplicity_le_natDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStratum {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) (m : ℕ) :
+  Set (Option (Fin n) → ℝ)
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStratum' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_iff {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) (m : ℕ)
+  (v : Option (Fin n) → ℝ) :
+  v ∈ BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m ↔
+    (∀ j ∈ Finset.range m, (MvPolynomial.eval v) (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p j) = 0) ∧
+      (MvPolynomial.eval v) (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p m) ≠ 0
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_semialgebraic {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (m : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    (BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m)
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) :
+  Set (Option (Fin n) → ℝ)
+'BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder_semialgebraic {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder p)
+'BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_degree_bound {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  {v : Option (Fin n) → ℝ} {m : ℕ} (hv : v ∈ BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m) :
+  m ≤ MvPolynomial.degreeOf none p
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_degree_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStrata_disjoint {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  {j k : ℕ} (hjk : j ≠ k) :
+  Disjoint (BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p j)
+    (BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p k)
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStrata_disjoint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.zeroFiber_disjoint_multiplicityStratum {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) (m : ℕ) :
+  Disjoint (BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder p)
+    (BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m)
+'BfgsVerification.RealAlgebraicGeometry.zeroFiber_disjoint_multiplicityStratum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStrata_partition {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder p ∪
+      ⋃ m ∈ Finset.range (MvPolynomial.degreeOf none p + 1),
+        BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m =
+    Set.univ
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStrata_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_root_iff {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  {v : Option (Fin n) → ℝ} {m : ℕ} (hv : v ∈ BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m) :
+  (MvPolynomial.eval v) p = 0 ↔ 0 < m
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_root_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.root_multiplicity_partition {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) :
+  {v | (MvPolynomial.eval v) p = 0} =
+    BfgsVerification.RealAlgebraicGeometry.zeroFiberCylinder p ∪
+      ⋃ m ∈ Finset.Icc 1 (MvPolynomial.degreeOf none p), BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m
+'BfgsVerification.RealAlgebraicGeometry.root_multiplicity_partition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.verticalDerivative_succ {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ) (k : ℕ) :
+  (MvPolynomial.pderiv none) (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p k) =
+    BfgsVerification.RealAlgebraicGeometry.verticalDerivative p (k + 1)
+'BfgsVerification.RealAlgebraicGeometry.verticalDerivative_succ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_derivative_simple {n : ℕ}
+  (p : MvPolynomial (Option (Fin n)) ℝ) {a : BfgsVerification.Vec n} {b : ℝ} {m : ℕ}
+  (hv :
+    BfgsVerification.RealAlgebraicGeometry.parameterPoint a b ∈
+      BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m)
+  (hm : 0 < m) :
+  Polynomial.eval b
+        (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+          (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p (m - 1)) a) =
+      0 ∧
+    Polynomial.eval b
+        (Polynomial.derivative
+          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+            (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p (m - 1)) a)) ≠
+      0
+'BfgsVerification.RealAlgebraicGeometry.multiplicityStratum_derivative_simple' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.multiplicity_stratum_local_chart {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  {a : BfgsVerification.Vec n} {b : ℝ} {m : ℕ}
+  (hv :
+    BfgsVerification.RealAlgebraicGeometry.parameterPoint a b ∈
+      BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m)
+  (hm : 0 < m) :
+  ∃ g r δ,
+    0 < r ∧
+      0 < δ ∧
+        g a = b ∧
+          ContDiffOn ℝ (↑⊤) g (Metric.ball a r) ∧
+            (∀ x ∈ Metric.ball a r,
+                dist (g x) b < δ ∧
+                  ∀ (t : ℝ),
+                    dist t b < δ →
+                      (BfgsVerification.RealAlgebraicGeometry.parameterEval
+                            (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p (m - 1)) (x, t) =
+                          0 ↔
+                        t = g x)) ∧
+              (∀ x ∈ Metric.ball a r,
+                  ∀ (t : ℝ),
+                    dist t b < δ →
+                      BfgsVerification.RealAlgebraicGeometry.parameterPoint x t ∈
+                          BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m →
+                        t = g x) ∧
+                BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+                  {v | (fun i => v (some i)) ∈ Metric.ball a r ∧ v none = g fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.multiplicity_stratum_local_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.nonzero_fiber_root_stratum_chart {n : ℕ} (p : MvPolynomial (Option (Fin n)) ℝ)
+  (a : BfgsVerification.Vec n) (b : ℝ) (hp : BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a ≠ 0)
+  (hz : Polynomial.eval b (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a) = 0) :
+  ∃ m,
+    m = Polynomial.rootMultiplicity b (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial p a) ∧
+      0 < m ∧
+        m ≤ MvPolynomial.degreeOf none p ∧
+          ∃ g r δ,
+            0 < r ∧
+              0 < δ ∧
+                g a = b ∧
+                  ContDiffOn ℝ (↑⊤) g (Metric.ball a r) ∧
+                    (∀ x ∈ Metric.ball a r,
+                        dist (g x) b < δ ∧
+                          ∀ (t : ℝ),
+                            dist t b < δ →
+                              (BfgsVerification.RealAlgebraicGeometry.parameterEval
+                                    (BfgsVerification.RealAlgebraicGeometry.verticalDerivative p (m - 1)) (x, t) =
+                                  0 ↔
+                                t = g x)) ∧
+                      (∀ x ∈ Metric.ball a r,
+                          ∀ (t : ℝ),
+                            dist t b < δ →
+                              BfgsVerification.RealAlgebraicGeometry.parameterPoint x t ∈
+                                  BfgsVerification.RealAlgebraicGeometry.multiplicityStratum p m →
+                                t = g x) ∧
+                        BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+                          {v | (fun i => v (some i)) ∈ Metric.ball a r ∧ v none = g fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.nonzero_fiber_root_stratum_chart' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.PolynomialDegreeStrataTarget : Prop
+'BfgsVerification.PolynomialDegreeStrataTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialDegreeStrata : BfgsVerification.PolynomialDegreeStrataTarget
+'BfgsVerification.polynomialDegreeStrata' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialDerivativeSpecializationTarget : Prop
+'BfgsVerification.PolynomialDerivativeSpecializationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialDerivativeSpecialization : BfgsVerification.PolynomialDerivativeSpecializationTarget
+'BfgsVerification.polynomialDerivativeSpecialization' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialMultiplicityStrataTarget : Prop
+'BfgsVerification.PolynomialMultiplicityStrataTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialMultiplicityStrata : BfgsVerification.PolynomialMultiplicityStrataTarget
+'BfgsVerification.polynomialMultiplicityStrata' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialMultipleRootChartTarget : Prop
+'BfgsVerification.PolynomialMultipleRootChartTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialMultipleRootChart : BfgsVerification.PolynomialMultipleRootChartTarget
+'BfgsVerification.polynomialMultipleRootChart' depends on axioms: [propext, Classical.choice, Quot.sound]

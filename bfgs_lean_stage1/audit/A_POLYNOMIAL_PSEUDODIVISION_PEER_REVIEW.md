@@ -1,0 +1,15 @@
+# Independent positive pseudo-division review
+
+Reviewer: convex_gradient. All six frozen source modules and all three exact target definitions were read. Fresh independent audit-driver runs report all 26 declarations with only the standard allowed axioms and all three strict target checks. All six source hashes match `source_hashes.json`; see `peer_axioms.log`, `peer_contracts.log`, and `peer_validation.log`.
+
+No defect was found within the stated algebraic scope. Leading-term cancellation uses the actual polynomial leading coefficients and actual degrees over an integral domain. The proof separates zero dividends and zero remainders before invoking strict natural-degree descent. Nonzero constant divisors are handled and force zero remainder. The induction constructs an actual identity, rather than assuming a division oracle.
+
+The second multiplication produces an even power of the divisor leading coefficient, and the specialized multiplier is proved strictly positive for every nonzero specialized leading coefficient. Root value identities are derived by mapping and evaluating that polynomial identity. Zero, positive, and nonnegative tests are therefore preserved in both directions, including a negative leading coefficient and exponent zero. Specialized degree claims use the actual nonvanishing-leading-coefficient theorem; remainder degree may drop further.
+
+The exceptional branch erases the actual symbolic leading term only when it specializes to zero; the entire specialized polynomial is proved unchanged. The finite-prefix result chooses the actual fiber degree and proves the corresponding symbolic prefix specializes to the full fiber with nonzero leading coefficient. Thus every nonzero fiber, including all degree drops and constant fibers, is covered by the finite remainder family selected before the specialization quantifier. No false fixed-degree or fixed-sign assumption is hidden in that selection.
+
+`RootRemainderSigns` transparently states actual degree decrease and actual root-wise sign equivalences; its proof is constructed in the final theorem. Zero divisor fibers are explicitly excluded from this reduction, which is necessary because their root set is all of R. This does not impose that exclusion on a purported full projection result: full projection is not claimed. The reviewed tranche does not yet prove root counts, simultaneous sign determination, Boolean projection, global path decomposition, or Module A's final affine-critical-value theorem. The scope description and exact targets accurately retain those limitations.
+
+## Main integration correspondence
+
+The frozen source snapshot above was copied to the delivered main files listed in `a_polynomial_pseudodivision_declarations.json`. Only owned import qualification changed. `a_polynomial_pseudodivision_copy_validation.log` records the exact-body comparison. Fresh main compiler, transitive-dependency, strict-contract and hash evidence is recorded in `a_polynomial_pseudodivision_validation.log`; `verify_a_polynomial_pseudodivision.sh` uses delivered main files only. The original mathematical scope and limitations remain unchanged.

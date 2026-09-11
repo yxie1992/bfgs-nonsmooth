@@ -722,3 +722,53 @@ example : BfgsVerification.PolynomialSimpleRootChartTarget := BfgsVerification.p
 #print BfgsVerification.PolynomialSimpleRootProjectionTarget
 example : BfgsVerification.PolynomialSimpleRootProjectionTarget := BfgsVerification.polynomialSimpleRootProjection
 #print axioms BfgsVerification.polynomialSimpleRootProjection
+
+/- Fourteenth milestone: constant-rank geometry, precision, termination and polynomial elimination infrastructure. -/
+#print BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget
+example : BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget := BfgsVerification.TwoPieceBudget.twoPieceTermination
+#print axioms BfgsVerification.TwoPieceBudget.twoPieceTermination
+#print BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget
+example : BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget := BfgsVerification.TwoPieceBudget.twoPieceLinearImage
+#print axioms BfgsVerification.TwoPieceBudget.twoPieceLinearImage
+#print BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget
+example : BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget := BfgsVerification.LShapePrecision.actualJacobianPrecision
+#print axioms BfgsVerification.LShapePrecision.actualJacobianPrecision
+#print BfgsVerification.ConstantRankFields.SourceConstantRankTarget
+example : BfgsVerification.ConstantRankFields.SourceConstantRankTarget := BfgsVerification.ConstantRankFields.sourceConstantRank
+#print axioms BfgsVerification.ConstantRankFields.sourceConstantRank
+#print BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget
+example : BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget := BfgsVerification.ConstantRankFields.sourceConstantRankEligible
+#print axioms BfgsVerification.ConstantRankFields.sourceConstantRankEligible
+#print BfgsVerification.PolynomialDegreeStrataTarget
+example : BfgsVerification.PolynomialDegreeStrataTarget := BfgsVerification.polynomialDegreeStrata
+#print axioms BfgsVerification.polynomialDegreeStrata
+#print BfgsVerification.PolynomialDerivativeSpecializationTarget
+example : BfgsVerification.PolynomialDerivativeSpecializationTarget := BfgsVerification.polynomialDerivativeSpecialization
+#print axioms BfgsVerification.polynomialDerivativeSpecialization
+#print BfgsVerification.PolynomialMultiplicityStrataTarget
+example : BfgsVerification.PolynomialMultiplicityStrataTarget := BfgsVerification.polynomialMultiplicityStrata
+#print axioms BfgsVerification.polynomialMultiplicityStrata
+#print BfgsVerification.PolynomialMultipleRootChartTarget
+example : BfgsVerification.PolynomialMultipleRootChartTarget := BfgsVerification.polynomialMultipleRootChart
+#print axioms BfgsVerification.polynomialMultipleRootChart
+#print BfgsVerification.RealQuadraticEliminationTarget
+example : BfgsVerification.RealQuadraticEliminationTarget := BfgsVerification.realQuadraticElimination
+#print axioms BfgsVerification.realQuadraticElimination
+#print BfgsVerification.QuadraticPolynomialProjectionTarget
+example : BfgsVerification.QuadraticPolynomialProjectionTarget := BfgsVerification.quadraticPolynomialProjection
+#print axioms BfgsVerification.quadraticPolynomialProjection
+#print BfgsVerification.QuadraticUniversalConditionsTarget
+example : BfgsVerification.QuadraticUniversalConditionsTarget := BfgsVerification.quadraticUniversalConditions
+#print axioms BfgsVerification.quadraticUniversalConditions
+#print BfgsVerification.ActualDegreeTwoProjectionTarget
+example : BfgsVerification.ActualDegreeTwoProjectionTarget := BfgsVerification.actualDegreeTwoProjection
+#print axioms BfgsVerification.actualDegreeTwoProjection
+#print BfgsVerification.PositivePseudoDivisionTarget
+example : BfgsVerification.PositivePseudoDivisionTarget := BfgsVerification.positivePseudoDivision
+#print axioms BfgsVerification.positivePseudoDivision
+#print BfgsVerification.PseudoDivisionSpecializationTarget
+example : BfgsVerification.PseudoDivisionSpecializationTarget := BfgsVerification.pseudoDivisionSpecialization
+#print axioms BfgsVerification.pseudoDivisionSpecialization
+#print BfgsVerification.FiniteRootRemaindersTarget
+example : BfgsVerification.FiniteRootRemaindersTarget := BfgsVerification.finiteRootRemainders
+#print axioms BfgsVerification.finiteRootRemainders

@@ -1,0 +1,361 @@
+@BfgsVerification.TwoPieceBudget.uniform_drop : ∀ {c δ a ψ ψ' : ℝ},
+  0 < c → 0 < δ → δ < 1 → 1 < a → a * (δ + c * (1 - δ)) ≤ δ * ψ → ψ' = ψ - (ψ - a) / (1 - δ) → ψ' + c < ψ
+'BfgsVerification.TwoPieceBudget.uniform_drop' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.finite_budget : ∀ {c : ℝ} (ψ : ℕ → ℝ) (N : ℕ),
+  (∀ k < N, ψ (k + 1) + c ≤ ψ k) → ψ N + ↑N * c ≤ ψ 0
+'BfgsVerification.TwoPieceBudget.finite_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.no_infinite_scalar_continuation : ∀ {c : ℝ},
+  0 < c →
+    ∀ (δ a ψ : ℕ → ℝ),
+      (∀ (k : ℕ), 0 < δ k) →
+        (∀ (k : ℕ), δ k < 1) →
+          (∀ (k : ℕ), 1 < a k) →
+            (∀ (k : ℕ), 1 < ψ k) →
+              (∀ (k : ℕ), a k * (δ k + c * (1 - δ k)) ≤ δ k * ψ k) →
+                (∀ (k : ℕ), ψ (k + 1) = ψ k - (ψ k - a k) / (1 - δ k)) → False
+'BfgsVerification.TwoPieceBudget.no_infinite_scalar_continuation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TwoPieceBudget.matrix : ℝ → ℝ → ℝ → BfgsVerification.Mat 2
+'BfgsVerification.TwoPieceBudget.matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.gradient : ℝ → BfgsVerification.Vec 2
+'BfgsVerification.TwoPieceBudget.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.energy : ℝ → ℝ → ℝ → ℝ → ℝ
+'BfgsVerification.TwoPieceBudget.energy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.cross : ℝ → ℝ → ℝ → ℝ
+'BfgsVerification.TwoPieceBudget.cross' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.determinant : ℝ → ℝ → ℝ → ℝ
+'BfgsVerification.TwoPieceBudget.determinant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.step_formula : ∀ (a b c σ α : ℝ),
+  σ ^ 2 = 1 →
+    BfgsVerification.bfgsStep (BfgsVerification.TwoPieceBudget.matrix a b c)
+        (BfgsVerification.TwoPieceBudget.gradient σ) α =
+      ![-α * σ * BfgsVerification.TwoPieceBudget.cross a b σ,
+        -α * (BfgsVerification.TwoPieceBudget.energy a b c σ - BfgsVerification.TwoPieceBudget.cross a b σ)]
+'BfgsVerification.TwoPieceBudget.step_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.gradient_change : ∀ (σ : ℝ),
+  BfgsVerification.TwoPieceBudget.gradient (-σ) - BfgsVerification.TwoPieceBudget.gradient σ = ![-2 * σ, 0]
+'BfgsVerification.TwoPieceBudget.gradient_change' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.curvature_formula : ∀ (a b c σ α : ℝ),
+  σ ^ 2 = 1 →
+    BfgsVerification.dot (BfgsVerification.TwoPieceBudget.gradient (-σ) - BfgsVerification.TwoPieceBudget.gradient σ)
+        (BfgsVerification.bfgsStep (BfgsVerification.TwoPieceBudget.matrix a b c)
+          (BfgsVerification.TwoPieceBudget.gradient σ) α) =
+      2 * α * BfgsVerification.TwoPieceBudget.cross a b σ
+'BfgsVerification.TwoPieceBudget.curvature_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.actual_update_matrix : ∀ (a b c σ α : ℝ),
+  σ ^ 2 = 1 →
+    α ≠ 0 →
+      BfgsVerification.TwoPieceBudget.cross a b σ ≠ 0 →
+        BfgsVerification.inverseBFGS (BfgsVerification.TwoPieceBudget.matrix a b c)
+            (BfgsVerification.bfgsStep (BfgsVerification.TwoPieceBudget.matrix a b c)
+              (BfgsVerification.TwoPieceBudget.gradient σ) α)
+            (BfgsVerification.TwoPieceBudget.gradient (-σ) - BfgsVerification.TwoPieceBudget.gradient σ) =
+          BfgsVerification.TwoPieceBudget.matrix (α * BfgsVerification.TwoPieceBudget.cross a b σ / 2)
+            (σ * α * (BfgsVerification.TwoPieceBudget.energy a b c σ - BfgsVerification.TwoPieceBudget.cross a b σ) / 2)
+            (BfgsVerification.TwoPieceBudget.determinant a b c * BfgsVerification.TwoPieceBudget.energy a b c σ /
+                BfgsVerification.TwoPieceBudget.cross a b σ ^ 2 +
+              α * (BfgsVerification.TwoPieceBudget.energy a b c σ - BfgsVerification.TwoPieceBudget.cross a b σ) ^ 2 /
+                (2 * BfgsVerification.TwoPieceBudget.cross a b σ))
+'BfgsVerification.TwoPieceBudget.actual_update_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.scalar_update_identities : ∀ (a b c σ α : ℝ),
+  σ ^ 2 = 1 →
+    BfgsVerification.TwoPieceBudget.cross a b σ ≠ 0 →
+      let A := BfgsVerification.TwoPieceBudget.energy a b c σ;
+      let B := BfgsVerification.TwoPieceBudget.cross a b σ;
+      let D := BfgsVerification.TwoPieceBudget.determinant a b c;
+      let a' := α * B / 2;
+      let b' := σ * α * (A - B) / 2;
+      let c' := D * A / B ^ 2 + α * (A - B) ^ 2 / (2 * B);
+      BfgsVerification.TwoPieceBudget.energy a' b' c' (-σ) = D * A / B ^ 2 + α * (A - 2 * B) ^ 2 / (2 * B) ∧
+        BfgsVerification.TwoPieceBudget.cross a' b' (-σ) = α * (B - A / 2) ∧
+          BfgsVerification.TwoPieceBudget.determinant a' b' c' = α * A * D / (2 * B)
+'BfgsVerification.TwoPieceBudget.scalar_update_identities' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.raw_uniform_drop : ∀ {c A B D X α A' B' D' X' : ℝ},
+  0 < c →
+    0 < A →
+      0 < B →
+        0 < D →
+          0 < α →
+            A' < 2 * B' →
+              A' = D * A / B ^ 2 + α * (A - 2 * B) ^ 2 / (2 * B) →
+                B' = α * (B - A / 2) →
+                  D' = α * A * D / (2 * B) →
+                    X' = α * B - X → α * (2 * B - (1 - c) * A) ≤ 2 * X → B' * X' / D' + c < B * X / D
+'BfgsVerification.TwoPieceBudget.raw_uniform_drop' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.raw_no_infinite_continuation : ∀ {c : ℝ},
+  0 < c →
+    ∀ (A B D X α : ℕ → ℝ),
+      (∀ (k : ℕ), 0 < A k) →
+        (∀ (k : ℕ), 0 < B k) →
+          (∀ (k : ℕ), 0 < D k) →
+            (∀ (k : ℕ), 0 < X k) →
+              (∀ (k : ℕ), 0 < α k) →
+                (∀ (k : ℕ), A (k + 1) = D k * A k / B k ^ 2 + α k * (A k - 2 * B k) ^ 2 / (2 * B k)) →
+                  (∀ (k : ℕ), B (k + 1) = α k * (B k - A k / 2)) →
+                    (∀ (k : ℕ), D (k + 1) = α k * A k * D k / (2 * B k)) →
+                      (∀ (k : ℕ), X (k + 1) = α k * B k - X k) →
+                        (∀ (k : ℕ), α k * (2 * B k - (1 - c) * A k) ≤ 2 * X k) → False
+'BfgsVerification.TwoPieceBudget.raw_no_infinite_continuation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TwoPieceBudget.objective : BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.TwoPieceBudget.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.objective_convex : ConvexOn ℝ Set.univ BfgsVerification.TwoPieceBudget.objective
+'BfgsVerification.TwoPieceBudget.objective_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.support_positive : ∀ {x : BfgsVerification.Vec 2},
+  0 ≤ x 0 →
+    BfgsVerification.Homogeneous.Supports BfgsVerification.TwoPieceBudget.objective x
+      (BfgsVerification.TwoPieceBudget.gradient 1)
+'BfgsVerification.TwoPieceBudget.support_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.support_negative : ∀ {x : BfgsVerification.Vec 2},
+  x 0 ≤ 0 →
+    BfgsVerification.Homogeneous.Supports BfgsVerification.TwoPieceBudget.objective x
+      (BfgsVerification.TwoPieceBudget.gradient (-1))
+'BfgsVerification.TwoPieceBudget.support_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.actual_gradient_shape : ∀ {x g : BfgsVerification.Vec 2},
+  HasFDerivAt BfgsVerification.TwoPieceBudget.objective (BfgsVerification.gradientFunctional g) x →
+    g 0 ^ 2 = 1 ∧ g = BfgsVerification.TwoPieceBudget.gradient (g 0) ∧ 0 < g 0 * x 0 ∧ |x 0| = g 0 * x 0
+'BfgsVerification.TwoPieceBudget.actual_gradient_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.sigma : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.sigma' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.aa : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.aa' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.bb : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.bb' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.cc : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.cc' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.A : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.A' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.B : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.B' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.D : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.D' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.X : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective →
+  ℕ → ℝ
+'BfgsVerification.TwoPieceBudget.X' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.sigma_sq : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.sigma R k ^ 2 = 1
+'BfgsVerification.TwoPieceBudget.sigma_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.gradient_shape : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  R.g k = BfgsVerification.TwoPieceBudget.gradient (BfgsVerification.TwoPieceBudget.sigma R k)
+'BfgsVerification.TwoPieceBudget.gradient_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.X_eq : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.X R k = BfgsVerification.TwoPieceBudget.sigma R k * R.x k 0
+'BfgsVerification.TwoPieceBudget.X_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.X_pos : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  0 < BfgsVerification.TwoPieceBudget.X R k
+'BfgsVerification.TwoPieceBudget.X_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.matrix_shape : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  R.H k =
+    BfgsVerification.TwoPieceBudget.matrix (BfgsVerification.TwoPieceBudget.aa R k)
+      (BfgsVerification.TwoPieceBudget.bb R k) (BfgsVerification.TwoPieceBudget.cc R k)
+'BfgsVerification.TwoPieceBudget.matrix_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.sigma_next : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.sigma R (k + 1) = -BfgsVerification.TwoPieceBudget.sigma R k
+'BfgsVerification.TwoPieceBudget.sigma_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.A_eq_q : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.A R k = R.q k
+'BfgsVerification.TwoPieceBudget.A_eq_q' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.A_pos : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  0 < BfgsVerification.TwoPieceBudget.A R k
+'BfgsVerification.TwoPieceBudget.A_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.D_pos : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  0 < BfgsVerification.TwoPieceBudget.D R k
+'BfgsVerification.TwoPieceBudget.D_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.B_pos : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  0 < BfgsVerification.TwoPieceBudget.B R k
+'BfgsVerification.TwoPieceBudget.B_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.actual_next_matrix : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  R.H (k + 1) =
+    BfgsVerification.TwoPieceBudget.matrix (R.α k * BfgsVerification.TwoPieceBudget.B R k / 2)
+      (BfgsVerification.TwoPieceBudget.sigma R k * R.α k *
+          (BfgsVerification.TwoPieceBudget.A R k - BfgsVerification.TwoPieceBudget.B R k) /
+        2)
+      (BfgsVerification.TwoPieceBudget.D R k * BfgsVerification.TwoPieceBudget.A R k /
+          BfgsVerification.TwoPieceBudget.B R k ^ 2 +
+        R.α k * (BfgsVerification.TwoPieceBudget.A R k - BfgsVerification.TwoPieceBudget.B R k) ^ 2 /
+          (2 * BfgsVerification.TwoPieceBudget.B R k))
+'BfgsVerification.TwoPieceBudget.actual_next_matrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.aa_next : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.aa R (k + 1) = R.α k * BfgsVerification.TwoPieceBudget.B R k / 2
+'BfgsVerification.TwoPieceBudget.aa_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.bb_next : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.bb R (k + 1) =
+    BfgsVerification.TwoPieceBudget.sigma R k * R.α k *
+        (BfgsVerification.TwoPieceBudget.A R k - BfgsVerification.TwoPieceBudget.B R k) /
+      2
+'BfgsVerification.TwoPieceBudget.bb_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.cc_next : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.cc R (k + 1) =
+    BfgsVerification.TwoPieceBudget.D R k * BfgsVerification.TwoPieceBudget.A R k /
+        BfgsVerification.TwoPieceBudget.B R k ^ 2 +
+      R.α k * (BfgsVerification.TwoPieceBudget.A R k - BfgsVerification.TwoPieceBudget.B R k) ^ 2 /
+        (2 * BfgsVerification.TwoPieceBudget.B R k)
+'BfgsVerification.TwoPieceBudget.cc_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.scalar_recurrences : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.A R (k + 1) =
+      BfgsVerification.TwoPieceBudget.D R k * BfgsVerification.TwoPieceBudget.A R k /
+          BfgsVerification.TwoPieceBudget.B R k ^ 2 +
+        R.α k * (BfgsVerification.TwoPieceBudget.A R k - 2 * BfgsVerification.TwoPieceBudget.B R k) ^ 2 /
+          (2 * BfgsVerification.TwoPieceBudget.B R k) ∧
+    BfgsVerification.TwoPieceBudget.B R (k + 1) =
+        R.α k * (BfgsVerification.TwoPieceBudget.B R k - BfgsVerification.TwoPieceBudget.A R k / 2) ∧
+      BfgsVerification.TwoPieceBudget.D R (k + 1) =
+        R.α k * BfgsVerification.TwoPieceBudget.A R k * BfgsVerification.TwoPieceBudget.D R k /
+          (2 * BfgsVerification.TwoPieceBudget.B R k)
+'BfgsVerification.TwoPieceBudget.scalar_recurrences' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.X_next : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  BfgsVerification.TwoPieceBudget.X R (k + 1) =
+    R.α k * BfgsVerification.TwoPieceBudget.B R k - BfgsVerification.TwoPieceBudget.X R k
+'BfgsVerification.TwoPieceBudget.X_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.last_coordinate_next : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  R.x (k + 1) 1 = R.x k 1 - R.α k * (BfgsVerification.TwoPieceBudget.A R k - BfgsVerification.TwoPieceBudget.B R k)
+'BfgsVerification.TwoPieceBudget.last_coordinate_next' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.raw_armijo : ∀
+  (R : BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective) (k : ℕ),
+  R.α k * (2 * BfgsVerification.TwoPieceBudget.B R k - (1 - R.c₁) * BfgsVerification.TwoPieceBudget.A R k) ≤
+    2 * BfgsVerification.TwoPieceBudget.X R k
+'BfgsVerification.TwoPieceBudget.raw_armijo' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.no_infinite_actual_run : BfgsVerification.AdmissibleBFGSRun 2
+    BfgsVerification.TwoPieceBudget.objective →
+  False
+'BfgsVerification.TwoPieceBudget.no_infinite_actual_run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.State : Type
+'BfgsVerification.TwoPieceBudget.State' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.State.gradient_nonzero : ∀ (S : BfgsVerification.TwoPieceBudget.State), S.g ≠ 0
+'BfgsVerification.TwoPieceBudget.State.gradient_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.Step : ℝ →
+  ℝ → BfgsVerification.TwoPieceBudget.State → BfgsVerification.TwoPieceBudget.State → Prop
+'BfgsVerification.TwoPieceBudget.Step' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.runOfChain : {c₁ c₂ : ℝ} →
+  0 < c₁ →
+    c₁ < c₂ →
+      c₂ < 1 →
+        (S : ℕ → BfgsVerification.TwoPieceBudget.State) →
+          (∀ (k : ℕ), BfgsVerification.TwoPieceBudget.Step c₁ c₂ (S k) (S (k + 1))) →
+            BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.TwoPieceBudget.objective
+'BfgsVerification.TwoPieceBudget.runOfChain' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.wellFounded_actual_steps : ∀ {c₁ c₂ : ℝ},
+  0 < c₁ → c₁ < c₂ → c₂ < 1 → WellFounded fun T S => BfgsVerification.TwoPieceBudget.Step c₁ c₂ S T
+'BfgsVerification.TwoPieceBudget.wellFounded_actual_steps' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.finite_path_to_terminal : ∀ {c₁ c₂ : ℝ},
+  0 < c₁ →
+    c₁ < c₂ →
+      c₂ < 1 →
+        ∀ (S : BfgsVerification.TwoPieceBudget.State),
+          ∃ T,
+            Relation.ReflTransGen (BfgsVerification.TwoPieceBudget.Step c₁ c₂) S T ∧
+              ¬∃ U, BfgsVerification.TwoPieceBudget.Step c₁ c₂ T U
+'BfgsVerification.TwoPieceBudget.finite_path_to_terminal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.differentiableAt_of_ne : ∀ {x : BfgsVerification.Vec 2},
+  x 0 ≠ 0 → DifferentiableAt ℝ BfgsVerification.TwoPieceBudget.objective x
+'BfgsVerification.TwoPieceBudget.differentiableAt_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.finite_bad_ray : ∀ (x p : BfgsVerification.Vec 2),
+  x 0 ≠ 0 → {t | 0 < t ∧ ¬DifferentiableAt ℝ BfgsVerification.TwoPieceBudget.objective (x + t • p)}.Finite
+'BfgsVerification.TwoPieceBudget.finite_bad_ray' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.ray_lower_bound : ∀ (x p : BfgsVerification.Vec 2),
+  0 ≤ |p 0| + p 1 → ∀ (t : ℝ), 0 ≤ t → x 1 - |x 0| ≤ BfgsVerification.TwoPieceBudget.objective (x + t • p)
+'BfgsVerification.TwoPieceBudget.ray_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.ray_upper_bound : ∀ (x p : BfgsVerification.Vec 2) (t : ℝ),
+  0 ≤ t →
+    BfgsVerification.TwoPieceBudget.objective (x + t • p) ≤
+      BfgsVerification.TwoPieceBudget.objective x + t * (|p 0| + p 1)
+'BfgsVerification.TwoPieceBudget.ray_upper_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.terminal_direction_negative : ∀ {c₁ c₂ : ℝ},
+  0 < c₁ →
+    c₁ < c₂ →
+      c₂ < 1 →
+        ∀ (S : BfgsVerification.TwoPieceBudget.State),
+          (¬∃ T, BfgsVerification.TwoPieceBudget.Step c₁ c₂ S T) →
+            |BfgsVerification.bfgsStep S.H S.g 1 0| + BfgsVerification.bfgsStep S.H S.g 1 1 < 0
+'BfgsVerification.TwoPieceBudget.terminal_direction_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.terminal_direction_unbounded : ∀ {c₁ c₂ : ℝ},
+  0 < c₁ →
+    c₁ < c₂ →
+      c₂ < 1 →
+        ∀ (S : BfgsVerification.TwoPieceBudget.State),
+          (¬∃ T, BfgsVerification.TwoPieceBudget.Step c₁ c₂ S T) →
+            Filter.Tendsto
+              (fun t => BfgsVerification.TwoPieceBudget.objective (S.x + BfgsVerification.bfgsStep S.H S.g t))
+              Filter.atTop Filter.atBot
+'BfgsVerification.TwoPieceBudget.terminal_direction_unbounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.TwoPieceBudget.fullRowRank_of_row_independence : ∀ {n r : ℕ} (Q : Matrix (Fin r) (Fin n) ℝ),
+  LinearIndependent ℝ Q → BfgsVerification.AffineProjection.FullRowRank Q
+'BfgsVerification.TwoPieceBudget.fullRowRank_of_row_independence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@BfgsVerification.TwoPieceBudget.rowMatrix : {n : ℕ} →
+  BfgsVerification.Vec n → BfgsVerification.Vec n → Matrix (Fin 2) (Fin n) ℝ
+'BfgsVerification.TwoPieceBudget.rowMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.image_objective : ∀ {n : ℕ} (u v x : BfgsVerification.Vec n),
+  BfgsVerification.TwoPieceBudget.objective ((BfgsVerification.TwoPieceBudget.rowMatrix u v).mulVec x) =
+    |BfgsVerification.dot u x| + BfgsVerification.dot v x
+'BfgsVerification.TwoPieceBudget.image_objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.no_infinite_linear_image : ∀ {n : ℕ} (Q : Matrix (Fin 2) (Fin n) ℝ),
+  BfgsVerification.AffineProjection.FullRowRank Q →
+    (BfgsVerification.AdmissibleBFGSRun n fun x => BfgsVerification.TwoPieceBudget.objective (Q.mulVec x)) → False
+'BfgsVerification.TwoPieceBudget.no_infinite_linear_image' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.TwoPieceBudget.no_infinite_independent_two_piece : ∀ {n : ℕ} (u v : BfgsVerification.Vec n),
+  LinearIndependent ℝ ![u, v] →
+    (BfgsVerification.AdmissibleBFGSRun n fun x => |BfgsVerification.dot u x| + BfgsVerification.dot v x) → False
+'BfgsVerification.TwoPieceBudget.no_infinite_independent_two_piece' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget : Prop
+'BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.twoPieceTermination : BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget
+'BfgsVerification.TwoPieceBudget.twoPieceTermination' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget : Prop
+'BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TwoPieceBudget.twoPieceLinearImage : BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget
+'BfgsVerification.TwoPieceBudget.twoPieceLinearImage' depends on axioms: [propext, Classical.choice, Quot.sound]
+def BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget : Prop :=
+ConvexOn ℝ Set.univ BfgsVerification.TwoPieceBudget.objective ∧
+  ∀ (c₁ c₂ : ℝ),
+    0 < c₁ →
+      c₁ < c₂ →
+        c₂ < 1 →
+          (WellFounded fun T S => BfgsVerification.TwoPieceBudget.Step c₁ c₂ S T) ∧
+            ∀ (S : BfgsVerification.TwoPieceBudget.State),
+              ∃ T,
+                Relation.ReflTransGen (BfgsVerification.TwoPieceBudget.Step c₁ c₂) S T ∧
+                  (¬∃ U, BfgsVerification.TwoPieceBudget.Step c₁ c₂ T U) ∧
+                    Filter.Tendsto
+                      (fun t => BfgsVerification.TwoPieceBudget.objective (T.x + BfgsVerification.bfgsStep T.H T.g t))
+                      Filter.atTop Filter.atBot
+EXACT_TARGET_OK BfgsVerification.TwoPieceBudget.twoPieceTermination BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget
+def BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget : Prop :=
+(∀ {n : ℕ} (Q : Matrix (Fin 2) (Fin n) ℝ),
+    BfgsVerification.AffineProjection.FullRowRank Q →
+      (BfgsVerification.AdmissibleBFGSRun n fun x => BfgsVerification.TwoPieceBudget.objective (Q.mulVec x)) → False) ∧
+  ∀ {n : ℕ} (u v : BfgsVerification.Vec n),
+    LinearIndependent ℝ ![u, v] →
+      (BfgsVerification.AdmissibleBFGSRun n fun x => |BfgsVerification.dot u x| + BfgsVerification.dot v x) → False
+EXACT_TARGET_OK BfgsVerification.TwoPieceBudget.twoPieceLinearImage BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget

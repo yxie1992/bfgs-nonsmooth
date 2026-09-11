@@ -1,3 +1,7 @@
+Current source reconciliation at milestone14: **verified with the documented nonzero-jump-parameter correction**.
+See [RU_SOURCE_RECONCILIATION.md](RU_SOURCE_RECONCILIATION.md) and REPORT_STATUS.json.
+Chronological pending entries below are historical, not current status.
+
 # Module U inventory and implementation boundaries
 
 Source read in full: `BFGS_MASTER_REPORT_LaTeX/report/chapters/U.tex`. This register distinguishes the checked principal U.1/U.2 tranche from secondary source obligations. The principal U.1/U.2 tranche was included in seventh release f820c46. The subsequent composite/literal-geometry tranche has separate scoped compiler, exact-target and axiom evidence; it is not a claim that every assertion in Module U is verified.

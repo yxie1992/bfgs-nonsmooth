@@ -1,3 +1,7 @@
+Current source reconciliation at milestone14: **recoverable current mathematics verified; historical four-piece attribution remains unresolved**.
+See [RU_SOURCE_RECONCILIATION.md](RU_SOURCE_RECONCILIATION.md) and REPORT_STATUS.json.
+Chronological pending entries below are historical, not current status.
+
 # Module R retained-claim inventory
 
 Source `BFGS_MASTER_REPORT_LaTeX/report/chapters/R.tex` has been read in full; its family and boundary examples

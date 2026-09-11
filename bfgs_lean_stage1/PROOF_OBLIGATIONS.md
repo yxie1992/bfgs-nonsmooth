@@ -442,3 +442,30 @@ still needs its arbitrary-dimensional constant-rank field/secant partial
 construction and A-dependent alternative. Final numerical-display, historical
 source, synthesis and evidence reconciliation remain active. Original sources
 are preserved, including every disputed claim and documented correction.
+
+
+## Fourteenth milestone: constant-rank geometry, precision and two-piece termination
+
+The frozen pinned build and full transitive audit passed 4,469 explicit theorems,
+6,568 total theorem declarations,178 exact targets and582 frozen Lean files.
+Only propext,Classical.choice and Quot.sound occur. Evidence is in
+audit/report_geometry_completion_check.log and the accompanying frozen manifest,
+compiler logs, declaration inventory and source statement review.
+
+C's actual arbitrary-dimensional constant-rank construction now derives one C1
+comparison field and uniform all-endpoint secant correction from the original
+active gradients. C2 input does not justify C-infinity field regularity; the
+qualification is explicit. L's complete source map and actual Jacobian precision
+certificate close its remaining display claim, with a documented last-digit
+nearest-rounding correction. The literal two-piece actual BFGS transition relation
+is well-founded, and its terminal search ray exposes unboundedness. Arbitrary
+full-row-rank linear images have no infinite actual admissible continuation.
+The pre-existing two-piece theorem retains Xie–Wächter attribution.
+
+A now has actual finite degree/multiplicity strata, derivative charts, exact
+global quadratic root/sign projection with degeneracies, and arbitrary-degree
+positive pseudo-division with one finite remainder family chosen before every
+specialization. These fragments do not establish general Boolean projection.
+General semialgebraic elimination and finite smooth paths, the dependent C
+alternative, D numerical-display precision and final synthesis/evidence
+reconciliation remain active. The entire report is not yet verified.

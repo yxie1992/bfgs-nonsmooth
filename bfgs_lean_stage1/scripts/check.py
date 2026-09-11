@@ -380,7 +380,41 @@ REPORT_SOURCE_CLOSURE_TARGETS = {
     "polynomialSimpleRootProjection_verified":
         ("BfgsVerification.polynomialSimpleRootProjection", "BfgsVerification.PolynomialSimpleRootProjectionTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS
+REPORT_GEOMETRY_COMPLETION_TARGETS = {
+    "TwoPieceBudget_twoPieceTermination_verified":
+        ("BfgsVerification.TwoPieceBudget.twoPieceTermination", "BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget"),
+    "TwoPieceBudget_twoPieceLinearImage_verified":
+        ("BfgsVerification.TwoPieceBudget.twoPieceLinearImage", "BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget"),
+    "LShapePrecision_actualJacobianPrecision_verified":
+        ("BfgsVerification.LShapePrecision.actualJacobianPrecision", "BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget"),
+    "ConstantRankFields_sourceConstantRank_verified":
+        ("BfgsVerification.ConstantRankFields.sourceConstantRank", "BfgsVerification.ConstantRankFields.SourceConstantRankTarget"),
+    "ConstantRankFields_sourceConstantRankEligible_verified":
+        ("BfgsVerification.ConstantRankFields.sourceConstantRankEligible", "BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget"),
+    "polynomialDegreeStrata_verified":
+        ("BfgsVerification.polynomialDegreeStrata", "BfgsVerification.PolynomialDegreeStrataTarget"),
+    "polynomialDerivativeSpecialization_verified":
+        ("BfgsVerification.polynomialDerivativeSpecialization", "BfgsVerification.PolynomialDerivativeSpecializationTarget"),
+    "polynomialMultiplicityStrata_verified":
+        ("BfgsVerification.polynomialMultiplicityStrata", "BfgsVerification.PolynomialMultiplicityStrataTarget"),
+    "polynomialMultipleRootChart_verified":
+        ("BfgsVerification.polynomialMultipleRootChart", "BfgsVerification.PolynomialMultipleRootChartTarget"),
+    "realQuadraticElimination_verified":
+        ("BfgsVerification.realQuadraticElimination", "BfgsVerification.RealQuadraticEliminationTarget"),
+    "quadraticPolynomialProjection_verified":
+        ("BfgsVerification.quadraticPolynomialProjection", "BfgsVerification.QuadraticPolynomialProjectionTarget"),
+    "quadraticUniversalConditions_verified":
+        ("BfgsVerification.quadraticUniversalConditions", "BfgsVerification.QuadraticUniversalConditionsTarget"),
+    "actualDegreeTwoProjection_verified":
+        ("BfgsVerification.actualDegreeTwoProjection", "BfgsVerification.ActualDegreeTwoProjectionTarget"),
+    "positivePseudoDivision_verified":
+        ("BfgsVerification.positivePseudoDivision", "BfgsVerification.PositivePseudoDivisionTarget"),
+    "pseudoDivisionSpecialization_verified":
+        ("BfgsVerification.pseudoDivisionSpecialization", "BfgsVerification.PseudoDivisionSpecializationTarget"),
+    "finiteRootRemainders_verified":
+        ("BfgsVerification.finiteRootRemainders", "BfgsVerification.FiniteRootRemaindersTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS | REPORT_SOURCE_CLOSURE_TARGETS | REPORT_GEOMETRY_COMPLETION_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -662,7 +696,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "A general nonlinear semialgebraic projection/path/critical-value closure; C arbitrary-dimensional constant-rank field/secant partial assertion and semialgebraic alternative; final source/synthesis/evidence reconciliation. Actual L identity-initialized local failure families and smooth invariant stable manifold, C one-field uniform all-endpoint estimates, A rank-loss spectrum and univariate/simple-root infrastructure, and T/F source details are now checked; see REPORT_STATUS.json",
+            "A general nonlinear Boolean semialgebraic projection/path/critical-value closure and the dependent C semialgebraic alternative; final source/synthesis/evidence reconciliation. Actual C arbitrary-dimensional constant-rank C1 field/secant theorem, L Jacobian precision, two-piece termination and arbitrary-dimensional no-infinite-continuation, and A multiplicity/quadratic-projection/positive-pseudo-division infrastructure are now checked. The finite polynomial fragments do not prove general quantifier elimination; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -671,7 +705,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_SOURCE_CLOSURE_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_GEOMETRY_COMPLETION_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")
