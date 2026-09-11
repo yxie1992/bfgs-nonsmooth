@@ -1,0 +1,9 @@
+# Closed independent declaration-audit review
+
+PASS after the owner corrected the exact generated/private-name classification and performed a new full run. Read the final unchanged Lean drivers, exact-name inventory guard, public entry point and verifier. The previously recorded source review remains applicable; all metadata/checked-value comparisons are present. The corrected census has 61 newly covered theorem roots, of which 59 have a private prefix and two are other generated equations. The original preparatory classification failure is retained separately.
+
+Independently executed `python3 audit/scratch/master21/audit_dl_e/delivery/run.py --check`; exit 0: all 9,672 main and 9,781 unified safe constants, all 7,813 prior exact types/axiom sets and 182 ordinary supplemental occurrences passed, with no missing/unsafe/partial dependency. No new compiler run was performed by this reviewer. The owner run whose command, input and output evidence was checked is the fresh closed run recorded in the hashed SUMMARY. The main/supplemental inventory aliases were independently compared byte-for-byte with those actual outputs.
+
+The verifier checks actual module-set completeness, exact safe-name sets, type/body/structural dependencies, standard axiom restrictions, unchanged original main and supplemental inputs, pinned version/dependency commits and clean states, explicit import paths, executed commands, logs and compiler markers. The main environment and unified environment preserve exact types, universes and proof dependencies; import-order ownership metadata differences do not count as new mathematical declarations. The audit is tooling, not a proof that English source claims mean the same thing as Lean statements; the source/statement correspondence remains a separate review.
+
+Final source and initial closed-evidence hashes are in final_delivery_hashes.json. This review made no edits to the package or proof sources.

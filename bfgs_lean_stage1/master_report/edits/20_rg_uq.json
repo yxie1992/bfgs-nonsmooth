@@ -1,0 +1,237 @@
+[
+  {
+    "id": "R.homogeneous_reference_and_compact_optimizer",
+    "chapter": "R",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/R.tex",
+    "start_line": 180,
+    "end_line": 180,
+    "kind": "formula_and_context_precision",
+    "old": "we have $b_F(u,v)=u^2$: crossing $v=0$ flips a gradient component but does not produce a jump in this scalar. For a nonnegative degree-$p$ homogeneous function, $b_F=(p-1)F$. These identities explain much of the breadth of the previous sufficient classes.\n",
+    "old_sha256": "bb0559d4a58e35d92713697852a669214fa6d489a9b595c4614ecb8b5b708192",
+    "new": "we have $b_F(u,v)=u^2$: crossing $v=0$ flips a gradient component but does not produce a jump in this scalar.\n\nFor a function homogeneous of degree $p$, Euler's identity at a differentiable point is $\\nabla F(x)^Tx=pF(x)$. Consequently the supporting-plane error at an arbitrary reference point $x_*$ is\n\\[\n b_{F,x_*}(x)=(p-1)F(x)+F(x_*)-\\nabla F(x)^Tx_*.\n\\]\nNo minimizer assumption is needed for this algebraic identity. At reference zero it reduces to $(p-1)F(x)+F(0)$; the constant term cannot be discarded without a normalization. We use homogeneity under nonnegative dilations, $F(tx)=t^pF(x)$ for $t\\ge0$, with $t^0=1$ also at $t=0$. Thus degree zero forces $F$ to be constant.\n\nIn the compact setting of this chapter, the original simplified formula is valid without assuming that the optimizer is the origin. More precisely, let $n\\ge1$, let $F:\\mathbb R^n\\to\\mathbb R$ be finite, convex, nonnegative and homogeneous, and suppose $\\{F\\le b\\}$ is compact with $F(z)<b$ for some $z$. Then $p>0$. Indeed, if $p\\le0$, homogeneity at dilation two and midpoint convexity give\n\\[\n F(x)\\le\\tfrac12F(2x)+\\tfrac12F(0)\n       =2^{p-1}F(x)+\\tfrac12F(0),\n\\]\nwhence $F(x)\\le F(0)$. Applying midpoint convexity to $x$ and $-x$ then gives $F(x)=F(0)$ for every $x$, so the strict sublevel witness makes $\\{F\\le b\\}=\\mathbb R^n$, a contradiction.\n\nPositive degree gives $F(0)=0$. Any optimizer $x_*$ therefore has value zero. If $x_*\\ne0$, homogeneity places the unbounded ray $\\{t x_*:t\\ge0\\}$ inside the compact sublevel, another contradiction. Thus zero is the unique optimizer and\n\\[\n b_F(x)=(p-1)F(x).\n\\]\nThe chapter's hypothesis $b>F_*$ supplies the strict witness by taking $z=x_*$. Outside this compact context, the positive constant function $F\\equiv1$ has degree zero and intercept zero, whereas $(p-1)F=-1$; its positive sublevels are noncompact. These identities explain the breadth of the preceding sufficient classes without changing their compact-basin hypotheses.\n",
+    "lean_exports": [
+      "BfgsVerification.InterceptExamples.degree_euler",
+      "BfgsVerification.InterceptExamples.degree_intercept_with_zero_value",
+      "BfgsVerification.OriginalClaimInterpretation.degree_intercept_at_reference",
+      "BfgsVerification.OriginalClaimInterpretation.degree_zero_constant",
+      "BfgsVerification.OriginalClaimInterpretation.degree_zero_intercept",
+      "BfgsVerification.OriginalClaimInterpretation.positive_constant_homogeneous",
+      "BfgsVerification.OriginalClaimInterpretation.positive_constant_derivative",
+      "BfgsVerification.OriginalClaimInterpretation.compact_degree_intercept",
+      "BfgsVerification.OriginalClaimInterpretation.positive_constant_convex",
+      "BfgsVerification.OriginalClaimInterpretation.positive_constant_assumptions",
+      "BfgsVerification.OriginalClaimInterpretation.compact_nonnegative_homogeneity_positive_degree",
+      "BfgsVerification.OriginalClaimInterpretation.zero_value_eq_zero_of_compact_sublevel",
+      "BfgsVerification.OriginalClaimInterpretation.compact_homogeneous_minimizer_eq_zero",
+      "BfgsVerification.OriginalClaimInterpretation.compact_homogeneous_optimizer_intercept",
+      "BfgsVerification.OriginalClaimInterpretation.unrestricted_zero_degree_formula_fails",
+      "BfgsVerification.OriginalClaimInterpretation.degree_zero_positive_sublevel_not_compact"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/OptimizerInterceptExamples.lean",
+      "bfgs_lean_stage1/audit/claim_review20/sources/OriginalClaimInterpretation.lean"
+    ],
+    "reason": "Actual arbitrary-reference formula includes minus dot(g,xStar). Compact corollary derives both p>0 and xStar=0 from any strict sublevel witness; n>=1 is explicit. The constant example is not described as a counterexample to compact-context convergence. Homogeneity convention matches PositiveDegree, including zero dilations."
+  },
+  {
+    "id": "R.explicit_reconstructed_four_piece_failure",
+    "chapter": "R",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/R.tex",
+    "start_line": 182,
+    "end_line": 186,
+    "kind": "new_explicit_realization",
+    "old": "In the four-piece counterexample, the optimizer is $(-1,5)$, the minimum is $-1$, and the first three branches have values $-1,-1,-29/4$ there. Their supporting errors at the optimizer are therefore\n\\[\n 0,\\quad0,\\quad25/4.\n\\]\nThe bad trajectory repeatedly switches between these incompatible scalar predictions while $T$ tends to zero. This is exactly what (SP) prohibits. The supporting-plane calculations here do not change or independently re-prove the earlier infinite BFGS certificate.\n",
+    "old_sha256": "0623a81e11a7bfd6548ac75bbf973cf42d4ad031e53427c23b5284400433bc49",
+    "new": "\\paragraph{An explicit four-piece realization.}\nLet $c,d$ be the exact algebraic seed parameters of Module D, and let\n\\[\n F_D(u,v)=\\max\\{u,-u-v/8,cu+dv,v-17\\}\n\\]\nbe its verified coercive four-piece objective. Define\n\\[\n \\delta=c-16d-1>0,\\qquad a=\\frac{25}{4\\delta}>0,\n \\qquad \\mathcal L(u,v)=(u,16v/5),\n\\]\nand set\n\\[\n F_R(z)=aF_D(\\mathcal L z)+a-1.\n\\]\nThus $F_R$ is the maximum of the four affine functions\n\\[\n \\begin{gathered}\n au+a-1,\\qquad a(-u-2v/5)+a-1,\\\\\n a(cu+16dv/5)+a-1,\\qquad 16av/5-16a-1.\n \\end{gathered}\n\\]\nThis definition is an explicit reconstruction for this edition, not an identification of an unspecified earlier objective. Module D's own optimizer remains $(-1,16)$.\n\nThe positivity of $\\delta$ follows from the certified D parameters. Since $\\mathcal L$ is invertible and $a>0$, $F_R$ is finite and convex with compact sublevels. The unique D optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$. At this optimizer the first three branches have values\n\\[\n -1,\\quad-1,\\quad -1-a\\delta=-29/4,\n\\]\nso their supporting errors are exactly $0,0,25/4$.\n\nThis objective has an actual infinite unmodified full-BFGS failure run. For any fixed parameters\n\\[\n 0<c_1\\le1/3,\\qquad c_1<c_2<1,\n\\]\nlet $x_k,g_k,H_k,\\alpha_k$ be the verified D run. Define\n\\[\n \\begin{aligned}\n \\widehat x_k&=\\mathcal L^{-1}x_k,&\n \\widehat g_k&=a\\mathcal L^Tg_k,\\\\\n \\widehat H_k&=a^{-1}\\mathcal L^{-1}H_k\\mathcal L^{-T},&\n \\widehat\\alpha_k&=\\alpha_k.\n \\end{aligned}\n\\]\nThe gradients are the actual derivatives of $F_R$ at the accepted points, and $\\widehat H_0\\succ0$. Direct substitution in the inverse-BFGS update proves that these are its exact next matrices and steps. Both the predicted and actual objective decreases and the secant curvature are multiplied by $a$, so Armijo and weak Wolfe hold with the same constants. This proves a transformed full-BFGS run, rather than prescribing an unrelated sequence of endpoint pairs.\n\nThe iterates satisfy $\\widehat x_k\\to0$, while their strictly decreasing values tend to $a-1>-1$; zero is nonstationary. In every three phases the actual supporting errors repeat $0,0,25/4$. The actual positive secant curvatures are $a$ times those of D and tend to zero. On the fixed band\n\\[\n K=\\{F_R\\le F_R(\\widehat x_0)\\},\\qquad\n F_R\\ge -1+a,\n\\]\nall these accepted points remain above the band threshold. Applying (SP) to successive points with indices $3m+1$ and $3m+2$ would give $(25/4)^2\\le C'T_k$ for every cycle, a contradiction as $T_k\\to0$. Thus (SP), and by the compact-domain equivalence also (RS), fail on this actual initial sublevel. The construction specifies both the objective and the infinite full-BFGS trajectory.\n",
+    "lean_exports": [
+      "BfgsVerification.ReconstructedFourPiece.gap_pos",
+      "BfgsVerification.ReconstructedFourPiece.literal_branches",
+      "BfgsVerification.ReconstructedFourPiece.objective_formula",
+      "BfgsVerification.ReconstructedFourPiece.branches_at_optimizer",
+      "BfgsVerification.ReconstructedFourPiece.point_phase_intercepts",
+      "BfgsVerification.ReconstructedFourPiece.secant_scale",
+      "BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero",
+      "BfgsVerification.ReconstructedFourPiece.no_intercept_bounds",
+      "BfgsVerification.ReconstructedFourPiece.no_radial_bounds",
+      "BfgsVerification.reconstructedFourPieceFailure",
+      "BfgsVerification.reconstructedSupportingPlane"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/ReconstructedFourPieceObjective.lean",
+      "bfgs_lean_stage1/BfgsVerification/ReconstructedFourPieceOrbit.lean",
+      "bfgs_lean_stage1/BfgsVerification/ReconstructedFourPieceRun.lean",
+      "bfgs_lean_stage1/BfgsVerification/ReconstructedFourPieceSeparation.lean",
+      "bfgs_lean_stage1/BfgsVerification/ReconstructedFourPieceTargets.lean"
+    ],
+    "reason": "Delta is c-16d-1, not 16d-c. Failure exists for the displayed source constant range; no arbitrary-H0 failure or arbitrary-c1 claim. The SP band eta=a is fixed before the proposed constant. Transformation is actual full inverse-BFGS, not a matrix-convergence assumption."
+  },
+  {
+    "id": "G.accessible_span_vs_all_active",
+    "chapter": "G",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/G.tex",
+    "start_line": 166,
+    "end_line": 176,
+    "kind": "substantive_inference_correction",
+    "old": "For a certificate with a finite continuous extension to $p$, accessible incoming pairs with $t\\to0$ force\n\\[\n W(p)(g_i-g_j)=0.\n\\]\nThus its range is tangential to the accessible jump directions. Visibility then requires a nonzero common tangential gradient. Algebraically,\n\\[\n P_Ug_i=0\\quad\\Longleftrightarrow\\quad0\\in\\aff\\{g_1,\\dots,g_r\\}.\n\\]\nThe condition $0\\in\\aff G$ is weaker than $0\\in\\conv G$: a point can have no tangent descent of this type yet remain nonstationary for the convex objective.\n\nThis limiting picture is an interpretation under the stated continuity and accessibility qualifications, \\emph{not} a proof for arbitrary fields. Proposition~\\ref{G:prop:star} supplies the rigorous obstruction without those regularity assumptions. Eligibility matters: some local derivative jumps cannot be crossed by arbitrarily small steps satisfying the fixed Wolfe condition.\n",
+    "old_sha256": "0d9a1415b9d89c0fd772a880d7c396a656385feff042ed250b34fbc8b4bddf3b",
+    "new": "For a certificate with a finite continuous extension to $p$, consider actual eligible incoming pairs on the fixed positive band, with both endpoints tending to $p$, $d\\to0$, $t\\to0$, and limiting gradient jump $j$. The secant inequality and continuity give\n\\[\n j^TW(p)j=0,\\qquad W(p)j=0,\n\\]\nwhere the second conclusion uses positive semidefiniteness. Let $N_{\\rm acc}$ be the span of all such accessible limiting jumps, and set $U_{\\rm acc}=N_{\\rm acc}^{\\perp}$. Then\n\\[\n \\operatorname{range}W(p)\\subseteq U_{\\rm acc}.\n\\]\nFor a limiting gradient $g$ at which visibility persists, $g^TW(p)g>0$ implies $P_{U_{\\rm acc}}g\\ne0$.\n\nThis conclusion concerns the accessible span. It does not identify $N_{\\rm acc}$ with the earlier space $N$ generated by all active-gradient differences. A nonzero common projection onto $U=N^\\perp$ follows if the accessible jumps span $N$, or if $W(p)$ is otherwise known to annihilate all active differences. Under that additional hypothesis, the common projection is nonzero by visibility. Independently of accessibility, the following algebraic identity is exact:\n\\[\n P_Ug_i=0\\quad\\Longleftrightarrow\\quad0\\in\\aff\\{g_1,\\dots,g_r\\}.\n\\]\nThe affine-hull condition is weaker than $0\\in\\conv\\{g_1,\\dots,g_r\\}$ and need not imply stationarity for the convex objective.\n\nThe distinction is realized by the finite strongly convex objective\n\\[\n f(x)=\\tfrac12(x+2)^2+|x|,\n \\qquad (c_1,c_2)=(1/8,1/4).\n\\]\nOn every compact positive band, $W\\equiv1$ is a transported certificate. Indeed, every eligible pair with $d\\le1/4$ stays on one smooth side of zero: a right-to-left crossing contradicts weak Wolfe, and a left-to-right crossing contradicts Armijo and the small-decrease bound. Hence $f'(z)-f'(x)=z-x$, proving (S) with $C=1$; transport is equality, and the positive-band gradient bound proves visibility. Weak Wolfe gives $d\\le4t/3$, so $t\\to0$ eventually makes $d\\le1/4$; as both endpoints tend to the same point, every accessible limiting jump is therefore zero. Nevertheless the actual limiting active gradients at zero are $1$ and $3$, so $N=\\mathbb R$ and $U=\\{0\\}$. The full-active tangential conclusion would be false here. The later no-certificate example uses the different constants $(1/4,1/2)$ and is consistent with this distinction.\n\nThis limiting argument uses the stated finite-extension and accessibility hypotheses only in this interpretation. It is not a proof for arbitrary discontinuous or unbounded certificate fields. Proposition~\\ref{G:prop:star} supplies an obstruction without either regularity hypothesis. Eligibility matters: arbitrary active-gradient jumps need not be accessible under a fixed weak-Wolfe condition.\n",
+    "lean_exports": [
+      "BfgsVerification.AccessibleJumpGeometry.suppression_limit_annihilates",
+      "BfgsVerification.AccessibleJumpGeometry.accessible_jump_annihilated_of_continuousAt",
+      "BfgsVerification.AccessibleJumpGeometry.range_orthogonal_to_accessible_jumps",
+      "BfgsVerification.AccessibleJumpGeometry.visible_accessible_projection_ne_zero",
+      "BfgsVerification.AccessibleJumpGeometry.visible_tangent_projection_ne_zero",
+      "BfgsVerification.AccessibleJumpGeometry.tangent_projection_zero_iff_zero_mem_affineSpan",
+      "BfgsVerification.ShiftedAbsAccessibility.small_eligible_same_side",
+      "BfgsVerification.ShiftedAbsAccessibility.small_eligible_gradient_change",
+      "BfgsVerification.ShiftedAbsAccessibility.shifted_all_compact_band_certificates",
+      "BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero",
+      "BfgsVerification.ShiftedAbsAccessibility.full_active_tangent_space_eq_bot",
+      "BfgsVerification.accessibleActiveSeparation"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/AccessibleJumpGeometry.lean",
+      "bfgs_lean_stage1/BfgsVerification/AccessibleCurvatureBridge.lean",
+      "bfgs_lean_stage1/BfgsVerification/ShiftedAbsAccessibility.lean",
+      "bfgs_lean_stage1/BfgsVerification/ReportFamiliesEndToEnd.lean"
+    ],
+    "reason": "Explicit Nacc avoids false all-active inference. Counterexample is an actual objective/certificate at c2=1/4, not a bad BFGS trajectory. Finite continuous extension is not imposed on general certificates."
+  },
+  {
+    "id": "G.remove_unsupported_auxiliary_archive",
+    "chapter": "G",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/G.tex",
+    "start_line": 263,
+    "end_line": 263,
+    "kind": "unsupported_historical_attribution_withdrawal",
+    "old": "Nevertheless Proposition~\\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$. The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it. Thus the transported condition is not necessary even for local convergence. A further source example is retained in the provenance archive; it is not needed for the nonnecessity conclusion here.\n",
+    "old_sha256": "a023964a3c758df5dd213a0f7c5640c8e605300a5e4f24ba834ef57a23352469",
+    "new": "Nevertheless Proposition~\\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$. The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it. Thus the transported condition is not necessary even for local convergence. This conclusion uses the explicitly defined infinite-series objective above; no unspecified archived auxiliary is needed.\n",
+    "lean_exports": [
+      "BfgsVerification.scalarLocalCertificateNonnecessity"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/ReportContinuationEndToEnd.lean"
+    ],
+    "reason": "Removes only the unsupported assertion of a further archived source example. The actual accumulating-kink objective and its convergence/noncertificate theorem are retained."
+  },
+  {
+    "id": "G.finite_sample_empty_safe_constants",
+    "chapter": "G",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/G.tex",
+    "start_line": 273,
+    "end_line": 279,
+    "kind": "proof_precision",
+    "old": "\\begin{proof}\nChoose $m=\\min_x\\norm{\\nabla F(x)}^2>0$ and\n\\[\n C=\\max_{(x,z)}\\frac{\\norm{\\nabla F(z)-\\nabla F(x)}^2}{t(x,z)}<\\infty.\n\\]\nThere are finitely many pairs and all their denominators are positive. Transport is equality for a constant field.\n\\end{proof}\n",
+    "old_sha256": "29ee73115c672882d4dc9dc2a74c91375d06489e8096d19bef8e7b747a691536",
+    "new": "\\begin{proof}\nFor a nonempty endpoint sample choose $m$ as the minimum of the positive numbers $\\|\\nabla F(x)\\|^2$; for an empty sample set $m=1$. Let $\\mathcal P$ denote the finite pair sample and choose\n\\[\n C=\\sum_{(x,z)\\in\\mathcal P}\n       \\frac{\\|\\nabla F(z)-\\nabla F(x)\\|^2}{t(x,z)}.\n\\]\nAll denominators are positive, every summand is nonnegative, and the sum is zero for an empty pair sample. Thus $C$ is finite and bounds each sampled quotient. The constant identity field satisfies visibility and (S), and transport is equality.\n\\end{proof}\n",
+    "lean_exports": [
+      "BfgsVerification.TransportedCertificate.finite_positive_lower_bound",
+      "BfgsVerification.TransportedCertificate.finite_sample_identity_certificate",
+      "BfgsVerification.TransportedCertificate.positive_band_finite_sample_feasible"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/FiniteSampleCertificates.lean"
+    ],
+    "reason": "The source theorem allows empty finite samples. This matches the checked finite-sum proof and supplies explicit empty-case constants; it does not turn a finite sample into a continuum certificate."
+  },
+  {
+    "id": "U.remove_unsupported_numerical_test_attribution",
+    "chapter": "U",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/U.tex",
+    "start_line": 390,
+    "end_line": 393,
+    "kind": "unsupported_historical_attribution_withdrawal",
+    "old": "\\] The numerical full-BFGS tests use this complete infinite-series\noracle and a dense positive-definite quadratic in place of the diagonal\nsmooth term in (20). They do not assume block-diagonal matrices or\nperform a reduced two-dimensional algorithm.\n",
+    "old_sha256": "aca91d75edda2c32d9f737f24ed87ce51427b6c60e26e3428f9eba4104658e02",
+    "new": "\\] These are identities for the complete infinite series, not for a truncation. The exact rational-query formulas and their derivative values are proved for this oracle. For the objective (20), the convergence theorem applies in every stated dimension with an arbitrary coupled SPD initial inverse matrix; it does not replace full BFGS by a reduced two-dimensional or block-diagonal algorithm.\n",
+    "lean_exports": [
+      "BfgsVerification.NormalSpike.rationalValueOracle_correct",
+      "BfgsVerification.NormalSpike.rationalSpikeOracle",
+      "BfgsVerification.NormalSpike.spikeObjectiveConvergence"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/NormalSpikeRational.lean",
+      "bfgs_lean_stage1/BfgsVerification/NormalSpikeExampleTargets.lean"
+    ],
+    "reason": "Preserves the actual infinite oracle and all-dimensional theorem while withdrawing original unsupported numerical-history/dense-quadratic attribution. Do not claim the new E theorem job is an old floating-point experiment."
+  },
+  {
+    "id": "U.zero_coupling_and_nonsplitting_scope",
+    "chapter": "U",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/U.tex",
+    "start_line": 412,
+    "end_line": 416,
+    "kind": "parameter_qualification",
+    "old": "\\] which is Lipschitz across that hyperplane. Theorem U.1 gives local\nfull-BFGS convergence. The jump magnitude changes with \\(u\\), so the\ntheorem is not relying on an additive smooth-plus-univariate\ndecomposition. The same spike calculation makes RS fail locally for this\nexample as well.\n",
+    "old_sha256": "25c3f1696b0bb7ee3b5289334a2d32ad16f39cc9fa656f59a0c71277366c355c",
+    "new": "\\] which is Lipschitz across that hyperplane. Theorem U.1 gives an objective-dependent local full-BFGS convergence basin for every $\\|c\\|<1$, including $c=0$.\n\nIf $c\\ne0$, the normal-gradient jump magnitude $2(1+c^Tu)$ varies with $u$ on this neighborhood. More precisely, on no open neighborhood of zero can this objective equal $S(u,v)+h(v)$ with $S$ differentiable and $h$ an arbitrary scalar function. One way to see the obstruction is to subtract values at two nearby tangential points: the scalar term cancels, while the varying jump leaves a nonzero multiple of $|v|$, contradicting differentiability at $v=0$.\n\nThe nonzero condition is needed only for this nonsplitting conclusion. When $c=0$, the objective has the explicit global decomposition\n\\[\n S(u,v)=\\tfrac12(\\|u\\|^2+v^2),\\qquad h(v)=|v|+r(v),\n\\]\nwith $S$ smooth. Thus the subsection's existential claim is realized by nonzero $c$, not by every allowed parameter. The spike argument still makes (RS) fail in every neighborhood of zero for all $\\|c\\|<1$, including the zero case.\n",
+    "lean_exports": [
+      "BfgsVerification.NormalSpike.variableSpikeConvergence",
+      "BfgsVerification.NormalSpike.variableSpikeSeparation",
+      "BfgsVerification.NormalSpike.variableSpikeNonsplitting",
+      "BfgsVerification.NormalSpike.printed_variable_no_local_smooth_scalar_split",
+      "BfgsVerification.OriginalClaimInterpretation.printed_zero_coupling_has_split",
+      "BfgsVerification.OriginalClaimInterpretation.zero_coupling_split",
+      "BfgsVerification.OriginalClaimInterpretation.quadratic_smooth"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/NormalSpikeVariableTargets.lean",
+      "bfgs_lean_stage1/BfgsVerification/NormalSpikeVariableGeometry.lean",
+      "bfgs_lean_stage1/audit/claim_review20/sources/OriginalClaimInterpretation.lean"
+    ],
+    "reason": "All-c convergence remains local and objective-only threshold precedes all runs. Nonadditivity is existential family scope and exact fixed-normal h(v) nonsplitting, not exclusion of arbitrary nonlinear changes of variables."
+  },
+  {
+    "id": "Q.printed_pair_exact_armijo_scope",
+    "chapter": "Q",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/Q.tex",
+    "start_line": 234,
+    "end_line": 234,
+    "kind": "parameter_scope_precision",
+    "old": "Thus $\\alpha=1$ is a valid BFGS step, with strict Armijo whenever $c_1<2/3$ and strict weak Wolfe for every allowed $c_2>0$.\n",
+    "old_sha256": "3af1cbca96e88cf6cff169a758889c4632e36f6018c45bcb58ccdb7ef71885b5",
+    "new": "Under the fixed ordinary line-search parameters, $\\alpha=1$ is an actual first full-BFGS step exactly when the Armijo condition $c_1\\le2/3$ holds. Armijo is strict for $c_1<2/3$, and weak Wolfe is strict for every allowed $c_2>0$. The displayed pair alone is not used for $c_1>2/3$.\n",
+    "lean_exports": [
+      "BfgsVerification.Parabolic.Example.printed_armijo_iff",
+      "BfgsVerification.Parabolic.Example.printed_strict_acceptance",
+      "BfgsVerification.Parabolic.Example.initialMetric_posDef",
+      "BfgsVerification.Parabolic.Example.initialMetric_step"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExampleSeparation.lean",
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExampleSourceIdentities.lean",
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExamplePairs.lean"
+    ],
+    "reason": "The iff statement is under the existing fixed ordinary c1,c2 convention and the displayed A>0,epsilon bounds. Accepted-pair construction is not an infinite prescribed bad run."
+  },
+  {
+    "id": "Q.all_parameters_rho_separation",
+    "chapter": "Q",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/Q.tex",
+    "start_line": 241,
+    "end_line": 241,
+    "kind": "checked_extension_without_principal_change",
+    "old": "The values tend to the positive level $3u^2$ while $d\\to0$. Such pairs exist in every neighborhood of zero. The original RS condition, even restricted to eligible near-stalling pairs for ordinary line-search constants, fails.\n",
+    "old_sha256": "4dd88aaf1932d9da864427d354d7be31c996f8348a0e5fe13ba8162179c68e19",
+    "new": "The values tend to the positive level $3u^2$ while $d\\to0$. Such pairs exist in every neighborhood of zero, with $u\\ne0$ fixed before taking $\\epsilon\\downarrow0$.\n\nThe same separation holds for every fixed ordinary pair $0<c_1<c_2<1$. Choose\n\\[\n \\rho=\\frac{1-c_1}{2c_1}>0,\n \\qquad c_1(1+\\rho)=\\frac{1+c_1}{2}<1,\n\\]\nand replace the new point and metric by\n\\[\n \\begin{gathered}\n z_{\\epsilon,\\rho}=(u,2u^2-\\rho\\epsilon),\\\\\n H_{\\epsilon,\\rho}=\n \\begin{pmatrix}A&-2uA\\\\-2uA&4u^2A+(1+\\rho)\\epsilon\\end{pmatrix},\n \\qquad0<\\rho\\epsilon<3u^2.\n \\end{gathered}\n\\]\nFor any $A>0$, the quadratic form is\n$A(w_1-2uw_2)^2+(1+\\rho)\\epsilon w_2^2$, so the metric is SPD. The active gradients remain $(2u,1)^T$ and $(6u,0)^T$, and direct calculation gives\n\\[\n -H_{\\epsilon,\\rho}g=z_{\\epsilon,\\rho}-x_\\epsilon,\n \\qquad d=t=(1+\\rho)\\epsilon,\\qquad\\Delta=\\epsilon.\n\\]\nThus these are strictly Armijo--weak-Wolfe eligible unit steps. Their radial quotient is\n\\[\n \\frac{(y^Tz_{\\epsilon,\\rho})^2}{t}\n =\\frac{(2u^2+\\rho\\epsilon)^2}{(1+\\rho)\\epsilon}\n \\longrightarrow\\infty.\n\\]\nIn each neighborhood first fix a sufficiently small nonzero $u$ and the resulting positive band; then the quotient exceeds any proposed bound with arbitrarily small $d$. Hence the original (RS) condition fails even on eligible near-stalling pairs for every fixed allowed line-search pair. These metrics supply individual accepted first steps and vary with $\\epsilon$; they are not a single infinite bad BFGS history. Every actual infinite admissible run still converges by the main parabolic theorem.\n\nFor the original printed choice $\\rho=1/2$, the following exact transported quantities hold.\n",
+    "lean_exports": [
+      "BfgsVerification.Parabolic.Example.exists_strict_armijo_parameter",
+      "BfgsVerification.Parabolic.Example.initialMetric_posDef",
+      "BfgsVerification.Parabolic.Example.initialMetric_step",
+      "BfgsVerification.Parabolic.Example.pair_eligible",
+      "BfgsVerification.Parabolic.Example.strict_armijo",
+      "BfgsVerification.Parabolic.Example.strict_weak_wolfe",
+      "BfgsVerification.Parabolic.Example.radial_quotient_tendsto",
+      "BfgsVerification.Parabolic.Example.eligible_radial_unbounded_on_neighborhood",
+      "BfgsVerification.Parabolic.Example.converges_without_radial_secant"
+    ],
+    "proof_sources": [
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExamplePairs.lean",
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExampleSourceIdentities.lean",
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExampleSeparation.lean",
+      "bfgs_lean_stage1/BfgsVerification/ParabolicExampleContrast.lean"
+    ],
+    "reason": "Preserves Q principal theorem unchanged and printed rho=1/2 identities below this insertion. Positive eta is chosen before delta and C. Covers arbitrary c1<1 via derived rho; does not assert a divergent BFGS run or arbitrary-metric occurrence of these pairs."
+  }
+]

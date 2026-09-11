@@ -1,0 +1,142 @@
+[
+  {
+    "id": "F.centered_local_constant_route",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/families.tex",
+    "start_line": 13,
+    "end_line": 13,
+    "old": "This cocoercivity statement is valid on an open convex neighborhood; the source cites Wachsmuth--Wachsmuth for the local version.",
+    "new": "Here $L$ is a uniform constant chosen for the compact endpoint set inside the open convex neighborhood. A local proof subtracts a supporting tangent plane and applies the descent estimate at a short step opposite the gradient difference, with the test step kept inside a larger buffered neighborhood. Applying the resulting Bregman estimate in both directions gives the stated inequality. The constant may be enlarged to keep those test steps inside the neighborhood; no assertion that an arbitrarily prescribed Lipschitz constant is sharp is needed.",
+    "lean_exports": [
+      "BfgsVerification.CenteredSmoothSublinear.bregman_lower_of_descent",
+      "BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact",
+      "BfgsVerification.CenteredSmoothSublinear.exists_pair_correction_bound"
+    ],
+    "reason": "Match the actual compact local descent-test proof and existential constant; the external local-cocoercivity citation is not a formal dependency.",
+    "kind": "proof_route_disclosure"
+  },
+  {
+    "id": "F.transformed_gauge_inverse_route_disclosure",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/families.tex",
+    "start_line": 49,
+    "end_line": 49,
+    "old": "This proof never claims invariance of BFGS under a nonlinear scalar transform.",
+    "new": "The same correction estimate can be obtained without introducing an inverse: on a compact positive gauge annulus, bound the derivative of $r\\Phi'(r)$ and bound $\\Phi'$ away from zero, then apply the scalar mean-value theorem twice. The formal convergence argument uses this annulus route; the inverse identities and derivative formula displayed above are separately proved. Neither route claims invariance of BFGS under a nonlinear scalar transform.",
+    "lean_exports": [
+      "BfgsVerification.AdmissibleBFGSRun.transformedGauge_correction_on_positive_band",
+      "BfgsVerification.AdmissibleBFGSRun.transformedGauge_convergence",
+      "BfgsVerification.TransformedGauge.theta_hasDerivAt",
+      "BfgsVerification.TransformedGauge.theta_lipschitz_on_positive_interval"
+    ],
+    "reason": "Disclose the actual dependency order without deleting or weakening the separately verified literal inverse formulas.",
+    "kind": "proof_route_disclosure"
+  },
+  {
+    "id": "F.finite_ray_tilted_minimum",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/families.tex",
+    "start_line": 159,
+    "end_line": 159,
+    "old": "For a convex bounded-below line restriction with negative initial derivative $a$, let $\\tau$ be the first time its right derivative reaches $c_2a$. Before $\\tau$, its slopes are at most $c_2a$, giving strict Armijo because $c_2a<c_1a$. Nearby times to the right satisfy weak Wolfe. If full-space nondifferentiability occurs at only finitely many ray times, a differentiable acceptable point can be selected. This applies to finite affine absolute-value/hinge sums and suitable Euclidean residual sums. It is an existence argument, not a complexity guarantee for every implementation.",
+    "new": "For a finite convex line restriction $\\varphi$ bounded below on the positive ray, suppose $\\varphi'(0)=a<0$. Choose $\\sigma=(c_1+c_2)/2$ and set $\\psi(t)=\\varphi(t)-\\sigma at$. Its derivative at zero is $(1-\\sigma)a<0$, while the lower bound on $\\varphi$ makes $\\psi(t)\\to+\\infty$ as $t\\to+\\infty$. Choose a compact interval $[0,M]$ whose interior contains a minimizer $z>0$ of $\\psi$, with $\\psi(z)<\\psi(0)$. Then\n\\[\n \\varphi(z)<\\varphi(0)+\\sigma az<\\varphi(0)+c_1az.\n\\]\nContinuity preserves strict Armijo on an interval immediately to the right of $z$. For each $t$ in a sufficiently small such interval, minimality and convexity give\n\\[\n \\varphi'(t)\\ge\\frac{\\varphi(t)-\\varphi(z)}{t-z}\\ge\\sigma a>c_2a\n\\]\nwhenever the scalar derivative exists. Thus there is a nonempty open interval of strict Armijo points whose actual scalar derivatives satisfy strict weak Wolfe. If full-space nondifferentiability occurs at only finitely many positive ray times, choose a point in that interval outside this finite set; its actual full gradient gives a differentiable acceptable step. This is the proved tilted-minimum construction, replacing the earlier first-right-derivative-threshold route. It applies to finite affine absolute-value/hinge sums and suitable Euclidean residual sums through their proved full-space bad-ray-set finiteness. It gives existence, not a trial-complexity guarantee for every implementation.",
+    "lean_exports": [
+      "BfgsVerification.FiniteRayLineSearch.negative_derivative_descends",
+      "BfgsVerification.FiniteRayLineSearch.acceptable_interval",
+      "BfgsVerification.FiniteRayLineSearch.finite_nondifferentiability_step",
+      "BfgsVerification.FiniteRayLineSearch.fullBFGS_step_exists"
+    ],
+    "reason": "The literal first derivative-threshold formula is not exported; replace it by the actual complete finite-interval tilted-minimum proof. No finite switching or scalar-for-full differentiability substitution.",
+    "kind": "proof_route_replacement"
+  },
+  {
+    "id": "T.formal_contradiction_route",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/T.tex",
+    "start_line": 146,
+    "end_line": 146,
+    "old": "This contradicts (5). The gap therefore tends to zero. Compactness gives convergence to the solution set, and uniqueness gives whole-sequence convergence. \\qed",
+    "new": "This contradicts (5). The gap therefore tends to zero. Compactness gives convergence to the solution set, and uniqueness gives whole-sequence convergence. \\qed\n\nThe formal principal theorem uses the same derived trace recurrence with a harmless larger additive bound $C_+(k+1)$, where $C_+=\\max\\{C,0\\}$. The normalized energy estimate then gives an $O(N^2)$ reciprocal-sum bound and contradicts Module M's superquadratic theorem. Its additional summability requirement is already a consequence of Armijo and the finite limiting value. Thus no extra hypothesis is added. The sharper linear telescoping estimate above follows from the separately proved scalar transport budget; it is not necessary to the formal principal theorem's contradiction.",
+    "lean_exports": [
+      "BfgsVerification.AdmissibleBFGSRun.certificate_trace_step",
+      "BfgsVerification.AdmissibleBFGSRun.band_certificate_incompatible",
+      "BfgsVerification.ResidualBudget.residual_recurrence_incompatible",
+      "BfgsVerification.ScalarTransport.reciprocal_sum_le"
+    ],
+    "reason": "The formal principal proof uses the existing residual budget and stronger M theorem rather than the exact O(N)/qualitative dependency route shown above. Retain the sharper valid bound and disclose that distinction.",
+    "kind": "proof_route_disclosure"
+  },
+  {
+    "id": "H.finite_value_route_disclosure",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/H.tex",
+    "start_line": 324,
+    "end_line": 325,
+    "old": "Hence \\(L=0\\), proving Theorem H.A.\n\\(\\square\\)",
+    "new": "Hence \\(L=0\\), proving Theorem H.A.\n\\(\\square\\)\n\nThe formal finite-value theorem uses the same energy identity in a shorter alternative arrangement. If \\(L\\ne0\\), shift to a tail with \\(|f_k|\\ge|L|/2\\). The actual homogeneous corrections are nonnegative and bounded by \\(d_k\\), so they are summable. Module M gives divergent reciprocal sums, and the energy identity would bound \\((|L|/2)^2\\sum q_k^{-1}\\) by the initial tail energy plus a finite correction sum, a contradiction. The main formal proof invokes the already available superquadratic theorem to obtain this divergence. The displayed weighted-potential budgets and pointwise metric Cauchy--Schwarz bound are also separately proved; their presence does not assert that the implementation of the principal theorem follows both arguments verbatim.",
+    "lean_exports": [
+      "BfgsVerification.AdmissibleBFGSRun.homogeneous_finite_value_limit_zero",
+      "BfgsVerification.AdmissibleBFGSRun.homogeneous_corrections_summable",
+      "BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_summable",
+      "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_sq_le_budget_mul_q"
+    ],
+    "reason": "Disclose the actual finite-value proof route, keeping the separately checked literal source potential and pointwise deductions.",
+    "kind": "proof_route_disclosure"
+  },
+  {
+    "id": "M.residual_trace_factor_route",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/foundation.tex",
+    "start_line": 224,
+    "end_line": 224,
+    "old": " E_{k+1}=\\|M_k^{1/2}(V_kT_k+R_k)\\|_F^2+\\frac{\\|V_{k+1}^Ty_k\\|^2}{t_k}.",
+    "new": " E_{k+1}=\\operatorname{tr}\\!\\left[(V_kT_k+R_k)^TM_k(V_kT_k+R_k)\\right]\n +\\frac{\\|V_{k+1}^Ty_k\\|^2}{t_k}.",
+    "lean_exports": [
+      "BfgsVerification.EnergyIdentities.gram_add_kernel",
+      "BfgsVerification.FrameBounds.gram_trace_square",
+      "BfgsVerification.AdmissibleBFGSRun.residual_frame_step"
+    ],
+    "reason": "Use the literal trace quadratic form of the checked proof, equivalent to the source square-root expression without selecting a canonical square root.",
+    "kind": "proof_route_disclosure"
+  },
+  {
+    "id": "M.residual_factor_Young_route",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/foundation.tex",
+    "start_line": 226,
+    "end_line": 226,
+    "old": "Young's inequality with parameter $d_k$ bounds this by",
+    "new": "Since $M_k$ is positive semidefinite, choose a real factor $C_k$ with $M_k=C_k^TC_k$. The trace is the sum of squares of the entries of $C_k(V_kT_k+R_k)$. Entrywise Young's inequality with parameter $d_k$, followed by the Euclidean operator bound on right multiplication by $T_k$, bounds this by",
+    "lean_exports": [
+      "BfgsVerification.FrameBounds.gram_trace_square",
+      "BfgsVerification.FrameBounds.scalar_young",
+      "BfgsVerification.FrameBounds.gram_trace_add_le",
+      "BfgsVerification.FrameBounds.gram_trace_transport_le",
+      "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq"
+    ],
+    "reason": "Disclose the actual PSD factorization and trace/Young proof; no square-root oracle or altered norm convention is assumed.",
+    "kind": "proof_route_disclosure"
+  },
+  {
+    "id": "M.sphere_nontrivial_dimension",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/foundation.tex",
+    "start_line": 29,
+    "end_line": 29,
+    "old": "Let $F$ be finite convex and have a unique minimizer $x_*$. Inside any specified structural neighborhood, choose $r>0$ with $\\overline B_r(x_*)$ contained in it. Then",
+    "new": "Let $F$ be finite convex and have a unique minimizer $x_*$. In positive dimension, choose $r>0$ so that $\\overline B_r(x_*)$ lies in the specified structural neighborhood. The sphere is nonempty, and",
+    "lean_exports": [
+      "BfgsVerification.Localization.sphere_gap",
+      "BfgsVerification.Localization.neighborhood_basin"
+    ],
+    "reason": "Make the nonempty-sphere premise explicit, unless a global positive-dimension convention already supplies it. The zero-dimensional basin conclusion is separately immediate.",
+    "kind": "dimension_convention_clarification"
+  },
+  {
+    "id": "M.zero_dimensional_basin",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/foundation.tex",
+    "start_line": 40,
+    "end_line": 40,
+    "old": "This argument also proves boundedness of every sublevel for a finite convex function with an attained unique minimizer.",
+    "new": "This argument also proves boundedness of every sublevel for a finite convex function with an attained unique minimizer. In dimension zero the space is a singleton, so the trapping and compact-sublevel conclusions hold directly; no minimum over an empty positive-radius sphere is used.",
+    "lean_exports": [
+      "BfgsVerification.Localization.sublevel_bounded",
+      "BfgsVerification.Localization.sublevel_compact",
+      "BfgsVerification.Localization.neighborhood_basin"
+    ],
+    "reason": "Preserve the full zero-dimensional basin/compactness consequence while qualifying only the displayed sphere minimum.",
+    "kind": "dimension_convention_clarification"
+  }
+]

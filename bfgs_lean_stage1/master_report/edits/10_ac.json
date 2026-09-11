@@ -1,0 +1,235 @@
+[
+  {
+    "id": "A.lifted-critical-graph-proof",
+    "module": "A",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/affine_geometry.tex",
+    "source_sha256": "e6e2ff352f01baed0a1d0b814d349c4355c734463badeb7cef2a614ad8ebca6d",
+    "start_line": 69,
+    "end_line": 75,
+    "anchor_occurrences": 1,
+    "old": "The subgradient graph is semialgebraic by its quantified supporting-plane description and quantifier elimination. Using at most $n+1$ subgradients in an affine representation shows that the affine-critical set $C_{\\rm aff}$ is semialgebraic. It has finitely many semialgebraically path-connected components.\n\nOn a piecewise $C^1$ semialgebraic path $p(t)$ in that set, the composition $F\\circ p$ is continuous and piecewise $C^1$. At a time where both derivatives exist, the two-sided convex subgradient inequality implies\n\\[\n (F\\circ p)'(t)=g^Tp'(t)\\qquad\\text{for every }g\\in\\partial F(p(t)).\n\\]\nTaking an affine combination of these subgradients equal to zero proves $(F\\circ p)'(t)=0$. Thus $F$ is constant on each path component. There are finitely many affine-critical values. Since $F_*$ is one of them, choose $\\epsilon$ below the least strictly larger value, or any positive number if no larger value occurs. Convexity turns equality with $F_*$ into stationarity.",
+    "new": "The subgradient graph is semialgebraic: its global supporting-plane condition is a quantified polynomial condition involving the graph of $F$, and real projection and Boolean closure eliminate the quantifiers. An affine representation of zero can be chosen with at most $n+1$ subgradients, with real coefficients summing to one; these coefficients need not be nonnegative. It follows that both the affine-critical set $C_{\\rm aff}$ and its lifted graph\n\\[\n \\widehat C_{\\rm aff}=\\{(p,F(p)):p\\in C_{\\rm aff}\\}\n\\]\nare semialgebraic.\n\nUse a finite semialgebraic cover of $\\widehat C_{\\rm aff}$ whose pieces are internally connected by continuous paths that are $C^\\infty$ outside finitely many interior parameters. For a path $(p(t),q(t))$ inside one piece, $q(t)=F(p(t))$. Coordinate projection therefore gives derivatives of both $p$ and the actual composition $F\\circ p$ at every interior time outside one finite exceptional set. No differentiability of $F$ at $p(t)$ is assumed.\n\nAt such a time, for every $g\\in\\partial F(p(t))$, the supporting inequality makes\n\\[\n u\\longmapsto F(p(u))-g^Tp(u)\n\\]\nhave a local minimum at $t$. Differentiation gives\n\\[\n (F\\circ p)'(t)=g^Tp'(t)\\qquad\\text{for every }g\\in\\partial F(p(t)).\n\\]\nAn affine combination of these subgradients equal to zero forces $(F\\circ p)'(t)=0$. The mean-value theorem makes the value constant between consecutive exceptional parameters, and continuity joins those constants at the junctions and endpoints. Thus each piece of the finite lifted cover has only one objective value, proving that there are finitely many affine-critical values.\n\nSince $F_*$ is one of these values, choose $\\epsilon>0$ no larger than the least strictly positive difference between an affine-critical value and $F_*$, or choose any positive $\\epsilon$ if there is no larger value. The strict inequality in the proposition then forces $F(p)=F_*$. Convexity turns this equality into $0\\in\\partial F(p)$.",
+    "kind": "proof_route_alignment",
+    "reason": "Use the actual lifted-graph proof of finite values; both derivatives are derived, not assumed. The original conclusion and all original premises are retained.",
+    "lean_exports": [
+      "BfgsVerification.RealAlgebraicGeometry.supportGraph_semialgebraic",
+      "BfgsVerification.RealAlgebraicGeometry.affineCritical_set_semialgebraic",
+      "BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_semialgebraic",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_smooth_cover",
+      "BfgsVerification.RealAlgebraicGeometry.finite_critical_values_of_smooth_graph_cover",
+      "BfgsVerification.AffineSupportPath.supporting_path_derivative_eq",
+      "BfgsVerification.AffineSupportPath.derivative_zero_of_affineCritical",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap"
+    ]
+  },
+  {
+    "id": "A.actual-path-meaning",
+    "module": "A",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/affine_geometry.tex",
+    "source_sha256": "e6e2ff352f01baed0a1d0b814d349c4355c734463badeb7cef2a614ad8ebca6d",
+    "start_line": 77,
+    "end_line": 77,
+    "anchor_occurrences": 1,
+    "old": "The standard semialgebraic path and projection facts are the external geometric ingredients cited in~\\cite{SA}, including Bolte--Daniilidis--Lewis--Shiota~\\cite{BDLS}. This proposition concerns affine criticality rather than merely Clarke criticality. It does not imply a blanket local BFGS theorem without a dynamical result forcing such a cluster point. Modules C and U provide completed restricted cases.",
+    "new": "Here and below, a piecewise $C^1$ path is continuous on $[0,1]$ and $C^1$ at every interior parameter outside a finite set. No derivative at $0$ or $1$, or derivative extension across a junction, is required. The geometric facts used above are established by real-polynomial projection, finite root and sign refinements, and graph-and-band path constructions; the references~\\cite{SA,BDLS} supply mathematical context rather than unproved premises.\n\nThe affine-critical set also has finitely many actual semialgebraic path classes, where two points are related when a continuous path with semialgebraic restricted graph joins them inside the set. Each class is semialgebraic and internally connected by such paths. Every continuous semialgebraic path admits the finite-exception regularity just specified on the same curve; for finite convex semialgebraic $F$, its actual composition with $F$ is likewise continuous and smooth off finitely many interior parameters. The objective is constant on each class. Ordinary topological connected components are separately finite and semialgebraic, with constant objective value; their identification with path classes is not needed here.\n\nThis proposition concerns affine criticality rather than merely Clarke criticality. It does not imply local BFGS convergence without a dynamical theorem forcing an affine-critical cluster point. Modules C and U provide such theorems under their respective additional hypotheses.",
+    "kind": "regularity_and_component_semantics",
+    "reason": "Clarify literal path classes and endpoint regularity; acknowledge derived geometric facts without claiming the identical historical proof route or ordinary/path-component equality.",
+    "lean_exports": [
+      "BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components",
+      "BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_path_iff_piecewise_smooth",
+      "BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant"
+    ]
+  },
+  {
+    "id": "C.initial-SPD-derived-curvature",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 59,
+    "end_line": 59,
+    "anchor_occurrences": 1,
+    "old": "Existence of differentiable acceptable lengths on every exceptional search ray is not part of the general theorem.",
+    "new": "The positivity $t_k>0$ in the update is derived, not an additional assumption on later matrices: $H_k\\succ0$ and $g_k\\ne0$ give $q_k=g_k^TH_kg_k>0$, and weak Wolfe gives $t_k\\ge(1-c_2)\\alpha_kq_k>0$. The full update then preserves positive definiteness, starting from $H_0\\succ0$. Existence of differentiable acceptable lengths on every exceptional search ray is not part of the theorem.",
+    "kind": "hypothesis_clarification",
+    "reason": "Make induction and the infinite accepted-run convention explicit; no assumed later SPD or all-ray existence.",
+    "lean_exports": [
+      "BfgsVerification.AdmissibleBFGSRun.positive_definite",
+      "BfgsVerification.AdmissibleBFGSRun.q_pos",
+      "BfgsVerification.AdmissibleBFGSRun.curvature_pos"
+    ]
+  },
+  {
+    "id": "C.strict-contour-proof",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 123,
+    "end_line": 128,
+    "anchor_occurrences": 1,
+    "old": "Otherwise a subsequence has $x_k\\to x$, $x_{k+1}\\to z\\ne x$, and $g_k\\to g\\in\\partial F(x)$ by compactness and closedness of the convex subgradient graph. Since $d_k\\to0$,\n\\[\n F(x)=F(z)=\\ell,\\qquad g^T(z-x)=0.\n\\]\nThe supporting inequality at $x$ and convexity make $F$ identically $\\ell$ on $[x,z]$. This is a nontrivial boundary segment of $K_\\ell$, a contradiction.\n\\end{proof}",
+    "new": "Otherwise compactness gives a subsequence with $x_k\\to x$ and $x_{k+1}\\to z\\ne x$. For every $0\\le\\theta\\le1$, the supporting inequality at the accepted point $x_k$ and convexity give\n\\[\n F(x_k)-\\theta d_k\n \\le F((1-\\theta)x_k+\\theta x_{k+1})\n \\le(1-\\theta)F(x_k)+\\theta F(x_{k+1}).\n\\]\nSince $d_k\\to0$ and both endpoint values tend to $\\ell$, continuity shows that $F=\\ell$ on $[x,z]$. A level point of a continuous convex function lies on the boundary of its sublevel whenever some point has strictly smaller value; here a minimizer has value $F_*<\\ell$. Thus $[x,z]$ is a nontrivial boundary segment of $K_\\ell$, contradicting strict convexity. This argument does not require a convergent subsequence of gradients.\n\\end{proof}",
+    "kind": "proof_route_alignment",
+    "reason": "Replace the gradient-subsequence proof by the actual compact endpoint/segment-value proof.",
+    "lean_exports": [
+      "BfgsVerification.AdmissibleBFGSRun.segment_value_lower",
+      "BfgsVerification.AdmissibleBFGSRun.cluster_pair_segment_constant",
+      "BfgsVerification.StrictContours.level_mem_frontier",
+      "BfgsVerification.AdmissibleBFGSRun.differences_tendsto_zero_of_strict_contour"
+    ]
+  },
+  {
+    "id": "C.same-field-buffer-quantifiers",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 205,
+    "end_line": 205,
+    "anchor_occurrences": 1,
+    "old": "The following estimates hold for sufficiently close eligible pairs in a buffered neighborhood of $C$. All intermediate segment points lie in the larger structural neighborhood.",
+    "new": "For each fixed valid pair $(c_1,c_2)$, the following three estimates hold for the same objective-constructed field $w$. There are an open set $U\\supset C$, a compact buffer $Q\\supset\\overline U$, and positive uniform distance and visibility constants such that every sufficiently close eligible pair $x,z\\in U$ is covered, with its entire segment in $Q$. On $Q$, every subgradient at a given point has the same strictly positive pairing with $w$, bounded uniformly away from zero. All constants and neighborhoods are chosen before the endpoint pair; none depends on a BFGS matrix or on an assumed trajectory limit.",
+    "kind": "quantifier_clarification",
+    "reason": "Retain the all-pair quantifiers and one common field required by the actual combined endpoint theorem; common pairing holds throughout the buffer.",
+    "lean_exports": [
+      "BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates",
+      "BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates"
+    ]
+  },
+  {
+    "id": "C.transport-right-derivative-proof",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 232,
+    "end_line": 253,
+    "anchor_occurrences": 1,
+    "old": "Let $q(\\theta)=x+\\theta s$, $\\varphi(\\theta)=F(q(\\theta))$, and $D(\\theta)=\\det(s,w(q(\\theta)))$. Lemma~\\ref{C:lem:trans} makes $D$ nonzero with constant sign. Both $w\\circ q$ and $\\varphi$ are absolutely continuous.\n\nOn a smooth part of the segment use \\eqref{C:eq:triangular}. With $s=s_TT+s_n n$,\n\\[\n \\det(s,Dw\\,s)=s_n[(e-a)s_T-bs_n].\n\\]\nThe uniform derivative bound, transversality, and a positive lower bound on $\\norm{\\nabla F}$ yield\n\\[\n |(\\log|D|)'|\\le C|\\nabla F(q)^Ts|=C|\\varphi'|.\n\\]\nInside a corner neighborhood, \\eqref{C:eq:nearcorner} gives directly\n\\[\n (w\\circ q)'=v_j'(\\varphi)\\varphi'\\quad\\hbox{a.e.},\n\\]\nwhich gives the same bound even on the nondifferentiable subset. This argument does not assume finitely many intersections of a straight segment with a $C^2$ switching curve.\n\nConvexity of $\\varphi$, $\\varphi'(0)=-d$, and $\\varphi(1)\\le\\varphi(0)$ imply\n\\begin{equation}\\label{C:eq:variation}\n \\int_0^1|\\varphi'(\\theta)|\\,d\\theta\\le2d.\n\\end{equation}\nIndeed the negative variation is at most $d$, because every later derivative is at least $-d$; the positive variation is no greater than the negative variation. Integration proves $|\\log(D(1)/D(0))|\\le2Cd$. Since $s,w(x)$ form a basis, the coefficient of $w(x)$ in $w(z)$ is exactly $\\lambda=D(1)/D(0)>0$. This proves the claim.\n\\end{proof}",
+    "new": "Let $q(\\theta)=x+\\theta s$, $\\varphi(\\theta)=F(q(\\theta))$, and $D(\\theta)=\\det(s,w(q(\\theta)))$. Transversality makes the continuous function $D$ nonzero throughout $[0,1]$, hence of constant sign.\n\nOn a smooth part of the segment, use \\eqref{C:eq:triangular}. The ordered orthonormal basis $(T,n)$ has determinant $-1$. Consequently, with $s=s_TT+s_n n$, the correctly oriented identity is\n\\[\n \\det(s,Dw\\,s)=s_n[(a-e)s_T+b s_n].\n\\]\nIts absolute value, the uniform derivative bound, transversality and the positive lower bound on $\\norm{\\nabla F}$ give the required determinant-derivative estimate. In a corner neighborhood, $w\\circ q=v_j\\circ\\varphi$. The convex function $\\varphi$ has an actual right derivative at every $\\theta<1$; the ordinary one-sided chain rule therefore handles corner points as well as smooth points. We obtain, for one $C\\ge0$,\n\\[\n \\left|\\frac{D'_+(\\theta)}{D(\\theta)}\\right|\n \\le C|\\varphi'_+(\\theta)|,\\qquad 0\\le\\theta<1.\n\\]\nNo finite bound on intersections with a switching curve is used.\n\nSet $h(\\theta)=\\log|D(\\theta)|$. Convexity and $\\varphi'(0)=-d$ imply $\\varphi'_+(\\theta)\\ge-d$, and hence\n\\begin{equation}\\label{C:eq:variation}\n |h'_+(\\theta)|\\le C|\\varphi'_+(\\theta)|\n \\le C(\\varphi'_+(\\theta)+2d).\n\\end{equation}\nApply the one-sided derivative comparison theorem to the continuous observable $h-h(0)$ and the barrier\n\\[\n B(\\theta)=C[\\varphi(\\theta)-\\varphi(0)+2d\\theta].\n\\]\nThe initial value is zero and the right-derivative norm is bounded by $B'_+$. Thus $|h(1)-h(0)|\\le B(1)\\le2Cd$, since $\\varphi(1)\\le\\varphi(0)$. Because $D(1)/D(0)>0$, this is $|\\log(D(1)/D(0))|\\le2Cd$. Finally $s,w(x)$ form a basis, and solving in that basis gives $w(z)=\\lambda w(x)+\\beta s$ with $\\lambda=D(1)/D(0)>0$. Absorb the factor two into the stated constant. This proves the claim.\n\\end{proof}",
+    "kind": "signed_identity_correction_and_proof_replacement",
+    "reason": "Correct the signed determinant and replace the unexported a.e./integral proof route by the exact checked one-sided derivative comparison; the literal transport conclusion is unchanged.",
+    "lean_exports": [
+      "BfgsVerification.PlanarTransport.tangent_normal_det",
+      "BfgsVerification.PlanarTransport.triangular_determinant",
+      "BfgsVerification.PlanarObjectiveField.field_determinant_right_derivative_bound",
+      "BfgsVerification.PlanarScalarTransport.convex_right_derivative_lower",
+      "BfgsVerification.PlanarScalarTransport.right_derivative_transport_budget",
+      "BfgsVerification.PlanarScalarTransport.convex_log_determinant_budget",
+      "BfgsVerification.PlanarScalarTransport.planar_transport_from_right_derivative_budget",
+      "BfgsVerification.PlanarObjectiveField.structured_field_segment_transport"
+    ]
+  },
+  {
+    "id": "C.tame-alternative-proof-and-domain",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 336,
+    "end_line": 338,
+    "anchor_occurrences": 1,
+    "old": "The previous note proved that a finite convex semialgebraic function has only finitely many affine-critical values~\\cite{SA}. For clarity, its subgradient graph and affine-critical set are semialgebraic. The latter has finitely many piecewise-smooth path components. On such a path the two-sided subgradient inequality makes the derivative of $F$ equal to $g^T\\dot x$ for \\emph{every} subgradient $g$. An affine combination giving zero forces that derivative to vanish. Thus $F$ is constant on each component; choose a low level excluding the finitely many larger values. This is a geometric consequence consistent with the stratification framework of~\\cite{BDLS}, not a BFGS theorem from that source.\n\nCombining that fact with Theorem~\\ref{C:thm:cluster} gives a second local sufficient class: \\emph{planar finite convex semialgebraic objectives with strictly convex low sublevels and the stated regular two-branch structure at non-affine-critical points}. No positive-multiplier condition at the minimizer is needed if local \\eqref{C:eq:AC} is obtained this way. This does not cover arbitrary semialgebraic functions: degenerate noncritical ties and flat contours remain outside this theorem.",
+    "new": "Module A proves that a finite convex semialgebraic function has finitely many affine-critical values. Its proof uses a finite piecewise-smooth cover of the lifted critical graph, so the point path and its actual objective composition have simultaneous derivatives off a finite exceptional set. The two-sided supporting inequality and an affine combination of supporting vectors equal to zero then force the composition derivative to vanish. Continuity joins the resulting constants. No finite-value, path-cover, or composition-differentiability premise is assumed in the final result.\n\nThe actual affine-critical set also has finitely many piecewise-smooth path classes, each semialgebraic and internally piecewise-smoothly connected. Once finite critical values are known, continuity makes the value image of each such class a singleton, so $F$ is constant along every piecewise-smooth path in the critical set. This avoids presuming that an arbitrary smooth point path has a semialgebraic graph or that its composition with a nonsmooth $F$ is differentiable in advance. These path classes are distinguished from ordinary topological connected components, whose finiteness, semialgebraicity and value constancy are proved separately.\n\nCombining A's low affine-critical gap with Theorem~\\ref{C:thm:cluster} gives the following restricted planar basin conclusion. On a compact structural sublevel above an attained minimum, retain strictly convex positive sublevels and the regular smooth/two-branch hypotheses away from affine criticality. Then a sufficiently low objective basin gives convergence in value and distance to the full minimizer set; uniqueness gives convergence of the whole sequence. Alternatively, with a unique minimizer and the structural hypotheses on a neighborhood, localization supplies a sufficiently low trapped compact sublevel. In both versions the basin is chosen before the admissible run, its initial SPD matrix and its fixed valid line-search constants. No positive-multiplier condition is needed. Semialgebraicity alone does not give the dynamical conclusion: degenerate noncritical ties and flat contours remain outside this theorem.",
+    "kind": "proof_route_alignment",
+    "reason": "Match the noncircular formal finite-value proof and the separately proved arbitrary smooth-path constancy. Preserve compactness/uniqueness and planar contour/regularity conditions.",
+    "lean_exports": [
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin",
+      "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin"
+    ]
+  },
+  {
+    "id": "C.noncritical-constant-rank-domain",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 389,
+    "end_line": 389,
+    "anchor_occurrences": 1,
+    "old": "There is a useful partial statement before transport. Suppose a compact regular region has a finite convex $C^2$ maximum representation. Assume that near each non-affine-critical point $p$, the gradient-difference matrix of the fixed family $I(p)$ has constant rank. Affine independence is an easy sufficient assumption.",
+    "new": "There is a useful partial statement before transport. Let $K$ be a compact set containing no affine-critical point. Suppose that a finite convex $F$ has an exact finite maximum representation by convex $C^2$ branches on a neighborhood of every point of $K$. For each $p\\in K$, let $J=I(p)$ be the fixed family active at $p$, and assume its gradient-difference matrix has constant rank on a neighborhood of $p$. Nearby inactive branches can be removed by their strict gaps. Affine independence of the family at $p$ is a sufficient condition for this local rank hypothesis. The noncritical restriction on $K$ is essential: unit pairing with all subgradients is impossible at an affine-critical point.",
+    "kind": "necessary_domain_clarification",
+    "reason": "State the necessary compact noncritical domain explicitly, matching the actual theorem. The original phrase regular region did not itself exclude critical points.",
+    "lean_exports": [
+      "BfgsVerification.ConstantRankFields.source_common_rate_and_secant",
+      "BfgsVerification.ConstantRankFields.active_affineIndependent_implies_locallyConstantActiveRank",
+      "BfgsVerification.AffineCriticalGeometry.affine_zero_excluded_of_equal_rate"
+    ]
+  },
+  {
+    "id": "C.canonical-C1-regularity",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 391,
+    "end_line": 391,
+    "anchor_occurrences": 1,
+    "old": "The minimum-norm point $a_J(x)$ of the affine hull of these gradients depends smoothly on $x$ in a smaller chart, and remains nonzero.",
+    "new": "The minimum-norm point $a_J(x)$ of the affine hull of these gradients is $C^1$ in a smaller chart and remains nonzero. To see the regularity, choose an affinely independent subfamily at $p$ that spans this affine hull. Independence persists nearby, and constant rank makes the same subfamily span the full fixed-family hull nearby. The inverse-Gram formula for its minimum-norm point is therefore $C^1$, because the branch gradients are $C^1$. No $C^\\infty$ conclusion follows from $C^2$ branch data alone.",
+    "kind": "regularity_correction",
+    "reason": "Make C2-to-C1 regularity exact and explain the actual persistent-basis Gram proof.",
+    "lean_exports": [
+      "BfgsVerification.ConstantRankFields.exists_affine_basis_indices",
+      "BfgsVerification.ConstantRankFields.fixed_basis_spans_near",
+      "BfgsVerification.ConstantRankFields.closest_contDiffAt_of_constant_rank",
+      "BfgsVerification.ConstantRankFields.commonRate_contDiffAt_of_constant_rank"
+    ]
+  },
+  {
+    "id": "C.patched-C1-field",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 396,
+    "end_line": 396,
+    "anchor_occurrences": 1,
+    "old": "A finite partition of unity on buffered charts yields a bounded smooth field $v$ with $g^Tv=1$ at every active gradient.",
+    "new": "A finite $C^\\infty$ partition of unity on buffered charts yields one $C^1$ field $v$, bounded on a compact buffer of $K$, with $g^Tv=1$ for every actual subgradient at every point of that buffer. The cutoff regularity does not increase the regularity of the local fields.",
+    "kind": "regularity_correction",
+    "reason": "Replace ambiguous smooth by the actual C1 result; include all actual subgradients and the compact-buffer boundedness scope.",
+    "lean_exports": [
+      "BfgsVerification.ConstantRankFields.source_common_rate_and_secant",
+      "BfgsVerification.ConstantRankFields.source_eligible_common_rate"
+    ]
+  },
+  {
+    "id": "C.no-higher-dimensional-transport",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 407,
+    "end_line": 407,
+    "anchor_occurrences": 1,
+    "old": "\\textbf{What does not follow:} smoothness of this field does not provide the projected transport needed by the BFGS energy.",
+    "new": "\\textbf{What does not follow:} $C^1$ regularity of this field does not provide the projected transport needed by the BFGS energy.",
+    "kind": "regularity_terminology",
+    "reason": "Keep the explicit higher-dimensional limitation and consistent regularity terminology.",
+    "lean_exports": [
+      "BfgsVerification.spatialCanonicalWarning",
+      "BfgsVerification.spatialQuadraticRadial"
+    ]
+  },
+  {
+    "id": "C.same-branch-local-gradient-estimate",
+    "module": "C",
+    "source": "BFGS_MASTER_REPORT_LaTeX/report/chapters/C.tex",
+    "source_sha256": "3be6a6137a5f87151f6f94f126f4224ff44e1812c0efcc9ad789a5d44e5139d0",
+    "start_line": 263,
+    "end_line": 263,
+    "anchor_occurrences": 1,
+    "old": "For close pairs in a common smooth chart, or with the same active branch in a two-branch chart, convex $C^2$ smoothness gives $\\norm{y}^2\\le L t$ by Hessian integration.",
+    "new": "For close pairs in a common smooth chart, or with the same active branch in a two-branch chart, the local convex gradient-increment estimate gives $\\norm{y}^2\\le L t$ for a uniform constant $L$. One proof subtracts a tangent plane, applies the descent estimate to a short step opposite the gradient difference within the larger convex chart, and combines the resulting one-sided inequalities. Compact buffering supplies a single constant; no positive lower Hessian bound is required.",
+    "kind": "proof_route_alignment",
+    "reason": "Align the same-branch proof with the checked local descent-test/cocoercivity route rather than claiming an identical Hessian-integral proof.",
+    "lean_exports": [
+      "BfgsVerification.CenteredSmoothSublinear.bregman_lower_of_descent",
+      "BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact",
+      "BfgsVerification.PlanarCrossing.smooth_local_secant",
+      "BfgsVerification.PlanarCrossing.cornerData_secant_bound"
+    ]
+  }
+]

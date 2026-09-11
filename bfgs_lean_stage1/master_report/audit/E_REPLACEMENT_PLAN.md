@@ -1,0 +1,15 @@
+# E replacement plan for the integrated corrected report
+
+Replace the original `verification.tex` historical-rerun narrative with a newly authored evidence chapter. Preserve the original file as historical input. The original PASS timings, numerical case counts, software/environment claims, and unavailable archive protocols are **unsupported AI-generated historical assertions**, superseded in the corrected report; their status does not establish that the alleged runs never occurred.
+
+The replacement should distinguish three independently evidenced layers:
+
+1. The actual main Lean build, exact target contracts, and new all-declaration audit. Use the fresh final report audit's counts and timestamps, not the former namespace-only count as a claim of complete definition coverage.
+2. The reconstructed 19-job exact theorem suite in `bfgs_lean_stage1/verification/reconstructed/`. Its actual closed run started at 2026-09-11T18:18:47.982457+00:00 and ended at 2026-09-11T18:19:42.196351+00:00; all 19 jobs passed 107 strict check occurrences concerning 93 distinct declarations. The real `fresh/SUMMARY.json`, job sources, raw logs, pin checks, and validator are the evidence. These are newly authored protocols, not reruns of the missing historical numerical protocols.
+3. The skeptical original-claim review in `audit/claim_review20/`, whose six actual Lean jobs produced 182 ordinary report occurrences, 141 distinct names, and 35 strict markers. Its 17 original-claim owner declarations appear again in the peer source, so those repetitions are not new independent mathematical results. Its review findings and conditional-hypothesis distinctions must be retained.
+
+Use the actual `verification/reconstructed/jobs.json` and `CONTRACT_MAP.md` for the 19 family labels and mathematical roles. In particular, C/U job labels ending in “numerical” now refer to exact actual-run convergence and eventual-tolerance theorems; they do not certify an executed iteration count or a computed stopping time. The old undefined G archive auxiliary example is explicitly substituted by the report's defined accumulating-kink function and its actual incoming-pair obstruction. Do not claim recovery of an unspecified oscillatory formula or 24 missing runs.
+
+Preserve the distinction between exact checked arithmetic, approximate displays supported by exact enclosures, and actual infinite-run theorems. Every infinite conclusion must link to the actual Lean theorem under its stated hypotheses, rather than to a finite sample. The D/L nearest-decimal corrections are separately guarded in `D_L_TEX_REPLACEMENTS.json`; the original displayed values remain valid approximations within one last printed unit.
+
+The corrected chapter should give runnable current commands and point to source hashes and actual logs. It should not retain the old Python/SymPy/mpmath version list or original 0.03–1.3 second job timings as current evidence. It should state that all retained mathematical assertions require the source-claim ledger's reviewed disposition; auxiliary provenance, example substitutions, and engineering logs have their own evidence statuses.

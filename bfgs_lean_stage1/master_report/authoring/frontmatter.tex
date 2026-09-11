@@ -1,0 +1,75 @@
+\begin{titlepage}
+\color{Ink}
+{\large\sffamily\bfseries CORRECTED MATHEMATICS AND LEAN PROOFS}\par
+\vspace{19mm}
+{\Huge\bfseries Full BFGS on\\[3mm]convex nonsmooth\\[3mm]objectives}\par
+\vspace{11mm}
+{\Large Rigorous master report}\par
+\vspace{6mm}
+{\large Reviewed statements, formal proofs and an auditable correspondence}\par
+\vspace{9mm}
+{\color{Accent}\rule{\textwidth}{1.2pt}}\par
+\vspace{6mm}
+\begin{minipage}{.94\textwidth}
+\large
+Ordinary full BFGS in finite dimension.\\
+Armijo--weak-Wolfe and differentiable accepted iterates.\\
+Objective conditions, geometric convergence results and exact failure constructions.
+\end{minipage}
+\vfill
+\begin{minipage}{.94\textwidth}
+\textbf{@@STATUS@@}\par
+\vspace{4mm}
+This edition integrates mathematical corrections and disclosed proof replacements into the preserved research report. Its retained mathematical assertions have reviewed correspondences to exact Lean statements. Explicit open questions and records of actual tool execution have different logical status.\par
+\vspace{4mm}
+\textbf{Foundations:} Lean 4.19.0 and pinned mathlib; transitive axiom audit.\par
+\textbf{Companion:} editable sources, complete claim/proof index, compiler logs, source hashes and reproducible audit commands.\par
+\textbf{Edition date:} 11 September 2026.
+\end{minipage}
+\end{titlepage}
+\frontmatter
+\chapter*{What is verified}
+\addcontentsline{toc}{chapter}{What is verified}
+This is a corrected mathematical edition of the full BFGS report. It is intended to be read together with the delivered Lean project, not as an assertion that a prose document itself has been parsed and proved by Lean. Every retained mathematical assertion has been reviewed against formal declarations, including substantive intermediate identities and unnamed deductions. The formal statement, with all of its hypotheses, is the exact checked claim. The correspondence review is the bridge from mathematical prose to that statement.
+
+The original research sources remain unchanged. The new edition has an exact edit ledger and a complete source map: 14 modules, 172 disjoint original source spans and all 4,323 original chapter lines. A span can contain several claims and link to several declarations. Each chapter ends with a compact correspondence table. The accompanying \path{master_report/PROOF_INDEX.html} supplies the complete export list, exact Lean types, standard axioms and direct project proof dependencies; \path{master_report/CLAIMS.json} and \path{master_report/SOURCE_MAP.json} give the machine-readable record. Original and corrected line locations are distinguished.
+
+\textbf{Mathematical scope.} Positive statements concern an infinite admissible run when that is what the theorem states. Such a run uses the actual gradients of a finite convex objective at differentiable accepted iterates, the actual unmodified full BFGS update and fixed valid Armijo--weak-Wolfe constants. Later positive definiteness and curvature are derived from the initial SPD matrix and line-search conditions. The principal-minor hierarchy is proved for actual finite-dimensional matrices and their actual principal determinants; the normalized scalar hierarchy is derived from that matrix theorem. A sequence theorem assuming a hierarchy is not substituted for this bridge.
+
+The main convergence and failure conclusions do not assume iterate or matrix convergence. A reusable conditional statement may explicitly assume a projected sequence limit or a geometric premise; that hypothesis remains visible and is not represented as a derived fact. Likewise, existence of a differentiable acceptable point on every possible search ray is not inferred from a theorem about infinite admissible runs. Deterministic counterexamples prove the decisions of their stated line search. No limited-memory method, damping, restart or altered update is substituted.
+
+\textbf{Axiom audit.} The main project contains 9,672 safe declarations, including 7,874 theorems. Adding the exact supplemental correction modules gives 9,781 distinct safe declarations and 7,954 theorems. Enumeration uses ownership by the compiled project modules rather than a namespace prefix alone, so private and generated mathematical declarations are included. Types, proof values and structural dependencies are examined transitively. The only axiom dependencies admitted are \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. No mathematical proof is allowed to depend on \texttt{sorryAx}, a custom mathematical axiom, an unchecked external calculation, or an unsafe/partial implementation artifact.
+
+These three axioms express propositional extensionality, classical choice and quotient soundness. They are standard foundations used by Lean and mathlib. Auditing them means identifying and restricting actual transitive dependencies; it does not prove their consistency or Lean's consistency. Trust in the Lean kernel, the installed compiler and the execution environment remains part of the usual formal-verification foundation. The repository records the exact toolchain and package revisions used.
+
+The compiler also creates executable implementation artifacts for some safe definitions and metaprograms. The audit inventories those separately and proves no mathematical claim from their executable behavior. No safe mathematical declaration's dependency closure may reach an unsafe or partial artifact. Generated equation-lemma ownership can vary with import order; declaration names, exact types and axiom sets are reconciled independently of that metadata.
+
+\textbf{What is not a proved assertion.} Definitions specify objects, hypotheses restrict theorems, and explicit questions state unresolved research directions. They are not presented as proved conclusions. Old assertions about unavailable archives, past execution counts, precision or timing have been withdrawn from the operative record; new compiler runs cannot establish a past event. Bibliographic pointers provide context and are not mathematical axioms. This edition makes no publication-priority or human-referee certification.
+
+\chapter*{Corrections and proof correspondence}
+\addcontentsline{toc}{chapter}{Corrections and proof correspondence}
+The corrections below are incorporated where the affected arguments occur. The full ledger preserves each original passage, replacement, reason and associated Lean exports.
+
+\begin{itemize}
+\item \textbf{Radial intercepts (R).} The general reference-point identity retains its constant and linear terms. In the chapter's positive-dimensional compact setting, positivity of the homogeneous degree and the optimizer's identity with the origin are derived. They are not added as assumptions. Outside that context the unrestricted simplified degree formula is false. An explicit four-piece objective and transformed actual BFGS run replace an unspecified historical example.
+\item \textbf{Accessible jumps (G).} A certificate annihilates accessible limiting jumps under the stated extension hypothesis. This does not automatically identify their span with all active-gradient differences. An actual strongly convex scalar example separates the two spans for fixed line-search constants.
+\item \textbf{Planar transport (C).} The signed determinant identity is corrected for the orientation of the chosen basis. Its absolute-value estimate survives. The proof now follows the checked right-derivative comparison argument. A field obtained from convex $C^2$ branch data is $C^1$; a smooth partition of unity does not increase that regularity. A compact domain carrying unit common pairing must exclude affine-critical points, and that restriction is stated explicitly.
+\item \textbf{Coupling and eligibility (U, Q).} The nonsplitting explanation in U requires nonzero coupling; the convergence theorem and radial-condition failure include zero coupling. Q's printed example retains its valid strict Armijo range and exact non-strict boundary. A separate parameterized example gives the stronger all-parameter separation without changing the printed identities.
+\item \textbf{Certified constants (D, L).} Rational enclosure statements are primary. Nearest-decimal displays are corrected where appropriate; unsupported claims that old external verifiers ran are replaced by actual formal certificates.
+\end{itemize}
+
+Some valid informal proofs have been replaced by different formal proofs. Strict-contour trapping uses endpoint compactness and segment-value bounds. Semialgebraic finite critical values use the lifted critical graph, deriving the derivatives of both a path and its actual objective composition. Planar transport uses one-sided derivative comparison. The certificate and homogeneous convergence applications disclose their actual reciprocal-growth route. These are reviewed proofs of the stated conclusions, not claims of a literal line-by-line translation of the old argument. Local dimension or regularity conventions are stated at the point of use.
+
+The positive classes are not totally ordered. Compact-level geometry, noncompact homogeneous behavior, planar switching structure and fixed-normal geometry retain distinct assumptions. The counterexamples also establish different properties; the report does not combine their features into an unstated stronger example. Explicitly open general-dimensional and higher-rank questions remain open.
+
+\begin{center}
+\begin{tabular}{p{.15\textwidth}p{.76\textwidth}}
+\toprule Read & Purpose\\\midrule
+I & Operative statements, logical relationships and open boundaries.\\
+M & Actual full-matrix hierarchy, normalized scalar consequences and energy budgets.\\
+T, R, F, H, Q & Objective certificates, applications, rates and homogeneous results.\\
+G, A, C, U & Geometric meaning, limitations and restricted convergence theorems.\\
+D, L & Exact failure constructions, embeddings and stable-manifold arguments.\\
+E & Actual compiler evidence, audit scope and reproduction commands.\\\bottomrule
+\end{tabular}
+\end{center}

@@ -1,0 +1,637 @@
+\begingroup
+
+\setcounter{section}{0}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+\section{Scope and main
+conclusions}\label{H:scope-and-main-conclusions}
+
+This note continues the investigation of ordinary, full-memory BFGS
+under the algorithmic formulation in Xie--W\"achter~\cite{XW}. The accepted
+steps satisfy fixed Armijo and \textbf{weak} Wolfe inequalities.
+Accepted iterates are differentiable; the inverse matrices are positive
+definite; no damping, restarts, smoothing, spectral safeguards, or
+particular line-search implementation is imposed.
+
+The principal family is
+
+\[
+f(x)=\max_{1\le i\le m}a_i^\top x,\qquad m<\infty.
+\]
+
+The objective-value theorem below holds more generally for every finite
+convex, positively homogeneous function on the whole space. ``Finite''
+in this broader statement means real-valued everywhere, not a finite
+number of pieces.
+
+\textbf{Proof status.} The value and iterate statements below have reviewed Lean proofs under their stated assumptions. Their formal hypotheses and dependencies are indexed with the source claims. Finite numerical tests and publication-priority assertions are not premises of those proofs. The reusable conditional lifting implications retain any projected-run limit explicitly stated in their hypotheses.
+
+\subsection{Theorem H.A: an unconditional objective-value
+dichotomy}\label{H:theorem-a-an-unconditional-objective-value-dichotomy}
+
+Let \(f:\mathbb R^n\to\mathbb R\) be finite, convex, and positively
+homogeneous of degree one. Every infinite admissible full-BFGS run
+satisfies
+
+\[
+\boxed{f(x_k)\longrightarrow0\quad\text{or}\quad f(x_k)\longrightarrow-\infty.}
+\]
+
+There is \textbf{no assumption} that the iterates, displacements,
+accepted step lengths, or matrices are bounded. There is also no
+assumption of a finite gradient alphabet for this theorem.
+
+Consequently, if \(f\) is bounded below, then \(f(x_k)\to0=\min f\). If
+\(f\) is coercive, then \(x_k\to0\), its unique minimizer. If an
+infinite run ever attains \(f(x_k)\le0\), its values must tend to
+\(-\infty\); the finite-value branch has \(f(x_k)>0\) at every
+iteration.
+
+\subsection{Theorem H.B: a many-piece extension of the common-tilt
+geometry}\label{H:theorem-b-a-many-piece-extension-of-the-common-tilt-geometry}
+
+For a finite max-linear objective, let \(G\) be the set of gradients
+occurring infinitely often. If the objective values have a finite limit,
+then
+
+\[
+\boxed{0\in\operatorname{aff}G.}
+\]
+
+This no longer needs a bounded-displacement hypothesis. In particular,
+
+\[
+0\notin\operatorname{aff}\{a_1,\ldots,a_m\}
+\quad\Longrightarrow\quad
+f(x_k)\longrightarrow-\infty
+\]
+
+for every infinite admissible run. A useful arbitrary-many-piece family
+is
+
+\[
+\boxed{f(u,t)=t+\max_{1\le i\le m}b_i^\top u.}
+\]
+
+All its gradients have last component one, so every infinite admissible
+run drives the values to \(-\infty\). This is an infinite-run result,
+not a proof of finite termination for every many-piece objective.
+
+\subsection{Theorem H.C: complete iterate dichotomy in the planar
+unbounded-below
+case}\label{H:theorem-c-complete-iterate-dichotomy-in-the-planar-unbounded-below-case}
+
+For a finite max-linear objective on \(\mathbb R^2\) with
+\(\inf f=-\infty\), every infinite admissible run satisfies exactly one
+of
+
+\[
+\boxed{x_k\longrightarrow0,\quad f(x_k)\downarrow0,}
+\]
+
+or
+
+\[
+\boxed{f(x_k)\longrightarrow-\infty,\quad\|x_k\|\longrightarrow\infty.}
+\]
+
+In the first alternative the limit is nonstationary. The previously
+constructed exact three-piece example attains that alternative. In the
+second, convergence of the \emph{directions} \(x_k/\|x_k\|\) is not
+asserted.
+
+More generally, for any finite max-linear objective, if the span of the
+recurrent gradients has dimension at most two, every finite-value-limit
+run has convergent iterates. Section H.7 proves this broader statement,
+including the noncoercive bounded-below case.
+
+\subsection{What this does not yet
+establish}\label{H:what-this-does-not-yet-establish}
+
+The objective-value classification is now unconditional in every
+dimension. The remaining unresolved iterate question in this
+investigation is the zero-value branch for noncompact objectives when
+the recurrent gradient span has dimension at least three. We have
+neither proved that all such iterate sequences converge nor constructed
+a nonconvergent zero-value-limit trajectory.
+
+This distinction is essential: the results close the previous
+unbounded-displacement gap for \textbf{function values}, but are not
+being presented as a full all-dimensional classification of the
+\textbf{iterates}.
+
+
+\setcounter{section}{1}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+\section{Notation and BFGS
+identities}\label{H:notation-and-bfgs-identities}
+
+Write
+
+\[
+\begin{aligned}
+g_k&=\nabla f(x_k),&p_k&=-H_kg_k,&s_k&=\alpha_kp_k,\\
+x_{k+1}&=x_k+s_k,&y_k&=g_{k+1}-g_k,&B_k&=H_k^{-1},\\
+q_k&=g_k^\top H_kg_k>0,&d_k&=-g_k^\top s_k=\alpha_kq_k>0,\\
+t_k&=y_k^\top s_k,&\Delta_k&=f(x_k)-f(x_{k+1}).
+\end{aligned}
+\]
+
+The line-search conditions are
+
+\[
+f(x_{k+1})\le f(x_k)+c_1g_k^\top s_k,
+\qquad
+g_{k+1}^\top s_k\ge c_2g_k^\top s_k,
+\qquad0<c_1<c_2<1.
+\]
+
+In particular, with \(c=1-c_2>0\),
+
+\[
+t_k\ge c\,d_k>0,
+\qquad
+\beta_k:=\frac{t_k}{d_k}
+=-\frac{y_k^\top H_kg_k}{q_k}\ge c.
+\]
+
+The full inverse-BFGS update is
+
+\[
+H_{k+1}=
+\left(I-\frac{s_ky_k^\top}{t_k}\right)
+H_k
+\left(I-\frac{y_ks_k^\top}{t_k}\right)
++\frac{s_ks_k^\top}{t_k}.
+\]
+
+Its Hessian form, after substituting \(s_k=-\alpha_kH_kg_k\), is
+
+\[
+\boxed{B_{k+1}=B_k-\frac{g_kg_k^\top}{q_k}
++\frac{y_ky_k^\top}{t_k}.}
+\tag{H.2.1}
+\]
+
+A zero gradient corresponds to a stationary termination rather than an
+infinite strict-descent run. Throughout, ``infinite admissible''
+therefore includes nonzero accepted gradients and well-defined
+positive-curvature updates.
+
+\Needspace{19\baselineskip}
+
+
+\setcounter{section}{4}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+\section{Homogeneous potential and proof of Theorem
+A}\label{H:homogeneous-potential-and-proof-of-theorem-a}
+
+\subsection{5.1 Bounded subgradients and Euler's
+identity}\label{H:bounded-subgradients-and-eulers-identity}
+
+For finite convex positively homogeneous \(f\), every subgradient
+\(g\in\partial f(x)\) satisfies
+
+\[
+g^\top x=f(x),\qquad g^\top z\le f(z)\quad\text{for every }z.
+\]
+
+The first equality follows by applying the subgradient inequality to
+\(0\) and \(2x\); the second follows by substituting that equality back
+into the inequality. In particular, all subgradients belong to
+\(\partial f(0)\). In positive dimension, the unit sphere is nonempty and \(f\) is finite and continuous there, so
+\[
+\|g\|\le\max_{\|z\|=1}f(z)<\infty.
+\]
+In dimension zero the space is a singleton and every gradient is zero; boundedness and the later bounded-sublevel or coercive convergence conclusions hold directly. All uses of a sphere minimum or maximum below concern positive dimension. This leaves the value theorem in arbitrary finite dimension; an infinite admissible run with nonzero gradients cannot occur in dimension zero.
+
+Thus the bounded-gradient assumption in Theorem~\ref{M:average} is automatic, even for
+an infinite-piece sublinear function.
+
+\subsection{5.2 The exact energy
+identity}\label{H:the-exact-energy-identity}
+
+Set \(f_k=f(x_k)\) and
+
+\[
+h_k=y_k^\top x_{k+1}=d_k-\Delta_k,\qquad
+\ell_k=-y_k^\top x_k.
+\]
+
+Convexity and homogeneity give \(h_k,\ell_k\ge0\) and
+\(t_k=h_k+\ell_k\). Armijo and convexity give
+
+\[
+c_1d_k\le\Delta_k\le d_k.
+\]
+
+Expanding (2.1) at \(x_{k+1}=x_k-\alpha_kH_kg_k\) yields
+
+\[
+\boxed{
+x_{k+1}^\top B_{k+1}x_{k+1}
+=x_k^\top B_kx_k-\frac{f_k^2}{q_k}+\frac{h_k^2}{t_k}.
+}
+\tag{H.5.1}
+\]
+
+The explicit terms involving \(\alpha_k\) cancel because
+\(g_k^\top x_k=f_k\):
+
+\[
+-2\alpha_k f_k+\alpha_k^2q_k
+-\frac{(f_k-\alpha_kq_k)^2}{q_k}
+=-\frac{f_k^2}{q_k}.
+\]
+
+Also,
+
+\[
+\frac{h_k^2}{t_k}\le h_k=d_k-\Delta_k
+\le\frac{1-c_1}{c_1}\Delta_k.
+\]
+
+Consequently, with \(\gamma=(1-c_1)/c_1\),
+
+\[
+\Phi_k=x_k^\top B_kx_k+\gamma f_k,
+\qquad
+\boxed{\Phi_{k+1}\le\Phi_k-\frac{f_k^2}{q_k}.}
+\tag{H.5.2}
+\]
+
+This potential inequality was established in the earlier note. The new
+ingredient is Theorem~\ref{M:average}, which replaces its former bounded-step
+reciprocal-sum argument.
+
+\subsection{5.3 Every finite value limit is
+zero}\label{H:every-finite-value-limit-is-zero}
+
+Armijo gives strictly decreasing values. Either they tend to \(-\infty\)
+or they have a finite limit \(L\).
+
+In the latter case,
+
+\[
+\sum_k d_k\le\frac{f_0-L}{c_1}<\infty,
+\]
+
+so \(d_k\to0\) and Theorem~\ref{M:average} gives \(\liminf q_k=0\). On the other hand,
+\(\Phi_k\ge\gamma L\), and telescoping (5.2) gives
+
+\[
+\sum_k\frac{f_k^2}{q_k}<\infty.
+\]
+
+If \(L\ne0\), this would imply \(\sum_k1/q_k<\infty\) and therefore
+\(q_k\to\infty\), a contradiction.
+
+There is also a direct pointwise argument. The potential bounds
+
+\[
+x_k^\top B_kx_k\le\Phi_0-\gamma L=:M<\infty.
+\]
+
+Metric Cauchy--Schwarz and Euler's identity imply
+
+\[
+f_k^2=(g_k^\top x_k)^2
+\le(g_k^\top H_kg_k)(x_k^\top B_kx_k)
+\le Mq_k.
+\]
+
+A finite nonzero limit would thus force \(q_k\) to be bounded away from
+zero, again contradicting Theorem~\ref{M:average}. Hence \(L=0\), proving Theorem H.A.
+\(\square\)
+
+The formal finite-value theorem uses the same energy identity in a shorter alternative arrangement. If \(L\ne0\), shift to a tail with \(|f_k|\ge|L|/2\). The actual homogeneous corrections are nonnegative and bounded by \(d_k\), so they are summable. Module M gives divergent reciprocal sums, and the energy identity would bound \((|L|/2)^2\sum q_k^{-1}\) by the initial tail energy plus a finite correction sum, a contradiction. The main formal proof invokes the already available superquadratic theorem to obtain this divergence. The displayed weighted-potential budgets and pointwise metric Cauchy--Schwarz bound are also separately proved; their presence does not assert that the implementation of the principal theorem follows both arguments verbatim.
+
+\subsection{5.4 Bounded-below and coercive
+consequences}\label{H:bounded-below-and-coercive-consequences}
+
+A positively homogeneous function bounded below cannot take a negative
+value: otherwise \(f(tx)=tf(x)\to-\infty\). Thus its minimum value is
+zero, attained at the origin, and Theorem H.A gives unconditional
+objective convergence.
+
+If its sublevels are bounded, then \(f(x)>0\) for \(x\ne0\). Compactness
+of the unit sphere gives \(f(x)\ge\mu\|x\|\) for some \(\mu>0\), so
+\(f_k\to0\) forces \(x_k\to0\).
+
+These consequences now hold for all finite convex sublinear objectives,
+not only finite polyhedral maxima. No rate or finite-path-length
+estimate is asserted.
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+\section{Affine-hull obstruction and a many-piece escape
+theorem}\label{H:affine-hull-obstruction-and-a-many-piece-escape-theorem}
+
+\textbf{Lemma H.3.} Suppose a full-BFGS run satisfies Armijo--weak-Wolfe,
+has a finite gradient alphabet, and has objective values bounded below
+along the run. Let \(G\) be the recurrent gradients. Then
+\(0\in\operatorname{aff}G\).
+
+\textbf{Proof.} Finite objective decrease gives \(d_k\to0\). Bounded
+gradients and Theorem~\ref{M:average} give \(\liminf q_k=0\), hence
+\(\sum_k1/q_k=\infty\).
+
+Discard a finite prefix so that all remaining gradients belong to \(G\).
+If \(0\notin\operatorname{aff}G\), a vector \(v\) exists with
+
+\[
+v^\top g=1\quad(g\in G).
+\]
+
+In particular \(v^\top y_k=0\). Equation (2.1) then implies
+
+\[
+v^\top B_{k+1}v=v^\top B_kv-\frac1{q_k}.
+\]
+
+Positive definiteness forces the reciprocal sum to be finite, a
+contradiction. \(\square\)
+
+This lemma does not need homogeneity, or even convexity, beyond what may
+be needed to obtain the specified run. It is a necessary condition for
+any finite-gradient, finite-value-limit trajectory under these BFGS and
+line-search assumptions.
+
+For max-linear objectives, if \(0\notin\operatorname{aff}\{a_i\}\), no
+recurrent subset can have an affine hull containing zero. A finite value
+limit is impossible; monotonicity therefore forces \(f_k\to-\infty\).
+This proves Theorem H.B.
+
+\subsection{Connection to the two-piece
+paper}\label{H:connection-to-the-two-piece-paper}
+
+The model \(|u|+t\) has gradients \((1,1)\) and \((-1,1)\), both with
+last component one. The arbitrary-many-piece model
+
+\[
+f(u,t)=t+\max_i b_i^\top u
+\]
+
+has precisely the same common-component property. The new theorem proves
+that an infinite accepted-iterate sequence cannot stagnate on any finite
+value for this entire family.
+
+Xie--W\"achter~\cite{XW} proves the stronger finite-termination conclusion
+for its two-piece model: a search direction exposing unboundedness is
+reached after finitely many iterations. The argument here does
+\textbf{not} establish finite termination for the general many-piece
+family. It does show that any infinite admissible continuation must
+decrease the values without bound.
+
+If \(r=\dim\operatorname{span}G\), a finite-value-limit run needs at
+least \(r+1\) distinct recurrent gradients. Indeed,
+\(0\in\operatorname{aff}G\) implies that the gradient differences span
+the same \(r\)-dimensional space; \(|G|-1\) differences must span it.
+The earlier three-gradient, rank-two stagnation example attains this
+lower bound.
+
+
+\setcounter{section}{6}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+\section{Iterate convergence in effective dimension at most
+two}\label{H:iterate-convergence-in-effective-dimension-at-most-two}
+
+\subsection{7.1 Exact invariant subspace and
+lifting}\label{H:exact-invariant-subspace-and-lifting}
+
+Suppose that, after some index \(K\), all gradients lie in a subspace
+\(S\). Let \(U\) have orthonormal columns spanning \(S\), and define
+
+\[
+\widehat x_k=U^\top x_k,\qquad
+\widehat H_k=U^\top H_kU,\qquad
+\widehat g_k=U^\top g_k.
+\]
+
+Projection of the inverse-BFGS formula gives exactly the same
+inverse-BFGS update for the hatted variables and projected steps. The
+scalars \(q_k,d_k,t_k\) and the line-search inequalities are unchanged.
+
+Moreover, all subsequent steps belong to the \textbf{fixed} subspace
+\(H_KS\). To see this, initially \(H_KS\) is the image of \(S\); if
+\(H_kS\subset H_KS\), then \(s_k\in H_KS\), and the inverse update maps
+\(S\) back into \(H_KS\), since \(g_k,y_k\in S\). Induction proves the
+claim.
+
+The restriction of \(U^\top\) to \(H_KS\) is invertible because
+\(U^\top H_KU\succ0\). Therefore
+
+\[
+\boxed{
+x_k=x_K+L_K(\widehat x_k-\widehat x_K),\qquad
+L_K=H_KU(U^\top H_KU)^{-1}.
+}
+\tag{H.7.1}
+\]
+
+In particular, convergence of the projected iterates implies convergence
+of the original iterates. If \(\widehat x_k\to0\), the limit is
+
+\[
+\boxed{x_*=x_K-H_KU(U^\top H_KU)^{-1}U^\top x_K.}
+\tag{H.7.2}
+\]
+
+The projected Hessian is \((U^\top H_kU)^{-1}\), not \(U^\top B_kU\).
+This distinction is necessary for a valid reduction.
+
+\subsection{7.2 A two-gradient endpoint
+observation}\label{H:a-two-gradient-endpoint-observation}
+
+Assume \(f_k\to0\). Then \(d_k\to0\), and every endpoint satisfies
+
+\[
+g_{k+1}^\top x_{k+1}=f_{k+1}\longrightarrow0,
+\qquad
+g_k^\top x_{k+1}=f_k-d_k\longrightarrow0.
+\tag{H.7.3}
+\]
+
+In two dimensions, if \(g_k\) and \(g_{k+1}\) are linearly independent,
+these two equations determine \(x_{k+1}\). There are only finitely many
+distinct pairs, so their inverse norms are uniformly bounded. Thus the
+endpoints of all independent-gradient transitions converge to zero, even
+if the full sequence was not known to be bounded.
+
+An unchanged nonzero gradient cannot satisfy weak Wolfe on a strict
+descent step. Distinct gradients that are positive multiples of one
+another also cannot both be active at positive-value iterates: among
+positive multiples of a slope, only the largest multiple can attain a
+positive maximum. Consequently, any dependent transition on the
+positive-value branch is between opposite slopes.
+
+\subsection{7.3 The unbounded-below planar
+case}\label{H:the-unbounded-below-planar-case}
+
+If the global objective is unbounded below, its slope set cannot contain
+an opposite pair \(a,-\kappa a\) with \(\kappa>0\): their maximum alone
+is nonnegative everywhere. Every accepted gradient transition is
+therefore linearly independent in the plane.
+
+Equation (7.3) now gives \(x_k\to0\) directly. Combined with Theorem H.A,
+this proves Theorem H.C. In the other branch, global Lipschitz continuity
+gives \(|f(x)|\le M\|x\|\), so \(f_k\to-\infty\) implies
+\(\|x_k\|\to\infty\).
+
+For an unbounded-below max-linear objective there is no stationary
+point: a stationary point of a convex function would be a global
+minimizer, and no minimizer exists. Thus the zero limit is genuinely
+nonstationary.
+
+\subsection{7.4 The general planar finite-value
+branch}\label{H:the-general-planar-finite-value-branch}
+
+For completeness, opposing-gradient transitions can also be handled,
+giving convergence for \textbf{all} planar finite max-linear objectives,
+including noncompact bounded-below ones.
+
+Call an endpoint of an independent-gradient transition an \emph{anchor}.
+By (7.3), anchors converge to zero.
+
+Consider consecutive anchors \(x_a,x_b\). If there is no intermediate
+iterate, there is nothing to prove. Otherwise, all gradients from
+\(g_a\) through \(g_{b-1}\) lie on a single gradient line; the
+intermediate dependent transitions alternate between opposite slopes. By
+the invariant-subspace argument, all steps from \(x_a\) up to and
+including the step arriving at \(x_b\) lie on a fixed primal line.
+Therefore all points in this block are collinear with its endpoints.
+
+Write its initial gradient as \(g\), and the next opposite gradient as
+\(-\kappa g\), with \(\kappa>0\). The first dependent transition has
+
+\[
+d_a=f_a+f_{a+1}/\kappa.
+\]
+
+Armijo implies
+
+\[
+f_{a+1}\le\frac{1-c_1}{1+c_1/\kappa}f_a
+\le(1-c_1)f_a,
+\]
+
+so monotonicity gives \(f_b\le(1-c_1)f_a\). Every accepted point in the
+block obeys
+
+\[
+-f_a/\kappa\le g^\top x\le f_a,
+\]
+
+because \(g\) and \(-\kappa g\) are both slopes of the objective and
+\(f(x)\le f_a\). The endpoint difference satisfies
+
+\[
+g^\top(x_b-x_a)\le-c_1 f_a.
+\]
+
+Writing \(x=x_a+\theta(x_b-x_a)\) consequently gives
+
+\[
+0\le\theta\le\frac{1+1/\kappa}{c_1}.
+\]
+
+Only finitely many slope pairs occur, so this bound is uniform across
+blocks. Since both anchor endpoints tend to zero, every intermediate
+point does too. Arbitrarily long blocks cause no difficulty.
+
+If there are only finitely many anchors, the tail gradients lie on a
+fixed line, and all tail iterates lie on one fixed primal line. The
+slope coordinate tends to zero because \(f_k\to0\) and only finitely
+many nonzero slope multipliers occur. Positive definiteness makes that
+slope coordinate nonconstant along the primal line, so the entire tail
+converges to its unique intersection with the zero-slope hyperplane.
+
+This proves planar iterate convergence in every finite-value-limit case.
+Reducing to the span of the recurrent gradients and using (7.1) proves
+the same conclusion whenever that span has dimension at most two in any
+ambient dimension. The limit may be nonzero in the original coordinates.
+
+
+\setcounter{section}{7}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+\section{A noncompact convergence theorem in arbitrary
+dimension}\label{H:a-noncompact-convergence-theorem-in-arbitrary-dimension}
+
+One source of noncompactness is a subspace of directions on which the
+function is constant. When this is the only source of noncompactness,
+the case is fully tractable in all dimensions.
+
+Let
+
+\[
+S=\operatorname{span}\{a_1,\ldots,a_m\},\qquad
+P=\operatorname{conv}\{a_1,\ldots,a_m\},
+\]
+
+and suppose \(0\in\operatorname{relint}P\), with relative interior taken
+in \(S\). Then \(f\) depends only on the projection to \(S\) and is
+coercive there:
+
+\[
+f(x)\ge\mu\|U^\top x\|\quad\text{for some }\mu>0.
+\]
+
+Theorem H.A implies \(U^\top x_k\to0\). The invariant subspace formula
+with \(K=0\) gives
+
+\[
+\boxed{
+x_k\longrightarrow
+x_0-H_0U(U^\top H_0U)^{-1}U^\top x_0.
+}
+\tag{H.8.1}
+\]
+
+The limit is a minimizer, and in fact the projection of \(x_0\) onto
+\(S^\perp\) in the \(H_0^{-1}\) metric. It is independent of the choices
+of admissible accepted lengths. This includes all finite polyhedral
+seminorms and noncoercive gauges whose minimizer set is a linear
+subspace.
+
+The same argument applies after a finite prefix if
+\(0\in\operatorname{relint}\operatorname{conv}G\) for the recurrent
+gradients. The projected tail objective is then coercive even if some
+original, nonrecurrent slopes have disappeared. Formula (7.2) supplies
+the limit.
+
+For \(f\equiv0\), the algorithm is already stationary; there is no
+nonzero-gradient infinite run. The projection formula above concerns a
+nontrivial slope span.
+
+
+\endgroup

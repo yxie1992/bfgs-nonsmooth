@@ -1,0 +1,173 @@
+\section{Centered smooth-plus-sublinear objectives}
+This module collects the nonredundant structural consequences from [M], [P], [E] and [Q]. The finite-polyhedral-partition and powered-gauge radial arguments themselves are reproduced in Module R. The discussion here retains the global, nonunique, explicit-basin and quantitative clauses that are not supplied by a bare local uniqueness theorem.
+
+\begin{theorem}[Centered smooth-plus-sublinear convergence]\label{F:centered}
+Let $F(x)=\psi(x)+\gamma(x-x_*)$, where $\psi$ is convex and locally $C^{1,1}$ on an open convex neighborhood of a compact initial sublevel, and $\gamma$ is finite convex and positively homogeneous of degree one. Suppose $x_*$ minimizes $F$. Every infinite admissible full-BFGS run has $F(x_k)\to F(x_*)$. If $x_*$ is unique, then $x_k\to x_*$. A representation only near a unique minimizer gives a low-starting local theorem by Lemma~\ref{M:localization}.
+\end{theorem}
+\begin{proof}
+Translate $x_*=0$ and let $R$ bound the initial sublevel. At differentiable endpoints, $\gamma$ is differentiable because $F$ and $\psi$ are. Write $y=y_\psi+y_\gamma$, and set
+\[
+ a=y_\psi^Ts,\quad b=y_\gamma^Ts,\quad
+ \xi=y_\psi^Tx',\quad\zeta=y_\gamma^Tx'.
+\]
+Then $a,b\ge0$ and $t=a+b$. Convex local $L$-smoothness gives $\|y_\psi\|^2\le La$, hence $\xi^2\le LR^2a$. Here $L$ is a uniform constant chosen for the compact endpoint set inside the open convex neighborhood. A local proof subtracts a supporting tangent plane and applies the descent estimate at a short step opposite the gradient difference, with the test step kept inside a larger buffered neighborhood. Applying the resulting Bregman estimate in both directions gives the stated inequality. The constant may be enlarged to keep those test steps inside the neighborhood; no assertion that an arbitrarily prescribed Lipschitz constant is sharp is needed.
+
+If $h\in\partial\gamma(x)$, homogeneity and the supporting inequality give $h^Tx=\gamma(x)$ and $h^Tz\le\gamma(z)$. Hence $0\le\zeta\le b$. All subgradients of $\gamma$ are bounded by some $G_\gamma$, so $\zeta\le2G_\gamma R$. Weighted Cauchy--Schwarz gives
+\[
+ \frac{(y^Tx')^2}{t}
+ \le\frac{\xi^2}{a}+\frac{\zeta^2}{b}
+ \le LR^2+2G_\gamma R.
+\]
+Terms with zero denominator are zero since their numerators vanish. Apply the fixed-reference energy bound and the reciprocal-average theorem in Module M. Compactness and uniqueness give the iterate conclusion.
+\end{proof}
+The original summands need not separately be minimized at the center. Optimality implies $-\nabla\psi(x_*)\in\partial\gamma(0)$. After translating, subtract the smooth tangent plane from $\psi$ and add it to $\gamma$; both adjusted summands are then nonnegative and minimized at zero. This is a permissible rewriting of the same objective, not invariance of BFGS under a change of objective.
+
+\section{Smooth increasing transforms of coercive gauges}
+\begin{theorem}[Transformed-gauge convergence]\label{F:transform}
+Let $\gamma$ be finite convex, degree-one homogeneous and coercive. Let $\Phi:[0,\infty)\to\mathbb R$ be continuous, convex, strictly increasing, with $\Phi(0)=0$, $\Phi\in C^2((0,\infty))$ and $\Phi'>0$ there. Then every infinite admissible full-BFGS run on $F(x)=\Phi(\gamma(x-x_*))$ converges to $x_*$.
+\end{theorem}
+\begin{proof}
+Coercivity of $\gamma$ and unboundedness of $\Phi$ give compact sublevels. Translate $x_*=0$. Suppose $F_k\downarrow L>0$. Euler's identity and the chain rule give
+\[
+ a_k=g_k^Tx_k=\gamma(x_k)\Phi'(\gamma(x_k))=\Theta(F_k),
+\quad\Theta(t)=\Phi^{-1}(t)\Phi'(\Phi^{-1}(t)).
+\]
+On $[L,F_0]$, the derivative
+\[
+ \Theta'(t)=1+\frac{r\Phi''(r)}{\Phi'(r)},\qquad r=\Phi^{-1}(t),
+\]
+is bounded. Thus $|a_{k+1}-a_k|\le C\Delta_k$. Since
+\[
+ y_k^Tx_{k+1}=d_k+a_{k+1}-a_k,
+\]
+\eqref{M:basic} implies
+\[
+ R_k\le\frac{(1+C)^2}{(1-c_2)c_1}\Delta_k.
+\]
+The corrections are summable, contradicting a positive gap in \eqref{M:energybound}. Hence $F_k\to0$, and coercivity and strict increase give $x_k\to0$.
+\end{proof}
+The same correction estimate can be obtained without introducing an inverse: on a compact positive gauge annulus, bound the derivative of $r\Phi'(r)$ and bound $\Phi'$ away from zero, then apply the scalar mean-value theorem twice. The formal convergence argument uses this annulus route; the inverse identities and derivative formula displayed above are separately proved. Neither route claims invariance of BFGS under a nonlinear scalar transform. It includes cases whose scalar second derivative is unbounded at zero. Finite sums of differently powered gauges are instead covered by the radial argument in Module R, including $1<p<2$.
+
+\section{Finite max-affine terms and a certified basin}
+Let $F=\psi+p$, with $\psi$ convex locally $C^{1,1}$ and $p(x)=\max_i\ell_i(x)$, $\ell_i(x)=a_i^Tx+b_i$, a finite real-valued maximum. At a unique minimizer $x_*$, put $I_*=\{i:\ell_i(x_*)=p(x_*)\}$. Inactive pieces have positive gaps, so on a sufficiently small ball
+\begin{equation}\label{F:active}
+ p(x_*+z)=p(x_*)+\max_{i\in I_*}a_i^Tz.
+\end{equation}
+Indeed, with any fixed $i_0\in I_*$, the difference between its value and an inactive piece $j$ is
+\[
+ \delta_j+(a_{i_0}-a_j)^Tz,\qquad \delta_j=p(x_*)-\ell_j(x_*)>0,
+\]
+which stays positive if $\|z\|\le\delta_j/(2\|a_{i_0}-a_j\|)$; a parallel inactive piece stays dominated everywhere. This exact local identity and Theorem~\ref{F:centered} prove local convergence without strict complementarity or Hessian nondegeneracy.
+
+For an explicit sufficient level, define the closed active region
+\[
+ P_j=\{x:\ell_j(x)=p(x)\}
+ =\{x:(a_j-a_i)^Tx\ge b_i-b_j\ \forall i\}
+\]
+and
+\begin{equation}\label{F:basin}
+ \tau_* =\min_{j\notin I_*}\inf_{x\in P_j}F(x),
+\end{equation}
+with empty infima or minima equal to $+\infty$. Then $\tau_*>F_*$. To prove it, note that unique-minimizer convexity gives compact sublevels; a finite infimum on a nonempty closed $P_j$ is attained. It cannot equal $F_*$ because $x_*\notin P_j$. Finitely many inactive pieces preserve the strict gap.
+
+Every admissible run with $F(x_0)<\tau_*$ converges. On its full compact initial sublevel, only indices in $I_*$ can be active, so \eqref{F:active} and the centered correction estimate apply throughout. A tail that first enters this sublevel enjoys the same conclusion for its current arbitrary SPD matrix. The threshold is sufficient, not a characterization of every successful initialization. Each inner infimum is a convex program over the displayed linear inequalities.
+
+\section{Residual penalties and affine-fiber lifting}
+For a scalar affine residual nonzero at the solution, its absolute-value or hinge term is locally affine. A zero optimal residual produces a centered sublinear term. The same decomposition applies to an affine-composed Euclidean norm: a nonzero optimal vector residual is locally smooth, and a zero residual becomes a centered norm. Finite sums with a convex locally $C^{1,1}$ smooth part reduce to Theorem~\ref{F:centered}. For a more general gauge, local $C^{1,1}$ smoothness at that particular nonzero residual must be checked; a spectral penalty may fail it.
+
+\begin{theorem}[Exact linear-image lifting]\label{F:lifting}
+Let $A\in\mathbb R^{r\times n}$ have full row rank and $F(x)=\bar F(Ax)$. Suppose the projected admissible run converges to a unique optimizer $z_*$ of $\bar F$, under any of the retained sufficient hypotheses. Then
+\[
+ x_k\to x_0+H_0A^T(AH_0A^T)^{-1}(z_*-Ax_0).
+\]
+\end{theorem}
+\begin{proof}
+With $z_k=Ax_k$ and $\bar H_k=AH_kA^T$, projection of the inverse-BFGS update gives exactly full BFGS on $\bar F$, with the same step lengths and line-search comparisons. Let $S=\operatorname{range}A^T$. Since gradients and secant differences lie in $S$, the update gives $H_{k+1}S\subset H_kS$; both spaces have dimension $r$, so equality holds. All displacements lie in $H_0S$. The restriction of $A$ to that space has right inverse
+\[
+ L_0=H_0A^T(AH_0A^T)^{-1}.
+\]
+Thus $x_k-x_0=L_0(z_k-z_0)$, proving the result. This is the $H_0^{-1}$-metric projection onto the affine fiber, not a claim about arbitrary nonunique minimizer sets.
+\end{proof}
+
+\section{Finite-horizon rates and strengthened asymptotic corollaries}
+Let $S_N=\sum_{k<N}q_k^{-1}$. Retain the explicit lower bound \eqref{M:finitehorizon}, which is meaningful at a fixed horizon. All rates below concern fixed dimension, problem, initialization and line-search constants, and count accepted iterations only. The source rate note recorded big-$O$ bounds. The little-$o$ versions below are explicit consolidation deductions from the later superquadratic theorem; they do not assert a sharp rate.
+
+\paragraph{Uniformly bounded reference correction.}
+If $R_k\le\bar R$, then \eqref{M:energybound} gives
+\[
+ F(x_N)-F_*\le\sqrt{\frac{E_0+\bar RN}{S_N}}=o(N^{-1/2}),
+\]
+because $S_N/N^2\to\infty$. The same estimate holds for a linear cumulative correction budget. This is not a rate for arbitrary band-dependent certificates.
+
+\paragraph{Bounded-below degree-one objectives.}
+Module H proves
+\[
+ \sum_{k<N}\frac{F(x_k)^2}{q_k}\le\Phi_0,
+\quad \Phi_0=x_0^TH_0^{-1}x_0+\frac{1-c_1}{c_1}F(x_0).
+\]
+Hence $F(x_N)\le\sqrt{\Phi_0/S_N}=o(N^{-1})$. Coercivity gives $F(x)\ge\mu\|x\|$ and the same order for the iterate norm. The little-$o$ conclusion uses the superquadratic theorem; the finite-horizon bound retains its explicit constants. No rate sharpness is asserted.
+
+\paragraph{Quadratic plus coercive gauge.}
+For $F(u,v)=u^TQu/2+\gamma(v)$, $Q\succ0$, let $\mu\|v\|\le\gamma(v)\le\Lambda\|v\|$. Split $t=a+b$ with
+\[
+ a=\delta u^TQ\delta u,\quad b=(h'-h)^T\delta v,\quad
+ \xi=(Q\delta u)^Tu',\quad\zeta=(h'-h)^Tv',
+\]
+where $h\in\partial\gamma(v)$ and $h'\in\partial\gamma(v')$. Then
+\[
+ \xi^2/a\le u'^TQu',\qquad0\le\zeta\le b,
+ \qquad\zeta\le(1+\Lambda/\mu)\gamma(v').
+\]
+Thus
+\[
+ R_k\le C_\gamma F(x_{k+1}),\qquad
+ C_\gamma=\max\{2,1+\Lambda/\mu\}.
+\]
+Choose $a_0>0,N_0$ with $S_N\ge a_0N^2$ for $N\ge N_0$, and put
+\[
+ A_N=E_0+C_\gamma\sum_{j=1}^NF(x_j).
+\]
+Then $F(x_N)\le\sqrt{A_N}/(\sqrt{a_0}N)$, and
+\[
+ \sqrt{A_N}-\sqrt{A_{N-1}}
+ =\frac{C_\gamma F(x_N)}{\sqrt{A_N}+\sqrt{A_{N-1}}}
+ \le\frac{C_\gamma}{\sqrt{a_0}N}.
+\]
+Summing first recovers the source bounds $\sqrt{A_N}=O(\log N)$ and $F(x_N)=O(\log N/N)$. For the strengthened conclusion, keep the exact denominator:
+\[
+ \sqrt{A_N}-\sqrt{A_{N-1}}\le \frac{C_\gamma}{\sqrt{S_N}}=o(N^{-1}).
+\]
+A sum of $o(1/N)$ increments is $o(\log N)$: for any fixed $\epsilon>0$, bound the sufficiently late increments by $\epsilon/N$, then divide their sum by $\log N$ and let $\epsilon\downarrow0$. Thus $\sqrt{A_N}=o(\log N)$. Dividing by $\sqrt{S_N}=N\sqrt{S_N/N^2}$ yields
+\[
+ \boxed{F(x_N)=o(\log N/N).}
+\]
+These strengthened asymptotic corollaries follow from already recorded estimates; they are not uniform complexity bounds over all instances and do not establish linear or superlinear convergence.
+
+\section{Matrix limits and line-search existence are different questions}
+The convergence theorems do not assert a universal inverse-Hessian limit. For $u^2+|v|$, choose $A>0$, $v_0>0$ and $0<\rho<(1-c_1)/(1+c_1)$. With
+\[
+ x_0=(0,v_0),\quad
+ H_0=\operatorname{diag}\left(A,\frac{1+\rho}{2\rho}v_0\right),\quad\alpha_k=2\rho,
+\]
+ordinary BFGS gives
+\[
+ x_k=(0,(-\rho)^kv_0),\quad
+ H_k=\operatorname{diag}\left(A,\frac{1+\rho}{2\rho}\rho^kv_0\right).
+\]
+The Armijo ratio is $(1-\rho)/(1+\rho)>c_1$ and the weak-Wolfe ratio is $-1$. The unexcited tangential entry tends to its arbitrary initial value $A$, not necessarily the inverse true tangential curvature.
+
+For a finite convex line restriction $\varphi$ bounded below on the positive ray, suppose $\varphi'(0)=a<0$. Choose $\sigma=(c_1+c_2)/2$ and set $\psi(t)=\varphi(t)-\sigma at$. Its derivative at zero is $(1-\sigma)a<0$, while the lower bound on $\varphi$ makes $\psi(t)\to+\infty$ as $t\to+\infty$. Choose a compact interval $[0,M]$ whose interior contains a minimizer $z>0$ of $\psi$, with $\psi(z)<\psi(0)$. Then
+\[
+ \varphi(z)<\varphi(0)+\sigma az<\varphi(0)+c_1az.
+\]
+Continuity preserves strict Armijo on an interval immediately to the right of $z$. For each $t$ in a sufficiently small such interval, minimality and convexity give
+\[
+ \varphi'(t)\ge\frac{\varphi(t)-\varphi(z)}{t-z}\ge\sigma a>c_2a
+\]
+whenever the scalar derivative exists. Thus there is a nonempty open interval of strict Armijo points whose actual scalar derivatives satisfy strict weak Wolfe. If full-space nondifferentiability occurs at only finitely many positive ray times, choose a point in that interval outside this finite set; its actual full gradient gives a differentiable acceptable step. This is the proved tilted-minimum construction, replacing the earlier first-right-derivative-threshold route. It applies to finite affine absolute-value/hinge sums and suitable Euclidean residual sums through their proved full-space bad-ray-set finiteness. It gives existence, not a trial-complexity guarantee for every implementation.
+
+For arbitrary max-functions there is a genuine exception. The coercive function
+\[
+ h(x,y,z)=\max\{-x,y+z,-y+z,x/4,-z\}
+\]
+has unique minimizer zero. At $(-2,0,1)$ with $H_0=I$, the direction is $(1,0,0)$ and the ray function is $\max\{2-\alpha,1,(\alpha-2)/4\}$. For $(c_1,c_2)=(1/4,1/2)$, times $0<\alpha<1$ fail weak Wolfe; $1\le\alpha\le6$ are full-space nondifferentiable; and $\alpha>6$ fails Armijo, which would require $\alpha\le5$. Scaling the point and matrix places the same finite obstruction arbitrarily close to the minimizer. It is not an infinite admissible run and does not contradict the positive theorems.
