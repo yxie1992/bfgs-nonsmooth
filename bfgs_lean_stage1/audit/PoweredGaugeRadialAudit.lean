@@ -1,0 +1,34 @@
+import BfgsVerification.PoweredGaugeRadial
+
+#print axioms BfgsVerification.RadialPower.profile
+#print axioms BfgsVerification.RadialPower.profile_contDiffOn_Iio
+#print axioms BfgsVerification.RadialPower.profile_contDiff
+#print axioms BfgsVerification.RadialPower.profile_hasDerivAt
+#print axioms BfgsVerification.RadialPower.profile_hasDerivAt_zero
+#print axioms BfgsVerification.RadialPower.profile_derivative_hasDerivAt
+#print axioms BfgsVerification.RadialPower.profile_second_derivative_bounded
+#print axioms BfgsVerification.RadialPower.profile_one_zero_remainder
+#print axioms BfgsVerification.RadialPower.degree_one_inward_error_zero
+#print axioms BfgsVerification.RadialPower.profile_taylor_polynomial
+#print axioms BfgsVerification.RadialPower.profile_taylor_bound
+#print axioms BfgsVerification.RadialPower.powered
+#print axioms BfgsVerification.RadialPower.powered_homogeneous
+#print axioms BfgsVerification.RadialPower.powered_nonneg
+#print axioms BfgsVerification.RadialPower.powered_convex
+#print axioms BfgsVerification.RadialPower.sumObjective
+#print axioms BfgsVerification.RadialPower.inward_radius
+#print axioms BfgsVerification.RadialPower.sumObjective_inward
+#print axioms BfgsVerification.RadialPower.actual_radial_pairing
+#print axioms BfgsVerification.RadialPower.inward_error_decomposition
+#print axioms BfgsVerification.RadialPower.powered_values_bounded_on_compact
+#print axioms BfgsVerification.RadialPower.uniform_power_remainder
+#print axioms BfgsVerification.RadialPower.sqNorm_smul
+#print axioms BfgsVerification.RadialPower.uniform_smooth_inward_remainder
+#print axioms BfgsVerification.RadialPower.mixed_powers_inward
+#print axioms BfgsVerification.RadialPower.mixed_powers_radial
+#print axioms BfgsVerification.RadialPower.composed_gauge_homogeneous
+#print axioms BfgsVerification.RadialPower.composed_gauge_convex
+#print axioms BfgsVerification.RadialPower.mixed_linear_powers_radial
+#print axioms BfgsVerification.AdmissibleBFGSRun.mixed_powers_convergence
+#print axioms BfgsVerification.AdmissibleBFGSRun.mixed_linear_powers_convergence
+#print axioms BfgsVerification.RadialPower.local_mixed_linear_powers_basin

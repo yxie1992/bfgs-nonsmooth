@@ -1,0 +1,6 @@
+import BfgsVerification.MaxAffineCalculus
+#print axioms BfgsVerification.MaxAffine.Family.branch_hasGradient
+#print axioms BfgsVerification.MaxAffine.Family.active_supports
+#print axioms BfgsVerification.MaxAffine.Family.active_eq_gradient
+#print axioms BfgsVerification.MaxAffine.Family.strict_active_eventuallyEq
+#print axioms BfgsVerification.MaxAffine.Family.strict_active_hasGradient

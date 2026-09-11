@@ -144,7 +144,27 @@ REPORT_FAMILY_TARGETS = {
     "recurrent_relative_interior_verified":
         ("BfgsVerification.recurrentRelativeInterior", "BfgsVerification.RecurrentRelativeInteriorTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS
+REPORT_STRUCTURE_TARGETS = {
+    "smooth_plq_basin_verified":
+        ("BfgsVerification.smoothPLQBasin", "BfgsVerification.SmoothPLQBasinTarget"),
+    "maxAffineThreshold_verified":
+        ("BfgsVerification.maxAffineThreshold", "BfgsVerification.MaxAffineThresholdTarget"),
+    "mixedLinearPowers_verified":
+        ("BfgsVerification.mixedLinearPowers", "BfgsVerification.MixedLinearPowersTarget"),
+    "recurrentLowRank_verified":
+        ("BfgsVerification.recurrentLowRank", "BfgsVerification.RecurrentLowRankTarget"),
+    "relativeInteriorClass_verified":
+        ("BfgsVerification.relativeInteriorClass", "BfgsVerification.RelativeInteriorClassTarget"),
+    "parabolicPruning_verified":
+        ("BfgsVerification.parabolicPruning", "BfgsVerification.ParabolicPruningTarget"),
+    "parabolicPrintedField_verified":
+        ("BfgsVerification.parabolicPrintedField", "BfgsVerification.ParabolicPrintedFieldTarget"),
+    "polyhedralBasin_verified":
+        ("BfgsVerification.polyhedralBasin", "BfgsVerification.PolyhedralBasinTarget"),
+    "fivePieceObstruction_verified":
+        ("BfgsVerification.fivePieceObstruction", "BfgsVerification.FivePieceObstructionTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -401,6 +421,7 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
+                ("BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full", "Continuous finite gradient data, affine independence and positive base weights; the actual finite-C1-max subdifferential bridge remains a separate A application obligation"),
                 ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; discharged for the actual quadratic-gauge family in quadraticGaugeRates"),
                 ("BfgsVerification.linearCorrectionRate", "Actual linear cumulative reference-correction budget; derived for centered smooth-plus-sublinear objectives"),
                 ("BfgsVerification.linearImageLifting", "Explicit source premise: the projected actual run converges; full-space convergence and metric fiber selection are derived"),
@@ -421,7 +442,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "Remaining F/R applications, Q explicit scaling/ordered-envelope bookkeeping, H.7.4 and H.8 class specializations, remaining G interpretations, C/U/A, D/L, and synthesis; see REPORT_STATUS.json",
+            "Remaining F residual/matrix/line-search constructions, R branch/spectral cases and interpretive details, G interpretations, C/U/A, D/L, cross-referenced examples and synthesis; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -430,7 +451,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_FAMILY_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_STRUCTURE_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

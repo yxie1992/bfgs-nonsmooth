@@ -1,0 +1,31 @@
+'BfgsVerification.Parabolic.Example.strict_armijo' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.Parabolic.Example.strict_weak_wolfe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.Parabolic.Example.printed_strict_acceptance' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BfgsVerification.Parabolic.Example.pair_values_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+@BfgsVerification.Parabolic.Example.printed_strict_acceptance : ∀ {u ε c₁ c₂ : ℝ},
+  0 < ε →
+    ε < 6 * u ^ 2 →
+      c₁ < 2 / 3 →
+        0 < c₂ →
+          c₁ *
+                BfgsVerification.TransportedCertificate.pairDecrease (BfgsVerification.Parabolic.Example.oldPoint u ε)
+                  (BfgsVerification.Parabolic.Example.newPoint u (1 / 2) ε)
+                  (BfgsVerification.Parabolic.Example.oldGradient u) <
+              BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.oldPoint u ε) -
+                BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.newPoint u (1 / 2) ε) ∧
+            c₂ *
+                BfgsVerification.dot (BfgsVerification.Parabolic.Example.oldGradient u)
+                  (BfgsVerification.TransportedCertificate.pairStep (BfgsVerification.Parabolic.Example.oldPoint u ε)
+                    (BfgsVerification.Parabolic.Example.newPoint u (1 / 2) ε)) <
+              BfgsVerification.dot (BfgsVerification.Parabolic.Example.newGradient u)
+                (BfgsVerification.TransportedCertificate.pairStep (BfgsVerification.Parabolic.Example.oldPoint u ε)
+                  (BfgsVerification.Parabolic.Example.newPoint u (1 / 2) ε))
+BfgsVerification.Parabolic.Example.pair_values_tendsto : ∀ (u ρ : ℝ),
+  Filter.Tendsto
+      (fun ε => BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.oldPoint u ε))
+      (nhdsWithin 0 (Set.Ioi 0)) (nhds (3 * u ^ 2)) ∧
+    Filter.Tendsto
+      (fun ε => BfgsVerification.Parabolic.Example.objective (BfgsVerification.Parabolic.Example.newPoint u ρ ε))
+      (nhdsWithin 0 (Set.Ioi 0)) (nhds (3 * u ^ 2))

@@ -302,3 +302,38 @@ Entire-report verification remains false. Remaining F/R applications, G
 interpretations, C/U/A, D/L constructions and final synthesis/evidence coverage
 remain explicit obligations. Next-tranche drafts live only under audit/scratch
 and are excluded from this release manifest until fully integrated and audited.
+
+## Sixth milestone: finite structural families and source closure
+
+The pinned full build and compiled-environment audit passed for **1,445 explicit
+and 2,014 total theorem declarations**, with all **61 exact targets** inhabited
+and only propext, Classical.choice and Quot.sound in transitive dependencies.
+The exact 177 source hashes match the audited bytes. Actual logs are
+`audit/report_structures_check.log`, `audit/build.log`, `audit/axioms.log`;
+statement scope is reviewed in `audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md`.
+
+Q's original-family theorem and every internally retained source construction
+are now mapped, including literal ordered pruning, printed scale and strict
+acceptance identities. H's internal H.7.4/class/energy statements are now proved;
+its cited earlier three-gradient construction and external two-piece termination
+result remain cross-references to reconcile. The rank-at-least-three open
+question remains classified as a conjectural gap, not as a theorem.
+
+F's actual max-affine active reduction, literal extended-real threshold and
+tail basin are proved, as is the actual coercive five-piece finite line-search
+obstruction in every neighborhood of its unique minimizer. R's arbitrary mixed
+gauge powers, actual finite polyhedral C1,1 extensions and smooth-plus-PLQ basins
+are proved. Extensions need not be convex off their cells. The proof derives
+one-sided radial matching; the source's stronger full-gradient boundary assertion
+is separately pending. No matrix/iterate convergence or algorithm modification
+was added to any family theorem.
+
+The A barycentric Gram-inverse and local affine-independence/positive-coefficient
+geometry is checked, but its application to actual finite smooth-max subdifferentials
+is still a separate obligation in this frozen release. New scratch proofs do not
+change the verified status until integrated and audited.
+
+Entire-report verification remains false. Continue with the explicit matrix-limit
+run, finite-ray-singularity step existence, residual decompositions, R branch and
+spectral boundary cases, A/C/U, D/L and source synthesis. Review and push the
+milestone, then continue these independent proof chains autonomously.

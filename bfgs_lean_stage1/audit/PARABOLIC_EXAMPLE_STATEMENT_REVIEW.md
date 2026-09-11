@@ -76,3 +76,11 @@ axiom log are `parabolic_example_declarations.txt` and
 checked in `PARABOLIC_EXAMPLE_CONTRACTS.lean`, with compiler output in
 `parabolic_example_contracts.log`. Source checks and exact axiom coverage
 are recorded in `parabolic_example_validation.log`.
+
+## Post-fifth-milestone continuation
+
+The printed-field continuity/identification obligation listed above is now
+closed by `ParabolicExampleScale.lean`, with an actual BandCertificate for
+the literal printed field. See `PARABOLIC_EXAMPLE_SCALE_STATEMENT_REVIEW.md`
+and its scoped compiler/axiom logs. This does not change the recorded fifth-
+milestone proof scope; it adds a checked subsequent result.

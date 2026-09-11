@@ -1,0 +1,7 @@
+import BfgsVerification.PoweredGaugeProfiles
+
+#print axioms BfgsVerification.RadialPower.powered_radial_hasDerivAt
+#print axioms BfgsVerification.RadialPower.powered_radial_derivative_hasDerivAt
+#print axioms BfgsVerification.RadialPower.powered_radial_second_derivative_bounded
+#print axioms BfgsVerification.RadialPower.seminorm_homogeneous
+#print axioms BfgsVerification.RadialPower.seminorm_mixed_powers_radial

@@ -1,0 +1,13 @@
+# Five-piece finite line-search obstruction: independent statement review
+
+Reviewed `BfgsVerification/FivePieceObstruction.lean` against the final paragraph of `BFGS_MASTER_REPORT_LaTeX/report/chapters/families.tex`, including the actual derivative helpers in `MaxAffineCalculus.lean`, the definition of the BFGS step, and the unique-minimizer compact-sublevel theorem used for coercivity. No mathematical or quantifier defect was found in the 18 explicit theorems.
+
+The formal family is literally `max(-x, y+z, -y+z, x/4, -z)`, with zero offsets. Global convexity, nonnegativity, value zero at the origin, and uniqueness of that zero are derived from the actual pieces. Compactness of every sublevel follows from finite convexity and the proved unique minimizer, and cocompact divergence proves coercivity; bounded sublevels are not an extra assumption.
+
+For every positive scale `τ`, the starting point is `(-2τ,0,τ)` and the actual inverse metric is `τ I`, proved positive definite. The actual gradient at the start is `(-1,0,0)`. `ray_step` identifies the ray with the starting point plus the full-BFGS step `-α H g`, hence the direction is `(τ,0,0)` with the same unscaled step parameter `α`. At `τ=1` this is exactly the source's initial point, identity matrix, and direction.
+
+The three ray value formulas cover `α≤1`, `1≤α≤6`, and `α≥6`. For `0<α<1`, strict activity proves the actual Fréchet derivative; uniqueness of actual derivatives makes weak Wolfe with `c2=1/2` impossible. On the closed interval `[1,6]`, the two distinct active gradients `(0,1,1)` and `(0,-1,1)` rule out full-space differentiability, including both endpoints. For `α>6`, the actual value formula contradicts Armijo with `c1=1/4`. There is no assumption about differentiability merely along the ray being sufficient.
+
+`no_differentiable_armijo_wolfe` uses the ordinary Armijo and weak-Wolfe inequalities paired with the actual displacement. Its reduction to the scalar inequalities divides only through positive `τ α`. `obstruction_in_every_neighborhood` quantifies over every neighborhood of the minimizer and constructs a positive scale, a point in that neighborhood, the SPD matrix, the initial derivative, and rejection of every positive differentiable trial satisfying both inequalities. There is no hidden restriction on the neighborhood or trial gradient.
+
+The conclusion is a finite failure of finding a differentiable acceptable step, exactly as in the source. The file does not construct or assume an infinite admissible run and makes no matrix-limit or global convergence counterclaim. Compiler/axiom evidence is maintained by the root integration audit; this independent review addresses source semantics and proof dependencies rather than substituting for that audit.

@@ -1,0 +1,16 @@
+@Parabolic.Family.ordered_pruning_specification : ∀ {m : ℕ} (P : Parabolic.Family m),
+  (∀ (x : Vec 2), P.prunedFamily.objective x = P.objective x) ∧
+    StrictMono P.prunedFamily.b ∧
+      StrictMono (P.orderedBreakpoint P.prunedOrder) ∧
+        ∀ (i : { i // ↑i + 1 < P.prunedOrder.count }),
+          let l := P.prunedOrder.index ↑i;
+          let r := P.prunedOrder.index ⟨↑↑i + 1, ⋯⟩;
+          P.ProfileActive l (P.breakpoint l r) ∧
+            P.ProfileActive r (P.breakpoint l r) ∧
+              0 < P.profile l (P.breakpoint l r) ∧
+                P.calibration r - P.calibration l = -(P.a r - P.a l) / (2 * P.profile l (P.breakpoint l r))
+@Parabolic.Family.essential_strict_interval : ∀ {m : ℕ} (P : Parabolic.Family m) {i : Fin m},
+  P.Essential i →
+    ∃ ξ δ, 0 < δ ∧ ∀ ζ ∈ Ioo (ξ - δ) (ξ + δ), ∀ (j : Fin m), P.Canonical j → j ≠ i → P.profile j ζ < P.profile i ζ
+@Parabolic.Family.essential_same_slope_maximal : ∀ {m : ℕ} (P : Parabolic.Family m) {i : Fin m},
+  P.Essential i → ∀ (j : Fin m), P.b j = P.b i → P.a j ≤ P.a i

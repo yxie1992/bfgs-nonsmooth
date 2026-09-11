@@ -1,0 +1,10 @@
+import BfgsVerification.ParabolicExampleScale
+#print axioms BfgsVerification.Parabolic.Example.objective_middle_closed
+#print axioms BfgsVerification.Parabolic.Example.sourceScale_continuousOn
+#print axioms BfgsVerification.Parabolic.Example.calibration_differences
+#print axioms BfgsVerification.Parabolic.Example.sourceNormalization
+#print axioms BfgsVerification.Parabolic.Example.sourceNormalization_pos
+#print axioms BfgsVerification.Parabolic.Example.sourceScale_eq_normalized
+#print axioms BfgsVerification.Parabolic.Example.sourceVector
+#print axioms BfgsVerification.Parabolic.Example.sourceVector_eq_normalized
+#print axioms BfgsVerification.Parabolic.Example.exists_source_bandCertificate

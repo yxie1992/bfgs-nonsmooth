@@ -342,3 +342,31 @@ example : BfgsVerification.AccessibleActiveSeparationTarget := BfgsVerification.
 #check @BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero
 #check @BfgsVerification.ShiftedAbsAccessibility.full_active_tangent_space_eq_bot
 #check @BfgsVerification.ShiftedAbsAccessibility.shifted_all_compact_band_certificates
+
+-- Sixth milestone: literal objective-family and structural source contracts.
+#print BfgsVerification.MaxAffineThresholdTarget
+example : BfgsVerification.MaxAffineThresholdTarget := BfgsVerification.maxAffineThreshold
+#print BfgsVerification.MixedLinearPowersTarget
+example : BfgsVerification.MixedLinearPowersTarget := BfgsVerification.mixedLinearPowers
+#print BfgsVerification.RecurrentLowRankTarget
+example : BfgsVerification.RecurrentLowRankTarget := BfgsVerification.recurrentLowRank
+#print BfgsVerification.RelativeInteriorClassTarget
+example : BfgsVerification.RelativeInteriorClassTarget := BfgsVerification.relativeInteriorClass
+#print BfgsVerification.ParabolicPruningTarget
+example : BfgsVerification.ParabolicPruningTarget := BfgsVerification.parabolicPruning
+#print BfgsVerification.ParabolicPrintedFieldTarget
+example : BfgsVerification.ParabolicPrintedFieldTarget := BfgsVerification.parabolicPrintedField
+#print BfgsVerification.PolyhedralBasinTarget
+example : BfgsVerification.PolyhedralBasinTarget := BfgsVerification.polyhedralBasin
+#print BfgsVerification.FivePieceObstructionTarget
+example : BfgsVerification.FivePieceObstructionTarget := BfgsVerification.fivePieceObstruction
+#check @BfgsVerification.FivePieceObstruction.objective_coercive
+#check @BfgsVerification.FivePieceObstruction.unique_minimum
+#check @BfgsVerification.FivePieceObstruction.ray_step
+#check @BfgsVerification.MaxAffine.Family.threshold_eq_inactive_infima
+#check @BfgsVerification.MaxAffine.Family.threshold_gt_minimum
+#check @BfgsVerification.MaxAffine.Family.inactive_radius_domination
+#check @BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full
+
+#print BfgsVerification.SmoothPLQBasinTarget
+example : BfgsVerification.SmoothPLQBasinTarget := BfgsVerification.smoothPLQBasin

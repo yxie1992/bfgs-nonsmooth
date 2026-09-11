@@ -1,0 +1,12 @@
+import BfgsVerification.ConvexCellRadial
+
+#print axioms BfgsVerification.ConvexCellRadial.inward_mem
+#print axioms BfgsVerification.ConvexCellRadial.radial_derivative_eq
+#print axioms BfgsVerification.ConvexCellRadial.finite_incident_cells_inward
+#print axioms BfgsVerification.ConvexCellRadial.incident_neighborhood
+#print axioms BfgsVerification.ConvexCellRadial.local_cells_inward
+#print axioms BfgsVerification.ConvexCellRadial.local_cells_basin
+#print axioms BfgsVerification.ConvexCellRadial.polyhedron
+#print axioms BfgsVerification.ConvexCellRadial.polyhedron_closed
+#print axioms BfgsVerification.ConvexCellRadial.polyhedron_convex
+#print axioms BfgsVerification.ConvexCellRadial.finite_polyhedral_basin

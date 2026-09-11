@@ -1,0 +1,9 @@
+import BfgsVerification.QuadraticCellRadial
+
+#print axioms BfgsVerification.ConvexCellRadial.contDiffOn_two_locallyC11
+#print axioms BfgsVerification.ConvexCellRadial.quadratic
+#print axioms BfgsVerification.ConvexCellRadial.quadratic_contDiff
+#print axioms BfgsVerification.ConvexCellRadial.quadratic_locallyC11
+#print axioms BfgsVerification.ConvexCellRadial.locallyC11_add
+#print axioms BfgsVerification.ConvexCellRadial.piecewise_quadratic_basin
+#print axioms BfgsVerification.ConvexCellRadial.smooth_plus_piecewise_quadratic_basin

@@ -46,3 +46,11 @@ The exact every-run target is transformedGaugeConvergence. Remaining F claims
 are the max-affine basin, residual descriptions, matrix/line-search examples,
 and source-linked powered-gauge classes in R. See
 TRANSFORMED_GAUGE_STATEMENT_REVIEW.md.
+
+Sixth milestone: the actual max-affine local identity, inactive radius and
+extended-real threshold (including attainment, empty regions, strict gap and
+current-tail convergence) are checked in MaxAffineBasin. The literal coercive
+five-piece finite line-search obstruction and its arbitrary-neighborhood scaling
+are checked in FivePieceObstruction. Mixed gauge powers are checked with source
+R. Remaining F obligations are concrete residual decompositions, the exact
+u²+abs(v) infinite matrix-limit example, and finite-ray-singularity step existence.

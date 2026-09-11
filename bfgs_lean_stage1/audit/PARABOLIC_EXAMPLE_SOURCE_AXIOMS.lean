@@ -1,0 +1,8 @@
+import BfgsVerification.ParabolicExampleSourceIdentities
+#print axioms BfgsVerification.Parabolic.Example.strict_armijo
+#print axioms BfgsVerification.Parabolic.Example.strict_weak_wolfe
+#print axioms BfgsVerification.Parabolic.Example.printed_strict_acceptance
+#print axioms BfgsVerification.Parabolic.Example.pair_values_tendsto
+
+#check @BfgsVerification.Parabolic.Example.printed_strict_acceptance
+#check @BfgsVerification.Parabolic.Example.pair_values_tendsto

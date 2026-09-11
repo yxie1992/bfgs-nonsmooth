@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 1,202 explicit
-theorems and 1,675 theorem declarations including generated auxiliaries. All 52
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 1,445 explicit
+theorems and 2,014 theorem declarations including generated auxiliaries. All 61
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_families_check.log`.
+`audit/report_structures_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -58,8 +58,13 @@ its explicit radial-secant separation, F transformed gauges including the invers
 derivative formulas, H.8 relative-interior convergence and metric fibers, and an
 actual-objective correction to G.4. See
 [audit/REPORT_FAMILIES_STATEMENT_REVIEW.md](audit/REPORT_FAMILIES_STATEMENT_REVIEW.md).
-Remaining F/R applications, H.7.4 and source bookkeeping, C/U/A, D/L and synthesis
-remain open.
+The sixth tranche closes Q's literal pruning/printed-scale claims and H's internal
+low-rank/class theorems, and verifies the max-affine threshold, mixed gauge powers,
+finite polyhedral/PLQ basins and the actual five-piece finite line-search obstruction.
+See [audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md](audit/REPORT_STRUCTURES_STATEMENT_REVIEW.md).
+A barycentric geometry is audited with its objective application still explicitly
+conditional in this release. Remaining F/R concrete applications, C/U/A, D/L,
+source cross-references and synthesis remain open.
 
 The original matrix growth results use `FullBFGSRun`, the algebraic specification
 of the unmodified full matrix update, with bounded gradients and a positive fixed

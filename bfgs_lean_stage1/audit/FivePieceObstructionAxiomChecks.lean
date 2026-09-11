@@ -1,0 +1,19 @@
+import BfgsVerification.FivePieceObstruction
+#print axioms BfgsVerification.FivePieceObstruction.objective_eq_of_dominates
+#print axioms BfgsVerification.FivePieceObstruction.ray_value_before
+#print axioms BfgsVerification.FivePieceObstruction.ray_value_middle
+#print axioms BfgsVerification.FivePieceObstruction.ray_value_after
+#print axioms BfgsVerification.FivePieceObstruction.ray_gradient_before
+#print axioms BfgsVerification.FivePieceObstruction.ray_not_differentiable_middle
+#print axioms BfgsVerification.FivePieceObstruction.no_acceptable_step
+#print axioms BfgsVerification.FivePieceObstruction.objective_zero
+#print axioms BfgsVerification.FivePieceObstruction.objective_nonneg
+#print axioms BfgsVerification.FivePieceObstruction.unique_minimum
+#print axioms BfgsVerification.FivePieceObstruction.objective_convex
+#print axioms BfgsVerification.FivePieceObstruction.sublevel_compact
+#print axioms BfgsVerification.FivePieceObstruction.objective_coercive
+#print axioms BfgsVerification.FivePieceObstruction.initialMetric_posDef
+#print axioms BfgsVerification.FivePieceObstruction.ray_step
+#print axioms BfgsVerification.FivePieceObstruction.step_pairings
+#print axioms BfgsVerification.FivePieceObstruction.no_differentiable_armijo_wolfe
+#print axioms BfgsVerification.FivePieceObstruction.obstruction_in_every_neighborhood

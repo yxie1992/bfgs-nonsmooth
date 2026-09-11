@@ -1,0 +1,26 @@
+import BfgsVerification.AffineBarycentricLocal
+
+#print axioms BfgsVerification.AffineBarycentric.gram
+#print axioms BfgsVerification.AffineBarycentric.leftInverse
+#print axioms BfgsVerification.AffineBarycentric.coefficients
+#print axioms BfgsVerification.AffineBarycentric.gram_posDef
+#print axioms BfgsVerification.AffineBarycentric.leftInverse_mul
+#print axioms BfgsVerification.AffineBarycentric.injective_of_gram_det_ne_zero
+#print axioms BfgsVerification.AffineBarycentric.solution_eq_coefficients
+#print axioms BfgsVerification.AffineBarycentric.gram_continuous
+#print axioms BfgsVerification.AffineBarycentric.coefficients_continuousAt
+#print axioms BfgsVerification.AffineBarycentric.eventually_full_column_rank
+#print axioms BfgsVerification.AffineBarycentric.positive_solutions_eventually
+#print axioms BfgsVerification.AffineBarycentric.augmented
+#print axioms BfgsVerification.AffineBarycentric.affineTarget
+#print axioms BfgsVerification.AffineBarycentric.augmented_mulVec_zero_row
+#print axioms BfgsVerification.AffineBarycentric.augmented_mulVec_succ_row
+#print axioms BfgsVerification.AffineBarycentric.augmented_mulVec_eq_zero_iff
+#print axioms BfgsVerification.AffineBarycentric.augmented_equation_iff
+#print axioms BfgsVerification.AffineBarycentric.weightedVSub_eq_sum_of_sum_zero
+#print axioms BfgsVerification.AffineBarycentric.affineIndependent_iff_augmented_injective
+#print axioms BfgsVerification.AffineBarycentric.zero_mem_convexHull_of_positive_augmented_solution
+#print axioms BfgsVerification.AffineBarycentric.augmented_continuous
+#print axioms BfgsVerification.AffineBarycentric.affine_zero_subset_coefficients
+#print axioms BfgsVerification.AffineBarycentric.augmented_continuousAt
+#print axioms BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full

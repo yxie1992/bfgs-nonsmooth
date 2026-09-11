@@ -111,13 +111,13 @@ all 22 axiom closures use only the three standard axioms.
 
 ## Sections 7–8 claim register and remaining obligations
 
-9. Exact projected full-BFGS update on a gradient subspace; q,d,t and line-search
+9. **Checked.** Exact projected full-BFGS update on a gradient subspace; q,d,t and line-search
    inequalities are preserved. All later steps lie in the fixed image `H_K S`.
    Derive the actual lift `H_K U (Uᵀ H_K U)⁻¹`, and the source limit formula.
    The projected Hessian is `(Uᵀ H_k U)⁻¹`, not `Uᵀ B_k U`.
 10. **Checked.** Homogeneous endpoint pairings tend to zero. Finitely many independent slope
     pairs in dimension two give uniform inverse bounds at transition endpoints.
-11. **Partially checked.** Unchanged gradients are excluded generally. A direct
+11. **Checked.** Unchanged gradients are excluded generally. A direct
     determinant argument excludes all dependent transitions when a common
     negative objective direction exists. General exclusion of positively proportional
     active transitions on the positive
@@ -126,12 +126,11 @@ all 22 axiom closures use only the three standard axioms.
 12. **Checked.** H.C: planar unbounded-below finite maxima have exactly the two source branches
     (iterate→zero, value↓zero) or (value→−infinity, norm→infinity). The zero limit
     is nonstationary. No directional convergence in the escaping branch.
-13. **Partially checked.** Independent-transition anchors→zero is proved.
-    Remaining general planar finite-value branch:
+13. **Checked.** Independent-transition anchors→zero and the general planar finite-value branch:
     opposite-gradient blocks are collinear, with the explicit uniformly bounded
     interpolation coefficient. Finitely many anchors instead give a fixed-line
     limit. Projection/lifting extends convergence to recurrent span dimension≤2.
-14. Relative-interior slope condition gives coercivity on the effective span and
+14. **Checked.** Relative-interior slope condition gives coercivity on the effective span and
     the explicit metric projection limit in any dimension, independent of
     accepted lengths. Include recurrent-tail version; exclude stationary F=0
     from infinite nonzero-gradient runs.
@@ -159,3 +158,27 @@ current-metric formula and original objective optimality. No global original
 factorization follows merely from recurrent slope membership, and none is used.
 See `audit/H_RELATIVE_INTERIOR_VERIFICATION.md` and the 31-declaration actual
 compiler/axiom logs. General H.7.4 block stitching and rank≤2 are still pending.
+
+
+## H.7.4 and full internal H claim closure — compiled and individually audited
+
+`HomogeneousSourceConsequences.lean` collects 13 new modules, with 66 public
+theorems and four concrete definitions. All 70 transitive axiom closures use
+only the standard three axioms; the actual replay source/logs and exact source
+mapping are documented in `audit/H_LOW_RANK_VERIFICATION.md`.
+
+The general planar finite-value branch now derives actual uniform opposite-block
+control and discharges cofinal- and finite-anchor cases. The arbitrary-dimensional
+extension uses the exact finrank of the actual recurrent gradient span, derives
+an actual restricted tail objective/run, and then constructs its genuinely
+projected full-BFGS run. No original global factorization is inferred from tail
+gradient membership. H.8's class inclusions are now proved through an exact iff
+between relative interior and nonnegative linear zero fibers, with actual
+seminorm/gauge wrappers and stationary-zero exclusion. H.5.3's displayed
+weighted-summability and energy-budget deductions are explicitly exported.
+
+After rereading H.tex in full, all internal retained mathematical assertions have
+formal proofs. Research-source open questions remain open. Historical statements,
+external finite-termination citations, and references to examples constructed
+elsewhere retain their report-wide provenance/cross-module status; this does
+not certify those external claims or the entire report.
