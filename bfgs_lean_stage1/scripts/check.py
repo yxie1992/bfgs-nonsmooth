@@ -292,7 +292,59 @@ REPORT_STRUCTURAL_CLOSURE_TARGETS = {
     "positiveStableOrbitCriterion_verified":
         ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget"),
 }
-ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS
+REPORT_L_FAILURE_TARGETS = {
+    "spatialCanonicalWarning_verified":
+        ("BfgsVerification.spatialCanonicalWarning", "BfgsVerification.SpatialCanonicalWarningTarget"),
+    "spatialQuadraticRadial_verified":
+        ("BfgsVerification.spatialQuadraticRadial", "BfgsVerification.SpatialQuadraticRadialTarget"),
+    "finiteMaxTaylor_verified":
+        ("BfgsVerification.finiteMaxTaylor", "BfgsVerification.FiniteMaxTaylorTarget"),
+    "finiteMaxActualHessian_verified":
+        ("BfgsVerification.finiteMaxActualHessian", "BfgsVerification.FiniteMaxActualHessianTarget"),
+    "lScalarRamp_verified":
+        ("BfgsVerification.lScalarRamp", "BfgsVerification.LScalarRampTarget"),
+    "lScalarDefinition_verified":
+        ("BfgsVerification.lScalarDefinition", "BfgsVerification.LScalarDefinitionTarget"),
+    "lScalarRegularity_verified":
+        ("BfgsVerification.lScalarRegularity", "BfgsVerification.LScalarRegularityTarget"),
+    "lScalarNodes_verified":
+        ("BfgsVerification.lScalarNodes", "BfgsVerification.LScalarNodeTarget"),
+    "lScalarPeaks_verified":
+        ("BfgsVerification.lScalarPeaks", "BfgsVerification.LScalarPeaksTarget"),
+    "lScalarStepDefinition_verified":
+        ("BfgsVerification.lScalarStepDefinition", "BfgsVerification.LScalarStepDefinitionTarget"),
+    "lScalarStepGeometry_verified":
+        ("BfgsVerification.lScalarStepGeometry", "BfgsVerification.LScalarStepGeometryTarget"),
+    "lScalarStepNodes_verified":
+        ("BfgsVerification.lScalarStepNodes", "BfgsVerification.LScalarStepNodeTarget"),
+    "lScalarStepLocal_verified":
+        ("BfgsVerification.lScalarStepLocal", "BfgsVerification.LScalarStepLocalTarget"),
+    "lStepEmbeddingGeometry_verified":
+        ("BfgsVerification.lStepEmbeddingGeometry", "BfgsVerification.LStepEmbeddingGeometryTarget"),
+    "lStepEmbeddingPolyhedral_verified":
+        ("BfgsVerification.lStepEmbeddingPolyhedral", "BfgsVerification.LStepEmbeddingPolyhedralTarget"),
+    "lStepEmbeddingCopies_verified":
+        ("BfgsVerification.lStepEmbeddingCopies", "BfgsVerification.LStepEmbeddingCopiesTarget"),
+    "LEmbedding_regularity_verified":
+        ("BfgsVerification.LEmbedding.regularity", "BfgsVerification.LEmbedding.RegularityTarget"),
+    "LEmbedding_origin_verified":
+        ("BfgsVerification.LEmbedding.origin", "BfgsVerification.LEmbedding.OriginTarget"),
+    "LEmbedding_hessian_verified":
+        ("BfgsVerification.LEmbedding.hessian", "BfgsVerification.LEmbedding.HessianTarget"),
+    "LEmbedding_localModel_verified":
+        ("BfgsVerification.LEmbedding.localModel", "BfgsVerification.LEmbedding.LocalModelTarget"),
+    "LActualCopies_smoothFailure_verified":
+        ("BfgsVerification.LActualCopies.smoothFailure", "BfgsVerification.LActualCopies.SmoothFailureTarget"),
+    "LActualCopies_stepFailure_verified":
+        ("BfgsVerification.LActualCopies.stepFailure", "BfgsVerification.LActualCopies.StepFailureTarget"),
+    "LGlobalTargets_globalFailure_verified":
+        ("BfgsVerification.LGlobalTargets.globalFailure", "BfgsVerification.LGlobalTargets.GlobalFailureTarget"),
+    "LGlobalTargets_spectrum_verified":
+        ("BfgsVerification.LGlobalTargets.spectrum", "BfgsVerification.LGlobalTargets.SpectrumTarget"),
+    "LGlobalTargets_localInverse_verified":
+        ("BfgsVerification.LGlobalTargets.localInverse", "BfgsVerification.LGlobalTargets.LocalInverseTarget"),
+}
+ALL_TARGETS = TARGETS | OBJECTIVE_TARGETS | FOUNDATION_TARGETS | REPORT_CORE_TARGETS | REPORT_GEOMETRY_TARGETS | REPORT_CONTINUATION_TARGETS | REPORT_APPLICATION_TARGETS | REPORT_FAMILY_TARGETS | REPORT_STRUCTURE_TARGETS | REPORT_ANALYTIC_TARGETS | REPORT_DYNAMICS_TARGETS | REPORT_CONSTRUCTION_TARGETS | REPORT_EMBEDDING_TARGETS | REPORT_STRUCTURAL_CLOSURE_TARGETS | REPORT_L_FAILURE_TARGETS
 
 
 def theorem_names(code: str) -> list[str]:
@@ -549,9 +601,9 @@ def main() -> int:
         status["conditional_results"] += [
             {"theorem": name, "verified": name in inventory, "condition": condition}
             for name, condition in [
-                ("BfgsVerification.LocalStableOrbit.stableOrbit", "Actual strict derivative with contractive stable block and inverse-contracting unstable block; constructs a forward orbit without assuming one. Source-specific L spectral application remains pending."),
-                ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "Same actual derivative/contraction hypotheses plus a positive stable functional direction; proves positive initial scale. Later scale preservation needs the actual recurrence."),
-                ("BfgsVerification.LBlockSplitting.positive_orbit_of_block", "Actual strict derivative, literal upper-block equations and two actual characteristic roots with stated ordering; all coordinates and the forward orbit are constructed. Actual L spectrum/global-run application remains pending."),
+                ("BfgsVerification.LocalStableOrbit.stableOrbit", "Actual strict derivative with contractive stable block and inverse-contracting unstable block; constructs a forward orbit without assuming one. The actual L spectral application and source orbit are now derived in LReturnStableOrbit/LGlobalFailure."),
+                ("BfgsVerification.LocalStableOrbit.positiveStableOrbit", "Same actual derivative/contraction hypotheses plus a positive stable functional direction; proves positive initial scale. Actual L positive scale preservation is now derived from its return recurrence in source_oracle_orbit."),
+                ("BfgsVerification.LBlockSplitting.positive_orbit_of_block", "Actual strict derivative, literal upper-block equations and two actual characteristic roots with stated ordering; all coordinates and the forward orbit are constructed. The actual L spectrum and global-run application are now discharged in LGlobalTargets."),
                 ("BfgsVerification.SeedEmbedding.fromMetric_exact", "Conditional translated/scaled objective value and derivative interface; every field is discharged for the actual D objective in DEmbedding.actualOracleData and embeddingFailure"),
                 ("BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full", "Continuous finite gradient data, affine independence and positive base weights; the actual finite-C1-max subdifferential bridge and original-family application are now discharged in localAffineCorrectness"),
                 ("BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound", "Actual pointwise correction bounded by C times next objective gap; discharged for the actual quadratic-gauge family in quadraticGaugeRates"),
@@ -574,7 +626,7 @@ def main() -> int:
         status["euclidean_operator_norm_bridge_verified"] = "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq" in inventory
         status["arbitrary_subspace_basis_bridge_verified"] = "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace" in inventory
         status["outside_verified_scope"] = [
-            "A semialgebraic critical values and rank-loss source closure; C stronger uniform transport and higher-dimensional partial/warning assertions; L actual spectral/global-run application, smooth-manifold regularity and local embeddings; remaining family/source/synthesis/evidence reconciliation. A compact affine gap, C finite-max/quadratic applications and arbitrary rectangular nuclear families are now checked; see REPORT_STATUS.json",
+            "A general semialgebraic projection/path/critical-value closure and rank-loss spectrum; C stronger uniform transport and higher-dimensional partial assertions; L fixed identity initialization and smooth-manifold/tangency; final family/source/synthesis/evidence reconciliation. Actual L spectrum, global failure and both fixed-SPD local-copy failures, plus the literal C spatial warning, are now checked; see REPORT_STATUS.json",
             "Unconditional optimal-value convergence for arbitrary finite convex nonsmooth objectives",
             "Existence of admissible steps on every search ray",
         ]
@@ -583,7 +635,7 @@ def main() -> int:
         complete = all(status[flag] for flag in ALL_TARGETS)
         matrix_complete = all(status[flag] for flag in TARGETS)
         objective_complete = matrix_complete and all(status[flag] for flag in OBJECTIVE_TARGETS)
-        status["status"] = ("MODULE_M_AND_REPORT_STRUCTURAL_CLOSURE_TARGETS_VERIFIED" if complete
+        status["status"] = ("MODULE_M_AND_REPORT_L_FAILURE_TARGETS_VERIFIED" if complete
                             else "MODULE_M_OBJECTIVE_AND_MATRIX_GROWTH_VERIFIED" if objective_complete
                             else "MODULE_M_MATRIX_AND_GROWTH_TARGETS_VERIFIED" if matrix_complete
                             else "STAGED_LEMMAS_CHECKED_MATRIX_TARGET_STILL_OPEN")

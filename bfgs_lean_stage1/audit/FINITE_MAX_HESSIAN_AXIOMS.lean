@@ -1,0 +1,35 @@
+import BfgsVerification.FiniteMaxHessianTargets
+set_option pp.all true
+set_option pp.universes true
+#check BfgsVerification.FiniteMaxHessian.active_derivative_eq
+#print axioms BfgsVerification.FiniteMaxHessian.active_derivative_eq
+#check BfgsVerification.FiniteMaxHessian.abs_dot_le_relative
+#print axioms BfgsVerification.FiniteMaxHessian.abs_dot_le_relative
+#check BfgsVerification.FiniteMaxHessian.gradient_increment_bound
+#print axioms BfgsVerification.FiniteMaxHessian.gradient_increment_bound
+#check BfgsVerification.FiniteMaxHessian.second_upper_of_increment
+#print axioms BfgsVerification.FiniteMaxHessian.second_upper_of_increment
+#check BfgsVerification.FiniteMaxHessian.second_lower_of_increment
+#print axioms BfgsVerification.FiniteMaxHessian.second_lower_of_increment
+#check BfgsVerification.FiniteMaxHessian.actual_second_eq
+#print axioms BfgsVerification.FiniteMaxHessian.actual_second_eq
+#check BfgsVerification.FiniteMaxHessian.second_symmetric
+#print axioms BfgsVerification.FiniteMaxHessian.second_symmetric
+#check BfgsVerification.FiniteMaxHessian.finiteMax_second_upper
+#print axioms BfgsVerification.FiniteMaxHessian.finiteMax_second_upper
+#check BfgsVerification.FiniteMaxHessian.stronglyConvex_second_lower
+#print axioms BfgsVerification.FiniteMaxHessian.stronglyConvex_second_lower
+#check BfgsVerification.FiniteMaxHessian.finiteMax_actual_hessian_bounds
+#print axioms BfgsVerification.FiniteMaxHessian.finiteMax_actual_hessian_bounds
+#check BfgsVerification.FiniteMaxHessian.branch_upper_taylor
+#print axioms BfgsVerification.FiniteMaxHessian.branch_upper_taylor
+#check BfgsVerification.FiniteMaxHessian.finiteMax_local_upper_taylor
+#print axioms BfgsVerification.FiniteMaxHessian.finiteMax_local_upper_taylor
+#check BfgsVerification.FiniteMaxTaylorTarget
+#print axioms BfgsVerification.FiniteMaxTaylorTarget
+#check BfgsVerification.finiteMaxTaylor
+#print axioms BfgsVerification.finiteMaxTaylor
+#check BfgsVerification.FiniteMaxActualHessianTarget
+#print axioms BfgsVerification.FiniteMaxActualHessianTarget
+#check BfgsVerification.finiteMaxActualHessian
+#print axioms BfgsVerification.finiteMaxActualHessian

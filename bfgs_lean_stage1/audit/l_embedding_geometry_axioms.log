@@ -1,0 +1,335 @@
+BfgsVerification.LEmbedding.mu : ℝ
+'BfgsVerification.LEmbedding.mu' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.center : BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.slope (i : Fin 3) : BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.slope' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.parameter (i : Fin 3) : ℝ
+'BfgsVerification.LEmbedding.parameter' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch : Fin 4 → BfgsVerification.Vec 2 → ℝ
+'BfgsVerification.LEmbedding.residualBranch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residual (x : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.LEmbedding.residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch (i : Fin 4) (x : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.LEmbedding.branch' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective (x : BfgsVerification.Vec 2) : ℝ
+'BfgsVerification.LEmbedding.objective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.mu_pos : 0 < BfgsVerification.LEmbedding.mu
+'BfgsVerification.LEmbedding.mu_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.center_sqNorm : BfgsVerification.sqNorm BfgsVerification.LEmbedding.center = 1028
+'BfgsVerification.LEmbedding.center_sqNorm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.slope_first : BfgsVerification.LEmbedding.slope 0 = ![2047 / 2048, 1 / 128]
+'BfgsVerification.LEmbedding.slope_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.slope_second : BfgsVerification.LEmbedding.slope 1 = ![-2049 / 2048, -15 / 128]
+'BfgsVerification.LEmbedding.slope_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.slope_third :
+  BfgsVerification.LEmbedding.slope 2 =
+    ![BfgsVerification.SeedOrbit.seedC - 1 / 2048, BfgsVerification.SeedOrbit.seedD + 1 / 128]
+'BfgsVerification.LEmbedding.slope_third' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.parameter_first : BfgsVerification.LEmbedding.parameter 0 = 1791 / 1024
+'BfgsVerification.LEmbedding.parameter_first' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.parameter_second : BfgsVerification.LEmbedding.parameter 1 = 1791 / 1024
+'BfgsVerification.LEmbedding.parameter_second' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.parameter_third :
+  BfgsVerification.LEmbedding.parameter 2 =
+    2 * BfgsVerification.SeedOrbit.seedC - 32 * BfgsVerification.SeedOrbit.seedD - 257 / 1024
+'BfgsVerification.LEmbedding.parameter_third' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.parameter_bounds (i : Fin 3) :
+  17 / 10 < BfgsVerification.LEmbedding.parameter i ∧ BfgsVerification.LEmbedding.parameter i < 34
+'BfgsVerification.LEmbedding.parameter_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch_old (i : Fin 3) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.residualBranch i.castSucc x =
+    BfgsVerification.LScalar.phi (BfgsVerification.LEmbedding.parameter i)
+      (BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) x)
+'BfgsVerification.LEmbedding.residualBranch_old' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch_last (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.residualBranch 3 x = x 1
+'BfgsVerification.LEmbedding.residualBranch_last' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch_le (i : Fin 4) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.residualBranch i x ≤ BfgsVerification.LEmbedding.residual x
+'BfgsVerification.LEmbedding.residualBranch_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residual_le {x : BfgsVerification.Vec 2} {a : ℝ}
+  (h : ∀ (i : Fin 4), BfgsVerification.LEmbedding.residualBranch i x ≤ a) : BfgsVerification.LEmbedding.residual x ≤ a
+'BfgsVerification.LEmbedding.residual_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_le (i : Fin 4) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.branch i x ≤ BfgsVerification.LEmbedding.objective x
+'BfgsVerification.LEmbedding.branch_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_le {x : BfgsVerification.Vec 2} {a : ℝ}
+  (h : ∀ (i : Fin 4), BfgsVerification.LEmbedding.branch i x ≤ a) : BfgsVerification.LEmbedding.objective x ≤ a
+'BfgsVerification.LEmbedding.objective_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_eq_max (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.objective x = Finset.univ.sup' ⋯ fun i => BfgsVerification.LEmbedding.branch i x
+'BfgsVerification.LEmbedding.objective_eq_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.ridge_convex (i : Fin 3) :
+  ConvexOn ℝ Set.univ fun x =>
+    BfgsVerification.LScalar.phi (BfgsVerification.LEmbedding.parameter i)
+      (BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) x)
+'BfgsVerification.LEmbedding.ridge_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch_convex (i : Fin 4) :
+  ConvexOn ℝ Set.univ (BfgsVerification.LEmbedding.residualBranch i)
+'BfgsVerification.LEmbedding.residualBranch_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residual_convex : ConvexOn ℝ Set.univ BfgsVerification.LEmbedding.residual
+'BfgsVerification.LEmbedding.residual_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_convex (i : Fin 4) : ConvexOn ℝ Set.univ (BfgsVerification.LEmbedding.branch i)
+'BfgsVerification.LEmbedding.branch_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_convex : ConvexOn ℝ Set.univ BfgsVerification.LEmbedding.objective
+'BfgsVerification.LEmbedding.objective_convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_strongConvex (i : Fin 4) :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ BfgsVerification.LEmbedding.mu
+    (BfgsVerification.LEmbedding.branch i)
+'BfgsVerification.LEmbedding.branch_strongConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_strongConvex :
+  BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ BfgsVerification.LEmbedding.mu
+    BfgsVerification.LEmbedding.objective
+'BfgsVerification.LEmbedding.objective_strongConvex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residual_nonnegative (x : BfgsVerification.Vec 2) :
+  0 ≤ BfgsVerification.LEmbedding.residual x
+'BfgsVerification.LEmbedding.residual_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_lower (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.mu / 2 * BfgsVerification.sqNorm x ≤ BfgsVerification.LEmbedding.objective x
+'BfgsVerification.LEmbedding.objective_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch_zero (i : Fin 4) : BfgsVerification.LEmbedding.residualBranch i 0 = 0
+'BfgsVerification.LEmbedding.residualBranch_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residual_zero : BfgsVerification.LEmbedding.residual 0 = 0
+'BfgsVerification.LEmbedding.residual_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_zero : BfgsVerification.LEmbedding.objective 0 = 0
+'BfgsVerification.LEmbedding.objective_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_nonnegative (x : BfgsVerification.Vec 2) :
+  0 ≤ BfgsVerification.LEmbedding.objective x
+'BfgsVerification.LEmbedding.objective_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_unique_zero {x : BfgsVerification.Vec 2}
+  (hx : BfgsVerification.LEmbedding.objective x = 0) : x = 0
+'BfgsVerification.LEmbedding.objective_unique_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_sublevels_compact (a : ℝ) :
+  IsCompact {x | BfgsVerification.LEmbedding.objective x ≤ a}
+'BfgsVerification.LEmbedding.objective_sublevels_compact' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.scalar_derivative_lipschitz {b : ℝ} (hl : 17 / 10 ≤ b) (hr : b ≤ 34) :
+  LipschitzWith ⟨768 / b, ⋯⟩ (BfgsVerification.LScalar.phiFirst b)
+'BfgsVerification.LEmbedding.scalar_derivative_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.ridgeGradient (i : Fin 3) (x : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.ridgeGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualGradient : Fin 4 → BfgsVerification.Vec 2 → BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.residualGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branchGradient (i : Fin 4) (x : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.branchGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.ridge_hasGradient (i : Fin 3) (x : BfgsVerification.Vec 2) :
+  HasFDerivAt
+    (fun z =>
+      BfgsVerification.LScalar.phi (BfgsVerification.LEmbedding.parameter i)
+        (BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) z))
+    (BfgsVerification.gradientFunctional (BfgsVerification.LEmbedding.ridgeGradient i x)) x
+'BfgsVerification.LEmbedding.ridge_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residual_hasGradient (i : Fin 4) (x : BfgsVerification.Vec 2) :
+  HasFDerivAt (BfgsVerification.LEmbedding.residualBranch i)
+    (BfgsVerification.gradientFunctional (BfgsVerification.LEmbedding.residualGradient i x)) x
+'BfgsVerification.LEmbedding.residual_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_hasGradient (i : Fin 4) (x : BfgsVerification.Vec 2) :
+  HasFDerivAt (BfgsVerification.LEmbedding.branch i)
+    (BfgsVerification.gradientFunctional (BfgsVerification.LEmbedding.branchGradient i x)) x
+'BfgsVerification.LEmbedding.branch_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.ridge_contDiff (i : Fin 3) :
+  ContDiff ℝ 1 fun x =>
+    BfgsVerification.LScalar.phi (BfgsVerification.LEmbedding.parameter i)
+      (BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) x)
+'BfgsVerification.LEmbedding.ridge_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualBranch_contDiff (i : Fin 4) :
+  ContDiff ℝ 1 (BfgsVerification.LEmbedding.residualBranch i)
+'BfgsVerification.LEmbedding.residualBranch_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_contDiff (i : Fin 4) : ContDiff ℝ 1 (BfgsVerification.LEmbedding.branch i)
+'BfgsVerification.LEmbedding.branch_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.residualGradient_zero (i : Fin 3) :
+  BfgsVerification.LEmbedding.residualGradient i.castSucc 0 = 0
+'BfgsVerification.LEmbedding.residualGradient_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branchGradient_zero (i : Fin 3) :
+  BfgsVerification.LEmbedding.branchGradient i.castSucc 0 = 0
+'BfgsVerification.LEmbedding.branchGradient_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_not_differentiable_zero :
+  ¬DifferentiableAt ℝ BfgsVerification.LEmbedding.objective 0
+'BfgsVerification.LEmbedding.objective_not_differentiable_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LEmbedding.slope_third_sqNorm_bound :
+  BfgsVerification.sqNorm (BfgsVerification.LEmbedding.slope 2) < 57 / 50
+'BfgsVerification.LEmbedding.slope_third_sqNorm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.parameter_third_gt : 33 < BfgsVerification.LEmbedding.parameter 2
+'BfgsVerification.LEmbedding.parameter_third_gt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.gradientBound (i : Fin 3) : ℝ
+'BfgsVerification.LEmbedding.gradientBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.gradientBound_pos (i : Fin 3) : 0 < BfgsVerification.LEmbedding.gradientBound i
+'BfgsVerification.LEmbedding.gradientBound_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.gradientBound_source (i : Fin 3) :
+  BfgsVerification.LEmbedding.gradientBound i < ![439, 446, 27] i
+'BfgsVerification.LEmbedding.gradientBound_source' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.gradientBound_le_512 (i : Fin 3) : BfgsVerification.LEmbedding.gradientBound i ≤ 512
+'BfgsVerification.LEmbedding.gradientBound_le_512' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.ridge_gradient_bound (i : Fin 3) (x y : BfgsVerification.Vec 2) :
+  BfgsVerification.sqNorm
+      (BfgsVerification.LEmbedding.ridgeGradient i x - BfgsVerification.LEmbedding.ridgeGradient i y) ≤
+    (768 / BfgsVerification.LEmbedding.parameter i * BfgsVerification.sqNorm (BfgsVerification.LEmbedding.slope i)) ^
+        2 *
+      BfgsVerification.sqNorm (x - y)
+'BfgsVerification.LEmbedding.ridge_gradient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.add_scalar_sqNorm_bound {n : ℕ} {v w : BfgsVerification.Vec n} {a K : ℝ} (ha : 0 ≤ a)
+  (hK : 0 ≤ K) (hw : BfgsVerification.sqNorm w ≤ K ^ 2 * BfgsVerification.sqNorm v) :
+  BfgsVerification.sqNorm (a • v + w) ≤ (a + K) ^ 2 * BfgsVerification.sqNorm v
+'BfgsVerification.LEmbedding.add_scalar_sqNorm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_old_gradient_bound (i : Fin 3) (x y : BfgsVerification.Vec 2) :
+  BfgsVerification.sqNorm
+      (BfgsVerification.LEmbedding.branchGradient i.castSucc x -
+        BfgsVerification.LEmbedding.branchGradient i.castSucc y) ≤
+    BfgsVerification.LEmbedding.gradientBound i ^ 2 * BfgsVerification.sqNorm (x - y)
+'BfgsVerification.LEmbedding.branch_old_gradient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_gradient_bound (i : Fin 4) (x y : BfgsVerification.Vec 2) :
+  BfgsVerification.sqNorm
+      (BfgsVerification.LEmbedding.branchGradient i x - BfgsVerification.LEmbedding.branchGradient i y) ≤
+    512 ^ 2 * BfgsVerification.sqNorm (x - y)
+'BfgsVerification.LEmbedding.branch_gradient_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.copyCenter (n : ℕ) : BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.copyCenter' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.copyPoint (n : ℕ) (y : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.LEmbedding.copyPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.offset : ℝ
+'BfgsVerification.LEmbedding.offset' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.localDomain : Set (BfgsVerification.Vec 2)
+'BfgsVerification.LEmbedding.localDomain' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.localDomain_open : IsOpen BfgsVerification.LEmbedding.localDomain
+'BfgsVerification.LEmbedding.localDomain_open' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.zero_mem_localDomain : 0 ∈ BfgsVerification.LEmbedding.localDomain
+'BfgsVerification.LEmbedding.zero_mem_localDomain' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.localDomain_nhds : BfgsVerification.LEmbedding.localDomain ∈ nhds 0
+'BfgsVerification.LEmbedding.localDomain_nhds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.copy_argument (n : ℕ) (i : Fin 3) (y : BfgsVerification.Vec 2) :
+  BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) (BfgsVerification.LEmbedding.copyPoint n y) =
+    BfgsVerification.LEmbedding.parameter i * BfgsVerification.LScalarGeometric.scale n +
+      BfgsVerification.LScalarGeometric.scale n * BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) y
+'BfgsVerification.LEmbedding.copy_argument' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.scalar_copy (n : ℕ) (i : Fin 3) {y : BfgsVerification.Vec 2}
+  (hy : |BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) y| ≤ 1 / 2) :
+  BfgsVerification.LEmbedding.residualBranch i.castSucc (BfgsVerification.LEmbedding.copyPoint n y) =
+    BfgsVerification.LScalarGeometric.scale n ^ 2 * (1 + BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) y)
+'BfgsVerification.LEmbedding.scalar_copy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.old_residual_copy_positive (n : ℕ) (i : Fin 3) {y : BfgsVerification.Vec 2}
+  (hy : y ∈ BfgsVerification.LEmbedding.localDomain) :
+  0 < BfgsVerification.LEmbedding.residualBranch i.castSucc (BfgsVerification.LEmbedding.copyPoint n y)
+'BfgsVerification.LEmbedding.old_residual_copy_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.last_residual_copy_negative (n : ℕ) {y : BfgsVerification.Vec 2}
+  (hy : y ∈ BfgsVerification.LEmbedding.localDomain) :
+  BfgsVerification.LEmbedding.residualBranch 3 (BfgsVerification.LEmbedding.copyPoint n y) < 0
+'BfgsVerification.LEmbedding.last_residual_copy_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.quadratic_copy (n : ℕ) (i : Fin 3) (y : BfgsVerification.Vec 2) :
+  BfgsVerification.LQuadraticSeed.quadratic BfgsVerification.LEmbedding.mu (BfgsVerification.LEmbedding.copyPoint n y) +
+      BfgsVerification.LScalarGeometric.scale n ^ 2 *
+        (1 + BfgsVerification.dot (BfgsVerification.LEmbedding.slope i) y) =
+    BfgsVerification.LScalarGeometric.scale n ^ 2 *
+      (BfgsVerification.LEmbedding.offset + BfgsVerification.LQuadraticSeed.branch BfgsVerification.LEmbedding.mu i y)
+'BfgsVerification.LEmbedding.quadratic_copy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_copy (n : ℕ) (i : Fin 3) {y : BfgsVerification.Vec 2}
+  (hy : y ∈ BfgsVerification.LEmbedding.localDomain) :
+  BfgsVerification.LEmbedding.branch i.castSucc (BfgsVerification.LEmbedding.copyPoint n y) =
+    BfgsVerification.LScalarGeometric.scale n ^ 2 *
+      (BfgsVerification.LEmbedding.offset + BfgsVerification.LQuadraticSeed.branch BfgsVerification.LEmbedding.mu i y)
+'BfgsVerification.LEmbedding.branch_copy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.seed_branch_le (i : Fin 3) (y : BfgsVerification.Vec 2) :
+  BfgsVerification.LQuadraticSeed.branch BfgsVerification.LEmbedding.mu i y ≤
+    BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu y
+'BfgsVerification.LEmbedding.seed_branch_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.local_model (n : ℕ) {y : BfgsVerification.Vec 2}
+  (hy : y ∈ BfgsVerification.LEmbedding.localDomain) :
+  BfgsVerification.LEmbedding.objective (BfgsVerification.LEmbedding.copyPoint n y) =
+    BfgsVerification.LScalarGeometric.scale n ^ 2 *
+      (BfgsVerification.LEmbedding.offset + BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu y)
+'BfgsVerification.LEmbedding.local_model' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.offset_pos : 0 < BfgsVerification.LEmbedding.offset
+'BfgsVerification.LEmbedding.offset_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.center_value (n : ℕ) :
+  BfgsVerification.LEmbedding.objective (BfgsVerification.LEmbedding.copyCenter n) =
+    BfgsVerification.LScalarGeometric.scale n ^ 2 * BfgsVerification.LEmbedding.offset
+'BfgsVerification.LEmbedding.center_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.center_value_pos (n : ℕ) :
+  0 < BfgsVerification.LEmbedding.objective (BfgsVerification.LEmbedding.copyCenter n)
+'BfgsVerification.LEmbedding.center_value_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.copyCenter_tendsto :
+  Filter.Tendsto BfgsVerification.LEmbedding.copyCenter Filter.atTop (nhds 0)
+'BfgsVerification.LEmbedding.copyCenter_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.copyPoint_tendsto (y : BfgsVerification.Vec 2) :
+  Filter.Tendsto (fun n => BfgsVerification.LEmbedding.copyPoint n y) Filter.atTop (nhds 0)
+'BfgsVerification.LEmbedding.copyPoint_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_isGreatest (x : BfgsVerification.Vec 2) :
+  IsGreatest (Set.range fun i => BfgsVerification.LEmbedding.branch i x) (BfgsVerification.LEmbedding.objective x)
+'BfgsVerification.LEmbedding.objective_isGreatest' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.localFiniteMax (x : BfgsVerification.Vec 2) :
+  BfgsVerification.ConvexSubdifferential.LocalFiniteMax BfgsVerification.LEmbedding.objective
+    BfgsVerification.LEmbedding.branch x
+'BfgsVerification.LEmbedding.localFiniteMax' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.local_upper_taylor {x g : BfgsVerification.Vec 2}
+  (hg : HasFDerivAt BfgsVerification.LEmbedding.objective (BfgsVerification.gradientFunctional g) x) :
+  ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x,
+    BfgsVerification.LEmbedding.objective z ≤
+      BfgsVerification.LEmbedding.objective x + BfgsVerification.dot g (z - x) + 256 * BfgsVerification.sqNorm (z - x)
+'BfgsVerification.LEmbedding.local_upper_taylor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.actual_hessian_bounds {x : BfgsVerification.Vec 2}
+  (hfirst : ∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, DifferentiableAt ℝ BfgsVerification.LEmbedding.objective z)
+  (hsecond : DifferentiableAt ℝ (fderiv ℝ BfgsVerification.LEmbedding.objective) x) :
+  Matrix.IsSymm (BfgsVerification.RadialHessian.matrix BfgsVerification.LEmbedding.objective x) ∧
+    ∀ (v : BfgsVerification.Vec 2),
+      BfgsVerification.LEmbedding.mu * BfgsVerification.sqNorm v ≤
+          BfgsVerification.dot v
+            (Matrix.mulVec (BfgsVerification.RadialHessian.matrix BfgsVerification.LEmbedding.objective x) v) ∧
+        BfgsVerification.dot v
+            (Matrix.mulVec (BfgsVerification.RadialHessian.matrix BfgsVerification.LEmbedding.objective x) v) ≤
+          512 * BfgsVerification.sqNorm v
+'BfgsVerification.LEmbedding.actual_hessian_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_old_actual_hessian_bounds (i : Fin 3) {x : BfgsVerification.Vec 2}
+  (hsecond : DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LEmbedding.branch i.castSucc)) x) :
+  Matrix.IsSymm (BfgsVerification.RadialHessian.matrix (BfgsVerification.LEmbedding.branch i.castSucc) x) ∧
+    ∀ (v : BfgsVerification.Vec 2),
+      BfgsVerification.LEmbedding.mu * BfgsVerification.sqNorm v ≤
+          BfgsVerification.dot v
+            (Matrix.mulVec (BfgsVerification.RadialHessian.matrix (BfgsVerification.LEmbedding.branch i.castSucc) x)
+              v) ∧
+        BfgsVerification.dot v
+            (Matrix.mulVec (BfgsVerification.RadialHessian.matrix (BfgsVerification.LEmbedding.branch i.castSucc) x)
+              v) ≤
+          BfgsVerification.LEmbedding.gradientBound i * BfgsVerification.sqNorm v
+'BfgsVerification.LEmbedding.branch_old_actual_hessian_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LEmbedding.branch_zero (i : Fin 4) : BfgsVerification.LEmbedding.branch i 0 = 0
+'BfgsVerification.LEmbedding.branch_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_nested_max (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LEmbedding.objective x =
+    max (max (BfgsVerification.LEmbedding.branch 0 x) (BfgsVerification.LEmbedding.branch 1 x))
+      (max (BfgsVerification.LEmbedding.branch 2 x) (BfgsVerification.LEmbedding.branch 3 x))
+'BfgsVerification.LEmbedding.objective_nested_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_ray_hasDerivAt_zero (i : Fin 4) (h : BfgsVerification.Vec 2) :
+  HasDerivAt (fun t => BfgsVerification.LEmbedding.branch i (t • h))
+    (BfgsVerification.dot (BfgsVerification.LEmbedding.branchGradient i 0) h) 0
+'BfgsVerification.LEmbedding.branch_ray_hasDerivAt_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.objective_directional_derivative_zero (h : BfgsVerification.Vec 2) :
+  Filter.Tendsto
+    (fun t => (BfgsVerification.LEmbedding.objective (t • h) - BfgsVerification.LEmbedding.objective 0) / t)
+    (nhdsWithin 0 (Set.Ioi 0)) (nhds (max 0 (h 1)))
+'BfgsVerification.LEmbedding.objective_directional_derivative_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LEmbedding.center_nonstationary (n : ℕ) :
+  0 ∉
+    BfgsVerification.ConvexSubdifferential.subdifferential BfgsVerification.LEmbedding.objective
+      (BfgsVerification.LEmbedding.copyCenter n)
+'BfgsVerification.LEmbedding.center_nonstationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.RegularityTarget : Prop
+'BfgsVerification.LEmbedding.RegularityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.regularity : BfgsVerification.LEmbedding.RegularityTarget
+'BfgsVerification.LEmbedding.regularity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.OriginTarget : Prop
+'BfgsVerification.LEmbedding.OriginTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.origin : BfgsVerification.LEmbedding.OriginTarget
+'BfgsVerification.LEmbedding.origin' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.HessianTarget : Prop
+'BfgsVerification.LEmbedding.HessianTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.hessian : BfgsVerification.LEmbedding.HessianTarget
+'BfgsVerification.LEmbedding.hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.LocalModelTarget : Prop
+'BfgsVerification.LEmbedding.LocalModelTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.localModel : BfgsVerification.LEmbedding.LocalModelTarget
+'BfgsVerification.LEmbedding.localModel' depends on axioms: [propext, Classical.choice, Quot.sound]

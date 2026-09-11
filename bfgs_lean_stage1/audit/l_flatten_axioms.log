@@ -1,0 +1,215 @@
+BfgsVerification.LFlatten.Data (μ c₁ c₂ : ℝ) : Type
+'BfgsVerification.LFlatten.Data' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.x {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LFlatten.Data.x' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.H {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  BfgsVerification.Mat 2
+'BfgsVerification.LFlatten.Data.H' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.g {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LFlatten.Data.g' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.alpha {μ c₁ c₂ : ℝ} (_D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) : ℝ
+'BfgsVerification.LFlatten.Data.alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.next_point {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  D.x (k + 1) =
+    BfgsVerification.LNormalizedReturn.scale (D.state (BfgsVerification.SeedOrbit.period k)) •
+      (BfgsVerification.LNormalizedReturn.internal μ (D.state (BfgsVerification.SeedOrbit.period k))
+          (↑(BfgsVerification.SeedOrbit.phase k) + 1)).1
+'BfgsVerification.LFlatten.Data.next_point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.next_metric {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  D.H (k + 1) =
+    BfgsVerification.LNormalizedReturn.scale (D.state (BfgsVerification.SeedOrbit.period k)) •
+      (BfgsVerification.LNormalizedReturn.internal μ (D.state (BfgsVerification.SeedOrbit.period k))
+          (↑(BfgsVerification.SeedOrbit.phase k) + 1)).2
+'BfgsVerification.LFlatten.Data.next_metric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.gradient_eq {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  D.g k =
+    BfgsVerification.LNormalizedOracle.phaseGradient μ (D.state (BfgsVerification.SeedOrbit.period k))
+      (BfgsVerification.SeedOrbit.phase k)
+'BfgsVerification.LFlatten.Data.gradient_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.hasGradient {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  HasFDerivAt (BfgsVerification.LQuadraticSeed.objective μ) (BfgsVerification.gradientFunctional (D.g k)) (D.x k)
+'BfgsVerification.LFlatten.Data.hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.positive_metric {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  Matrix.PosDef (D.H k)
+'BfgsVerification.LFlatten.Data.positive_metric' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.value_positive {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  0 < BfgsVerification.LQuadraticSeed.objective μ (D.x k)
+'BfgsVerification.LFlatten.Data.value_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.gradient_nonzero {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (hμ : 0 ≤ μ)
+  (k : ℕ) : D.g k ≠ 0
+'BfgsVerification.LFlatten.Data.gradient_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.point_step {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  D.x (k + 1) = D.x k + BfgsVerification.bfgsStep (D.H k) (D.g k) (D.alpha k)
+'BfgsVerification.LFlatten.Data.point_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.metric_update {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  D.H (k + 1) =
+    BfgsVerification.inverseBFGS (D.H k) (BfgsVerification.bfgsStep (D.H k) (D.g k) (D.alpha k)) (D.g (k + 1) - D.g k)
+'BfgsVerification.LFlatten.Data.metric_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.alpha_step {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  BfgsVerification.bfgsStep (D.H k) (D.g k) (D.alpha k) = D.alpha k • BfgsVerification.bfgsStep (D.H k) (D.g k) 1
+'BfgsVerification.LFlatten.Data.alpha_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.trial_endpoint {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  D.x (k + 1) = D.x k + D.alpha k • BfgsVerification.bfgsStep (D.H k) (D.g k) 1
+'BfgsVerification.LFlatten.Data.trial_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.accepted_search_conditions {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  (k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.Armijo (BfgsVerification.LQuadraticSeed.objective μ) (D.x k)
+      (BfgsVerification.bfgsStep (D.H k) (D.g k) 1) (D.g k) c₁ (D.alpha k) ∧
+    BfgsVerification.DeterministicLineSearch.Wolfe (BfgsVerification.LQuadraticSeed.objective μ) (D.x k)
+      (BfgsVerification.bfgsStep (D.H k) (D.g k) 1) (D.g k) c₂ (D.alpha k)
+'BfgsVerification.LFlatten.Data.accepted_search_conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.strict_accept {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  BfgsVerification.LQuadraticSeed.objective μ (D.x (k + 1)) <
+      BfgsVerification.LQuadraticSeed.objective μ (D.x k) +
+        c₁ * BfgsVerification.dot (D.g k) (BfgsVerification.bfgsStep (D.H k) (D.g k) (D.alpha k)) ∧
+    c₂ * BfgsVerification.dot (D.g k) (BfgsVerification.bfgsStep (D.H k) (D.g k) (D.alpha k)) <
+      BfgsVerification.dot (D.g (k + 1)) (BfgsVerification.bfgsStep (D.H k) (D.g k) (D.alpha k))
+'BfgsVerification.LFlatten.Data.strict_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.run {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (hμ : 0 ≤ μ)
+  (hc₁ : 0 < c₁) (hc : c₁ < c₂) (hc₂ : c₂ < 1) :
+  BfgsVerification.AdmissibleBFGSRun 2 (BfgsVerification.LQuadraticSeed.objective μ)
+'BfgsVerification.LFlatten.Data.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.actual_search {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric (BfgsVerification.LQuadraticSeed.objective μ) (D.x k) (D.H k) c₁
+      c₂ 5 =
+    (some (D.alpha k), BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.LFlatten.Data.actual_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.all_trial_derivatives {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ)
+  (q : Fin 9) (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  HasFDerivAt (BfgsVerification.LQuadraticSeed.objective μ)
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.LNormalizedOracle.trialGradient μ (D.state (BfgsVerification.SeedOrbit.period k))
+        (BfgsVerification.SeedOrbit.phase k) (BfgsVerification.SeedOrbit.trialLength q)
+        (BfgsVerification.SeedOrbit.trialActive q)))
+    (D.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (D.H k) (D.g k) 1)
+'BfgsVerification.LFlatten.Data.all_trial_derivatives' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.all_trial_values_positive {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  (k : ℕ) (q : Fin 9) (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  0 <
+    BfgsVerification.LQuadraticSeed.objective μ
+      (D.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (D.H k) (D.g k) 1)
+'BfgsVerification.LFlatten.Data.all_trial_values_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.tendsto_finite_choice.{u_1, u_2, u_3} {α : Type u_1} {β : Type u_2} {E : Type u_3} [Finite β]
+  [TopologicalSpace E] {l : Filter α} {f : β → α → E} {b : E} (hf : ∀ (j : β), Filter.Tendsto (f j) l (nhds b))
+  (p : α → β) : Filter.Tendsto (fun k => f (p k) k) l (nhds b)
+'BfgsVerification.LFlatten.tendsto_finite_choice' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.physicalPoint_continuous_seed (μ : ℝ) (j : Fin 3) :
+  ContinuousAt (fun w => BfgsVerification.LNormalizedOracle.physicalPoint μ w j) BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LFlatten.physicalPoint_continuous_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.physicalMetric_continuous_seed (μ : ℝ) (j : Fin 3) :
+  ContinuousAt (fun w => BfgsVerification.LNormalizedOracle.physicalMetric μ w j)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LFlatten.physicalMetric_continuous_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.physicalQuery (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) (q : Fin 9) :
+  BfgsVerification.Vec 2
+'BfgsVerification.LFlatten.physicalQuery' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.physicalQuery_continuous_seed (μ : ℝ) (q : Fin 9) :
+  ContinuousAt (fun w => BfgsVerification.LFlatten.physicalQuery μ w q) BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LFlatten.physicalQuery_continuous_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.point_tendsto {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  (ht : Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed)) :
+  Filter.Tendsto D.x Filter.atTop (nhds 0)
+'BfgsVerification.LFlatten.Data.point_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.metric_tendsto {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  (ht : Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed)) :
+  Filter.Tendsto D.H Filter.atTop (nhds 0)
+'BfgsVerification.LFlatten.Data.metric_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.value_tendsto {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (hμ : 0 ≤ μ)
+  (ht : Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed)) :
+  Filter.Tendsto (fun k => BfgsVerification.LQuadraticSeed.objective μ (D.x k)) Filter.atTop (nhds 0)
+'BfgsVerification.LFlatten.Data.value_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.queries_tendsto {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  (ht : Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed)) (q : ℕ → Fin 9) :
+  Filter.Tendsto
+    (fun k => BfgsVerification.LFlatten.physicalQuery μ (D.state (BfgsVerification.SeedOrbit.period k)) (q k))
+    Filter.atTop (nhds 0)
+'BfgsVerification.LFlatten.Data.queries_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.actual_trial_eq {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (k : ℕ)
+  (q : Fin 9) (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  D.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (D.H k) (D.g k) 1 =
+    BfgsVerification.LFlatten.physicalQuery μ (D.state (BfgsVerification.SeedOrbit.period k)) q
+'BfgsVerification.LFlatten.Data.actual_trial_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.actual_trials_tendsto {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  (ht : Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed)) (q : ℕ → Fin 9)
+  (hq : ∀ (k : ℕ), BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) :
+  Filter.Tendsto
+    (fun k => D.x k + BfgsVerification.SeedOrbit.trialLength (q k) • BfgsVerification.bfgsStep (D.H k) (D.g k) 1)
+    Filter.atTop (nhds 0)
+'BfgsVerification.LFlatten.Data.actual_trials_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.physical_neighborhood (μ : ℝ) (U : Set (BfgsVerification.Vec 2)) (hU : U ∈ nhds 0) :
+  ∃ V,
+    IsOpen V ∧
+      BfgsVerification.LNormalizedReturn.seed ∈ V ∧
+        ∀ w ∈ V,
+          (∀ (j : Fin 3), BfgsVerification.LNormalizedOracle.physicalPoint μ w j ∈ U) ∧
+            ∀ (q : Fin 9), BfgsVerification.LFlatten.physicalQuery μ w q ∈ U
+'BfgsVerification.LFlatten.physical_neighborhood' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.phase_parameters {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (m : ℕ)
+  (j : Fin 3) :
+  D.x (3 * m + ↑j) = BfgsVerification.LNormalizedOracle.physicalPoint μ (D.state m) j ∧
+    D.H (3 * m + ↑j) = BfgsVerification.LNormalizedOracle.physicalMetric μ (D.state m) j ∧
+      D.g (3 * m + ↑j) = BfgsVerification.LNormalizedOracle.phaseGradient μ (D.state m) j ∧
+        D.alpha (3 * m + ↑j) = BfgsVerification.SeedOrbit.length j
+'BfgsVerification.LFlatten.Data.phase_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.whole_run_in_neighborhood {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂)
+  {U : Set (BfgsVerification.Vec 2)} {V : Set BfgsVerification.LNormalizedReturn.State} (hv : ∀ (m : ℕ), D.state m ∈ V)
+  (hV :
+    ∀ w ∈ V,
+      (∀ (j : Fin 3), BfgsVerification.LNormalizedOracle.physicalPoint μ w j ∈ U) ∧
+        ∀ (q : Fin 9), BfgsVerification.LFlatten.physicalQuery μ w q ∈ U) :
+  (∀ (k : ℕ), D.x k ∈ U) ∧
+    ∀ (k : ℕ) (q : Fin 9),
+      BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+        D.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (D.H k) (D.g k) 1 ∈ U
+'BfgsVerification.LFlatten.Data.whole_run_in_neighborhood' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.failure_contract {μ c₁ c₂ : ℝ} (D : BfgsVerification.LFlatten.Data μ c₁ c₂) (hμ : 0 ≤ μ)
+  (hc₁ : 0 < c₁) (hc : c₁ < c₂) (hc₂ : c₂ < 1)
+  (ht : Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed)) :
+  let R := D.run hμ hc₁ hc hc₂;
+  Filter.Tendsto R.x Filter.atTop (nhds 0) ∧
+    Filter.Tendsto R.H Filter.atTop (nhds 0) ∧
+      Filter.Tendsto (fun k => BfgsVerification.LQuadraticSeed.objective μ (R.x k)) Filter.atTop (nhds 0) ∧
+        (∀ (k : ℕ), 0 < BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+          (∀ (k : ℕ),
+              BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <
+                BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+            (∀ (k : ℕ),
+                BfgsVerification.DeterministicLineSearch.fromMetric (BfgsVerification.LQuadraticSeed.objective μ)
+                    (R.x k) (R.H k) c₁ c₂ 5 =
+                  (some (R.α k), BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+              (∀ (k : ℕ) (q : Fin 9),
+                  BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                    DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)
+                      (R.x k +
+                        BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (R.H k) (R.g k) 1)) ∧
+                (∀ (q : ℕ → Fin 9),
+                    (∀ (k : ℕ), BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) →
+                      Filter.Tendsto
+                        (fun k =>
+                          R.x k +
+                            BfgsVerification.SeedOrbit.trialLength (q k) • BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+                        Filter.atTop (nhds 0)) ∧
+                  0 ∉
+                    BfgsVerification.ConvexSubdifferential.subdifferential (BfgsVerification.LQuadraticSeed.objective μ)
+                      0
+'BfgsVerification.LFlatten.Data.failure_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.mk {μ c₁ c₂ : ℝ} (state : ℕ → BfgsVerification.LNormalizedReturn.State)
+  (scale_pos : ∀ (m : ℕ), 0 < BfgsVerification.LNormalizedReturn.scale (state m))
+  (conditions : ∀ (m : ℕ), BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ (state m))
+  (next : ∀ (m : ℕ), state (m + 1) = BfgsVerification.LNormalizedReturn.returnMap μ (state m)) :
+  BfgsVerification.LFlatten.Data μ c₁ c₂
+'BfgsVerification.LFlatten.Data.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.state {μ c₁ c₂ : ℝ} (self : BfgsVerification.LFlatten.Data μ c₁ c₂) :
+  ℕ → BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LFlatten.Data.state' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.scale_pos {μ c₁ c₂ : ℝ} (self : BfgsVerification.LFlatten.Data μ c₁ c₂) (m : ℕ) :
+  0 < BfgsVerification.LNormalizedReturn.scale (self.state m)
+'BfgsVerification.LFlatten.Data.scale_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.conditions {μ c₁ c₂ : ℝ} (self : BfgsVerification.LFlatten.Data μ c₁ c₂) (m : ℕ) :
+  BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ (self.state m)
+'BfgsVerification.LFlatten.Data.conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LFlatten.Data.next {μ c₁ c₂ : ℝ} (self : BfgsVerification.LFlatten.Data μ c₁ c₂) (m : ℕ) :
+  self.state (m + 1) = BfgsVerification.LNormalizedReturn.returnMap μ (self.state m)
+'BfgsVerification.LFlatten.Data.next' depends on axioms: [propext, Classical.choice, Quot.sound]

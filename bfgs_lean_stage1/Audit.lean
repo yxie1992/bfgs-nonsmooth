@@ -592,3 +592,80 @@ example : BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget := BfgsVer
 #print BfgsVerification.LBlockSplitting.BlockForm
 #print BfgsVerification.LBlockSplitting.block_splitting
 #print BfgsVerification.LBlockSplitting.positive_orbit_of_block
+
+/- Twelfth milestone: literal L failures and completed scalar/geometry targets. -/
+#print BfgsVerification.SpatialCanonicalWarningTarget
+example : BfgsVerification.SpatialCanonicalWarningTarget := BfgsVerification.spatialCanonicalWarning
+#print axioms BfgsVerification.spatialCanonicalWarning
+#print BfgsVerification.SpatialQuadraticRadialTarget
+example : BfgsVerification.SpatialQuadraticRadialTarget := BfgsVerification.spatialQuadraticRadial
+#print axioms BfgsVerification.spatialQuadraticRadial
+#print BfgsVerification.FiniteMaxTaylorTarget
+example : BfgsVerification.FiniteMaxTaylorTarget := BfgsVerification.finiteMaxTaylor
+#print axioms BfgsVerification.finiteMaxTaylor
+#print BfgsVerification.FiniteMaxActualHessianTarget
+example : BfgsVerification.FiniteMaxActualHessianTarget := BfgsVerification.finiteMaxActualHessian
+#print axioms BfgsVerification.finiteMaxActualHessian
+#print BfgsVerification.LScalarRampTarget
+example : BfgsVerification.LScalarRampTarget := BfgsVerification.lScalarRamp
+#print axioms BfgsVerification.lScalarRamp
+#print BfgsVerification.LScalarDefinitionTarget
+example : BfgsVerification.LScalarDefinitionTarget := BfgsVerification.lScalarDefinition
+#print axioms BfgsVerification.lScalarDefinition
+#print BfgsVerification.LScalarRegularityTarget
+example : BfgsVerification.LScalarRegularityTarget := BfgsVerification.lScalarRegularity
+#print axioms BfgsVerification.lScalarRegularity
+#print BfgsVerification.LScalarNodeTarget
+example : BfgsVerification.LScalarNodeTarget := BfgsVerification.lScalarNodes
+#print axioms BfgsVerification.lScalarNodes
+#print BfgsVerification.LScalarPeaksTarget
+example : BfgsVerification.LScalarPeaksTarget := BfgsVerification.lScalarPeaks
+#print axioms BfgsVerification.lScalarPeaks
+#print BfgsVerification.LScalarStepDefinitionTarget
+example : BfgsVerification.LScalarStepDefinitionTarget := BfgsVerification.lScalarStepDefinition
+#print axioms BfgsVerification.lScalarStepDefinition
+#print BfgsVerification.LScalarStepGeometryTarget
+example : BfgsVerification.LScalarStepGeometryTarget := BfgsVerification.lScalarStepGeometry
+#print axioms BfgsVerification.lScalarStepGeometry
+#print BfgsVerification.LScalarStepNodeTarget
+example : BfgsVerification.LScalarStepNodeTarget := BfgsVerification.lScalarStepNodes
+#print axioms BfgsVerification.lScalarStepNodes
+#print BfgsVerification.LScalarStepLocalTarget
+example : BfgsVerification.LScalarStepLocalTarget := BfgsVerification.lScalarStepLocal
+#print axioms BfgsVerification.lScalarStepLocal
+#print BfgsVerification.LStepEmbeddingGeometryTarget
+example : BfgsVerification.LStepEmbeddingGeometryTarget := BfgsVerification.lStepEmbeddingGeometry
+#print axioms BfgsVerification.lStepEmbeddingGeometry
+#print BfgsVerification.LStepEmbeddingPolyhedralTarget
+example : BfgsVerification.LStepEmbeddingPolyhedralTarget := BfgsVerification.lStepEmbeddingPolyhedral
+#print axioms BfgsVerification.lStepEmbeddingPolyhedral
+#print BfgsVerification.LStepEmbeddingCopiesTarget
+example : BfgsVerification.LStepEmbeddingCopiesTarget := BfgsVerification.lStepEmbeddingCopies
+#print axioms BfgsVerification.lStepEmbeddingCopies
+#print BfgsVerification.LEmbedding.RegularityTarget
+example : BfgsVerification.LEmbedding.RegularityTarget := BfgsVerification.LEmbedding.regularity
+#print axioms BfgsVerification.LEmbedding.regularity
+#print BfgsVerification.LEmbedding.OriginTarget
+example : BfgsVerification.LEmbedding.OriginTarget := BfgsVerification.LEmbedding.origin
+#print axioms BfgsVerification.LEmbedding.origin
+#print BfgsVerification.LEmbedding.HessianTarget
+example : BfgsVerification.LEmbedding.HessianTarget := BfgsVerification.LEmbedding.hessian
+#print axioms BfgsVerification.LEmbedding.hessian
+#print BfgsVerification.LEmbedding.LocalModelTarget
+example : BfgsVerification.LEmbedding.LocalModelTarget := BfgsVerification.LEmbedding.localModel
+#print axioms BfgsVerification.LEmbedding.localModel
+#print BfgsVerification.LActualCopies.SmoothFailureTarget
+example : BfgsVerification.LActualCopies.SmoothFailureTarget := BfgsVerification.LActualCopies.smoothFailure
+#print axioms BfgsVerification.LActualCopies.smoothFailure
+#print BfgsVerification.LActualCopies.StepFailureTarget
+example : BfgsVerification.LActualCopies.StepFailureTarget := BfgsVerification.LActualCopies.stepFailure
+#print axioms BfgsVerification.LActualCopies.stepFailure
+#print BfgsVerification.LGlobalTargets.GlobalFailureTarget
+example : BfgsVerification.LGlobalTargets.GlobalFailureTarget := BfgsVerification.LGlobalTargets.globalFailure
+#print axioms BfgsVerification.LGlobalTargets.globalFailure
+#print BfgsVerification.LGlobalTargets.SpectrumTarget
+example : BfgsVerification.LGlobalTargets.SpectrumTarget := BfgsVerification.LGlobalTargets.spectrum
+#print axioms BfgsVerification.LGlobalTargets.spectrum
+#print BfgsVerification.LGlobalTargets.LocalInverseTarget
+example : BfgsVerification.LGlobalTargets.LocalInverseTarget := BfgsVerification.LGlobalTargets.localInverse
+#print axioms BfgsVerification.LGlobalTargets.localInverse

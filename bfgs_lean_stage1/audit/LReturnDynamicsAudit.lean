@@ -1,0 +1,302 @@
+import BfgsVerification.LGlobalVerification
+
+#check BfgsVerification.LReturnJets.Jet
+#print axioms BfgsVerification.LReturnJets.Jet
+#check BfgsVerification.LReturnJets.Models
+#print axioms BfgsVerification.LReturnJets.Models
+#check BfgsVerification.LReturnJets.constant
+#print axioms BfgsVerification.LReturnJets.constant
+#check BfgsVerification.LReturnJets.add
+#print axioms BfgsVerification.LReturnJets.add
+#check BfgsVerification.LReturnJets.neg
+#print axioms BfgsVerification.LReturnJets.neg
+#check BfgsVerification.LReturnJets.sub
+#print axioms BfgsVerification.LReturnJets.sub
+#check BfgsVerification.LReturnJets.mul
+#print axioms BfgsVerification.LReturnJets.mul
+#check BfgsVerification.LReturnJets.inv
+#print axioms BfgsVerification.LReturnJets.inv
+#check BfgsVerification.LReturnJets.div
+#print axioms BfgsVerification.LReturnJets.div
+#check BfgsVerification.LReturnJets.models_constant
+#print axioms BfgsVerification.LReturnJets.models_constant
+#check BfgsVerification.LReturnJets.Models.add
+#print axioms BfgsVerification.LReturnJets.Models.add
+#check BfgsVerification.LReturnJets.Models.neg
+#print axioms BfgsVerification.LReturnJets.Models.neg
+#check BfgsVerification.LReturnJets.Models.sub
+#print axioms BfgsVerification.LReturnJets.Models.sub
+#check BfgsVerification.LReturnJets.Models.mul
+#print axioms BfgsVerification.LReturnJets.Models.mul
+#check BfgsVerification.LReturnJets.Models.inv
+#print axioms BfgsVerification.LReturnJets.Models.inv
+#check BfgsVerification.LReturnJets.Models.div
+#print axioms BfgsVerification.LReturnJets.Models.div
+#check BfgsVerification.LReturnJets.JetVec
+#print axioms BfgsVerification.LReturnJets.JetVec
+#check BfgsVerification.LReturnJets.JetMat
+#print axioms BfgsVerification.LReturnJets.JetMat
+#check BfgsVerification.LReturnJets.ModelsVec
+#print axioms BfgsVerification.LReturnJets.ModelsVec
+#check BfgsVerification.LReturnJets.ModelsMat
+#print axioms BfgsVerification.LReturnJets.ModelsMat
+#check BfgsVerification.LReturnJets.vecConstant
+#print axioms BfgsVerification.LReturnJets.vecConstant
+#check BfgsVerification.LReturnJets.matConstant
+#print axioms BfgsVerification.LReturnJets.matConstant
+#check BfgsVerification.LReturnJets.vecSub
+#print axioms BfgsVerification.LReturnJets.vecSub
+#check BfgsVerification.LReturnJets.vecScale
+#print axioms BfgsVerification.LReturnJets.vecScale
+#check BfgsVerification.LReturnJets.matAdd
+#print axioms BfgsVerification.LReturnJets.matAdd
+#check BfgsVerification.LReturnJets.matSub
+#print axioms BfgsVerification.LReturnJets.matSub
+#check BfgsVerification.LReturnJets.matScale
+#print axioms BfgsVerification.LReturnJets.matScale
+#check BfgsVerification.LReturnJets.matMul
+#print axioms BfgsVerification.LReturnJets.matMul
+#check BfgsVerification.LReturnJets.mulVec
+#print axioms BfgsVerification.LReturnJets.mulVec
+#check BfgsVerification.LReturnJets.dot
+#print axioms BfgsVerification.LReturnJets.dot
+#check BfgsVerification.LReturnJets.outer
+#print axioms BfgsVerification.LReturnJets.outer
+#check BfgsVerification.LReturnJets.models_vecConstant
+#print axioms BfgsVerification.LReturnJets.models_vecConstant
+#check BfgsVerification.LReturnJets.models_matConstant
+#print axioms BfgsVerification.LReturnJets.models_matConstant
+#check BfgsVerification.LReturnJets.ModelsVec.sub
+#print axioms BfgsVerification.LReturnJets.ModelsVec.sub
+#check BfgsVerification.LReturnJets.ModelsVec.scale
+#print axioms BfgsVerification.LReturnJets.ModelsVec.scale
+#check BfgsVerification.LReturnJets.ModelsMat.add
+#print axioms BfgsVerification.LReturnJets.ModelsMat.add
+#check BfgsVerification.LReturnJets.ModelsMat.sub
+#print axioms BfgsVerification.LReturnJets.ModelsMat.sub
+#check BfgsVerification.LReturnJets.ModelsMat.scale
+#print axioms BfgsVerification.LReturnJets.ModelsMat.scale
+#check BfgsVerification.LReturnJets.ModelsMat.mul
+#print axioms BfgsVerification.LReturnJets.ModelsMat.mul
+#check BfgsVerification.LReturnJets.ModelsMat.mulVec
+#print axioms BfgsVerification.LReturnJets.ModelsMat.mulVec
+#check BfgsVerification.LReturnJets.ModelsVec.dot
+#print axioms BfgsVerification.LReturnJets.ModelsVec.dot
+#check BfgsVerification.LReturnJets.ModelsVec.outer
+#print axioms BfgsVerification.LReturnJets.ModelsVec.outer
+#check BfgsVerification.LReturnJets.inverseUpdate
+#print axioms BfgsVerification.LReturnJets.inverseUpdate
+#check BfgsVerification.LReturnJets.models_inverseUpdate
+#print axioms BfgsVerification.LReturnJets.models_inverseUpdate
+#check BfgsVerification.LShapeDerivative.center
+#print axioms BfgsVerification.LShapeDerivative.center
+#check BfgsVerification.LShapeDerivative.inputMatrix
+#print axioms BfgsVerification.LShapeDerivative.inputMatrix
+#check BfgsVerification.LShapeDerivative.matrixIter
+#print axioms BfgsVerification.LShapeDerivative.matrixIter
+#check BfgsVerification.LShapeDerivative.shapeMap
+#print axioms BfgsVerification.LShapeDerivative.shapeMap
+#check BfgsVerification.LShapeDerivative.boundary
+#print axioms BfgsVerification.LShapeDerivative.boundary
+#check BfgsVerification.LShapeDerivative.shapeLift
+#print axioms BfgsVerification.LShapeDerivative.shapeLift
+#check BfgsVerification.LShapeDerivative.boundary_scale
+#print axioms BfgsVerification.LShapeDerivative.boundary_scale
+#check BfgsVerification.LShapeDerivative.boundary_shape
+#print axioms BfgsVerification.LShapeDerivative.boundary_shape
+#check BfgsVerification.LShapeDerivative.boundary_center
+#print axioms BfgsVerification.LShapeDerivative.boundary_center
+#check BfgsVerification.LShapeDerivative.matrixIter_eq_internal
+#print axioms BfgsVerification.LShapeDerivative.matrixIter_eq_internal
+#check BfgsVerification.LShapeDerivative.matrixIter_center
+#print axioms BfgsVerification.LShapeDerivative.matrixIter_center
+#check BfgsVerification.LShapeDerivative.shapeMap_eq_returnMap
+#print axioms BfgsVerification.LShapeDerivative.shapeMap_eq_returnMap
+#check BfgsVerification.LShapeDerivative.curve
+#print axioms BfgsVerification.LShapeDerivative.curve
+#check BfgsVerification.LShapeDerivative.initialJet
+#print axioms BfgsVerification.LShapeDerivative.initialJet
+#check BfgsVerification.LShapeDerivative.stepJet
+#print axioms BfgsVerification.LShapeDerivative.stepJet
+#check BfgsVerification.LShapeDerivative.updateJet
+#print axioms BfgsVerification.LShapeDerivative.updateJet
+#check BfgsVerification.LShapeDerivative.jetIter
+#print axioms BfgsVerification.LShapeDerivative.jetIter
+#check BfgsVerification.LShapeDerivative.shapeJet
+#print axioms BfgsVerification.LShapeDerivative.shapeJet
+#check BfgsVerification.LShapeDerivative.jacobian
+#print axioms BfgsVerification.LShapeDerivative.jacobian
+#check BfgsVerification.LShapeDerivative.curve_zero
+#print axioms BfgsVerification.LShapeDerivative.curve_zero
+#check BfgsVerification.LShapeDerivative.models_initial
+#print axioms BfgsVerification.LShapeDerivative.models_initial
+#check BfgsVerification.LShapeDerivative.models_step
+#print axioms BfgsVerification.LShapeDerivative.models_step
+#check BfgsVerification.LShapeDerivative.models_update
+#print axioms BfgsVerification.LShapeDerivative.models_update
+#check BfgsVerification.LShapeDerivative.models_iter
+#print axioms BfgsVerification.LShapeDerivative.models_iter
+#check BfgsVerification.LShapeDerivative.models_shape
+#print axioms BfgsVerification.LShapeDerivative.models_shape
+#check BfgsVerification.LShapeDerivative.shapeCoord
+#print axioms BfgsVerification.LShapeDerivative.shapeCoord
+#check BfgsVerification.LShapeDerivative.shapeLift_single
+#print axioms BfgsVerification.LShapeDerivative.shapeLift_single
+#check BfgsVerification.LShapeDerivative.boundary_curve
+#print axioms BfgsVerification.LShapeDerivative.boundary_curve
+#check BfgsVerification.LShapeDerivative.boundary_curve_hasDerivAt
+#print axioms BfgsVerification.LShapeDerivative.boundary_curve_hasDerivAt
+#check BfgsVerification.LShapeDerivative.actual_shape_derivative
+#print axioms BfgsVerification.LShapeDerivative.actual_shape_derivative
+#check BfgsVerification.LShapeMapDifferentiability.shapeProjection
+#print axioms BfgsVerification.LShapeMapDifferentiability.shapeProjection
+#check BfgsVerification.LShapeMapDifferentiability.jacobianMap
+#print axioms BfgsVerification.LShapeMapDifferentiability.jacobianMap
+#check BfgsVerification.LShapeMapDifferentiability.jacobianMap_apply
+#print axioms BfgsVerification.LShapeMapDifferentiability.jacobianMap_apply
+#check BfgsVerification.LShapeMapDifferentiability.boundary_affine
+#print axioms BfgsVerification.LShapeMapDifferentiability.boundary_affine
+#check BfgsVerification.LShapeMapDifferentiability.boundary_hasFDerivAt
+#print axioms BfgsVerification.LShapeMapDifferentiability.boundary_hasFDerivAt
+#check BfgsVerification.LShapeMapDifferentiability.shapeMap_hasFDerivAt
+#print axioms BfgsVerification.LShapeMapDifferentiability.shapeMap_hasFDerivAt
+#check BfgsVerification.LShapeIntervalTools.enlarge
+#print axioms BfgsVerification.LShapeIntervalTools.enlarge
+#check BfgsVerification.LShapeIntervalTools.mul_corners
+#print axioms BfgsVerification.LShapeIntervalTools.mul_corners
+#check BfgsVerification.LShapeIntervalTools.inv_negative
+#print axioms BfgsVerification.LShapeIntervalTools.inv_negative
+#check BfgsVerification.LShapeSpectralAlgebra.characteristic
+#print axioms BfgsVerification.LShapeSpectralAlgebra.characteristic
+#check BfgsVerification.LShapeSpectralAlgebra.characteristic_eq_det
+#print axioms BfgsVerification.LShapeSpectralAlgebra.characteristic_eq_det
+#check BfgsVerification.LShapeSpectralAlgebra.signs_of_entry_bounds
+#print axioms BfgsVerification.LShapeSpectralAlgebra.signs_of_entry_bounds
+#check BfgsVerification.LShapeSpectralAlgebra.two_roots_of_signs
+#print axioms BfgsVerification.LShapeSpectralAlgebra.two_roots_of_signs
+#check BfgsVerification.LShapeSpectralAlgebra.eigenvector
+#print axioms BfgsVerification.LShapeSpectralAlgebra.eigenvector
+#check BfgsVerification.LShapeSpectralAlgebra.eigenvector_nonzero
+#print axioms BfgsVerification.LShapeSpectralAlgebra.eigenvector_nonzero
+#check BfgsVerification.LShapeSpectralAlgebra.eigenvector_equation
+#print axioms BfgsVerification.LShapeSpectralAlgebra.eigenvector_equation
+#check BfgsVerification.LReturnOrbitCore.pointLift_zero
+#print axioms BfgsVerification.LReturnOrbitCore.pointLift_zero
+#check BfgsVerification.LReturnOrbitCore.pointLift_one
+#print axioms BfgsVerification.LReturnOrbitCore.pointLift_one
+#check BfgsVerification.LReturnOrbitCore.shapeLift_zero
+#print axioms BfgsVerification.LReturnOrbitCore.shapeLift_zero
+#check BfgsVerification.LReturnOrbitCore.shapeLift_one
+#print axioms BfgsVerification.LReturnOrbitCore.shapeLift_one
+#check BfgsVerification.LReturnOrbitCore.actual_block
+#print axioms BfgsVerification.LReturnOrbitCore.actual_block
+#check BfgsVerification.LReturnOrbitCore.return_hasStrictFDerivAt
+#print axioms BfgsVerification.LReturnOrbitCore.return_hasStrictFDerivAt
+#check BfgsVerification.LReturnOrbitCore.positive_orbit_of_shape_roots
+#print axioms BfgsVerification.LReturnOrbitCore.positive_orbit_of_shape_roots
+#check BfgsVerification.LReturnParameter.parameterScale
+#print axioms BfgsVerification.LReturnParameter.parameterScale
+#check BfgsVerification.LReturnParameter.parameterScale_apply
+#print axioms BfgsVerification.LReturnParameter.parameterScale_apply
+#check BfgsVerification.LReturnParameter.parameterScale_seed
+#print axioms BfgsVerification.LReturnParameter.parameterScale_seed
+#check BfgsVerification.LReturnParameter.parameterScale_initial
+#print axioms BfgsVerification.LReturnParameter.parameterScale_initial
+#check BfgsVerification.LReturnParameter.parameterScale_scale
+#print axioms BfgsVerification.LReturnParameter.parameterScale_scale
+#check BfgsVerification.LReturnParameter.parameter_substep
+#print axioms BfgsVerification.LReturnParameter.parameter_substep
+#check BfgsVerification.LReturnParameter.parameter_internal
+#print axioms BfgsVerification.LReturnParameter.parameter_internal
+#check BfgsVerification.LReturnParameter.parameter_returnFactor
+#print axioms BfgsVerification.LReturnParameter.parameter_returnFactor
+#check BfgsVerification.LReturnParameter.parameter_semiconjugacy
+#print axioms BfgsVerification.LReturnParameter.parameter_semiconjugacy
+#check BfgsVerification.LReturnParameter.derivative_parameter_semiconjugacy
+#print axioms BfgsVerification.LReturnParameter.derivative_parameter_semiconjugacy
+#check BfgsVerification.LReturnParameter.derivative_tau_column
+#print axioms BfgsVerification.LReturnParameter.derivative_tau_column
+#check BfgsVerification.LReturnParameter.parameterScale_coordinate
+#print axioms BfgsVerification.LReturnParameter.parameterScale_coordinate
+#check BfgsVerification.LReturnParameter.parameterScale_horizontal_unit
+#print axioms BfgsVerification.LReturnParameter.parameterScale_horizontal_unit
+#check BfgsVerification.LReturnParameter.derivative_horizontal_entries
+#print axioms BfgsVerification.LReturnParameter.derivative_horizontal_entries
+#check BfgsVerification.LBlockInvertibility.block_injective
+#print axioms BfgsVerification.LBlockInvertibility.block_injective
+#check BfgsVerification.LBlockInvertibility.continuousLinearEquiv_of_block
+#print axioms BfgsVerification.LBlockInvertibility.continuousLinearEquiv_of_block
+#check BfgsVerification.LBlockInvertibility.local_smooth_inverse_of_block
+#print axioms BfgsVerification.LBlockInvertibility.local_smooth_inverse_of_block
+#check BfgsVerification.LReturnParameterBlock.Cleft
+#print axioms BfgsVerification.LReturnParameterBlock.Cleft
+#check BfgsVerification.LReturnParameterBlock.Cright
+#print axioms BfgsVerification.LReturnParameterBlock.Cright
+#check BfgsVerification.LReturnParameterBlock.upperScale
+#print axioms BfgsVerification.LReturnParameterBlock.upperScale
+#check BfgsVerification.LReturnParameterBlock.middleScale
+#print axioms BfgsVerification.LReturnParameterBlock.middleScale
+#check BfgsVerification.LReturnParameterBlock.shape_zero_column
+#print axioms BfgsVerification.LReturnParameterBlock.shape_zero_column
+#check BfgsVerification.LReturnParameterBlock.shape_one_column
+#print axioms BfgsVerification.LReturnParameterBlock.shape_one_column
+#check BfgsVerification.LReturnParameterBlock.scale_column
+#print axioms BfgsVerification.LReturnParameterBlock.scale_column
+#check BfgsVerification.LReturnParameterBlock.actual_parameter_block
+#print axioms BfgsVerification.LReturnParameterBlock.actual_parameter_block
+#check BfgsVerification.LExactDiagonalization.exact_block_diagonalization
+#print axioms BfgsVerification.LExactDiagonalization.exact_block_diagonalization
+#check BfgsVerification.LExactDiagonalization.diagonal_charpoly
+#print axioms BfgsVerification.LExactDiagonalization.diagonal_charpoly
+#check BfgsVerification.LExactDiagonalization.charpoly_of_exact_diagonalization
+#print axioms BfgsVerification.LExactDiagonalization.charpoly_of_exact_diagonalization
+#check BfgsVerification.LShapeIntervalCertificate.column_0_bounds
+#print axioms BfgsVerification.LShapeIntervalCertificate.column_0_bounds
+#check BfgsVerification.LShapeIntervalCertificate.column_1_bounds
+#print axioms BfgsVerification.LShapeIntervalCertificate.column_1_bounds
+#check BfgsVerification.LShapeIntervalCertificate.jacobian_bounds
+#print axioms BfgsVerification.LShapeIntervalCertificate.jacobian_bounds
+#check BfgsVerification.LShapeSpectrum.box_of_original_ball
+#print axioms BfgsVerification.LShapeSpectrum.box_of_original_ball
+#check BfgsVerification.LShapeSpectrum.source_box
+#print axioms BfgsVerification.LShapeSpectrum.source_box
+#check BfgsVerification.LShapeSpectrum.source_jacobian_bounds
+#print axioms BfgsVerification.LShapeSpectrum.source_jacobian_bounds
+#check BfgsVerification.LShapeSpectrum.source_jacobian_offdiag_positive
+#print axioms BfgsVerification.LShapeSpectrum.source_jacobian_offdiag_positive
+#check BfgsVerification.LShapeSpectrum.source_characteristic_signs
+#print axioms BfgsVerification.LShapeSpectrum.source_characteristic_signs
+#check BfgsVerification.LShapeSpectrum.source_shape_roots
+#print axioms BfgsVerification.LShapeSpectrum.source_shape_roots
+#check BfgsVerification.LShapeSpectrum.actual_middle_block
+#print axioms BfgsVerification.LShapeSpectrum.actual_middle_block
+#check BfgsVerification.LReturnStableOrbit.source_positive_return_orbit
+#print axioms BfgsVerification.LReturnStableOrbit.source_positive_return_orbit
+#check BfgsVerification.LReturnStableOrbit.source_oracle_orbit
+#print axioms BfgsVerification.LReturnStableOrbit.source_oracle_orbit
+#check BfgsVerification.LReturnLocalInverse.source_shape_determinant_positive
+#print axioms BfgsVerification.LReturnLocalInverse.source_shape_determinant_positive
+#check BfgsVerification.LReturnLocalInverse.actual_derivative_equiv
+#print axioms BfgsVerification.LReturnLocalInverse.actual_derivative_equiv
+#check BfgsVerification.LReturnLocalInverse.actual_local_inverse
+#print axioms BfgsVerification.LReturnLocalInverse.actual_local_inverse
+#check BfgsVerification.LReturnSpectrum.actual_spectral_contract
+#print axioms BfgsVerification.LReturnSpectrum.actual_spectral_contract
+#check BfgsVerification.LReturnSpectrum.actual_scale_eigenvector
+#print axioms BfgsVerification.LReturnSpectrum.actual_scale_eigenvector
+#check BfgsVerification.LReturnSpectrum.actual_no_zero_or_unit_real_root
+#print axioms BfgsVerification.LReturnSpectrum.actual_no_zero_or_unit_real_root
+#check BfgsVerification.LReturnSpectrum.actual_no_unit_complex_root
+#print axioms BfgsVerification.LReturnSpectrum.actual_no_unit_complex_root
+#check BfgsVerification.LGlobalFailure.actual_orbit_data
+#print axioms BfgsVerification.LGlobalFailure.actual_orbit_data
+#check BfgsVerification.LGlobalFailure.actual_global_failure
+#print axioms BfgsVerification.LGlobalFailure.actual_global_failure
+#check BfgsVerification.LGlobalFailure.source_global_failure
+#print axioms BfgsVerification.LGlobalFailure.source_global_failure
+#check BfgsVerification.LReturnJets.Jet.mk
+#print axioms BfgsVerification.LReturnJets.Jet.mk
+#check BfgsVerification.LReturnJets.Jet.value
+#print axioms BfgsVerification.LReturnJets.Jet.value
+#check BfgsVerification.LReturnJets.Jet.tangent
+#print axioms BfgsVerification.LReturnJets.Jet.tangent

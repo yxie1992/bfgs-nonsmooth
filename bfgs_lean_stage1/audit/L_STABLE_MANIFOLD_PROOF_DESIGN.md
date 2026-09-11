@@ -1,0 +1,27 @@
+# Remaining L stable-manifold graph and tangency
+
+The literal source claim at L.tex lines 199–202 is an actual smooth two-dimensional local stable manifold for the five-dimensional normalized return map, tangent to its stable eigenspace. The source uses its transverse tau component to obtain small positive-tau initial points. Existing verified `LocalStableOrbit`, `StableSequence*`, `LBlockStableOrbit` and `LReturnStableOrbit` already derive actual stable orbits with freely prescribed stable coordinate, and derive positive-tau orbits. They do **not** yet prove that the selected initial points depend smoothly on that coordinate. No manifold conclusion follows solely from those existential orbit statements.
+
+## Existing actual construction
+
+The Banach sequence space is C0(N,S times U), with the true supremum norm and actual convergence to zero. Its fixed-point transform has stable coordinate a at index zero, stable recurrence A*w_s+N_s afterward, and reverse unstable recurrence B*(shift(w_u)-N_u), with B the inverse expanding block. The derivative of the finite-dimensional remainder N is actually zero at zero. A local Lipschitz estimate and norm bounds on A and B produce a genuine contraction on a closed sequence ball. All these ingredients are already proved for the actual return map, without presumed trajectories or convergence.
+
+The remaining graph should provide a function h from an open subset of the actual two-dimensional stable coordinate space to the three-dimensional unstable coordinate space, with h(0)=0, smoothness on that open set, and actual derivative Dh(0)=0. Mapping a to Pstar+E(a,h(a)) using the checked splitting equivalence then gives an embedded two-dimensional graph tangent to the actual stable eigenspace. Every graph point must have an actual stable forward orbit; uniqueness among small bounded forward orbits supplies the usual local stable-set property and local invariance where the shifted stable coordinate remains in the graph domain.
+
+## First bounded infrastructure: parameter-dependent fixed points
+
+For Banach spaces S,E and an actual map Phi:S times E -> E, let its derivative at zero be P(a)+C(w), with norm(C)<1 and Phi(0)=0. The residual map G(a,w)=(a,w-Phi(a,w)) has triangular derivative (a,(I-C)w-Pa). `Units.oneSub` from the pinned normed-ring geometric-series theorem constructs the inverse of I-C; the triangular continuous linear equivalence is then explicit. Applying the pinned smooth inverse-function theorem yields a local solution w=g(a), local uniqueness, and the actual derivative Dg(0)=(I-C)^(-1)P. This is being implemented in scratch/l_stable_manifold, not assumed as a new axiom.
+
+Useful pinned APIs are `Units.oneSub`, `ContinuousLinearEquiv.ofUnit`, `ContDiffAt.localInverse`, `ContDiffAt.to_localInverse`, and `HasStrictFDerivAt.eventually_left_inverse/eventually_right_inverse/to_localInverse`. The generic `Implicit.lean` interface itself explicitly leaves full same-smoothness implicit regularity as future work, so the proof uses the available smooth inverse theorem on G directly.
+
+This generic lemma has the actual sequence transform's regularity as an explicit hypothesis. It is infrastructure and does not on its own verify the source manifold. The sequence derivative and its contractive norm must be constructed from the existing actual transform, and its regularity must be derived from the finite-dimensional return map.
+
+## Concrete regularity lifting still to prove
+
+A search of the pinned library found no smooth superposition/Nemytskii theorem for C0 or bounded continuous function spaces. Therefore the missing bridge is a checked regularity theorem for the pointwise finite-dimensional remainder acting on the actual Banach sequence space. Pointwise differentiability alone is insufficient for the supremum norm; a uniform neighborhood estimate is required.
+
+The actual normalized return map already has `analytic_returnMap_seed` and a neighborhood with `AnalyticOnNhd`, derived from its literal rational formulas. An analytic sequence-space lifting is thus a valid stronger route for this particular report claim. One can lift continuous multilinear coefficients pointwise, preserving their operator-norm bound, and transfer the actual convergent power series. A bounded-sequence space allows constant coefficients without the zero-at-infinity issue; contraction uniqueness can then identify the analytic graph with the existing C0 fixed point, deriving actual stable convergence. Alternatively, positive-arity coefficients map C0 sequences to C0, and the zero constant coefficient can be handled separately.
+
+There is a real formalization subtlety: pinned `ContDiffAt` at order infinity means each finite order holds as a germ and does not automatically provide one common infinity-smooth neighborhood (`ContDiffAt.contDiffOn` records this restriction). Analytic regularity, order omega, does provide that neighborhood and is already true for the actual finite-dimensional return map. The final target must give an actual smooth graph on one open set, not merely assert all finite derivatives at the base.
+
+No mathematical counterexample or source error was found in this claim. The remaining gap is explicit missing checked Banach regularity and graph/tangency infrastructure. The final source theorem must discharge that bridge and the actual linearized recurrence; it may not assume a stable manifold or a smooth selection of the existentially constructed orbits.

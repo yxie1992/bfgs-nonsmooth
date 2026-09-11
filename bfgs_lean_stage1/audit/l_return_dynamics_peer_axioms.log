@@ -1,0 +1,892 @@
+BfgsVerification.LReturnJets.Jet : Type
+'BfgsVerification.LReturnJets.Jet' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models (f : ℝ → ℝ) (j : BfgsVerification.LReturnJets.Jet) : Prop
+'BfgsVerification.LReturnJets.Models' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.constant (a : ℝ) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.add (a b : BfgsVerification.LReturnJets.Jet) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.neg (a : BfgsVerification.LReturnJets.Jet) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.sub (a b : BfgsVerification.LReturnJets.Jet) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.mul (a b : BfgsVerification.LReturnJets.Jet) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.inv (a : BfgsVerification.LReturnJets.Jet) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.div (a b : BfgsVerification.LReturnJets.Jet) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.div' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.models_constant (a : ℝ) :
+  BfgsVerification.LReturnJets.Models (fun x => a) (BfgsVerification.LReturnJets.constant a)
+'BfgsVerification.LReturnJets.models_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models.add {f g : ℝ → ℝ} {a b : BfgsVerification.LReturnJets.Jet}
+  (hf : BfgsVerification.LReturnJets.Models f a) (hg : BfgsVerification.LReturnJets.Models g b) :
+  BfgsVerification.LReturnJets.Models (fun t => f t + g t) (BfgsVerification.LReturnJets.add a b)
+'BfgsVerification.LReturnJets.Models.add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models.neg {f : ℝ → ℝ} {a : BfgsVerification.LReturnJets.Jet}
+  (hf : BfgsVerification.LReturnJets.Models f a) :
+  BfgsVerification.LReturnJets.Models (fun t => -f t) (BfgsVerification.LReturnJets.neg a)
+'BfgsVerification.LReturnJets.Models.neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models.sub {f g : ℝ → ℝ} {a b : BfgsVerification.LReturnJets.Jet}
+  (hf : BfgsVerification.LReturnJets.Models f a) (hg : BfgsVerification.LReturnJets.Models g b) :
+  BfgsVerification.LReturnJets.Models (fun t => f t - g t) (BfgsVerification.LReturnJets.sub a b)
+'BfgsVerification.LReturnJets.Models.sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models.mul {f g : ℝ → ℝ} {a b : BfgsVerification.LReturnJets.Jet}
+  (hf : BfgsVerification.LReturnJets.Models f a) (hg : BfgsVerification.LReturnJets.Models g b) :
+  BfgsVerification.LReturnJets.Models (fun t => f t * g t) (BfgsVerification.LReturnJets.mul a b)
+'BfgsVerification.LReturnJets.Models.mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models.inv {f : ℝ → ℝ} {a : BfgsVerification.LReturnJets.Jet}
+  (hf : BfgsVerification.LReturnJets.Models f a) (ha : a.value ≠ 0) :
+  BfgsVerification.LReturnJets.Models (fun t => (f t)⁻¹) (BfgsVerification.LReturnJets.inv a)
+'BfgsVerification.LReturnJets.Models.inv' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Models.div {f g : ℝ → ℝ} {a b : BfgsVerification.LReturnJets.Jet}
+  (hf : BfgsVerification.LReturnJets.Models f a) (hg : BfgsVerification.LReturnJets.Models g b) (hb : b.value ≠ 0) :
+  BfgsVerification.LReturnJets.Models (fun t => f t / g t) (BfgsVerification.LReturnJets.div a b)
+'BfgsVerification.LReturnJets.Models.div' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.JetVec : Type
+'BfgsVerification.LReturnJets.JetVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.JetMat : Type
+'BfgsVerification.LReturnJets.JetMat' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsVec (f : ℝ → BfgsVerification.Vec 2) (j : BfgsVerification.LReturnJets.JetVec) : Prop
+'BfgsVerification.LReturnJets.ModelsVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsMat (f : ℝ → BfgsVerification.Mat 2) (j : BfgsVerification.LReturnJets.JetMat) : Prop
+'BfgsVerification.LReturnJets.ModelsMat' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.vecConstant (v : BfgsVerification.Vec 2) : BfgsVerification.LReturnJets.JetVec
+'BfgsVerification.LReturnJets.vecConstant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.matConstant (H : BfgsVerification.Mat 2) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.matConstant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.vecSub (u v : BfgsVerification.LReturnJets.JetVec) : BfgsVerification.LReturnJets.JetVec
+'BfgsVerification.LReturnJets.vecSub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.vecScale (a : BfgsVerification.LReturnJets.Jet) (v : BfgsVerification.LReturnJets.JetVec) :
+  BfgsVerification.LReturnJets.JetVec
+'BfgsVerification.LReturnJets.vecScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.matAdd (H K : BfgsVerification.LReturnJets.JetMat) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.matAdd' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.matSub (H K : BfgsVerification.LReturnJets.JetMat) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.matSub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.matScale (a : BfgsVerification.LReturnJets.Jet) (H : BfgsVerification.LReturnJets.JetMat) :
+  BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.matScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.matMul (H K : BfgsVerification.LReturnJets.JetMat) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.matMul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.mulVec (H : BfgsVerification.LReturnJets.JetMat)
+  (v : BfgsVerification.LReturnJets.JetVec) : BfgsVerification.LReturnJets.JetVec
+'BfgsVerification.LReturnJets.mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.dot (u v : BfgsVerification.LReturnJets.JetVec) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.outer (u v : BfgsVerification.LReturnJets.JetVec) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.models_vecConstant (v : BfgsVerification.Vec 2) :
+  BfgsVerification.LReturnJets.ModelsVec (fun x => v) (BfgsVerification.LReturnJets.vecConstant v)
+'BfgsVerification.LReturnJets.models_vecConstant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.models_matConstant (H : BfgsVerification.Mat 2) :
+  BfgsVerification.LReturnJets.ModelsMat (fun x => H) (BfgsVerification.LReturnJets.matConstant H)
+'BfgsVerification.LReturnJets.models_matConstant' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsVec.sub {f g : ℝ → BfgsVerification.Vec 2}
+  {a b : BfgsVerification.LReturnJets.JetVec} (hf : BfgsVerification.LReturnJets.ModelsVec f a)
+  (hg : BfgsVerification.LReturnJets.ModelsVec g b) :
+  BfgsVerification.LReturnJets.ModelsVec (fun t => f t - g t) (BfgsVerification.LReturnJets.vecSub a b)
+'BfgsVerification.LReturnJets.ModelsVec.sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsVec.scale {f : ℝ → ℝ} {g : ℝ → BfgsVerification.Vec 2}
+  {a : BfgsVerification.LReturnJets.Jet} {b : BfgsVerification.LReturnJets.JetVec}
+  (hf : BfgsVerification.LReturnJets.Models f a) (hg : BfgsVerification.LReturnJets.ModelsVec g b) :
+  BfgsVerification.LReturnJets.ModelsVec (fun t => f t • g t) (BfgsVerification.LReturnJets.vecScale a b)
+'BfgsVerification.LReturnJets.ModelsVec.scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsMat.add {f g : ℝ → BfgsVerification.Mat 2}
+  {a b : BfgsVerification.LReturnJets.JetMat} (hf : BfgsVerification.LReturnJets.ModelsMat f a)
+  (hg : BfgsVerification.LReturnJets.ModelsMat g b) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => f t + g t) (BfgsVerification.LReturnJets.matAdd a b)
+'BfgsVerification.LReturnJets.ModelsMat.add' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsMat.sub {f g : ℝ → BfgsVerification.Mat 2}
+  {a b : BfgsVerification.LReturnJets.JetMat} (hf : BfgsVerification.LReturnJets.ModelsMat f a)
+  (hg : BfgsVerification.LReturnJets.ModelsMat g b) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => f t - g t) (BfgsVerification.LReturnJets.matSub a b)
+'BfgsVerification.LReturnJets.ModelsMat.sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsMat.scale {f : ℝ → ℝ} {g : ℝ → BfgsVerification.Mat 2}
+  {a : BfgsVerification.LReturnJets.Jet} {b : BfgsVerification.LReturnJets.JetMat}
+  (hf : BfgsVerification.LReturnJets.Models f a) (hg : BfgsVerification.LReturnJets.ModelsMat g b) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => f t • g t) (BfgsVerification.LReturnJets.matScale a b)
+'BfgsVerification.LReturnJets.ModelsMat.scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsMat.mul {f g : ℝ → BfgsVerification.Mat 2}
+  {a b : BfgsVerification.LReturnJets.JetMat} (hf : BfgsVerification.LReturnJets.ModelsMat f a)
+  (hg : BfgsVerification.LReturnJets.ModelsMat g b) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => f t * g t) (BfgsVerification.LReturnJets.matMul a b)
+'BfgsVerification.LReturnJets.ModelsMat.mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsMat.mulVec {f : ℝ → BfgsVerification.Mat 2} {g : ℝ → BfgsVerification.Vec 2}
+  {a : BfgsVerification.LReturnJets.JetMat} {b : BfgsVerification.LReturnJets.JetVec}
+  (hf : BfgsVerification.LReturnJets.ModelsMat f a) (hg : BfgsVerification.LReturnJets.ModelsVec g b) :
+  BfgsVerification.LReturnJets.ModelsVec (fun t => Matrix.mulVec (f t) (g t)) (BfgsVerification.LReturnJets.mulVec a b)
+'BfgsVerification.LReturnJets.ModelsMat.mulVec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsVec.dot {f g : ℝ → BfgsVerification.Vec 2}
+  {a b : BfgsVerification.LReturnJets.JetVec} (hf : BfgsVerification.LReturnJets.ModelsVec f a)
+  (hg : BfgsVerification.LReturnJets.ModelsVec g b) :
+  BfgsVerification.LReturnJets.Models (fun t => BfgsVerification.dot (f t) (g t)) (BfgsVerification.LReturnJets.dot a b)
+'BfgsVerification.LReturnJets.ModelsVec.dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.ModelsVec.outer {f g : ℝ → BfgsVerification.Vec 2}
+  {a b : BfgsVerification.LReturnJets.JetVec} (hf : BfgsVerification.LReturnJets.ModelsVec f a)
+  (hg : BfgsVerification.LReturnJets.ModelsVec g b) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => BfgsVerification.outer (f t) (g t))
+    (BfgsVerification.LReturnJets.outer a b)
+'BfgsVerification.LReturnJets.ModelsVec.outer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.inverseUpdate (H : BfgsVerification.LReturnJets.JetMat)
+  (s y : BfgsVerification.LReturnJets.JetVec) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LReturnJets.inverseUpdate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.models_inverseUpdate {H : ℝ → BfgsVerification.Mat 2} {s y : ℝ → BfgsVerification.Vec 2}
+  {jH : BfgsVerification.LReturnJets.JetMat} {js jy : BfgsVerification.LReturnJets.JetVec}
+  (hH : BfgsVerification.LReturnJets.ModelsMat H jH) (hs : BfgsVerification.LReturnJets.ModelsVec s js)
+  (hy : BfgsVerification.LReturnJets.ModelsVec y jy) (ht : BfgsVerification.dot (y 0) (s 0) ≠ 0) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => BfgsVerification.inverseBFGS (H t) (s t) (y t))
+    (BfgsVerification.LReturnJets.inverseUpdate jH js jy)
+'BfgsVerification.LReturnJets.models_inverseUpdate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.center : BfgsVerification.Vec 2
+'BfgsVerification.LShapeDerivative.center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.inputMatrix (x : BfgsVerification.Vec 2) : BfgsVerification.Mat 2
+'BfgsVerification.LShapeDerivative.inputMatrix' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.matrixIter (c d : ℝ) (x : BfgsVerification.Vec 2) : ℕ → BfgsVerification.Mat 2
+'BfgsVerification.LShapeDerivative.matrixIter' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.shapeMap (c d : ℝ) (x : BfgsVerification.Vec 2) : BfgsVerification.Vec 2
+'BfgsVerification.LShapeDerivative.shapeMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.boundary (x : BfgsVerification.Vec 2) : BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LShapeDerivative.boundary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.shapeLift : BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LShapeDerivative.shapeLift' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.boundary_scale (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LNormalizedReturn.scale (BfgsVerification.LShapeDerivative.boundary x) = 0
+'BfgsVerification.LShapeDerivative.boundary_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.boundary_shape (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LNormalizedReturn.shape (BfgsVerification.LShapeDerivative.boundary x) =
+    BfgsVerification.LShapeDerivative.inputMatrix x
+'BfgsVerification.LShapeDerivative.boundary_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.boundary_center :
+  BfgsVerification.LShapeDerivative.boundary BfgsVerification.LShapeDerivative.center =
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LShapeDerivative.boundary_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.matrixIter_eq_internal (μ : ℝ) (x : BfgsVerification.Vec 2) (k : ℕ) :
+  BfgsVerification.LShapeDerivative.matrixIter BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD x k =
+    (BfgsVerification.LNormalizedReturn.internal μ (BfgsVerification.LShapeDerivative.boundary x) k).2
+'BfgsVerification.LShapeDerivative.matrixIter_eq_internal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.matrixIter_center (μ : ℝ) (k : ℕ) :
+  BfgsVerification.LShapeDerivative.matrixIter BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+      BfgsVerification.LShapeDerivative.center k =
+    (BfgsVerification.LNormalizedReturn.internal μ BfgsVerification.LNormalizedReturn.seed k).2
+'BfgsVerification.LShapeDerivative.matrixIter_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.shapeMap_eq_returnMap (μ : ℝ) (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LShapeDerivative.shapeMap BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD x =
+    ![BfgsVerification.LNormalizedReturn.returnMap μ (BfgsVerification.LShapeDerivative.boundary x) 2,
+      BfgsVerification.LNormalizedReturn.returnMap μ (BfgsVerification.LShapeDerivative.boundary x) 3]
+'BfgsVerification.LShapeDerivative.shapeMap_eq_returnMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.curve (j : Fin 2) (t : ℝ) : BfgsVerification.Vec 2
+'BfgsVerification.LShapeDerivative.curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.initialJet (j : Fin 2) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LShapeDerivative.initialJet' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.stepJet (H : BfgsVerification.LReturnJets.JetMat) (g : BfgsVerification.Vec 2)
+  (a : ℝ) : BfgsVerification.LReturnJets.JetVec
+'BfgsVerification.LShapeDerivative.stepJet' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.updateJet (H : BfgsVerification.LReturnJets.JetMat) (g h : BfgsVerification.Vec 2)
+  (a : ℝ) : BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LShapeDerivative.updateJet' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.jetIter (c d : ℝ) (j : Fin 2) : ℕ → BfgsVerification.LReturnJets.JetMat
+'BfgsVerification.LShapeDerivative.jetIter' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.shapeJet (c d : ℝ) (j : Fin 2) : BfgsVerification.LReturnJets.JetVec
+'BfgsVerification.LShapeDerivative.shapeJet' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.jacobian (c d : ℝ) : BfgsVerification.Mat 2
+'BfgsVerification.LShapeDerivative.jacobian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.curve_zero (j : Fin 2) :
+  BfgsVerification.LShapeDerivative.curve j 0 = BfgsVerification.LShapeDerivative.center
+'BfgsVerification.LShapeDerivative.curve_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.models_initial (j : Fin 2) :
+  BfgsVerification.LReturnJets.ModelsMat
+    (fun t => BfgsVerification.LShapeDerivative.inputMatrix (BfgsVerification.LShapeDerivative.curve j t))
+    (BfgsVerification.LShapeDerivative.initialJet j)
+'BfgsVerification.LShapeDerivative.models_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.models_step {H : ℝ → BfgsVerification.Mat 2}
+  {jH : BfgsVerification.LReturnJets.JetMat} (hH : BfgsVerification.LReturnJets.ModelsMat H jH)
+  (g : BfgsVerification.Vec 2) (a : ℝ) :
+  BfgsVerification.LReturnJets.ModelsVec (fun t => BfgsVerification.bfgsStep (H t) g a)
+    (BfgsVerification.LShapeDerivative.stepJet jH g a)
+'BfgsVerification.LShapeDerivative.models_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.models_update {H : ℝ → BfgsVerification.Mat 2}
+  {jH : BfgsVerification.LReturnJets.JetMat} (hH : BfgsVerification.LReturnJets.ModelsMat H jH)
+  (g h : BfgsVerification.Vec 2) (a : ℝ) (ht : BfgsVerification.dot (h - g) (BfgsVerification.bfgsStep (H 0) g a) ≠ 0) :
+  BfgsVerification.LReturnJets.ModelsMat (fun t => BfgsVerification.SeedCycle.update (H t) g h a)
+    (BfgsVerification.LShapeDerivative.updateJet jH g h a)
+'BfgsVerification.LShapeDerivative.models_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.models_iter (j : Fin 2) (k : ℕ) (hk : k ≤ 3) :
+  BfgsVerification.LReturnJets.ModelsMat
+    (fun t =>
+      BfgsVerification.LShapeDerivative.matrixIter BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.LShapeDerivative.curve j t) k)
+    (BfgsVerification.LShapeDerivative.jetIter BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j k)
+'BfgsVerification.LShapeDerivative.models_iter' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.models_shape (j : Fin 2) :
+  BfgsVerification.LReturnJets.ModelsVec
+    (fun t =>
+      BfgsVerification.LShapeDerivative.shapeMap BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+        (BfgsVerification.LShapeDerivative.curve j t))
+    (BfgsVerification.LShapeDerivative.shapeJet BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD j)
+'BfgsVerification.LShapeDerivative.models_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.shapeCoord : Fin 2 → Fin 5
+'BfgsVerification.LShapeDerivative.shapeCoord' depends on axioms: [propext]
+BfgsVerification.LShapeDerivative.shapeLift_single (j : Fin 2) :
+  BfgsVerification.LShapeDerivative.shapeLift (Pi.single j 1) =
+    Pi.single (BfgsVerification.LShapeDerivative.shapeCoord j) 1
+'BfgsVerification.LShapeDerivative.shapeLift_single' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.boundary_curve (j : Fin 2) (t : ℝ) :
+  BfgsVerification.LShapeDerivative.boundary (BfgsVerification.LShapeDerivative.curve j t) =
+    BfgsVerification.LNormalizedReturn.seed + t • BfgsVerification.LShapeDerivative.shapeLift (Pi.single j 1)
+'BfgsVerification.LShapeDerivative.boundary_curve' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.boundary_curve_hasDerivAt (j : Fin 2) :
+  HasDerivAt (fun t => BfgsVerification.LShapeDerivative.boundary (BfgsVerification.LShapeDerivative.curve j t))
+    (BfgsVerification.LShapeDerivative.shapeLift (Pi.single j 1)) 0
+'BfgsVerification.LShapeDerivative.boundary_curve_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeDerivative.actual_shape_derivative (μ : ℝ) (i j : Fin 2) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+      (BfgsVerification.LShapeDerivative.shapeLift (Pi.single j 1)) (BfgsVerification.LShapeDerivative.shapeCoord i) =
+    BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i j
+'BfgsVerification.LShapeDerivative.actual_shape_derivative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeMapDifferentiability.shapeProjection :
+  BfgsVerification.LNormalizedReturn.State →L[ℝ] BfgsVerification.Vec 2
+'BfgsVerification.LShapeMapDifferentiability.shapeProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeMapDifferentiability.jacobianMap (J : BfgsVerification.Mat 2) :
+  BfgsVerification.Vec 2 →L[ℝ] BfgsVerification.Vec 2
+'BfgsVerification.LShapeMapDifferentiability.jacobianMap' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeMapDifferentiability.jacobianMap_apply (J : BfgsVerification.Mat 2)
+  (v : BfgsVerification.Vec 2) : (BfgsVerification.LShapeMapDifferentiability.jacobianMap J) v = Matrix.mulVec J v
+'BfgsVerification.LShapeMapDifferentiability.jacobianMap_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeMapDifferentiability.boundary_affine (x : BfgsVerification.Vec 2) :
+  BfgsVerification.LShapeDerivative.boundary x =
+    BfgsVerification.LNormalizedReturn.seed +
+      BfgsVerification.LShapeDerivative.shapeLift (x - BfgsVerification.LShapeDerivative.center)
+'BfgsVerification.LShapeMapDifferentiability.boundary_affine' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeMapDifferentiability.boundary_hasFDerivAt (x : BfgsVerification.Vec 2) :
+  HasFDerivAt BfgsVerification.LShapeDerivative.boundary BfgsVerification.LShapeDerivative.shapeLift x
+'BfgsVerification.LShapeMapDifferentiability.boundary_hasFDerivAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeMapDifferentiability.shapeMap_hasFDerivAt :
+  HasFDerivAt
+    (BfgsVerification.LShapeDerivative.shapeMap BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+    (BfgsVerification.LShapeMapDifferentiability.jacobianMap
+      (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD))
+    BfgsVerification.LShapeDerivative.center
+'BfgsVerification.LShapeMapDifferentiability.shapeMap_hasFDerivAt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeIntervalTools.enlarge {a x b l u : ℝ} (hx : BfgsVerification.IntervalBounds.Bounds a x b)
+  (ha : l ≤ a) (hb : b ≤ u) : BfgsVerification.IntervalBounds.Bounds l x u
+'BfgsVerification.LShapeIntervalTools.enlarge' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeIntervalTools.mul_corners {a x b c y d l u : ℝ}
+  (hx : BfgsVerification.IntervalBounds.Bounds a x b) (hy : BfgsVerification.IntervalBounds.Bounds c y d)
+  (hlac : l ≤ a * c) (hlad : l ≤ a * d) (hlbc : l ≤ b * c) (hlbd : l ≤ b * d) (huac : a * c ≤ u) (huad : a * d ≤ u)
+  (hubc : b * c ≤ u) (hubd : b * d ≤ u) : BfgsVerification.IntervalBounds.Bounds l (x * y) u
+'BfgsVerification.LShapeIntervalTools.mul_corners' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeIntervalTools.inv_negative {a x b : ℝ} (hx : BfgsVerification.IntervalBounds.Bounds a x b)
+  (hb : b < 0) : BfgsVerification.IntervalBounds.Bounds b⁻¹ x⁻¹ a⁻¹
+'BfgsVerification.LShapeIntervalTools.inv_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.characteristic (J : BfgsVerification.Mat 2) (lam : ℝ) : ℝ
+'BfgsVerification.LShapeSpectralAlgebra.characteristic' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.characteristic_eq_det (J : BfgsVerification.Mat 2) (lam : ℝ) :
+  BfgsVerification.LShapeSpectralAlgebra.characteristic J lam = Matrix.det (J - lam • 1)
+'BfgsVerification.LShapeSpectralAlgebra.characteristic_eq_det' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.signs_of_entry_bounds {J : BfgsVerification.Mat 2}
+  (h00 : BfgsVerification.IntervalBounds.Bounds (11123986249 / 10 ^ 10) (J 0 0) (11123986253 / 10 ^ 10))
+  (h01 : BfgsVerification.IntervalBounds.Bounds (6459701025 / 10 ^ 10) (J 0 1) (6459701029 / 10 ^ 10))
+  (h10 : BfgsVerification.IntervalBounds.Bounds (7515015701 / 10 ^ 10) (J 1 0) (7515015708 / 10 ^ 10))
+  (h11 : BfgsVerification.IntervalBounds.Bounds (4905136882 / 10 ^ 10) (J 1 1) (4905136890 / 10 ^ 10)) :
+  0 < BfgsVerification.LShapeSpectralAlgebra.characteristic J (38 / 1000) ∧
+    BfgsVerification.LShapeSpectralAlgebra.characteristic J (39 / 1000) < 0 ∧
+      BfgsVerification.LShapeSpectralAlgebra.characteristic J (1564 / 1000) < 0 ∧
+        0 < BfgsVerification.LShapeSpectralAlgebra.characteristic J (1565 / 1000)
+'BfgsVerification.LShapeSpectralAlgebra.signs_of_entry_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.two_roots_of_signs {J : BfgsVerification.Mat 2}
+  (hs0 : 0 < BfgsVerification.LShapeSpectralAlgebra.characteristic J (38 / 1000))
+  (hs1 : BfgsVerification.LShapeSpectralAlgebra.characteristic J (39 / 1000) < 0)
+  (hu0 : BfgsVerification.LShapeSpectralAlgebra.characteristic J (1564 / 1000) < 0)
+  (hu1 : 0 < BfgsVerification.LShapeSpectralAlgebra.characteristic J (1565 / 1000)) :
+  ∃ ls lu,
+    (38 / 1000 < ls ∧ ls < 39 / 1000) ∧
+      (1564 / 1000 < lu ∧ lu < 1565 / 1000) ∧
+        BfgsVerification.LShapeSpectralAlgebra.characteristic J ls = 0 ∧
+          BfgsVerification.LShapeSpectralAlgebra.characteristic J lu = 0 ∧
+            ∀ (lam : ℝ), BfgsVerification.LShapeSpectralAlgebra.characteristic J lam = (lam - ls) * (lam - lu)
+'BfgsVerification.LShapeSpectralAlgebra.two_roots_of_signs' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.eigenvector (J : BfgsVerification.Mat 2) (lam : ℝ) : BfgsVerification.Vec 2
+'BfgsVerification.LShapeSpectralAlgebra.eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.eigenvector_nonzero {J : BfgsVerification.Mat 2} (hJ : J 0 1 ≠ 0) (lam : ℝ) :
+  BfgsVerification.LShapeSpectralAlgebra.eigenvector J lam ≠ 0
+'BfgsVerification.LShapeSpectralAlgebra.eigenvector_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectralAlgebra.eigenvector_equation {J : BfgsVerification.Mat 2} {lam : ℝ}
+  (hlam : BfgsVerification.LShapeSpectralAlgebra.characteristic J lam = 0) :
+  Matrix.mulVec J (BfgsVerification.LShapeSpectralAlgebra.eigenvector J lam) =
+    lam • BfgsVerification.LShapeSpectralAlgebra.eigenvector J lam
+'BfgsVerification.LShapeSpectralAlgebra.eigenvector_equation' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.pointLift_zero :
+  BfgsVerification.LNormalizedReturn.pointLift ![1, 0] = BfgsVerification.LBlockSplitting.pointZero
+'BfgsVerification.LReturnOrbitCore.pointLift_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.pointLift_one :
+  BfgsVerification.LNormalizedReturn.pointLift ![0, 1] = BfgsVerification.LBlockSplitting.pointOne
+'BfgsVerification.LReturnOrbitCore.pointLift_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.shapeLift_zero :
+  BfgsVerification.LShapeDerivative.shapeLift (Pi.single 0 1) = BfgsVerification.LBlockSplitting.shapeZero
+'BfgsVerification.LReturnOrbitCore.shapeLift_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.shapeLift_one :
+  BfgsVerification.LShapeDerivative.shapeLift (Pi.single 1 1) = BfgsVerification.LBlockSplitting.shapeOne
+'BfgsVerification.LReturnOrbitCore.shapeLift_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.actual_block (μ : ℝ) :
+  BfgsVerification.LBlockSplitting.BlockForm
+    (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+    BfgsVerification.SeedOrbit.seedRatio⁻¹ BfgsVerification.SeedOrbit.seedRatio
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 0)
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1)
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1 0)
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1 1)
+    ![(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.shapeZero 0,
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.shapeZero 1]
+    ![(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.shapeOne 0,
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.shapeOne 1]
+    ![(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.scaleUnit 0,
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.scaleUnit 1]
+    ![(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.scaleUnit 2,
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.scaleUnit 3]
+'BfgsVerification.LReturnOrbitCore.actual_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.return_hasStrictFDerivAt (μ : ℝ) :
+  HasStrictFDerivAt (BfgsVerification.LNormalizedReturn.returnMap μ)
+    (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LReturnOrbitCore.return_hasStrictFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnOrbitCore.positive_orbit_of_shape_roots (μ : ℝ) {ls lu : ℝ} (hs0 : 0 < ls)
+  (hsr : ls < BfgsVerification.SeedOrbit.seedRatio) (hu1 : 1 < lu) (hua : lu < BfgsVerification.SeedOrbit.seedRatio⁻¹)
+  (hb :
+    BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1 ≠
+      0)
+  (hs :
+    (ls -
+          BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0
+            0) *
+        (ls -
+          BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1
+            1) =
+      BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1 *
+        BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1
+          0)
+  (hu :
+    (lu -
+          BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0
+            0) *
+        (lu -
+          BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1
+            1) =
+      BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1 *
+        BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1
+          0)
+  (V : Set BfgsVerification.LNormalizedReturn.State) (hV : V ∈ nhds BfgsVerification.LNormalizedReturn.seed) :
+  ∃ w,
+    (∀ (n : ℕ), w n ∈ V) ∧
+      Filter.Tendsto w Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed) ∧
+        0 < BfgsVerification.LNormalizedReturn.scale (w 0) ∧
+          ∀ (n : ℕ), w (n + 1) = BfgsVerification.LNormalizedReturn.returnMap μ (w n)
+'BfgsVerification.LReturnOrbitCore.positive_orbit_of_shape_roots' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale (μ : ℝ) :
+  BfgsVerification.LNormalizedReturn.State →L[ℝ] BfgsVerification.LNormalizedReturn.State
+'BfgsVerification.LReturnParameter.parameterScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale_apply (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) :
+  (BfgsVerification.LReturnParameter.parameterScale μ) w = ![w 0, w 1, w 2, w 3, μ * w 4]
+'BfgsVerification.LReturnParameter.parameterScale_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale_seed (μ : ℝ) :
+  (BfgsVerification.LReturnParameter.parameterScale μ) BfgsVerification.LNormalizedReturn.seed =
+    BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LReturnParameter.parameterScale_seed' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale_initial (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) :
+  BfgsVerification.LNormalizedReturn.initial ((BfgsVerification.LReturnParameter.parameterScale μ) w) =
+    BfgsVerification.LNormalizedReturn.initial w
+'BfgsVerification.LReturnParameter.parameterScale_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale_scale (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) :
+  BfgsVerification.LNormalizedReturn.scale ((BfgsVerification.LReturnParameter.parameterScale μ) w) =
+    μ * BfgsVerification.LNormalizedReturn.scale w
+'BfgsVerification.LReturnParameter.parameterScale_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameter_substep (μ τ : ℝ) (j : Fin 3)
+  (s : BfgsVerification.LNormalizedReturn.PhaseState) :
+  BfgsVerification.LNormalizedReturn.substep 1 (μ * τ) j s = BfgsVerification.LNormalizedReturn.substep μ τ j s
+'BfgsVerification.LReturnParameter.parameter_substep' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameter_internal (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) (k : ℕ) :
+  BfgsVerification.LNormalizedReturn.internal 1 ((BfgsVerification.LReturnParameter.parameterScale μ) w) k =
+    BfgsVerification.LNormalizedReturn.internal μ w k
+'BfgsVerification.LReturnParameter.parameter_internal' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameter_returnFactor (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) :
+  BfgsVerification.LNormalizedReturn.returnFactor 1 ((BfgsVerification.LReturnParameter.parameterScale μ) w) =
+    BfgsVerification.LNormalizedReturn.returnFactor μ w
+'BfgsVerification.LReturnParameter.parameter_returnFactor' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameter_semiconjugacy (μ : ℝ) (w : BfgsVerification.LNormalizedReturn.State) :
+  BfgsVerification.LNormalizedReturn.returnMap 1 ((BfgsVerification.LReturnParameter.parameterScale μ) w) =
+    (BfgsVerification.LReturnParameter.parameterScale μ) (BfgsVerification.LNormalizedReturn.returnMap μ w)
+'BfgsVerification.LReturnParameter.parameter_semiconjugacy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.derivative_parameter_semiconjugacy (μ : ℝ) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap 1) BfgsVerification.LNormalizedReturn.seed).comp
+      (BfgsVerification.LReturnParameter.parameterScale μ) =
+    (BfgsVerification.LReturnParameter.parameterScale μ).comp
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+'BfgsVerification.LReturnParameter.derivative_parameter_semiconjugacy' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnParameter.derivative_tau_column (μ : ℝ) (i : Fin 5) (hi : ↑i < 4) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed) (Pi.single 4 1)
+      i =
+    μ *
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap 1) BfgsVerification.LNormalizedReturn.seed)
+        (Pi.single 4 1) i
+'BfgsVerification.LReturnParameter.derivative_tau_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale_coordinate (μ : ℝ) (v : BfgsVerification.LNormalizedReturn.State)
+  (i : Fin 5) (hi : ↑i < 4) : (BfgsVerification.LReturnParameter.parameterScale μ) v i = v i
+'BfgsVerification.LReturnParameter.parameterScale_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameter.parameterScale_horizontal_unit (μ : ℝ) (j : Fin 5) (hj : ↑j < 4) :
+  (BfgsVerification.LReturnParameter.parameterScale μ) (Pi.single j 1) = Pi.single j 1
+'BfgsVerification.LReturnParameter.parameterScale_horizontal_unit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnParameter.derivative_horizontal_entries (μ : ℝ) (i j : Fin 5) (hi : ↑i < 4) (hj : ↑j < 4) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed) (Pi.single j 1)
+      i =
+    (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap 1) BfgsVerification.LNormalizedReturn.seed) (Pi.single j 1)
+      i
+'BfgsVerification.LReturnParameter.derivative_horizontal_entries' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LBlockInvertibility.block_injective
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho a b c d : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k)
+  (ha : alpha ≠ 0) (hr : rho ≠ 0) (hdet : a * d - b * c ≠ 0) : Function.Injective ⇑F
+'BfgsVerification.LBlockInvertibility.block_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LBlockInvertibility.continuousLinearEquiv_of_block
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {alpha rho a b c d : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k)
+  (ha : alpha ≠ 0) (hr : rho ≠ 0) (hdet : a * d - b * c ≠ 0) : ∃ E, ↑E = F
+'BfgsVerification.LBlockInvertibility.continuousLinearEquiv_of_block' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LBlockInvertibility.local_smooth_inverse_of_block
+  {T : BfgsVerification.LBlockSplitting.State → BfgsVerification.LBlockSplitting.State}
+  {P : BfgsVerification.LBlockSplitting.State}
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} (hT : ContDiffAt ℝ ⊤ T P)
+  (hD : HasFDerivAt T F P) {alpha rho a b c d : ℝ} {p q h k : BfgsVerification.Vec 2}
+  (hF : BfgsVerification.LBlockSplitting.BlockForm F alpha rho a b c d p q h k) (ha : alpha ≠ 0) (hr : rho ≠ 0)
+  (hdet : a * d - b * c ≠ 0) :
+  ∃ S,
+    ContDiffAt ℝ ⊤ S (T P) ∧
+      S (T P) = P ∧
+        (∀ᶠ (x : BfgsVerification.LBlockSplitting.State) in nhds P, S (T x) = x) ∧
+          ∀ᶠ (y : BfgsVerification.LBlockSplitting.State) in nhds (T P), T (S y) = y
+'BfgsVerification.LBlockInvertibility.local_smooth_inverse_of_block' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnParameterBlock.Cleft : BfgsVerification.Vec 2
+'BfgsVerification.LReturnParameterBlock.Cleft' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.Cright : BfgsVerification.Vec 2
+'BfgsVerification.LReturnParameterBlock.Cright' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.upperScale : BfgsVerification.Vec 2
+'BfgsVerification.LReturnParameterBlock.upperScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.middleScale : BfgsVerification.Vec 2
+'BfgsVerification.LReturnParameterBlock.middleScale' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.shape_zero_column (μ : ℝ) (i : Fin 5) (hi : ↑i < 4) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+      BfgsVerification.LBlockSplitting.shapeZero i =
+    (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap 1) BfgsVerification.LNormalizedReturn.seed)
+      BfgsVerification.LBlockSplitting.shapeZero i
+'BfgsVerification.LReturnParameterBlock.shape_zero_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.shape_one_column (μ : ℝ) (i : Fin 5) (hi : ↑i < 4) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+      BfgsVerification.LBlockSplitting.shapeOne i =
+    (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap 1) BfgsVerification.LNormalizedReturn.seed)
+      BfgsVerification.LBlockSplitting.shapeOne i
+'BfgsVerification.LReturnParameterBlock.shape_one_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.scale_column (μ : ℝ) (i : Fin 5) (hi : ↑i < 4) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+      BfgsVerification.LBlockSplitting.scaleUnit i =
+    μ *
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap 1) BfgsVerification.LNormalizedReturn.seed)
+        BfgsVerification.LBlockSplitting.scaleUnit i
+'BfgsVerification.LReturnParameterBlock.scale_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnParameterBlock.actual_parameter_block (μ : ℝ) :
+  BfgsVerification.LBlockSplitting.BlockForm
+    (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+    BfgsVerification.SeedOrbit.seedRatio⁻¹ BfgsVerification.SeedOrbit.seedRatio
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 0)
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1)
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1 0)
+    (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1 1)
+    BfgsVerification.LReturnParameterBlock.Cleft BfgsVerification.LReturnParameterBlock.Cright
+    (μ • BfgsVerification.LReturnParameterBlock.upperScale) (μ • BfgsVerification.LReturnParameterBlock.middleScale)
+'BfgsVerification.LReturnParameterBlock.actual_parameter_block' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LExactDiagonalization.exact_block_diagonalization
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {rho a b c d ls lu : ℝ}
+  {p q h k : BfgsVerification.Vec 2} (hF : BfgsVerification.LBlockSplitting.BlockForm F rho⁻¹ rho a b c d p q h k)
+  (hr0 : 0 < rho) (hr1 : rho < 1) (hs0 : 0 < ls) (hsr : ls < rho) (hu1 : 1 < lu) (hua : lu < rho⁻¹) (hb : b ≠ 0)
+  (hsroot : (ls - a) * (ls - d) = b * c) (huroot : (lu - a) * (lu - d) = b * c) :
+  ∃ E,
+    (∀ (w : BfgsVerification.LBlockSplitting.Coordinates), E w 4 = w.1 1) ∧
+      ∀ (w : BfgsVerification.LBlockSplitting.Coordinates),
+        F (E w) =
+          E
+            ((BfgsVerification.LBlockSplitting.diagonalMap ![ls, rho]) w.1,
+              (BfgsVerification.LBlockSplitting.diagonalMap ![rho⁻¹, rho⁻¹, lu]) w.2)
+'BfgsVerification.LExactDiagonalization.exact_block_diagonalization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LExactDiagonalization.diagonal_charpoly {n : ℕ} (d : BfgsVerification.Vec n) :
+  (↑(BfgsVerification.LBlockSplitting.diagonalMap d)).charpoly = ∏ i, (Polynomial.X - Polynomial.C (d i))
+'BfgsVerification.LExactDiagonalization.diagonal_charpoly' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LExactDiagonalization.charpoly_of_exact_diagonalization
+  {F : BfgsVerification.LBlockSplitting.State →L[ℝ] BfgsVerification.LBlockSplitting.State} {ls rho alpha lu : ℝ}
+  (E : BfgsVerification.LBlockSplitting.Coordinates ≃L[ℝ] BfgsVerification.LBlockSplitting.State)
+  (hE :
+    ∀ (w : BfgsVerification.LBlockSplitting.Coordinates),
+      F (E w) =
+        E
+          ((BfgsVerification.LBlockSplitting.diagonalMap ![ls, rho]) w.1,
+            (BfgsVerification.LBlockSplitting.diagonalMap ![alpha, alpha, lu]) w.2)) :
+  (↑F).charpoly =
+    (Polynomial.X - Polynomial.C alpha) ^ 2 * (Polynomial.X - Polynomial.C ls) * (Polynomial.X - Polynomial.C lu) *
+      (Polynomial.X - Polynomial.C rho)
+'BfgsVerification.LExactDiagonalization.charpoly_of_exact_diagonalization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeIntervalCertificate.column_0_bounds {c d : ℝ}
+  (hc : BfgsVerification.IntervalBounds.Bounds (318481427627118 / 10 ^ 15) c (318481427627119 / 10 ^ 15))
+  (hd : BfgsVerification.IntervalBounds.Bounds (-1025232119675749 / 10 ^ 15) d (-1025232119675748 / 10 ^ 15)) :
+  BfgsVerification.IntervalBounds.Bounds (11123986249 / 10000000000)
+      (BfgsVerification.LShapeDerivative.jacobian c d 0 0) (11123986253 / 10000000000) ∧
+    BfgsVerification.IntervalBounds.Bounds (7515015701 / 10000000000)
+      (BfgsVerification.LShapeDerivative.jacobian c d 1 0) (1878753927 / 2500000000)
+'BfgsVerification.LShapeIntervalCertificate.column_0_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeIntervalCertificate.column_1_bounds {c d : ℝ}
+  (hc : BfgsVerification.IntervalBounds.Bounds (318481427627118 / 10 ^ 15) c (318481427627119 / 10 ^ 15))
+  (hd : BfgsVerification.IntervalBounds.Bounds (-1025232119675749 / 10 ^ 15) d (-1025232119675748 / 10 ^ 15)) :
+  BfgsVerification.IntervalBounds.Bounds (258388041 / 400000000) (BfgsVerification.LShapeDerivative.jacobian c d 0 1)
+      (6459701029 / 10000000000) ∧
+    BfgsVerification.IntervalBounds.Bounds (2452568441 / 5000000000)
+      (BfgsVerification.LShapeDerivative.jacobian c d 1 1) (490513689 / 1000000000)
+'BfgsVerification.LShapeIntervalCertificate.column_1_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeIntervalCertificate.jacobian_bounds {c d : ℝ}
+  (hc : BfgsVerification.IntervalBounds.Bounds (318481427627118 / 10 ^ 15) c (318481427627119 / 10 ^ 15))
+  (hd : BfgsVerification.IntervalBounds.Bounds (-1025232119675749 / 10 ^ 15) d (-1025232119675748 / 10 ^ 15)) :
+  BfgsVerification.IntervalBounds.Bounds (11123986249 / 10 ^ 10) (BfgsVerification.LShapeDerivative.jacobian c d 0 0)
+      (11123986253 / 10 ^ 10) ∧
+    BfgsVerification.IntervalBounds.Bounds (6459701025 / 10 ^ 10) (BfgsVerification.LShapeDerivative.jacobian c d 0 1)
+        (6459701029 / 10 ^ 10) ∧
+      BfgsVerification.IntervalBounds.Bounds (7515015701 / 10 ^ 10) (BfgsVerification.LShapeDerivative.jacobian c d 1 0)
+          (7515015708 / 10 ^ 10) ∧
+        BfgsVerification.IntervalBounds.Bounds (4905136882 / 10 ^ 10)
+          (BfgsVerification.LShapeDerivative.jacobian c d 1 1) (4905136890 / 10 ^ 10)
+'BfgsVerification.LShapeIntervalCertificate.jacobian_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectrum.box_of_original_ball {x : BfgsVerification.Vec 2}
+  (hx : ‖x - BfgsVerification.AlgebraicSeed.center‖ ≤ BfgsVerification.AlgebraicSeed.radius) :
+  BfgsVerification.IntervalBounds.Bounds (318481427627118 / 10 ^ 15) (x 0) (318481427627119 / 10 ^ 15) ∧
+    BfgsVerification.IntervalBounds.Bounds (-1025232119675749 / 10 ^ 15) (x 1) (-1025232119675748 / 10 ^ 15)
+'BfgsVerification.LShapeSpectrum.box_of_original_ball' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectrum.source_box :
+  BfgsVerification.IntervalBounds.Bounds (318481427627118 / 10 ^ 15) BfgsVerification.SeedOrbit.seedC
+      (318481427627119 / 10 ^ 15) ∧
+    BfgsVerification.IntervalBounds.Bounds (-1025232119675749 / 10 ^ 15) BfgsVerification.SeedOrbit.seedD
+      (-1025232119675748 / 10 ^ 15)
+'BfgsVerification.LShapeSpectrum.source_box' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectrum.source_jacobian_bounds :
+  BfgsVerification.IntervalBounds.Bounds (11123986249 / 10 ^ 10)
+      (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 0)
+      (11123986253 / 10 ^ 10) ∧
+    BfgsVerification.IntervalBounds.Bounds (6459701025 / 10 ^ 10)
+        (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0
+          1)
+        (6459701029 / 10 ^ 10) ∧
+      BfgsVerification.IntervalBounds.Bounds (7515015701 / 10 ^ 10)
+          (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+            1 0)
+          (7515015708 / 10 ^ 10) ∧
+        BfgsVerification.IntervalBounds.Bounds (4905136882 / 10 ^ 10)
+          (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD
+            1 1)
+          (4905136890 / 10 ^ 10)
+'BfgsVerification.LShapeSpectrum.source_jacobian_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectrum.source_jacobian_offdiag_positive :
+  0 < BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1
+'BfgsVerification.LShapeSpectrum.source_jacobian_offdiag_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LShapeSpectrum.source_characteristic_signs :
+  0 <
+      BfgsVerification.LShapeSpectralAlgebra.characteristic
+        (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+        (38 / 1000) ∧
+    BfgsVerification.LShapeSpectralAlgebra.characteristic
+          (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD)
+          (39 / 1000) <
+        0 ∧
+      BfgsVerification.LShapeSpectralAlgebra.characteristic
+            (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC
+              BfgsVerification.SeedOrbit.seedD)
+            (1564 / 1000) <
+          0 ∧
+        0 <
+          BfgsVerification.LShapeSpectralAlgebra.characteristic
+            (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC
+              BfgsVerification.SeedOrbit.seedD)
+            (1565 / 1000)
+'BfgsVerification.LShapeSpectrum.source_characteristic_signs' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectrum.source_shape_roots :
+  ∃ ls lu,
+    (38 / 1000 < ls ∧ ls < 39 / 1000) ∧
+      (1564 / 1000 < lu ∧ lu < 1565 / 1000) ∧
+        BfgsVerification.LShapeSpectralAlgebra.characteristic
+              (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC
+                BfgsVerification.SeedOrbit.seedD)
+              ls =
+            0 ∧
+          BfgsVerification.LShapeSpectralAlgebra.characteristic
+                (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC
+                  BfgsVerification.SeedOrbit.seedD)
+                lu =
+              0 ∧
+            ∀ (lam : ℝ),
+              BfgsVerification.LShapeSpectralAlgebra.characteristic
+                  (BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC
+                    BfgsVerification.SeedOrbit.seedD)
+                  lam =
+                (lam - ls) * (lam - lu)
+'BfgsVerification.LShapeSpectrum.source_shape_roots' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LShapeSpectrum.actual_middle_block (μ : ℝ) (i j : Fin 2) :
+  (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+      (Pi.single (BfgsVerification.LShapeDerivative.shapeCoord j) 1) (BfgsVerification.LShapeDerivative.shapeCoord i) =
+    BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i j
+'BfgsVerification.LShapeSpectrum.actual_middle_block' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnStableOrbit.source_positive_return_orbit (μ : ℝ)
+  (V : Set BfgsVerification.LNormalizedReturn.State) (hV : V ∈ nhds BfgsVerification.LNormalizedReturn.seed) :
+  ∃ w,
+    (∀ (n : ℕ), w n ∈ V) ∧
+      Filter.Tendsto w Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed) ∧
+        0 < BfgsVerification.LNormalizedReturn.scale (w 0) ∧
+          ∀ (n : ℕ), w (n + 1) = BfgsVerification.LNormalizedReturn.returnMap μ (w n)
+'BfgsVerification.LReturnStableOrbit.source_positive_return_orbit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnStableOrbit.source_oracle_orbit (μ c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂)
+  (V : Set BfgsVerification.LNormalizedReturn.State) (hV : V ∈ nhds BfgsVerification.LNormalizedReturn.seed) :
+  ∃ w,
+    (∀ (n : ℕ), w n ∈ V) ∧
+      Filter.Tendsto w Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed) ∧
+        (∀ (n : ℕ), 0 < BfgsVerification.LNormalizedReturn.scale (w n)) ∧
+          (∀ (n : ℕ), BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ (w n)) ∧
+            ∀ (n : ℕ), w (n + 1) = BfgsVerification.LNormalizedReturn.returnMap μ (w n)
+'BfgsVerification.LReturnStableOrbit.source_oracle_orbit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnLocalInverse.source_shape_determinant_positive :
+  0 <
+    BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 0 *
+        BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1
+          1 -
+      BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 0 1 *
+        BfgsVerification.LShapeDerivative.jacobian BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD 1 0
+'BfgsVerification.LReturnLocalInverse.source_shape_determinant_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnLocalInverse.actual_derivative_equiv (μ : ℝ) :
+  ∃ E, ↑E = fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed
+'BfgsVerification.LReturnLocalInverse.actual_derivative_equiv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnLocalInverse.actual_local_inverse (μ : ℝ) :
+  ∃ S,
+    ContDiffAt ℝ ⊤ S BfgsVerification.LNormalizedReturn.seed ∧
+      S BfgsVerification.LNormalizedReturn.seed = BfgsVerification.LNormalizedReturn.seed ∧
+        (∀ᶠ (x : BfgsVerification.LNormalizedReturn.State) in nhds BfgsVerification.LNormalizedReturn.seed,
+            S (BfgsVerification.LNormalizedReturn.returnMap μ x) = x) ∧
+          ∀ᶠ (y : BfgsVerification.LNormalizedReturn.State) in nhds BfgsVerification.LNormalizedReturn.seed,
+            BfgsVerification.LNormalizedReturn.returnMap μ (S y) = y
+'BfgsVerification.LReturnLocalInverse.actual_local_inverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnSpectrum.actual_spectral_contract (μ : ℝ) :
+  ∃ ls lu,
+    (38 / 1000 < ls ∧ ls < 39 / 1000) ∧
+      (1564 / 1000 < lu ∧ lu < 1565 / 1000) ∧
+        ∃ E,
+          (∀ (w : BfgsVerification.LBlockSplitting.Coordinates), E w 4 = w.1 1) ∧
+            (∀ (w : BfgsVerification.LBlockSplitting.Coordinates),
+                (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)
+                    (E w) =
+                  E
+                    ((BfgsVerification.LBlockSplitting.diagonalMap ![ls, BfgsVerification.SeedOrbit.seedRatio]) w.1,
+                      (BfgsVerification.LBlockSplitting.diagonalMap
+                          ![BfgsVerification.SeedOrbit.seedRatio⁻¹, BfgsVerification.SeedOrbit.seedRatio⁻¹, lu])
+                        w.2)) ∧
+              (↑(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ)
+                      BfgsVerification.LNormalizedReturn.seed)).charpoly =
+                (Polynomial.X - Polynomial.C BfgsVerification.SeedOrbit.seedRatio⁻¹) ^ 2 *
+                      (Polynomial.X - Polynomial.C ls) *
+                    (Polynomial.X - Polynomial.C lu) *
+                  (Polynomial.X - Polynomial.C BfgsVerification.SeedOrbit.seedRatio)
+'BfgsVerification.LReturnSpectrum.actual_spectral_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnSpectrum.actual_scale_eigenvector (μ : ℝ) :
+  ∃ v,
+    v 4 = 1 ∧
+      (fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed) v =
+        BfgsVerification.SeedOrbit.seedRatio • v
+'BfgsVerification.LReturnSpectrum.actual_scale_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnSpectrum.actual_no_zero_or_unit_real_root (μ : ℝ) {lam : ℝ}
+  (hroot :
+    Polynomial.eval lam
+        (↑(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ)
+              BfgsVerification.LNormalizedReturn.seed)).charpoly =
+      0) :
+  lam ≠ 0 ∧ |lam| ≠ 1
+'BfgsVerification.LReturnSpectrum.actual_no_zero_or_unit_real_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LReturnSpectrum.actual_no_unit_complex_root (μ : ℝ) {z : ℂ} (hz : ‖z‖ = 1) :
+  Polynomial.eval₂ (algebraMap ℝ ℂ) z
+      (↑(fderiv ℝ (BfgsVerification.LNormalizedReturn.returnMap μ) BfgsVerification.LNormalizedReturn.seed)).charpoly ≠
+    0
+'BfgsVerification.LReturnSpectrum.actual_no_unit_complex_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.LGlobalFailure.actual_orbit_data (μ c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc₂ : 0 < c₂)
+  (U : Set (BfgsVerification.Vec 2)) (hU : U ∈ nhds 0) :
+  ∃ D,
+    Filter.Tendsto D.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed) ∧
+      (∀ (k : ℕ), D.x k ∈ U) ∧
+        ∀ (k : ℕ) (q : Fin 9),
+          BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+            D.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (D.H k) (D.g k) 1 ∈ U
+'BfgsVerification.LGlobalFailure.actual_orbit_data' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LGlobalFailure.actual_global_failure {μ c₁ c₂ : ℝ} (hμ : 0 < μ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) (U : Set (BfgsVerification.Vec 2)) (hU : U ∈ nhds 0) :
+  ∃ R,
+    R.c₁ = c₁ ∧
+      R.c₂ = c₂ ∧
+        Filter.Tendsto R.x Filter.atTop (nhds 0) ∧
+          Filter.Tendsto R.H Filter.atTop (nhds 0) ∧
+            Filter.Tendsto (fun k => BfgsVerification.LQuadraticSeed.objective μ (R.x k)) Filter.atTop (nhds 0) ∧
+              (∀ (k : ℕ), 0 < BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                (∀ (k : ℕ),
+                    BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <
+                      BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                  (∀ (k : ℕ), R.α k = BfgsVerification.SeedOrbit.length (BfgsVerification.SeedOrbit.phase k)) ∧
+                    (∀ (k : ℕ),
+                        BfgsVerification.DeterministicLineSearch.fromMetric
+                            (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) c₁ c₂ 5 =
+                          (some (R.α k),
+                            BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+                      (∀ (k : ℕ), R.x k ∈ U) ∧
+                        (∀ (k : ℕ) (q : Fin 9),
+                            BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                              DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)
+                                  (R.x k +
+                                    BfgsVerification.SeedOrbit.trialLength q •
+                                      BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                0 <
+                                    BfgsVerification.LQuadraticSeed.objective μ
+                                      (R.x k +
+                                        BfgsVerification.SeedOrbit.trialLength q •
+                                          BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                  R.x k +
+                                      BfgsVerification.SeedOrbit.trialLength q •
+                                        BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈
+                                    U) ∧
+                          (∀ (q : ℕ → Fin 9),
+                              (∀ (k : ℕ),
+                                  BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) →
+                                Filter.Tendsto
+                                  (fun k =>
+                                    R.x k +
+                                      BfgsVerification.SeedOrbit.trialLength (q k) •
+                                        BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+                                  Filter.atTop (nhds 0)) ∧
+                            (∀ (k : ℕ),
+                                BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <
+                                    BfgsVerification.LQuadraticSeed.objective μ (R.x k) +
+                                      c₁ *
+                                        BfgsVerification.dot (R.g k)
+                                          (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) ∧
+                                  c₂ *
+                                      BfgsVerification.dot (R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) <
+                                    BfgsVerification.dot (R.g (k + 1))
+                                      (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))) ∧
+                              0 ∉
+                                BfgsVerification.ConvexSubdifferential.subdifferential
+                                  (BfgsVerification.LQuadraticSeed.objective μ) 0
+'BfgsVerification.LGlobalFailure.actual_global_failure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LGlobalFailure.source_global_failure {μ : ℝ} (hμ : 0 < μ) (U : Set (BfgsVerification.Vec 2))
+  (hU : U ∈ nhds 0) :
+  ∃ R,
+    R.c₁ = 1 / 10000 ∧
+      R.c₂ = 1 / 2 ∧
+        Filter.Tendsto R.x Filter.atTop (nhds 0) ∧
+          Filter.Tendsto R.H Filter.atTop (nhds 0) ∧
+            Filter.Tendsto (fun k => BfgsVerification.LQuadraticSeed.objective μ (R.x k)) Filter.atTop (nhds 0) ∧
+              (∀ (k : ℕ), 0 < BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                (∀ (k : ℕ),
+                    BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <
+                      BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                  (∀ (k : ℕ), R.α k = BfgsVerification.SeedOrbit.length (BfgsVerification.SeedOrbit.phase k)) ∧
+                    (∀ (k : ℕ),
+                        BfgsVerification.DeterministicLineSearch.fromMetric
+                            (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) (1 / 10000) (1 / 2) 5 =
+                          (some (R.α k),
+                            BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+                      (∀ (k : ℕ), R.x k ∈ U) ∧
+                        (∀ (k : ℕ) (q : Fin 9),
+                            BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                              DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)
+                                  (R.x k +
+                                    BfgsVerification.SeedOrbit.trialLength q •
+                                      BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                0 <
+                                    BfgsVerification.LQuadraticSeed.objective μ
+                                      (R.x k +
+                                        BfgsVerification.SeedOrbit.trialLength q •
+                                          BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                  R.x k +
+                                      BfgsVerification.SeedOrbit.trialLength q •
+                                        BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈
+                                    U) ∧
+                          (∀ (q : ℕ → Fin 9),
+                              (∀ (k : ℕ),
+                                  BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) →
+                                Filter.Tendsto
+                                  (fun k =>
+                                    R.x k +
+                                      BfgsVerification.SeedOrbit.trialLength (q k) •
+                                        BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+                                  Filter.atTop (nhds 0)) ∧
+                            (∀ (k : ℕ),
+                                BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <
+                                    BfgsVerification.LQuadraticSeed.objective μ (R.x k) +
+                                      1 / 10000 *
+                                        BfgsVerification.dot (R.g k)
+                                          (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) ∧
+                                  1 / 2 *
+                                      BfgsVerification.dot (R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) <
+                                    BfgsVerification.dot (R.g (k + 1))
+                                      (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))) ∧
+                              0 ∉
+                                BfgsVerification.ConvexSubdifferential.subdifferential
+                                  (BfgsVerification.LQuadraticSeed.objective μ) 0
+'BfgsVerification.LGlobalFailure.source_global_failure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Jet.mk (value tangent : ℝ) : BfgsVerification.LReturnJets.Jet
+'BfgsVerification.LReturnJets.Jet.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Jet.value (self : BfgsVerification.LReturnJets.Jet) : ℝ
+'BfgsVerification.LReturnJets.Jet.value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LReturnJets.Jet.tangent (self : BfgsVerification.LReturnJets.Jet) : ℝ
+'BfgsVerification.LReturnJets.Jet.tangent' depends on axioms: [propext, Classical.choice, Quot.sound]

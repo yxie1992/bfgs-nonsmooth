@@ -1,0 +1,519 @@
+BfgsVerification.RealAlgebraicGeometry.exists_between_finite_weak (lo hi : Finset.{0} Real)
+  (h :
+    ∀ (x : Real),
+      @Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) lo x →
+        ∀ (y : Real),
+          @Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) hi y →
+            @LE.le.{0} Real Real.instLE x y) :
+  @Exists.{1} Real fun (t : Real) =>
+    And
+      (∀ (x : Real),
+        @Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) lo x →
+          @LE.le.{0} Real Real.instLE x t)
+      (∀ (y : Real),
+        @Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) hi y →
+          @LE.le.{0} Real Real.instLE t y)
+'BfgsVerification.RealAlgebraicGeometry.exists_between_finite_weak' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_strict_affine_iff.{u_1} {ι : Type u_1} [Fintype.{u_1} ι]
+  (a b : ι → Real) :
+  Iff
+    (@Exists.{1} Real fun (t : Real) =>
+      ∀ (i : ι),
+        @LT.lt.{0} Real Real.instLT (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (a i) t)
+          (b i))
+    (And
+      (∀ (i : ι),
+        @Eq.{1} Real (a i) (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) →
+          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) (b i))
+      (∀ (i j : ι),
+        @LT.lt.{0} Real Real.instLT (a i) (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) →
+          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) (a j) →
+            @LT.lt.{0} Real Real.instLT
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (b j) (a i))
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (b i) (a j))))
+'BfgsVerification.RealAlgebraicGeometry.exists_strict_affine_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_weak_affine_iff.{u_1} {ι : Type u_1} [Fintype.{u_1} ι] (a b : ι → Real) :
+  Iff
+    (@Exists.{1} Real fun (t : Real) =>
+      ∀ (i : ι),
+        @LE.le.{0} Real Real.instLE (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (a i) t)
+          (b i))
+    (And
+      (∀ (i : ι),
+        @Eq.{1} Real (a i) (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) →
+          @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) (b i))
+      (∀ (i j : ι),
+        @LT.lt.{0} Real Real.instLT (a i) (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) →
+          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) (a j) →
+            @LE.le.{0} Real Real.instLE
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (b j) (a i))
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (b i) (a j))))
+'BfgsVerification.RealAlgebraicGeometry.exists_weak_affine_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_forall_finite.{u_1, u_2} {σ : Type u_1} {ι : Type u_2}
+  [Finite.{u_1 + 1} σ] [Fintype.{u_2} ι] (S : ι → Set.{u_1} (σ → Real))
+  (hS : ∀ (i : ι), @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝ (S i)) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      ∀ (i : ι),
+        @Membership.mem.{u_1, u_1} (σ → Real) (Set.{u_1} (σ → Real)) (@Set.instMembership.{u_1} (σ → Real)) (S i) x)
+'BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_forall_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.strict_linear_projection_semialgebraic.{u_1, u_2} {σ : Type u_1} {ι : Type u_2}
+  [Finite.{u_1 + 1} σ] [Fintype.{u_2} ι] (a b : ι → @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      @Exists.{1} Real fun (t : Real) =>
+        ∀ (i : ι),
+          @LT.lt.{0} Real Real.instLT
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                  (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                      (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                  (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+                (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+                (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                  (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                      (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                  (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+                (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) (a i))
+              t)
+            (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+              (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                  (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+              (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+              (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                  (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+              (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) (b i)))
+'BfgsVerification.RealAlgebraicGeometry.strict_linear_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.weak_linear_projection_semialgebraic.{u_1, u_2} {σ : Type u_1} {ι : Type u_2}
+  [Finite.{u_1 + 1} σ] [Fintype.{u_2} ι] (a b : ι → @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      @Exists.{1} Real fun (t : Real) =>
+        ∀ (i : ι),
+          @LE.le.{0} Real Real.instLE
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                  (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                      (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                  (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+                (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+                (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                  (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                      (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                  (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+                (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) (a i))
+              t)
+            (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+              (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                  (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+              (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+              (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                  (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+              (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) (b i)))
+'BfgsVerification.RealAlgebraicGeometry.weak_linear_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.markedLE (strict : Bool) (x y : Real) : Prop
+'BfgsVerification.RealAlgebraicGeometry.markedLE' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.markedLE_of_lt (s : Bool) {x y : Real} (h : @LT.lt.{0} Real Real.instLT x y) :
+  BfgsVerification.RealAlgebraicGeometry.markedLE s x y
+'BfgsVerification.RealAlgebraicGeometry.markedLE_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.markedLE_le {s : Bool} {x y : Real}
+  (h : BfgsVerification.RealAlgebraicGeometry.markedLE s x y) : @LE.le.{0} Real Real.instLE x y
+'BfgsVerification.RealAlgebraicGeometry.markedLE_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_between_finite_marked (lo hi : Finset.{0} (Prod.{0, 0} Real Bool))
+  (h :
+    ∀ (l : Prod.{0, 0} Real Bool),
+      @Membership.mem.{0, 0} (Prod.{0, 0} Real Bool) (Finset.{0} (Prod.{0, 0} Real Bool))
+          (@Finset.instMembership.{0} (Prod.{0, 0} Real Bool)) lo l →
+        ∀ (u : Prod.{0, 0} Real Bool),
+          @Membership.mem.{0, 0} (Prod.{0, 0} Real Bool) (Finset.{0} (Prod.{0, 0} Real Bool))
+              (@Finset.instMembership.{0} (Prod.{0, 0} Real Bool)) hi u →
+            BfgsVerification.RealAlgebraicGeometry.markedLE
+              (Bool.or (@Prod.snd.{0, 0} Real Bool l) (@Prod.snd.{0, 0} Real Bool u)) (@Prod.fst.{0, 0} Real Bool l)
+              (@Prod.fst.{0, 0} Real Bool u)) :
+  @Exists.{1} Real fun (t : Real) =>
+    And
+      (∀ (l : Prod.{0, 0} Real Bool),
+        @Membership.mem.{0, 0} (Prod.{0, 0} Real Bool) (Finset.{0} (Prod.{0, 0} Real Bool))
+            (@Finset.instMembership.{0} (Prod.{0, 0} Real Bool)) lo l →
+          BfgsVerification.RealAlgebraicGeometry.markedLE (@Prod.snd.{0, 0} Real Bool l) (@Prod.fst.{0, 0} Real Bool l)
+            t)
+      (∀ (u : Prod.{0, 0} Real Bool),
+        @Membership.mem.{0, 0} (Prod.{0, 0} Real Bool) (Finset.{0} (Prod.{0, 0} Real Bool))
+            (@Finset.instMembership.{0} (Prod.{0, 0} Real Bool)) hi u →
+          BfgsVerification.RealAlgebraicGeometry.markedLE (@Prod.snd.{0, 0} Real Bool u) t
+            (@Prod.fst.{0, 0} Real Bool u))
+'BfgsVerification.RealAlgebraicGeometry.exists_between_finite_marked' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.markedLE_mul_pos {s : Bool} {x y a : Real}
+  (ha : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) a)
+  (h : BfgsVerification.RealAlgebraicGeometry.markedLE s x y) :
+  BfgsVerification.RealAlgebraicGeometry.markedLE s
+    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) x a)
+    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) y a)
+'BfgsVerification.RealAlgebraicGeometry.markedLE_mul_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.markedLE_mul_neg {s : Bool} {x y a : Real}
+  (ha : @LT.lt.{0} Real Real.instLT a (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)))
+  (h : BfgsVerification.RealAlgebraicGeometry.markedLE s x y) :
+  BfgsVerification.RealAlgebraicGeometry.markedLE s
+    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) y a)
+    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) x a)
+'BfgsVerification.RealAlgebraicGeometry.markedLE_mul_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.markedLE_trans_or {s t : Bool} {x y z : Real}
+  (hxy : BfgsVerification.RealAlgebraicGeometry.markedLE s x y)
+  (hyz : BfgsVerification.RealAlgebraicGeometry.markedLE t y z) :
+  BfgsVerification.RealAlgebraicGeometry.markedLE (Bool.or s t) x z
+'BfgsVerification.RealAlgebraicGeometry.markedLE_trans_or' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.exists_marked_affine_iff.{u_1} {ι : Type u_1} [Fintype.{u_1} ι] (s : ι → Bool)
+  (a b : ι → Real) :
+  Iff
+    (@Exists.{1} Real fun (t : Real) =>
+      ∀ (i : ι),
+        BfgsVerification.RealAlgebraicGeometry.markedLE (s i)
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (a i) t) (b i))
+    (And
+      (∀ (i : ι),
+        @Eq.{1} Real (a i) (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) →
+          BfgsVerification.RealAlgebraicGeometry.markedLE (s i)
+            (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) (b i))
+      (∀ (i j : ι),
+        @LT.lt.{0} Real Real.instLT (a i) (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) →
+          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) (a j) →
+            BfgsVerification.RealAlgebraicGeometry.markedLE (Bool.or (s i) (s j))
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (b j) (a i))
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (b i) (a j))))
+'BfgsVerification.RealAlgebraicGeometry.exists_marked_affine_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_marked.{u_1} {σ : Type u_1} [Finite.{u_1 + 1} σ] (s : Bool)
+  (p q : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      BfgsVerification.RealAlgebraicGeometry.markedLE s
+        (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+          (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+            (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+            (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+          (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+          (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+          (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+            (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+            (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+          (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) p)
+        (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+          (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+            (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+            (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+          (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+          (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+          (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+            (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+            (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+          (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) q))
+'BfgsVerification.RealAlgebraicGeometry.isSemialgebraic_marked' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.marked_linear_projection_semialgebraic.{u_1, u_2} {σ : Type u_1} {ι : Type u_2}
+  [Finite.{u_1 + 1} σ] [Fintype.{u_2} ι] (s : ι → Bool)
+  (a b : ι → @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      @Exists.{1} Real fun (t : Real) =>
+        ∀ (i : ι),
+          BfgsVerification.RealAlgebraicGeometry.markedLE (s i)
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                  (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                      (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                  (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+                (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+                (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                  (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                      (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                  (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+                (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) (a i))
+              t)
+            (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+              (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                  (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+              (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+              (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+                (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                  (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                    (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+                (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+              (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x) (b i)))
+'BfgsVerification.RealAlgebraicGeometry.marked_linear_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} (σ : Type u_1) : Type u_1
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.Holds.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) (x : σ → Real) (t : Real) : Prop
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.Holds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.neg.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) :
+  BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.holds_neg.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) (x : σ → Real) (t : Real) :
+  Iff
+    (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.Holds.{u_1} σ
+      (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.neg.{u_1} σ a) x t)
+    (Not (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.Holds.{u_1} σ a x t))
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.holds_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} (σ : Type u_1) : Type u_1
+'BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.Holds.{u_1} {σ : Type u_1} :
+  BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ → (σ → Real) → Real → Prop
+'BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.Holds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} (σ : Type u_1) : Type u_1
+'BfgsVerification.RealAlgebraicGeometry.AffineDNF' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} {σ : Type u_1}
+  (D : BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ) (x : σ → Real) (t : Real) : Prop
+'BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineDNF.product.{u_1} {σ : Type u_1}
+  (D E : BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ) :
+  BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ
+'BfgsVerification.RealAlgebraicGeometry.AffineDNF.product' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineDNF.holds_append.{u_1} {σ : Type u_1}
+  (D E : BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ) (x : σ → Real) (t : Real) :
+  Iff
+    (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ
+      (@HAppend.hAppend.{u_1, u_1, u_1} (BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ)
+        (BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ)
+        (BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ)
+        (@instHAppendOfAppend.{u_1} (BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ)
+          (@List.instAppend.{u_1} (List.{u_1} (BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ))))
+        D E)
+      x t)
+    (Or (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ D x t)
+      (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ E x t))
+'BfgsVerification.RealAlgebraicGeometry.AffineDNF.holds_append' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineDNF.holds_product.{u_1} {σ : Type u_1}
+  (D E : BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ) (x : σ → Real) (t : Real) :
+  Iff
+    (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ
+      (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.product.{u_1} σ D E) x t)
+    (And (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ D x t)
+      (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ E x t))
+'BfgsVerification.RealAlgebraicGeometry.AffineDNF.holds_product' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toDNF.{u_1} {σ : Type u_1} :
+  Bool →
+    BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ →
+      BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ
+'BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toDNF' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.holds_toDNF.{u_1} {σ : Type u_1}
+  (f : BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ) (b : Bool) (x : σ → Real) (t : Real) :
+  Iff
+    (@BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ
+      (@BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toDNF.{u_1} σ b f) x t)
+    (@ite.{1} Prop (@Eq.{1} Bool b Bool.true) (instDecidableEqBool b Bool.true)
+      (Not (@BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.Holds.{u_1} σ f x t))
+      (@BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.Holds.{u_1} σ f x t))
+'BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.holds_toDNF' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.affine_clause_projection_semialgebraic.{u_1} {σ : Type u_1} [Finite.{u_1 + 1} σ]
+  (c : List.{u_1} (BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ)) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      @Exists.{1} Real fun (t : Real) =>
+        ∀ (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ),
+          @Membership.mem.{u_1, u_1} (BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ)
+              (List.{u_1} (BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ))
+              (@List.instMembership.{u_1} (BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ)) c a →
+            @BfgsVerification.RealAlgebraicGeometry.AffineAtom.Holds.{u_1} σ a x t)
+'BfgsVerification.RealAlgebraicGeometry.affine_clause_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.affine_dnf_projection_semialgebraic.{u_1} {σ : Type u_1} [Finite.{u_1 + 1} σ]
+  (D : BfgsVerification.RealAlgebraicGeometry.AffineDNF.{u_1} σ) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      @Exists.{1} Real fun (t : Real) => @BfgsVerification.RealAlgebraicGeometry.AffineDNF.Holds.{u_1} σ D x t)
+'BfgsVerification.RealAlgebraicGeometry.affine_dnf_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.affine_boolean_projection_semialgebraic.{u_1} {σ : Type u_1} [Finite.{u_1 + 1} σ]
+  (f : BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@setOf.{u_1} (σ → Real) fun (x : σ → Real) =>
+      @Exists.{1} Real fun (t : Real) =>
+        @BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.Holds.{u_1} σ f x t)
+'BfgsVerification.RealAlgebraicGeometry.affine_boolean_projection_semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.polynomial.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) :
+  @MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.toPolynomialFormula.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) :
+  BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.{u_1} (Sum.{u_1, 0} σ Unit)
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.toPolynomialFormula' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.polynomial_eval.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) (x : σ → Real) (t : Real) :
+  @Eq.{1} Real
+    (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+      (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring) Real
+        (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring)
+          (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring)
+            (@MvPolynomial.commSemiring.{0, u_1} Real (Sum.{u_1, 0} σ Unit) Real.instCommSemiring)))
+        (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+      (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring)
+      (fun (x : @MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring) => Real)
+      (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring) Real
+        (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring)
+          (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} (Sum.{u_1, 0} σ Unit) Real Real.instCommSemiring)
+            (@MvPolynomial.commSemiring.{0, u_1} Real (Sum.{u_1, 0} σ Unit) Real.instCommSemiring)))
+        (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+      (@MvPolynomial.eval.{0, u_1} Real (Sum.{u_1, 0} σ Unit) Real.instCommSemiring
+        (@Sum.elim.{u_1, 0, 1} σ Unit Real x fun (x : Unit) => t))
+      (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.polynomial.{u_1} σ a))
+    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+      (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+        (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+          (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+            (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+          (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+        (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+        (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+        (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+          (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+            (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+          (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+        (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x)
+        (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.bound.{u_1} σ a))
+      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+        (@DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+          (@RingHom.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+            (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+            (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+          (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+          (fun (x : @MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) => Real)
+          (@RingHom.instFunLike.{u_1, 0} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring) Real
+            (@Semiring.toNonAssocSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+              (@CommSemiring.toSemiring.{u_1} (@MvPolynomial.{u_1, 0} σ Real Real.instCommSemiring)
+                (@MvPolynomial.commSemiring.{0, u_1} Real σ Real.instCommSemiring)))
+            (@Semiring.toNonAssocSemiring.{0} Real (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)))
+          (@MvPolynomial.eval.{0, u_1} Real σ Real.instCommSemiring x)
+          (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.slope.{u_1} σ a))
+        t))
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.polynomial_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineAtom.holds_polynomialFormula.{u_1} {σ : Type u_1}
+  (a : BfgsVerification.RealAlgebraicGeometry.AffineAtom.{u_1} σ) (x : σ → Real) (t : Real) :
+  Iff
+    (@BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{u_1} (Sum.{u_1, 0} σ Unit)
+      (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.toPolynomialFormula.{u_1} σ a)
+      (@Sum.elim.{u_1, 0, 1} σ Unit Real x fun (x : Unit) => t))
+    (@BfgsVerification.RealAlgebraicGeometry.AffineAtom.Holds.{u_1} σ a x t)
+'BfgsVerification.RealAlgebraicGeometry.AffineAtom.holds_polynomialFormula' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toPolynomialFormula.{u_1} {σ : Type u_1} :
+  BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ →
+    BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.{u_1} (Sum.{u_1, 0} σ Unit)
+'BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toPolynomialFormula' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.holds_polynomialFormula.{u_1} {σ : Type u_1}
+  (f : BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ) (x : σ → Real) (t : Real) :
+  Iff
+    (@BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{u_1} (Sum.{u_1, 0} σ Unit)
+      (@BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toPolynomialFormula.{u_1} σ f)
+      (@Sum.elim.{u_1, 0, 1} σ Unit Real x fun (x : Unit) => t))
+    (@BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.Holds.{u_1} σ f x t)
+'BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.holds_polynomialFormula' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.affine_boolean_coordinate_projection.{u_1} {σ : Type u_1} [Finite.{u_1 + 1} σ]
+  (f : BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.{u_1} σ) :
+  @BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic.{u_1} σ inst✝
+    (@BfgsVerification.RealAlgebraicGeometry.coordinateProjection.{u_1, 0} σ Unit
+      (@setOf.{u_1} (Sum.{u_1, 0} σ Unit → Real) fun (v : Sum.{u_1, 0} σ Unit → Real) =>
+        @BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.Holds.{u_1} (Sum.{u_1, 0} σ Unit)
+          (@BfgsVerification.RealAlgebraicGeometry.AffineBooleanFormula.toPolynomialFormula.{u_1} σ f) v))
+'BfgsVerification.RealAlgebraicGeometry.affine_boolean_coordinate_projection' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.MixedAffineEliminationTarget : Prop
+'BfgsVerification.MixedAffineEliminationTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.mixedAffineElimination : BfgsVerification.MixedAffineEliminationTarget
+'BfgsVerification.mixedAffineElimination' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.PolynomialCoefficientProjectionTarget : Prop
+'BfgsVerification.PolynomialCoefficientProjectionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.polynomialCoefficientProjection : BfgsVerification.PolynomialCoefficientProjectionTarget
+'BfgsVerification.polynomialCoefficientProjection' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineBooleanProjectionTarget : Prop
+'BfgsVerification.AffineBooleanProjectionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.affineBooleanProjection : BfgsVerification.AffineBooleanProjectionTarget
+'BfgsVerification.affineBooleanProjection' depends on axioms: [propext, Classical.choice, Quot.sound]

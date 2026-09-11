@@ -466,3 +466,37 @@ roots. Actual spectral inputs and global BFGS application remain open in this
 release; smooth-manifold regularity is not implied by orbit existence. All exact
 scopes and independent reviews are linked in
 `audit/REPORT_STRUCTURAL_CLOSURE_STATEMENT_REVIEW.md`.
+
+
+## Twelfth milestone: actual L dynamics and fixed-metric local failures
+
+The complete pinned build and transitive axiom audit passed 4,039 explicit
+theorems, 5,852 total theorem declarations including generated auxiliaries, and
+all 145 registered exact targets across 488 frozen Lean sources. Only propext,
+Classical.choice and Quot.sound occur. Evidence: audit/report_l_failure_check.log,
+audit/build.log, audit/axioms.log, audit/STATUS.json and the frozen source manifest.
+
+L's actual shape Jacobian, kernel rational spectral certificate, full characteristic
+polynomial, parameter dependence and local inverse now supply the constructive
+positive return orbit. The final actual global Q_mu BFGS run has no assumed
+spectrum, trajectory or limit; every deterministic query and its actual derivative
+is proved. Both literal smooth and countably affine local embeddings now have
+actual infinite BFGS run families with one fixed SPD initial matrix, nonstationary
+positive-value limits, strict Armijo/weak Wolfe, exact complete search histories,
+and uniform all-query smallness as starts tend to 0. Scalar regularity, the
+source 439/446/27 and 512 constants, actual Hessian bounds and local-copy identities
+are checked. See audit/REPORT_L_FAILURE_STATEMENT_REVIEW.md and linked independent
+reviews for each exact source boundary and reproducible scoped audit.
+
+A's actual path calculus, bounded signed support representations, genuine
+polynomial projection reduction and exact affine-coordinate Boolean elimination
+are verified infrastructure; general nonlinear QE and finite semialgebraic path
+decomposition are still required. C's literal three-dimensional transport warning
+and the same quadratic's actual radial convergence are checked.
+
+The entire report remains incomplete. L's fixed identity initialization and its
+transformed constants/search/family conclusions are outside this frozen milestone,
+as is smooth stable-manifold regularity/tangency. A's general semialgebraic
+application/rank-loss spectrum, C's remaining uniform and higher-dimensional
+partial statements, and final family/source/synthesis/evidence reconciliation
+remain active obligations. Original research sources are unchanged.

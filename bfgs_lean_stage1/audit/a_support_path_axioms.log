@@ -1,0 +1,1127 @@
+BfgsVerification.AffineSupportPath.supporting_path_derivative_eq {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {p : Real → BfgsVerification.Vec n} {t a : Real} {v g : BfgsVerification.Vec n}
+  (hg : @BfgsVerification.Homogeneous.Supports n F (p t) g)
+  (hp :
+    @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+      (BfgsVerification.Vec n)
+      (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+      (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real
+        (@DivisionSemiring.toSemiring.{0} Real
+          (@Semifield.toDivisionSemiring.{0} Real
+            (@Field.toSemifield.{0} Real
+              (@NormedField.toField.{0} Real
+                (@NontriviallyNormedField.toNormedField.{0} Real
+                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+          (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+            (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+      (@Pi.topologicalSpace.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+        @UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@instContinuousSMulForall.{0, 0, 0} Real
+        (@UniformSpace.toTopologicalSpace.{0} Real
+          (@PseudoMetricSpace.toUniformSpace.{0} Real
+            (@SeminormedRing.toPseudoMetricSpace.{0} Real
+              (@SeminormedCommRing.toSeminormedRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real
+                  (@NormedField.toNormedCommRing.{0} Real
+                    (@NontriviallyNormedField.toNormedField.{0} Real
+                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+        (Fin n) (fun (a : Fin n) => Real)
+        (fun (i : Fin n) =>
+          @UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        (fun (i : Fin n) =>
+          @Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring Real.semiring
+            (@Algebra.id.{0} Real Real.instCommSemiring))
+        fun (i : Fin n) =>
+        @IsModuleTopology.toContinuousSMul.{0, 0} Real
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real
+              (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                (@SeminormedCommRing.toSeminormedRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real
+                    (@NormedField.toNormedCommRing.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+          Real Real.instAdd
+          (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring Real.semiring
+            (@Algebra.id.{0} Real Real.instCommSemiring))
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real
+                (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                  (@SeminormedCommRing.toSeminormedRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+            (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                    (@SeminormedCommRing.toSeminormedRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real
+                        (@NormedField.toNormedCommRing.{0} Real
+                          (@NontriviallyNormedField.toNormedField.{0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+              (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+                (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                  (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                    (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+              instIsTopologicalRingReal)))
+      p v t)
+  (hFp :
+    @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+      Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@IsModuleTopology.toContinuousSMul.{0, 0} Real
+        (@UniformSpace.toTopologicalSpace.{0} Real
+          (@PseudoMetricSpace.toUniformSpace.{0} Real
+            (@SeminormedRing.toPseudoMetricSpace.{0} Real
+              (@SeminormedCommRing.toSeminormedRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real
+                  (@NormedField.toNormedCommRing.{0} Real
+                    (@NontriviallyNormedField.toNormedField.{0} Real
+                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+        Real Real.instAdd
+        (@SMulZeroClass.toSMul.{0, 0} Real Real
+          (@AddZeroClass.toZero.{0} Real
+            (@AddMonoid.toAddZeroClass.{0} Real
+              (@SubNegMonoid.toAddMonoid.{0} Real
+                (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))))
+          (@DistribSMul.toSMulZeroClass.{0, 0} Real Real
+            (@AddMonoid.toAddZeroClass.{0} Real
+              (@SubNegMonoid.toAddMonoid.{0} Real
+                (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup))))
+            (@DistribMulAction.toDistribSMul.{0, 0} Real Real
+              (@MonoidWithZero.toMonoid.{0} Real
+                (@Semiring.toMonoidWithZero.{0} Real
+                  (@DivisionSemiring.toSemiring.{0} Real
+                    (@Semifield.toDivisionSemiring.{0} Real
+                      (@Field.toSemifield.{0} Real
+                        (@NormedField.toField.{0} Real
+                          (@NontriviallyNormedField.toNormedField.{0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+              (@SubNegMonoid.toAddMonoid.{0} Real
+                (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))
+              (@Module.toDistribMulAction.{0, 0} Real Real
+                (@DivisionSemiring.toSemiring.{0} Real
+                  (@Semifield.toDivisionSemiring.{0} Real
+                    (@Field.toSemifield.{0} Real
+                      (@NormedField.toField.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+                (@AddCommGroup.toAddCommMonoid.{0} Real Real.instAddCommGroup)
+                (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                        (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                          (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                    (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))))))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real
+              (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                (@SeminormedCommRing.toSeminormedRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real
+                    (@NormedField.toNormedCommRing.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+          (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real
+                (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                  (@SeminormedCommRing.toSeminormedRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                  (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+            instIsTopologicalRingReal)))
+      (@Function.comp.{1, 1, 1} Real (BfgsVerification.Vec n) Real F p) a t) :
+  @Eq.{1} Real (@BfgsVerification.dot n g v) a
+'BfgsVerification.AffineSupportPath.supporting_path_derivative_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.derivative_zero_of_affineCritical {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {p : Real → BfgsVerification.Vec n} {t a : Real} {v : BfgsVerification.Vec n}
+  (hc : @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F (p t))
+  (hp :
+    @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+      (BfgsVerification.Vec n)
+      (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+      (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real
+        (@DivisionSemiring.toSemiring.{0} Real
+          (@Semifield.toDivisionSemiring.{0} Real
+            (@Field.toSemifield.{0} Real
+              (@NormedField.toField.{0} Real
+                (@NontriviallyNormedField.toNormedField.{0} Real
+                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+          (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+            (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+      (@Pi.topologicalSpace.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+        @UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@instContinuousSMulForall.{0, 0, 0} Real
+        (@UniformSpace.toTopologicalSpace.{0} Real
+          (@PseudoMetricSpace.toUniformSpace.{0} Real
+            (@SeminormedRing.toPseudoMetricSpace.{0} Real
+              (@SeminormedCommRing.toSeminormedRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real
+                  (@NormedField.toNormedCommRing.{0} Real
+                    (@NontriviallyNormedField.toNormedField.{0} Real
+                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+        (Fin n) (fun (a : Fin n) => Real)
+        (fun (i : Fin n) =>
+          @UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        (fun (i : Fin n) =>
+          @Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring Real.semiring
+            (@Algebra.id.{0} Real Real.instCommSemiring))
+        fun (i : Fin n) =>
+        @IsModuleTopology.toContinuousSMul.{0, 0} Real
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real
+              (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                (@SeminormedCommRing.toSeminormedRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real
+                    (@NormedField.toNormedCommRing.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+          Real Real.instAdd
+          (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring Real.semiring
+            (@Algebra.id.{0} Real Real.instCommSemiring))
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real
+                (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                  (@SeminormedCommRing.toSeminormedRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+            (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                    (@SeminormedCommRing.toSeminormedRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real
+                        (@NormedField.toNormedCommRing.{0} Real
+                          (@NontriviallyNormedField.toNormedField.{0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+              (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+                (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                  (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                    (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+              instIsTopologicalRingReal)))
+      p v t)
+  (hFp :
+    @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+      Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@IsModuleTopology.toContinuousSMul.{0, 0} Real
+        (@UniformSpace.toTopologicalSpace.{0} Real
+          (@PseudoMetricSpace.toUniformSpace.{0} Real
+            (@SeminormedRing.toPseudoMetricSpace.{0} Real
+              (@SeminormedCommRing.toSeminormedRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real
+                  (@NormedField.toNormedCommRing.{0} Real
+                    (@NontriviallyNormedField.toNormedField.{0} Real
+                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+        Real Real.instAdd
+        (@SMulZeroClass.toSMul.{0, 0} Real Real
+          (@AddZeroClass.toZero.{0} Real
+            (@AddMonoid.toAddZeroClass.{0} Real
+              (@SubNegMonoid.toAddMonoid.{0} Real
+                (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))))
+          (@DistribSMul.toSMulZeroClass.{0, 0} Real Real
+            (@AddMonoid.toAddZeroClass.{0} Real
+              (@SubNegMonoid.toAddMonoid.{0} Real
+                (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup))))
+            (@DistribMulAction.toDistribSMul.{0, 0} Real Real
+              (@MonoidWithZero.toMonoid.{0} Real
+                (@Semiring.toMonoidWithZero.{0} Real
+                  (@DivisionSemiring.toSemiring.{0} Real
+                    (@Semifield.toDivisionSemiring.{0} Real
+                      (@Field.toSemifield.{0} Real
+                        (@NormedField.toField.{0} Real
+                          (@NontriviallyNormedField.toNormedField.{0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+              (@SubNegMonoid.toAddMonoid.{0} Real
+                (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))
+              (@Module.toDistribMulAction.{0, 0} Real Real
+                (@DivisionSemiring.toSemiring.{0} Real
+                  (@Semifield.toDivisionSemiring.{0} Real
+                    (@Field.toSemifield.{0} Real
+                      (@NormedField.toField.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+                (@AddCommGroup.toAddCommMonoid.{0} Real Real.instAddCommGroup)
+                (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                        (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                          (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                    (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))))))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real
+              (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                (@SeminormedCommRing.toSeminormedRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real
+                    (@NormedField.toNormedCommRing.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+          (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real
+                (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                  (@SeminormedCommRing.toSeminormedRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                  (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+            instIsTopologicalRingReal)))
+      (@Function.comp.{1, 1, 1} Real (BfgsVerification.Vec n) Real F p) a t) :
+  @Eq.{1} Real a (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero))
+'BfgsVerification.AffineSupportPath.derivative_zero_of_affineCritical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.hasDerivAt_zero_of_affineCritical {n : Nat} {F : BfgsVerification.Vec n → Real}
+  {p : Real → BfgsVerification.Vec n} {t : Real}
+  (hc : @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F (p t))
+  (hp :
+    @DifferentiableAt.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+      Real Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (BfgsVerification.Vec n)
+      (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+      (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real
+        (@DivisionSemiring.toSemiring.{0} Real
+          (@Semifield.toDivisionSemiring.{0} Real
+            (@Field.toSemifield.{0} Real
+              (@NormedField.toField.{0} Real
+                (@NontriviallyNormedField.toNormedField.{0} Real
+                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+          (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+            (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+        (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+      (@Pi.topologicalSpace.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+        @UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      p t)
+  (hFp :
+    @DifferentiableAt.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+      Real Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      Real Real.instAddCommGroup
+      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@Function.comp.{1, 1, 1} Real (BfgsVerification.Vec n) Real F p) t) :
+  @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+    Real.instAddCommGroup
+    (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+            (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+      (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+        (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+    (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+    (@IsModuleTopology.toContinuousSMul.{0, 0} Real
+      (@UniformSpace.toTopologicalSpace.{0} Real
+        (@PseudoMetricSpace.toUniformSpace.{0} Real
+          (@SeminormedRing.toPseudoMetricSpace.{0} Real
+            (@SeminormedCommRing.toSeminormedRing.{0} Real
+              (@NormedCommRing.toSeminormedCommRing.{0} Real
+                (@NormedField.toNormedCommRing.{0} Real
+                  (@NontriviallyNormedField.toNormedField.{0} Real
+                    (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+      Real Real.instAdd
+      (@SMulZeroClass.toSMul.{0, 0} Real Real
+        (@AddZeroClass.toZero.{0} Real
+          (@AddMonoid.toAddZeroClass.{0} Real
+            (@SubNegMonoid.toAddMonoid.{0} Real
+              (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))))
+        (@DistribSMul.toSMulZeroClass.{0, 0} Real Real
+          (@AddMonoid.toAddZeroClass.{0} Real
+            (@SubNegMonoid.toAddMonoid.{0} Real
+              (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup))))
+          (@DistribMulAction.toDistribSMul.{0, 0} Real Real
+            (@MonoidWithZero.toMonoid.{0} Real
+              (@Semiring.toMonoidWithZero.{0} Real
+                (@DivisionSemiring.toSemiring.{0} Real
+                  (@Semifield.toDivisionSemiring.{0} Real
+                    (@Field.toSemifield.{0} Real
+                      (@NormedField.toField.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+            (@SubNegMonoid.toAddMonoid.{0} Real
+              (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))
+            (@Module.toDistribMulAction.{0, 0} Real Real
+              (@DivisionSemiring.toSemiring.{0} Real
+                (@Semifield.toDivisionSemiring.{0} Real
+                  (@Field.toSemifield.{0} Real
+                    (@NormedField.toField.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+              (@AddCommGroup.toAddCommMonoid.{0} Real Real.instAddCommGroup)
+              (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                        (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                  (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))))))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+        (@UniformSpace.toTopologicalSpace.{0} Real
+          (@PseudoMetricSpace.toUniformSpace.{0} Real
+            (@SeminormedRing.toPseudoMetricSpace.{0} Real
+              (@SeminormedCommRing.toSeminormedRing.{0} Real
+                (@NormedCommRing.toSeminormedCommRing.{0} Real
+                  (@NormedField.toNormedCommRing.{0} Real
+                    (@NontriviallyNormedField.toNormedField.{0} Real
+                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+        (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real
+              (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                (@SeminormedCommRing.toSeminormedRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real
+                    (@NormedField.toNormedCommRing.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+              (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+          instIsTopologicalRingReal)))
+    (@Function.comp.{1, 1, 1} Real (BfgsVerification.Vec n) Real F p)
+    (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) t
+'BfgsVerification.AffineSupportPath.hasDerivAt_zero_of_affineCritical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.constant_on_Icc_of_hasDerivAt_zero {f : Real → Real} {a b : Real}
+  (hc :
+    @ContinuousOn.{0, 0} Real Real
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) f
+      (@Set.Icc.{0} Real Real.instPreorder a b))
+  (hd :
+    ∀ (t : Real),
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioo.{0} Real Real.instPreorder a b) t →
+        @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+          Real.instAddCommGroup
+          (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          (@IsModuleTopology.toContinuousSMul.{0, 0} Real
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real
+                (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                  (@SeminormedCommRing.toSeminormedRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real
+                      (@NormedField.toNormedCommRing.{0} Real
+                        (@NontriviallyNormedField.toNormedField.{0} Real
+                          (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+            Real Real.instAdd
+            (@SMulZeroClass.toSMul.{0, 0} Real Real
+              (@AddZeroClass.toZero.{0} Real
+                (@AddMonoid.toAddZeroClass.{0} Real
+                  (@SubNegMonoid.toAddMonoid.{0} Real
+                    (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))))
+              (@DistribSMul.toSMulZeroClass.{0, 0} Real Real
+                (@AddMonoid.toAddZeroClass.{0} Real
+                  (@SubNegMonoid.toAddMonoid.{0} Real
+                    (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup))))
+                (@DistribMulAction.toDistribSMul.{0, 0} Real Real
+                  (@MonoidWithZero.toMonoid.{0} Real
+                    (@Semiring.toMonoidWithZero.{0} Real
+                      (@DivisionSemiring.toSemiring.{0} Real
+                        (@Semifield.toDivisionSemiring.{0} Real
+                          (@Field.toSemifield.{0} Real
+                            (@NormedField.toField.{0} Real
+                              (@NontriviallyNormedField.toNormedField.{0} Real
+                                (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+                  (@SubNegMonoid.toAddMonoid.{0} Real
+                    (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))
+                  (@Module.toDistribMulAction.{0, 0} Real Real
+                    (@DivisionSemiring.toSemiring.{0} Real
+                      (@Semifield.toDivisionSemiring.{0} Real
+                        (@Field.toSemifield.{0} Real
+                          (@NormedField.toField.{0} Real
+                            (@NontriviallyNormedField.toNormedField.{0} Real
+                              (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+                    (@AddCommGroup.toAddCommMonoid.{0} Real Real.instAddCommGroup)
+                    (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                            (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                      (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                        (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))))))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                    (@SeminormedCommRing.toSeminormedRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real
+                        (@NormedField.toNormedCommRing.{0} Real
+                          (@NontriviallyNormedField.toNormedField.{0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+              (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+                (@UniformSpace.toTopologicalSpace.{0} Real
+                  (@PseudoMetricSpace.toUniformSpace.{0} Real
+                    (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                      (@SeminormedCommRing.toSeminormedRing.{0} Real
+                        (@NormedCommRing.toSeminormedCommRing.{0} Real
+                          (@NormedField.toNormedCommRing.{0} Real
+                            (@NontriviallyNormedField.toNormedField.{0} Real
+                              (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                    (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                      (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+                instIsTopologicalRingReal)))
+          f (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) t)
+  (t : Real) :
+  @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real) (@Set.Icc.{0} Real Real.instPreorder a b)
+      t →
+    @Eq.{1} Real (f t) (f a)
+'BfgsVerification.AffineSupportPath.constant_on_Icc_of_hasDerivAt_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.constant_on_Icc_of_hasDerivAt_zero_off_finset {f : Real → Real} (s : Finset.{0} Real)
+  {a b : Real}
+  (hc :
+    @ContinuousOn.{0, 0} Real Real
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace)) f
+      (@Set.Icc.{0} Real Real.instPreorder a b))
+  (hd :
+    ∀ (t : Real),
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioo.{0} Real Real.instPreorder a b) t →
+        Not (@Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) s t) →
+          @HasDerivAt.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.instAddCommGroup
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            (@IsModuleTopology.toContinuousSMul.{0, 0} Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                    (@SeminormedCommRing.toSeminormedRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real
+                        (@NormedField.toNormedCommRing.{0} Real
+                          (@NontriviallyNormedField.toNormedField.{0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+              Real Real.instAdd
+              (@SMulZeroClass.toSMul.{0, 0} Real Real
+                (@AddZeroClass.toZero.{0} Real
+                  (@AddMonoid.toAddZeroClass.{0} Real
+                    (@SubNegMonoid.toAddMonoid.{0} Real
+                      (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))))
+                (@DistribSMul.toSMulZeroClass.{0, 0} Real Real
+                  (@AddMonoid.toAddZeroClass.{0} Real
+                    (@SubNegMonoid.toAddMonoid.{0} Real
+                      (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup))))
+                  (@DistribMulAction.toDistribSMul.{0, 0} Real Real
+                    (@MonoidWithZero.toMonoid.{0} Real
+                      (@Semiring.toMonoidWithZero.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                    Real.denselyNormedField))))))))
+                    (@SubNegMonoid.toAddMonoid.{0} Real
+                      (@AddGroup.toSubNegMonoid.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)))
+                    (@Module.toDistribMulAction.{0, 0} Real Real
+                      (@DivisionSemiring.toSemiring.{0} Real
+                        (@Semifield.toDivisionSemiring.{0} Real
+                          (@Field.toSemifield.{0} Real
+                            (@NormedField.toField.{0} Real
+                              (@NontriviallyNormedField.toNormedField.{0} Real
+                                (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+                      (@AddCommGroup.toAddCommMonoid.{0} Real Real.instAddCommGroup)
+                      (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                              (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                                (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))))))
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              (@IsTopologicalSemiring.toIsModuleTopology.{0} Real Real.semiring
+                (@UniformSpace.toTopologicalSpace.{0} Real
+                  (@PseudoMetricSpace.toUniformSpace.{0} Real
+                    (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                      (@SeminormedCommRing.toSeminormedRing.{0} Real
+                        (@NormedCommRing.toSeminormedCommRing.{0} Real
+                          (@NormedField.toNormedCommRing.{0} Real
+                            (@NontriviallyNormedField.toNormedField.{0} Real
+                              (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+                (@IsTopologicalRing.toIsTopologicalSemiring.{0} Real
+                  (@UniformSpace.toTopologicalSpace.{0} Real
+                    (@PseudoMetricSpace.toUniformSpace.{0} Real
+                      (@SeminormedRing.toPseudoMetricSpace.{0} Real
+                        (@SeminormedCommRing.toSeminormedRing.{0} Real
+                          (@NormedCommRing.toSeminormedCommRing.{0} Real
+                            (@NormedField.toNormedCommRing.{0} Real
+                              (@NontriviallyNormedField.toNormedField.{0} Real
+                                (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))))
+                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Real
+                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Real
+                      (@NonUnitalNormedCommRing.toNonUnitalCommRing.{0} Real
+                        (@NormedCommRing.toNonUnitalNormedCommRing.{0} Real Real.normedCommRing))))
+                  instIsTopologicalRingReal)))
+            f (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) t)
+  (t : Real) :
+  @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real) (@Set.Icc.{0} Real Real.instPreorder a b)
+      t →
+    @Eq.{1} Real (f t) (f a)
+'BfgsVerification.AffineSupportPath.constant_on_Icc_of_hasDerivAt_zero_off_finset' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.objective_constant_on_piecewise_differentiable_path {n : Nat}
+  {F : BfgsVerification.Vec n → Real}
+  (hF :
+    @ConvexOn.{0, 0, 0} Real (BfgsVerification.Vec n) Real Real.semiring Real.partialOrder
+      (@Pi.addCommMonoid.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommMonoid)
+      Real.instAddCommMonoid Real.partialOrder
+      (@Function.hasSMul.{0, 0, 0} (Fin n) Real Real
+        (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+          (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring) (@Algebra.id.{0} Real Real.instCommSemiring)))
+      (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+        (@Algebra.id.{0} Real Real.instCommSemiring))
+      (@Set.univ.{0} (BfgsVerification.Vec n)) F)
+  {p : Real → BfgsVerification.Vec n} {a b : Real} (s : Finset.{0} Real)
+  (hp :
+    @ContinuousOn.{0, 0} Real (BfgsVerification.Vec n)
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      (@Pi.topologicalSpace.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+        @UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      p (@Set.Icc.{0} Real Real.instPreorder a b))
+  (hac :
+    ∀ (t : Real),
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioo.{0} Real Real.instPreorder a b) t →
+        @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F (p t))
+  (hdp :
+    ∀ (t : Real),
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioo.{0} Real Real.instPreorder a b) t →
+        Not (@Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) s t) →
+          @DifferentiableAt.{0, 0, 0} Real
+            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            (BfgsVerification.Vec n)
+            (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+            (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real
+              (@DivisionSemiring.toSemiring.{0} Real
+                (@Semifield.toDivisionSemiring.{0} Real
+                  (@Field.toSemifield.{0} Real
+                    (@NormedField.toField.{0} Real
+                      (@NontriviallyNormedField.toNormedField.{0} Real
+                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField))))))
+              (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+                (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+                  (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+              (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                        (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                  (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+            (@Pi.topologicalSpace.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+              @UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            p t)
+  (hdF :
+    ∀ (t : Real),
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioo.{0} Real Real.instPreorder a b) t →
+        Not (@Membership.mem.{0, 0} Real (Finset.{0} Real) (@Finset.instMembership.{0} Real) s t) →
+          @DifferentiableAt.{0, 0, 0} Real
+            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real Real.instAddCommGroup
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            Real Real.instAddCommGroup
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike)))
+            (@UniformSpace.toTopologicalSpace.{0} Real
+              (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+            (@Function.comp.{1, 1, 1} Real (BfgsVerification.Vec n) Real F p) t)
+  (t : Real) :
+  @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real) (@Set.Icc.{0} Real Real.instPreorder a b)
+      t →
+    @Eq.{1} Real (F (p t)) (F (p a))
+'BfgsVerification.AffineSupportPath.objective_constant_on_piecewise_differentiable_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.finite_set_gap_above {S : Set.{0} Real} (hS : @Set.Finite.{0} Real S) (v : Real) :
+  @Exists.{1} Real fun (ε : Real) =>
+    And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
+      (∀ (a : Real),
+        @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real) S a →
+          @LT.lt.{0} Real Real.instLT v a →
+            @LE.le.{0} Real Real.instLE (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd) v ε) a)
+'BfgsVerification.AffineSupportPath.finite_set_gap_above' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_values {n : Nat}
+  {F : BfgsVerification.Vec n → Real}
+  (hfinite :
+    @Set.Finite.{0} Real
+      (@Set.image.{0, 0} (BfgsVerification.Vec n) Real F
+        (@setOf.{0} (BfgsVerification.Vec n) fun (p : BfgsVerification.Vec n) =>
+          @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F p)))
+  (star : BfgsVerification.Vec n) (hmin : ∀ (x : BfgsVerification.Vec n), @LE.le.{0} Real Real.instLE (F star) (F x)) :
+  @Exists.{1} Real fun (ε : Real) =>
+    And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
+      (∀ (p : BfgsVerification.Vec n),
+        @LT.lt.{0} Real Real.instLT (F p)
+            (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd) (F star) ε) →
+          @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F p →
+            @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+              (@Set.instMembership.{0} (BfgsVerification.Vec n))
+              (@BfgsVerification.ConvexSubdifferential.subdifferential n F p)
+              (@OfNat.ofNat.{0} (BfgsVerification.Vec n) 0
+                (@Zero.toOfNat0.{0} (BfgsVerification.Vec n)
+                  (@Pi.instZero.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instZero))))
+'BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_values' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.affine_representation_bounded {n : Nat} {S : Set.{0} (BfgsVerification.Vec n)}
+  {z : BfgsVerification.Vec n}
+  (hz :
+    @Membership.mem.{0, 0} (BfgsVerification.Vec n)
+      (@AffineSubspace.{0, 0, 0} Real (Fin n → Real) (BfgsVerification.Vec n) Real.instRing
+        (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+        (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real (@Ring.toSemiring.{0} Real Real.instRing)
+          (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+            (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+              (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+          (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+        (@Finset.instAddTorsorForall.{0, 0} Real Real.instRing (Fin n)))
+      (@SetLike.instMembership.{0, 0}
+        (@AffineSubspace.{0, 0, 0} Real (Fin n → Real) (BfgsVerification.Vec n) Real.instRing
+          (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+          (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real (@Ring.toSemiring.{0} Real Real.instRing)
+            (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+              (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+                (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+          (@Finset.instAddTorsorForall.{0, 0} Real Real.instRing (Fin n)))
+        (BfgsVerification.Vec n)
+        (@AffineSubspace.instSetLike.{0, 0, 0} Real (Fin n → Real) (BfgsVerification.Vec n) Real.instRing
+          (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+          (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real (@Ring.toSemiring.{0} Real Real.instRing)
+            (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+              (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+                (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+            (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                      (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+          (@Finset.instAddTorsorForall.{0, 0} Real Real.instRing (Fin n))))
+      (@affineSpan.{0, 0, 0} Real (Fin n → Real) (BfgsVerification.Vec n) Real.instRing
+        (@Pi.addCommGroup.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommGroup)
+        (@Pi.Function.module.{0, 0, 0} (Fin n) Real Real (@Ring.toSemiring.{0} Real Real.instRing)
+          (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Real
+            (@NonUnitalSemiring.toNonUnitalNonAssocSemiring.{0} Real
+              (@Semiring.toNonUnitalSemiring.{0} Real (@Ring.toSemiring.{0} Real Real.instRing))))
+          (@NormedSpace.toModule.{0, 0} Real Real Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                  (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Real
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Real
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Real
+                    (@NormedCommRing.toSeminormedCommRing.{0} Real Real.normedCommRing))))
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))))
+        (@Finset.instAddTorsorForall.{0, 0} Real Real.instRing (Fin n)) S)
+      z) :
+  @Exists.{1} Nat fun (m : Nat) =>
+    And (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat 0 (instOfNatNat 0)) m)
+      (And
+        (@LE.le.{0} Nat instLENat m
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n (@OfNat.ofNat.{0} Nat 1 (instOfNatNat 1))))
+        (@Exists.{1} (Fin m → BfgsVerification.Vec n) fun (g : Fin m → BfgsVerification.Vec n) =>
+          @Exists.{1} (Fin m → Real) fun (w : Fin m → Real) =>
+            And
+              (∀ (i : Fin m),
+                @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+                  (@Set.instMembership.{0} (BfgsVerification.Vec n)) S (g i))
+              (And
+                (@Eq.{1} Real
+                  (@Finset.sum.{0, 0} (Fin m) Real Real.instAddCommMonoid (@Finset.univ.{0} (Fin m) (Fin.fintype m))
+                    fun (i : Fin m) => w i)
+                  (@OfNat.ofNat.{0} Real 1 (@One.toOfNat1.{0} Real Real.instOne)))
+                (@Eq.{1} (BfgsVerification.Vec n)
+                  (@Finset.sum.{0, 0} (Fin m) (BfgsVerification.Vec n)
+                    (@Pi.addCommMonoid.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+                      Real.instAddCommMonoid)
+                    (@Finset.univ.{0} (Fin m) (Fin.fintype m)) fun (i : Fin m) =>
+                    @HSMul.hSMul.{0, 0, 0} Real (BfgsVerification.Vec n) (BfgsVerification.Vec n)
+                      (@instHSMul.{0, 0} Real (BfgsVerification.Vec n)
+                        (@Function.hasSMul.{0, 0, 0} (Fin n) Real Real
+                          (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+                            (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+                            (@Algebra.id.{0} Real Real.instCommSemiring))))
+                      (w i) (g i))
+                  z))))
+'BfgsVerification.AffineSupportPath.affine_representation_bounded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.isAffineCritical_iff_bounded_supports {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (x : BfgsVerification.Vec n) :
+  Iff (@BfgsVerification.AffineCriticalObjective.IsAffineCritical n F x)
+    (@Exists.{1} Nat fun (m : Nat) =>
+      And (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat 0 (instOfNatNat 0)) m)
+        (And
+          (@LE.le.{0} Nat instLENat m
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat 1 (instOfNatNat 1))))
+          (@Exists.{1} (Fin m → BfgsVerification.Vec n) fun (g : Fin m → BfgsVerification.Vec n) =>
+            @Exists.{1} (Fin m → Real) fun (w : Fin m → Real) =>
+              And (∀ (i : Fin m), @BfgsVerification.Homogeneous.Supports n F x (g i))
+                (And
+                  (@Eq.{1} Real
+                    (@Finset.sum.{0, 0} (Fin m) Real Real.instAddCommMonoid (@Finset.univ.{0} (Fin m) (Fin.fintype m))
+                      fun (i : Fin m) => w i)
+                    (@OfNat.ofNat.{0} Real 1 (@One.toOfNat1.{0} Real Real.instOne)))
+                  (@Eq.{1} (BfgsVerification.Vec n)
+                    (@Finset.sum.{0, 0} (Fin m) (BfgsVerification.Vec n)
+                      (@Pi.addCommMonoid.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) =>
+                        Real.instAddCommMonoid)
+                      (@Finset.univ.{0} (Fin m) (Fin.fintype m)) fun (i : Fin m) =>
+                      @HSMul.hSMul.{0, 0, 0} Real (BfgsVerification.Vec n) (BfgsVerification.Vec n)
+                        (@instHSMul.{0, 0} Real (BfgsVerification.Vec n)
+                          (@Function.hasSMul.{0, 0, 0} (Fin n) Real Real
+                            (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+                              (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+                              (@Algebra.id.{0} Real Real.instCommSemiring))))
+                        (w i) (g i))
+                    (@OfNat.ofNat.{0} (BfgsVerification.Vec n) 0
+                      (@Zero.toOfNat0.{0} (BfgsVerification.Vec n)
+                        (@Pi.instZero.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instZero))))))))
+'BfgsVerification.AffineSupportPath.isAffineCritical_iff_bounded_supports' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn {n : Nat} (F : BfgsVerification.Vec n → Real)
+  (S : Set.{0} (BfgsVerification.Vec n)) (x y : BfgsVerification.Vec n) : Prop
+'BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.value_eq_of_affineCritical_path {n : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF :
+    @ConvexOn.{0, 0, 0} Real (BfgsVerification.Vec n) Real Real.semiring Real.partialOrder
+      (@Pi.addCommMonoid.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommMonoid)
+      Real.instAddCommMonoid Real.partialOrder
+      (@Function.hasSMul.{0, 0, 0} (Fin n) Real Real
+        (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+          (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring) (@Algebra.id.{0} Real Real.instCommSemiring)))
+      (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+        (@Algebra.id.{0} Real Real.instCommSemiring))
+      (@Set.univ.{0} (BfgsVerification.Vec n)) F)
+  {S : Set.{0} (BfgsVerification.Vec n)}
+  (hS :
+    ∀ (x : BfgsVerification.Vec n),
+      @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+          (@Set.instMembership.{0} (BfgsVerification.Vec n)) S x →
+        @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F x)
+  {x y : BfgsVerification.Vec n} (hp : @BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn n F S x y) :
+  @Eq.{1} Real (F x) (F y)
+'BfgsVerification.AffineSupportPath.value_eq_of_affineCritical_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.finite_values_of_finite_path_cover {n m : Nat} {F : BfgsVerification.Vec n → Real}
+  (hF :
+    @ConvexOn.{0, 0, 0} Real (BfgsVerification.Vec n) Real Real.semiring Real.partialOrder
+      (@Pi.addCommMonoid.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommMonoid)
+      Real.instAddCommMonoid Real.partialOrder
+      (@Function.hasSMul.{0, 0, 0} (Fin n) Real Real
+        (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+          (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring) (@Algebra.id.{0} Real Real.instCommSemiring)))
+      (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+        (@Algebra.id.{0} Real Real.instCommSemiring))
+      (@Set.univ.{0} (BfgsVerification.Vec n)) F)
+  (C : Fin m → Set.{0} (BfgsVerification.Vec n))
+  (hcover :
+    @Eq.{1} (Set.{0} (BfgsVerification.Vec n))
+      (@setOf.{0} (BfgsVerification.Vec n) fun (p : BfgsVerification.Vec n) =>
+        @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F p)
+      (@Set.iUnion.{0, 1} (BfgsVerification.Vec n) (Fin m) fun (i : Fin m) => C i))
+  (hpaths :
+    ∀ (i : Fin m) (x : BfgsVerification.Vec n),
+      @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+          (@Set.instMembership.{0} (BfgsVerification.Vec n)) (C i) x →
+        ∀ (y : BfgsVerification.Vec n),
+          @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+              (@Set.instMembership.{0} (BfgsVerification.Vec n)) (C i) y →
+            @BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn n F (C i) x y) :
+  @Set.Finite.{0} Real
+    (@Set.image.{0, 0} (BfgsVerification.Vec n) Real F
+      (@setOf.{0} (BfgsVerification.Vec n) fun (p : BfgsVerification.Vec n) =>
+        @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F p))
+'BfgsVerification.AffineSupportPath.finite_values_of_finite_path_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_path_cover {n m : Nat}
+  {F : BfgsVerification.Vec n → Real}
+  (hF :
+    @ConvexOn.{0, 0, 0} Real (BfgsVerification.Vec n) Real Real.semiring Real.partialOrder
+      (@Pi.addCommMonoid.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instAddCommMonoid)
+      Real.instAddCommMonoid Real.partialOrder
+      (@Function.hasSMul.{0, 0, 0} (Fin n) Real Real
+        (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring
+          (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring) (@Algebra.id.{0} Real Real.instCommSemiring)))
+      (@Algebra.toSMul.{0, 0} Real Real Real.instCommSemiring (@CommSemiring.toSemiring.{0} Real Real.instCommSemiring)
+        (@Algebra.id.{0} Real Real.instCommSemiring))
+      (@Set.univ.{0} (BfgsVerification.Vec n)) F)
+  (C : Fin m → Set.{0} (BfgsVerification.Vec n))
+  (hcover :
+    @Eq.{1} (Set.{0} (BfgsVerification.Vec n))
+      (@setOf.{0} (BfgsVerification.Vec n) fun (p : BfgsVerification.Vec n) =>
+        @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F p)
+      (@Set.iUnion.{0, 1} (BfgsVerification.Vec n) (Fin m) fun (i : Fin m) => C i))
+  (hpaths :
+    ∀ (i : Fin m) (x : BfgsVerification.Vec n),
+      @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+          (@Set.instMembership.{0} (BfgsVerification.Vec n)) (C i) x →
+        ∀ (y : BfgsVerification.Vec n),
+          @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+              (@Set.instMembership.{0} (BfgsVerification.Vec n)) (C i) y →
+            @BfgsVerification.AffineSupportPath.PiecewiseDifferentiablePathIn n F (C i) x y)
+  (star : BfgsVerification.Vec n) (hmin : ∀ (x : BfgsVerification.Vec n), @LE.le.{0} Real Real.instLE (F star) (F x)) :
+  @Exists.{1} Real fun (ε : Real) =>
+    And (@LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real 0 (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
+      (∀ (p : BfgsVerification.Vec n),
+        @LT.lt.{0} Real Real.instLT (F p)
+            (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd) (F star) ε) →
+          @BfgsVerification.AffineCriticalObjective.IsAffineCritical n F p →
+            @Membership.mem.{0, 0} (BfgsVerification.Vec n) (Set.{0} (BfgsVerification.Vec n))
+              (@Set.instMembership.{0} (BfgsVerification.Vec n))
+              (@BfgsVerification.ConvexSubdifferential.subdifferential n F p)
+              (@OfNat.ofNat.{0} (BfgsVerification.Vec n) 0
+                (@Zero.toOfNat0.{0} (BfgsVerification.Vec n)
+                  (@Pi.instZero.{0, 0} (Fin n) (fun (a : Fin n) => Real) fun (i : Fin n) => Real.instZero))))
+'BfgsVerification.AffineSupportPath.low_level_affine_correct_of_finite_path_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

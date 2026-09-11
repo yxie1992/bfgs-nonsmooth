@@ -1,0 +1,423 @@
+BfgsVerification.ScaledCopy.Data {n : ℕ} (Q F : BfgsVerification.Vec n → ℝ) (c : BfgsVerification.Vec n) (C : ℝ)
+  (U : Set (BfgsVerification.Vec n)) : Prop
+'BfgsVerification.ScaledCopy.Data' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.model_offset {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U) (m : ℕ)
+  (y : BfgsVerification.Vec n) (hy : y ∈ U) :
+  F (BfgsVerification.LScalarGeometric.scale m • c + BfgsVerification.LScalarGeometric.scale m • y) =
+    BfgsVerification.LScalarGeometric.scale m ^ 2 * C + BfgsVerification.LScalarGeometric.scale m ^ 2 * Q y
+'BfgsVerification.ScaledCopy.Data.model_offset' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.transferData {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m : ℕ) :
+  BfgsVerification.TranslatedRun.Data R F (BfgsVerification.LScalarGeometric.scale m • c)
+    (BfgsVerification.LScalarGeometric.scale m) (BfgsVerification.LScalarGeometric.scale m ^ 2 * C)
+'BfgsVerification.ScaledCopy.Data.transferData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m : ℕ) :
+  BfgsVerification.AdmissibleBFGSRun n F
+'BfgsVerification.ScaledCopy.Data.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_x {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) :
+  (D.run R hx m).x k = BfgsVerification.LScalarGeometric.scale m • c + BfgsVerification.LScalarGeometric.scale m • R.x k
+'BfgsVerification.ScaledCopy.Data.run_x' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_H {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) : (D.run R hx m).H k = R.H k
+'BfgsVerification.ScaledCopy.Data.run_H' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_g {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) :
+  (D.run R hx m).g k = BfgsVerification.LScalarGeometric.scale m • R.g k
+'BfgsVerification.ScaledCopy.Data.run_g' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_alpha {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) : (D.run R hx m).α k = R.α k
+'BfgsVerification.ScaledCopy.Data.run_alpha' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_value {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) :
+  F ((D.run R hx m).x k) = BfgsVerification.LScalarGeometric.scale m ^ 2 * (C + Q (R.x k))
+'BfgsVerification.ScaledCopy.Data.run_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_tendsto {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U)
+  (ht : Filter.Tendsto R.x Filter.atTop (nhds 0)) (m : ℕ) :
+  Filter.Tendsto (D.run R hx m).x Filter.atTop (nhds (BfgsVerification.LScalarGeometric.scale m • c))
+'BfgsVerification.ScaledCopy.Data.run_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_values_tendsto {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {c : BfgsVerification.Vec n} {C : ℝ} {U : Set (BfgsVerification.Vec n)}
+  (D : BfgsVerification.ScaledCopy.Data Q F c C U) (R : BfgsVerification.AdmissibleBFGSRun n Q)
+  (hx : ∀ (k : ℕ), R.x k ∈ U) (ht : Filter.Tendsto (fun k => Q (R.x k)) Filter.atTop (nhds 0)) (m : ℕ) :
+  Filter.Tendsto (fun k => F ((D.run R hx m).x k)) Filter.atTop
+    (nhds (BfgsVerification.LScalarGeometric.scale m ^ 2 * C))
+'BfgsVerification.ScaledCopy.Data.run_values_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.run_values_above_limit {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {c : BfgsVerification.Vec n} {C : ℝ} {U : Set (BfgsVerification.Vec n)}
+  (D : BfgsVerification.ScaledCopy.Data Q F c C U) (R : BfgsVerification.AdmissibleBFGSRun n Q)
+  (hx : ∀ (k : ℕ), R.x k ∈ U) (hp : ∀ (k : ℕ), 0 < Q (R.x k)) (m k : ℕ) :
+  BfgsVerification.LScalarGeometric.scale m ^ 2 * C < F ((D.run R hx m).x k)
+'BfgsVerification.ScaledCopy.Data.run_values_above_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.starts_tendsto_zero {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {c : BfgsVerification.Vec n} {C : ℝ} {U : Set (BfgsVerification.Vec n)}
+  (D : BfgsVerification.ScaledCopy.Data Q F c C U) (R : BfgsVerification.AdmissibleBFGSRun n Q)
+  (hx : ∀ (k : ℕ), R.x k ∈ U) : Filter.Tendsto (fun m => (D.run R hx m).x 0) Filter.atTop (nhds 0)
+'BfgsVerification.ScaledCopy.Data.starts_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.search_transfer {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (fuel : ℕ)
+  (hq :
+    ∀ (k : ℕ),
+      ∀ a ∈ (BfgsVerification.DeterministicLineSearch.fromMetric Q (R.x k) (R.H k) R.c₁ R.c₂ fuel).2,
+        R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈ U ∧
+          DifferentiableAt ℝ Q (R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1))
+  (m k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric F ((D.run R hx m).x k) ((D.run R hx m).H k) R.c₁ R.c₂ fuel =
+    BfgsVerification.DeterministicLineSearch.fromMetric Q (R.x k) (R.H k) R.c₁ R.c₂ fuel
+'BfgsVerification.ScaledCopy.Data.search_transfer' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.query_identity {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) (a : ℝ) :
+  (D.run R hx m).x k + a • BfgsVerification.bfgsStep ((D.run R hx m).H k) ((D.run R hx m).g k) 1 =
+    BfgsVerification.LScalarGeometric.scale m • c +
+      BfgsVerification.LScalarGeometric.scale m • (R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+'BfgsVerification.ScaledCopy.Data.query_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.query_hasGradient {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {c : BfgsVerification.Vec n} {C : ℝ} {U : Set (BfgsVerification.Vec n)}
+  (D : BfgsVerification.ScaledCopy.Data Q F c C U) (R : BfgsVerification.AdmissibleBFGSRun n Q)
+  (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) (a : ℝ) (hU : R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈ U)
+  (hd : DifferentiableAt ℝ Q (R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1)) :
+  HasFDerivAt F
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.LScalarGeometric.scale m •
+        BfgsVerification.coordinateGradient Q (R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1)))
+    ((D.run R hx m).x k + a • BfgsVerification.bfgsStep ((D.run R hx m).H k) ((D.run R hx m).g k) 1)
+'BfgsVerification.ScaledCopy.Data.query_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.query_value {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) (a : ℝ)
+  (hU : R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈ U) :
+  F ((D.run R hx m).x k + a • BfgsVerification.bfgsStep ((D.run R hx m).H k) ((D.run R hx m).g k) 1) =
+    BfgsVerification.LScalarGeometric.scale m ^ 2 * (C + Q (R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1))
+'BfgsVerification.ScaledCopy.Data.query_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.query_norm_bound {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {c : BfgsVerification.Vec n} {C : ℝ} {U : Set (BfgsVerification.Vec n)}
+  (D : BfgsVerification.ScaledCopy.Data Q F c C U) (R : BfgsVerification.AdmissibleBFGSRun n Q)
+  (hx : ∀ (k : ℕ), R.x k ∈ U) (m k : ℕ) (a M : ℝ) (hb : ‖R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1‖ ≤ M) :
+  ‖(D.run R hx m).x k + a • BfgsVerification.bfgsStep ((D.run R hx m).H k) ((D.run R hx m).g k) 1‖ ≤
+    BfgsVerification.LScalarGeometric.scale m * (‖c‖ + M)
+'BfgsVerification.ScaledCopy.Data.query_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.all_queries_uniformly_small {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {c : BfgsVerification.Vec n} {C : ℝ} {U : Set (BfgsVerification.Vec n)}
+  (D : BfgsVerification.ScaledCopy.Data Q F c C U) (R : BfgsVerification.AdmissibleBFGSRun n Q)
+  (hx : ∀ (k : ℕ), R.x k ∈ U) (fuel : ℕ) (M : ℝ)
+  (hb :
+    ∀ (k : ℕ),
+      ∀ a ∈ (BfgsVerification.DeterministicLineSearch.fromMetric Q (R.x k) (R.H k) R.c₁ R.c₂ fuel).2,
+        ‖R.x k + a • BfgsVerification.bfgsStep (R.H k) (R.g k) 1‖ ≤ M)
+  {ε : ℝ} (hε : 0 < ε) :
+  ∀ᶠ (m : ℕ) in Filter.atTop,
+    ∀ (k : ℕ),
+      ∀ a ∈ (BfgsVerification.DeterministicLineSearch.fromMetric Q (R.x k) (R.H k) R.c₁ R.c₂ fuel).2,
+        ‖(D.run R hx m).x k + a • BfgsVerification.bfgsStep ((D.run R hx m).H k) ((D.run R hx m).g k) 1‖ < ε
+'BfgsVerification.ScaledCopy.Data.all_queries_uniformly_small' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ScaledCopy.Data.queries_tendsto {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (D : BfgsVerification.ScaledCopy.Data Q F c C U)
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (hx : ∀ (k : ℕ), R.x k ∈ U) (m : ℕ) (a : ℕ → ℝ)
+  (ht : Filter.Tendsto (fun k => R.x k + a k • BfgsVerification.bfgsStep (R.H k) (R.g k) 1) Filter.atTop (nhds 0)) :
+  Filter.Tendsto
+    (fun k => (D.run R hx m).x k + a k • BfgsVerification.bfgsStep ((D.run R hx m).H k) ((D.run R hx m).g k) 1)
+    Filter.atTop (nhds (BfgsVerification.LScalarGeometric.scale m • c))
+'BfgsVerification.ScaledCopy.Data.queries_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.trial_history_witness (j : Fin 3) {a : ℝ}
+  (ha : a ∈ BfgsVerification.SeedOrbit.trialHistory j) :
+  ∃ q, BfgsVerification.SeedOrbit.trialPhase q = j ∧ BfgsVerification.SeedOrbit.trialLength q = a
+'BfgsVerification.SeedOrbit.trial_history_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SeedOrbit.query_in_history (q : Fin 9) :
+  BfgsVerification.SeedOrbit.trialLength q ∈
+    BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.trialPhase q)
+'BfgsVerification.SeedOrbit.query_in_history' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.data : BfgsVerification.LFlatten.Data BfgsVerification.LEmbedding.mu (1 / 10000) (1 / 2)
+'BfgsVerification.LSeedCopies.data' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.data_spec :
+  Filter.Tendsto BfgsVerification.LSeedCopies.data.state Filter.atTop (nhds BfgsVerification.LNormalizedReturn.seed) ∧
+    (∀ (k : ℕ), BfgsVerification.LSeedCopies.data.x k ∈ BfgsVerification.LEmbedding.localDomain) ∧
+      ∀ (k : ℕ) (q : Fin 9),
+        BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+          BfgsVerification.LSeedCopies.data.x k +
+              BfgsVerification.SeedOrbit.trialLength q •
+                BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.data.H k)
+                  (BfgsVerification.LSeedCopies.data.g k) 1 ∈
+            BfgsVerification.LEmbedding.localDomain
+'BfgsVerification.LSeedCopies.data_spec' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run :
+  BfgsVerification.AdmissibleBFGSRun 2 (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu)
+'BfgsVerification.LSeedCopies.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.point_in (k : ℕ) :
+  BfgsVerification.LSeedCopies.run.x k ∈ BfgsVerification.LEmbedding.localDomain
+'BfgsVerification.LSeedCopies.point_in' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run_point_limit : Filter.Tendsto BfgsVerification.LSeedCopies.run.x Filter.atTop (nhds 0)
+'BfgsVerification.LSeedCopies.run_point_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run_matrix_limit : Filter.Tendsto BfgsVerification.LSeedCopies.run.H Filter.atTop (nhds 0)
+'BfgsVerification.LSeedCopies.run_matrix_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run_value_limit :
+  Filter.Tendsto
+    (fun k =>
+      BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu (BfgsVerification.LSeedCopies.run.x k))
+    Filter.atTop (nhds 0)
+'BfgsVerification.LSeedCopies.run_value_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run_value_positive (k : ℕ) :
+  0 < BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu (BfgsVerification.LSeedCopies.run.x k)
+'BfgsVerification.LSeedCopies.run_value_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run_search (k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric
+      (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu) (BfgsVerification.LSeedCopies.run.x k)
+      (BfgsVerification.LSeedCopies.run.H k) BfgsVerification.LSeedCopies.run.c₁ BfgsVerification.LSeedCopies.run.c₂ 5 =
+    (some (BfgsVerification.LSeedCopies.run.α k),
+      BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.LSeedCopies.run_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.run_query_conditions (k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  BfgsVerification.LSeedCopies.run.x k +
+        BfgsVerification.SeedOrbit.trialLength q •
+          BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k) 1 ∈
+      BfgsVerification.LEmbedding.localDomain ∧
+    DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu)
+      (BfgsVerification.LSeedCopies.run.x k +
+        BfgsVerification.SeedOrbit.trialLength q •
+          BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k) 1)
+'BfgsVerification.LSeedCopies.run_query_conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.history_query_conditions (k : ℕ) (a : ℝ)
+  (ha :
+    a ∈
+      (BfgsVerification.DeterministicLineSearch.fromMetric
+          (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu)
+          (BfgsVerification.LSeedCopies.run.x k) (BfgsVerification.LSeedCopies.run.H k)
+          BfgsVerification.LSeedCopies.run.c₁ BfgsVerification.LSeedCopies.run.c₂ 5).2) :
+  BfgsVerification.LSeedCopies.run.x k +
+        a • BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k) 1 ∈
+      BfgsVerification.LEmbedding.localDomain ∧
+    DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu)
+      (BfgsVerification.LSeedCopies.run.x k +
+        a • BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k) 1)
+'BfgsVerification.LSeedCopies.history_query_conditions' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.history_query_norm (k : ℕ) (a : ℝ)
+  (ha :
+    a ∈
+      (BfgsVerification.DeterministicLineSearch.fromMetric
+          (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu)
+          (BfgsVerification.LSeedCopies.run.x k) (BfgsVerification.LSeedCopies.run.H k)
+          BfgsVerification.LSeedCopies.run.c₁ BfgsVerification.LSeedCopies.run.c₂ 5).2) :
+  ‖BfgsVerification.LSeedCopies.run.x k +
+        a • BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k) 1‖ ≤
+    1
+'BfgsVerification.LSeedCopies.history_query_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LSeedCopies.query_tendsto (q : ℕ → Fin 9)
+  (hq : ∀ (k : ℕ), BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) :
+  Filter.Tendsto
+    (fun k =>
+      BfgsVerification.LSeedCopies.run.x k +
+        BfgsVerification.SeedOrbit.trialLength (q k) •
+          BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k) 1)
+    Filter.atTop (nhds 0)
+'BfgsVerification.LSeedCopies.query_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.CopyData (F : BfgsVerification.Vec 2 → ℝ) : Prop
+'BfgsVerification.LActualCopies.CopyData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.smoothData :
+  BfgsVerification.LActualCopies.CopyData BfgsVerification.LEmbedding.objective
+'BfgsVerification.LActualCopies.smoothData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.stepData :
+  BfgsVerification.LActualCopies.CopyData BfgsVerification.LStepEmbedding.objective
+'BfgsVerification.LActualCopies.stepData' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.family {F : BfgsVerification.Vec 2 → ℝ} (D : BfgsVerification.LActualCopies.CopyData F)
+  (m : ℕ) : BfgsVerification.AdmissibleBFGSRun 2 F
+'BfgsVerification.LActualCopies.family' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.point_formula {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  (BfgsVerification.LActualCopies.family D m).x k =
+    BfgsVerification.LEmbedding.copyCenter m +
+      BfgsVerification.LScalarGeometric.scale m • BfgsVerification.LSeedCopies.run.x k
+'BfgsVerification.LActualCopies.point_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.matrix_formula {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  (BfgsVerification.LActualCopies.family D m).H k = BfgsVerification.LSeedCopies.run.H k
+'BfgsVerification.LActualCopies.matrix_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.gradient_formula {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  (BfgsVerification.LActualCopies.family D m).g k =
+    BfgsVerification.LScalarGeometric.scale m • BfgsVerification.LSeedCopies.run.g k
+'BfgsVerification.LActualCopies.gradient_formula' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.actual_parameters {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  (BfgsVerification.LActualCopies.family D m).c₁ = 1 / 10000 ∧
+    (BfgsVerification.LActualCopies.family D m).c₂ = 1 / 2 ∧
+      ∀ (k : ℕ),
+        (BfgsVerification.LActualCopies.family D m).α k =
+          BfgsVerification.SeedOrbit.length (BfgsVerification.SeedOrbit.phase k)
+'BfgsVerification.LActualCopies.actual_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.point_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  Filter.Tendsto (BfgsVerification.LActualCopies.family D m).x Filter.atTop
+    (nhds (BfgsVerification.LEmbedding.copyCenter m))
+'BfgsVerification.LActualCopies.point_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.matrix_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  Filter.Tendsto (BfgsVerification.LActualCopies.family D m).H Filter.atTop (nhds 0)
+'BfgsVerification.LActualCopies.matrix_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.value_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) :
+  Filter.Tendsto (fun k => F ((BfgsVerification.LActualCopies.family D m).x k)) Filter.atTop
+    (nhds (BfgsVerification.LScalarGeometric.scale m ^ 2 * BfgsVerification.LEmbedding.offset))
+'BfgsVerification.LActualCopies.value_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.values_above_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  BfgsVerification.LScalarGeometric.scale m ^ 2 * BfgsVerification.LEmbedding.offset <
+    F ((BfgsVerification.LActualCopies.family D m).x k)
+'BfgsVerification.LActualCopies.values_above_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.starts_tendsto {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) :
+  Filter.Tendsto (fun m => (BfgsVerification.LActualCopies.family D m).x 0) Filter.atTop (nhds 0)
+'BfgsVerification.LActualCopies.starts_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.actual_search {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  BfgsVerification.DeterministicLineSearch.fromMetric F ((BfgsVerification.LActualCopies.family D m).x k)
+      ((BfgsVerification.LActualCopies.family D m).H k) (1 / 10000) (1 / 2) 5 =
+    (some ((BfgsVerification.LActualCopies.family D m).α k),
+      BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))
+'BfgsVerification.LActualCopies.actual_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.trial_hasGradient {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  HasFDerivAt F
+    (BfgsVerification.gradientFunctional
+      (BfgsVerification.LScalarGeometric.scale m •
+        BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu)
+          (BfgsVerification.LSeedCopies.run.x k +
+            BfgsVerification.SeedOrbit.trialLength q •
+              BfgsVerification.bfgsStep (BfgsVerification.LSeedCopies.run.H k) (BfgsVerification.LSeedCopies.run.g k)
+                1)))
+    ((BfgsVerification.LActualCopies.family D m).x k +
+      BfgsVerification.SeedOrbit.trialLength q •
+        BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+          ((BfgsVerification.LActualCopies.family D m).g k) 1)
+'BfgsVerification.LActualCopies.trial_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.trial_value_positive {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  0 <
+    F
+      ((BfgsVerification.LActualCopies.family D m).x k +
+        BfgsVerification.SeedOrbit.trialLength q •
+          BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+            ((BfgsVerification.LActualCopies.family D m).g k) 1)
+'BfgsVerification.LActualCopies.trial_value_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.trials_limit {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ) (q : ℕ → Fin 9)
+  (hq : ∀ (k : ℕ), BfgsVerification.SeedOrbit.trialPhase (q k) = BfgsVerification.SeedOrbit.phase k) :
+  Filter.Tendsto
+    (fun k =>
+      (BfgsVerification.LActualCopies.family D m).x k +
+        BfgsVerification.SeedOrbit.trialLength (q k) •
+          BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+            ((BfgsVerification.LActualCopies.family D m).g k) 1)
+    Filter.atTop (nhds (BfgsVerification.LEmbedding.copyCenter m))
+'BfgsVerification.LActualCopies.trials_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.strict_accept {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  F ((BfgsVerification.LActualCopies.family D m).x (k + 1)) <
+      F ((BfgsVerification.LActualCopies.family D m).x k) +
+        1 / 10000 *
+          BfgsVerification.dot ((BfgsVerification.LActualCopies.family D m).g k)
+            (BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+              ((BfgsVerification.LActualCopies.family D m).g k) ((BfgsVerification.LActualCopies.family D m).α k)) ∧
+    1 / 2 *
+        BfgsVerification.dot ((BfgsVerification.LActualCopies.family D m).g k)
+          (BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+            ((BfgsVerification.LActualCopies.family D m).g k) ((BfgsVerification.LActualCopies.family D m).α k)) <
+      BfgsVerification.dot ((BfgsVerification.LActualCopies.family D m).g (k + 1))
+        (BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+          ((BfgsVerification.LActualCopies.family D m).g k) ((BfgsVerification.LActualCopies.family D m).α k))
+'BfgsVerification.LActualCopies.strict_accept' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.centers_nonstationary {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (hF0 : F 0 = 0) (m : ℕ) :
+  0 ∉ BfgsVerification.ConvexSubdifferential.subdifferential F (BfgsVerification.LEmbedding.copyCenter m)
+'BfgsVerification.LActualCopies.centers_nonstationary' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.uniformBound (m : ℕ) : ℝ
+'BfgsVerification.LActualCopies.uniformBound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.uniformBound_tendsto :
+  Filter.Tendsto BfgsVerification.LActualCopies.uniformBound Filter.atTop (nhds 0)
+'BfgsVerification.LActualCopies.uniformBound_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.point_norm_bound {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) :
+  ‖(BfgsVerification.LActualCopies.family D m).x k‖ ≤ BfgsVerification.LActualCopies.uniformBound m
+'BfgsVerification.LActualCopies.point_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.trial_norm_bound {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ) (q : Fin 9)
+  (hq : BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k) :
+  ‖(BfgsVerification.LActualCopies.family D m).x k +
+        BfgsVerification.SeedOrbit.trialLength q •
+          BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+            ((BfgsVerification.LActualCopies.family D m).g k) 1‖ ≤
+    BfgsVerification.LActualCopies.uniformBound m
+'BfgsVerification.LActualCopies.trial_norm_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.uniform_locality {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (U : Set (BfgsVerification.Vec 2)) (hU : U ∈ nhds 0) :
+  ∃ N,
+    ∀ m ≥ N,
+      ∀ (k : ℕ),
+        (BfgsVerification.LActualCopies.family D m).x k ∈ U ∧
+          ∀ (q : Fin 9),
+            BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+              (BfgsVerification.LActualCopies.family D m).x k +
+                  BfgsVerification.SeedOrbit.trialLength q •
+                    BfgsVerification.bfgsStep ((BfgsVerification.LActualCopies.family D m).H k)
+                      ((BfgsVerification.LActualCopies.family D m).g k) 1 ∈
+                U
+'BfgsVerification.LActualCopies.uniform_locality' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_last_second_hasFDerivAt (x : BfgsVerification.Vec 2) :
+  HasFDerivAt (fderiv ℝ (BfgsVerification.LEmbedding.branch 3))
+    (BfgsVerification.LEmbedding.mu • BfgsVerification.LQuadraticSeed.pairingMap) x
+'BfgsVerification.LEmbedding.branch_last_second_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LEmbedding.branch_last_hessian (x : BfgsVerification.Vec 2) :
+  BfgsVerification.RadialHessian.matrix (BfgsVerification.LEmbedding.branch 3) x = BfgsVerification.LEmbedding.mu • 1
+'BfgsVerification.LEmbedding.branch_last_hessian' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.FixedMetricFailureTarget (F : BfgsVerification.Vec 2 → ℝ) : Prop
+'BfgsVerification.LActualCopies.FixedMetricFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.fixed_metric_failure {F : BfgsVerification.Vec 2 → ℝ}
+  (D : BfgsVerification.LActualCopies.CopyData F) (hF0 : F 0 = 0) :
+  BfgsVerification.LActualCopies.FixedMetricFailureTarget F
+'BfgsVerification.LActualCopies.fixed_metric_failure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.SmoothFailureTarget : Prop
+'BfgsVerification.LActualCopies.SmoothFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.smoothFailure : BfgsVerification.LActualCopies.SmoothFailureTarget
+'BfgsVerification.LActualCopies.smoothFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.StepFailureTarget : Prop
+'BfgsVerification.LActualCopies.StepFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.LActualCopies.stepFailure : BfgsVerification.LActualCopies.StepFailureTarget
+'BfgsVerification.LActualCopies.stepFailure' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.mk {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (convex : ConvexOn ℝ Set.univ F) (open_domain : IsOpen U)
+  (model :
+    ∀ (m : ℕ),
+      ∀ y ∈ U,
+        F (BfgsVerification.LScalarGeometric.scale m • c + BfgsVerification.LScalarGeometric.scale m • y) =
+          BfgsVerification.LScalarGeometric.scale m ^ 2 * (C + Q y)) :
+  BfgsVerification.ScaledCopy.Data Q F c C U
+'BfgsVerification.ScaledCopy.Data.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.convex {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (self : BfgsVerification.ScaledCopy.Data Q F c C U) : ConvexOn ℝ Set.univ F
+'BfgsVerification.ScaledCopy.Data.convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.open_domain {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n}
+  {C : ℝ} {U : Set (BfgsVerification.Vec n)} (self : BfgsVerification.ScaledCopy.Data Q F c C U) : IsOpen U
+'BfgsVerification.ScaledCopy.Data.open_domain' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ScaledCopy.Data.model {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ} {c : BfgsVerification.Vec n} {C : ℝ}
+  {U : Set (BfgsVerification.Vec n)} (self : BfgsVerification.ScaledCopy.Data Q F c C U) (m : ℕ)
+  (y : BfgsVerification.Vec n) :
+  y ∈ U →
+    F (BfgsVerification.LScalarGeometric.scale m • c + BfgsVerification.LScalarGeometric.scale m • y) =
+      BfgsVerification.LScalarGeometric.scale m ^ 2 * (C + Q y)
+'BfgsVerification.ScaledCopy.Data.model' depends on axioms: [propext, Classical.choice, Quot.sound]

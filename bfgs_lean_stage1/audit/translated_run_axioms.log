@@ -1,0 +1,122 @@
+BfgsVerification.TranslatedRun.point {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (p : BfgsVerification.Vec n) (t : ℝ) (k : ℕ) : BfgsVerification.Vec n
+'BfgsVerification.TranslatedRun.point' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.gradient {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (t : ℝ) (k : ℕ) : BfgsVerification.Vec n
+'BfgsVerification.TranslatedRun.gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.Data {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (F : BfgsVerification.Vec n → ℝ) (p : BfgsVerification.Vec n) (t A : ℝ) :
+  Prop
+'BfgsVerification.TranslatedRun.Data' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.point_step {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (p : BfgsVerification.Vec n) (t : ℝ) (k : ℕ) :
+  BfgsVerification.TranslatedRun.point R p t (k + 1) =
+    BfgsVerification.TranslatedRun.point R p t k +
+      BfgsVerification.bfgsStep (R.H k) (BfgsVerification.TranslatedRun.gradient R t k) (R.α k)
+'BfgsVerification.TranslatedRun.point_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.matrix_update {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) {t : ℝ} (ht : t ≠ 0) (k : ℕ) :
+  R.H (k + 1) =
+    BfgsVerification.inverseBFGS (R.H k)
+      (BfgsVerification.bfgsStep (R.H k) (BfgsVerification.TranslatedRun.gradient R t k) (R.α k))
+      (BfgsVerification.TranslatedRun.gradient R t (k + 1) - BfgsVerification.TranslatedRun.gradient R t k)
+'BfgsVerification.TranslatedRun.matrix_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.scaled_pairing {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) (t : ℝ) (j k : ℕ) :
+  BfgsVerification.dot (BfgsVerification.TranslatedRun.gradient R t j)
+      (BfgsVerification.bfgsStep (R.H k) (BfgsVerification.TranslatedRun.gradient R t k) (R.α k)) =
+    t ^ 2 * BfgsVerification.dot (R.g j) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))
+'BfgsVerification.TranslatedRun.scaled_pairing' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.run {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {p : BfgsVerification.Vec n} {t A : ℝ}
+  (D : BfgsVerification.TranslatedRun.Data R F p t A) (ht : t ≠ 0) : BfgsVerification.AdmissibleBFGSRun n F
+'BfgsVerification.TranslatedRun.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.point_tendsto {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n Q) {z : BfgsVerification.Vec n}
+  (hz : Filter.Tendsto R.x Filter.atTop (nhds z)) (p : BfgsVerification.Vec n) (t : ℝ) :
+  Filter.Tendsto (BfgsVerification.TranslatedRun.point R p t) Filter.atTop (nhds (p + t • z))
+'BfgsVerification.TranslatedRun.point_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.value_tendsto {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {p : BfgsVerification.Vec n} {t A q : ℝ}
+  (D : BfgsVerification.TranslatedRun.Data R F p t A) (hq : Filter.Tendsto (fun k => Q (R.x k)) Filter.atTop (nhds q)) :
+  Filter.Tendsto (fun k => F (BfgsVerification.TranslatedRun.point R p t k)) Filter.atTop (nhds (A + t ^ 2 * q))
+'BfgsVerification.TranslatedRun.value_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.local_model_hasGradient {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U) {p x g : BfgsVerification.Vec n} {t A : ℝ} (ht : t ≠ 0)
+  (hx : x ∈ U) (hmodel : ∀ y ∈ U, F (p + t • y) = A + t ^ 2 * Q y)
+  (hg : HasFDerivAt Q (BfgsVerification.gradientFunctional g) x) :
+  HasFDerivAt F (BfgsVerification.gradientFunctional (t • g)) (p + t • x)
+'BfgsVerification.TranslatedRun.local_model_hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.data_of_local_model {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U)
+  {p : BfgsVerification.Vec n} {t A : ℝ} (ht : t ≠ 0) (hF : ConvexOn ℝ Set.univ F) (hx : ∀ (k : ℕ), R.x k ∈ U)
+  (hmodel : ∀ y ∈ U, F (p + t • y) = A + t ^ 2 * Q y) : BfgsVerification.TranslatedRun.Data R F p t A
+'BfgsVerification.TranslatedRun.data_of_local_model' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.DeterministicLineSearch.search_history_congr {n : ℕ} (Q F : BfgsVerification.Vec n → ℝ)
+  (x p g u v h : BfgsVerification.Vec n) (c₁ c₂ : ℝ) (fuel : ℕ) (l : ℝ) (upper : Option ℝ) (a : ℝ)
+  (hc :
+    ∀ b ∈ (BfgsVerification.DeterministicLineSearch.search Q x p g c₁ c₂ fuel l upper a).2,
+      (BfgsVerification.DeterministicLineSearch.Armijo F u v h c₁ b ↔
+          BfgsVerification.DeterministicLineSearch.Armijo Q x p g c₁ b) ∧
+        (BfgsVerification.DeterministicLineSearch.Wolfe F u v h c₂ b ↔
+          BfgsVerification.DeterministicLineSearch.Wolfe Q x p g c₂ b)) :
+  BfgsVerification.DeterministicLineSearch.search F u v h c₁ c₂ fuel l upper a =
+    BfgsVerification.DeterministicLineSearch.search Q x p g c₁ c₂ fuel l upper a
+'BfgsVerification.DeterministicLineSearch.search_history_congr' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.TranslatedRun.translated_trial {n : ℕ} (p x d : BfgsVerification.Vec n) (t a : ℝ) :
+  p + t • x + a • t • d = p + t • (x + a • d)
+'BfgsVerification.TranslatedRun.translated_trial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.translated_comparisons {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {p x d g : BfgsVerification.Vec n} {t A a c₁ c₂ : ℝ} (ht : t ≠ 0) (hbase : F (p + t • x) = A + t ^ 2 * Q x)
+  (htrial : F (p + t • (x + a • d)) = A + t ^ 2 * Q (x + a • d))
+  (hgrad :
+    BfgsVerification.coordinateGradient F (p + t • (x + a • d)) =
+      t • BfgsVerification.coordinateGradient Q (x + a • d)) :
+  (BfgsVerification.DeterministicLineSearch.Armijo F (p + t • x) (t • d) (t • g) c₁ a ↔
+      BfgsVerification.DeterministicLineSearch.Armijo Q x d g c₁ a) ∧
+    (BfgsVerification.DeterministicLineSearch.Wolfe F (p + t • x) (t • d) (t • g) c₂ a ↔
+      BfgsVerification.DeterministicLineSearch.Wolfe Q x d g c₂ a)
+'BfgsVerification.TranslatedRun.translated_comparisons' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.translated_query_gradient {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U) {p z g : BfgsVerification.Vec n} {t A : ℝ} (ht : t ≠ 0)
+  (hz : z ∈ U) (hmodel : ∀ y ∈ U, F (p + t • y) = A + t ^ 2 * Q y)
+  (hg : HasFDerivAt Q (BfgsVerification.gradientFunctional g) z) :
+  BfgsVerification.coordinateGradient F (p + t • z) = t • BfgsVerification.coordinateGradient Q z
+'BfgsVerification.TranslatedRun.translated_query_gradient' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.local_model_search {n : ℕ} {Q F : BfgsVerification.Vec n → ℝ}
+  {U : Set (BfgsVerification.Vec n)} (hU : IsOpen U) {p x g : BfgsVerification.Vec n} {H : BfgsVerification.Mat n}
+  {t A c₁ c₂ : ℝ} (ht : t ≠ 0) (hx : x ∈ U) (hg : HasFDerivAt Q (BfgsVerification.gradientFunctional g) x) (fuel : ℕ)
+  (hmodel : ∀ y ∈ U, F (p + t • y) = A + t ^ 2 * Q y)
+  (hqueries :
+    ∀ a ∈ (BfgsVerification.DeterministicLineSearch.fromMetric Q x H c₁ c₂ fuel).2,
+      x + a • BfgsVerification.bfgsStep H g 1 ∈ U ∧ DifferentiableAt ℝ Q (x + a • BfgsVerification.bfgsStep H g 1)) :
+  BfgsVerification.DeterministicLineSearch.fromMetric F (p + t • x) H c₁ c₂ fuel =
+    BfgsVerification.DeterministicLineSearch.fromMetric Q x H c₁ c₂ fuel
+'BfgsVerification.TranslatedRun.local_model_search' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.Data.mk {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {F : BfgsVerification.Vec n → ℝ} {p : BfgsVerification.Vec n} {t A : ℝ}
+  (convex : ConvexOn ℝ Set.univ F)
+  (value : ∀ (k : ℕ), F (BfgsVerification.TranslatedRun.point R p t k) = A + t ^ 2 * Q (R.x k))
+  (hasGradient :
+    ∀ (k : ℕ),
+      HasFDerivAt F (BfgsVerification.gradientFunctional (BfgsVerification.TranslatedRun.gradient R t k))
+        (BfgsVerification.TranslatedRun.point R p t k)) :
+  BfgsVerification.TranslatedRun.Data R F p t A
+'BfgsVerification.TranslatedRun.Data.mk' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.Data.convex {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {F : BfgsVerification.Vec n → ℝ} {p : BfgsVerification.Vec n} {t A : ℝ}
+  (self : BfgsVerification.TranslatedRun.Data R F p t A) : ConvexOn ℝ Set.univ F
+'BfgsVerification.TranslatedRun.Data.convex' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.Data.value {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {F : BfgsVerification.Vec n → ℝ} {p : BfgsVerification.Vec n} {t A : ℝ}
+  (self : BfgsVerification.TranslatedRun.Data R F p t A) (k : ℕ) :
+  F (BfgsVerification.TranslatedRun.point R p t k) = A + t ^ 2 * Q (R.x k)
+'BfgsVerification.TranslatedRun.Data.value' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.TranslatedRun.Data.hasGradient {n : ℕ} {Q : BfgsVerification.Vec n → ℝ}
+  {R : BfgsVerification.AdmissibleBFGSRun n Q} {F : BfgsVerification.Vec n → ℝ} {p : BfgsVerification.Vec n} {t A : ℝ}
+  (self : BfgsVerification.TranslatedRun.Data R F p t A) (k : ℕ) :
+  HasFDerivAt F (BfgsVerification.gradientFunctional (BfgsVerification.TranslatedRun.gradient R t k))
+    (BfgsVerification.TranslatedRun.point R p t k)
+'BfgsVerification.TranslatedRun.Data.hasGradient' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,202 @@
+import BfgsVerification.LEmbeddingGeometryTargets
+
+#check BfgsVerification.LEmbedding.mu
+#print axioms BfgsVerification.LEmbedding.mu
+#check BfgsVerification.LEmbedding.center
+#print axioms BfgsVerification.LEmbedding.center
+#check BfgsVerification.LEmbedding.slope
+#print axioms BfgsVerification.LEmbedding.slope
+#check BfgsVerification.LEmbedding.parameter
+#print axioms BfgsVerification.LEmbedding.parameter
+#check BfgsVerification.LEmbedding.residualBranch
+#print axioms BfgsVerification.LEmbedding.residualBranch
+#check BfgsVerification.LEmbedding.residual
+#print axioms BfgsVerification.LEmbedding.residual
+#check BfgsVerification.LEmbedding.branch
+#print axioms BfgsVerification.LEmbedding.branch
+#check BfgsVerification.LEmbedding.objective
+#print axioms BfgsVerification.LEmbedding.objective
+#check BfgsVerification.LEmbedding.mu_pos
+#print axioms BfgsVerification.LEmbedding.mu_pos
+#check BfgsVerification.LEmbedding.center_sqNorm
+#print axioms BfgsVerification.LEmbedding.center_sqNorm
+#check BfgsVerification.LEmbedding.slope_first
+#print axioms BfgsVerification.LEmbedding.slope_first
+#check BfgsVerification.LEmbedding.slope_second
+#print axioms BfgsVerification.LEmbedding.slope_second
+#check BfgsVerification.LEmbedding.slope_third
+#print axioms BfgsVerification.LEmbedding.slope_third
+#check BfgsVerification.LEmbedding.parameter_first
+#print axioms BfgsVerification.LEmbedding.parameter_first
+#check BfgsVerification.LEmbedding.parameter_second
+#print axioms BfgsVerification.LEmbedding.parameter_second
+#check BfgsVerification.LEmbedding.parameter_third
+#print axioms BfgsVerification.LEmbedding.parameter_third
+#check BfgsVerification.LEmbedding.parameter_bounds
+#print axioms BfgsVerification.LEmbedding.parameter_bounds
+#check BfgsVerification.LEmbedding.residualBranch_old
+#print axioms BfgsVerification.LEmbedding.residualBranch_old
+#check BfgsVerification.LEmbedding.residualBranch_last
+#print axioms BfgsVerification.LEmbedding.residualBranch_last
+#check BfgsVerification.LEmbedding.residualBranch_le
+#print axioms BfgsVerification.LEmbedding.residualBranch_le
+#check BfgsVerification.LEmbedding.residual_le
+#print axioms BfgsVerification.LEmbedding.residual_le
+#check BfgsVerification.LEmbedding.branch_le
+#print axioms BfgsVerification.LEmbedding.branch_le
+#check BfgsVerification.LEmbedding.objective_le
+#print axioms BfgsVerification.LEmbedding.objective_le
+#check BfgsVerification.LEmbedding.objective_eq_max
+#print axioms BfgsVerification.LEmbedding.objective_eq_max
+#check BfgsVerification.LEmbedding.ridge_convex
+#print axioms BfgsVerification.LEmbedding.ridge_convex
+#check BfgsVerification.LEmbedding.residualBranch_convex
+#print axioms BfgsVerification.LEmbedding.residualBranch_convex
+#check BfgsVerification.LEmbedding.residual_convex
+#print axioms BfgsVerification.LEmbedding.residual_convex
+#check BfgsVerification.LEmbedding.branch_convex
+#print axioms BfgsVerification.LEmbedding.branch_convex
+#check BfgsVerification.LEmbedding.objective_convex
+#print axioms BfgsVerification.LEmbedding.objective_convex
+#check BfgsVerification.LEmbedding.branch_strongConvex
+#print axioms BfgsVerification.LEmbedding.branch_strongConvex
+#check BfgsVerification.LEmbedding.objective_strongConvex
+#print axioms BfgsVerification.LEmbedding.objective_strongConvex
+#check BfgsVerification.LEmbedding.residual_nonnegative
+#print axioms BfgsVerification.LEmbedding.residual_nonnegative
+#check BfgsVerification.LEmbedding.objective_lower
+#print axioms BfgsVerification.LEmbedding.objective_lower
+#check BfgsVerification.LEmbedding.residualBranch_zero
+#print axioms BfgsVerification.LEmbedding.residualBranch_zero
+#check BfgsVerification.LEmbedding.residual_zero
+#print axioms BfgsVerification.LEmbedding.residual_zero
+#check BfgsVerification.LEmbedding.objective_zero
+#print axioms BfgsVerification.LEmbedding.objective_zero
+#check BfgsVerification.LEmbedding.objective_nonnegative
+#print axioms BfgsVerification.LEmbedding.objective_nonnegative
+#check BfgsVerification.LEmbedding.objective_unique_zero
+#print axioms BfgsVerification.LEmbedding.objective_unique_zero
+#check BfgsVerification.LEmbedding.objective_sublevels_compact
+#print axioms BfgsVerification.LEmbedding.objective_sublevels_compact
+#check BfgsVerification.LEmbedding.scalar_derivative_lipschitz
+#print axioms BfgsVerification.LEmbedding.scalar_derivative_lipschitz
+#check BfgsVerification.LEmbedding.ridgeGradient
+#print axioms BfgsVerification.LEmbedding.ridgeGradient
+#check BfgsVerification.LEmbedding.residualGradient
+#print axioms BfgsVerification.LEmbedding.residualGradient
+#check BfgsVerification.LEmbedding.branchGradient
+#print axioms BfgsVerification.LEmbedding.branchGradient
+#check BfgsVerification.LEmbedding.ridge_hasGradient
+#print axioms BfgsVerification.LEmbedding.ridge_hasGradient
+#check BfgsVerification.LEmbedding.residual_hasGradient
+#print axioms BfgsVerification.LEmbedding.residual_hasGradient
+#check BfgsVerification.LEmbedding.branch_hasGradient
+#print axioms BfgsVerification.LEmbedding.branch_hasGradient
+#check BfgsVerification.LEmbedding.ridge_contDiff
+#print axioms BfgsVerification.LEmbedding.ridge_contDiff
+#check BfgsVerification.LEmbedding.residualBranch_contDiff
+#print axioms BfgsVerification.LEmbedding.residualBranch_contDiff
+#check BfgsVerification.LEmbedding.branch_contDiff
+#print axioms BfgsVerification.LEmbedding.branch_contDiff
+#check BfgsVerification.LEmbedding.residualGradient_zero
+#print axioms BfgsVerification.LEmbedding.residualGradient_zero
+#check BfgsVerification.LEmbedding.branchGradient_zero
+#print axioms BfgsVerification.LEmbedding.branchGradient_zero
+#check BfgsVerification.LEmbedding.objective_not_differentiable_zero
+#print axioms BfgsVerification.LEmbedding.objective_not_differentiable_zero
+#check BfgsVerification.LEmbedding.slope_third_sqNorm_bound
+#print axioms BfgsVerification.LEmbedding.slope_third_sqNorm_bound
+#check BfgsVerification.LEmbedding.parameter_third_gt
+#print axioms BfgsVerification.LEmbedding.parameter_third_gt
+#check BfgsVerification.LEmbedding.gradientBound
+#print axioms BfgsVerification.LEmbedding.gradientBound
+#check BfgsVerification.LEmbedding.gradientBound_pos
+#print axioms BfgsVerification.LEmbedding.gradientBound_pos
+#check BfgsVerification.LEmbedding.gradientBound_source
+#print axioms BfgsVerification.LEmbedding.gradientBound_source
+#check BfgsVerification.LEmbedding.gradientBound_le_512
+#print axioms BfgsVerification.LEmbedding.gradientBound_le_512
+#check BfgsVerification.LEmbedding.ridge_gradient_bound
+#print axioms BfgsVerification.LEmbedding.ridge_gradient_bound
+#check BfgsVerification.LEmbedding.add_scalar_sqNorm_bound
+#print axioms BfgsVerification.LEmbedding.add_scalar_sqNorm_bound
+#check BfgsVerification.LEmbedding.branch_old_gradient_bound
+#print axioms BfgsVerification.LEmbedding.branch_old_gradient_bound
+#check BfgsVerification.LEmbedding.branch_gradient_bound
+#print axioms BfgsVerification.LEmbedding.branch_gradient_bound
+#check BfgsVerification.LEmbedding.copyCenter
+#print axioms BfgsVerification.LEmbedding.copyCenter
+#check BfgsVerification.LEmbedding.copyPoint
+#print axioms BfgsVerification.LEmbedding.copyPoint
+#check BfgsVerification.LEmbedding.offset
+#print axioms BfgsVerification.LEmbedding.offset
+#check BfgsVerification.LEmbedding.localDomain
+#print axioms BfgsVerification.LEmbedding.localDomain
+#check BfgsVerification.LEmbedding.localDomain_open
+#print axioms BfgsVerification.LEmbedding.localDomain_open
+#check BfgsVerification.LEmbedding.zero_mem_localDomain
+#print axioms BfgsVerification.LEmbedding.zero_mem_localDomain
+#check BfgsVerification.LEmbedding.localDomain_nhds
+#print axioms BfgsVerification.LEmbedding.localDomain_nhds
+#check BfgsVerification.LEmbedding.copy_argument
+#print axioms BfgsVerification.LEmbedding.copy_argument
+#check BfgsVerification.LEmbedding.scalar_copy
+#print axioms BfgsVerification.LEmbedding.scalar_copy
+#check BfgsVerification.LEmbedding.old_residual_copy_positive
+#print axioms BfgsVerification.LEmbedding.old_residual_copy_positive
+#check BfgsVerification.LEmbedding.last_residual_copy_negative
+#print axioms BfgsVerification.LEmbedding.last_residual_copy_negative
+#check BfgsVerification.LEmbedding.quadratic_copy
+#print axioms BfgsVerification.LEmbedding.quadratic_copy
+#check BfgsVerification.LEmbedding.branch_copy
+#print axioms BfgsVerification.LEmbedding.branch_copy
+#check BfgsVerification.LEmbedding.seed_branch_le
+#print axioms BfgsVerification.LEmbedding.seed_branch_le
+#check BfgsVerification.LEmbedding.local_model
+#print axioms BfgsVerification.LEmbedding.local_model
+#check BfgsVerification.LEmbedding.offset_pos
+#print axioms BfgsVerification.LEmbedding.offset_pos
+#check BfgsVerification.LEmbedding.center_value
+#print axioms BfgsVerification.LEmbedding.center_value
+#check BfgsVerification.LEmbedding.center_value_pos
+#print axioms BfgsVerification.LEmbedding.center_value_pos
+#check BfgsVerification.LEmbedding.copyCenter_tendsto
+#print axioms BfgsVerification.LEmbedding.copyCenter_tendsto
+#check BfgsVerification.LEmbedding.copyPoint_tendsto
+#print axioms BfgsVerification.LEmbedding.copyPoint_tendsto
+#check BfgsVerification.LEmbedding.objective_isGreatest
+#print axioms BfgsVerification.LEmbedding.objective_isGreatest
+#check BfgsVerification.LEmbedding.localFiniteMax
+#print axioms BfgsVerification.LEmbedding.localFiniteMax
+#check BfgsVerification.LEmbedding.local_upper_taylor
+#print axioms BfgsVerification.LEmbedding.local_upper_taylor
+#check BfgsVerification.LEmbedding.actual_hessian_bounds
+#print axioms BfgsVerification.LEmbedding.actual_hessian_bounds
+#check BfgsVerification.LEmbedding.branch_old_actual_hessian_bounds
+#print axioms BfgsVerification.LEmbedding.branch_old_actual_hessian_bounds
+#check BfgsVerification.LEmbedding.branch_zero
+#print axioms BfgsVerification.LEmbedding.branch_zero
+#check BfgsVerification.LEmbedding.objective_nested_max
+#print axioms BfgsVerification.LEmbedding.objective_nested_max
+#check BfgsVerification.LEmbedding.branch_ray_hasDerivAt_zero
+#print axioms BfgsVerification.LEmbedding.branch_ray_hasDerivAt_zero
+#check BfgsVerification.LEmbedding.objective_directional_derivative_zero
+#print axioms BfgsVerification.LEmbedding.objective_directional_derivative_zero
+#check BfgsVerification.LEmbedding.center_nonstationary
+#print axioms BfgsVerification.LEmbedding.center_nonstationary
+#check BfgsVerification.LEmbedding.RegularityTarget
+#print axioms BfgsVerification.LEmbedding.RegularityTarget
+#check BfgsVerification.LEmbedding.regularity
+#print axioms BfgsVerification.LEmbedding.regularity
+#check BfgsVerification.LEmbedding.OriginTarget
+#print axioms BfgsVerification.LEmbedding.OriginTarget
+#check BfgsVerification.LEmbedding.origin
+#print axioms BfgsVerification.LEmbedding.origin
+#check BfgsVerification.LEmbedding.HessianTarget
+#print axioms BfgsVerification.LEmbedding.HessianTarget
+#check BfgsVerification.LEmbedding.hessian
+#print axioms BfgsVerification.LEmbedding.hessian
+#check BfgsVerification.LEmbedding.LocalModelTarget
+#print axioms BfgsVerification.LEmbedding.LocalModelTarget
+#check BfgsVerification.LEmbedding.localModel
+#print axioms BfgsVerification.LEmbedding.localModel
