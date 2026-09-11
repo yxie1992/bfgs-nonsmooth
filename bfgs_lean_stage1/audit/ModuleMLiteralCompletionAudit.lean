@@ -1,0 +1,59 @@
+import BfgsVerification.PrincipalCombinatorialIdentity
+import BfgsVerification.SharpPotentialDegree
+import BfgsVerification.SharpPotentialTargets
+import Lean
+
+#check BfgsVerification.insert_product_sum_eq
+#print axioms BfgsVerification.insert_product_sum_eq
+#check BfgsVerification.principal_product_augmented_sum_eq
+#print axioms BfgsVerification.principal_product_augmented_sum_eq
+#check BfgsVerification.diagonal_coordinate_gram_sum_eq
+#print axioms BfgsVerification.diagonal_coordinate_gram_sum_eq
+#check BfgsVerification.orthogonal_coordinate_gram_sum_eq
+#print axioms BfgsVerification.orthogonal_coordinate_gram_sum_eq
+#check BfgsVerification.PrincipalGramSumIdentityTarget
+#print axioms BfgsVerification.PrincipalGramSumIdentityTarget
+#check BfgsVerification.principalGramSumIdentity
+#print axioms BfgsVerification.principalGramSumIdentity
+#check BfgsVerification.SharpPotentialDegree.potentialPolynomial
+#print axioms BfgsVerification.SharpPotentialDegree.potentialPolynomial
+#check BfgsVerification.SharpPotentialDegree.potentialPolynomial_eval
+#print axioms BfgsVerification.SharpPotentialDegree.potentialPolynomial_eval
+#check BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree
+#print axioms BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree
+#check BfgsVerification.SharpPotentialDegree.weightedPotential_mul_le_pred
+#print axioms BfgsVerification.SharpPotentialDegree.weightedPotential_mul_le_pred
+#check BfgsVerification.SharpPotentialDegree.optimized_potential_eq_polynomial
+#print axioms BfgsVerification.SharpPotentialDegree.optimized_potential_eq_polynomial
+#check BfgsVerification.SharpPotentialDegree.principal_optimized_polynomial
+#print axioms BfgsVerification.SharpPotentialDegree.principal_optimized_polynomial
+#check BfgsVerification.SharpPotentialDegree.principal_optimized_bound
+#print axioms BfgsVerification.SharpPotentialDegree.principal_optimized_bound
+#check BfgsVerification.SharpPotentialDegree.run_optimized_bound
+#print axioms BfgsVerification.SharpPotentialDegree.run_optimized_bound
+#check BfgsVerification.SharpPotentialDegree.shifted_potential_root_tendsto
+#print axioms BfgsVerification.SharpPotentialDegree.shifted_potential_root_tendsto
+#check BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto
+#print axioms BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto
+#check BfgsVerification.SharpPrincipalPotentialTarget
+#print axioms BfgsVerification.SharpPrincipalPotentialTarget
+#check BfgsVerification.sharpPrincipalPotential
+#print axioms BfgsVerification.sharpPrincipalPotential
+
+#print BfgsVerification.PrincipalGramSumIdentityTarget
+example : BfgsVerification.PrincipalGramSumIdentityTarget := BfgsVerification.principalGramSumIdentity
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.principalGramSumIdentity
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.PrincipalGramSumIdentityTarget)
+  unless ok do throwError "Exact target type mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.principalGramSumIdentity"
+
+#print BfgsVerification.SharpPrincipalPotentialTarget
+example : BfgsVerification.SharpPrincipalPotentialTarget := BfgsVerification.sharpPrincipalPotential
+open Lean Elab Command in
+run_cmd do
+  let info ← getConstInfo `BfgsVerification.sharpPrincipalPotential
+  let ok ← liftTermElabM <| Meta.isDefEq info.type (mkConst `BfgsVerification.SharpPrincipalPotentialTarget)
+  unless ok do throwError "Exact target type mismatch"
+  logInfo "EXACT_TARGET_OK BfgsVerification.sharpPrincipalPotential"

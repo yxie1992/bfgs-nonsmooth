@@ -6,12 +6,12 @@ The entire report is still in progress. The execution plan is
 [ENTIRE_REPORT_PLAN.md](ENTIRE_REPORT_PLAN.md); the source coverage and remaining
 claims are in [audit/REPORT_STATUS.json](audit/REPORT_STATUS.json).
 
-The pinned Lean 4.19.0 build and transitive axiom audit checked all 5,111 explicit
-theorems and 7,684 theorem declarations including generated auxiliaries. All 249
+The pinned Lean 4.19.0 build and transitive axiom audit checked all 5,126 explicit
+theorems and 7,704 theorem declarations including generated auxiliaries. All 251
 registered exact targets passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` occur; no placeholders or unchecked mathematical computations are
 used. Current logs are `audit/build.log`, `audit/axioms.log`, and
-`audit/report_semialgebraic_path_check.log`.
+`audit/report_literal_foundation_check.log`.
 
 The original research sources are unchanged. The pre-work draft and report were
 committed and pushed as `2c8bb60`. Historical environment-failure logs describe the
@@ -73,6 +73,10 @@ low gap, C's tame basins and D's last literal consequences. See
 The seventeenth tranche proves A's literal semialgebraic path graphs, actual
 path classes and general objective-composition regularity. See
 [audit/REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md](audit/REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md).
+The eighteenth tranche closes M's literal Gram-sum identity and sharp potential
+degree/root limit. The complete audit uses the independently checked shared
+dependency graph and preserves the ordinary target/axiom checks. See
+[audit/REPORT_LITERAL_FOUNDATION_STATEMENT_REVIEW.md](audit/REPORT_LITERAL_FOUNDATION_STATEMENT_REVIEW.md).
 Historical execution/source-attribution exceptions remain unverified.
 R's old four-piece numerical attribution remains explicitly unresolved; the
 supporting-plane interpretation is proved for the actual current D objective.
@@ -201,9 +205,10 @@ For subsequent checks:
 python3 scripts/check.py
 ```
 
-The checker allows up to 7,200 seconds per build or audit command. The
-complete inventory takes substantially longer than the former ten-minute
-default; use `--timeout SECONDS` to change the limit.
+The checker allows up to 7,200 seconds per build or audit command; use
+`--timeout SECONDS` to change the limit. The shared dependency graph avoids
+repeated full traversal of the same proof dependencies. Complete ordinary
+audit comparisons and source checks are preserved as implementation evidence.
 
 After the audit output log has closed and intended delivery files have been
 staged in Git, `python3 scripts/manifest.py` regenerates their artifact hashes in

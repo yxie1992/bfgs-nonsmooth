@@ -28,10 +28,11 @@ principal submatrix determinants.
 | M1.7 Eigenbasis Gram summation bound | `diagonal_coordinate_gram_det`, `diagonal_coordinate_gram_sum_le`; `PrincipalCombinatorics.lean` |
 | M1.8 Assembly without assumed determinant identities | `principalMinorHierarchy : PrincipalMinorHierarchyTarget` |
 
-The source's combinatorial equality is not separately exported. The proof checks
-the needed inequality directly by inserting a missing index into a coordinate
-subset and bounding nonnegative omitted terms. This changes the proof route,
-not the hierarchy's statement or constants. Larger Gram matrices and projected
+The original hierarchy proof establishes the needed inequality directly by
+inserting a missing index and bounding nonnegative omitted terms. Its statement
+and constants remain unchanged. The source's literal combinatorial equality is
+now separately proved by `principalGramSumIdentity`, including the constructed
+actual-SPD eigenbasis and actual augmented Gram determinants. Larger Gram matrices and projected
 compressions may be singular; only the SPD base compression is inverted.
 
 ## 2. Actual matrix-to-scalar normalization — complete
@@ -543,3 +544,29 @@ counts, timings and execution identities remain unverified. Current D's proved
 correction and current universal Lean proofs do not establish those missing
 source facts. The entire original report flag remains false pending resolution;
 no claim has been silently dropped or replaced by an added assumption.
+
+
+## Eighteenth milestone: literal M identities and complete shared-graph audit
+
+The pinned complete build and transitive audit passed 5,126 explicit theorems,
+7,704 total theorem declarations, 251 exact targets and 729 frozen Lean files.
+Only propext, Classical.choice and Quot.sound occur. Actual complete evidence
+is in report_literal_foundation_check.log, STATUS.json and their companions.
+
+The exact actual-SPD eigenbasis Gram-sum equality closes foundation94–99.
+The constructed optimized principal-potential polynomial, sharp degree n−1
+bound and actual horizon root limit close foundation151–155. The earlier
+principal-matrix and reciprocal-growth proofs remain unchanged.
+
+The shared dependency-graph collector preserves Lean4.19's exact checked
+constant cases and handles cycles by reverse reachability. Every milestone17
+theorem's type/axiom set was compared with its complete ordinary audit; all
+new scoped declarations also passed ordinary collector checks. All original
+trailing axiom/target commands remain. This tooling change supplies no proof
+premise and changes no mathematical theorem or pinned dependency.
+
+R's unidentified older four-piece numerical objective and E's absent original
+19-job archive remain source-resolution obligations. Neither current D nor
+current Lean executions establishes those missing original inputs. The entire
+original report remains unverified pending their explicit resolution. All
+research originals, documented corrections and explicit questions are preserved.

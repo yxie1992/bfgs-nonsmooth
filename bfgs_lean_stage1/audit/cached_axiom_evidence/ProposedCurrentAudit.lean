@@ -1,0 +1,1085 @@
+import BfgsVerification
+
+/- Experimental shared-graph audit proposal. The original Lean4.19
+CollectAxioms outgoing-edge cases are preserved exactly. Reverse reachability
+computes the same axiom sets while caching each constant's outgoing edges once.
+This is audit tooling, never a mathematical proof premise. -/
+namespace BfgsAuditCache
+open Lean
+
+-- Match Lean.Util.CollectAxioms.collect case by case. In particular do not use
+-- ConstantInfo.getUsedConstantsAsSet, whose recursion/axiom cases differ.
+def directDependencies (info : ConstantInfo) : Array Name :=
+  match info with
+  | .axiomInfo _ => #[]
+  | .defnInfo v => v.type.getUsedConstants ++ v.value.getUsedConstants
+  | .thmInfo v => v.type.getUsedConstants ++ v.value.getUsedConstants
+  | .opaqueInfo v => v.type.getUsedConstants ++ v.value.getUsedConstants
+  | .quotInfo _ => #[]
+  | .ctorInfo v => v.type.getUsedConstants
+  | .recInfo v => v.type.getUsedConstants
+  | .inductInfo v => v.type.getUsedConstants ++ v.ctors.toArray
+
+structure GraphState where
+  indices : Std.HashMap Name Nat := {}
+  names : Array Name := #[]
+  dependencies : Array (Array Name) := #[]
+  axiomIndices : Array Nat := #[]
+  missing : Array Name := #[]
+
+-- This phase caches only complete outgoing edges, never incomplete axiom sets.
+partial def visit (env : Environment) (name : Name) : StateM GraphState Unit := do
+  unless (← get).indices.contains name do
+    let index := (← get).names.size
+    let info := env.checked.get.find? name
+    let deps := info.map directDependencies |>.getD #[]
+    modify fun state => { state with
+      indices := state.indices.insert name index
+      names := state.names.push name
+      dependencies := state.dependencies.push deps
+      axiomIndices := match info with
+        | some (.axiomInfo _) => state.axiomIndices.push index
+        | _ => state.axiomIndices
+      missing := if info.isNone then state.missing.push name else state.missing }
+    deps.forM (visit env)
+
+-- A worklist search on reversed edges reaches exactly the constants that can
+-- reach its axiom seed. Visited indices make self/mutual cycles harmless.
+def reverseReach (reverseEdges : Array (Array Nat)) (seed : Nat) : Array Bool := Id.run do
+  let mut seen := (Array.replicate reverseEdges.size false).set! seed true
+  let mut pending := #[seed]
+  while !pending.isEmpty do
+    let index := pending.back!
+    pending := pending.pop
+    for parent in reverseEdges[index]! do
+      if !seen[parent]! then
+        seen := seen.set! parent true
+        pending := pending.push parent
+  return seen
+
+def allAxiomSets (graph : GraphState) : Array (Array Name) := Id.run do
+  let mut reverseEdges : Array (Array Nat) := Array.replicate graph.names.size #[]
+  for index in [:graph.names.size] do
+    for dependency in graph.dependencies[index]! do
+      let child := graph.indices[dependency]!
+      reverseEdges := reverseEdges.modify child (fun edges => edges.push index)
+  let mut results : Array (Array Name) := Array.replicate graph.names.size #[]
+  for seed in graph.axiomIndices do
+    let reached := reverseReach reverseEdges seed
+    for index in [:graph.names.size] do
+      if reached[index]! then
+        results := results.modify index (fun deps => deps.push graph.names[seed]!)
+  return results
+
+end BfgsAuditCache
+
+set_option maxHeartbeats 0 in
+set_option maxRecDepth 1000000 in
+open Lean Elab Command BfgsAuditCache in
+run_cmd do
+  let env ← getEnv
+  let mut roots := #[]
+  for (name, info) in env.constants.toList do
+    if (`BfgsVerification).isPrefixOf name && info.isTheorem then
+      roots := roots.push name
+  let (_, graph) := (roots.forM (visit env)).run {}
+  unless graph.missing.isEmpty do
+    throwError "axiom audit reached unchecked or missing constants: {graph.missing}"
+  let dependencies := allAxiomSets graph
+  let mut count := 0
+  for name in roots do
+    let info ← getConstInfo name
+    let some checkedInfo := env.checked.get.find? name
+      | throwError "axiom audit root absent from checked environment: {name}"
+    unless info.type == checkedInfo.type do
+      throwError "axiom audit checked/elaboration type mismatch: {name}"
+    let deps := dependencies[graph.indices[name]!]! |>.qsort Name.lt
+    let signature ← liftTermElabM do
+      return (← Meta.ppExpr info.type).pretty
+    let report := Json.mkObj [
+      ("theorem", toJson name.toString),
+      ("axioms", toJson (deps.map Name.toString)),
+      ("signature", toJson signature)]
+    logInfo m!"BFGS_AUDIT {report.compress}"
+    count := count + 1
+  logInfo m!"BFGS_AUDIT_COUNT {count}"
+
+#print axioms BfgsVerification.CompressionAlgebra.gram_numerator_identity
+#print axioms BfgsVerification.CompressionAlgebra.compression_scalar_identity
+#print axioms BfgsVerification.CompressionAlgebra.compression_from_gram_relations
+#print axioms BfgsVerification.CompressionAlgebra.compression_upper_bound
+#print axioms BfgsVerification.CompressionAlgebra.rank_one_increment_upper_bound
+#print axioms BfgsVerification.CompressionAlgebra.compressed_update_bound
+#print axioms BfgsVerification.CompressionAlgebra.sum_compressed_bounds
+#print axioms BfgsVerification.ScalarHierarchy.shift_identity
+#print axioms BfgsVerification.ScalarHierarchy.weighted_nonneg
+#print axioms BfgsVerification.ScalarHierarchy.first_le_weighted
+#print axioms BfgsVerification.ScalarHierarchy.weighted_step
+#print axioms BfgsVerification.ScalarHierarchy.hierarchy_tail_potentials
+#print axioms BfgsVerification.ReciprocalGrowth.sum_prefix_tail
+#print axioms BfgsVerification.ReciprocalGrowth.log_potential_telescope
+#print axioms BfgsVerification.ReciprocalGrowth.tail_log_product_upper
+#print axioms BfgsVerification.ReciprocalGrowth.global_log_product_upper
+#print axioms BfgsVerification.ReciprocalGrowth.tail_potentials_force_log_growth
+#print axioms BfgsVerification.ReciprocalGrowth.geometricMean_eq_exp_logMean
+#print axioms BfgsVerification.ReciprocalGrowth.logMean_le_arithmeticMean
+#print axioms BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth
+
+-- Print the complete signature so the conditional premise remains visible.
+#check @BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth
+
+-- These are proposition DEFINITIONS, not exported theorem proofs.
+#print BfgsVerification.PrincipalMinorHierarchyTarget
+#print BfgsVerification.ReciprocalGrowthTarget
+#print BfgsVerification.SuperquadraticReciprocalTarget
+#print BfgsVerification.FullBFGSRun
+#print BfgsVerification.principalSum
+#print BfgsVerification.inverseBFGS
+#print BfgsVerification.FullBFGSRun.q
+#print BfgsVerification.FullBFGSRun.d
+#print BfgsVerification.FullBFGSRun.beta
+
+-- These terms must inhabit the exact original targets, with no extra premises.
+example : BfgsVerification.PrincipalMinorHierarchyTarget := BfgsVerification.principalMinorHierarchy
+example : BfgsVerification.ReciprocalGrowthTarget := BfgsVerification.reciprocalGrowth
+example : BfgsVerification.SuperquadraticReciprocalTarget := BfgsVerification.superquadraticReciprocalGrowth
+#check @BfgsVerification.finiteHorizon
+#check @BfgsVerification.fullBFGS_normalizedHierarchy
+
+-- Objective-level hypotheses and conclusions are printed for statement review.
+#print BfgsVerification.gradientFunctional
+#print BfgsVerification.AdmissibleBFGSRun
+#print BfgsVerification.AdmissibleBFGSRun.q
+#print BfgsVerification.AdmissibleBFGSRun.d
+#print BfgsVerification.AdmissibleBFGSRun.beta
+#print BfgsVerification.AdmissibleBFGSRun.initialSublevel
+#print BfgsVerification.ObjectiveReciprocalGrowthTarget
+#print BfgsVerification.ObjectiveLowerBoundGrowthTarget
+#print BfgsVerification.CompactObjectiveGrowthTarget
+#print BfgsVerification.ObjectiveFiniteHorizonBound
+#print BfgsVerification.CompactObjectiveFiniteHorizonTarget
+
+example : BfgsVerification.ObjectiveReciprocalGrowthTarget := BfgsVerification.objectiveReciprocalGrowth
+example : BfgsVerification.ObjectiveLowerBoundGrowthTarget := BfgsVerification.objectiveLowerBoundGrowth
+example : BfgsVerification.CompactObjectiveGrowthTarget := BfgsVerification.compactObjectiveGrowth
+example : BfgsVerification.CompactObjectiveFiniteHorizonTarget := BfgsVerification.compactObjectiveFiniteHorizon
+#check @BfgsVerification.fullBFGS_positive_invariants
+#check @BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun
+#check @BfgsVerification.convex_gradient_bound_on_compact
+#check @BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound
+#check @BfgsVerification.objectiveFiniteHorizon_of_lower_bound
+#check @BfgsVerification.objectiveGrowth_of_value_limit
+
+-- Actual Hessian/energy definitions and exact frame hypotheses remain visible.
+#print BfgsVerification.AdmissibleBFGSRun.hessian
+#print BfgsVerification.AdmissibleBFGSRun.displacement
+#print BfgsVerification.AdmissibleBFGSRun.gradientChange
+#print BfgsVerification.AdmissibleBFGSRun.curvature
+#print BfgsVerification.AdmissibleBFGSRun.referenceEnergy
+#print BfgsVerification.AdmissibleBFGSRun.referencePairing
+#print BfgsVerification.AdmissibleBFGSRun.referenceCorrection
+#print BfgsVerification.EnergyIdentities.rectOuter
+#print BfgsVerification.FrameBounds.OperatorSqBound
+#print BfgsVerification.FrameNorms.euclideanOpNorm
+#print BfgsVerification.SmoothSubspace.frobSq
+#print BfgsVerification.ExactFrameCertificate
+#print BfgsVerification.ResidualFrameCertificate
+#print BfgsVerification.HessianInvariantTarget
+#print BfgsVerification.LocalizationTarget
+#print BfgsVerification.StrictContourTarget
+#print BfgsVerification.ReferenceEnergyTarget
+#print BfgsVerification.QuadraticCorrectionTarget
+#print BfgsVerification.MovingFrameCriterionTarget
+#print BfgsVerification.ResidualFrameCriterionTarget
+
+example : BfgsVerification.HessianInvariantTarget := BfgsVerification.hessianInvariants
+example : BfgsVerification.LocalizationTarget := BfgsVerification.localization
+example : BfgsVerification.StrictContourTarget := BfgsVerification.strictContourSteps
+example : BfgsVerification.ReferenceEnergyTarget := BfgsVerification.referenceEnergy
+example : BfgsVerification.QuadraticCorrectionTarget := BfgsVerification.quadraticCorrectionConvergence
+example : BfgsVerification.MovingFrameCriterionTarget := BfgsVerification.movingFrameCriterion
+example : BfgsVerification.ResidualFrameCriterionTarget := BfgsVerification.residualFrameCriterion
+#check @BfgsVerification.Localization.sphere_gap
+#check @BfgsVerification.Localization.radial_lower_bound
+#check @BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_negligible_corrections
+#check @BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_quadratic_corrections
+#check @BfgsVerification.AdmissibleBFGSRun.moving_frame_energy
+#check @BfgsVerification.AdmissibleBFGSRun.moving_frame_tail_criterion
+#check @BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible_source
+#check @BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq
+#check @BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace
+
+-- First entire-report tranche: exact objective hypotheses and source conclusions.
+#print BfgsVerification.argmin
+#print BfgsVerification.euclideanVector
+#print BfgsVerification.euclideanSolutionDistance
+#print BfgsVerification.TransportedCertificate.EligiblePair
+#print BfgsVerification.TransportedCertificate.stepProjector
+#print BfgsVerification.TransportedCertificate.BandCertificate
+#print BfgsVerification.TransportedCertificate.HasBandCertificates
+#print BfgsVerification.Homogeneous.PositiveDegreeOne
+#print BfgsVerification.ScalarMetricRun
+#print BfgsVerification.RadialCertificate.HasRadialSecantBounds
+#print BfgsVerification.TransportedCertificateTarget
+#print BfgsVerification.HomogeneousDichotomyTarget
+#print BfgsVerification.ScalarMetricConvergenceTarget
+#print BfgsVerification.ScalarBFGSConvergenceTarget
+#print BfgsVerification.RadialCertificateConvergenceTarget
+example : BfgsVerification.TransportedCertificateTarget := BfgsVerification.transportedCertificateConvergence
+example : BfgsVerification.HomogeneousDichotomyTarget := BfgsVerification.homogeneousDichotomy
+example : BfgsVerification.ScalarMetricConvergenceTarget := BfgsVerification.scalarMetricConvergence
+example : BfgsVerification.ScalarBFGSConvergenceTarget := BfgsVerification.scalarBFGSConvergence
+example : BfgsVerification.RadialCertificateConvergenceTarget := BfgsVerification.radialCertificateConvergence
+#check @BfgsVerification.AdmissibleBFGSRun.accepted_pair_eligible
+#check @BfgsVerification.AdmissibleBFGSRun.certificate_trace_step
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_global_gradient_bound
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero
+#check @BfgsVerification.AdmissibleBFGSRun.toScalarMetricRun
+#check @BfgsVerification.AdmissibleBFGSRun.radial_correction_bound
+#check @BfgsVerification.global_minimum_of_zero_gradient
+
+-- Second report tranche: objective geometry and equivalences.
+#print BfgsVerification.Homogeneous.finiteMaxLinear
+#print BfgsVerification.Homogeneous.recurrentValues
+#print BfgsVerification.Homogeneous.commonTilt
+#print BfgsVerification.TransportedCertificate.VisibilitySecantCertificate
+#print BfgsVerification.TransportedCertificate.PotentialBandCertificate
+#print BfgsVerification.TransportedCertificate.ScalarQuotientBound
+#print BfgsVerification.TransportedCertificate.ScalarEligibleLipschitz
+#print BfgsVerification.TransportedCertificate.HasShellCertificates
+#print BfgsVerification.RadialCertificate.HasInterceptBounds
+#print BfgsVerification.RadialCertificate.HasInwardTaylorBounds
+#print BfgsVerification.CertificateNormalizationTarget
+#print BfgsVerification.RecurrentAffineHullTarget
+#print BfgsVerification.MaxLinearAffineEscapeTarget
+#print BfgsVerification.RadialInterceptEquivalenceTarget
+#print BfgsVerification.InwardCertificateConvergenceTarget
+#print BfgsVerification.IncomingJumpObstructionTarget
+#print BfgsVerification.ScalarCertificateCharacterizationTarget
+example : BfgsVerification.CertificateNormalizationTarget := BfgsVerification.certificateNormalization
+example : BfgsVerification.RecurrentAffineHullTarget := BfgsVerification.recurrentAffineHull
+example : BfgsVerification.MaxLinearAffineEscapeTarget := BfgsVerification.maxLinearAffineEscape
+example : BfgsVerification.RadialInterceptEquivalenceTarget := BfgsVerification.radialInterceptEquivalence
+example : BfgsVerification.InwardCertificateConvergenceTarget := BfgsVerification.inwardCertificateConvergence
+example : BfgsVerification.IncomingJumpObstructionTarget := BfgsVerification.incomingJumpObstruction
+example : BfgsVerification.ScalarCertificateCharacterizationTarget := BfgsVerification.scalarCertificateCharacterization
+#check @BfgsVerification.TransportedCertificate.BandCertificate.normalize_field
+#check @BfgsVerification.TransportedCertificate.BandCertificate.normalize_budget
+#check @BfgsVerification.TransportedCertificate.PotentialBandCertificate.absorb_constants
+#check @BfgsVerification.TransportedCertificate.local_transported_certificate_basin
+#check @BfgsVerification.AdmissibleBFGSRun.transported_shell_certificate_convergence_on_sublevel
+#check @BfgsVerification.TransportedCertificate.projected_transport_iff_perpendicular
+#check @BfgsVerification.AdmissibleBFGSRun.commonTilt_value_escape
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_gradient_cardinality
+#check @BfgsVerification.TransportedCertificate.basis_limit_no_visibility_secant
+#check @BfgsVerification.RadialCertificate.inward_error_le_of_pair_radial
+#check @BfgsVerification.convex_gradients_tendsto_at_differentiable
+
+-- Third report tranche: radial equivalences, lifting, rates and explicit examples.
+#print BfgsVerification.RadialCertificate.HasNestedCentralBounds
+#print BfgsVerification.AffineProjection.FullRowRank
+#print BfgsVerification.AffineProjection.compress
+#print BfgsVerification.AffineProjection.lift
+#print BfgsVerification.AffineProjection.fiberPoint
+#print BfgsVerification.AffineProjection.projectRun
+#print BfgsVerification.AdmissibleBFGSRun.valueCorrectionBudget
+#print BfgsVerification.TransportedCertificate.realizingMetric
+#print BfgsVerification.ScalarCounterexamples.shiftedAbs
+#print BfgsVerification.AccumulatingKinks.knot
+#print BfgsVerification.AccumulatingKinks.kinkSum
+#print BfgsVerification.AccumulatingKinks.objective
+#print BfgsVerification.RadialInwardEquivalenceTarget
+example : BfgsVerification.RadialInwardEquivalenceTarget := BfgsVerification.radialInwardEquivalence
+#print BfgsVerification.LocalRadialCentralEquivalenceTarget
+example : BfgsVerification.LocalRadialCentralEquivalenceTarget := BfgsVerification.localRadialCentralEquivalence
+#print BfgsVerification.LinearImageLiftingTarget
+example : BfgsVerification.LinearImageLiftingTarget := BfgsVerification.linearImageLifting
+#print BfgsVerification.NonuniqueSolutionBasinTarget
+example : BfgsVerification.NonuniqueSolutionBasinTarget := BfgsVerification.nonuniqueSolutionBasin
+#print BfgsVerification.LinearCorrectionRateTarget
+example : BfgsVerification.LinearCorrectionRateTarget := BfgsVerification.linearCorrectionRate
+#print BfgsVerification.HomogeneousRatesTarget
+example : BfgsVerification.HomogeneousRatesTarget := BfgsVerification.homogeneousRates
+#print BfgsVerification.ScalarGlobalCertificateNonnecessityTarget
+example : BfgsVerification.ScalarGlobalCertificateNonnecessityTarget := BfgsVerification.scalarGlobalCertificateNonnecessity
+#print BfgsVerification.ScalarLocalCertificateNonnecessityTarget
+example : BfgsVerification.ScalarLocalCertificateNonnecessityTarget := BfgsVerification.scalarLocalCertificateNonnecessity
+#print BfgsVerification.EligiblePairRealizabilityTarget
+example : BfgsVerification.EligiblePairRealizabilityTarget := BfgsVerification.eligiblePairRealizability
+#print BfgsVerification.FiniteSampleFeasibilityTarget
+example : BfgsVerification.FiniteSampleFeasibilityTarget := BfgsVerification.finiteSampleFeasibility
+#check @BfgsVerification.RadialCertificate.inward_iff_intercept_on_compact_sublevel
+#check @BfgsVerification.RadialCertificate.central_of_radial_on_sublevel
+#check @BfgsVerification.RadialCertificate.radial_of_central_on_smaller_sublevel
+#check @BfgsVerification.AffineProjection.matrix_lift_invariant
+#check @BfgsVerification.AffineProjection.fiberPoint_minimizer_unique
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_sum_bound
+#check @BfgsVerification.Homogeneous.coercive_euclidean_lower_bound
+#check @BfgsVerification.AdmissibleBFGSRun.compact_value_log_orders_of_correction_bound
+#check @BfgsVerification.HarmonicRates.self_budget_value_log_orders
+#check @BfgsVerification.ScalarCounterexamples.crossing_quotient_tendsto
+#check @BfgsVerification.AccumulatingKinks.crossing_quotient_tendsto
+#check @BfgsVerification.AccumulatingKinks.series_uniform_on_compact
+#check @BfgsVerification.AccumulatingKinks.objective_coercive
+
+-- Fourth report tranche: actual structural families and geometric criteria.
+#print BfgsVerification.AffineCertificateCovarianceTarget
+example : BfgsVerification.AffineCertificateCovarianceTarget := BfgsVerification.affineCertificateCovariance
+#print BfgsVerification.CenteredSmoothConvergenceTarget
+example : BfgsVerification.CenteredSmoothConvergenceTarget := BfgsVerification.centeredSmoothConvergence
+#print BfgsVerification.CenteredLocalBasinTarget
+example : BfgsVerification.CenteredLocalBasinTarget := BfgsVerification.centeredLocalBasin
+#print BfgsVerification.QuadraticGaugeRatesTarget
+example : BfgsVerification.QuadraticGaugeRatesTarget := BfgsVerification.quadraticGaugeRates
+#print BfgsVerification.EllipsoidCertificateGeometryTarget
+example : BfgsVerification.EllipsoidCertificateGeometryTarget := BfgsVerification.ellipsoidCertificateGeometry
+#print BfgsVerification.PointwiseCertificateCapacityTarget
+example : BfgsVerification.PointwiseCertificateCapacityTarget := BfgsVerification.pointwiseCertificateCapacity
+#print BfgsVerification.PlanarHomogeneousEscapeTarget
+example : BfgsVerification.PlanarHomogeneousEscapeTarget := BfgsVerification.planarHomogeneousEscape
+#print BfgsVerification.ParabolicDenominatorTarget
+example : BfgsVerification.ParabolicDenominatorTarget := BfgsVerification.parabolicDenominator
+#print BfgsVerification.AffineCertificate.forward
+#print BfgsVerification.AffineCertificate.backward
+#print BfgsVerification.AffineCertificate.objective
+#print BfgsVerification.AffineCertificate.field
+#print BfgsVerification.AffineCertificate.transform
+#print BfgsVerification.CenteredSmoothSublinear.LocallyC11On
+#print BfgsVerification.CenteredSmoothSublinear.smoothRemainder
+#print BfgsVerification.CenteredSmoothSublinear.recenteredHomogeneous
+#print BfgsVerification.QuadraticGauge.objective
+#print BfgsVerification.QuadraticGauge.correctionConstant
+#print BfgsVerification.CertificateGeometry.euclideanUnitBall
+#print BfgsVerification.CertificateGeometry.ellipsoid
+#print BfgsVerification.PointwiseFeasibility.sourceCapacity
+#print BfgsVerification.PointwiseFeasibility.BandPoint
+#print BfgsVerification.PointwiseFeasibility.IncomingPoint
+#print BfgsVerification.Parabolic.Family
+#print BfgsVerification.Parabolic.Family.objective
+#print BfgsVerification.Parabolic.Family.Active
+#print BfgsVerification.Parabolic.Family.branchGradient
+#print BfgsVerification.Parabolic.Family.stepDeterminant
+#check @BfgsVerification.AffineCertificate.eligible_pair_affine_iff
+#check @BfgsVerification.AffineCertificate.transform_constants
+#check @BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact
+#check @BfgsVerification.CenteredSmoothSublinear.exists_pair_correction_bound
+#check @BfgsVerification.CenteredSmoothSublinear.center_support
+#check @BfgsVerification.CenteredSmoothSublinear.centered_rewriting
+#check @BfgsVerification.CenteredSmoothSublinear.smoothRemainder_locallyC11
+#check @BfgsVerification.AdmissibleBFGSRun.quadraticGauge_finite_budget
+#check @BfgsVerification.AdmissibleBFGSRun.quadraticGauge_finite_sqrt_bound
+#check @BfgsVerification.AdmissibleBFGSRun.quadraticGauge_sqrt_budget_log_rate
+#check @BfgsVerification.AdmissibleBFGSRun.homogeneous_endpoint_pairings_tendsto_zero
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_independent_anchors_tendsto_zero
+#check @BfgsVerification.Parabolic.Family.sublevel_compact
+#check @BfgsVerification.Parabolic.Family.active_eq_gradient
+#check @BfgsVerification.Parabolic.Family.secant_quotient_bound
+#check @BfgsVerification.Parabolic.Family.exists_uniform_secant_bound
+#check @BfgsVerification.Parabolic.Family.positive_visibility
+#check @BfgsVerification.CertificateGeometry.projected_matrixRange
+#check @BfgsVerification.CertificateGeometry.range_le_sup_span_of_projected_order
+#check @BfgsVerification.PointwiseFeasibility.uniformPSD_iff_capacity
+#check @BfgsVerification.PointwiseFeasibility.sourceIncomingPolar_eq_closedHull_polar
+#check @BfgsVerification.AccessibleJumpGeometry.common_tangential_projection
+#check @BfgsVerification.AccessibleJumpGeometry.tangent_projection_zero_iff_zero_mem_affineSpan
+#check @BfgsVerification.AccessibleJumpGeometry.accessible_jump_annihilated_of_continuousAt
+#check @BfgsVerification.AccessibleJumpGeometry.visible_accessible_projection_ne_zero
+#check @BfgsVerification.AccessibleJumpGeometry.visible_tangent_projection_ne_zero
+#check @BfgsVerification.AccessibleJumpGeometry.active_accessible_span_countermodel
+#check @BfgsVerification.AccessibleJumpGeometry.accessible_curvature_annihilated_of_continuousAt
+
+-- Fifth milestone: original-family Q, transformed gauges, and H.8.
+#print BfgsVerification.Parabolic.Family
+#print BfgsVerification.Parabolic.Family.calibratedScale
+#print BfgsVerification.Parabolic.Family.calibratedVector
+#print BfgsVerification.TransformedGauge.IncreasingTransform
+#print BfgsVerification.TransformedGauge.objective
+#print BfgsVerification.TransformedGauge.inverse
+#print BfgsVerification.TransformedGauge.theta
+#print BfgsVerification.Homogeneous.RelativeInteriorZero
+#print BfgsVerification.ParabolicCertificateTarget
+#print BfgsVerification.ParabolicConvergenceTarget
+#print BfgsVerification.TransformedGaugeConvergenceTarget
+#print BfgsVerification.RelativeInteriorConvergenceTarget
+#print BfgsVerification.RecurrentRelativeInteriorTarget
+example : BfgsVerification.ParabolicCertificateTarget := BfgsVerification.parabolicCertificate
+example : BfgsVerification.ParabolicConvergenceTarget := BfgsVerification.parabolicConvergence
+example : BfgsVerification.TransformedGaugeConvergenceTarget := BfgsVerification.transformedGaugeConvergence
+example : BfgsVerification.RelativeInteriorConvergenceTarget := BfgsVerification.relativeInteriorConvergence
+example : BfgsVerification.RecurrentRelativeInteriorTarget := BfgsVerification.recurrentRelativeInterior
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_complete
+#check @BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_convergence
+#check @BfgsVerification.TransformedGauge.theta_hasDerivAt
+#check @BfgsVerification.AdmissibleBFGSRun.transformedGauge_actual_gauge_derivative
+
+#print BfgsVerification.Parabolic.Example.objective
+#print BfgsVerification.Parabolic.Example.initialMetric
+#print BfgsVerification.ParabolicEligibleSeparationTarget
+#print BfgsVerification.ParabolicNonnecessityTarget
+example : BfgsVerification.ParabolicEligibleSeparationTarget := BfgsVerification.parabolicEligibleSeparation
+example : BfgsVerification.ParabolicNonnecessityTarget := BfgsVerification.parabolicNonnecessity
+#check @BfgsVerification.Parabolic.Example.printed_armijo_iff
+#check @BfgsVerification.Parabolic.Example.source_compensated_log
+
+#print BfgsVerification.AccessibleActiveSeparationTarget
+example : BfgsVerification.AccessibleActiveSeparationTarget := BfgsVerification.accessibleActiveSeparation
+#check @BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero
+#check @BfgsVerification.ShiftedAbsAccessibility.full_active_tangent_space_eq_bot
+#check @BfgsVerification.ShiftedAbsAccessibility.shifted_all_compact_band_certificates
+
+-- Sixth milestone: literal objective-family and structural source contracts.
+#print BfgsVerification.MaxAffineThresholdTarget
+example : BfgsVerification.MaxAffineThresholdTarget := BfgsVerification.maxAffineThreshold
+#print BfgsVerification.MixedLinearPowersTarget
+example : BfgsVerification.MixedLinearPowersTarget := BfgsVerification.mixedLinearPowers
+#print BfgsVerification.RecurrentLowRankTarget
+example : BfgsVerification.RecurrentLowRankTarget := BfgsVerification.recurrentLowRank
+#print BfgsVerification.RelativeInteriorClassTarget
+example : BfgsVerification.RelativeInteriorClassTarget := BfgsVerification.relativeInteriorClass
+#print BfgsVerification.ParabolicPruningTarget
+example : BfgsVerification.ParabolicPruningTarget := BfgsVerification.parabolicPruning
+#print BfgsVerification.ParabolicPrintedFieldTarget
+example : BfgsVerification.ParabolicPrintedFieldTarget := BfgsVerification.parabolicPrintedField
+#print BfgsVerification.PolyhedralBasinTarget
+example : BfgsVerification.PolyhedralBasinTarget := BfgsVerification.polyhedralBasin
+#print BfgsVerification.FivePieceObstructionTarget
+example : BfgsVerification.FivePieceObstructionTarget := BfgsVerification.fivePieceObstruction
+#check @BfgsVerification.FivePieceObstruction.objective_coercive
+#check @BfgsVerification.FivePieceObstruction.unique_minimum
+#check @BfgsVerification.FivePieceObstruction.ray_step
+#check @BfgsVerification.MaxAffine.Family.threshold_eq_inactive_infima
+#check @BfgsVerification.MaxAffine.Family.threshold_gt_minimum
+#check @BfgsVerification.MaxAffine.Family.inactive_radius_domination
+#check @BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full
+
+#print BfgsVerification.SmoothPLQBasinTarget
+example : BfgsVerification.SmoothPLQBasinTarget := BfgsVerification.smoothPLQBasin
+
+-- Seventh milestone: actual analytic families, fixed interfaces, and exact algebraic seed.
+#print BfgsVerification.ActualFiniteMaxSubdifferentialTarget
+example : BfgsVerification.ActualFiniteMaxSubdifferentialTarget := BfgsVerification.actualFiniteMaxSubdifferential
+#print BfgsVerification.LocalAffineCorrectnessTarget
+example : BfgsVerification.LocalAffineCorrectnessTarget := BfgsVerification.localAffineCorrectness
+#print BfgsVerification.FiniteMaxRadialBasinTarget
+example : BfgsVerification.FiniteMaxRadialBasinTarget := BfgsVerification.finiteMaxRadialBasin
+#print BfgsVerification.EuclideanResidualBasinTarget
+example : BfgsVerification.EuclideanResidualBasinTarget := BfgsVerification.euclideanResidualBasin
+#print BfgsVerification.FiniteRayStepTarget
+example : BfgsVerification.FiniteRayStepTarget := BfgsVerification.finiteRayStep
+#print BfgsVerification.UnexcitedMetricTarget
+example : BfgsVerification.UnexcitedMetricTarget := BfgsVerification.unexcitedMetric
+#print BfgsVerification.ParabolicRadialBoundaryTarget
+example : BfgsVerification.ParabolicRadialBoundaryTarget := BfgsVerification.parabolicRadialBoundary
+#print BfgsVerification.AlgebraicSeedRootTarget
+example : BfgsVerification.AlgebraicSeedRootTarget := BfgsVerification.algebraicSeedRoot
+#print BfgsVerification.AlgebraicSeedBoundsTarget
+example : BfgsVerification.AlgebraicSeedBoundsTarget := BfgsVerification.algebraicSeedBounds
+#print BfgsVerification.AffineRankLossTarget
+example : BfgsVerification.AffineRankLossTarget := BfgsVerification.affineRankLoss
+#print BfgsVerification.AlgebraicJacobianCertificateTarget
+example : BfgsVerification.AlgebraicJacobianCertificateTarget := BfgsVerification.algebraicJacobianCertificate
+#print BfgsVerification.NuclearBoundaryTarget
+example : BfgsVerification.NuclearBoundaryTarget := BfgsVerification.nuclearBoundary
+#print BfgsVerification.FixedNormalHyperplaneTarget
+example : BfgsVerification.FixedNormalHyperplaneTarget := BfgsVerification.fixedNormalHyperplane
+#print BfgsVerification.ParallelInterfacesClusterTarget
+example : BfgsVerification.ParallelInterfacesClusterTarget := BfgsVerification.parallelInterfacesCluster
+#print BfgsVerification.ParallelInterfacesConvergenceTarget
+example : BfgsVerification.ParallelInterfacesConvergenceTarget := BfgsVerification.parallelInterfacesConvergence
+#print BfgsVerification.FixedNormalLocalBasinTarget
+example : BfgsVerification.FixedNormalLocalBasinTarget := BfgsVerification.fixedNormalLocalBasin
+#print BfgsVerification.ParallelInterfacesLocalBasinTarget
+example : BfgsVerification.ParallelInterfacesLocalBasinTarget := BfgsVerification.parallelInterfacesLocalBasin
+#print BfgsVerification.UnexcitedMetric.run
+#print axioms BfgsVerification.UnexcitedMetric.run
+#print BfgsVerification.NuclearSymmetric2.nuclear
+#print axioms BfgsVerification.NuclearSymmetric2.nuclear
+#print BfgsVerification.NuclearSymmetric2.objective
+#print axioms BfgsVerification.NuclearSymmetric2.objective
+#print BfgsVerification.NuclearSymmetric2.matrix
+#print axioms BfgsVerification.NuclearSymmetric2.matrix
+#print BfgsVerification.ConvexSubdifferential.subdifferential
+#print axioms BfgsVerification.ConvexSubdifferential.subdifferential
+#print BfgsVerification.AlgebraicSeed.center
+#print axioms BfgsVerification.AlgebraicSeed.center
+#print BfgsVerification.AlgebraicSeed.P
+#print axioms BfgsVerification.AlgebraicSeed.P
+#print BfgsVerification.AlgebraicSeed.root
+#print axioms BfgsVerification.AlgebraicSeed.root
+
+/- Eighth milestone: exact weaker-curvature/composite and actual deterministic seed targets. -/
+#print BfgsVerification.TangentialCompositeConvergenceTarget
+example : BfgsVerification.TangentialCompositeConvergenceTarget := BfgsVerification.tangentialCompositeConvergence
+#print BfgsVerification.TangentialCompositeLocalBasinTarget
+example : BfgsVerification.TangentialCompositeLocalBasinTarget := BfgsVerification.tangentialCompositeLocalBasin
+#print BfgsVerification.StrongCompositeConvergenceTarget
+example : BfgsVerification.StrongCompositeConvergenceTarget := BfgsVerification.strongCompositeConvergence
+#print BfgsVerification.StrongCompositeLocalBasinTarget
+example : BfgsVerification.StrongCompositeLocalBasinTarget := BfgsVerification.strongCompositeLocalBasin
+#print BfgsVerification.ExactSeedCycleTarget
+example : BfgsVerification.ExactSeedCycleTarget := BfgsVerification.exactSeedCycle
+#print BfgsVerification.DeterministicSeedFailureTarget
+example : BfgsVerification.DeterministicSeedFailureTarget := BfgsVerification.deterministicSeedFailure
+#print BfgsVerification.AllSeedTrialsTarget
+example : BfgsVerification.AllSeedTrialsTarget := BfgsVerification.allSeedTrials
+#print BfgsVerification.SeedOrbit.run
+#print axioms BfgsVerification.SeedOrbit.run
+#print BfgsVerification.DeterministicLineSearch.search
+#print axioms BfgsVerification.DeterministicLineSearch.search
+#print BfgsVerification.DeterministicLineSearch.fromMetric
+#print axioms BfgsVerification.DeterministicLineSearch.fromMetric
+#print BfgsVerification.SeedOrbit.family
+#print axioms BfgsVerification.SeedOrbit.family
+#print BfgsVerification.SeedOrbit.trialPhase
+#print axioms BfgsVerification.SeedOrbit.trialPhase
+#print BfgsVerification.SeedOrbit.trialLength
+#print axioms BfgsVerification.SeedOrbit.trialLength
+#print BfgsVerification.SeedOrbit.trialActive
+#print axioms BfgsVerification.SeedOrbit.trialActive
+#print BfgsVerification.SeedOrbit.trialAccept
+#print axioms BfgsVerification.SeedOrbit.trialAccept
+
+-- Ninth tranche: exact construction targets and actual model definitions.
+#print BfgsVerification.CoerciveSeedFailureTarget
+example : BfgsVerification.CoerciveSeedFailureTarget := BfgsVerification.coerciveSeedFailure
+#print axioms BfgsVerification.coerciveSeedFailure
+#print BfgsVerification.DScalarFunctionTarget
+example : BfgsVerification.DScalarFunctionTarget := BfgsVerification.dScalarFunction
+#print axioms BfgsVerification.dScalarFunction
+#print BfgsVerification.CenteredSpectralConvergenceTarget
+example : BfgsVerification.CenteredSpectralConvergenceTarget := BfgsVerification.centeredSpectralConvergence
+#print axioms BfgsVerification.centeredSpectralConvergence
+#print BfgsVerification.SingularCurvatureCounterexampleTarget
+example : BfgsVerification.SingularCurvatureCounterexampleTarget := BfgsVerification.singularCurvatureCounterexample
+#print axioms BfgsVerification.singularCurvatureCounterexample
+#print BfgsVerification.NormalSpike.SourceSpikePropertiesTarget
+example : BfgsVerification.NormalSpike.SourceSpikePropertiesTarget := BfgsVerification.NormalSpike.sourceSpikeProperties
+#print axioms BfgsVerification.NormalSpike.sourceSpikeProperties
+#print BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget
+example : BfgsVerification.NormalSpike.SpikeObjectiveConvergenceTarget := BfgsVerification.NormalSpike.spikeObjectiveConvergence
+#print axioms BfgsVerification.NormalSpike.spikeObjectiveConvergence
+#print BfgsVerification.NormalSpike.SpikeRadialSeparationTarget
+example : BfgsVerification.NormalSpike.SpikeRadialSeparationTarget := BfgsVerification.NormalSpike.spikeRadialSeparation
+#print axioms BfgsVerification.NormalSpike.spikeRadialSeparation
+#print BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget
+example : BfgsVerification.NormalSpike.SpikeObjectiveGeometryTarget := BfgsVerification.NormalSpike.spikeObjectiveGeometry
+#print axioms BfgsVerification.NormalSpike.spikeObjectiveGeometry
+#print BfgsVerification.NormalSpike.SpikeHessianPeakTarget
+example : BfgsVerification.NormalSpike.SpikeHessianPeakTarget := BfgsVerification.NormalSpike.spikeHessianPeaks
+#print axioms BfgsVerification.NormalSpike.spikeHessianPeaks
+#print BfgsVerification.NormalSpike.RationalSpikeOracleTarget
+example : BfgsVerification.NormalSpike.RationalSpikeOracleTarget := BfgsVerification.NormalSpike.rationalSpikeOracle
+#print axioms BfgsVerification.NormalSpike.rationalSpikeOracle
+#print BfgsVerification.SeedOrbit.coerciveFamily
+#print BfgsVerification.SeedOrbit.coerciveRun
+#print BfgsVerification.DScalar.phi
+#print BfgsVerification.DScalar.positivePart
+#print BfgsVerification.DScalar.component
+#print BfgsVerification.DScalarRamp.primitive
+#print BfgsVerification.DScalarNegative.negative
+#print BfgsVerification.CenteredSpectral.objective
+#print BfgsVerification.CenteredSpectral.matrix
+#print BfgsVerification.NormalSpike.sourcePrimitive
+#print BfgsVerification.NormalSpike.objective
+
+-- Tenth tranche: actual D embedding, C principal theorem, U variable jump and L seed geometry.
+#print BfgsVerification.DEmbedding.ObjectiveGeometryTarget
+example : BfgsVerification.DEmbedding.ObjectiveGeometryTarget := BfgsVerification.DEmbedding.objectiveGeometry
+#print axioms BfgsVerification.DEmbedding.objectiveGeometry
+#print BfgsVerification.DEmbedding.EmbeddingFailureTarget
+example : BfgsVerification.DEmbedding.EmbeddingFailureTarget := BfgsVerification.DEmbedding.embeddingFailure
+#print axioms BfgsVerification.DEmbedding.embeddingFailure
+#print BfgsVerification.LQuadraticSeed.QuadraticSeedTarget
+example : BfgsVerification.LQuadraticSeed.QuadraticSeedTarget := BfgsVerification.LQuadraticSeed.quadraticSeed
+#print axioms BfgsVerification.LQuadraticSeed.quadraticSeed
+#print BfgsVerification.PlanarAffineCriticalClusterTarget
+example : BfgsVerification.PlanarAffineCriticalClusterTarget := BfgsVerification.planarAffineCriticalCluster
+#print axioms BfgsVerification.planarAffineCriticalCluster
+#print BfgsVerification.PlanarConvergenceTarget
+example : BfgsVerification.PlanarConvergenceTarget := BfgsVerification.planarConvergence
+#print axioms BfgsVerification.planarConvergence
+#print BfgsVerification.PlanarLocalBasinTarget
+example : BfgsVerification.PlanarLocalBasinTarget := BfgsVerification.planarLocalBasin
+#print axioms BfgsVerification.planarLocalBasin
+#print BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget
+example : BfgsVerification.NormalSpike.VariableSpikeConvergenceTarget := BfgsVerification.NormalSpike.variableSpikeConvergence
+#print axioms BfgsVerification.NormalSpike.variableSpikeConvergence
+#print BfgsVerification.NormalSpike.VariableSpikeSeparationTarget
+example : BfgsVerification.NormalSpike.VariableSpikeSeparationTarget := BfgsVerification.NormalSpike.variableSpikeSeparation
+#print axioms BfgsVerification.NormalSpike.variableSpikeSeparation
+#print BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget
+example : BfgsVerification.NormalSpike.VariableSpikeNonsplittingTarget := BfgsVerification.NormalSpike.variableSpikeNonsplitting
+#print axioms BfgsVerification.NormalSpike.variableSpikeNonsplitting
+#print BfgsVerification.NormalSpike.VariableSpikeGeometryTarget
+example : BfgsVerification.NormalSpike.VariableSpikeGeometryTarget := BfgsVerification.NormalSpike.variableSpikeGeometry
+#print axioms BfgsVerification.NormalSpike.variableSpikeGeometry
+#print BfgsVerification.NormalSpike.VariableSpikeHessianTarget
+example : BfgsVerification.NormalSpike.VariableSpikeHessianTarget := BfgsVerification.NormalSpike.variableSpikeHessian
+#print axioms BfgsVerification.NormalSpike.variableSpikeHessian
+#print BfgsVerification.DEmbedding.branch
+#print BfgsVerification.DEmbedding.objective
+#print BfgsVerification.DEmbedding.center
+#print BfgsVerification.DEmbedding.actualOracleData
+#print BfgsVerification.DEmbedding.run
+#print BfgsVerification.SeedEmbedding.Data
+#print BfgsVerification.SeedEmbedding.OracleData
+#print BfgsVerification.LQuadraticSeed.objective
+#print BfgsVerification.LQuadraticSeed.minimizer
+#print BfgsVerification.NormalSpike.printedVariableObjective
+
+-- Eleventh tranche: actual A/C/R structural claims and explicit conditional dynamics criteria.
+#print BfgsVerification.FiniteC1MaxAffineGapTarget
+example : BfgsVerification.FiniteC1MaxAffineGapTarget := BfgsVerification.finiteC1MaxAffineGap
+#print axioms BfgsVerification.finiteC1MaxAffineGap
+#print BfgsVerification.PlanarFiniteMaxLocalBasinTarget
+example : BfgsVerification.PlanarFiniteMaxLocalBasinTarget := BfgsVerification.planarFiniteMaxLocalBasin
+#print axioms BfgsVerification.planarFiniteMaxLocalBasin
+#print BfgsVerification.PlanarFiniteMaxHessianBasinTarget
+example : BfgsVerification.PlanarFiniteMaxHessianBasinTarget := BfgsVerification.planarFiniteMaxHessianBasin
+#print axioms BfgsVerification.planarFiniteMaxHessianBasin
+#print BfgsVerification.RectangularNuclearNormTarget
+example : BfgsVerification.RectangularNuclearNormTarget := BfgsVerification.rectangularNuclearNorm
+#print axioms BfgsVerification.rectangularNuclearNorm
+#print BfgsVerification.CenteredRectangularNuclearTarget
+example : BfgsVerification.CenteredRectangularNuclearTarget := BfgsVerification.centeredRectangularNuclear
+#print axioms BfgsVerification.centeredRectangularNuclear
+#print BfgsVerification.MixedNuclearPowersTarget
+example : BfgsVerification.MixedNuclearPowersTarget := BfgsVerification.mixedNuclearPowers
+#print axioms BfgsVerification.mixedNuclearPowers
+#print BfgsVerification.FirstDifferenceBasinTarget
+example : BfgsVerification.FirstDifferenceBasinTarget := BfgsVerification.firstDifferenceBasin
+#print axioms BfgsVerification.firstDifferenceBasin
+#print BfgsVerification.PlanarQuadraticModelTarget
+example : BfgsVerification.PlanarQuadraticModelTarget := BfgsVerification.planarQuadraticModel
+#print axioms BfgsVerification.planarQuadraticModel
+#print BfgsVerification.PlanarQuadraticCoefficientsTarget
+example : BfgsVerification.PlanarQuadraticCoefficientsTarget := BfgsVerification.planarQuadraticCoefficients
+#print axioms BfgsVerification.planarQuadraticCoefficients
+#print BfgsVerification.PlanarQuadraticBasinTarget
+example : BfgsVerification.PlanarQuadraticBasinTarget := BfgsVerification.planarQuadraticBasin
+#print axioms BfgsVerification.planarQuadraticBasin
+#print BfgsVerification.PlanarQuadraticCurveTarget
+example : BfgsVerification.PlanarQuadraticCurveTarget := BfgsVerification.planarQuadraticCurve
+#print axioms BfgsVerification.planarQuadraticCurve
+#print BfgsVerification.PlanarQuadraticSeparationTarget
+example : BfgsVerification.PlanarQuadraticSeparationTarget := BfgsVerification.planarQuadraticSeparation
+#print axioms BfgsVerification.planarQuadraticSeparation
+#print BfgsVerification.LocalStableOrbit.StableOrbitTarget
+example : BfgsVerification.LocalStableOrbit.StableOrbitTarget := BfgsVerification.LocalStableOrbit.stableOrbit
+#print axioms BfgsVerification.LocalStableOrbit.stableOrbit
+#print BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget
+example : BfgsVerification.LocalStableOrbit.PositiveStableOrbitTarget := BfgsVerification.LocalStableOrbit.positiveStableOrbit
+#print axioms BfgsVerification.LocalStableOrbit.positiveStableOrbit
+#print BfgsVerification.LNormalizedReturn.returnMap
+#print BfgsVerification.LNormalizedReturn.normalized_return_contract
+#print BfgsVerification.LNormalizedOracle.actual_implementation_neighborhood
+#print BfgsVerification.LBlockSplitting.BlockForm
+#print BfgsVerification.LBlockSplitting.block_splitting
+#print BfgsVerification.LBlockSplitting.positive_orbit_of_block
+
+/- Twelfth milestone: literal L failures and completed scalar/geometry targets. -/
+#print BfgsVerification.SpatialCanonicalWarningTarget
+example : BfgsVerification.SpatialCanonicalWarningTarget := BfgsVerification.spatialCanonicalWarning
+#print axioms BfgsVerification.spatialCanonicalWarning
+#print BfgsVerification.SpatialQuadraticRadialTarget
+example : BfgsVerification.SpatialQuadraticRadialTarget := BfgsVerification.spatialQuadraticRadial
+#print axioms BfgsVerification.spatialQuadraticRadial
+#print BfgsVerification.FiniteMaxTaylorTarget
+example : BfgsVerification.FiniteMaxTaylorTarget := BfgsVerification.finiteMaxTaylor
+#print axioms BfgsVerification.finiteMaxTaylor
+#print BfgsVerification.FiniteMaxActualHessianTarget
+example : BfgsVerification.FiniteMaxActualHessianTarget := BfgsVerification.finiteMaxActualHessian
+#print axioms BfgsVerification.finiteMaxActualHessian
+#print BfgsVerification.LScalarRampTarget
+example : BfgsVerification.LScalarRampTarget := BfgsVerification.lScalarRamp
+#print axioms BfgsVerification.lScalarRamp
+#print BfgsVerification.LScalarDefinitionTarget
+example : BfgsVerification.LScalarDefinitionTarget := BfgsVerification.lScalarDefinition
+#print axioms BfgsVerification.lScalarDefinition
+#print BfgsVerification.LScalarRegularityTarget
+example : BfgsVerification.LScalarRegularityTarget := BfgsVerification.lScalarRegularity
+#print axioms BfgsVerification.lScalarRegularity
+#print BfgsVerification.LScalarNodeTarget
+example : BfgsVerification.LScalarNodeTarget := BfgsVerification.lScalarNodes
+#print axioms BfgsVerification.lScalarNodes
+#print BfgsVerification.LScalarPeaksTarget
+example : BfgsVerification.LScalarPeaksTarget := BfgsVerification.lScalarPeaks
+#print axioms BfgsVerification.lScalarPeaks
+#print BfgsVerification.LScalarStepDefinitionTarget
+example : BfgsVerification.LScalarStepDefinitionTarget := BfgsVerification.lScalarStepDefinition
+#print axioms BfgsVerification.lScalarStepDefinition
+#print BfgsVerification.LScalarStepGeometryTarget
+example : BfgsVerification.LScalarStepGeometryTarget := BfgsVerification.lScalarStepGeometry
+#print axioms BfgsVerification.lScalarStepGeometry
+#print BfgsVerification.LScalarStepNodeTarget
+example : BfgsVerification.LScalarStepNodeTarget := BfgsVerification.lScalarStepNodes
+#print axioms BfgsVerification.lScalarStepNodes
+#print BfgsVerification.LScalarStepLocalTarget
+example : BfgsVerification.LScalarStepLocalTarget := BfgsVerification.lScalarStepLocal
+#print axioms BfgsVerification.lScalarStepLocal
+#print BfgsVerification.LStepEmbeddingGeometryTarget
+example : BfgsVerification.LStepEmbeddingGeometryTarget := BfgsVerification.lStepEmbeddingGeometry
+#print axioms BfgsVerification.lStepEmbeddingGeometry
+#print BfgsVerification.LStepEmbeddingPolyhedralTarget
+example : BfgsVerification.LStepEmbeddingPolyhedralTarget := BfgsVerification.lStepEmbeddingPolyhedral
+#print axioms BfgsVerification.lStepEmbeddingPolyhedral
+#print BfgsVerification.LStepEmbeddingCopiesTarget
+example : BfgsVerification.LStepEmbeddingCopiesTarget := BfgsVerification.lStepEmbeddingCopies
+#print axioms BfgsVerification.lStepEmbeddingCopies
+#print BfgsVerification.LEmbedding.RegularityTarget
+example : BfgsVerification.LEmbedding.RegularityTarget := BfgsVerification.LEmbedding.regularity
+#print axioms BfgsVerification.LEmbedding.regularity
+#print BfgsVerification.LEmbedding.OriginTarget
+example : BfgsVerification.LEmbedding.OriginTarget := BfgsVerification.LEmbedding.origin
+#print axioms BfgsVerification.LEmbedding.origin
+#print BfgsVerification.LEmbedding.HessianTarget
+example : BfgsVerification.LEmbedding.HessianTarget := BfgsVerification.LEmbedding.hessian
+#print axioms BfgsVerification.LEmbedding.hessian
+#print BfgsVerification.LEmbedding.LocalModelTarget
+example : BfgsVerification.LEmbedding.LocalModelTarget := BfgsVerification.LEmbedding.localModel
+#print axioms BfgsVerification.LEmbedding.localModel
+#print BfgsVerification.LActualCopies.SmoothFailureTarget
+example : BfgsVerification.LActualCopies.SmoothFailureTarget := BfgsVerification.LActualCopies.smoothFailure
+#print axioms BfgsVerification.LActualCopies.smoothFailure
+#print BfgsVerification.LActualCopies.StepFailureTarget
+example : BfgsVerification.LActualCopies.StepFailureTarget := BfgsVerification.LActualCopies.stepFailure
+#print axioms BfgsVerification.LActualCopies.stepFailure
+#print BfgsVerification.LGlobalTargets.GlobalFailureTarget
+example : BfgsVerification.LGlobalTargets.GlobalFailureTarget := BfgsVerification.LGlobalTargets.globalFailure
+#print axioms BfgsVerification.LGlobalTargets.globalFailure
+#print BfgsVerification.LGlobalTargets.SpectrumTarget
+example : BfgsVerification.LGlobalTargets.SpectrumTarget := BfgsVerification.LGlobalTargets.spectrum
+#print axioms BfgsVerification.LGlobalTargets.spectrum
+#print BfgsVerification.LGlobalTargets.LocalInverseTarget
+example : BfgsVerification.LGlobalTargets.LocalInverseTarget := BfgsVerification.LGlobalTargets.localInverse
+#print axioms BfgsVerification.LGlobalTargets.localInverse
+
+/- Thirteenth milestone: identity failures, invariant manifold and source details. -/
+#print BfgsVerification.AffineRankLoss.RankLossCurvatureTarget
+example : BfgsVerification.AffineRankLoss.RankLossCurvatureTarget := BfgsVerification.AffineRankLoss.rankLossCurvature
+#print axioms BfgsVerification.AffineRankLoss.rankLossCurvature
+#print BfgsVerification.LWhitening.SmoothIdentityFailureTarget
+example : BfgsVerification.LWhitening.SmoothIdentityFailureTarget := BfgsVerification.LWhitening.smoothIdentityFailure
+#print axioms BfgsVerification.LWhitening.smoothIdentityFailure
+#print BfgsVerification.LWhitening.StepIdentityFailureTarget
+example : BfgsVerification.LWhitening.StepIdentityFailureTarget := BfgsVerification.LWhitening.stepIdentityFailure
+#print axioms BfgsVerification.LWhitening.stepIdentityFailure
+#print BfgsVerification.LWhitening.SmoothLocalFailureTarget
+example : BfgsVerification.LWhitening.SmoothLocalFailureTarget := BfgsVerification.LWhitening.smoothLocalFailure
+#print axioms BfgsVerification.LWhitening.smoothLocalFailure
+#print BfgsVerification.LWhitening.StepLocalFailureTarget
+example : BfgsVerification.LWhitening.StepLocalFailureTarget := BfgsVerification.LWhitening.stepLocalFailure
+#print axioms BfgsVerification.LWhitening.stepLocalFailure
+#print BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget
+example : BfgsVerification.PlanarAllPairs.SourceAllPairTransportTarget := BfgsVerification.PlanarAllPairs.sourceAllPairTransport
+#print axioms BfgsVerification.PlanarAllPairs.sourceAllPairTransport
+#print BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget
+example : BfgsVerification.PlanarAllPairs.SourceAllEndpointEstimatesTarget := BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates
+#print axioms BfgsVerification.PlanarAllPairs.sourceAllEndpointEstimates
+#print BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget
+example : BfgsVerification.ComparisonEnergyWarning.ComparisonEnergyWarningTarget := BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+#print axioms BfgsVerification.ComparisonEnergyWarning.comparisonEnergyWarning
+#print BfgsVerification.AffineProjection.ActualImageRangeTarget
+example : BfgsVerification.AffineProjection.ActualImageRangeTarget := BfgsVerification.AffineProjection.actualImageRange
+#print axioms BfgsVerification.AffineProjection.actualImageRange
+#print BfgsVerification.LReturnStableGraph.LStableManifoldTarget
+example : BfgsVerification.LReturnStableGraph.LStableManifoldTarget := BfgsVerification.LReturnStableGraph.lStableManifold
+#print axioms BfgsVerification.LReturnStableGraph.lStableManifold
+#print BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget
+example : BfgsVerification.LReturnStableGraph.LStableInvariantManifoldTarget := BfgsVerification.LReturnStableGraph.lStableInvariantManifold
+#print axioms BfgsVerification.LReturnStableGraph.lStableInvariantManifold
+#print BfgsVerification.UnivariateSignBoundaryTarget
+example : BfgsVerification.UnivariateSignBoundaryTarget := BfgsVerification.univariateSignBoundary
+#print axioms BfgsVerification.univariateSignBoundary
+#print BfgsVerification.UnivariateConvexCoverTarget
+example : BfgsVerification.UnivariateConvexCoverTarget := BfgsVerification.univariateConvexCover
+#print axioms BfgsVerification.univariateConvexCover
+#print BfgsVerification.UnivariateCellCoverTarget
+example : BfgsVerification.UnivariateCellCoverTarget := BfgsVerification.univariateCellCover
+#print axioms BfgsVerification.univariateCellCover
+#print BfgsVerification.PolynomialFiberDerivativeTarget
+example : BfgsVerification.PolynomialFiberDerivativeTarget := BfgsVerification.polynomialFiberDerivative
+#print axioms BfgsVerification.polynomialFiberDerivative
+#print BfgsVerification.PolynomialSimpleRootChartTarget
+example : BfgsVerification.PolynomialSimpleRootChartTarget := BfgsVerification.polynomialSimpleRootChart
+#print axioms BfgsVerification.polynomialSimpleRootChart
+#print BfgsVerification.PolynomialSimpleRootProjectionTarget
+example : BfgsVerification.PolynomialSimpleRootProjectionTarget := BfgsVerification.polynomialSimpleRootProjection
+#print axioms BfgsVerification.polynomialSimpleRootProjection
+
+/- Fourteenth milestone: constant-rank geometry, precision, termination and polynomial elimination infrastructure. -/
+#print BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget
+example : BfgsVerification.TwoPieceBudget.TwoPieceTerminationTarget := BfgsVerification.TwoPieceBudget.twoPieceTermination
+#print axioms BfgsVerification.TwoPieceBudget.twoPieceTermination
+#print BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget
+example : BfgsVerification.TwoPieceBudget.TwoPieceLinearImageTarget := BfgsVerification.TwoPieceBudget.twoPieceLinearImage
+#print axioms BfgsVerification.TwoPieceBudget.twoPieceLinearImage
+#print BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget
+example : BfgsVerification.LShapePrecision.ActualJacobianPrecisionTarget := BfgsVerification.LShapePrecision.actualJacobianPrecision
+#print axioms BfgsVerification.LShapePrecision.actualJacobianPrecision
+#print BfgsVerification.ConstantRankFields.SourceConstantRankTarget
+example : BfgsVerification.ConstantRankFields.SourceConstantRankTarget := BfgsVerification.ConstantRankFields.sourceConstantRank
+#print axioms BfgsVerification.ConstantRankFields.sourceConstantRank
+#print BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget
+example : BfgsVerification.ConstantRankFields.SourceConstantRankEligibleTarget := BfgsVerification.ConstantRankFields.sourceConstantRankEligible
+#print axioms BfgsVerification.ConstantRankFields.sourceConstantRankEligible
+#print BfgsVerification.PolynomialDegreeStrataTarget
+example : BfgsVerification.PolynomialDegreeStrataTarget := BfgsVerification.polynomialDegreeStrata
+#print axioms BfgsVerification.polynomialDegreeStrata
+#print BfgsVerification.PolynomialDerivativeSpecializationTarget
+example : BfgsVerification.PolynomialDerivativeSpecializationTarget := BfgsVerification.polynomialDerivativeSpecialization
+#print axioms BfgsVerification.polynomialDerivativeSpecialization
+#print BfgsVerification.PolynomialMultiplicityStrataTarget
+example : BfgsVerification.PolynomialMultiplicityStrataTarget := BfgsVerification.polynomialMultiplicityStrata
+#print axioms BfgsVerification.polynomialMultiplicityStrata
+#print BfgsVerification.PolynomialMultipleRootChartTarget
+example : BfgsVerification.PolynomialMultipleRootChartTarget := BfgsVerification.polynomialMultipleRootChart
+#print axioms BfgsVerification.polynomialMultipleRootChart
+#print BfgsVerification.RealQuadraticEliminationTarget
+example : BfgsVerification.RealQuadraticEliminationTarget := BfgsVerification.realQuadraticElimination
+#print axioms BfgsVerification.realQuadraticElimination
+#print BfgsVerification.QuadraticPolynomialProjectionTarget
+example : BfgsVerification.QuadraticPolynomialProjectionTarget := BfgsVerification.quadraticPolynomialProjection
+#print axioms BfgsVerification.quadraticPolynomialProjection
+#print BfgsVerification.QuadraticUniversalConditionsTarget
+example : BfgsVerification.QuadraticUniversalConditionsTarget := BfgsVerification.quadraticUniversalConditions
+#print axioms BfgsVerification.quadraticUniversalConditions
+#print BfgsVerification.ActualDegreeTwoProjectionTarget
+example : BfgsVerification.ActualDegreeTwoProjectionTarget := BfgsVerification.actualDegreeTwoProjection
+#print axioms BfgsVerification.actualDegreeTwoProjection
+#print BfgsVerification.PositivePseudoDivisionTarget
+example : BfgsVerification.PositivePseudoDivisionTarget := BfgsVerification.positivePseudoDivision
+#print axioms BfgsVerification.positivePseudoDivision
+#print BfgsVerification.PseudoDivisionSpecializationTarget
+example : BfgsVerification.PseudoDivisionSpecializationTarget := BfgsVerification.pseudoDivisionSpecialization
+#print axioms BfgsVerification.pseudoDivisionSpecialization
+#print BfgsVerification.FiniteRootRemaindersTarget
+example : BfgsVerification.FiniteRootRemaindersTarget := BfgsVerification.finiteRootRemainders
+#print axioms BfgsVerification.finiteRootRemainders
+
+/- Fifteenth milestone: actual general semialgebraic projection, critical-set definability, and source precision/corollaries. -/
+#print BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget
+example : BfgsVerification.SeedOrbit.SharpRecurrentCardinalityTarget := BfgsVerification.SeedOrbit.sharpRecurrentCardinality
+#print axioms BfgsVerification.SeedOrbit.sharpRecurrentCardinality
+#print BfgsVerification.RidgeSupersession.RidgeSupersessionTarget
+example : BfgsVerification.RidgeSupersession.RidgeSupersessionTarget := BfgsVerification.RidgeSupersession.ridgeSupersession
+#print axioms BfgsVerification.RidgeSupersession.ridgeSupersession
+#print BfgsVerification.PolynomialOneSidedSignsTarget
+example : BfgsVerification.PolynomialOneSidedSignsTarget := BfgsVerification.polynomialOneSidedSigns
+#print axioms BfgsVerification.polynomialOneSidedSigns
+#print BfgsVerification.PolynomialLogarithmicResidueTarget
+example : BfgsVerification.PolynomialLogarithmicResidueTarget := BfgsVerification.polynomialLogarithmicResidue
+#print axioms BfgsVerification.polynomialLogarithmicResidue
+#print BfgsVerification.WeightedLogarithmicPoleTarget
+example : BfgsVerification.WeightedLogarithmicPoleTarget := BfgsVerification.weightedLogarithmicPole
+#print axioms BfgsVerification.weightedLogarithmicPole
+#print BfgsVerification.TarskiCauchyLocalIdentityTarget
+example : BfgsVerification.TarskiCauchyLocalIdentityTarget := BfgsVerification.tarskiCauchyLocalIdentity
+#print axioms BfgsVerification.tarskiCauchyLocalIdentity
+#print BfgsVerification.FiniteJumpTelescopingTarget
+example : BfgsVerification.FiniteJumpTelescopingTarget := BfgsVerification.finiteJumpTelescoping
+#print axioms BfgsVerification.finiteJumpTelescoping
+#print BfgsVerification.PolynomialSignJumpTarget
+example : BfgsVerification.PolynomialSignJumpTarget := BfgsVerification.polynomialSignJump
+#print axioms BfgsVerification.polynomialSignJump
+#print BfgsVerification.RationalIndexReciprocityTarget
+example : BfgsVerification.RationalIndexReciprocityTarget := BfgsVerification.rationalIndexReciprocity
+#print axioms BfgsVerification.rationalIndexReciprocity
+#print BfgsVerification.RationalIndexRemainderTarget
+example : BfgsVerification.RationalIndexRemainderTarget := BfgsVerification.rationalIndexRemainder
+#print axioms BfgsVerification.rationalIndexRemainder
+#print BfgsVerification.EuclideanIndexComputationTarget
+example : BfgsVerification.EuclideanIndexComputationTarget := BfgsVerification.euclideanIndexComputation
+#print axioms BfgsVerification.euclideanIndexComputation
+#print BfgsVerification.RootSignReconstructionTarget
+example : BfgsVerification.RootSignReconstructionTarget := BfgsVerification.rootSignReconstruction
+#print axioms BfgsVerification.rootSignReconstruction
+#print BfgsVerification.SimultaneousRootSignsTarget
+example : BfgsVerification.SimultaneousRootSignsTarget := BfgsVerification.simultaneousRootSigns
+#print axioms BfgsVerification.simultaneousRootSigns
+#print BfgsVerification.SignQueryDeterminationTarget
+example : BfgsVerification.SignQueryDeterminationTarget := BfgsVerification.signQueryDetermination
+#print axioms BfgsVerification.signQueryDetermination
+#print BfgsVerification.FinitePolynomialSignSamplingTarget
+example : BfgsVerification.FinitePolynomialSignSamplingTarget := BfgsVerification.finitePolynomialSignSampling
+#print axioms BfgsVerification.finitePolynomialSignSampling
+#print BfgsVerification.PolynomialTailSamplesTarget
+example : BfgsVerification.PolynomialTailSamplesTarget := BfgsVerification.polynomialTailSamples
+#print axioms BfgsVerification.polynomialTailSamples
+#print BfgsVerification.RealPolynomialSignReductionTarget
+example : BfgsVerification.RealPolynomialSignReductionTarget := BfgsVerification.realPolynomialSignReduction
+#print axioms BfgsVerification.realPolynomialSignReduction
+#print BfgsVerification.PositivePseudoIndexSpecializationTarget
+example : BfgsVerification.PositivePseudoIndexSpecializationTarget := BfgsVerification.positivePseudoIndexSpecialization
+#print axioms BfgsVerification.positivePseudoIndexSpecialization
+#print BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget
+example : BfgsVerification.DDisplayPrecision.PrintedPrecisionTarget := BfgsVerification.DDisplayPrecision.printedPrecision
+#print axioms BfgsVerification.DDisplayPrecision.printedPrecision
+#print BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget
+example : BfgsVerification.DBoxDenominators.SourceBoxDenominatorsTarget := BfgsVerification.DBoxDenominators.sourceBoxDenominators
+#print axioms BfgsVerification.DBoxDenominators.sourceBoxDenominators
+#print BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget
+example : BfgsVerification.DEuclideanLocality.EuclideanLocalityTarget := BfgsVerification.DEuclideanLocality.euclideanLocality
+#print axioms BfgsVerification.DEuclideanLocality.euclideanLocality
+#print BfgsVerification.RationalIndexParameterTarget
+example : BfgsVerification.RationalIndexParameterTarget := BfgsVerification.rationalIndexParameter
+#print axioms BfgsVerification.rationalIndexParameter
+#print BfgsVerification.TarskiQueryParameterTarget
+example : BfgsVerification.TarskiQueryParameterTarget := BfgsVerification.tarskiQueryParameter
+#print axioms BfgsVerification.tarskiQueryParameter
+#print BfgsVerification.SimultaneousPolynomialProjectionTarget
+example : BfgsVerification.SimultaneousPolynomialProjectionTarget := BfgsVerification.simultaneousPolynomialProjection
+#print axioms BfgsVerification.simultaneousPolynomialProjection
+#print BfgsVerification.BooleanScalarProjectionTarget
+example : BfgsVerification.BooleanScalarProjectionTarget := BfgsVerification.booleanScalarProjection
+#print axioms BfgsVerification.booleanScalarProjection
+#print BfgsVerification.GeneralCoordinateProjectionTarget
+example : BfgsVerification.GeneralCoordinateProjectionTarget := BfgsVerification.generalCoordinateProjection
+#print axioms BfgsVerification.generalCoordinateProjection
+#print BfgsVerification.AffineCriticalSemialgebraicTarget
+example : BfgsVerification.AffineCriticalSemialgebraicTarget := BfgsVerification.affineCriticalSemialgebraic
+#print axioms BfgsVerification.affineCriticalSemialgebraic
+
+/- Sixteenth milestone: actual finite smooth geometry, critical values, low gaps and planar basins; literal D closure. -/
+#print BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget
+example : BfgsVerification.RealAlgebraicGeometry.ParameterRootDegreeBoundTarget := BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterRootDegreeBound
+#print BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget
+example : BfgsVerification.RealAlgebraicGeometry.IntervalMultiplicityRolleTarget := BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle
+#print axioms BfgsVerification.RealAlgebraicGeometry.intervalMultiplicityRolle
+#print BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget
+example : BfgsVerification.RealAlgebraicGeometry.ParameterRootMultiplicityClusterTarget := BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterRootMultiplicityCluster
+#print BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget
+example : BfgsVerification.RealAlgebraicGeometry.ParameterRootClusterCoverTarget := BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover
+#print axioms BfgsVerification.RealAlgebraicGeometry.parameterRootClusterCover
+#print BfgsVerification.RootClusterConservation.FiniteConservationTarget
+example : BfgsVerification.RootClusterConservation.FiniteConservationTarget := BfgsVerification.RootClusterConservation.finiteConservation
+#print axioms BfgsVerification.RootClusterConservation.finiteConservation
+#print BfgsVerification.RootClusterConservation.FiniteBijectionTarget
+example : BfgsVerification.RootClusterConservation.FiniteBijectionTarget := BfgsVerification.RootClusterConservation.finiteBijection
+#print axioms BfgsVerification.RootClusterConservation.finiteBijection
+#print BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget
+example : BfgsVerification.RealAlgebraicGeometry.OrderedRootContinuityTarget := BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRootContinuity
+#print BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget
+example : BfgsVerification.RealAlgebraicGeometry.OrderedRootMultiplicityTarget := BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRootMultiplicity
+#print BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget
+example : BfgsVerification.RealAlgebraicGeometry.OrderedRootSmoothBranchesTarget := BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches
+#print axioms BfgsVerification.RealAlgebraicGeometry.orderedRootSmoothBranches
+#print BfgsVerification.SmoothPathCompositionTarget
+example : BfgsVerification.SmoothPathCompositionTarget := BfgsVerification.smoothPathComposition
+#print axioms BfgsVerification.smoothPathComposition
+#print BfgsVerification.SmoothPathMappingTarget
+example : BfgsVerification.SmoothPathMappingTarget := BfgsVerification.smoothPathMapping
+#print axioms BfgsVerification.smoothPathMapping
+#print BfgsVerification.LiftedObjectivePathTarget
+example : BfgsVerification.LiftedObjectivePathTarget := BfgsVerification.liftedObjectivePath
+#print axioms BfgsVerification.liftedObjectivePath
+#print BfgsVerification.SmoothCylindersTarget
+example : BfgsVerification.SmoothCylindersTarget := BfgsVerification.smoothCylinders
+#print axioms BfgsVerification.smoothCylinders
+#print BfgsVerification.OrderedSmoothPartitionTarget
+example : BfgsVerification.OrderedSmoothPartitionTarget := BfgsVerification.orderedSmoothPartition
+#print axioms BfgsVerification.orderedSmoothPartition
+#print BfgsVerification.OrderedSemialgebraicCellsTarget
+example : BfgsVerification.OrderedSemialgebraicCellsTarget := BfgsVerification.orderedSemialgebraicCells
+#print axioms BfgsVerification.orderedSemialgebraicCells
+#print BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget
+example : BfgsVerification.RealAlgebraicGeometry.ActualRootCountsTarget := BfgsVerification.RealAlgebraicGeometry.actualRootCounts
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualRootCounts
+#print BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget
+example : BfgsVerification.RealAlgebraicGeometry.ActualRootSignatureTarget := BfgsVerification.RealAlgebraicGeometry.actualRootSignature
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualRootSignature
+#print BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget
+example : BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootGraphTarget := BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualOrderedRootGraph
+#print BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget
+example : BfgsVerification.RealAlgebraicGeometry.ActualOrderedRootBandsTarget := BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands
+#print axioms BfgsVerification.RealAlgebraicGeometry.actualOrderedRootBands
+#print BfgsVerification.DLiteralTargets.LiteralIdentitiesTarget
+example : BfgsVerification.DLiteralTargets.LiteralIdentitiesTarget := BfgsVerification.DLiteralTargets.literalIdentities
+#print axioms BfgsVerification.DLiteralTargets.literalIdentities
+#print BfgsVerification.DLiteralTargets.NonStrictRunTarget
+example : BfgsVerification.DLiteralTargets.NonStrictRunTarget := BfgsVerification.DLiteralTargets.nonStrictRun
+#print axioms BfgsVerification.DLiteralTargets.nonStrictRun
+#print BfgsVerification.BoundarySignPartitionTarget
+example : BfgsVerification.BoundarySignPartitionTarget := BfgsVerification.boundarySignPartition
+#print axioms BfgsVerification.boundarySignPartition
+#print BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicSmoothCoverTarget
+example : BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicSmoothCoverTarget := BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover
+#print axioms BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicSmoothCover
+#print BfgsVerification.SemialgebraicAffineCriticalTarget
+example : BfgsVerification.SemialgebraicAffineCriticalTarget := BfgsVerification.semialgebraicAffineCritical
+#print axioms BfgsVerification.semialgebraicAffineCritical
+#print BfgsVerification.SemialgebraicPlanarBasinTarget
+example : BfgsVerification.SemialgebraicPlanarBasinTarget := BfgsVerification.semialgebraicPlanarBasin
+#print axioms BfgsVerification.semialgebraicPlanarBasin
+#print BfgsVerification.SemialgebraicPlanarLocalBasinTarget
+example : BfgsVerification.SemialgebraicPlanarLocalBasinTarget := BfgsVerification.semialgebraicPlanarLocalBasin
+#print axioms BfgsVerification.semialgebraicPlanarLocalBasin
+#print BfgsVerification.FiniteSmoothComponentsTarget
+example : BfgsVerification.FiniteSmoothComponentsTarget := BfgsVerification.finiteSmoothComponents
+#print axioms BfgsVerification.finiteSmoothComponents
+#print BfgsVerification.SemialgebraicSmoothComponentsTarget
+example : BfgsVerification.SemialgebraicSmoothComponentsTarget := BfgsVerification.semialgebraicSmoothComponents
+#print axioms BfgsVerification.semialgebraicSmoothComponents
+
+/- Seventeenth milestone: actual semialgebraic path graphs, finite path covers, scalar and objective composition regularity, and continuous semialgebraic path components. -/
+#print BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget
+example : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget := BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations
+#print BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget
+example : BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget := BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations
+#print axioms BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations
+#print BfgsVerification.SemialgebraicPathCompositionTarget
+example : BfgsVerification.SemialgebraicPathCompositionTarget := BfgsVerification.semialgebraicPathComposition
+#print axioms BfgsVerification.semialgebraicPathComposition
+#print BfgsVerification.SemialgebraicPathMappingTarget
+example : BfgsVerification.SemialgebraicPathMappingTarget := BfgsVerification.semialgebraicPathMapping
+#print axioms BfgsVerification.semialgebraicPathMapping
+#print BfgsVerification.SemialgebraicOrderedPathsTarget
+example : BfgsVerification.SemialgebraicOrderedPathsTarget := BfgsVerification.semialgebraicOrderedPaths
+#print axioms BfgsVerification.semialgebraicOrderedPaths
+#print BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget
+example : BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget := BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover
+#print axioms BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover
+#print BfgsVerification.SemialgebraicFunctionPiecesTarget
+example : BfgsVerification.SemialgebraicFunctionPiecesTarget := BfgsVerification.semialgebraicFunctionPieces
+#print axioms BfgsVerification.semialgebraicFunctionPieces
+#print BfgsVerification.SemialgebraicScalarSmoothTarget
+example : BfgsVerification.SemialgebraicScalarSmoothTarget := BfgsVerification.semialgebraicScalarSmooth
+#print axioms BfgsVerification.semialgebraicScalarSmooth
+#print BfgsVerification.SemialgebraicIntervalSmoothTarget
+example : BfgsVerification.SemialgebraicIntervalSmoothTarget := BfgsVerification.semialgebraicIntervalSmooth
+#print axioms BfgsVerification.semialgebraicIntervalSmooth
+#print BfgsVerification.ObjectiveSemialgebraicCompositionTarget
+example : BfgsVerification.ObjectiveSemialgebraicCompositionTarget := BfgsVerification.objectiveSemialgebraicComposition
+#print axioms BfgsVerification.objectiveSemialgebraicComposition
+#print BfgsVerification.SemialgebraicCurveSmoothTarget
+example : BfgsVerification.SemialgebraicCurveSmoothTarget := BfgsVerification.semialgebraicCurveSmooth
+#print axioms BfgsVerification.semialgebraicCurveSmooth
+#print BfgsVerification.CriticalSmoothPathValuesTarget
+example : BfgsVerification.CriticalSmoothPathValuesTarget := BfgsVerification.criticalSmoothPathValues
+#print axioms BfgsVerification.criticalSmoothPathValues
+#print BfgsVerification.SemialgebraicActualPathComponentsTarget
+example : BfgsVerification.SemialgebraicActualPathComponentsTarget := BfgsVerification.semialgebraicActualPathComponents
+#print axioms BfgsVerification.semialgebraicActualPathComponents
+#print BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget
+example : BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget := BfgsVerification.semialgebraicPathRegularityEquivalence
+#print axioms BfgsVerification.semialgebraicPathRegularityEquivalence
+#print BfgsVerification.ContinuousSemialgebraicComponentsTarget
+example : BfgsVerification.ContinuousSemialgebraicComponentsTarget := BfgsVerification.continuousSemialgebraicComponents
+#print axioms BfgsVerification.continuousSemialgebraicComponents
+#print BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget
+example : BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget := BfgsVerification.affineCriticalSemialgebraicPathComponents
+#print axioms BfgsVerification.affineCriticalSemialgebraicPathComponents
+
+/- Eighteenth milestone: literal principal Gram sum and sharp finite-potential degree/root limit. -/
+#print BfgsVerification.PrincipalGramSumIdentityTarget
+example : BfgsVerification.PrincipalGramSumIdentityTarget := BfgsVerification.principalGramSumIdentity
+#print axioms BfgsVerification.principalGramSumIdentity
+#print BfgsVerification.SharpPrincipalPotentialTarget
+example : BfgsVerification.SharpPrincipalPotentialTarget := BfgsVerification.sharpPrincipalPotential
+#print axioms BfgsVerification.sharpPrincipalPotential

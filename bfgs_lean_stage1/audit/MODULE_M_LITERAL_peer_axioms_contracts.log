@@ -1,0 +1,30 @@
+@insert_product_sum_eq : ∀ {n : ℕ} (lam : Fin n → ℝ) (j : ℕ) (k : Fin n),
+  ∑ I ∈ {I ∈ Finset.powersetCard j Finset.univ | k ∉ I}, lam k * ∏ i ∈ I, lam i =
+    ∑ J ∈ {J ∈ Finset.powersetCard (j + 1) Finset.univ | k ∈ J}, ∏ i ∈ J, lam i
+'BfgsVerification.insert_product_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@principal_product_augmented_sum_eq : ∀ {n : ℕ} (lam : Fin n → ℝ) (y : Vec n) (j : ℕ),
+  ∑ I ∈ Finset.powersetCard j Finset.univ, (∏ i ∈ I, lam i) * ∑ k ∈ Finset.univ \ I, lam k * y k ^ 2 =
+    ∑ J ∈ Finset.powersetCard (j + 1) Finset.univ, (∏ i ∈ J, lam i) * ∑ k ∈ J, y k ^ 2
+'BfgsVerification.principal_product_augmented_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@diagonal_coordinate_gram_sum_eq : ∀ {n : ℕ} (lam : Fin n → ℝ),
+  (∀ (i : Fin n), 0 < lam i) →
+    ∀ (y : Vec n) (j : ℕ),
+      ∑ I ∈ Finset.powersetCard j Finset.univ,
+          (metricGram (diagonal lam) ((replicateCol Unit y).fromCols (coordinateMatrix I))).det =
+        ∑ J ∈ Finset.powersetCard (j + 1) Finset.univ, (∏ i ∈ J, lam i) * ∑ k ∈ J, y k ^ 2
+'BfgsVerification.diagonal_coordinate_gram_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@orthogonal_coordinate_gram_sum_eq : ∀ {n : ℕ} (H U : Mat n) (lam : Vec n),
+  U * Uᵀ = 1 →
+    Uᵀ * H * U = diagonal lam →
+      (∀ (i : Fin n), 0 < lam i) →
+        ∀ (y : Vec n) (j : ℕ),
+          ∑ I ∈ Finset.powersetCard j Finset.univ,
+              (metricGram H ((replicateCol Unit y).fromCols (U * coordinateMatrix I))).det =
+            ∑ J ∈ Finset.powersetCard (j + 1) Finset.univ, (∏ i ∈ J, lam i) * ∑ k ∈ J, (Uᵀ *ᵥ y) k ^ 2
+'BfgsVerification.orthogonal_coordinate_gram_sum_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+PrincipalGramSumIdentityTarget : Prop
+'BfgsVerification.PrincipalGramSumIdentityTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+@principalGramSumIdentity : PrincipalGramSumIdentityTarget
+'BfgsVerification.principalGramSumIdentity' depends on axioms: [propext, Classical.choice, Quot.sound]
+PEER_EXACT_TARGET_OK actual_source_identity
+PEER_EXACT_TARGET_OK target_definition

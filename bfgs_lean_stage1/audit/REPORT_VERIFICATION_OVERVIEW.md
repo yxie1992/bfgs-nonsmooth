@@ -1,19 +1,19 @@
 # Report verification overview
 
-The seventeenth complete pinned Lean build and transitive axiom audit passed:
-**5,111 explicit theorems, 7,684 total theorem declarations, 249 exact targets,
-726 frozen Lean files**. Only propext, Classical.choice and Quot.sound occur.
+The eighteenth complete pinned Lean build and transitive axiom audit passed:
+**5,126 explicit theorems, 7,704 total theorem declarations, 251 exact targets,
+729 frozen Lean files**. Only propext, Classical.choice and Quot.sound occur.
 No sorry/admit, custom mathematical axioms or unchecked mathematical computation
 is used. Every original research source is preserved.
 
 The entire original report is **not yet verified**: the older R numerical
 attribution lacks its defining objective, and E's historical execution archive
-is absent. M's additional literal Gram-sum identity and sharp potential-degree
-export are also in a separate active scope; its principal theorem chain is proved.
+is absent. M's additional literal Gram-sum identity and sharp potential-degree/root-limit
+exports are now also proved; the original principal theorem chain is preserved.
 
 | Module | Verified scope / remaining item |
 |---|---|
-| M | Actual full-BFGS principal determinants and matrix hierarchy, derived normalized hierarchy, reciprocal means, finite horizon and superquadratic growth; actual objective-run bridges. Literal Gram-sum equality and sharp potential degree remain separately active. |
+| M | Actual full-BFGS principal determinants and matrix hierarchy, derived normalized hierarchy, reciprocal means, finite horizon and superquadratic growth; actual objective-run bridges. Literal Gram-sum equality, sharp potential degree and actual root limit are also proved. |
 | T | Transported-certificate convergence and stated variants, with explicit certificate hypotheses. |
 | R | Recoverable current radial/inward/supporting-plane theory, families and boundaries; older four-piece attribution at lines 182–187 remains unresolved. |
 | F | Stated structural families, local basins, affine lifting and rates, with documented proof replacements. |
@@ -36,13 +36,12 @@ completion targets.
 
 The source register covers all 14 modules, 172 disjoint spans and 4,323 chapter
 lines. See [REPORT_STATUS.json](REPORT_STATUS.json) for exact exports and source
-hashes, [the statement review](REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md) for
+hashes, [the geometric statement review](REPORT_SEMIALGEBRAIC_PATH_STATEMENT_REVIEW.md) and [the literal M/audit review](REPORT_LITERAL_FOUNDATION_STATEMENT_REVIEW.md) for
 the final geometric hypotheses and definitions, and
-[STATUS.json](STATUS.json), [the complete checker transcript](report_semialgebraic_path_check.log)
+[STATUS.json](STATUS.json), [the complete checker transcript](report_literal_foundation_check.log)
 and [axioms.log](axioms.log) for actual compiler and dependency evidence.
 
-The remaining Lean work is M's literal Gram-sum identity and sharp potential
-degree export. To finish the unresolved original-source claims, recover the older four-piece
+To finish the unresolved original-source claims, recover the older four-piece
 objective used in R182–187 and the verification archive identified by E. The
 current D objective and newly executed Lean proofs do not identify those
 missing inputs. Any correction or retirement must be explicit and preserve

@@ -1,23 +1,107 @@
 import BfgsVerification
 
-/- Enumerate the compiled environment, rather than trusting a hand-maintained
-list to cover every theorem. This is audit tooling, not a mathematical premise.
-`collectAxioms` traverses proof dependencies, exactly as `#print axioms` does. -/
-open Lean Elab Command in
+/- Experimental shared-graph audit proposal. The original Lean4.19
+CollectAxioms outgoing-edge cases are preserved exactly. Reverse reachability
+computes the same axiom sets while caching each constant's outgoing edges once.
+This is audit tooling, never a mathematical proof premise. -/
+namespace BfgsAuditCache
+open Lean
+
+-- Match Lean.Util.CollectAxioms.collect case by case. In particular do not use
+-- ConstantInfo.getUsedConstantsAsSet, whose recursion/axiom cases differ.
+def directDependencies (info : ConstantInfo) : Array Name :=
+  match info with
+  | .axiomInfo _ => #[]
+  | .defnInfo v => v.type.getUsedConstants ++ v.value.getUsedConstants
+  | .thmInfo v => v.type.getUsedConstants ++ v.value.getUsedConstants
+  | .opaqueInfo v => v.type.getUsedConstants ++ v.value.getUsedConstants
+  | .quotInfo _ => #[]
+  | .ctorInfo v => v.type.getUsedConstants
+  | .recInfo v => v.type.getUsedConstants
+  | .inductInfo v => v.type.getUsedConstants ++ v.ctors.toArray
+
+structure GraphState where
+  indices : Std.HashMap Name Nat := {}
+  names : Array Name := #[]
+  dependencies : Array (Array Name) := #[]
+  axiomIndices : Array Nat := #[]
+  missing : Array Name := #[]
+
+-- This phase caches only complete outgoing edges, never incomplete axiom sets.
+partial def visit (env : Environment) (name : Name) : StateM GraphState Unit := do
+  unless (← get).indices.contains name do
+    let index := (← get).names.size
+    let info := env.checked.get.find? name
+    let deps := info.map directDependencies |>.getD #[]
+    modify fun state => { state with
+      indices := state.indices.insert name index
+      names := state.names.push name
+      dependencies := state.dependencies.push deps
+      axiomIndices := match info with
+        | some (.axiomInfo _) => state.axiomIndices.push index
+        | _ => state.axiomIndices
+      missing := if info.isNone then state.missing.push name else state.missing }
+    deps.forM (visit env)
+
+-- A worklist search on reversed edges reaches exactly the constants that can
+-- reach its axiom seed. Visited indices make self/mutual cycles harmless.
+def reverseReach (reverseEdges : Array (Array Nat)) (seed : Nat) : Array Bool := Id.run do
+  let mut seen := (Array.replicate reverseEdges.size false).set! seed true
+  let mut pending := #[seed]
+  while !pending.isEmpty do
+    let index := pending.back!
+    pending := pending.pop
+    for parent in reverseEdges[index]! do
+      if !seen[parent]! then
+        seen := seen.set! parent true
+        pending := pending.push parent
+  return seen
+
+def allAxiomSets (graph : GraphState) : Array (Array Name) := Id.run do
+  let mut reverseEdges : Array (Array Nat) := Array.replicate graph.names.size #[]
+  for index in [:graph.names.size] do
+    for dependency in graph.dependencies[index]! do
+      let child := graph.indices[dependency]!
+      reverseEdges := reverseEdges.modify child (fun edges => edges.push index)
+  let mut results : Array (Array Name) := Array.replicate graph.names.size #[]
+  for seed in graph.axiomIndices do
+    let reached := reverseReach reverseEdges seed
+    for index in [:graph.names.size] do
+      if reached[index]! then
+        results := results.modify index (fun deps => deps.push graph.names[seed]!)
+  return results
+
+end BfgsAuditCache
+
+set_option maxHeartbeats 0 in
+set_option maxRecDepth 1000000 in
+open Lean Elab Command BfgsAuditCache in
 run_cmd do
   let env ← getEnv
-  let mut count := 0
+  let mut roots := #[]
   for (name, info) in env.constants.toList do
     if (`BfgsVerification).isPrefixOf name && info.isTheorem then
-      let deps ← collectAxioms name
-      let signature ← liftTermElabM do
-        return (← Meta.ppExpr info.type).pretty
-      let report := Json.mkObj [
-        ("theorem", toJson name.toString),
-        ("axioms", toJson (deps.map Name.toString)),
-        ("signature", toJson signature)]
-      logInfo m!"BFGS_AUDIT {report.compress}"
-      count := count + 1
+      roots := roots.push name
+  let (_, graph) := (roots.forM (visit env)).run {}
+  unless graph.missing.isEmpty do
+    throwError "axiom audit reached unchecked or missing constants: {graph.missing}"
+  let dependencies := allAxiomSets graph
+  let mut count := 0
+  for name in roots do
+    let info ← getConstInfo name
+    let some checkedInfo := env.checked.get.find? name
+      | throwError "axiom audit root absent from checked environment: {name}"
+    unless info.type == checkedInfo.type do
+      throwError "axiom audit checked/elaboration type mismatch: {name}"
+    let deps := dependencies[graph.indices[name]!]! |>.qsort Name.lt
+    let signature ← liftTermElabM do
+      return (← Meta.ppExpr info.type).pretty
+    let report := Json.mkObj [
+      ("theorem", toJson name.toString),
+      ("axioms", toJson (deps.map Name.toString)),
+      ("signature", toJson signature)]
+    logInfo m!"BFGS_AUDIT {report.compress}"
+    count := count + 1
   logInfo m!"BFGS_AUDIT_COUNT {count}"
 
 #print axioms BfgsVerification.CompressionAlgebra.gram_numerator_identity
@@ -991,3 +1075,11 @@ example : BfgsVerification.ContinuousSemialgebraicComponentsTarget := BfgsVerifi
 #print BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget
 example : BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget := BfgsVerification.affineCriticalSemialgebraicPathComponents
 #print axioms BfgsVerification.affineCriticalSemialgebraicPathComponents
+
+/- Eighteenth milestone: literal principal Gram sum and sharp finite-potential degree/root limit. -/
+#print BfgsVerification.PrincipalGramSumIdentityTarget
+example : BfgsVerification.PrincipalGramSumIdentityTarget := BfgsVerification.principalGramSumIdentity
+#print axioms BfgsVerification.principalGramSumIdentity
+#print BfgsVerification.SharpPrincipalPotentialTarget
+example : BfgsVerification.SharpPrincipalPotentialTarget := BfgsVerification.sharpPrincipalPotential
+#print axioms BfgsVerification.sharpPrincipalPotential

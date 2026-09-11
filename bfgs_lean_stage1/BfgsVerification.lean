@@ -535,6 +535,7 @@ import BfgsVerification.PositiveUpdate
 import BfgsVerification.PowerPoleIndex
 import BfgsVerification.PoweredGaugeProfiles
 import BfgsVerification.PoweredGaugeRadial
+import BfgsVerification.PrincipalCombinatorialIdentity
 import BfgsVerification.PrincipalCombinatorics
 import BfgsVerification.PrincipalHierarchy
 import BfgsVerification.PrincipalInvariance
@@ -665,6 +666,8 @@ import BfgsVerification.SemialgebraicSmoothPathTargets
 import BfgsVerification.SemialgebraicSmoothPaths
 import BfgsVerification.SemialgebraicSupportProjection
 import BfgsVerification.SemialgebraicSyntax
+import BfgsVerification.SharpPotentialDegree
+import BfgsVerification.SharpPotentialTargets
 import BfgsVerification.ShiftedAbsAccessibility
 import BfgsVerification.SignDeterminationTargets
 import BfgsVerification.SignPatternIndicators

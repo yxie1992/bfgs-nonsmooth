@@ -634,3 +634,29 @@ counts, timings and execution identities remain unverified. Current D's proved
 correction and current universal Lean proofs do not establish those missing
 source facts. The entire original report flag remains false pending resolution;
 no claim has been silently dropped or replaced by an added assumption.
+
+
+## Eighteenth milestone: literal M identities and complete shared-graph audit
+
+The pinned complete build and transitive audit passed 5,126 explicit theorems,
+7,704 total theorem declarations, 251 exact targets and 729 frozen Lean files.
+Only propext, Classical.choice and Quot.sound occur. Actual complete evidence
+is in report_literal_foundation_check.log, STATUS.json and their companions.
+
+The exact actual-SPD eigenbasis Gram-sum equality closes foundation94–99.
+The constructed optimized principal-potential polynomial, sharp degree n−1
+bound and actual horizon root limit close foundation151–155. The earlier
+principal-matrix and reciprocal-growth proofs remain unchanged.
+
+The shared dependency-graph collector preserves Lean4.19's exact checked
+constant cases and handles cycles by reverse reachability. Every milestone17
+theorem's type/axiom set was compared with its complete ordinary audit; all
+new scoped declarations also passed ordinary collector checks. All original
+trailing axiom/target commands remain. This tooling change supplies no proof
+premise and changes no mathematical theorem or pinned dependency.
+
+R's unidentified older four-piece numerical objective and E's absent original
+19-job archive remain source-resolution obligations. Neither current D nor
+current Lean executions establishes those missing original inputs. The entire
+original report remains unverified pending their explicit resolution. All
+research originals, documented corrections and explicit questions are preserved.

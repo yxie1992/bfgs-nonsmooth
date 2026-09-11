@@ -1,0 +1,101 @@
+BfgsVerification.SharpPotentialDegree.potentialPolynomial (n : ℕ) (r : ℝ) (e : ℕ → ℝ) : Polynomial ℝ
+'BfgsVerification.SharpPotentialDegree.potentialPolynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SharpPotentialDegree.potentialPolynomial_eval (n : ℕ) (r t : ℝ) (e : ℕ → ℝ) :
+  Polynomial.eval t (BfgsVerification.SharpPotentialDegree.potentialPolynomial n r e) =
+    BfgsVerification.ScalarHierarchy.weightedPotential n (r * t) e
+'BfgsVerification.SharpPotentialDegree.potentialPolynomial_eval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree (n : ℕ) (r : ℝ) (e : ℕ → ℝ) :
+  (BfgsVerification.SharpPotentialDegree.potentialPolynomial n r e).natDegree ≤ n - 1
+'BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.weightedPotential_mul_le_pred (n : ℕ) (r t : ℝ) (e : ℕ → ℝ) (hr : 0 ≤ r)
+  (ht : 1 ≤ t) (he : ∀ (j : ℕ), 0 ≤ e j) :
+  BfgsVerification.ScalarHierarchy.weightedPotential n (r * t) e ≤
+    BfgsVerification.ScalarHierarchy.weightedPotential n r e * t ^ (n - 1)
+'BfgsVerification.SharpPotentialDegree.weightedPotential_mul_le_pred' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.optimized_potential_eq_polynomial (n : ℕ) (K a t : ℝ) (e : ℕ → ℝ) :
+  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (a / t)) e =
+    Polynomial.eval t (BfgsVerification.SharpPotentialDegree.potentialPolynomial n (K / a) e)
+'BfgsVerification.SharpPotentialDegree.optimized_potential_eq_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.principal_optimized_polynomial {n : ℕ} (H : BfgsVerification.Mat n) (K D c : ℝ)
+  (m : ℕ) :
+  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1)))) (BfgsVerification.principalSum H) =
+    Polynomial.eval (↑m - 1)
+      (BfgsVerification.SharpPotentialDegree.potentialPolynomial n (K / (D / c)) (BfgsVerification.principalSum H))
+'BfgsVerification.SharpPotentialDegree.principal_optimized_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.principal_optimized_bound {n : ℕ} (H : BfgsVerification.Mat n)
+  (hH : Matrix.PosSemidef H) (K D c : ℝ) (hK : 0 ≤ K) (hD : 0 < D) (hc : 0 < c) (m : ℕ) (hm : 2 ≤ m) :
+  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1)))) (BfgsVerification.principalSum H) ≤
+    BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / c)) (BfgsVerification.principalSum H) *
+      (↑m - 1) ^ (n - 1)
+'BfgsVerification.SharpPotentialDegree.principal_optimized_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.run_optimized_bound {n : ℕ} (R : BfgsVerification.FullBFGSRun n) (G c : ℝ)
+  (hc : 0 < c) (hd : Summable R.d) (J m : ℕ) (hm : 2 ≤ m) :
+  let D := ∑' (i : ℕ), R.d (J + i);
+  let K := 4 * G ^ 2 / c ^ 2;
+  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1))))
+      (BfgsVerification.principalSum (R.H J)) ≤
+    BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / c)) (BfgsVerification.principalSum (R.H J)) *
+      (↑m - 1) ^ (n - 1)
+'BfgsVerification.SharpPotentialDegree.run_optimized_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SharpPotentialDegree.shifted_potential_root_tendsto (n : ℕ) (hn : 0 < n) (r : ℝ) (hr : 0 ≤ r)
+  (e : ℕ → ℝ) (he : ∀ (j : ℕ), 0 ≤ e j) (hfirst : 0 < e 1) :
+  Filter.Tendsto (fun m => BfgsVerification.ScalarHierarchy.weightedPotential n (r * (↑m - 1)) e ^ (1 / ↑m))
+    Filter.atTop (nhds 1)
+'BfgsVerification.SharpPotentialDegree.shifted_potential_root_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto {n : ℕ} (R : BfgsVerification.FullBFGSRun n) (G c : ℝ)
+  (hc : 0 < c) (hd : Summable R.d) (J : ℕ) :
+  let D := ∑' (i : ℕ), R.d (J + i);
+  let K := 4 * G ^ 2 / c ^ 2;
+  Filter.Tendsto
+    (fun m =>
+      BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1))))
+          (BfgsVerification.principalSum (R.H J)) ^
+        (1 / ↑m))
+    Filter.atTop (nhds 1)
+'BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SharpPrincipalPotentialTarget : Prop
+'BfgsVerification.SharpPrincipalPotentialTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.sharpPrincipalPotential : BfgsVerification.SharpPrincipalPotentialTarget
+'BfgsVerification.sharpPrincipalPotential' depends on axioms: [propext, Classical.choice, Quot.sound]
+def BfgsVerification.SharpPrincipalPotentialTarget : Prop :=
+∀ (n : ℕ) (R : BfgsVerification.FullBFGSRun n) (G c : ℝ),
+  0 < c →
+    Summable R.d →
+      ∀ (J : ℕ),
+        let D := ∑' (i : ℕ), R.d (J + i);
+        let K := 4 * G ^ 2 / c ^ 2;
+        ∃ p,
+          p.natDegree ≤ n - 1 ∧
+            (∀ (m : ℕ),
+                2 ≤ m →
+                  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1))))
+                        (BfgsVerification.principalSum (R.H J)) =
+                      Polynomial.eval (↑m - 1) p ∧
+                    BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1))))
+                        (BfgsVerification.principalSum (R.H J)) ≤
+                      BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / c))
+                          (BfgsVerification.principalSum (R.H J)) *
+                        (↑m - 1) ^ (n - 1)) ∧
+              Filter.Tendsto
+                (fun m =>
+                  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (↑m - 1))))
+                      (BfgsVerification.principalSum (R.H J)) ^
+                    (1 / ↑m))
+                Filter.atTop (nhds 1)
+EXACT_TARGET_OK BfgsVerification.sharpPrincipalPotential

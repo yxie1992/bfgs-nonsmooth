@@ -1,0 +1,1107 @@
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.{u_1, u_2} {σ : Type u_1} {τ : Type u_2} [Fintype σ]
+  [Fintype τ] (G : (σ → ℝ) → τ → ℝ) (S : Set (σ → ℝ)) : Prop
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.polynomial.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype σ] [Fintype τ] (P : τ → MvPolynomial σ ℝ) {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn (fun x j => (MvPolynomial.eval x) (P j)) S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.mono.{u_1, u_2} {σ : Type u_1} {τ : Type u_2} [Fintype σ]
+  [Fintype τ] {G : (σ → ℝ) → τ → ℝ} {S T : Set (σ → ℝ)}
+  (hG : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S)
+  (hT : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T) (hTS : T ⊆ S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G T
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.comp.{u_1, u_2, u_3} {σ : Type u_1} {τ : Type u_2}
+  {υ : Type u_3} [Fintype σ] [Fintype τ] [Fintype υ] {G : (σ → ℝ) → τ → ℝ} {H : (τ → ℝ) → υ → ℝ} {S : Set (σ → ℝ)}
+  {T : Set (τ → ℝ)} (hG : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S)
+  (hH : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn H T) (hGT : Set.MapsTo G S T) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn (H ∘ G) S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.comp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.coordinatewise.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype σ] [Fintype τ] {G : (σ → ℝ) → τ → ℝ} {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hG :
+    ∀ (j : τ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+        {v | (fun i => v (some i)) ∈ S ∧ v none = G (fun i => v (some i)) j}) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.coordinatewise' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.{u_1} {σ : Type u_1} [Fintype σ] (p : ℝ → σ → ℝ)
+  (J : Set ℝ) : Prop
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_interval.{u_1} {σ : Type u_1} [Fintype σ] (a b : ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v none ∈ Set.Icc a b}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_interval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine.{u_1} {σ : Type u_1} [Fintype σ] (a b : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t i => a i * t + b i) (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.const.{u_1} {σ : Type u_1} [Fintype σ] (x : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun x_1 => x) (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.segment.{u_1} {σ : Type u_1} [Fintype σ] (x y : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t => (1 - t) • x + t • y) (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.segment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.map.{u_1, u_2} {σ : Type u_1} {τ : Type u_2} [Fintype σ]
+  [Fintype τ] {p : ℝ → σ → ℝ} {J : Set ℝ} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J)
+  {G : (σ → ℝ) → τ → ℝ} {S : Set (σ → ℝ)} (hG : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S)
+  (hpS : Set.MapsTo p J S) : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (G ∘ p) J
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine_precomp.{u_1} {σ : Type u_1} [Fintype σ]
+  {p : ℝ → σ → ℝ} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1)) (a b : ℝ)
+  (hm : Set.MapsTo (fun t => a * t + b) (Set.Icc 0 1) (Set.Icc 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t => p (a * t + b)) (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.affine_precomp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.symm.{u_1} {σ : Type u_1} [Fintype σ] {p : ℝ → σ → ℝ}
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (fun t => p (1 - t)) (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.symm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_polynomial.{u_1} {σ : Type u_1} [Fintype σ]
+  (p : MvPolynomial σ ℝ) {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    {v | (fun i => v (some i)) ∈ S ∧ v none = (MvPolynomial.eval fun i => v (some i)) p}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_polynomial' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_const.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) (c : ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | (fun i => v (some i)) ∈ S ∧ v none = c}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_const' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.graph_lift.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) {f : (σ → ℝ) → ℝ}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = f fun i => v (some i)}) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn (fun x j => j.elim (f x) x) S
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn.graph_lift' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_affine.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {f g : (σ → ℝ) → ℝ}
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = f fun i => v (some i)})
+  (hg :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = g fun i => v (some i)})
+  (a b c : ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    {v | (fun i => v (some i)) ∈ S ∧ v none = ((a * f fun i => v (some i)) + b * g fun i => v (some i)) + c}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_graph_affine' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.joinedCurve.{u_1} {σ : Type u_1} [Fintype σ]
+  {p q : ℝ → σ → ℝ} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1))
+  (hq : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn q (Set.Icc 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn (BfgsVerification.RealAlgebraicGeometry.joinedCurve p q)
+    (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn.joinedCurve' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathGraphOperationsTarget
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicScalarGraphOperationsTarget
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.constantSmoothPath.{u_1} {E : Type u_1} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {S : Set E} {x : E} (hx : x ∈ S) : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x x
+'BfgsVerification.RealAlgebraicGeometry.constantSmoothPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.mappedSmoothPath.{u_1, u_2} {E : Type u_1} {F : Type u_2} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {S : Set E} {T : Set F} {x y : E}
+  (p : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y) {G : E → F} (hG : ContDiffOn ℝ (↑⊤) G S)
+  (hGT : Set.MapsTo G S T) : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath T (G x) (G y)
+'BfgsVerification.RealAlgebraicGeometry.mappedSmoothPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.reversedSmoothPath.{u_1} {E : Type u_1} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {S : Set E} {x y : E} (p : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S y x
+'BfgsVerification.RealAlgebraicGeometry.reversedSmoothPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.segmentSmoothPath.{u_1} {E : Type u_1} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {S : Set E} (hS : Convex ℝ S) {x y : E} (hx : x ∈ S) (hy : y ∈ S) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y
+'BfgsVerification.RealAlgebraicGeometry.segmentSmoothPath' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.concatenatedSmoothPath.{u_1} {E : Type u_1} [NormedAddCommGroup E]
+  [NormedSpace ℝ E] {S : Set E} {x y z : E} (p : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y)
+  (q : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S y z) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x z
+'BfgsVerification.RealAlgebraicGeometry.concatenatedSmoothPath' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x y : σ → ℝ) : Type u_1
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.mk.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (path : BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y)
+  (semialgebraic : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn path.curve (Set.Icc 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.path.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (self : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath S x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.semialgebraic.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (self : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn self.path.curve (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x y : σ → ℝ) : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.forget.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.forget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mem.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) : x ∈ S ∧ y ∈ S
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.refl.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x : σ → ℝ} (hx : x ∈ S) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x x
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.refl' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mono.{u_1} {σ : Type u_1} [Fintype σ]
+  {S T : Set (σ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) (hST : S ⊆ T) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.symm.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S y x
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.symm' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.segment.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : Convex ℝ S) {x y : σ → ℝ} (hx : x ∈ S) (hy : y ∈ S) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.segment' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.map.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype σ] [Fintype τ] {S : Set (σ → ℝ)} {T : Set (τ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) {G : (σ → ℝ) → τ → ℝ}
+  (hG : ContDiffOn ℝ (↑⊤) G S) (hGsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S)
+  (hGT : Set.MapsTo G S T) : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T (G x) (G y)
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mapOn.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype σ] [Fintype τ] {S U : Set (σ → ℝ)} {T : Set (τ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) {G : (σ → ℝ) → τ → ℝ}
+  (hG : ContDiffOn ℝ (↑⊤) G S) (hGsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G U) (hSU : S ⊆ U)
+  (hGT : Set.MapsTo G S T) : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T (G x) (G y)
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.mapOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.trans.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y z : σ → ℝ}
+  (hxy : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y)
+  (hyz : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S y z) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x z
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.trans' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicPiecewiseSmoothPathIn_equivalence.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) :
+  Equivalence fun x y => BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S ↑x ↑y
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicPiecewiseSmoothPathIn_equivalence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.toPiecewiseSmoothConnected.{u_1}
+  {σ : Type u_1} [Fintype σ] {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S) :
+  BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected S
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.toPiecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.convex.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : Convex ℝ S) : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.convex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.image.{u_1, u_2} {σ : Type u_1}
+  {τ : Type u_2} [Fintype σ] [Fintype τ] {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S) {G : (σ → ℝ) → τ → ℝ}
+  (hG : ContDiffOn ℝ (↑⊤) G S) (hGsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicMapOn G S) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (G '' S)
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.image' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.option_graph_lift_contDiffOn.{u_1} {σ : Type u_1} [Fintype σ] {S : Set (σ → ℝ)}
+  {f : (σ → ℝ) → ℝ} (hf : ContDiffOn ℝ (↑⊤) f S) : ContDiffOn ℝ (↑⊤) (fun x j => j.elim (f x) x) S
+'BfgsVerification.RealAlgebraicGeometry.option_graph_lift_contDiffOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.graph.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) {f : (σ → ℝ) → ℝ} (hf : ContDiffOn ℝ (↑⊤) f S)
+  (hfsa :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = f fun i => v (some i)}) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    {v | (fun i => v (some i)) ∈ S ∧ v none = f fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_vertical_path.{u_1} {σ : Type u_1} [Fintype σ]
+  {T : Set (Option σ → ℝ)} (x : σ → ℝ) (hT : Convex ℝ {t | (fun j => j.elim t x) ∈ T}) {t u : ℝ}
+  (ht : (fun j => j.elim t x) ∈ T) (hu : (fun j => j.elim u x) ∈ T) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn T (fun j => j.elim t x) fun j => j.elim u x
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_vertical_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.option_coordinate_eta.{u_1} {σ : Type u_1} (v : Option σ → ℝ) :
+  (fun j => j.elim (v none) fun i => v (some i)) = v
+'BfgsVerification.RealAlgebraicGeometry.option_coordinate_eta' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.cylinder_of_section.{u_1} {σ : Type u_1}
+  [Fintype σ] {S : Set (σ → ℝ)} {T : Set (Option σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) {f : (σ → ℝ) → ℝ} (hf : ContDiffOn ℝ (↑⊤) f S)
+  (hfsa :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = f fun i => v (some i)})
+  (hsection : ∀ x ∈ S, (fun j => j.elim (f x) x) ∈ T) (hbase : ∀ z ∈ T, (fun i => z (some i)) ∈ S)
+  (hvertical : ∀ x ∈ S, Convex ℝ {t | (fun j => j.elim t x) ∈ T}) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected T
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.cylinder_of_section' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.open_band.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) {a b : (σ → ℝ) → ℝ} (ha : ContDiffOn ℝ (↑⊤) a S)
+  (hb : ContDiffOn ℝ (↑⊤) b S)
+  (hasa :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = a fun i => v (some i)})
+  (hbsa :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = b fun i => v (some i)})
+  (hab : ∀ x ∈ S, a x < b x) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    {v | (fun i => v (some i)) ∈ S ∧ (a fun i => v (some i)) < v none ∧ v none < b fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.open_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.upper_band.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) {a : (σ → ℝ) → ℝ} (ha : ContDiffOn ℝ (↑⊤) a S)
+  (hasa :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = a fun i => v (some i)}) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    {v | (fun i => v (some i)) ∈ S ∧ (a fun i => v (some i)) < v none}
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.upper_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.lower_band.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) {b : (σ → ℝ) → ℝ} (hb : ContDiffOn ℝ (↑⊤) b S)
+  (hbsa :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ S ∧ v none = b fun i => v (some i)}) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    {v | (fun i => v (some i)) ∈ S ∧ v none < b fun i => v (some i)}
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.lower_band' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.full_cylinder.{u_1} {σ : Type u_1}
+  [Fintype σ] {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected {v | (fun i => v (some i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.full_cylinder' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraicPiecewiseSmoothConnected.{u_1} {σ : Type u_1}
+  [Fintype σ] {r : ℕ} (S : Set (σ → ℝ)) (f : Fin r → (σ → ℝ) → ℝ)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hsm : ∀ (i : Fin r), ContDiffOn ℝ (↑⊤) (f i) S) (hf : ∀ x ∈ S, StrictMono fun i => f i x)
+  (hgraph :
+    ∀ (i : Fin r),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+        {v | (fun k => v (some k)) ∈ S ∧ v none = f i fun k => v (some k)})
+  (j : Fin (r + 1)) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    {v | (fun k => v (some k), v none) ∈ BfgsVerification.RealAlgebraicGeometry.orderedGapCell S f j}
+'BfgsVerification.RealAlgebraicGeometry.orderedGapCell_semialgebraicPiecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraicPiecewiseSmoothConnected.{u_1} {σ : Type u_1}
+  [Fintype σ] {r : ℕ} (S : Set (σ → ℝ)) (f : Fin r → (σ → ℝ) → ℝ)
+  (hSsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hsm : ∀ (i : Fin r), ContDiffOn ℝ (↑⊤) (f i) S) (hf : ∀ x ∈ S, StrictMono fun i => f i x)
+  (hgraph :
+    ∀ (i : Fin r),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+        {v | (fun k => v (some k)) ∈ S ∧ v none = f i fun k => v (some k)})
+  (i : Fin r ⊕ Fin (r + 1)) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    {v | (fun k => v (some k), v none) ∈ BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell S f i}
+'BfgsVerification.RealAlgebraicGeometry.orderedCylindricalCell_semialgebraicPiecewiseSmoothConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicPathCompositionTarget : Prop
+'BfgsVerification.SemialgebraicPathCompositionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicPathComposition : BfgsVerification.SemialgebraicPathCompositionTarget
+'BfgsVerification.semialgebraicPathComposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicPathMappingTarget : Prop
+'BfgsVerification.SemialgebraicPathMappingTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicPathMapping : BfgsVerification.SemialgebraicPathMappingTarget
+'BfgsVerification.semialgebraicPathMapping' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicOrderedPathsTarget : Prop
+'BfgsVerification.SemialgebraicOrderedPathsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicOrderedPaths : BfgsVerification.SemialgebraicOrderedPathsTarget
+'BfgsVerification.semialgebraicOrderedPaths' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) : Prop
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.of_connected.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hc : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.of_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.empty.{u_1} {σ : Type u_1} [Fintype σ] :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover ∅
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.iUnion.{u_1, u_2} {σ : Type u_1} [Fintype σ]
+  {ι : Type u_2} [Fintype ι] {S : ι → Set (σ → ℝ)}
+  (hS : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover (S i)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover (⋃ i, S i)
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.iUnion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_cover_select.{u_1} {σ : Type u_1} [Fintype σ]
+  (C : Finset (Set (σ → ℝ)))
+  (hC :
+    ∀ T ∈ C,
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T ∧
+        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected T)
+  {S : Set (σ → ℝ)} (hsub : S ⊆ ⋃ T ∈ C, T) (hcompatible : ∀ T ∈ C, ∀ x ∈ T, ∀ y ∈ T, x ∈ S ↔ y ∈ S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S
+'BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_cover_select' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_semialgebraic_path_cover_of_sign_cover.{u_1}
+  {σ : Type u_1} [Fintype σ] (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula σ) (C : Finset (Set (σ → ℝ)))
+  (hC :
+    ∀ T ∈ C,
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic T ∧
+        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected T)
+  (hcover : ⋃ T ∈ C, T = Set.univ)
+  (hsign :
+    ∀ T ∈ C,
+      ∀ x ∈ T,
+        ∀ y ∈ T,
+          ∀ p ∈ f.atomPolynomials, SignType.sign ((MvPolynomial.eval x) p) = SignType.sign ((MvPolynomial.eval y) p)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {x | f.Holds x}
+'BfgsVerification.RealAlgebraicGeometry.PolynomialFormula.finite_semialgebraic_path_cover_of_sign_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_cover_dimension_zero {S : Set (Fin 0 → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S
+'BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_cover_dimension_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicPiecewiseSmoothConnected_reindex.{u_1, u_2} {σ : Type u_1}
+  {τ : Type u_2} [Fintype σ] [Fintype τ] {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hSA : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) (e : σ ≃ τ) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected {y | (fun i => y (e i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicPiecewiseSmoothConnected_reindex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.reindex.{u_1, u_2} {σ : Type u_1} {τ : Type u_2}
+  [Fintype σ] [Fintype τ] {S : Set (σ → ℝ)}
+  (hS : BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S) (e : σ ≃ τ) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {y | (fun i => y (e i)) ∈ S}
+'BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover.reindex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_from_signed_cells.{u_1} {n m : ℕ} {ι : Type u_1}
+  [Fintype ι] (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p)
+  (C : ι → Set (Option (Fin n) → ℝ)) (S : Set (BfgsVerification.Vec n))
+  (hsa : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i))
+  (hpath : ∀ (i : ι), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i))
+  (hcover : ⋃ i, C i = {v | (fun j => v (some j)) ∈ S})
+  (hsign :
+    ∀ (i : ι),
+      ∀ x ∈ C i,
+        ∀ y ∈ C i,
+          ∀ (j : Fin m), SignType.sign ((MvPolynomial.eval x) (P j)) = SignType.sign ((MvPolynomial.eval y) (P j))) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_from_signed_cells' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension (n : ℕ) : Prop
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.restricted_formula_semialgebraic_path_cover_iUnion.{u_1} {n : ℕ} {ι : Type u_1}
+  [Fintype ι] (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (S : ι → Set (BfgsVerification.Vec n))
+  (h :
+    ∀ (i : ι),
+      BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover
+        {v | (fun j => v (some j)) ∈ S i ∧ f.Holds v}) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover
+    {v | (fun j => v (some j)) ∈ ⋃ i, S i ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.restricted_formula_semialgebraic_path_cover_iUnion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_root_component {n m : ℕ}
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m))
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hpath : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a)
+  (signs :
+    Fin m →
+      Fin
+          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card →
+        SignType)
+  (hboundary :
+    ∀ x ∈ S,
+      ∀ (j : Fin m)
+        (i :
+          Fin
+            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card),
+        SignType.sign
+            (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)
+              (x,
+                BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (↑i) x)) =
+          signs j i) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_root_component' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_boundary_refinement {n m : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m))
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a)
+  (signs :
+    Fin m →
+      Fin
+          (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card →
+        SignType)
+  (hboundary :
+    ∀ x ∈ S,
+      ∀ (j : Fin m)
+        (i :
+          Fin
+            (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+                    (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) a).roots.toFinset.card),
+        SignType.sign
+            (BfgsVerification.RealAlgebraicGeometry.parameterEval (P j)
+              (x,
+                BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot
+                  (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) (↑i) x)) =
+          signs j i) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_boundary_refinement' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_root_signature {n m : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m))
+  (a : BfgsVerification.Vec n) (S : Set (BfgsVerification.Vec n))
+  (hsa : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S)
+  (hzero : S ⊆ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z)
+  (hS :
+    S ⊆
+      BfgsVerification.RealAlgebraicGeometry.rootSignatureStratum
+        ((MvPolynomial.optionEquivLeft ℝ (Fin n))
+          (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z))
+        a) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {v | (fun i => v (some i)) ∈ S ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_root_signature' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_zero_pattern {n m : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ j, P j = p) (Z : Finset (Fin m)) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover
+    {v | (fun i => v (some i)) ∈ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z ∧ f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_on_zero_pattern' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_of_lower_dimension {n : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n)
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n))) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover {v | f.Holds v}
+'BfgsVerification.RealAlgebraicGeometry.formula_semialgebraic_path_cover_of_lower_dimension' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicPathCoverDimension_succ {n : ℕ}
+  (ih : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension (n + 1)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicPathCoverDimension_succ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover_fin (n : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPathCoverDimension n
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover_fin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  BfgsVerification.RealAlgebraicGeometry.HasFiniteSemialgebraicPathCover S
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget : Prop
+'BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover :
+  BfgsVerification.RealAlgebraicGeometry.GeneralSemialgebraicPathCoverTarget
+'BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_neighborhood_except_finite {S : Set ℝ}
+  (hS :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (BfgsVerification.RealAlgebraicGeometry.univariateLift S)) :
+  ∃ B, ∀ t ∈ S, t ∉ B → S ∈ nhds t
+'BfgsVerification.RealAlgebraicGeometry.univariate_semialgebraic_neighborhood_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.vec_one_semialgebraic_neighborhood_except_finite
+  {S : Set (BfgsVerification.Vec 1)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  ∃ B, ∀ (t : ℝ), (fun x => t) ∈ S → t ∉ B → {u | (fun x => u) ∈ S} ∈ nhds t
+'BfgsVerification.RealAlgebraicGeometry.vec_one_semialgebraic_neighborhood_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.isolated_formula_fiber_has_nonzero_atom_root {n m : ℕ}
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ i, P i = p)
+  (x : BfgsVerification.Vec n) (t : ℝ) (ht : f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x t))
+  (hunique : ∀ (u : ℝ), f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x u) → u = t) :
+  ∃ i,
+    BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x ≠ 0 ∧
+      (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial (P i) x).IsRoot t
+'BfgsVerification.RealAlgebraicGeometry.isolated_formula_fiber_has_nonzero_atom_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.singleton_formula_fiber_is_surviving_root {n m : ℕ}
+  (f : BfgsVerification.RealAlgebraicGeometry.PolynomialFormula (Option (Fin n)))
+  (P : Fin m → MvPolynomial (Option (Fin n)) ℝ) (hP : ∀ p ∈ f.atomPolynomials, ∃ i, P i = p) (Z : Finset (Fin m))
+  (x : BfgsVerification.Vec n) (hx : x ∈ BfgsVerification.RealAlgebraicGeometry.zeroFiberPattern P Z) (t : ℝ)
+  (ht : f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x t))
+  (hunique : ∀ (u : ℝ), f.Holds (BfgsVerification.RealAlgebraicGeometry.parameterPoint x u) → u = t) :
+  (BfgsVerification.RealAlgebraicGeometry.fiberPolynomial
+        (BfgsVerification.RealAlgebraicGeometry.survivingPolynomialProduct P Z) x).IsRoot
+    t
+'BfgsVerification.RealAlgebraicGeometry.singleton_formula_fiber_is_surviving_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_root_equality {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  {D : Set (BfgsVerification.Vec n)}
+  (hF :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ D ∧ v none = F fun i => v (some i)})
+  (p : MvPolynomial (Option (Fin n)) ℝ) (k : ℕ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    {x | x ∈ D ∧ F x = BfgsVerification.RealAlgebraicGeometry.orderedFiberRoot p k x}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_root_equality' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_finite_smooth_pieces {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} {D : Set (BfgsVerification.Vec n)}
+  (hF :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | (fun i => v (some i)) ∈ D ∧ v none = F fun i => v (some i)}) :
+  ∃ C, (∀ S ∈ C, BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S ∧ ContDiffOn ℝ (↑⊤) F S) ∧ ⋃ S ∈ C, S = D
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_function_finite_smooth_pieces' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_smooth_except_finite {f : ℝ → ℝ} {D : Set ℝ}
+  (hf : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) ∈ D ∧ v none = f (v (some 0))}) :
+  ∃ E, ∀ t ∈ D, t ∉ E → ContDiffAt ℝ (↑⊤) f t
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_scalar_smooth_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_interval_piecewise_smooth {f : ℝ → ℝ} {a b : ℝ}
+  (hc : ContinuousOn f (Set.Icc a b))
+  (hf :
+    BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) ∈ Set.Icc a b ∧ v none = f (v (some 0))}) :
+  ∃ E, ContinuousOn f (Set.Icc a b) ∧ ∀ t ∈ Set.Ioo a b, t ∉ E → ContDiffAt ℝ (↑⊤) f t
+'BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_interval_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicFunctionPiecesTarget : Prop
+'BfgsVerification.SemialgebraicFunctionPiecesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicFunctionPieces : BfgsVerification.SemialgebraicFunctionPiecesTarget
+'BfgsVerification.semialgebraicFunctionPieces' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicScalarSmoothTarget : Prop
+'BfgsVerification.SemialgebraicScalarSmoothTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicScalarSmooth : BfgsVerification.SemialgebraicScalarSmoothTarget
+'BfgsVerification.semialgebraicScalarSmooth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicIntervalSmoothTarget : Prop
+'BfgsVerification.SemialgebraicIntervalSmoothTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicIntervalSmooth : BfgsVerification.SemialgebraicIntervalSmoothTarget
+'BfgsVerification.semialgebraicIntervalSmooth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_objective_curve_scalar_graph {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hF : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F)
+  {p : ℝ → BfgsVerification.Vec n} {J : Set ℝ}
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) ∈ J ∧ v none = F (p (v (some 0)))}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_objective_curve_scalar_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hconv : ConvexOn ℝ Set.univ F)
+  (hF : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F) {p : ℝ → BfgsVerification.Vec n}
+  (hc : ContinuousOn p (Set.Icc 0 1))
+  (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p (Set.Icc 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+      {v | v (some 0) ∈ Set.Icc 0 1 ∧ v none = (F ∘ p) (v (some 0))} ∧
+    ContinuousOn (F ∘ p) (Set.Icc 0 1) ∧ ∃ E, ∀ t ∈ Set.Ioo 0 1, t ∉ E → ContDiffAt ℝ (↑⊤) (F ∘ p) t
+'BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_coordinate_scalar_graph.{u_1} {σ : Type u_1} [Fintype σ]
+  {p : ℝ → σ → ℝ} {J : Set ℝ} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J) (i : σ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic {v | v (some 0) ∈ J ∧ v none = p (v (some 0)) i}
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_coordinate_scalar_graph' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_smooth_except_finite.{u_1} {σ : Type u_1} [Fintype σ]
+  {p : ℝ → σ → ℝ} {J : Set ℝ} (hp : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn p J) :
+  ∃ E, ∀ t ∈ J, t ∉ E → ContDiffAt ℝ (↑⊤) p t
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_smooth_except_finite' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ObjectiveSemialgebraicCompositionTarget : Prop
+'BfgsVerification.ObjectiveSemialgebraicCompositionTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveSemialgebraicComposition : BfgsVerification.ObjectiveSemialgebraicCompositionTarget
+'BfgsVerification.objectiveSemialgebraicComposition' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.SemialgebraicCurveSmoothTarget : Prop
+'BfgsVerification.SemialgebraicCurveSmoothTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicCurveSmooth : BfgsVerification.SemialgebraicCurveSmoothTarget
+'BfgsVerification.semialgebraicCurveSmooth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (hSA : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F) :
+  (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+          {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} ''
+        {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z}).Finite ∧
+    ∀ (x : Fin n → ℝ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) ∧
+        BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothConnected
+            (BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+              {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) ∧
+          ∀
+            p ∈
+              BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+                {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,
+            ∀
+              q ∈
+                BfgsVerification.RealAlgebraicGeometry.piecewiseSmoothComponent
+                  {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,
+              F p = F q
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (hSA : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F) {x y : BfgsVerification.Vec n}
+  (p :
+    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath
+      {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x y)
+  (t : ℝ) : t ∈ Set.Icc 0 1 → F (p.curve t) = F x
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_hasDerivAt_zero {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (hSA : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F) {x y : BfgsVerification.Vec n}
+  (p :
+    BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath
+      {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x y)
+  {t : ℝ} (ht : t ∈ Set.Ioo 0 1) : HasDerivAt (fun u => F (p.curve u)) 0 t
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_hasDerivAt_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.CriticalSmoothPathValuesTarget : Prop
+'BfgsVerification.CriticalSmoothPathValuesTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.criticalSmoothPathValues : BfgsVerification.CriticalSmoothPathValuesTarget
+'BfgsVerification.criticalSmoothPathValues' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent.{u_1} {σ : Type u_1} [Fintype σ] (S : Set (σ → ℝ))
+  (x : σ → ℝ) : Set (σ → ℝ)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_subset.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x : σ → ℝ) : BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x ⊆ S
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_subset' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_eq_of_path.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (hxy : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) :
+  BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x =
+    BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S y
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_eq_of_path' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.prefix.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (p : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y)
+  {t : ℝ} (ht : t ∈ Set.Icc 0 1) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x (p.path.curve t)
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.prefix' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.in_component.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (p : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath S x y) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn
+    (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x) x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPath.in_component' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_connected.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_eq_union_cover.{u_1} {σ : Type u_1} [Fintype σ]
+  {m : ℕ} {S : Set (σ → ℝ)} (C : Fin m → Set (σ → ℝ)) (hcover : S = ⋃ i, C i)
+  (hC : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) (x : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x =
+    ⋃ i ∈ {i | (C i ∩ BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x).Nonempty}, C i
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_eq_union_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_components_of_finite_path_cover.{u_1} {σ : Type u_1}
+  [Fintype σ] {m : ℕ} {S : Set (σ → ℝ)} (C : Fin m → Set (σ → ℝ)) (hcover : S = ⋃ i, C i)
+  (hC : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) :
+  (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S '' S).Finite
+'BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_components_of_finite_path_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_semialgebraic_of_finite_path_cover.{u_2}
+  {τ : Type u_2} [Fintype τ] {m : ℕ} {S : Set (τ → ℝ)} (C : Fin m → Set (τ → ℝ)) (hcover : S = ⋃ i, C i)
+  (hC : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i))
+  (hSA : ∀ (i : Fin m), BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i)) (x : τ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+    (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent_semialgebraic_of_finite_path_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_components_of_cover.{u_1} {σ : Type u_1} [Fintype σ]
+  {m : ℕ} {S : Set (σ → ℝ)} (C : Fin m → Set (σ → ℝ)) (hcover : S = ⋃ i, C i)
+  (hC :
+    ∀ (i : Fin m),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic (C i) ∧
+        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected (C i)) :
+  (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S '' S).Finite ∧
+    ∀ (x : σ → ℝ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x) ∧
+        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+          (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)
+'BfgsVerification.RealAlgebraicGeometry.finite_semialgebraic_path_components_of_cover' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.semialgebraic_actual_path_components.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S '' S).Finite ∧
+    ∀ (x : σ → ℝ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x) ∧
+        BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+          (BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x)
+'BfgsVerification.RealAlgebraicGeometry.semialgebraic_actual_path_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicActualPathComponentsTarget : Prop
+'BfgsVerification.SemialgebraicActualPathComponentsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.semialgebraicActualPathComponents : BfgsVerification.SemialgebraicActualPathComponentsTarget
+'BfgsVerification.semialgebraicActualPathComponents' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.{u_1} {σ : Type u_1} [Fintype σ] (S : Set (σ → ℝ))
+  (x y : σ → ℝ) : Type u_1
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.mk.{u_1} {σ : Type u_1} [Fintype σ] {S : Set (σ → ℝ)}
+  {x y : σ → ℝ} (curve : ℝ → σ → ℝ) (continuousOn : ContinuousOn curve (Set.Icc 0 1)) (source : curve 0 = x)
+  (target : curve 1 = y) (mapsTo : Set.MapsTo curve (Set.Icc 0 1) S)
+  (semialgebraic : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn curve (Set.Icc 0 1)) :
+  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.mk' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.curve.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (self : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y) :
+  ℝ → σ → ℝ
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.curve' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.continuousOn.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (self : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y) :
+  ContinuousOn self.curve (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.continuousOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.source.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (self : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y) :
+  self.curve 0 = x
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.source' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.target.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (self : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y) :
+  self.curve 1 = y
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.target' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.mapsTo.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (self : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y) :
+  Set.MapsTo self.curve (Set.Icc 0 1) S
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.mapsTo' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.semialgebraic.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (self : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath S x y) :
+  BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicCurveOn self.curve (Set.Icc 0 1)
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPath.semialgebraic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.{u_1} {σ : Type u_1} [Fintype σ] (S : Set (σ → ℝ))
+  (x y : σ → ℝ) : Prop
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x : σ → ℝ) : Set (σ → ℝ)
+'BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) : Prop
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.toContinuousSemialgebraicPathIn.{u_1}
+  {σ : Type u_1} [Fintype σ] {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y) :
+  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn.toContinuousSemialgebraicPathIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.toContinuousSemialgebraicPathConnected.{u_1}
+  {σ : Type u_1} [Fintype σ] {S : Set (σ → ℝ)}
+  (h : BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected S) :
+  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected S
+'BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected.toContinuousSemialgebraicPathConnected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.mem.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} {x y : σ → ℝ} (h : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y) :
+  x ∈ S ∧ y ∈ S
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.toSemialgebraicPiecewiseSmoothPathIn.{u_1}
+  {σ : Type u_1} [Fintype σ] {S : Set (σ → ℝ)} {x y : σ → ℝ}
+  (h : BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn.toSemialgebraicPiecewiseSmoothPathIn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_path_iff_piecewise_smooth.{u_1} {σ : Type u_1}
+  [Fintype σ] (S : Set (σ → ℝ)) (x y : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S x y ↔
+    BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothPathIn S x y
+'BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_path_iff_piecewise_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent_eq.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x =
+    BfgsVerification.RealAlgebraicGeometry.semialgebraicSmoothComponent S x
+'BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicPathIn_equivalence.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) :
+  Equivalence fun x y => BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn S ↑x ↑y
+'BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicPathIn_equivalence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent_connected.{u_1} {σ : Type u_1} [Fintype σ]
+  (S : Set (σ → ℝ)) (x : σ → ℝ) :
+  BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+    (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x)
+'BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent_connected' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_components.{u_1} {σ : Type u_1} [Fintype σ]
+  {S : Set (σ → ℝ)} (hS : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic S) :
+  (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S '' S).Finite ∧
+    ∀ (x : σ → ℝ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x) ∧
+        BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected
+            (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x) ∧
+          BfgsVerification.RealAlgebraicGeometry.SemialgebraicPiecewiseSmoothConnected
+            (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent S x)
+'BfgsVerification.RealAlgebraicGeometry.continuous_semialgebraic_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget : Prop
+'BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.semialgebraicPathRegularityEquivalence : BfgsVerification.SemialgebraicPathRegularityEquivalenceTarget
+'BfgsVerification.semialgebraicPathRegularityEquivalence' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ContinuousSemialgebraicComponentsTarget : Prop
+'BfgsVerification.ContinuousSemialgebraicComponentsTarget' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.continuousSemialgebraicComponents : BfgsVerification.ContinuousSemialgebraicComponentsTarget
+'BfgsVerification.continuousSemialgebraicComponents' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (hSA : BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective F) :
+  (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent
+          {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} ''
+        {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z}).Finite ∧
+    ∀ (x : Fin n → ℝ),
+      BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic
+          (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent
+            {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) ∧
+        BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathConnected
+            (BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent
+              {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x) ∧
+          ∀
+            p ∈
+              BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent
+                {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,
+            ∀
+              q ∈
+                BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicComponent
+                  {z | BfgsVerification.AffineCriticalObjective.IsAffineCritical F z} x,
+              F p = F q
+'BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget : Prop
+'BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.affineCriticalSemialgebraicPathComponents :
+  BfgsVerification.AffineCriticalSemialgebraicPathComponentsTarget
+'BfgsVerification.affineCriticalSemialgebraicPathComponents' depends on axioms: [propext, Classical.choice, Quot.sound]
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.semialgebraicPathGraphOperations
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.semialgebraicScalarGraphOperations
+EXACT_TARGET_OK BfgsVerification.semialgebraicPathComposition
+EXACT_TARGET_OK BfgsVerification.semialgebraicPathMapping
+EXACT_TARGET_OK BfgsVerification.semialgebraicOrderedPaths
+EXACT_TARGET_OK BfgsVerification.RealAlgebraicGeometry.generalSemialgebraicPathCover
+EXACT_TARGET_OK BfgsVerification.semialgebraicFunctionPieces
+EXACT_TARGET_OK BfgsVerification.semialgebraicScalarSmooth
+EXACT_TARGET_OK BfgsVerification.semialgebraicIntervalSmooth
+EXACT_TARGET_OK BfgsVerification.objectiveSemialgebraicComposition
+EXACT_TARGET_OK BfgsVerification.semialgebraicCurveSmooth
+EXACT_TARGET_OK BfgsVerification.criticalSmoothPathValues
+EXACT_TARGET_OK BfgsVerification.semialgebraicActualPathComponents
+EXACT_TARGET_OK BfgsVerification.semialgebraicPathRegularityEquivalence
+EXACT_TARGET_OK BfgsVerification.continuousSemialgebraicComponents
+EXACT_TARGET_OK BfgsVerification.affineCriticalSemialgebraicPathComponents

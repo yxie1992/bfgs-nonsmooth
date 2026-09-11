@@ -1,6 +1,6 @@
 {
-  "timestamp_utc": "2026-09-11T13:02:26.021668+00:00",
-  "status": "MODULE_M_AND_REPORT_SEMIALGEBRAIC_PATH_TARGETS_VERIFIED",
+  "timestamp_utc": "2026-09-11T13:40:28.965290+00:00",
+  "status": "MODULE_M_AND_REPORT_LITERAL_FOUNDATION_TARGETS_VERIFIED",
   "lean_typechecking_performed": true,
   "end_to_end_principal_minor_hierarchy_verified": true,
   "end_to_end_bfgs_reciprocal_growth_verified": true,
@@ -251,6 +251,8 @@
   "semialgebraicPathRegularityEquivalence_verified": true,
   "continuousSemialgebraicComponents_verified": true,
   "affineCriticalSemialgebraicPathComponents_verified": true,
+  "principalGramSumIdentity_verified": true,
+  "sharpPrincipalPotential_verified": true,
   "objective_level_model_formalized": true,
   "entire_report_verified": false,
   "verified_declarations": [
@@ -45923,6 +45925,96 @@
       "source": "BfgsVerification/LTrialHistory.lean"
     },
     {
+      "theorem": "BfgsVerification.SharpPotentialDegree.optimized_potential_eq_polynomial",
+      "signature": "\u2200 (n : \u2115) (K a t : \u211d) (e : \u2115 \u2192 \u211d),\n  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (a / t)) e =\n    Polynomial.eval t (BfgsVerification.SharpPotentialDegree.potentialPolynomial n (K / a) e)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.potentialPolynomial_eval",
+      "signature": "\u2200 (n : \u2115) (r t : \u211d) (e : \u2115 \u2192 \u211d),\n  Polynomial.eval t (BfgsVerification.SharpPotentialDegree.potentialPolynomial n r e) =\n    BfgsVerification.ScalarHierarchy.weightedPotential n (r * t) e",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree",
+      "signature": "\u2200 (n : \u2115) (r : \u211d) (e : \u2115 \u2192 \u211d), (BfgsVerification.SharpPotentialDegree.potentialPolynomial n r e).natDegree \u2264 n - 1",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.principal_optimized_bound",
+      "signature": "\u2200 {n : \u2115} (H : BfgsVerification.Mat n),\n  Matrix.PosSemidef H \u2192\n    \u2200 (K D c : \u211d),\n      0 \u2264 K \u2192\n        0 < D \u2192\n          0 < c \u2192\n            \u2200 (m : \u2115),\n              2 \u2264 m \u2192\n                BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (\u2191m - 1))))\n                    (BfgsVerification.principalSum H) \u2264\n                  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / c)) (BfgsVerification.principalSum H) *\n                    (\u2191m - 1) ^ (n - 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.principal_optimized_polynomial",
+      "signature": "\u2200 {n : \u2115} (H : BfgsVerification.Mat n) (K D c : \u211d) (m : \u2115),\n  BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (\u2191m - 1)))) (BfgsVerification.principalSum H) =\n    Polynomial.eval (\u2191m - 1)\n      (BfgsVerification.SharpPotentialDegree.potentialPolynomial n (K / (D / c)) (BfgsVerification.principalSum H))",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.run_optimized_bound",
+      "signature": "\u2200 {n : \u2115} (R : BfgsVerification.FullBFGSRun n) (G c : \u211d),\n  0 < c \u2192\n    Summable R.d \u2192\n      \u2200 (J m : \u2115),\n        2 \u2264 m \u2192\n          let D := \u2211' (i : \u2115), R.d (J + i);\n          let K := 4 * G ^ 2 / c ^ 2;\n          BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (\u2191m - 1))))\n              (BfgsVerification.principalSum (R.H J)) \u2264\n            BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / c)) (BfgsVerification.principalSum (R.H J)) *\n              (\u2191m - 1) ^ (n - 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto",
+      "signature": "\u2200 {n : \u2115} (R : BfgsVerification.FullBFGSRun n) (G c : \u211d),\n  0 < c \u2192\n    Summable R.d \u2192\n      \u2200 (J : \u2115),\n        let D := \u2211' (i : \u2115), R.d (J + i);\n        let K := 4 * G ^ 2 / c ^ 2;\n        Filter.Tendsto\n          (fun m =>\n            BfgsVerification.ScalarHierarchy.weightedPotential n (K / (D / (c * (\u2191m - 1))))\n                (BfgsVerification.principalSum (R.H J)) ^\n              (1 / \u2191m))\n          Filter.atTop (nhds 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.shifted_potential_root_tendsto",
+      "signature": "\u2200 (n : \u2115),\n  0 < n \u2192\n    \u2200 (r : \u211d),\n      0 \u2264 r \u2192\n        \u2200 (e : \u2115 \u2192 \u211d),\n          (\u2200 (j : \u2115), 0 \u2264 e j) \u2192\n            0 < e 1 \u2192\n              Filter.Tendsto (fun m => BfgsVerification.ScalarHierarchy.weightedPotential n (r * (\u2191m - 1)) e ^ (1 / \u2191m))\n                Filter.atTop (nhds 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
+      "theorem": "BfgsVerification.SharpPotentialDegree.weightedPotential_mul_le_pred",
+      "signature": "\u2200 (n : \u2115) (r t : \u211d) (e : \u2115 \u2192 \u211d),\n  0 \u2264 r \u2192\n    1 \u2264 t \u2192\n      (\u2200 (j : \u2115), 0 \u2264 e j) \u2192\n        BfgsVerification.ScalarHierarchy.weightedPotential n (r * t) e \u2264\n          BfgsVerification.ScalarHierarchy.weightedPotential n r e * t ^ (n - 1)",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialDegree.lean"
+    },
+    {
       "theorem": "BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero",
       "signature": "\u2200 {\u03b9 : Type u_1} {l : Filter \u03b9} [inst : l.NeBot] {c\u2081 : \u211d},\n  0 < c\u2081 \u2192\n    \u2200 (x z g h : \u03b9 \u2192 BfgsVerification.Vec 1) (p jump : BfgsVerification.Vec 1),\n      (\u2200\u1da0 (a : \u03b9) in l,\n          BfgsVerification.TransportedCertificate.EligiblePair BfgsVerification.ScalarCounterexamples.shiftedObjective\n            c\u2081 (1 / 4) (x a) (z a) (g a) (h a)) \u2192\n        Filter.Tendsto x l (nhds p) \u2192\n          Filter.Tendsto z l (nhds p) \u2192\n            Filter.Tendsto (fun a => BfgsVerification.TransportedCertificate.pairCurvature (x a) (z a) (g a) (h a)) l\n                (nhds 0) \u2192\n              Filter.Tendsto (fun a => h a - g a) l (nhds jump) \u2192 jump = 0",
       "axioms": [
@@ -49033,6 +49125,16 @@
       "source": "BfgsVerification/CoordinateGram.lean"
     },
     {
+      "theorem": "BfgsVerification.diagonal_coordinate_gram_sum_eq",
+      "signature": "\u2200 {n : \u2115} (lam : Fin n \u2192 \u211d),\n  (\u2200 (i : Fin n), 0 < lam i) \u2192\n    \u2200 (y : BfgsVerification.Vec n) (j : \u2115),\n      \u2211 I \u2208 Finset.powersetCard j Finset.univ,\n          (BfgsVerification.metricGram (Matrix.diagonal lam)\n              ((Matrix.replicateCol Unit y).fromCols (BfgsVerification.coordinateMatrix I))).det =\n        \u2211 J \u2208 Finset.powersetCard (j + 1) Finset.univ, (\u220f i \u2208 J, lam i) * \u2211 k \u2208 J, y k ^ 2",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/PrincipalCombinatorialIdentity.lean"
+    },
+    {
       "theorem": "BfgsVerification.diagonal_coordinate_gram_sum_le",
       "signature": "\u2200 {n : \u2115} (lam : Fin n \u2192 \u211d),\n  (\u2200 (i : Fin n), 0 < lam i) \u2192\n    \u2200 (y : BfgsVerification.Vec n) (j : \u2115),\n      \u2211 I \u2208 Finset.powersetCard j Finset.univ,\n          (BfgsVerification.metricGram (Matrix.diagonal lam)\n              ((Matrix.replicateCol Unit y).fromCols (BfgsVerification.coordinateMatrix I))).det \u2264\n        BfgsVerification.sqNorm y * BfgsVerification.principalSum (Matrix.diagonal lam) (j + 1)",
       "axioms": [
@@ -49461,6 +49563,16 @@
         "propext"
       ],
       "source": "BfgsVerification/ReportGeometryEndToEnd.lean"
+    },
+    {
+      "theorem": "BfgsVerification.insert_product_sum_eq",
+      "signature": "\u2200 {n : \u2115} (lam : Fin n \u2192 \u211d) (j : \u2115) (k : Fin n),\n  \u2211 I \u2208 {I \u2208 Finset.powersetCard j Finset.univ | k \u2209 I}, lam k * \u220f i \u2208 I, lam i =\n    \u2211 J \u2208 {J \u2208 Finset.powersetCard (j + 1) Finset.univ | k \u2208 J}, \u220f i \u2208 J, lam i",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/PrincipalCombinatorialIdentity.lean"
     },
     {
       "theorem": "BfgsVerification.insert_product_sum_le",
@@ -50063,6 +50175,16 @@
       "source": "BfgsVerification/OrderedCylindricalTargets.lean"
     },
     {
+      "theorem": "BfgsVerification.orthogonal_coordinate_gram_sum_eq",
+      "signature": "\u2200 {n : \u2115} (H U : BfgsVerification.Mat n) (lam : BfgsVerification.Vec n),\n  U * Matrix.transpose U = 1 \u2192\n    Matrix.transpose U * H * U = Matrix.diagonal lam \u2192\n      (\u2200 (i : Fin n), 0 < lam i) \u2192\n        \u2200 (y : BfgsVerification.Vec n) (j : \u2115),\n          \u2211 I \u2208 Finset.powersetCard j Finset.univ,\n              (BfgsVerification.metricGram H\n                  ((Matrix.replicateCol Unit y).fromCols (U * BfgsVerification.coordinateMatrix I))).det =\n            \u2211 J \u2208 Finset.powersetCard (j + 1) Finset.univ,\n              (\u220f i \u2208 J, lam i) * \u2211 k \u2208 J, (Matrix.transpose U).mulVec y k ^ 2",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/PrincipalCombinatorialIdentity.lean"
+    },
+    {
       "theorem": "BfgsVerification.outer_mulVec",
       "signature": "\u2200 {n : \u2115} (u v x : BfgsVerification.Vec n), Matrix.mulVec (BfgsVerification.outer u v) x = BfgsVerification.dot v x \u2022 u",
       "axioms": [
@@ -50493,6 +50615,16 @@
       "source": "BfgsVerification/PositivePseudoIndexSpecialization.lean"
     },
     {
+      "theorem": "BfgsVerification.principalGramSumIdentity",
+      "signature": "BfgsVerification.PrincipalGramSumIdentityTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/PrincipalCombinatorialIdentity.lean"
+    },
+    {
       "theorem": "BfgsVerification.principalMinorHierarchy",
       "signature": "BfgsVerification.PrincipalMinorHierarchyTarget",
       "axioms": [
@@ -50571,6 +50703,16 @@
         "propext"
       ],
       "source": "BfgsVerification/PrincipalMinors.lean"
+    },
+    {
+      "theorem": "BfgsVerification.principal_product_augmented_sum_eq",
+      "signature": "\u2200 {n : \u2115} (lam : Fin n \u2192 \u211d) (y : BfgsVerification.Vec n) (j : \u2115),\n  \u2211 I \u2208 Finset.powersetCard j Finset.univ, (\u220f i \u2208 I, lam i) * \u2211 k \u2208 Finset.univ \\ I, lam k * y k ^ 2 =\n    \u2211 J \u2208 Finset.powersetCard (j + 1) Finset.univ, (\u220f i \u2208 J, lam i) * \u2211 k \u2208 J, y k ^ 2",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/PrincipalCombinatorialIdentity.lean"
     },
     {
       "theorem": "BfgsVerification.principal_product_augmented_sum_le",
@@ -51003,6 +51145,16 @@
       "source": "BfgsVerification/SemialgebraicSmoothComponents.lean"
     },
     {
+      "theorem": "BfgsVerification.sharpPrincipalPotential",
+      "signature": "BfgsVerification.SharpPrincipalPotentialTarget",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "source": "BfgsVerification/SharpPotentialTargets.lean"
+    },
+    {
       "theorem": "BfgsVerification.signQueryDetermination",
       "signature": "BfgsVerification.SignQueryDeterminationTarget",
       "axioms": [
@@ -51367,11 +51519,11 @@
   "sources": [
     {
       "path": "BfgsVerification.lean",
-      "sha256": "468bd6dc09caa683e9c43e6e226f78d2ae89fcb483035967bba3fa10db376209"
+      "sha256": "a16a8f1a56cd35076e8b9fa9f718690a1da3dcfeadf29295897adefa0c135225"
     },
     {
       "path": "Audit.lean",
-      "sha256": "add7eee3115c2d0e6f7bc3f47e2e512b727893d8c4922b73d8cb716c4449f997"
+      "sha256": "366022802f207e3f9918c0eac847fc1eb72feaba2a3270dbe80e11d53d579c27"
     },
     {
       "path": "BfgsVerification/AccessibleCurvatureBridge.lean",
@@ -53522,6 +53674,10 @@
       "sha256": "f1a4e106552cd9f67c1f3c155fdee2fcd9879082505a5af21c55bc09ac39e65a"
     },
     {
+      "path": "BfgsVerification/PrincipalCombinatorialIdentity.lean",
+      "sha256": "13a63e2d00b66c0d8fe7e9ddedcb19de1d4351c94caeef20b1915ac4b0f613ac"
+    },
+    {
       "path": "BfgsVerification/PrincipalCombinatorics.lean",
       "sha256": "f4470f1a00ff3408f0dbd739ee4fd3aabeb32c6c65b8158fe12bf21d843cce65"
     },
@@ -54042,6 +54198,14 @@
       "sha256": "d42acb2f658f679f559c2bf90fc23acdafb188486f37ff79414ada4fe0a13bc4"
     },
     {
+      "path": "BfgsVerification/SharpPotentialDegree.lean",
+      "sha256": "e356d20f43e836916c0ececea2dad1139e9f5d7c1c61f9bd07e19a37f2a29654"
+    },
+    {
+      "path": "BfgsVerification/SharpPotentialTargets.lean",
+      "sha256": "5adf6214d614b848e9d70332ba98e06cf6af280e6f05b58657b63c9bc9bdd19e"
+    },
+    {
       "path": "BfgsVerification/ShiftedAbsAccessibility.lean",
       "sha256": "199c6f0f615ae8d54243079558d2dff387a0bc3f16ac3bbded7f18ec334f8f34"
     },
@@ -54270,7 +54434,7 @@
       "sha256": "8a1c00552f1ba1000c0d1eaabd44ceb2f08e6045bea25b4026fb91b76b3a1f81"
     }
   ],
-  "explicit_theorem_declarations": 5111,
+  "explicit_theorem_declarations": 5126,
   "static_scan_passed": true,
   "static_scan_problems": [],
   "report_sources_preserved": true,
@@ -54344,7 +54508,7 @@
       "verified": true
     }
   ],
-  "audited_declaration_count": 7684,
+  "audited_declaration_count": 7704,
   "unexpected_axioms": [],
   "missing_axiom_reports": [],
   "conditional_results": [
