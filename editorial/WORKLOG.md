@@ -63,3 +63,69 @@ proof gap. Editorial corrections made during review are recorded in the reviews.
 The full companion and new prose-only Lean wrappers are being finalized for
 milestone C. Full final page-hash visual reconciliation and portable release
 checks remain before milestone D.
+
+Milestone B committed as 0fadf4e and pushed successfully to origin/main.
+
+Additional article geometry is now explicitly checked: 14 module-owned
+declarations, including generated helpers, and 26,496 recursively checked
+dependencies; the independent audit and Lean's ordinary axiom collector agree
+on only the three standard axioms. The final run is article_geometry_04.
+
+The correspondence now includes all 40 manually or automatically named companion
+results, 10 inline results, 73 unnamed mathematical/proof spans, and all 172
+classified source spans. Nine article explanatory records have exact supplemental
+exports and type/dependency evidence, supplementing the 75 core article entries.
+No strongest incomparable source result was omitted.
+
+A final bibliography review caught missing version notes in the new companion
+bibliography; these are being restored rather than transferring theorem numbers
+from preprints to later publication versions. The companion's LO scalar comparison
+is also qualified to match the inspected special line-search convention. These
+are documented attribution corrections; original source snapshots are unchanged.
+
+## Milestone C — complete companion and correspondence
+
+Final author-review typography is 32 article pages and 105 companion pages.
+The companion increased by one page when exact preprint-version and source-access
+notes were restored in its bibliography. The complete theorem/definition/open-
+question map and the full exports are assembled reproducibly. All original
+research, 761 fresh-audit inputs, the sealed corrected edition and dependencies
+still match their baseline hashes. Current document checks have zero unresolved
+references and zero overfull boxes; there are no substantive authoring TODOs.
+
+A historical-gate compatibility issue was detected, not suppressed: the original
+citation-only validator compares every repository .lean path against its old Git
+baseline, so legitimate new editorial audit copies and article wrappers cause it
+to reject current HEAD. Its original code is being run in an isolated checkout of
+its authoritative pre-authoring commit, alongside the independent current audit
+and unchanged-input checks. No formal check or axiom policy is weakened.
+
+## Milestone C: completed companion and exact correspondence
+
+The final article has 32 pages and the complete companion 105. All pages have
+been visually reviewed; the final page hashes are recorded in the render and
+visual-review registers. Both builds have resolved references/citations and no
+overfull boxes. All 172 original source spans and 3,087 distinct full formal
+exports are preserved. The final ledger includes 84 article records, 40 named
+companion results, ten inline results and 73 unnamed mathematical/proof spans.
+The mathematical, narrative and build/visual author-side review passes are
+complete. No remaining mathematical authoring obligation is recorded.
+
+The unchanged original public gate was replayed successfully at its historical
+commit 00362c0 in an isolated clean worktree. The wrapper records the expected
+current-HEAD citation-only failure and confirms all 761 historical audit inputs
+and 286 sealed artifacts are identical; it does not weaken the legacy checker.
+An additional reviewer found no blocking wrapper issue. Current authoring
+source integrity and exact-contract hash checks pass separately.
+
+The release packager preserves every committed relative path, adds the final
+PDFs and audit-required Git bundle, and excludes caches, compiled objects and
+untracked user files. The independent extraction validator will rebuild both
+documents, compare every page with the visually reviewed originals and replay
+the historical/current evidence gates. These release actions follow this
+source milestone; their actual outcomes will be recorded separately.
+
+Staged-file inspection found no dependency cache, compiled Lean object or
+unrelated user file. Own-source whitespace checks passed with documented
+exceptions for verbatim compiler logs, frozen source text and a harmless
+trailing space in the already reviewed typographic command display.

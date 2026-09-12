@@ -47,3 +47,12 @@ empty author block was removed without changing the body font or page geometry.
 The article appendix body was explicitly restored to normal size. Figures were
 read for grayscale distinction, exact-data/schematic status and label placement.
 A fresh full-page render of the final revision will be matched to PDF hashes.
+
+### Final article visual reconciliation
+
+The final 32-page article was rendered completely at 100 dpi. All pages were
+visually inspected in the prior complete review. Pages 1–7 and 32 changed after
+the final metadata/DOI edits and were visually reinspected; every other final
+page has the identical pixel SHA256 to its reviewed predecessor. No clipping,
+overlap, broken glyph, unresolved reference or overfull display remains.
+The final page hashes and PDF hash are in paper_visual_review.json.

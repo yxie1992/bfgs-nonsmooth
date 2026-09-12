@@ -1,0 +1,443 @@
+\chapter{Radial modeling and finite partitions}\label{comp:R}\label{R:chapter}
+\renewcommand{\ModuleTag}{4}
+A fixed comparison direction toward an optimizer gives a concrete modeling condition. Its inward formulation explains both local finite partitions and familiar centered nonsmooth terms.
+
+
+% SOURCE_BEGIN R.span.1
+\begingroup
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb R}
+\providecommand{\ip}{}
+\renewcommand{\ip}[2]{\langle #1,#2\rangle}
+\providecommand{\DF}{}
+\renewcommand{\DF}{D_F}
+\providecommand{\st}{}
+\renewcommand{\st}{x_*}
+\providecommand{\fs}{}
+\renewcommand{\fs}{F_*}
+\makeatletter\let\c@lemma\c@theorem\let\c@corollary\c@theorem\let\c@proposition\c@theorem\let\c@remark\c@theorem\makeatother
+\renewcommand{\thelemma}{\thetheorem}\renewcommand{\thecorollary}{\thetheorem}\renewcommand{\theproposition}{\thetheorem}\renewcommand{\theremark}{\thetheorem}
+\renewcommand{\thetheorem}{4.\arabic{section}.\arabic{theorem}}
+\setcounter{section}{0}
+\setcounter{theorem}{0}
+\setcounter{equation}{0}
+% SOURCE_END R.span.1
+
+
+% SOURCE_BEGIN R.span.2
+\section{Setup: the existing condition}
+
+Let $F:\R^n\to\R$ be finite and convex, with a minimizer $\st$ and minimum value $\fs$. Let
+\[
+ K=\{x:F(x)\le b\},\qquad b>\fs,
+\]
+be compact. Write $r_x=x-\st$. Fix bounds $R>0$ and $G>0$ such that
+\[
+ \|r_x\|\le R,\qquad \|g\|\le G\quad(x\in K,\ g\in\partial F(x)).
+\]
+Such a subgradient bound exists because a finite convex function is locally Lipschitz on the whole space.
+
+For differentiable $x,z$, put
+\begin{align*}
+ g&=\nabla F(x),& h&=\nabla F(z),&y&=h-g,&s&=z-x,\\
+ T(x,z)&=y^Ts,&N(x,z)&=y^Tr_z.
+\end{align*}
+The supporting-plane error, or Bregman expression, is
+\[
+ \DF(z,x)=F(z)-F(x)-g^T(z-x)\ge0.
+\]
+Unlike the strictly convex smooth setting of many standard presentations \cite{BB}, only differentiability of the second endpoint is needed to define this expression here. We have
+\[
+ T=\DF(z,x)+\DF(x,z),\qquad 0\le T\le T_{\max}:=4GR.
+\]
+The preceding report assumes the following positive-band condition:
+\begin{equation}
+ \forall\eta>0\ \exists C_\eta<\infty:\quad
+ N(x,z)^2\le C_\eta T(x,z)
+ \quad\text{if }\fs+\eta\le F(z)\le F(x),\ x,z\in K,\ T>0.
+ \tag{4.RS}\label{R:eq:RS}
+\end{equation}
+Endpoints in this condition are differentiable. Constants may diverge as $\eta\downarrow0$. The hypothesis is imposed only on nonempty bands.
+
+The algorithm remains ordinary full BFGS with arbitrary $H_0\succ0$, differentiable accepted iterates, and positive steps satisfying fixed Armijo--weak-Wolfe parameters $0<c_1<c_2<1$, as in \cite{XW}. ``Every run'' below always means every infinite admissible run; a zero gradient is successful termination. General all-ray existence of differentiable acceptable points is not asserted.
+
+
+\setcounter{section}{1}
+\setcounter{theorem}{0}
+\setcounter{equation}{1}
+% SOURCE_END R.span.2
+
+
+% SOURCE_BEGIN R.span.3
+\section{Equivalent formulation: smooth only toward the minimizer}
+\begin{theorem}[Inward radial smoothness is equivalent to (RS)]\label{R:thm:equiv}
+On the compact sublevel $K$, condition (RS) is equivalent, up to constants, to the following hypothesis. For every $\eta>0$, there exist $M_\eta<\infty$ and $\theta_\eta\in(0,1/2]$ such that, at every differentiable $x\in K$ with $F(x)\ge\fs+\eta$,
+\begin{equation}
+ 0\le F(x-t r_x)-F(x)+t\nabla F(x)^Tr_x
+ \le \frac{M_\eta}{2}t^2,
+ \qquad 0\le t\le\theta_\eta.
+ \tag{4.IR}\label{R:eq:IR}
+\end{equation}
+No differentiability of $x-t r_x$ is required. The sampled point is a convex combination of $x$ and $\st$, so it remains in $K$.
+\end{theorem}
+The label ``inward radial smoothness'' is descriptive terminology in this note, not a claim of a standardized definition or of novelty for the terminology. The parameter $t$ is a fraction of the distance to the minimizer. A factor $\|r_x\|^2$ can alternatively be placed in the upper bound: on a positive objective band, the two conventions are equivalent because $\eta/G\le\|r_x\|\le R$.
+
+% SOURCE_END R.span.3
+
+
+% SOURCE_BEGIN R.span.4
+\subsection{Proof that (IR) implies (RS)}
+Fix a positive band and write $M,\theta$ for its constants. Consider endpoints $x,z$ on that band. If $N\ge0$, evaluate the supporting plane at $x$ at the inward test point $z-t r_z$. Convexity and (IR) at $z$ give
+\[
+ tN\le \DF(z,x)+\frac M2t^2,\qquad 0\le t\le\theta.
+\]
+If $N<0$, use the inward test point $x-t r_x$ and the supporting plane at $z$. Since
+\[
+ (g-h)^Tr_x=T-N\ge|N|,
+\]
+we instead obtain
+\[
+ t(T-N)\le\DF(x,z)+\frac M2t^2.
+\]
+In either case there is a number $A\in[|N|,2GR]$ and a supporting error $D\in\{\DF(z,x),\DF(x,z)\}$ such that
+\[
+ tA\le D+\frac M2t^2\quad(0\le t\le\theta).
+\]
+When $M>0$ and $A\le M\theta$, take $t=A/M$ to get $A^2\le2MD$. Otherwise take $t=\theta$; if $A>M\theta$, then $D\ge A\theta/2$, so
+\[
+ A^2\le \frac{4GR}{\theta}D.
+\]
+For $M=0$, choosing $t=\theta$ gives an even stronger bound. Thus
+\begin{equation}
+ N^2\le C T,\qquad
+ C=\max\left\{2M,\frac{4GR}{\theta}\right\}.
+ \label{R:eq:IRtoRS}
+\end{equation}
+This proof also shows why controlling only the direction \emph{toward} the minimizer is enough: the sign of $N$ determines which endpoint supplies the inward probe. No outward point is needed.
+
+% SOURCE_END R.span.4
+
+
+% SOURCE_BEGIN R.span.5
+\subsection{Proof that (RS) implies (IR)}
+Fix $\eta>0$ and choose
+\[
+ \theta_\eta=\min\left\{\frac12,\frac{\eta}{4GR}\right\}.
+\]
+For $x$ on the $\eta$-band and $z=x-t r_x$, the Lipschitz bound on $K$ gives
+\[
+ F(z)\ge F(x)-GtR\ge\fs+3\eta/4.
+\]
+First suppose both endpoints are differentiable. Put
+\[
+ a=(\nabla F(x)-\nabla F(z))^Tr_x\ge0.
+\]
+Then
+\[
+ T(x,z)=ta,\qquad N(x,z)=-(1-t)a.
+\]
+Using (RS) on the $\eta/2$-band, if $a>0$,
+\[
+ (1-t)^2a^2\le C_{\eta/2}ta,
+ \qquad
+ a\le\frac{C_{\eta/2}t}{(1-t)^2}.
+\]
+Convexity supplies
+\[
+ 0\le\DF(z,x)\le ta\le4C_{\eta/2}t^2.
+\]
+If $a=0$, the same conclusion follows from $\DF(z,x)\le ta=0$. Thus (IR) holds with $M_\eta=8C_{\eta/2}$.
+
+For completeness, the inner endpoint may be nondifferentiable. For fixed $t<1$, approximate $x$ by points $x_j$ in the interior of $K$ such that both $x_j$ and $x_j-t(x_j-\st)$ are differentiable. This is possible because the differentiability set has full measure and the affine dilation is invertible. The positive-band inequalities persist, using the spare $\eta/4$ margin above. Convexity and differentiability at $x$ imply $\nabla F(x_j)\to\nabla F(x)$. Passing to the limit in the function-value inequality proves (IR) without differentiability of the inner endpoint. Boundary points of $K$ are approximated from its interior. The case $t=0$ is trivial. \qed
+
+% SOURCE_END R.span.5
+
+
+% SOURCE_BEGIN R.span.6
+\subsection{Interpretation and a derivative-free version}
+For a unit direction $d$, inspect only the scalar function
+\[
+ \varphi_d(\rho)=F(\st+\rho d),\qquad \rho>0.
+\]
+On compact positive objective bands, the equivalent conditions control the change of its scalar derivative uniformly over directions. Angular derivatives may jump. In a smooth region, the infinitesimal quantity being bounded is
+\[
+ r_x^T\nabla^2F(x)r_x,
+\]
+not the largest Hessian eigenvalue. For a nonsmooth function, checking this expression almost everywhere is \emph{not enough}: a radial gradient jump contributes singular curvature and must also be excluded.
+
+On slightly nested positive bands where both dilations remain in $K$, an equivalent function-value formulation is a uniform bound
+\begin{equation}
+ F(\st+(1+t)r)+F(\st+(1-t)r)-2F(\st+r)\le M_\eta t^2.
+ \label{R:eq:central}
+\end{equation}
+Indeed, this bound directly bounds each nonnegative tangent-plane remainder at a differentiable middle point, yielding (IR). Conversely, apply (RS) to the outer/middle and middle/inner radial pairs. If $a_+$ and $a_-$ are their scalar derivative differences in direction $r$, then
+\[
+ a_+\le C t,\qquad a_-\le Ct/(1-t)^2.
+\]
+The central difference is at most $t(a_++a_-)\le5Ct^2$ for $t\le1/2$. Approximation by differentiable triples extends the function-value inequality to all centers. This is a local equivalence with constants allowed to change; an outward point need not remain in the original top boundary of $K$.
+
+
+\setcounter{section}{2}
+\setcounter{theorem}{0}
+\setcounter{equation}{4}
+% SOURCE_END R.span.6
+
+
+% SOURCE_BEGIN R.span.7
+\section{A second interpretation: what tangent planes predict at the optimum}
+Define, at a differentiable point,
+\[
+ b_F(x)=\fs-\bigl[F(x)+\nabla F(x)^T(\st-x)\bigr]
+       =\nabla F(x)^Tr_x-(F(x)-\fs)\ge0.
+\]
+This is the amount by which the supporting plane at $x$ underestimates the minimum when extrapolated to $\st$. It is also the supporting error $\DF(\st,x)$.
+
+A direct calculation gives
+\begin{equation}
+ N(x,z)=\DF(z,x)+b_F(z)-b_F(x).
+ \label{R:eq:intercept}
+\end{equation}
+Since $0\le\DF(z,x)\le T\le T_{\max}$, the radial condition is equivalent on the same bounded domains to
+\begin{equation}
+ |b_F(z)-b_F(x)|^2\le C' T(x,z).
+ \tag{4.SP}\label{R:eq:SP}
+\end{equation}
+For example, (RS) with $C$ implies (SP) with $2C+2T_{\max}$, and conversely. Thus the full gradient need not be Lipschitz; only the \emph{height at the optimizer} of its supporting plane needs this curvature-relative regularity. The square root of $T$ is not being asserted to be a metric.
+
+For a degree-one homogeneous function minimized at zero, $b_F\equiv0$. For
+\[
+ F(u,v)=u^2+|v|,
+\]
+we have $b_F(u,v)=u^2$: crossing $v=0$ flips a gradient component but does not produce a jump in this scalar.
+
+For a function homogeneous of degree $p$, Euler's identity at a differentiable point is $\nabla F(x)^Tx=pF(x)$. Consequently the supporting-plane error at an arbitrary reference point $x_*$ is
+\[
+ b_{F,x_*}(x)=(p-1)F(x)+F(x_*)-\nabla F(x)^Tx_*.
+\]
+No minimizer assumption is needed for this algebraic identity. At reference zero it reduces to $(p-1)F(x)+F(0)$; the constant term cannot be discarded without a normalization. We use homogeneity under nonnegative dilations, $F(tx)=t^pF(x)$ for $t\ge0$, with $t^0=1$ also at $t=0$. Thus degree zero forces $F$ to be constant.
+
+In the compact setting of this chapter, the original simplified formula is valid without assuming that the optimizer is the origin. More precisely, let $n\ge1$, let $F:\mathbb R^n\to\mathbb R$ be finite, convex, nonnegative and homogeneous, and suppose $\{F\le b\}$ is compact with $F(z)<b$ for some $z$. Then $p>0$. Indeed, if $p\le0$, homogeneity at dilation two and midpoint convexity give
+\[
+ F(x)\le\tfrac12F(2x)+\tfrac12F(0)
+       =2^{p-1}F(x)+\tfrac12F(0),
+\]
+whence $F(x)\le F(0)$. Applying midpoint convexity to $x$ and $-x$ then gives $F(x)=F(0)$ for every $x$, so the strict sublevel witness makes $\{F\le b\}=\mathbb R^n$, a contradiction.
+
+Positive degree gives $F(0)=0$. Any optimizer $x_*$ therefore has value zero. If $x_*\ne0$, homogeneity places the unbounded ray $\{t x_*:t\ge0\}$ inside the compact sublevel, another contradiction. Thus zero is the unique optimizer and
+\[
+ b_F(x)=(p-1)F(x).
+\]
+The chapter's hypothesis $b>F_*$ supplies the strict witness by taking $z=x_*$. Outside this compact context, the positive constant function $F\equiv1$ has degree zero and intercept zero, whereas $(p-1)F=-1$; its positive sublevels are noncompact. These identities explain the breadth of the preceding sufficient classes without changing their compact-basin hypotheses.
+
+\paragraph{An explicit four-piece realization.}
+Let $c,d$ be the exact algebraic seed parameters of Chapter~\ref{comp:D}, and let
+\[
+ F_D(u,v)=\max\{u,-u-v/8,cu+dv,v-17\}
+\]
+be its verified coercive four-piece objective. Define
+\[
+ \delta=c-16d-1>0,\qquad a=\frac{25}{4\delta}>0,
+ \qquad \mathcal L(u,v)=(u,16v/5),
+\]
+and set
+\[
+ F_R(z)=aF_D(\mathcal L z)+a-1.
+\]
+Thus $F_R$ is the maximum of the four affine functions
+\[
+ \begin{gathered}
+ au+a-1,\qquad a(-u-2v/5)+a-1,\\
+ a(cu+16dv/5)+a-1,\qquad 16av/5-16a-1.
+ \end{gathered}
+\]
+This definition is an explicit reconstruction for this edition, not an identification of an unspecified earlier objective. Chapter~\ref{comp:D}'s own optimizer remains $(-1,16)$.
+
+The positivity of $\delta$ follows from the certified D parameters. Since $\mathcal L$ is invertible and $a>0$, $F_R$ is finite and convex with compact sublevels. The unique D optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$. At this optimizer the first three branches have values
+\[
+ -1,\quad-1,\quad -1-a\delta=-29/4,
+\]
+so their supporting errors are exactly $0,0,25/4$.
+
+This objective has an actual infinite unmodified full-BFGS failure run. For any fixed parameters
+\[
+ 0<c_1\le1/3,\qquad c_1<c_2<1,
+\]
+let $x_k,g_k,H_k,\alpha_k$ be the verified D run. Define
+\[
+ \begin{aligned}
+ \widehat x_k&=\mathcal L^{-1}x_k,&
+ \widehat g_k&=a\mathcal L^Tg_k,\\
+ \widehat H_k&=a^{-1}\mathcal L^{-1}H_k\mathcal L^{-T},&
+ \widehat\alpha_k&=\alpha_k.
+ \end{aligned}
+\]
+The gradients are the actual derivatives of $F_R$ at the accepted points, and $\widehat H_0\succ0$. Direct substitution in the inverse-BFGS update proves that these are its exact next matrices and steps. Both the predicted and actual objective decreases and the secant curvature are multiplied by $a$, so Armijo and weak Wolfe hold with the same constants. This proves a transformed full-BFGS run, rather than prescribing an unrelated sequence of endpoint pairs.
+
+The iterates satisfy $\widehat x_k\to0$, while their strictly decreasing values tend to $a-1>-1$; zero is nonstationary. In every three phases the actual supporting errors repeat $0,0,25/4$. The actual positive secant curvatures are $a$ times those of D and tend to zero. On the fixed band
+\[
+ K=\{F_R\le F_R(\widehat x_0)\},\qquad
+ F_R\ge -1+a,
+\]
+all these accepted points remain above the band threshold. Applying (SP) to successive points with indices $3m+1$ and $3m+2$ would give $(25/4)^2\le C'T_k$ for every cycle, a contradiction as $T_k\to0$. Thus (SP), and by the compact-domain equivalence also (RS), fail on this actual initial sublevel. The construction specifies both the objective and the infinite full-BFGS trajectory.
+
+
+\setcounter{section}{4}
+\setcounter{theorem}{0}
+\setcounter{equation}{8}
+% SOURCE_END R.span.7
+
+
+% SOURCE_BEGIN R.span.8
+\section{A broader verifiable family: polyhedrally piecewise smooth convex functions}
+\begin{theorem}[Finite polyhedral partitions]\label{R:thm:plq}
+Let $F$ be finite and convex, with a unique minimizer $\st$. Suppose a neighborhood of $\st$ is covered by finitely many closed full-dimensional polyhedra $P_i$, with compatible function values on overlaps, and
+\[
+ F(x)=f_i(x)\quad(x\in P_i)
+\]
+there. Assume each $f_i$ has a $C^{1,1}$ extension to an open neighborhood of the relevant part of its cell. Then every sufficiently low-starting infinite admissible full-BFGS run converges to $\st$, for arbitrary SPD initialization.
+\end{theorem}
+\begin{proof}
+Discard all cells not containing $\st$ by shrinking to a ball whose radius is below their positive distances from $\st$. There are only finitely many cells. If a remaining cell contains $x$, it also contains the segment from $x$ to $\st$ by convexity. At a differentiable point of $F$, its gradient agrees with the smooth gradient of each adjacent full-dimensional cell: approach from the interior of that cell and use differentiability and convexity of $F$.
+
+Let $L$ bound the Lipschitz constants of the finitely many smooth extensions on a smaller ball of radius $R$. For $x$ in one such cell, the usual Taylor estimate along the inward segment gives
+\[
+ 0\le F(x-t r_x)-F(x)+t\nabla F(x)^Tr_x
+ \le\frac L2 t^2\|r_x\|^2\le\frac{LR^2}{2}t^2.
+\]
+The lower bound follows from convexity of $F$; individual smooth extensions need not be convex outside their cells. Thus uniform (IR), hence (RS), holds locally. A low compact sublevel is trapped there, and the preceding convergence theorem applies. No cell or active-manifold identification is assumed of the iterates.
+\end{proof}
+In particular this covers every finite convex \emph{piecewise linear-quadratic} objective, and a convex smooth loss plus a finite convex piecewise linear-quadratic regularizer. This is broader than merely having affine pieces plus one common smooth summand: different cells can have different quadratic Hessians and different gradient jumps. Convexity of the full objective remains essential. A finite maximum of arbitrary convex quadratics need not have a polyhedral partition and is not automatically included.
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{0}
+\setcounter{equation}{8}
+% SOURCE_END R.span.8
+
+
+% SOURCE_BEGIN R.span.9
+\section{Common families through the one-dimensional profile}
+All conclusions in this section require the indicated minimizer and compact-basin hypotheses. Local statements are not global arbitrary-initialization statements.
+
+% SOURCE_END R.span.9
+
+
+% SOURCE_BEGIN R.span.10
+\subsection{Norms, gauges, and mixed powers}
+
+For a finite sublinear $\gamma$ centered at zero,
+\[
+ \gamma((1-t)z)=(1-t)\gamma(z),\qquad 0\le t<1.
+\]
+There is exactly zero radial Taylor error, regardless of angular nonsmoothness. This includes polyhedral norms, Euclidean norms, the spectral norm and nuclear norm when centered at zero, and asymmetric finite gauges.
+
+For nonnegative $\gamma$ and $p\ge1$,
+\[
+ \gamma((1-t)z)^p=(1-t)^p\gamma(z)^p.
+\]
+On $0\le t\le1/2$, the second derivative in $t$ is bounded uniformly on any bounded set of $z$. This includes $1<p<2$, without demanding a Lipschitz full gradient near zero. Therefore finite sums of differently powered, linearly composed gauges,
+\[
+ F(\st+z)=\psi(z)+\sum_j\gamma_j(A_jz)^{p_j},\qquad p_j\ge1,
+\]
+are covered when $\psi$ is convex $C^{1,1}$ locally and the full objective has the required minimizer and compact sublevel. The individual terms need not be coercive.
+
+% SOURCE_END R.span.10
+
+
+% SOURCE_BEGIN R.span.11
+\subsection{Polyhedral losses and penalties at nonzero solutions}
+Locally around any optimizer, a nonzero scalar affine residual has fixed sign and is smooth; a zero residual becomes a centered absolute value or hinge. Hence smooth losses plus $\ell_1$, fused/generalized $\ell_1$, finite hinge and quantile losses are covered locally under uniqueness. The minimizer is not required to be zero. Finite polyhedral regularizers, and their piecewise linear-quadratic extensions from Theorem~\ref{R:thm:plq}, are also covered. Extended-valued constraints remain outside the finite-function formulation.
+
+% SOURCE_END R.span.11
+
+
+% SOURCE_BEGIN R.span.12
+\subsection{Affine Euclidean group residuals}
+For terms $\|A_jx-b_j\|_2$, a nonzero optimal residual is locally smooth, while a zero optimal residual becomes $\|A_jz\|_2$, which is homogeneous. Thus sums of such terms, including overlapping Euclidean group penalties and sums of distances, added to a suitable convex smooth objective, satisfy the local condition when the minimizer is unique. This does not imply that every spectral penalty is smooth near every nonzero residual.
+
+% SOURCE_END R.span.12
+
+
+% SOURCE_BEGIN R.span.13
+\subsection{Finite maxima: a simple branch test}
+If locally $F=\max_i f_i$ with finitely many convex $C^2$ branches, it suffices that
+\[
+ (\nabla f_i(w)-\nabla f_j(w))^T(w-\st)=0
+ \quad(i,j\in I(w))
+\]
+at every active tie near $\st$. Along a fixed ray, active branches then agree in the scalar first derivative. That derivative is a continuous selection of finitely many Lipschitz branch derivatives, and has their common Lipschitz bound on compact intervals. This proves (IR) directly, shortening the earlier segment-based proof.
+
+The necessity for the old radial condition is also clear on genuine active ties: if the active radial derivatives differ by $J>0$, the one-dimensional central second difference at the tie is $J|t|+O(t^2)$, not $O(t^2)$. Thus radial compatibility describes the exact no-jump part of the criterion for this finite smooth-branch class. It is not a necessary condition for BFGS convergence itself.
+
+
+\setcounter{section}{6}
+\setcounter{theorem}{0}
+\setcounter{equation}{8}
+% SOURCE_END R.span.13
+
+
+% SOURCE_BEGIN R.span.14
+\section{Important boundaries: curved ridges and low-rank spectral penalties}
+% SOURCE_END R.span.14
+
+
+% SOURCE_BEGIN R.span.15
+\subsection{The parabolic ridge}
+For
+\[
+ F(u,v)=\max\{u^2+v,2u^2-v\},\qquad \st=0,
+\]
+the switching curve is $v=u^2/2$. At $w=(u,u^2/2)$, $u\ne0$, the active gradient difference is $(-2u,2)$ and its radial inner product is $-u^2\ne0$. A ray crosses a genuine one-dimensional kink there. For the descending pair
+\[
+ x_\epsilon=(u,u^2/2-\epsilon),\qquad
+ z_\epsilon=(u,u^2/2+\epsilon/2),
+\]
+the ratio is exactly
+\[
+ \frac{(y^Tz_\epsilon)^2}{y^T(z_\epsilon-x_\epsilon)}
+ =\frac{(u^2-\epsilon)^2}{3\epsilon}\to\infty.
+\]
+This fails (RS) on a positive objective band in every neighborhood of zero. It is \emph{not} a nonconvergent BFGS trajectory and does not establish failure of BFGS.
+
+% SOURCE_END R.span.15
+
+
+% SOURCE_BEGIN R.span.16
+\subsection{A common spectral regularizer not automatically covered}
+
+Work in symmetric $2\times2$ matrices with the Frobenius inner product. Let
+\[
+ F(X)=\frac12\|X-C\|_F^2+\|X\|_*,\qquad
+ C=\operatorname{diag}(2,0),\quad X_*=\operatorname{diag}(1,0).
+\]
+This is strongly convex and uniquely minimized at $X_*$. Indeed $X_*-C=\operatorname{diag}(-1,0)$ is canceled by a nuclear-norm subgradient $\operatorname{diag}(1,0)$ there.
+
+Take orthonormal vectors
+\[
+ v=(\cos\theta,\sin\theta),\qquad u=(-\sin\theta,\cos\theta),
+\]
+and let $W=vv^T$, $U=uu^T$, $a=\sin^2\theta>0$. For
+\[
+ X_\epsilon=W-\epsilon U,\qquad Z_\epsilon=W+\epsilon U,
+\]
+both nuclear norms are differentiable, since the matrices have nonzero eigenvalues. The pair is descending: $F(Z_\epsilon)-F(X_\epsilon)=-4a\epsilon<0$. Its gradient difference is $y=2(1+\epsilon)U$, so
+\[
+ T=4\epsilon(1+\epsilon),\qquad
+ N=2(1+\epsilon)(\epsilon-a),\qquad
+ \frac{N^2}{T}=\frac{(1+\epsilon)(\epsilon-a)^2}{\epsilon}\to\infty.
+\]
+Also $F(W)-F(X_*)=2a>0$. Choosing small $\theta$ puts such points arbitrarily close to $X_*$. Thus this familiar smooth-plus-nuclear-norm problem need not satisfy the original local radial criterion at a nonzero rank-deficient minimizer. The nuclear norm centered at zero \emph{is} covered. No failure of BFGS on this spectral problem is being claimed.
+
+
+\endgroup
+% SOURCE_END R.span.16
+
+
+\section*{Relation to earlier work}
+The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+
+The Bregman expression uses established terminology~\cite[Definition~1]{BB} and ordinary supporting-plane calculus. Only its supporting endpoint must be differentiable; no new divergence construction is asserted.
+
+Full-BFGS convergence on the Euclidean norm in arbitrary dimension was established by Guo--Lewis~\cite[Corollary~4.2]{GL18}; Lewis--Overton~\cite[Section~5.1]{LO} analyzes the scalar absolute-value model with its stated line-search conventions. The Euclidean-norm theorem is a known case recovered here. The wider gauge and mixed-power conclusions use the radial argument under the stated minimizer and compact-basin hypotheses.
+
+The optimizer in this example is a specialization of singular-value thresholding~\cite[Theorem~2.1]{CCS10}. That standard calculation is separate from the rotated-pair obstruction to the radial condition established in this chapter; the obstruction makes no claim of BFGS failure.
