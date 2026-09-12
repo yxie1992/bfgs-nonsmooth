@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "utc": "2026-09-12T07:35:13.082100+00:00",
+  "source_commit": "afc53ac7f3034fb8b473ee9835883cee312ac2a7",
+  "archive": "dist/BFGS_complete_source_and_verification.zip",
+  "archive_sha256": "3c6d482cb223891040dde5e755de33819078fc6249a97c2e7e5c639f8fa645b2",
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "_archive/restore_git_history.py"
+      ],
+      "cwd": "dist/verify-complete-zre3yuc6/BFGS-complete",
+      "default_branch_override": "main",
+      "exit_code": 0,
+      "log": "packaging/review/restore_main.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/verify_rigorous_master_report.py"
+      ],
+      "cwd": "dist/verify-complete-zre3yuc6/BFGS-complete/bfgs_lean_stage1",
+      "default_branch_override": null,
+      "exit_code": 0,
+      "log": "packaging/review/extracted_report_gate.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "literature_audit/scripts/validate.py"
+      ],
+      "cwd": "dist/verify-complete-zre3yuc6/BFGS-complete/bfgs_lean_stage1",
+      "default_branch_override": null,
+      "exit_code": 0,
+      "log": "packaging/review/extracted_literature_gate.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "_archive/restore_git_history.py"
+      ],
+      "cwd": "dist/verify-complete-zre3yuc6/BFGS-complete",
+      "default_branch_override": "master",
+      "exit_code": 0,
+      "log": "packaging/review/restore_master.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "_archive/restore_git_history.py"
+      ],
+      "cwd": "dist/verify-complete-zre3yuc6/BFGS-complete",
+      "default_branch_override": null,
+      "exit_code": 1,
+      "log": "packaging/review/restore_existing_repo_refused.log"
+    }
+  ],
+  "checks": [
+    "ZIP CRC and safe extraction paths",
+    "No Lean compiler/dependency/cache/scratch directories in extracted project",
+    "History restoration with defaultBranch=main and master",
+    "Both immutable baseline commits and source commit available",
+    "Tracked working tree clean after each restoration",
+    "Unmodified public report release gate PASS",
+    "Unmodified literature audit gate PASS",
+    "Existing Git repository restoration refused without changing HEAD",
+    "Only fresh packaging test directory removed"
+  ],
+  "scope": "Portable source-and-evidence validation from ZIP; no new Lean compilation."
+}
