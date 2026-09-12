@@ -35,7 +35,10 @@ The archive-only `_archive/RELEASE_SNAPSHOT.json` identifies the exact source
 freeze. Committed prior archive/validation receipts inside it remain historical;
 this new archive's hash and later validation receipt are external to that
 immutable snapshot. This avoids a circular archive-hash or future-execution
-claim. The final release receipt commit/push is recorded after it occurs.
+claim. The validated release commit `0fcf64f2b40b41829711ec62ab8dee04ee78ac50`
+was pushed successfully; `editorial/logs/satisfaction_release_push.json` records
+the exact remote check. A later completion-receipt commit only records that
+result and closes the status register; the source ZIP remains the fixed freeze.
 
 The ZIP preserves the outer `BFGS-non-smooth/` folder and every committed
 relative path. It includes sources, figures, current and historical PDFs,
