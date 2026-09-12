@@ -1,0 +1,1642 @@
+M20_MATRIX_LITERAL
+M20_GRAM_LITERAL
+M20_SHARP_LITERAL
+M20_RAW_NO_ASSUMED_INTERFACE BfgsVerification.ClaimReview20M.raw_reciprocal_means
+M20_RAW_NO_ASSUMED_INTERFACE BfgsVerification.ClaimReview20M.raw_superquadratic
+M20_RAW_NO_ASSUMED_INTERFACE BfgsVerification.ClaimReview20M.raw_finite_horizon
+M20_RAW_NO_ASSUMED_INTERFACE BfgsVerification.ClaimReview20M.raw_fixed_tail_lower
+M20_RAW_NO_ASSUMED_INTERFACE BfgsVerification.ClaimReview20M.raw_optimized_root
+BfgsVerification.ClaimReview20M.rawRun {n : ℕ} (H : ℕ → BfgsVerification.Mat n) (g : ℕ → BfgsVerification.Vec n)
+  (α : ℕ → ℝ) (c₂ : ℝ) (hH : PosDef (H 0)) (hg : ∀ (k : ℕ), g k ≠ 0) (hα : ∀ (k : ℕ), 0 < α k) (hc : c₂ < 1)
+  (hw :
+    ∀ (k : ℕ),
+      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k)))
+  (hu :
+    ∀ (k : ℕ),
+      H (k + 1) = BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) :
+  BfgsVerification.FullBFGSRun n
+def BfgsVerification.ClaimReview20M.rawRun : {n : ℕ} →
+  (H : ℕ → BfgsVerification.Mat n) →
+    (g : ℕ → BfgsVerification.Vec n) →
+      (α : ℕ → ℝ) →
+        (c₂ : ℝ) →
+          PosDef (H 0) →
+            (∀ (k : ℕ), g k ≠ 0) →
+              (∀ (k : ℕ), 0 < α k) →
+                c₂ < 1 →
+                  (∀ (k : ℕ),
+                      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+                        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k))) →
+                    (∀ (k : ℕ),
+                        H (k + 1) =
+                          BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k))
+                            (g (k + 1) - g k)) →
+                      BfgsVerification.FullBFGSRun n :=
+fun {n} H g α c₂ hH hg hα hc hw hu =>
+  { H := H, g := g, α := α, positive_definite := ⋯, alpha_pos := hα, energy_pos := ⋯, curvature_pos := ⋯, update := hu }
+'BfgsVerification.ClaimReview20M.rawRun' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.raw_reciprocal_means {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ) (hH : PosDef (H 0)) (hg : ∀ (k : ℕ), g k ≠ 0)
+  (hα : ∀ (k : ℕ), 0 < α k) (hc : c₂ < 1)
+  (hw :
+    ∀ (k : ℕ),
+      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k)))
+  (hu :
+    ∀ (k : ℕ),
+      H (k + 1) = BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k))
+  (G : ℝ) (hG : 0 < G) (hbound : ∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2)
+  (hd : Tendsto (fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) atTop (𝓝 0)) :
+  Tendsto (fun N => (∏ k ∈ Finset.range N, (BfgsVerification.metricEnergy (H k) (g k))⁻¹) ^ (↑N)⁻¹) atTop atTop ∧
+    Tendsto (fun N => (∑ k ∈ Finset.range N, (BfgsVerification.metricEnergy (H k) (g k))⁻¹) / ↑N) atTop atTop
+theorem BfgsVerification.ClaimReview20M.raw_reciprocal_means : ∀ {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ),
+  PosDef (H 0) →
+    (∀ (k : ℕ), g k ≠ 0) →
+      (∀ (k : ℕ), 0 < α k) →
+        c₂ < 1 →
+          (∀ (k : ℕ),
+              c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+                BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k))) →
+            (∀ (k : ℕ),
+                H (k + 1) =
+                  BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) →
+              ∀ (G : ℝ),
+                0 < G →
+                  (∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2) →
+                    Tendsto (fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) atTop (𝓝 0) →
+                      Tendsto (fun N => (∏ k ∈ Finset.range N, (BfgsVerification.metricEnergy (H k) (g k))⁻¹) ^ (↑N)⁻¹)
+                          atTop atTop ∧
+                        Tendsto (fun N => (∑ k ∈ Finset.range N, (BfgsVerification.metricEnergy (H k) (g k))⁻¹) / ↑N)
+                          atTop atTop :=
+fun {n} H g α c₂ hH hg hα hc hw hu G hG hbound hd =>
+  let R := BfgsVerification.ClaimReview20M.rawRun H g α c₂ hH hg hα hc hw hu;
+  BfgsVerification.reciprocalGrowth n R G (1 - c₂) hG (sub_pos.mpr hc) hbound
+    (fun k => BfgsVerification.FullBFGSRun.beta_ge_of_weakWolfe R k c₂ (hw k)) hd
+'BfgsVerification.ClaimReview20M.raw_reciprocal_means' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.raw_superquadratic {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ) (hH : PosDef (H 0)) (hg : ∀ (k : ℕ), g k ≠ 0)
+  (hα : ∀ (k : ℕ), 0 < α k) (hc : c₂ < 1)
+  (hw :
+    ∀ (k : ℕ),
+      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k)))
+  (hu :
+    ∀ (k : ℕ),
+      H (k + 1) = BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k))
+  (G : ℝ) (hG : 0 < G) (hbound : ∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2)
+  (hd : Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) :
+  Tendsto (fun N => (∑ k ∈ Finset.range N, (BfgsVerification.metricEnergy (H k) (g k))⁻¹) / ↑N ^ 2) atTop atTop
+theorem BfgsVerification.ClaimReview20M.raw_superquadratic : ∀ {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ),
+  PosDef (H 0) →
+    (∀ (k : ℕ), g k ≠ 0) →
+      (∀ (k : ℕ), 0 < α k) →
+        c₂ < 1 →
+          (∀ (k : ℕ),
+              c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+                BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k))) →
+            (∀ (k : ℕ),
+                H (k + 1) =
+                  BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) →
+              ∀ (G : ℝ),
+                0 < G →
+                  (∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2) →
+                    (Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) →
+                      Tendsto (fun N => (∑ k ∈ Finset.range N, (BfgsVerification.metricEnergy (H k) (g k))⁻¹) / ↑N ^ 2)
+                        atTop atTop :=
+fun {n} H g α c₂ hH hg hα hc hw hu G hG hbound hd =>
+  let R := BfgsVerification.ClaimReview20M.rawRun H g α c₂ hH hg hα hc hw hu;
+  BfgsVerification.superquadraticReciprocalGrowth n R G (1 - c₂) hG (sub_pos.mpr hc) hbound
+    (fun k => BfgsVerification.FullBFGSRun.beta_ge_of_weakWolfe R k c₂ (hw k)) hd
+'BfgsVerification.ClaimReview20M.raw_superquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.raw_finite_horizon {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ) (hH : PosDef (H 0)) (hg : ∀ (k : ℕ), g k ≠ 0)
+  (hα : ∀ (k : ℕ), 0 < α k) (hc : c₂ < 1)
+  (hw :
+    ∀ (k : ℕ),
+      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k)))
+  (hu :
+    ∀ (k : ℕ),
+      H (k + 1) = BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k))
+  (G : ℝ) (hG : 0 < G) (hbound : ∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2)
+  (hd : Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) (J m : ℕ) (hm : 2 ≤ m) (η : ℝ) (hη : 0 < η) :
+  let c := 1 - c₂;
+  let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+  let V := ∑ j ∈ Finset.range n, (4 * G ^ 2 / c ^ 2 / η) ^ j * BfgsVerification.principalSum (H J) (j + 1);
+  ↑m * (G ^ 2 * V) ^ (-1 / ↑m) * (η + D / (c * (↑m - 1))) ^ (-(↑m - 1) / ↑m) ≤
+    ∑ i ∈ Finset.range m, (BfgsVerification.metricEnergy (H (J + i)) (g (J + i)))⁻¹
+theorem BfgsVerification.ClaimReview20M.raw_finite_horizon : ∀ {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ),
+  PosDef (H 0) →
+    (∀ (k : ℕ), g k ≠ 0) →
+      (∀ (k : ℕ), 0 < α k) →
+        c₂ < 1 →
+          (∀ (k : ℕ),
+              c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+                BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k))) →
+            (∀ (k : ℕ),
+                H (k + 1) =
+                  BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) →
+              ∀ (G : ℝ),
+                0 < G →
+                  (∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2) →
+                    (Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) →
+                      ∀ (J m : ℕ),
+                        2 ≤ m →
+                          ∀ (η : ℝ),
+                            0 < η →
+                              let c := 1 - c₂;
+                              let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+                              let V :=
+                                ∑ j ∈ Finset.range n,
+                                  (4 * G ^ 2 / c ^ 2 / η) ^ j * BfgsVerification.principalSum (H J) (j + 1);
+                              ↑m * (G ^ 2 * V) ^ (-1 / ↑m) * (η + D / (c * (↑m - 1))) ^ (-(↑m - 1) / ↑m) ≤
+                                ∑ i ∈ Finset.range m, (BfgsVerification.metricEnergy (H (J + i)) (g (J + i)))⁻¹ :=
+fun {n} H g α c₂ hH hg hα hc hw hu G hG hbound hd J m hm η hη =>
+  let R := BfgsVerification.ClaimReview20M.rawRun H g α c₂ hH hg hα hc hw hu;
+  Exists.casesOn
+    (Nat.exists_eq_succ_of_ne_zero
+      (let_fun this := fun a => BfgsVerification.ClaimReview20M.raw_finite_horizon._proof_4 m hm a;
+      this))
+    fun p h =>
+    Eq.ndrec (motive := fun m =>
+      2 ≤ m →
+        let c := 1 - c₂;
+        let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+        let V := ∑ j ∈ Finset.range n, (4 * G ^ 2 / c ^ 2 / η) ^ j * BfgsVerification.principalSum (H J) (j + 1);
+        ↑m * (G ^ 2 * V) ^ (-1 / ↑m) * (η + D / (c * (↑m - 1))) ^ (-(↑m - 1) / ↑m) ≤
+          ∑ i ∈ Finset.range m, (BfgsVerification.metricEnergy (H (J + i)) (g (J + i)))⁻¹)
+      (fun hm =>
+        let_fun hp :=
+          Decidable.byContradiction fun a => BfgsVerification.ClaimReview20M.raw_finite_horizon._proof_5 p hm a;
+        let_fun h :=
+          BfgsVerification.finiteHorizon R G (1 - c₂) hG (sub_pos.mpr hc) hbound
+            (fun k => BfgsVerification.FullBFGSRun.beta_ge_of_weakWolfe R k c₂ (hw k)) hd J p hp η hη;
+        Eq.mpr
+          (id
+            (congrArg
+              (fun x => x ≤ ∑ i ∈ Finset.range (p + 1), (BfgsVerification.metricEnergy (H (J + i)) (g (J + i)))⁻¹)
+              (congr
+                (congrArg HMul.hMul
+                  (congr (congrArg HMul.hMul (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))
+                    (congrArg
+                      (fun x =>
+                        (G ^ 2 *
+                            ∑ j ∈ Finset.range n,
+                              (4 * G ^ 2 / (1 - c₂) ^ 2 / η) ^ j * BfgsVerification.principalSum (H J) (j + 1)) ^
+                          (-1 / x))
+                      (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))))
+                (congr
+                  (congrArg
+                    (fun x =>
+                      HPow.hPow
+                        (η +
+                          (∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i))) /
+                            ((1 - c₂) * x)))
+                    (Eq.trans
+                      (congrArg (fun x => x - 1) (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))
+                      (add_sub_cancel_right (↑p) 1)))
+                  (congr
+                    (congrArg (fun x => HDiv.hDiv (-x))
+                      (Eq.trans
+                        (congrArg (fun x => x - 1) (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))
+                        (add_sub_cancel_right (↑p) 1)))
+                    (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))))))
+          (Eq.mp
+            (congr
+              (congrArg LE.le
+                (congr
+                  (congrArg HMul.hMul
+                    (congr (congrArg HMul.hMul (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))
+                      (congr
+                        (congrArg (fun x => HPow.hPow (G ^ 2 * x))
+                          (Finset.sum_congr (Eq.refl (Finset.range n)) fun x a =>
+                            Eq.refl ((4 * G ^ 2 / (1 - c₂) ^ 2 / η) ^ x * BfgsVerification.principalSum (H J) (x + 1))))
+                        (congrArg (HDiv.hDiv (-1))
+                          (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one))))))
+                  (congrArg
+                    (fun x =>
+                      (η +
+                          (∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i))) /
+                            ((1 - c₂) * ↑p)) ^
+                        (-↑p / x))
+                    (Eq.trans (Nat.cast_add p 1) (congrArg (HAdd.hAdd ↑p) Nat.cast_one)))))
+              (Finset.sum_congr (Eq.refl (Finset.range (p + 1))) fun x a =>
+                Eq.refl (BfgsVerification.metricEnergy (H (J + x)) (g (J + x)))⁻¹))
+            h))
+      (Eq.symm h) hm
+'BfgsVerification.ClaimReview20M.raw_finite_horizon' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.raw_fixed_tail_lower {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ) (hH : PosDef (H 0)) (hg : ∀ (k : ℕ), g k ≠ 0)
+  (hα : ∀ (k : ℕ), 0 < α k) (hc : c₂ < 1)
+  (hw :
+    ∀ (k : ℕ),
+      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k)))
+  (hu :
+    ∀ (k : ℕ),
+      H (k + 1) = BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k))
+  (G : ℝ) (hG : 0 < G) (hbound : ∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2)
+  (hd : Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) (J : ℕ) :
+  let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+  0 < D ∧
+    ∀ a < (1 - c₂) / (2 * D),
+      ∀ᶠ (N : ℕ) in atTop, a ≤ (∑ i ∈ Finset.range N, (BfgsVerification.metricEnergy (H i) (g i))⁻¹) / ↑N ^ 2
+theorem BfgsVerification.ClaimReview20M.raw_fixed_tail_lower : ∀ {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ),
+  PosDef (H 0) →
+    (∀ (k : ℕ), g k ≠ 0) →
+      (∀ (k : ℕ), 0 < α k) →
+        c₂ < 1 →
+          (∀ (k : ℕ),
+              c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+                BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k))) →
+            (∀ (k : ℕ),
+                H (k + 1) =
+                  BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) →
+              ∀ (G : ℝ),
+                0 < G →
+                  (∀ (k : ℕ), BfgsVerification.sqNorm (g k) ≤ G ^ 2) →
+                    (Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) →
+                      ∀ (J : ℕ),
+                        let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+                        0 < D ∧
+                          ∀ a < (1 - c₂) / (2 * D),
+                            ∀ᶠ (N : ℕ) in atTop,
+                              a ≤ (∑ i ∈ Finset.range N, (BfgsVerification.metricEnergy (H i) (g i))⁻¹) / ↑N ^ 2 :=
+fun {n} H g α c₂ hH hg hα hc hw hu G hG hbound hd J =>
+  let R := BfgsVerification.ClaimReview20M.rawRun H g α c₂ hH hg hα hc hw hu;
+  let D := ∑' (i : ℕ), R.d (J + i);
+  let_fun hc' := sub_pos.mpr hc;
+  let_fun hs :=
+    Eq.mp
+      (congrArg Summable
+        (funext fun n_1 =>
+          congr (congrArg (fun x => HMul.hMul (α x)) (Nat.add_comm n_1 J))
+            (congr (congrArg (fun x => BfgsVerification.metricEnergy (H x)) (Nat.add_comm n_1 J))
+              (congrArg g (Nat.add_comm n_1 J)))))
+      ((summable_nat_add_iff J).mpr hd);
+  let_fun hD :=
+    Summable.tsum_pos hs (fun i => LT.lt.le (BfgsVerification.FullBFGSRun.d_pos R (J + i))) 0
+      (BfgsVerification.FullBFGSRun.d_pos R (J + 0));
+  ⟨hD, fun a ha =>
+    let_fun hbudget := fun m =>
+      Eq.mpr
+        (id
+          (congrArg (fun _a => _a ≤ D / (1 - c₂))
+            (Eq.symm (Finset.sum_div (Finset.range m) (fun i => R.d (J + i)) (1 - c₂)))))
+        (div_le_div_of_nonneg_right
+          (Summable.sum_le_tsum (Finset.range m) (fun i x => LT.lt.le (BfgsVerification.FullBFGSRun.d_pos R (J + i)))
+            hs)
+          (LT.lt.le hc'));
+    let_fun heq :=
+      of_eq_true
+        (Eq.trans
+          (Eq.trans
+            (congrArg (fun x => x = (1 - c₂) / (2 * D))
+              (Eq.trans (Eq.trans (congrArg Inv.inv (mul_div_assoc' 2 D (1 - c₂))) (inv_eq_one_div (2 * D / (1 - c₂))))
+                (Eq.trans (div_div_eq_mul_div 1 (2 * D) (1 - c₂))
+                  (congrArg (fun x => x / (2 * D)) (one_mul (1 - c₂))))))
+            (_proof_11✝
+              (ne_of_gt
+                (mul_pos
+                  (Mathlib.Meta.Positivity.pos_of_isNat (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 2))
+                    (Eq.refl (Nat.ble 1 2)))
+                  hD))))
+          (Eq.trans
+            (congrArg (fun x => x = 1 - c₂)
+              (Eq.trans (div_mul_eq_mul_div (1 - c₂) (2 * D) (2 * D))
+                (IsUnit.mul_div_cancel_right
+                  (of_eq_true
+                    (Eq.trans _proof_8✝
+                      (Eq.trans
+                        (congrArg Not
+                          (_proof_1✝
+                            (Mathlib.Meta.NormNum.isNat_eq_false (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 2))
+                              (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero) (Eq.refl false))
+                            (ne_of_gt hD)))
+                        not_false_eq_true)))
+                  (1 - c₂))))
+            (eq_self (1 - c₂))));
+    let_fun hi :=
+      BfgsVerification.QuantitativeGrowth.hierarchy_fixed_tail_lower_eventually
+        (BfgsVerification.fullBFGS_normalizedHierarchy R G (1 - c₂) hG hc' hbound fun k =>
+          BfgsVerification.FullBFGSRun.beta_ge_of_weakWolfe R k c₂ (hw k))
+        (fun k => LT.lt.le (div_pos (BfgsVerification.FullBFGSRun.d_pos R k) hc')) J (D / (1 - c₂)) (div_pos hD hc')
+        hbudget a (Eq.symm heq ▸ ha);
+    hi⟩
+'BfgsVerification.ClaimReview20M.raw_fixed_tail_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.raw_optimized_root {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ) (hH : PosDef (H 0)) (hg : ∀ (k : ℕ), g k ≠ 0)
+  (hα : ∀ (k : ℕ), 0 < α k) (hc : c₂ < 1)
+  (hw :
+    ∀ (k : ℕ),
+      c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+        BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k)))
+  (hu :
+    ∀ (k : ℕ),
+      H (k + 1) = BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k))
+  (G : ℝ) (hd : Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) (J : ℕ) :
+  let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+  let c := 1 - c₂;
+  Tendsto
+    (fun m =>
+      (∑ j ∈ Finset.range n,
+          (4 * G ^ 2 / c ^ 2 / (D / (c * (↑m - 1)))) ^ j * BfgsVerification.principalSum (H J) (j + 1)) ^
+        (1 / ↑m))
+    atTop (𝓝 1)
+theorem BfgsVerification.ClaimReview20M.raw_optimized_root : ∀ {n : ℕ} (H : ℕ → BfgsVerification.Mat n)
+  (g : ℕ → BfgsVerification.Vec n) (α : ℕ → ℝ) (c₂ : ℝ),
+  PosDef (H 0) →
+    (∀ (k : ℕ), g k ≠ 0) →
+      (∀ (k : ℕ), 0 < α k) →
+        c₂ < 1 →
+          (∀ (k : ℕ),
+              c₂ * BfgsVerification.dot (g k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) ≤
+                BfgsVerification.dot (g (k + 1)) (BfgsVerification.bfgsStep (H k) (g k) (α k))) →
+            (∀ (k : ℕ),
+                H (k + 1) =
+                  BfgsVerification.inverseBFGS (H k) (BfgsVerification.bfgsStep (H k) (g k) (α k)) (g (k + 1) - g k)) →
+              ∀ (G : ℝ),
+                (Summable fun k => α k * BfgsVerification.metricEnergy (H k) (g k)) →
+                  ∀ (J : ℕ),
+                    let D := ∑' (i : ℕ), α (J + i) * BfgsVerification.metricEnergy (H (J + i)) (g (J + i));
+                    let c := 1 - c₂;
+                    Tendsto
+                      (fun m =>
+                        (∑ j ∈ Finset.range n,
+                            (4 * G ^ 2 / c ^ 2 / (D / (c * (↑m - 1)))) ^ j *
+                              BfgsVerification.principalSum (H J) (j + 1)) ^
+                          (1 / ↑m))
+                      atTop (𝓝 1) :=
+fun {n} H g α c₂ hH hg hα hc hw hu G hd J =>
+  let R := BfgsVerification.ClaimReview20M.rawRun H g α c₂ hH hg hα hc hw hu;
+  BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto R G (1 - c₂) (sub_pos.mpr hc) hd J
+'BfgsVerification.ClaimReview20M.raw_optimized_root' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.actual_eigenvalue_principal_identity {n : ℕ} (H : BfgsVerification.Mat n)
+  (hH : PosDef H) :
+  ∃ U lam,
+    Uᵀ * U = 1 ∧
+      U * Uᵀ = 1 ∧
+        Uᵀ * H * U = diagonal lam ∧
+          (∀ (i : Fin n), 0 < lam i) ∧
+            ∀ (j : ℕ), BfgsVerification.principalSum H j = ∑ I ∈ Finset.powersetCard j Finset.univ, ∏ i ∈ I, lam i
+theorem BfgsVerification.ClaimReview20M.actual_eigenvalue_principal_identity : ∀ {n : ℕ} (H : BfgsVerification.Mat n),
+  PosDef H →
+    ∃ U lam,
+      Uᵀ * U = 1 ∧
+        U * Uᵀ = 1 ∧
+          Uᵀ * H * U = diagonal lam ∧
+            (∀ (i : Fin n), 0 < lam i) ∧
+              ∀ (j : ℕ), BfgsVerification.principalSum H j = ∑ I ∈ Finset.powersetCard j Finset.univ, ∏ i ∈ I, lam i :=
+fun {n} H hH =>
+  Exists.casesOn (BfgsVerification.posDef_orthogonal_diagonalization hH) fun U h =>
+    Exists.casesOn h fun lam h =>
+      And.casesOn h fun hU right =>
+        And.casesOn right fun hUt right =>
+          And.casesOn right fun hdiag hlam =>
+            Exists.intro U
+              (Exists.intro lam
+                ⟨hU,
+                  ⟨hUt,
+                    ⟨hdiag,
+                      ⟨hlam, fun j =>
+                        Eq.mpr
+                          (id
+                            (congrArg (fun _a => _a = ∑ I ∈ Finset.powersetCard j Finset.univ, ∏ i ∈ I, lam i)
+                              (Eq.symm (BfgsVerification.PrincipalInvariance.principalSum_conjugate Uᵀ U H hU j))))
+                          (Eq.mpr
+                            (id
+                              (congrArg
+                                (fun _a =>
+                                  BfgsVerification.principalSum _a j =
+                                    ∑ I ∈ Finset.powersetCard j Finset.univ, ∏ i ∈ I, lam i)
+                                hdiag))
+                            (Eq.mpr
+                              (id
+                                (congrArg (fun _a => _a = ∑ I ∈ Finset.powersetCard j Finset.univ, ∏ i ∈ I, lam i)
+                                  (BfgsVerification.principalSum_diagonal lam j)))
+                              (Eq.refl (∑ I ∈ Finset.powersetCard j Finset.univ, ∏ i ∈ I, lam i))))⟩⟩⟩⟩)
+'BfgsVerification.ClaimReview20M.actual_eigenvalue_principal_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.ClaimReview20M.actual_principal_hierarchy {n : ℕ} (H : BfgsVerification.Mat n)
+  (g y : BfgsVerification.Vec n) (α : ℝ) (hH : PosDef H) (hα : 0 < α) (hq : 0 < BfgsVerification.metricEnergy H g)
+  (hβ : 0 < -BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) (j : ℕ) (hj : 1 ≤ j) (hjn : j ≤ n) :
+  ∑ I ∈ Finset.powersetCard j Finset.univ,
+      (submatrix (BfgsVerification.inverseBFGS H (-α • H *ᵥ g) y) (fun i => ↑i) fun i => ↑i).det ≤
+    BfgsVerification.sqNorm y /
+          ((-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) ^ 2 *
+            BfgsVerification.metricEnergy H g) *
+        ∑ I ∈ Finset.powersetCard (j + 1) Finset.univ, (submatrix H (fun i => ↑i) fun i => ↑i).det +
+      α / (-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) *
+        ∑ I ∈ Finset.powersetCard j Finset.univ, (submatrix H (fun i => ↑i) fun i => ↑i).det
+theorem BfgsVerification.ClaimReview20M.actual_principal_hierarchy : ∀ {n : ℕ} (H : BfgsVerification.Mat n)
+  (g y : BfgsVerification.Vec n) (α : ℝ),
+  PosDef H →
+    0 < α →
+      0 < BfgsVerification.metricEnergy H g →
+        0 < -BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g →
+          ∀ (j : ℕ),
+            1 ≤ j →
+              j ≤ n →
+                ∑ I ∈ Finset.powersetCard j Finset.univ,
+                    (submatrix (BfgsVerification.inverseBFGS H (-α • H *ᵥ g) y) (fun i => ↑i) fun i => ↑i).det ≤
+                  BfgsVerification.sqNorm y /
+                        ((-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) ^ 2 *
+                          BfgsVerification.metricEnergy H g) *
+                      ∑ I ∈ Finset.powersetCard (j + 1) Finset.univ, (submatrix H (fun i => ↑i) fun i => ↑i).det +
+                    α / (-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) *
+                      ∑ I ∈ Finset.powersetCard j Finset.univ, (submatrix H (fun i => ↑i) fun i => ↑i).det :=
+fun {n} H g y α hH hα hq hβ j hj hjn => BfgsVerification.principalMinorHierarchy n H g y α hH hα hq hβ j hj hjn
+'BfgsVerification.ClaimReview20M.actual_principal_hierarchy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.ExpectedGram : Prop
+def BfgsVerification.ClaimReview20M.ExpectedGram : Prop :=
+∀ {n : ℕ} (H : BfgsVerification.Mat n),
+  PosDef H →
+    ∃ U lam,
+      Uᵀ * U = 1 ∧
+        U * Uᵀ = 1 ∧
+          Uᵀ * H * U = diagonal lam ∧
+            (∀ (i : Fin n), 0 < lam i) ∧
+              ∀ (y : BfgsVerification.Vec n) (j : ℕ),
+                ∑ I ∈ Finset.powersetCard j Finset.univ,
+                    (BfgsVerification.metricGram H
+                        ((replicateCol Unit y).fromCols (U * BfgsVerification.coordinateMatrix I))).det =
+                  ∑ J ∈ Finset.powersetCard (j + 1) Finset.univ, (∏ i ∈ J, lam i) * ∑ k ∈ J, (Uᵀ *ᵥ y) k ^ 2
+'BfgsVerification.ClaimReview20M.ExpectedGram' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.ClaimReview20M.ExpectedSharp : Prop
+def BfgsVerification.ClaimReview20M.ExpectedSharp : Prop :=
+∀ (n : ℕ) (R : BfgsVerification.FullBFGSRun n) (G c : ℝ),
+  0 < c →
+    Summable R.d →
+      ∀ (J : ℕ),
+        let D := ∑' (i : ℕ), R.d (J + i);
+        let K := 4 * G ^ 2 / c ^ 2;
+        ∃ p,
+          p.natDegree ≤ n - 1 ∧
+            (∀ (m : ℕ),
+                2 ≤ m →
+                  ∑ j ∈ Finset.range n, (K / (D / (c * (↑m - 1)))) ^ j * BfgsVerification.principalSum (R.H J) (j + 1) =
+                      Polynomial.eval (↑m - 1) p ∧
+                    ∑ j ∈ Finset.range n,
+                        (K / (D / (c * (↑m - 1)))) ^ j * BfgsVerification.principalSum (R.H J) (j + 1) ≤
+                      (∑ j ∈ Finset.range n, (K / (D / c)) ^ j * BfgsVerification.principalSum (R.H J) (j + 1)) *
+                        (↑m - 1) ^ (n - 1)) ∧
+              Tendsto
+                (fun m =>
+                  (∑ j ∈ Finset.range n,
+                      (K / (D / (c * (↑m - 1)))) ^ j * BfgsVerification.principalSum (R.H J) (j + 1)) ^
+                    (1 / ↑m))
+                atTop (𝓝 1)
+'BfgsVerification.ClaimReview20M.ExpectedSharp' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.principalMinorHierarchy : BfgsVerification.PrincipalMinorHierarchyTarget
+theorem BfgsVerification.principalMinorHierarchy : BfgsVerification.PrincipalMinorHierarchyTarget :=
+fun n H g y α hH hα =>
+  id fun hq hβ j _hj1 _hjn =>
+    let q := BfgsVerification.metricEnergy H g;
+    let β := -BfgsVerification.dot y (H *ᵥ g) / q;
+    let Hplus := BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g α) y;
+    let S := Finset.powersetCard j Finset.univ;
+    Exists.casesOn (BfgsVerification.posDef_orthogonal_diagonalization hH) fun U h =>
+      Exists.casesOn h fun lam h =>
+        And.casesOn h fun hUL right =>
+          And.casesOn right fun hUR right =>
+            And.casesOn right fun hdiag hlam =>
+              let_fun hpoint := fun I =>
+                BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound_generic H
+                  (U * BfgsVerification.coordinateMatrix I) g y α hH
+                  (BfgsVerification.transformed_coordinateMatrix_injective U hUL I) hα hq hβ;
+              let_fun hgram :=
+                Trans.trans
+                  (Trans.trans
+                    (Finset.sum_congr rfl fun I a =>
+                      Eq.mpr
+                        (id
+                          (congrArg
+                            (fun _a =>
+                              _a.det =
+                                (BfgsVerification.metricGram (diagonal lam)
+                                    ((replicateCol Unit (Uᵀ *ᵥ y)).fromCols (BfgsVerification.coordinateMatrix I))).det)
+                            (BfgsVerification.metricGram_append_orthogonal H U hUR y
+                              (BfgsVerification.coordinateMatrix I))))
+                        (Eq.mpr
+                          (id
+                            (congrArg
+                              (fun _a =>
+                                (BfgsVerification.metricGram _a
+                                      ((replicateCol Unit (Uᵀ *ᵥ y)).fromCols
+                                        (BfgsVerification.coordinateMatrix I))).det =
+                                  (BfgsVerification.metricGram (diagonal lam)
+                                      ((replicateCol Unit (Uᵀ *ᵥ y)).fromCols
+                                        (BfgsVerification.coordinateMatrix I))).det)
+                              hdiag))
+                          (Eq.refl
+                            (BfgsVerification.metricGram (diagonal lam)
+                                ((replicateCol Unit (Uᵀ *ᵥ y)).fromCols (BfgsVerification.coordinateMatrix I))).det)))
+                    (BfgsVerification.diagonal_coordinate_gram_sum_le lam hlam (Uᵀ *ᵥ y) j))
+                  (Eq.mpr
+                    (id
+                      (congrArg
+                        (fun _a =>
+                          _a * BfgsVerification.principalSum (diagonal lam) (j + 1) =
+                            BfgsVerification.sqNorm y * BfgsVerification.principalSum H (j + 1))
+                        (BfgsVerification.sqNorm_orthogonal_coordinates U hUR y)))
+                    (Eq.mpr
+                      (id
+                        (congrArg
+                          (fun _a =>
+                            BfgsVerification.sqNorm y * BfgsVerification.principalSum _a (j + 1) =
+                              BfgsVerification.sqNorm y * BfgsVerification.principalSum H (j + 1))
+                          (Eq.symm hdiag)))
+                      (Eq.mpr
+                        (id
+                          (congrArg
+                            (fun _a =>
+                              BfgsVerification.sqNorm y * _a =
+                                BfgsVerification.sqNorm y * BfgsVerification.principalSum H (j + 1))
+                            (BfgsVerification.PrincipalInvariance.principalSum_conjugate Uᵀ U H hUL (j + 1))))
+                        (Eq.refl (BfgsVerification.sqNorm y * BfgsVerification.principalSum H (j + 1))))));
+              id
+                (Trans.trans
+                  (Trans.trans
+                    (Trans.trans
+                      (Trans.trans (Eq.symm (BfgsVerification.sum_transformed_coordinate_grams Hplus U hUL j))
+                        (Finset.sum_le_sum fun I x => hpoint I))
+                      (Eq.mpr
+                        (id
+                          (congr
+                            (congrArg Eq
+                              (Eq.trans Finset.sum_add_distrib
+                                (congrArg
+                                  (HAdd.hAdd
+                                    (∑ x ∈ S,
+                                      (BfgsVerification.metricGram H
+                                            ((replicateCol Unit y).fromCols
+                                              (U * BfgsVerification.coordinateMatrix x))).det /
+                                        (β ^ 2 * q)))
+                                  (BfgsVerification.principalMinorHierarchy._proof_1 S
+                                    (fun i =>
+                                      (BfgsVerification.metricGram H (U * BfgsVerification.coordinateMatrix i)).det)
+                                    (α / β)))))
+                            (congrArg (fun x => x + α / β * BfgsVerification.principalSum H j)
+                              (Finset.sum_div S
+                                (fun i =>
+                                  (BfgsVerification.metricGram H
+                                      ((replicateCol Unit y).fromCols (U * BfgsVerification.coordinateMatrix i))).det)
+                                (β ^ 2 * q)))))
+                        (Eq.mpr
+                          (id
+                            (congrArg
+                              (fun _a =>
+                                ∑ x ∈ S,
+                                      (BfgsVerification.metricGram H
+                                            ((replicateCol Unit y).fromCols
+                                              (U * BfgsVerification.coordinateMatrix x))).det /
+                                        (β ^ 2 * q) +
+                                    α / β * _a =
+                                  ∑ i ∈ S,
+                                      (BfgsVerification.metricGram H
+                                            ((replicateCol Unit y).fromCols
+                                              (U * BfgsVerification.coordinateMatrix i))).det /
+                                        (β ^ 2 * q) +
+                                    α / β * BfgsVerification.principalSum H j)
+                              (let_fun this := BfgsVerification.sum_transformed_coordinate_grams H U hUL j;
+                              this)))
+                          (Eq.refl
+                            (∑ x ∈ S,
+                                (BfgsVerification.metricGram H
+                                      ((replicateCol Unit y).fromCols (U * BfgsVerification.coordinateMatrix x))).det /
+                                  (β ^ 2 * q) +
+                              α / β * BfgsVerification.principalSum H j)))))
+                    (add_le_add_right (div_le_div_of_nonneg_right hgram (le_of_lt (mul_pos (pow_pos hβ 2) hq)))
+                      (α / β * BfgsVerification.principalSum H j)))
+                  (Mathlib.Tactic.Ring.of_eq
+                    (Mathlib.Tactic.Ring.add_congr
+                      (Mathlib.Tactic.Ring.div_congr
+                        (Mathlib.Tactic.Ring.mul_congr (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.sqNorm y))
+                          (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.principalSum H (j + 1)))
+                          (Mathlib.Tactic.Ring.add_mul
+                            (Mathlib.Tactic.Ring.mul_add
+                              (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.sqNorm y) (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.principalSum H (j + 1))
+                                  (Nat.rawCast 1) (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                              (Mathlib.Tactic.Ring.mul_zero (BfgsVerification.sqNorm y ^ Nat.rawCast 1 * Nat.rawCast 1))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                    (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                  0)))
+                            (Mathlib.Tactic.Ring.zero_mul
+                              (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                  (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 * Nat.rawCast 1) +
+                                0))))
+                        (Mathlib.Tactic.Ring.mul_congr
+                          (Mathlib.Tactic.Ring.pow_congr
+                            (Mathlib.Tactic.Ring.div_congr
+                              (Mathlib.Tactic.Ring.neg_congr
+                                (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.dot y (H *ᵥ g)))
+                                (Mathlib.Tactic.Ring.neg_add
+                                  (Mathlib.Tactic.Ring.neg_mul (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.neg_one_mul
+                                      (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                        (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                          (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                          (Eq.refl (Int.negOfNat 1))))))
+                                  Mathlib.Tactic.Ring.neg_zero))
+                              (Mathlib.Tactic.Ring.atom_pf q)
+                              (Mathlib.Tactic.Ring.div_pf
+                                (Mathlib.Tactic.Ring.inv_single
+                                  (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹)
+                                    (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                      (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                        (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                          (Mathlib.Meta.NormNum.isRat_inv_pos
+                                            (Mathlib.Meta.NormNum.IsNat.to_isRat
+                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))))))
+                                    (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                                (Mathlib.Tactic.Ring.add_mul
+                                  (Mathlib.Tactic.Ring.mul_add
+                                    (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                        (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))
+                                    (Mathlib.Tactic.Ring.mul_zero
+                                      (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))
+                                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                                      (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                          (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                        0)))
+                                  (Mathlib.Tactic.Ring.zero_mul (q⁻¹ ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                        (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                      0)))))
+                            (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℕ (Eq.refl 2)))
+                            (Mathlib.Tactic.Ring.pow_add
+                              (Mathlib.Tactic.Ring.single_pow
+                                (Mathlib.Tactic.Ring.mul_pow (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 2))
+                                  (Mathlib.Tactic.Ring.mul_pow (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 2))
+                                    (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                      (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                        (Mathlib.Meta.NormNum.isInt_pow (Eq.refl HPow.hPow)
+                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                          (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 2)
+                                          (Mathlib.Meta.NormNum.intPow_negOfNat_bit0 Mathlib.Meta.NormNum.one_natPow
+                                            (Eq.refl 2) (Eq.refl 1))))))))
+                              (Mathlib.Tactic.Ring.pow_zero
+                                (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                    (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                  0))
+                              (Mathlib.Tactic.Ring.add_mul
+                                (Mathlib.Tactic.Ring.mul_add
+                                  (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                                  (Mathlib.Tactic.Ring.mul_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                      (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))
+                                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                        (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1) +
+                                      0)))
+                                (Mathlib.Tactic.Ring.zero_mul (Nat.rawCast 1 + 0))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                      (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1) +
+                                    0)))))
+                          (Mathlib.Tactic.Ring.atom_pf q)
+                          (Mathlib.Tactic.Ring.add_mul
+                            (Mathlib.Tactic.Ring.mul_add
+                              (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 2)
+                                (Mathlib.Tactic.Ring.mul_pf_right q (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                              (Mathlib.Tactic.Ring.mul_zero
+                                (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                  (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                    (q ^ Nat.rawCast 1 * (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)) +
+                                  0)))
+                            (Mathlib.Tactic.Ring.zero_mul (q ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                  (q ^ Nat.rawCast 1 * (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)) +
+                                0))))
+                        (Mathlib.Tactic.Ring.div_pf
+                          (Mathlib.Tactic.Ring.inv_single
+                            (Mathlib.Tactic.Ring.inv_mul (Eq.refl (BfgsVerification.dot y (H *ᵥ g))⁻¹)
+                              (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹)
+                                (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹⁻¹)
+                                  (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                    (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                      (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                        (Mathlib.Meta.NormNum.isRat_inv_pos
+                                          (Mathlib.Meta.NormNum.IsNat.to_isRat
+                                            (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))))))
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                                (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                              (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 2)
+                                  (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))))
+                          (Mathlib.Tactic.Ring.add_mul
+                            (Mathlib.Tactic.Ring.mul_add
+                              (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.sqNorm y) (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.principalSum H (j + 1))
+                                  (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹
+                                      (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 2)
+                                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))))
+                              (Mathlib.Tactic.Ring.mul_zero
+                                (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                  (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 * Nat.rawCast 1)))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                    (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 *
+                                      (q⁻¹ ^ Nat.rawCast 1 *
+                                        ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                          (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))) +
+                                  0)))
+                            (Mathlib.Tactic.Ring.zero_mul
+                              (q⁻¹ ^ Nat.rawCast 1 *
+                                  ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                    (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)) +
+                                0))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                  (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 *
+                                    (q⁻¹ ^ Nat.rawCast 1 *
+                                      ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                        (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))) +
+                                0)))))
+                      (Mathlib.Tactic.Ring.mul_congr
+                        (Mathlib.Tactic.Ring.div_congr (Mathlib.Tactic.Ring.atom_pf α)
+                          (Mathlib.Tactic.Ring.div_congr
+                            (Mathlib.Tactic.Ring.neg_congr
+                              (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.dot y (H *ᵥ g)))
+                              (Mathlib.Tactic.Ring.neg_add
+                                (Mathlib.Tactic.Ring.neg_mul (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.neg_one_mul
+                                    (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                      (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                        (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                        (Eq.refl (Int.negOfNat 1))))))
+                                Mathlib.Tactic.Ring.neg_zero))
+                            (Mathlib.Tactic.Ring.atom_pf q)
+                            (Mathlib.Tactic.Ring.div_pf
+                              (Mathlib.Tactic.Ring.inv_single
+                                (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹)
+                                  (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                    (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                      (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                        (Mathlib.Meta.NormNum.isRat_inv_pos
+                                          (Mathlib.Meta.NormNum.IsNat.to_isRat
+                                            (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))))))
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                              (Mathlib.Tactic.Ring.add_mul
+                                (Mathlib.Tactic.Ring.mul_add
+                                  (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))
+                                  (Mathlib.Tactic.Ring.mul_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))
+                                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                        (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                      0)))
+                                (Mathlib.Tactic.Ring.zero_mul (q⁻¹ ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                      (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                    0)))))
+                          (Mathlib.Tactic.Ring.div_pf
+                            (Mathlib.Tactic.Ring.inv_single
+                              (Mathlib.Tactic.Ring.inv_mul (Eq.refl (BfgsVerification.dot y (H *ᵥ g))⁻¹)
+                                (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹⁻¹)
+                                  (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                    (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                      (Mathlib.Meta.NormNum.isRat_inv_neg
+                                        (Mathlib.Meta.NormNum.IsInt.to_isRat
+                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))))))
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))
+                                (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))))
+                            (Mathlib.Tactic.Ring.add_mul
+                              (Mathlib.Tactic.Ring.mul_add
+                                (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.one_mul (Int.negOfNat 1).rawCast))))
+                                (Mathlib.Tactic.Ring.mul_zero (α ^ Nat.rawCast 1 * Nat.rawCast 1))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                      (q⁻¹⁻¹ ^ Nat.rawCast 1 * (α ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)) +
+                                    0)))
+                              (Mathlib.Tactic.Ring.zero_mul
+                                ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                    (q⁻¹⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                  0))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                    (q⁻¹⁻¹ ^ Nat.rawCast 1 * (α ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)) +
+                                  0)))))
+                        (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.principalSum H j))
+                        (Mathlib.Tactic.Ring.add_mul
+                          (Mathlib.Tactic.Ring.mul_add
+                            (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.principalSum H j) (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))))
+                            (Mathlib.Tactic.Ring.mul_zero
+                              ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                (q⁻¹⁻¹ ^ Nat.rawCast 1 * (α ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                  (q⁻¹⁻¹ ^ Nat.rawCast 1 *
+                                    (α ^ Nat.rawCast 1 *
+                                      (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))) +
+                                0)))
+                          (Mathlib.Tactic.Ring.zero_mul
+                            (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero
+                            ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                (q⁻¹⁻¹ ^ Nat.rawCast 1 *
+                                  (α ^ Nat.rawCast 1 *
+                                    (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))) +
+                              0))))
+                      (Mathlib.Tactic.Ring.add_pf_add_lt
+                        (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                          (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 *
+                            (q⁻¹ ^ Nat.rawCast 1 *
+                              ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))))
+                        (Mathlib.Tactic.Ring.add_pf_zero_add
+                          ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                              (q⁻¹⁻¹ ^ Nat.rawCast 1 *
+                                (α ^ Nat.rawCast 1 *
+                                  (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))) +
+                            0))))
+                    (Mathlib.Tactic.Ring.add_congr
+                      (Mathlib.Tactic.Ring.mul_congr
+                        (Mathlib.Tactic.Ring.div_congr (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.sqNorm y))
+                          (Mathlib.Tactic.Ring.mul_congr
+                            (Mathlib.Tactic.Ring.pow_congr
+                              (Mathlib.Tactic.Ring.div_congr
+                                (Mathlib.Tactic.Ring.neg_congr
+                                  (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.dot y (H *ᵥ g)))
+                                  (Mathlib.Tactic.Ring.neg_add
+                                    (Mathlib.Tactic.Ring.neg_mul (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.neg_one_mul
+                                        (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                          (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                            (Mathlib.Meta.NormNum.IsNat.to_isInt
+                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                            (Eq.refl (Int.negOfNat 1))))))
+                                    Mathlib.Tactic.Ring.neg_zero))
+                                (Mathlib.Tactic.Ring.atom_pf q)
+                                (Mathlib.Tactic.Ring.div_pf
+                                  (Mathlib.Tactic.Ring.inv_single
+                                    (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹)
+                                      (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                          (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                            (Mathlib.Meta.NormNum.isRat_inv_pos
+                                              (Mathlib.Meta.NormNum.IsNat.to_isRat
+                                                (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))))))
+                                      (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                                  (Mathlib.Tactic.Ring.add_mul
+                                    (Mathlib.Tactic.Ring.mul_add
+                                      (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                        (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                          (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))
+                                      (Mathlib.Tactic.Ring.mul_zero
+                                        (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))
+                                      (Mathlib.Tactic.Ring.add_pf_add_zero
+                                        (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                            (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                          0)))
+                                    (Mathlib.Tactic.Ring.zero_mul (q⁻¹ ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                                      (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                          (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                        0)))))
+                              (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℕ (Eq.refl 2)))
+                              (Mathlib.Tactic.Ring.pow_add
+                                (Mathlib.Tactic.Ring.single_pow
+                                  (Mathlib.Tactic.Ring.mul_pow (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 2))
+                                    (Mathlib.Tactic.Ring.mul_pow (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 2))
+                                      (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                        (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                          (Mathlib.Meta.NormNum.isInt_pow (Eq.refl HPow.hPow)
+                                            (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                            (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 2)
+                                            (Mathlib.Meta.NormNum.intPow_negOfNat_bit0 Mathlib.Meta.NormNum.one_natPow
+                                              (Eq.refl 2) (Eq.refl 1))))))))
+                                (Mathlib.Tactic.Ring.pow_zero
+                                  (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                      (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                    0))
+                                (Mathlib.Tactic.Ring.add_mul
+                                  (Mathlib.Tactic.Ring.mul_add
+                                    (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 2)
+                                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                                    (Mathlib.Tactic.Ring.mul_zero
+                                      (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                        (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))
+                                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                                      (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                          (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1) +
+                                        0)))
+                                  (Mathlib.Tactic.Ring.zero_mul (Nat.rawCast 1 + 0))
+                                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                        (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1) +
+                                      0)))))
+                            (Mathlib.Tactic.Ring.atom_pf q)
+                            (Mathlib.Tactic.Ring.add_mul
+                              (Mathlib.Tactic.Ring.mul_add
+                                (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 2)
+                                  (Mathlib.Tactic.Ring.mul_pf_right q (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                                (Mathlib.Tactic.Ring.mul_zero
+                                  (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                    (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                      (q ^ Nat.rawCast 1 * (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)) +
+                                    0)))
+                              (Mathlib.Tactic.Ring.zero_mul (q ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 2 *
+                                    (q ^ Nat.rawCast 1 * (q⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)) +
+                                  0))))
+                          (Mathlib.Tactic.Ring.div_pf
+                            (Mathlib.Tactic.Ring.inv_single
+                              (Mathlib.Tactic.Ring.inv_mul (Eq.refl (BfgsVerification.dot y (H *ᵥ g))⁻¹)
+                                (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹)
+                                  (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹⁻¹)
+                                    (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                      (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                        (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                          (Mathlib.Meta.NormNum.isRat_inv_pos
+                                            (Mathlib.Meta.NormNum.IsNat.to_isRat
+                                              (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))))))
+                                    (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                                (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))))
+                            (Mathlib.Tactic.Ring.add_mul
+                              (Mathlib.Tactic.Ring.mul_add
+                                (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.sqNorm y) (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹
+                                      (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 2)
+                                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))))
+                                (Mathlib.Tactic.Ring.mul_zero
+                                  (BfgsVerification.sqNorm y ^ Nat.rawCast 1 * Nat.rawCast 1))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                      (q⁻¹ ^ Nat.rawCast 1 *
+                                        ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                          (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1))) +
+                                    0)))
+                              (Mathlib.Tactic.Ring.zero_mul
+                                (q⁻¹ ^ Nat.rawCast 1 *
+                                    ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                      (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)) +
+                                  0))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                    (q⁻¹ ^ Nat.rawCast 1 *
+                                      ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                        (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1))) +
+                                  0)))))
+                        (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.principalSum H (j + 1)))
+                        (Mathlib.Tactic.Ring.add_mul
+                          (Mathlib.Tactic.Ring.mul_add
+                            (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.sqNorm y) (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.principalSum H (j + 1))
+                                (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.mul_pf_left q⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 2)
+                                    (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 2)
+                                      (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))))
+                            (Mathlib.Tactic.Ring.mul_zero
+                              (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                (q⁻¹ ^ Nat.rawCast 1 *
+                                  ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                    (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                  (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 *
+                                    (q⁻¹ ^ Nat.rawCast 1 *
+                                      ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                        (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))) +
+                                0)))
+                          (Mathlib.Tactic.Ring.zero_mul
+                            (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero
+                            (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                                (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 *
+                                  (q⁻¹ ^ Nat.rawCast 1 *
+                                    ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                      (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))) +
+                              0))))
+                      (Mathlib.Tactic.Ring.mul_congr
+                        (Mathlib.Tactic.Ring.div_congr (Mathlib.Tactic.Ring.atom_pf α)
+                          (Mathlib.Tactic.Ring.div_congr
+                            (Mathlib.Tactic.Ring.neg_congr
+                              (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.dot y (H *ᵥ g)))
+                              (Mathlib.Tactic.Ring.neg_add
+                                (Mathlib.Tactic.Ring.neg_mul (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.neg_one_mul
+                                    (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                      (Mathlib.Meta.NormNum.isInt_mul (Eq.refl HMul.hMul)
+                                        (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))
+                                        (Mathlib.Meta.NormNum.IsNat.to_isInt (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))
+                                        (Eq.refl (Int.negOfNat 1))))))
+                                Mathlib.Tactic.Ring.neg_zero))
+                            (Mathlib.Tactic.Ring.atom_pf q)
+                            (Mathlib.Tactic.Ring.div_pf
+                              (Mathlib.Tactic.Ring.inv_single
+                                (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹)
+                                  (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                                    (Mathlib.Meta.NormNum.IsInt.to_isNat
+                                      (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                        (Mathlib.Meta.NormNum.isRat_inv_pos
+                                          (Mathlib.Meta.NormNum.IsNat.to_isRat
+                                            (Mathlib.Meta.NormNum.IsNat.of_raw ℝ 1))))))
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                              (Mathlib.Tactic.Ring.add_mul
+                                (Mathlib.Tactic.Ring.mul_add
+                                  (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_right q⁻¹ (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))
+                                  (Mathlib.Tactic.Ring.mul_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))
+                                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                                    (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                        (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                      0)))
+                                (Mathlib.Tactic.Ring.zero_mul (q⁻¹ ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 *
+                                      (q⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                    0)))))
+                          (Mathlib.Tactic.Ring.div_pf
+                            (Mathlib.Tactic.Ring.inv_single
+                              (Mathlib.Tactic.Ring.inv_mul (Eq.refl (BfgsVerification.dot y (H *ᵥ g))⁻¹)
+                                (Mathlib.Tactic.Ring.inv_mul (Eq.refl q⁻¹⁻¹)
+                                  (Mathlib.Meta.NormNum.IsInt.to_raw_eq
+                                    (Mathlib.Meta.NormNum.IsRat.to_isInt
+                                      (Mathlib.Meta.NormNum.isRat_inv_neg
+                                        (Mathlib.Meta.NormNum.IsInt.to_isRat
+                                          (Mathlib.Meta.NormNum.IsInt.of_raw ℝ (Int.negOfNat 1))))))
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))
+                                (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))))
+                            (Mathlib.Tactic.Ring.add_mul
+                              (Mathlib.Tactic.Ring.mul_add
+                                (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right q⁻¹⁻¹ (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                                      (Mathlib.Tactic.Ring.one_mul (Int.negOfNat 1).rawCast))))
+                                (Mathlib.Tactic.Ring.mul_zero (α ^ Nat.rawCast 1 * Nat.rawCast 1))
+                                (Mathlib.Tactic.Ring.add_pf_add_zero
+                                  ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                      (q⁻¹⁻¹ ^ Nat.rawCast 1 * (α ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)) +
+                                    0)))
+                              (Mathlib.Tactic.Ring.zero_mul
+                                ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                    (q⁻¹⁻¹ ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast) +
+                                  0))
+                              (Mathlib.Tactic.Ring.add_pf_add_zero
+                                ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                    (q⁻¹⁻¹ ^ Nat.rawCast 1 * (α ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast)) +
+                                  0)))))
+                        (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.principalSum H j))
+                        (Mathlib.Tactic.Ring.add_mul
+                          (Mathlib.Tactic.Ring.mul_add
+                            (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g))⁻¹ (Nat.rawCast 1)
+                              (Mathlib.Tactic.Ring.mul_pf_left q⁻¹⁻¹ (Nat.rawCast 1)
+                                (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                                  (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.principalSum H j) (Nat.rawCast 1)
+                                    (Mathlib.Tactic.Ring.mul_one (Int.negOfNat 1).rawCast)))))
+                            (Mathlib.Tactic.Ring.mul_zero
+                              ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                (q⁻¹⁻¹ ^ Nat.rawCast 1 * (α ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))))
+                            (Mathlib.Tactic.Ring.add_pf_add_zero
+                              ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                  (q⁻¹⁻¹ ^ Nat.rawCast 1 *
+                                    (α ^ Nat.rawCast 1 *
+                                      (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))) +
+                                0)))
+                          (Mathlib.Tactic.Ring.zero_mul
+                            (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero
+                            ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                                (q⁻¹⁻¹ ^ Nat.rawCast 1 *
+                                  (α ^ Nat.rawCast 1 *
+                                    (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))) +
+                              0))))
+                      (Mathlib.Tactic.Ring.add_pf_add_lt
+                        (BfgsVerification.sqNorm y ^ Nat.rawCast 1 *
+                          (BfgsVerification.principalSum H (j + 1) ^ Nat.rawCast 1 *
+                            (q⁻¹ ^ Nat.rawCast 1 *
+                              ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 2 *
+                                (q⁻¹⁻¹ ^ Nat.rawCast 2 * Nat.rawCast 1)))))
+                        (Mathlib.Tactic.Ring.add_pf_zero_add
+                          ((BfgsVerification.dot y (H *ᵥ g))⁻¹ ^ Nat.rawCast 1 *
+                              (q⁻¹⁻¹ ^ Nat.rawCast 1 *
+                                (α ^ Nat.rawCast 1 *
+                                  (BfgsVerification.principalSum H j ^ Nat.rawCast 1 * (Int.negOfNat 1).rawCast))) +
+                            0))))))
+'BfgsVerification.principalMinorHierarchy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.fullBFGS_normalizedHierarchy {n : ℕ} (R : BfgsVerification.FullBFGSRun n) (G c : ℝ) (hG : 0 < G)
+  (hc : 0 < c) (hg : ∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) (hβ : ∀ (k : ℕ), c ≤ R.beta k) :
+  BfgsVerification.ScalarHierarchy.NormalizedHierarchy n (fun k => BfgsVerification.principalSum (R.H k)) R.q
+    (fun k => R.d k / c) (4 * G ^ 2 / c ^ 2) (G ^ 2)
+theorem BfgsVerification.fullBFGS_normalizedHierarchy : ∀ {n : ℕ} (R : BfgsVerification.FullBFGSRun n) (G c : ℝ),
+  0 < G →
+    0 < c →
+      (∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) →
+        (∀ (k : ℕ), c ≤ R.beta k) →
+          BfgsVerification.ScalarHierarchy.NormalizedHierarchy n (fun k => BfgsVerification.principalSum (R.H k)) R.q
+            (fun k => R.d k / c) (4 * G ^ 2 / c ^ 2) (G ^ 2) :=
+fun {n} R G c hG hc hg hβ =>
+  BfgsVerification.normalizedHierarchy_of_principalMinorHierarchy BfgsVerification.principalMinorHierarchy R G c hG hc
+    hg hβ
+'BfgsVerification.fullBFGS_normalizedHierarchy' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.reciprocalGrowth : BfgsVerification.ReciprocalGrowthTarget
+theorem BfgsVerification.reciprocalGrowth : BfgsVerification.ReciprocalGrowthTarget :=
+BfgsVerification.reciprocalGrowth_of_principalMinorHierarchy BfgsVerification.principalMinorHierarchy
+'BfgsVerification.reciprocalGrowth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.finiteHorizon {n : ℕ} (R : BfgsVerification.FullBFGSRun n) (G c : ℝ) (hG : 0 < G) (hc : 0 < c)
+  (hg : ∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) (hβ : ∀ (k : ℕ), c ≤ R.beta k) (hd : Summable R.d) (J m : ℕ)
+  (hm : 0 < m) (η : ℝ) (hη : 0 < η) :
+  let D := ∑' (i : ℕ), R.d (J + i);
+  let V :=
+    BfgsVerification.ScalarHierarchy.weightedPotential n (4 * G ^ 2 / c ^ 2 / η)
+      (BfgsVerification.principalSum (R.H J));
+  ↑(m + 1) * (G ^ 2 * V) ^ (-1 / ↑(m + 1)) * (η + D / (c * ↑m)) ^ (-↑m / ↑(m + 1)) ≤
+    ∑ i ∈ Finset.range (m + 1), (R.q (J + i))⁻¹
+theorem BfgsVerification.finiteHorizon : ∀ {n : ℕ} (R : BfgsVerification.FullBFGSRun n) (G c : ℝ),
+  0 < G →
+    0 < c →
+      (∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) →
+        (∀ (k : ℕ), c ≤ R.beta k) →
+          Summable R.d →
+            ∀ (J m : ℕ),
+              0 < m →
+                ∀ (η : ℝ),
+                  0 < η →
+                    let D := ∑' (i : ℕ), R.d (J + i);
+                    let V :=
+                      BfgsVerification.ScalarHierarchy.weightedPotential n (4 * G ^ 2 / c ^ 2 / η)
+                        (BfgsVerification.principalSum (R.H J));
+                    ↑(m + 1) * (G ^ 2 * V) ^ (-1 / ↑(m + 1)) * (η + D / (c * ↑m)) ^ (-↑m / ↑(m + 1)) ≤
+                      ∑ i ∈ Finset.range (m + 1), (R.q (J + i))⁻¹ :=
+fun {n} R G c hG hc hg hβ hd J m hm η hη =>
+  BfgsVerification.finiteHorizon_of_principalMinorHierarchy BfgsVerification.principalMinorHierarchy R G c hG hc hg hβ
+    hd J m hm η hη
+'BfgsVerification.finiteHorizon' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.superquadraticReciprocalGrowth : BfgsVerification.SuperquadraticReciprocalTarget
+theorem BfgsVerification.superquadraticReciprocalGrowth : BfgsVerification.SuperquadraticReciprocalTarget :=
+BfgsVerification.superquadraticGrowth_of_principalMinorHierarchy BfgsVerification.principalMinorHierarchy
+'BfgsVerification.superquadraticReciprocalGrowth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveReciprocalGrowth : BfgsVerification.ObjectiveReciprocalGrowthTarget
+theorem BfgsVerification.objectiveReciprocalGrowth : BfgsVerification.ObjectiveReciprocalGrowthTarget :=
+fun n F R G hG hg hd =>
+  BfgsVerification.reciprocalGrowth n R.toFullBFGSRun G (1 - R.c₂) hG
+    (BfgsVerification.AdmissibleBFGSRun.wolfe_constant_pos R) hg (BfgsVerification.AdmissibleBFGSRun.beta_lower_bound R)
+    hd
+'BfgsVerification.objectiveReciprocalGrowth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveLowerBoundGrowth : BfgsVerification.ObjectiveLowerBoundGrowthTarget
+theorem BfgsVerification.objectiveLowerBoundGrowth : BfgsVerification.ObjectiveLowerBoundGrowthTarget :=
+fun n F R G L hG hg hL =>
+  let_fun hs := BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound R L hL;
+  let_fun hm := BfgsVerification.objectiveReciprocalGrowth n F R G hG hg (Summable.tendsto_atTop_zero hs);
+  ⟨hs,
+    ⟨hm.left,
+      ⟨hm.right,
+        BfgsVerification.superquadraticReciprocalGrowth n R.toFullBFGSRun G (1 - R.c₂) hG
+          (BfgsVerification.AdmissibleBFGSRun.wolfe_constant_pos R) hg
+          (BfgsVerification.AdmissibleBFGSRun.beta_lower_bound R) hs⟩⟩⟩
+'BfgsVerification.objectiveLowerBoundGrowth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.compactObjectiveGrowth : BfgsVerification.CompactObjectiveGrowthTarget
+theorem BfgsVerification.compactObjectiveGrowth : BfgsVerification.CompactObjectiveGrowthTarget :=
+fun n F R hK =>
+  Exists.casesOn (BfgsVerification.AdmissibleBFGSRun.bounded_gradients_of_compact_sublevel R hK) fun G h =>
+    And.casesOn h fun hG hg =>
+      Exists.casesOn (BfgsVerification.AdmissibleBFGSRun.lower_bound_of_compact_sublevel R hK) fun L hL =>
+        ⟨Exists.intro G ⟨hG, hg⟩, BfgsVerification.objectiveLowerBoundGrowth n F R G L hG hg hL⟩
+'BfgsVerification.compactObjectiveGrowth' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveFiniteHorizon_of_lower_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (G L : ℝ) (hG : 0 < G)
+  (hg : ∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) (hL : ∀ (k : ℕ), L ≤ F (R.x k)) :
+  BfgsVerification.ObjectiveFiniteHorizonBound R G
+theorem BfgsVerification.objectiveFiniteHorizon_of_lower_bound : ∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (G L : ℝ),
+  0 < G →
+    (∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) →
+      (∀ (k : ℕ), L ≤ F (R.x k)) → BfgsVerification.ObjectiveFiniteHorizonBound R G :=
+fun {n} {F} R G L hG hg hL J m hm η hη =>
+  BfgsVerification.finiteHorizon R.toFullBFGSRun G (1 - R.c₂) hG
+    (BfgsVerification.AdmissibleBFGSRun.wolfe_constant_pos R) hg (BfgsVerification.AdmissibleBFGSRun.beta_lower_bound R)
+    (BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound R L hL) J m hm η hη
+'BfgsVerification.objectiveFiniteHorizon_of_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.objectiveGrowth_of_value_limit {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (G ℓ : ℝ) (hG : 0 < G)
+  (hg : ∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) (hlim : Tendsto (fun k => F (R.x k)) atTop (𝓝 ℓ)) :
+  Summable R.d ∧
+    Tendsto (BfgsVerification.reciprocalGeometricMean R.q) atTop atTop ∧
+      Tendsto (BfgsVerification.reciprocalMean R.q) atTop atTop ∧
+        Tendsto (fun N => (∑ k ∈ Finset.range N, (R.q k)⁻¹) / ↑N ^ 2) atTop atTop
+theorem BfgsVerification.objectiveGrowth_of_value_limit : ∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (G ℓ : ℝ),
+  0 < G →
+    (∀ (k : ℕ), BfgsVerification.sqNorm (R.g k) ≤ G ^ 2) →
+      Tendsto (fun k => F (R.x k)) atTop (𝓝 ℓ) →
+        Summable R.d ∧
+          Tendsto (BfgsVerification.reciprocalGeometricMean R.q) atTop atTop ∧
+            Tendsto (BfgsVerification.reciprocalMean R.q) atTop atTop ∧
+              Tendsto (fun N => (∑ k ∈ Finset.range N, (R.q k)⁻¹) / ↑N ^ 2) atTop atTop :=
+fun {n} {F} R G ℓ hG hg hlim =>
+  BfgsVerification.objectiveLowerBoundGrowth n F R G ℓ hG hg
+    (BfgsVerification.DescentBudget.armijo_limit_le R.c₁_pos
+      (fun k => LT.lt.le (BfgsVerification.AdmissibleBFGSRun.d_pos R k))
+      (BfgsVerification.AdmissibleBFGSRun.armijo_decrease R) hlim)
+'BfgsVerification.objectiveGrowth_of_value_limit' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) : BfgsVerification.FullBFGSRun n
+def BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun : {n : ℕ} →
+  {F : BfgsVerification.Vec n → ℝ} → BfgsVerification.AdmissibleBFGSRun n F → BfgsVerification.FullBFGSRun n :=
+fun {n} {F} R =>
+  { H := R.H, g := R.g, α := R.α, positive_definite := ⋯, alpha_pos := ⋯, energy_pos := ⋯, curvature_pos := ⋯,
+    update := ⋯ }
+'BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.positive_invariants {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) :
+  PosDef (R.H k) ∧
+    0 < R.q k ∧ 0 < BfgsVerification.dot (R.g (k + 1) - R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))
+theorem BfgsVerification.AdmissibleBFGSRun.positive_invariants : ∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ),
+  PosDef (R.H k) ∧
+    0 < R.q k ∧ 0 < BfgsVerification.dot (R.g (k + 1) - R.g k) (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) :=
+fun {n} {F} R k =>
+  BfgsVerification.fullBFGS_positive_invariants R.H R.g R.α R.c₂ R.initial_posDef R.gradient_nonzero R.alpha_pos
+    R.c₂_lt_one R.weak_wolfe R.update k
+'BfgsVerification.AdmissibleBFGSRun.positive_invariants' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.dimension_pos {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) : 0 < n
+theorem BfgsVerification.AdmissibleBFGSRun.dimension_pos : ∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ},
+  BfgsVerification.AdmissibleBFGSRun n F → 0 < n :=
+fun {n} {F} R => BfgsVerification.FullBFGSRun.dimension_pos R.toFullBFGSRun
+'BfgsVerification.AdmissibleBFGSRun.dimension_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.AdmissibleBFGSRun.beta_lower_bound {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ) : 1 - R.c₂ ≤ R.beta k
+theorem BfgsVerification.AdmissibleBFGSRun.beta_lower_bound : ∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (k : ℕ), 1 - R.c₂ ≤ R.beta k :=
+fun {n} {F} R k => BfgsVerification.FullBFGSRun.beta_ge_of_weakWolfe R.toFullBFGSRun k R.c₂ (R.weak_wolfe k)
+'BfgsVerification.AdmissibleBFGSRun.beta_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.inverseBFGS_step_det_beta {n : ℕ} {H : BfgsVerification.Mat n} (hH : PosDef H)
+  {g : BfgsVerification.Vec n} (hg : g ≠ 0) (y : BfgsVerification.Vec n) {α : ℝ} (hα : 0 < α)
+  (ht : 0 < BfgsVerification.dot y (BfgsVerification.bfgsStep H g α)) :
+  det (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g α) y) =
+    α / (-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) * det H
+theorem BfgsVerification.inverseBFGS_step_det_beta : ∀ {n : ℕ} {H : BfgsVerification.Mat n},
+  PosDef H →
+    ∀ {g : BfgsVerification.Vec n},
+      g ≠ 0 →
+        ∀ (y : BfgsVerification.Vec n) {α : ℝ},
+          0 < α →
+            0 < BfgsVerification.dot y (BfgsVerification.bfgsStep H g α) →
+              det (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g α) y) =
+                α / (-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) * det H :=
+fun {n} {H} hH {g} hg y {α} hα ht =>
+  let_fun hq := LT.lt.ne' (BfgsVerification.metricEnergy_pos hH hg);
+  let_fun hα0 := LT.lt.ne' hα;
+  let_fun hcurv := BfgsVerification.curvature_eq_alpha_beta_q H g y α hq;
+  let_fun hb := fun hz =>
+    LT.lt.ne' ht
+      (Eq.mp
+        (congrArg (fun _a => BfgsVerification.dot y (BfgsVerification.bfgsStep H g α) = _a)
+          (zero_mul (BfgsVerification.metricEnergy H g)))
+        (Eq.mp
+          (congrArg
+            (fun _a =>
+              BfgsVerification.dot y (BfgsVerification.bfgsStep H g α) = _a * BfgsVerification.metricEnergy H g)
+            (mul_zero α))
+          (Eq.mp
+            (congrArg
+              (fun _a =>
+                BfgsVerification.dot y (BfgsVerification.bfgsStep H g α) = α * _a * BfgsVerification.metricEnergy H g)
+              hz)
+            hcurv)));
+  Eq.mpr
+    (id
+      (congrArg (fun _a => _a = α / (-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) * det H)
+        (BfgsVerification.inverseBFGS_step_det hH g y α (LT.lt.ne' ht))))
+    (Eq.mpr
+      (id
+        (congrArg
+          (fun _a =>
+            α ^ 2 * BfgsVerification.metricEnergy H g / _a * det H =
+              α / (-BfgsVerification.dot y (H *ᵥ g) / BfgsVerification.metricEnergy H g) * det H)
+          hcurv))
+      (let_fun hy := neg_ne_zero.mp (div_ne_zero_iff.mp hb).left;
+      Eq.mpr
+        (id
+          (Eq.trans
+            (Eq.trans
+              (congr
+                (congrArg Eq
+                  (Eq.trans
+                    (congrArg (fun x => x * det H)
+                      (Eq.trans
+                        (congrArg (HDiv.hDiv (α ^ 2 * BfgsVerification.metricEnergy H g))
+                          (Eq.trans
+                            (Eq.trans
+                              (congrArg (fun x => x * BfgsVerification.metricEnergy H g)
+                                (Eq.trans
+                                  (mul_div_assoc' α (-BfgsVerification.dot y (H *ᵥ g))
+                                    (BfgsVerification.metricEnergy H g))
+                                  (congrArg (fun x => x / BfgsVerification.metricEnergy H g)
+                                    (mul_neg α (BfgsVerification.dot y (H *ᵥ g))))))
+                              (div_mul_eq_mul_div (-(α * BfgsVerification.dot y (H *ᵥ g)))
+                                (BfgsVerification.metricEnergy H g) (BfgsVerification.metricEnergy H g)))
+                            (congrArg (fun x => x / BfgsVerification.metricEnergy H g)
+                              (neg_mul (α * BfgsVerification.dot y (H *ᵥ g)) (BfgsVerification.metricEnergy H g)))))
+                        (div_div_eq_mul_div (α ^ 2 * BfgsVerification.metricEnergy H g)
+                          (-(α * BfgsVerification.dot y (H *ᵥ g) * BfgsVerification.metricEnergy H g))
+                          (BfgsVerification.metricEnergy H g))))
+                    (div_mul_eq_mul_div (α ^ 2 * BfgsVerification.metricEnergy H g * BfgsVerification.metricEnergy H g)
+                      (-(α * BfgsVerification.dot y (H *ᵥ g) * BfgsVerification.metricEnergy H g)) (det H))))
+                (Eq.trans
+                  (congrArg (fun x => x * det H)
+                    (div_div_eq_mul_div α (-BfgsVerification.dot y (H *ᵥ g)) (BfgsVerification.metricEnergy H g)))
+                  (div_mul_eq_mul_div (α * BfgsVerification.metricEnergy H g) (-BfgsVerification.dot y (H *ᵥ g))
+                    (det H))))
+              (_proof_11✝ (of_eq_true (Eq.trans (congrArg Not (Eq.trans _proof_18✝ (eq_false hy))) not_false_eq_true))))
+            (Eq.trans
+              (congrArg (fun x => x = α * BfgsVerification.metricEnergy H g * det H)
+                (Eq.trans
+                  (div_mul_eq_mul_div
+                    (α ^ 2 * BfgsVerification.metricEnergy H g * BfgsVerification.metricEnergy H g * det H)
+                    (-(α * BfgsVerification.dot y (H *ᵥ g) * BfgsVerification.metricEnergy H g))
+                    (-BfgsVerification.dot y (H *ᵥ g)))
+                  (Eq.trans
+                    (congrArg (fun x => x / -(α * BfgsVerification.dot y (H *ᵥ g) * BfgsVerification.metricEnergy H g))
+                      (mul_neg (α ^ 2 * BfgsVerification.metricEnergy H g * BfgsVerification.metricEnergy H g * det H)
+                        (BfgsVerification.dot y (H *ᵥ g))))
+                    (neg_div_neg_eq
+                      (α ^ 2 * BfgsVerification.metricEnergy H g * BfgsVerification.metricEnergy H g * det H *
+                        BfgsVerification.dot y (H *ᵥ g))
+                      (α * BfgsVerification.dot y (H *ᵥ g) * BfgsVerification.metricEnergy H g)))))
+              (_proof_10✝ (mul_ne_zero (Mathlib.Meta.Positivity.mul_ne_zero_of_pos_of_ne_zero✝ hα hy) hq)))))
+        (Mathlib.Tactic.Ring.of_eq
+          (Mathlib.Tactic.Ring.mul_congr
+            (Mathlib.Tactic.Ring.mul_congr
+              (Mathlib.Tactic.Ring.mul_congr
+                (Mathlib.Tactic.Ring.mul_congr
+                  (Mathlib.Tactic.Ring.pow_congr (Mathlib.Tactic.Ring.atom_pf α)
+                    (Mathlib.Tactic.Ring.cast_pos (Mathlib.Meta.NormNum.isNat_ofNat ℕ (Eq.refl 2)))
+                    (Mathlib.Tactic.Ring.pow_add
+                      (Mathlib.Tactic.Ring.single_pow
+                        (Mathlib.Tactic.Ring.mul_pow (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 2))
+                          (Mathlib.Tactic.Ring.one_pow (Nat.rawCast 2))))
+                      (Mathlib.Tactic.Ring.pow_zero (α ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                      (Mathlib.Tactic.Ring.add_mul
+                        (Mathlib.Tactic.Ring.mul_add
+                          (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 2)
+                            (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))
+                          (Mathlib.Tactic.Ring.mul_zero (α ^ Nat.rawCast 2 * Nat.rawCast 1))
+                          (Mathlib.Tactic.Ring.add_pf_add_zero (α ^ Nat.rawCast 2 * Nat.rawCast 1 + 0)))
+                        (Mathlib.Tactic.Ring.zero_mul (Nat.rawCast 1 + 0))
+                        (Mathlib.Tactic.Ring.add_pf_add_zero (α ^ Nat.rawCast 2 * Nat.rawCast 1 + 0)))))
+                  (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.metricEnergy H g))
+                  (Mathlib.Tactic.Ring.add_mul
+                    (Mathlib.Tactic.Ring.mul_add
+                      (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 2)
+                        (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.metricEnergy H g) (Nat.rawCast 1)
+                          (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                      (Mathlib.Tactic.Ring.mul_zero (α ^ Nat.rawCast 2 * Nat.rawCast 1))
+                      (Mathlib.Tactic.Ring.add_pf_add_zero
+                        (α ^ Nat.rawCast 2 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1) + 0)))
+                    (Mathlib.Tactic.Ring.zero_mul
+                      (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                      (α ^ Nat.rawCast 2 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1) + 0))))
+                (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.metricEnergy H g))
+                (Mathlib.Tactic.Ring.add_mul
+                  (Mathlib.Tactic.Ring.mul_add
+                    (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 2)
+                      (Mathlib.Tactic.Ring.mul_pp_pf_overlap (BfgsVerification.metricEnergy H g)
+                        (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                          (Mathlib.Meta.NormNum.isNat_add (Eq.refl HAdd.hAdd) (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 1)
+                            (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 1) (Eq.refl 2)))
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                    (Mathlib.Tactic.Ring.mul_zero
+                      (α ^ Nat.rawCast 2 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1)))
+                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                      (α ^ Nat.rawCast 2 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 * Nat.rawCast 1) + 0)))
+                  (Mathlib.Tactic.Ring.zero_mul (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (α ^ Nat.rawCast 2 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 * Nat.rawCast 1) + 0))))
+              (Mathlib.Tactic.Ring.atom_pf (det H))
+              (Mathlib.Tactic.Ring.add_mul
+                (Mathlib.Tactic.Ring.mul_add
+                  (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 2)
+                    (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.metricEnergy H g) (Nat.rawCast 2)
+                      (Mathlib.Tactic.Ring.mul_pf_right (det H) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                  (Mathlib.Tactic.Ring.mul_zero
+                    (α ^ Nat.rawCast 2 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 * Nat.rawCast 1)))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (α ^ Nat.rawCast 2 *
+                        (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 * (det H ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                      0)))
+                (Mathlib.Tactic.Ring.zero_mul (det H ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                (Mathlib.Tactic.Ring.add_pf_add_zero
+                  (α ^ Nat.rawCast 2 *
+                      (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 * (det H ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                    0))))
+            (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.dot y (H *ᵥ g)))
+            (Mathlib.Tactic.Ring.add_mul
+              (Mathlib.Tactic.Ring.mul_add
+                (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 2)
+                  (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.metricEnergy H g) (Nat.rawCast 2)
+                    (Mathlib.Tactic.Ring.mul_pf_left (det H) (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))))
+                (Mathlib.Tactic.Ring.mul_zero
+                  (α ^ Nat.rawCast 2 *
+                    (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 * (det H ^ Nat.rawCast 1 * Nat.rawCast 1))))
+                (Mathlib.Tactic.Ring.add_pf_add_zero
+                  (α ^ Nat.rawCast 2 *
+                      (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 *
+                        (det H ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1))) +
+                    0)))
+              (Mathlib.Tactic.Ring.zero_mul (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+              (Mathlib.Tactic.Ring.add_pf_add_zero
+                (α ^ Nat.rawCast 2 *
+                    (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 *
+                      (det H ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1))) +
+                  0))))
+          (Mathlib.Tactic.Ring.mul_congr
+            (Mathlib.Tactic.Ring.mul_congr
+              (Mathlib.Tactic.Ring.mul_congr (Mathlib.Tactic.Ring.atom_pf α)
+                (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.metricEnergy H g))
+                (Mathlib.Tactic.Ring.add_mul
+                  (Mathlib.Tactic.Ring.mul_add
+                    (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.metricEnergy H g) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                    (Mathlib.Tactic.Ring.mul_zero (α ^ Nat.rawCast 1 * Nat.rawCast 1))
+                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                      (α ^ Nat.rawCast 1 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1) + 0)))
+                  (Mathlib.Tactic.Ring.zero_mul (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (α ^ Nat.rawCast 1 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1) + 0))))
+              (Mathlib.Tactic.Ring.atom_pf (det H))
+              (Mathlib.Tactic.Ring.add_mul
+                (Mathlib.Tactic.Ring.mul_add
+                  (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.metricEnergy H g) (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.mul_pf_right (det H) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                  (Mathlib.Tactic.Ring.mul_zero
+                    (α ^ Nat.rawCast 1 * (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1)))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (α ^ Nat.rawCast 1 *
+                        (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * (det H ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                      0)))
+                (Mathlib.Tactic.Ring.zero_mul (det H ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                (Mathlib.Tactic.Ring.add_pf_add_zero
+                  (α ^ Nat.rawCast 1 *
+                      (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * (det H ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                    0))))
+            (Mathlib.Tactic.Ring.mul_congr
+              (Mathlib.Tactic.Ring.mul_congr (Mathlib.Tactic.Ring.atom_pf α)
+                (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.dot y (H *ᵥ g)))
+                (Mathlib.Tactic.Ring.add_mul
+                  (Mathlib.Tactic.Ring.mul_add
+                    (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))
+                    (Mathlib.Tactic.Ring.mul_zero (α ^ Nat.rawCast 1 * Nat.rawCast 1))
+                    (Mathlib.Tactic.Ring.add_pf_add_zero
+                      (α ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1) + 0)))
+                  (Mathlib.Tactic.Ring.zero_mul (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (α ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1) + 0))))
+              (Mathlib.Tactic.Ring.atom_pf (BfgsVerification.metricEnergy H g))
+              (Mathlib.Tactic.Ring.add_mul
+                (Mathlib.Tactic.Ring.mul_add
+                  (Mathlib.Tactic.Ring.mul_pf_left α (Nat.rawCast 1)
+                    (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.metricEnergy H g) (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.mul_pf_left (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1)))))
+                  (Mathlib.Tactic.Ring.mul_zero
+                    (α ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1)))
+                  (Mathlib.Tactic.Ring.add_pf_add_zero
+                    (α ^ Nat.rawCast 1 *
+                        (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 *
+                          (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                      0)))
+                (Mathlib.Tactic.Ring.zero_mul (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * Nat.rawCast 1 + 0))
+                (Mathlib.Tactic.Ring.add_pf_add_zero
+                  (α ^ Nat.rawCast 1 *
+                      (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 *
+                        (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                    0))))
+            (Mathlib.Tactic.Ring.add_mul
+              (Mathlib.Tactic.Ring.mul_add
+                (Mathlib.Tactic.Ring.mul_pp_pf_overlap α
+                  (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                    (Mathlib.Meta.NormNum.isNat_add (Eq.refl HAdd.hAdd) (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 1)
+                      (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 1) (Eq.refl 2)))
+                  (Mathlib.Tactic.Ring.mul_pp_pf_overlap (BfgsVerification.metricEnergy H g)
+                    (Mathlib.Meta.NormNum.IsNat.to_raw_eq
+                      (Mathlib.Meta.NormNum.isNat_add (Eq.refl HAdd.hAdd) (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 1)
+                        (Mathlib.Meta.NormNum.IsNat.of_raw ℕ 1) (Eq.refl 2)))
+                    (Mathlib.Tactic.Ring.mul_pf_left (det H) (Nat.rawCast 1)
+                      (Mathlib.Tactic.Ring.mul_pf_right (BfgsVerification.dot y (H *ᵥ g)) (Nat.rawCast 1)
+                        (Mathlib.Tactic.Ring.one_mul (Nat.rawCast 1))))))
+                (Mathlib.Tactic.Ring.mul_zero
+                  (α ^ Nat.rawCast 1 *
+                    (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 * (det H ^ Nat.rawCast 1 * Nat.rawCast 1))))
+                (Mathlib.Tactic.Ring.add_pf_add_zero
+                  (α ^ Nat.rawCast 2 *
+                      (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 *
+                        (det H ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1))) +
+                    0)))
+              (Mathlib.Tactic.Ring.zero_mul
+                (α ^ Nat.rawCast 1 *
+                    (BfgsVerification.metricEnergy H g ^ Nat.rawCast 1 *
+                      (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1)) +
+                  0))
+              (Mathlib.Tactic.Ring.add_pf_add_zero
+                (α ^ Nat.rawCast 2 *
+                    (BfgsVerification.metricEnergy H g ^ Nat.rawCast 2 *
+                      (det H ^ Nat.rawCast 1 * (BfgsVerification.dot y (H *ᵥ g) ^ Nat.rawCast 1 * Nat.rawCast 1))) +
+                  0)))))))
+'BfgsVerification.inverseBFGS_step_det_beta' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.principalGramSumIdentity : BfgsVerification.PrincipalGramSumIdentityTarget
+theorem BfgsVerification.principalGramSumIdentity : BfgsVerification.PrincipalGramSumIdentityTarget :=
+fun {n} H hH =>
+  Exists.casesOn (BfgsVerification.posDef_orthogonal_diagonalization hH) fun U h =>
+    Exists.casesOn h fun lam h =>
+      And.casesOn h fun hUL right =>
+        And.casesOn right fun hUR right =>
+          And.casesOn right fun hdiag hlam =>
+            Exists.intro U
+              (Exists.intro lam
+                ⟨hUL,
+                  ⟨hUR, ⟨hdiag, ⟨hlam, BfgsVerification.orthogonal_coordinate_gram_sum_eq H U lam hUR hdiag hlam⟩⟩⟩⟩)
+'BfgsVerification.principalGramSumIdentity' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.sharpPrincipalPotential : BfgsVerification.SharpPrincipalPotentialTarget
+theorem BfgsVerification.sharpPrincipalPotential : BfgsVerification.SharpPrincipalPotentialTarget :=
+fun n R G c hc hd J =>
+  id
+    (Exists.intro
+      (BfgsVerification.SharpPotentialDegree.potentialPolynomial n (4 * G ^ 2 / c ^ 2 / ((∑' (i : ℕ), R.d (J + i)) / c))
+        (BfgsVerification.principalSum (R.H J)))
+      ⟨BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree n
+          (4 * G ^ 2 / c ^ 2 / ((∑' (i : ℕ), R.d (J + i)) / c)) (BfgsVerification.principalSum (R.H J)),
+        ⟨fun m hm =>
+          ⟨BfgsVerification.SharpPotentialDegree.principal_optimized_polynomial (R.H J) (4 * G ^ 2 / c ^ 2)
+              (∑' (i : ℕ), R.d (J + i)) c m,
+            BfgsVerification.SharpPotentialDegree.run_optimized_bound R G c hc hd J m hm⟩,
+          BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto R G c hc hd J⟩⟩)
+'BfgsVerification.sharpPrincipalPotential' depends on axioms: [propext, Classical.choice, Quot.sound]

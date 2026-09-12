@@ -1,0 +1,155 @@
+BfgsVerification.OriginalClaimInterpretation.degree_zero_constant {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (h : BfgsVerification.InterceptExamples.PositiveDegree 0 F) (x : BfgsVerification.Vec n) : F x = F 0
+'BfgsVerification.OriginalClaimInterpretation.degree_zero_constant' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.degree_zero_intercept {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (h : BfgsVerification.InterceptExamples.PositiveDegree 0 F) {x g : BfgsVerification.Vec n}
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  BfgsVerification.RadialCertificate.optimizerIntercept F 0 x g = 0
+'BfgsVerification.OriginalClaimInterpretation.degree_zero_intercept' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.positive_constant_homogeneous :
+  BfgsVerification.InterceptExamples.PositiveDegree 0 fun x => 1
+'BfgsVerification.OriginalClaimInterpretation.positive_constant_homogeneous' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.positive_constant_derivative (x : BfgsVerification.Vec 1) :
+  HasFDerivAt (fun x => 1) (BfgsVerification.gradientFunctional 0) x
+'BfgsVerification.OriginalClaimInterpretation.positive_constant_derivative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.unrestricted_zero_degree_formula_fails (x : BfgsVerification.Vec 1) :
+  BfgsVerification.RadialCertificate.optimizerIntercept (fun x => 1) 0 x 0 ≠ (0 - 1) * 1
+'BfgsVerification.OriginalClaimInterpretation.unrestricted_zero_degree_formula_fails' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.degree_zero_positive_sublevel_not_compact (n : ℕ)
+  {F : BfgsVerification.Vec (n + 1) → ℝ} (hh : BfgsVerification.InterceptExamples.PositiveDegree 0 F) {b : ℝ}
+  (hb : F 0 < b) : ¬IsCompact {x | F x ≤ b}
+'BfgsVerification.OriginalClaimInterpretation.degree_zero_positive_sublevel_not_compact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.compact_nonnegative_homogeneity_positive_degree (n : ℕ)
+  {F : BfgsVerification.Vec (n + 1) → ℝ} (hF : ConvexOn ℝ univ F)
+  (hnonneg : ∀ (x : BfgsVerification.Vec (n + 1)), 0 ≤ F x) {p b : ℝ}
+  (hh : BfgsVerification.InterceptExamples.PositiveDegree p F) {z : BfgsVerification.Vec (n + 1)} (hb : F z < b)
+  (hK : IsCompact {x | F x ≤ b}) : 0 < p
+'BfgsVerification.OriginalClaimInterpretation.compact_nonnegative_homogeneity_positive_degree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.compact_degree_intercept (n : ℕ) {F : BfgsVerification.Vec (n + 1) → ℝ}
+  (hF : ConvexOn ℝ univ F) (hnonneg : ∀ (x : BfgsVerification.Vec (n + 1)), 0 ≤ F x) {p b : ℝ}
+  (hh : BfgsVerification.InterceptExamples.PositiveDegree p F) {z : BfgsVerification.Vec (n + 1)} (hb : F z < b)
+  (hK : IsCompact {x | F x ≤ b}) {x g : BfgsVerification.Vec (n + 1)}
+  (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  BfgsVerification.RadialCertificate.optimizerIntercept F 0 x g = (p - 1) * F x
+'BfgsVerification.OriginalClaimInterpretation.compact_degree_intercept' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.positive_constant_convex : ConvexOn ℝ univ fun x => 1
+'BfgsVerification.OriginalClaimInterpretation.positive_constant_convex' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.positive_constant_assumptions :
+  (BfgsVerification.Vec 1 → 0 ≤ 1) ∧ IsMinOn (fun x => 1) univ 0
+'BfgsVerification.OriginalClaimInterpretation.positive_constant_assumptions' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.zero_coupling_split {n : ℕ} (a x : BfgsVerification.Vec n) :
+  BfgsVerification.NormalSpike.variableObjective a 0 x =
+    BfgsVerification.NormalSpike.quadratic x +
+      (BfgsVerification.NormalSpike.sourcePrimitive (BfgsVerification.dot a x) + |BfgsVerification.dot a x|)
+'BfgsVerification.OriginalClaimInterpretation.zero_coupling_split' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.quadratic_smooth {n : ℕ} :
+  ContDiff ℝ ⊤ BfgsVerification.NormalSpike.quadratic
+'BfgsVerification.OriginalClaimInterpretation.quadratic_smooth' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.printed_zero_coupling_has_split (n : ℕ) :
+  √(BfgsVerification.sqNorm 0) < 1 ∧
+    ∃ S h,
+      ContDiff ℝ ⊤ S ∧
+        ∀ (x : BfgsVerification.Vec (n + 2)),
+          BfgsVerification.NormalSpike.printedVariableObjective n 0 x = S x + h (x 0)
+'BfgsVerification.OriginalClaimInterpretation.printed_zero_coupling_has_split' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.zero_value_eq_zero_of_compact_sublevel {n : ℕ}
+  {F : BfgsVerification.Vec n → ℝ} {p b : ℝ} (hh : BfgsVerification.InterceptExamples.PositiveDegree p F) (hb : 0 ≤ b)
+  (hK : IsCompact {x | F x ≤ b}) {x : BfgsVerification.Vec n} (hx : F x = 0) : x = 0
+'BfgsVerification.OriginalClaimInterpretation.zero_value_eq_zero_of_compact_sublevel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.compact_homogeneous_minimizer_eq_zero (n : ℕ)
+  {F : BfgsVerification.Vec (n + 1) → ℝ} (hF : ConvexOn ℝ univ F)
+  (hnonneg : ∀ (x : BfgsVerification.Vec (n + 1)), 0 ≤ F x) {p b : ℝ}
+  (hh : BfgsVerification.InterceptExamples.PositiveDegree p F) {z : BfgsVerification.Vec (n + 1)} (hb : F z < b)
+  (hK : IsCompact {x | F x ≤ b}) {xStar : BfgsVerification.Vec (n + 1)} (hmin : IsMinOn F univ xStar) : xStar = 0
+'BfgsVerification.OriginalClaimInterpretation.compact_homogeneous_minimizer_eq_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.compact_homogeneous_optimizer_intercept (n : ℕ)
+  {F : BfgsVerification.Vec (n + 1) → ℝ} (hF : ConvexOn ℝ univ F)
+  (hnonneg : ∀ (x : BfgsVerification.Vec (n + 1)), 0 ≤ F x) {p b : ℝ}
+  (hh : BfgsVerification.InterceptExamples.PositiveDegree p F) {z : BfgsVerification.Vec (n + 1)} (hb : F z < b)
+  (hK : IsCompact {x | F x ≤ b}) {xStar : BfgsVerification.Vec (n + 1)} (hmin : IsMinOn F univ xStar)
+  {x g : BfgsVerification.Vec (n + 1)} (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  BfgsVerification.RadialCertificate.optimizerIntercept F xStar x g = (p - 1) * F x
+'BfgsVerification.OriginalClaimInterpretation.compact_homogeneous_optimizer_intercept' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalClaimInterpretation.degree_intercept_at_reference {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  {p : ℝ} (hh : BfgsVerification.InterceptExamples.PositiveDegree p F) (xStar : BfgsVerification.Vec n)
+  {x g : BfgsVerification.Vec n} (hg : HasFDerivAt F (BfgsVerification.gradientFunctional g) x) :
+  BfgsVerification.RadialCertificate.optimizerIntercept F xStar x g =
+    (p - 1) * F x + F xStar - BfgsVerification.dot g xStar
+'BfgsVerification.OriginalClaimInterpretation.degree_intercept_at_reference' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ORIGINAL_PEER_UNRESTRICTED
+ORIGINAL_PEER_NONCOMPACT
+ORIGINAL_PEER_POSITIVE_DEGREE
+ORIGINAL_PEER_COMPACT_INTERCEPT
+ORIGINAL_PEER_PRINTED_SPLIT
+ORIGINAL_PEER_ZERO_RAY
+ORIGINAL_PEER_UNIQUE_OPTIMIZER
+ORIGINAL_PEER_ANY_OPTIMIZER
+ORIGINAL_PEER_ANY_REFERENCE
+BfgsVerification.OriginalInterpretationPeer.ExpectedUnrestrictedFailure : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedUnrestrictedFailure' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedNoncompact : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedNoncompact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedPositiveDegree : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedPositiveDegree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedCompactIntercept : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedCompactIntercept' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedPrintedSplit : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedPrintedSplit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedZeroRay : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedZeroRay' depends on axioms: [propext, Classical.choice, Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedUniqueOptimizer : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedUniqueOptimizer' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedAnyOptimizerIntercept : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedAnyOptimizerIntercept' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+BfgsVerification.OriginalInterpretationPeer.ExpectedAnyReference : Prop
+'BfgsVerification.OriginalInterpretationPeer.ExpectedAnyReference' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
