@@ -1,48 +1,37 @@
 \section{Synthesis, verification and the remaining questions}\label{art:verification}
 
-The mixed quadratic--absolute-value benchmark now has a whole-sequence
-answer: every admissible full-BFGS run for $u^2+|v|$ converges to its unique
-minimizer. The same centered-family argument gives global convergence for
-smooth-plus-sublinear objectives whose compact initial sublevels lie in the
-region of the structural representation,
-and recovers the known Euclidean-norm result inside the broader coercive
-homogeneous class. Locally, finite polyhedral geometry controls the inward
-model error. The planar theorem goes further: a moving comparison field
-handles curved switches in the three-quadratic example even though its radial
-secant condition fails. These are objective-based convergence results, with
-their distinct compactness and geometric assumptions intact.
+The mixed benchmark $u^2+|v|$ now has a whole-sequence convergence answer.
+The centered-family argument places it within a broader global theory;
+locally, finite polyhedral geometry controls the inward model error, while
+a moving comparison field handles the three-quadratic example's curved
+switches even when its radial secant condition fails. The common mechanism
+uses the principal-minor hierarchy and comparison energies to detect the
+remaining objective gap without a full spectral description of the BFGS
+matrices. The geometric conditions are sufficient, not necessary.
 
-The counterexamples place a different limit on deterministic guarantees.
-They exclude a neighborhood in which every admissible start
-succeeds for the specified unit-first search, both for finite maxima of
-convex $C^{2,1}$ branches with bounded Hessians and, independently, for the
-stated uniformly strongly convex $C^{1,1}$ regime. Simpler polyhedral and
-quadratic-plus-maximum examples establish global failure near a wrong corner;
-the local embeddings are needed to place bad starts arbitrarily near the
-objective's own minimizer. The proof follows the actual full update and every
-line-search query, so the failure is an algorithmic trajectory, not only a
-prescribed sequence of accepted points.
+The implemented counterexamples show why finite smooth formulas alone do
+not ensure local convergence. One regime has four convex $C^{2,1}$ branches
+with bounded Hessians; the other has four uniformly strongly convex
+$C^{1,1}$ branches. Each has one fixed objective with bad starts arbitrarily
+near its own minimizer, under the respective search parameters in
+Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}.
+The local embeddings provide this conclusion; the simpler polyhedral and
+quadratic-plus-maximum wrong-corner examples establish global failure.
+The argument follows the actual update and every rejected query, so these
+are implemented trajectories, not merely prescribed accepted sequences.
 
-The common analytical advance is a route around a full spectral description
-of the BFGS matrices. The principal-minor hierarchy constrains the decrease
-metric even while the matrices degenerate. A comparison energy then converts
-those constraints into progress whenever its directions continue to see the
-remaining objective gap with controlled secant and transport costs. The radial,
-finite-partition and planar arguments provide different ways of meeting these
-requirements. Their success does not make the requirements necessary, or turn
-an affine-critical obstruction into a universal dynamical classification.
-
-These distinctions leave precise questions. The two local negatives do not
-give a counterexample with finitely many uniformly strongly convex $C^2$
-branches through the minimizer; the planar positive theorem settles a
-nondegenerate subclass, not that entire class. Nor do exceptional deterministic
-starts establish failure with positive probability. The accumulating local
-constructions do not have a finite semialgebraic description. The almost-sure
-stationarity, all-trial-value rate and spectral-identification assertions in
-Lewis--Overton's challenge~\cite[Challenge~7.1]{LO} therefore remain outside
-the conclusions proved here. We also distinguish convergence of an infinite
-admissible run from a guarantee of indefinite differentiable execution; a
-zero gradient is successful termination in this paper.
+The two local negatives do not give a counterexample with finitely many
+uniformly strongly convex $C^2$ branches through the minimizer. The planar
+positive theorem settles a nondegenerate subclass, leaving that broader
+local question open. The constructions concern the specified weak-Wolfe
+implementation; they do not establish failure for every search routine or
+for strong Wolfe. Exceptional deterministic starts also do not establish
+failure with positive probability, and the accumulating local constructions
+have no finite semialgebraic description. Lewis--Overton's almost-sure
+stationarity, all-trial-value rate and spectral-identification challenge
+\cite[Challenge~7.1]{LO} therefore remains outside these conclusions.
+Convergence of an infinite admissible run is distinct from indefinite
+differentiable execution; a zero gradient is successful termination.
 
 \paragraph{Formal verification and reproducibility.}
 The companion records Lean~4.19.0 proofs with pinned mathlib, exact
@@ -51,21 +40,19 @@ logs. The permitted foundational dependencies are propositional
 extensionality (\texttt{propext}), classical choice
 (\texttt{Classical.choice}) and quotient soundness (\texttt{Quot.sound}).
 The audits reject \texttt{sorryAx}, custom mathematical axioms and reachable
-unsafe or partial proof artifacts. The principal-minor theorem concerns the
+unsafe or partial proof artifacts. The principal-minor theorem concerns
 actual matrices and determinants, and the negative proofs include the search
-decisions and all-query induction. The rational certificate and the article's
-proofs can also be read independently of Lean. Formal checking supports these
-precise claims; it does not establish foundational consistency, publication
-priority, fidelity of every prose paraphrase, or floating-point robustness.
-The kernel and execution environment remain trusted, and author-side
-correspondence reviews are separate from independent human peer review.
+decisions and all-query induction. The article's proofs and rational
+certificate can also be read independently of Lean. The kernel and execution
+environment remain trusted. Formal checking does not establish foundational
+consistency, publication priority, fidelity of every prose paraphrase or
+floating-point robustness; author-side correspondence review is separate
+from independent human peer review.
 
 \paragraph{AI assistance and author review.}
-The accompanying source tree contains the article, complete companion,
-figure-generation code, exact certificates and Lean project. Large language
-models assisted theorem development, proof reconstruction, formalization,
-literature searches, software and writing. This assistance was substantive;
-it was not limited to grammar editing. Human authors must review the claims,
-citations, novelty assessment and disclosure before submission. This
-author-review edition asserts no author consent, independent human review,
-affiliations, grants or public archival identifier.
+Large language models assisted theorem development, proof reconstruction,
+formalization, literature searches, software and writing. This assistance
+was substantive, beyond grammar editing. Human authors must review the
+claims, citations, novelty assessment and disclosure before submission;
+this author-review edition asserts neither author consent nor completed
+independent human review.

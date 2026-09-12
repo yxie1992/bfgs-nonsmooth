@@ -1,0 +1,64 @@
+{
+  "status": "PASS_NO_MATERIAL_PROOF_GAP_FOUND",
+  "reviewer": "Primary AI author-side reviewer; not human peer review",
+  "baseline_commit": "dbe14e9aacacd72d84a4bd9a457bb503e1aee4bc",
+  "files_reviewed": [
+    "paper/master.tex",
+    "paper/sections/introduction.tex",
+    "paper/sections/geometry.tex",
+    "paper/sections/energy.tex",
+    "paper/sections/global.tex",
+    "paper/sections/local.tex",
+    "paper/sections/failure.tex",
+    "paper/sections/verification.tex",
+    "paper/appendices/matrix_algebra.tex",
+    "paper/appendices/planar_geometry.tex",
+    "paper/appendices/seed_certificate.tex",
+    "paper/appendices/lower_curvature.tex"
+  ],
+  "scope": "Detailed matrix/reference-energy proof plus actual Lean target definitions; positive/negative/lineage reviews recorded separately",
+  "checks": [
+    {
+      "check": "Admissibility is an actual algorithmic contract",
+      "finding": "ObjectiveDefinitions.lean30\u201351 gives actual F derivative, positive initial matrix, full update, positive step and weak Wolfe; no boundedness/summability/convergence field is assumed.",
+      "status": "PASS"
+    },
+    {
+      "check": "Actual principal determinants",
+      "finding": "Definitions.lean41\u201355 uses det of actual submatrices in a finite powerset-card sum. PrincipalHierarchy.lean sums actual compressed Gram determinants after an orthogonal diagonalization; it does not assume the scalar hierarchy.",
+      "status": "PASS"
+    },
+    {
+      "check": "Compression calculation",
+      "finding": "Reexpanded the rank-two determinant: detA[(\u03ba\u2212w)\u00b2+u(r\u2212z)]/\u03ba\u00b2. The nonnegative(g,y,Z)Gram determinant removes the square term. Adding\u03c1aa\u1d40 contributes\u03c1detA\u00b7u with0\u2264u\u2264q, even when the projected compression is singular. The full-size endpoint gives the exact determinant.",
+      "status": "PASS"
+    },
+    {
+      "check": "Normalization and product endpoint",
+      "finding": "The run gives\u03b2=t/d\u22651\u2212c2, ||y||\u22642G and\u03b1=d/q. Weighted adjacent degrees boundqVnext\u22642\u03b7V. The product bound usesm\u22121updates and the q\u2264G\u00b2V inequality at the last endpoint; it does not require any positive lower spectral bound.",
+      "status": "PASS"
+    },
+    {
+      "check": "Weaker assumption preserved",
+      "finding": "Only d_k\u21920 is used in the reciprocal theorem. Summability is derived later on compact sublevels, not substituted into the weaker statement. GM divergence implies arithmetic mean of reciprocals divergence, not pointwise q_k\u21920.",
+      "status": "PASS"
+    },
+    {
+      "check": "Reference energy",
+      "finding": "Mksk=0 removes both reference-point step cross terms. Convexity suppliesg\u00b7r\u2265gap; summation uses finalgapmonotonicity and nonnegativeenergy, not an energyupperbound assumed in advance.",
+      "status": "PASS"
+    },
+    {
+      "check": "Transported energy",
+      "finding": "Projected PSD order can be paired withMk by trace monotonicity. Dividing byP_{k+1} subtractsm/(qP_k); 1\u2264P_k\u2264exp(L\u03a3d) gives the stated reciprocal-sum bound. A compact cluster argument separately derives solution-set distance and unique-minimizer whole-iterate convergence.",
+      "status": "PASS"
+    },
+    {
+      "check": "Definitions expanded rather than only theorem names",
+      "finding": "Read FullBFGSRun, ReciprocalGrowthTarget, TransportedCertificateTarget and AdmissibleBFGSRun. Pure matrix SPD/curvature invariants in FullBFGSRun are derived when passing from objective-level admissible runs; no recurrence or favorable limit is inserted.",
+      "status": "PASS"
+    }
+  ],
+  "formal_replay": "editorial/satisfaction_review/formal/runs/geometry_structural_01/SUMMARY.json",
+  "limits": "This is a mathematical and contract review, not an assertion of foundational consistency, novelty or human approval."
+}

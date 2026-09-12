@@ -225,12 +225,25 @@ def main():
             attach_pinned_library_cache(tree)
             supplement_records = []
             register = json.loads((tree / 'editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json').read_text())
-            assert {r['name'] for r in register['supplements']} == {'positive_formal', 'negative_formal'}
-            for i, name in enumerate(['positive_formal', 'negative_formal']):
-                record = next(r for r in register['supplements'] if r['name'] == name)
+            assert len(register['supplements']) == 2 and {r['name'] for r in register['supplements']} == {'positive_formal', 'negative_formal'}
+            root_contracts = json.loads((tree / 'editorial/root_contract_review.json').read_text())
+            geometry = root_contracts['supplemental_structural_audit']
+            assert geometry['name'] == 'geometry_formal'
+            assert geometry['summary'] == 'editorial/satisfaction_review/formal/runs/geometry_structural_01/SUMMARY.json'
+            assert geometry['declarations'] == 'editorial/satisfaction_review/formal/runs/geometry_structural_01/declarations.json'
+            branch = root_contracts['supplemental_branch_regularity_audit']
+            assert branch['name'] == 'branch_regularity_formal'
+            assert branch['summary'] == 'editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/SUMMARY.json'
+            assert branch['declarations'] == 'editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json'
+            replay_plans = [(next(r for r in register['supplements'] if r['name'] == name),
+                             tree / 'editorial/narrative_rebuild' / name)
+                            for name in ['positive_formal', 'negative_formal']]
+            replay_plans.append((geometry, tree / 'editorial/satisfaction_review/formal'))
+            replay_plans.append((branch, tree / 'editorial/satisfaction_review/branch_formal'))
+            for record, base in replay_plans:
+                name = record['name']
                 assert sha(tree / record['summary']) == record['summary_sha256']
                 assert sha(tree / record['declarations']) == record['declarations_sha256']
-                base = tree / 'editorial/narrative_rebuild' / name
                 replay_id = 'archive_validation_' + run_id
                 replay = base / 'runs' / replay_id
                 try:
@@ -250,6 +263,24 @@ def main():
                 fields = ['name', 'kind', 'signature', 'axioms', 'unsafe', 'partial']
                 assert [{key: row[key] for key in fields} for row in actual] == [{key: row[key] for key in fields} for row in expected]
                 assert all(row['ordinary_collector_agrees'] for row in actual)
+                if name == 'geometry_formal':
+                    assert fresh['module_owned_declarations'] == 14
+                    assert set(fresh['compiled_olean_sha256']) == {'ArticleGeometry', 'ConvexBalance'}
+                    for module, digest in fresh['compiled_olean_sha256'].items():
+                        assert sha(replay / 'build' / (module + '.olean')) == digest
+                    geometry_fields = fields + ['module']
+                    def geometry_types(rows):
+                        assert len({row['name'] for row in rows}) == len(rows)
+                        return sorted(({key: row[key] for key in geometry_fields} for row in rows), key=lambda row: row['name'])
+                    assert geometry_types(actual) == geometry_types(expected) == geometry_types(root_contracts['supplemental_declarations'])
+                if name == 'branch_regularity_formal':
+                    assert fresh['module_owned_declarations'] == 3
+                    assert {row['module'] for row in actual} == {'ArticleBranchRegularity'}
+                    assert {row['name'] for row in actual} == {
+                        'ArticleBranchRegularity.branch_not_twice_differentiable_zero',
+                        'ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero',
+                        'ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction'}
+                    assert sha(replay / 'build/ArticleBranchRegularity.olean') == fresh['compiled_olean_sha256']
                 supplement_records.append({'name': name, 'status': 'PASS', 'run_id': replay_id,
                                            'module_owned_declarations': fresh['module_owned_declarations'],
                                            'transitive_checked_declarations': fresh['transitive_checked_declarations'],

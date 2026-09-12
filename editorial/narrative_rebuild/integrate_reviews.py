@@ -42,7 +42,7 @@ for r in new['statements']:
   r['proof_location']={'kind':'definition_not_a_proved_claim',**r['article_location']};continue
  p=r['article_location']['path']
  if r['label']=='art:polyhedral':
-  p='paper/sections/local.tex';t=texts[p];start=t.index('\\begin{proof}[Proof of Theorem~\\ref{art:polyhedral}]')
+  p='paper/sections/local.tex';t=texts[p];start=t.index('\\begin{proof}[Theorem~\\ref{art:polyhedral}]')
  else:
   t=texts[p];offset=t.index('\\label{'+r['label']+'}');start=t.index('\\begin{proof}',offset)
  end=t.index('\\end{proof}',start)
@@ -114,7 +114,7 @@ row('root.energy.companion_quantitative','paper/sections/energy.tex','Finite-hor
 row('root.energy.nonnecessity','paper/sections/energy.tex','The certificate is a sufficient convergence mechanism.',
  ['G.span.9','G.span.10','T.span.7','R.span.15'],old['root.beyond.nonnecessity']['primary_declarations'],
  'Nonnecessity is explicitly companion-only (Ch5/7). Scalar convergence and nonexistence of this comparison certificate remain distinct assertions. Full nonradial example is now proved in this article rather than listed as a companion orientation.')
-row('root.synthesis.mathematical_scope','paper/sections/verification.tex','The mixed quadratic--absolute-value benchmark',
+row('root.synthesis.mathematical_scope','paper/sections/verification.tex','The mixed benchmark $u^2+|v|$',
  ['F.span.1','H.span.9','R.span.8','C.span.11','C.span.13','C.span.14','D.span.2','L.span.2','M.span.2','T.span.3'],
  ['ArticlePositive.mixed_benchmark_global'],
  'Synthesis matches abstract and proved theorem set. It distinguishes compact-centered, coercive homogeneous, finite local cells and moving planar geometry, and the two incomparable local negative regularity regimes. No probability or complete spectral classification is claimed.')

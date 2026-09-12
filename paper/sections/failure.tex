@@ -56,8 +56,8 @@ constructions for smooth nonconvex objectives~\cite{NEG_M04,NEG_M07}
 suggest the value of designing the dynamics first. Other failures concern
 nonconvex objectives~\cite{NEG_LZ15}; see also \preprintcite{NEG_DIAO26}
 for a recent smooth nonconvex planar construction. These results do not
-supply the convex local claim above. The examples in \preprintcite{NEG_LO08}
-use exact search or subgradient choices, and the scaled memoryless failures
+supply the convex local claim above. Lewis--Overton's earlier examples use exact search or subgradient choices
+\preprintcite{NEG_LO08}; the scaled memoryless failures
 of Asl--Overton~\cite{NEG_AO21} concern a different matrix update. Here
 the essential combination is convex branch regularity, full BFGS with the
 specified search, a common identity initialization, and every query close
@@ -381,7 +381,7 @@ $|h_1|\le a_n/2$ and $|h_2|\le8a_n$, so the fourth branch is negative.
 In particular $F(p_n)=a_n^3$ and
 $F'(p_n;(-1,16)^T)=-a_n^2<0$.
 
-\begin{proof}[Proof of Theorem~\ref{art:local-failure}]
+\begin{proof}[Theorem~\ref{art:local-failure}]
 For $n\ge1$ take $x_0^{(n)}=p_n+a_n^2z_0$ and $H_0=I$. We claim that
 \begin{equation}\label{art:upper_orbit}
  x_{3m+j}^{(n)}=p_n+a_n^2\rho^mz_j,\qquad
@@ -483,26 +483,8 @@ regularity but prevents second differentiability at the accumulation point.
 This is why the theorem does not supply a finite strongly convex $C^2$
 local counterexample.
 
-\subsection{The deterministic assertions excluded}
-The constructions answer three concrete questions negatively for the
-specified unit-first rule. Compact sublevels and a finite polyhedral
-representation do not guarantee convergence from every starting point.
-Even with one unique minimizer, four globally convex $C^{2,1}$ branches
-and a uniform upper Hessian bound do not guarantee a neighborhood in which
-all identity-initialized runs converge, for any fixed pair in
-Theorem~\ref{art:local-failure}'s parameter range. Uniform strong convexity
-and globally Lipschitz branch gradients do not restore that local guarantee
-in the separate $C^{1,1}$ class at the parameters of
-Theorem~\ref{art:local-failure-lower}.
-
-The simpler quadratic-branch example in the second proof is global: its
-bad corner is not the minimizer. It therefore does not decide local
-convergence near the optimizer of a finite maximum of uniformly strongly
-convex $C^2$ branches. That local question survives, as do possible
-guarantees under further objective geometry. The examples also leave
-almost-sure or generic-start guarantees open: they establish exceptional
-starts and no positive-measure failure set. They concern the specified
-weak-Wolfe implementation, and do not prove failure for every line-search
-routine or for strong Wolfe. Finally, failure of a sufficient comparison
-condition alone would prove none of these negative conclusions; the
-actual implemented trajectories do the work here.
+The two constructions separate upper branch regularity from positive lower
+curvature. Their common mechanism is a local copy of an actual bad query
+tree; the different scalar scales determine which regularity survives at
+the accumulation point. The remaining convergence questions are discussed
+next.

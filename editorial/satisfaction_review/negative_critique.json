@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "status": "NO_MATERIAL_GAP_FOUND",
+  "reviewed_utc": "2026-09-12T11:22:52.371925+00:00",
+  "scope": "Fresh skeptical mathematical review of the complete printed negative proof and its two canonical statements. Previous PASS conclusions were not used as premises.",
+  "reviewed_source_files": {
+    "paper/sections/failure.tex": {
+      "sha256": "3e1ea997cb849fc395039968e5f25ad13a192c1b664e1e9055d5372dcaa72d3f",
+      "lines": 508
+    },
+    "paper/appendices/seed_certificate.tex": {
+      "sha256": "4f47a09b3a1e06cd106eabcf605ddc733177703654709f0e13313f15c3ab3d9f",
+      "lines": 200
+    },
+    "paper/appendices/lower_curvature.tex": {
+      "sha256": "6e76377b098fc7a63d891b1201845adc434540113001cb2c7630b0ccd41ffc32",
+      "lines": 315
+    },
+    "paper/statements/negative_upper.tex": {
+      "sha256": "dc24603ade146b37fe166e9ac4813e4ab8c6175b4f6dcca6947e2fe31fb17856",
+      "lines": 25
+    },
+    "paper/statements/negative_lower.tex": {
+      "sha256": "153a960d7ffec83fd2e6690a3d20e5ce6e2d2e2d334a5c2fa368146a576e0a44",
+      "lines": 22
+    }
+  },
+  "supporting_formal_source_snapshot": {
+    "bfgs_lean_stage1/BfgsVerification/AlgebraicSeedCycle.lean": {
+      "sha256": "13f5ff21c8aa26c8c6f7db2e569a6c333dd82ff28d4c232a3ad4b0b0d654de2b",
+      "lines": 209
+    },
+    "bfgs_lean_stage1/BfgsVerification/AlgebraicSeedRoot.lean": {
+      "sha256": "03d727b17cc013bcbd8390a00c5df7c4498b2d21db621eb3451595d1157d6e87",
+      "lines": 172
+    },
+    "bfgs_lean_stage1/BfgsVerification/AlgebraicSeedData.lean": {
+      "sha256": "f9728276ec344c78e9b4871c810a51e782ff168381dee423172b2727d8740795",
+      "lines": 56
+    },
+    "bfgs_lean_stage1/BfgsVerification/LShapeSpectrum.lean": {
+      "sha256": "cce4c211b114fdb28b3058911e3e127aafc17048894d5000c16dad9ae71e9819",
+      "lines": 64
+    },
+    "bfgs_lean_stage1/BfgsVerification/LReturnStableOrbit.lean": {
+      "sha256": "ac222d7e349d62671a79c9d03ad7284736fa9c771de9c67081aa7f42a7dfda57",
+      "lines": 47
+    },
+    "bfgs_lean_stage1/BfgsVerification/LGlobalFailure.lean": {
+      "sha256": "b11e953d6ec3f4be3aaae69897fcc2a784d17dca2a52a86e65cfc5b63edb73e3",
+      "lines": 87
+    },
+    "bfgs_lean_stage1/BfgsVerification/LIdentityGeometry.lean": {
+      "sha256": "42ce74cb02447cb5acdc385174799172327991eb3e65d7ae80118f827af7e8d9",
+      "lines": 128
+    },
+    "bfgs_lean_stage1/BfgsVerification/LIdentityTargets.lean": {
+      "sha256": "3dec737734ec02b784043967cca2ab932b977103d1b288b0f0ec754c078f3cd7",
+      "lines": 62
+    },
+    "bfgs_lean_stage1/BfgsVerification/LWhiteningGeometry.lean": {
+      "sha256": "2b8d23e070f43ccdd3a70a4ee454a4017c16a14c845669df9937e5dbab34e667",
+      "lines": 122
+    },
+    "bfgs_lean_stage1/BfgsVerification/LScalarRegularity.lean": {
+      "sha256": "b56ddbd9fc9ab4dfdd573885e27b3d3ef8b741d6640038d806e1c4e66f310672",
+      "lines": 136
+    },
+    "editorial/narrative_rebuild/negative_contract_review.json": {
+      "sha256": "d18bd0a0fd7d5a0fe4f3d6255e9f0efd820ea673885dd4d6cb7156bd4b2009ab",
+      "lines": 10257
+    }
+  },
+  "material_findings": [],
+  "standalone_proof_assessment": {
+    "verdict": "The printed proofs specify their finite arithmetic data and operations and supply the essential algorithmic and analytic implications. No essential reference to the companion or an assumed orbit, spectrum, accepted-length sequence, matrix limit or all-query containment was found.",
+    "external_mathematics": "Banach contraction, the inverse function theorem and the classical local stable-manifold theorem remain standard external mathematical results; the latter is explicitly cited. This review checks their application rather than reproving these general theorems.",
+    "finite_arithmetic": "Independent exact recomputation from the paper's printed rational inputs reproduced every checked root, trial, shape-derivative and scalar bound. These diagnostics do not replace Lean verification and are not new trusted proof premises."
+  },
+  "hardest_checks": [
+    {
+      "id": "NEG-ROOT",
+      "location": "paper/appendices/seed_certificate.tex:43",
+      "labels": [
+        "art:root_certificate",
+        "art:root_arithmetic"
+      ],
+      "result": "Nonzero exact Jacobian determinant; absolute centered Newton constants below 1e-50; degree-weighted nonlinear coefficient sums below 7000. Direct expansion has no linear term, yielding contraction factor 7000r and self-map bound 1e-50+7000r^2<r at r=1e-30.",
+      "diagnostic_id": "root_arithmetic",
+      "formal_contracts": [
+        "BfgsVerification.AlgebraicSeed.exact_closed_box",
+        "BfgsVerification.AlgebraicSeed.expansion0",
+        "BfgsVerification.AlgebraicSeed.expansion1",
+        "BfgsVerification.AlgebraicSeed.constant0_small",
+        "BfgsVerification.AlgebraicSeed.constant1_small",
+        "BfgsVerification.AlgebraicSeed.coeff0_bound",
+        "BfgsVerification.AlgebraicSeed.coeff1_bound"
+      ]
+    },
+    {
+      "id": "NEG-MATRIX",
+      "location": "paper/appendices/seed_certificate.tex:95",
+      "labels": [
+        "art:closure_identity"
+      ],
+      "result": "The full inverse update decomposes as the displayed length-independent projection part plus a rank-one term linear in beta. The middle gradient alignment and perpendicular energy imply the final rho-times-identity closure. Positive factors supply all divisions; accepted signs supply positive curvature, without circular reliance on SPD to establish the rational margins.",
+      "formal_contracts": [
+        "BfgsVerification.SeedCycle.middle_update",
+        "BfgsVerification.SeedCycle.middle_metric_gradient",
+        "BfgsVerification.SeedCycle.middle_perpendicular_energy",
+        "BfgsVerification.SeedCycle.generic_closure",
+        "BfgsVerification.SeedCycle.beta_quarter",
+        "BfgsVerification.SeedCycle.gamma_sixteenth",
+        "BfgsVerification.SeedCycle.rho_difference"
+      ]
+    },
+    {
+      "id": "NEG-TRIALS",
+      "location": "paper/appendices/seed_certificate.tex:163",
+      "labels": [
+        "art:query_box",
+        "art:query_lower_bounds",
+        "art:trial_table",
+        "art:seed_query_bounds"
+      ],
+      "result": "All nine exact interval rows exceed the printed common lower bounds and fit the printed value intervals. Base-point activity, all branch gaps, positivity, the slab bounds and the second-coordinate bound also pass. Rejections increase the value; acceptances have Armijo margin at c1=1/3 and positive new directional derivative, hence the claimed entire fixed parameter range.",
+      "diagnostic_id": "all_trial_intervals",
+      "formal_contracts": [
+        "BfgsVerification.SeedOrbit.source_base_certificate",
+        "BfgsVerification.DEmbedding.deterministic_embedding_failure"
+      ]
+    },
+    {
+      "id": "NEG-UPPER-EMBED",
+      "location": "paper/sections/failure.tex:262",
+      "labels": [
+        "art:upper_scalar_lemma",
+        "art:upper_local_model",
+        "art:upper_orbit",
+        "art:local-failure"
+      ],
+      "result": "Both plateau widths exceed an/2 on the stated b range; the third derivative bound is exactly 139264/(5b^2); continuity at infinitely accumulating joins gives the global Lipschitz second derivative. At every actual candidate, the 3an^2<an/2 slab margin preserves the local model. Spatial scale an^2 and objective scale an^4 preserve the common identity matrix, not merely the accepted points.",
+      "diagnostic_id": "scalar_constants",
+      "formal_contracts": [
+        "BfgsVerification.DScalar.scalar_function_contract",
+        "BfgsVerification.DEmbedding.branch_hessian_bounds",
+        "BfgsVerification.DEmbedding.branch_hessian_lipschitz",
+        "BfgsVerification.DEmbedding.deterministic_embedding_failure"
+      ]
+    },
+    {
+      "id": "NEG-HYPERBOLIC",
+      "location": "paper/appendices/lower_curvature.tex:94",
+      "labels": [
+        "art:lower_hyperbolic",
+        "art:shape_certificate"
+      ],
+      "result": "Fresh exact interval automatic differentiation of the three unmodified matrix updates reproduces all four printed J enclosures and characteristic sign tests. The full derivative block structure follows from tau=0 matrix independence of z and the scale coordinate tau*r; unspecified off-diagonal blocks cannot change the spectrum. Rho differs from every eigenvalue of the upper four-dimensional block, so solving that block gives a stable eigenvector with tau=1.",
+      "diagnostic_id": "shape_derivative_intervals",
+      "formal_contracts": [
+        "BfgsVerification.LShapeSpectrum.source_jacobian_bounds",
+        "BfgsVerification.LShapeSpectrum.source_characteristic_signs",
+        "BfgsVerification.LShapeSpectrum.actual_middle_block",
+        "BfgsVerification.LReturnSpectrum.actual_spectral_contract"
+      ]
+    },
+    {
+      "id": "NEG-STABLE-QUERIES",
+      "location": "paper/appendices/lower_curvature.tex:151",
+      "labels": [
+        "art:quadratic_failure"
+      ],
+      "result": "The analytic extension, invertible hyperbolic derivative and transverse stable tau direction supply positive-scale local forward orbits. Positive r preserves tau>0; finite strict normalized branch/search inequalities persist on a common neighborhood. Physical candidate maps are continuous and vanish at the boundary fixed point, which permits every candidate of the entire chosen orbit to lie in any prescribed physical neighborhood. No rounded point is presumed to belong to the stable manifold.",
+      "formal_contracts": [
+        "BfgsVerification.LReturnStableOrbit.source_positive_return_orbit",
+        "BfgsVerification.LReturnStableOrbit.source_oracle_orbit",
+        "BfgsVerification.LGlobalFailure.actual_orbit_data",
+        "BfgsVerification.LGlobalFailure.actual_global_failure"
+      ]
+    },
+    {
+      "id": "NEG-LOWER-EMBED",
+      "location": "paper/appendices/lower_curvature.tex:192",
+      "labels": [
+        "art:lower_scalar",
+        "art:lower_plateau",
+        "art:lower_local_model",
+        "art:local-failure-lower"
+      ],
+      "result": "The lower interpolation matches node values/slopes, has bounded derivative slopes and distinct derivative quotients 1/b and 1/(b+1/4). The shifted linear forms cancel quadratic cross terms exactly. One whole perturbed orbit is chosen inside a fixed model neighborhood before scaling; this yields a common initial matrix for every copy. A single fixed square-root change then yields identity initialization and positive finite transformed curvature constants.",
+      "diagnostic_id": "scalar_constants",
+      "formal_contracts": [
+        "BfgsVerification.LScalar.phi_not_twice_differentiable_zero",
+        "BfgsVerification.LWhitening.IdentityFailureTarget",
+        "BfgsVerification.LWhitening.smoothIdentityFailure",
+        "BfgsVerification.LWhitening.SmoothLocalFailureTarget",
+        "BfgsVerification.LWhitening.smoothLocalFailure"
+      ]
+    },
+    {
+      "id": "NEG-HESSIAN-SCOPE",
+      "location": "paper/sections/failure.tex:460",
+      "labels": [
+        "art:local-failure-lower"
+      ],
+      "result": "The paper explicitly defines the classical Hessian through a gradient defined on a neighborhood. This matches the Lean premise of eventual first differentiability plus differentiability of fderiv. The finite-max upper Taylor argument is valid because every active gradient agrees at a differentiable point and finitely many inactive gaps persist locally. The theorem does not claim finite strongly convex C2 branches at the accumulation point.",
+      "formal_contracts": [
+        "BfgsVerification.LWhitening.smooth_actual_hessian",
+        "BfgsVerification.LWhitening.SmoothLocalFailureTarget"
+      ]
+    }
+  ],
+  "optional_exposition_findings": [
+    {
+      "id": "NIT-1",
+      "severity": "nonblocking exposition",
+      "location": "paper/appendices/lower_curvature.tex:169",
+      "issue": "The small-initial-state sentence is correct through the local stable-manifold theorem but compresses the uniform all-query quantifier.",
+      "proposed_fix": "Define each finite physical candidate map Phi_q(state)=tau*q(state), note Phi_q(P*)=0, and choose the normalized neighborhood inside the intersection of Phi_q^{-1}(V) before applying the local stable-manifold theorem. This makes whole-orbit containment immediate from the chosen neighborhood.",
+      "changes_theorem_contract": false
+    },
+    {
+      "id": "NIT-2",
+      "severity": "nonblocking exposition",
+      "location": "paper/appendices/seed_certificate.tex:112",
+      "issue": "The C+beta E matrix decomposition is fully recoverable from the update but its two explicit rank-one terms are omitted.",
+      "proposed_fix": "Optionally insert M_beta = 16512/(U+129)^2 * vv^T + beta/(256(U+129)) * ww^T, where v=(-(d+1/8),c+1)^T and w=(127,16)^T. This makes the subsequent alignment and perpendicular-energy substitutions easier to reproduce by hand.",
+      "changes_theorem_contract": false
+    },
+    {
+      "id": "NIT-3",
+      "severity": "nonblocking exposition",
+      "location": "paper/appendices/lower_curvature.tex:231",
+      "issue": "Scalar failure of second differentiability is explicit; its transfer to each of the first three composite branches and through the final coordinate map is elementary but compressed.",
+      "proposed_fix": "Optionally state that restricting a branch to a line v with qi^T v=1, then subtracting the smooth quadratic, recovers psi_bi. A branch Hessian at zero would therefore contradict the two displayed scalar derivative quotients; invertible coordinates preserve this obstruction.",
+      "changes_theorem_contract": false
+    }
+  ],
+  "formal_scope_notes": [
+    "Exact existing declarations and the definitions of SmoothLocalFailureTarget and IdentityFailureTarget were read; no Lean compilation or new transitive axiom audit was performed by this review.",
+    "The reviewed actual-run contracts quantify existence of admissible runs and deterministic fromMetric traces, with all-query differentiability and uniform locality. They do not take an orbit or iterate/matrix convergence as an input hypothesis.",
+    "The final classical-Hessian assertion uses eventual first differentiability and differentiability of fderiv, matching the paper's explicit convention.",
+    "The scalar non-second-differentiability export is connected to composite branches by the elementary line-restriction argument described above; this review does not claim that the final target definition itself includes that extra branch clause.",
+    "The finite Fraction diagnostics are independent reproducibility checks only; their runtime is not installed as a trusted Lean axiom or imported proof."
+  ],
+  "fresh_arithmetic_checks": [
+    {
+      "id": "root_arithmetic",
+      "method": "Fresh Python standard-library Fraction exact arithmetic; all pass/fail comparisons are rational. Decimal approximations in stdout are diagnostic display only.",
+      "command": [
+        "python3",
+        "-"
+      ],
+      "stdin": "from fractions import Fraction as F\nfrom math import comb\nimport json\nclass Poly:\n def __init__(self,d): self.d={k:F(v) for k,v in d.items() if v}\n def __add__(self,o):\n  if not isinstance(o,Poly):o=Poly({(0,0):o})\n  d=self.d.copy()\n  for k,v in o.d.items():d[k]=d.get(k,0)+v\n  return Poly(d)\n __radd__=__add__\n def __neg__(self):return Poly({k:-v for k,v in self.d.items()})\n def __sub__(self,o):return self+-o\n def __rsub__(self,o):return -self+o\n def __mul__(self,o):\n  if not isinstance(o,Poly):o=Poly({(0,0):o})\n  d={}\n  for (i,j),a in self.d.items():\n   for (k,l),b in o.d.items(): d[i+k,j+l]=d.get((i+k,j+l),0)+a*b\n  return Poly(d)\n __rmul__=__mul__\n def __pow__(self,n):\n  p=Poly({(0,0):1})\n  for _ in range(n):p=p*self\n  return p\nc=Poly({(1,0):1});d=Poly({(0,1):1})\nU=127*c+16*d;V=16*c-127*d-16;R=c-8*d\nK=8*c*c+8*d*d+d-8;T=c*c-c+d*d;Y=(c-1)**2+d*d\nP=[264192*R*K-U*V*(U+129),16*V*T*K-R*U*Y]\nrc=F('0.31848142762711863064645131250290703717912205023605')\nrd=F('-1.02523211967574872548135087001300414284511909318444')\ndef shifted(p):\n out={}\n for (i,j),v in p.d.items():\n  for a in range(i+1):\n   for b in range(j+1):out[a,b]=out.get((a,b),0)+v*comb(i,a)*comb(j,b)*rc**(i-a)*rd**(j-b)\n return out\nQ=list(map(shifted,P))\nD=[[q.get((1,0),0),q.get((0,1),0)] for q in Q]\ndet=D[0][0]*D[1][1]-D[0][1]*D[1][0]\nA=[[D[1][1]/det,-D[0][1]/det],[-D[1][0]/det,D[0][0]/det]]\nconstant=[-sum(A[i][j]*Q[j].get((0,0),0) for j in range(2)) for i in range(2)]\nweights=[sum(abs(sum(-A[i][j]*Q[j].get((a,b),0) for j in range(2)))*(a+b) for a in range(6) for b in range(6-a) if a+b>=2) for i in range(2)]\nprint(json.dumps({'det_nonzero':det!=0,'constant_bounds':[abs(v)<F(1,10**50) for v in constant],'constant_approx_diagnostic':[float(v) for v in constant],'coefficient_sum_bounds':[v<=7000 for v in weights],'coefficient_sum_approx_diagnostic':[float(v) for v in weights],'degree':[max(i+j for i,j in p.d) for p in P]}))\n",
+      "exit_code": 0,
+      "stdout": "{\"det_nonzero\": true, \"constant_bounds\": [true, true], \"constant_approx_diagnostic\": [4.5555542552971035e-52, 6.048242851954022e-52], \"coefficient_sum_bounds\": [true, true], \"coefficient_sum_approx_diagnostic\": [6371.66318308984, 1594.5978691375144], \"degree\": [3, 5]}\n"
+    },
+    {
+      "id": "all_trial_intervals",
+      "method": "Fresh Python standard-library Fraction exact arithmetic; all pass/fail comparisons are rational. Decimal approximations in stdout are diagnostic display only.",
+      "command": [
+        "python3",
+        "-"
+      ],
+      "stdin": "from fractions import Fraction as F\nimport json\nclass I:\n def __init__(self,l,h=None):self.l=F(l);self.h=F(l if h is None else h)\n def __add__(self,o):\n  o=toI(o);return I(self.l+o.l,self.h+o.h)\n __radd__=__add__\n def __neg__(self):return I(-self.h,-self.l)\n def __sub__(self,o):return self+-toI(o)\n def __rsub__(self,o):return toI(o)+-self\n def __mul__(self,o):\n  o=toI(o);p=[a*b for a in [self.l,self.h] for b in [o.l,o.h]];return I(min(p),max(p))\n __rmul__=__mul__\n def inv(self):\n  assert not self.l<=0<=self.h\n  return I(1/self.h,1/self.l)\n def __truediv__(self,o):return self*toI(o).inv()\n def __rtruediv__(self,o):return toI(o)*self.inv()\n def __pow__(self,n):\n  p=I(1)\n  for _ in range(n):p=p*self\n  return p\n def approx(self):return [float(self.l),float(self.h)]\ndef toI(x):return x if isinstance(x,I) else I(x)\ndef dot(a,b):return sum((x*y for x,y in zip(a,b)),I(0))\ndef add(a,b):return [x+y for x,y in zip(a,b)]\ndef scale(c,a):return [c*x for x in a]\nc=I(F(318481,10**6),F(318482,10**6))\nd=I(F(-1025233,10**6),F(-1025232,10**6))\nrho=I(F(6019,10**5),F(6021,10**5))\ng=[[I(1),I(0)],[I(-1),I(F(-1,8))],[c,d]]\np=[[I(-1),I(0)],[I(F(127,256)),I(F(1,16))],scale(16*rho,[1-c,-d])]\nz=[[(F(897,1024)-rho*(1-c))/(1-rho),(rho*d-F(1,64))/(1-rho)]]\nfor j,a in enumerate([F(1),F(1,4),F(1,16)]):z.append(add(z[-1],scale(a,p[j])))\nrows=[(0,F(1),1,True),(1,F(1),0,False),(1,F(1,2),0,False),(1,F(1,4),2,True),\n (2,F(1),0,False),(2,F(1,2),0,False),(2,F(1,4),0,False),(2,F(1,8),0,False),(2,F(1,16),0,True)]\nbounds=[729,2417,145,75,5964,2682,1041,221,20]\nvals=[(1218,1219),(3845,3846),(1364,1365),(723,724),(6687,6691),(3406,3408),(1765,1767),(944,946),(534,536)]\nout=[];qall=[]\nfor (j,a,i,accept),bound,valbound in zip(rows,bounds,vals):\n q=add(z[j],scale(a,p[j]));qall.append((q,i))\n v=dot(g[i],q);dec=dot(g[j],z[j])\n expr=[dot(add(g[i],scale(-1,g[k])),q) for k in range(3) if k!=i]+[-a*dot(g[j],p[j])]\n expr.append(dec+a*dot(g[j],p[j])/3-v if accept else v-dec)\n if accept:expr.append(a*dot(g[i],p[j]))\n out.append({'phase':j,'length':str(a),'minimum_lower':float(min(x.l for x in expr)),\n 'all_claimed_lower_bounds':all(x.l>F(bound,10000) for x in expr),\n 'all_value_enclosures':F(valbound[0],10000)<v.l and v.h<F(valbound[1],10000),'value_enclosure':v.approx()})\nbasegood=True;querybounds=True;minaux=None\nfor q,i in [(z[j],j) for j in range(3)]+qall:\n expr=[3-dot(gi,q) for gi in g]+[3+dot(gi,q) for gi in g]+[2-q[1],dot(g[i],q)]\n expr += [dot(add(g[i],scale(-1,g[k])),q) for k in range(3) if k!=i]\n querybounds &= all(x.l>0 for x in expr)\n mn=min(x.l for x in expr);minaux=mn if minaux is None else min(minaux,mn)\nrhorational=129*(c-8*d)/((16*c-127*d-16)*(127*c+16*d+129))\nprint(json.dumps({'rows':out,'all_base_and_query_bounds':querybounds,'minimum_auxiliary_bound':float(minaux),\n 'rho_box_from_coarse_cd':rho.l<rhorational.l and rhorational.h<rho.h,'rho_evaluated':rhorational.approx()}))\n",
+      "exit_code": 0,
+      "stdout": "{\"rows\": [{\"phase\": 0, \"length\": \"1\", \"minimum_lower\": 0.07297882545613045, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.12183627668271374, 0.12187270526136809]}, {\"phase\": 1, \"length\": \"1\", \"minimum_lower\": 0.24174031648648095, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.384509816556006, 0.38454329093999723]}, {\"phase\": 1, \"length\": \"1/2\", \"minimum_lower\": 0.014590236294637909, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.136462941556006, 0.13649641593999723]}, {\"phase\": 1, \"length\": \"1/4\", \"minimum_lower\": 0.007503828515051383, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.07230529067499858, 0.07234026066766236]}, {\"phase\": 2, \"length\": \"1\", \"minimum_lower\": 0.5964283381083436, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.668768598776006, 0.6690211222799972]}, {\"phase\": 2, \"length\": \"1/2\", \"minimum_lower\": 0.26826379074834367, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.340604051416006, 0.34074705035999725]}, {\"phase\": 2, \"length\": \"1/4\", \"minimum_lower\": 0.10418151706834364, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.176521777736006, 0.17661001439999724]}, {\"phase\": 2, \"length\": \"1/8\", \"minimum_lower\": 0.022140380228343644, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.094480640896006, 0.09454149641999723]}, {\"phase\": 2, \"length\": \"1/16\", \"minimum_lower\": 0.0020571791869111247, \"all_claimed_lower_bounds\": true, \"all_value_enclosures\": true, \"value_enclosure\": [0.053460072476006, 0.05350723742999723]}], \"all_base_and_query_bounds\": true, \"minimum_auxiliary_bound\": 0.03133197018794814, \"rho_box_from_coarse_cd\": true, \"rho_evaluated\": [0.060199105939462885, 0.06019929793443301]}\n"
+    },
+    {
+      "id": "shape_derivative_intervals",
+      "method": "Fresh Python standard-library Fraction exact arithmetic; all pass/fail comparisons are rational. Decimal approximations in stdout are diagnostic display only.",
+      "command": [
+        "python3",
+        "-"
+      ],
+      "stdin": "from fractions import Fraction as F\nimport json\nclass I:\n def __init__(self,l,h=None):self.l=F(l);self.h=F(l if h is None else h)\n def __add__(self,o):\n  o=toI(o);return I(self.l+o.l,self.h+o.h)\n __radd__=__add__\n def __neg__(self):return I(-self.h,-self.l)\n def __sub__(self,o):return self+-toI(o)\n def __rsub__(self,o):return toI(o)+-self\n def __mul__(self,o):\n  o=toI(o);p=[a*b for a in [self.l,self.h] for b in [o.l,o.h]];return I(min(p),max(p))\n __rmul__=__mul__\n def inv(self):\n  assert not self.l<=0<=self.h\n  return I(1/self.h,1/self.l)\n def __truediv__(self,o):return self*toI(o).inv()\n def __rtruediv__(self,o):return toI(o)*self.inv()\n def __pow__(self,n):\n  p=I(1)\n  for _ in range(n):p=p*self\n  return p\n def approx(self):return [float(self.l),float(self.h)]\ndef toI(x):return x if isinstance(x,I) else I(x)\ndef dot(a,b):return sum((x*y for x,y in zip(a,b)),I(0))\ndef add(a,b):return [x+y for x,y in zip(a,b)]\ndef scale(c,a):return [c*x for x in a]\n\nclass D:\n def __init__(self,v,db=0,de=0):self.v=toI(v);self.d=[toI(db),toI(de)]\n def __add__(self,o):\n  o=toD(o);return D(self.v+o.v,*[self.d[i]+o.d[i] for i in range(2)])\n __radd__=__add__\n def __neg__(self):return D(-self.v,*[-x for x in self.d])\n def __sub__(self,o):return self+-toD(o)\n def __rsub__(self,o):return toD(o)+-self\n def __mul__(self,o):\n  o=toD(o);return D(self.v*o.v,*[self.d[i]*o.v+self.v*o.d[i] for i in range(2)])\n __rmul__=__mul__\n def inv(self):return D(self.v.inv(),*[-x/(self.v*self.v) for x in self.d])\n def __truediv__(self,o):return self*toD(o).inv()\n def __rtruediv__(self,o):return toD(o)*self.inv()\ndef toD(x):return x if isinstance(x,D) else D(x)\ndef dp(a,b):return sum((x*y for x,y in zip(a,b)),D(0))\ndef mm(A,B):return [[sum((A[i][k]*B[k][j] for k in range(2)),D(0)) for j in range(2)]for i in range(2)]\ndef mv(A,b):return [dp(row,b) for row in A]\ndef outer(a,b):return [[x*y for y in b]for x in a]\ndef plus(A,B):return [[A[i][j]+B[i][j]for j in range(2)]for i in range(2)]\nc=D(I(F(318481427627118,10**15),F(318481427627119,10**15)))\nd=D(I(F(-1025232119675749,10**15),F(-1025232119675748,10**15)))\ng=[[D(1),D(0)],[D(-1),D(F(-1,8))],[c,d]]\nH=[[D(1),D(0,1,0)],[D(0,1,0),D(1,0,1)]]\ndef update(H,g,gp,a):\n S=[-a*x for x in mv(H,g)];Y=[gp[i]-g[i]for i in range(2)];t=dp(Y,S)\n L=[[D(int(i==j))-S[i]*Y[j]/t for j in range(2)]for i in range(2)]\n R=[[L[j][i]for j in range(2)]for i in range(2)]\n return plus(mm(mm(L,H),R),[[S[i]*S[j]/t for j in range(2)]for i in range(2)])\nfor j,a in enumerate([F(1),F(1,4),F(1,16)]):H=update(H,g[j],g[(j+1)%3],a)\nshape=[H[0][1]/H[0][0],H[1][1]/H[0][0]]\nJ=[row.d for row in shape]\nbounds=[[(11123986249,11123986253),(6459701025,6459701029)],[(7515015701,7515015708),(4905136882,4905136890)]]\nresults=[]\nfor i in range(2):\n for j in range(2):\n  l,h=bounds[i][j];q=J[i][j]\n  results.append({'entry':[i,j],'claimed_enclosure_pass':F(l,10**10)<=q.l and q.h<=F(h,10**10),'fresh_enclosure_diagnostic':q.approx()})\ntr=J[0][0]+J[1][1];det=J[0][0]*J[1][1]-J[0][1]*J[1][0]\nsigns=[]\nfor v,positive in [(F(38,1000),True),(F(39,1000),False),(F(1564,1000),False),(F(1565,1000),True)]:\n q=v*v-tr*v+det; signs.append({'at':str(v),'sign_pass':q.l>0 if positive else q.h<0,'enclosure_diagnostic':q.approx()})\nprint(json.dumps({'shape_enclosures':results,'characteristic_signs':signs}))\n",
+      "exit_code": 0,
+      "stdout": "{\"shape_enclosures\": [{\"entry\": [0, 0], \"claimed_enclosure_pass\": true, \"fresh_enclosure_diagnostic\": [1.112398625072615, 1.1123986250739641]}, {\"entry\": [0, 1], \"claimed_enclosure_pass\": true, \"fresh_enclosure_diagnostic\": [0.6459701027311541, 0.6459701027320415]}, {\"entry\": [1, 0], \"claimed_enclosure_pass\": true, \"fresh_enclosure_diagnostic\": [0.7515015704260456, 0.7515015704289512]}, {\"entry\": [1, 1], \"claimed_enclosure_pass\": true, \"fresh_enclosure_diagnostic\": [0.4905136885821094, 0.4905136885842413]}], \"characteristic_signs\": [{\"at\": \"19/500\", \"sign_pass\": true, \"enclosure_diagnostic\": [0.0007325381857434541, 0.0007325381914528124]}, {\"at\": \"39/1000\", \"sign_pass\": true, \"enclosure_diagnostic\": [-0.0007933741279147514, -0.000793374122201912]}, {\"at\": \"391/250\", \"sign_pass\": true, \"enclosure_diagnostic\": [-0.0006596524566779912, -0.0006596524456566508]}, {\"at\": \"313/200\", \"sign_pass\": true, \"enclosure_diagnostic\": [0.0008664352296638034, 0.0008664352406886247]}]}\n"
+    },
+    {
+      "id": "scalar_constants",
+      "method": "Fresh Python standard-library Fraction exact arithmetic; all pass/fail comparisons are rational. Decimal approximations in stdout are diagnostic display only.",
+      "command": [
+        "python3",
+        "-"
+      ],
+      "stdin": "from fractions import Fraction as F\nimport json\nclass I:\n def __init__(self,l,h=None):self.l=F(l);self.h=F(l if h is None else h)\n def __add__(self,o):\n  o=toI(o);return I(self.l+o.l,self.h+o.h)\n __radd__=__add__\n def __neg__(self):return I(-self.h,-self.l)\n def __sub__(self,o):return self+-toI(o)\n def __rsub__(self,o):return toI(o)+-self\n def __mul__(self,o):\n  o=toI(o);p=[a*b for a in [self.l,self.h] for b in [o.l,o.h]];return I(min(p),max(p))\n __rmul__=__mul__\n def inv(self):\n  assert not self.l<=0<=self.h\n  return I(1/self.h,1/self.l)\n def __truediv__(self,o):return self*toI(o).inv()\n def __rtruediv__(self,o):return toI(o)*self.inv()\n def __pow__(self,n):\n  p=I(1)\n  for _ in range(n):p=p*self\n  return p\n def approx(self):return [float(self.l),float(self.h)]\ndef toI(x):return x if isinstance(x,I) else I(x)\ndef dot(a,b):return sum((x*y for x,y in zip(a,b)),I(0))\ndef add(a,b):return [x+y for x,y in zip(a,b)]\ndef scale(c,a):return [c*x for x in a]\n\ntheta=F(1,16);eps=F(1,128)\ndef upper_lengths(b):\n t=(1-(1+theta+theta**2)/b)/(1-theta**2)\n return [b*(1-theta)*(1-t-eps),b*(1-theta)*(t-eps)/theta]\nr=F(1,128);epsilon=F(1,1024)\ndef lower_lengths(b):\n t=(1-(1+r)/b)/(1-r)\n return [b*(1-r)*(1-t-epsilon),b*(1-r)*(t-epsilon)/r]\nc=I(F(318,1000),F(319,1000));d=I(F(-1026,1000),F(-1025,1000))\nb0=2*c-32*d\nmu=F(1,4096);cc=[2,-32]\ng=[[I(1),I(0)],[I(-1),I(F(-1,8))],[c,d]]\nq=[[v-mu*a for v,a in zip(gi,cc)]for gi in g]\nbi=[dot(qi,list(map(I,cc)))for qi in q]\nL=[mu+(768/b)*dot(qi,qi) for b,qi in zip(bi,q)]\nprint(json.dumps({'upper_plateau_endpoint_lengths':[[str(x)for x in upper_lengths(b)]for b in [F(2),F(34)]],\n'upper_plateau_all_pass':all(x>F(1,2)for b in [F(2),F(34)]for x in upper_lengths(b)),\n'upper_third_derivative_bound_identity':(1+theta)/(1-theta)*3/(2*eps**2)==F(139264,5),\n'lower_plateau_endpoint_lengths':[[str(x)for x in lower_lengths(b)]for b in [F(17,10),F(34)]],\n'lower_plateau_all_pass':all(x>F(1,2)for b in [F(17,10),F(34)]for x in lower_lengths(b)),\n'upper_b_star':b0.approx(),'lower_b_i':[b.approx()for b in bi],\n'lower_smoothness_enclosures':[v.approx()for v in L],\n'lower_claimed_smoothness_pass':[v.h<h for v,h in zip(L,[439,446,27])]}))\n",
+      "exit_code": 0,
+      "stdout": "{\"upper_plateau_endpoint_lengths\": [[\"17089/17408\", \"15041/1088\"], [\"10961/17408\", \"535249/1088\"]], \"upper_plateau_all_pass\": true, \"upper_third_derivative_bound_identity\": true, \"lower_plateau_endpoint_lengths\": [[\"1301393/1310720\", \"181021/2048\"], [\"46481/65536\", \"2160017/512\"]], \"lower_plateau_all_pass\": true, \"upper_b_star\": [33.436, 33.47], \"lower_b_i\": [[1.7490234375, 1.7490234375], [1.7490234375, 1.7490234375], [33.1850234375, 33.2190234375]], \"lower_smoothness_enclosures\": [[438.70051633492983, 438.70051633492983], [445.56148785921795, 445.56148785921795], [26.25182229873047, 26.340542671730077]], \"lower_claimed_smoothness_pass\": [true, true, true]}\n"
+    }
+  ],
+  "limits": [
+    "No new bibliography or publication-priority search was performed.",
+    "This review does not assert a fresh compiler run or kernel-consistency proof.",
+    "The printed proofs rely on standard named general theorems as noted above.",
+    "Only the two owned critique files were written; no TeX, Lean or Git state was changed."
+  ]
+}

@@ -11,7 +11,8 @@ claims={r['id']:r for r in read('bfgs_lean_stage1/master_report/CLAIMS.json')['c
 index=read('bfgs_lean_stage1/master_report/DECLARATION_INDEX.json')
 article_sources=active_sources(ROOT)
 supplement_register=read('editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json')
-for supplement in supplement_register['supplements']:
+branch_supplement=read('editorial/root_contract_review.json')['supplemental_branch_regularity_audit']
+for supplement in supplement_register['supplements']+[branch_supplement]:
  audit=read(supplement['summary'])
  assert audit['status']=='PASS' and not audit['unchecked_missing_unsafe_partial']
  assert set(audit['axioms'])<= {'propext','Classical.choice','Quot.sound'}
@@ -81,6 +82,10 @@ out={'schema_version':1,'scope':'Exact source-span export sets are conservative 
 out['companion_frontmatter_deductions']=frontmatter
 out['article_selection_dispositions']='editorial/narrative_rebuild/ARTICLE_DISPOSITIONS.json'
 out['narrative_formal_supplements']=supplement_register
+out['literal_branch_regularity_supplement']=branch_supplement
+for row in article:
+ if 'exact_contracts' in row and any(n.startswith('ArticleBranchRegularity.') for n in row['full_formal_exports']):
+  row['exact_contracts'].append(branch_supplement['declarations'])
 (ROOT/'editorial/CLAIM_LEDGER.json').write_text(json.dumps(out,indent=2)+'\n')
 # Portable readable navigation: complete exports, exact signatures and source definitions are expandable.
 parts=['<!doctype html><html lang="en"><meta charset="utf-8"><title>BFGS article and companion correspondence</title><style>body{font:16px system-ui;max-width:1050px;margin:3em auto;padding:0 1em;line-height:1.5}pre{white-space:pre-wrap;background:#f3f4f5;padding:1em}summary{cursor:pointer}details{margin:.6em 0}code{overflow-wrap:anywhere}</style><h1>Article and companion correspondence</h1><p>Full formal export lists and exact types. A reviewed correspondence is distinct from Lean checking natural-language text. Original definitions and complete dependency records remain in the sealed declaration index.</p>']

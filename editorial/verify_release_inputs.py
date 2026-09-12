@@ -51,7 +51,9 @@ def hash_map(mapping):
         require_hash(path,digest)
 
 def verify_supplement(entry,expected):
-    expected_run,module,expected_roots=expected
+    expected_run,modules,expected_roots=expected
+    modules={modules} if isinstance(modules,str) else set(modules)
+    split_schema=entry['name'] in {'positive_formal','geometry_formal','branch_regularity_formal'}
     run=Path(expected_run)
     if entry['summary']!=str(run/'SUMMARY.json') or entry['declarations']!=str(run/'declarations.json'):
         raise ValueError('Unexpected supplement run or declaration artifact')
@@ -73,33 +75,56 @@ def verify_supplement(entry,expected):
         raise ValueError('Supplement exceeds the standard axiom policy')
 
     cache_status='No compiled object hash is part of this retained manifest'
-    if entry['name']=='positive_formal':
+    if split_schema:
         hash_map(summary['source_sha256'])
         inputs_path=require_hash(str(run/'INPUTS.json'),summary['input_hashes_sha256'])
         retained_inputs=json.loads(inputs_path.read_text())
         hash_map(retained_inputs)
         frozen=read('bfgs_lean_stage1/master_report/audit/fresh/INPUTS.json')
         if len(frozen)!=summary['frozen_original_audit_inputs_unchanged']:
-            raise ValueError('Frozen input count disagrees with the positive audit')
+            raise ValueError('Frozen input count disagrees with the supplement audit')
         for name,digest in frozen.items():
             relative='bfgs_lean_stage1/'+('master_report/audit/'+name[len('@audit/'):] if name.startswith('@audit/') else name)
             if retained_inputs.get(relative)!=digest:
-                raise ValueError('Positive supplement loses or changes a frozen input: '+name)
+                raise ValueError('Supplement loses or changes a frozen input: '+name)
+        if entry['name'] in {'geometry_formal','branch_regularity_formal'}:
+            proof_directory=Path('editorial/article_formal') if entry['name']=='geometry_formal' else run.parents[1]
+            source_paths={str(proof_directory/(module+'.lean')) for module in modules}|{
+                str(run.parents[1]/'DependencyAudit.lean'),str(run.parents[1]/'verify.py')}
+            if set(summary['source_sha256'])!=source_paths:
+                raise ValueError('Satisfaction audit source manifest must cover every proof module and its complete auditor')
+            expected_inputs={
+                'bfgs_lean_stage1/'+('master_report/audit/'+name[len('@audit/'):] if name.startswith('@audit/') else name)
+                for name in frozen
+            }|source_paths|{'bfgs_lean_stage1/master_report/audit/fresh/INPUTS.json',
+                            'bfgs_lean_stage1/master_report/DECLARATION_INDEX.json','editorial/BASELINE.json'}
+            if set(retained_inputs)!=expected_inputs:
+                raise ValueError('Satisfaction input manifest omits or adds unexpected inputs')
         for name,key in [('declarations.json','declarations_sha256'),
                          ('dependency_graph.json','dependency_graph_sha256'),
                          ('commands.json','commands_sha256')]:
             require_hash(str(run/name),summary[key])
         # Source archives intentionally omit compiled caches. An absent cache
         # is reported, never represented as a successful compilation replay.
-        compiled=run/'build/MixedBenchmark.olean'
-        digest=summary['compiled_olean_sha256']
-        if not isinstance(digest,str) or not re.fullmatch(r'[0-9a-f]{64}',digest):
-            raise ValueError('Invalid recorded compiled-object hash')
-        if checked_path(compiled).exists():
-            require_hash(compiled,digest)
-            cache_status='Present compiled cache matches its recorded hash'
+        if entry['name']=='geometry_formal':
+            compiled_hashes=summary['compiled_olean_sha256']
         else:
-            cache_status='Compiled cache omitted; retained hash only, not fresh proof evidence'
+            if len(modules)!=1:
+                raise ValueError('Single-module supplement has unexpected module coverage')
+            compiled_hashes={next(iter(modules)):summary['compiled_olean_sha256']}
+        if not isinstance(compiled_hashes,dict) or set(compiled_hashes)!=modules:
+            raise ValueError('Compiled-object hash manifest differs from the audited modules')
+        cache_records={}
+        for module,digest in compiled_hashes.items():
+            compiled=run/'build'/(module+'.olean')
+            if not isinstance(digest,str) or not re.fullmatch(r'[0-9a-f]{64}',digest):
+                raise ValueError('Invalid recorded compiled-object hash')
+            if checked_path(compiled).exists():
+                require_hash(compiled,digest)
+                cache_records[module]='Present compiled cache matches its recorded hash'
+            else:
+                cache_records[module]='Compiled cache omitted; retained hash only, not fresh proof evidence'
+        cache_status=cache_records if entry['name']=='geometry_formal' else cache_records[next(iter(modules))]
     else:
         hash_map(summary['input_sha256'])
         hash_map(summary['output_sha256'])
@@ -117,12 +142,20 @@ def verify_supplement(entry,expected):
         raise ValueError('Supplement lacks an actual Lean compilation command')
     if not any(any(str(part).endswith('/DependencyAudit.lean') for part in command) for command in command_lines):
         raise ValueError('Supplement lacks an actual dependency audit command')
+    if entry['name'] in {'geometry_formal','branch_regularity_formal'}:
+        compiles=[command for command in command_lines if '-o' in command]
+        if len(compiles)!=len(modules) or {Path(command[-1]).stem for command in compiles}!=modules:
+            raise ValueError('Satisfaction audit must actually compile every owned proof module')
+        for command in compiles:
+            module=Path(command[-1]).stem
+            if not command[-1].endswith('/'+str(proof_directory/(module+'.lean'))) or not command[command.index('-o')+1].endswith('/'+str(run/'build'/(module+'.olean'))):
+                raise ValueError('Satisfaction compile source or output path differs from its recorded run')
     audit_text=''
     version_evidence=[]
     for command in commands:
         is_version=command['command'][-2:]==['lean','--version']
         is_audit=any(str(part).endswith('/DependencyAudit.lean') for part in command['command'])
-        if entry['name']=='positive_formal':
+        if split_schema:
             for stream in ('stdout','stderr'):
                 path=require_hash(command[stream],command[stream+'_sha256'])
                 if is_audit:
@@ -139,7 +172,10 @@ def verify_supplement(entry,expected):
     if version_evidence!=[summary['lean_version']]:
         raise ValueError('Actual compiler version log disagrees with the summary')
     audit=read(str(run/'audit_summary.json'))
-    pattern=r'(?:ARTICLE_POSITIVE_AUDIT|NEGATIVE_COVARIANCE_AUDIT) (\{.*\})'
+    marker={'positive_formal':'ARTICLE_POSITIVE_AUDIT','negative_formal':'NEGATIVE_COVARIANCE_AUDIT',
+            'geometry_formal':'ARTICLE_GEOMETRY_STRUCTURAL_AUDIT',
+            'branch_regularity_formal':'ARTICLE_BRANCH_REGULARITY_AUDIT'}[entry['name']]
+    pattern=re.escape(marker)+r' (\{.*\})'
     matches=re.findall(pattern,audit_text)
     if len(matches)!=1 or json.loads(matches[0])!=audit:
         raise ValueError('Actual audit log does not match the retained audit summary')
@@ -158,7 +194,7 @@ def verify_supplement(entry,expected):
         raise ValueError('Supplement root coverage count disagrees')
     if len(graph)!=summary['transitive_checked_declarations']:
         raise ValueError('Supplement structural dependency count disagrees')
-    owned={name for name,row in graph.items() if row['module']==module}
+    owned={name for name,row in graph.items() if row['module'] in modules}
     if owned!=set(roots):
         raise ValueError('Module-owned declarations or helpers are missing')
     axioms=set()
@@ -171,7 +207,7 @@ def verify_supplement(entry,expected):
             axioms.add(name)
             if name not in allowed:
                 raise ValueError('Unapproved transitive axiom: '+name)
-        if entry['name']=='positive_formal':
+        if split_schema:
             split=set(row['type_dependencies'])|set(row['value_dependencies'])|set(row['structural_dependencies'])
             if split!=set(row['dependencies']):
                 raise ValueError('Type/value/structural edge partition disagrees: '+name)
@@ -222,6 +258,47 @@ try:
         record('Narrative formal supplement integrity: '+entry['name'],True,details)
 except (KeyError,TypeError,ValueError,OSError) as error:
     record('Narrative formal supplement integrity',False,str(error))
+
+try:
+    geometry=root['supplemental_structural_audit']
+    if geometry['name']!='geometry_formal':
+        raise ValueError('Missing dedicated geometry structural audit registration')
+    details=verify_supplement(geometry,('editorial/satisfaction_review/formal/runs/geometry_structural_01',
+                                        {'ArticleGeometry','ConvexBalance'},14))
+    old_run='editorial/article_formal/runs/20260912_article_geometry_04'
+    if supp['run_directory']!=old_run or read(old_run+'/SUMMARY.json')!=supp:
+        raise ValueError('Historical geometry summary no longer matches its retained provenance')
+    old_declarations=read(old_run+'/declarations.json')
+    if old_declarations!=root['supplemental_declarations']:
+        raise ValueError('Historical geometry declarations no longer match the retained root contracts')
+    def exact_contracts(rows):
+        fields=['name','module','kind','signature','axioms','unsafe','partial']
+        if len({row['name'] for row in rows})!=len(rows):
+            raise ValueError('Duplicate geometry declarations in a correspondence comparison')
+        return sorted(({key:row[key] for key in fields} for row in rows),key=lambda row:row['name'])
+    if exact_contracts(old_declarations)!=exact_contracts(read(geometry['declarations'])):
+        raise ValueError('Strict geometry audit changes a prior declaration name, exact type or axiom set')
+    details['unchanged_prior_geometry_contracts']=14
+    details['historical_run_preserved']=old_run
+    record('Strict geometry structural audit and original contract agreement',True,details)
+except (KeyError,TypeError,ValueError,OSError) as error:
+    record('Strict geometry structural audit and original contract agreement',False,str(error))
+
+try:
+    branch=root['supplemental_branch_regularity_audit']
+    if branch['name']!='branch_regularity_formal':
+        raise ValueError('Missing dedicated actual-branch regularity audit registration')
+    details=verify_supplement(branch,('editorial/satisfaction_review/branch_formal/runs/branch_regularity_01',
+                                      'ArticleBranchRegularity',3))
+    required_roots={'ArticleBranchRegularity.branch_not_twice_differentiable_zero',
+                    'ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero',
+                    'ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction'}
+    if {row['name'] for row in read(branch['declarations'])}!=required_roots:
+        raise ValueError('Actual-branch audit omits a required original, whitened or combined endpoint theorem')
+    details['literal_combined_failure_endpoint']='ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction'
+    record('Actual branch regularity and combined lower-failure audit',True,details)
+except (KeyError,TypeError,ValueError,OSError) as error:
+    record('Actual branch regularity and combined lower-failure audit',False,str(error))
 
 for file,key in [('positive_contract_review.json','article_sha256'),('negative_contract_review.json','article_file_sha256'),('root_contract_review.json','article_file_sha256')]:
  d=read('editorial/'+file);changed=[p for p,h in d[key].items() if sha(ROOT/p)!=h]
