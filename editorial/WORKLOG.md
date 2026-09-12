@@ -173,3 +173,7 @@ author-review-ready release. This final status-record commit changes no
 manuscript, mathematical input, audit, figure or PDF. Human metadata, source and
 novelty review, responsibility/consent and submission/deposit decisions remain
 reserved author actions. No external blocker or autonomous task remains.
+
+## Narrative rebuild release, 12 September2026
+
+The authorized second handoff was executed. Source milestone252ea5d is pushed; the expanded47-page article and107-page complete companion pass all-source/formal correspondence, three author-side reviews, all154-page visual review and fresh-extraction reproduction. Fresh new benchmark and scaling Lean compilations/audits passed in the extraction; exact evidence and commit/push receipts are in `narrative_rebuild/WORKLOG.md` and `release/validation/runs/narrative_20260912_01/`. The previous release remains under `release/history/20260912_initial/`.

@@ -1,0 +1,2399 @@
+BFGS on Convex Nonsmooth Functions:
+Convergence and Failure
+
+Author-review edition, 12 September 2026
+
+
+
+Abstract Ordinary full BFGS often succeeds on nonsmooth objectives, but
+its convergence theory must accommodate gradient jumps and possible degen-
+eration of the quasi-Newton matrices. We give complementary positive and
+negative results for finite convex objectives with Armijo–weak-Wolfe steps and
+actual gradients at differentiable accepted iterates. A centered smooth–sublinear
+theorem proves global whole-sequence convergence for u2 + |v| and applies in
+arbitrary dimension on compact initial sublevels. Coercive degree-one homo-
+geneous objectives, including the stated max-linear and gauge families, admit
+global convergence. Local results cover finite polyhedral smooth-piece parti-
+tions and nondegenerate planar smooth maxima; an explicit curved-interface
+example requires moving comparison geometry beyond the radial criterion. In
+contrast, a fixed unit-first implementation can converge to nonstationary points
+from starts arbitrarily close to the unique minimizer of one fixed objective.
+One construction is a maximum of four globally convex C 2,1 branches; another
+retains uniform strong convexity with C 1,1 branches that lose second differentia-
+bility at the accumulation point. The positive proofs derive an adjacent-degree
+hierarchy for actual principal minors of full-BFGS matrices, then combine
+reciprocal growth with comparison energies. The resulting objective-level condi-
+tions require neither iterate convergence nor prescribed spectral behavior. The
+negative proofs certify the complete trial trees and infinite local embeddings.
+These results expand the convergence theory while ruling out unrestricted
+deterministic guarantees for the specified classes.
+Keywords BFGS · convex nonsmooth optimization · global convergence ·
+local convergence · counterexample
+Mathematics Subject Classification (2020) 90C30 · 90C53 · 49J52
+
+
+1 Introduction
+
+BFGS builds its search directions from changes in gradients, yet it often works
+well when those gradients jump. Classical convex convergence theory uses
+smoothness together with the evolving quasi-Newton matrices [9,8,7]. Lewis–
+Overton’s experiments and analyses [1] exposed the difficulty of extending that
+theory: nonsmooth BFGS can approach a minimizer while its inverse-Hessian
+approximations become highly singular. What global or local convergence can
+2
+
+
+ordinary full BFGS guarantee on convex nonsmooth functions, and how can one
+prove it without assuming the asymptotic behavior of its iterates or matrices?
+    We give three answers: deterministic counterexamples to every-start local
+convergence; global and local convergence theorems for structured convex
+families, including the mixed benchmark below; and a principal-minor and
+comparison-energy argument that remains effective as the BFGS matrices
+degenerate.
+    Lewis–Overton’s Challenge 7.1 [1] gives this question a broader, probabilistic
+setting. For locally Lipschitz semialgebraic objectives with bounded sublevels
+and absolutely continuously distributed initial data, it asks about nonbreak-
+down, stationary cluster points, R-linear convergence of all function trial values,
+and identification of spectral subspaces under partly smooth convergence. We
+study deterministic guarantees for convex objectives. Successful termination is
+allowed; infinite runs are analyzed under the differentiable-iterate convention
+made precise below.
+    Substantial positive theory precedes this work. Guo–Lewis extends Powell’s
+argument through smooth convex replacements on regions relevant to a BFGS
+sequence [5, Theorems 3.2, 4.1 and 4.3]. The resulting theory proves Euclidean-
+norm convergence in arbitrary finite dimension [5, Corollary 4.2]; for the mixed
+model
+                                F (u, v) = u2 + |v|
+Corollary 4.4 gives only a subsequence approaching a point of v = 0. The
+following paragraph explicitly leaves convergence of every BFGS sequence
+to (0, 0) open [5, Corollary 4.4 and following discussion]. Approaching the
+nonsmooth line does not force the smooth coordinate u to vanish. Corollary 2
+answers this whole-sequence question for every admissible full-BFGS run, as a
+consequence of an arbitrary-dimensional family theorem rather than a special
+planar recurrence.
+    Two other advances clarify the remaining task. Xie–Wächter’s two-piece
+unbounded affine model leads to an unbounded descent direction after finitely
+many iterations (Xie and Wächter, 2017 preprint, arXiv:1712.08571v1, Theorem
+IV.1); a value-convergence theorem for a broader homogeneous family does
+not replace that finite escape result. Gebken’s published 2026 introduction still
+identifies u2 + |v| as unresolved. His local criticality theorem for continuous
+smooth selections assumes an iterate limit, repeated activity, and specified
+spectral and gradient-jump behavior [3, Theorem 3.1 and (B1)]. Our positive
+results instead derive convergence from the objective hypotheses for the families
+stated here.
+    Throughout the paper, an admissible run uses the unmodified full BFGS
+update, an arbitrary H0 ≻ 0, fixed 0 < c1 < c2 < 1, Armijo–weak-Wolfe steps,
+and differentiable accepted points with nonzero gradients (Definition 1). The
+positive theorems concern every infinite such run. They do not assert that
+every search ray contains an acceptable differentiable point.
+
+Deterministic limits. We construct convex objectives for which a fixed unit-
+first Armijo–weak-Wolfe doubling/bisection search generates full-BFGS iterates
+BFGS: convergence and failure                                                   3
+
+
+converging to a nonstationary point. For each local construction, one fixed
+objective has failing starts arbitrarily close to its unique minimizer, all with
+H0 = I, and every accepted or rejected query approaches that minimizer
+across the family of runs. One construction is a maximum of four convex C 2,1
+branches with bounded Hessians; another is a maximum of four uniformly
+strongly convex C 1,1 branches, three of which are not twice differentiable at
+the minimizer (Theorems 10 and 11). These refute every-start neighborhood
+guarantees under either regularity regime. They establish no positive-measure
+failure set and do not refute the almost-sure semialgebraic challenge.
+
+Global and local convergence. We prove global value convergence for centered
+smooth-plus-sublinear objectives with compact initial sublevels contained in
+the region where the representation holds, and whole-iterate convergence when
+the minimizer is unique (Theorem 5). This settles the mixed benchmark above.
+For coercive finite convex degree-one homogeneous functions, including coercive
+maxima of finitely many linear functions, every admissible run converges to
+zero (Theorem 6). Local results cover smooth convex plus finite polyhedral
+terms and finite polyhedral partitions with smooth extensions (Theorem 7).
+Moving comparison geometry also yields local convergence for planar smooth
+maxima under strict-contour and active-gradient nondegeneracy assumptions
+(Corollary 7). The explicit three-quadratic example 9 has curved switching sets
+and fails the radial condition, so this extension has a concrete payoff beyond
+inward radial modeling.
+
+Analysis with degenerating matrices. We prove a hierarchy linking adjacent
+degrees of the actual principal minors of full-BFGS matrices. Extending the clas-
+sical trace/determinant potential approach, it forces growth of the arithmetic
+mean of the reciprocals 1/(gkT Hk gk ). Comparison energies turn this restriction
+into convergence: a field must retain information about the objective gap,
+control the gradient changes it sees, and move with a controlled energy cost.
+The field is an analytical device, not part of the algorithm. Neither a bounded
+condition number nor a prescribed spectral limit is needed (Theorems 1–3).
+    Our conditions are sufficient; they do not classify every successful run.
+Sections 2 and 3 explain and establish the mechanism; Sections 4 and 5
+prove its global and local consequences, and Section 6 gives the deterministic
+counterexamples. The article includes the essential proofs of these claims.
+An independent complete companion preserves the wider noncompact and
+quantitative theory, with Lean proofs, exact correspondence and reproducible
+audit evidence.
+
+
+2 What the results say about nonsmooth BFGS
+
+The mixed ridge F (u, v) = u2 + |v| isolates the difficulty left by a subsequence
+approaching the nonsmooth line. Reaching v = 0 does not eliminate the
+horizontal error u2 . Yet the vertical gradient jump does not remove the direction
+4
+
+
+that can reduce this error. Along v = 0 the limiting gradients are (2u, 1) and
+(2u, −1). Their difference is vertical. At a point with u ̸= 0, the horizontal
+vector (−u, 0) has the same strictly negative pairing −2u2 with both gradients.
+The inward radial model also has a small error:
+F ((1 − τ )(u, v)) − F (u, v) + τ ∇F (u, v)T (u, v) = τ 2 u2          (v ̸= 0, 0 ≤ τ ≤ 1).
+Thus the nonsmooth part is exactly linear under inward scaling, while the
+smooth part contributes a quadratic remainder. Section 4 uses this property to
+prove convergence of the whole sequence. The inward segment is a comparison
+used in the proof; it is not a direction BFGS is assumed to take. No eventual
+eigenvector or eigenvalue description is needed.
+
+
+                                (1, 1)
+
+
+
+                0                                                 0             g0
+      descent                                     g1
+
+
+
+                                (1, −1)                                 g2
+
+
+             (a) u2 + |v|, u = 1/2                (b) Certified nonstationary seed
+
+Fig. 1 Gradient space. Left: the mixed ridge at u = 1/2 has a vertical jump and a common
+horizontal descent direction. Right: the particular three-gradient seed used in Section 6.
+Its convex hull excludes zero, but its affine hull is the plane. The vertices on the right
+are rendered from the certified root’s rational center; the mathematical definition uses the
+isolated root. Arrows indicate gradients, not BFGS steps.
+
+
+    The right panel asks a different question: can a genuine full-BFGS run
+contract around a point where descent still exists? The bad corner is specific.
+Its slopes are g0 = (1, 0), g1 = (−1, −1/8) and g2 = (c, d), where (c, d) is
+defined exactly in Appendix C. They are affinely independent, so no nonzero
+direction pairs equally with all three. Yet (−1, 16) has negative pairing with
+each, and zero is outside their convex hull. The corner is therefore nonstationary.
+Section 6 constructs a three-step cycle and verifies that the stated line search
+produces it, including all rejected trials. This additional dynamical proof is
+what makes the corner a counterexample.
+    This distinction between affine and convex balance helps interpret the
+examples. For a nonempty finite family of slopes ai , equality aTi v = κ < 0
+for every i asks for a common rate of descent, whereas aTi v < 0 asks only for
+descent. The former fails when zero belongs to their affine hull; the latter fails
+when zero belongs to their convex hull. Indeed, a linear functional constant on
+the slopes is constant on their affine hull. Conversely, if zero is outside that
+affine hull, its nearest point gives a separating functional constant on the hull;
+BFGS: convergence and failure                                                          5
+
+
+changing its sign gives the negative common value. The convex version follows
+from the same closest-point argument for the convex hull. These are elementary
+separation facts, not a classification of BFGS behavior.
+    The positive conclusions differ in their geometry and in the locality of
+the guarantee. Table 1 distinguishes them before the proofs. In every row
+the quantifier is over infinite admissible runs with arbitrary positive-definite
+initialization. An admissible run uses actual gradients and satisfies Armijo–
+weak-Wolfe at its accepted points; it does not assert that an arbitrary line-search
+implementation always finds such points.
+
+
+Objective geometry                      Starting scope          Conclusion
+Centered smooth–sublinear, Theo-        Compact initial sub-    Optimal values; unique
+rem 5                                   level in the struc-     minimizer gives whole-
+                                        tural region            sequence convergence
+Coercive degree-one homogeneous,        Every starting point    Whole sequence converges
+Theorem 6                                                       to zero
+Finite polyhedral smooth-piece parti-   Common low sub-         Whole sequence converges
+tion, Theorem 7                         level near the unique   to the minimizer
+                                        minimizer
+Nondegenerate planar smooth maxi-       Local basin under       Whole sequence converges
+mum, Corollary 7                        the stated contour      to the unique minimizer
+                                        hypotheses
+
+Table 1 What the positive theory guarantees. The benchmark u2 + |v| has compact sublevels
+everywhere, so the first row gives global convergence. The results concern accepted runs,
+without a presumed matrix limit.
+
+
+
+    The first two rows make precise global assertions; they do not claim global
+convergence for every affine maximum. Indeed, the coercive polyhedral realiza-
+tion of the wrong corner in Corollary 8 has a positive limiting objective gap.
+General affine offsets can place the bad corner away from the true optimizer,
+whereas homogeneity centers all linear pieces at the origin.
+    Local behavior raises a further distinction. Finitely many smooth formulas
+can reproduce bad configurations at infinitely many shrinking scales. A finite
+polyhedral partition near the optimizer controls the inward model because
+each remaining cell contains the optimizer after localization. Curved interfaces
+require a different argument: the planar example in Section 5 has a radial
+obstruction, yet a moving contour field proves convergence. These are com-
+plementary sufficient mechanisms and specific realized failures, rather than a
+classification by jump span.
+
+
+3 The analytical framework
+
+Smooth convergence proofs can relate a gradient difference to curvature along
+a short step. A nonsmooth secant can instead contain a jump that remains
+large as the step shrinks. Our starting point is to measure how much of that
+6
+
+
+secant is seen by a direction that still detects the objective gap. A quadratic
+comparison energy separates the cost of this component from a negative term
+measuring missed progress. The matrix hierarchy then shows that persistent
+missed progress cannot be paid for by a bounded secant cost per iteration. The
+argument uses the matrices actually generated by BFGS throughout.
+
+Definition 1 (Admissible runs) Let F : Rn → R be finite and convex, with
+n ≥ 1. An admissible run is an infinite sequence of differentiable accepted
+points xk , nonzero gradients gk = ∇F (xk ), and matrices generated by
+           sk = −αk Hk gk ,    xk+1 = xk + sk ,      yk = gk+1 − gk ,
+                          T               T         T
+                                         
+                     sk yk           yk sk      sk sk
+         Hk+1 = I −           Hk I −          +       ,    tk = ykT sk ,           (1)
+                       tk              tk        tk
+where H0 ≻ 0, αk > 0, and fixed constants 0 < c1 < c2 < 1 satisfy
+               F (xk+1 ) ≤ F (xk ) + c1 gkT sk ,     T
+                                                    gk+1 sk ≥ c2 gkT sk .          (2)
+
+These are the usual actual-gradient, full-BFGS conventions [1]; see also (Xie
+and Wächter, 2017 preprint, arXiv:1712.08571v1). A zero gradient is successful
+termination. Statements about admissible runs do not assert that a differentiable
+acceptable point exists on every ray, or that every implementation finds one.
+   Write
+            Bk = Hk−1 ,        qk = gkT Hk gk ,    dk = −gkT sk = αk qk ,
+                     ∆k = F (xk ) − F (xk+1 ),        c = 1 − c2 .
+
+
+Lemma 1 Every admissible run satisfies Hk ≻ 0, qk , dk , tk > 0 and
+                           c1 dk ≤ ∆k ≤ dk ,       tk ≥ cdk .                      (3)
+Moreover,
+                  gk gkT   yk ykT                 gk gkT
+    Bk+1 = Bk −          +        ,     Mk := Bk −       ⪰ 0,           Mk sk = 0. (4)
+                   qk       tk                     qk
+                                                 P
+If the objective values have a finite limit, then k dk < ∞.
+
+Proof Given Hk ≻ 0, nonzero gk gives qk , dk > 0; weak Wolfe gives tk ≥
+(1 − c2 )dk > 0. For any vector v, the quadratic form in (1) is a sum of two
+nonnegative terms. If both vanish, then sTk v = 0 and (I − yk sTk /tk )v = 0,
+whence v = 0. Thus Hk+1 ≻ 0, proving the induction. Armijo gives the first
+lower bound in (3); the supporting inequality for F gives the upper bound.
+Summing the lower bound proves summability when the values have a finite
+limit.
+     The Hessian identity is the classical equivalent form of BFGS [7, Section 5];
+it also follows by multiplying its right side by (1), using Bk sk = −αk gk and
+sTk yk = tk . Finally, metric Cauchy–Schwarz gives (gkT v)2 ≤ qk v T Bk v, and
+gkT sk = −αk qk gives Mk sk = 0.
+BFGS: convergence and failure                                                    7
+
+
+Lemma 2 (Reference energy) For any fixed x∗ , put rk = xk − x∗ and
+                                                            (ykT rk+1 )2
+             Ek = rkT Bk rk ,      ak = gkT rk ,    Rk =                 .
+                                                                 tk
+Then
+                                           a2k
+                                Ek+1 = Ek −    + Rk .                           (5)
+                                           qk
+If x∗ minimizes F , with F∗ = F (x∗ ), then
+
+                   (F (xN ) − F∗ )2
+                                    X                 X
+                                        qk−1 ≤ E0 +     Rk .                    (6)
+                                       k<N              k<N
+
+Proof Since rk+1 = rk + sk and Mk sk = 0, the Hessian update gives
+
+                      T                             (ykT rk+1 )2
+                     rk+1 Bk+1 rk+1 = rkT Mk rk +                ,
+                                                         tk
+which is (5). At a minimizer, convexity gives ak ≥ F (xk ) − F∗ ; the values
+decrease. Summation and EN ≥ 0 yield (6).
+   The identity makes the intended contradiction visible. If a gap of at least
+η > 0 persists and the secant correction satisfies Rk ≤ C, then (6) gives
+
+                           η2
+                              X
+                                  qk−1 ≤ E0 + CN.
+                                 k<N
+
+Thus an objective-level bound on one component of a gradient jump would
+force the reciprocal sum to grow at most linearly. The next theorem proves
+that the full update requires faster growth. Neither step requires a bound on
+∥Bk ∥ or a limit for Hk : the initial energy is finite, and the later energies need
+only remain nonnegative.
+
+
+3.1 Actual principal minors and reciprocal growth
+
+For a symmetric n × n matrix H, define
+                         X
+               ej (H) =         det HI,I ,          en+1 (H) = 0.
+                           I⊂{1,...,n}
+                             |I|=j
+
+These are actual principal determinants. Multilinearity of the determinant
+identifies them with the coefficients of det(I + zH); hence they are invariant
+under orthogonal changes of coordinates and equal the elementary symmetric
+polynomials of the eigenvalues. In particular e1 = tr and en = det. Trace
+and determinant potentials are central to classical BFGS analysis [7, 8]. The
+determinant records volume, while the intermediate principal-minor sums
+retain information about different-dimensional compressions. The inequality
+below couples each degree to the next one. After normalization, this coupling
+supplies a positive weighted potential even when the matrices become poorly
+conditioned.
+8
+
+
+Theorem 1 (Principal-minor hierarchy) Let H ≻ 0, s = −αHg, α > 0,
+and suppose
+                                      y T Hg
+               q = g T Hg > 0,  β=−          > 0.
+                                         q
+For the inverse-BFGS update H+ in (1),
+
+                             ∥y∥2           α
+              ej (H+ ) ≤          ej+1 (H) + ej (H),                    1 ≤ j ≤ n.            (7)
+                             β2q            β
+At j = n the exact identity is det H+ = (α/β) det H.
+
+Proof Let Z have j orthonormal columns. The complete compression calculation
+in Lemma 6 gives
+                                    det GramH (y, Z) α
+              det(Z T H+ Z) ≤                       + det(Z T HZ),
+                                          β2q        β
+
+where GramH (y, Z) = [y Z]T H[y Z]. Choose an orthonormal eigenbasis of H,
+with eigenvalues λi > 0, and write yi for the coordinates of y in this basis.
+Summing over its j-column selections ZI gives
+                                           !
+                                                λℓ yℓ2
+       X                        X Y          X
+           det GramH (y, ZI ) =         λi
+      |I|=j                             |I|=j   i∈I       ∈I
+                                                         ℓ/
+                                                             !
+                                                                       yℓ2 ≤ ∥y∥2 ej+1 (H).
+                                          X       Y              X
+                                    =                   λi
+                                        |J|=j+1   i∈J            ℓ∈J
+
+The first equality is the Schur complement of the diagonal compression; the
+second groups terms by J = I ∪ {ℓ}. Orthogonal invariance now proves (7).
+The last assertion follows from the full-size case in Lemma 6.
+
+Theorem 2 (Reciprocal growth) If an admissible run has bounded gradients
+and dk → 0, then
+                             !1/N
+                Y                                     1 X −1
+                      qk−1          −→ +∞,               qk −→ +∞.                            (8)
+                                                      N
+                k<N                                          k<N
+
+Proof Choose G > 0 with ∥gk ∥ ≤ G, and put K0 = 4G2 /c2 . For the actual
+run,
+                    tk                             dk
+               βk =    ≥ c,     ∥yk ∥ ≤ 2G,   αk =    .
+                    dk                             qk
+Theorem 1 therefore yields the normalized hierarchy
+                                                                 dk
+                    qk ej (Hk+1 ) ≤ K0 ej+1 (Hk ) +                 ej (Hk ).                 (9)
+                                                                  c
+This recurrence is derived for the run’s principal determinants.
+BFGS: convergence and failure                                                    9
+
+
+    Fix η > 0 and choose J so that dk /c ≤ η for k ≥ J. For H ≻ 0 define
+                                   n
+                                   X
+                        Vη (H) =     (K0 /η)j−1 ej (H) > 0.
+                                   j=1
+
+Multiply (9) by these weights and sum. The ej+1 terms contribute at most
+ηVη (Hk ), as do the remaining terms. Also qk ≤ G2 tr Hk ≤ G2 Vη (Hk ). Conse-
+quently
+                                         J+m−1
+                     2η                   Y                        1
+        Vη (Hk+1 ) ≤    Vη (Hk ),                qk−1 ≥                      .
+                     qk                                   G2 Vη (HJ )(2η)m−1
+                                          k=J
+
+For the last bound, iterate through m − 1 updates and apply the bound on
+qJ+m−1 at the remaining endpoint. Taking mth roots gives a lower limit of
+at least (2η)−1 . A fixed prefix contributes a factor tending to one. Since η is
+arbitrary, the geometric mean diverges; AM–GM gives the arithmetic-mean
+conclusion.
+
+   The argument extends the product-estimate tradition in BFGS analysis [6,
+Theorem 3.7][10, Appendices C–D] to the bounded-gradient, vanishing-decrease
+regime through the normalized adjacent-degree hierarchy. The assumption
+dk → 0 is weaker than the summability supplied by Armijo on a compact
+sublevel. Finite-horizon bounds and the stronger reciprocal-sum consequence
+under summability are retained in the companion’s Chapter 2; the qualitative
+conclusion above is sufficient for the article. Neither limit in (8) asserts that
+qk → 0 pointwise or that Hk converges.
+
+
+3.2 Moving comparison directions
+
+The radial direction is effective for a centered homogeneous term, but a curved
+switching interface may rotate the direction in which its jump cancels. The
+comparison geometry must then move. Three requirements have distinct roles.
+Visibility keeps the remaining objective gap detectable on a positive band.
+Secant control limits the gradient-jump component seen by the geometry at
+the next endpoint. Transport bounds the cost of changing that geometry
+between endpoints. The identity Mk sk = 0 means that movement parallel to
+the executed step carries no cost in the part of the update left after its negative
+rank-one term. Only the perpendicular projection needs control.
+    A positive-semidefinite field packages one or several comparison directions.
+It is constructed from the objective for the analysis; BFGS neither evaluates it
+nor changes its step in response to it. The rank-one radial field in Section 4
+and the contour field in Section 5 illustrate the two designs.
+    For differentiable x, z, write g = ∇F (x), h = ∇F (z), s = z − x, y = h − g,
+d = −g T s, ∆ = F (x) − F (z) and t = y T s. Call the pair eligible when
+
+                      d > 0,        c1 d ≤ ∆ ≤ d,         t ≥ cd.
+10
+
+
+All accepted pairs are eligible. Requiring a property of every eligible pair is an
+objective assumption; it does not assert that an arbitrary sequence of eligible
+pairs can be realized by BFGS. Put Πs = I − ssT /(sT s).
+Definition 2 (Band certificate) Let K = {F ≤ b} be compact, with b >
+F∗ = min F . For each nonempty Kη = {x ∈ K : F (x) ≥ F∗ + η}, η > 0, a
+band certificate consists of a finite-valued symmetric PSD field Wη (x) on its
+differentiable points and constants mη > 0, Cη ≥ 0, Lη ≥ 0, δη > 0 such that
+                       g T Wη (x)g ≥ mη ,                                    (10)
+                        T
+                       y Wη (z)y ≤ Cη t,                                     (11)
+                     Πs Wη (z)Πs ⪯ (1 + Lη d)Πs Wη (x)Πs .                   (12)
+The first inequality holds at every differentiable point of Kη ; the last two hold
+for all eligible pairs in Kη with d ≤ δη .
+Neither continuity, uniform boundedness nor positive definiteness of Wη is
+required. The constants and field may depend on the positive band. Allowing
+an arbitrary real secant constant gives the same condition, since it can always
+be replaced by its maximum with zero. The positive-band restriction permits
+these constants to deteriorate near the solution set: the proof only needs to
+rule out a limiting gap bounded away from zero. In particular, the condition
+allows nonsmoothness at an optimizer.
+Theorem 3 (Transported comparison certificate) If K admits the band
+certificates above, every admissible run with x0 ∈ K satisfies
+                  F (xk ) → F∗ ,     dist(xk , arg min F ) → 0.
+If the minimizer is unique, the iterates converge to it.
+      Armijo keeps the run in K, and its values have a finite limit. Lemma 1
+Proof P
+gives   dk < ∞. Gradients are bounded there: choose ϵ > 0 and bound the
+continuous finite convex function on K + ϵB. Its supporting inequality at x
+evaluated at x + ϵu, for every unit u, bounds every subgradient at x. Thus
+Theorem 2 applies.
+   Suppose the limiting gap is ℓ > 0. On a tail k ≥ J, use the field on Kℓ/2
+and ensure dk ≤ δℓ/2 ; omit the band subscripts. Set Ek = tr(Bk W (xk )) ≥ 0.
+Since Mk = Πsk Mk Πsk ⪰ 0, trace monotonicity and (11)–(12) give
+                                 ykT W (xk+1 )yk
+     Ek+1 = tr(Mk W (xk+1 )) +
+                                        tk
+           ≤ (1 + Ldk ) tr(Mk W (xk )) + C ≤ (1 + Ldk )(Ek − m/qk ) + C.
+Trace monotonicity here follows from tr(AQ) = tr(Q1/2 AQ1/2 ) ≥ 0 for PSD
+      P PJ = 1 and Pk+1 = Pk (1 + Ldk ). Summability gives 1 ≤ Pk ≤
+A, Q. Let
+exp(L j≥J dj ) =: P . Dividing by Pk+1 , summing and using EN ≥ 0 yields
+                            N −1
+                         m X −1
+                              q ≤ EJ + C(N − J),
+                         P k=J k
+BFGS: convergence and failure                                                 11
+
+
+contradicting (8). This normalization is the usual summable multiplicative-
+error argument; compare [11, Lemmas 2.2–2.3]. Finally, a sequence in compact
+K with values tending to F∗ cannot stay a positive distance from the closed
+solution set: a convergent subsequence would have a nonoptimal limit with
+value F∗ . With a unique minimizer the same argument gives convergence of
+the entire sequence.
+
+    The certificate is a sufficient convergence mechanism. It leaves the metric
+free to degenerate, and it neither proves finite line-search termination nor
+requires the iterates to identify a smooth cell. It is also not necessary: the
+companion’s scalar convergence and certificate-nonexistence results (Chapters 5
+and 7) separate successful BFGS behavior from existence of this particular
+comparison field. The planar application below shows a different point: moving
+geometry can prove convergence where the fixed radial field fails.
+
+
+4 Global convergence: homogeneous and mixed geometry
+
+The example F (u, v) = u2 + |v| combines smooth motion along the nonsmooth
+line with a gradient jump across it. Reaching that line is therefore only part of
+the convergence question: the smooth coordinate must also approach zero. The
+comparison energy resolves both motions through a single objective property.
+Toward the minimizer, a homogeneous term has an exact first-order model; a
+smooth convex term adds only a quadratic remainder. The argument below
+works in arbitrary finite dimension and allows the BFGS matrices to become
+increasingly ill-conditioned.
+
+
+4.1 Why inward accuracy controls a nonradial algorithm
+
+A gradient jump can make the positive correction in (5) large. We control its
+pairing with the direction to a minimizer by asking that first-order prediction
+remain quadratically accurate on short inward segments. This asks nothing
+about transverse smoothness, and it does not require BFGS to take radial steps.
+The comparison segments are an analytical device; the actual steps remain
+those in (1).
+   Fix a minimizer x∗ , write F∗ = F (x∗ ), and let K = {x : F (x) ≤ b} be
+compact, with b > F∗ . For differentiable x, z ∈ K, set
+
+                  rx = x − x∗ ,       g = ∇F (x),    h = ∇F (z),
+                                  T
+                   T = (h − g) (z − x),        N = (h − g)T rz .
+
+The radial secant condition is the following requirement on positive bands:
+
+                    for every η > 0 there is Cη ≥ 0 such that
+              2
+                                                                            (13)
+            N ≤ Cη T      whenever F∗ + η ≤ F (z) ≤ F (x),      T > 0.
+12
+
+
+Here all such differentiable endpoint pairs are included, whether or not they
+are eligible for the fixed line search. The inward model condition is
+          for every η > 0 there are Mη ≥ 0, θη ∈ (0, 1/2] such that
+                                                   Mη 2                    (14)
+        0 ≤ F (x − τ rx ) − F (x) + τ ∇F (x)T rx ≤   τ , 0 ≤ τ ≤ θη ,
+                                                   2
+at every differentiable x ∈ K with F (x) ≥ F∗ + η. The inward point need not
+be differentiable. It remains in K by convexity. The parameter τ is a fraction
+of the distance to x∗ , rather than a Euclidean step length. Constants may
+depend on the positive value band: no common bound is required as the band
+approaches the minimum. Thus nonsmoothness at the solution is permitted,
+including the absolute-value term in the benchmark.
+
+Theorem 4 (Inward models control radial secants) For finite convex F
+and the compact sublevel K above, (14) implies (13).
+
+Proof Choose G, R > 0 bounding subgradient norms on K and ∥x − x∗ ∥ there.
+The subgradient bound was proved in Theorem 3; supporting inequalities then
+give |F (x) − F (z)| ≤ G∥x − z∥ on K. Use the supporting-plane error
+
+               DF (z, x) = F (z) − F (x) − ∇F (x)T (z − x) ≥ 0.
+
+This is the usual Bregman expression [4]; only its supporting endpoint needs
+to be differentiable. At differentiable endpoints, T = DF (z, x) + DF (x, z).
+    Suppose that (14) holds, and fix a positive band, with constants M, θ. If
+N ≥ 0, compare the supporting plane at x with the inward model at z − τ rz
+to obtain
+                            τ N ≤ DF (z, x) + 12 M τ 2 .
+If N < 0, reverse the endpoints and use the inward model at x:
+
+                       τ (T − N ) ≤ DF (x, z) + 12 M τ 2 .
+
+Thus there are A ∈ [|N |, 2GR] and D ∈ {DF (z, x), DF (x, z)} such that τ A ≤
+D + M τ 2 /2 for 0 ≤ τ ≤ θ. For M > 0 and A ≤ M θ, choose τ = A/M ,
+giving A2 ≤ 2M D. If A > M θ, take τ = θ to obtain D ≥ Aθ/2 and hence
+A2 ≤ (4GR/θ)D. When M = 0, the same endpoint choice gives an even
+stronger estimate. Therefore
+
+                          N 2 ≤ max{2M, 4GR/θ} T.                          (15)
+
+    The converse implication, including inward samples that are not differen-
+tiable, is proved in Chapter 4 of the complete companion. The article uses
+the sufficient direction just proved: objective modeling accuracy controls every
+descending secant pair on the same positive band.
+
+Corollary 1 (Radial convergence) Under either condition, every admissible
+run starting in K converges in value to F∗ and in distance to arg min F . With
+a unique minimizer it converges to x∗ .
+BFGS: convergence and failure                                                   13
+
+
+Proof Take Wη (x) = rx rxT . Convexity gives g T rx ≥ F (x) − F∗ ≥ η, proving
+visibility with mη = η 2 . Equation (13) gives secant control on eligible pairs.
+Finally rz = rx + s implies Πs rz = Πs rx , so transport holds with Lη = 0.
+Apply Theorem 3.
+    This condition controls only inward first-order modeling error. In a smooth
+region its infinitesimal expression is rxT ∇2 F (x)rx , rather than the largest
+Hessian eigenvalue. A bound almost everywhere on that expression alone
+would miss a jump of the derivative along a ray; the function-value condition
+(14) includes such jumps. The condition is sufficient; Theorem 9 will exhibit
+convergence where it fails on positive bands arbitrarily near the minimizer.
+
+
+4.2 A family theorem and the mixed benchmark
+
+A finite convex positively homogeneous function is sublinear: its value on
+(1 − τ )r is exactly (1 − τ ) times its value on r. Its angular nonsmoothness
+consequently disappears from the inward remainder. The next theorem permits
+an arbitrary locally C 1,1 convex perturbation, provided the homogeneous part
+is centered at a minimizer of the sum. Centering is a geometric hypothesis on
+the objective, not knowledge required by the algorithm. In particular, the two
+summands need not separately be minimized at that center.
+Theorem 5 (Centered smooth-plus-sublinear objectives) Let F : Rn →
+R be finite and convex, and suppose x∗ minimizes F . Let U be an open convex
+set, let ψ be convex and locally C 1,1 on U , and let γ : Rn → R be finite, convex
+and positively homogeneous of degree one. Suppose
+                     F (x) = ψ(x) + γ(x − x∗ )       (x ∈ U ).
+Every admissible run whose initial sublevel is compact and contained in U
+satisfies F (xk ) → F (x∗ ). The distance to arg min F also tends to zero. If x∗ is
+the unique minimizer, then xk → x∗ . Neither original summand is required to
+be minimized at x∗ .
+Proof Let K = {F ≤ F (x0 )}. Since g0 ̸= 0, convexity implies F (x0 ) > F (x∗ ).
+On compact convex K ⊂ U , local C 1,1 regularity provides a uniform Lipschitz
+constant L for ∇ψ: take a finite cover by neighborhoods carrying local constants
+and subdivide any segment in K into pieces in that cover. Summing the local
+bounds gives the maximum of those constants along the segment. Integrating
+the gradient along an inward segment consequently gives
+                ψ(x − τ rx ) − ψ(x) + τ ∇ψ(x)T rx ≤ 12 Lτ 2 ∥rx ∥2 .
+At a differentiable point of F in U , the representation and smoothness of
+ψ imply differentiability of γ at rx . Differentiating its homogeneity identity
+gives ∇γ(rx )T rx = γ(rx ). Its contribution to the inward remainder is therefore
+exactly zero. The upper bound in (14) follows with M = L maxx∈K ∥rx ∥2 ; its
+lower bound follows from convexity of F . Corollary 1 proves the claim.
+14
+
+
+    The compact initial sublevel supplies uniform constants and traps the
+accepted iterates. When the representation is global and all sublevels are
+compact, the theorem applies from every differentiable nonstationary starting
+point, for every initial SPD matrix and every fixed valid Armijo–weak-Wolfe
+pair. Neither a lower Hessian bound for the smooth term nor differentiability of
+the full objective away from the minimizer is required. Without uniqueness, the
+stated conclusion is value and solution-set distance convergence; convergence
+to one particular minimizer is not asserted.
+
+Corollary 2 (The quadratic–absolute-value benchmark) For F (u, v) =
+u2 + |v|, every infinite admissible full-BFGS run, with arbitrary H0 ≻ 0 and
+any fixed 0 < c1 < c2 < 1, satisfies
+
+                    F (uk , vk ) −→ 0,      (uk , vk ) −→ (0, 0).
+
+Proof Take ψ(u, v) = u2 , γ(u, v) = |v|, x∗ = (0, 0) and U = R2 . The objective
+is finite and convex, its sublevels are closed and bounded, and its minimizer is
+unique. More explicitly, for 0 ≤ τ ≤ 1 and v ̸= 0,
+
+            F ((1 − τ )(u, v)) − F (u, v) + τ ∇F (u, v)T (u, v) = τ 2 u2 .
+
+Thus the nonsmooth coordinate contributes zero inward error, while the smooth
+coordinate contributes exactly its quadratic remainder. Theorem 5 applies.
+
+    Guo–Lewis proved that every BFGS sequence for this objective has a
+subsequence approaching a point of the line v = 0 [5, Corollary 4.4]; they
+expressly left convergence of every sequence to the origin open. The corollary
+above settles that whole-sequence conclusion in the admissible full-BFGS
+setting. It follows from the family theorem, without a special recurrence for
+this two-dimensional objective. The conclusion concerns accepted differentiable
+iterates. It does not assert that every search ray contains a differentiable
+acceptable point or that a particular search routine can always find one.
+
+
+4.3 Coercive homogeneous objectives, linear maxima, and gauges
+
+Pure homogeneous geometry is the limiting case with no smooth remainder.
+Coercivity here has a clear purpose: it prevents escape along a direction of
+zero or negative homogeneous value and converts convergence in value into
+convergence to the origin. It imposes no smoothness or finite-piece condition.
+
+Theorem 6 (Coercive homogeneous objectives) Let F : Rn → R, n ≥ 1,
+be finite, convex, positively homogeneous of degree one, and coercive. Then zero
+is its unique minimizer and every infinite admissible full-BFGS run satisfies
+
+                           F (xk ) −→ 0,       xk −→ 0.
+
+The initial point, initial SPD matrix and fixed valid line-search constants are
+arbitrary within admissibility.
+BFGS: convergence and failure                                                 15
+
+
+Proof Homogeneity gives F (0) = 0. If F (x) ≤ 0 for some x ̸= 0, then
+F (tx) = tF (x) ≤ 0 as t → ∞, contradicting coercivity. Thus F (x) > 0
+off zero. Continuity on the unit sphere gives
+                     µ = min F (x) > 0,          F (x) ≥ µ∥x∥.
+                          ∥x∥=1
+
+All sublevels are compact. Theorem 5, with ψ = 0 and γ = F , gives convergence
+in value, and the displayed lower bound gives convergence of the iterates.
+Equivalently, the inward remainder is identically zero, so the radial convergence
+corollary applies directly.
+Corollary 3 (Compact homogeneous models) The conclusion of Theo-
+rem 6 holds for every norm, every finite convex degree-one gauge with bounded
+unit sublevel, and every finite linear maximum
+                                  F (x) = max aTi x
+                                         1≤i≤m
+
+whose zero sublevel is bounded. These are whole-iterate conclusions from every
+admissible start. The linear maximum has no affine intercepts.
+Proof For a norm, continuity and positivity give a positive minimum on the
+Euclidean unit sphere. For either of the other models, boundedness of the
+stated sublevel rules out a nonzero x with F (x) ≤ 0, since its full positive ray
+would lie in that sublevel. The same sphere argument gives F (x) ≥ µ∥x∥, hence
+coercivity. Finite maxima of linear forms are finite, convex and degree-one
+homogeneous, so the theorem applies.
+    No symmetry is needed for the gauge or max-linear cases. The familiar
+Euclidean norm is an already established consequence of Guo–Lewis’s smooth-
+extension analysis [5, Corollary 4.2]; the scalar absolute-value model was ana-
+lyzed by Lewis–Overton under their stated search conventions [1, Section 5.1].
+The result here treats the stated arbitrary-dimensional homogeneous family.
+Coercivity is used for this compact, whole-iterate route, not asserted necessary
+for value convergence. The complete companion, Chapter 7, separately proves
+the noncompact homogeneous value dichotomy F (xk ) → 0 or F (xk ) → −∞,
+together with its bounded-below and additional iterate consequences. Those
+noncompact conclusions are not needed for, or independently reproved by, the
+compact global theorems of this article.
+
+
+5 Local convergence: geometry that survives near a minimizer
+
+The global theorem requires the initial sublevel to lie in the region where its
+representation is valid. A local theorem must choose that region before seeing
+a BFGS run or its initial metric. Convexity and a unique minimizer supply
+precisely this localization. We first use it for finite polyhedral pieces, where
+inward accuracy has a direct geometric explanation, and then for curved planar
+switching interfaces, where a moving comparison direction is essential to the
+proof.
+16
+
+
+5.1 Localization and finite polyhedral pieces
+
+The distinction between a local objective hypothesis and a hypothesis on the
+whole initial sublevel is handled by a simple convex trapping argument.
+
+Lemma 3 (A common local basin) Let F : Rn → R be finite and convex
+with a unique minimizer x∗ . Every sublevel is compact. For each neighborhood
+U of x∗ , there is ε > 0 such that {F ≤ F (x∗ ) + ε} ⊂ U . Thus any admissible
+run starting in that sublevel stays in U , independently of its initial SPD matrix.
+
+Proof Choose r > 0 with B r (x∗ ) ⊂ U . Continuity, compactness of the sphere
+and uniqueness give
+                                                  
+                      ω = min F (x∗ + u) − F (x∗ ) > 0.
+                           ∥u∥=r
+
+
+For ∥x − x∗ ∥ ≥ r, convexity at the point at distance r on the segment from x∗
+to x gives
+                                           ∥x − x∗ ∥
+                         F (x) − F (x∗ ) ≥           ω.
+                                               r
+Consequently F is coercive, hence has compact sublevels, and ε = ω/2 gives
+the asserted inclusion. Armijo preserves it.
+
+   A finite local partition controls which formulas an inward comparison
+segment can cross. After removing the finitely many cells that miss x∗ , every
+remaining cell contains x∗ . Convexity of a cell then keeps the entire inward
+segment in that same cell. Its smooth extension yields quadratic model accuracy
+even if the full gradient jumps across cell boundaries. The algorithm need not
+identify a cell or a manifold; only the comparison segment uses the cell geometry.
+
+Theorem 7 (Local convergence on finite polyhedral cells) Let n ≥ 1
+and let F : Rn → R be finite and convex, with a unique minimizer x∗ . Suppose
+an open neighborhood U of x∗ is covered by finitely many closed full-dimensional
+polyhedra Pi . For each i, suppose there is an open set Vi ⊃ U ∩Pi and a function
+       1,1
+fi ∈ Cloc  (Vi ) such that
+
+                         F (x) = fi (x)    (x ∈ U ∩ Pi ).
+
+Then there exists ε > 0 such that every infinite full-BFGS run with arbitrary
+H0 ≻ 0, differentiable accepted iterates, fixed Armijo–weak-Wolfe constants
+0 < c1 < c2 < 1, and F (x0 ) ≤ F (x∗ ) + ε satisfies
+
+             xk ∈ U    (k ≥ 0),      F (xk ) → F (x∗ ),     xk → x∗ .
+
+The basin is chosen before the run and its initial matrix. Only the full objective
+must be convex; the extensions need not be convex outside their cells.
+BFGS: convergence and failure                                                      17
+
+
+Proof (Proof of Theorem 7) First discard cells not containing x∗ . Each such
+closed cell has an open complement containing x∗ ; finiteness supplies one ball
+                                             T its extension domain Vi contains
+that avoids them all. For every remaining cell,
+x∗ . Shrink to a common ball Br (x∗ ) ⊂ U ∩ i:x∗ ∈Pi Vi , and then shrink again
+so that the gradients of all remaining extensions have one Lipschitz bound L
+there. This uses only finitely many local extensions; they need not have shared
+a domain before shrinking.
+     Let x be a differentiability point of F in this ball, and choose a cell Pi
+containing it. Convexity of Pi places the whole inward segment x − τ (x − x∗ ),
+0 ≤ τ ≤ 1, in Pi . Both F and fi agree along that segment. Comparing their
+right derivatives at τ = 0 gives
+
+                      ∇F (x)T (x − x∗ ) = ∇fi (x)T (x − x∗ ).
+
+Only equality in the radial direction is needed, including at cell boundaries.
+The smooth Taylor estimate along the same segment gives
+
+        0 ≤ F (x − τ rx ) − F (x) + τ ∇F (x)T rx ≤ 12 Lτ 2 ∥rx ∥2 ≤ 12 Lr2 τ 2 .
+
+The first inequality uses convexity of F , not convexity of the extension. Lemma 3
+supplies a compact positive sublevel wholly contained in this ball, chosen before
+the run or its matrix. The inward condition holds on that sublevel, so Corollary 1
+gives value and iterate convergence. Armijo gives the asserted containment.
+
+Corollary 4 (Smooth losses with polyhedral or quadratic pieces) A
+finite convex piecewise linear-quadratic objective with a unique minimizer has
+the local convergence property of Theorem 7. The same holds for a convex locally
+C 1,1 loss plus a finite convex piecewise linear-quadratic regularizer, provided
+the sum has a unique minimizer.
+
+Proof By piecewise linear-quadratic we mean a representation by quadratic
+polynomials on a finite cover by closed full-dimensional polyhedral cells. Each
+polynomial is a smooth extension of its cell formula; adding the smooth loss
+preserves the required local C 1,1 extensions. Theorem 7 applies.
+
+    In particular, a finite convex polyhedral penalty, such as a finite sum of
+absolute-value or hinge terms, is piecewise affine on a finite polyhedral partition.
+It therefore falls under this corollary when added to a locally C 1,1 convex loss,
+under the stated uniqueness assumption. Different cells may have different
+quadratic Hessians. A finite maximum of arbitrary quadratic formulas need
+not admit such a polyhedral partition and is not automatically covered. There
+is also no claim that iterates identify a cell or that rejected trials remain in the
+local structural neighborhood.
+    The finiteness and cell geometry are substantive. Finitely many curved
+switching interfaces need not preserve inward segments, and the negative
+examples later in the paper show that regularity of smooth branches alone
+cannot replace the stated geometric hypothesis. The theorem gives a sufficient
+local basin, without claiming necessity or a uniform rate.
+18
+
+
+Corollary 5 (A local centered-composite basin) If the representation
+and smoothness assumptions of Theorem 5 hold on a neighborhood of a unique
+minimizer x∗ , then some ε > 0, chosen from the objective alone, has the
+following property: every admissible run starting with F (x0 ) ≤ F (x∗ ) + ε stays
+in that neighborhood and converges to x∗ in value and iterates.
+
+Proof Shrink to an open convex neighborhood where the representation holds.
+Lemma 3 gives a compact sublevel contained there. Armijo traps the accepted
+points, and Theorem 5 applies.
+
+   For example, a locally C 1,1 convex loss plus finitely many Euclidean residual
+norms ∥Aj x − bj ∥ has this local form. A residual nonzero at x∗ remains nonzero
+nearby, so its Euclidean norm is smooth there; a zero residual gives the centered
+sublinear function ∥Aj (x − x∗ )∥. Summing these decompositions proves the
+representation. Under uniqueness, the corollary applies. This example allows
+nonpolyhedral penalties while retaining the same radial mechanism.
+
+
+5.2 A moving direction for curved planar switching
+
+The radial direction can fail for a different reason: a curved interface may carry
+a gradient jump with a nonzero radial component. The secant correction then
+blows up as endpoints approach opposite sides of the interface. The transported
+framework allows the comparison direction to follow the interface instead. It
+must first remain visible to every local supporting model, then cancel the
+leading jump, and finally move at a cost controlled by the actual objective
+decrease. The field is constructed from the objective; BFGS never evaluates it.
+   For F : R2 → R, write
+
+                           Caff = {p : 0 ∈ aff ∂F (p)}.
+
+At a point outside this set, let a be the least-norm point of aff ∂F (p). Or-
+thogonality to its direction space gives g T a = ∥a∥2 for every g ∈ ∂F (p). Thus
+−a/∥a∥2 decreases all supporting models at the same unit rate. Affine criticality
+concerns failure of this common-rate direction; ordinary stationarity concerns
+failure of every strict common descent direction. They need not coincide.
+    The two planar hypotheses have separate roles. Strictly convex positive
+sublevels prohibit long accepted chords with vanishing value decrease. Regular
+two-branch switching makes each positive-level corner move smoothly with
+the level and supplies a direction paired equally with both gradients. Neither
+condition imposes a matrix limit or a lower bound on all eigenvalues of a
+Hessian. A common positive lower Hessian bound is one sufficient way to
+obtain strict contours, but is not required.
+
+Theorem 8 (An affine-critical cluster point in the plane) Let F : R2 →
+R be finite and convex, attain its minimum F∗ , and have a compact sublevel
+K = {F ≤ b} with b > F∗ . Assume the following objective geometry:
+BFGS: convergence and failure                                                   19
+
+
+1. For every F∗ < t ≤ b, the boundary of {F ≤ t} contains no nontrivial line
+   segment.
+2. At every p ∈ K \ Caff , either F is C 2 in a neighborhood of p, or it equals
+   max{f1 , f2 } there, where f1 , f2 are convex C 2 functions, both active at p,
+   and ∇f1 (p), ∇f2 (p) are linearly independent.
+Every infinite admissible full-BFGS run starting in K has an affine-critical
+cluster point. No local representation is required at affine-critical points.
+Proof
+P      The values decrease to ℓ ≥ F∗ , the gradients are bounded on K, and
+   dk < ∞. Let Γ be the nonempty compact cluster set. Every point of Γ has
+value ℓ. If ℓ = F∗ , its points are minimizers and hence affine critical. Suppose,
+for a contradiction, that Γ contains no affine-critical point. Then ℓ > F∗ .
+    The steps tend to zero. Otherwise compactness gives a subsequence with
+xk → x, xk+1 → z ̸= x. For 0 ≤ θ ≤ 1, the supporting inequality and convexity
+give
+      F (xk ) − θdk ≤ F ((1 − θ)xk + θxk+1 ) ≤ (1 − θ)F (xk ) + θF (xk+1 ).
+Passing to the limit shows F = ℓ on [x, z]. Such level points lie on the boundary
+of {F ≤ ℓ}: if one were interior, extending the line from a minimizer slightly
+beyond that point and applying convexity would give value strictly less than ℓ.
+The resulting boundary segment contradicts the first hypothesis.
+    Lemma 7, proved in Appendix B, constructs a continuous comparison field
+w on a neighborhood of the whole set Γ . For each sufficiently close eligible pair
+in that neighborhood, it gives uniform constants m > 0, C, L ≥ 0 and scalars
+λ > 0, β with
+                     (g T w(x))2 ≥ m,     (y T w(z))2 /t ≤ C,
+                      w(z) = λw(x) + βs,       λ2 ≤ 1 + Ld.
+Compactness implies dist(xk , Γ ) → 0, so these estimates apply to the entire
+tail, not just a selected subsequence. With Ek = w(xk )T Bk w(xk ), the Hessian
+update and Mk sk = 0 yield
+                     (gkT w(xk ))2    (y T w(xk+1 ))2
+                                  
+           2
+Ek+1 = λk Ek −                       + k              ≤ (1 + Ldk )(Ek − m/qk ) + C.
+                           qk                tk
+                                                                    Qk
+The parenthesized quadratic form is nonnegative. Dividing by j=J (1 + Ldj )
+                                                                   PN −1
+and summing, exactly as in the proof of Theorem 3, bounds k=J qk−1 by a
+constant times N − J + 1. This contradicts Theorem 2.
+Corollary 6 (When affine criticality is correct) Under the hypotheses of
+Theorem 8, assume in addition that Caff ∩ K ⊆ arg min F . Every admissible
+run starting in K then converges in value to F∗ and in distance to arg min F .
+A unique minimizer gives convergence of the entire sequence.
+Proof The theorem supplies an affine-critical cluster point, which is optimal
+by hypothesis. Its value equals the limiting value of the decreasing objective
+sequence. Hence that value is F∗ , and compactness gives the distance and
+uniqueness conclusions as in Theorem 3.
+20
+
+
+    This condition says that nonoptimal points retain equal-rate descent, which
+is stronger than ordinary descent. It is a sufficient geometric route in the
+stated planar setting, not a universal criterion for either convergence or failure.
+The strict-contour and regular-switching assumptions are independent parts of
+this route. In particular, the argument neither handles arbitrary flat contours
+nor transfers automatically to dimension three: the tangent line used in the
+transport construction is then a higher-dimensional space.
+
+
+5.3 Nondegenerate smooth maxima and an explicit nonradial basin
+
+The extra affine-correctness condition can be verified from the active models at
+the minimizer. Positive optimal multipliers ensure that an affine balance cannot
+lose a branch nearby without losing stationarity; affine independence makes
+that balance unique and continuous. In the plane these same assumptions leave
+at most two active branches at a noncritical point, which supplies the required
+regular switching.
+
+Corollary 7 (Nondegenerate planar smooth maxima) Let F : R2 →
+R be finite and convex with a unique minimizer x∗ . Near x∗ suppose F =
+max1≤i≤m fi , where the branches are convex and C 2 . Suppose sufficiently
+low positive sublevels are strictly convex in the boundary-segment sense of
+Theorem 8. For the active set I∗ at x∗ , suppose the gradients are affinely
+independent and admit weights
+                            X               X
+               λ∗i > 0,         λ∗i = 1,        λ∗i ∇fi (x∗ ) = 0.
+                            i∈I∗              i∈I∗
+
+Then some ε > 0, chosen independently of H0 and the valid line-search con-
+stants, satisfies
+
+              F (x0 ) < F∗ + ε     =⇒   F (xk ) → F∗ ,     xk → x∗
+
+for every infinite admissible full-BFGS run. A common positive lower Hessian
+bound on the locally relevant branches suffices for the contour hypothesis.
+
+Proof Discard the branches inactive at x∗ by their strict value gaps. Let A(x)
+have columns (∇fi (x), 1) for i ∈ I∗ . Affine independence makes A(x∗ ) full
+column rank, and this persists nearby. If A(p)λ = (0, 0, 1)T is solvable, its
+unique solution is
+
+                     λ(p) = (A(p)T A(p))−1 A(p)T (0, 0, 1)T .
+
+This expression is continuous and equals λ∗ at x∗ . Shrink the neighborhood
+until all its coordinates are positive. The subdifferential of a finite smooth
+maximum is the convex hull of its active gradients. Indeed, differentiating
+the finite maximum in a direction gives the maximum of the active gradient
+pairings. Every convex combination of those gradients supports the objective
+locally; convexity extends the supporting inequality globally by taking a short
+BFGS: convergence and failure                                                     21
+
+
+initial segment toward any proposed violating point. Conversely, a subgradient
+outside their convex hull could be strictly separated from that hull by a
+direction, contradicting the directional-derivative inequality for a subgradient.
+An affine representation of zero using gradients active at p, extended by zero on
+inactive indices, must equal λ(p). It therefore uses every index and is a convex
+representation of zero. Thus every nearby affine-critical point is a minimizer.
+    At most three planar gradients are affinely independent. Away from affine
+criticality, three cannot be active, since their affine hull would be all of R2 . One
+active branch gives a smooth chart. For two active branches their gradients are
+distinct; if they were linearly dependent, their affine line would contain zero.
+Thus the gradients are independent, and the other branches have strict gaps.
+This gives the required convex two-branch chart.
+    Lemma 3 now puts a sufficiently low compact sublevel inside the chosen
+neighborhood, with its upper level also below the threshold for strict contours.
+Apply Corollary 6. If all relevant branch Hessians have a common positive
+lower bound on a convex neighborhood, subtracting the corresponding positive
+quadratic makes every branch convex. Their maximum is therefore strongly
+convex there. A sufficiently low sublevel lies in that neighborhood and cannot
+have a nontrivial boundary segment, proving the last assertion.
+
+   The multiplier geometry is related to the nondegeneracy used in local
+bundle Newton analysis (Lewis and Wylie, 2019 preprint, arXiv:1907.11742v1,
+Propositions 5.5–5.6) and in Gebken’s criticality results [3]. Here the full-BFGS
+conclusion is derived without assumed iterate or matrix asymptotics. The
+contour and planar restrictions remain explicit.
+
+Theorem 9 (Convergence with curved, nonradial switching) For
+
+                f0 (u, v) = u + u2 + 12 v 2 ,
+                f1 (u, v) = v + 12 u2 + 32 v 2 ,
+                f2 (u, v) = −u − v + 23 u2 + v 2 ,      F = max fi ,
+                                                               i
+
+every infinite admissible full-BFGS run with F (x0 ) < 1/100 converges in value
+and iterates to zero, for arbitrary H0 ≻ 0 and fixed valid Armijo–weak-Wolfe
+constants. Nevertheless, the radial secant condition (13) fails on a positive band
+in every neighborhood of zero. The obstructing endpoint pairs can themselves
+be chosen eligible for c1 = 1/4, c2 = 1/2.
+
+Proof The branch Hessians lie between I and 3I, and (f0 + f1 + f2 )/3 = u2 + v 2 .
+Thus F ≥ u2 + v 2 , zero is the unique minimizer, and all positive contours
+are strict. The active gradients at zero are (1, 0), (0, 1), (−1, −1), with positive
+weights 1/3. To obtain the stated basin rather than an unspecified one, put
+D = 3(1 + v − uv). Direct solution of the augmented gradient system gives
+
+             Dλ0 = 1 − 4u + 3v − 7uv,           Dλ1 = 1 + 2u − 3v − uv,
+             Dλ2 = 1 + 2u + 3v + 5uv.
+22
+
+
+On |u|, |v| ≤ 1/10, D ≥ 267/100 and the three numerators are at least 23/100,
+49/100, and 45/100. The coefficients sum to one and their weighted gradient
+is zero. Thus affine independence and affine correctness hold throughout this
+box, by the same unique-coefficient argument as above. The planar regularity
+argument also applies throughout the box. Since {F ≤ 1/100} lies there,
+Corollary 6 proves the exact convergence claim.
+    For the radial obstruction choose a sufficiently small fixed u > 0 and put
+                               √
+                         −1 + 1 + 4u + 2u2
+             v = v(u) =                        = u − 21 u2 + O(u3 ).
+                                  2
+This is the positive active tie f0 = f1 , with f2 inactive. At that point
+
+         (∇f0 − ∇f1 )T (u, v) = (1 + u)u − (1 + 2v)v = 12 u2 − v 2 ̸= 0
+
+for small u, as follows from the displayed expansion. Take x = (u, v + e) and
+z = (u, v − e) with e > 0 tending to zero. Branches 1 and 0, respectively, are
+uniquely active. A direct calculation gives
+
+                  d = 2e(1 + 3v + 3e),    t = 2e(1 + 2v + 4e),
+                                     2
+                  ∆ = e(1 + 4v) + e .
+
+As u, e → 0+ , ∆/d → 1/2 and t/d → 1, so for fixed sufficiently small u and
+all sufficiently small e, the pairs are eligible for the stated constants. Their
+radial numerator y T z tends to u2 /2 − v 2 ̸= 0 while t → 0+ . The quotient
+(y T z)2 /t is unbounded. For each chosen u both endpoint values stay above half
+the positive tie value; hence one fixed positive band precedes the unbounded
+sequence. Choosing u arbitrarily small places that band and those pairs in any
+given neighborhood of zero.
+
+    The example identifies the extra freedom supplied by moving geometry.
+Curvature of the interface produces a radial jump, while the contour-based
+field cancels it and charges its own motion to the accepted decrease. The proof
+uses the original coordinates and the unmodified BFGS update; a nonlinear
+change of variables or a replacement by polyhedral cells would not establish
+this conclusion.
+
+
+6 Failure: a contracting mechanism and local realizations
+
+The positive theorems identify geometry that permits convergence. We now
+show why convexity and regularity of the branch formulas cannot supply an
+unrestricted deterministic replacement. The first tempting assertion is global:
+compact sublevels might seem enough to prevent convergence to a wrong corner.
+The second is local: for one finite maximum of very smooth convex branches,
+perhaps every sufficiently close start succeeds. We construct an actual failure of
+each assertion, and then examine what changes when positive lower curvature
+is imposed.
+BFGS: convergence and failure                                                       23
+
+
+    The mechanism has three parts. A three-step BFGS cycle returns the
+inverse matrix to a smaller multiple of itself while approaching a nonstationary
+corner. Strict function and gradient inequalities force the specified line search
+to produce that cycle. Finally, local copies of the corner accumulate at the true
+minimizer of one objective. Matching spatial and objective scales keeps the
+initial matrix fixed across the copies. The distinction between a formal cycle
+and an implemented run matters at every part of this argument.
+
+
+6.1 The specified implementation and the local guarantee at issue
+
+At a differentiable point x, let g = ∇F (x) and p = −Hg. The line search starts
+with lower bracket ℓ = 0, upper bracket h = +∞, and trial length α = 1. It
+tests Armijo first and weak Wolfe second:
+           F (x + αp) ≤ F (x) + c1 αg T p,       ∇F (x + αp)T p ≥ c2 g T p.        (16)
+An Armijo rejection sets h = α; a Wolfe rejection sets ℓ = α. The next
+length is (ℓ + h)/2 when h < ∞, and 2ℓ otherwise. If both tests hold, the
+length is accepted. This is the unit-first bracketing implementation of Lewis–
+Overton [1, Algorithm 4.6]. All comparisons in the construction are strict, so
+strict acceptance tests give the same decisions.
+    Write the full inverse update as
+                        sy T           ysT       ssT
+                                         
+          +
+B(H, g, g , α) = I − T        H I− T          + T , s = −αHg, y = g + −g.
+                        y s            y s       y s
+                                                                            (17)
+No resetting or rescaling of the stored matrix is performed.
+    For this routine, even identity initialization does not give a neighborhood
+in which every differentiable start succeeds under the following regularity
+assumptions.
+Theorem 10 (Local failure with globally smooth convex branches)
+There are four globally convex functions fi ∈ C 2,1 (R2 ) such that
+                   0 ⪯ ∇2 fi (x) ⪯ 64I       (i = 0, 1, 2, 3; x ∈ R2 )
+and F = maxi fi has compact sublevel sets and a unique nonsmooth minimizer
+                                                                 (n)
+at zero. For this one objective there are fixed starting points x0 → 0, all with
+H0 = I, such that, for every fixed pair
+                           0 < c1 ≤ 31 ,      c1 < c2 < 1,
+the deterministic unit-first bracketing implementation of Section 6 produces
+infinite full-BFGS runs satisfying
+        (n)                      (n)
+      xk      → pn ̸= 0,    F (xk ) ↓ F (pn ) > F (0) = 0,          0∈
+                                                                     / ∂F (pn ).
+Every queried point is differentiable. Each line search takes at most five trials,
+and its accepted lengths repeat 1, 1/4, 1/16. The objective, initial points, initial
+24
+
+
+matrix and complete decision tree are the same throughout the displayed pa-
+rameter range. The supremum of the norms of all accepted and rejected query
+points in the nth run tends to zero as n → ∞.
+    The objective and all starts are chosen before the displayed line-search
+parameters. The failure set supplied by the theorem is a sequence of starts; it is
+not a positive-measure basin. There is no uniform positive lower curvature re-
+quirement on these branches. Earlier prescribed-orbit constructions for smooth
+nonconvex objectives [14,15] suggest the value of designing the dynamics first.
+Other failures concern nonconvex objectives [12]; see also (Diao, 2026 preprint,
+arXiv:2609.09686v1) for a recent smooth nonconvex planar construction. These
+results do not supply the convex local claim above. The examples in (Lewis
+and Overton, Behavior of BFGS with an Exact Line Search on Nonsmooth
+Examples, 2008 manuscript) use exact search or subgradient choices, and the
+scaled memoryless failures of Asl–Overton [13] concern a different matrix up-
+date. Here the essential combination is convex branch regularity, full BFGS
+with the specified search, a common identity initialization, and every query
+close to the true minimizer.
+
+
+6.2 Designing a cycle around a wrong corner
+
+We seek a corner with a strict descent direction that the cycle nevertheless fails
+to follow to the minimum. Three slopes in the plane provide the needed freedom.
+Begin with H0 = I and fix the first two slopes so that the unit step has a
+simple exact update. The third slope has two free coordinates. We choose them
+to close the matrix cycle at a scalar multiple ρI and choose the starting point
+to close the displacement cycle at ρz0 . For the maximum of linear functions,
+those two identities allow the same geometry to repeat at each smaller scale.
+    The target lengths 1, 1/4, 1/16 fit the bisections of the unit-first search.
+Choosing them in the algebra does not prove that the algorithm accepts
+them: we must also exclude every earlier candidate and verify both tests at
+the intended endpoint. The strict trial certificate below supplies exactly this
+missing dynamical condition.
+    Let (c, d) be the algebraic pair specified in Appendix C. Define
+ g0 = (1, 0)T ,         g1 = (−1, −1/8)T ,     g2 = (c, d)T ,    G(z) = max giT z.
+                                                                          0≤i≤2
+
+The useful coarse bounds are 0.318 < c < 0.319 and −1.026 < d < −1.025. Put
+                       129(c − 8d)
+      ρ=                                       ,          0.060 < ρ < 0.061.       (18)
+           (16c − 127d − 16)(127c + 16d + 129)
+Set
+                                     
+                        129/256 −1/16
+     M0 = I,      M1 =                  ,            M2 = B(M1 , g1 , g2 , 1/4),   (19)
+                         −1/16    1
+      s0 = (−1, 0)T ,     s1 = (127/1024, 1/64)T ,    s2 = ρ(1 − c, −d)T .         (20)
+BFGS: convergence and failure                                                           25
+
+            Phase j    Trial α     Active branch     104 G(zj + αpj )   Decision
+              0           1              1             (1218, 1219)      accept
+              1           1              0             (3845, 3846)      reject
+              1         1/2              0             (1364, 1365)      reject
+              1         1/4              2              (723, 724)       accept
+              2           1              0             (6687, 6691)      reject
+              2         1/2              0             (3406, 3408)      reject
+              2         1/4              0             (1765, 1767)      reject
+              2         1/8              0              (944, 946)       reject
+              2         1/16             0              (534, 536)       accept
+Table 2 Rational enclosures and the deterministic trial tree for the algebraic seed. Every
+rejection is an Armijo rejection. The intervals are enclosures, not rounded approximations
+asserted to be exact values.
+
+
+
+The point is then determined by the displacement closure s0 + s1 + s2 =
+−(1 − ρ)z0 ; explicitly, let
+                                  
+         1      897/1024 − ρ(1 − c)
+  z0 =                               , zj+1 = zj + sj (j = 0, 1, 2). (21)
+       1−ρ            ρd − 1/64
+Lemma 4 (Exact cycle and strict trial decisions) The matrices in (19)
+are positive definite, and
+        B(I, g0 , g1 , 1) = M1 ,      B(M2 , g2 , g0 , 1/16) = ρI,        z3 = ρz0 .
+At zj , j = 0, 1, 2, the unique active gradient is gj . With pj = −Mj gj , the entire
+line-search query list is Table 2. At every rejection the objective strictly exceeds
+its current value. At every acceptance,
+             G(zj ) + 13 gjT sj − G(zj+1 ) > 0,           T
+                                                         gj+1 sj > 0 > gjT sj ,        (22)
+where g3 = g0 . All listed queries and the three starting points have a unique
+active branch and satisfy
+                 |giT z| < 3(i = 0, 1, 2),         z2 < 2,      G(z) > 0.              (23)
+Here z2 in the middle inequality denotes the second coordinate.
+    The proof of the lemma, including the root isolation, matrix closure and
+rational certificate, is in Appendix C. The logic of the search can already be
+read from its margins. Every rejected candidate has a value larger than the
+current value, so it fails Armijo for every c1 > 0. At each accepted candidate the
+decrease exceeds one third of the predicted decrease, while the new directional
+derivative is positive and the old one is negative. Hence Armijo holds for
+c1 ≤ 1/3 and weak Wolfe holds for every c2 > 0. Thus the displayed lengths are
+outputs of the specified search for the entire parameter range in Theorem 10; no
+accepted-length sequence is assumed. The routine never needs a Wolfe rejection
+on this example.
+    Figure 2 displays this unit-first geometry: phase zero accepts its first query,
+while the next two phases bisect past the rejected candidates before reaching
+their accepted points. The right panel includes all those rejected candidates.
+26
+
+
+                                                         v
+      v                                                • Current point             ×1
+               z3 = ρz0                                ◦ Accepted query
+                                             u         × Armijo rejection
+
+
+                                                                       ×1/2
+
+                                                                ×1/4
+          z2                            z0                    ×1/8
+ z1                                                            ×        ×                       u
+                                                                 1/2        1
+
+ (a) Accepted cycle; vertical scale enlarged        (b) All queries; rejected lengths labeled
+
+Fig. 2 The accepted three-step seed cycle (left), with closure z3 = ρz0 , and every rejected
+candidate point (right). The rendering uses the rational center of the certified root box. It
+illustrates the certified trial geometry; it is not a proof of exact equality or of membership in
+the stable manifold used for the perturbed construction.
+
+
+
+   The finite calculation becomes an infinite run through homogeneity. A
+smaller copy has the same active slopes, and its inverse matrix produces
+proportionally smaller steps. Both sides of every line-search comparison have
+the same scale. The two cycle closures therefore give the exact induction
+
+                   x3m+j = ρm zj ,        H3m+j = ρm Mj ,           j = 0, 1, 2.            (24)
+
+Each query in phase j is ρm times its base query. Gradients are unchanged,
+function differences and gradient–step products scale by ρm , and (17) scales
+the updated matrix by ρm . Thus every branch choice and every rejection is
+preserved, as well as acceptance. The iterates converge to zero, but the direction
+w = (−1, 16)T satisfies
+
+                      g0T w = g1T w = −1,        g2T w = −c + 16d < −1.
+
+Hence G(tw) = −t for t ≥ 0, so this limit is nonstationary.
+
+Corollary 8 (Coercive polyhedral global failure) The same deterministic
+run, with H0 = I, fails for
+
+                          G(u, v) = max{u, −u − v/8, cu + dv, v − 17}.
+
+This function is coercive and has unique minimizer (−1, 16), with value −1,
+while the run converges to the nonstationary origin with value zero.
+
+Proof At every query, (23) and 0 < ρ < 1 give v − 17 < 0 < G(u, v), so the
+fourth branch is inactive. The convex combination of branches 0, 1, 3 with
+weights 8/17, 8/17, 1/17 is identically −1. Equality in this lower bound forces
+all three branches to equal −1, hence (u, v) = (−1, 16); the remaining branch is
+strictly smaller there. If G(u, v) ≤ t, then u ≤ t, v ≤ t + 17 and −u − v/8 ≤ t,
+which also give lower bounds on both coordinates. Every sublevel is therefore
+compact.
+BFGS: convergence and failure                                                    27
+
+
+This already excludes global convergence from every start for coercive finite
+polyhedral objectives under this routine. Its wrong corner is away from the
+optimizer, so it is consistent with the local finite-partition convergence theorem.
+To rule out a local neighborhood guarantee, we need bad corners arbitrarily
+near the optimizer of the same function.
+
+
+6.3 Matching the spatial scale, objective scale and initial matrix
+
+A change of scale also changes which inverse matrix represents the same search
+direction. This simple covariance explains both local constructions. Suppose,
+near the current and queried points under consideration, that
+
+                     F (p + λz) = C + σG(z),        λ, σ > 0.                  (25)
+
+Differentiation gives gF = (σ/λ)gG . Consequently, for the same candidate
+length, the corresponding inverse matrix and step are
+                          λ2
+                  HF =       HG ,     pF = λpG ,      sF = λsG .               (26)
+                          σ
+At an accepted pair yF = (σ/λ)yG . Thus yFT sF = σyGT sG ; the two projection
+factors in the inverse update are identical, and its rank-one term is multiplied by
+λ2 /σ. This proves the matrix relation in (26) again after the update. Function
+differences and all gradient–step products are multiplied by σ > 0, so the
+Armijo and weak-Wolfe comparisons, including their strict signs, agree.
+     This is a covariance calculation, not an existence theorem for a local
+trajectory. To transfer a particular run, the local model must cover the current
+point and every candidate the search actually visits. Under that containment,
+induction on the bracket decisions transfers the full trial tree, and induction on
+accepted steps transfers the matrices. We verify that containment separately
+in each construction below.
+     The choice σ = λ2 is decisive: it leaves the initial matrix unchanged. In the
+first embedding, the corner’s objective height is a3n and its affine slopes are
+a2n gi . Taking spatial scale λ = a2n gives σ = a4n = λ2 , so every copy starts with
+I. Its affine neighborhood has width proportional to an , much larger than the
+entire copied trial tree, whose width is proportional to a2n . This separation of
+scales makes all-query containment possible.
+
+
+6.4 Convex interpolation that leaves room for every query
+
+We now construct the scalar functions that implement this design. Their node
+values are a3n and their node slopes are a2n . A monotone derivative connects
+neighboring nodes and is constant on a neighborhood of each node. The constant
+regions create the local affine corner; the cubic transition makes the second
+derivative continuous and globally Lipschitz even as the nodes accumulate at
+zero. The following formulas fix the construction completely.
+28
+
+
+   Let θ = 1/16, an = θn , ε = 1/128, and b∗ = 2c − 32d ∈ (33, 34). For
+b ∈ {2, b∗ } define
+                         1 − (1 + θ + θ2 )/b                  ξ − tb + ε
+                  tb =                       ,       v=                  .
+                               1 − θ2                             2ε
+                   
+                   0
+                                   ξ ≤ tb − ε,                    Z ξ
+           Pb (ξ) = 3v 2 − 2v 3     |ξ − tb | < ε,     Jb (ξ) =          Pb (t) dt.
+                                                                    0
+                    1               ξ ≥ tb + ε,
+                   
+
+The middle formula for Jb is 2ε(v 3 − v 4 /2); its outer formulas are zero and
+ξ − tb . For bθan ≤ x ≤ ban , set
+                                                                          x/(ban ) − θ
+ φb (x) = (θan )3 + ba3n (1 − θ){θ2 ξ + (1 − θ2 )Jb (ξ)},           ξ=                 . (27)
+                                                                             1−θ
+Complete the definition by
+                                              2
+                      
+                      1 − 3(x + 1) + 3(x + 1)
+                                                             x < −1,
+             φb (x) = −x3                                     −1 ≤ x ≤ 0,
+                      
+                        1+x−b                                 x ≥ b.
+                      
+
+Lemma 5 (Scalar interpolation) The functions φb are convex, coercive and
+globally C 2,1 , are nonnegative, and vanish only at zero. They satisfy
+                                0 ≤ φ′′b ≤ max{6, 102/b},                                  (28)
+                    φb (ban + h) = a3n + a2n h        (|h| ≤ an /2).                       (29)
+Their second derivatives are globally Lipschitz with constant
+                            Lb = max{6, 139264/(5b2 )}.
+                                                                              R1
+Proof The ramp is monotone, C 1 , and satisfies 0 ≤ Pb′ ≤ 96 and               0
+                                                                                   Pb = 1 − tb .
+On a positive interval,
+                                                              an (1 + θ) ′
+            φ′b = a2n {θ2 + (1 − θ2 )Pb (ξ)},        φ′′b =             Pb (ξ).
+                                                                   b
+The identity θ2 + (1 − θ2 )(1 − tb ) = (1 + θ + θ2 )/b gives matching values
+φb (ban ) = a3n . The derivative is constant near both ends of each interval, so
+the first two derivatives also match, with values a2n and zero at ban .
+    As x ↓ 0, the bounds an ≤ x/(bθ) on its interval give φb (x) = O(x3 ),
+φb (x) = O(x2 ) and φ′′b (x) = O(x). These match the negative cubic at zero.
+ ′
+
+The formulas also match through second order at −1 and b. The derivative is
+negative on the negative half-line and positive on the positive half-line; the
+outer formulas diverge to infinity. This proves convexity, coercivity and the
+minimum assertions.
+    The constant-derivative lengths below and above ban , divided by an , are
+                                                 b(1 − θ)(tb − ε)
+                    b(1 − θ)(1 − tb − ε),                         .
+                                                        θ
+BFGS: convergence and failure                                                          29
+
+
+Both exceed 1/2 for 2 ≤ b ≤ 34, by substitution in the displayed rational
+formulas; the affine outer extension covers the upper side when n = 0. This
+proves (29). Finally |Pb′′ | ≤ 3/(2ε2 ) in each ramp, so differentiation once more
+                             2
+gives |φ′′′
+         b | ≤ 139264/(5b ) there. The negative cubic has third derivative of
+magnitude six. Continuity of φ′′b permits summing the Lipschitz estimates over
+finitely many joins away from zero; taking limits at zero covers the infinitely
+many accumulating joins and gives the global bound.
+
+
+6.5 One objective and a uniform induction over all queries
+
+Define
+              F (u, v) = max{φ2 (u), φ2 (−u − v/8), φb∗ (cu + dv), v}.                (30)
+The Hessian of each of the first three branches is a nonnegative scalar multiple
+of gi giT . Equation (28) gives the upper bounds 51, 51(65/64) < 52, and 12,
+respectively, on their operator norms; the last branch has zero Hessian. Their
+Hessians are globally Lipschitz because φ′′b is Lipschitz and the arguments
+are linear. The first two scalar arguments are independent, so their coercivity
+makes every sublevel of F compact. Nonnegativity and their unique scalar
+zeros show F (x) = 0 exactly at x = 0. At zero the first three gradients vanish
+and the last is (0, 1)T , giving F ′ (0; h) = max{0, h2 }; thus the minimizer is
+nonsmooth.
+    Let pn = an (2, −32)T . The first two scalar arguments at pn equal 2an , and
+the third equals b∗ an . Consequently
+             F (pn + h) = a3n + a2n G(h)       if |giT h| ≤ an /2(i = 0, 1, 2).       (31)
+Indeed, the first three branches are on their affine regions and each has value at
+least a3n /2. The first two slab inequalities imply |h1 | ≤ an /2 and |h2 | ≤ 8an , so
+the fourth branch is negative. In particular F (pn ) = a3n and F ′ (pn ; (−1, 16)T ) =
+−a2n < 0.
+                                                      (n)
+Proof (Proof of Theorem 10) For n ≥ 1 take x0               = pn + a2n z0 and H0 = I. We
+claim that
+            (n)                               (n)
+          x3m+j = pn + a2n ρm zj ,         H3m+j = ρm Mj ,           j = 0, 1, 2.     (32)
+
+At a current point of this form its gradient is a2n gj . Every trial on the finite
+candidate list therefore has the form pn + a2n ρm ztrial . Equation (23) gives
+                     |giT (a2n ρm ztrial )| < 3a2n ≤ 3an /16 < an /2.
+Thus (31) is valid at every candidate query, not only the final accepted one.
+Unique activity is preserved, and
+         F (pn + a2n ρm ztrial ) = a3n + a4n ρm G(ztrial ),      ∇F = a2n gactive .
+These identities instantiate (25) with λ = a2n , σ = a4n and C = a3n . The
+containment just proved applies before each candidate is tested, so the scaling
+30
+
+
+argument transfers every bracket decision. Equivalently, the additive constant
+cancels in Armijo and every function difference and gradient–step product is
+the seed quantity times a4n ρm > 0. The actual search traverses exactly the
+candidate list and makes the same strict decisions. In (17), the projection
+factors are unchanged and the rank-one term has factor ρm . The cycle closures
+prove the next point and matrix identities, completing the induction.
+    The finite matrices are positive definite. Equation (32) gives convergence
+to pn and strict descent to a3n > 0. Since the base query set is finite, the norm
+of every query is bounded by
+
+                   an ∥(2, −32)∥ + a2n           max               ∥z∥,
+                                         base points and queries
+
+which tends to zero. The starting points also tend to zero. All other claims
+were proved directly from (30).
+
+
+6.6 What changes when positive lower curvature is required
+
+The flat affine regions in the first construction explain why its convex branches
+have no uniform positive lower curvature. Adding the same positive quadratic
+to each branch restores that curvature, but changes the dynamics. The old
+exact cycle can no longer be copied without adjustment. The next result uses
+a nearby trajectory whose existence is proved analytically, and then matches
+its scales in a different way.
+Theorem 11 (Independent local failure with positive lower curvature)
+There is a finite strongly convex function F : R2 → R with compact sublevels
+and a unique nonsmooth minimizer at zero such that the following holds. For
+the fixed deterministic unit-first bracketing implementation of Section 6, with
+                                                                  (n)
+c1 = 10−4 , c2 = 1/2 and H0 = I, there are starting points x0 → 0 whose
+infinite full-BFGS runs converge to nonstationary points pn ̸= 0, with pn → 0
+         (n)
+and F (xk ) ↓ F (pn ) > F (0). Every accepted and rejected query is differentiable,
+the accepted lengths repeat 1, 1/4, 1/16, and the supremum of all query norms
+in the nth run tends to zero.
+    The objective can be a maximum of four globally C 1,1 , uniformly strongly
+convex branches with globally Lipschitz gradients. There are fixed 0 < µ ≤ L <
+∞ such that
+
+            µI ⪯ ∇2 F (x) ⪯ LI    at every twice-differentiable point.
+
+The first three branches in this construction are not twice differentiable at zero.
+    Here a classical Hessian is the derivative of the gradient map, with that map
+defined in a neighborhood of the point. A pointwise second-order expansion
+alone is not the convention.
+    The proof in Appendix D has the same sequence of tasks as the first
+construction. It starts from the explicit strongly convex objective Qµ (z) =
+µ∥z∥2 /2 + G(z), whose true minimizer is away from the wrong corner. A
+BFGS: convergence and failure                                                            31
+
+  Branch regularity             Uniform curvature           At the accumulation point
+  Four convex C 2,1 branches    0 ⪯ ∇2 fi ⪯ 64I globally    All branch Hessians exist and
+                                                            are Lipschitz; no uniform pos-
+                                                            itive lower bound
+  Four uniformly strongly       Positive lower bound and    The first three branches are
+  convex C 1,1 branches         globally Lipschitz branch   not twice differentiable
+                                gradients
+Table 3 The two independent local failure regimes. Each uses one fixed objective and
+H0 = I, with bad starts arbitrarily close to its unique minimizer; all actual accepted and
+rejected queries are differentiable and remain in neighborhoods shrinking to that minimizer.
+The respective line-search parameter ranges are stated in Theorems 10 and 11.
+
+
+
+normalized three-step return map has the original seed as a hyperbolic boundary
+fixed point. Its stable manifold contains positive scale states, yielding an actual
+perturbed bad orbit. The seed’s strict finite margins ensure that the same
+accepted and rejected trial lists persist along that orbit. No rounded initial
+state is asserted to lie on the stable manifold.
+    For the local embedding the scalar node values are now a2n and the node
+slopes an . The resulting model is F (pn + an z) = a2n (C∗ + Qµ (z)), so λ = an ,
+σ = a2n and again λ2 /σ = 1. We choose one entire perturbed orbit small
+enough for every query to fit the affine scalar regions. Its one initial SPD
+matrix is then used in every copy; one fixed affine change makes it I. The faster
+variation of the scalar derivative retains global C 1,1 regularity but prevents
+second differentiability at the accumulation point. This is why the theorem
+does not supply a finite strongly convex C 2 local counterexample.
+
+
+6.7 The deterministic assertions excluded
+
+The constructions answer three concrete questions negatively for the specified
+unit-first rule. Compact sublevels and a finite polyhedral representation do
+not guarantee convergence from every starting point. Even with one unique
+minimizer, four globally convex C 2,1 branches and a uniform upper Hessian
+bound do not guarantee a neighborhood in which all identity-initialized runs
+converge, for any fixed pair in Theorem 10’s parameter range. Uniform strong
+convexity and globally Lipschitz branch gradients do not restore that local
+guarantee in the separate C 1,1 class at the parameters of Theorem 11.
+    The simpler quadratic-branch example in the second proof is global: its bad
+corner is not the minimizer. It therefore does not decide local convergence near
+the optimizer of a finite maximum of uniformly strongly convex C 2 branches.
+That local question survives, as do possible guarantees under further objective
+geometry. The examples also leave almost-sure or generic-start guarantees open:
+they establish exceptional starts and no positive-measure failure set. They
+concern the specified weak-Wolfe implementation, and do not prove failure
+for every line-search routine or for strong Wolfe. Finally, failure of a sufficient
+comparison condition alone would prove none of these negative conclusions;
+the actual implemented trajectories do the work here.
+32
+
+
+7 Synthesis, verification and the remaining questions
+
+The mixed quadratic–absolute-value benchmark now has a whole-sequence
+answer: every admissible full-BFGS run for u2 + |v| converges to its unique
+minimizer. The same centered-family argument gives global convergence for
+smooth-plus-sublinear objectives whose compact initial sublevels lie in the
+region of the structural representation, and recovers the known Euclidean-norm
+result inside the broader coercive homogeneous class. Locally, finite polyhedral
+geometry controls the inward model error. The planar theorem goes further:
+a moving comparison field handles curved switches in the three-quadratic
+example even though its radial secant condition fails. These are objective-based
+convergence results, with their distinct compactness and geometric assumptions
+intact.
+    The counterexamples place a different limit on deterministic guarantees.
+They exclude a neighborhood in which every admissible start succeeds for
+the specified unit-first search, both for finite maxima of convex C 2,1 branches
+with bounded Hessians and, independently, for the stated uniformly strongly
+convex C 1,1 regime. Simpler polyhedral and quadratic-plus-maximum examples
+establish global failure near a wrong corner; the local embeddings are needed
+to place bad starts arbitrarily near the objective’s own minimizer. The proof
+follows the actual full update and every line-search query, so the failure is an
+algorithmic trajectory, not only a prescribed sequence of accepted points.
+    The common analytical advance is a route around a full spectral description
+of the BFGS matrices. The principal-minor hierarchy constrains the decrease
+metric even while the matrices degenerate. A comparison energy then converts
+those constraints into progress whenever its directions continue to see the
+remaining objective gap with controlled secant and transport costs. The radial,
+finite-partition and planar arguments provide different ways of meeting these
+requirements. Their success does not make the requirements necessary, or turn
+an affine-critical obstruction into a universal dynamical classification.
+    These distinctions leave precise questions. The two local negatives do not
+give a counterexample with finitely many uniformly strongly convex C 2 branches
+through the minimizer; the planar positive theorem settles a nondegenerate
+subclass, not that entire class. Nor do exceptional deterministic starts establish
+failure with positive probability. The accumulating local constructions do not
+have a finite semialgebraic description. The almost-sure stationarity, all-trial-
+value rate and spectral-identification assertions in Lewis–Overton’s challenge [1,
+Challenge 7.1] therefore remain outside the conclusions proved here. We also
+distinguish convergence of an infinite admissible run from a guarantee of
+indefinite differentiable execution; a zero gradient is successful termination in
+this paper.
+
+Formal verification and reproducibility. The companion records Lean 4.19.0
+proofs with pinned mathlib, exact statement-to-source correspondence,
+and compiler and transitive-axiom audit logs. The permitted foundational
+dependencies are propositional extensionality (propext), classical choice
+BFGS: convergence and failure                                                  33
+
+
+(Classical.choice) and quotient soundness (Quot.sound). The audits re-
+ject sorryAx, custom mathematical axioms and reachable unsafe or partial
+proof artifacts. The principal-minor theorem concerns the actual matrices
+and determinants, and the negative proofs include the search decisions and
+all-query induction. The rational certificate and the article’s proofs can also be
+read independently of Lean. Formal checking supports these precise claims;
+it does not establish foundational consistency, publication priority, fidelity of
+every prose paraphrase, or floating-point robustness. The kernel and execution
+environment remain trusted, and author-side correspondence reviews are
+separate from independent human peer review.
+
+AI assistance and author review. The accompanying source tree contains the
+article, complete companion, figure-generation code, exact certificates and Lean
+project. Large language models assisted theorem development, proof reconstruc-
+tion, formalization, literature searches, software and writing. This assistance
+was substantive; it was not limited to grammar editing. Human authors must
+review the claims, citations, novelty assessment and disclosure before submis-
+sion. This author-review edition asserts no author consent, independent human
+review, affiliations, grants or public archival identifier.
+
+
+A The BFGS compression calculation
+
+Lemma 6 Under the assumptions of Theorem 1, let Z have j orthonormal
+columns, 1 ≤ j ≤ n. Then
+                                det GramH (y, Z) α
+              det(Z T H+ Z) ≤                   + det(Z T HZ).
+                                      β2q        β
+For j = n, det H+ = (α/β) det H.
+Proof Put v = Hg, κ = g T Hy = −βq and P = I − vy T /κ. Since y T s = αβq,
+the update becomes
+                              α T
+                   H+ = F +     vv ,    F = P HP T .
+                             βq
+Write
+          A = Z T HZ ≻ 0,       a = Z T Hg,   b = Z T Hy,   r = y T Hy,
+                  u = aT A−1 a,    w = aT A−1 b,   z = bT A−1 b.
+Then
+                                          −r/κ2 1/κ
+                                                  
+                    Z T FZ = A − [a b]               [a b]T .
+                                           1/κ 0
+The identity det(I + U V ) = det(I + V U ) reduces its determinant to a 2 × 2
+determinant. Expanding gives
+                                   det A
+                   det(Z T FZ) =         (κ − w)2 + u(r − z) .
+                                                            
+                                      2
+                                                                             (33)
+                                    κ
+34
+
+
+Schur complements give, independently,
+              det GramH (y, Z) = det A(r − z),
+           det GramH (g, y, Z) = det A (q − u)(r − z) − (κ − w)2 .
+                                                                
+
+Both are Gram determinants and hence nonnegative, including when their
+column families are dependent. Combining these identities yields
+                q det GramH (y, Z) − det GramH (g, y, Z)   det GramH (y, Z)
+det(Z T FZ) =                                            ≤                  .
+                                 β 2 q2                          β2q
+   Adding ρaaT to the compression changes the coefficient r/κ2 by ρ. The
+same 2 × 2 expansion therefore changes its determinant by exactly ρ det A u.
+No invertibility of Z T FZ is used. For ρ = α/(βq), the Schur complement of A
+in GramH (g, Z) gives 0 ≤ u ≤ q, so the increase is at most (α/β) det A. This
+proves the inequality.
+   When j = n, Z is an orthogonal basis and u = q, w = κ, z = r. Equation (33)
+then vanishes, while the rank-one increase is exactly (α/β) det A. Orthogonal
+invariance gives the stated determinant identity.
+
+
+B Constructing the planar comparison field
+
+This appendix supplies the geometric ingredient used in Theorem 8. The
+construction applies near a compact regular part of one positive level. It does
+not assume that the BFGS iterates converge to one point of that level.
+Lemma 7 (One field with all endpoint estimates) Let F : R2 → R be
+finite and convex with minimum F∗ , and let C ⊂ {F = ℓ} be a nonempty
+compact set, where ℓ > F∗ . Suppose the boundary of {F ≤ ℓ} contains no
+nontrivial segment and every point of C is non-affine-critical and has the
+smooth or regular convex two-branch structure in Theorem 8. Fix valid Armijo–
+weak-Wolfe constants. There exist an open neighborhood U ⊃ C, a compact
+buffer Q ⊃ U , a field w defined on a neighborhood of Q, and constants η, κ, δ > 0,
+C0 , C1 , L ≥ 0 such that:
+1. The field is locally Lipschitz, bounded on Q, and every g ∈ ∂F (p), p ∈ Q,
+   satisfies g T w(p) ≥ η. All subgradients at a fixed point have the same pairing
+   with w(p).
+2. For every eligible pair x, z ∈ U with ∥s∥ < δ, its entire segment lies in Q
+   and
+         | det(s, w(x + θs))| ≥ κ∥s∥   (0 ≤ θ ≤ 1),      (y T w(z))2 /t ≤ C0 .
+3. For every such pair there are λ > 0 and β ∈ R with
+      w(z) = λw(x) + βs,         | log λ| ≤ C1 d,     d ≤ 1 =⇒ λ2 ≤ 1 + Ld.
+All neighborhoods, constants and the field are chosen before the endpoint pair
+or any BFGS matrix.
+BFGS: convergence and failure                                                     35
+
+
+Proof Corner motion. At a nonsmooth point of C, the local branch-value map
+x 7→ (f1 (x), f2 (x)) has nonsingular derivative. The inverse function theorem
+gives a C 2 curve pj (t) characterized by f1 (pj (t)) = f2 (pj (t)) = t for t near ℓ.
+Its C 1 velocity vj (t) = p′j (t) satisfies
+
+                   ∇f1 (pj (t))T vj (t) = ∇f2 (pj (t))T vj (t) = 1.             (34)
+
+In particular, this chart has only one nonsmooth point at level ℓ. A smooth
+point has a neighborhood with no nonsmooth points. A finite cover of C by
+smaller buffered charts therefore contains only finitely many level-ℓ corners.
+After shrinking their charts, the neighborhood of C, and the interval of levels,
+every nearby nonsmooth point lies on one of these finitely many curves. This is
+a compactness consequence of the charts, rather than an assumed finite bound
+on future branch changes.
+    Joining their directions. At a corner, the two active gradients generate its
+cone of supporting normals. Its unit directions form a compact arc of width
+less than π; by (34), every such unit normal n has nT vj (t) > 0. Normal arcs at
+distinct level-ℓ corners are disjoint: a shared supporting normal would expose
+both points and their full segment in the boundary of {F ≤ ℓ}. The strict-
+contour hypothesis excludes this. The finitely many arcs have positive angular
+separation.
+    Choose fixed smooth angular cutoffs 0 ≤ χj ≤ 1 with disjoint supports,
+equal to one on slightly enlarged normal arcs. Shrink the level interval so that
+these plateaus contain the whole moving arcs and each support still satisfies
+nT vj (t) > 0 uniformly. With n(θ) = (cos θ, sin θ) and T (θ) = (− sin θ, cos θ),
+define                             X
+                                       χj (θ) n(θ)T vj (t) − 1 .
+                                                              
+                     h(t, θ) = 1 +                                          (35)
+                                    j
+
+Because at most one cutoff is nonzero, this is a convex combination of positive
+quantities. Thus h is bounded and bounded away from zero on the chosen
+compact level interval. It is C 1 in t, smooth in θ, and its derivatives used below
+are bounded. No convex-support-function property of h is needed.
+   At a smooth point, put n(θ(x)) = ∇F (x)/∥∇F (x)∥ and define
+
+             w(x) = h(F (x), θ(x))n(θ(x)) + hθ (F (x), θ(x))T (θ(x)).           (36)
+
+All expressions are periodic, so no global choice of angle is required. Near
+the jth switching curve the relevant cutoff equals one and all others vanish.
+Consequently h = nT vj , hθ = T T vj , and
+
+                                w(x) = vj (F (x)).                              (37)
+
+This holds on both smooth sides in a whole neighborhood of the curve. Use
+the same formula on the curve itself. It provides a continuous, locally Lipschitz
+extension across the gradient jump, while the field is C 1 elsewhere. Smaller
+compact buffers give uniform field and derivative bounds. At a smooth point,
+
+                  ∇F (x)T w(x) = ∥∇F (x)∥h(F (x), θ(x)) > 0;
+36
+
+
+at a corner every subgradient pairs to one by (34). On sufficiently small buffers
+of C, these pairings have a uniform positive lower bound. One way to see the
+needed uniform gradient bound away from zero is the supporting inequality
+∥g∥∥x − x∗ ∥ ≥ F (x) − F∗ on the compact buffer, where x∗ is any minimizer
+and the value gap stays positive. This proves the visibility and common-pairing
+assertions.
+    The specific angular formula has a crucial derivative cancellation:
+
+                         ∂θ (hn + hθ T ) = (h + hθθ )T.                     (38)
+
+Thus at a smooth point the derivative of w maps the tangent line of a level
+curve into that same line. In the orthonormal basis (T, n),
+                                        
+                                         ab
+                                 Dw =
+                                         0e
+
+with bounded coefficients. The formula hn + hθ T is classical in normal-
+angle geometry [17]; see the explicit formula in (Bogosel, 2022 preprint,
+arXiv:2203.06981v1, Section 2, equation (4)). Here its derivative cancellation
+is used for a comparison field, without a convexity requirement on h.
+    Transversality of eligible steps. Choose nested neighborhoods so that U
+lies in the interior of Q, with all preceding bounds valid on a larger buffer.
+Sufficiently close pairs in U have their segments in Q. If the claimed deter-
+minant lower bound failed at arbitrarily short lengths, compactness would
+give coalescing endpoints tending to p ∈ Q, normalized steps s/∥s∥ → e, and
+segment points at which the normalized determinant tends to zero. Bounded
+subgradients and their closed graph give endpoint gradient limits a, b ∈ ∂F (p).
+Continuity of w makes e parallel to w(p). Positivity of the common pairing
+and d > 0 force e = −w(p)/∥w(p)∥. Hence
+
+              d/∥s∥ −→ −aT e > 0,        t/∥s∥ −→ (b − a)T e = 0,
+
+contradicting t ≥ (1 − c2 )d. This proves uniform transversality, including every
+point of the segment, after reducing δ.
+   Transport charged to decrease. Write q(θ) = x + θs, φ(θ) = F (q(θ)) and
+D(θ) = det(s, w(q(θ))). Transversality makes D nonzero with constant sign
+on [0, 1]. At a smooth point the basis (T, n) has determinant −1. Writing
+s = sT T + sn n, direct calculation yields
+                                                        
+                      det(s, Dw s) = sn (a − e)sT + bsn .                    (39)
+
+The numerator has magnitude at most a constant times |sn |∥s∥. Since |D| ≥
+κ∥s∥ and φ′ = ∥∇F ∥ sn , the quotient is bounded by a constant times |φ′ |.
+At a corner, (37) gives w ◦ q = vj ◦ φ. The convex function φ has a right
+derivative at every θ < 1, and the one-sided chain rule gives the same bound
+there. Therefore, for H(θ) = log |D(θ)|,
+               ′
+                 (θ)| ≤ A|φ′+ (θ)| ≤ A φ′+ (θ) + 2d ,
+                                                   
+            |H+                                        0 ≤ θ < 1.
+BFGS: convergence and failure                                                    37
+
+
+The last inequality uses monotonicity of the convex right derivative and φ′ (0) =
+−d.
+    For clarity, the one-sided comparison needed here requires no finite count of
+switching intersections. If a continuous function u on [a, b] has u′+ ≤ 0 on [a, b),
+then u(b) ≤ u(a). Otherwise choose ϵ > 0 so that u(b) − ϵb > u(a) − ϵa. The
+continuous function u(t) − ϵt has a minimum at some point before b, where
+its right derivative must be nonnegative, contradicting the strictly negative
+bound. Apply this fact to both
+                                                             
+                    ± H(θ) − H(0) − A φ(θ) − φ(0) + 2dθ .
+
+Both start at zero and have nonpositive right derivative. Since φ(1) ≤ φ(0),
+
+                                |H(1) − H(0)| ≤ 2Ad.
+
+Set λ = D(1)/D(0) > 0. Because s, w(x) are linearly independent, solving in
+that basis gives w(z) = λw(x) + βs; the preceding bound is | log λ| ≤ 2Ad. For
+0 < d ≤ 1, convexity of the exponential on [0, 1] gives λ2 ≤ e4Ad ≤ 1+(e4A −1)d.
+This establishes the transport constants.
+   The secant correction. A finite buffered chart cover supplies a common
+Lipschitz constant for the branch gradients. First suppose the endpoints use
+the same smooth branch f . On a larger convex chart, with Lipschitz constant
+L > 0, sufficiently close buffered endpoints satisfy
+
+           ∥∇f (z) − ∇f (x)∥2 ≤ 2L f (z) − f (x) − ∇f (x)T (z − x) .
+                                                                   
+
+
+Indeed, subtract the tangent plane at x, then use the descent estimate at z
+for the step −(∇f (z) − ∇f (x))/L. This step stays in the larger chart for close
+endpoints, and convexity makes the resulting function value no smaller than
+its value at x. This proves the displayed inequality. It is the local convex-
+gradient estimate underlying cocoercivity [2]; compare (D. Wachsmuth and
+G. Wachsmuth, 2022 preprint, arXiv:2204.00282v1, Theorem 2.5). Since the
+branch values and gradients at both endpoints agree with those of F , the
+bracket is at most t. Boundedness of w then bounds (y T w(z))2 /t uniformly.
+    For different endpoint branches i, j in a two-branch chart, the segment
+contains a tie point p. There (∇fj (p)−∇fi (p))T w(p) = 0. The branch gradients
+and w are Lipschitz, so
+                               |y T w(z)| ≤ A1 ∥s∥.
+Put a = ∇fi (x), b = ∇fj (x) and r = ∇fj (z) − ∇fj (x), so ∥r∥ ≤ L∥s∥. Then
+
+                        aT s = −d,      bT s = t − d − rT s.
+
+The two gradient rows are uniformly independent on the smaller chart. Their
+inverse bound and eligibility imply
+                                                   
+                                               2
+         ∥s∥ ≤ A2 (2d + t + L∥s∥2 ) ≤ A2 1 +          t + A2 L∥s∥2 .
+                                             1 − c2
+38
+
+
+For sufficiently small ∥s∥, absorb the last term to obtain t ≥ a0 ∥s∥ with a0 > 0.
+Consequently (y T w(z))2 /t ≤ A21 ∥s∥/a0 , uniformly bounded. A finite buffered
+cover ensures every sufficiently close pair lies in one of the preceding charts.
+Taking the common smaller distance threshold finishes all three assertions for
+the same field.
+
+
+C The algebraic seed and its finite rational certificate
+
+This appendix gives the objects and finite inequalities needed for Lemma 4.
+There are two logically separate tasks. The algebraic equations close the
+three-step matrix and displacement cycle; the strict inequalities force the
+specified search to choose that cycle. Solving the equations alone would leave
+the algorithmic claim unproved. All decimals defining a box are terminating
+rationals. No rounded point is substituted for a root or an infinite orbit.
+
+
+C.1 Existence and uniqueness of the defining root
+
+The two unknown coordinates of the third slope are used to enforce the
+two prescribed dyadic lengths. The matrix calculation in the next subsection
+first expresses the lengths needed for closure as rational functions β(c, d) and
+γ(c, d). Clearing their positive denominators in β = 1/4 and γ = 1/16 gives
+the following two equations. A contraction certificate then selects one exact
+solution near a rational center.
+    Put
+     U = 127c + 16d,             V = 16c − 127d − 16,      R = c − 8d,
+           2      2                    2        2
+     K = 8c + 8d + d − 8,         T =c −c+d ,              Y = (c − 1)2 + d2 ,
+and let                                                   
+                                  264192RK − U V (U + 129)
+                      P (c, d) =                             .               (40)
+                                       16V T K − RU Y
+The root is specified by P (c, d) = 0 and ∥(c, d) − r̄∥∞ ≤ 10−30 , where
+      r̄1 = 0.31848142762711863064645131250290703717912205023605,
+      r̄2 = −1.02523211967574872548135087001300414284511909318444.
+Lemma 8 (Rational root certificate) This closed box contains exactly one
+root. On the box all of U, V, R, K, T, Y, U + 129 are positive, and (18) holds.
+Proof Let D = DP (r̄) and define its inverse by the ordinary two-by-two
+adjugate formula A = adj(D)/ det D. The following finite rational certificate
+uses only the coefficients of (40) and the two displayed rationals:
+                                                       X
+  det D ̸= 0,     max |(AP (r̄))i | < 10−50 ,   max         |ai,ν | |ν| ≤ 7000,
+                       i                            i
+                                                        2≤|ν|≤5
+                                                                             (41)
+BFGS: convergence and failure                                                            39
+
+
+where, for ν = (ν1 , ν2 ),
+                                                  2
+                                           1 X
+                             ai,ν = −                Aij ∂ ν Pj (r̄).
+                                        ν1 !ν2 ! j=1
+
+These formulas specify every rational in the certificate: the index set contains
+the eighteen monomials of degrees two through five. The bounds in (41) follow
+by substituting the rational center, differentiating the displayed polynomials,
+and clearing positive denominators in the three comparisons. Thus they are
+finite integer inequalities, rather than tolerances for a numerically computed
+root.
+    For completeness, their analytic consequence follows directly. The centered
+residual map N (h) = h − AP (r̄ + h) has the exact expansion
+                                               X
+                      Ni (h) = −(AP (r̄))i +         ai,ν hν ;
+                                                      2≤|ν|≤5
+
+
+its linear part vanishes because AD = I. On ∥h∥∞ , ∥k∥∞ ≤ r = 10−30 ,
+telescoping the factors of each monomial gives |hν − k ν | ≤ |ν|r∥h − k∥∞ , since
+r ≤ 1 and |ν| ≥ 2. Hence N has Lipschitz constant at most 7000r and
+
+                           ∥N (h)∥∞ ≤ 10−50 + 7000r2 < r.
+
+The closed box is complete, so contraction gives a unique fixed point. Since A
+is invertible, this is exactly a root of P . This is the standard preconditioned-
+residual principle; compare Rump [16, Theorem 13.3].
+    The root box lies in 318/1000 < c < 319/1000 and −1026/1000 < d <
+−1025/1000. Substitution gives positivity of the stated factors. For example,
+      2397      24113              119263      59703                4259     8527
+           ≤U ≤       ,                   ≤V ≤       ,                   ≤R≤      .
+       100       1000               1000        500                  500     1000
+Multiplying positive endpoints in 129R/[V (U + 129)] gives 60/1000 < ρ <
+61/1000. In particular all divisions used below are valid.
+
+
+C.2 The matrix identity
+
+Proof (Proof of the algebraic part of Lemma 4) The first update in (19) is
+immediate from s0 = (−1, 0)T and g1 − g0 = (−2, −1/8)T . For arbitrary (c, d)
+with the positive factors above, put
+                     66048RK                   V TK                  2064T K
+             β=                  ,       γ=         ,      ρe =                .
+                   U V (U + 129)               RU Y               U (U + 129)Y
+
+The rational identities obtained from (17) are
+
+ B(B(M1 , g1 , g2 , β), g2 , g0 , γ) = ρeI,      −γB(M1 , g1 , g2 , β)g2 = ρe(g0 −g2 ). (42)
+40
+
+
+Here is a way to check the identities without guessing matrix entries. The
+middle update is C + βE, because its two projection factors are independent
+of the step length and its rank-one term is linear in that length. Requiring
+(C + βE)g2 to be parallel to g0 − g2 gives a linear equation for β; substitution of
+M1 , g1 , g2 gives the displayed value. For a unit vector w ⊥ (g0 −g2 ), substitution
+gives wT (C + βE)w = ρe. With the displayed γ, the last step is ρe(g0 − g2 ). Its
+projection factors are the orthogonal projector onto (g0 − g2 )⊥ , and its rank-one
+term is ρe times the complementary projector. Their sum is ρeI, proving (42).
+Each substitution is a rational identity and can equivalently be checked by
+clearing their nonzero denominators and expanding.
+    Equations (40) give exactly β = 1/4 and γ = 1/16. Moreover,
+                                                            
+                                   2064R                 1
+                       ρe − ρ =                      γ−          = 0.
+                                V (U + 129)             16
+
+This gives the matrix and displacement closures. The formula for z0 gives
+s0 +s1 +s2 = −(1−ρ)z0 . The strict inequalities below imply (gj+1 −gj )T sj > 0
+at each phase. Positive definiteness follows inductively from the full update:
+its two nonnegative quadratic terms cannot both vanish on a nonzero vector
+when y T s > 0.
+
+
+C.3 Sound enclosure of every query
+
+The remaining task is finite because one cycle has only nine queries. For
+each query we must certify its unique active branch, the descent direction at
+the current iterate, and the comparison that accepts or rejects it. A positive
+derivative at each accepted query supplies weak Wolfe for every permitted
+curvature constant. Strict value increase at each rejected query makes Armijo
+fail, so the routine reaches exactly the next displayed bisection. This explains
+why the certificate below contains more than values at the three accepted
+points.
+     An interval [a, b] encloses the corresponding real quantity. Addition, nega-
+tion, multiplication and reciprocal are evaluated by
+
+             [a, b] + [c, d] = [a + c, b + d],        −[a, b] = [−b, −a],
+                [a, b][c, d] = [min(ac, ad, bc, bd), max(ac, ad, bc, bd)],
+
+and [a, b]−1 = [1/b, 1/a] when 0 ∈  / [a, b]. These inclusion rules follow from
+order on the reals; induction on a rational expression proves the soundness
+of every resulting bound. All endpoints used here are rational, so no directed
+floating-point rounding is needed.
+    For the query calculation it suffices to use the larger box
+
+       [318481, 318482]           [−1025233, −1025232]                  [6019, 6021]
+  c∈                    ,   d∈                         ,           ρ∈                . (43)
+             106                          106                               105
+BFGS: convergence and failure                                                    41
+
+
+The first two inclusions follow from the root box; substitution in (18), with
+positive denominator, gives the third. Evaluate zj from (21) and use
+
+       p0 = (−1, 0)T ,    p1 = (127/256, 1/16)T ,    p2 = 16ρ(1 − c, −d)T .
+
+For a row with active index i, set q = zj + αpj and evaluate the following
+rational expressions by the inclusion rules:
+                                    (
+             T               T        gjT zj + αgjT pj /3 − giT q, acceptance,
+   (gi − gk ) q(k ̸= i), −αgj pj ,
+                                      giT q − gjT zj ,             rejection.
+
+For an acceptance also evaluate αgiT pj . Every expression in its row is strictly
+greater than the following positive rational lower bound, in the order of Table 2:
+                 1
+                    (729, 2417, 145, 75, 5964, 2682, 1041, 221, 20).           (44)
+                104
+The same interval operations give the value enclosures in that table. For the
+three base points, the designated active gaps are positive as well. Evaluating
+3 ± giT q for every i, 2 − q2 , and the designated active value giT q gives positive
+lower bounds for all base points and all nine queries. This proves (23). All inputs,
+expressions, interval rules and output bounds of this finite certificate are now
+specified. The strict active gaps also give differentiability on a neighborhood of
+each query. Together with the matrix identities, these calculations complete
+the proof of Lemma 4.
+
+
+D Positive lower curvature through a perturbed cycle
+
+Theorem 11 uses a different regularity balance from Theorem 10. Adding a
+positive quadratic changes the seed orbit, so exact homogeneity alone no longer
+supplies a trajectory. We first prove persistence on a stable manifold and then
+copy one entire perturbed orbit at all scales. The first step yields a global
+failure from a suitable matrix; the copying step makes bad starts approach
+the minimizer of one fixed objective; a final fixed change of coordinates makes
+their common initial matrix the identity. The price of retaining a positive lower
+curvature bound is the loss of second differentiability of the branches at the
+accumulation point. Throughout this appendix the line-search constants are
+c1 = 10−4 and c2 = 1/2.
+
+
+D.1 A strongly convex global example
+
+A common positive quadratic leaves the active-branch geometry unchanged
+and makes every sublevel compact. It perturbs the gradients, however, so the
+homogeneous seed is no longer an exact orbit. Close to the corner, the quadratic
+gradient is small relative to the fixed slopes. The task is to turn this smallness
+into an exact infinite trajectory, with every rejection and acceptance retained.
+42
+
+
+     Use the fixed slopes of Appendix C and let
+
+                        Qµ (x) = µ2 ∥x∥2 + G(x),           µ > 0.
+
+The vector
+                             (1, −16)T        129         128
+                         ḡ =             =        g0 +         g1
+                                 257          257         257
+is the least-norm point of conv{g0 , g1 , g2 }: g0T ḡ = g1T ḡ = ∥ḡ∥2 = 1/257, whereas
+g2T ḡ > 1/257. Therefore the unique minimizer is
+
+                      x∗ = −ḡ/µ,         min Qµ = −1/(514µ).                      (45)
+
+At x∗ the first two branches tie with distinct gradients, so the minimizer is
+nonsmooth. At zero the subdifferential is the nonstationary triangle of the
+original seed.
+
+Proposition 1 (A perturbed bad orbit) For every µ > 0 and every neigh-
+borhood V of zero, some initial state (x0 , H0 ), H0 ≻ 0, produces a deterministic
+full-BFGS run on Qµ converging to zero, with positive objective values decreas-
+ing to zero. Its accepted lengths repeat 1, 1/4, 1/16, and all accepted and rejected
+query points are differentiable and belong to V .
+
+    The right object for persistence is the three-step return map after dividing
+out the shrinking scale. The homogeneous cycle becomes a fixed point on the
+boundary where that scale is zero. We will verify that it is hyperbolic and that
+its stable manifold enters the positive-scale region. This gives exact perturbed
+orbits; closeness of a finite floating-point trajectory would not. To prove the
+proposition, use normalized coordinates
+                                                       
+                                                       1b
+          x = τ z,    H = τ M (b, e),      M (b, e) =       ,     τ > 0.
+                                                       be
+
+The boundary seed is P∗ = (z0 , 0, 1, 0) in coordinates (z, b, e, τ ). Keep the
+input τ fixed during three substeps. Starting with (Z, M ) = (z, M (b, e)), for
+j = 0, 1, 2 perform
+
+               γj = gj + µτ Z,         S = −αj M γj ,         Z + = Z + S,         (46)
+              Y = gj+1 − gj + µτ S,
+                        SY T        Y ST    SS T
+                                      
+              +
+             M = I− T          M I− T      + T .
+                        Y S         Y S     Y S
+with cyclic gradient indices and α = (1, 1/4, 1/16). For the resulting (Z3 , M3 ),
+let r = (M3 )11 and define
+
+                 Tµ (z, b, e, τ ) = (Z3 /r, (M3 )12 /r, (M3 )22 /r, τ r) .         (47)
+
+The seed closure gives Tµ (P∗ ) = P∗ and r(P∗ ) = ρ. All denominators are
+nonzero there. Hence the map is real analytic on an open neighborhood of P∗ ,
+using negative τ only to define this analytic extension.
+BFGS: convergence and failure                                                       43
+
+
+Lemma 9 (Implementation and hyperbolicity) On a sufficiently small
+neighborhood of P∗ , positive-τ states follow exactly the three query lists of
+Table 2 under the actual algorithm, and (47) is their return map. Its derivative
+has eigenvalues
+   ρ−1 ,   ρ−1 ,   λs ,   λu ,   ρ,       .038 < λs < .039,   1.564 < λu < 1.565.
+The stable eigenspace contains a vector whose τ coordinate is one.
+
+Proof At a query τ Z, the value divided by τ is G(Z) + µτ ∥Z∥2 /2 and the
+gradient is gi + µτ Z. The common quadratic does not affect which slope is
+active. All finite branch gaps and normalized search comparisons are continuous
+in the normalized state. The strict seed margins therefore persist on a common
+neighborhood. The physical step and secant are exactly the ones in (46) after
+restoring the scale, proving agreement with the actual update and the entire
+search tree.
+     At τ = 0 the matrix return is independent of z. Let J be the derivative at
+(b, e) = (0, 1) of its normalized shape map. The following rational enclosures
+specify the spectral certificate:
+                                                                     
+                 [11123986249, 11123986253] [6459701025, 6459701029]
+     1010 J ∈                                                            . (48)
+                  [7515015701, 7515015708] [4905136882, 4905136890]
+They are obtained by differentiating the rational substeps (46) at τ = 0, then
+applying the interval rules of Appendix C to
+              c ∈ [318481427627118, 318481427627119]/1015 ,
+              d ∈ [−1025232119675749, −1025232119675748]/1015 .
+Both intervals contain the defining root box. This is a finite rational derivative
+calculation: for a product use D(ab) = a Db + b Da, and for an inverse use
+D(a−1 ) = −a−2 Da, with denominators bounded away from zero. Substitution
+of (48) in p(λ) = λ2 − tr(J)λ + det J gives
+       p(.038) > 0,        p(.039) < 0,       p(1.564) < 0,     p(1.565) > 0.
+These rational sign comparisons locate two distinct real roots and exhaust the
+degree-two polynomial; no numerical eigenvector is used.
+   At τ = 0, Z3 = z + v(b, e) and r is independent of z. The last coordinate of
+the return is τ r. Thus its full derivative has the block form
+                                        −1          
+                                         ρ I2 C µa
+                          DTµ (P∗ ) =  0 J µb′  .
+                                            0 0 ρ
+The unspecified blocks are finite derivatives of the displayed rational map and
+do not affect its spectrum. None of the five eigenvalues is zero or has modulus
+one. Moreover ρ is not an eigenvalue of the upper left four-dimensional block.
+Assigning last coordinate one and solving the remaining four linear equations
+gives a ρ-eigenvector. This proves the last assertion and the lemma.
+44
+
+
+Proof (Proof of Proposition 1) The inverse function theorem makes the re-
+turn map a local diffeomorphism. The classical local stable-manifold theorem
+provides a two-dimensional smooth stable manifold through P∗ , tangent to
+the stable eigenspace; (Dyatlov, Notes on hyperbolic dynamics, 2018 preprint,
+arXiv:1805.11660v1) gives an exposition of this principle and its graph trans-
+form proof. By the last assertion of Lemma 9, this manifold contains points
+with arbitrarily small positive τ . Choose such a point whose forward return
+orbit stays in the implementation neighborhood and tends to P∗ . Shrinking
+the neighborhood keeps r > 0 and M (b, e) ≻ 0, so τ + = τ r preserves positivity.
+The actual intermediate matrices remain positive definite by positive curvature.
+    The physical iterates are x3m = τm zm → 0. Intermediate points and all
+queries are τm times bounded continuous functions of the normalized state,
+so they tend to zero too. Their normalized objective values stay positive by
+the seed’s strict positivity. Armijo makes the values decrease to zero, which
+exceeds (45). The initial stable-manifold point can be taken sufficiently close
+to P∗ that the entire local stable orbit, and hence every physical query, lies in
+the prescribed V . This proves the proposition. The initial matrix is supplied by
+the stable-manifold point, not presumed to be identity or obtained by rounded
+forward shooting.
+
+
+
+D.2 An accumulation embedding with four strongly convex branches
+
+The previous proposition places a bad orbit near its wrong corner, whereas the
+desired local counterexample needs bad starts near the minimizer. We therefore
+place shrinking copies around centers pn converging to that minimizer. The
+spatial factor will be an , and the objective factor a2n , which preserves the same
+inverse matrix by (26). To accommodate the common quadratic, the three
+scalar branch slopes are shifted so that the quadratic cross term restores the
+original seed gradients inside every copy.
+    The scalar interpolation must have value a2n and derivative an at its nth
+node, with an affine neighborhood wide enough to contain all seed queries after
+scaling. A monotone cubic ramp between these plateaux gives a convex function
+with Lipschitz derivative. The node slopes divided by the node positions stay of
+order one, so this construction need not, and will not, have a second derivative
+at zero.
+    Fix
+
+              µ = 1/4096,           c∗ = (2, −32)T ,   qi = gi − µc∗ ,
+                    bi = qiT c∗ ,       r = 1/128,     an = rn .
+
+Here b0 = b1 = 1791/1024 and 1.7 < bi < 34. For each of the two distinct
+values of bi , set
+                        1 − (1 + r)/b
+                   tb =               , ε = 1/1024.
+                            1−r
+BFGS: convergence and failure                                                       45
+
+
+Use the same cubic ramp Pb and primitive Jb as in (27), with this center and
+width. For ban+1 ≤ x ≤ ban put
+
+                                                                    x/(ban ) − r
+  ψb (x) = (ran )2 + ba2n (1 − r){rξ + (1 − r)Jb (ξ)},         ξ=                . (49)
+                                                                       1−r
+
+Set ψb (0) = 0, ψb (x) = x2 /2 for x < 0, and ψb (x) = 1 + x − b for x ≥ b.
+   On each positive interval,
+
+       ψb′ = an {r + (1 − r)Pb (ξ)},       ψb′′ = Pb′ (ξ)/b,    0 ≤ Pb′ ≤ 768.
+
+The identity r + (1 − r)(1 − tb ) = (1 + r)/b matches node values and derivatives.
+Their values are a2n and an , respectively. The positive derivative is monotone
+and constant near every node. Its derivative slopes are uniformly bounded, so
+summing over intervals and taking a limit at zero proves that ψb is globally
+C 1,1 , convex and coercive, nonnegative with unique zero at the origin. The two
+constant-derivative lengths, divided by an , are
+
+                   b(1 − r)(1 − tb − ε),       b(1 − r)(tb − ε)/r,
+
+both greater than 1/2 for these values of b. Consequently
+
+                   ψb (ban + h) = a2n + an h         (|h| ≤ an /2).               (50)
+
+At zero, the difference quotients of ψb′ along ban and (b + 1/4)an equal 1/b and
+1/(b + 1/4), respectively. Thus its second derivative at zero does not exist.
+   Define
+                   fi (x) = µ2 ∥x∥2 + ψbi (qiT x)   (i = 0, 1, 2),
+                            µ     2                                          (51)
+                   f3 (x) = 2 ∥x∥ + x2 ,        F = max fi .
+                                                        i
+
+Each branch is globally µ-strongly convex and C 1,1 . For the first three branches,
+the gradient-Lipschitz constants are at most Li = µ + max{1, 768/bi }∥qi ∥2 .
+Direct substitution of the rational root bounds gives L0 < 439, L1 < 446 and
+L2 < 27; hence 512 is a common constant, also covering the fourth branch. Since
+F (x) ≥ µ∥x∥2 /2 with equality zero at the origin, the sublevels are compact
+and the minimizer is unique. The first three gradients at zero vanish, whereas
+the fourth is (0, 1)T , so the minimizer is nonsmooth.
+    At a differentiable point of a finite maximum of L-smooth functions, all
+active gradients agree. Inactive branches stay inactive locally; taking the
+maximum of the active upper Taylor bounds therefore gives the local upper
+Taylor bound with constant L. Applying this with L = 512 and combining it
+with strong convexity proves
+
+          µI ⪯ ∇2 F (x) ⪯ 512I     whenever F is twice differentiable.
+
+This does not require a globally Lipschitz gradient for the maximum itself.
+46
+
+
+D.3 Copying one entire orbit and fixing the initial matrix
+
+Let pn = an c∗ and C∗ = 1 + µ∥c∗ ∥2 /2. For y in a fixed sufficiently small
+neighborhood of zero, (50) yields
+                   F (pn + an y) = a2n {C∗ + Qµ (y)}          (n ≥ 1).               (52)
+Indeed, |qiT y| ≤ 1/2 puts each old branch in its affine scalar region, and
+expansion of the common quadratic uses qi + µc∗ = gi . The fourth branch
+is inactive there: its residual an (−32 + y2 ) is negative, while each old scalar
+residual is at least a2n /2.
+    Choose, by Proposition 1, one bad orbit (x̄k , H̄k ) all of whose queries lie in
+this neighborhood. For every n, start at pn + an x̄0 with the same matrix H̄0 .
+Induction on the actual query tree gives
+                          (n)                        (n)
+                        xk      = pn + an x̄k ,    Hk      = H̄k .
+This is (25) with spatial factor an and objective factor a2n . The covariance
+calculation (26) preserves the matrix, while function differences and directional
+products acquire the same positive factor. Thus each rejection, acceptance and
+updated matrix is preserved. Equation (52) applies to every query because
+                                                          (n)                  (n)
+the whole chosen seed orbit lies in its domain. Thus xk → pn and F (xk ) ↓
+  2
+an C∗ > 0. The three active gradients at pn are an gi , whose convex hull excludes
+zero. All query norms are at most an (∥c∗ ∥ + supseed queries ∥x̄∥) → 0.
+     The seed supplied by the stable manifold has a positive-definite initial matrix
+H̄0 , common to every copy. Identity initialization is obtained by changing
+coordinates once for the whole objective and the whole sequence of starts,
+                                                                            1/2
+rather than selecting a different objective for each start. Set A = H̄0 and
+Fe(z) = F (Az). The coordinate identities
+
+                  ge = AT g,        e = A−1 HA−T ,
+                                    H                        se = A−1 s
+preserve both scalar line-search tests and (17); see also [1, Section 2]. They give
+He 0 = I for this one fixed transformation. Strong-convexity and smoothness
+constants become µ = µλmin (H̄0 ) and L = 512λmax (H̄0 ). All locality and
+differentiability statements persist under the invertible linear map. This proves
+Theorem 11.
+
+
+References
+
+ 1. A. S. Lewis and M. L. Overton. Nonsmooth optimization via quasi-Newton methods.
+    Mathematical Programming 141 (2013), 135–163; published online 16 February 2012.
+    https://doi.org/10.1007/s10107-012-0514-2.
+ 2. D. Wachsmuth and G. Wachsmuth. A simple proof of the Baillon–Haddad theorem on
+    open subsets of Hilbert spaces. Journal of Convex Analysis 30(4) (2023), 1319–1328.
+    https://journalofconvexanalysis.com/articles/jca30059/.
+ 3. B. Gebken. Technical Results on the Convergence of Quasi-Newton Methods for Nons-
+    mooth Optimization. Journal of Optimization Theory and Applications 209, article 57 (8
+    May 2026). https://doi.org/10.1007/s10957-026-03008-z.
+BFGS: convergence and failure                                                           47
+
+
+ 4. A. Banerjee, S. Merugu, I. S. Dhillon and J. Ghosh. Clustering with Bregman Divergences.
+    Journal of Machine Learning Research 6 (2005), 1705–1749. https://www.jmlr.org/pap
+    ers/v6/banerjee05b.html.
+ 5. J. Guo and A. S. Lewis. Nonsmooth Variants of Powell’s BFGS Convergence Theorem.
+    SIAM Journal on Optimization 28(2) (2018), 1301–1311. https://doi.org/10.1137/17
+    M1121883.
+ 6. F. Schöpfer. Linear Convergence of Descent Methods for the Unconstrained Minimization
+    of Restricted Strongly Convex Functions. SIAM Journal on Optimization 26(3) (2016),
+    1883–1911. https://doi.org/10.1137/140992990.
+ 7. J. Nocedal. Theory of algorithms for unconstrained optimization. Acta Numerica 1
+    (1992), 199–242. https://doi.org/10.1017/S0962492900002270.
+ 8. R. H. Byrd and J. Nocedal. A Tool for the Analysis of Quasi-Newton Methods with
+    Application to Unconstrained Minimization. SIAM Journal on Numerical Analysis 26(3)
+    (1989), 727–739. https://doi.org/10.1137/0726042.
+ 9. M. J. D. Powell. Some global convergence properties of a variable metric algorithm for
+    minimization without exact line searches.
+    In R. W. Cottle and C. E. Lemke (eds.), Nonlinear Programming. SIAM–AMS Proceed-
+    ings 9, American Mathematical Society (1976), 53–72.
+10. Q. Jin, R. Jiang and A. Mokhtari. Non-asymptotic Global Convergence Analysis of
+    BFGS with the Armijo-Wolfe Line Search. Advances in Neural Information Processing
+    Systems 37 (NeurIPS 2024). https://doi.org/10.52202/079017-0536.
+11. P. L. Combettes and B. C. Vũ. Variable metric quasi-Fejér monotonicity. Nonlinear
+    Analysis: Theory, Methods & Applications 78 (2013), 17–31. https://doi.org/10.101
+    6/j.na.2012.09.008.
+12. A. S. Lewis and S. Zhang. Nonsmoothness and a Variable Metric Method. Journal of
+    Optimization Theory and Applications 165 (2015), 151–171; published online 7 August
+    2014. https://doi.org/10.1007/s10957-014-0622-7.
+13. A. Asl and M. L. Overton. Analysis of limited-memory BFGS on a class of nonsmooth
+    convex functions. IMA Journal of Numerical Analysis 41(1) (2021), 1–27; advance access
+    18 January 2020. https://doi.org/10.1093/imanum/drz052.
+14. W. F. Mascarenhas. The BFGS method with exact line searches fails for non-convex
+    objective functions. Mathematical Programming 99 (2004), 49–61; published online 7
+    May 2003. https://doi.org/10.1007/s10107-003-0421-7.
+15. W. F. Mascarenhas. On the divergence of line search methods. Computational and
+    Applied Mathematics 26(1) (2007), 129–169. https://www.scielo.br/j/cam/a/JBFzLz
+    r4PNdcqKHJRRS4mHf/.
+16. S. M. Rump. Verification methods: Rigorous results using floating-point arithmetic. Acta
+    Numerica 19 (2010), 287–449. https://doi.org/10.1017/S096249291000005X.
+17. B. Bogosel. Numerical Shape Optimization Among Convex Sets. Applied Mathematics
+    & Optimization 87, article 1 (2023); published online 7 November 2022. https://doi.
+    org/10.1007/s00245-022-09920-w.
+

@@ -14,13 +14,25 @@ Deliverables: `BFGS_Journal_Article.pdf`, `BFGS_Complete_Companion.pdf`, and
 
 ## Source freeze and validation receipts
 
-This committed source-freeze record precedes packaging and extraction
-validation. Current PDF hashes are in `RELEASE.json`. Packaging resolves the
-source commit and writes the ZIP and external `SOURCE_MANIFEST.json`. Any
-committed prior `SOURCE_MANIFEST.json` describes an earlier package; the new
-ZIP's own `_archive/RELEASE_SNAPSHOT.json` identifies the current snapshot
-without a circular archive-hash claim. A later release receipt records actual
-extraction results under `validation/runs/`, preserving prior validation runs.
+The source commit is `252ea5dd5a0dccc9301da4132f98c539f1e2393c`.
+The ZIP is 96,721,994 bytes in 3,778 members, with SHA256
+`9f34ef3c91096958bd59e812de001a878f44be441541b097359ec5714c47b99f`.
+Current PDF and archive hashes are in `RELEASE.json` and `SOURCE_MANIFEST.json`.
+
+Fresh extraction validation passed in
+`validation/runs/narrative_20260912_01/SUMMARY.json`. Both PDFs rebuilt
+byte-identically; all 154 rendered pages and paginated text matched the reviewed
+versions, with resolved references and no overfull boxes. Both new Lean
+supplements were freshly compiled and structurally audited in the extraction,
+with the same exact types and dependency counts. The current and historical
+evidence gates passed, and temporary extraction files were removed. All 34
+commands and their output remain in the versioned validation directory.
+
+The ZIP contains the earlier committed source-freeze state. Its
+`_archive/RELEASE_SNAPSHOT.json` identifies that snapshot; any committed
+`SOURCE_MANIFEST.json` inside it describes a prior package, explicitly labeled
+as such. The external receipt here records this ZIP's hash and later validation
+without a circular archive-hash claim. All prior validation runs are preserved.
 
 The ZIP preserves the outer `BFGS-non-smooth/` folder and every committed
 relative path. It includes the Git history bundle required by historical
