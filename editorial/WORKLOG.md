@@ -137,3 +137,30 @@ comparison read the outer workspace manifest without requiring both documents.
 Both are corrected: optimized execution is rejected explicitly; the extracted
 manifest must identify exactly the article and companion. This strengthens the
 release checks without changing any manuscript or formal proof.
+
+## Milestone D: author-review release validated
+
+Milestone C (7e48cbb) and archive-check hardening (7bcce9a) were both pushed
+successfully to origin/main. The archive freezes 7bcce9a, preserves the original
+directory structure and contains 3,527 members (3,521 committed source files plus
+release/archive metadata). It is 79,008,274 bytes. Its SHA-256 is
+e80514f12068dc5aced1eba8fedc89d1822e2cd28366456b40208824a15ec686.
+
+The actual fresh-extraction replay passed: Git history restored at the exact
+source commit; complete document and vector-figure regeneration succeeded; both
+PDFs were byte-identical; all 32 article and 105 companion pages were pixel- and
+text-identical to the already visually reviewed PDFs. References/citations are
+resolved and overfull boxes are absent. Companion regeneration and current
+source/formal evidence integrity checks passed. The unchanged historical gate
+passed at 00362c0 after the wrapper explicitly recorded the expected new-HEAD
+citation-only failure and verified all frozen original inputs. All command logs
+and hashes are retained in release/validation/. The temporary extraction and
+its owned worktrees were removed. This replay did not claim a second empty-cache
+Lean build. The previously recorded actual pinned build/audits remain current
+because no mathematical source or dependency changed.
+
+All three required author-side review passes are complete. No remaining
+mathematical or authoring blocker is recorded. Release PDFs, archive manifest,
+validation logs, source entry points and human author actions are documented in
+release/README.md. This commit is the final release milestone; the successful
+push receipt and final gate status are recorded immediately afterward.
