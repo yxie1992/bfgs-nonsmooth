@@ -12,16 +12,30 @@ Deliverables are `BFGS_Journal_Article.pdf`, `BFGS_Complete_Companion.pdf` and
 and `companion/master.tex`. The prior editions and their receipts are preserved
 in `history/20260912_initial/` and `history/20260912_narrative/`.
 
-## Current source-freeze status
+## Validated source freeze
 
-The proof/prose milestone `7072ac033abb8ac8a1373850142f2fb4cec7f951` was pushed.
-This committed source-freeze record precedes the current archive validation.
-`RELEASE.json` identifies the reviewed PDFs and pending package status; after
-packaging, the external `SOURCE_MANIFEST.json` and archive-only
-`_archive/RELEASE_SNAPSHOT.json` identify the exact source-freeze commit. Earlier
-committed archive/validation receipts remain historical evidence and do not
-claim a new replay. The current planned validation run is
-`validation/runs/satisfaction_20260912_01/`.
+The reviewed source commit is `573306b9fb4f4c66d7214b533b89380c28ceda66`,
+committed and pushed after proof/prose milestone `7072ac0`. The source ZIP is
+119,243,872 bytes in 4,327 members, with SHA-256
+`64633451de2c70cb1b97af49abc5ac65a9d549460d4e597e100a88685403aaba`.
+`RELEASE.json` and `SOURCE_MANIFEST.json` record its exact PDFs and source.
+
+Fresh extraction validation passed in
+`validation/runs/satisfaction_20260912_01/SUMMARY.json`. Both PDFs rebuilt
+byte-identically; all 153 rendered pages and paginated text matched the reviewed
+versions. References resolve and there are no overfull boxes. All four Lean
+supplements freshly compiled and passed their full structural dependency and
+axiom audits, with matching displayed theorem contracts and exact within-run
+kernel type/proof-value agreement. Both cache-byte checks passed, with every
+recorded ordered search path matching the sealed pinned paths. The current
+21-check and unchanged historical-baseline gates passed. All 38 command
+receipts and outputs are retained; the temporary extraction was removed.
+
+The archive-only `_archive/RELEASE_SNAPSHOT.json` identifies the exact source
+freeze. Committed prior archive/validation receipts inside it remain historical;
+this new archive's hash and later validation receipt are external to that
+immutable snapshot. This avoids a circular archive-hash or future-execution
+claim. The final release receipt commit/push is recorded after it occurs.
 
 The ZIP preserves the outer `BFGS-non-smooth/` folder and every committed
 relative path. It includes sources, figures, current and historical PDFs,
