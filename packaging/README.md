@@ -18,6 +18,26 @@ The script creates these local delivery artifacts under `dist/`:
   baseline comparisons without copying local Git configuration or hooks.
 - `ARCHIVES.json`: source commit, archive sizes, hashes and content checks.
 
+Both ZIPs preserve the original filesystem layout beneath the repository's
+original folder name, `BFGS-non-smooth/`. For example:
+
+```text
+BFGS-non-smooth/
+  bfgs_lean_stage1/
+    master_report/latex/master.tex
+    master_report/latex/chapters/...
+    master_report/latex/coverage/...
+    master_report/latex/bibliography.tex
+    output/pdf/Rigorous_BFGS_Master_Report.pdf
+```
+
+The small LaTeX package selects only the files needed for typesetting and the
+reference PDF, while retaining each selected file's original path. The complete
+package retains every committed path. Neither package flattens the LaTeX tree
+or relocates the PDF. Supplemental archive instructions and `_archive/` metadata
+are separate from the original source files. Compile by entering
+`bfgs_lean_stage1/master_report/latex/` before invoking `latexmk`.
+
 The packager reads `git archive HEAD`, not the working directory recursively.
 It rejects a dirty tracked tree, forbidden cache/temporary path components,
 compiled artifacts and nonregular committed files. Untracked files, raw `.git`,

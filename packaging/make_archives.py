@@ -35,6 +35,7 @@ def main():
     timestamp = int(git('show', '-s', '--format=%ct', commit))
     expected_names = set(git('ls-tree', '-r', '--name-only', '-z', commit).decode().rstrip('\0').split('\0'))
     date = dt.datetime.fromtimestamp(timestamp, dt.timezone.utc).timetuple()[:6]
+    archive_prefix = ROOT.name + '/'
     OUT.mkdir(exist_ok=True)
     full_path = OUT / 'BFGS_complete_source_and_verification.zip'
     tex_path = OUT / 'BFGS_corrected_report_LaTeX.zip'
@@ -70,23 +71,27 @@ def main():
                     name = member.name
                     data = stream.extractfile(member).read()
                     mode = member.mode & 0o777
-                    add(full, 'complete', 'BFGS-complete/', name, data, mode)
+                    add(full, 'complete', archive_prefix, name, data, mode)
                     tracked[name] = payloads['complete'][name]
                     if name.startswith(LATEX_PREFIX):
-                        add(tex, 'latex', 'BFGS-corrected-report-LaTeX/', name[len(LATEX_PREFIX):], data, mode)
+                        add(tex, 'latex', archive_prefix, name, data, mode)
                     elif name == PDF:
-                        add(tex, 'latex', 'BFGS-corrected-report-LaTeX/', 'Rigorous_BFGS_Master_Report.pdf', data)
+                        add(tex, 'latex', archive_prefix, name, data)
             assert process.wait() == 0
             process.stdout.close()
             assert set(tracked) == expected_names, 'Snapshot differs from the independently listed Git tree'
             assert len([name for name in payloads['latex'] if name.endswith('.tex')]) == 30
-            assert 'Rigorous_BFGS_Master_Report.pdf' in payloads['latex']
-            add(full, 'complete', 'BFGS-complete/', '_archive/history.bundle', bundle.read_bytes(), stored=True)
-            add(full, 'complete', 'BFGS-complete/', '_archive/restore_git_history.py',
+            assert set(payloads['latex']) == {name for name in expected_names if name.startswith(LATEX_PREFIX) or name == PDF}
+            add(full, 'complete', archive_prefix, '_archive/history.bundle', bundle.read_bytes(), stored=True)
+            add(full, 'complete', archive_prefix, '_archive/restore_git_history.py',
                 git('show', commit + ':packaging/restore_git_history.py'), 0o755)
             full_readme = f'''# Complete BFGS source and verification package
 
 Source commit: {commit}
+
+The outer folder retains the original name, {ROOT.name}. Every committed file
+keeps its exact repository-relative path; no source file is flattened or moved.
+Archive-only instructions, inventories and history helpers are supplemental.
 
 This contains the exact committed project, corrected report/PDF, editable
 authoring inputs, original research sources, Lean proofs, pinned dependency
@@ -104,7 +109,7 @@ No files in the original working directory were deleted by packaging.
 Extract into a NEW directory. Python 3, Node.js and Git must be available on PATH.
 The bundled release history is required by the immutable baseline comparisons.
 It contains committed history only: no local Git configuration, hooks or reflogs.
-From the extracted BFGS-complete directory, run:
+From the extracted {ROOT.name} directory, run:
 
     python3 _archive/restore_git_history.py
     cd bfgs_lean_stage1
@@ -133,18 +138,22 @@ can be compiled directly, but regeneration overwrites direct edits to it.
 _archive/CONTENTS.json lists every other archive member with its SHA-256 and size.
 The report's own manifests and proof records are included unchanged.
 '''
-            add(full, 'complete', 'BFGS-complete/', 'ARCHIVE_README.md', full_readme.encode())
+            add(full, 'complete', archive_prefix, 'ARCHIVE_README.md', full_readme.encode())
             tex_readme = f'''# Corrected BFGS report: standalone LaTeX package
 
 Source commit: {commit}
 
-Open master.tex as the entry point. This package contains all 30 required .tex
-files: the main document, bibliography, 14 chapters and 14 coverage tables.
-Rigorous_BFGS_Master_Report.pdf is the reviewed 98-page reference PDF.
+The outer folder retains the original name, {ROOT.name}. All source files keep
+their exact repository-relative paths. This package contains all 30 required
+.tex files: the main document, bibliography, 14 chapters and 14 coverage tables.
+The entry point is bfgs_lean_stage1/master_report/latex/master.tex.
+The reviewed 98-page PDF remains at
+bfgs_lean_stage1/output/pdf/Rigorous_BFGS_Master_Report.pdf.
 
-Compile from this directory with a TeX distribution providing the packages
+From the extracted {ROOT.name} directory, compile with a TeX distribution providing the packages
 declared in master.tex (including latexmk, Latin Modern, xurl and bookmark):
 
+    cd bfgs_lean_stage1/master_report/latex
     latexmk -pdf -interaction=nonstopmode -halt-on-error master.tex
 
 No Lean installation, Git history, external figures or BibTeX database is needed
@@ -158,21 +167,23 @@ generation workflow, use its authoring inputs and edit ledger instead.
 The PDF and coverage tables refer to companion Lean sources and audit records.
 This small package does not include those proof artifacts or support the full
 verification gate; use BFGS_complete_source_and_verification.zip for that purpose.
-ARCHIVE_CONTENTS.json lists every other member with its SHA-256 and size.
+_archive/CONTENTS.json lists every other member with its SHA-256 and size.
 '''
-            add(tex, 'latex', 'BFGS-corrected-report-LaTeX/', 'README.md', tex_readme.encode())
+            add(tex, 'latex', archive_prefix, 'ARCHIVE_README.md', tex_readme.encode())
             for kind, archive, prefix, manifest_name in [
-                ('complete', full, 'BFGS-complete/', '_archive/CONTENTS.json'),
-                ('latex', tex, 'BFGS-corrected-report-LaTeX/', 'ARCHIVE_CONTENTS.json'),
+                ('complete', full, archive_prefix, '_archive/CONTENTS.json'),
+                ('latex', tex, archive_prefix, '_archive/CONTENTS.json'),
             ]:
                 record = {'schema_version': 1, 'source_commit': commit,
-                          'scope': kind, 'files': dict(payloads[kind])}
+                          'scope': kind, 'root_directory': ROOT.name,
+                          'source_paths': 'Exact repository-relative paths; no flattening or relocation',
+                          'files': dict(payloads[kind])}
                 add(archive, kind, prefix, manifest_name, (json.dumps(record, indent=2) + '\n').encode())
         assert git('rev-parse', 'HEAD').decode().strip() == commit, 'HEAD changed during packaging'
 
     results = []
-    for kind, path, prefix in [('complete', full_path, 'BFGS-complete/'),
-                               ('latex', tex_path, 'BFGS-corrected-report-LaTeX/')]:
+    for kind, path, prefix in [('complete', full_path, archive_prefix),
+                               ('latex', tex_path, archive_prefix)]:
         with zipfile.ZipFile(path) as archive:
             assert archive.testzip() is None
             names = archive.namelist()
@@ -188,10 +199,13 @@ ARCHIVE_CONTENTS.json lists every other member with its SHA-256 and size.
                         'uncompressed_bytes': sum(r['bytes'] for r in payloads[kind].values())})
     summary = {'status': 'PASS', 'source_commit': commit,
                'utc': dt.datetime.now(dt.timezone.utc).isoformat(),
+               'root_directory': ROOT.name,
+               'source_paths': 'Exact repository-relative paths; no flattening or relocation',
                'tracked_files': len(tracked), 'tracked_bytes': sum(r['bytes'] for r in tracked.values()),
                'excluded_path_components': sorted(FORBIDDEN),
                'excluded_suffixes': sorted(SUFFIXES),
-               'checks': ['Committed snapshot only', 'No temporary/cache paths or compiled artifacts',
+               'checks': ['Committed snapshot only', 'Exact original directory name and source paths in both archives',
+                          'No temporary/cache paths or compiled artifacts',
                           'Self-contained release bundle with exact HEAD', 'ZIP CRC and every member SHA-256'],
                'archives': results}
     (OUT / 'ARCHIVES.json').write_text(json.dumps(summary, indent=2) + '\n')
