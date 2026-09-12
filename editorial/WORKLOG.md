@@ -164,3 +164,12 @@ mathematical or authoring blocker is recorded. Release PDFs, archive manifest,
 validation logs, source entry points and human author actions are documented in
 release/README.md. This commit is the final release milestone; the successful
 push receipt and final gate status are recorded immediately afterward.
+
+Milestone D was committed as 9d330763a73e8d3de2e2af446e186de94c4070d8 and
+pushed successfully to origin/main. A subsequent `git ls-remote` returned that
+exact commit for refs/heads/main. The complete command/output receipt is
+editorial/logs/milestone_D_push.json. All nine completion gates now pass for the
+author-review-ready release. This final status-record commit changes no
+manuscript, mathematical input, audit, figure or PDF. Human metadata, source and
+novelty review, responsibility/consent and submission/deposit decisions remain
+reserved author actions. No external blocker or autonomous task remains.
