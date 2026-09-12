@@ -5,10 +5,22 @@ Theorem~\ref{art:local-failure-lower} uses a different regularity balance
 from Theorem~\ref{art:local-failure}. Adding a positive quadratic changes
 the seed orbit, so exact homogeneity alone no longer supplies a trajectory.
 We first prove persistence on a stable manifold and then copy one entire
-perturbed orbit at all scales. Throughout this appendix the line-search
-constants are $c_1=10^{-4}$ and $c_2=1/2$.
+perturbed orbit at all scales. The first step yields a global failure
+from a suitable matrix; the copying step makes bad starts approach the
+minimizer of one fixed objective; a final fixed change of coordinates
+makes their common initial matrix the identity. The price of retaining
+a positive lower curvature bound is the loss of second differentiability
+of the branches at the accumulation point. Throughout this appendix the
+line-search constants are $c_1=10^{-4}$ and $c_2=1/2$.
 
 \subsection{A strongly convex global example}
+A common positive quadratic leaves the active-branch geometry unchanged
+and makes every sublevel compact. It perturbs the gradients, however, so
+the homogeneous seed is no longer an exact orbit. Close to the corner,
+the quadratic gradient is small relative to the fixed slopes. The task
+is to turn this smallness into an exact infinite trajectory, with every
+rejection and acceptance retained.
+
 Use the fixed slopes of Appendix~\ref{art:seed_certificate} and let
 \[
  Q_\mu(x)=\tfrac\mu2\|x\|^2+G(x),\qquad\mu>0.
@@ -36,7 +48,13 @@ zero. Its accepted lengths repeat $1,1/4,1/16$, and all accepted and
 rejected query points are differentiable and belong to $V$.
 \end{proposition}
 
-To prove this proposition, use normalized coordinates
+The right object for persistence is the three-step return map after
+dividing out the shrinking scale. The homogeneous cycle becomes a fixed
+point on the boundary where that scale is zero. We will verify that it
+is hyperbolic and that its stable manifold enters the positive-scale
+region. This gives exact perturbed orbits; closeness of a finite
+floating-point trajectory would not. To prove the proposition, use
+normalized coordinates
 \[
  x=\tau z,\qquad H=\tau M(b,e),\qquad
  M(b,e)=\begin{pmatrix}1&b\\b&e\end{pmatrix},\qquad\tau>0.
@@ -156,6 +174,22 @@ identity or obtained by rounded forward shooting.
 \end{proof}
 
 \subsection{An accumulation embedding with four strongly convex branches}
+The previous proposition places a bad orbit near its wrong corner,
+whereas the desired local counterexample needs bad starts near the
+minimizer. We therefore place shrinking copies around centers $p_n$
+converging to that minimizer. The spatial factor will be $a_n$, and the
+objective factor $a_n^2$, which preserves the same inverse matrix by
+\eqref{art:matched-scaling}. To accommodate the common quadratic, the
+three scalar branch slopes are shifted so that the quadratic cross term
+restores the original seed gradients inside every copy.
+
+The scalar interpolation must have value $a_n^2$ and derivative $a_n$
+at its $n$th node, with an affine neighborhood wide enough to contain
+all seed queries after scaling. A monotone cubic ramp between these
+plateaux gives a convex function with Lipschitz derivative. The node
+slopes divided by the node positions stay of order one, so this
+construction need not, and will not, have a second derivative at zero.
+
 Fix
 \begin{gather*}
  \mu=1/4096,\qquad c_*=(2,-32)^T,\qquad q_i=g_i-\mu c_*,\\
@@ -248,10 +282,11 @@ $\bar H_0$. Induction on the actual query tree gives
 \[
  x_k^{(n)}=p_n+a_n\bar x_k,\qquad H_k^{(n)}=\bar H_k.
 \]
-Function differences and directional products scale by $a_n^2$;
-gradients and steps scale by $a_n$. Both scale factors cancel in the
-inverse update, so each rejection, acceptance and updated matrix is
-preserved. Equation~\eqref{art:lower_local_model} applies to every
+This is \eqref{art:matched-local-model} with spatial factor $a_n$
+and objective factor $a_n^2$. The covariance calculation
+\eqref{art:matched-scaling} preserves the matrix, while function
+differences and directional products acquire the same positive factor.
+Thus each rejection, acceptance and updated matrix is preserved. Equation~\eqref{art:lower_local_model} applies to every
 query because the whole chosen seed orbit lies in its domain.
 Thus $x_k^{(n)}\to p_n$ and
 $F(x_k^{(n)})\downarrow a_n^2C_*>0$. The three active gradients at
@@ -259,7 +294,11 @@ $p_n$ are $a_ng_i$, whose convex hull excludes zero.
 All query norms are at most
 $a_n(\|c_*\|+\sup_{\rm seed\ queries}\|\bar x\|)\to0$.
 
-Finally set $A=\bar H_0^{1/2}$ and $\widetilde F(z)=F(Az)$.
+The seed supplied by the stable manifold has a positive-definite initial
+matrix $\bar H_0$, common to every copy. Identity initialization is
+obtained by changing coordinates once for the whole objective and the
+whole sequence of starts, rather than selecting a different objective
+for each start. Set $A=\bar H_0^{1/2}$ and $\widetilde F(z)=F(Az)$.
 The coordinate identities
 \[
  \widetilde g=A^Tg,\qquad \widetilde H=A^{-1}HA^{-T},\qquad
@@ -272,29 +311,5 @@ Strong-convexity and smoothness constants become
 $\underline\mu=\mu\lambda_{\min}(\bar H_0)$ and
 $\overline L=512\lambda_{\max}(\bar H_0)$.
 All locality and differentiability statements persist under the
-invertible linear map. This proves the finite-branch assertion in
+invertible linear map. This proves
 Theorem~\ref{art:local-failure-lower}.
-
-\subsection{The constant classical-Hessian alternative}
-Replace the ramp in \eqref{art:lower_scalar} by
-$P_b(\xi)=\mathbf1_{\{\xi>t_b\}}$, its primitive by
-$(\xi-t_b)_+$, and the negative scalar extension by $-x$.
-The resulting scalar function is convex, countably piecewise affine,
-and retains the node values, node slopes and affine regions
-\eqref{art:lower_plateau}. Hence the same orbit-copy proof applies.
-The new objective is $F(x)=\mu\|x\|^2/2+p(x)$, with convex
-countably piecewise-affine $p$.
-
-At any nonzero point, a scalar branch with $q_i^Tx=0$ is strictly
-inactive: its residual is zero, whereas the independence of $q_0,q_1$
-ensures some scalar residual is positive. The possibly active scalar
-arguments are nonzero and meet only finitely many breakpoints in a small
-neighborhood. Thus $p$ is locally finite-polyhedral away from zero.
-At a differentiable point it is locally affine. At zero the directional
-derivative along $c_*$ is zero, since all $b_i>0$ and the positive scalar
-parts are $O(t^2)$; along $-c_*$ it is positive, since the negative scalar
-parts are linear. Thus zero is nonsmooth. Therefore $\nabla^2F=\mu I$ wherever the classical Hessian exists.
-After the same fixed coordinate transformation this Hessian is
-$\mu\bar H_0\succ0$. This proves the remaining alternative of
-Theorem~\ref{art:local-failure-lower} without asserting four smooth
-branches for that alternative.

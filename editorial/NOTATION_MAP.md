@@ -2,6 +2,17 @@
 
 The article uses one global notation convention for its common argument. The companion preserves the corrected source conventions chapter by chapter. Equal symbols in separate constructions need not denote equal objects. This map records notation changes only; exact hypotheses, dimensions and exported Lean types remain in `CLAIM_LEDGER.json`, `companion/SOURCE_CORRESPONDENCE.json` and the canonical declaration index.
 
+The narrative revision separates global families (article Section 4) from local
+finite-cell and planar geometry (Section 5). The latter now has a complete
+article proof appendix. Its local field is `w`, with normal-angle variables
+`t, theta`, unit normal `n`, unit tangent `T`, and scalar height `h`; these are
+not the BFGS curvature scalar `t_k`, global constant `c=1-c_2`, or a Hessian
+approximation. The benchmark `(u,v)` coordinates are literal Euclidean
+coordinates in `ArticlePositive.mixed_benchmark_global`. The negative matched
+model `F(p+lambda z)=C+sigma G(z)` uses positive spatial and objective scales;
+`H_F=(lambda^2/sigma)H_G`. The choice `sigma=lambda^2` preserves the initial
+matrix and is verified separately from existence of either embedded orbit.
+
 ## Shared BFGS notation
 
 | Symbol | Meaning in the article | Companion location and cautions |

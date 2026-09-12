@@ -1,120 +1,111 @@
-\section{Introduction and main results}\label{art:introduction}
+\section{Introduction}\label{art:introduction}
 
-Can ordinary BFGS converge locally on a convex objective whose gradients jump?
-Regularity of the formulas defining the objective does not by itself settle
-this question. We prove local convergence when a finite polyhedral arrangement
-controls the nearby smooth pieces, and construct local failure when four smooth
-convex formulas encode an accumulating sequence of bad switching configurations.
-The distinction is between the geometry of switching and the regularity within
-individual branches. It persists when all gradients queried by the algorithm
-are ordinary derivatives.
+BFGS builds its search directions from changes in gradients, yet it often
+works well when those gradients jump. Classical convex convergence theory
+uses smoothness together with the evolving quasi-Newton matrices
+\cite{FND_P76,FND_BN89,FND_N92}. Lewis--Overton's experiments and analyses
+\cite{LO} exposed the difficulty of extending that theory: nonsmooth BFGS can
+approach a minimizer while its inverse-Hessian approximations become highly
+singular. What global or local convergence can ordinary full BFGS guarantee
+on convex nonsmooth functions, and how can one prove it without assuming
+the asymptotic behavior of its iterates or matrices?
 
-Throughout, BFGS means the unmodified full inverse update. An infinite
-\emph{admissible run} starts with any positive definite matrix, uses fixed
-$0<c_1<c_2<1$, satisfies Armijo decrease and weak Wolfe curvature, and accepts
-only differentiable points with nonzero gradients; the equations are given in
-Definition~\ref{art:admissible}. This notion describes successful successive
-line searches. It does not guarantee that every search ray contains a
-differentiable acceptable point. The negative results instead verify every
-decision of one specified unit-first doubling/bisection implementation.
+We give three answers: deterministic counterexamples to every-start local
+convergence; global and local convergence theorems for structured convex
+families, including the mixed benchmark below; and a principal-minor and
+comparison-energy argument that remains effective as the BFGS matrices
+degenerate.
 
-The following theorem gives the main positive contrast. The local extensions
-are defined on open sets, so smoothness at cell boundaries has a precise meaning.
-\input{statements/positive_partition}
+Lewis--Overton's Challenge~7.1~\cite{LO} gives this question a broader,
+probabilistic setting. For locally Lipschitz semialgebraic objectives with
+bounded sublevels and absolutely continuously distributed initial data, it
+asks about nonbreakdown, stationary cluster points, R-linear convergence of
+all function trial values, and identification of spectral subspaces under
+partly smooth convergence. We study deterministic guarantees for convex
+objectives. Successful termination is allowed; infinite runs are analyzed
+under the differentiable-iterate convention made precise below.
 
-Finite maxima of smooth functions need not satisfy this finite-cell hypothesis.
-The next result fixes the objective and implementation before choosing a
-sequence of failing initial points. Its proof constructs all trial points,
-not only an accepted orbit.
-\input{statements/negative_upper}
+Substantial positive theory precedes this work. Guo--Lewis extends Powell's
+argument through smooth convex replacements on regions relevant to a BFGS
+sequence~\cite[Theorems~3.2, 4.1 and~4.3]{GL18}. The resulting theory proves
+Euclidean-norm convergence in arbitrary finite dimension
+\cite[Corollary~4.2]{GL18}; for the mixed model
+\[
+                    F(u,v)=u^2+|v|
+\]
+Corollary~4.4 gives only a subsequence approaching a point of $v=0$.
+The following paragraph explicitly leaves convergence of every BFGS sequence
+to $(0,0)$ open~\cite[Corollary~4.4 and following discussion]{GL18}.
+Approaching the nonsmooth line does not force the smooth coordinate $u$ to
+vanish. Corollary~\ref{art:mixed-benchmark} answers this whole-sequence question
+for every admissible full-BFGS run, as a consequence of an arbitrary-dimensional
+family theorem rather than a special planar recurrence.
 
-Theorem~\ref{art:local-failure} rules out a local guarantee based only on a
-finite number of very smooth convex branch formulas. It does not say that every
-nearby starting point fails. The obstruction is compatible with compact
-sublevels and a unique minimizer. An independent construction changes the
-balance between smoothness and lower curvature.
-\input{statements/negative_lower}
+Two other advances clarify the remaining task. Xie--W\"achter's two-piece
+unbounded affine model leads to an unbounded descent direction after finitely
+many iterations~\preprintcite[Theorem IV.1]{XW}; a value-convergence theorem
+for a broader homogeneous family does not replace that finite escape result.
+Gebken's published 2026 introduction still identifies $u^2+|v|$ as unresolved.
+His local criticality theorem for continuous smooth selections assumes an
+iterate limit, repeated activity, and specified spectral and gradient-jump
+behavior~\cite[Theorem~3.1 and (B1)]{BG}. Our positive results instead derive
+convergence from the objective hypotheses for the families stated here.
 
-In this last statement, a classical Hessian means the derivative of the gradient
-map, with that map defined on a neighborhood of the point. An isolated second
-Peano expansion is not the convention used. Table~\ref{art:regularity-map}
-keeps the incomparable regularity conclusions separate. In particular, neither
-construction gives local failure for a finite maximum of uniformly strongly
-convex $C^2$ branches through the optimizer. The common quadratic example used
-inside the second proof fails globally near a wrong corner; it is the subsequent
-embedding that gives failure near its own minimizer.
+Throughout the paper, an \emph{admissible run} uses the unmodified full BFGS
+update, an arbitrary $H_0\succ0$, fixed $0<c_1<c_2<1$, Armijo--weak-Wolfe
+steps, and differentiable accepted points with nonzero gradients
+(Definition~\ref{art:admissible}). The positive theorems concern every infinite
+such run. They do not assert that every search ray contains an acceptable
+differentiable point.
 
-\begin{table}[t]
-\centering
-\begin{tabular}{p{.27\textwidth}p{.31\textwidth}p{.31\textwidth}}
-\toprule
-Property & Theorem~\ref{art:local-failure} & Theorem~\ref{art:local-failure-lower}, finite-branch version\\
-\midrule
-Number of branches & Four & Four\\
-Branch regularity & Global $C^{2,1}$ & Global $C^{1,1}$\\
-Positive lower curvature & Not imposed & Uniformly strongly convex\\
-At the accumulation point & Branch Hessians exist & Three branch Hessians fail to exist\\
-Initialization and locality & Fixed $H_0=I$; all queries approach the optimizer & Fixed $H_0=I$; all queries approach the optimizer\\
-\bottomrule
-\end{tabular}
-\caption{Two local counterexamples along different regularity axes. The last
-row concerns a sequence of runs for one fixed objective in each column.}
-\label{art:regularity-map}
-\end{table}
+\paragraph{Deterministic limits.}
+We construct convex objectives for which a fixed unit-first
+Armijo--weak-Wolfe doubling/bisection search generates full-BFGS iterates
+converging to a nonstationary point. For each local construction, one fixed
+objective has failing starts arbitrarily close to its unique minimizer, all
+with $H_0=I$, and every accepted or rejected query approaches that minimizer
+across the family of runs. One construction is a maximum of four convex
+$C^{2,1}$ branches with bounded Hessians; another is a maximum of four
+uniformly strongly convex $C^{1,1}$ branches, three of which are not twice
+differentiable at the minimizer (Theorems~\ref{art:local-failure}
+and~\ref{art:local-failure-lower}). These refute every-start neighborhood
+guarantees under either regularity regime. They establish no positive-measure
+failure set and do not refute the almost-sure semialgebraic challenge.
 
-The positive proof starts from a comparison energy. Its negative term measures
-progress still visible to a supporting gradient; its positive term measures a
-secant correction. We establish a hierarchy for the actual principal minors
-of full-BFGS matrices and derive divergence of the reciprocal arithmetic mean
-of $g_k^TH_kg_k$. This provides a budget that excludes a persistent objective
-gap when the objective supplies a suitable comparison field. The direction
-toward a fixed minimizer gives the finite-cell result. The criterion is sufficient, and is
-not claimed to characterize all convergent BFGS runs.
+\paragraph{Global and local convergence.}
+We prove global value convergence for centered smooth-plus-sublinear
+objectives with compact initial sublevels contained in the region where the
+representation holds, and whole-iterate convergence when
+the minimizer is unique (Theorem~\ref{art:centered}). This settles the mixed
+benchmark above. For coercive finite convex degree-one homogeneous functions,
+including coercive maxima of finitely many linear functions, every admissible
+run converges to zero (Theorem~\ref{art:homogeneous}). Local results
+cover smooth convex plus finite polyhedral terms and finite polyhedral
+partitions with smooth extensions (Theorem~\ref{art:polyhedral}). Moving
+comparison geometry also yields local convergence for planar smooth maxima
+under strict-contour and active-gradient nondegeneracy assumptions
+(Corollary~\ref{art:planar-max}). The explicit three-quadratic example
+\ref{art:nonradial-example} has curved switching sets and fails the radial
+condition, so this extension has a concrete payoff beyond inward radial
+modeling.
 
-\subsection{Related work and the role of the present results}
-Classical BFGS analysis combines convexity with matrix potentials and
-line-search inequalities. Powell's convergence analysis, the role of the
-quasi-Newton matrices studied by Byrd--Nocedal, and Nocedal's survey provide
-the relevant smooth background~\cite{FND_P76,FND_BN89,FND_N92}.
-The Gram and Schur identities used below are standard matrix algebra.
-Our use of adjacent principal-minor degrees supplies a bridge from the full
-matrix update to a reciprocal budget in the bounded-gradient, vanishing-decrease
-regime. We do not attribute the underlying determinant, trace, or AM--GM tools
-to this work.
+\paragraph{Analysis with degenerating matrices.}
+We prove a hierarchy linking adjacent degrees of the actual principal
+minors of full-BFGS matrices. Extending the classical trace/determinant
+potential approach, it forces growth of the arithmetic mean of the reciprocals
+$1/(g_k^TH_kg_k)$. Comparison energies turn this restriction into convergence:
+a field must retain information about the objective gap, control the gradient
+changes it sees, and move with a controlled energy cost. The field is an
+analytical device, not part of the algorithm. Neither a bounded condition
+number nor a prescribed spectral limit is needed
+(Theorems~\ref{art:minor-hierarchy}--\ref{art:certificate}).
 
-For unmodified nonsmooth BFGS, Guo--Lewis proves convergence on the Euclidean
-norm in every finite dimension~\cite[Corollary~4.2]{GL18}; this is a known
-special case of the centered homogeneous setting below. Lewis--Overton studies
-the practical method and the line search used in our examples~\cite{LO}.
-The finite two-piece affine escape theorem of
-\preprintcite[Theorem IV.1]{XW} is also prior work, with an unbounded-descent
-conclusion rather than the compact-level conclusion considered here.
-Gebken's criticality result assumes an iterate limit and specified matrix
-behavior~\cite{BG}; those are not premises in our convergence theorems.
-
-Earlier negative examples have different combinations of objective geometry
-and algorithmic hypotheses. Smooth nonconvex BFGS failures~\cite{NEG_M04,NEG_M07},
-the examples of \preprintcite{NEG_LO08}, and other nonconvex quasi-Newton
-constructions~\cite{NEG_LZ15} are relevant antecedents, but do not establish
-the two convex local statements above. Limited-memory failure
-results~\cite{NEG_AO21} concern a different update. The recent smooth
-nonconvex planar example of \preprintcite{NEG_DIAO26} likewise has different
-objective assumptions. We compare these statements by their hypotheses;
-no claim of failure for every weak-Wolfe implementation is made.
-
-The geometric interpretation of surviving smooth directions is related to
-$VU$ theory, partial smoothness, and stratification
-\cite{geom_Lewis2002,LL,BDLS}. Convex-gradient cocoercivity is an established
-ingredient~\cite{WW}. The companion develops affine-critical and fixed-normal
-extensions using those antecedents. Such connections identify standard tools
-and related structures, without supplying a necessary-and-sufficient dynamical
-classification or establishing priority for a complete theorem.
-
-Sections~\ref{art:geometry}--\ref{art:positive} develop the geometric
-motivation and the positive proof. Section~\ref{art:beyond} identifies the
-separate companion results and their limits. Section~\ref{art:failure} proves
-Theorem~\ref{art:local-failure}, with its finite certificate in
-Appendix~\ref{art:seed_certificate}; Appendix~\ref{art:lower_curvature}
-proves Theorem~\ref{art:local-failure-lower}. All essential arguments for the
-article's theorems are contained here, apart from the explicitly invoked
-standard background theorems.
+Our conditions are sufficient; they do not classify every successful run.
+Sections~\ref{art:geometry}
+and~\ref{art:energy} explain and establish the mechanism;
+Sections~\ref{art:global} and~\ref{art:local} prove its global and local
+consequences, and Section~\ref{art:failure} gives the deterministic
+counterexamples. The article includes the essential proofs of these claims.
+An independent complete companion preserves the wider noncompact and
+quantitative theory, with Lean proofs, exact correspondence and reproducible
+audit evidence.

@@ -27,3 +27,38 @@ foundational axioms. This is an incremental build plus fresh audits, not an
 empty-cache rebuild of every dependency. Additional article-only wrappers
 are being added for the newly prominent literal mixed-benchmark corollary and
 matched scaling; they will receive separate full audits.
+
+The lineage/selection milestone c8109c6 was pushed successfully. The complete
+revised source now has 107 article correspondence records and all 172 companion
+spans with 3,087 full source exports. The former standalone `positive.tex` and
+`beyond.tex` are preserved in `prior_sources/`; their active content is replaced
+by complete global/local sections and a full planar appendix. The IR converse
+and infinite constant-Hessian alternative remain companion results with explicit
+article-selection dispositions. No sealed source or mathematical correction
+ledger changed.
+
+Both additional Lean supplements passed: three literal-benchmark theorems with
+31,960 transitive dependencies and eleven covariance declarations with 10,697.
+Their exact recorded types, values, structural dependencies, source hashes and
+ordinary axiom-collector results agree; only the established three axioms
+occur. The current integrity gate validates all retained evidence and passes.
+
+The final source candidate builds to 47 article pages and 107 companion pages,
+with resolved references and no overfull boxes. All 154 pages were actually
+visually inspected. Three companion layout findings were repaired: a stranded
+heading, an awkward editorial chapter-title break, and a split three-formula
+definition. Changed pages were re-viewed; the remaining pages were confirmed
+pixel-identical to the inspected version. The three review passes are in
+`REVIEW_LOG.md`, with separate mathematical, significance and visual records.
+The 47-page length exception retains the requested broad positive proofs and
+normal typography; journal fit and author decisions are explicit.
+
+The release source freeze includes the current reviewed PDFs and awaiting-
+validation metadata. Packaging will identify its actual source commit inside
+the ZIP; a new versioned extraction run will separately rebuild all pages,
+freshly compile/audit both new supplements against checked pinned host
+libraries, and replay the current and immutable historical evidence gates.
+These executions are pending at this source milestone; no unattended work or
+already-completed archive replay is claimed.
+
+The staged diff was inspected: only paper, companion, editorial and release files are included; unrelated user files remain untracked. Non-log whitespace checks pass. The only raw diff-check notices are preserved LaTeX compiler whitespace in the two first-build logs; those logs are intentionally not edited.

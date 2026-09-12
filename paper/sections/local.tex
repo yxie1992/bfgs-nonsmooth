@@ -1,0 +1,392 @@
+\section{Local convergence: geometry that survives near a minimizer}\label{art:local}\label{art:positive}
+
+The global theorem requires the initial sublevel to lie in the region where
+its representation is valid. A local theorem must choose that region before
+seeing a BFGS run or its initial metric. Convexity and a unique minimizer
+supply precisely this localization. We first use it for finite polyhedral
+pieces, where inward accuracy has a direct geometric explanation, and then
+for curved planar switching interfaces, where a moving comparison direction
+is essential to the proof.
+
+\subsection{Localization and finite polyhedral pieces}
+
+The distinction between a local objective hypothesis and a hypothesis on the
+whole initial sublevel is handled by a simple convex trapping argument.
+
+\begin{lemma}[A common local basin]\label{art:localization}
+Let $F:\R^n\to\R$ be finite and convex with a unique minimizer $x_*$.
+Every sublevel is compact. For each neighborhood $U$ of $x_*$, there is
+$\varepsilon>0$ such that $\{F\le F(x_*)+\varepsilon\}\subset U$.
+Thus any admissible run starting in that sublevel stays in $U$, independently
+of its initial SPD matrix.
+\end{lemma}
+\begin{proof}
+Choose $r>0$ with $\overline B_r(x_*)\subset U$.
+Continuity, compactness of the sphere and uniqueness give
+\[
+ \omega=\min_{\norm{u}=r}\bigl(F(x_*+u)-F(x_*)\bigr)>0.
+\]
+For $\norm{x-x_*}\ge r$, convexity at the point at distance $r$ on the
+segment from $x_*$ to $x$ gives
+\[
+ F(x)-F(x_*)\ge\frac{\norm{x-x_*}}r\omega.
+\]
+Consequently $F$ is coercive, hence has compact sublevels, and
+$\varepsilon=\omega/2$ gives the asserted inclusion. Armijo preserves it.
+\end{proof}
+
+A finite local partition controls which formulas an inward comparison segment
+can cross. After removing the finitely many cells that miss $x_*$, every
+remaining cell contains $x_*$. Convexity of a cell then keeps the entire
+inward segment in that same cell. Its smooth extension yields quadratic
+model accuracy even if the full gradient jumps across cell boundaries.
+The algorithm need not identify a cell or a manifold; only the comparison
+segment uses the cell geometry.
+
+\input{statements/positive_partition}
+
+\begin{proof}[Proof of Theorem~\ref{art:polyhedral}]
+First discard cells not containing $x_*$. Each such closed cell has an open
+complement containing $x_*$; finiteness supplies one ball that avoids them all.
+For every remaining cell, its extension domain $V_i$ contains $x_*$.
+Shrink to a common ball $B_r(x_*)\subset U\cap\bigcap_{i:x_*\in P_i}V_i$,
+and then shrink again so that the gradients of all remaining extensions have
+one Lipschitz bound $L$ there. This uses only finitely many local extensions;
+they need not have shared a domain before shrinking.
+
+Let $x$ be a differentiability point of $F$ in this ball, and choose a cell
+$P_i$ containing it. Convexity of $P_i$ places the whole inward segment
+$x-\tau(x-x_*)$, $0\le\tau\le1$, in $P_i$. Both $F$ and $f_i$ agree
+along that segment. Comparing their right derivatives at $\tau=0$ gives
+\[
+ \nabla F(x)^T(x-x_*)=\nabla f_i(x)^T(x-x_*).
+\]
+Only equality in the radial direction is needed, including at cell boundaries.
+The smooth Taylor estimate along the same segment gives
+\[
+ 0\le F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x
+       \le\tfrac12L\tau^2\norm{r_x}^2
+       \le\tfrac12Lr^2\tau^2.
+\]
+The first inequality uses convexity of $F$, not convexity of the extension.
+Lemma~\ref{art:localization} supplies a compact positive sublevel wholly
+contained in this ball, chosen before the run or its matrix. The inward
+condition holds on that sublevel, so Corollary~\ref{art:radial-convergence}
+gives value and iterate convergence. Armijo gives the asserted containment.
+\end{proof}
+
+\begin{corollary}[Smooth losses with polyhedral or quadratic pieces]\label{art:plq}
+A finite convex piecewise linear-quadratic objective with a unique minimizer
+has the local convergence property of Theorem~\ref{art:polyhedral}.
+The same holds for a convex locally $C^{1,1}$ loss plus a finite convex
+piecewise linear-quadratic regularizer, provided the sum has a unique minimizer.
+\end{corollary}
+\begin{proof}
+By piecewise linear-quadratic we mean a representation by quadratic polynomials
+on a finite cover by closed full-dimensional polyhedral cells. Each polynomial is a smooth
+extension of its cell formula; adding the smooth loss preserves the required
+local $C^{1,1}$ extensions. Theorem~\ref{art:polyhedral} applies.
+\end{proof}
+
+In particular, a finite convex polyhedral penalty, such as a finite sum of
+absolute-value or hinge terms, is piecewise affine on a finite polyhedral
+partition. It therefore falls under this corollary when added to a locally
+$C^{1,1}$ convex loss,
+under the stated uniqueness assumption. Different cells may have different
+quadratic Hessians. A finite maximum of arbitrary quadratic formulas need not
+admit such a polyhedral partition and is not automatically covered.
+There is also no claim that iterates identify a cell or that rejected trials
+remain in the local structural neighborhood.
+
+
+The finiteness and cell geometry are substantive. Finitely many curved
+switching interfaces need not preserve inward segments, and the negative
+examples later in the paper show that regularity of smooth branches alone
+cannot replace the stated geometric hypothesis. The theorem gives a
+sufficient local basin, without claiming necessity or a uniform rate.
+
+\begin{corollary}[A local centered-composite basin]\label{art:local-centered}
+If the representation and smoothness assumptions of
+Theorem~\ref{art:centered} hold on a neighborhood of a unique minimizer $x_*$,
+then some $\varepsilon>0$, chosen from the objective alone, has the following
+property: every admissible run starting with
+$F(x_0)\le F(x_*)+\varepsilon$ stays in that neighborhood and converges to
+$x_*$ in value and iterates.
+\end{corollary}
+\begin{proof}
+Shrink to an open convex neighborhood where the representation holds.
+Lemma~\ref{art:localization} gives a compact sublevel contained there.
+Armijo traps the accepted points, and Theorem~\ref{art:centered} applies.
+\end{proof}
+
+For example, a locally $C^{1,1}$ convex loss plus finitely many Euclidean
+residual norms $\norm{A_jx-b_j}$ has this local form. A residual nonzero at
+$x_*$ remains nonzero nearby, so its Euclidean norm is smooth there; a zero
+residual gives the centered sublinear function $\norm{A_j(x-x_*)}$.
+Summing these decompositions proves the representation. Under uniqueness,
+the corollary applies. This example allows nonpolyhedral penalties while
+retaining the same radial mechanism.
+
+\subsection{A moving direction for curved planar switching}
+
+The radial direction can fail for a different reason: a curved interface may
+carry a gradient jump with a nonzero radial component. The secant correction
+then blows up as endpoints approach opposite sides of the interface.
+The transported framework allows the comparison direction to follow the
+interface instead. It must first remain visible to every local supporting
+model, then cancel the leading jump, and finally move at a cost controlled
+by the actual objective decrease. The field is constructed from the
+objective; BFGS never evaluates it.
+
+For $F:\R^2\to\R$, write
+\[
+ \mathcal C_{\rm aff}=
+ \{p:0\in\aff\partial F(p)\}.
+\]
+At a point outside this set, let $a$ be the least-norm point of
+$\aff\partial F(p)$. Orthogonality to its direction space gives
+$g^Ta=\norm{a}^2$ for every $g\in\partial F(p)$. Thus
+$-a/\norm{a}^2$ decreases all supporting models at the same unit rate.
+Affine criticality concerns failure of this common-rate direction;
+ordinary stationarity concerns failure of every strict common descent
+direction. They need not coincide.
+
+The two planar hypotheses have separate roles. Strictly convex positive
+sublevels prohibit long accepted chords with vanishing value decrease.
+Regular two-branch switching makes each positive-level corner move smoothly
+with the level and supplies a direction paired equally with both gradients.
+Neither condition imposes a matrix limit or a lower bound on all eigenvalues
+of a Hessian. A common positive lower Hessian bound is one sufficient way
+to obtain strict contours, but is not required.
+
+\begin{theorem}[An affine-critical cluster point in the plane]\label{art:planar-cluster}
+Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$, and have
+a compact sublevel $K=\{F\le b\}$ with $b>F_*$. Assume the following
+objective geometry:
+
+\begin{enumerate}
+\item For every $F_*<t\le b$, the boundary of $\{F\le t\}$ contains no
+nontrivial line segment.
+\item At every $p\in K\setminus\mathcal C_{\rm aff}$, either $F$ is $C^2$
+in a neighborhood of $p$, or it equals $\max\{f_1,f_2\}$ there, where
+$f_1,f_2$ are convex $C^2$ functions, both active at $p$, and
+$\nabla f_1(p),\nabla f_2(p)$ are linearly independent.
+\end{enumerate}
+Every infinite admissible full-BFGS run starting in $K$ has an affine-critical
+cluster point. No local representation is required at affine-critical points.
+\end{theorem}
+\begin{proof}
+The values decrease to $\ell\ge F_*$, the gradients are bounded on $K$, and
+$\sum d_k<\infty$. Let $\Gamma$ be the nonempty compact cluster set.
+Every point of $\Gamma$ has value $\ell$. If $\ell=F_*$, its points are
+minimizers and hence affine critical. Suppose, for a contradiction, that
+$\Gamma$ contains no affine-critical point. Then $\ell>F_*$.
+
+The steps tend to zero. Otherwise compactness gives a subsequence with
+$x_k\to x$, $x_{k+1}\to z\ne x$. For $0\le\theta\le1$, the supporting
+inequality and convexity give
+\[
+ F(x_k)-\theta d_k
+ \le F((1-\theta)x_k+\theta x_{k+1})
+ \le(1-\theta)F(x_k)+\theta F(x_{k+1}).
+\]
+Passing to the limit shows $F=\ell$ on $[x,z]$. Such level points lie on
+the boundary of $\{F\le\ell\}$: if one were interior, extending the line
+from a minimizer slightly beyond that point and applying convexity would
+give value strictly less than $\ell$. The resulting boundary segment
+contradicts the first hypothesis.
+
+Lemma~\ref{art:planar-field}, proved in Appendix~\ref{art:planar-appendix},
+constructs a continuous comparison field $w$ on a neighborhood of the whole
+set $\Gamma$. For each sufficiently close eligible pair in that neighborhood,
+it gives uniform constants $m>0,C,L\ge0$ and scalars $\lambda>0,\beta$ with
+\[
+ \begin{gathered}
+ (g^Tw(x))^2\ge m,\qquad (y^Tw(z))^2/t\le C,\\
+ w(z)=\lambda w(x)+\beta s,\qquad \lambda^2\le1+Ld.
+ \end{gathered}
+\]
+Compactness implies $\operatorname{dist}(x_k,\Gamma)\to0$, so these estimates
+apply to the entire tail, not just a selected subsequence.
+With $E_k=w(x_k)^TB_kw(x_k)$, the Hessian update and $M_ks_k=0$ yield
+\[
+ E_{k+1}=
+ \lambda_k^2\left(E_k-\frac{(g_k^Tw(x_k))^2}{q_k}\right)
+       +\frac{(y_k^Tw(x_{k+1}))^2}{t_k}
+ \le(1+Ld_k)(E_k-m/q_k)+C.
+\]
+The parenthesized quadratic form is nonnegative. Dividing by
+$\prod_{j=J}^{k}(1+Ld_j)$ and summing, exactly as in the proof of
+Theorem~\ref{art:certificate}, bounds $\sum_{k=J}^{N-1}q_k^{-1}$ by a constant
+times $N-J+1$. This contradicts Theorem~\ref{art:reciprocal-growth}.
+\end{proof}
+
+\begin{corollary}[When affine criticality is correct]\label{art:planar-convergence}
+Under the hypotheses of Theorem~\ref{art:planar-cluster}, assume in addition
+that $\mathcal C_{\rm aff}\cap K\subseteq\arg\min F$. Every admissible run
+starting in $K$ then converges in value to $F_*$ and in distance to
+$\arg\min F$. A unique minimizer gives convergence of the entire sequence.
+\end{corollary}
+\begin{proof}
+The theorem supplies an affine-critical cluster point, which is optimal by
+hypothesis. Its value equals the limiting value of the decreasing objective
+sequence. Hence that value is $F_*$, and compactness gives the distance and
+uniqueness conclusions as in Theorem~\ref{art:certificate}.
+\end{proof}
+
+This condition says that nonoptimal points retain equal-rate descent, which
+is stronger than ordinary descent. It is a sufficient geometric route in the
+stated planar setting, not a universal criterion for either convergence or
+failure. The strict-contour and regular-switching assumptions are independent
+parts of this route. In particular, the argument neither handles arbitrary
+flat contours nor transfers automatically to dimension three: the tangent
+line used in the transport construction is then a higher-dimensional space.
+
+\subsection{Nondegenerate smooth maxima and an explicit nonradial basin}
+
+The extra affine-correctness condition can be verified from the active
+models at the minimizer. Positive optimal multipliers ensure that an affine
+balance cannot lose a branch nearby without losing stationarity; affine
+independence makes that balance unique and continuous. In the plane these
+same assumptions leave at most two active branches at a noncritical point,
+which supplies the required regular switching.
+
+\begin{corollary}[Nondegenerate planar smooth maxima]\label{art:planar-max}
+Let $F:\R^2\to\R$ be finite and convex with a unique minimizer $x_*$. Near
+$x_*$ suppose $F=\max_{1\le i\le m}f_i$, where the branches are convex and
+$C^2$. Suppose sufficiently low positive sublevels are strictly convex in
+the boundary-segment sense of Theorem~\ref{art:planar-cluster}. For the
+active set $I_*$ at $x_*$, suppose the gradients are affinely independent
+and admit weights
+\[
+ \lambda_i^*>0,\qquad \sum_{i\in I_*}\lambda_i^*=1,
+ \qquad \sum_{i\in I_*}\lambda_i^*\nabla f_i(x_*)=0.
+\]
+Then some $\varepsilon>0$, chosen independently of $H_0$ and the valid
+line-search constants, satisfies
+\[
+ F(x_0)<F_*+\varepsilon
+ \quad\Longrightarrow\quad F(x_k)\to F_*,\qquad x_k\to x_*
+\]
+for every infinite admissible full-BFGS run. A common positive lower Hessian
+bound on the locally relevant branches suffices for the contour hypothesis.
+\end{corollary}
+\begin{proof}
+Discard the branches inactive at $x_*$ by their strict value gaps. Let $A(x)$
+have columns $(\nabla f_i(x),1)$ for $i\in I_*$. Affine independence makes
+$A(x_*)$ full column rank, and this persists nearby. If
+$A(p)\lambda=(0,0,1)^T$ is solvable, its unique solution is
+\[
+ \lambda(p)=(A(p)^TA(p))^{-1}A(p)^T(0,0,1)^T.
+\]
+This expression is continuous and equals $\lambda^*$ at $x_*$. Shrink the
+neighborhood until all its coordinates are positive. The subdifferential
+of a finite smooth maximum is the convex hull of its active gradients.
+Indeed, differentiating the finite maximum in a direction gives the maximum
+of the active gradient pairings. Every convex combination of those gradients
+supports the objective locally; convexity extends the supporting inequality
+globally by taking a short initial segment toward any proposed violating
+point. Conversely, a subgradient outside their convex
+hull could be strictly separated from that hull by a direction, contradicting
+the directional-derivative inequality for a subgradient.
+An affine representation of zero using gradients active at $p$, extended by
+zero on inactive indices, must equal $\lambda(p)$. It therefore uses every
+index and is a convex representation of zero. Thus every nearby
+affine-critical point is a minimizer.
+
+At most three planar gradients are affinely independent. Away from affine
+criticality, three cannot be active, since their affine hull would be all of
+$\R^2$. One active branch gives a smooth chart. For two active branches their
+gradients are distinct; if they were linearly dependent, their affine line
+would contain zero. Thus the gradients are independent, and the other
+branches have strict gaps. This gives the required convex two-branch chart.
+
+Lemma~\ref{art:localization} now puts a sufficiently low compact sublevel
+inside the chosen neighborhood, with its upper level also below the threshold
+for strict contours. Apply Corollary~\ref{art:planar-convergence}.
+If all relevant branch Hessians have a common positive lower bound on a
+convex neighborhood, subtracting the corresponding positive quadratic
+makes every branch convex. Their maximum is therefore strongly convex
+there. A sufficiently low sublevel lies in that neighborhood and cannot have
+a nontrivial boundary segment, proving the last assertion.
+\end{proof}
+
+The multiplier geometry is related to the nondegeneracy used in local bundle
+Newton analysis \preprintcite[Propositions~5.5--5.6]{LW} and in Gebken's
+criticality results \cite{BG}.
+Here the full-BFGS conclusion is derived without assumed iterate or matrix
+asymptotics. The contour and planar restrictions remain explicit.
+
+\begin{theorem}[Convergence with curved, nonradial switching]\label{art:nonradial-example}
+For
+\[
+ \begin{aligned}
+ f_0(u,v)&=u+u^2+\tfrac12v^2,\\
+ f_1(u,v)&=v+\tfrac12u^2+\tfrac32v^2,\\
+ f_2(u,v)&=-u-v+\tfrac32u^2+v^2,\qquad F=\max_i f_i,
+ \end{aligned}
+\]
+every infinite admissible full-BFGS run with $F(x_0)<1/100$ converges in
+value and iterates to zero, for arbitrary $H_0\succ0$ and fixed valid
+Armijo--weak-Wolfe constants. Nevertheless, the radial secant condition
+\eqref{art:radial-condition} fails on a positive band in every neighborhood
+of zero. The obstructing endpoint pairs can themselves be chosen eligible
+for $c_1=1/4,c_2=1/2$.
+\end{theorem}
+\begin{proof}
+The branch Hessians lie between $I$ and $3I$, and
+$(f_0+f_1+f_2)/3=u^2+v^2$. Thus $F\ge u^2+v^2$, zero is the unique
+minimizer, and all positive contours are strict. The active gradients at
+zero are $(1,0),(0,1),(-1,-1)$, with positive weights $1/3$.
+To obtain the stated basin rather than an unspecified one, put
+$D=3(1+v-uv)$. Direct solution of the augmented gradient system gives
+\[
+ \begin{aligned}
+ D\lambda_0&=1-4u+3v-7uv,&
+ D\lambda_1&=1+2u-3v-uv,\\
+ D\lambda_2&=1+2u+3v+5uv.&&
+ \end{aligned}
+\]
+On $|u|,|v|\le1/10$, $D\ge267/100$ and the three numerators are at least
+$23/100$, $49/100$, and $45/100$. The coefficients sum to one and their
+weighted gradient is zero. Thus affine independence and affine correctness
+hold throughout this box, by the same unique-coefficient argument as above.
+The planar regularity argument also applies throughout the box. Since
+$\{F\le1/100\}$ lies there, Corollary~\ref{art:planar-convergence} proves
+the exact convergence claim.
+
+For the radial obstruction choose a sufficiently small fixed $u>0$ and put
+\[
+ v=v(u)=\frac{-1+\sqrt{1+4u+2u^2}}2
+       =u-\tfrac12u^2+O(u^3).
+\]
+This is the positive active tie $f_0=f_1$, with $f_2$ inactive. At that point
+\[
+ (\nabla f_0-\nabla f_1)^T(u,v)
+ =(1+u)u-(1+2v)v=\tfrac12u^2-v^2\ne0
+\]
+for small $u$, as follows from the displayed expansion. Take
+$x=(u,v+e)$ and $z=(u,v-e)$ with $e>0$ tending to zero. Branches 1 and 0,
+respectively, are uniquely active. A direct calculation gives
+\[
+ \begin{aligned}
+ d&=2e(1+3v+3e),&t&=2e(1+2v+4e),\\
+ \Delta&=e(1+4v)+e^2.&&
+ \end{aligned}
+\]
+As $u,e\to0^+$, $\Delta/d\to1/2$ and $t/d\to1$, so for fixed sufficiently
+small $u$ and all sufficiently small $e$, the pairs are eligible for the
+stated constants. Their radial numerator $y^Tz$ tends to
+$u^2/2-v^2\ne0$ while $t\to0^+$. The quotient $(y^Tz)^2/t$ is unbounded.
+For each chosen $u$ both endpoint values stay above half the positive tie
+value; hence one fixed positive band precedes the unbounded sequence.
+Choosing $u$ arbitrarily small places that band and those pairs in any
+given neighborhood of zero.
+\end{proof}
+
+The example identifies the extra freedom supplied by moving geometry.
+Curvature of the interface produces a radial jump, while the contour-based
+field cancels it and charges its own motion to the accepted decrease.
+The proof uses the original coordinates and the unmodified BFGS update;
+a nonlinear change of variables or a replacement by polyhedral cells would
+not establish this conclusion.

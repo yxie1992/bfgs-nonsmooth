@@ -1,49 +1,71 @@
-\section{Verification and the remaining boundary}\label{art:verification}
+\section{Synthesis, verification and the remaining questions}\label{art:verification}
 
-The formal record uses Lean 4.19.0 with pinned mathlib. A fresh incremental
-project build and declaration-level audit were run on 12 September 2026.
-The audited main and supplemental correction modules contain 9,781 safe
-declarations, including 7,954 theorems. Their type, proof-value and structural
-dependencies were inspected transitively. Only propositional extensionality
-(\texttt{propext}), classical choice (\texttt{Classical.choice}) and quotient
-soundness (\texttt{Quot.sound}) are permitted axiom dependencies. No
-\texttt{sorryAx}, custom mathematical axiom, unchecked external calculation,
-or reachable unsafe or partial implementation artifact passed the audit.
-These statements describe an actual run, not a restored historical count.
+The mixed quadratic--absolute-value benchmark now has a whole-sequence
+answer: every admissible full-BFGS run for $u^2+|v|$ converges to its unique
+minimizer. The same centered-family argument gives global convergence for
+smooth-plus-sublinear objectives whose compact initial sublevels lie in the
+region of the structural representation,
+and recovers the known Euclidean-norm result inside the broader coercive
+homogeneous class. Locally, finite polyhedral geometry controls the inward
+model error. The planar theorem goes further: a moving comparison field
+handles curved switches in the three-quadratic example even though its radial
+secant condition fails. These are objective-based convergence results, with
+their distinct compactness and geometric assumptions intact.
 
-The exact theorem contracts determine the formal scope. For example, the
-principal-minor result concerns actual matrices and determinants, and the
-scalar hierarchy is derived from it. Conditional sequence lemmas alone would
-not establish that bridge. Similarly, the negative exports include the
-implemented search decisions and the induction over all queries; a finite
-numerical trajectory would not suffice. The companion supplies the full
-export lists, source and theorem correspondence, pinned reproduction commands,
-and the audit logs. The article's rational certificate and mathematical
-proofs are readable independently of Lean.
+The counterexamples place a different limit on deterministic guarantees.
+They exclude a neighborhood in which every admissible start
+succeeds for the specified unit-first search, both for finite maxima of
+convex $C^{2,1}$ branches with bounded Hessians and, independently, for the
+stated uniformly strongly convex $C^{1,1}$ regime. Simpler polyhedral and
+quadratic-plus-maximum examples establish global failure near a wrong corner;
+the local embeddings are needed to place bad starts arbitrarily near the
+objective's own minimizer. The proof follows the actual full update and every
+line-search query, so the failure is an algorithmic trajectory, not only a
+prescribed sequence of accepted points.
 
-Formal checking does not prove consistency of the foundational axioms,
-novelty, fidelity of a natural-language paraphrase, or floating-point
-robustness. The standard kernel and execution environment remain trusted.
-The correspondence and the three editorial review passes are author-side
-reviews, not independent human peer review. Stable-manifold membership in
-Appendix~\ref{art:lower_curvature} is an existence theorem and is not inferred
-from rounded forward shooting.
+The common analytical advance is a route around a full spectral description
+of the BFGS matrices. The principal-minor hierarchy constrains the decrease
+metric even while the matrices degenerate. A comparison energy then converts
+those constraints into progress whenever its directions continue to see the
+remaining objective gap with controlled secant and transport costs. The radial,
+finite-partition and planar arguments provide different ways of meeting these
+requirements. Their success does not make the requirements necessary, or turn
+an affine-critical obstruction into a universal dynamical classification.
 
-The results leave a focused boundary. Local finite polyhedral geometry with
-smooth extensions controls inward model error, while smooth convex branch
-formulas alone can encode bad configurations accumulating at the minimizer.
-Uniform lower curvature does not repair the separate $C^{1,1}$ construction.
-The present results do not decide the local problem for finite uniformly
-strongly convex $C^2$ branches through the optimizer, or classify all convex
-nonsmooth objectives by affine-critical or accessible-jump geometry.
+These distinctions leave precise questions. The two local negatives do not
+give a counterexample with finitely many uniformly strongly convex $C^2$
+branches through the minimizer; the planar positive theorem settles a
+nondegenerate subclass, not that entire class. Nor do exceptional deterministic
+starts establish failure with positive probability. The accumulating local
+constructions do not have a finite semialgebraic description. The almost-sure
+stationarity, all-trial-value rate and spectral-identification assertions in
+Lewis--Overton's challenge~\cite[Challenge~7.1]{LO} therefore remain outside
+the conclusions proved here. We also distinguish convergence of an infinite
+admissible run from a guarantee of indefinite differentiable execution; a
+zero gradient is successful termination in this paper.
 
-\paragraph{Reproducibility and AI assistance.}
+\paragraph{Formal verification and reproducibility.}
+The companion records Lean~4.19.0 proofs with pinned mathlib, exact
+statement-to-source correspondence, and compiler and transitive-axiom audit
+logs. The permitted foundational dependencies are propositional
+extensionality (\texttt{propext}), classical choice
+(\texttt{Classical.choice}) and quotient soundness (\texttt{Quot.sound}).
+The audits reject \texttt{sorryAx}, custom mathematical axioms and reachable
+unsafe or partial proof artifacts. The principal-minor theorem concerns the
+actual matrices and determinants, and the negative proofs include the search
+decisions and all-query induction. The rational certificate and the article's
+proofs can also be read independently of Lean. Formal checking supports these
+precise claims; it does not establish foundational consistency, publication
+priority, fidelity of every prose paraphrase, or floating-point robustness.
+The kernel and execution environment remain trusted, and author-side
+correspondence reviews are separate from independent human peer review.
+
+\paragraph{AI assistance and author review.}
 The accompanying source tree contains the article, complete companion,
 figure-generation code, exact certificates and Lean project. Large language
 models assisted theorem development, proof reconstruction, formalization,
-literature searches, software, and writing. This assistance was substantive;
-it was not limited to grammar editing. Compiler and arithmetic checks provide
-the specific evidence described above. Human authors must review the claims,
+literature searches, software and writing. This assistance was substantive;
+it was not limited to grammar editing. Human authors must review the claims,
 citations, novelty assessment and disclosure before submission. This
 author-review edition asserts no author consent, independent human review,
-affiliations, grants, or public archival identifier.
+affiliations, grants or public archival identifier.

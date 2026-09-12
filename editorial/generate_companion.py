@@ -24,19 +24,19 @@ index=json.loads((SOURCE/'DECLARATION_INDEX.json').read_text())
 for source in {SOURCE/c['corrected_source'] for c in claims}:
  guard_source(source)
 outputs={}
-order=[('I','Scope, quantifiers and the result map'),('M','The common BFGS algebra and reciprocal budgets'),('T','Transported comparison energies'),('R','Radial modeling and finite partitions'),('G','What comparison certificates express'),('F','Concrete objectives, lifting and rates'),('H','Homogeneous objectives without compactness'),('A','Affine criticality and stratified geometry'),('C','Planar switching and affine-critical cluster points'),('Q','Flat contours and parabolic branches'),('U','Fixed normal geometry in arbitrary dimension'),('D','The exact deterministic seed and local smooth embedding'),('L','Failure with positive lower curvature'),('E','Formal correspondence and the evidence boundary')]
+order=[('I','Scope, quantifiers and the result map'),('M','BFGS algebra and reciprocal budgets'),('T','Transported comparison energies'),('R','Radial modeling and finite partitions'),('G','What comparison certificates express'),('F','Concrete objectives, lifting and rates'),('H','Homogeneous objectives without compactness'),('A','Affine criticality and stratified geometry'),('C','Planar switching and affine-critical cluster points'),('Q','Flat contours and parabolic branches'),('U','Fixed normal geometry in arbitrary dimension'),('D','The exact deterministic seed and local smooth embedding'),('L','Failure with positive lower curvature'),('E','Formal correspondence and the evidence boundary')]
 number={m:str(i+1) for i,(m,_) in enumerate(order)}
 internal={'SM':'M','SH':'H','ST':'T','SG':'G','SR':'R','SL':'R','SP':'F','SQ':'F','SE':'F','SV':'M','SA':'A','SC':'C','SU':'U','SD':'D','SLC':'L'}
 introductions={
 'I':'The scope map separates objective convergence, convergence to the solution set and convergence of the full sequence. It also separates universal admissible-run statements from the particular deterministic executions used in the counterexamples.',
 'M':'The same matrix calculation supports every positive result in this volume. We establish it once for actual full BFGS matrices, then retain the distinct qualitative, finite-horizon and summable-budget consequences.',
 'T':'The reciprocal budget becomes an objective theorem only when geometry controls a comparison energy. Visibility, secant control and transport are imposed on objective-level pairs, not inferred from a presumed limit of the BFGS matrices.',
-'R':'A fixed comparison direction toward an optimizer gives a concrete modeling condition. Its inward formulation explains both local finite partitions and familiar centered nonsmooth terms.',
+'R':'The global mixed-benchmark question is answered through inward model accuracy: a centered sublinear term contributes no inward remainder, and a smooth term contributes a quadratic one. The same condition localizes to finite polyhedral partitions without requiring cell identification.',
 'G':'The certificate is a sufficient analytic condition. Its normalization and pointwise geometry help interpret it, while scalar examples separate failure of the condition from failure of BFGS.',
 'F':'These applications turn the common analytic mechanism into verifiable objective classes. The affine-fiber selection formula and quantitative conclusions retain their own initialization and budget hypotheses.',
-'H':'Homogeneity permits a different potential even without compact sublevels. The value dichotomy, recurrent-gradient obstructions and low-effective-rank iterate conclusions must therefore be retained separately from the compact-band theory.',
+'H':'Coercive homogeneous objectives provide a broad global convergence family. This chapter goes beyond that compact case: a different potential gives noncompact value alternatives, recurrent-gradient obstructions and conditional iterate conclusions, which remain distinct from finite line-search escape and from whole-iterate convergence.',
 'A':'Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity. This distinction gives useful local geometry but does not by itself force an algorithm to visit it.',
-'C':'The plane allows a comparison direction to be joined along a regular positive contour. The corrected determinant orientation and one-sided transport argument are essential to the conclusion.',
+'C':'Curved switching interfaces can defeat inward radial accuracy even in a convergent problem. The planar contour construction supplies moving comparison geometry; the explicit three-quadratic basin demonstrates its added scope. The signed determinant and one-sided transport proof make the resulting convergence theorem independent of assumed matrix behavior.',
 'Q':'Flat contour segments are allowed in this finite parabolic family. Its explicit field supplies a convergence theorem that is not contained in the strict-contour planar result.',
 'U':'A fixed space of jump normals leaves controlled smooth directions in arbitrary dimension. Residual transport can be paid for in those directions; this is a different hypothesis from planar switching geometry.',
 'D':'A finite algebraic cycle first determines every query of a specified line search. Scaled copies then produce one fixed convex objective with failing initial points approaching its optimizer.',
@@ -102,6 +102,18 @@ for module,title in order:
   assert text.count(trial_heading)==1
   text=text.replace(trial_heading,trial_heading+r'\label{comp:trial_table}')
   transform_log.append({'module':module,'kind':'add_stable_trial_table_cross_reference','label':'comp:trial_table','reason':'The companion finite-certificate appendix refers to this retained full trial table.'})
+ if module=='I':
+  heading=r'\section{Supersession policy}'
+  assert text.count(heading)==1
+  text=text.replace(heading,'\\clearpage\n'+heading)
+  transform_log.append({'module':module,'kind':'keep_heading_with_table','reason':'All-page visual review found the supersession heading stranded before its longtable. Explicit page break changes layout only.'})
+ if module=='C':
+  pattern=r'\\begin\{align\*\}\n f_0\(u,v\).*?\\end\{align\*\}'
+  blocks=list(re.finditer(pattern,text,re.S));assert len(blocks)==1
+  block=blocks[0][0]
+  replacement=block.replace(r'\begin{align*}',r'\[\begin{aligned}').replace(r'\end{align*}',r'\end{aligned}\]')
+  text=text.replace(block,replacement)
+  transform_log.append({'module':module,'kind':'keep_three_branch_definition_together','reason':'Visual review found the definition split across pages. Unbreakable aligned display retains every formula and all theorem hypotheses.'})
  intro='\\chapter{'+title+'}\\label{comp:'+module+'}\\label{'+module+':chapter}\n\\renewcommand{\\ModuleTag}{'+number[module]+'}\n'+introductions[module]+'\n\n'
  if module=='E':intro+='\\input{current_verification}\n'
  content=intro+text

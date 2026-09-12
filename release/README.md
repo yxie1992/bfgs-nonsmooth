@@ -1,85 +1,100 @@
-# BFGS author-review release
+# BFGS narrative-rebuild author-review release
 
-The journal article is **32 pages**; the complete companion is **105 pages**.
-This is an author-review-ready research package. Human approval, independent
-peer review and journal acceptance are not claimed.
+The revised article is **47 pages**, including its essential proof appendices;
+the complete companion is **107 pages**. The article gives coequal weight to
+deterministic counterexamples, global/local convergence families and the actual
+BFGS matrix/energy mechanism. The literal `u^2+|v|` whole-sequence result is a
+named corollary. The nonradial planar application has a complete article proof.
+This is an author-review edition, not an approved submission.
 
-- `BFGS_Journal_Article.pdf`: article, including its essential proof appendices.
-- `BFGS_Complete_Companion.pdf`: complete reorganized corrected report.
-- `BFGS_paper_companion_sources.zip`: full source archive, 79,008,274 bytes.
-- `SOURCE_MANIFEST.json`: source commit, archive/PDF hashes and file counts.
-- `validation/SUMMARY.json`: actual fresh-extraction commands and results.
+Deliverables: `BFGS_Journal_Article.pdf`, `BFGS_Complete_Companion.pdf`, and
+`BFGS_paper_companion_sources.zip`. The previous edition is preserved in
+`history/20260912_initial/`. The handoff response is
+`editorial/narrative_rebuild/narrative_response.md`.
 
-The archive preserves the outer `BFGS-non-smooth/` folder and every committed
-repository-relative path. It contains 3,521 source files, final PDFs, a hash
-manifest and the Git bundle required by immutable historical checks. Dependency
-caches, compiled Lean objects, raw `.git`, temporary build files and unrelated
-untracked user files are excluded. The ZIP is a local deliverable excluded from
-Git; its manifest and final PDFs are committed.
+## Source freeze and validation receipts
 
-The frozen source commit is
-`7bcce9ae46cb2b3dffcffff218b60d233c45dc15`.
-The subsequent release commit records the extraction results and final release
-status; this keeps the source snapshot and its validation independently
-traceable. The archive's editorial work-state files describe that source
-milestone, before the extraction validation recorded here.
+This committed source-freeze record precedes packaging and extraction
+validation. Current PDF hashes are in `RELEASE.json`. Packaging resolves the
+source commit and writes the ZIP and external `SOURCE_MANIFEST.json`. Any
+committed prior `SOURCE_MANIFEST.json` describes an earlier package; the new
+ZIP's own `_archive/RELEASE_SNAPSHOT.json` identifies the current snapshot
+without a circular archive-hash claim. A later release receipt records actual
+extraction results under `validation/runs/`, preserving prior validation runs.
+
+The ZIP preserves the outer `BFGS-non-smooth/` folder and every committed
+relative path. It includes the Git history bundle required by historical
+checks, sources, exact correspondence, compiler/audit evidence, figures and
+PDFs. Dependency caches, compiled Lean objects, raw `.git`, temporary build
+files and unrelated untracked user files are excluded. The local ZIP is
+ignored by Git; its manifest and release PDFs are committed.
 
 ## Reproduction
 
-In a fresh ZIP extraction, restore the bundled history **before** building or
-editing, because the restore helper validates the original member hashes:
+In a fresh ZIP extraction restore history before changing or building files:
 
 ```bash
 python3 _archive/restore_git_history.py
 bash editorial/build.sh
 python3 editorial/verify_release_inputs.py
-python3 editorial/verify_historical_baseline.py
+python3 editorial/verify_historical_baseline.py --run-id local_replay
 ```
 
-In an existing Git checkout omit the restore command. LaTeX sources start at
-`paper/master.tex` and `companion/master.tex`. The build requires Python 3,
-TeX Live with the supplied packages, latexmk/pdflatex and Poppler. Node.js is
-also needed by the historical index check. The official journal class is
-included unchanged with its provenance and notices.
+In an existing Git checkout omit the restore command. LaTeX entry points are
+`paper/master.tex` and `companion/master.tex`. The build uses Python 3, TeX Live,
+latexmk/pdflatex and Poppler; Node.js is needed by the historical index check.
+The official journal class is included with its notices and provenance.
+Source generation checks all frozen corrected-source hashes.
 
-The source ZIP was actually extracted into a new directory and rebuilt with no
-preexisting document build outputs. Both PDFs were byte-identical, every one
-of 137 rendered pages matched the previously visually inspected versions,
-and paginated extracted text matched. References/citations resolved and there
-were no overfull boxes. The temporary extraction was removed after the check;
-commands, output and hashes remain under `validation/`.
+For new Lean compilation, run `bash scripts/bootstrap.sh` inside
+`bfgs_lean_stage1`, then run from the repository root:
 
-## Formal scope and evidence
+```bash
+python3 editorial/formal_audit/run.py --run --run-dir editorial/formal_audit/runs/local_replay
+python3 editorial/narrative_rebuild/positive_formal/verify.py --run-id local_replay
+python3 editorial/narrative_rebuild/negative_formal/verify.py --run-id local_replay
+```
 
-The pinned Lean 4.19.0 project received an actual incremental build and fresh
-transitive declaration audits, with 9,781 safe declarations in the main and
-correction union (7,954 theorems). The new article geometry audit checked 14
-module-owned declarations and 26,496 recursively reached dependencies. Only
-`propext`, `Classical.choice` and `Quot.sound` occur as axioms. The audits reject
-unfinished proof axioms, custom mathematical axioms and reachable unsafe or
-partial implementation artifacts. This is not a proof of foundational
-consistency or a new empty-cache build of every dependency.
+Use new run names for repeat execution; evidence directories are not overwritten.
+The source-only integrity gate checks retained evidence and reports omitted
+compiled caches as such. It does not execute Lean. The release validator also
+compiles the new supplements and performs their full structural audits in a
+fresh extraction, reusing explicitly checked pinned host libraries. This is
+not an empty-cache rebuild of those libraries.
 
-The historical public checker is unchanged. Its citation-only repository-wide
-Git comparison rejects new editorial Lean files at later HEADs. The wrapper
-preserves that expected failure, compares all 761 frozen audit inputs and 286
-sealed artifacts, and replays all original checks at `00362c0`, where they pass.
-Current article/companion integrity and supplemental Lean verification are
-separate checks. The archive replay repeated both evidence-validation paths;
-it did not represent them as a new Lean compilation.
+## Mathematical and formal scope
 
-Exact source/type/hypothesis correspondence and attribution are in
-`editorial/CLAIM_LEDGER.json`, its component contract reviews,
-`companion/PROOF_CORRESPONDENCE.html`, and `editorial/LITERATURE_LEDGER.json`.
-All 172 corrected source spans and 3,087 distinct full exports are preserved.
-Conditional hypotheses, definitions, interpretations and open questions are
-classified separately. Formal checking does not certify prose translation,
-novelty, bibliographic priority or floating-point behavior; the recorded
-correspondence and literature reviews address those distinct scopes.
+All 172 corrected source spans and 3,087 distinct full exports remain in the
+companion. Exact statements, definitions, hypotheses and transitive support
+are exposed in `editorial/CLAIM_LEDGER.json`, its component reviews,
+`companion/PROOF_CORRESPONDENCE.html` and the original declaration index.
+Article selection changes are in
+`editorial/narrative_rebuild/ARTICLE_DISPOSITIONS.json`.
 
-## Reserved author actions
+The fresh pinned main replay checked 9,781 safe declarations in the main and
+correction union, including 7,954 theorems. The preceding fourteen article
+geometry declarations retain unchanged audited sources. The new benchmark
+supplement has three module-owned theorems and 31,960 checked transitive
+dependencies; matched scaling has eleven declarations and 10,697 dependencies.
+Counts overlap and are not additive. Only `propext`, `Classical.choice` and
+`Quot.sound` are permitted as axioms; unfinished proof axioms, custom
+mathematical axioms and reachable unsafe/partial artifacts are rejected.
+Formal verification does not certify foundational consistency, natural-language
+correspondence, novelty or floating-point behavior.
 
-Read `editorial/AI_AND_AUTHOR_ACTIONS.md`. Human authors must supply metadata,
-review the cited sources and novelty statements, accept responsibility and the
-substantive AI-use disclosure, and decide final submission or archival deposit.
-No submission, public deposit or external message has been made by this task.
+The historical public checker is unchanged. Its repository-wide citation-only
+diff rejects added editorial Lean files at later commits. The wrapper preserves
+that expected failure, checks 761 frozen inputs and 286 sealed artifacts, and
+replays the original checks at the frozen baseline. Current document and
+supplemental verification remain separate checks.
+
+## Human author actions
+
+See `editorial/AI_AND_AUTHOR_ACTIONS.md`. Authors must review the mathematics,
+literature and novelty statements, approve the substantive AI-use disclosure,
+supply accurate metadata and declarations, and decide the target/length and any
+submission or public deposit. The 47-page article exceeds the original 30–35-page
+editorial aim to retain the requested broad positive results and complete
+proofs; `editorial/JOURNAL_FIT.md` records the rationale and policy. No acceptance,
+human approval, independent human peer review, submission, public deposit or
+external message is claimed.

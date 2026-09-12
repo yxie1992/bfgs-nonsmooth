@@ -1,0 +1,268 @@
+\section{Global convergence: homogeneous and mixed geometry}\label{art:global}
+
+The example $F(u,v)=u^2+|v|$ combines smooth motion along the nonsmooth line
+with a gradient jump across it. Reaching that line is therefore only part of
+the convergence question: the smooth coordinate must also approach zero.
+The comparison energy resolves both motions through a single objective
+property. Toward the minimizer, a homogeneous term has an exact first-order
+model; a smooth convex term adds only a quadratic remainder. The argument
+below works in arbitrary finite dimension and allows the BFGS matrices to
+become increasingly ill-conditioned.
+
+\subsection{Why inward accuracy controls a nonradial algorithm}
+
+A gradient jump can make the positive correction in
+\eqref{art:energy-identity} large. We control its pairing with the direction
+to a minimizer by asking that first-order prediction remain quadratically
+accurate on short inward segments. This asks nothing about transverse
+smoothness, and it does not require BFGS to take radial steps. The comparison
+segments are an analytical device; the actual steps remain those in
+\eqref{art:update}.
+
+Fix a minimizer $x_*$, write $F_*=F(x_*)$, and let
+$K=\{x:F(x)\le b\}$ be compact, with $b>F_*$. For differentiable $x,z\in K$,
+set
+\[
+ \begin{gathered}
+ r_x=x-x_*,\qquad g=\nabla F(x),\qquad h=\nabla F(z),\\
+ T=(h-g)^T(z-x),\qquad N=(h-g)^Tr_z.
+ \end{gathered}
+\]
+The radial secant condition is the following requirement on positive bands:
+\begin{equation}\label{art:radial-condition}
+ \begin{gathered}
+ \text{for every }\eta>0\text{ there is }C_\eta\ge0\text{ such that}\\
+ N^2\le C_\eta T
+ \quad\text{whenever }F_*+\eta\le F(z)\le F(x),\quad T>0.
+ \end{gathered}
+\end{equation}
+Here all such differentiable endpoint pairs are included, whether or not they
+are eligible for the fixed line search. The inward model condition is
+\begin{equation}\label{art:inward-condition}
+ \begin{gathered}
+ \text{for every }\eta>0\text{ there are }M_\eta\ge0,
+       \ \theta_\eta\in(0,1/2]\text{ such that}\\
+ 0\le F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x
+       \le\frac{M_\eta}{2}\tau^2,\quad 0\le\tau\le\theta_\eta,
+ \end{gathered}
+\end{equation}
+at every differentiable $x\in K$ with $F(x)\ge F_*+\eta$.
+The inward point need not be differentiable. It remains in $K$ by convexity.
+The parameter $\tau$ is a fraction of the distance to $x_*$, rather than a
+Euclidean step length. Constants may depend on the positive value band:
+no common bound is required as the band approaches the minimum. Thus
+nonsmoothness at the solution is permitted, including the absolute-value
+term in the benchmark.
+
+\begin{theorem}[Inward models control radial secants]\label{art:radial-equivalence}
+For finite convex $F$ and the compact sublevel $K$ above,
+\eqref{art:inward-condition} implies \eqref{art:radial-condition}.
+\end{theorem}
+\begin{proof}
+Choose $G,R>0$ bounding subgradient norms on $K$ and $\norm{x-x_*}$ there.
+The subgradient bound was proved in Theorem~\ref{art:certificate}; supporting
+inequalities then give $|F(x)-F(z)|\le G\norm{x-z}$ on $K$.
+Use the supporting-plane error
+\[
+ D_F(z,x)=F(z)-F(x)-\nabla F(x)^T(z-x)\ge0.
+\]
+This is the usual Bregman expression \cite{BB}; only its supporting endpoint
+needs to be differentiable. At differentiable endpoints,
+$T=D_F(z,x)+D_F(x,z)$.
+
+Suppose that \eqref{art:inward-condition} holds, and fix a positive band,
+with constants $M,\theta$. If $N\ge0$, compare the supporting plane at $x$
+with the inward model at $z-\tau r_z$ to obtain
+\[
+ \tau N\le D_F(z,x)+\tfrac12M\tau^2.
+\]
+If $N<0$, reverse the endpoints and use the inward model at $x$:
+\[
+ \tau(T-N)\le D_F(x,z)+\tfrac12M\tau^2.
+\]
+Thus there are $A\in[|N|,2GR]$ and
+$D\in\{D_F(z,x),D_F(x,z)\}$ such that
+$\tau A\le D+M\tau^2/2$ for $0\le\tau\le\theta$.
+For $M>0$ and $A\le M\theta$, choose $\tau=A/M$, giving $A^2\le2MD$.
+If $A>M\theta$, take $\tau=\theta$ to obtain
+$D\ge A\theta/2$ and hence $A^2\le(4GR/\theta)D$.
+When $M=0$, the same endpoint choice gives an even stronger estimate.
+Therefore
+\begin{equation}\label{art:inward-to-radial}
+ N^2\le \max\{2M,4GR/\theta\}\,T.
+\end{equation}
+\end{proof}
+
+The converse implication, including inward samples that are not
+differentiable, is proved in Chapter~4 of the complete companion. The article
+uses the sufficient direction just proved: objective modeling accuracy
+controls every descending secant pair on the same positive band.
+
+\begin{corollary}[Radial convergence]\label{art:radial-convergence}
+Under either condition, every admissible run starting in $K$
+converges in value to $F_*$ and in distance to $\arg\min F$. With a unique
+minimizer it converges to $x_*$.
+\end{corollary}
+\begin{proof}
+Take $W_\eta(x)=r_xr_x^T$. Convexity gives
+$g^Tr_x\ge F(x)-F_*\ge\eta$, proving visibility with $m_\eta=\eta^2$.
+Equation~\eqref{art:radial-condition} gives secant control on eligible pairs.
+Finally $r_z=r_x+s$ implies $\Pi_sr_z=\Pi_sr_x$, so transport holds with
+$L_\eta=0$. Apply Theorem~\ref{art:certificate}.
+\end{proof}
+
+This condition controls only inward first-order modeling error. In a smooth
+region its infinitesimal expression is $r_x^T\nabla^2F(x)r_x$, rather than the
+largest Hessian eigenvalue. A bound almost everywhere on that expression alone
+would miss a jump of the derivative along a ray; the function-value condition
+\eqref{art:inward-condition} includes such jumps. The condition is sufficient;
+Theorem~\ref{art:nonradial-example} will exhibit convergence where it fails
+on positive bands arbitrarily near the minimizer.
+
+\subsection{A family theorem and the mixed benchmark}
+
+A finite convex positively homogeneous function is sublinear: its value on
+$(1-\tau)r$ is exactly $(1-\tau)$ times its value on $r$. Its angular
+nonsmoothness consequently disappears from the inward remainder. The next
+theorem permits an arbitrary locally $C^{1,1}$ convex perturbation, provided
+the homogeneous part is centered at a minimizer of the sum. Centering is a
+geometric hypothesis on the objective, not knowledge required by the
+algorithm. In particular, the two summands need not separately be minimized
+at that center.
+
+\begin{theorem}[Centered smooth-plus-sublinear objectives]\label{art:centered}
+Let $F:\R^n\to\R$ be finite and convex, and suppose $x_*$ minimizes $F$.
+Let $U$ be an open convex set, let $\psi$ be convex and locally $C^{1,1}$ on
+$U$, and let $\gamma:\R^n\to\R$ be finite, convex and positively homogeneous
+of degree one. Suppose
+\[
+ F(x)=\psi(x)+\gamma(x-x_*)\qquad(x\in U).
+\]
+Every admissible run whose initial sublevel is compact and contained in $U$
+satisfies $F(x_k)\to F(x_*)$. The distance to $\arg\min F$ also tends to zero. If $x_*$ is the unique
+minimizer, then $x_k\to x_*$. Neither original summand is required to be
+minimized at $x_*$.
+\end{theorem}
+\begin{proof}
+Let $K=\{F\le F(x_0)\}$. Since $g_0\ne0$, convexity implies
+$F(x_0)>F(x_*)$. On compact convex $K\subset U$, local $C^{1,1}$ regularity
+provides a uniform Lipschitz constant $L$ for $\nabla\psi$: take a finite
+cover by neighborhoods carrying local constants and subdivide any segment in
+$K$ into pieces in that cover. Summing the local bounds gives the maximum
+of those constants along the segment. Integrating the gradient along an
+inward segment consequently gives
+\[
+ \left|\psi(x-\tau r_x)-\psi(x)
+             +\tau\nabla\psi(x)^Tr_x\right|
+ \le\tfrac12L\tau^2\norm{r_x}^2.
+\]
+At a differentiable point of $F$ in $U$, the representation and smoothness of
+$\psi$ imply differentiability of $\gamma$ at $r_x$. Differentiating its
+homogeneity identity gives $\nabla\gamma(r_x)^Tr_x=\gamma(r_x)$.
+Its contribution to the inward remainder is therefore exactly zero.
+The upper bound in \eqref{art:inward-condition} follows with
+$M=L\max_{x\in K}\norm{r_x}^2$; its lower bound follows from convexity of $F$.
+Corollary~\ref{art:radial-convergence} proves the claim.
+\end{proof}
+
+
+The compact initial sublevel supplies uniform constants and traps the accepted
+iterates. When the representation is global and all sublevels are compact,
+the theorem applies from every differentiable nonstationary starting point,
+for every initial SPD matrix and every fixed valid Armijo--weak-Wolfe pair.
+Neither a lower Hessian bound for the smooth term nor differentiability of
+the full objective away from the minimizer is required. Without uniqueness,
+the stated conclusion is value and solution-set distance convergence;
+convergence to one particular minimizer is not asserted.
+
+\begin{corollary}[The quadratic--absolute-value benchmark]\label{art:mixed-benchmark}
+For $F(u,v)=u^2+|v|$, every infinite admissible full-BFGS run, with arbitrary
+$H_0\succ0$ and any fixed $0<c_1<c_2<1$, satisfies
+\[
+ F(u_k,v_k)\longrightarrow0,\qquad (u_k,v_k)\longrightarrow(0,0).
+\]
+\end{corollary}
+\begin{proof}
+Take $\psi(u,v)=u^2$, $\gamma(u,v)=|v|$, $x_*=(0,0)$ and $U=\R^2$.
+The objective is finite and convex, its sublevels are closed and bounded,
+and its minimizer is unique. More explicitly, for $0\le\tau\le1$ and
+$v\ne0$,
+\[
+ F((1-\tau)(u,v))-F(u,v)
+       +\tau\nabla F(u,v)^T(u,v)=\tau^2u^2.
+\]
+Thus the nonsmooth coordinate contributes zero inward error, while the
+smooth coordinate contributes exactly its quadratic remainder.
+Theorem~\ref{art:centered} applies.
+\end{proof}
+
+Guo--Lewis proved that every BFGS sequence for this objective has a subsequence
+approaching a point of the line $v=0$ \cite[Corollary~4.4]{GL18}; they expressly
+left convergence of every sequence to the origin open. The corollary above
+settles that whole-sequence conclusion in the admissible full-BFGS setting.
+It follows from the family theorem, without a special recurrence for this
+two-dimensional objective. The conclusion concerns accepted differentiable
+iterates. It does not assert that every search ray contains a differentiable
+acceptable point or that a particular search routine can always find one.
+
+\subsection{Coercive homogeneous objectives, linear maxima, and gauges}
+
+Pure homogeneous geometry is the limiting case with no smooth remainder.
+Coercivity here has a clear purpose: it prevents escape along a direction of
+zero or negative homogeneous value and converts convergence in value into
+convergence to the origin. It imposes no smoothness or finite-piece condition.
+
+\begin{theorem}[Coercive homogeneous objectives]\label{art:homogeneous}
+Let $F:\R^n\to\R$, $n\ge1$, be finite, convex, positively homogeneous of
+degree one, and coercive. Then zero is its unique minimizer and every
+infinite admissible full-BFGS run satisfies
+\[
+ F(x_k)\longrightarrow0,\qquad x_k\longrightarrow0.
+\]
+The initial point, initial SPD matrix and fixed valid line-search constants
+are arbitrary within admissibility.
+\end{theorem}
+\begin{proof}
+Homogeneity gives $F(0)=0$. If $F(x)\le0$ for some $x\ne0$, then
+$F(tx)=tF(x)\le0$ as $t\to\infty$, contradicting coercivity. Thus
+$F(x)>0$ off zero. Continuity on the unit sphere gives
+\[
+ \mu=\min_{\norm{x}=1}F(x)>0,
+ \qquad F(x)\ge\mu\norm{x}.
+\]
+All sublevels are compact. Theorem~\ref{art:centered}, with $\psi=0$ and
+$\gamma=F$, gives convergence in value, and the displayed lower bound gives
+convergence of the iterates. Equivalently, the inward remainder is identically
+zero, so the radial convergence corollary applies directly.
+\end{proof}
+
+\begin{corollary}[Compact homogeneous models]\label{art:homogeneous-examples}
+The conclusion of Theorem~\ref{art:homogeneous} holds for every norm, every
+finite convex degree-one gauge with bounded unit sublevel, and every finite
+linear maximum
+\[
+ F(x)=\max_{1\le i\le m}a_i^Tx
+\]
+whose zero sublevel is bounded. These are whole-iterate conclusions from every
+admissible start. The linear maximum has no affine intercepts.
+\end{corollary}
+\begin{proof}
+For a norm, continuity and positivity give a positive minimum on the Euclidean
+unit sphere. For either of the other models, boundedness of the stated
+sublevel rules out a nonzero $x$ with $F(x)\le0$, since its full positive ray
+would lie in that sublevel. The same sphere argument gives
+$F(x)\ge\mu\norm{x}$, hence coercivity. Finite maxima of linear forms are
+finite, convex and degree-one homogeneous, so the theorem applies.
+\end{proof}
+
+No symmetry is needed for the gauge or max-linear cases. The familiar
+Euclidean norm is an already established consequence of Guo--Lewis's
+smooth-extension analysis \cite[Corollary~4.2]{GL18}; the scalar absolute-value
+model was analyzed by Lewis--Overton under their stated search conventions
+\cite[Section~5.1]{LO}. The result here treats the stated arbitrary-dimensional
+homogeneous family. Coercivity is used for this compact, whole-iterate route,
+not asserted necessary for value convergence. The complete companion,
+Chapter~7, separately proves the noncompact homogeneous value dichotomy
+$F(x_k)\to0$ or $F(x_k)\to-\infty$, together with its bounded-below and
+additional iterate consequences. Those noncompact conclusions are not needed
+for, or independently reproved by, the compact global theorems of this article.
