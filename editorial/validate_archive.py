@@ -21,6 +21,8 @@ def sha(path):
 
 
 def main():
+    if not __debug__:
+        raise RuntimeError('Run without Python optimization so integrity assertions remain enabled.')
     OUT.mkdir(parents=True, exist_ok=True)
     summary_path = OUT / 'SUMMARY.json'
     if summary_path.exists():
@@ -83,7 +85,9 @@ def main():
             assert checks['status'] == 'PASS'
             for name in ['paper_build.log', 'companion_build.log', 'figure_build.log', 'document_checks.json']:
                 shutil.copy2(tree / 'editorial/logs' / name, OUT / name)
-            reviews = json.loads((ROOT / 'editorial/reviews/render_manifest.json').read_text())
+            reviews = json.loads((tree / 'editorial/reviews/render_manifest.json').read_text())
+            names = [r['document'] for r in reviews['documents']]
+            assert len(names) == 2 and set(names) == {'paper', 'companion'}
             documents = []
 
             def compare_document(review):

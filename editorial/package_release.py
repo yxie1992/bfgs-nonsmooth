@@ -6,6 +6,7 @@ ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'release'
 def git(*a):return subprocess.check_output(['git',*a],cwd=ROOT)
 def sha(b):return hashlib.sha256(b).hexdigest()
 def main():
+ if not __debug__:raise RuntimeError('Run without Python optimization so integrity assertions remain enabled.')
  commit=git('rev-parse','HEAD').decode().strip()
  assert not git('status','--porcelain','--untracked-files=no'),'Commit tracked source changes before packaging.'
  OUT.mkdir(exist_ok=True);prefix=ROOT.name+'/'

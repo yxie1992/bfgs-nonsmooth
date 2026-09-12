@@ -129,3 +129,11 @@ Staged-file inspection found no dependency cache, compiled Lean object or
 unrelated user file. Own-source whitespace checks passed with documented
 exceptions for verbatim compiler logs, frozen source text and a harmless
 trailing space in the already reviewed typographic command display.
+
+The source/correspondence milestone was committed as 7e48cbb. A second-agent
+review of the new archive scripts then caught two validation gaps before the
+archive was built: optimized Python could disable assertions, and the page
+comparison read the outer workspace manifest without requiring both documents.
+Both are corrected: optimized execution is rejected explicitly; the extracted
+manifest must identify exactly the article and companion. This strengthens the
+release checks without changing any manuscript or formal proof.
