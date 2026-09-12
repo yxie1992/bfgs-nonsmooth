@@ -145,3 +145,12 @@ The citation revision's sealed public gate returned PASS with
 The final replay after recording that output and resealing reproduced it exactly.
 The separate [literature audit validation](../literature_audit/review/validation.log)
 also returned PASS against its immutable historical report baseline.
+
+A subsequent ZIP extraction check found three macOS `.DS_Store` entries in the
+artifact manifest. Those ignored, untracked metadata files were available in
+the original working directory but absent from a committed-source archive.
+The portable release manifest and its inventory check now explicitly exclude
+that fixed basename, while retaining all report, proof and audit artifacts.
+The report/PDF, mathematical exports, pinned inputs and compiler evidence did
+not change. The packaging failure, correction and fresh extraction checks are
+recorded under [packaging/review/](../../packaging/review/).

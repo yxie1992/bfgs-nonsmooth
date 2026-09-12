@@ -101,10 +101,12 @@ def main():
     if not args.before_seal:
         manifest=read(HERE/'MANIFEST.json')
         assert manifest['status']=='PASS' and manifest['pdf_sha256']==sha(pdf)
+        assert manifest['excluded_basenames']==['.DS_Store'], 'unexpected artifact exclusions'
+        assert all(Path(name).name!='.DS_Store' for name in manifest['files']), 'OS metadata is not a release artifact'
         for name,h in manifest['files'].items():
             assert sha(ROOT/name)==h, ('sealed artifact changed',name)
         actual={str(f.relative_to(ROOT)) for f in HERE.rglob('*') if f.is_file()
-            and '__pycache__' not in f.parts and f!=HERE/'MANIFEST.json'}
+            and '__pycache__' not in f.parts and f.name!='.DS_Store' and f!=HERE/'MANIFEST.json'}
         actual.update(manifest['outside_master_report'])
         assert set(manifest['files'])==actual, 'artifact inventory differs'
         checks.append('complete exact artifact manifest')

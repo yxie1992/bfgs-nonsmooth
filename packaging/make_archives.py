@@ -16,7 +16,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'dist'
-FORBIDDEN = {'.git', '.lake', '.toolchain', '.cache', 'tmp', 'scratch', '__pycache__'}
+FORBIDDEN = {'.git', '.lake', '.toolchain', '.cache', 'tmp', 'scratch', '__pycache__', '.DS_Store'}
 SUFFIXES = {'.olean', '.ilean', '.o', '.pyc', '.aux', '.toc', '.fls', '.fdb_latexmk'}
 LATEX_PREFIX = 'bfgs_lean_stage1/master_report/latex/'
 PDF = 'bfgs_lean_stage1/output/pdf/Rigorous_BFGS_Master_Report.pdf'

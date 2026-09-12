@@ -8,6 +8,12 @@ universe parameters, axioms, source links and project proof dependencies.
 Definition source excerpts make named proposition targets inspectable; long
 proofs remain available through the complete source links.
 
+Portable LaTeX and complete source/evidence ZIPs can be produced with
+`python3 packaging/make_archives.py` from the repository root; see
+[the archive instructions](../../packaging/README.md). The release manifest
+excludes macOS `.DS_Store` files and Python cache directories, which are local
+metadata rather than report or proof artifacts.
+
 The claim register covers all **14 modules, 172 original spans and 4,323 original
 chapter lines**. Its **3,087 distinct linked exports** lead to **8,249 indexed
 declarations** in their complete project dependency closure. These index counts
