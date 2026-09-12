@@ -18,7 +18,7 @@ is separate from publication priority. The source identities are recorded in
 | D/L deterministic doubling/bisection search | D already cites Lewis–Overton Algorithm 4.6. | Its use is established, irrespective of whether the new failure construction is original. |
 | A/C/U active-gradient geometry | Gebken's published Theorem 3.1 assumes behavior (B1), including iterate convergence and spectral/annihilation conditions. | Close precedent, but these conditional results do not establish the report's unconditional BFGS conclusions. |
 | A finite affine-critical values | The projection formula in Bolte–Daniilidis–Lewis–Shiota suggests a direct standard corollary for the affine-critical variant. | Record the implication explicitly; do not claim the background geometric conclusion as safely novel. Final comparison will supply the argument. |
-| M matrix potential arguments | Classical trace/determinant analysis is described by Nocedal, §4.1, with attribution to Powell and Byrd–Nocedal. | Credit the established matrix-analysis method; separately investigate the full principal-minor hierarchy and reciprocal growth. |
+| M matrix potential arguments | Classical trace/determinant analysis is described by Nocedal, §5, with attribution to Powell and Byrd–Nocedal. | Credit the established matrix-analysis method; separately investigate the full principal-minor hierarchy and reciprocal growth. |
 
 Guo–Lewis is absent from the corrected edition's nine external bibliography
 entries and is an essential addition to the literature discussion. Gebken's
@@ -44,6 +44,8 @@ connection; they do not establish copying or causal source use.
 2. A. S. Lewis and M. L. Overton, [Nonsmooth optimization via quasi-Newton methods](https://cs.nyu.edu/overton/papers/pdffiles/nsoquasi.pdf), *Mathematical Programming* 141 (2013), 135–163; §2, Algorithm 4.6 and §5.1.
 3. B. Gebken, [Technical Results on the Convergence of Quasi-Newton Methods for Nonsmooth Optimization](https://link.springer.com/article/10.1007/s10957-026-03008-z), *JOTA* 209:57 (2026), behavior (B1), Lemma 3.5 and Theorem 3.1. The arXiv manuscript uses different numbering.
 4. J. Bolte, A. Daniilidis, A. S. Lewis and M. Shiota, [Clarke subgradients of stratifiable functions](https://arxiv.org/abs/math/0601530), first posted 22 January 2006; Proposition 4 and definable stratification results.
-5. J. Nocedal, [Theory of algorithms for unconstrained optimization](https://users.iems.northwestern.edu/~nocedal/PDFfiles/acta.pdf), *Acta Numerica* 1 (1992), 199–242, §4.1. Author-hosted manuscript read.
+5. J. Nocedal, [Theory of algorithms for unconstrained optimization](https://users.iems.northwestern.edu/~nocedal/PDFfiles/acta.pdf), *Acta Numerica* 1 (1992), 199–242, §5 (author manuscript pp. 16–21). Author-hosted manuscript read.
 6. R. H. Byrd and J. Nocedal, [A Tool for the Analysis of Quasi-Newton Methods with Application to Unconstrained Minimization](https://epubs.siam.org/doi/10.1137/0726042), *SIAM Journal on Numerical Analysis* 26(3) (1989), 727–739. Publisher abstract/metadata accessed; original full text was not available through this page.
 7. R. Diao, [Counterexamples for BFGS-type methods under arbitrary strong Wolfe constants](https://arxiv.org/abs/2609.09686), preprint, submitted 9 September 2026.
+
+Locator correction after full-text inspection: the matrix analysis in the Nocedal author manuscript is §5, not the initially recorded §4.1. This corrects a citation locator, not the mathematical comparison.
