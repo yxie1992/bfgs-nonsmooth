@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "utc": "2026-09-12T07:42:03.177142+00:00",
+  "source_commit": "1d891fd26627baa06122c8021cb34ad8b85ee392",
+  "archive": "dist/BFGS_complete_source_and_verification.zip",
+  "archive_sha256": "f329bdb853492812ba13f53514ef206d04130b2a4bb9d735d17cbfe0b9b71e93",
+  "root_directory": "BFGS-non-smooth",
+  "tracked_paths_preserved": 3194,
+  "archive_only_supplemental_files": [
+    "ARCHIVE_README.md",
+    "_archive/CONTENTS.json",
+    "_archive/history.bundle",
+    "_archive/restore_git_history.py"
+  ],
+  "checks": [
+    "Every committed path preserved exactly below original repository folder name",
+    "Every tracked payload matches independent Git blob identity and executable classification",
+    "No flattened source or relocated PDF",
+    "Manifest, ZIP CRC and every member hash valid",
+    "No cache/temporary paths",
+    "History restoration and both baseline commits available",
+    "Tracked extraction clean",
+    "Report release gate PASS from original directory layout",
+    "Literature audit gate PASS from original directory layout"
+  ],
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "_archive/restore_git_history.py"
+      ],
+      "cwd": "dist/verify-original-paths-m_tlc1oo/BFGS-non-smooth",
+      "exit_code": 0,
+      "log": "packaging/review/original_paths/restore_history.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "scripts/verify_rigorous_master_report.py"
+      ],
+      "cwd": "dist/verify-original-paths-m_tlc1oo/BFGS-non-smooth/bfgs_lean_stage1",
+      "exit_code": 0,
+      "log": "packaging/review/original_paths/report_gate.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "literature_audit/scripts/validate.py"
+      ],
+      "cwd": "dist/verify-original-paths-m_tlc1oo/BFGS-non-smooth/bfgs_lean_stage1",
+      "exit_code": 0,
+      "log": "packaging/review/original_paths/literature_gate.log"
+    }
+  ],
+  "scope": "Archive path/integrity and recorded-evidence replay; no new Lean compilation."
+}

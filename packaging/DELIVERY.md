@@ -1,15 +1,22 @@
 # Validated ZIP delivery
 
-Source snapshot: `afc53ac7f3034fb8b473ee9835883cee312ac2a7`. The report/PDF and Lean proof sources
+Source snapshot: `1d891fd26627baa06122c8021cb34ad8b85ee392`. The report/PDF and Lean proof sources
 are unchanged by packaging. This snapshot includes the reviewed portability fix
 for three macOS metadata files accidentally present in the prior artifact seal.
 
+Both ZIPs now preserve the original `BFGS-non-smooth/` folder and every
+repository-relative source path. The small package keeps its LaTeX sources at
+`bfgs_lean_stage1/master_report/latex/` and its reference PDF at
+`bfgs_lean_stage1/output/pdf/`. Archive instructions and `_archive/` metadata are
+supplemental; original files are not moved or renamed. Earlier layout validation
+records remain historical; the current checks are under `review/original_paths/`.
+
 | Archive under `dist/` | Bytes | Purpose |
 |---|---:|---|
-| `BFGS_corrected_report_LaTeX.zip` | 1,043,963 | Standalone 30-file LaTeX source, reference PDF and build instructions |
-| `BFGS_complete_source_and_verification.zip` | 66,931,329 | Exact committed project, proof/audit evidence and restorable release history |
+| `BFGS_corrected_report_LaTeX.zip` | 1,045,724 | Standalone 30-file LaTeX source, reference PDF and build instructions |
+| `BFGS_complete_source_and_verification.zip` | 66,938,517 | Exact committed project, proof/audit evidence and restorable release history |
 
-The complete archive has 3,188 members, including all 3,184 committed files and
+The complete archive has 3,198 members, including all 3,194 committed files and
 four distribution metadata/helper files. Its inventory binds all payload files
 by SHA-256. Untracked files, raw `.git`, `.DS_Store`, `.lake`, `.toolchain`, `.cache`,
 `tmp`, `audit/scratch` and compiled artifacts are excluded. Recorded compiler and
@@ -27,17 +34,18 @@ matched the reference PDF. Final archive TeX/PDF payloads were independently
 checked byte-for-byte against those actually compiled inputs; only archive
 metadata changed between the intermediate and final ZIPs.
 
-The complete ZIP was extracted independently and its release history restored
-under both Git default-branch settings (`main` and `master`). Both historical
-baseline commits were available. The unmodified public report gate and
+The updated complete ZIP was extracted independently and its release history
+restored under the original folder name. The unchanged restoration helper was
+also tested in the prior delivery under both Git default-branch settings
+(`main` and `master`). Both historical baseline commits were available. The unmodified public report gate and
 literature validator passed without the Lean compiler or dependencies installed
 in that extraction. Restoration refused an existing repository without changing
 its HEAD. These are checks of delivered source/evidence and packaging, not a
 fresh Lean compilation.
 
-See [the archive checksums](review/final_ARCHIVES.json),
-[complete-package validation](review/full_archive_validation.json),
-[final LaTeX validation](review/latex_final_archive_validation.json), and the
+See [the archive checksums](review/original_paths/ARCHIVES.json),
+[complete-package validation](review/original_paths/complete_validation.json),
+[final LaTeX validation](review/original_paths/latex_validation.json), and the
 [portability review](review/portability_peer_review.md). The initial failed
 extraction and intermediate TeX validation wrapper error remain explicitly
 recorded alongside their successful corrections.
