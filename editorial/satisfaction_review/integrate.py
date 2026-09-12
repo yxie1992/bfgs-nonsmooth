@@ -62,6 +62,32 @@ root['supplemental_branch_regularity_audit'] = {
     'declarations_sha256': sha(branch_run + 'declarations.json'),
     'scope': 'Actual unwhitened and whitened branches fail second Frechet differentiability; combined literal lower local failure contract.'
 }
+cache_run = 'editorial/satisfaction_review/cache_binding/runs/cache_binding_04/'
+cache_summary = read(cache_run + 'SUMMARY.json')
+assert cache_summary['status'] == 'PASS'
+assert cache_summary['manifest_sha256'] == sha(cache_run + 'MANIFEST.json')
+root['supplemental_cache_binding'] = {
+    'manifest': cache_run + 'MANIFEST.json',
+    'manifest_sha256': sha(cache_run + 'MANIFEST.json'),
+    'summary': cache_run + 'SUMMARY.json',
+    'summary_sha256': sha(cache_run + 'SUMMARY.json'),
+    'scope': 'Ordinary pinned Lake build plus independent proof-object binary output-hash checks and exact source/object/trace/compiler byte binding. Failed upstream JS rehash attempt retained; no clean build or independent re-typechecking of imports claimed.',
+}
+companion_path = 'companion/chapters/13_L.tex'
+companion_anchor = 'The first three branches of the local finite-branch construction fail to be twice differentiable'
+companion_text = (ROOT / companion_path).read_text()
+source_claims = {c['id']: c for c in read('bfgs_lean_stage1/master_report/CLAIMS.json')['claims']}
+spans = ['L.span.2', 'L.span.6', 'L.span.7']
+root['records'].append({
+    'id': 'companion.lower.actual_branch_regularity', 'kind': 'companion_narrative_deduction',
+    'article_location': {'path': companion_path, 'line': companion_text[:companion_text.index(companion_anchor)].count('\n') + 1},
+    'anchor': companion_anchor, 'source_span_ids': spans,
+    'all_source_span_exports': sorted({n for s in spans for n in source_claims[s]['exports']}),
+    'primary_declarations': [d['name'] for d in branch_declarations],
+    'scope_review': 'Actual first three scalar-ridge branches and their one fixed whitening fail differentiability of the Frechet derivative at zero. The new combined endpoint includes the original identity-initialized local-failure contract without extra hypotheses. This also supports the chapter opening regularity contrast. Complete restriction proof is printed in the article lower-curvature appendix and formalized in the separate supplement.',
+    'status': 'REVIEWED_WITH_EXACT_FORMAL_SUPPORT',
+})
+root['article_file_sha256'][companion_path] = sha(companion_path)
 negative = read('editorial/negative_contract_review.json')
 names = [d['name'] for d in branch_declarations]
 for row in negative['article_labels']:

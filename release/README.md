@@ -1,49 +1,40 @@
-# BFGS narrative-rebuild author-review release
+# BFGS paper and complete companion — skeptical refinement
 
-The revised article is **47 pages**, including its essential proof appendices;
-the complete companion is **107 pages**. The article gives coequal weight to
-deterministic counterexamples, global/local convergence families and the actual
-BFGS matrix/energy mechanism. The literal `u^2+|v|` whole-sequence result is a
-named corollary. The nonradial planar application has a complete article proof.
-This is an author-review edition, not an approved submission.
+The article is **46 pages**, including essential proof appendices; the complete
+companion is **107 pages**. Both positive convergence results and deterministic
+local counterexamples remain central. The fresh skeptical pass tightened the
+introductory hypotheses, removed repetition, clarified two proof deductions and
+closed a literal formal correspondence point for actual branch regularity.
+This is an author-review manuscript, not an approved submission.
 
-Deliverables: `BFGS_Journal_Article.pdf`, `BFGS_Complete_Companion.pdf`, and
-`BFGS_paper_companion_sources.zip`. The previous edition is preserved in
-`history/20260912_initial/`. The handoff response is
-`editorial/narrative_rebuild/narrative_response.md`.
+Deliverables are `BFGS_Journal_Article.pdf`, `BFGS_Complete_Companion.pdf` and
+`BFGS_paper_companion_sources.zip`. LaTeX entry points are `paper/master.tex`
+and `companion/master.tex`. The prior editions and their receipts are preserved
+in `history/20260912_initial/` and `history/20260912_narrative/`.
 
-## Source freeze and validation receipts
+## Current source-freeze status
 
-The source commit is `252ea5dd5a0dccc9301da4132f98c539f1e2393c`.
-The ZIP is 96,721,994 bytes in 3,778 members, with SHA256
-`9f34ef3c91096958bd59e812de001a878f44be441541b097359ec5714c47b99f`.
-Current PDF and archive hashes are in `RELEASE.json` and `SOURCE_MANIFEST.json`.
-
-Fresh extraction validation passed in
-`validation/runs/narrative_20260912_01/SUMMARY.json`. Both PDFs rebuilt
-byte-identically; all 154 rendered pages and paginated text matched the reviewed
-versions, with resolved references and no overfull boxes. Both new Lean
-supplements were freshly compiled and structurally audited in the extraction,
-with the same exact types and dependency counts. The current and historical
-evidence gates passed, and temporary extraction files were removed. All 34
-commands and their output remain in the versioned validation directory.
-
-The ZIP contains the earlier committed source-freeze state. Its
-`_archive/RELEASE_SNAPSHOT.json` identifies that snapshot; any committed
-`SOURCE_MANIFEST.json` inside it describes a prior package, explicitly labeled
-as such. The external receipt here records this ZIP's hash and later validation
-without a circular archive-hash claim. All prior validation runs are preserved.
+The proof/prose milestone `7072ac033abb8ac8a1373850142f2fb4cec7f951` was pushed.
+This committed source-freeze record precedes the current archive validation.
+`RELEASE.json` identifies the reviewed PDFs and pending package status; after
+packaging, the external `SOURCE_MANIFEST.json` and archive-only
+`_archive/RELEASE_SNAPSHOT.json` identify the exact source-freeze commit. Earlier
+committed archive/validation receipts remain historical evidence and do not
+claim a new replay. The current planned validation run is
+`validation/runs/satisfaction_20260912_01/`.
 
 The ZIP preserves the outer `BFGS-non-smooth/` folder and every committed
-relative path. It includes the Git history bundle required by historical
-checks, sources, exact correspondence, compiler/audit evidence, figures and
-PDFs. Dependency caches, compiled Lean objects, raw `.git`, temporary build
-files and unrelated untracked user files are excluded. The local ZIP is
-ignored by Git; its manifest and release PDFs are committed.
+relative path. It includes sources, figures, current and historical PDFs,
+complete correspondence, actual compiler/audit/review evidence and the Git
+history bundle required by immutable historical checks. It excludes dependency
+caches, compiled objects, raw `.git`, temporary build files and unrelated
+untracked user files. The ZIP itself is ignored by Git; its manifest and the
+release PDFs are committed. Its own hash is recorded externally after creation
+to avoid a circular archive-hash claim.
 
 ## Reproduction
 
-In a fresh ZIP extraction restore history before changing or building files:
+In a fresh extraction, restore history before changing or building files:
 
 ```bash
 python3 _archive/restore_git_history.py
@@ -52,61 +43,73 @@ python3 editorial/verify_release_inputs.py
 python3 editorial/verify_historical_baseline.py --run-id local_replay
 ```
 
-In an existing Git checkout omit the restore command. LaTeX entry points are
-`paper/master.tex` and `companion/master.tex`. The build uses Python 3, TeX Live,
-latexmk/pdflatex and Poppler; Node.js is needed by the historical index check.
-The official journal class is included with its notices and provenance.
-Source generation checks all frozen corrected-source hashes.
+Omit the restore command in an existing Git checkout. Python 3, TeX Live,
+latexmk/pdflatex and Poppler are required; the historical index check also uses
+Node.js. The journal class is included with notices and provenance. Generated
+companion sources are checked against frozen corrected-source hashes.
 
-For new Lean compilation, run `bash scripts/bootstrap.sh` inside
-`bfgs_lean_stage1`, then run from the repository root:
+New Lean compilation requires the pinned toolchain and dependencies; follow
+`bfgs_lean_stage1/README.md`. Once available, from the repository root run:
 
 ```bash
 python3 editorial/formal_audit/run.py --run --run-dir editorial/formal_audit/runs/local_replay
 python3 editorial/narrative_rebuild/positive_formal/verify.py --run-id local_replay
 python3 editorial/narrative_rebuild/negative_formal/verify.py --run-id local_replay
+python3 editorial/satisfaction_review/formal/verify.py --run-id local_replay
+python3 editorial/satisfaction_review/branch_formal/verify.py --run-id local_replay
 ```
 
-Use new run names for repeat execution; evidence directories are not overwritten.
-The source-only integrity gate checks retained evidence and reports omitted
-compiled caches as such. It does not execute Lean. The release validator also
-compiles the new supplements and performs their full structural audits in a
-fresh extraction, reusing explicitly checked pinned host libraries. This is
-not an empty-cache rebuild of those libraries.
+Use new run names; existing evidence is never overwritten. For the exact sealed
+host cache, `editorial/satisfaction_review/cache_binding/README.md` gives the
+read-only byte check. A legitimately rebuilt cache can have different bytes;
+it needs its own new build/audit evidence rather than a claimed match to the
+recorded host cache. The source integrity gate distinguishes retained evidence
+from present-cache verification. Archive validation recompiles all four
+supplements and performs their full structural audits in fresh output
+directories, while reusing the separately checked pinned original libraries.
+No empty-cache original-library or Mathlib rebuild is claimed.
 
-## Mathematical and formal scope
+## Proof and review scope
 
 All 172 corrected source spans and 3,087 distinct full exports remain in the
-companion. Exact statements, definitions, hypotheses and transitive support
-are exposed in `editorial/CLAIM_LEDGER.json`, its component reviews,
-`companion/PROOF_CORRESPONDENCE.html` and the original declaration index.
-Article selection changes are in
-`editorial/narrative_rebuild/ARTICLE_DISPOSITIONS.json`.
+companion. Exact hypotheses and proof support are recorded in
+`editorial/CLAIM_LEDGER.json`, `companion/PROOF_CORRESPONDENCE.html` and the
+original declaration index. All 31 article statement blocks are unchanged by
+this refinement. The source/proof selection and supersession ledgers are
+preserved. The current review is in `editorial/satisfaction_review/REVIEW_LOG.md`.
+All 153 final pages have visual approval; unchanged companion pages are carried
+forward only by exact pixel equality with actually inspected prior pages.
 
-The fresh pinned main replay checked 9,781 safe declarations in the main and
-correction union, including 7,954 theorems. The preceding fourteen article
-geometry declarations retain unchanged audited sources. The new benchmark
-supplement has three module-owned theorems and 31,960 checked transitive
-dependencies; matched scaling has eleven declarations and 10,697 dependencies.
-Counts overlap and are not additive. Only `propext`, `Classical.choice` and
-`Quot.sound` are permitted as axioms; unfinished proof axioms, custom
-mathematical axioms and reachable unsafe/partial artifacts are rejected.
-Formal verification does not certify foundational consistency, natural-language
-correspondence, novelty or floating-point behavior.
+The pinned main incremental build/audit checks 9,781 safe declarations in the
+main/correction union, including 7,954 theorems. Four supplemental audits check:
+benchmark, 3 owned declarations/31,960 transitive declarations; covariance,
+11/10,697; geometry, 14/26,496; actual branch regularity, 3/37,525. Counts overlap
+and are not additive. Only `propext`, `Classical.choice` and `Quot.sound` are
+permitted. The audits reject unfinished proof axioms, custom mathematical
+axioms and reachable unsafe/partial declarations and compare exact root types
+and proof values against the checked environment.
 
-The historical public checker is unchanged. Its repository-wide citation-only
-diff rejects added editorial Lean files at later commits. The wrapper preserves
-that expected failure, checks 761 frozen inputs and 286 sealed artifacts, and
-replays the original checks at the frozen baseline. Current document and
-supplemental verification remain separate checks.
+Cache binding additionally seals 8,853 objects, all paired sources and 32,470
+cached files. Every available Lake object hash was independently recomputed.
+The ordinary pinned build passed. The separate failed `--rehash` experiment
+and upstream ProofWidgets metadata diagnosis remain explicit; it is not
+reported as a successful build. Cached compiler artifacts and the execution
+environment retain their stated trust role. Neither formal checking nor byte
+hashing establishes foundational consistency, natural-language equivalence,
+novelty or floating-point robustness.
+
+The original public checker is unchanged. Its citation-only diff rule rejects
+later editorial Lean additions; the wrapper records this expected failure,
+checks 761 frozen inputs and 286 sealed artifacts, then replays the original
+checker at its exact frozen baseline. Current document/supplement checks are
+separate, without weakening historical policy.
 
 ## Human author actions
 
-See `editorial/AI_AND_AUTHOR_ACTIONS.md`. Authors must review the mathematics,
-literature and novelty statements, approve the substantive AI-use disclosure,
-supply accurate metadata and declarations, and decide the target/length and any
-submission or public deposit. The 47-page article exceeds the original 30–35-page
-editorial aim to retain the requested broad positive results and complete
-proofs; `editorial/JOURNAL_FIT.md` records the rationale and policy. No acceptance,
-human approval, independent human peer review, submission, public deposit or
-external message is claimed.
+`editorial/AI_AND_AUTHOR_ACTIONS.md` reserves human mathematical/literature and
+novelty review, accurate author metadata, consent, responsibility/declarations,
+target/length decisions and any submission/deposit. The 46-page article exceeds
+the original 30–35-page editorial aim to preserve the requested positive and
+negative theorem set with complete proofs; `editorial/JOURNAL_FIT.md` documents
+the exception and current policy. No acceptance, independent human peer review,
+human approval, submission or public archival deposit is claimed.

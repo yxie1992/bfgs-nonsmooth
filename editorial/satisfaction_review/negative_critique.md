@@ -49,4 +49,3 @@ Three optional clarifications would make the proof easier to audit; none repairs
 - At `lower_curvature.tex:231`, explicitly transfer the scalar obstruction to each branch by restricting to a line with (q_i^Tv=1) and subtracting the smooth quadratic; an invertible coordinate change preserves the obstruction. The scalar formal export proves the obstruction; the final target definition itself does not separately state this additional branch clause.
 
 No new literature-priority search, full Lean replay or kernel-consistency claim belongs to this review. Its conclusion is that the inspected printed negative proof has survived a fresh skeptical reading and the essential finite arithmetic has independently reproduced.
-

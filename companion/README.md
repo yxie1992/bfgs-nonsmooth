@@ -34,3 +34,20 @@ the bundled history. The wrapper records the old gate's expected rejection of
 new editorial Lean files at current HEAD, verifies the unchanged frozen inputs,
 and runs every original check at the exact historical release commit. Current
 authoring integrity is checked separately by `editorial/verify_release_inputs.py`.
+
+The further skeptical review in `editorial/satisfaction_review/` adds a literal
+combined lower-failure theorem that includes non-second-differentiability of
+the three actual whitened branches. The full article-geometry structural audit
+and this branch audit are separately reproduced from `formal/verify.py` and
+`branch_formal/verify.py` there; neither modifies the original corrected project.
+The root contract record registers their exact types and retained execution
+artifacts. The archive validator recompiles all four article supplements.
+
+Reused compiled libraries have an additional exact-byte/source/Lake-trace
+receipt produced by `editorial/satisfaction_review/cache_binding.py`. Its
+read-only `--check --manifest <MANIFEST.json> --root <repository>` mode verifies
+an existing pinned cache; it does not silently rebuild or repair one. The
+registered current manifest and actual ordinary-build/hash-check logs are identified by
+`editorial/root_contract_review.json`. This is trusted incremental-build
+provenance, not an empty-cache build or independent rechecking of imported
+kernel objects.

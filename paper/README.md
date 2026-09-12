@@ -30,3 +30,11 @@ The article's theorem/source/formal map is `editorial/CLAIM_LEDGER.json` and its
 component contract reviews. Small additional geometric deductions are verified
 in `editorial/article_formal/`, separately from the sealed source-project audit.
 The final author-review PDF is copied into `release/` with a source manifest.
+
+The further skeptical review is recorded in `editorial/satisfaction_review/`.
+It preserves all31 theorem/definition blocks, clarifies the reciprocal-growth
+summary hypotheses, and adds a literal formal endpoint for the actual lower
+counterexample branches' failure of second differentiability. The active
+supplemental audits and compiled-library provenance are registered in
+`editorial/root_contract_review.json`; the original corrected sources remain
+unchanged. Human author-review and submission decisions remain separate.

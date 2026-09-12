@@ -6,6 +6,7 @@ import argparse
 import datetime
 import hashlib
 import json
+import os
 import re
 import shutil
 import stat
@@ -57,11 +58,19 @@ def main():
     commands = []
     lock = threading.Lock()
     temp_path = None
+    controlled_env = os.environ.copy()
+    for variable in ['LEAN_PATH', 'LEAN_SRC_PATH']:
+        controlled_env.pop(variable, None)
+    subprocess_environment = {
+        'inherited_LEAN_PATH_cleared': True, 'inherited_LEAN_SRC_PATH_cleared': True,
+        'scope': 'Every validation subprocess starts without inherited Lean search-path variables. Each frozen supplemental runner obtains its base path from pinned Lake and prepends only its fresh local module output for its own audit.',
+    }
     summary = {
         'status': 'RUNNING', 'run_id': run_id, 'output_directory': str(out.relative_to(ROOT)),
         'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
         'scope': 'Fresh source extraction, document regeneration, all-page pixel comparison, fresh supplemental Lean compilation/full structural audits using disclosed pinned host library caches, and historical/current evidence validation. No empty-cache or fresh original-library build is claimed.',
         'commands': commands,
+        'subprocess_environment': subprocess_environment,
     }
 
     def run(argv, name, cwd):
@@ -70,8 +79,9 @@ def main():
         stderr = out / (name + '.stderr.log')
         assert not stdout.exists() and not stderr.exists(), 'Duplicate command label: ' + name
         with stdout.open('wb') as output, stderr.open('wb') as error:
-            result = subprocess.run(argv, cwd=cwd, stdout=output, stderr=error)
+            result = subprocess.run(argv, cwd=cwd, env=controlled_env, stdout=output, stderr=error)
         record = {'command': argv, 'cwd': str(cwd), 'exit_code': result.returncode,
+                  'inherited_LEAN_PATH_cleared': True, 'inherited_LEAN_SRC_PATH_cleared': True,
                   'seconds': time.monotonic() - start,
                   'stdout': str(stdout.relative_to(ROOT)), 'stdout_sha256': sha(stdout),
                   'stderr': str(stderr.relative_to(ROOT)), 'stderr_sha256': sha(stderr)}
@@ -116,6 +126,65 @@ def main():
         summary['lean_cache_reuse'] = {'scope': 'Only .lake and .toolchain are linked after source/history validation. .cache is not linked. Supplemental own modules are compiled in fresh extraction-local output directories.',
                                       'frozen_original_inputs_matched': len(frozen), 'links': links,
                                       'dependency_checkouts': package_records, 'fresh_original_library_build': False}
+
+    def authenticate_cache_binding(tree):
+        binding = json.loads((tree / 'editorial/root_contract_review.json').read_text())['supplemental_cache_binding']
+        manifest_name = safe_relative(binding['manifest'])
+        binding_run = manifest_name.parent.as_posix()
+        assert re.fullmatch(r'editorial/satisfaction_review/cache_binding/runs/[A-Za-z0-9_-]+', binding_run)
+        assert manifest_name.name == 'MANIFEST.json' and binding['summary'] == binding_run + '/SUMMARY.json'
+        assert sha(tree / manifest_name) == binding['manifest_sha256']
+        assert sha(tree / binding['summary']) == binding['summary_sha256']
+        cache = json.loads((tree / manifest_name).read_text())
+        receipt = json.loads((tree / binding['summary']).read_text())
+        assert cache['schema_version'] == 2 and cache['status'] == 'SEALED_TRUSTED_INCREMENTAL_CACHE'
+        assert cache['run_directory'] == receipt['run_directory'] == binding_run
+        assert receipt['status'] == 'PASS' and receipt['manifest'] == binding['manifest']
+        assert receipt['manifest_sha256'] == binding['manifest_sha256']
+        assert cache['build_command'] == ['lake', 'build', 'BfgsVerification']
+        assert cache['successful_rehash_build'] is False and cache['independent_cached_output_hash_validation'] is True
+        assert cache['inherited_LEAN_PATH_cleared'] is True and cache['inherited_LEAN_SRC_PATH_cleared'] is True
+        assert cache['fresh_original_library_build'] is False and cache['fresh_mathlib_build'] is False
+        for group in ['pinned_input_files', 'evidence_files', 'prior_attempt_evidence']:
+            assert cache[group], 'Missing cache-binding evidence group: ' + group
+            for name, data in cache[group].items():
+                artifact = tree / safe_relative(name)
+                assert sha(artifact) == data['sha256'] and artifact.stat().st_size == data['bytes'], name
+        helper = 'editorial/satisfaction_review/cache_binding.py'
+        assert sha(tree / helper) == cache['pinned_input_files'][helper]['sha256']
+        assert receipt['object_count'] == len(cache['objects'])
+        assert receipt['sealed_cache_file_count'] == len(cache['cache_files'])
+        assert receipt['verification']['status'] == 'PASS'
+        summary['cache_binding'] = {'manifest': binding['manifest'], 'manifest_sha256': binding['manifest_sha256'],
+                                    'summary': binding['summary'], 'summary_sha256': binding['summary_sha256'],
+                                    'helper_sha256': sha(tree / helper),
+                                    'object_count': len(cache['objects']), 'sealed_cache_file_count': len(cache['cache_files']),
+                                    'method': 'Ordinary pinned Lake build with independent cached binary-output hash checks; no successful --rehash or clean rebuild claimed.',
+                                    'checks': []}
+        return binding, cache
+
+    def check_cache_bytes(tree, binding, cache, phase):
+        actual = json.loads(run([sys.executable, 'editorial/satisfaction_review/cache_binding.py', '--check',
+                                 '--manifest', binding['manifest'], '--root', str(tree)],
+                                'cache_binding_' + phase, tree))
+        assert actual['status'] == 'PASS' and actual['read_only_check'] is True
+        assert actual['manifest_sha256'] == binding['manifest_sha256']
+        assert actual['object_count'] == len(cache['objects']) and actual['sealed_cache_file_count'] == len(cache['cache_files'])
+        assert actual['fresh_original_library_build'] is False and actual['fresh_mathlib_build'] is False
+        summary['cache_binding']['checks'].append({'phase': phase, 'result': actual})
+
+    def check_supplement_search_path(tree, replay, name, cache):
+        log = replay / ('01_search_path.log' if name == 'negative_formal' else '02_search_path.stdout.log')
+        tokens = log.read_text().strip().split(os.pathsep)
+        expected = cache['search_directories']
+        assert len(tokens) == len(expected) and all(tokens), 'Unexpected Lean search-path entry count: ' + name
+        project = tree / 'bfgs_lean_stage1'
+        for actual, sealed in zip(tokens, expected):
+            assert (project / actual).resolve() == (tree / safe_relative(sealed)).resolve(), 'Unsealed or reordered Lean search path: ' + name
+        return {'recorded_search_path_log': str(log.relative_to(tree)), 'sha256': sha(log),
+                'normalized_search_directories': expected,
+                'exact_ordered_match_to_sealed_cache': True,
+                'normalization': 'Resolve recorded paths relative to the extracted project, including the disclosed .lake/.toolchain symlinks.'}
 
     try:
         work.mkdir(parents=True, exist_ok=True)
@@ -222,82 +291,89 @@ def main():
             with ThreadPoolExecutor(max_workers=2) as pool:
                 summary['documents'] = list(pool.map(compare_document, reviews['documents']))
             run([sys.executable, 'editorial/generate_companion.py', '--check'], '04_companion_preservation', tree)
+            binding, cache = authenticate_cache_binding(tree)
             attach_pinned_library_cache(tree)
-            supplement_records = []
-            register = json.loads((tree / 'editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json').read_text())
-            assert len(register['supplements']) == 2 and {r['name'] for r in register['supplements']} == {'positive_formal', 'negative_formal'}
-            root_contracts = json.loads((tree / 'editorial/root_contract_review.json').read_text())
-            geometry = root_contracts['supplemental_structural_audit']
-            assert geometry['name'] == 'geometry_formal'
-            assert geometry['summary'] == 'editorial/satisfaction_review/formal/runs/geometry_structural_01/SUMMARY.json'
-            assert geometry['declarations'] == 'editorial/satisfaction_review/formal/runs/geometry_structural_01/declarations.json'
-            branch = root_contracts['supplemental_branch_regularity_audit']
-            assert branch['name'] == 'branch_regularity_formal'
-            assert branch['summary'] == 'editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/SUMMARY.json'
-            assert branch['declarations'] == 'editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json'
-            replay_plans = [(next(r for r in register['supplements'] if r['name'] == name),
-                             tree / 'editorial/narrative_rebuild' / name)
-                            for name in ['positive_formal', 'negative_formal']]
-            replay_plans.append((geometry, tree / 'editorial/satisfaction_review/formal'))
-            replay_plans.append((branch, tree / 'editorial/satisfaction_review/branch_formal'))
-            for record, base in replay_plans:
-                name = record['name']
-                assert sha(tree / record['summary']) == record['summary_sha256']
-                assert sha(tree / record['declarations']) == record['declarations_sha256']
-                replay_id = 'archive_validation_' + run_id
-                replay = base / 'runs' / replay_id
-                try:
-                    run([sys.executable, str(base / 'verify.py'), '--run-id', replay_id], '08_fresh_' + name, tree)
-                finally:
-                    if replay.is_dir():
-                        shutil.copytree(replay, out / name, ignore=shutil.ignore_patterns('build'))
-                fresh = json.loads((replay / 'SUMMARY.json').read_text())
-                old = json.loads((tree / record['summary']).read_text())
-                assert fresh['status'] == 'PASS' and not fresh['unchecked_missing_unsafe_partial']
-                assert fresh['kernel_root_type_and_value_agreement'] is True
-                assert set(fresh['axioms']) <= {'propext', 'Classical.choice', 'Quot.sound'}
-                assert fresh['module_owned_declarations'] == old['module_owned_declarations']
-                assert fresh['transitive_checked_declarations'] == old['transitive_checked_declarations']
-                actual = json.loads((replay / 'declarations.json').read_text())
-                expected = json.loads((tree / record['declarations']).read_text())
-                fields = ['name', 'kind', 'signature', 'axioms', 'unsafe', 'partial']
-                assert [{key: row[key] for key in fields} for row in actual] == [{key: row[key] for key in fields} for row in expected]
-                assert all(row['ordinary_collector_agrees'] for row in actual)
-                if name == 'geometry_formal':
-                    assert fresh['module_owned_declarations'] == 14
-                    assert set(fresh['compiled_olean_sha256']) == {'ArticleGeometry', 'ConvexBalance'}
-                    for module, digest in fresh['compiled_olean_sha256'].items():
-                        assert sha(replay / 'build' / (module + '.olean')) == digest
-                    geometry_fields = fields + ['module']
-                    def geometry_types(rows):
-                        assert len({row['name'] for row in rows}) == len(rows)
-                        return sorted(({key: row[key] for key in geometry_fields} for row in rows), key=lambda row: row['name'])
-                    assert geometry_types(actual) == geometry_types(expected) == geometry_types(root_contracts['supplemental_declarations'])
-                if name == 'branch_regularity_formal':
-                    assert fresh['module_owned_declarations'] == 3
-                    assert {row['module'] for row in actual} == {'ArticleBranchRegularity'}
-                    assert {row['name'] for row in actual} == {
-                        'ArticleBranchRegularity.branch_not_twice_differentiable_zero',
-                        'ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero',
-                        'ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction'}
-                    assert sha(replay / 'build/ArticleBranchRegularity.olean') == fresh['compiled_olean_sha256']
-                supplement_records.append({'name': name, 'status': 'PASS', 'run_id': replay_id,
-                                           'module_owned_declarations': fresh['module_owned_declarations'],
-                                           'transitive_checked_declarations': fresh['transitive_checked_declarations'],
-                                           'same_exact_types_as_recorded_source_audit': True,
-                                           'summary': str((out / name / 'SUMMARY.json').relative_to(ROOT)),
-                                           'summary_sha256': sha(out / name / 'SUMMARY.json')})
-            summary['fresh_supplemental_audits'] = supplement_records
-            run([sys.executable, 'editorial/verify_release_inputs.py'], '09_release_inputs', tree)
-            historical_id = 'archive_validation_' + run_id
-            historical_run = tree / 'editorial/historical_baseline/runs' / historical_id
+            check_cache_bytes(tree, binding, cache, 'before_library_use')
             try:
-                run([sys.executable, 'editorial/verify_historical_baseline.py', '--run-id', historical_id], '10_historical_gate', tree)
+                supplement_records = []
+                register = json.loads((tree / 'editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json').read_text())
+                assert len(register['supplements']) == 2 and {r['name'] for r in register['supplements']} == {'positive_formal', 'negative_formal'}
+                root_contracts = json.loads((tree / 'editorial/root_contract_review.json').read_text())
+                geometry = root_contracts['supplemental_structural_audit']
+                assert geometry['name'] == 'geometry_formal'
+                assert geometry['summary'] == 'editorial/satisfaction_review/formal/runs/geometry_structural_01/SUMMARY.json'
+                assert geometry['declarations'] == 'editorial/satisfaction_review/formal/runs/geometry_structural_01/declarations.json'
+                branch = root_contracts['supplemental_branch_regularity_audit']
+                assert branch['name'] == 'branch_regularity_formal'
+                assert branch['summary'] == 'editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/SUMMARY.json'
+                assert branch['declarations'] == 'editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json'
+                replay_plans = [(next(r for r in register['supplements'] if r['name'] == name),
+                                 tree / 'editorial/narrative_rebuild' / name)
+                                for name in ['positive_formal', 'negative_formal']]
+                replay_plans.append((geometry, tree / 'editorial/satisfaction_review/formal'))
+                replay_plans.append((branch, tree / 'editorial/satisfaction_review/branch_formal'))
+                for record, base in replay_plans:
+                    name = record['name']
+                    assert sha(tree / record['summary']) == record['summary_sha256']
+                    assert sha(tree / record['declarations']) == record['declarations_sha256']
+                    replay_id = 'archive_validation_' + run_id
+                    replay = base / 'runs' / replay_id
+                    try:
+                        run([sys.executable, str(base / 'verify.py'), '--run-id', replay_id], '08_fresh_' + name, tree)
+                    finally:
+                        if replay.is_dir():
+                            shutil.copytree(replay, out / name, ignore=shutil.ignore_patterns('build'))
+                    fresh = json.loads((replay / 'SUMMARY.json').read_text())
+                    old = json.loads((tree / record['summary']).read_text())
+                    assert fresh['status'] == 'PASS' and not fresh['unchecked_missing_unsafe_partial']
+                    assert fresh['kernel_root_type_and_value_agreement'] is True
+                    assert set(fresh['axioms']) <= {'propext', 'Classical.choice', 'Quot.sound'}
+                    assert fresh['module_owned_declarations'] == old['module_owned_declarations']
+                    assert fresh['transitive_checked_declarations'] == old['transitive_checked_declarations']
+                    actual = json.loads((replay / 'declarations.json').read_text())
+                    expected = json.loads((tree / record['declarations']).read_text())
+                    fields = ['name', 'kind', 'signature', 'axioms', 'unsafe', 'partial']
+                    assert [{key: row[key] for key in fields} for row in actual] == [{key: row[key] for key in fields} for row in expected]
+                    assert all(row['ordinary_collector_agrees'] for row in actual)
+                    if name == 'geometry_formal':
+                        assert fresh['module_owned_declarations'] == 14
+                        assert set(fresh['compiled_olean_sha256']) == {'ArticleGeometry', 'ConvexBalance'}
+                        for module, digest in fresh['compiled_olean_sha256'].items():
+                            assert sha(replay / 'build' / (module + '.olean')) == digest
+                        geometry_fields = fields + ['module']
+                        def geometry_types(rows):
+                            assert len({row['name'] for row in rows}) == len(rows)
+                            return sorted(({key: row[key] for key in geometry_fields} for row in rows), key=lambda row: row['name'])
+                        assert geometry_types(actual) == geometry_types(expected) == geometry_types(root_contracts['supplemental_declarations'])
+                    if name == 'branch_regularity_formal':
+                        assert fresh['module_owned_declarations'] == 3
+                        assert {row['module'] for row in actual} == {'ArticleBranchRegularity'}
+                        assert {row['name'] for row in actual} == {
+                            'ArticleBranchRegularity.branch_not_twice_differentiable_zero',
+                            'ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero',
+                            'ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction'}
+                        assert sha(replay / 'build/ArticleBranchRegularity.olean') == fresh['compiled_olean_sha256']
+                    search_path = check_supplement_search_path(tree, replay, name, cache)
+                    supplement_records.append({'name': name, 'status': 'PASS', 'run_id': replay_id,
+                                               'sealed_search_path_check': search_path,
+                                               'module_owned_declarations': fresh['module_owned_declarations'],
+                                               'transitive_checked_declarations': fresh['transitive_checked_declarations'],
+                                               'same_exact_types_as_recorded_source_audit': True,
+                                               'summary': str((out / name / 'SUMMARY.json').relative_to(ROOT)),
+                                               'summary_sha256': sha(out / name / 'SUMMARY.json')})
+                summary['fresh_supplemental_audits'] = supplement_records
+                run([sys.executable, 'editorial/verify_release_inputs.py'], '09_release_inputs', tree)
+                historical_id = 'archive_validation_' + run_id
+                historical_run = tree / 'editorial/historical_baseline/runs' / historical_id
+                try:
+                    run([sys.executable, 'editorial/verify_historical_baseline.py', '--run-id', historical_id], '10_historical_gate', tree)
+                finally:
+                    if historical_run.is_dir():
+                        shutil.copytree(historical_run, out / 'historical_baseline')
+                summary['historical_gate'] = json.loads((out / 'historical_baseline/SUMMARY.json').read_text())['status']
+                assert summary['historical_gate'] == 'PASS'
             finally:
-                if historical_run.is_dir():
-                    shutil.copytree(historical_run, out / 'historical_baseline')
-            summary['historical_gate'] = json.loads((out / 'historical_baseline/SUMMARY.json').read_text())['status']
-            assert summary['historical_gate'] == 'PASS'
+                check_cache_bytes(tree, binding, cache, 'after_library_use')
             summary['status'] = 'PASS'
         summary['temporary_extraction_removed'] = True
     except Exception as error:

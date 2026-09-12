@@ -182,6 +182,12 @@ instructions. Once those are available, reproduce the current new supplements:
 
     python3 editorial/narrative_rebuild/positive_formal/verify.py
     python3 editorial/narrative_rebuild/negative_formal/verify.py
+    python3 editorial/satisfaction_review/formal/verify.py --run-id local_geometry
+    python3 editorial/satisfaction_review/branch_formal/verify.py --run-id local_branches
+
+The exact host cache seal and its read-only check are documented in
+editorial/satisfaction_review/cache_binding/README.md. New builds require their
+own evidence if their object bytes differ from that host-specific seal.
 
 Their own modules are freshly compiled. Retained original-library audit logs
 state what was actually built; no new empty-cache library build is implied.

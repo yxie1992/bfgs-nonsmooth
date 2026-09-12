@@ -23,3 +23,32 @@ N03, an optional move of scalar interpolation into an article appendix, was deli
 Both PDFs build with resolved references and no overfull boxes: 46 and107 pages. During new companion image inspection, the shared appendix exposed a class difference: svjour3 adds an optional proof title, whereas amsthm replaces it. The generated companion now restores its 'Proof of' prefix while keeping the article's nonduplicated heading. This is a documented layout transformation, not a duplicate hand-edited proof.
 
 Final image review and fresh source-archive validation have separate hash-bound records. Until those records pass and the source/release milestones are pushed, this file is a work record rather than a completion receipt. These are AI-assisted author-side reviews, not independent human peer review. Human source/novelty review, authorship metadata, responsibility/disclosure approval and submission/deposit decisions remain reserved.
+
+## Final correspondence refinement
+
+The scalar restriction clause is now also an exact Lean endpoint. The new
+`ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction` conjoins
+the unchanged full identity-initialized failure target with failure of
+Fréchet-derivative differentiability for each of the three actual whitened
+branches. Its3theorems/37,525transitive dependencies passed the strict audit;
+the article and companion narrative both map to this endpoint. The revised
+companion remains107pages; all changed pages were seen and every carried
+approval is bound to exact page-image hashes. The article remains46pages with
+its complete fresh visual/text approval.
+
+Source/proof milestone7072ac033abb8ac8a1373850142f2fb4cec7f951 was committed.
+The first push failed with an HTTP broken pipe and the unchanged remote was
+verified. A command-local HTTP/1.1 retry succeeded; `git ls-remote` confirmed
+that exact commit. Both failure and success receipts are retained. No force
+push, history rewrite, remote change or persistent Git configuration was used.
+
+A further audit-method review found that the old reuse record bound source
+inputs and package revisions but did not seal the reused library object bytes.
+The new cache binding is designed to record the actual rehashed incremental
+build and exact object/source/trace/compiler files, with read-only checks
+before and after extraction replay. It preserves the explicit trust in the
+compiler, Lake, execution environment and prior cache creation; no clean
+Mathlib rebuild or foundational-consistency proof is claimed. Its actual
+completion evidence is separate from this description of the method.
+
+Final cache_binding_04 passed: 8,853 objects, all paired source paths, 32,470 cached files, and 7,382 independently recomputed existing Lake output hashes. The ordinary pinned build and the later read-only check both passed. All nine dependency revisions are clean. Seven adverse-input guard tests passed. No successful --rehash or empty-cache build is asserted. All 153 final PDF pages are approved by actual visual review, with unchanged companion pages carried only by exact pixel hashes. The manuscript is satisfactory as an author-review candidate; the current source archive replay and final push remain execution gates.

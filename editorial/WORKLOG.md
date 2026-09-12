@@ -177,3 +177,7 @@ reserved author actions. No external blocker or autonomous task remains.
 ## Narrative rebuild release, 12 September2026
 
 The authorized second handoff was executed. Source milestone252ea5d is pushed; the expanded47-page article and107-page complete companion pass all-source/formal correspondence, three author-side reviews, all154-page visual review and fresh-extraction reproduction. Fresh new benchmark and scaling Lean compilations/audits passed in the extraction; exact evidence and commit/push receipts are in `narrative_rebuild/WORKLOG.md` and `release/validation/runs/narrative_20260912_01/`. The previous release remains under `release/history/20260912_initial/`.
+
+## Additional skeptical refinement requested after the narrative release
+
+The manuscript review passes are recorded in satisfaction_review/. Article prose was tightened to46 pages with all31 formal statement blocks preserved; the companion remains107 pages. A literal actual-branch regularity wrapper and full structural geometry replay passed. The proof/prose milestone7072ac0 was pushed after a recorded transport retry. All153 pages are approved. The original library cache has a separately reviewed exact byte/source/trace seal (cache_binding_04), retaining the failed upstream JS rehash experiment honestly. Current release preparation is awaiting its new source freeze, archive replay and final push; earlier completion receipts remain preserved as historical evidence.

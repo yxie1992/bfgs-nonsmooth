@@ -1,0 +1,3 @@
+# Further companion visual review
+
+PASS for the107-page PDF with SHA256 905afadda918b8facfc70ee325dadfdc96e20824b7dc60e5693d03974feb6b73. Newly viewed full-size pages6,94–98 have legible text, clean tables and intact margins; the changed verification paragraph has no collision or clipping. All other101pages match the preceding fully approved renders byte-for-byte. An intermediate page100 heading exposed a class-specific proof-title difference; the generator now restores the companion prefix, and the final page100 is byte-identical to its previously approved rendering. The exact page hashes and evidence chain are in visual_companion.json. This is an AI author-side visual review, not human review.

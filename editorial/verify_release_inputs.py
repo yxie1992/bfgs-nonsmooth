@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only final source, contract, build and audit integrity gate."""
 from pathlib import Path
-import hashlib,json,re
+import hashlib,json,os,re,subprocess,sys
 ROOT=Path(__file__).resolve().parents[1]
 def read(p):return json.loads((ROOT/p).read_text())
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -299,6 +299,66 @@ try:
     record('Actual branch regularity and combined lower-failure audit',True,details)
 except (KeyError,TypeError,ValueError,OSError) as error:
     record('Actual branch regularity and combined lower-failure audit',False,str(error))
+
+try:
+    binding=root['supplemental_cache_binding']
+    manifest_path=require_hash(binding['manifest'],binding['manifest_sha256'])
+    summary_path=require_hash(binding['summary'],binding['summary_sha256'])
+    binding_run=Path(binding['manifest']).parent
+    if not re.fullmatch(r'editorial/satisfaction_review/cache_binding/runs/[A-Za-z0-9_-]+',str(binding_run)) or Path(binding['manifest']).name!='MANIFEST.json' or binding['summary']!=str(binding_run/'SUMMARY.json'):
+        raise ValueError('Cache receipt must identify one versioned satisfaction-review run')
+    cache=json.loads(manifest_path.read_text())
+    receipt=json.loads(summary_path.read_text())
+    if cache.get('schema_version')!=2 or cache.get('status')!='SEALED_TRUSTED_INCREMENTAL_CACHE' or cache.get('run_directory')!=str(binding_run):
+        raise ValueError('Unknown or incomplete cache-binding manifest')
+    if receipt.get('status')!='PASS' or receipt.get('run_directory')!=str(binding_run) or receipt.get('manifest')!=binding['manifest'] or receipt.get('manifest_sha256')!=binding['manifest_sha256']:
+        raise ValueError('Cache-binding summary disagrees with the registered manifest')
+    if cache.get('build_command')!=['lake','build','BfgsVerification'] or cache.get('successful_rehash_build') is not False or cache.get('independent_cached_output_hash_validation') is not True:
+        raise ValueError('Cache receipt misstates its actual build/hash-validation method')
+    if any(cache.get(key) is not True for key in ['inherited_LEAN_PATH_cleared','inherited_LEAN_SRC_PATH_cleared']) or any(cache.get(key) is not False for key in ['fresh_original_library_build','fresh_mathlib_build']):
+        raise ValueError('Cache receipt misstates its controlled-path or incremental-build scope')
+    for group in ['pinned_input_files','evidence_files','prior_attempt_evidence']:
+        if not cache.get(group):
+            raise ValueError('Cache receipt lacks '+group)
+        for name,data in cache[group].items():
+            if require_hash(name,data['sha256']).stat().st_size!=data['bytes']:
+                raise ValueError('Cache receipt artifact size differs: '+name)
+    helper='editorial/satisfaction_review/cache_binding.py'
+    require_hash(helper,cache['pinned_input_files'][helper]['sha256'])
+    if receipt['object_count']!=len(cache['objects']) or receipt['sealed_cache_file_count']!=len(cache['cache_files']) or receipt['verification']['status']!='PASS':
+        raise ValueError('Cache-binding counts or recorded verification disagree')
+    details={'manifest':binding['manifest'],'manifest_sha256':binding['manifest_sha256'],
+             'summary':binding['summary'],'summary_sha256':binding['summary_sha256'],
+             'object_count':len(cache['objects']),'sealed_cache_file_count':len(cache['cache_files']),
+             'method':'Ordinary pinned Lake build plus independent cached binary-output hash checks; no successful --rehash or clean rebuild claimed',
+             'retained_source_and_execution_receipts':'authenticated'}
+    cache_paths=[ROOT/'bfgs_lean_stage1'/name for name in ['.lake','.toolchain']]
+    if any((path.exists() or path.is_symlink()) and not path.is_dir() for path in cache_paths):
+        raise ValueError('Pinned cache/toolchain path is invalid or a broken symlink')
+    cache_presence=[path.is_dir() for path in cache_paths]
+    if any(cache_presence) and not all(cache_presence):
+        raise ValueError('Pinned cache/toolchain is only partially available')
+    if all(cache_presence):
+        env=os.environ.copy()
+        env.pop('LEAN_PATH',None)
+        env.pop('LEAN_SRC_PATH',None)
+        command=[sys.executable,helper,'--check','--manifest',binding['manifest'],'--root',str(ROOT)]
+        result=subprocess.run(command,cwd=ROOT,env=env,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        details['current_read_only_check']={'command':command,'exit_code':result.returncode,
+            'inherited_LEAN_PATH_cleared':True,'inherited_LEAN_SRC_PATH_cleared':True,
+            'stdout':result.stdout,'stderr':result.stderr}
+        if result.returncode:
+            raise ValueError('Current cache-binding helper rejected the available cache bytes: '+json.dumps(details))
+        actual=json.loads(result.stdout)
+        if actual.get('status')!='PASS' or actual.get('read_only_check') is not True or actual.get('manifest_sha256')!=binding['manifest_sha256'] or actual.get('object_count')!=len(cache['objects']) or actual.get('sealed_cache_file_count')!=len(cache['cache_files']):
+            raise ValueError('Current cache helper result disagrees with its receipt')
+        details['current_cache_bytes_verified']=True
+    else:
+        details['current_cache_bytes_verified']=False
+        details['source_only_scope']='Pinned caches are absent. Retained receipts are authenticated; present cache bytes and fresh compilation are not checked. Archive replay requires successful before/after cache checks.'
+    record('Reused Lean cache binding and controlled-path receipts',True,details)
+except (KeyError,TypeError,ValueError,OSError) as error:
+    record('Reused Lean cache binding and controlled-path receipts',False,str(error))
 
 for file,key in [('positive_contract_review.json','article_sha256'),('negative_contract_review.json','article_file_sha256'),('root_contract_review.json','article_file_sha256')]:
  d=read('editorial/'+file);changed=[p for p,h in d[key].items() if sha(ROOT/p)!=h]
