@@ -1,0 +1,28 @@
+# Independent review of the positive article proofs
+
+**Outcome:** no substantive mathematical gap found in the reviewed positive core. The actual matrix hierarchy, normalized bridge, reciprocal growth and comparison argument are complete within the article and its matrix appendix. The radial and local finite-partition proofs give the stated scope without assuming convergence of iterates or matrices.
+
+Reviewed the complete current contents of the four files listed below, including every displayed calculation and the canonical early theorem statement. This is a mathematical and statement-scope review, not a fresh compiler run or a visual PDF review.
+
+## Checks and conclusions
+
+1. **BFGS invariants and energy.** The curvature, SPD induction, supporting-plane decrease bounds and Hessian inverse-update identity use the actual accepted steps. The reference energy cancellation follows from M s = 0. The budget uses a genuine minimizer and decreasing nonnegative objective gaps.
+2. **Compression and all principal minors.** Expanding the rank-two determinant gives det(A)[(kappa-w)^2+u(r-z)]/kappa^2. Subtracting the nonnegative enlarged Gram determinant yields the required bound. Adding the update's rank-one term changes the determinant by exactly rho det(A)u, with 0 <= u <= q; it does not require the projected compression to be invertible. The full-dimension case gives the exact determinant endpoint. Summing in an orthonormal eigenbasis counts each augmented principal set once and gives the actual hierarchy in arbitrary finite dimension n >= 1.
+3. **Normalized bridge and reciprocal means.** The bounds beta >= 1-c2, ||y|| <= 2G and alpha=d/q are derived from actual runs. The weighted principal-minor sum closes the normalized recurrence. The product lower bound has the correct m-1 exponent: iterate m-1 updates and then use q <= G^2 V at the remaining endpoint. A fixed prefix does not affect divergence of the geometric mean, and AM-GM supplies reciprocal-mean divergence. The article does not silently replace this matrix argument by an assumed scalar hierarchy.
+4. **Singular comparison fields.** Visibility, secant control and projected transport apply to every eligible pair on each positive band. The proof is valid for finite-valued singular PSD fields, including unbounded or discontinuous ones. Trace monotonicity needs only PSD matrices. The summable product normalization is bounded and gives an O(N) reciprocal-sum upper bound under a hypothetical positive limiting gap, contradicting the proven mean divergence. No uniform norm bound on the field or matrices is used.
+5. **Radial equivalence.** Both signs of the radial secant are handled using supporting-plane errors; the bounded quantity for the negative case is T-N = -(h-g) dot r_x. The choice of inward fraction gives the asserted quadratic bound. In the reverse direction the positive band loses a fixed margin, permitting approximation. Almost-everywhere differentiability at both x and its invertible dilation gives a dense set inside the compact sublevel; its interior is nonempty and has closure equal to that sublevel. Local gradient bounds and uniqueness of the limiting subgradient justify passing to the limit at the original differentiable endpoint. No differentiability at the inward endpoint is assumed in the conclusion.
+6. **Centered and finite-cell applications.** The homogeneous term has exactly zero inward remainder; local C1,1 regularity on a compact convex sublevel supplies a uniform gradient bound for the smooth part. The canonical partition theorem permits separate open extension domains. Finite closed cells not containing the minimizer can be removed locally, and all remaining domains share a small ball. Equality only in the inward radial derivative is enough at cell boundaries. Convexity is required of the full objective; extensions need not be convex away from their cells. The convex trapping lemma supplies one basin before selecting the initial SPD matrix.
+7. **Scope of examples and conclusions.** PLQ is explicitly defined by a finite cover of full-dimensional polyhedral cells, rather than an arbitrary maximum of quadratic functions. Uniqueness is retained when concluding iterate convergence, and positive local results concern accepted iterates, not all rejected trials. Euclidean residual norms away from zero are smooth; zero residuals are centered sublinear terms. The final examples now name the smooth loss as locally C1,1, matching the theorem's hypothesis; the suggested wording refinement is resolved.
+
+## Limits and external references
+
+The article proves the qualitative reciprocal growth needed by its positive core. The different finite-horizon and superquadratic results remain companion results, as permitted by the selection plan; this review does not represent them as proved in these three sections. The published WW entry permits its ordinary bibliography citation. The XW convention pointer now uses the explicit preprint citation macro.
+
+This review does not establish publication priority or audit every quoted historical comparison. Those remain the independent literature review's responsibility. It also does not replace the integrated build, axiom audit, correspondence register or final PDF inspection.
+
+## Reviewed file hashes
+
+- `paper/sections/energy.tex`: `cf23294356740d167aa6a034f642007123067dc4d32b97256a3c4f82cf239206`
+- `paper/sections/positive.tex`: `14d661bdc166839b228bc4610f078306e78a2585a83d60d4d136fb2b69d93598`
+- `paper/appendices/matrix_algebra.tex`: `c388eb5210324adbe4a194b8ef25d599b3960c6d2758b06f052bae0427322f0a`
+- `paper/statements/positive_partition.tex`: `bf8317bd81c418d9a4f9a6ff5747d97862ceac6e92bdab9f85528ccfc1e90882`

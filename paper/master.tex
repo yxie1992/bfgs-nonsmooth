@@ -1,0 +1,70 @@
+\documentclass[smallextended]{svjour3}
+\smartqed
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,mathtools,microtype}
+\usepackage{graphicx,booktabs,array,longtable,xurl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,patterns}
+\usepackage[colorlinks=true,allcolors=black,bookmarksnumbered=true]{hyperref}
+\input{preprint_references}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\argmin}{argmin}
+\setlength{\emergencystretch}{1.5em}
+\allowdisplaybreaks[1]
+\title{BFGS on Convex Nonsmooth Functions:\\Local Convergence and Failure}
+\titlerunning{BFGS: local convergence and failure}
+\author{}
+\institute{}
+\journalname{}
+% Author-review layout: omit the editor's manuscript-number placeholder and
+% the reserved empty author block. The class and body typography are unchanged.
+\renewcommand{\makeheadbox}{}
+\setlength{\headerboxheight}{0pt}
+\date{Author-review edition, 12 September 2026}
+\hypersetup{pdftitle={BFGS on Convex Nonsmooth Functions: Local Convergence and Failure},pdfsubject={Unmodified full BFGS; local convergence and deterministic failure},pdfkeywords={BFGS, convex nonsmooth optimization, local convergence, formal verification}}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study unmodified full BFGS on finite convex nonsmooth objectives, with
+Armijo--weak-Wolfe steps and actual gradients at differentiable accepted
+iterates. The main contrast concerns local geometry. A finite polyhedral
+partition near a unique minimizer, with locally Lipschitz gradient extensions
+on its cells, gives a common local convergence basin for every positive
+definite initial matrix. In contrast, a maximum of four globally convex
+$C^{2,1}$ functions with uniformly bounded Hessians admits deterministic
+nonstationary limits from starting points arbitrarily close to its unique
+minimizer. A separate construction retains uniform strong convexity with
+$C^{1,1}$ branches that lose second differentiability at the accumulation
+point. All accepted and rejected queries in these examples are differentiable
+and can remain arbitrarily close to the optimizer. The positive analysis
+uses a reference-energy identity, a hierarchy of actual principal minors
+of the full BFGS matrices, and reciprocal growth under bounded gradients
+and vanishing predicted decreases. A transported comparison certificate
+then relates this matrix budget to the objective's geometry. Neither the
+positive analysis nor the counterexample construction presumes iterate
+convergence or a matrix limit. Exact rational certificates, infinite
+scaling inductions, and a reviewed Lean correspondence support the proofs;
+the formal audit is distinguished from novelty and prose verification.
+\keywords{BFGS \and convex nonsmooth optimization \and local convergence \and counterexample \and formal verification}
+\subclass{90C30 \and 90C53 \and 49J52}
+\end{abstract}
+\input{sections/introduction}
+\input{sections/geometry}
+\input{sections/energy}
+\input{sections/positive}
+\input{sections/beyond}
+\input{sections/failure}
+\input{sections/verification}
+\appendix
+\normalsize
+\input{appendices/matrix_algebra}
+\input{appendices/seed_certificate}
+\input{appendices/lower_curvature}
+\input{bibliography}
+\end{document}

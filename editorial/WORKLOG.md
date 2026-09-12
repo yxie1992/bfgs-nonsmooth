@@ -40,3 +40,26 @@ audit files and unrelated untracked user files remain untouched.
 
 The manuscript assembly and page/proof reviews remain in progress; this milestone
 is the baseline and scope record, not a completed-paper claim.
+
+Milestone A was committed as 21bf099 and pushed successfully to origin/main.
+Staged diff review excluded only whitespace checks for the verbatim supplied
+handoff and unmodified official template, whose original CRLF/trailing spaces
+were preserved. Compiled Lean scope objects were removed from staging and ignored.
+The first combined build passed with 31 article pages and 104 companion pages,
+with resolved references; seven article overfull lines and two companion lines
+were identified and are being corrected without reducing font size.
+
+## Milestone B — complete article v1
+
+The complete article, including both local counterexample proofs, matrix appendix,
+exact root/trial certificate, and reproducible vector figures, now builds in the
+official Mathematical Programming class at 32 pages. Body and essential appendix
+proofs use the normal class font size; no geometry or font compression was used.
+References resolve and there are no overfull boxes. The paper includes 20 cited
+published references, with unpublished works identified in text.
+
+Independent proof and rational arithmetic checks found no remaining substantive
+proof gap. Editorial corrections made during review are recorded in the reviews.
+The full companion and new prose-only Lean wrappers are being finalized for
+milestone C. Full final page-hash visual reconciliation and portable release
+checks remain before milestone D.
