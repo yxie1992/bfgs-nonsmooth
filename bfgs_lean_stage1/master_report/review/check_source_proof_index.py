@@ -44,6 +44,7 @@ for n,r in main.items():
 audit={**allrows,**main}
 missing=sorted({d for r in audit.values() for k in keys for d in r.get(k,[]) if d not in audit})
 require(not missing,'missing actual project dependencies: '+repr(missing))
+bib_notes={n['id']:n for n in read(HERE/'BIBLIOGRAPHIC_NOTES.json')['notes']}
 source_map=read(HERE/'SOURCE_MAP.json');claims=read(HERE/'CLAIMS.json')['claims'];ledger=source_map['edits']
 register=read(ROOT/'audit/REPORT_STATUS.json');original_claims={s['id']:s for m in register['modules'] for s in m['coverage_spans']};additions=read(HERE/'authoring/extra_span_exports.json')
 require({c['id'] for c in claims}==set(original_claims),'claim ID correspondence')
@@ -91,6 +92,11 @@ for m in source_map['modules']:
   require(expected_exports==c['exports'],'reviewed export correspondence '+c['id'])
   require(c['original_sha256']==m['original_sha256'],'claim source hash '+c['id'])
   excerpt='\n'.join('\n'.join(expected.splitlines()[a-1:b]) for a,b in c['corrected_line_ranges']);require(excerpt==c['corrected_excerpt'],'excerpt mismatch '+c['id'])
+  note_ids=re.findall(r'% BEGIN ATTRIBUTION ([A-Za-z0-9_.]+)',excerpt)
+  require([n['id'] for n in c['bibliographic_notes']]==note_ids,'bibliographic note mapping '+c['id'])
+  for n in c['bibliographic_notes']:
+   require(n['kind']=='bibliographic_attribution' and n['formal_status']=='Editorial source comparison; not a Lean-certified assertion','bibliographic classification '+c['id'])
+   require(n['source_ids']==bib_notes[n['id']]['source_ids'],'bibliographic sources '+c['id'])
   require(all(n in audit for n in c['exports']),'unaudited export '+c['id'])
   if c['classification']=='proved_mathematics':require(bool(c['exports']),'unlinked proved span '+c['id'])
   if c['module']=='E':require(c['classification'] in ['execution_evidence_or_scope','mathematics_and_evidence_scope'],'E evidence mislabeled '+c['id'])

@@ -6,6 +6,7 @@ import json
 import pathlib
 import re
 import unicodedata
+from baseline_io import baseline_json
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
 REPO = BASE.parents[1]
@@ -107,7 +108,7 @@ for s, ids in routing.items():
     assert set(ids) <= set(claim_by_id), s
     span_claims[s].update(ids)
 
-original = read(EDITION / 'CLAIMS.json')['claims']
+original = baseline_json('bfgs_lean_stage1/master_report/CLAIMS.json')['claims']
 original_ids = {s['id'] for s in original}
 assert set(span_claims) <= original_ids
 coverage = []

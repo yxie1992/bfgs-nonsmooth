@@ -29,6 +29,25 @@ qualifications, replacement examples and alternative formal proof routes.
 Unsupported historical execution claims are withdrawn. Explicit research
 questions remain questions, not theorems certified by this edition.
 
+## Citation and attribution revision
+
+The current 98-page edition adds **41 attribution notes** and makes **five
+corrections to unqualified novelty wording**. Its bibliography contains **38
+external works** (**53 keys**, including 15 internal topic labels). Its ledger now contains **114
+guarded edits**. The comparison notes distinguish established results, proof
+techniques and neighboring theorems; they are editorial scholarship, not
+additional assertions certified by Lean. The affine-fiber selector's exact
+publication priority remains unresolved.
+
+Removing the notes and reversing the five wording corrections recovers all 14
+preceding mathematical chapters byte-for-byte. Every span's formal export list
+and the complete declaration index are unchanged. No new Lean compiler run was
+needed or performed for these citation-only changes; the delivered earlier
+compiler and axiom evidence remains the proof evidence. The revision's checks,
+reviews and rendering attempts are recorded in
+[review/citation_revision/](review/citation_revision/). Earlier release logs
+retain their historical dates and scope.
+
 ## Reproduce
 
 Run the complete read-only release validation from `bfgs_lean_stage1/`:
@@ -38,8 +57,18 @@ python3 scripts/verify_rigorous_master_report.py
 ```
 
 This checks the recorded compiler/axiom evidence, source-to-proof index,
-corruption-rejection tests, PDF build and visual record, and exact final artifact
-manifest. It requires Python 3 and Node.js. For a fresh Lean build:
+corruption-rejection tests, citation preservation, PDF build and visual record,
+and exact final artifact manifest. It requires Python 3, Node.js and the full
+Git history. The immutable preservation comparison reads the preceding edition
+at commit `06ee12f7e7661437b8481fcab3b5bd26cff60130`; an exported source archive
+or shallow clone lacking that commit is insufficient. The citation check can
+also be run alone:
+
+```sh
+python3 scripts/verify_report_attributions.py
+```
+
+For a fresh Lean build:
 
 ```sh
 bash scripts/bootstrap.sh
@@ -70,15 +99,24 @@ The renderer requires `latexmk`, `pdflatex`, `pdfinfo`, `pdftotext` and
 `master_report/render/`, and temporary page images under `tmp/pdfs/master21/`.
 Its fixed publication timestamp makes PDF metadata reproducible; actual
 execution times are recorded independently. Visual inspection is documented
-separately from compiler and text-bound checks.
+separately from compiler and text-bound checks. The authored attribution notes
+are already incorporated in the guarded edit ledger. Do not rerun
+`scripts/apply_report_attributions.py` on this edition: it is the recorded,
+one-use migration from the baseline, not a report assembly step.
 
 ## Evidence and source correspondence
 
 - [FINAL_REVIEW.md](FINAL_REVIEW.md): release review, evidence and trust boundaries.
 - [MANIFEST.json](MANIFEST.json): complete final artifact hashes.
-- [render/VISUAL_REVIEW.json](render/VISUAL_REVIEW.json): inspection of the final 92-page PDF.
+- [render/VISUAL_REVIEW.json](render/VISUAL_REVIEW.json): inspection record bound to the current 98-page PDF.
 - [STATUS.json](STATUS.json): exact completion scope and open boundaries.
 - [CLAIMS.json](CLAIMS.json): every original source span and its reviewed exports.
+- [BIBLIOGRAPHIC_NOTES.json](BIBLIOGRAPHIC_NOTES.json): the 41 editorial source
+  comparisons, explicitly separated from Lean assertions.
+- [authoring/citation_revision/BASELINE.json](authoring/citation_revision/BASELINE.json):
+  the immutable preceding edition and preservation hashes.
+- [review/citation_revision/](review/citation_revision/): current attribution,
+  preservation, index, render and final gate evidence.
 - [SOURCE_MAP.json](SOURCE_MAP.json): exact old/new edits and full character maps.
 - [DECLARATION_INDEX.json](DECLARATION_INDEX.json): checked types and complete
   project dependency closure for the indexed claims.

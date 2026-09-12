@@ -163,7 +163,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 for(const m of [...new Set(DATA.claims.map(x=>x.module))]){const o=document.createElement('option');o.value=m;o.textContent=m;$('module').append(o)}
 function dependencies(r){return [...new Set([...(r.type_project_dependencies||[]),...(r.value_project_dependencies||[]),...(r.structural_project_dependencies||[])])].filter(n=>DATA.declarations[n])}
 function theorem(n){const r=DATA.declarations[n];if(!r)return '<p>Unknown declaration</p>';return '<h3>'+esc(n)+'</h3><p>'+esc(r.kind)+' · '+esc(r.module||'source module')+'</p><p>Universe parameters: '+esc((r.level_params||[]).join(', ')||'none')+'</p><pre>'+esc(r.signature)+'</pre><p>Axioms: '+esc(r.axioms.join(', ')||'none')+'</p>'+(r.source_href?'<p><a href="'+esc(r.source_href)+'">Lean source: '+esc(r.source_path)+'</a></p>':'')+(r.source_excerpt?'<details><summary>Compiler-reported source range'+(r.source_excerpt_truncated?' (excerpt; full source linked above)':'')+'</summary><pre>'+esc(r.source_excerpt)+'</pre><small>Generated declarations may refer to the source that produced them; the range is compiler metadata.</small></details>':'')+'<details><summary>Direct project proof/type dependencies ('+dependencies(r).length+')</summary><div class="deps">'+dependencies(r).map(d=>'<button data-theorem="'+esc(d)+'">'+esc(d)+'</button>').join('')+'</div></details>'}
-function select(c){location.hash=c.id;$('detail').innerHTML='<h2>'+esc(c.id)+' · Module '+esc(c.module)+'</h2><span class="tag">'+esc(c.classification)+'</span><p>Original lines '+c.original_lines.join('-')+'; corrected source '+esc(c.corrected_source)+'</p><p>'+esc(c.review_note||'See the source correspondence and exact Lean declarations below.')+'</p><details><summary>Corrected source passage</summary><pre>'+esc(c.corrected_excerpt)+'</pre></details><p>Reviewed exports: '+c.exports.length+'</p>'+c.exports.map(n=>'<details><summary>'+esc(n)+'</summary>'+theorem(n)+'</details>').join('');window.scrollTo(0,0)}
+function select(c){location.hash=c.id;$('detail').innerHTML='<h2>'+esc(c.id)+' · Module '+esc(c.module)+'</h2><span class="tag">'+esc(c.classification)+'</span><p>Original lines '+c.original_lines.join('-')+'; corrected source '+esc(c.corrected_source)+'</p><p>'+esc(c.review_note||'See the source correspondence and exact Lean declarations below.')+'</p><details><summary>Corrected source passage</summary><pre>'+esc(c.corrected_excerpt)+'</pre></details>'+((c.bibliographic_notes||[]).length?'<p><small>Editorial attribution notes: '+c.bibliographic_notes.map(n=>esc(n.id)).join(', ')+'. These source comparisons are separate from the Lean-verified assertions.</small></p>':'')+'<p>Reviewed exports: '+c.exports.length+'</p>'+c.exports.map(n=>'<details><summary>'+esc(n)+'</summary>'+theorem(n)+'</details>').join('');window.scrollTo(0,0)}
 for(const c of DATA.claims)c.searchText=[c.id,c.review_note,c.corrected_excerpt,...c.exports,...c.exports.map(n=>DATA.declarations[n].signature)].join(' ').toLowerCase();
 function list(){const q=$('search').value.toLowerCase(),m=$('module').value;const xs=DATA.claims.filter(c=>(!m||c.module===m)&&(!q||c.searchText.includes(q)));$('list').innerHTML='<small>'+xs.length+' source spans</small>';for(const c of xs){const b=document.createElement('button');b.textContent=c.id+' · '+c.classification.replaceAll('_',' ');b.onclick=()=>select(c);$('list').append(b)}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-theorem]');if(b){$('detail').innerHTML='<button id="back">Back to source claim</button>'+theorem(b.dataset.theorem);$('back').onclick=()=>{const c=DATA.claims.find(x=>x.id===location.hash.slice(1));if(c)select(c)};window.scrollTo(0,0)}});
@@ -178,6 +178,8 @@ def assemble(draft):
     assert all(e['source'] in {m['source'] for m in register['modules']} for e in changes), 'orphan edit source'
     additions=read(HERE/'authoring/extra_span_exports.json')
     extras=additions['exports']; overrides=additions.get('classification_overrides',{})
+    note_paths=sorted((HERE/'authoring/citation_revision').glob('*_notes.json'))
+    bibliographic_notes={n['id']:n for p in note_paths for n in read(p)}
     outputs={}; claims=[]; module_records=[]
     for mod in register['modules']:
         sourcepath=REPO/mod['source']; source=sourcepath.read_text()
@@ -203,7 +205,11 @@ def assemble(draft):
                 'original_sha256':mod['source_sha256'],'corrected_source':generated,
                 'corrected_line_ranges':ranges,'corrected_excerpt':text,'edits':ids,
                 'classification':overrides.get(span['id'],classification(span,exports)),'exports':exports,
-                'review_note':span.get('review_note',''), 'inherited_review':mod['detailed_inventory']})
+                'review_note':span.get('review_note',''), 'inherited_review':mod['detailed_inventory'],
+                'bibliographic_notes':[{'id':i,'kind':'bibliographic_attribution',
+                    'formal_status':'Editorial source comparison; not a Lean-certified assertion',
+                    'source_ids':bibliographic_notes[i]['source_ids']}
+                    for i in re.findall(r'% BEGIN ATTRIBUTION ([A-Za-z0-9_.]+)',text)]})
         assert previous==len(source.splitlines()), mod['module']
         own=[c for c in claims if c['module']==mod['module']]
         rows=[]
@@ -231,6 +237,10 @@ open questions are distinct from mathematical theorems.
 '''
     assert len(claims)==172 and len(module_records)==14
     assert {e['id'] for e in changes}=={i for m in module_records for i in m['edits']}, 'unapplied edit'
+    assert set(bibliographic_notes)=={n['id'] for c in claims for n in c['bibliographic_notes']}, 'Unmapped bibliographic note'
+    outputs['BIBLIOGRAPHIC_NOTES.json']=json.dumps({'schema_version':1,
+        'scope':'Editorial attribution and external-source comparison, separate from Lean-verified mathematics.',
+        'notes':list(bibliographic_notes.values())},indent=2,ensure_ascii=False)+'\n'
     outputs['CLAIMS.json']=json.dumps({'schema_version':1,'claims':claims},indent=2,ensure_ascii=False)+'\n'
     outputs['SOURCE_MAP.json']=json.dumps({'schema_version':1,'modules':module_records,'edits':changes},indent=2,ensure_ascii=False)+'\n'
     # Retain direct dependencies of every claim export in the searchable index.
@@ -280,7 +290,7 @@ open questions are distinct from mathematical theorems.
     inputs=[Path(__file__).resolve(), ROOT/'audit/REPORT_STATUS.json', HERE/'STATUS.json',
         HERE/'authoring/extra_span_exports.json',HERE/'authoring/frontmatter.tex',
         HERE/'authoring/bibliography.tex',ORIGINAL/'master.tex',
-        *[REPO/m['source'] for m in register['modules']],*sorted((HERE/'edits').glob('*.json')),*source_inputs]
+        *[REPO/m['source'] for m in register['modules']],*sorted((HERE/'edits').glob('*.json')),*note_paths,*source_inputs]
     for p in [HERE/'audit/main/all_safe_declarations.json',HERE/'audit/supplemental/all_safe_declarations.json']:
         if p.is_file():inputs.append(p)
     if draft:

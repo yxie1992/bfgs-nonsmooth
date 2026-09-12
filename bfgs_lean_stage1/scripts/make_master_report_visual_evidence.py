@@ -33,7 +33,7 @@ for start in range(0,len(pages),16):
     p=out/f'contact-{start//16+1}.jpg';canvas.save(p,quality=88)
     sheets.append({'path':str(p.relative_to(ROOT)),'pages':list(range(start+1,min(start+16,len(pages))+1))})
 focus=[];commands=[]
-for page in [1,15,26,37,46,60,70,75,86]:
+for page in [1,3,15,21,33,55,60,70,75,82,94,96,98]:
     prefix=out/f'page-{page}'
     argv=['pdftoppm','-f',str(page),'-l',str(page),'-scale-to','1800','-singlefile','-png',str(pdf),str(prefix)]
     result=subprocess.run(argv,capture_output=True,text=True)

@@ -6,6 +6,7 @@ import json
 import pathlib
 import re
 from urllib.parse import unquote, urlparse
+from baseline_io import baseline_bytes, baseline_json, LOCATIONS
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
 REPO = BASE.parents[1]
@@ -30,7 +31,7 @@ def main():
     args=parser.parse_args()
     baseline=read(BASE/'BASELINE.json')
     for p,h in baseline['files'].items():
-        assert sha(REPO/p)==h, ('Frozen report input changed',p)
+        assert hashlib.sha256(baseline_bytes(p)).hexdigest()==h, ('Frozen report input changed',p)
     d=read(BASE/'CLAIMS.json')
     sources=read(BASE/'SOURCES.json')['sources']
     claims={c['id']:c for c in d['claims']}
@@ -46,7 +47,7 @@ def main():
     for s in sources:
         assert urlparse(s['url']).scheme in ('http','https'),s['id']
         assert s['title'] and s['authors'] and s['access'] and s['locators'],s['id']
-    original=read(BASE.parent/'master_report/CLAIMS.json')['claims']
+    original=baseline_json('bfgs_lean_stage1/master_report/CLAIMS.json')['claims']
     original_by_id={s['id']:s for s in original}
     coverage=d['span_coverage']
     assert [s['span_id'] for s in coverage]==[s['id'] for s in original]
@@ -56,7 +57,7 @@ def main():
         assert s['edition_classification']==original_s['classification']
         assert set(s['research_claim_ids'])<=set(claims)
         path=REPO/s['corrected_source']
-        n=len(path.read_text().splitlines())
+        n=len(baseline_bytes(s['corrected_source']).decode().splitlines())
         assert all(1<=a<=b<=n for a,b in s['corrected_line_ranges'])
         if not s['research_claim_ids']:
             assert s['edition_classification'] in ('notation_or_scope','execution_evidence_or_scope')
@@ -93,7 +94,7 @@ def main():
     assert gate['status']=='PASS' and gate['source_spans']==172
     manifest=read(BASE/'MANIFEST.json')
     assert manifest['files']==files(),'Supplement manifest differs; review intentional edits before regenerating.'
-    print(json.dumps({'status':'PASS','baseline_files_unchanged':len(baseline['files']),
+    print(json.dumps({'status':'PASS','baseline_files_verified':len(baseline['files']),'baseline_read_locations':LOCATIONS,
         'packet_count':len(d['packets']),'research_claim_groups':len(claims),
         'source_records':len(sources),'queries_logged':summary['queries_logged'],
         'edition_spans':len(coverage),'spans_with_research_comparisons':summary['spans_with_research_comparisons'],

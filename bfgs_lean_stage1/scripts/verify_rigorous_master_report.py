@@ -49,6 +49,7 @@ def main():
 
     command([sys.executable,'scripts/build_rigorous_master_report.py','--check'],'exact textual regeneration')
     command([sys.executable,'master_report/audit/run.py','--check'],'actual pinned compiler/axiom evidence')
+    command([sys.executable,'scripts/verify_report_attributions.py'],'citation revision preserves mathematics and classifies attribution separately')
     command([sys.executable,'master_report/review/check_source_proof_index.py'],'independent complete source/index/alias correspondence')
     command([sys.executable,'master_report/review/check_negative_guards.py'],'seven meaningful corruption-rejection tests')
     command([args.node,'master_report/review/check_index_ui.cjs'],'index functional navigation with actual dependencies')

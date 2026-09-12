@@ -4,7 +4,7 @@ Start with [REPORT.md](REPORT.md). It answers which results have published prece
 
 The comparison covers all 172 corrected report spans through 75 research groups and separately classified scope/execution records. This is a completed, bounded literature search as of 11 September 2026 in Los Angeles. “No exact match found” does not establish novelty. Two metric-selector priority questions remain unresolved; an explicit open conjecture is also recorded separately from proved claims.
 
-The corrected report and its Lean/audit files are preserved at the hashes in [BASELINE.json](BASELINE.json). This supplement does not introduce proof axioms or claim to have rerun Lean compilation. Independent packet reviews, artifact checks, and the unchanged-edition verification log appear under [review](review).
+The audited report edition is preserved in Git at the commit and hashes in [BASELINE.json](BASELINE.json). This supplement does not introduce proof axioms or claim to have rerun Lean compilation. Independent packet reviews, artifact checks, and the unchanged-edition verification log appear under [review](review).
 
 ## Detailed comparisons
 
@@ -32,6 +32,8 @@ From the repository root:
 python3 bfgs_lean_stage1/literature_audit/scripts/rebuild_register.py
 python3 bfgs_lean_stage1/literature_audit/scripts/validate.py
 ```
+
+The readers use the exact audited baseline, verifying its hashes in the current checkout or, after an authorized report revision, in the recorded Git commit. A clone must retain that commit; changing baseline hashes is not a substitute for restoring missing history. The current corrected report now incorporates these citations, with its revision record in `../master_report/authoring/citation_revision/`.
 
 The first command deterministically rebuilds the combined JSON/BibTeX files from reviewed packets and explicit span routing. The second checks baseline integrity, register links, exact span coverage and the supplement manifest. These commands validate artifact structure and preservation; they do not automate mathematical priority judgment. After intentional edits, review them, rebuild the registers, then regenerate the manifest with `python3 bfgs_lean_stage1/literature_audit/scripts/validate.py --write-manifest` before rerunning validation.
 

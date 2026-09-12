@@ -13,6 +13,11 @@
 \setcounter{remark}{0}
 \setcounter{equation}{0}
 \section{Main result and exact implementation}
+% BEGIN ATTRIBUTION d.negative_context
+\paragraph{Attribution and comparison.}
+The unit-first search below is Lewis--Overton's Algorithm 4.6 \cite{LO}. Earlier negative results include their convex subgradient/exact-search construction with null steps \cite{NEG_LO08}, smooth globally nonconvex examples \cite{NEG_M04,NEG_M07,NEG_M14,NEG_DAI02,NEG_DAI13}, Clarke-stationary limits with descent directions \cite{NEG_LZ15}, and scaled memoryless BFGS failure \cite{NEG_AO21}. Those settings differ from the convex, differentiable-query, full-update statement here. The recent planar counterexample of Diao uses a smooth nonconvex objective and an escaping exact-search trajectory \cite{NEG_DIAO26}. No exact match for the complete theorem was identified in the documented search; this is not a priority certification.
+% END ATTRIBUTION d.negative_context
+
 For a differentiable current point $x$, put $g=\nabla F(x)$ and $p=-Hg$, with $H\succ0$. We use the ordinary full inverse-BFGS update
 \begin{equation}\label{D:bfgs}
  s=\alpha p,\quad y=\nabla F(x+s)-g,\quad t=y^Ts,\qquad
@@ -65,6 +70,11 @@ Thus the construction resolves the implementation-selection issue left open by t
 \setcounter{remark}{0}
 \setcounter{equation}{1}
 \section{An exactly specified algebraic seed}
+% BEGIN ATTRIBUTION d.construction_tools
+\paragraph{Attribution and comparison.}
+Prescribing an algebraic orbit and then constructing an objective that realizes its update equations has substantial precedents in Mascarenhas's divergence constructions \cite{NEG_M04,NEG_M07,NEG_M14}. The convex interpolation and all-query containment below are specific additional properties. Preconditioned residual maps and rigorous root enclosures are standard validated-numerics tools; compare Rump \cite[Section 13.2, Theorem 13.3]{NEG_RUMP10}. Here the required rational inequalities have their own Lean proofs, with no external numerical computation imported as a proof.
+% END ATTRIBUTION d.construction_tools
+
 Let $(c,d)$ be the real pair specified below. Define
 \begin{align*}
  U&=127c+16d,& V&=16c-127d-16,& R&=c-8d,\\
