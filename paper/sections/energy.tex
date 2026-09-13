@@ -37,19 +37,19 @@ Write
  \begin{gathered}
  B_k=H_k^{-1},\qquad q_k=g_k^TH_kg_k,\qquad
  d_k=-g_k^Ts_k=\alpha_kq_k,\\
- \Delta_k=F(x_k)-F(x_{k+1}),\qquad c=1-c_2.
+ \Delta_k=F(x_k)-F(x_{k+1}),\qquad \omega=1-c_2.
  \end{gathered}
 \]
 \begin{lemma}\label{art:run-invariants}
 Every admissible run satisfies $H_k\succ0$, $q_k,d_k,t_k>0$ and
 \begin{equation}\label{art:decrease-bounds}
- c_1d_k\le\Delta_k\le d_k,\qquad t_k\ge cd_k.
+ c_1d_k\le\Delta_k\le d_k,\qquad t_k\ge\omega d_k.
 \end{equation}
 Moreover,
 \begin{equation}\label{art:hessian-update}
  B_{k+1}=B_k-\frac{g_kg_k^T}{q_k}+\frac{y_ky_k^T}{t_k},
- \qquad M_k:=B_k-\frac{g_kg_k^T}{q_k}\succeq0,
- \qquad M_ks_k=0.
+ \qquad \widehat B_k:=B_k-\frac{g_kg_k^T}{q_k}\succeq0,
+ \qquad \widehat B_ks_k=0.
 \end{equation}
 If the objective values have a finite limit, then $\sum_kd_k<\infty$.
 \end{lemma}
@@ -68,7 +68,7 @@ The Hessian identity is the classical equivalent form of BFGS
 \eqref{art:update}, using $B_ks_k=-\alpha_kg_k$ and $s_k^Ty_k=t_k$.
 Finally, metric Cauchy--Schwarz gives
 $(g_k^Tv)^2\le q_kv^TB_kv$, and
-$g_k^Ts_k=-\alpha_kq_k$ gives $M_ks_k=0$.
+$g_k^Ts_k=-\alpha_kq_k$ gives $\widehat B_ks_k=0$.
 \end{proof}
 
 \begin{lemma}[Reference energy]\label{art:reference-energy}
@@ -88,10 +88,10 @@ If $x_*$ minimizes $F$, with $F_*=F(x_*)$, then
 \end{equation}
 \end{lemma}
 \begin{proof}
-Since $r_{k+1}=r_k+s_k$ and $M_ks_k=0$, the Hessian update gives
+Since $r_{k+1}=r_k+s_k$ and $\widehat B_ks_k=0$, the Hessian update gives
 \[
  r_{k+1}^TB_{k+1}r_{k+1}
- =r_k^TM_kr_k+\frac{(y_k^Tr_{k+1})^2}{t_k},
+ =r_k^T\widehat B_kr_k+\frac{(y_k^Tr_{k+1})^2}{t_k},
 \]
 which is \eqref{art:energy-identity}. At a minimizer, convexity gives
 $a_k\ge F(x_k)-F_*$; the values decrease. Summation and $E_N\ge0$ yield
@@ -110,15 +110,14 @@ that the full update requires faster growth. Neither step requires a bound
 on $\norm{B_k}$ or a limit for $H_k$: the initial energy is finite, and the
 later energies need only remain nonnegative.
 
-\subsection{Actual principal minors and reciprocal growth}
+\subsection{Principal minors and reciprocal growth}
 
 For a symmetric $n\times n$ matrix $H$, define
 \[
  e_j(H)=\sum_{\substack{I\subset\{1,\ldots,n\}\\|I|=j}}\det H_{I,I},
  \qquad e_{n+1}(H)=0.
 \]
-These are actual principal determinants. Multilinearity of the determinant
-identifies them with the coefficients of $\det(I+zH)$; hence they are invariant
+Multilinearity of the determinant identifies these sums with the coefficients of $\det(I+zH)$; hence they are invariant
 under orthogonal changes of coordinates and equal the elementary symmetric
 polynomials of the eigenvalues. In particular $e_1=\tr$ and $e_n=\det$.
 Trace and determinant potentials are central to classical BFGS analysis
@@ -174,20 +173,20 @@ If an admissible run has bounded gradients and $d_k\to0$, then
 \end{equation}
 \end{theorem}
 \begin{proof}
-Choose $G>0$ with $\norm{g_k}\le G$, and put $K_0=4G^2/c^2$.
+Choose $G>0$ with $\norm{g_k}\le G$, and put $K_0=4G^2/\omega^2$.
 For the actual run,
 \[
- \beta_k=\frac{t_k}{d_k}\ge c,\qquad
+ \beta_k=\frac{t_k}{d_k}\ge \omega,\qquad
  \norm{y_k}\le2G,\qquad \alpha_k=\frac{d_k}{q_k}.
 \]
 Theorem~\ref{art:minor-hierarchy} therefore yields the normalized hierarchy
 \begin{equation}\label{art:normalized-hierarchy}
  q_ke_j(H_{k+1})\le
- K_0e_{j+1}(H_k)+\frac{d_k}{c}e_j(H_k).
+ K_0e_{j+1}(H_k)+\frac{d_k}{\omega}e_j(H_k).
 \end{equation}
 This recurrence is derived for the run's principal determinants.
 
-Fix $\eta>0$ and choose $J$ so that $d_k/c\le\eta$ for $k\ge J$.
+Fix $\eta>0$ and choose $J$ so that $d_k/\omega\le\eta$ for $k\ge J$.
 For $H\succ0$ define
 \[
  V_\eta(H)=\sum_{j=1}^n(K_0/\eta)^{j-1}e_j(H)>0.
@@ -225,7 +224,7 @@ The comparison geometry must then move. Three requirements have distinct
 roles. \emph{Visibility} keeps the remaining objective gap detectable on a
 positive band. \emph{Secant control} limits the gradient-jump component seen
 by the geometry at the next endpoint. \emph{Transport} bounds the cost of
-changing that geometry between endpoints. The identity $M_ks_k=0$ means that
+changing that geometry between endpoints. The identity $\widehat B_ks_k=0$ means that
 movement parallel to the executed step carries no cost in the part of the
 update left after its negative rank-one term. Only the perpendicular
 projection needs control.
@@ -240,7 +239,7 @@ For differentiable $x,z$, write $g=\nabla F(x)$, $h=\nabla F(z)$,
 $s=z-x$, $y=h-g$, $d=-g^Ts$, $\Delta=F(x)-F(z)$ and $t=y^Ts$.
 Call the pair eligible when
 \[
- d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge cd.
+ d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge\omega d.
 \]
 All accepted pairs are eligible. Requiring a property of every eligible pair
 is an objective assumption; it does not assert that an arbitrary sequence of
@@ -264,8 +263,6 @@ the last two hold for all eligible pairs in $K_\eta$ with $d\le\delta_\eta$.
 \end{definition}
 Neither continuity, uniform boundedness nor positive definiteness of $W_\eta$
 is required. The constants and field may depend on the positive band.
-Allowing an arbitrary real secant constant gives the same condition, since
-it can always be replaced by its maximum with zero.
 The positive-band restriction permits these constants to deteriorate near the
 solution set: the proof only needs to rule out a limiting gap bounded away
 from zero. In particular, the condition allows nonsmoothness at an optimizer.
@@ -290,13 +287,13 @@ subgradient at $x$. Thus Theorem~\ref{art:reciprocal-growth} applies.
 Suppose the limiting gap is $\ell>0$. On a tail $k\ge J$, use the field
 on $K_{\ell/2}$ and ensure $d_k\le\delta_{\ell/2}$; omit the band subscripts.
 Set $E_k=\tr(B_kW(x_k))\ge0$. Since
-$M_k=\Pi_{s_k}M_k\Pi_{s_k}\succeq0$, trace monotonicity and
+$\widehat B_k=\Pi_{s_k}\widehat B_k\Pi_{s_k}\succeq0$, trace monotonicity and
 \eqref{art:secant-control}--\eqref{art:transport} give
 \begin{align*}
  E_{k+1}
- &=\tr(M_kW(x_{k+1}))+
+ &=\tr(\widehat B_kW(x_{k+1}))+
        \frac{y_k^TW(x_{k+1})y_k}{t_k}\\
- &\le(1+Ld_k)\tr(M_kW(x_k))+C
+ &\le(1+Ld_k)\tr(\widehat B_kW(x_k))+C
  \le(1+Ld_k)(E_k-m/q_k)+C.
 \end{align*}
 Trace monotonicity here follows from
@@ -316,11 +313,7 @@ would have a nonoptimal limit with value $F_*$. With a unique minimizer the
 same argument gives convergence of the entire sequence.
 \end{proof}
 
-The certificate is a sufficient convergence mechanism. It leaves the metric
-free to degenerate, and it neither proves finite line-search termination nor
-requires the iterates to identify a smooth cell. It is also not necessary:
-the companion's scalar convergence and certificate-nonexistence results
-(Chapters~5 and~7) separate successful BFGS behavior from existence of this
-particular comparison field. The planar application below shows a different
-point: moving geometry can prove convergence where the fixed radial field
-fails.
+The companion's scalar convergence and certificate-nonexistence results
+show that the certificate is not necessary for successful BFGS behavior.
+The planar application below shows a different point: moving geometry can
+prove convergence where the fixed radial field fails.

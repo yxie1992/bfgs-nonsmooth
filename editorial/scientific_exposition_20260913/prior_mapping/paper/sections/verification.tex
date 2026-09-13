@@ -1,0 +1,58 @@
+\section{Synthesis, verification and the remaining questions}\label{art:verification}
+
+The mixed benchmark $u^2+|v|$ now has a whole-sequence convergence answer.
+The centered-family argument places it within a broader global theory;
+locally, finite polyhedral geometry controls the inward model error, while
+a moving comparison field handles the three-quadratic example's curved
+switches even when its radial secant condition fails. The common mechanism
+uses the principal-minor hierarchy and comparison energies to detect the
+remaining objective gap without a full spectral description of the BFGS
+matrices. The geometric conditions are sufficient, not necessary.
+
+The implemented counterexamples show why finite smooth formulas alone do
+not ensure local convergence. One regime has four convex $C^{2,1}$ branches
+with bounded Hessians; the other has four uniformly strongly convex
+$C^{1,1}$ branches. Each has one fixed objective with bad starts arbitrarily
+near its own minimizer, under the respective search parameters in
+Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}.
+The local embeddings provide this conclusion; the simpler polyhedral and
+quadratic-plus-maximum wrong-corner examples establish global failure.
+The argument follows the actual update and every rejected query, so these
+are implemented trajectories, not merely prescribed accepted sequences.
+
+The two local negatives do not give a counterexample with finitely many
+uniformly strongly convex $C^2$ branches through the minimizer. The planar
+positive theorem settles a nondegenerate subclass, leaving that broader
+local question open. The constructions concern the specified weak-Wolfe
+implementation; they do not establish failure for every search routine or
+for strong Wolfe. Exceptional deterministic starts also do not establish
+failure with positive probability, and the accumulating local constructions
+have no finite semialgebraic description. Lewis--Overton's almost-sure
+stationarity, all-trial-value rate and spectral-identification challenge
+\cite[Challenge~7.1]{LO} therefore remains outside these conclusions.
+Convergence of an infinite admissible run is distinct from indefinite
+differentiable execution; a zero gradient is successful termination.
+
+\paragraph{Formal verification and reproducibility.}
+The companion records Lean~4.19.0 proofs with pinned mathlib, exact
+statement-to-source correspondence, and compiler and transitive-axiom audit
+logs. The permitted foundational dependencies are propositional
+extensionality (\texttt{propext}), classical choice
+(\texttt{Classical.choice}) and quotient soundness (\texttt{Quot.sound}).
+The audits reject \texttt{sorryAx}, custom mathematical axioms and reachable
+unsafe or partial proof artifacts. The principal-minor theorem concerns
+actual matrices and determinants, and the negative proofs include the search
+decisions and all-query induction. The article's proofs and rational
+certificate can also be read independently of Lean. The kernel and execution
+environment remain trusted. Formal checking does not establish foundational
+consistency, publication priority, fidelity of every prose paraphrase or
+floating-point robustness; author-side correspondence review is separate
+from independent human peer review.
+
+\paragraph{AI assistance and author review.}
+Large language models assisted theorem development, proof reconstruction,
+formalization, literature searches, software and writing. This assistance
+was substantive, beyond grammar editing. Human authors must review the
+claims, citations, novelty assessment and disclosure before submission;
+this author-review edition asserts neither author consent nor completed
+independent human review.

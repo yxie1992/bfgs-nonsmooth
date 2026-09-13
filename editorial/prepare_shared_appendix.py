@@ -4,6 +4,9 @@ from pathlib import Path
 import re
 ROOT=Path(__file__).resolve().parents[1]
 src=(ROOT/'paper/appendices/seed_certificate.tex').read_text()
+# The companion's preserved construction uses c,d; the article separates
+# these fixed seed coordinates from its analytical constants with circle aliases.
+src=src.replace(r'c_\circ','c').replace(r'd_\circ','d')
 # amsthm replaces the proof heading, whereas svjour3 adds its optional title.
 src=src.replace(r'\begin{proof}[the algebraic part of ',
                 r'\begin{proof}[Proof of the algebraic part of ')

@@ -41,7 +41,7 @@ introductions={
 'U':'A fixed space of jump normals leaves controlled smooth directions in arbitrary dimension. Residual transport can be paid for in those directions; this is a different hypothesis from planar switching geometry.',
 'D':'A finite algebraic cycle first determines every query of a specified line search. Scaled copies then produce one fixed convex objective with failing initial points approaching its optimizer.',
 'L':'Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point; no claim combines uniform strong convexity with the preceding local C2,1 branch regularity.',
-'E':'Mathematical proof, formal statement correspondence, computation and historical execution are different kinds of evidence. The current authoring audit is stated first; the preserved release record that follows is historical evidence, not a new run count.'}
+'E':'Mathematical proof, formal statement correspondence, computation and historical execution are different kinds of evidence. The dated authoring audit is stated first; the preserved release record that follows is historical evidence, not a new run count.'}
 rows=[];transform_log=[];chapter_inputs=[]
 for module,title in order:
  group=[c for c in claims if c['module']==module];path=SOURCE/group[0]['corrected_source'];text=path.read_text();original=text
@@ -69,6 +69,21 @@ for module,title in order:
   text=re.sub(r'\b'+m+r'\.(?=[0-9A-Z])',num+'.',text)
   text=re.sub(r'\bModule~? '+m+r'\b',r'Chapter~\\ref{comp:'+m+'}',text)
   text=re.sub(r'\bModule~'+m+r'\b',r'Chapter~\\ref{comp:'+m+'}',text)
+ # Complete the source-to-chapter aliases, including plural and label forms.
+ def plural_chapters(match):
+  first,second=match.group(1),match.group(2)
+  if first not in number or second not in number:return match[0]
+  replacement='Chapters~\\ref{comp:'+first+'} and~\\ref{comp:'+second+'}'
+  transform_log.append({'module':module,'kind':'replace_plural_source_module_reference','old':match[0],'new':replacement,'reason':'Point to the operative numeric companion chapters; no mathematical assertion changes.'})
+  return replacement
+ text=re.sub(r'\bModules ([A-Z]) and ([A-Z])\b',plural_chapters,text)
+ def labeled_chapter(match):
+  target=match.group(1)
+  if target not in number:return match[0]
+  replacement='Chapter~\\ref{comp:'+target+'}'
+  transform_log.append({'module':module,'kind':'replace_labeled_source_module_reference','old':match[0],'new':replacement,'reason':'Use companion chapter terminology with the corresponding existing label.'})
+  return replacement
+ text=re.sub(r'\bModule~\\ref\{([A-Z]):chapter\}',labeled_chapter,text)
  # The R/G source overrides print their prefix before a macro, which the
  # preceding printed-number substitution deliberately does not match.
  old_numbering=r'\renewcommand{\thetheorem}{'+module+r'.\arabic{section}.\arabic{theorem}}'

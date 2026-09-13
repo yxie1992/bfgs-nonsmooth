@@ -98,13 +98,6 @@ admit such a polyhedral partition and is not automatically covered.
 There is also no claim that iterates identify a cell or that rejected trials
 remain in the local structural neighborhood.
 
-
-The finiteness and cell geometry are substantive. Finitely many curved
-switching interfaces need not preserve inward segments, and the negative
-examples later in the paper show that regularity of smooth branches alone
-cannot replace the stated geometric hypothesis. The theorem gives a
-sufficient local basin, without claiming necessity or a uniform rate.
-
 \begin{corollary}[A local centered-composite basin]\label{art:local-centered}
 If the representation and smoothness assumptions of
 Theorem~\ref{art:centered} hold on a neighborhood of a unique minimizer $x_*$,
@@ -119,7 +112,29 @@ Lemma~\ref{art:localization} gives a compact sublevel contained there.
 Armijo traps the accepted points, and Theorem~\ref{art:centered} applies.
 \end{proof}
 
-For example, a locally $C^{1,1}$ convex loss plus finitely many Euclidean
+For a concrete reduction, let
+$F(x)=\tfrac12\norm{Ax-b}^2+\lambda\norm{x}_1$, with
+$A\in\R^{m\times n}$, $b\in\R^m$, $\lambda>0$, and assume that $F$ has a
+unique minimizer $x_*$. Put $I_0=\{i:x_{*,i}=0\}$ and
+$\sigma_i=\operatorname{sign}(x_{*,i})$ for $i\notin I_0$.
+On the open convex neighborhood where $\sigma_i x_i>0$ for all
+$i\notin I_0$, the exact decomposition is
+\begin{equation}\label{art:local-l1-decomposition}
+ \begin{aligned}
+ F(x)&=\psi(x)+\gamma(x-x_*),\\
+ \psi(x)&=\tfrac12\norm{Ax-b}^2+
+                \lambda\sum_{i\notin I_0}\sigma_i x_i,\\
+ \gamma(r)&=\lambda\sum_{i\in I_0}|r_i|.
+ \end{aligned}
+\end{equation}
+The nonzero optimal coordinates contribute affine terms to the smooth
+convex function $\psi$; the zero coordinates give the centered sublinear
+function $\gamma$. Corollary~\ref{art:local-centered} therefore gives a
+positive sublevel basin, chosen independently of the initial SPD matrix,
+in which every admissible run converges in value and iterates to $x_*$.
+Uniqueness is a hypothesis here; $\lambda>0$ alone does not supply it.
+
+A locally $C^{1,1}$ convex loss plus finitely many Euclidean
 residual norms $\norm{A_jx-b_j}$ has this local form. A residual nonzero at
 $x_*$ remains nonzero nearby, so its Euclidean norm is smooth there; a zero
 residual gives the centered sublinear function $\norm{A_j(x-x_*)}$.
@@ -158,6 +173,41 @@ with the level and supplies a direction paired equally with both gradients.
 Neither condition imposes a matrix limit or a lower bound on all eigenvalues
 of a Hessian. A common positive lower Hessian bound is one sufficient way
 to obtain strict contours, but is not required.
+
+Here is the construction near a compact noncritical part of a positive
+level. At a two-branch corner, the independent gradients let us solve
+$f_1(p_j(t))=f_2(p_j(t))=t$ for the corner as the level varies.
+Its velocity $v_j(t)=p_j'(t)$ satisfies
+$\nabla f_i(p_j(t))^Tv_j(t)=1$ for both branches. Thus $-v_j$ is an
+equal-rate descent direction, while $v_j$ is the positively paired field
+used in the energy. There are finitely many such corners in the compact
+part under consideration. Their supporting-normal arcs are disjoint: a common normal at two
+corners would expose the whole segment between them, contrary to the
+strict-contour assumption. Their angular separation leaves room to join
+the local velocities smoothly.
+
+The joining also has to control derivatives. For unit normal
+$n(\theta)=(\cos\theta,\sin\theta)$ and tangent
+$T(\theta)=(-\sin\theta,\cos\theta)$, choose a positive angular function
+$h(t,\theta)$ that equals $n(\theta)^Tv_j(t)$ near the $j$th normal arc.
+Disjoint smooth cutoffs blend these positive pairings with $h=1$ elsewhere.
+The field $w=hn+h_\theta T$, evaluated at $t=F(x)$ and the gradient's
+normal angle, equals $v_j(F(x))$ on both sides of that corner.
+Its angular derivative is $(h+h_{\theta\theta})T$: the normal terms
+cancel. Consequently $Dw$ preserves the tangent line of each smooth
+level. The one-dimensional tangent is essential here: for a tangent step
+$s$, this makes $Dw\,s$ parallel to $s$, so $\det(s,Dw\,s)=0$.
+
+For a sufficiently short eligible chord, weak Wolfe makes
+$\det(s,w)$ uniformly nonzero relative to $\norm{s}$. Tangent preservation
+then bounds the change of $\log|\det(s,w)|$ by a constant times the
+variation of $F$ along the chord. Convexity bounds that variation by
+$2d$, giving the transport factor $|\log\lambda|\le C d$.
+Since Armijo gives $d\le(F(x)-F(z))/c_1$, transport is charged to summable
+objective decreases; finite total path length is not required.
+Appendix~\ref{art:planar-appendix} supplies the cutoffs, estimates through
+switching points, and secant bound. These yield one field on a neighborhood
+of the compact level set, not just separate directions at its corners.
 
 \begin{theorem}[An affine-critical cluster point in the plane]\label{art:planar-cluster}
 Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$, and have
@@ -208,7 +258,7 @@ it gives uniform constants $m>0,C,L\ge0$ and scalars $\lambda>0,\beta$ with
 \]
 Compactness implies $\operatorname{dist}(x_k,\Gamma)\to0$, so these estimates
 apply to the entire tail, not just a selected subsequence.
-With $E_k=w(x_k)^TB_kw(x_k)$, the Hessian update and $M_ks_k=0$ yield
+With $E_k=w(x_k)^TB_kw(x_k)$, the Hessian update and $\widehat B_ks_k=0$ yield
 \[
  E_{k+1}=
  \lambda_k^2\left(E_k-\frac{(g_k^Tw(x_k))^2}{q_k}\right)
@@ -235,12 +285,9 @@ uniqueness conclusions as in Theorem~\ref{art:certificate}.
 \end{proof}
 
 This condition says that nonoptimal points retain equal-rate descent, which
-is stronger than ordinary descent. It is a sufficient geometric route in the
-stated planar setting, not a universal criterion for either convergence or
-failure. The strict-contour and regular-switching assumptions are independent
-parts of this route. In particular, the argument neither handles arbitrary
-flat contours nor transfers automatically to dimension three: the tangent
-line used in the transport construction is then a higher-dimensional space.
+is stronger than ordinary descent. The strict-contour and regular-switching
+assumptions remain essential to this sufficient planar route; it does not
+give a criterion for every convergent run.
 
 \subsection{Nondegenerate smooth maxima and an explicit nonradial basin}
 
@@ -315,7 +362,7 @@ The multiplier geometry is related to the nondegeneracy used in local bundle
 Newton analysis \preprintcite[Propositions~5.5--5.6]{LW} and in Gebken's
 criticality results \cite{BG}.
 Here the full-BFGS conclusion is derived without assumed iterate or matrix
-asymptotics. The contour and planar restrictions remain explicit.
+asymptotics.
 
 \begin{theorem}[Convergence with curved, nonradial switching]\label{art:nonradial-example}
 For

@@ -1,0 +1,112 @@
+\section{Introduction}\label{art:introduction}
+
+BFGS builds its search directions from changes in gradients, yet it often
+works well when those gradients jump. Classical convex convergence theory
+uses smoothness together with the evolving quasi-Newton matrices
+\cite{FND_P76,FND_BN89,FND_N92}. Lewis--Overton's experiments and analyses
+\cite{LO} exposed the difficulty of extending that theory: nonsmooth BFGS can
+approach a minimizer while its inverse-Hessian approximations become highly
+singular. What global or local convergence can ordinary full BFGS guarantee
+on convex nonsmooth functions, and how can one prove it without assuming
+the asymptotic behavior of its iterates or matrices?
+
+We give three answers: deterministic counterexamples to every-start local
+convergence; global and local convergence theorems for structured convex
+families, including the mixed benchmark below; and a principal-minor and
+comparison-energy argument that remains effective as the BFGS matrices
+degenerate.
+
+Lewis--Overton's Challenge~7.1~\cite{LO} gives this question a broader,
+probabilistic setting. For locally Lipschitz semialgebraic objectives with
+bounded sublevels and absolutely continuously distributed initial data, it
+asks about nonbreakdown, stationary cluster points, R-linear convergence of
+all function trial values, and identification of spectral subspaces under
+partly smooth convergence. We study deterministic guarantees for convex
+objectives. Successful termination is allowed; infinite runs are analyzed
+under the differentiable-iterate convention made precise below.
+
+Substantial positive theory precedes this work. Guo--Lewis extends Powell's
+argument through smooth convex replacements on regions relevant to a BFGS
+sequence~\cite[Theorems~3.2, 4.1 and~4.3]{GL18}. The resulting theory proves
+Euclidean-norm convergence in arbitrary finite dimension
+\cite[Corollary~4.2]{GL18}; for the mixed model
+\[
+                    F(u,v)=u^2+|v|
+\]
+Corollary~4.4 gives only a subsequence approaching a point of $v=0$.
+The following paragraph explicitly leaves convergence of every BFGS sequence
+to $(0,0)$ open~\cite[Corollary~4.4 and following discussion]{GL18}.
+Approaching the nonsmooth line does not force the smooth coordinate $u$ to
+vanish. Corollary~\ref{art:mixed-benchmark} answers this whole-sequence question
+for every admissible full-BFGS run, as a consequence of an arbitrary-dimensional
+family theorem rather than a special planar recurrence.
+
+Two other advances clarify the remaining task. Xie--W\"achter's two-piece
+unbounded affine model leads to an unbounded descent direction after finitely
+many iterations~\preprintcite[Theorem IV.1]{XW}; a value-convergence theorem
+for a broader homogeneous family does not replace that finite escape result.
+Gebken's published 2026 introduction still identifies $u^2+|v|$ as unresolved.
+His local criticality theorem for continuous smooth selections assumes an
+iterate limit, repeated activity, and specified spectral and gradient-jump
+behavior~\cite[Theorem~3.1 and (B1)]{BG}. Our positive results instead derive
+convergence from the objective hypotheses for the families stated here.
+
+Throughout the paper, an \emph{admissible run} uses the unmodified full BFGS
+update, an arbitrary $H_0\succ0$, fixed $0<c_1<c_2<1$, Armijo--weak-Wolfe
+steps, and differentiable accepted points with nonzero gradients
+(Definition~\ref{art:admissible}). The positive theorems concern every infinite
+such run. They do not assert that every search ray contains an acceptable
+differentiable point.
+
+\paragraph{Deterministic limits.}
+We construct convex objectives for which a fixed unit-first
+Armijo--weak-Wolfe doubling/bisection search generates full-BFGS iterates
+converging to a nonstationary point. For each local construction, one fixed
+objective has failing starts arbitrarily close to its unique minimizer, all
+with $H_0=I$, and every accepted or rejected query approaches that minimizer
+across the family of runs. One construction is a maximum of four convex
+$C^{2,1}$ branches with bounded Hessians; another is a maximum of four
+uniformly strongly convex $C^{1,1}$ branches, three of which are not twice
+differentiable at the minimizer (Theorems~\ref{art:local-failure}
+and~\ref{art:local-failure-lower}). These refute every-start neighborhood
+guarantees under either regularity regime. They establish no positive-measure
+failure set and do not refute the almost-sure semialgebraic challenge.
+
+\paragraph{Global and local convergence.}
+We prove global value convergence for centered smooth-plus-sublinear
+objectives with compact initial sublevels contained in the region where the
+representation holds, and whole-iterate convergence when
+the minimizer is unique (Theorem~\ref{art:centered}). This settles the mixed
+benchmark above. For coercive finite convex degree-one homogeneous functions,
+including coercive maxima of finitely many linear functions, every admissible
+run converges to zero (Theorem~\ref{art:homogeneous}). Local results
+cover smooth convex plus finite polyhedral terms and finite polyhedral
+partitions with smooth extensions (Theorem~\ref{art:polyhedral}). Moving
+comparison geometry also yields local convergence for planar smooth maxima
+under strict-contour and active-gradient nondegeneracy assumptions
+(Corollary~\ref{art:planar-max}). The explicit three-quadratic example in
+Theorem~\ref{art:nonradial-example} has curved switching sets and fails the radial
+condition, so this extension has a concrete payoff beyond inward radial
+modeling.
+
+\paragraph{Analysis with degenerating matrices.}
+We prove a hierarchy linking adjacent degrees of the actual principal
+minors of full-BFGS matrices. Extending the classical trace/determinant
+potential approach, it forces the arithmetic mean of the reciprocals
+$1/(g_k^TH_kg_k)$ to diverge when gradients are bounded and predicted
+decreases tend to zero. Comparison energies turn this restriction into convergence:
+a field must retain information about the objective gap, control the gradient
+changes it sees, and move with a controlled energy cost. The field is an
+analytical device, not part of the algorithm. Neither a bounded condition
+number nor a prescribed spectral limit is needed
+(Theorems~\ref{art:minor-hierarchy}--\ref{art:certificate}).
+
+Our conditions are sufficient; they do not classify every successful run.
+Sections~\ref{art:geometry}
+and~\ref{art:energy} explain and establish the mechanism;
+Sections~\ref{art:global} and~\ref{art:local} prove its global and local
+consequences, and Section~\ref{art:failure} gives the deterministic
+counterexamples. The article includes the essential proofs of these claims.
+An independent complete companion preserves the wider noncompact and
+quantitative theory, with Lean proofs, exact correspondence and reproducible
+audit evidence.

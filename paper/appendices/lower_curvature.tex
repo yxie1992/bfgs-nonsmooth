@@ -115,8 +115,8 @@ They are obtained by differentiating the rational substeps
 \eqref{art:lower_return_substep} at $\tau=0$, then applying the interval
 rules of Appendix~\ref{art:seed_certificate} to
 \begin{align*}
- c&\in[318481427627118,318481427627119]/10^{15},\\
- d&\in[-1025232119675749,-1025232119675748]/10^{15}.
+ c_\circ&\in[318481427627118,318481427627119]/10^{15},\\
+ d_\circ&\in[-1025232119675749,-1025232119675748]/10^{15}.
 \end{align*}
 Both intervals contain the defining root box. This is a finite rational
 derivative calculation: for a product use
@@ -181,15 +181,15 @@ identity or obtained by rounded forward shooting.
 \subsection{An accumulation embedding with four strongly convex branches}
 The previous proposition places a bad orbit near its wrong corner,
 whereas the desired local counterexample needs bad starts near the
-minimizer. We therefore place shrinking copies around centers $p_n$
-converging to that minimizer. The spatial factor will be $a_n$, and the
-objective factor $a_n^2$, which preserves the same inverse matrix by
+minimizer. We therefore place shrinking copies around centers $\bar x_\ell$
+converging to that minimizer. The spatial factor will be $a_\ell$, and the
+objective factor $a_\ell^2$, which preserves the same inverse matrix by
 \eqref{art:matched-scaling}. To accommodate the common quadratic, the
 three scalar branch slopes are shifted so that the quadratic cross term
 restores the original seed gradients inside every copy.
 
-The scalar interpolation must have value $a_n^2$ and derivative $a_n$
-at its $n$th node, with an affine neighborhood wide enough to contain
+The scalar interpolation must have value $a_\ell^2$ and derivative $a_\ell$
+at its $\ell$th node, with an affine neighborhood wide enough to contain
 all seed queries after scaling. A monotone cubic ramp between these
 plateaux gives a convex function with Lipschitz derivative. The node
 slopes divided by the node positions stay of order one, so this
@@ -198,7 +198,7 @@ construction need not, and will not, have a second derivative at zero.
 Fix
 \begin{gather*}
  \mu=1/4096,\qquad c_*=(2,-32)^T,\qquad q_i=g_i-\mu c_*,\\
- b_i=q_i^Tc_*,\qquad r=1/128,\qquad a_n=r^n.
+ b_i=q_i^Tc_*,\qquad r=1/128,\qquad a_\ell=r^\ell.
 \end{gather*}
 Here $b_0=b_1=1791/1024$ and $1.7<b_i<34$. For each of the two distinct
 values of $b_i$, set
@@ -207,37 +207,37 @@ values of $b_i$, set
 \]
 Use the same cubic ramp $P_b$ and primitive $J_b$ as in
 \eqref{art:upper_scalar}, with this center and width. For
-$ba_{n+1}\le x\le ba_n$ put
+$ba_{\ell+1}\le x\le ba_\ell$ put
 \begin{equation}\label{art:lower_scalar}
- \psi_b(x)=(ra_n)^2+ba_n^2(1-r)
+ \psi_b(x)=(ra_\ell)^2+ba_\ell^2(1-r)
        \{r\xi+(1-r)J_b(\xi)\},\qquad
- \xi=\frac{x/(ba_n)-r}{1-r}.
+ \xi=\frac{x/(ba_\ell)-r}{1-r}.
 \end{equation}
 Set $\psi_b(0)=0$, $\psi_b(x)=x^2/2$ for $x<0$, and
 $\psi_b(x)=1+x-b$ for $x\ge b$.
 
 On each positive interval,
 \[
- \psi_b'=a_n\{r+(1-r)P_b(\xi)\},\qquad
+ \psi_b'=a_\ell\{r+(1-r)P_b(\xi)\},\qquad
  \psi_b''=P_b'(\xi)/b,\qquad0\le P_b'\le768.
 \]
 The identity $r+(1-r)(1-t_b)=(1+r)/b$ matches node values and
-derivatives. Their values are $a_n^2$ and $a_n$, respectively.
+derivatives. Their values are $a_\ell^2$ and $a_\ell$, respectively.
 The positive derivative is monotone and constant near every node.
 Its derivative slopes are uniformly bounded, so summing over intervals
 and taking a limit at zero proves that $\psi_b$ is globally $C^{1,1}$,
 convex and coercive, nonnegative with unique zero at the origin.
-The two constant-derivative lengths, divided by $a_n$, are
+The two constant-derivative lengths, divided by $a_\ell$, are
 \[
  b(1-r)(1-t_b-\varepsilon),\qquad
  b(1-r)(t_b-\varepsilon)/r,
 \]
 both greater than $1/2$ for these values of $b$. Consequently
 \begin{equation}\label{art:lower_plateau}
- \psi_b(ba_n+h)=a_n^2+a_nh\qquad(|h|\le a_n/2).
+ \psi_b(ba_\ell+h)=a_\ell^2+a_\ell h\qquad(|h|\le a_\ell/2).
 \end{equation}
-At zero, the difference quotients of $\psi_b'$ along $ba_n$ and
-$(b+1/4)a_n$ equal $1/b$ and $1/(b+1/4)$, respectively. Thus its second
+At zero, the difference quotients of $\psi_b'$ along $ba_\ell$ and
+$(b+1/4)a_\ell$ equal $1/b$ and $1/(b+1/4)$, respectively. Thus its second
 derivative at zero does not exist.
 
 Define
@@ -273,41 +273,41 @@ $L=512$ and combining it with strong convexity proves
 This does not require a globally Lipschitz gradient for the maximum itself.
 
 \subsection{Copying one entire orbit and fixing the initial matrix}
-Let $p_n=a_nc_*$ and $C_*=1+\mu\|c_*\|^2/2$.
+Let $\bar x_\ell=a_\ell c_*$ and $C_*=1+\mu\|c_*\|^2/2$.
 For $y$ in a fixed sufficiently small neighborhood of zero,
 \eqref{art:lower_plateau} yields
 \begin{equation}\label{art:lower_local_model}
- F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}\qquad(n\ge1).
+ F(\bar x_\ell+a_\ell y)=a_\ell^2\{C_*+Q_\mu(y)\}\qquad(\ell\ge1).
 \end{equation}
 Indeed, $|q_i^Ty|\le1/2$ puts each old branch in its affine scalar
 region, and expansion of the common quadratic uses $q_i+\mu c_*=g_i$.
-The fourth branch is inactive there: its residual $a_n(-32+y_2)$ is
-negative, while each old scalar residual is at least $a_n^2/2$.
+The fourth branch is inactive there: its residual $a_\ell(-32+y_2)$ is
+negative, while each old scalar residual is at least $a_\ell^2/2$.
 
 Choose, by Proposition~\ref{art:quadratic_failure}, one bad orbit
-$(\bar x_k,\bar H_k)$ all of whose queries lie in this neighborhood.
-For every $n$, start at $p_n+a_n\bar x_0$ with the same matrix
-$\bar H_0$. Induction on the actual query tree gives
+$(x_k^{\rm seed},H_k^{\rm seed})$ all of whose queries lie in this neighborhood.
+For every $\ell$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
+$H_0^{\rm seed}$. Induction on the actual query tree gives
 \[
- x_k^{(n)}=p_n+a_n\bar x_k,\qquad H_k^{(n)}=\bar H_k.
+ x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed},\qquad H_k^{(\ell)}=H_k^{\rm seed}.
 \]
-This is \eqref{art:matched-local-model} with spatial factor $a_n$
-and objective factor $a_n^2$. The covariance calculation
+This is \eqref{art:matched-local-model} with spatial factor $a_\ell$
+and objective factor $a_\ell^2$. The covariance calculation
 \eqref{art:matched-scaling} preserves the matrix, while function
 differences and directional products acquire the same positive factor.
 Thus each rejection, acceptance and updated matrix is preserved. Equation~\eqref{art:lower_local_model} applies to every
 query because the whole chosen seed orbit lies in its domain.
-Thus $x_k^{(n)}\to p_n$ and
-$F(x_k^{(n)})\downarrow a_n^2C_*>0$. The three active gradients at
-$p_n$ are $a_ng_i$, whose convex hull excludes zero.
+Thus $x_k^{(\ell)}\to \bar x_\ell$ and
+$F(x_k^{(\ell)})\downarrow a_\ell^2C_*>0$. The three active gradients at
+$\bar x_\ell$ are $a_\ell g_i$, whose convex hull excludes zero.
 All query norms are at most
-$a_n(\|c_*\|+\sup_{\rm seed\ queries}\|\bar x\|)\to0$.
+$a_\ell(\|c_*\|+\sup_{\rm seed\ queries}\|x^{\rm seed}\|)\to0$.
 
 The seed supplied by the stable manifold has a positive-definite initial
-matrix $\bar H_0$, common to every copy. Identity initialization is
+matrix $H_0^{\rm seed}$, common to every copy. Identity initialization is
 obtained by changing coordinates once for the whole objective and the
 whole sequence of starts, rather than selecting a different objective
-for each start. Set $A=\bar H_0^{1/2}$ and $\widetilde F(z)=F(Az)$.
+for each start. Set $A=(H_0^{\rm seed})^{1/2}$ and $\widetilde F(z)=F(Az)$.
 The coordinate identities
 \[
  \widetilde g=A^Tg,\qquad \widetilde H=A^{-1}HA^{-T},\qquad
@@ -317,8 +317,8 @@ preserve both scalar line-search tests and
 \eqref{art:failure_update}; see also~\cite[Section~2]{LO}.
 They give $\widetilde H_0=I$ for this one fixed transformation.
 Strong-convexity and smoothness constants become
-$\underline\mu=\mu\lambda_{\min}(\bar H_0)$ and
-$\overline L=512\lambda_{\max}(\bar H_0)$.
+$\underline\mu=\mu\lambda_{\min}(H_0^{\rm seed})$ and
+$\overline L=512\lambda_{\max}(H_0^{\rm seed})$.
 All locality and differentiability statements persist under the
 invertible linear map. This proves
 Theorem~\ref{art:local-failure-lower}.

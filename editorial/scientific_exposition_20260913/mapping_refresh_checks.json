@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "scope": "Actual refresh/check, unchanged ledger assembly and two in-memory negative probes; no Lean/document build or full release gate here. Existing checker code remains byte-identical to baseline.",
+  "baseline_commit": "91d30dadcfd0980472c3896be0c9fd83fc7d4db1",
+  "script_sha256": "79fdab7b49e82a5023a1db3e693bc243794370686110caedc20bb0013ffc1959",
+  "negative_probes": [
+    {
+      "case": "changed inequality in an existing theorem",
+      "mode": "in-memory source perturbation; no file mutation",
+      "result": "REJECTED",
+      "reason": "('Non-alias statement change', 'paper/sections/energy.tex', 'art:run-invariants')"
+    },
+    {
+      "case": "changed bracketing decision order",
+      "mode": "in-memory source perturbation; no file mutation",
+      "result": "REJECTED",
+      "reason": "Algorithm changed beyond bracket notation"
+    }
+  ],
+  "existing_checkers": {
+    "editorial/verify_release_inputs.py": {
+      "sha256": "f77d173cbb9973221f043b434c24846d15ab5b65e1cd11a60bf46f6b5233322f",
+      "unchanged_from_baseline": true
+    },
+    "editorial/assemble_claim_ledger.py": {
+      "sha256": "20931f56cb863b12eef8cc427a10c6277db989261fe67b80e73f668571c2d1c0",
+      "unchanged_from_baseline": true
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "editorial/scientific_exposition_20260913/refresh_correspondence.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "editorial/scientific_exposition_20260913/mapping_refresh_check.log",
+      "log_sha256": "26c15ba6eb410371df20ea3756f980a8c9399657ba155e0b4ee5c1c904d26fc3"
+    },
+    {
+      "argv": [
+        "python3",
+        "editorial/assemble_claim_ledger.py"
+      ],
+      "exit_code": 0,
+      "log": "editorial/scientific_exposition_20260913/mapping_assembly.log",
+      "log_sha256": "a4df6e5c134d0d3327fe8a642ef7d4da70452b64532743dc509bdce12bccb1b2"
+    }
+  ],
+  "integration_failure_and_fix": {
+    "reported_failure": "Unchanged assembler line 63 rejected component full_formal_exports membership.",
+    "independently_identified_missing_name": "ArticleGeometry.mixed_ridge_inward",
+    "affected_row": "art:mixed-inward-remainder",
+    "cause": "Original geometry declarations are loaded only at the later root-prose phase.",
+    "fix": "The positive equation uses its already-loaded literal ArticlePositive.mixed_inward_error endpoint; alternate geometry support stays linked to the unchanged root.geometry.mixed_ridge record and structural audit. Phase-specific membership is also checked in the revision helper.",
+    "assembler_modified": false
+  },
+  "assembled_ledger_sha256": "295c4e3024ff67f7873a456ad11bc0f3092faad1a5d0b860a71be68fe9b0fac1"
+}

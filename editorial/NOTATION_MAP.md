@@ -6,10 +6,10 @@ The narrative revision separates global families (article Section 4) from local
 finite-cell and planar geometry (Section 5). The latter now has a complete
 article proof appendix. Its local field is `w`, with normal-angle variables
 `t, theta`, unit normal `n`, unit tangent `T`, and scalar height `h`; these are
-not the BFGS curvature scalar `t_k`, global constant `c=1-c_2`, or a Hessian
+not the BFGS curvature scalar `t_k`, global constant `omega=1-c_2`, or a Hessian
 approximation. The benchmark `(u,v)` coordinates are literal Euclidean
 coordinates in `ArticlePositive.mixed_benchmark_global`. The negative matched
-model `F(p+lambda z)=C+sigma G(z)` uses positive spatial and objective scales;
+model `F(xbar+lambda z)=C+sigma G(z)` uses positive spatial and objective scales;
 `H_F=(lambda^2/sigma)H_G`. The choice `sigma=lambda^2` preserves the initial
 matrix and is verified separately from existence of either embedded orbit.
 
@@ -18,18 +18,18 @@ matrix and is verified separately from existence of either embedded orbit.
 | Symbol | Meaning in the article | Companion location and cautions |
 |---|---|---|
 | $F$; occasionally $f$ | Finite real-valued convex objective on Euclidean space | Chapter 7 uses lower-case $f$ for homogeneous objectives; the same algorithm applies. |
-| $n$ | Ambient dimension in the positive theory | Also a scale index in the negative construction; that construction has ambient dimension two. |
+| $n$ | Ambient dimension in the positive theory | The article uses $\ell$ for shrinking embedded copies; both negative constructions have ambient dimension two. The companion retains its local scale index $n$. |
 | $x_k$, $g_k=\nabla F(x_k)$ | Accepted iterate and its ordinary gradient | Chapters 2–13 retain this convention. Accepted gradients are nonzero on an infinite admissible run. |
 | $H_k\succ0$, $B_k=H_k^{-1}$ | Stored inverse-Hessian approximation and its inverse | $B_k$ is an algebraic inverse, not the actual objective Hessian. No matrix limit is assumed. |
 | $p_k=-H_kg_k$, $\alpha_k>0$ | Search direction and accepted length | A trial length is also denoted $\alpha$; a trial is not assumed accepted. |
 | $s_k=x_{k+1}-x_k=\alpha_kp_k$ | Executed step | Pair statements use $s=z-x$. |
 | $y_k=g_{k+1}-g_k$ | Gradient difference | Pair statements use $y=h-g$, $g=\nabla F(x)$ and $h=\nabla F(z)$. |
-| $c_1,c_2$, $c=1-c_2$ | Fixed Armijo and weak-Wolfe constants, $0<c_1<c_2<1$ | The seed's algebraic coordinate $c$ is a different, local symbol. |
+| $c_1,c_2$, $\omega=1-c_2$ | Fixed Armijo and weak-Wolfe constants, $0<c_1<c_2<1$ | The companion uses $c=1-c_2$ here; the article's fixed seed coordinate is $c_\circ$. |
 | $q_k=g_k^TH_kg_k$ | Positive metric quadratic form | In the lower-curvature construction, $q_i=g_i-\mu c_*$ is instead a vector of shifted slopes. |
-| $d_k=-g_k^Ts_k=\alpha_kq_k$ | Predicted decrease | The seed coordinate $d\approx-1.02523$ is unrelated and has no iteration subscript. |
+| $d_k=-g_k^Ts_k=\alpha_kq_k$ | Predicted decrease | The seed coordinate $d_\circ\approx-1.02523$ is unrelated and has no iteration subscript. |
 | $\Delta_k=F(x_k)-F(x_{k+1})$ | Actual objective decrease | $c_1d_k\le\Delta_k\le d_k$. |
 | $t_k=y_k^Ts_k$ | Secant curvature | $t_k\ge(1-c_2)d_k>0$. Scalar ramp coordinates called $t$ are unrelated. |
-| $M_k=B_k-g_kg_k^T/q_k$ | PSD remainder annihilating $s_k$ | The seed phase matrices $M_0,M_1,M_2$ are inverse-BFGS matrices, not these PSD remainders. |
+| $\widehat B_k=B_k-g_kg_k^T/q_k$ | PSD remainder annihilating $s_k$ | The companion calls the remainder $M_k$. The article reserves $M_0,M_1,M_2$ for seed inverse matrices. |
 | $e_j(H)$ | Sum of actual order-$j$ principal determinants | Chapter 2 also identifies these with elementary symmetric eigenvalue polynomials; $e_{n+1}=0$. |
 | $\beta_k=t_k/d_k$ | Positive normalized secant curvature in the hierarchy | Appendix seed identities use $\beta,\gamma$ for algebraic lengths that specialize to $1/4,1/16$. |
 | $S_N=\sum_{k<N}q_k^{-1}$ | Reciprocal sum | This shorthand is most prominent in companion Chapter 6; it is not a smooth subspace $S$. |
@@ -43,7 +43,7 @@ An admissible-run theorem assumes an infinite sequence of successful accepted st
 | $x_*$, $F_*$ | A minimizer and minimum value | A fixed reference point in an energy identity need not be a minimizer until a gap inequality explicitly uses that assumption. |
 | $r_x=x-x_*$, $r_k=x_k-x_*$ | Radial reference displacement | The lower-curvature scale ratio $r=1/128$ and a return-map normalization factor also named $r$ are different local scalars. |
 | $E_k=r_k^TB_kr_k$ | Fixed-reference energy | In the PSD-field proof, $E_k=\operatorname{tr}(B_kW(x_k))$ is the corresponding generalized energy. |
-| $a_k=g_k^Tr_k$ | Scalar supporting-gradient pairing | In a moving frame, $a_k=V_k^Tg_k$ is a vector; in both scalar embeddings $a_n$ is a geometric scale. |
+| $a_k=g_k^Tr_k$ | Scalar supporting-gradient pairing | In a moving frame, $a_k=V_k^Tg_k$ is a vector; in both article scalar embeddings $a_\ell$ is a geometric scale (companion $a_n$). |
 | $R_k=(y_k^Tr_{k+1})^2/t_k$ | Radial correction | $R$ may also denote a radius bound, while seed polynomial $R=c-8d$ is local to its certificate. |
 | $K=\{F\le b\}$, $K_\eta$ | Compact sublevel and its positive-gap band | The level $b$ is not a scalar-interpolation parameter $b$ or normalized matrix-shape coordinate $b$. |
 | $\Pi_s=I-ss^T/(s^Ts)$ | Euclidean projection perpendicular to a nonzero executed/pair step | Its denominator is valid on eligible pairs because $d>0$ implies $s\ne0$. |
@@ -61,24 +61,24 @@ An admissible-run theorem assumes an infinite sequence of successful accepted st
 
 ## Exact seed shared by both negative constructions
 
-The article's $G(z)=\max(g_0^Tz,g_1^Tz,g_2^Tz)$ and companion Chapters 12–13 use the same algebraically isolated $(c,d)$, gradients $g_0=(1,0)^T$, $g_1=(-1,-1/8)^T$, $g_2=(c,d)^T$, contraction factor $\rho$, phase matrices $M_j$, displacements $s_j$ and phase points $z_j$. The seed variables $U,V,R,K,T,Y$ are polynomial abbreviations local to the algebraic certificate. They are not the geometric subspaces, sublevel set, frame or curvature quantities of earlier chapters.
+The article's $G(z)=\max(g_0^Tz,g_1^Tz,g_2^Tz)$ and companion Chapters 12–13 use the same algebraically isolated pair: article $(c_\circ,d_\circ)$ and companion $(c,d)$. The article has gradients $g_0=(1,0)^T$, $g_1=(-1,-1/8)^T$, $g_2=(c_\circ,d_\circ)^T$, contraction factor $\rho$, phase matrices $M_j$, displacements $s_j$ and phase points $z_j$. The seed variables $U,V,R,K,T,Y$ are polynomial abbreviations local to the algebraic certificate. They are not the geometric subspaces, sublevel set, frame or curvature quantities of earlier chapters.
 
-Here $j=0,1,2$ is the phase, $m\ge0$ counts full three-step cycles, and $n$ counts shrinking embedded copies. Thus $x_{3m+j}$ is a run iterate, while $x_0^{(n)}$ identifies the start of the $n$th separate run. The point $p_n$ is that run's nonstationary limit; it is distinct from the search direction $p_k$. The objective and initial matrix are fixed across those starts within each theorem.
+Here $j=0,1,2$ is the phase and $m\ge0$ counts complete cycles. The article uses $\ell$ for the embedded copy, with starts $x_0^{(\ell)}$ and bad limits $\bar x_\ell$; the companion retains $n$ and $p_n$. The article's search direction remains $p=-Hg$. A seed point $z_2$ is distinct from a coordinate written $[z]_2$. The objective and initial matrix are fixed across the starts within each theorem.
 
 ## Upper-curvature scalar construction: article and Chapter 12
 
 | Article | Companion Chapter 12 | Value or role |
 |---|---|---|
 | $\theta$ | $\vartheta$ | Scale ratio $1/16$. |
-| $a_n=\theta^n$ | $a_n=\vartheta^n$ | Node scale. |
+| $a_\ell=\theta^\ell$ | $a_n=\vartheta^n$ | Node scale. |
 | $\varepsilon$ | $\epsilon_0$ | Ramp half-width $1/128$. |
 | $t_b$ | $c_b$ | Ramp center $[1-(1+\theta+\theta^2)/b]/(1-\theta^2)$. |
 | Ramp variable $v$ | Ramp variable $t$ | $(\xi-t_b+\varepsilon)/(2\varepsilon)$. |
 | $P_b$, $J_b$ | $P_b$, $J_b$ | Cubic ramp and its integral; the parameter substitutions above identify them. |
-| $\varphi_b$ | $\varphi_b$ | Convex $C^{2,1}$ scalar with node value $a_n^3$ and node derivative $a_n^2$. |
-| $b\in\{2,b_*\}$ | Same | $b_*=2c-32d\in(33,34)$. |
+| $\varphi_b$ | $\varphi_b$ | Convex $C^{2,1}$ scalar with article node value $a_\ell^3$ and derivative $a_\ell^2$ (companion index $n$). |
+| $b\in\{2,b_*\}$ | Same | $b_*=2c_\circ-32d_\circ\in(33,34)$ in the article. |
 
-The embedded starts are $p_n+a_n^2z_0$. Gradients and steps have scale $a_n^2$, while objective differences have scale $a_n^4$. The negative scalar side is cubic near zero; this is part of its $C^{2,1}$ regularity.
+The article embedded starts are $\bar x_\ell+a_\ell^2z_0$. Gradients and steps have scale $a_\ell^2$, while objective differences have scale $a_\ell^4$. The negative scalar side is cubic near zero; this is part of its $C^{2,1}$ regularity.
 
 ## Lower-curvature scalar construction: article and Chapter 13
 
@@ -87,20 +87,26 @@ The embedded starts are $p_n+a_n^2z_0$. Gradients and steps have scale $a_n^2$, 
 | $\mu$ | $\mu$ | Fixed common quadratic coefficient $1/4096$ during the local embedding. |
 | $c_*$, $q_i$, $b_i$ | Same | $c_*=(2,-32)^T$, $q_i=g_i-\mu c_*$, $b_i=q_i^Tc_*$. |
 | $r$ | $r$ | Scalar scale ratio $1/128$, distinct from the upper construction's $1/16$. |
-| $a_n=r^n$ | Same | Node scale in this second construction. |
+| $a_\ell=r^\ell$ | $a_n=r^n$ | Node scale in this second construction. |
 | $\varepsilon$ | $\epsilon$ | Ramp half-width $1/1024$. |
 | $t_b$ | $\vartheta_b$ | Ramp center $[1-(1+r)/b]/(1-r)$. It is neither the scale ratio nor the upper ramp center. |
 | Ramp variable $v$ via the reused cubic-ramp formula | Ramp variable $t$ | $(\xi-t_b+\varepsilon)/(2\varepsilon)$. |
-| $\psi_b$ | $\varphi_b$ | Convex $C^{1,1}$ scalar with node value $a_n^2$ and derivative $a_n$. The article deliberately renames it to distinguish the two constructions. |
+| $\psi_b$ | $\varphi_b$ | Convex $C^{1,1}$ scalar with article node value $a_\ell^2$ and derivative $a_\ell$ (companion index $n$). The article deliberately renames it to distinguish the two constructions. |
 | $P_b$, $J_b$ | Same symbols | Reinstantiated with this construction's center and half-width; they are not numerically the upper-curvature ramps. |
 | $Q_\mu=\mu\|x\|^2/2+G(x)$ | Same formula | Strongly convex seed objective, whose bad orbit is supplied by the stable-manifold theorem. |
 | $\mathcal T_\mu$ | $\mathcal T_\mu$ | Five-dimensional normalized return map in $(z,b,e,\tau)$; here $b,e$ are matrix-shape coordinates. |
-| $A=\bar H_0^{1/2}$ | Same fixed whitening change | $\widetilde F(z)=F(Az)$ converts the one common SPD initialization to identity. This $A$ is not a tangential gradient field. |
+| $A=(H_0^{\rm seed})^{1/2}$ | $A=\bar H_0^{1/2}$ | $\widetilde F(z)=F(Az)$ converts the one common SPD initialization to identity. This $A$ is not a tangential gradient field. |
 
-The local copy uses $p_n+a_n y$ and scales objective differences by $a_n^2$. The scalar's negative side is $x^2/2$, and its derivative is not differentiable at zero on the accumulating positive side. These functions therefore do not acquire the upper construction's $C^{2,1}$ regularity by a notation change. The separate constant-classical-Hessian alternative replaces the ramp by a step, the integral by a hinge, and the negative scalar side by $-x$; it has a countably piecewise-affine remainder, not the finite smooth-branch claim.
+The article local copy uses $\bar x_\ell+a_\ell y$ and scales objective differences by $a_\ell^2$. The chosen perturbed orbit is $(x_k^{\rm seed},H_k^{\rm seed})$; only the transformed matrix is $\widetilde H$, with $\widetilde H_0=I$. The scalar's negative side is $x^2/2$, and its derivative is not differentiable at zero on the accumulating positive side. These functions therefore do not acquire the upper construction's $C^{2,1}$ regularity by a notation change. The separate constant-classical-Hessian alternative replaces the ramp by a step, the integral by a hinge, and the negative scalar side by $-x$; it has a countably piecewise-affine remainder, not the finite smooth-branch claim.
 
 ## Source navigation and formal representations
 
 Companion Chapters 1–14 correspond to source IDs `I`, `M`, `T`, `R`, `G`, `F`, `H`, `A`, `C`, `Q`, `U`, `D`, `L`, `E`, respectively. Article labels use `art:`; retained source labels and formal namespaces keep their historical identifiers. Manually headed theorems in Chapters 7 and 11 are indexed as named statements even though their TeX does not use theorem environments.
 
 Lean uses several concrete representations for vectors, matrices, linear maps and Euclidean quantities. This notation table does not identify distinct Lean types or equate a default function-space norm with a Euclidean norm. The expanded exact declarations and their definitions govern those representation bridges. Bibliographic notes and editorial scope sentences remain separately classified from mathematical theorem exports.
+
+## Exact formal aliases in the focused revision
+
+All Lean declaration names and types are unchanged. `scientific_exposition_20260913/REVIEW_MATHEMATICS.json` compares all 31 statement environments under the scoped aliases above and records 40 exact existing declarations used in the review. N2_review.json separately records the optimizer gradient and quadratic-seed contracts; N3_N4_review.json records the planar and local-model correspondences. The new explanatory deductions are reviewed compositions of these contracts, not newly compiled Lean endpoints.
+
+The line-search bracket notation changes from lower/upper $\ell,h$ to $\alpha_{\rm lo},\alpha_{\rm hi}$. The algorithm is unchanged: Armijo rejection updates the upper bound, weak-Wolfe rejection updates the lower bound, and finite upper bounds trigger bisection. `prepare_shared_appendix.py` converts $c_\circ,d_\circ$ back to the companion's $c,d$ so both documents still use one canonical seed proof.

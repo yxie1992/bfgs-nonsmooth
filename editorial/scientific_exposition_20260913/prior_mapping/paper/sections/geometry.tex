@@ -1,0 +1,102 @@
+\section{What the results say about nonsmooth BFGS}\label{art:geometry}
+
+The mixed ridge $F(u,v)=u^2+|v|$ isolates the difficulty left by a
+subsequence approaching the nonsmooth line. Reaching $v=0$ does not eliminate
+the horizontal error $u^2$. Yet the vertical gradient jump does not remove
+the direction that can reduce this error. Along $v=0$ the limiting gradients are $(2u,1)$ and
+$(2u,-1)$. Their difference is vertical. At a point with $u\ne0$, the
+horizontal vector $(-u,0)$ has the same strictly negative pairing $-2u^2$
+with both gradients. The inward radial model also has a small error:
+\[
+ F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)
+       =\tau^2u^2\qquad(v\ne0,\ 0\le\tau\le1).
+\]
+Thus the nonsmooth part is exactly linear under inward scaling, while the
+smooth part contributes a quadratic remainder. Section~\ref{art:global}
+uses this property to prove convergence of the whole sequence. The inward
+segment is a comparison used in the proof; it is not a direction BFGS is
+assumed to take. No eventual eigenvector or eigenvalue description is needed.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/gradient_geometry}
+\caption{Gradient space. Left: the mixed ridge at $u=1/2$ has a vertical
+jump and a common horizontal descent direction. Right: the particular
+three-gradient seed used in Section~\ref{art:failure}. Its convex hull
+excludes zero, but its affine hull is the plane. The vertices on the right
+are rendered from the certified root's rational center; the mathematical
+definition uses the isolated root. Arrows indicate gradients, not BFGS steps.}
+\label{art:gradient-geometry}
+\end{figure}
+
+The right panel asks a different question: can a genuine full-BFGS run
+contract around a point where descent still exists? The bad corner is specific. Its slopes
+are $g_0=(1,0)$, $g_1=(-1,-1/8)$ and $g_2=(c,d)$, where $(c,d)$ is
+defined exactly in Appendix~\ref{art:seed_certificate}. They are affinely
+independent, so no nonzero direction pairs equally with all three. Yet
+$(-1,16)$ has negative pairing with each, and zero is outside their convex
+hull. The corner is therefore nonstationary. Section~\ref{art:failure}
+constructs a three-step cycle and verifies that the stated line search
+produces it, including all rejected trials. This additional dynamical proof
+is what makes the corner a counterexample.
+
+This distinction between affine and convex balance helps interpret the
+examples. For a nonempty finite family of slopes $a_i$, equality $a_i^Tv=\kappa<0$ for every $i$ asks
+for a common rate of descent, whereas $a_i^Tv<0$ asks only for descent.
+The former fails when zero belongs to their affine hull; the latter fails
+when zero belongs to their convex hull. Indeed, a linear functional constant
+on the slopes is constant on their affine hull. Conversely, if zero is
+outside that affine hull, its nearest point gives a separating functional
+constant on the hull; changing its sign gives the negative common value.
+The convex version follows from the same closest-point argument for the
+convex hull. These are elementary separation facts, not a classification
+of BFGS behavior.
+
+The positive conclusions differ in their geometry and in the locality of the
+guarantee. Table~\ref{art:positive-outcomes} distinguishes them before the
+proofs. In every row the quantifier is over infinite admissible runs with
+arbitrary positive-definite initialization. An admissible run uses actual
+gradients and satisfies Armijo--weak-Wolfe at its accepted points; it does not
+assert that an arbitrary line-search implementation always finds such points.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}p{.40\textwidth}p{.22\textwidth}p{.29\textwidth}@{}}
+\toprule
+Objective geometry & Starting scope & Conclusion\\
+\midrule
+Centered smooth--sublinear, Theorem~\ref{art:centered}
+& Compact initial sublevel in the structural region
+& Optimal values; unique minimizer gives whole-sequence convergence\\
+Coercive degree-one homogeneous, Theorem~\ref{art:homogeneous}
+& Every starting point
+& Whole sequence converges to zero\\
+Finite polyhedral smooth-piece partition, Theorem~\ref{art:polyhedral}
+& Common low sublevel near the unique minimizer
+& Whole sequence converges to the minimizer\\
+Nondegenerate planar smooth maximum, Corollary~\ref{art:planar-max}
+& Local basin under the stated contour hypotheses
+& Whole sequence converges to the unique minimizer\\
+\bottomrule
+\end{tabular}
+\caption{What the positive theory guarantees. The benchmark $u^2+|v|$ has
+compact sublevels everywhere, so the first row gives global convergence.
+The results concern accepted runs, without a presumed matrix limit.}
+\label{art:positive-outcomes}
+\end{table}
+
+The first two rows make precise global assertions; they do not claim global
+convergence for every affine maximum. Indeed, the coercive polyhedral
+realization of the wrong corner in Corollary~\ref{art:failure_polyhedral}
+has a positive limiting objective gap. General affine offsets can place the
+bad corner away from the true optimizer, whereas homogeneity centers all
+linear pieces at the origin.
+
+Local behavior raises a further distinction. Finitely many smooth formulas
+can reproduce bad configurations at infinitely many shrinking scales.
+A finite polyhedral partition near the optimizer controls the inward model
+because each remaining cell contains the optimizer after localization.
+Curved interfaces require a different argument: the planar example in
+Section~\ref{art:local} has a radial obstruction, yet a moving contour field
+proves convergence. These are complementary sufficient mechanisms and
+specific realized failures, rather than a classification by jump span.

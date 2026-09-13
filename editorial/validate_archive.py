@@ -291,6 +291,11 @@ def main():
             with ThreadPoolExecutor(max_workers=2) as pool:
                 summary['documents'] = list(pool.map(compare_document, reviews['documents']))
             run([sys.executable, 'editorial/generate_companion.py', '--check'], '04_companion_preservation', tree)
+            # This edition's additional source correspondence check preserves
+            # the existing proof/audit gates and runs against the fresh extraction.
+            focused = tree / 'editorial/scientific_exposition_20260913/refresh_correspondence.py'
+            if focused.is_file():
+                run([sys.executable, str(focused), '--check'], '04_focused_correspondence', tree)
             binding, cache = authenticate_cache_binding(tree)
             attach_pinned_library_cache(tree)
             check_cache_bytes(tree, binding, cache, 'before_library_use')
