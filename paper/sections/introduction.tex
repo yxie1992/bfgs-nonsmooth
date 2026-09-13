@@ -49,7 +49,8 @@ Gebken's published 2026 introduction still identifies $u^2+|v|$ as unresolved.
 His local criticality theorem for continuous smooth selections assumes an
 iterate limit, repeated activity, and specified spectral and gradient-jump
 behavior~\cite[Theorem~3.1 and (B1)]{BG}. Our positive results instead derive
-convergence from the objective hypotheses for the families stated here.
+convergence from objective hypotheses within the convex families stated here;
+they do not subsume his potentially nonconvex selection setting.
 
 Throughout the paper, an \emph{admissible run} uses the unmodified full BFGS
 update, an arbitrary $H_0\succ0$, fixed $0<c_1<c_2<1$, Armijo--weak-Wolfe
@@ -59,6 +60,14 @@ such run. They do not assert that every search ray contains an acceptable
 differentiable point.
 
 \paragraph{Deterministic limits.}
+Prescribed-orbit constructions give smooth nonconvex failures
+\cite{NEG_M04,NEG_M07}; nonconvexity also separates the examples of
+Lewis--Zhang~\cite{NEG_LZ15} and Diao~\preprintcite{NEG_DIAO26} from the
+question here. Lewis--Overton's nonsmooth examples use exact search or
+subgradient choices~\preprintcite{NEG_LO08}, while Asl--Overton's failure
+theorem concerns a scaled memoryless update~\cite{NEG_AO21}. These cited
+examples do not supply convex local failure with the full update and the
+specified search.
 We construct convex objectives for which a fixed unit-first
 Armijo--weak-Wolfe doubling/bisection search generates full-BFGS iterates
 converging to a nonstationary point. For each local construction, one fixed
@@ -79,7 +88,10 @@ representation holds, and whole-iterate convergence when
 the minimizer is unique (Theorem~\ref{art:centered}). This settles the mixed
 benchmark above. For coercive finite convex degree-one homogeneous functions,
 including coercive maxima of finitely many linear functions, every admissible
-run converges to zero (Theorem~\ref{art:homogeneous}). Local results
+run converges to zero (Theorem~\ref{art:homogeneous}). This includes every
+norm, for example $\norm{x}_1$, whose nonsmooth set for $n\ge2$ contains
+coordinate hyperplanes, beyond the isolated nonsmooth point of the
+Euclidean-norm case above. Local results
 cover smooth convex plus finite polyhedral terms and finite polyhedral
 partitions with smooth extensions (Theorem~\ref{art:polyhedral}). Moving
 comparison geometry also yields local convergence for planar smooth maxima
@@ -90,9 +102,11 @@ condition, so this extension has a concrete payoff beyond inward radial
 modeling.
 
 \paragraph{Analysis with degenerating matrices.}
-We prove a hierarchy linking adjacent degrees of the actual principal
-minors of full-BFGS matrices. Extending the classical trace/determinant
-potential approach, it forces the arithmetic mean of the reciprocals
+The classical smooth analysis combines trace and determinant identities in
+a matrix potential~\cite[Section~5]{FND_N92}. The uniform smooth secant bound
+used there need not hold when gradients jump. We prove an inequality linking
+each principal-minor degree to the next for the actual full-BFGS update.
+This adjacent-degree control forces the arithmetic mean of the reciprocals
 $1/(g_k^TH_kg_k)$ to diverge when gradients are bounded and predicted
 decreases tend to zero. Comparison energies turn this restriction into convergence:
 a field must retain information about the objective gap, control the gradient

@@ -1,0 +1,5 @@
+# N2: positive hypotheses versus the actual examples
+
+The synthesis now checks the constructed objectives rather than merely listing theorem classes. The seed is unbounded below; its coercive cap has an intercept. Accumulating actual bad runs exclude the finite-partition local-basin hypotheses. At the optimizer the indexed branch gradients are three zeros and one nonzero vector, before and after the single fixed linear coordinate change. Their displayed weighted sum proves that the planar corollary's positivity hypothesis fails, and repeated zeros exclude affine independence.
+
+The exact secant decomposition is obtained by subtracting the already-verified quadratic-seed gradients. Its interpretation is limited to the certified perturbed cycle. The printed proof of each local negative, including all-query containment, is retained. N2_review.json records exact existing formal contracts and each elementary inference; no new Lean endpoint or independent proof execution is claimed. The introductory/synthesis comparison is a correspondence review, not a new formalization campaign.

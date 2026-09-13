@@ -1,0 +1,426 @@
+{
+  "status": "REVIEWED_ELEMENTARY_DEDUCTIONS_FROM_EXISTING_VERIFIED_CONSTRUCTION",
+  "baseline": "91d30dadcfd0980472c3896be0c9fd83fc7d4db1",
+  "edited_file": "paper/sections/verification.tex",
+  "source_index_sha256": "cb57c735cdc15f827cd0fda1355d6593b50ea5032f5437b6c14125c07e03e01e",
+  "exact_contracts": {
+    "BfgsVerification.DEmbedding.branch_zero": {
+      "signature": "\u2200 (i : Fin 4), BfgsVerification.DEmbedding.branch i 0 = 0",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingObjective.lean",
+      "source_range": {
+        "start_line": 87,
+        "start_column": 0,
+        "end_line": 92,
+        "end_column": 7
+      },
+      "source_excerpt": "theorem branch_zero (i : Fin 4) : branch i 0=0 := by\n  fin_cases i\n  \u00b7 simpa [branch, dot] using DScalar.phi_zero (by norm_num : (2 : \u211d) \u2264 2) (by norm_num)\n  \u00b7 simpa [branch, dot] using DScalar.phi_zero (by norm_num : (2 : \u211d) \u2264 2) (by norm_num)\n  \u00b7 simpa [branch, dot] using DScalar.phi_zero (by linarith [bStar_bounds.1] : 2 \u2264 bStar) bStar_bounds.2.le\n  \u00b7 rfl",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.branch_old_hasGradient": {
+      "signature": "\u2200 (i : Fin 3) (x : BfgsVerification.Vec 2),\n  HasFDerivAt (BfgsVerification.DEmbedding.branch i.castSucc)\n    (BfgsVerification.gradientFunctional\n      (BfgsVerification.DEmbedding.ridgeGradient (BfgsVerification.DEmbedding.parameter i)\n        (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i) x))\n    x",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingObjective.lean",
+      "source_range": {
+        "start_line": 257,
+        "start_column": 0,
+        "end_line": 261,
+        "end_column": 75
+      },
+      "source_excerpt": "theorem branch_old_hasGradient (i : Fin 3) (x : Vec 2) :\n    HasFDerivAt (branch i.castSucc)\n      (gradientFunctional (ridgeGradient (parameter i) (SeedOrbit.gradient seedC seedD i) x)) x := by\n  rw [show branch i.castSucc=ridge (parameter i) (SeedOrbit.gradient seedC seedD i) from funext (branch_old i)]\n  exact ridge_hasGradient (parameter_bounds i).1 (parameter_bounds i).2 _ _",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.branch_last_hasGradient": {
+      "signature": "\u2200 (x : BfgsVerification.Vec 2),\n  HasFDerivAt (BfgsVerification.DEmbedding.branch 3) (BfgsVerification.gradientFunctional ![0, 1]) x",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingObjective.lean",
+      "source_range": {
+        "start_line": 263,
+        "start_column": 0,
+        "end_line": 269,
+        "end_column": 74
+      },
+      "source_excerpt": "theorem branch_last_hasGradient (x : Vec 2) :\n    HasFDerivAt (branch 3) (gradientFunctional (![0,1] : Vec 2)) x := by\n  have h : gradientFunctional (![0,1] : Vec 2)=ContinuousLinearMap.proj (1 : Fin 2) := by\n    ext z\n    norm_num [gradientFunctional_apply, dot, Fin.sum_univ_two]\n  rw [h]\n  exact (ContinuousLinearMap.proj (1 : Fin 2) : Vec 2 \u2192L[\u211d] \u211d).hasFDerivAt",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.phiFirst_zero": {
+      "signature": "\u2200 {b : \u211d}, 2 \u2264 b \u2192 b \u2264 34 \u2192 BfgsVerification.DScalar.phiFirst b 0 = 0",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingObjective.lean",
+      "source_range": {
+        "start_line": 417,
+        "start_column": 0,
+        "end_line": 419,
+        "end_column": 56
+      },
+      "source_excerpt": "theorem phiFirst_zero {b : \u211d} (hl : 2 \u2264 b) (hr : b \u2264 34) : DScalar.phiFirst b 0=0 := by\n  rw [DScalar.phiFirst, DScalar.positiveSlope_nonpos hl hr (le_refl 0),\n    DScalarNegative.first_eq_zero (le_refl 0), add_zero]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.branch_old_ray_hasDerivAt_zero": {
+      "signature": "\u2200 (i : Fin 3) (h : BfgsVerification.Vec 2),\n  HasDerivAt (fun t => BfgsVerification.DEmbedding.branch i.castSucc (t \u2022 h)) 0 0",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingObjective.lean",
+      "source_range": {
+        "start_line": 421,
+        "start_column": 0,
+        "end_line": 426,
+        "end_column": 12
+      },
+      "source_excerpt": "theorem branch_old_ray_hasDerivAt_zero (i : Fin 3) (h : Vec 2) :\n    HasDerivAt (fun t : \u211d => branch i.castSucc (t \u2022 h)) 0 0 := by\n  have hd := (branch_old_hasGradient i (0 : Vec 2)).comp_hasDerivAt_of_eq 0\n    ((hasDerivAt_id (0 : \u211d)).smul_const h) (by simp)\n  simpa [Function.comp_def, ridgeGradient, dot, phiFirst_zero (parameter_bounds i).1 (parameter_bounds i).2]\n    using hd",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.seed_descent_ray": {
+      "signature": "\u2200 {t : \u211d},\n  0 \u2264 t \u2192\n    BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD\n        (t \u2022 BfgsVerification.DEmbedding.descentDirection) =\n      -t",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingCenter.lean",
+      "source_range": {
+        "start_line": 12,
+        "start_column": 0,
+        "end_line": 28,
+        "end_column": 117
+      },
+      "source_excerpt": "theorem seed_descent_ray {t : \u211d} (ht : 0 \u2264 t) :\n    SeedOrbit.objective seedC seedD (t \u2022 descentDirection)= -t := by\n  have hb := root_tight_box\n  have hg : -seedC+16*seedD < -1 := by\n    dsimp [seedC, seedD]\n    linarith [hb.1.1, hb.2.2]\n  apply le_antisymm\n  \u00b7 unfold SeedOrbit.objective MaxAffine.Family.objective\n    apply Finset.sup'_le\n    intro i _\n    change dot (SeedOrbit.gradient seedC seedD i) (t \u2022 descentDirection)+0 \u2264 -t\n    fin_cases i <;> norm_num [SeedOrbit.gradient, descentDirection, dot, g0, g1, g2, Fin.sum_univ_two]\n    \u00b7 ring_nf\n      exact le_refl _\n    \u00b7 nlinarith [mul_le_mul_of_nonneg_left hg.le ht]\n  \u00b7 have he := (family seedC seedD).branch_le 0 (t \u2022 descentDirection)\n    simpa [MaxAffine.Family.branch, family, SeedOrbit.gradient, descentDirection, dot, g0, Fin.sum_univ_two] using he",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.local_cone": {
+      "signature": "\u2200 (n : \u2115) {h : BfgsVerification.Vec 2},\n  (\u2200 (i : Fin 3),\n      |BfgsVerification.dot\n            (BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD i)\n            h| \u2264\n        BfgsVerification.DScalarGeometric.scale n / 2) \u2192\n    BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n + h) =\n      BfgsVerification.DScalarGeometric.scale n ^ 3 +\n        BfgsVerification.DScalarGeometric.scale n ^ 2 *\n          BfgsVerification.SeedOrbit.objective BfgsVerification.SeedOrbit.seedC BfgsVerification.SeedOrbit.seedD h",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingLocal.lean",
+      "source_range": {
+        "start_line": 56,
+        "start_column": 0,
+        "end_line": 81,
+        "end_column": 13
+      },
+      "source_excerpt": "theorem local_cone (n : \u2115) {h : Vec 2}\n    (hh : \u2200 i : Fin 3, |dot (SeedOrbit.gradient seedC seedD i) h| \u2264 scale n/2) :\n    objective (center n+h)=(scale n)^3+(scale n)^2*SeedOrbit.objective seedC seedD h := by\n  have hle (i : Fin 3) : dot (SeedOrbit.gradient seedC seedD i) h \u2264 SeedOrbit.objective seedC seedD h := by\n    simpa [MaxAffine.Family.branch, family] using (family seedC seedD).branch_le i h\n  apply le_antisymm\n  \u00b7 apply objective_le\n    intro i\n    refine Fin.lastCases ?_ (fun j => ?_) i\n    \u00b7 exact (last_branch_negative n hh).le.trans ((branch_plateau_positive n 0 (hh 0)).le.trans (by\n        rw [branch_plateau n 0 (hh 0)]\n        exact add_le_add_left (mul_le_mul_of_nonneg_left (hle 0) (sq_nonneg _)) _))\n    \u00b7 rw [branch_plateau n j (hh j)]\n      exact add_le_add_left (mul_le_mul_of_nonneg_left (hle j) (sq_nonneg _)) _\n  \u00b7 have hmax : SeedOrbit.objective seedC seedD h \u2264\n        (objective (center n+h)-(scale n)^3)/(scale n)^2 := by\n      unfold SeedOrbit.objective MaxAffine.Family.objective\n      apply Finset.sup'_le\n      intro i _\n      change dot (SeedOrbit.gradient seedC seedD i) h+0 \u2264 _\n      rw [add_zero, le_div_iff\u2080 (sq_pos_of_pos (scale_pos n))]\n      have hi := branch_le i.castSucc (center n+h)\n      rw [branch_plateau n i (hh i)] at hi\n      nlinarith\n    have hh' := (le_div_iff\u2080 (sq_pos_of_pos (scale_pos n))).mp hmax\n    nlinarith",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.DEmbedding.deterministic_embedding_failure": {
+      "signature": "Filter.Tendsto\n    (fun n =>\n      BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)\n        (BfgsVerification.DScalarGeometric.scale n ^ 2) 0)\n    Filter.atTop (nhds 0) \u2227\n  Filter.Tendsto\n      (fun n =>\n        BfgsVerification.DEmbedding.objective\n          (BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)\n            (BfgsVerification.DScalarGeometric.scale n ^ 2) 0))\n      Filter.atTop (nhds 0) \u2227\n    (\u2200 (n : \u2115),\n        BfgsVerification.DEmbedding.center n \u2260 0 \u2227\n          BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) =\n              BfgsVerification.DScalarGeometric.scale n ^ 3 \u2227\n            0 < BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) \u2227\n              0 \u2209\n                  BfgsVerification.ConvexSubdifferential.subdifferential BfgsVerification.DEmbedding.objective\n                    (BfgsVerification.DEmbedding.center n) \u2227\n                Filter.Tendsto\n                  (fun t =>\n                    (BfgsVerification.DEmbedding.objective\n                          (BfgsVerification.DEmbedding.center n + t \u2022 BfgsVerification.DEmbedding.descentDirection) -\n                        BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n)) /\n                      t)\n                  (nhdsWithin 0 (Set.Ioi 0)) (nhds (-BfgsVerification.DScalarGeometric.scale n ^ 2))) \u2227\n      (\u2200 V \u2208 nhds 0,\n          \u2200\u1da0 (n : \u2115) in Filter.atTop,\n            (\u2200 (k : \u2115),\n                BfgsVerification.SeedEmbedding.point (BfgsVerification.DEmbedding.center n)\n                    (BfgsVerification.DScalarGeometric.scale n ^ 2) k \u2208\n                  V) \u2227\n              \u2200 (k : \u2115) (q : Fin 9),\n                BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k \u2192\n                  BfgsVerification.DEmbedding.center n +\n                      BfgsVerification.DScalarGeometric.scale n ^ 2 \u2022 BfgsVerification.SeedEmbedding.trialPoint k q \u2208\n                    V) \u2227\n        \u2200 (c\u2081 c\u2082 : \u211d) (hc\u2081 : 0 < c\u2081) (hc\u2081' : c\u2081 \u2264 1 / 3) (hc : c\u2081 < c\u2082) (hc\u2082 : c\u2082 < 1) (n : \u2115) (hn : 1 \u2264 n),\n          let R := BfgsVerification.DEmbedding.run hn c\u2081 c\u2082 hc\u2081 hc\u2081' hc hc\u2082;\n          R.H 0 = 1 \u2227\n            (\u2200 (k : \u2115), Matrix.PosDef (R.H k)) \u2227\n              Filter.Tendsto R.x Filter.atTop (nhds (BfgsVerification.DEmbedding.center n)) \u2227\n                Filter.Tendsto (fun k => BfgsVerification.DEmbedding.objective (R.x k)) Filter.atTop\n                    (nhds (BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n))) \u2227\n                  (\u2200 (k : \u2115),\n                      BfgsVerification.DEmbedding.objective (BfgsVerification.DEmbedding.center n) <\n                        BfgsVerification.DEmbedding.objective (R.x k)) \u2227\n                    (\u2200 (k : \u2115),\n                        BfgsVerification.DEmbedding.objective (R.x (k + 1)) <\n                          BfgsVerification.DEmbedding.objective (R.x k)) \u2227\n                      (\u2200 (k : \u2115),\n                          BfgsVerification.DeterministicLineSearch.fromMetric BfgsVerification.DEmbedding.objective\n                              (R.x k) (R.H k) c\u2081 c\u2082 5 =\n                            (some (R.\u03b1 k),\n                              BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) \u2227\n                        (\u2200 (k : \u2115),\n                            (BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k)).length \u2264 5) \u2227\n                          (\u2200 (k : \u2115) (q : Fin 9),\n                              BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k \u2192\n                                HasFDerivAt BfgsVerification.DEmbedding.objective\n                                  (BfgsVerification.gradientFunctional\n                                    (BfgsVerification.DScalarGeometric.scale n ^ 2 \u2022\n                                      BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC\n                                        BfgsVerification.SeedOrbit.seedD (BfgsVerification.SeedOrbit.trialActive q)))\n                                  (R.x k +\n                                    BfgsVerification.SeedOrbit.trialLength q \u2022\n                                      BfgsVerification.bfgsStep (R.H k) (R.g k) 1)) \u2227\n                            \u2200 (m : \u2115) (j : Fin 3),\n                              R.x (3 * m + \u2191j) =\n                                  BfgsVerification.DEmbedding.center n +\n                                    BfgsVerification.DScalarGeometric.scale n ^ 2 \u2022\n                                      BfgsVerification.SeedOrbit.seedRatio ^ m \u2022\n                                        BfgsVerification.SeedOrbit.point BfgsVerification.SeedOrbit.seedC\n                                          BfgsVerification.SeedOrbit.seedD BfgsVerification.SeedOrbit.seedRatio j \u2227\n                                R.H (3 * m + \u2191j) =\n                                    BfgsVerification.SeedOrbit.seedRatio ^ m \u2022\n                                      BfgsVerification.SeedOrbit.metric BfgsVerification.SeedOrbit.seedC\n                                        BfgsVerification.SeedOrbit.seedD j \u2227\n                                  R.g (3 * m + \u2191j) =\n                                      BfgsVerification.DScalarGeometric.scale n ^ 2 \u2022\n                                        BfgsVerification.SeedOrbit.gradient BfgsVerification.SeedOrbit.seedC\n                                          BfgsVerification.SeedOrbit.seedD j \u2227\n                                    R.\u03b1 (3 * m + \u2191j) = BfgsVerification.SeedOrbit.length j",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/DEmbeddingTarget.lean",
+      "source_range": {
+        "start_line": 9,
+        "start_column": 0,
+        "end_line": 51,
+        "end_column": 96
+      },
+      "source_excerpt": "/-- The actual fixed objective, source centers, full matrices, and deterministic\noracle produce bad starts arbitrarily close to the unique minimizer. All\nconvergence conclusions are derived from the displayed concrete trajectory. -/\ntheorem deterministic_embedding_failure :\n    Tendsto (fun n => SeedEmbedding.point (center n) ((scale n)^2) 0) atTop (\ud835\udcdd 0) \u2227\n    Tendsto (fun n => objective (SeedEmbedding.point (center n) ((scale n)^2) 0)) atTop (\ud835\udcdd 0) \u2227\n    (\u2200 n, center n\u22600 \u2227 objective (center n)=(scale n)^3 \u2227 0<objective (center n) \u2227\n      (0 : Vec 2) \u2209 ConvexSubdifferential.subdifferential objective (center n) \u2227\n      Tendsto (fun t : \u211d => (objective (center n+t \u2022 descentDirection)-objective (center n))/t)\n        (\ud835\udcdd[>] 0) (\ud835\udcdd (-((scale n)^2)))) \u2227\n    (\u2200 V \u2208 \ud835\udcdd (0 : Vec 2), \u2200\u1da0 n in atTop,\n      (\u2200 k, SeedEmbedding.point (center n) ((scale n)^2) k \u2208 V) \u2227\n      \u2200 k q, trialPhase q=phase k \u2192 center n+(scale n)^2 \u2022 SeedEmbedding.trialPoint k q \u2208 V) \u2227\n    (\u2200 (c\u2081 c\u2082 : \u211d) (hc\u2081 : 0<c\u2081) (hc\u2081' : c\u2081\u22641/3) (hc : c\u2081<c\u2082) (hc\u2082 : c\u2082<1)\n        (n : \u2115) (hn : 1\u2264n),\n      let R := run hn c\u2081 c\u2082 hc\u2081 hc\u2081' hc hc\u2082\n      R.H 0=1 \u2227 (\u2200 k, (R.H k).PosDef) \u2227\n      Tendsto R.x atTop (\ud835\udcdd (center n)) \u2227\n      Tendsto (fun k => objective (R.x k)) atTop (\ud835\udcdd (objective (center n))) \u2227\n      (\u2200 k, objective (center n)<objective (R.x k)) \u2227\n      (\u2200 k, objective (R.x (k+1))<objective (R.x k)) \u2227\n      (\u2200 k, fromMetric objective (R.x k) (R.H k) c\u2081 c\u2082 5=\n        (some (R.\u03b1 k),trialHistory (phase k))) \u2227\n      (\u2200 k, (trialHistory (phase k)).length\u22645) \u2227\n      (\u2200 k q, trialPhase q=phase k \u2192\n        HasFDerivAt objective (gradientFunctional ((scale n)^2 \u2022 SeedOrbit.gradient seedC seedD (trialActive q)))\n          (R.x k+trialLength q \u2022 bfgsStep (R.H k) (R.g k) 1)) \u2227\n      (\u2200 m j, R.x (3*m+j.val)=center n+(scale n)^2 \u2022 (seedRatio^m \u2022 SeedOrbit.point seedC seedD seedRatio j) \u2227\n        R.H (3*m+j.val)=seedRatio^m \u2022 metric seedC seedD j \u2227\n        R.g (3*m+j.val)=(scale n)^2 \u2022 SeedOrbit.gradient seedC seedD j \u2227\n        R.\u03b1 (3*m+j.val)=length j)) := by\n  refine \u27e8initial_points_tendsto, initial_values_tendsto, ?_,\n    fun V hV => trajectories_uniformly_small hV, ?_\u27e9\n  \u00b7 intro n\n    exact \u27e8center_ne_zero n, center_value n, center_positive n,\n      center_nonstationary n, center_directional_derivative n\u27e9\n  \u00b7 intro c\u2081 c\u2082 hc\u2081 hc\u2081' hc hc\u2082 n hn\n    exact \u27e8run_initial_matrix hn hc\u2081 hc\u2081' hc hc\u2082,\n      (run hn c\u2081 c\u2082 hc\u2081 hc\u2081' hc hc\u2082).positive_definite,\n      run_point_tendsto hn hc\u2081 hc\u2081' hc hc\u2082, run_value_tendsto hn hc\u2081 hc\u2081' hc hc\u2082,\n      run_value_above_center hn hc\u2081 hc\u2081' hc hc\u2082, run_value_strict_decrease hn hc\u2081 hc\u2081' hc hc\u2082,\n      run_search hn hc\u2081 hc\u2081' hc hc\u2082, fun k => trialHistory_length_le (phase k),\n      run_all_trials_differentiable hn hc\u2081 hc\u2081' hc hc\u2082, run_phase_parameters hn hc\u2081 hc\u2081' hc hc\u2082\u27e9",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LEmbedding.branch_zero": {
+      "signature": "\u2200 (i : Fin 4), BfgsVerification.LEmbedding.branch i 0 = 0",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LEmbeddingGeometry.lean",
+      "source_range": {
+        "start_line": 46,
+        "start_column": 0,
+        "end_line": 47,
+        "end_column": 67
+      },
+      "source_excerpt": "theorem branch_zero (i : Fin 4) : branch i 0=0 := by\n  simp [branch,LQuadraticSeed.quadratic,sqNorm,residualBranch_zero]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LEmbedding.branchGradient_zero": {
+      "signature": "\u2200 (i : Fin 3), BfgsVerification.LEmbedding.branchGradient i.castSucc 0 = 0",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LEmbeddingRegularity.lean",
+      "source_range": {
+        "start_line": 103,
+        "start_column": 0,
+        "end_line": 104,
+        "end_column": 45
+      },
+      "source_excerpt": "theorem branchGradient_zero (i : Fin 3) : branchGradient i.castSucc 0=0 := by\n  simp [branchGradient,residualGradient_zero]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LEmbedding.branch_hasGradient": {
+      "signature": "\u2200 (i : Fin 4) (x : BfgsVerification.Vec 2),\n  HasFDerivAt (BfgsVerification.LEmbedding.branch i)\n    (BfgsVerification.gradientFunctional (BfgsVerification.LEmbedding.branchGradient i x)) x",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LEmbeddingRegularity.lean",
+      "source_range": {
+        "start_line": 69,
+        "start_column": 0,
+        "end_line": 74,
+        "end_column": 52
+      },
+      "source_excerpt": "theorem branch_hasGradient (i : Fin 4) (x : Vec 2) :\n    HasFDerivAt (branch i) (gradientFunctional (branchGradient i x)) x := by\n  convert (LQuadraticSeed.quadratic_hasGradient mu x).add (residual_hasGradient i x) using 1\n  ext v\n  simp [branchGradient,gradientFunctional_apply,ContinuousLinearMap.add_apply,\n    dot,Pi.add_apply,add_mul,Finset.sum_add_distrib]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LEmbedding.objective_directional_derivative_zero": {
+      "signature": "\u2200 (h : BfgsVerification.Vec 2),\n  Filter.Tendsto\n    (fun t => (BfgsVerification.LEmbedding.objective (t \u2022 h) - BfgsVerification.LEmbedding.objective 0) / t)\n    (nhdsWithin 0 (Set.Ioi 0)) (nhds (max 0 (h 1)))",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LEmbeddingGeometry.lean",
+      "source_range": {
+        "start_line": 67,
+        "start_column": 0,
+        "end_line": 89,
+        "end_column": 78
+      },
+      "source_excerpt": "theorem objective_directional_derivative_zero (h : Vec 2) :\n    Tendsto (fun t : \u211d => (objective (t \u2022 h)-objective 0)/t)\n      (\ud835\udcdd[>] 0) (\ud835\udcdd (max 0 (h 1))) := by\n  have hold (i : Fin 3) : Tendsto (fun t : \u211d => branch i.castSucc (t \u2022 h)/t) (\ud835\udcdd[>] 0) (\ud835\udcdd 0) := by\n    have hh := (branch_ray_hasDerivAt_zero i.castSucc h).tendsto_slope_zero_right\n    simpa only [branchGradient_zero,dot,Pi.zero_apply,zero_mul,mul_zero,Finset.sum_const_zero,\n      zero_add,zero_smul,branch_zero,sub_zero,smul_eq_mul,div_eq_mul_inv,mul_comm] using hh\n  have hlast : Tendsto (fun t : \u211d => branch 3 (t \u2022 h)/t) (\ud835\udcdd[>] 0) (\ud835\udcdd (h 1)) := by\n    have hh := (branch_ray_hasDerivAt_zero 3 h).tendsto_slope_zero_right\n    have he : branchGradient 3 (0 : Vec 2)=![0,1] := by\n      change mu \u2022 (0 : Vec 2)+![0,1]=![0,1]\n      simp\n    simpa only [he,dot,Fin.sum_univ_two,Matrix.cons_val_zero,Matrix.cons_val_one,\n      zero_mul,one_mul,zero_add,zero_smul,branch_zero,sub_zero,smul_eq_mul,div_eq_mul_inv,mul_comm] using hh\n  have hm := ((hold 0).max (hold 1)).max ((hold 2).max hlast)\n  simp only [max_self] at hm\n  rw [max_eq_right (le_max_left (0 : \u211d) (h 1))] at hm\n  apply hm.congr'\n  filter_upwards [self_mem_nhdsWithin] with t ht\n  rw [objective_zero,sub_zero,objective_nested_max]\n  change max (max (branch 0 (t \u2022 h)/t) (branch 1 (t \u2022 h)/t))\n    (max (branch 2 (t \u2022 h)/t) (branch 3 (t \u2022 h)/t))=_\n  rw [max_div_div_right ht.le,max_div_div_right ht.le,max_div_div_right ht.le]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LWhitening.smoothGradient": {
+      "signature": "Fin 4 \u2192 BfgsVerification.Vec 2 \u2192 BfgsVerification.Vec 2",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LWhiteningGeometry.lean",
+      "source_range": {
+        "start_line": 32,
+        "start_column": 0,
+        "end_line": 33,
+        "end_column": 85
+      },
+      "source_excerpt": "def smoothGradient (i : Fin 4) (z : Vec 2) : Vec 2 :=\n  gradient coordinateMatrix (LEmbedding.branchGradient i (coordinateMatrix.mulVec z))",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LWhitening.smooth_branch_regular": {
+      "signature": "\u2200 (i : Fin 4),\n  ContDiff \u211d 1 (BfgsVerification.LWhitening.smoothBranch i) \u2227\n    BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ BfgsVerification.LWhitening.lowerConstant\n        (BfgsVerification.LWhitening.smoothBranch i) \u2227\n      (\u2200 (z : BfgsVerification.Vec 2),\n          HasFDerivAt (BfgsVerification.LWhitening.smoothBranch i)\n            (BfgsVerification.gradientFunctional (BfgsVerification.LWhitening.smoothGradient i z)) z) \u2227\n        \u2200 (x y : BfgsVerification.Vec 2),\n          BfgsVerification.sqNorm\n              (BfgsVerification.LWhitening.smoothGradient i x - BfgsVerification.LWhitening.smoothGradient i y) \u2264\n            BfgsVerification.LWhitening.upperConstant ^ 2 * BfgsVerification.sqNorm (x - y)",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LWhiteningGeometry.lean",
+      "source_range": {
+        "start_line": 35,
+        "start_column": 0,
+        "end_line": 45,
+        "end_column": 76
+      },
+      "source_excerpt": "theorem smooth_branch_regular (i : Fin 4) :\n    ContDiff \u211d 1 (smoothBranch i) \u2227\n    FixedNormal.EuclideanStrongConvexOn univ lowerConstant (smoothBranch i) \u2227\n    (\u2200z,HasFDerivAt (smoothBranch i) (gradientFunctional (smoothGradient i z)) z) \u2227\n    \u2200x y,sqNorm (smoothGradient i x-smoothGradient i y) \u2264 upperConstant^2*sqNorm (x-y) := by\n  refine \u27e8contDiff_whitening _ (LEmbedding.branch_contDiff i),\n    strongConvex_whitening _ initialMetric_posDef LEmbedding.mu_pos.le (LEmbedding.branch_strongConvex i),?_,?_\u27e9\n  \u00b7 intro z\n    exact hasGradient_comp coordinateMatrix (LEmbedding.branch i) z _ (LEmbedding.branch_hasGradient i _)\n  \u00b7 exact gradient_bound_whitening initialMetric initialMetric_posDef\n      (LEmbedding.branchGradient i) 512 (LEmbedding.branch_gradient_bound i)",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LWhitening.coordinateMatrix_invertible": {
+      "signature": "Matrix.det BfgsVerification.LWhitening.coordinateMatrix \u2260 0",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LWhiteningGeometry.lean",
+      "source_range": {
+        "start_line": 21,
+        "start_column": 0,
+        "end_line": 21,
+        "end_column": 90
+      },
+      "source_excerpt": "theorem coordinateMatrix_invertible : coordinateMatrix.det\u22600 := squareRoot_det_ne_zero _ _",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.AffineWhitening.gradient_inverse": {
+      "signature": "\u2200 {n : \u2115} (A : BfgsVerification.Mat n),\n  Matrix.det A \u2260 0 \u2192\n    \u2200 (g : BfgsVerification.Vec n), A\u207b\u00b9.transpose.mulVec (BfgsVerification.AffineWhitening.gradient A g) = g",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/AffineWhiteningRun.lean",
+      "source_range": {
+        "start_line": 30,
+        "start_column": 0,
+        "end_line": 32,
+        "end_column": 60
+      },
+      "source_excerpt": "theorem gradient_inverse (A : Mat n) (hA : A.det\u22600) (g : Vec n) :\n    (A\u207b\u00b9)\u1d40.mulVec (gradient A g)=g := by\n  exact AffineCertificate.inverse_transpose_transpose A hA g",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LQuadraticSeed.branchGradient": {
+      "signature": "\u211d \u2192 BfgsVerification.Vec 2 \u2192 Fin 3 \u2192 BfgsVerification.Vec 2",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LQuadraticSeed.lean",
+      "source_range": {
+        "start_line": 25,
+        "start_column": 0,
+        "end_line": 26,
+        "end_column": 40
+      },
+      "source_excerpt": "def branchGradient (\u03bc : \u211d) (x : Vec 2) (i : Fin 3) : Vec 2 :=\n  \u03bc \u2022 x+SeedOrbit.gradient seedC seedD i",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.LQuadraticSeed.branch_hasGradient": {
+      "signature": "\u2200 (\u03bc : \u211d) (i : Fin 3) (x : BfgsVerification.Vec 2),\n  HasFDerivAt (BfgsVerification.LQuadraticSeed.branch \u03bc i)\n    (BfgsVerification.gradientFunctional (BfgsVerification.LQuadraticSeed.branchGradient \u03bc x i)) x",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/LQuadraticSeed.lean",
+      "source_range": {
+        "start_line": 249,
+        "start_column": 0,
+        "end_line": 257,
+        "end_column": 48
+      },
+      "source_excerpt": "theorem branch_hasGradient (\u03bc : \u211d) (i : Fin 3) (x : Vec 2) :\n    HasFDerivAt (branch \u03bc i) (gradientFunctional (branchGradient \u03bc x i)) x := by\n  have hl : HasFDerivAt (dot (SeedOrbit.gradient seedC seedD i))\n      (gradientFunctional (SeedOrbit.gradient seedC seedD i)) x := by\n    convert (gradientFunctional (SeedOrbit.gradient seedC seedD i)).hasFDerivAt (x := x) using 1\n  convert (quadratic_hasGradient \u03bc x).add hl using 1\n  ext v\n  simp only [gradientFunctional_apply,ContinuousLinearMap.add_apply,branchGradient,dot,\n    Pi.add_apply,add_mul,Finset.sum_add_distrib]",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.ConvexCellRadial.finite_polyhedral_basin": {
+      "signature": "\u2200 {n : \u2115} {\u03b9 : Type u_1} [inst : Fintype \u03b9] {m : \u03b9 \u2192 \u2115} {F : BfgsVerification.Vec n \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 (a : (i : \u03b9) \u2192 Fin (m i) \u2192 BfgsVerification.Vec n) (b : (i : \u03b9) \u2192 Fin (m i) \u2192 \u211d)\n      (V : \u03b9 \u2192 Set (BfgsVerification.Vec n)) (f : \u03b9 \u2192 BfgsVerification.Vec n \u2192 \u211d),\n      (\u2200 (i : \u03b9), IsOpen (V i)) \u2192\n        (\u2200 (i : \u03b9), BfgsVerification.CenteredSmoothSublinear.LocallyC11On (V i) (f i)) \u2192\n          \u2200 {U : Set (BfgsVerification.Vec n)},\n            IsOpen U \u2192\n              \u2200 {star : BfgsVerification.Vec n},\n                star \u2208 U \u2192\n                  (\u2200 (i : \u03b9), U \u2229 BfgsVerification.ConvexCellRadial.polyhedron (a i) (b i) \u2286 V i) \u2192\n                    (\u2200 x \u2208 U, \u2203 i, x \u2208 BfgsVerification.ConvexCellRadial.polyhedron (a i) (b i)) \u2192\n                      (\u2200 (i : \u03b9), \u2200 x \u2208 U, x \u2208 BfgsVerification.ConvexCellRadial.polyhedron (a i) (b i) \u2192 F x = f i x) \u2192\n                        (\u2200 (x : BfgsVerification.Vec n), F star \u2264 F x) \u2192\n                          (\u2200 (x : BfgsVerification.Vec n), F x = F star \u2192 x = star) \u2192\n                            \u2203 \u03b4,\n                              0 < \u03b4 \u2227\n                                \u2200 (R : BfgsVerification.AdmissibleBFGSRun n F),\n                                  F (R.x 0) \u2264 F star + \u03b4 \u2192\n                                    (\u2200 (k : \u2115), R.x k \u2208 U) \u2227\n                                      Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) \u2227\n                                        Filter.Tendsto R.x Filter.atTop (nhds star)",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/ConvexCellRadial.lean",
+      "source_range": {
+        "start_line": 188,
+        "start_column": 0,
+        "end_line": 208,
+        "end_column": 47
+      },
+      "source_excerpt": "/-- The literal finite-polyhedral-partition hypothesis, with actual affine\ninequality cells and separate smooth extension neighborhoods, implies the\nsource's local full-BFGS convergence conclusion. Full dimensionality and\ndisjoint cell interiors are unnecessary for this stronger radial proof. -/\ntheorem finite_polyhedral_basin {n : \u2115} {\u03b9 : Type*} [Fintype \u03b9] {m : \u03b9 \u2192 \u2115}\n    {F : Vec n \u2192 \u211d} (hF : ConvexOn \u211d univ F)\n    (a : \u2200 i, Fin (m i) \u2192 Vec n) (b : \u2200 i, Fin (m i) \u2192 \u211d)\n    (V : \u03b9 \u2192 Set (Vec n)) (f : \u03b9 \u2192 Vec n \u2192 \u211d)\n    (hV : \u2200 i, IsOpen (V i))\n    (hsmooth : \u2200 i, CenteredSmoothSublinear.LocallyC11On (V i) (f i))\n    {U : Set (Vec n)} (hU : IsOpen U) {star : Vec n} (hsU : star \u2208 U)\n    (hpart : \u2200 i, U \u2229 polyhedron (a i) (b i) \u2286 V i)\n    (hcover : \u2200 x \u2208 U, \u2203 i, x \u2208 polyhedron (a i) (b i))\n    (hrep : \u2200 i x, x \u2208 U \u2192 x \u2208 polyhedron (a i) (b i) \u2192 F x = f i x)\n    (hmin : \u2200 x, F star \u2264 F x) (hu : \u2200 x, F x = F star \u2192 x = star) :\n    \u2203 \u03b4 : \u211d, 0 < \u03b4 \u2227 \u2200 R : AdmissibleBFGSRun n F, F (R.x 0) \u2264 F star+\u03b4 \u2192\n      (\u2200 k, R.x k \u2208 U) \u2227 Tendsto (fun k => F (R.x k)) atTop (\ud835\udcdd (F star)) \u2227\n      Tendsto R.x atTop (\ud835\udcdd star) :=\n  local_cells_basin hF (fun i => polyhedron (a i) (b i)) V f\n    (fun i => polyhedron_closed (a i) (b i)) (fun i => polyhedron_convex (a i) (b i))\n    hV hsmooth hU hsU hpart hcover hrep hmin hu",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.PlanarMaxRegular.finite_max_local_basin": {
+      "signature": "\u2200 {F : BfgsVerification.Vec 2 \u2192 \u211d},\n  ConvexOn \u211d Set.univ F \u2192\n    \u2200 (star : BfgsVerification.Vec 2),\n      (\u2200 (x : BfgsVerification.Vec 2), F star \u2264 F x) \u2192\n        (\u2200 (x : BfgsVerification.Vec 2), F x = F star \u2192 x = star) \u2192\n          \u2200 {m : \u2115} {f : Fin m \u2192 BfgsVerification.Vec 2 \u2192 \u211d} {U : Set (BfgsVerification.Vec 2)},\n            IsOpen U \u2192\n              star \u2208 U \u2192\n                (\u2200 (i : Fin m), ConvexOn \u211d U (f i) \u2227 ContDiffOn \u211d 2 (f i) U) \u2192\n                  BfgsVerification.ConvexSubdifferential.LocalFiniteMax F f star \u2192\n                    (AffineIndependent \u211d fun i =>\n                        BfgsVerification.coordinateGradient\n                          (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i)) star) \u2192\n                      \u2200 (w : BfgsVerification.Vec (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card),\n                        (\u2200 (i : Fin (BfgsVerification.ConvexSubdifferential.activeIndices F f star).card), 0 < w i) \u2192\n                          \u2211 i, w i = 1 \u2192\n                            \u2211 i,\n                                  w i \u2022\n                                    BfgsVerification.coordinateGradient\n                                      (f (BfgsVerification.ConvexSubdifferential.activeIndexMap F f star i)) star =\n                                0 \u2192\n                              \u2200 {b : \u211d},\n                                F star < b \u2192\n                                  (\u2200 (\u2113 : \u211d),\n                                      F star < \u2113 \u2192\n                                        \u2113 \u2264 b \u2192\n                                          \u2200 (x y : BfgsVerification.Vec 2),\n                                            segment \u211d x y \u2286 frontier {z | F z \u2264 \u2113} \u2192 x = y) \u2192\n                                    \u2203 \u03b5,\n                                      0 < \u03b5 \u2227\n                                        \u2200 (R : BfgsVerification.AdmissibleBFGSRun 2 F),\n                                          F (R.x 0) < F star + \u03b5 \u2192\n                                            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F star)) \u2227\n                                              Filter.Tendsto R.x Filter.atTop (nhds star)",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/PlanarFiniteMaxBasin.lean",
+      "source_range": {
+        "start_line": 12,
+        "start_column": 0,
+        "end_line": 51,
+        "end_column": 90
+      },
+      "source_excerpt": "theorem finite_max_local_basin {F : Vec 2 \u2192 \u211d} (hF : ConvexOn \u211d univ F)\n    (star : Vec 2) (hmin : \u2200 x, F star\u2264F x) (hunique : \u2200 x, F x=F star \u2192 x=star)\n    {m : \u2115} {f : Fin m \u2192 Vec 2 \u2192 \u211d} {U : Set (Vec 2)}\n    (hU : IsOpen U) (hstar : star\u2208U) (hf : \u2200 i, ConvexOn \u211d U (f i) \u2227 ContDiffOn \u211d 2 (f i) U)\n    (hrep : LocalFiniteMax F f star)\n    (hind : AffineIndependent \u211d (fun i => coordinateGradient (f (activeIndexMap F f star i)) star))\n    (w : Vec (activeIndices F f star).card) (hw : \u2200 i, 0<w i)\n    (hsum : \u2211 i, w i=1)\n    (hzero : \u2211 i, w i \u2022 coordinateGradient (f (activeIndexMap F f star i)) star=0)\n    {b : \u211d} (hb : F star<b)\n    (hstrict : \u2200 \u2113 : \u211d, F star<\u2113 \u2192 \u2113\u2264b \u2192\n      \u2200 x y : Vec 2, segment \u211d x y\u2286frontier {z | F z\u2264\u2113} \u2192 x=y) :\n    \u2203 \u03b5 : \u211d, 0<\u03b5 \u2227 \u2200 R : AdmissibleBFGSRun 2 F, F (R.x 0)<F star+\u03b5 \u2192\n      Tendsto (fun k => F (R.x k)) atTop (\ud835\udcdd (F star)) \u2227 Tendsto R.x atTop (\ud835\udcdd star) := by\n  let a := activeIndexMap F f star\n  let g : Vec 2 \u2192 Fin (activeIndices F f star).card \u2192 Vec 2 :=\n    fun p i => coordinateGradient (f (a i)) p\n  have hd (p : Vec 2) (hp : p\u2208U) (i : Fin m) :\n      HasFDerivAt (f i) (gradientFunctional (coordinateGradient (f i) p)) p :=\n    hasFDerivAt_coordinateGradient (((hf i).2.contDiffAt (hU.mem_nhds hp)).differentiableAt (by norm_num))\n  have hr := localFiniteMax_restrict_active (convex_continuous hF).continuousAt\n    (fun i => (hd star hstar i).continuousAt) hrep\n  have hg : \u2200\u1da0 p in \ud835\udcdd star, \u2200 i, HasFDerivAt (f (a i)) (gradientFunctional (g p i)) p := by\n    filter_upwards [hU.mem_nhds hstar] with p hp i\n    exact hd p hp (a i)\n  have hc (i) : ContinuousAt (fun p => g p i) star :=\n    (PlanarCrossing.contDiffAt_coordinateGradient ((hf (a i)).2.contDiffAt (hU.mem_nhds hstar))).continuousAt\n  have hbary := local_affine_critical_correctness hF g star hr hg hc hind w hw hsum hzero\n  have he : \u2200\u1da0 p in \ud835\udcdd star,\n      (\u00acIsAffineCritical F p \u2192 ContDiffAt \u211d 2 F p \u2228 ConvexTwoBranchRegularAt F p) \u2227 AffineCorrectAt F p := by\n    filter_upwards [hU.mem_nhds hstar,hr.eventually,hbary] with p hp hrp hbp\n    constructor\n    \u00b7 intro hn\n      exact regular_of_finite_max_independent hF hU hp (fun i => hf (a i)) hrp hbp.1 hn\n    \u00b7 intro hcrit\n      apply zero_mem_iff_global_minimum.mpr\n      exact hbp.2.1.mp ((isAffineCritical_iff_coordinate_affineSpan F p).mp hcrit)\n  obtain \u27e8r,hrpos,hball\u27e9 := Metric.mem_nhds_iff.mp he\n  exact PlanarConvergence.local_convergence_basin hF star hmin hunique isOpen_ball\n    (mem_ball_self hrpos) (fun p hp => (hball hp).1) (fun p hp => (hball hp).2) hb hstrict",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    },
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero": {
+      "signature": "\u2200 {n : \u2115} {F : BfgsVerification.Vec n \u2192 \u211d} (R : BfgsVerification.AdmissibleBFGSRun n F),\n  BfgsVerification.Homogeneous.PositiveDegreeOne F \u2192\n    Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop \u2192 Filter.Tendsto R.x Filter.atTop (nhds 0)",
+      "source_path": "bfgs_lean_stage1/BfgsVerification/HomogeneousConsequences.lean",
+      "source_range": {
+        "start_line": 100,
+        "start_column": 0,
+        "end_line": 104,
+        "end_column": 54
+      },
+      "source_excerpt": "/-- Source H.A's coercive case, expressed by the usual infinity limit. -/\ntheorem homogeneous_coercive_iterates_zero (hF : Homogeneous.PositiveDegreeOne F)\n    (hc : Tendsto F (cocompact (Vec n)) atTop) : Tendsto R.x atTop (\ud835\udcdd 0) :=\n  R.homogeneous_iterates_zero_of_bounded_zero_sublevel hF\n    (Homogeneous.bounded_zero_sublevel_of_coercive hc)",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe": false,
+      "partial": false
+    }
+  },
+  "deductions": [
+    {
+      "id": "N2.homogeneity",
+      "argument": "The existing seed descent ray is G(t(-1,16))=-t for t>=0. The cap v-17 is affine with nonzero intercept; e.g at the cap-active ray (0,t), large t makes the t-17 value, violating degree-one homogeneity. The homogeneous/coercive theorem does not apply to either objective.",
+      "printed_support": [
+        "art:failure_polyhedral",
+        "art:homogeneous"
+      ]
+    },
+    {
+      "id": "N2.partition",
+      "argument": "The explicit positive-valued nonstationary centers and bad starts accumulate at the unique minimizer. Were a finite local polyhedral C11 partition available, its established local-basin theorem would contradict these actual admissible bad runs on sufficiently low sublevels. No assertion is made that accumulating singularities generally force failure.",
+      "printed_support": [
+        "art:upper_local_model",
+        "art:upper_orbit",
+        "art:lower_local_model",
+        "art:polyhedral"
+      ]
+    },
+    {
+      "id": "N2.active_gradients",
+      "argument": "All four values are zero at zero. Upper branch derivatives follow branch_old_hasGradient plus phiFirst_zero and branch_last_hasGradient. Lower first-three gradients follow branchGradient_zero; fourth equals mu*0+e2 by its definition and is explicitly used in objective_directional_derivative_zero. Whitening sends them by A transpose, with invertible A. Repeated indexed zeros violate affine independence by its injectivity consequence. A positive weighted combination reduces to lambda_3 e2, or lambda_3 A^T e2, and is nonzero. These are elementary consequences, not a newly compiled standalone endpoint.",
+      "printed_support": [
+        "art:upper_objective",
+        "art:lower_objective",
+        "art:planar-max"
+      ]
+    },
+    {
+      "id": "N2.secants",
+      "argument": "Subtract the existing actual endpoint gradients mu*x+g_i and mu*(x+s)+g_j to obtain y=mu*s+(g_j-g_i). The certified orbit changes among distinct fixed slopes; its convergence implies s tends to zero. This describes that orbit, not a generic switching failure.",
+      "printed_support": [
+        "art:jump-secant",
+        "art:lower_return_substep",
+        "art:quadratic_failure"
+      ]
+    }
+  ],
+  "formal_execution": "No Lean source or theorem contract changed; retained audit evidence reused and literal construction contracts inspected. No fresh Lean build claimed for these elementary prose deductions.",
+  "scope_review": "Both negative regimes retained independently. No necessary-and-sufficient claim, generic affine-critical failure, new C2 strong-convexity counterexample, positive-probability basin or algorithm change."
+}
