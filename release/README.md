@@ -2,7 +2,7 @@
 
 The author-review article has **49 pages**, including its essential proof appendices; the complete companion has **107 pages**. The seven-section article architecture and its positive and negative theorem selection are unchanged. The revision clarifies the historical increment, teaches the planar field construction, supplies familiar norm/composite examples, explains why the actual negatives evade the positive hypotheses, and improves the finite-trial and fixed-objective scale figures.
 
-The PDFs are `BFGS_Journal_Article.pdf` and `BFGS_Complete_Companion.pdf`. LaTeX entry points are `paper/master.tex` and `companion/master.tex`. Exact page counts, hashes, source freeze and later extraction validation are recorded in `RELEASE.json` and `SOURCE_MANIFEST.json`. The preceding 12 September edition and receipts are preserved in `history/20260912_satisfaction/`.
+The PDFs are `BFGS_Journal_Article.pdf` and `BFGS_Complete_Companion.pdf`. LaTeX entry points are `paper/master.tex` and `companion/master.tex`. Exact page counts, hashes, source freeze and completed extraction validation are recorded in `RELEASE.json` and `SOURCE_MANIFEST.json`. The preceding 12 September edition and receipts are preserved in `history/20260912_satisfaction/`.
 
 ## Reproduction and source identity
 
@@ -24,7 +24,7 @@ The revision adds no Lean theorem, custom axiom or weakened guard. All 31 named 
 
 The three self-review passes and N1–N6 response are in `editorial/scientific_exposition_20260913/REVIEW_LOG.md` and `RESPONSE.md`. Page-level visual evidence is in `editorial/reviews/render_manifest.json`. The existing source/audit integrity gate authenticates the actual pinned main and four supplemental proof audits; it checks present sealed cache bytes when available. Reproduced compilation is reported only by actual dated run receipts. Counts overlap, and only `propext`, `Classical.choice` and `Quot.sound` are permitted. No empty-cache original-library or Mathlib rebuild, foundational consistency proof, publication-priority certification or floating-point robustness is asserted.
 
-The source freeze is reviewed before packaging. `RELEASE.json` distinguishes awaiting extraction validation from a completed release; the final validation record will show the commands that actually ran and their outcomes. New builds/audits use fresh versioned output directories, preserving existing evidence. The historical citation-only checker remains unchanged and is replayed at its frozen baseline by `editorial/verify_historical_baseline.py`; current editorial checks are separate.
+The reviewed source freeze is `3e8b5c6ff5f4ef663718c74776ecc78ca3527db4`, committed and pushed to `origin/main`. Fresh extraction validation `release/validation/runs/exposition_20260913_01/SUMMARY.json` passed all 39 recorded commands: both PDFs rebuilt byte-for-byte, all 156 rendered pages matched the visually reviewed PDFs, references resolved, and all four existing Lean supplements were freshly compiled and fully structurally audited. Pinned library/cache bytes and ordered Lean search paths were checked; the original main libraries and Mathlib were reused. The archive-only snapshot correctly records validation as a future step at packaging time; this external receipt records its later successful execution. Versioned outputs preserve earlier evidence. The historical citation-only checker remains unchanged and is replayed at its frozen baseline by `editorial/verify_historical_baseline.py`; current editorial checks are separate.
 
 ## Author decisions
 
