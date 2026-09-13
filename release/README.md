@@ -29,3 +29,5 @@ The reviewed source freeze is `3e8b5c6ff5f4ef663718c74776ecc78ca3527db4`, commit
 ## Author decisions
 
 Human mathematical/literature and novelty review, authorship metadata and consent, responsibility/declarations, target/length decisions, and any archival identifier or submission remain with the author; see `editorial/AI_AND_AUTHOR_ACTIONS.md`. The article retains an honest substantive AI-use disclosure. The 49-page length exceeds the earlier editorial aim to preserve the requested proof-complete positive/negative selection; `editorial/JOURNAL_FIT.md` explains this and dates the policy access. No DOI, deposit, submission, author approval or independent human peer review has been invented.
+
+The validated release and its execution evidence are committed at `fa54d6a4407b241148169afe2f351ec973595397` and pushed to `origin/main`; the verified remote outcome is in `editorial/scientific_exposition_20260913/final_push.json`. The later completion receipt does not change the reviewed PDFs or source archive.
