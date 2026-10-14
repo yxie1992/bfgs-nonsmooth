@@ -6,7 +6,38 @@ Scope: notation, typesetting and claim wording in the article (`paper/`). The se
 numerics were re-checked in the first reading and all matched. Unless an item says
 otherwise, no mathematical statement and no Lean declaration changed.
 
-**Status (13 October 2026):** M1 to M6 are resolved.
+**Status (13 October 2026):** M1 to M6 are resolved. M7 onwards were found by the
+Lean coverage work (`TODO_LEAN_COVERAGE.md`) and are open; they will be fixed with
+the line-by-line reading of the proofs.
+
+## Open (found by the Lean coverage, 14 October 2026)
+
+Each item is a `DISCREPANCY` in `editorial/lean_coverage/register/` with a Lean
+witness in `bfgs_lean_article/BfgsArticle/Coverage/Article/`. Independent review
+confirmed each one.
+
+- [ ] **M7: Abstract, centered theorem.** `paper/master.tex:42-44`: Theorem
+  `art:centered` "applies in arbitrary dimension on compact initial sublevels"
+  omits that the sublevel must lie in the region where the centered
+  representation holds. With only a local representation this is false: the
+  coercive cap of Corollary `art:failure_polyhedral` has a centered
+  representation on a ball around its minimizer and compact sublevels, but its run
+  fails (`Master.centered_representation_needs_containment`). The introduction
+  and Table `art:positive-outcomes` state the containment correctly. Proposed:
+  "…applies in arbitrary dimension on compact initial sublevels contained in the
+  region of the centered representation." (`A/master/prose/003`)
+- [ ] **M8: "Branches that lose second differentiability".** `paper/master.tex:52-54`
+  and `paper/sections/verification.tex` (item `A/verification/prose/017`) speak of
+  the lower-curvature branches losing second differentiability; only three of the
+  four do, as Theorem `art:local-failure-lower` says. The fourth is a quadratic
+  (`Verification.lower_branch_second_differentiability`). Proposed: "…with
+  $C^{1,1}$ branches, three of which lose second differentiability at the
+  accumulation point" and "Three of the four lower-curvature branches also lose
+  second differentiability at zero." (`A/master/prose/009`, `A/verification/prose/017`)
+- [ ] **M9: Ray identity without its range (typo).** `paper/sections/verification.tex`
+  (item `A/verification/prose/004`): "$G(t(-1,16))=-t$" holds only for $t\ge0$, as
+  `failure.tex:200` says (`Verification.seed_ray`, counterexample
+  `seed_ray_fails_at_minus_one`). Proposed: add "for $t\ge0$".
 
 ## Resolved
 
