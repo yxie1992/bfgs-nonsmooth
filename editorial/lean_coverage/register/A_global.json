@@ -14,7 +14,13 @@
    "title": null,
    "container": null,
    "sha256": "1b5e035a5077cdd1",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Global.secant_notation",
+    "BfgsVerification.RadialCertificate.secantCurvature",
+    "BfgsVerification.RadialCertificate.radialNumerator"
+   ],
+   "note": "Notation for differentiable x, z ∈ K in the setting of lines 19-21 (prose/006). The coverage theorems write r_x as x - xstar, g = ∇F(x) as HasFDerivAt F (gradientFunctional g) x (gradientFunctional g v = dot g v), and T, N as dot (h - g) (z - x) and dot (h - g) (z - xstar) (inside the proof of Theorem art:radial-equivalence as variables T, N with exactly these defining equations). secant_notation unfolds the library names secantCurvature (T) and radialNumerator (N) to these formulas."
   },
   {
    "id": "A/global/disp/002",
@@ -30,7 +36,13 @@
    "title": null,
    "container": null,
    "sha256": "bd7ce98aa326d590",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Global.RadialSecantCondition",
+    "BfgsCoverage.Article.Global.radialSecantCondition_iff",
+    "BfgsVerification.RadialCertificate.HasRadialSecantBounds"
+   ],
+   "note": "RadialSecantCondition F xstar K is the display literally: ∀ η > 0, ∃ C ≥ 0, ∀ differentiable x, z ∈ K (eligible for the line search or not, lines 36-37, prose/007) with F_* + η ≤ F(z) ≤ F(x) and T > 0, N² ≤ C T. radialSecantCondition_iff proves it equivalent to the library's HasRadialSecantBounds F K xstar, which omits C ≥ 0 (replace C by max C 0)."
   },
   {
    "id": "A/global/disp/003",
@@ -46,7 +58,13 @@
    "title": null,
    "container": null,
    "sha256": "34c0fc3e931e8027",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Global.InwardModelCondition",
+    "BfgsCoverage.Article.Global.inwardModelCondition_iff",
+    "BfgsVerification.RadialCertificate.HasInwardTaylorBounds"
+   ],
+   "note": "InwardModelCondition F xstar K is the display together with its quantifier on line 46 (\"at every differentiable x ∈ K with F(x) ≥ F_* + η\", prose/008): ∀ η > 0, ∃ M ≥ 0, θ ∈ (0, 1/2], ∀ differentiable x ∈ K with F_* + η ≤ F(x), ∀ τ ∈ [0, θ], the two-sided bound on F(x - τ r_x) - F(x) + τ ∇F(x)ᵀ r_x. No differentiability at x - τ r_x (prose/009); the constants depend on η (prose/012). inwardModelCondition_iff proves it equivalent to the library's HasInwardTaylorBounds F K xstar (remainder written as supportingError F x g (inwardPoint xstar x τ), M ≥ 0 omitted)."
   },
   {
    "id": "A/global/theorem/art:radial-equivalence",
@@ -62,7 +80,12 @@
    "title": "Inward models control radial secants",
    "container": null,
    "sha256": "582372f98250d352",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.radial_equivalence",
+    "BfgsVerification.RadialCertificate.radial_of_inward_on_compact"
+   ],
+   "note": "States the theorem in the setting of lines 19-20, written out: F finite convex (ConvexOn on univ), x_* a minimizer, K = {F ≤ b} compact with b > F_*. Proved along the paper's proof (exists_subgradient_and_radius_bounds, then inward_to_radial = equation art:inward-to-radial). The library proves the implication for every compact K and every reference point."
   },
   {
    "id": "A/global/proof/001",
@@ -78,7 +101,16 @@
    "title": null,
    "container": null,
    "sha256": "b303defaec8cd676",
-   "status": null
+   "status": "PROOF",
+   "of": "A/global/theorem/art:radial-equivalence",
+   "lean": [
+    "BfgsCoverage.Article.Global.exists_subgradient_and_radius_bounds",
+    "BfgsCoverage.Article.Global.lipschitz_on_K",
+    "BfgsCoverage.Article.Global.curvature_eq_errors",
+    "BfgsVerification.RadialCertificate.inward_probe_quadratic_bound",
+    "BfgsVerification.RadialCertificate.radialNumerator_swap"
+   ],
+   "note": "radial_equivalence is proved along this proof from the display theorems (disp/004-007). Undisplayed steps stated in Lean: exists_subgradient_and_radius_bounds (lines 59-60: Λ, R > 0 bounding Euclidean norms of all subgradients at points of K and ‖x - x_*‖ on K), lipschitz_on_K (lines 60-61: |F(x) - F(z)| ≤ Λ‖x - z‖ on K; not used later), curvature_eq_errors (lines 67-68: T = D_F(z,x) + D_F(x,z)). The choice A ∈ [|N|, 2ΛR], τ = A/M or τ = θ (and the case M = 0) of lines 80-86 is carried out inside inward_to_radial with the library's inward_probe_quadratic_bound. All hold as written. Wording point, not an error: \"The subgradient bound was proved in Theorem art:certificate\" refers to the proof of that theorem (energy.tex:282-285), not to its statement. The citation [BB] for the Bregman expression is literature only."
   },
   {
    "id": "A/global/disp/004",
@@ -92,7 +124,12 @@
    "title": null,
    "container": "A/global/proof/001",
    "sha256": "085f4b816de85dfd",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.supporting_plane_error",
+    "BfgsVerification.RadialCertificate.supportingError_nonneg"
+   ],
+   "note": "The display defines D_F(z,x) and asserts D_F(z,x) ≥ 0; supporting_plane_error takes D with its defining equation and proves 0 ≤ D, with x differentiable and z arbitrary (\"only its supporting endpoint needs to be differentiable\"), under the theorem's hypotheses and Λ, R."
   },
   {
    "id": "A/global/disp/005",
@@ -106,7 +143,12 @@
    "title": null,
    "container": "A/global/proof/001",
    "sha256": "3f7d704f9dedfa09",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.inward_probe_at_z",
+    "BfgsVerification.RadialCertificate.inward_probe"
+   ],
+   "note": "Stated for every 0 ≤ τ ≤ θ, under the theorem's hypotheses, Λ, R, the inward condition, the band η with its constants M, θ, the pair x, z with F_* + η ≤ F(z) ≤ F(x) and T > 0, and the case N ≥ 0 (which the inequality does not need: _hN). D_F(z,x) is the variable Dzx."
   },
   {
    "id": "A/global/disp/006",
@@ -120,7 +162,13 @@
    "title": null,
    "container": "A/global/proof/001",
    "sha256": "d7f56d352ca5ee25",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.inward_probe_at_x",
+    "BfgsVerification.RadialCertificate.inward_probe",
+    "BfgsVerification.RadialCertificate.radialNumerator_swap"
+   ],
+   "note": "Same standing assumptions as disp/005 with the case N < 0 (not needed: _hN); D_F(x,z) is the variable Dxz = F(x) - F(z) - ∇F(z)ᵀ(x - z); T - N = (g - h)ᵀ r_x."
   },
   {
    "id": "A/global/disp/007",
@@ -136,7 +184,12 @@
    "title": null,
    "container": "A/global/proof/001",
    "sha256": "b387dbae23ee38b3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.inward_to_radial",
+    "BfgsVerification.RadialCertificate.inward_probe_quadratic_bound"
+   ],
+   "note": "Stated under the theorem's hypotheses, Λ, R (positive Euclidean bounds), the inward condition, the band constants M ≥ 0, θ ∈ (0, 1/2] of a fixed η, and a pair of differentiable x, z ∈ K with F_* + η ≤ F(z) ≤ F(x), T > 0; T and N are variables with their defining equations. The proof uses disp/005 and disp/006 as in the paper."
   },
   {
    "id": "A/global/corollary/art:radial-convergence",
@@ -152,7 +205,13 @@
    "title": "Radial convergence",
    "container": null,
    "sha256": "78180d687d9a3549",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.radial_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.radial_certificate_convergence_on_sublevel",
+    "BfgsVerification.inwardCertificateConvergence"
+   ],
+   "note": "\"Under either condition\": hypothesis RadialSecantCondition ∨ InwardModelCondition; \"every admissible run starting in K\": every R : AdmissibleBFGSRun n F with R.x 0 ∈ K; the distance is the Euclidean euclideanSolutionDistance F (R.x k) = dist(x_k, argmin F); \"with a unique minimizer\": every minimizer equals x_*. Setting of lines 19-20 written out."
   },
   {
    "id": "A/global/proof/002",
@@ -166,7 +225,14 @@
    "title": null,
    "container": null,
    "sha256": "45d622d2261a9c9b",
-   "status": null
+   "status": "PROOF",
+   "of": "A/global/corollary/art:radial-convergence",
+   "lean": [
+    "BfgsCoverage.Article.Global.radial_band_certificate",
+    "BfgsVerification.TransportedCertificate.radial_implies_band_certificates",
+    "BfgsVerification.AdmissibleBFGSRun.transported_certificate_convergence_on_sublevel"
+   ],
+   "note": "radial_convergence is proved along this proof: Theorem art:radial-equivalence for the inward case; radial_band_certificate states the certificate of lines 104-108 (W(x) = r_x r_xᵀ, m = η², C_η ≥ 0 from the radial condition, L = 0; visibility from convexity, secant control from art:radial-condition on eligible pairs, transport since Π_s r_z = Π_s r_x); Theorem art:certificate (A/energy/theorem/art:certificate) is applied as the library's transported_certificate_convergence_on_sublevel, and the Euclidean distance statement is euclidean_distance_to_argmin_of_values. No displays."
   },
   {
    "id": "A/global/theorem/art:centered",
@@ -182,7 +248,14 @@
    "title": "Centered smooth-plus-sublinear objectives",
    "container": null,
    "sha256": "f1caaca8eac5e32d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.centered",
+    "BfgsCoverage.Article.Global.centered_summands_not_minimized",
+    "BfgsVerification.AdmissibleBFGSRun.centered_values",
+    "BfgsVerification.AdmissibleBFGSRun.centered_iterates"
+   ],
+   "note": "centered states the theorem with all hypotheses written out: F convex, x_* a minimizer, U open and convex, ψ convex and locally C^{1,1} on U (LocallyC11On U ψ: differentiable on U with locally Lipschitz derivative), γ finite convex positively homogeneous of degree one, F = ψ + γ(· - x_*) on U (disp/008), and every admissible run whose initial sublevel {F ≤ F(x_0)} is compact and contained in U; conclusion: F(x_k) → F(x_*), Euclidean dist(x_k, argmin F) → 0, and x_k → x_* if x_* is the unique minimizer. The last sentence (\"Neither original summand is required to be minimized at x_*\") is centered_summands_not_minimized: an instance of all hypotheses in which neither ψ nor γ(· - x_*) is minimized at x_*. The proof follows the paper (via the inward condition and Corollary art:radial-convergence); the library's centered_values/centered_iterates prove the value and iterate statements by a cocoercivity bound instead."
   },
   {
    "id": "A/global/disp/008",
@@ -196,7 +269,9 @@
    "title": null,
    "container": "A/global/theorem/art:centered",
    "sha256": "bd0b8039fe6709ec",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/global/theorem/art:centered",
+   "note": "Hypothesis hrep : ∀ x ∈ U, F x = ψ x + γ (x - xstar)."
   },
   {
    "id": "A/global/proof/003",
@@ -210,7 +285,16 @@
    "title": null,
    "container": null,
    "sha256": "36e86985887e03a2",
-   "status": null
+   "status": "PROOF",
+   "of": "A/global/theorem/art:centered",
+   "lean": [
+    "BfgsCoverage.Article.Global.initial_value_gt",
+    "BfgsCoverage.Article.Global.uniform_lipschitz_gradient",
+    "BfgsCoverage.Article.Global.homogeneous_part_at_differentiable",
+    "BfgsCoverage.Article.Global.centered_inward_condition",
+    "BfgsCoverage.Article.Global.homogeneous_inward_remainder_zero"
+   ],
+   "note": "centered is proved along this proof. Undisplayed steps stated in Lean: initial_value_gt (lines 144-145: g_0 ≠ 0 gives F(x_0) > F(x_*)), uniform_lipschitz_gradient (lines 145-149: a uniform Euclidean Lipschitz constant L for ∇ψ on compact K ⊆ U; the Lean proof takes one radius of uniform local Lipschitz continuity and the gradient bound on K, L = max(M, 2G/ρ), instead of subdividing segments, so it does not need convexity of K; the paper's Lebesgue-number argument is also correct), homogeneous_part_at_differentiable (lines 156-159: γ is differentiable at r_x with gradient g - ∇ψ(x), ∇γ(r_x)ᵀ r_x = γ(r_x), zero contribution to the inward remainder), and centered_inward_condition (lines 160-161: art:inward-condition on K with M = L max_K ‖r_x‖², θ = 1/2, lower bound from convexity). Line 162: Corollary art:radial-convergence with b = F(x_0). All hold as written."
   },
   {
    "id": "A/global/disp/009",
@@ -224,7 +308,11 @@
    "title": null,
    "container": "A/global/proof/003",
    "sha256": "28fc2a5e8f6822d9",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.smooth_inward_remainder"
+   ],
+   "note": "Stated under the theorem's hypotheses, for an admissible run with compact initial sublevel in U, K = {F ≤ F(x_0)} (variable with its defining equation) and a uniform Euclidean Lipschitz constant L ≥ 0 of ∇ψ (coordinateGradient ψ) on K, at every x ∈ K and every 0 ≤ τ ≤ 1 (the whole inward segment [x, x_*] ⊆ K). The Lean proof bounds the derivative of the remainder along the segment by Lτ‖r_x‖² (Mathlib's image_norm_le_of_norm_deriv_right_le_deriv_boundary) instead of integrating."
   },
   {
    "id": "A/global/corollary/art:mixed-benchmark",
@@ -240,7 +328,12 @@
    "title": "The quadratic--absolute-value benchmark",
    "container": null,
    "sha256": "c3244ebef5543713",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.mixed_benchmark",
+    "ArticlePositive.mixed_benchmark_global"
+   ],
+   "note": "F with hF_def : ∀ x, F x = (x 0)^2 + |x 1| ((u,v) = (x 0, x 1)) and every R : AdmissibleBFGSRun 2 F (arbitrary H_0 ≻ 0 and fixed 0 < c_1 < c_2 < 1 are fields of the run); conclusion F(x_k) → 0 and x_k → (0,0). Proved as in the paper through Theorem art:centered; the article supplement's mixed_benchmark_global proves it through the inward condition. Not vacuous: the library's UnexcitedMetric.run is an admissible run on u² + |v| (module's non-vacuity example)."
   },
   {
    "id": "A/global/disp/010",
@@ -254,7 +347,8 @@
    "title": null,
    "container": "A/global/corollary/art:mixed-benchmark",
    "sha256": "dbd8da324cd84754",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/global/corollary/art:mixed-benchmark"
   },
   {
    "id": "A/global/proof/004",
@@ -268,7 +362,13 @@
    "title": null,
    "container": null,
    "sha256": "d3f74ae43588449b",
-   "status": null
+   "status": "PROOF",
+   "of": "A/global/corollary/art:mixed-benchmark",
+   "lean": [
+    "BfgsCoverage.Article.Global.mixed_hypotheses",
+    "ArticlePositive.mixed_inward_error"
+   ],
+   "note": "mixed_hypotheses states lines 183-185 (ψ(u,v) = u², γ(u,v) = |v|, x_* = 0, U = R²; F finite and convex, sublevels compact (closed and bounded), unique minimizer, and all hypotheses of Theorem art:centered); mixed_benchmark then applies centered. The cited equation art:mixed-inward-remainder (geometry.tex:10-13, item A/geometry/disp/001) is the supplement's mixed_inward_error; the Lean proof does not need it because centered derives the inward bound."
   },
   {
    "id": "A/global/theorem/art:homogeneous",
@@ -284,7 +384,13 @@
    "title": "Coercive homogeneous objectives",
    "container": null,
    "sha256": "2fac0c8d2955db0a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero",
+    "BfgsCoverage.Article.Global.absRun"
+   ],
+   "note": "Hypotheses 1 ≤ n, F convex (finite), Homogeneous.PositiveDegreeOne F, coercive = Tendsto F (cocompact (Vec n)) atTop. Conclusion: 0 minimizes F and every minimizer is 0, and every R : AdmissibleBFGSRun n F (arbitrary x_0, H_0, c_1, c_2: the last sentence of the theorem) has F(x_k) → 0 and x_k → 0 (disp/011). Proved as in the paper through Theorem art:centered with ψ = 0, γ = F; the library proves the iterate statement through the homogeneous potential. Not vacuous: absRun (built by oneDimRun) is an explicit admissible run on the coercive homogeneous F(x) = |x| on R (x_k = (-1/2)^k, H_k = (3/2)2^{-k}, α_k = 1, c_1 = 1/4, c_2 = 1/2); see the module's non-vacuity example."
   },
   {
    "id": "A/global/disp/011",
@@ -298,7 +404,8 @@
    "title": null,
    "container": "A/global/theorem/art:homogeneous",
    "sha256": "cef221d53efa7b51",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/global/theorem/art:homogeneous"
   },
   {
    "id": "A/global/proof/005",
@@ -312,7 +419,17 @@
    "title": null,
    "container": null,
    "sha256": "a81917d672a31c9f",
-   "status": null
+   "status": "PROOF",
+   "of": "A/global/theorem/art:homogeneous",
+   "lean": [
+    "BfgsCoverage.Article.Global.coercive_homogeneous_positive",
+    "BfgsCoverage.Article.Global.sphere_minimum",
+    "BfgsCoverage.Article.Global.sublevels_compact_of_coercive",
+    "BfgsCoverage.Article.Global.iterates_of_values",
+    "BfgsCoverage.Article.Global.homogeneous_inward_condition",
+    "BfgsCoverage.Article.Global.homogeneous_via_radial"
+   ],
+   "note": "homogeneous is proved along this proof: coercive_homogeneous_positive (lines 211-213: F(0) = 0 and F > 0 off zero), homogeneous_sphere_bound (disp/012), sublevels_compact_of_coercive (line 218), centered with ψ = 0, γ = F (lines 218-219), iterates_of_values (lines 219-220: the lower bound gives x_k → 0). The alternative of lines 220-221 (\"the inward remainder is identically zero, so the radial convergence corollary applies directly\") is homogeneous_inward_condition (M_η = 0) and homogeneous_via_radial. All hold as written."
   },
   {
    "id": "A/global/disp/012",
@@ -326,7 +443,12 @@
    "title": null,
    "container": "A/global/proof/005",
    "sha256": "a12d18b5c597be34",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_sphere_bound",
+    "BfgsCoverage.Article.Global.sphere_minimum"
+   ],
+   "note": "Under the theorem's hypotheses: the minimum of F over the Euclidean unit sphere {‖euclideanVector x‖ = 1} exists (IsLeast of the image), and the minimum μ satisfies μ > 0 and F(x) ≥ μ‖x‖ for all x. The facts F(0) = 0 and F > 0 off zero, proved before the display, are derived rather than assumed."
   },
   {
    "id": "A/global/corollary/art:homogeneous-examples",
@@ -342,7 +464,17 @@
    "title": "Compact homogeneous models",
    "container": null,
    "sha256": "f92c03b1f9a96d80",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_examples_norm",
+    "BfgsCoverage.Article.Global.homogeneous_examples_gauge",
+    "BfgsCoverage.Article.Global.homogeneous_examples_maxLinear",
+    "BfgsVerification.AdmissibleBFGSRun.norm_conclusion",
+    "BfgsVerification.AdmissibleBFGSRun.gauge_conclusion",
+    "BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion",
+    "BfgsCoverage.Article.Global.absRun"
+   ],
+   "note": "One theorem per case, each with the conclusion of Theorem art:homogeneous (0 is the unique minimizer; every admissible run, from every admissible start, has F(x_k) → 0 and x_k → 0) in its setting n ≥ 1. Norm: N : Seminorm ℝ (Vec n) with N x = 0 → x = 0. Gauge: F convex, PositiveDegreeOne, {F ≤ 1} bounded. Linear maximum (disp/013): a : Fin m → Vec n and F x the greatest of the a_iᵀx (IsGreatest of the range; no affine intercepts), {F ≤ 0} bounded. BfgsArticle.HomogeneousModels states the same three cases (norm_conclusion, gauge_conclusion, finiteMaxLinear_conclusion, with a Finset of slopes). Not vacuous: |x| on R is a norm, a gauge with bounded unit sublevel and the linear maximum max(x, -x), and absRun is an admissible run for it (also as normSeminorm ℝ (Vec 1))."
   },
   {
    "id": "A/global/disp/013",
@@ -356,7 +488,8 @@
    "title": null,
    "container": "A/global/corollary/art:homogeneous-examples",
    "sha256": "6eff13879dccff14",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/global/corollary/art:homogeneous-examples"
   },
   {
    "id": "A/global/proof/006",
@@ -370,7 +503,576 @@
    "title": null,
    "container": null,
    "sha256": "96f616d7386c3a3b",
-   "status": null
+   "status": "PROOF",
+   "of": "A/global/corollary/art:homogeneous-examples",
+   "lean": [
+    "BfgsCoverage.Article.Global.coercive_of_positive",
+    "BfgsCoverage.Article.Global.sphere_minimum",
+    "BfgsCoverage.Article.Global.coercive_of_lower_bound",
+    "BfgsCoverage.Article.Global.maxLinear_convex_homogeneous",
+    "BfgsVerification.Homogeneous.positive_of_bounded_zero_sublevel"
+   ],
+   "note": "The three cases are proved along this proof: positivity off zero (norm axioms; for the gauge and the maximum, boundedness of the stated sublevel via Homogeneous.positive_of_bounded_zero_sublevel, the ray argument), sphere_minimum and coercive_of_lower_bound (F(x) ≥ μ‖x‖, hence coercivity), maxLinear_convex_homogeneous (finite maxima of linear forms are finite, convex and degree-one homogeneous), then Theorem art:homogeneous. All hold as written."
+  },
+  {
+   "id": "A/global/prose/001",
+   "kind": "prose",
+   "anchor": "Toward a minimizer, a homogeneous term has an exact first-order model",
+   "lines": [
+    3,
+    4
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/global/prose/021",
+    "A/global/disp/009"
+   ],
+   "note": "Summary of the proof of Theorem art:centered: the homogeneous term has zero inward remainder (prose/021, homogeneous_inward_remainder_zero) and the smooth term a quadratic one (disp/009)."
+  },
+  {
+   "id": "A/global/prose/002",
+   "kind": "prose",
+   "anchor": "We turn this inward",
+   "lines": [
+    4,
+    7
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/global/theorem/art:radial-equivalence",
+    "A/global/corollary/art:radial-convergence",
+    "A/global/theorem/art:centered",
+    "A/global/theorem/art:homogeneous"
+   ],
+   "note": "Announces the results of the section; all are stated for every dimension n."
+  },
+  {
+   "id": "A/global/prose/003",
+   "kind": "prose",
+   "anchor": "A gradient jump can make the positive correction in",
+   "lines": [
+    11,
+    12
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.gradient_jump_large_correction",
+    "BfgsVerification.ScalarCounterexamples.crossing_eligible",
+    "BfgsVerification.RadialSingularCurvature.crossing_radial_numerator"
+   ],
+   "note": "\"Large\" is read as unbounded: for F(t) = (t+2)²/2 + |t| (derivative jump from 1 to 3 at t = 0, minimizer -1), on the positive band η = 1/4 of the compact sublevel {F ≤ 3} the correction N²/T exceeds every constant C for differentiable pairs z < 0 < x across the jump with F_* + η ≤ F(z) ≤ F(x), T > 0. The pairs are eligible for c_1 = 1/4, c_2 = 1/2 (TransportedCertificate.EligiblePair, the library's crossing_eligible), as accepted pairs are (energy.tex:244); N²/T is the R_k of art:energy-identity for such a pair."
+  },
+  {
+   "id": "A/global/prose/004",
+   "kind": "prose",
+   "anchor": "We control its pairing with the direction",
+   "lines": [
+    12,
+    15
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the approach and the scope of the inward condition: it involves F only on the segments [x, x_*] and ∇F at x (InwardModelCondition, disp/003), and the convergence results quantify over every admissible run, whose steps are those of art:update rather than radial steps (radial_convergence, centered). No assertion beyond those items."
+  },
+  {
+   "id": "A/global/prose/005",
+   "kind": "prose",
+   "anchor": "segments are an analytical device",
+   "lines": [
+    15,
+    17
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Explanation: the inward segments occur only in the hypothesis art:inward-condition; the runs are AdmissibleBFGSRun, whose steps are those of art:update."
+  },
+  {
+   "id": "A/global/prose/006",
+   "kind": "prose",
+   "anchor": "Fix a minimizer $x_*$, write $F_*=F(x_*)$",
+   "lines": [
+    19,
+    21
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Sets the standing assumptions of the subsection (a fixed minimizer x_*, F_* = F(x_*), a compact sublevel K = {F ≤ b} with b > F_*); every theorem of the subsection takes them as the hypotheses xstar, hmin, b, hb, K, hK_def, hK."
+  },
+  {
+   "id": "A/global/prose/007",
+   "kind": "prose",
+   "anchor": "Here all such differentiable endpoint pairs are included",
+   "lines": [
+    36,
+    37
+   ],
+   "status": "PART_OF",
+   "of": "A/global/disp/002",
+   "note": "RadialSecantCondition quantifies over all differentiable x, z ∈ K, with no eligibility hypothesis."
+  },
+  {
+   "id": "A/global/prose/008",
+   "kind": "prose",
+   "anchor": "at every differentiable $x\\in K$ with $F(x)\\ge F_*+\\eta$",
+   "lines": [
+    46,
+    46
+   ],
+   "status": "PART_OF",
+   "of": "A/global/disp/003"
+  },
+  {
+   "id": "A/global/prose/009",
+   "kind": "prose",
+   "anchor": "The inward point need not be differentiable.",
+   "lines": [
+    47,
+    47
+   ],
+   "status": "PART_OF",
+   "of": "A/global/disp/003",
+   "note": "InwardModelCondition asks for a gradient only at x."
+  },
+  {
+   "id": "A/global/prose/010",
+   "kind": "prose",
+   "anchor": "It remains in $K$ by convexity.",
+   "lines": [
+    47,
+    47
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.inward_point_mem"
+   ],
+   "note": "For x ∈ K and 0 ≤ τ ≤ 1 (θ_η ≤ 1/2 in the condition), x - τ r_x = (1-τ)x + τx_* ∈ K."
+  },
+  {
+   "id": "A/global/prose/011",
+   "kind": "prose",
+   "anchor": "The parameter $\\tau$ is a fraction of the distance to $x_*$",
+   "lines": [
+    48,
+    49
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.inward_point_fraction"
+   ],
+   "note": "The step from x to the inward point has Euclidean length τ‖r_x‖, and its distance to x_* is (1-τ)‖r_x‖."
+  },
+  {
+   "id": "A/global/prose/012",
+   "kind": "prose",
+   "anchor": "Constants may depend on the positive value band",
+   "lines": [
+    49,
+    50
+   ],
+   "status": "PART_OF",
+   "of": "A/global/disp/003",
+   "note": "Quantifier order ∀ η ∃ M_η θ_η in InwardModelCondition."
+  },
+  {
+   "id": "A/global/prose/013",
+   "kind": "prose",
+   "anchor": "nonsmoothness at the solution is permitted, including the absolute-value",
+   "lines": [
+    50,
+    52
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.mixed_inward_condition",
+    "ArticlePositive.mixed_inward_on_sublevel"
+   ],
+   "note": "The benchmark u² + |v| is not differentiable at its minimizer (0,0) and satisfies art:inward-condition on every compact sublevel {F ≤ b}, b > 0."
+  },
+  {
+   "id": "A/global/prose/014",
+   "kind": "prose",
+   "anchor": "The converse implication, including inward samples that are not",
+   "lines": [
+    93,
+    94
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.radial_implies_inward",
+    "BfgsVerification.RadialCertificate.inward_of_radial_on_compact_sublevel"
+   ],
+   "note": "The attribution to Chapter 4 of the companion is checked by the companion register (C_04_R), not here."
+  },
+  {
+   "id": "A/global/prose/015",
+   "kind": "prose",
+   "anchor": "uses the sufficient direction just proved",
+   "lines": [
+    94,
+    96
+   ],
+   "status": "SAME_AS",
+   "of": "A/global/theorem/art:radial-equivalence",
+   "note": "\"Every descending secant pair on the same positive band\" are the pairs F_* + η ≤ F(z) ≤ F(x), T > 0 of art:radial-condition."
+  },
+  {
+   "id": "A/global/prose/016",
+   "kind": "prose",
+   "anchor": "This condition controls only inward first-order modeling error.",
+   "lines": [
+    111,
+    111
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes what art:inward-condition bounds (the inward first-order remainder); restates the definition disp/003."
+  },
+  {
+   "id": "A/global/prose/017",
+   "kind": "prose",
+   "anchor": "region its infinitesimal expression is $r_x^T\\nabla^2F(x)r_x$",
+   "lines": [
+    111,
+    113
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.inward_remainder_second_derivative",
+    "BfgsVerification.RadialHessian.ray_second_derivative_matrix"
+   ],
+   "note": "Where F is C² at x, the second derivative at τ = 0 of the inward remainder is r_xᵀ∇²F(x)r_x. \"Rather than the largest Hessian eigenvalue\" is a contrast, not a separate claim."
+  },
+  {
+   "id": "A/global/prose/018",
+   "kind": "prose",
+   "anchor": "A bound almost everywhere on that expression alone",
+   "lines": [
+    113,
+    115
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.ae_curvature_misses_jump",
+    "BfgsVerification.RadialSingularCurvature.singular_curvature_counterexample"
+   ],
+   "note": "For f(t) = (t+2)²/2 + |t| (strongly convex, derivative jump at 0 on the ray to x_* = -1) and K = {F ≤ 3}: (t+1)² f''(t) ∈ [0, 3] for almost every t with f(t) ≤ 3, yet art:inward-condition and art:radial-condition fail on K."
+  },
+  {
+   "id": "A/global/prose/019",
+   "kind": "prose",
+   "anchor": "The condition is sufficient;",
+   "lines": [
+    115,
+    117
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.nonradial_example_condition_fails",
+    "BfgsCoverage.Article.Global.radial_convergence",
+    "BfgsVerification.PlanarQuadraticExample.converges_without_radial_secant"
+   ],
+   "note": "\"It\" is art:inward-condition. Theorem art:nonradial-example (A/local/theorem/art:nonradial-example) states the failure of art:radial-condition; on every sublevel {F ≤ b}, b > 0, this implies the failure of art:inward-condition by Theorem art:radial-equivalence. Sufficiency is Corollary art:radial-convergence. The run part (\"every admissible run with F(x_0) < 1/100 converges\") restates the conclusion of Theorem art:nonradial-example; no admissible run on that objective is constructed here, so its non-vacuity is not shown in this module."
+  },
+  {
+   "id": "A/global/prose/020",
+   "kind": "prose",
+   "anchor": "A finite convex positively homogeneous function is sublinear",
+   "lines": [
+    121,
+    122
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_sublinear"
+   ],
+   "note": "Subadditivity, positive homogeneity, and γ((1-τ)r) = (1-τ)γ(r) for τ ≤ 1."
+  },
+  {
+   "id": "A/global/prose/021",
+   "kind": "prose",
+   "anchor": "nonsmoothness consequently disappears from the inward remainder",
+   "lines": [
+    122,
+    123
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_inward_remainder_zero"
+   ],
+   "note": "At every differentiable point r of γ, γ(r - τr) - γ(r) + τ∇γ(r)ᵀr = 0 for τ ≤ 1 (Euler)."
+  },
+  {
+   "id": "A/global/prose/022",
+   "kind": "prose",
+   "anchor": "theorem permits an arbitrary locally $C^{1,1}$ convex perturbation",
+   "lines": [
+    123,
+    125
+   ],
+   "status": "SAME_AS",
+   "of": "A/global/theorem/art:centered"
+  },
+  {
+   "id": "A/global/prose/023",
+   "kind": "prose",
+   "anchor": "geometric hypothesis on the objective, not knowledge required by the",
+   "lines": [
+    125,
+    127
+   ],
+   "status": "NON_CLAIM",
+   "reason": "The admissible run (AdmissibleBFGSRun, Definition art:admissible) does not involve x_*; the centering enters only the hypotheses of Theorem art:centered (hrep)."
+  },
+  {
+   "id": "A/global/prose/024",
+   "kind": "prose",
+   "anchor": "the two summands need not separately be minimized",
+   "lines": [
+    127,
+    128
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.centered_summands_not_minimized"
+   ],
+   "note": "An instance of all hypotheses of Theorem art:centered (U = R, all sublevels compact) in which neither ψ(x) = x² nor γ(x - x_*) = x + 1/2 is minimized at x_* = -1/2."
+  },
+  {
+   "id": "A/global/prose/025",
+   "kind": "prose",
+   "anchor": "The compact initial sublevel supplies uniform constants and traps the accepted",
+   "lines": [
+    166,
+    167
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.initial_sublevel_traps",
+    "BfgsCoverage.Article.Global.uniform_lipschitz_gradient",
+    "BfgsCoverage.Article.Global.centered_inward_condition"
+   ]
+  },
+  {
+   "id": "A/global/prose/026",
+   "kind": "prose",
+   "anchor": "When the representation is global and all sublevels are compact,",
+   "lines": [
+    167,
+    169
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.centered_global"
+   ],
+   "note": "\"Applies from every differentiable nonstationary starting point, for every initial SPD matrix and every fixed valid Armijo--weak-Wolfe pair\": the conclusion holds for every AdmissibleBFGSRun. No existence of runs is asserted."
+  },
+  {
+   "id": "A/global/prose/027",
+   "kind": "prose",
+   "anchor": "Neither a lower Hessian bound for the smooth term nor differentiability of",
+   "lines": [
+    170,
+    171
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.centered_weak_hypotheses",
+    "BfgsCoverage.Article.Global.mixed_benchmark"
+   ],
+   "note": "Witness: the benchmark satisfies all hypotheses with ψ(u,v) = u², which is strongly convex for no modulus m > 0 (no positive lower Hessian bound), and F is not differentiable at any (u, 0), u ≠ 0 included; the conclusion holds (mixed_benchmark)."
+  },
+  {
+   "id": "A/global/prose/028",
+   "kind": "prose",
+   "anchor": "Without uniqueness,",
+   "lines": [
+    171,
+    173
+   ],
+   "status": "SAME_AS",
+   "of": "A/global/theorem/art:centered",
+   "note": "Restates the conclusion of the theorem; \"convergence to one particular minimizer is not asserted\" is not a claim."
+  },
+  {
+   "id": "A/global/prose/029",
+   "kind": "prose",
+   "anchor": "This strengthens Guo--Lewis's subsequence approach to the line $v=0$",
+   "lines": [
+    189,
+    191
+   ],
+   "status": "SAME_AS",
+   "of": "A/global/corollary/art:mixed-benchmark",
+   "note": "The mathematical content is the corollary (whole-sequence convergence to the origin for every admissible run). The comparison with [GL18, Corollary 4.4] and \"they left open\" are literature remarks, not checked here."
+  },
+  {
+   "id": "A/global/prose/030",
+   "kind": "prose",
+   "anchor": "Pure homogeneous geometry is the limiting case with no smooth remainder.",
+   "lines": [
+    195,
+    195
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_inward_condition"
+   ],
+   "note": "ψ = 0 in Theorem art:centered: the inward remainder of a finite convex positively homogeneous F toward 0 vanishes, so art:inward-condition holds with M_η = 0 on every sublevel."
+  },
+  {
+   "id": "A/global/prose/031",
+   "kind": "prose",
+   "anchor": "Coercivity here has a clear purpose",
+   "lines": [
+    196,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.coercive_homogeneous_positive",
+    "BfgsCoverage.Article.Global.iterates_of_values"
+   ],
+   "note": "Coercive homogeneous F has F(0) = 0 and F > 0 off zero (no direction of zero or negative value), and with F(x) ≥ μ‖x‖ (disp/012) F(x_k) → 0 implies x_k → 0."
+  },
+  {
+   "id": "A/global/prose/032",
+   "kind": "prose",
+   "anchor": "It imposes no smoothness or finite-piece condition.",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_no_smoothness_or_pieces",
+    "BfgsCoverage.Article.Global.euclidean_norm_not_maxLinear",
+    "BfgsCoverage.Article.Global.l1_nonsmooth",
+    "BfgsCoverage.Article.Global.l1_norm_case",
+    "BfgsCoverage.Article.Global.euclidean_norm_case"
+   ],
+   "note": "\"It\" is coercivity, together with the other hypotheses of Theorem art:homogeneous (finite, convex, positively homogeneous of degree one). Witnesses that these force neither property: the ℓ¹ norm on R² satisfies all hypotheses and is not differentiable at (1, 0) ≠ 0; the Euclidean norm on R² satisfies all hypotheses and is not a finite maximum of linear forms (\"finite-piece\" read as finitely many linear pieces, the finite linear maxima of the section). Both are covered by the theorem (l1_norm_case, euclidean_norm_case). Consistent with prose/027."
+  },
+  {
+   "id": "A/global/prose/033",
+   "kind": "prose",
+   "anchor": "The norm cases include",
+   "lines": [
+    243,
+    244
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.l1_norm_case",
+    "BfgsCoverage.Article.Global.linf_norm_case"
+   ],
+   "note": "Both are derived from the norm case homogeneous_examples_norm (ℓ¹ as l1Seminorm, ℓ∞ = max_i |x_i| as the sup norm of Vec n, linf_eq_norm). For n = 1 both are |x|, on which absRun is an admissible run."
+  },
+  {
+   "id": "A/global/prose/034",
+   "kind": "prose",
+   "anchor": "In dimension at least two their nonsmoothness",
+   "lines": [
+    244,
+    247
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.l1_nonsmooth",
+    "BfgsCoverage.Article.Global.linf_nonsmooth"
+   ],
+   "note": "ℓ¹: on {x_i = 0} the norm restricted to x + t e_i is ‖x‖₁ + |t| (the i-th partial derivative jumps from -1 to 1), it is not differentiable there, and for n ≥ 2 no point of the hyperplane is isolated. ℓ∞: not differentiable where |x_i| = |x_j| = max_k |x_k| > 0, i ≠ j (along sign(x_i)e_i it is ‖x‖∞ + max(s, 0)); such tie points are not isolated."
+  },
+  {
+   "id": "A/global/prose/035",
+   "kind": "prose",
+   "anchor": "For example, along $(t,t,0,\\ldots,0)$ with $t>0$",
+   "lines": [
+    247,
+    248
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.linf_tie_example"
+   ],
+   "note": "The active forms y ↦ y_{i0}, y ↦ y_{i1} both equal ‖x‖∞ at x = (t, t, 0, ...), with gradients e_{i0} ≠ e_{i1}; ‖·‖∞ is not differentiable at x."
+  },
+  {
+   "id": "A/global/prose/036",
+   "kind": "prose",
+   "anchor": "are concrete specializations of the norm corollary",
+   "lines": [
+    248,
+    250
+   ],
+   "status": "SAME_AS",
+   "of": "A/global/prose/033",
+   "note": "\"With no separate priority claim\" is editorial."
+  },
+  {
+   "id": "A/global/prose/037",
+   "kind": "prose",
+   "anchor": "Euclidean norm is an already established consequence of Guo--Lewis's",
+   "lines": [
+    250,
+    252
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.euclidean_norm_case"
+   ],
+   "note": "euclidean_norm_case states the mathematical content (the conclusion of Theorem art:homogeneous for the Euclidean norm, an instance of the norm case). The attribution to [GL18, Corollary 4.2] is a literature remark, not checked here. For n = 1 the Euclidean norm is |x|, on which absRun is an admissible run."
+  },
+  {
+   "id": "A/global/prose/038",
+   "kind": "prose",
+   "anchor": "model was analyzed by Lewis--Overton under their stated search conventions",
+   "lines": [
+    252,
+    254
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution only ([LO, Section 5.1]); nothing in the article depends on it. (|x| on R is also the norm case n = 1 of Corollary art:homogeneous-examples.)"
+  },
+  {
+   "id": "A/global/prose/039",
+   "kind": "prose",
+   "anchor": "No symmetry is needed for the gauge or max-linear",
+   "lines": [
+    254,
+    255
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.asymmetric_example",
+    "BfgsCoverage.Article.Global.asymRun"
+   ],
+   "note": "F(x) = max(x, -2x) on R is a finite linear maximum with bounded zero sublevel and a convex degree-one gauge with bounded unit sublevel, F(-1) = 2 ≠ 1 = F(1), and the conclusion holds. The theorem also exhibits an admissible run on this F (asymRun: x_k = (-1/4)^k, H_k = (5/3)4^{-k}, g_k = 1, α_k = 3/4 for even k, g_k = -2, α_k = 3/8 for odd k, c_1 = 1/4, c_2 = 1/2), so its conclusion is not vacuous."
+  },
+  {
+   "id": "A/global/prose/040",
+   "kind": "prose",
+   "anchor": "Coercivity supplies this compact, whole-iterate route.",
+   "lines": [
+    255,
+    255
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.sublevels_compact_of_coercive",
+    "BfgsCoverage.Article.Global.homogeneous"
+   ]
+  },
+  {
+   "id": "A/global/prose/041",
+   "kind": "prose",
+   "anchor": "separately proves the noncompact homogeneous value dichotomy",
+   "lines": [
+    255,
+    258
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Global.homogeneous_value_dichotomy",
+    "BfgsVerification.homogeneousDichotomy",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_bounded_below_convergence"
+   ],
+   "note": "Dichotomy F(x_k) → 0 or F(x_k) → -∞ for every admissible run of a finite convex positively homogeneous F; bounded below ⇒ 0 minimizes F and F(x_k) → 0; the iterate consequence stated is bounded zero sublevel ⇒ x_k → 0 (\"additional iterate consequences\" is not specific; the companion chapter has more). The attribution to Chapter 7 is checked by the companion register (C_07_H). Runs on homogeneous objectives exist (absRun, asymRun)."
   }
  ],
  "discrepancies": []
