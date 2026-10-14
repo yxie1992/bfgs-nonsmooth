@@ -54,13 +54,23 @@ def lean_declarations(path):
     return names
 
 
-DOC_REF = re.compile(r'Items?\s+`([AC]/[^`]+)`\s*\(`((?:paper|companion)/[^`:]+\.tex):(\d+)(?:[-–](\d+))?`\)')
+ITEM_REF = re.compile(r'Items?\s+`([AC]/[^`]+)`')
+FILE_REF = re.compile(r'\(`((?:paper|companion)/[^`:]+\.tex):(\d+)(?:[-–](\d+))?`\)')
 
 
 def docstring_refs(path):
-    """(item id, file, first line, last line) cited as Item `id` (`file:a-b`) in a Lean file."""
-    return [(m.group(1), m.group(2), int(m.group(3)), int(m.group(4) or m.group(3)))
-            for m in DOC_REF.finditer(path.read_text())]
+    """(item id, file, first line, last line) for each Item `id` ... (`file:a-b`) in a Lean file.
+
+    The file reference must follow the item id within the same docstring, before any other item id."""
+    text, refs = path.read_text(), []
+    for m in ITEM_REF.finditer(text):
+        window = text[m.end():m.end() + 240]
+        for stop in (ITEM_REF.search(window), re.search(r'-/', window)):
+            if stop:
+                window = window[:stop.start()]
+        if f := FILE_REF.search(window):
+            refs.append((m.group(1), f.group(1), int(f.group(2)), int(f.group(3) or f.group(2))))
+    return refs
 
 
 def known_names():
