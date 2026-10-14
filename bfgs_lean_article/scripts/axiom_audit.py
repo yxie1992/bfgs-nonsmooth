@@ -5,8 +5,8 @@ Runs `#print axioms` (via `lake env lean`) on every declaration that
 `editorial/CLAIM_LEDGER.json` cites, for the article and for the companion (every
 export field of every record, and the declaration lists of the article
 supplements), on every Lean name of the coverage register
-(`editorial/lean_coverage/register/*.json`, items with status LEAN, DEFINITION or
-OPEN), plus the principal declarations of this package. Fails if a cited
+(`editorial/lean_coverage/register/*.json`, field `lean` of every classified
+item), plus the principal declarations of this package. Fails if a cited
 name does not exist or if any declaration depends on an axiom other than
 propext, Classical.choice and Quot.sound. The names are split across `--jobs`
 concurrent Lean processes. Private names (`_private.…`) in the supplements'
@@ -122,11 +122,11 @@ def ledger_names():
 
 
 def coverage_names():
-    """Lean names of the coverage register (statuses LEAN, DEFINITION, OPEN)."""
+    """Every Lean name cited by an item of the coverage register (any status)."""
     names = set()
     for path in sorted(COVERAGE.glob('*.json')):
         for item in json.loads(path.read_text())['items']:
-            if item.get('status') in ('LEAN', 'DEFINITION', 'OPEN'):
+            if item.get('status'):
                 names.update(item.get('lean') or [])
     return sorted(names)
 

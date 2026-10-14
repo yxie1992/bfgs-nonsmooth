@@ -51,18 +51,30 @@ one, the Lean name of a corrected statement or counterexample.
 
 ## Rules for coverage theorems
 
+The finished pilot, `bfgs_lean_article/BfgsArticle/Coverage/Article/MatrixAlgebra.lean`
+with `register/A_matrix_algebra.json`, is the model to follow.
+
 1. **Same statement.** Same hypotheses, same conclusion, same quantifier order
    and constants as the TeX. A more general Lean theorem is fine as the proof,
    but the coverage theorem states the paper's version. Never weaken a claim to
    make it provable; if it is false or unprovable as written, use `DISCREPANCY`.
 2. **Displays inside proofs** are stated under the standing assumptions of the
    proof at that point: the result's hypotheses and the objects and facts the
-   proof has introduced before the display.
-3. **Docstring.** Each coverage declaration has a docstring with the item id,
-   `file:lines`, and the claim in TeX (verbatim, or with notation expanded).
+   proof has introduced before the display. Objects that the text introduces
+   ("put $v=Hg$") are variables with their defining equation as a hypothesis,
+   `(v : Vec n) (hv : v = H *ᵥ g)`; inside a proof, introduce them with
+   `obtain ⟨v, hv⟩ : ∃ v, v = H *ᵥ g := ⟨_, rfl⟩`. A display that both defines
+   notation and asserts something (e.g. "$A=Z^THZ\succ0$") is `LEAN` for the
+   assertion, with a `note` on the definitions. Standing hypotheses that a proof
+   does not use get names starting with `_` (do not disable the linter).
+3. **Docstring.** Each coverage declaration has a docstring that starts with
+   ``Item `<id>` (`<tex file>:<first>-<last>`)`` (the checker compares these
+   lines with the register) and gives the claim in TeX, verbatim or with notation
+   expanded.
 4. **Readable statements.** Write statements with the library's definitions,
    unfolding `...Target` propositions so that the statement can be compared
-   with the TeX without chasing definitions.
+   with the TeX without chasing definitions. Use the shared forms below, so that
+   the same hypothesis reads the same in every file.
 5. **No shortcuts.** No `sorry`, `admit`, `axiom`, `native_decide`,
    `decide := true` tricks with `Lean.ofReduceBool`, `implemented_by`,
    `@[extern]`, `unsafe`, or `set_option debug.*`.
@@ -73,12 +85,41 @@ one, the Lean name of a corrected statement or counterexample.
    another coverage module.
 7. **Conventions.** `Vec n := Fin n → ℝ` carries the sup norm; Euclidean
    quantities are explicit (`sqNorm`, `dot`, `euclideanVector`).
+8. **Non-vacuity.** Each module with standing assumptions ends with an `example`
+   showing that they can all hold at once.
+9. **Proof steps.** Undisplayed steps of a proof need no item. Theorems that state
+   them anyway may be listed in the `lean` field of the `PROOF` item; every
+   `lean` name of every item is checked by the axiom audit.
+
+## Shared Lean forms
+
+| Paper | Lean |
+|---|---|
+| $H\succ0$ | `H.PosDef` |
+| $s=-\alpha Hg$ | `s = -α • (H *ᵥ g)` (definitionally `bfgsStep H g α`) |
+| the inverse update `art:update` | `inverseBFGS H s y` |
+| $q=g^THg$, $\beta$ of `art:minor-hierarchy` | variables with `q = dot g (H *ᵥ g)`, `β = -dot y (H *ᵥ g) / q` |
+| $Z$ with $j$ orthonormal columns | `Z : Matrix (Fin n) (Fin j) ℝ`, `Zᵀ * Z = 1` |
+| $\operatorname{Gram}_H(y,Z)$ | `metricGram H (fromCols (replicateCol Unit y) Z)` |
+| $[a\ b]$ | `(Matrix.of ![a, b])ᵀ` |
+| an admissible run (Definition `art:admissible`) | `AdmissibleBFGSRun` (see the energy module once written) |
+
+## Finding declarations
+
+Search the names in `bfgs_lean_stage1/master_report/DECLARATION_INDEX.json`
+(each entry has `signature`, `module`, `source_path`, `source_range`) and read the
+matching library files; this is faster than the claim ledger, whose export lists
+are coarse unions.
 
 ## Checking
 
     export PATH="$HOME/.elan/bin:$PATH"
     cd bfgs_lean_article && LEAN_NUM_THREADS=4 lake env lean BfgsArticle/Coverage/Article/Energy.lean
     python3 editorial/lean_coverage/check_coverage.py paper/sections/energy.tex
+
+Checking a module takes seconds once the library is built (loading even
+`import BfgsVerification` takes about 3 s). Never run `lake build`, `lake update`
+or `lake clean` while other agents work in the package.
 
 `lake build` compiles every coverage module (they are imported by
 `BfgsArticle.lean`); the axiom audit includes every Lean name in the registers;

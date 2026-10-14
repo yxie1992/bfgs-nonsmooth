@@ -16,7 +16,14 @@
    "title": null,
    "container": null,
    "sha256": "8d8ea8fbf5be5056",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.gram_compression",
+    "BfgsCoverage.Article.MatrixAlgebra.det_update",
+    "BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound",
+    "BfgsVerification.inverseBFGS_step_det_beta"
+   ],
+   "note": "gram_compression states the lemma under the hypotheses of Theorem art:minor-hierarchy (energy.tex:130-141), written out: H ≻ 0, s = -αHg, α > 0, q = gᵀHg > 0, β = -yᵀHg/q > 0, H₊ = inverseBFGS H s y (the update art:update), for Z : Matrix (Fin n) (Fin j) ℝ with Zᵀ * Z = 1 and 1 ≤ j ≤ n. Its conclusion is the inequality of disp/001 and, for the last sentence, j = n → det H₊ = (α/β) det H. Gram_H(y,Z) = [y Z]ᵀH[y Z] (defined at energy.tex:150) is metricGram H (fromCols (replicateCol Unit y) Z). The proof follows the paper, from the display theorems of this module. det_update states det H₊ = (α/β) det H without Z (second proof, from the library's inverseBFGS_step_det_beta). The library's compressed_inverseBFGS_bound is the inequality for every Z with independent columns."
   },
   {
    "id": "A/matrix_algebra/disp/001",
@@ -30,7 +37,8 @@
    "title": null,
    "container": "A/matrix_algebra/lemma/art:gram-compression",
    "sha256": "1c7e6d21a76f4bd5",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/matrix_algebra/lemma/art:gram-compression"
   },
   {
    "id": "A/matrix_algebra/proof/001",
@@ -46,7 +54,9 @@
    "title": null,
    "container": null,
    "sha256": "1e9d7ebb4c1815a1",
-   "status": null
+   "status": "PROOF",
+   "of": "A/matrix_algebra/lemma/art:gram-compression",
+   "note": "gram_compression is proved along this proof. Besides the displays (own items), the module states the undisplayed steps: kappa_eq_and_curvature (lines 14-15: κ = gᵀHy = -βq, yᵀs = αβq), gram_dets_nonneg (47-48), compression_update and compression_add_rank_one (56-59: ZᵀH₊Z = Zᵀ𝓕Z + ρaaᵀ with ρ = α/(βq); adding ρaaᵀ replaces r/κ² by r/κ² + ρ and adds exactly ρ det A u to the determinant), u_bounds (59-61: det Gram_H(g,Z) = det A (q-u), 0 ≤ u ≤ q, increase ≤ (α/β) det A), full_dimension_case (64-67: for j = n, ZZᵀ = I, u = q, w = κ, z = r, det(Zᵀ𝓕Z) = 0, increase = (α/β) det A, det(ZᵀH₊Z) = (α/β) det A, det H₊ = (α/β) det H). All hold as written. Two wording points, not errors: Gram_H(g,y,Z) and Gram_H(g,Z) are used without definition (the evident extension of energy.tex:150); and lines 59-60 credit 0 ≤ u ≤ q to the Schur complement of A in Gram_H(g,Z), which gives u ≤ q, while u ≥ 0 holds because A⁻¹ ≻ 0 (only u ≤ q is needed)."
   },
   {
    "id": "A/matrix_algebra/disp/002",
@@ -60,7 +70,12 @@
    "title": null,
    "container": "A/matrix_algebra/proof/001",
    "sha256": "51f05ec775580986",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.update_split",
+    "BfgsVerification.inverseBFGS_projection_form"
+   ],
+   "note": "Stated with v, κ, P, 𝓕 (Lean F) as variables with their defining equations v = Hg, κ = gᵀHy, P = I - vyᵀ/κ, F = PHPᵀ."
   },
   {
    "id": "A/matrix_algebra/disp/003",
@@ -74,7 +89,12 @@
    "title": null,
    "container": "A/matrix_algebra/proof/001",
    "sha256": "e21cee661bf0388a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.compression_posDef",
+    "BfgsVerification.metricGram_posDef"
+   ],
+   "note": "The display defines A, a, b, r, u, w, z and asserts A = ZᵀHZ ≻ 0. compression_posDef states the assertion. The definitions are notation: the coverage theorems of disp/004 to disp/006 take the ones they use as variables with exactly these defining equations as hypotheses (e.g. hu : u = dot a (A⁻¹ *ᵥ a))."
   },
   {
    "id": "A/matrix_algebra/disp/004",
@@ -88,7 +108,12 @@
    "title": null,
    "container": "A/matrix_algebra/proof/001",
    "sha256": "642fd52b03417fa6",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.compression_formula",
+    "BfgsVerification.BFGSCompression.projected_compression"
+   ],
+   "note": "[a b] is (Matrix.of ![a, b])ᵀ, so [a b]ᵀ is Matrix.of ![a, b]."
   },
   {
    "id": "A/matrix_algebra/disp/005",
@@ -104,7 +129,11 @@
    "title": null,
    "container": "A/matrix_algebra/proof/001",
    "sha256": "cb1a262d828261e5",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.compression_determinant",
+    "BfgsVerification.CompressionDeterminant.compression_det"
+   ]
   },
   {
    "id": "A/matrix_algebra/disp/006",
@@ -118,7 +147,13 @@
    "title": null,
    "container": "A/matrix_algebra/proof/001",
    "sha256": "dab4f6a82ab30a23",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.gram_schur",
+    "BfgsVerification.metricGram_det_append_one",
+    "BfgsVerification.metricGram_det_append_two"
+   ],
+   "note": "Gram_H(g,y,Z) is read as [g y Z]ᵀH[g y Z], i.e. metricGram H (fromCols (Matrix.of ![g, y])ᵀ Z); the paper defines only Gram_H(y,Z) (energy.tex:150)."
   },
   {
    "id": "A/matrix_algebra/disp/007",
@@ -132,7 +167,11 @@
    "title": null,
    "container": "A/matrix_algebra/proof/001",
    "sha256": "858cef07b47ee472",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.compression_gram_bound",
+    "BfgsVerification.metricGram_det_nonneg"
+   ]
   }
  ],
  "discrepancies": []

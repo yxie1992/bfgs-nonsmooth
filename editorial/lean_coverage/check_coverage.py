@@ -48,9 +48,18 @@ def lean_declarations(path):
             if stack and (m.group(1) is None or m.group(1) == stack[-1] or stack[-1].endswith('.' + (m.group(1) or ''))):
                 stack.pop()
         elif m := DECL.match(line):
-            name = m.group(1).lstrip('_root_.')
+            name = m.group(1).removeprefix('_root_.')
             names.add('.'.join(stack + [name]) if stack and not m.group(1).startswith('_root_.') else name)
     return names
+
+
+DOC_REF = re.compile(r'Items?\s+`([AC]/[^`]+)`\s*\(`((?:paper|companion)/[^`:]+\.tex):(\d+)(?:[-–](\d+))?`\)')
+
+
+def docstring_refs(path):
+    """(item id, file, first line, last line) cited as Item `id` (`file:a-b`) in a Lean file."""
+    return [(m.group(1), m.group(2), int(m.group(3)), int(m.group(4) or m.group(3)))
+            for m in DOC_REF.finditer(path.read_text())]
 
 
 def known_names():
@@ -89,6 +98,13 @@ def check(files, strict):
         module_names = lean_declarations(module_file(module)) if module and module_file(module).exists() else set()
         mechanical = {item['id']: item for item in ex.items_of(path)}
         listed = {item['id']: item for item in register['items']}
+        if module and module_file(module).exists():
+            for item_id, cited_file, first, last in docstring_refs(module_file(module)):
+                if item_id not in listed:
+                    problems.append(f'{module}: docstring cites unknown item {item_id}')
+                elif cited_file != path or [first, last] != listed[item_id].get('lines'):
+                    problems.append(f'{module}: docstring of {item_id} cites {cited_file}:{first}-{last}, '
+                                    f'register has {path}:{listed[item_id].get("lines")}')
         for item_id, item in mechanical.items():
             if item_id not in listed:
                 problems.append(f'{item_id}: missing from the register')
@@ -107,13 +123,13 @@ def check(files, strict):
             if status not in STATUSES:
                 problems.append(f'{item_id}: unknown status {status}')
                 continue
+            cited = item.get('lean') or []
+            for name in cited:
+                if name not in names and name not in module_names:
+                    problems.append(f'{item_id}: unknown Lean name {name}')
             if status in {'LEAN', 'DEFINITION', 'OPEN'}:
-                cited = item.get('lean') or []
                 if not cited:
                     problems.append(f'{item_id}: status {status} needs lean names')
-                for name in cited:
-                    if name not in names and name not in module_names:
-                        problems.append(f'{item_id}: unknown Lean name {name}')
                 if status == 'LEAN' and cited and cited[0] not in module_names:
                     problems.append(f'{item_id}: first lean name must be declared in {module}')
             if status in {'PART_OF', 'PROOF', 'SAME_AS'}:
