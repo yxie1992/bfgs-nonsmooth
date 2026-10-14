@@ -7,7 +7,10 @@ export field of every record, and the declaration lists of the article
 supplements), plus the principal declarations of this package. Fails if a cited
 name does not exist or if any declaration depends on an axiom other than
 propext, Classical.choice and Quot.sound. The names are split across `--jobs`
-concurrent Lean processes.
+concurrent Lean processes. Private names (`_private.…`) in the supplements'
+declaration lists cannot be referred to outside their module; they are listed
+in the report, and their axioms are part of those of the public declarations
+that use them.
 
 It also records the exact signature and module of this package's principal
 declarations, which `editorial/assemble_claim_ledger.py` uses for the ledger.
@@ -94,7 +97,7 @@ def collect(value, out):
 
 
 def ledger_names():
-    """Article principal exports, all article-cited names, all companion-cited names."""
+    """Article principal exports, article-cited names, companion-cited names, skipped private names."""
     ledger = json.loads(LEDGER.read_text())
     principal = set()
     for record in ledger['article_records']:
@@ -109,7 +112,10 @@ def ledger_names():
     supplements.append(ledger['literal_branch_regularity_supplement']['declarations'])
     for path in supplements:
         article.update(entry['name'] for entry in json.loads((ROOT / path).read_text()))
-    return sorted(principal), sorted(article), sorted(companion)
+    private = sorted(n for n in article | companion if n.startswith('_private.'))
+    article -= set(private)
+    companion -= set(private)
+    return sorted(principal), sorted(article), sorted(companion), private
 
 
 def run_lean(sources):
@@ -162,8 +168,10 @@ def main():
     parser.add_argument('--jobs', type=int, default=3, help='concurrent Lean processes (default 3)')
     args = parser.parse_args()
     started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    source_commit = command_output(['git', 'rev-parse', 'HEAD'], ROOT)
+    source_tree_clean = command_output(['git', 'status', '--porcelain'], ROOT) == ''
 
-    principal, article, companion = ledger_names()
+    principal, article, companion, private = ledger_names()
     cited = sorted(set(article) | set(companion))
     names = sorted(set(cited) | set(PACKAGE_PRINCIPAL))
     jobs = max(1, min(args.jobs, len(names)))
@@ -192,8 +200,8 @@ def main():
         'status': 'PASS' if passed else 'FAIL',
         'started_utc': started,
         'lean_version': command_output(['lake', 'env', 'lean', '--version'], PACKAGE),
-        'source_commit': command_output(['git', 'rev-parse', 'HEAD'], ROOT),
-        'source_tree_clean': command_output(['git', 'status', '--porcelain'], ROOT) == '',
+        'source_commit': source_commit,
+        'source_tree_clean': source_tree_clean,
         'command': 'python3 scripts/axiom_audit.py' + (' --write-guard' if args.write_guard else ''),
         'policy': 'every declaration cited by the claim ledger (article and companion) exists and depends on no axiom outside ' + ', '.join(STANDARD),
         'declarations_checked': len(names),
@@ -205,6 +213,7 @@ def main():
         'axiom_set_counts': counts,
         'missing_or_unresolved': missing,
         'nonstandard_axioms': nonstandard,
+        'private_names_not_referable': private,
         'package_declarations': [
             {'name': n, 'module': signatures[n][0], 'signature': signatures[n][1], 'axioms': found.get(n)}
             for n in PACKAGE_PRINCIPAL if n in signatures],
