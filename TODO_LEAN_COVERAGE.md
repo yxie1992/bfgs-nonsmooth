@@ -32,3 +32,8 @@ Progress (`python3 editorial/lean_coverage/check_coverage.py`):
 - [ ] Integrate: import the coverage modules in `BfgsArticle.lean`, add the
       register names to the axiom audit, rerun the audit and the kernel replay.
 - [ ] Discrepancies found on the way go to `TODO_MANUSCRIPT_REVIEW.md`.
+- [ ] Non-vacuity follow-up: no admissible run is exhibited on the three-branch
+      objective of Theorem `art:nonradial-example` (its objective-level hypotheses
+      are shown satisfiable; runs are exhibited on |x|, max(x,−2x), u²+|v| and a
+      quadratic). A general existence theorem for Armijo–weak Wolfe steps at
+      differentiable points of finite convex maxima would settle it.
