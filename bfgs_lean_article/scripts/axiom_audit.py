@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Axiom audit for the article's formal claims.
+"""Axiom audit for the formal claims of the article and the companion.
 
 Runs `#print axioms` (via `lake env lean`) on every declaration that
-`editorial/CLAIM_LEDGER.json` cites for an article statement (principal and
-full exports), plus the principal declarations of this package. Fails if a
-cited name does not exist or if any declaration depends on an axiom other than
-propext, Classical.choice and Quot.sound.
+`editorial/CLAIM_LEDGER.json` cites, for the article and for the companion (every
+export field of every record, and the declaration lists of the article
+supplements), plus the principal declarations of this package. Fails if a cited
+name does not exist or if any declaration depends on an axiom other than
+propext, Classical.choice and Quot.sound. The names are split across `--jobs`
+concurrent Lean processes.
 
 It also records the exact signature and module of this package's principal
 declarations, which `editorial/assemble_claim_ledger.py` uses for the ledger.
@@ -15,7 +17,7 @@ the `#print axioms` output of the principal exports with `#guard_msgs`, so that
 a plain `lake build` fails if any of them changes.
 
 Usage (from bfgs_lean_article/, after `lake build BfgsArticle`):
-    python3 scripts/axiom_audit.py [--write-guard] [--report AXIOM_AUDIT.json]
+    python3 scripts/axiom_audit.py [--jobs 3] [--write-guard] [--report AXIOM_AUDIT.json]
 """
 from pathlib import Path
 import argparse, datetime, json, re, subprocess, sys
@@ -60,7 +62,10 @@ PACKAGE_PRINCIPAL = [
     'BfgsVerification.LUniform.uniformSmoothLocalFailure',
 ]
 
-AXIOMS = re.compile(r"'([^']+)'\s+(?:depends on axioms:\s*\[([^\]]*)\]|does not depend on any axioms)")
+# Names may contain apostrophes, so the name is the shortest match before `' depends`.
+AXIOMS = re.compile(r"'([^\n]+?)'\s+(?:depends on axioms:\s*\[([^\]]*)\]|does not depend on any axioms)")
+# Ledger fields that list Lean declarations.
+EXPORT_FIELDS = ('principal_exports', 'full_formal_exports', 'all_span_exports', 'primary_declarations', 'exports')
 SIGNATURE = re.compile(r'BFGS_SIGNATURE_BEGIN (\S+) (\S+)\n(.*?)\nBFGS_SIGNATURE_END', re.S)
 
 SIGNATURE_COMMAND = '''open Lean Elab Command in
@@ -76,23 +81,55 @@ elab "#bfgs_signature " id:ident : command => do
 '''
 
 
+def collect(value, out):
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key in EXPORT_FIELDS and isinstance(item, list):
+                out.update(name for name in item if isinstance(name, str))
+            else:
+                collect(item, out)
+    elif isinstance(value, list):
+        for item in value:
+            collect(item, out)
+
+
 def ledger_names():
+    """Article principal exports, all article-cited names, all companion-cited names."""
     ledger = json.loads(LEDGER.read_text())
-    principal, full = set(), set()
+    principal = set()
     for record in ledger['article_records']:
         principal.update(record.get('principal_exports', []))
-        full.update(record.get('full_formal_exports', []))
-    return sorted(principal), sorted(full | principal)
+    article, companion = set(principal), set()
+    for key, value in ledger.items():
+        if key.startswith('companion'):
+            collect(value, companion)
+        else:
+            collect(value, article)
+    supplements = [s['declarations'] for s in ledger['narrative_formal_supplements']['supplements']]
+    supplements.append(ledger['literal_branch_regularity_supplement']['declarations'])
+    for path in supplements:
+        article.update(entry['name'] for entry in json.loads((ROOT / path).read_text()))
+    return sorted(principal), sorted(article), sorted(companion)
 
 
-def lean(source_text, name):
+def run_lean(sources):
+    """Run `lake env lean` on generated files concurrently; return [(code, output)]."""
     work = PACKAGE / '.lake' / 'axiom_audit'
     work.mkdir(parents=True, exist_ok=True)
-    source = work / name
-    source.write_text(source_text)
-    result = subprocess.run(['lake', 'env', 'lean', str(source)], cwd=PACKAGE,
-                            capture_output=True, text=True)
-    return result.returncode, result.stdout + result.stderr
+    running = []
+    for name, text in sources:
+        source, log = work / name, work / (name + '.out')
+        source.write_text(text)
+        handle = log.open('w')
+        process = subprocess.Popen(['lake', 'env', 'lean', str(source)], cwd=PACKAGE,
+                                   stdout=handle, stderr=subprocess.STDOUT)
+        running.append((process, handle, log))
+    results = []
+    for process, handle, log in running:
+        code = process.wait()
+        handle.close()
+        results.append((code, log.read_text()))
+    return results
 
 
 def order(axioms):
@@ -122,21 +159,27 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--write-guard', action='store_true')
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--jobs', type=int, default=3, help='concurrent Lean processes (default 3)')
     args = parser.parse_args()
     started = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-    principal, cited = ledger_names()
+    principal, article, companion = ledger_names()
+    cited = sorted(set(article) | set(companion))
     names = sorted(set(cited) | set(PACKAGE_PRINCIPAL))
-    code, output = lean('import BfgsArticle\n\n' + ''.join(f'#print axioms {n}\n' for n in names),
-                        'AxiomAudit.lean')
+    jobs = max(1, min(args.jobs, len(names)))
+    sources = [(f'AxiomAudit{i}.lean', 'import BfgsArticle\n\n' +
+                ''.join(f'#print axioms {n}\n' for n in names[i::jobs])) for i in range(jobs)]
+    sources.append(('Signatures.lean', 'import BfgsArticle\n\n' + SIGNATURE_COMMAND + '\n' +
+                    ''.join(f'set_option pp.fullNames true in\n#bfgs_signature {n}\n'
+                            for n in PACKAGE_PRINCIPAL)))
+    *audits, (sig_code, sig_output) = run_lean(sources)
+    code = next((c for c, _ in audits if c != 0), 0)
+    output = '\n'.join(o for _, o in audits)
     found = {m.group(1): order([a.strip() for a in (m.group(2) or '').replace('\n', ' ').split(',') if a.strip()])
              for m in AXIOMS.finditer(output)}
     missing = [n for n in names if n not in found]
     nonstandard = {n: a for n, a in found.items() if not set(a) <= set(STANDARD)}
 
-    sig_code, sig_output = lean('import BfgsArticle\n\n' + SIGNATURE_COMMAND + '\n' +
-                                ''.join(f'set_option pp.fullNames true in\n#bfgs_signature {n}\n'
-                                        for n in PACKAGE_PRINCIPAL), 'Signatures.lean')
     signatures = {m.group(1): (m.group(2), m.group(3)) for m in SIGNATURE.finditer(sig_output)}
     unsigned = [n for n in PACKAGE_PRINCIPAL if n not in signatures]
 
@@ -152,10 +195,12 @@ def main():
         'source_commit': command_output(['git', 'rev-parse', 'HEAD'], ROOT),
         'source_tree_clean': command_output(['git', 'status', '--porcelain'], ROOT) == '',
         'command': 'python3 scripts/axiom_audit.py' + (' --write-guard' if args.write_guard else ''),
-        'policy': 'every cited declaration exists and depends on no axiom outside ' + ', '.join(STANDARD),
+        'policy': 'every declaration cited by the claim ledger (article and companion) exists and depends on no axiom outside ' + ', '.join(STANDARD),
         'declarations_checked': len(names),
         'ledger_principal_exports': len(principal),
-        'ledger_cited_exports': len(cited),
+        'ledger_cited_exports': len(article),
+        'ledger_companion_exports': len(companion),
+        'ledger_companion_only_exports': len(set(companion) - set(article)),
         'package_principal_declarations': len(PACKAGE_PRINCIPAL),
         'axiom_set_counts': counts,
         'missing_or_unresolved': missing,
