@@ -12,3 +12,15 @@ import BfgsArticle.LNonStrictBranch
 import BfgsArticle.HomogeneousModels
 import BfgsArticle.LUniformGlobal
 import BfgsArticle.LUniformLocal
+import BfgsArticle.Coverage.Article.Master
+import BfgsArticle.Coverage.Article.Introduction
+import BfgsArticle.Coverage.Article.Geometry
+import BfgsArticle.Coverage.Article.Energy
+import BfgsArticle.Coverage.Article.Global
+import BfgsArticle.Coverage.Article.Local
+import BfgsArticle.Coverage.Article.PositivePartition
+import BfgsArticle.Coverage.Article.Failure
+import BfgsArticle.Coverage.Article.NegativeUpper
+import BfgsArticle.Coverage.Article.Verification
+import BfgsArticle.Coverage.Article.MatrixAlgebra
+import BfgsArticle.Coverage.Article.PlanarGeometry
