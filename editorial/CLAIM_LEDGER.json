@@ -189,11 +189,14 @@
       "full_formal_exports": [
         "BfgsVerification.BFGSCompression.inverseBFGS_compression",
         "BfgsVerification.CompressionAlgebra.gram_numerator_identity",
+        "BfgsVerification.HessianInvariantTarget",
         "BfgsVerification.PrincipalMinorHierarchyTarget",
         "BfgsVerification.UnexcitedMetric.literal_matrix_limit",
         "BfgsVerification.diagonal_coordinate_gram_sum_eq",
         "BfgsVerification.fullBFGS_normalizedHierarchy",
+        "BfgsVerification.hessianInvariants",
         "BfgsVerification.insert_product_sum_eq",
+        "BfgsVerification.inverseBFGS_step_det_beta",
         "BfgsVerification.orthogonal_coordinate_gram_sum_eq",
         "BfgsVerification.principalGramSumIdentity",
         "BfgsVerification.principalMinorHierarchy",
@@ -204,7 +207,10 @@
       ],
       "principal_exports": [
         "BfgsVerification.principalMinorHierarchy",
-        "BfgsVerification.PrincipalMinorHierarchyTarget"
+        "BfgsVerification.PrincipalMinorHierarchyTarget",
+        "BfgsVerification.inverseBFGS_step_det_beta",
+        "BfgsVerification.hessianInvariants",
+        "BfgsVerification.HessianInvariantTarget"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
@@ -212,7 +218,18 @@
       ],
       "review": "Actual principal determinant sums; SPD H, alpha>0,q>0,beta>0,1<=j<=n. Positive dimension is a harmless article specialization.",
       "detailed_review": "editorial/positive_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "BfgsVerification.inverseBFGS_step_det_beta",
+          "BfgsVerification.hessianInvariants",
+          "BfgsVerification.HessianInvariantTarget"
+        ],
+        "exact_contracts": [],
+        "note": "The exact j=n identity det H_+ = (alpha/beta) det H, for one update and along every admissible run."
+      }
     },
     {
       "id": "art:gram-compression",
@@ -241,6 +258,7 @@
         "BfgsVerification.diagonal_coordinate_gram_sum_eq",
         "BfgsVerification.fullBFGS_normalizedHierarchy",
         "BfgsVerification.insert_product_sum_eq",
+        "BfgsVerification.inverseBFGS_step_det_beta",
         "BfgsVerification.orthogonal_coordinate_gram_sum_eq",
         "BfgsVerification.principalGramSumIdentity",
         "BfgsVerification.principalMinorHierarchy",
@@ -252,7 +270,8 @@
       "principal_exports": [
         "BfgsVerification.principalMinorHierarchy",
         "BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound",
-        "BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound_generic"
+        "BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound_generic",
+        "BfgsVerification.inverseBFGS_step_det_beta"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
@@ -260,7 +279,16 @@
       ],
       "review": "Explicit Schur/rank-two calculation supporting the actual-matrix theorem; no assumed scalar hierarchy.",
       "detailed_review": "editorial/positive_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "BfgsVerification.inverseBFGS_step_det_beta"
+        ],
+        "exact_contracts": [],
+        "note": "The j=n case det H_+ = (alpha/beta) det H."
+      }
     },
     {
       "id": "art:reciprocal-growth",
@@ -1006,14 +1034,18 @@
         "H.span.20"
       ],
       "full_formal_exports": [
+        "BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion",
+        "BfgsVerification.AdmissibleBFGSRun.gauge_conclusion",
         "BfgsVerification.AdmissibleBFGSRun.homogeneous_bounded_below_convergence",
         "BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero",
+        "BfgsVerification.AdmissibleBFGSRun.homogeneous_conclusion_of_bounded_zero_sublevel",
         "BfgsVerification.AdmissibleBFGSRun.homogeneous_iterates_zero_of_bounded_zero_sublevel",
         "BfgsVerification.AdmissibleBFGSRun.identically_zero_no_infinite_run",
         "BfgsVerification.AdmissibleBFGSRun.maxLinear_linear_zero_fiber_limit",
         "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_convergence",
         "BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_complete",
         "BfgsVerification.AdmissibleBFGSRun.maxLinear_seminorm_has_limit",
+        "BfgsVerification.AdmissibleBFGSRun.norm_conclusion",
         "BfgsVerification.AdmissibleBFGSRun.zero_objective_no_infinite_run",
         "BfgsVerification.Homogeneous.finiteMaxLinear_convex",
         "BfgsVerification.Homogeneous.finiteMaxLinear_homogeneous",
@@ -1034,15 +1066,34 @@
         "BfgsVerification.AdmissibleBFGSRun.homogeneous_iterates_zero_of_bounded_zero_sublevel",
         "BfgsVerification.Homogeneous.positive_of_bounded_zero_sublevel",
         "BfgsVerification.Homogeneous.finiteMaxLinear_convex",
-        "BfgsVerification.Homogeneous.finiteMaxLinear_homogeneous"
+        "BfgsVerification.Homogeneous.finiteMaxLinear_homogeneous",
+        "BfgsVerification.AdmissibleBFGSRun.norm_conclusion",
+        "BfgsVerification.AdmissibleBFGSRun.gauge_conclusion",
+        "BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion",
+        "BfgsVerification.AdmissibleBFGSRun.homogeneous_conclusion_of_bounded_zero_sublevel"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
-        "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json"
+        "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "Explicit specializations to a norm, a finite convex degree-one gauge with bounded unit sublevel, or a finite linear maximum with bounded zero sublevel. The article proves the ray/sphere positivity deduction, and bounded unit sublevel implies bounded zero sublevel by inclusion. No affine intercepts, no noncoercive all-iterate claim, no symmetry needed for gauges. Standard norm axioms supply continuity/positive homogeneity/convexity; no new algorithmic theorem assumed.",
       "detailed_review": "editorial/positive_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "BfgsVerification.AdmissibleBFGSRun.norm_conclusion",
+          "BfgsVerification.AdmissibleBFGSRun.gauge_conclusion",
+          "BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion",
+          "BfgsVerification.AdmissibleBFGSRun.homogeneous_conclusion_of_bounded_zero_sublevel"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "Explicit Lean forms of the three cases (every norm, bounded unit sublevel gauge, finite linear maximum with bounded zero sublevel) with the full conclusion of Theorem art:homogeneous."
+      }
     },
     {
       "id": "art:localization",
@@ -7159,6 +7210,7 @@
       ],
       "full_formal_exports": [
         "ArticleBranchRegularity.branch_not_twice_differentiable_zero",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
         "BfgsVerification.AffineWhitening.armijo_equiv",
@@ -7291,6 +7343,8 @@
         "BfgsVerification.LSeedCopies.run_search",
         "BfgsVerification.LSeedCopies.run_value_limit",
         "BfgsVerification.LSeedCopies.run_value_positive",
+        "BfgsVerification.LWhitening.NonStrictIdentityFailureTarget",
+        "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
         "BfgsVerification.LWhitening.SmoothLocalFailureTarget",
         "BfgsVerification.LWhitening.constants_order",
         "BfgsVerification.LWhitening.coordinateMatrix_invertible",
@@ -7313,6 +7367,8 @@
         "BfgsVerification.LWhitening.identity_failure",
         "BfgsVerification.LWhitening.initialMetric_posDef",
         "BfgsVerification.LWhitening.lowerConstant_pos",
+        "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure",
+        "BfgsVerification.LWhitening.nonstrict_identity_failure",
         "BfgsVerification.LWhitening.smoothIdentityFailure",
         "BfgsVerification.LWhitening.smoothLocalFailure",
         "BfgsVerification.LWhitening.smooth_actual_hessian",
@@ -7385,16 +7441,37 @@
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
         "BfgsVerification.LWhitening.SmoothLocalFailureTarget",
-        "BfgsVerification.LWhitening.smoothLocalFailure"
+        "BfgsVerification.LWhitening.smoothLocalFailure",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
+        "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
+        "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure",
+        "BfgsVerification.LWhitening.NonStrictIdentityFailureTarget",
+        "BfgsVerification.LWhitening.nonstrict_identity_failure"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
         "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
-        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json"
+        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "reviewed_against_corrected_source_and_exact_formal_contracts",
       "detailed_review": "editorial/negative_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
+          "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
+          "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure",
+          "BfgsVerification.LWhitening.NonStrictIdentityFailureTarget",
+          "BfgsVerification.LWhitening.nonstrict_identity_failure"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "The same runs with the non-strict acceptance tests of Section art:failure (Armijo <=, weak Wolfe >=); the strict trace is kept alongside. Closes the strict-only formalization recorded in TODO_LEAN_REVIEW.md."
+      }
     },
     {
       "id": "art:failure",
@@ -11858,6 +11935,7 @@
       ],
       "full_formal_exports": [
         "ArticleBranchRegularity.branch_not_twice_differentiable_zero",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
         "BfgsVerification.AffineWhitening.armijo_equiv",
@@ -12375,16 +12453,29 @@
       "principal_exports": [
         "ArticleBranchRegularity.branch_not_twice_differentiable_zero",
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
-        "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero"
+        "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
         "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
-        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json"
+        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "reviewed_against_corrected_source_and_exact_formal_contracts",
       "detailed_review": "editorial/negative_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "Endpoint with the non-strict acceptance tests of Section art:failure."
+      }
     },
     {
       "id": "art:quadratic_minimizer",
@@ -12644,6 +12735,8 @@
         "BfgsVerification.LFlatten.physical_neighborhood",
         "BfgsVerification.LGlobalFailure.actual_global_failure",
         "BfgsVerification.LGlobalFailure.actual_orbit_data",
+        "BfgsVerification.LGlobalFailure.nonstrict_actual_global_failure",
+        "BfgsVerification.LGlobalFailure.nonstrict_source_global_failure",
         "BfgsVerification.LGlobalFailure.source_global_failure",
         "BfgsVerification.LGlobalTargets.globalFailure",
         "BfgsVerification.LGlobalTargets.localInverse",
@@ -12957,15 +13050,30 @@
         "BfgsVerification.SeedOrbit.trialHistory_length_le"
       ],
       "principal_exports": [
-        "BfgsVerification.LGlobalFailure.actual_global_failure"
+        "BfgsVerification.LGlobalFailure.actual_global_failure",
+        "BfgsVerification.LGlobalFailure.nonstrict_actual_global_failure",
+        "BfgsVerification.LGlobalFailure.nonstrict_source_global_failure"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
-        "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json"
+        "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "reviewed_against_corrected_source_and_exact_formal_contracts",
       "detailed_review": "editorial/negative_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "BfgsVerification.LGlobalFailure.nonstrict_actual_global_failure",
+          "BfgsVerification.LGlobalFailure.nonstrict_source_global_failure"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "The same runs with the non-strict acceptance tests of Section art:failure, for every mu>0, 0<c1<=1/3 and c1<c2<1, and for the literal c1=1e-4, c2=1/2."
+      }
     },
     {
       "id": "art:lower_return_substep",
@@ -13862,6 +13970,7 @@
       ],
       "full_formal_exports": [
         "ArticleBranchRegularity.branch_not_twice_differentiable_zero",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
         "BfgsVerification.LEmbedding.branch_gradient_bound",
@@ -13882,16 +13991,29 @@
       "principal_exports": [
         "ArticleBranchRegularity.branch_not_twice_differentiable_zero",
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
-        "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero"
+        "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
         "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
-        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json"
+        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "reviewed_against_corrected_source_and_exact_formal_contracts",
       "detailed_review": "editorial/negative_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "Endpoint with the non-strict acceptance tests of Section art:failure."
+      }
     },
     {
       "id": "art:lower_local_model",
@@ -13940,6 +14062,7 @@
         "BfgsVerification.AffineWhitening.squareRoot_transpose",
         "BfgsVerification.AffineWhitening.whiten_initial",
         "BfgsVerification.AffineWhitening.wolfe_equiv",
+        "BfgsVerification.LActualCopies.NonStrictFixedMetricFailureTarget",
         "BfgsVerification.LActualCopies.actual_parameters",
         "BfgsVerification.LActualCopies.actual_search",
         "BfgsVerification.LActualCopies.centers_nonstationary",
@@ -13947,6 +14070,7 @@
         "BfgsVerification.LActualCopies.gradient_formula",
         "BfgsVerification.LActualCopies.matrix_formula",
         "BfgsVerification.LActualCopies.matrix_limit",
+        "BfgsVerification.LActualCopies.nonstrict_fixed_metric_failure",
         "BfgsVerification.LActualCopies.point_formula",
         "BfgsVerification.LActualCopies.point_limit",
         "BfgsVerification.LActualCopies.point_norm_bound",
@@ -14027,15 +14151,30 @@
       ],
       "principal_exports": [
         "BfgsVerification.LEmbedding.local_model",
-        "BfgsVerification.LActualCopies.fixed_metric_failure"
+        "BfgsVerification.LActualCopies.fixed_metric_failure",
+        "BfgsVerification.LActualCopies.NonStrictFixedMetricFailureTarget",
+        "BfgsVerification.LActualCopies.nonstrict_fixed_metric_failure"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
-        "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json"
+        "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "reviewed_against_corrected_source_and_exact_formal_contracts",
       "detailed_review": "editorial/negative_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "BfgsVerification.LActualCopies.NonStrictFixedMetricFailureTarget",
+          "BfgsVerification.LActualCopies.nonstrict_fixed_metric_failure"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "Fixed-matrix copy family with the non-strict acceptance tests of Section art:failure."
+      }
     },
     {
       "id": "art:cycle-figure",
@@ -14359,6 +14498,7 @@
       ],
       "full_formal_exports": [
         "ArticleBranchRegularity.branch_not_twice_differentiable_zero",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction",
         "ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero",
         "BfgsVerification.AffineWhitening.armijo_equiv",
@@ -14776,6 +14916,7 @@
         "BfgsVerification.LSeedCopies.run_search",
         "BfgsVerification.LSeedCopies.run_value_limit",
         "BfgsVerification.LSeedCopies.run_value_positive",
+        "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
         "BfgsVerification.LWhitening.SmoothLocalFailureTarget",
         "BfgsVerification.LWhitening.constants_order",
         "BfgsVerification.LWhitening.coordinateMatrix_invertible",
@@ -14785,6 +14926,7 @@
         "BfgsVerification.LWhitening.fixedHessian_posDef",
         "BfgsVerification.LWhitening.initialMetric_posDef",
         "BfgsVerification.LWhitening.lowerConstant_pos",
+        "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure",
         "BfgsVerification.LWhitening.smoothLocalFailure",
         "BfgsVerification.LWhitening.smooth_actual_hessian",
         "BfgsVerification.LWhitening.smooth_branch_regular",
@@ -14878,16 +15020,33 @@
         "BfgsVerification.DEmbedding.branch_hessian_lipschitz",
         "BfgsVerification.DEmbedding.deterministic_embedding_failure",
         "BfgsVerification.LWhitening.SmoothLocalFailureTarget",
-        "BfgsVerification.LWhitening.smoothLocalFailure"
+        "BfgsVerification.LWhitening.smoothLocalFailure",
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
+        "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
+        "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure"
       ],
       "exact_contracts": [
         "bfgs_lean_stage1/master_report/DECLARATION_INDEX.json",
         "editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json",
-        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json"
+        "editorial/satisfaction_review/branch_formal/runs/branch_regularity_01/declarations.json",
+        "bfgs_lean_article/AXIOM_AUDIT.json"
       ],
       "review": "reviewed_against_exact_formal_contracts_and_fresh_supplemental_audit",
       "detailed_review": "editorial/negative_contract_review.json",
-      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS"
+      "status": "REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS",
+      "formal_addenda": {
+        "revision": "lean_review_20261013",
+        "source": "editorial/lean_review_20261013/LEDGER_ADDITIONS.json",
+        "principal_exports": [
+          "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
+          "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
+          "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure"
+        ],
+        "exact_contracts": [
+          "bfgs_lean_article/AXIOM_AUDIT.json"
+        ],
+        "note": "Lower-curvature regime with the non-strict acceptance tests of Section art:failure."
+      }
     },
     {
       "id": "art:matched-local-model",

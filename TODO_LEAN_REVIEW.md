@@ -4,9 +4,13 @@ Review date: 13 October 2026. Reviewer: AI assistant (Claude), at the author's r
 
 Scope: check that the Lean statements match the article's statements (`paper/`), and
 look for misuse of Lean (proof holes, extra axioms, kernel bypasses, vacuous or
-mis-specified definitions). Proofs were **not** read line by line, and the Lean
-was **not** compiled here (no Lean toolchain on this machine). The companion's
+mis-specified definitions). Proofs were **not** read line by line. The companion's
 other results were not reviewed.
+
+**Status (13 October 2026, second pass):** Lean 4.19.0 is now installed. The library
+was built from scratch here, and every item below except P3d (an optional paper edit)
+is resolved. Resolutions are recorded under each item and in
+`bfgs_lean_article/README.md`.
 
 ## Summary
 
@@ -33,7 +37,7 @@ other results were not reviewed.
 
 ### P1: verification
 
-- [ ] **Independent clean build and axiom check.** The repository's own records
+- [x] **Independent clean build and axiom check.** The repository's own records
   say that the main library and Mathlib were never rebuilt from an empty cache.
   The "PASS" evidence is AI-produced logs. On a clean machine:
   1. Install `elan`, then `cd bfgs_lean_stage1 && lake exe cache get && lake build`.
@@ -58,9 +62,38 @@ other results were not reviewed.
      `BfgsVerification.LGlobalFailure.actual_global_failure`,
      `ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction`.
 
+  **Done.**
+  - Build: Lean 4.19.0 via elan. Mathlib came from the official cache for the
+    pinned revision (Mathlib itself was not recompiled, which is standard). The
+    whole main library was compiled from scratch:
+    - 736 of 736 modules built, in 11 min 41 s with `LEAN_NUM_THREADS=10`, peak
+      about 10 GB RAM;
+    - no errors and no `sorry` warnings;
+    - 1244 linter warnings, all style: unused variables, tactics that never
+      run or do nothing, `<;>` where `;` suffices, and 6 deprecations.
+  - Supplements: all five now compile through the standard `lake build` of the
+    new package `bfgs_lean_article/` (see P3).
+  - Axioms: `bfgs_lean_article/scripts/axiom_audit.py` ran `#print axioms` on
+    2013 declarations. These are every Lean name that
+    `editorial/CLAIM_LEDGER.json` cites for an article statement (principal and
+    full exports) plus the new package's principal declarations.
+    - Every cited name exists.
+    - Every declaration depends only on `propext`, `Classical.choice` and
+      `Quot.sound` (2012 use all three; one uses only `propext` and `Quot.sound`).
+    - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
+    - The principal exports are pinned with `#guard_msgs` in
+      `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
+      of them gains an axiom.
+  - Found along the way: 14 ledger-cited names
+    (`BfgsVerification.OriginalClaimInterpretation.*`, supporting exports of
+    `art:mixed-benchmark` and `art:mixed-inward-remainder`) live in an
+    audit-source file outside every build target
+    (`bfgs_lean_stage1/master_report/audit/sources/OriginalClaimInterpretation.lean`).
+    The new package now compiles that file as well.
+
 ### P2: formal gap (the Lean proves a slightly different statement)
 
-- [ ] **The lower-curvature failure theorems are formalized only for the
+- [x] **The lower-curvature failure theorems are formalized only for the
   strict-inequality line search.**
   - Paper: the search in Section 6 (`paper/sections/failure.tex`, eq.
     `art:failure_tests`) uses non-strict tests (`≤` for Armijo, `≥` for weak
@@ -89,9 +122,35 @@ other results were not reviewed.
     - (b) say in the paper that the formal certificate for the lower-curvature
       construction is for the strict tests.
 
+  **Done, option (a)**, in `bfgs_lean_article/BfgsArticle/`. All new theorems
+  state the non-strict trace **and** the strict trace for the same runs.
+  - `LNonStrictGlobal.lean`, for Prop `art:quadratic_failure`:
+    - `LGlobalFailure.nonstrict_actual_global_failure`, for every μ > 0,
+      0 < c₁ ≤ 1/3 and c₁ < c₂ < 1;
+    - `nonstrict_source_global_failure`, for c₁ = 10⁻⁴, c₂ = 1/2.
+
+    These rest on non-strict versions of the oracle searches
+    (`LNormalizedOracle.Conditions.nonstrict_fromMetric_search`), which reuse
+    the strict margins.
+  - `LNonStrictLocal.lean`:
+    - `LActualCopies.nonstrict_fixed_metric_failure`, for `art:lower_local_model`;
+    - `LWhitening.nonstrict_identity_failure`, `nonstrictSmoothLocalFailure` and
+      `nonstrictStepLocalFailure`.
+
+    These carry the trace through the scaled copies and the fixed whitening using
+    non-strict transfer lemmas (`NonStrictTransfer.lean`).
+  - `LNonStrictBranch.lean`, for Thm `art:local-failure-lower`:
+    `ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction`.
+  - Ledger: the new names are added to the records `art:local-failure-lower`,
+    `art:lower_curvature`, `art:lower_objective`, `art:regularity-map`,
+    `art:lower_local_model` and `art:quadratic_failure` (see P3).
+  - The paper's sentence "All comparisons in the construction are strict, so
+    strict acceptance tests give the same decisions" is now formally backed for
+    both constructions.
+
 ### P3: bookkeeping, reproducibility and paper polish
 
-- [ ] **Article supplements are not part of the Lake package.**
+- [x] **Article supplements are not part of the Lake package.**
   - Files: `editorial/narrative_rebuild/positive_formal/MixedBenchmark.lean`
     (Corollary `art:mixed-benchmark`),
     `editorial/satisfaction_review/branch_formal/ArticleBranchRegularity.lean`
@@ -103,7 +162,22 @@ other results were not reviewed.
     `lake build` alone never checks the headline `u²+|v|` result.
   - Fix: add them as `lean_lib` targets in `bfgs_lean_stage1/lakefile.toml`, or
     move them into the package.
-- [ ] **The determinant identity is proved but not mapped to its statements.**
+
+  **Done, without touching `bfgs_lean_stage1`.**
+  - Its `lakefile.toml`, root module and 761 other inputs are hash-pinned by
+    `editorial/BASELINE.json` and `master_report/audit/fresh/INPUTS.json`, which
+    every supplement `verify.py` checks. So the supplements are instead compiled
+    in place by the new package `bfgs_lean_article/`: one `lean_lib` per
+    supplement folder, with `srcDir` pointing at the existing files.
+  - `cd bfgs_lean_article && lake build` now compiles:
+    - the whole main library;
+    - all five supplements;
+    - `OriginalClaimInterpretation`;
+    - the new modules;
+    - the axiom pins.
+  - The supplements' own `#print axioms` lines report only the three standard
+    axioms.
+- [x] **The determinant identity is proved but not mapped to its statements.**
   - Paper: Theorem `art:minor-hierarchy` ("At j=n … det H_+ = (α/β) det H",
     `paper/sections/energy.tex:140`) and Lemma `art:gram-compression`
     (`paper/appendices/matrix_algebra.tex:11`).
@@ -111,15 +185,40 @@ other results were not reviewed.
     `hessianInvariants`, `FoundationTargets.lean:16-22`).
   - Gap: neither declaration is listed in those two records of
     `editorial/CLAIM_LEDGER.json`. Add it.
-- [ ] **"Every norm" has no literal Lean instance.**
+
+  **Done.**
+  - The ledger is generated by `editorial/assemble_claim_ledger.py` from the
+    sealed component reviews. Re-running the unchanged generator reproduced the
+    committed ledger byte for byte.
+  - Additions are therefore a new, separate input:
+    - `editorial/lean_review_20261013/LEDGER_ADDITIONS.json`, merged by
+      `editorial/ledger_addenda.py`, which adds only and records a
+      `formal_addenda` field on each touched record;
+    - the generator gains one import and one call.
+  - `art:minor-hierarchy` now cites `inverseBFGS_step_det_beta`,
+    `hessianInvariants` and `HessianInvariantTarget`. `art:gram-compression`
+    cites `inverseBFGS_step_det_beta`.
+  - The P2 and P3c theorems are added the same way.
+  - `editorial/CLAIM_LEDGER.json` and `companion/PROOF_CORRESPONDENCE.html`
+    were regenerated.
+- [x] **"Every norm" has no literal Lean instance.**
   - Paper: Corollary `art:homogeneous-examples` (`paper/sections/global.tex:224`)
     covers every norm and every gauge with a bounded unit sublevel.
   - Lean: these cases are immediate from
     `AdmissibleBFGSRun.homogeneous_iterates_zero_of_bounded_zero_sublevel`, but no
     theorem states them. Optional: add a short corollary for an arbitrary norm
     function.
+
+  **Done** in `bfgs_lean_article/BfgsArticle/HomogeneousModels.lean`. Each
+  theorem gives the full conclusion of Thm `art:homogeneous`: F(0) = 0, F > 0
+  off zero, F(x_k) → 0 and x_k → 0, for every admissible run.
+  - `AdmissibleBFGSRun.norm_conclusion`: any `N : Seminorm ℝ (Vec n)` with
+    `N x = 0 → x = 0`, i.e. every norm.
+  - `gauge_conclusion`: positively homogeneous of degree one, with bounded
+    `{F ≤ 1}`.
+  - `finiteMaxLinear_conclusion`: bounded zero sublevel.
 - [ ] **Paper understates the Lean result for the global lower-curvature
-  failure.**
+  failure.** *(Optional; awaiting the author's decision. The paper is unchanged.)*
   - Paper: Proposition `art:quadratic_failure` is stated for c₁ = 10⁻⁴ and
     c₂ = 1/2 only ("Throughout this appendix …", `lower_curvature.tex:14`).
   - Lean: `LGlobalFailure.actual_global_failure` proves it for every μ > 0,
@@ -131,6 +230,33 @@ other results were not reviewed.
       `IdentityFailureTarget` fixes (10⁻⁴, 1/2), and the seed orbit would have to
       be chosen once for all constants. That looks feasible because the margins
       are uniform for c₁ ≤ 1/3.
+  - Note (second pass): the paper's own proof already covers the general range.
+    - The seed margins in `paper/sections/failure.tex:155-158` hold for every
+      c₁ ≤ 1/3 (Armijo) and every c₂ > 0 (Wolfe).
+    - The proof of the proposition (`lower_curvature.tex:151-179`) uses only
+      those margins near the seed.
+    - So strengthening it needs only the hypothesis and the sentence at
+      `lower_curvature.tex:13-14` (constants fixed "throughout this appendix")
+      to change. That sentence would then apply from the copy construction on.
+    - Since this changes a theorem statement, it is left for the author.
+
+### New items from the second pass
+
+- [ ] **Release receipts are now stale (expected).**
+  - The frozen editorial checks pin file hashes. After this pass:
+    - `editorial/scientific_exposition_20260913/refresh_correspondence.py --check`
+      reports a stale `mapping_refresh.json`, because it pins the hash of
+      `editorial/assemble_claim_ledger.py`;
+    - the release manifests no longer match `CLAIM_LEDGER.json`.
+  - `verify_release_inputs.py`, `check_documents.py` and
+    `verify_historical_baseline.py` need the TeX-built PDFs and Node.js, which
+    this machine lacks. They failed for that reason before any change here.
+  - A new release run (`editorial/build.sh` and the release scripts) on a machine
+    with TeX and Node will refresh them.
+- [ ] **Lean linter warnings (optional, cosmetic).**
+  - The main library emits 1244 style warnings.
+  - Cleaning them would change hash-pinned library files, so do it only together
+    with a deliberate re-baseline.
 
 ## Checked and matching (no action needed)
 
@@ -161,7 +287,9 @@ are on the right. Where the Lean version is more general, that is noted.
 | Lemma `art:upper_scalar_lemma` | `DScalar.scalar_function_contract` (constants max{6, 102/b} and max{6, 139264/(5b²)} match) |
 | Lemma `art:root_certificate` | `AlgebraicSeed.exact_closed_box`, `box_denominators_and_ratio` (centre equals r̄ exactly) |
 | Lemma `art:lower_hyperbolic` | `LReturnSpectrum.actual_spectral_contract` (0.038 < λs < 0.039, 1.564 < λu < 1.565, ρ-eigenvector with τ = 1) |
-| Thm `art:local-failure-lower` | `ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction` (only the strict search; see P2) |
+| Thm `art:local-failure-lower` | `ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction` (strict search), and `ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction` (strict and non-strict search, `bfgs_lean_article`) |
+| Prop `art:quadratic_failure` | `LGlobalFailure.actual_global_failure` (strict), `LGlobalFailure.nonstrict_actual_global_failure` (strict and non-strict, `bfgs_lean_article`); every μ > 0, 0 < c₁ ≤ 1/3, c₁ < c₂ < 1 |
+| Cor `art:homogeneous-examples` | `AdmissibleBFGSRun.norm_conclusion`, `gauge_conclusion`, `finiteMaxLinear_conclusion` (`bfgs_lean_article`) |
 
 Notes on conventions (no action needed):
 

@@ -1,0 +1,45 @@
+name = "bfgs-article"
+version = "0.1.0"
+defaultTargets = ["BfgsArticle", "BfgsArticleAxioms"]
+# Reuse the Mathlib checkout and build cache of the main library.
+packagesDir = "../bfgs_lean_stage1/.lake/packages"
+
+[[require]]
+name = "bfgs-verification"
+path = "../bfgs_lean_stage1"
+
+# New article-level modules.
+[[lean_lib]]
+name = "BfgsArticle"
+
+# Generated `#guard_msgs` pins of `#print axioms` (scripts/axiom_audit.py).
+[[lean_lib]]
+name = "BfgsArticleAxioms"
+
+# The five pre-existing article supplements, compiled in place.
+[[lean_lib]]
+name = "ArticleSupplementPositive"
+srcDir = "../editorial/narrative_rebuild/positive_formal"
+roots = ["MixedBenchmark"]
+
+[[lean_lib]]
+name = "ArticleSupplementBranch"
+srcDir = "../editorial/satisfaction_review/branch_formal"
+roots = ["ArticleBranchRegularity"]
+
+[[lean_lib]]
+name = "ArticleSupplementGeometry"
+srcDir = "../editorial/article_formal"
+roots = ["ArticleGeometry", "ConvexBalance"]
+
+[[lean_lib]]
+name = "ArticleSupplementScaling"
+srcDir = "../editorial/narrative_rebuild"
+roots = ["negative_scaling"]
+
+# Audit-source lemmas cited by the claim ledger (identical copies also exist
+# under editorial/formal_audit/sources and audit/claim_review20/sources).
+[[lean_lib]]
+name = "ArticleSupplementInterpretation"
+srcDir = "../bfgs_lean_stage1/master_report/audit/sources"
+roots = ["OriginalClaimInterpretation"]

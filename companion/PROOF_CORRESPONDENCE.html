@@ -300,6 +300,7 @@
               (α / (β * q)) •
                 BfgsVerification.outer (Z.transpose.mulVec (Matrix.mulVec H g)) (Z.transpose.mulVec (Matrix.mulVec H g))</pre></details>
 <details><summary><code>BfgsVerification.CompressionAlgebra.gram_numerator_identity</code></summary><pre>∀ (Δ q u r z κ w : ℝ), q * (Δ * (r - z)) - Δ * ((q - u) * (r - z) - (κ - w) ^ 2) = Δ * ((κ - w) ^ 2 + u * (r - z))</pre></details>
+<details><summary><code>BfgsVerification.HessianInvariantTarget</code></summary><pre>Prop</pre></details>
 <details><summary><code>BfgsVerification.PrincipalMinorHierarchyTarget</code></summary><pre>Prop</pre></details>
 <details><summary><code>BfgsVerification.UnexcitedMetric.literal_matrix_limit</code></summary><pre>∀ (A : ℝ) {ρ v₀ : ℝ},
   0 ≤ ρ →
@@ -323,9 +324,19 @@
         (∀ (k : ℕ), c ≤ R.beta k) →
           BfgsVerification.ScalarHierarchy.NormalizedHierarchy n (fun k =&gt; BfgsVerification.principalSum (R.H k)) R.q
             (fun k =&gt; R.d k / c) (4 * G ^ 2 / c ^ 2) (G ^ 2)</pre></details>
+<details><summary><code>BfgsVerification.hessianInvariants</code></summary><pre>BfgsVerification.HessianInvariantTarget</pre></details>
 <details><summary><code>BfgsVerification.insert_product_sum_eq</code></summary><pre>∀ {n : ℕ} (lam : Fin n → ℝ) (j : ℕ) (k : Fin n),
   ∑ I ∈ {I ∈ Finset.powersetCard j Finset.univ | k ∉ I}, lam k * ∏ i ∈ I, lam i =
     ∑ J ∈ {J ∈ Finset.powersetCard (j + 1) Finset.univ | k ∈ J}, ∏ i ∈ J, lam i</pre></details>
+<details><summary><code>BfgsVerification.inverseBFGS_step_det_beta</code></summary><pre>∀ {n : ℕ} {H : BfgsVerification.Mat n},
+  Matrix.PosDef H →
+    ∀ {g : BfgsVerification.Vec n},
+      g ≠ 0 →
+        ∀ (y : BfgsVerification.Vec n) {α : ℝ},
+          0 &lt; α →
+            0 &lt; BfgsVerification.dot y (BfgsVerification.bfgsStep H g α) →
+              Matrix.det (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g α) y) =
+                α / (-BfgsVerification.dot y (Matrix.mulVec H g) / BfgsVerification.metricEnergy H g) * Matrix.det H</pre></details>
 <details><summary><code>BfgsVerification.orthogonal_coordinate_gram_sum_eq</code></summary><pre>∀ {n : ℕ} (H U : BfgsVerification.Mat n) (lam : BfgsVerification.Vec n),
   U * Matrix.transpose U = 1 →
     Matrix.transpose U * H * U = Matrix.diagonal lam →
@@ -409,6 +420,15 @@
 <details><summary><code>BfgsVerification.insert_product_sum_eq</code></summary><pre>∀ {n : ℕ} (lam : Fin n → ℝ) (j : ℕ) (k : Fin n),
   ∑ I ∈ {I ∈ Finset.powersetCard j Finset.univ | k ∉ I}, lam k * ∏ i ∈ I, lam i =
     ∑ J ∈ {J ∈ Finset.powersetCard (j + 1) Finset.univ | k ∈ J}, ∏ i ∈ J, lam i</pre></details>
+<details><summary><code>BfgsVerification.inverseBFGS_step_det_beta</code></summary><pre>∀ {n : ℕ} {H : BfgsVerification.Mat n},
+  Matrix.PosDef H →
+    ∀ {g : BfgsVerification.Vec n},
+      g ≠ 0 →
+        ∀ (y : BfgsVerification.Vec n) {α : ℝ},
+          0 &lt; α →
+            0 &lt; BfgsVerification.dot y (BfgsVerification.bfgsStep H g α) →
+              Matrix.det (BfgsVerification.inverseBFGS H (BfgsVerification.bfgsStep H g α) y) =
+                α / (-BfgsVerification.dot y (Matrix.mulVec H g) / BfgsVerification.metricEnergy H g) * Matrix.det H</pre></details>
 <details><summary><code>BfgsVerification.orthogonal_coordinate_gram_sum_eq</code></summary><pre>∀ {n : ℕ} (H U : BfgsVerification.Mat n) (lam : BfgsVerification.Vec n),
   U * Matrix.transpose U = 1 →
     Matrix.transpose U * H * U = Matrix.diagonal lam →
@@ -2860,6 +2880,20 @@
 </details>
 <details><summary>art:homogeneous-examples — corollary</summary><p>{&#x27;path&#x27;: &#x27;paper/sections/global.tex&#x27;, &#x27;line&#x27;: 224, &#x27;sha256&#x27;: &#x27;ef1edec30b776f3afac2b2a153bb6691b0f408e8957ebfbd983450199868b41a&#x27;}</p><p>Source spans: H.span.9, H.span.12, H.span.20</p>
 <p>Status: REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS</p><p></p><p></p><p></p>
+<details><summary><code>BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion</code></summary><pre>∀ {n : ℕ} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),
+  Bornology.IsBounded {x | BfgsVerification.Homogeneous.finiteMaxLinear A hA x ≤ 0} →
+    ∀ (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),
+      BfgsVerification.Homogeneous.finiteMaxLinear A hA 0 = 0 ∧
+        (∀ (x : BfgsVerification.Vec n), x ≠ 0 → 0 &lt; BfgsVerification.Homogeneous.finiteMaxLinear A hA x) ∧
+          Filter.Tendsto (fun k =&gt; BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)) Filter.atTop (nhds 0) ∧
+            Filter.Tendsto R.x Filter.atTop (nhds 0)</pre></details>
+<details><summary><code>BfgsVerification.AdmissibleBFGSRun.gauge_conclusion</code></summary><pre>∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ},
+  BfgsVerification.Homogeneous.PositiveDegreeOne F →
+    Bornology.IsBounded {x | F x ≤ 1} →
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+        F 0 = 0 ∧
+          (∀ (x : BfgsVerification.Vec n), x ≠ 0 → 0 &lt; F x) ∧
+            Filter.Tendsto (fun k =&gt; F (R.x k)) Filter.atTop (nhds 0) ∧ Filter.Tendsto R.x Filter.atTop (nhds 0)</pre></details>
 <details><summary><code>BfgsVerification.AdmissibleBFGSRun.homogeneous_bounded_below_convergence</code></summary><pre>∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F),
   BfgsVerification.Homogeneous.PositiveDegreeOne F →
     ∀ (L : ℝ),
@@ -2869,6 +2903,12 @@
 <details><summary><code>BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero</code></summary><pre>∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F),
   BfgsVerification.Homogeneous.PositiveDegreeOne F →
     Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop → Filter.Tendsto R.x Filter.atTop (nhds 0)</pre></details>
+<details><summary><code>BfgsVerification.AdmissibleBFGSRun.homogeneous_conclusion_of_bounded_zero_sublevel</code></summary><pre>∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F),
+  BfgsVerification.Homogeneous.PositiveDegreeOne F →
+    Bornology.IsBounded {x | F x ≤ 0} →
+      F 0 = 0 ∧
+        (∀ (x : BfgsVerification.Vec n), x ≠ 0 → 0 &lt; F x) ∧
+          Filter.Tendsto (fun k =&gt; F (R.x k)) Filter.atTop (nhds 0) ∧ Filter.Tendsto R.x Filter.atTop (nhds 0)</pre></details>
 <details><summary><code>BfgsVerification.AdmissibleBFGSRun.homogeneous_iterates_zero_of_bounded_zero_sublevel</code></summary><pre>∀ {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (R : BfgsVerification.AdmissibleBFGSRun n F),
   BfgsVerification.Homogeneous.PositiveDegreeOne F →
     Bornology.IsBounded {x | F x ≤ 0} → Filter.Tendsto R.x Filter.atTop (nhds 0)</pre></details>
@@ -2932,6 +2972,12 @@
   (p : Seminorm ℝ (BfgsVerification.Vec n)),
   (∀ (x : BfgsVerification.Vec n), BfgsVerification.Homogeneous.finiteMaxLinear A hA x = p x) →
     ∃ xstar, Filter.Tendsto R.x Filter.atTop (nhds xstar) ∧ p xstar = 0</pre></details>
+<details><summary><code>BfgsVerification.AdmissibleBFGSRun.norm_conclusion</code></summary><pre>∀ {n : ℕ} (N : Seminorm ℝ (BfgsVerification.Vec n)),
+  (∀ (x : BfgsVerification.Vec n), N x = 0 → x = 0) →
+    ∀ (R : BfgsVerification.AdmissibleBFGSRun n ⇑N),
+      N 0 = 0 ∧
+        (∀ (x : BfgsVerification.Vec n), x ≠ 0 → 0 &lt; N x) ∧
+          Filter.Tendsto (fun k =&gt; N (R.x k)) Filter.atTop (nhds 0) ∧ Filter.Tendsto R.x Filter.atTop (nhds 0)</pre></details>
 <details><summary><code>BfgsVerification.AdmissibleBFGSRun.zero_objective_no_infinite_run</code></summary><pre>∀ {n : ℕ}, (BfgsVerification.AdmissibleBFGSRun n fun x =&gt; 0) → False</pre></details>
 <details><summary><code>BfgsVerification.Homogeneous.finiteMaxLinear_convex</code></summary><pre>∀ {n : ℕ} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),
   ConvexOn ℝ Set.univ (BfgsVerification.Homogeneous.finiteMaxLinear A hA)</pre></details>
@@ -28909,6 +28955,8 @@
 <details><summary>art:local-failure-lower — theorem</summary><p>{&#x27;path&#x27;: &#x27;paper/statements/negative_lower.tex&#x27;, &#x27;line&#x27;: 2, &#x27;sha256&#x27;: &#x27;7c5a93fcb99d6c708abaae564e3c3c8e6ccba1044e2db519a2f11b542e7ea0a3&#x27;}</p><p>Source spans: L.span.2, L.span.6, L.span.7, L.span.8</p>
 <p>Status: REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS</p><p></p><p></p><p></p>
 <details><summary><code>ArticleBranchRegularity.branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LEmbedding.branch i.castSucc)) 0</pre></details>
+<details><summary><code>ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget ∧
+  ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.SmoothLocalFailureTarget ∧
   ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
@@ -29478,6 +29526,8 @@
   Filter.atTop (nhds 0)</pre></details>
 <details><summary><code>BfgsVerification.LSeedCopies.run_value_positive</code></summary><pre>∀ (k : ℕ),
   0 &lt; BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu (BfgsVerification.LSeedCopies.run.x k)</pre></details>
+<details><summary><code>BfgsVerification.LWhitening.NonStrictIdentityFailureTarget</code></summary><pre>(BfgsVerification.Vec 2 → ℝ) → Prop</pre></details>
+<details><summary><code>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget</code></summary><pre>Prop</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.SmoothLocalFailureTarget</code></summary><pre>Prop</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.constants_order</code></summary><pre>BfgsVerification.LWhitening.lowerConstant ≤ BfgsVerification.LWhitening.upperConstant</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.coordinateMatrix_invertible</code></summary><pre>Matrix.det BfgsVerification.LWhitening.coordinateMatrix ≠ 0</pre></details>
@@ -29580,6 +29630,12 @@
         (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.initialMetric_posDef</code></summary><pre>Matrix.PosDef BfgsVerification.LWhitening.initialMetric</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.lowerConstant_pos</code></summary><pre>0 &lt; BfgsVerification.LWhitening.lowerConstant</pre></details>
+<details><summary><code>BfgsVerification.LWhitening.nonstrictSmoothLocalFailure</code></summary><pre>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget</pre></details>
+<details><summary><code>BfgsVerification.LWhitening.nonstrict_identity_failure</code></summary><pre>∀ {F : BfgsVerification.Vec 2 → ℝ},
+  BfgsVerification.LActualCopies.CopyData F →
+    F 0 = 0 →
+      BfgsVerification.LWhitening.NonStrictIdentityFailureTarget
+        (BfgsVerification.AffineWhitening.objective BfgsVerification.LWhitening.coordinateMatrix F)</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.smoothIdentityFailure</code></summary><pre>BfgsVerification.LWhitening.SmoothIdentityFailureTarget</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.smoothLocalFailure</code></summary><pre>BfgsVerification.LWhitening.SmoothLocalFailureTarget</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.smooth_actual_hessian</code></summary><pre>∀ {x : BfgsVerification.Vec 2},
@@ -51467,6 +51523,8 @@
 <details><summary>art:lower_curvature — definition_identity_bound_or_proof_location</summary><p>{&#x27;path&#x27;: &#x27;paper/appendices/lower_curvature.tex&#x27;, &#x27;line&#x27;: 2, &#x27;sha256&#x27;: &#x27;a0921b58fd059ce01c15f4e5af6fbb9099d556defeab8121a1526a9243371948&#x27;}</p><p>Source spans: L.span.2, L.span.3, L.span.4, L.span.5, L.span.6, L.span.7, L.span.8</p>
 <p>Status: REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS</p><p></p><p></p><p></p>
 <details><summary><code>ArticleBranchRegularity.branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LEmbedding.branch i.castSucc)) 0</pre></details>
+<details><summary><code>ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget ∧
+  ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.SmoothLocalFailureTarget ∧
   ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
@@ -55438,6 +55496,141 @@
                 ∀ (k : ℕ) (q : Fin 9),
                   BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
                     D.x k + BfgsVerification.SeedOrbit.trialLength q • BfgsVerification.bfgsStep (D.H k) (D.g k) 1 ∈ U</pre></details>
+<details><summary><code>BfgsVerification.LGlobalFailure.nonstrict_actual_global_failure</code></summary><pre>∀ {μ c₁ c₂ : ℝ},
+  0 &lt; μ →
+    0 &lt; c₁ →
+      c₁ ≤ 1 / 3 →
+        c₁ &lt; c₂ →
+          c₂ &lt; 1 →
+            ∀ U ∈ nhds 0,
+              ∃ R,
+                R.c₁ = c₁ ∧
+                  R.c₂ = c₂ ∧
+                    Filter.Tendsto R.x Filter.atTop (nhds 0) ∧
+                      Filter.Tendsto R.H Filter.atTop (nhds 0) ∧
+                        Filter.Tendsto (fun k =&gt; BfgsVerification.LQuadraticSeed.objective μ (R.x k)) Filter.atTop
+                            (nhds 0) ∧
+                          (∀ (k : ℕ), 0 &lt; BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                            (∀ (k : ℕ),
+                                BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) &lt;
+                                  BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                              (∀ (k : ℕ),
+                                  R.α k = BfgsVerification.SeedOrbit.length (BfgsVerification.SeedOrbit.phase k)) ∧
+                                (∀ (k : ℕ),
+                                    BfgsVerification.NonStrictLineSearch.fromMetric
+                                        (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) c₁ c₂ 5 =
+                                      (Option.some (R.α k),
+                                        BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+                                  (∀ (k : ℕ),
+                                      BfgsVerification.DeterministicLineSearch.fromMetric
+                                          (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) c₁ c₂ 5 =
+                                        (Option.some (R.α k),
+                                          BfgsVerification.SeedOrbit.trialHistory
+                                            (BfgsVerification.SeedOrbit.phase k))) ∧
+                                    (∀ (k : ℕ), R.x k ∈ U) ∧
+                                      (∀ (k : ℕ) (q : Fin 9),
+                                          BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                                            DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)
+                                                (R.x k +
+                                                  BfgsVerification.SeedOrbit.trialLength q •
+                                                    BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                              0 &lt;
+                                                  BfgsVerification.LQuadraticSeed.objective μ
+                                                    (R.x k +
+                                                      BfgsVerification.SeedOrbit.trialLength q •
+                                                        BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                                R.x k +
+                                                    BfgsVerification.SeedOrbit.trialLength q •
+                                                      BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈
+                                                  U) ∧
+                                        (∀ (q : ℕ → Fin 9),
+                                            (∀ (k : ℕ),
+                                                BfgsVerification.SeedOrbit.trialPhase (q k) =
+                                                  BfgsVerification.SeedOrbit.phase k) →
+                                              Filter.Tendsto
+                                                (fun k =&gt;
+                                                  R.x k +
+                                                    BfgsVerification.SeedOrbit.trialLength (q k) •
+                                                      BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+                                                Filter.atTop (nhds 0)) ∧
+                                          (∀ (k : ℕ),
+                                              BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) &lt;
+                                                  BfgsVerification.LQuadraticSeed.objective μ (R.x k) +
+                                                    c₁ *
+                                                      BfgsVerification.dot (R.g k)
+                                                        (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) ∧
+                                                c₂ *
+                                                    BfgsVerification.dot (R.g k)
+                                                      (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) &lt;
+                                                  BfgsVerification.dot (R.g (k + 1))
+                                                    (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))) ∧
+                                            0 ∉
+                                              BfgsVerification.ConvexSubdifferential.subdifferential
+                                                (BfgsVerification.LQuadraticSeed.objective μ) 0</pre></details>
+<details><summary><code>BfgsVerification.LGlobalFailure.nonstrict_source_global_failure</code></summary><pre>∀ {μ : ℝ},
+  0 &lt; μ →
+    ∀ U ∈ nhds 0,
+      ∃ R,
+        R.c₁ = 1 / 10000 ∧
+          R.c₂ = 1 / 2 ∧
+            Filter.Tendsto R.x Filter.atTop (nhds 0) ∧
+              Filter.Tendsto R.H Filter.atTop (nhds 0) ∧
+                Filter.Tendsto (fun k =&gt; BfgsVerification.LQuadraticSeed.objective μ (R.x k)) Filter.atTop (nhds 0) ∧
+                  (∀ (k : ℕ), 0 &lt; BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                    (∀ (k : ℕ),
+                        BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) &lt;
+                          BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧
+                      (∀ (k : ℕ), R.α k = BfgsVerification.SeedOrbit.length (BfgsVerification.SeedOrbit.phase k)) ∧
+                        (∀ (k : ℕ),
+                            BfgsVerification.NonStrictLineSearch.fromMetric
+                                (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) (1 / 10000) (1 / 2) 5 =
+                              (Option.some (R.α k),
+                                BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+                          (∀ (k : ℕ),
+                              BfgsVerification.DeterministicLineSearch.fromMetric
+                                  (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) (1 / 10000) (1 / 2) 5 =
+                                (Option.some (R.α k),
+                                  BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k))) ∧
+                            (∀ (k : ℕ), R.x k ∈ U) ∧
+                              (∀ (k : ℕ) (q : Fin 9),
+                                  BfgsVerification.SeedOrbit.trialPhase q = BfgsVerification.SeedOrbit.phase k →
+                                    DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)
+                                        (R.x k +
+                                          BfgsVerification.SeedOrbit.trialLength q •
+                                            BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                      0 &lt;
+                                          BfgsVerification.LQuadraticSeed.objective μ
+                                            (R.x k +
+                                              BfgsVerification.SeedOrbit.trialLength q •
+                                                BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧
+                                        R.x k +
+                                            BfgsVerification.SeedOrbit.trialLength q •
+                                              BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈
+                                          U) ∧
+                                (∀ (q : ℕ → Fin 9),
+                                    (∀ (k : ℕ),
+                                        BfgsVerification.SeedOrbit.trialPhase (q k) =
+                                          BfgsVerification.SeedOrbit.phase k) →
+                                      Filter.Tendsto
+                                        (fun k =&gt;
+                                          R.x k +
+                                            BfgsVerification.SeedOrbit.trialLength (q k) •
+                                              BfgsVerification.bfgsStep (R.H k) (R.g k) 1)
+                                        Filter.atTop (nhds 0)) ∧
+                                  (∀ (k : ℕ),
+                                      BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) &lt;
+                                          BfgsVerification.LQuadraticSeed.objective μ (R.x k) +
+                                            1 / 10000 *
+                                              BfgsVerification.dot (R.g k)
+                                                (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) ∧
+                                        1 / 2 *
+                                            BfgsVerification.dot (R.g k)
+                                              (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) &lt;
+                                          BfgsVerification.dot (R.g (k + 1))
+                                            (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))) ∧
+                                    0 ∉
+                                      BfgsVerification.ConvexSubdifferential.subdifferential
+                                        (BfgsVerification.LQuadraticSeed.objective μ) 0</pre></details>
 <details><summary><code>BfgsVerification.LGlobalFailure.source_global_failure</code></summary><pre>∀ {μ : ℝ},
   0 &lt; μ →
     ∀ U ∈ nhds 0,
@@ -61158,6 +61351,8 @@
 <details><summary>art:lower_objective — definition_identity_bound_or_proof_location</summary><p>{&#x27;path&#x27;: &#x27;paper/appendices/lower_curvature.tex&#x27;, &#x27;line&#x27;: 244, &#x27;sha256&#x27;: &#x27;a0921b58fd059ce01c15f4e5af6fbb9099d556defeab8121a1526a9243371948&#x27;}</p><p>Source spans: L.span.6</p>
 <p>Status: REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS</p><p></p><p></p><p></p>
 <details><summary><code>ArticleBranchRegularity.branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LEmbedding.branch i.castSucc)) 0</pre></details>
+<details><summary><code>ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget ∧
+  ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.SmoothLocalFailureTarget ∧
   ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
@@ -61322,6 +61517,7 @@
           (BfgsVerification.AffineWhitening.point A x) (BfgsVerification.AffineWhitening.point A p)
           (BfgsVerification.AffineWhitening.gradient A g) c a ↔
         BfgsVerification.DeterministicLineSearch.Wolfe F x p g c a</pre></details>
+<details><summary><code>BfgsVerification.LActualCopies.NonStrictFixedMetricFailureTarget</code></summary><pre>(BfgsVerification.Vec 2 → ℝ) → Prop</pre></details>
 <details><summary><code>BfgsVerification.LActualCopies.actual_parameters</code></summary><pre>∀ {F : BfgsVerification.Vec 2 → ℝ} (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ),
   (BfgsVerification.LActualCopies.family D m).c₁ = 1 / 10000 ∧
     (BfgsVerification.LActualCopies.family D m).c₂ = 1 / 2 ∧
@@ -61346,6 +61542,9 @@
   (BfgsVerification.LActualCopies.family D m).H k = BfgsVerification.LSeedCopies.run.H k</pre></details>
 <details><summary><code>BfgsVerification.LActualCopies.matrix_limit</code></summary><pre>∀ {F : BfgsVerification.Vec 2 → ℝ} (D : BfgsVerification.LActualCopies.CopyData F) (m : ℕ),
   Filter.Tendsto (BfgsVerification.LActualCopies.family D m).H Filter.atTop (nhds 0)</pre></details>
+<details><summary><code>BfgsVerification.LActualCopies.nonstrict_fixed_metric_failure</code></summary><pre>∀ {F : BfgsVerification.Vec 2 → ℝ},
+  BfgsVerification.LActualCopies.CopyData F →
+    F 0 = 0 → BfgsVerification.LActualCopies.NonStrictFixedMetricFailureTarget F</pre></details>
 <details><summary><code>BfgsVerification.LActualCopies.point_formula</code></summary><pre>∀ {F : BfgsVerification.Vec 2 → ℝ} (D : BfgsVerification.LActualCopies.CopyData F) (m k : ℕ),
   (BfgsVerification.LActualCopies.family D m).x k =
     BfgsVerification.LEmbedding.copyCenter m +
@@ -63404,6 +63603,8 @@
 <details><summary>art:regularity-map — comparison_of_proved_regularity_regimes</summary><p>{&#x27;path&#x27;: &#x27;paper/sections/failure.tex&#x27;, &#x27;line&#x27;: 480, &#x27;sha256&#x27;: &#x27;8f568d5b0c9946ce2e07bd452dbf823187f4190c317da5cb017f0f6acbb24684&#x27;}</p><p>Source spans: D.span.7, D.span.8, D.span.9, L.span.6, L.span.7, L.span.8</p>
 <p>Status: REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS</p><p></p><p></p><p></p>
 <details><summary><code>ArticleBranchRegularity.branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LEmbedding.branch i.castSucc)) 0</pre></details>
+<details><summary><code>ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget ∧
+  ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.smoothLocalFailure_with_branch_obstruction</code></summary><pre>BfgsVerification.LWhitening.SmoothLocalFailureTarget ∧
   ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
 <details><summary><code>ArticleBranchRegularity.whitened_branch_not_twice_differentiable_zero</code></summary><pre>∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LWhitening.smoothBranch i.castSucc)) 0</pre></details>
@@ -65129,6 +65330,7 @@
   Filter.atTop (nhds 0)</pre></details>
 <details><summary><code>BfgsVerification.LSeedCopies.run_value_positive</code></summary><pre>∀ (k : ℕ),
   0 &lt; BfgsVerification.LQuadraticSeed.objective BfgsVerification.LEmbedding.mu (BfgsVerification.LSeedCopies.run.x k)</pre></details>
+<details><summary><code>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget</code></summary><pre>Prop</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.SmoothLocalFailureTarget</code></summary><pre>Prop</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.constants_order</code></summary><pre>BfgsVerification.LWhitening.lowerConstant ≤ BfgsVerification.LWhitening.upperConstant</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.coordinateMatrix_invertible</code></summary><pre>Matrix.det BfgsVerification.LWhitening.coordinateMatrix ≠ 0</pre></details>
@@ -65139,6 +65341,7 @@
 <details><summary><code>BfgsVerification.LWhitening.fixedHessian_posDef</code></summary><pre>Matrix.PosDef BfgsVerification.LWhitening.fixedHessian</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.initialMetric_posDef</code></summary><pre>Matrix.PosDef BfgsVerification.LWhitening.initialMetric</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.lowerConstant_pos</code></summary><pre>0 &lt; BfgsVerification.LWhitening.lowerConstant</pre></details>
+<details><summary><code>BfgsVerification.LWhitening.nonstrictSmoothLocalFailure</code></summary><pre>BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.smoothLocalFailure</code></summary><pre>BfgsVerification.LWhitening.SmoothLocalFailureTarget</pre></details>
 <details><summary><code>BfgsVerification.LWhitening.smooth_actual_hessian</code></summary><pre>∀ {x : BfgsVerification.Vec 2},
   (∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, DifferentiableAt ℝ BfgsVerification.LWhitening.smoothObjective z) →
