@@ -38,6 +38,14 @@ confirmed each one.
   (item `A/verification/prose/004`): "$G(t(-1,16))=-t$" holds only for $t\ge0$, as
   `failure.tex:200` says (`Verification.seed_ray`, counterexample
   `seed_ray_fails_at_minus_one`). Proposed: add "for $t\ge0$".
+- [ ] **M10: "The next theorem" points to the wrong theorem.** `paper/sections/energy.tex:108-109`:
+  "The next theorem proves that the full update requires faster growth" — the next
+  theorem is `art:minor-hierarchy`, a one-step inequality; the faster growth is
+  Theorem `art:reciprocal-growth`, which also needs bounded gradients, a hypothesis
+  the paragraph does not state (the paragraph's contradiction relies on it too).
+  With it the corrected claim holds (`Energy.reciprocal_sum_superlinear_of_minimizer`).
+  Proposed: "Theorem~\ref{art:reciprocal-growth} proves that, along runs with
+  bounded gradients, the full update requires faster growth." (`A/energy/prose/012`)
 
 ## Resolved
 

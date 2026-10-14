@@ -18,7 +18,20 @@
    "title": "Admissible runs",
    "container": null,
    "sha256": "2ccb8f63e7d63b7e",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsCoverage.Article.Energy.admissible_iff",
+    "BfgsCoverage.Article.Energy.update_formula",
+    "BfgsCoverage.Article.Energy.armijo_weak_wolfe",
+    "BfgsCoverage.Article.Energy.run_notation",
+    "BfgsCoverage.Article.Energy.library_formulas",
+    "BfgsVerification.inverseBFGS",
+    "BfgsVerification.bfgsStep",
+    "BfgsVerification.gradientFunctional",
+    "BfgsVerification.AdmissibleBFGSRun.dimension_pos"
+   ],
+   "note": "admissible_iff: data x H g α c₁ c₂ are the data of some R : AdmissibleBFGSRun n F iff F is convex (ConvexOn ℝ Set.univ F; finite = real-valued) and n ≥ 1; every x_k is a differentiable point with g_k ≠ 0 and fderiv ℝ F (x k) v = dot (g k) v for all v (g_k = ∇F(x_k)); x_{k+1} = x_k + s_k and H_{k+1} = (I - s_ky_kᵀ/t_k)H_k(I - y_ks_kᵀ/t_k) + s_ks_kᵀ/t_k with s_k = -α_kH_kg_k, y_k = g_{k+1} - g_k, t_k = y_kᵀs_k (variables with defining equations); H_0 ≻ 0 (PosDef, symmetric); α_k > 0; 0 < c₁ < c₂ < 1; and the two non-strict inequalities of (art:aw). The structure omits n ≥ 1 (derived: dimension_pos) and stores the gradient as HasFDerivAt F (gradientFunctional (g k)) (x k). Lean's inverse is total, but t_k > 0 along every run (run_invariants), so (t k)⁻¹ = 1/t_k. Shared form for all modules: R : AdmissibleBFGSRun n F with s_k = R.displacement k, y_k = R.gradientChange k, t_k = R.curvature k, B_k = R.hessian k, q_k = R.q k, d_k = R.d k, β_k = R.beta k (run_notation)."
   },
   {
    "id": "A/energy/disp/001",
@@ -34,7 +47,17 @@
    "title": null,
    "container": "A/energy/definition/art:admissible",
    "sha256": "db1b73716203ae0d",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.inverseBFGS",
+    "BfgsVerification.bfgsStep",
+    "BfgsCoverage.Article.Energy.update_formula",
+    "BfgsCoverage.Article.Energy.library_formulas",
+    "BfgsVerification.AdmissibleBFGSRun.displacement",
+    "BfgsVerification.AdmissibleBFGSRun.gradientChange",
+    "BfgsVerification.AdmissibleBFGSRun.curvature"
+   ],
+   "note": "inverseBFGS H s y is literally (1 - t⁻¹ • outer s y) * H * (1 - t⁻¹ • outer y s) + t⁻¹ • outer s s with t = dot y s, and bfgsStep H g α = -α • (H *ᵥ g) (library_formulas). update_formula states the display for every admissible run with s_k, y_k, t_k = R.displacement k, R.gradientChange k, R.curvature k."
   },
   {
    "id": "A/energy/disp/002",
@@ -50,7 +73,13 @@
    "title": null,
    "container": "A/energy/definition/art:admissible",
    "sha256": "2b9b7c25c43625d1",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsCoverage.Article.Energy.armijo_weak_wolfe",
+    "BfgsCoverage.Article.Energy.admissible_iff"
+   ],
+   "note": "The fields armijo and weak_wolfe of AdmissibleBFGSRun: F(x_{k+1}) ≤ F(x_k) + c₁g_kᵀs_k and g_{k+1}ᵀs_k ≥ c₂g_kᵀs_k (both non-strict), with 0 < c₁ < c₂ < 1 (fields c₁_pos, c₁_lt_c₂, c₂_lt_one)."
   },
   {
    "id": "A/energy/disp/003",
@@ -64,7 +93,16 @@
    "title": null,
    "container": null,
    "sha256": "340134397b2f96d0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.notation_display",
+    "BfgsCoverage.Article.Energy.run_notation",
+    "BfgsVerification.AdmissibleBFGSRun.dot_step_eq_neg_d",
+    "BfgsVerification.AdmissibleBFGSRun.q",
+    "BfgsVerification.AdmissibleBFGSRun.d",
+    "BfgsVerification.AdmissibleBFGSRun.hessian"
+   ],
+   "note": "The display defines B_k, q_k, d_k, Δ_k, ω and asserts -g_kᵀs_k = α_kq_k. notation_display states the assertion and that R.hessian k = (R.H k)⁻¹, R.q k = g_kᵀH_kg_k, R.d k = -g_kᵀs_k (R.d k is defined as α_k q_k). Δ_k and ω are written out as F (R.x k) - F (R.x (k + 1)) and 1 - R.c₂."
   },
   {
    "id": "A/energy/lemma/art:run-invariants",
@@ -82,7 +120,19 @@
    "title": null,
    "container": null,
    "sha256": "18f8feacecbd5ec8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.run_invariants",
+    "BfgsVerification.AdmissibleBFGSRun.positive_invariants",
+    "BfgsVerification.AdmissibleBFGSRun.predicted_decrease_bounds",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound",
+    "BfgsVerification.AdmissibleBFGSRun.hessian_update",
+    "BfgsVerification.AdmissibleBFGSRun.annihilated_hessian_posSemidef",
+    "BfgsVerification.AdmissibleBFGSRun.annihilated_hessian_mul_displacement",
+    "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_value_limit",
+    "BfgsVerification.hessianInvariants"
+   ],
+   "note": "B̂_k is the variable Bhat with hBhat : ∀ k, Bhat k = R.hessian k - (R.q k)⁻¹ • outer (R.g k) (R.g k). \"The objective values have a finite limit\" is ∃ ℓ, Tendsto (fun k => F (R.x k)) atTop (𝓝 ℓ); ∑_k d_k < ∞ is Summable R.d (d_k > 0)."
   },
   {
    "id": "A/energy/disp/004",
@@ -98,7 +148,8 @@
    "title": null,
    "container": "A/energy/lemma/art:run-invariants",
    "sha256": "9c9141cdc02b4bbb",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/lemma/art:run-invariants"
   },
   {
    "id": "A/energy/disp/005",
@@ -114,7 +165,8 @@
    "title": null,
    "container": "A/energy/lemma/art:run-invariants",
    "sha256": "cdb8f8a2fb3af6b5",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/lemma/art:run-invariants"
   },
   {
    "id": "A/energy/proof/001",
@@ -128,7 +180,15 @@
    "title": null,
    "container": null,
    "sha256": "34b3a2f270a97907",
-   "status": null
+   "status": "PROOF",
+   "of": "A/energy/lemma/art:run-invariants",
+   "lean": [
+    "BfgsVerification.fullBFGS_positive_invariants",
+    "BfgsVerification.hessianUpdate",
+    "BfgsVerification.annihilatedMatrix_projection",
+    "BfgsVerification.annihilatedMatrix_mul_step"
+   ],
+   "note": "The library proves the lemma along this proof: fullBFGS_positive_invariants (induction on H_k ≻ 0 from the sum-of-squares form of the update and weak Wolfe), hessianUpdate (the Hessian identity), annihilatedMatrix_projection (B̂_k = PB_kPᵀ ⪰ 0, the metric Cauchy-Schwarz step) and annihilatedMatrix_mul_step (B̂_ks_k = 0)."
   },
   {
    "id": "A/energy/lemma/art:reference-energy",
@@ -146,7 +206,14 @@
    "title": "Reference energy",
    "container": null,
    "sha256": "16c37f8194d62da4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.reference_energy",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_reference_energy",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_reference_energy_bound",
+    "BfgsVerification.referenceEnergy"
+   ],
+   "note": "r_k, E_k, a_k, R_k (Lean Rk, since R names the run) and F_* are variables with their defining equations; \"x_* minimizes F\" is ∀ z, F xstar ≤ F z."
   },
   {
    "id": "A/energy/disp/006",
@@ -160,7 +227,14 @@
    "title": null,
    "container": "A/energy/lemma/art:reference-energy",
    "sha256": "c028cf3c9ecb5c50",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.referenceEnergy",
+    "BfgsVerification.AdmissibleBFGSRun.referencePairing",
+    "BfgsVerification.AdmissibleBFGSRun.referenceCorrection",
+    "BfgsCoverage.Article.Energy.reference_notation"
+   ],
+   "note": "E_k = r_kᵀB_kr_k, a_k = g_kᵀr_k and R_k = (y_kᵀr_{k+1})²/t_k with r_k = x_k - x_* are the library's referenceEnergy, referencePairing and referenceCorrection (reference_notation)."
   },
   {
    "id": "A/energy/disp/007",
@@ -176,7 +250,8 @@
    "title": null,
    "container": "A/energy/lemma/art:reference-energy",
    "sha256": "fcafb9e77784bc03",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/lemma/art:reference-energy"
   },
   {
    "id": "A/energy/disp/008",
@@ -192,7 +267,8 @@
    "title": null,
    "container": "A/energy/lemma/art:reference-energy",
    "sha256": "97da630d266ffecf",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/lemma/art:reference-energy"
   },
   {
    "id": "A/energy/proof/002",
@@ -206,7 +282,14 @@
    "title": null,
    "container": null,
    "sha256": "37d8299442f81839",
-   "status": null
+   "status": "PROOF",
+   "of": "A/energy/lemma/art:reference-energy",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.gap_le_referencePairing",
+    "BfgsVerification.AdmissibleBFGSRun.referenceEnergy_nonneg",
+    "BfgsVerification.EnergyBudget.gap_sq_mul_reciprocal_sum_le"
+   ],
+   "note": "Undisplayed steps: a_k ≥ F(x_k) - F_* at a minimizer (gap_le_referencePairing), E_N ≥ 0 (referenceEnergy_nonneg), summation (gap_sq_mul_reciprocal_sum_le)."
   },
   {
    "id": "A/energy/disp/009",
@@ -220,7 +303,12 @@
    "title": null,
    "container": "A/energy/proof/002",
    "sha256": "34e77939f119d60e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.energy_step",
+    "BfgsVerification.EnergyIdentities.fixed_reference"
+   ],
+   "note": "Stated with r_k = x_k - x_* and B̂_k (variable Bhat) of Lemma art:run-invariants."
   },
   {
    "id": "A/energy/disp/010",
@@ -234,7 +322,12 @@
    "title": null,
    "container": null,
    "sha256": "7652f0ceab1e973c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.persistent_gap_budget",
+    "BfgsCoverage.Article.Energy.persistent_gap_budget_general"
+   ],
+   "note": "Hypotheses as in the text: x_* minimizer, F_* = F(x_*), F(x_k) - F_* ≥ η > 0 for all k, R_k ≤ C for all k; conclusion for every N. These are the hypotheses of the reductio of lines 101-109: together with bounded gradients they cannot all hold (persistent_gap_contradiction; d_k → 0 follows from the minimizer by Armijo); without bounded gradients their satisfiability is not settled here. The proof is the finite-horizon form persistent_gap_budget_general, which assumes the gap only at N and R_k ≤ C only for k < N (exactly what the display's argument uses); its assumptions are satisfiable (example in the module: the quadratic run x_k = 2^{-k}, x_* = 0, N = 1, η = 1/8, C = 1)."
   },
   {
    "id": "A/energy/disp/011",
@@ -248,7 +341,13 @@
    "title": null,
    "container": null,
    "sha256": "fbd5f187b1b38b5b",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.principalSum",
+    "BfgsCoverage.Article.Energy.principalSum_def",
+    "BfgsVerification.principalSum_terminal"
+   ],
+   "note": "principalSum H j is literally the sum of det H_{I,I} over the j-subsets I of Fin n (principalSum_def); e_{n+1}(H) = 0 is then a consequence (no (n+1)-subsets). The Lean definition is for every real matrix; the text restricts to symmetric H."
   },
   {
    "id": "A/energy/theorem/art:minor-hierarchy",
@@ -265,7 +364,16 @@
    "title": "Principal-minor hierarchy",
    "container": null,
    "sha256": "f54e6abede6c4471",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.minor_hierarchy",
+    "BfgsVerification.principalMinorHierarchy",
+    "BfgsVerification.PrincipalMinorHierarchyTarget",
+    "BfgsVerification.inverseBFGS_step_det_beta",
+    "BfgsVerification.hessianInvariants",
+    "BfgsVerification.HessianInvariantTarget"
+   ],
+   "note": "Standing assumptions written out with the shared forms of MatrixAlgebra.lean (hH, hs, hα, hq_def, hq, hβ_def, hβ, hHplus : Hplus = inverseBFGS H s y); ‖y‖² is sqNorm y; e_j is principalSum. Conclusion: the inequality for every 1 ≤ j ≤ n, and det H₊ = (α/β) det H. The j = n identity along runs is part of hessianInvariants."
   },
   {
    "id": "A/energy/disp/012",
@@ -279,7 +387,8 @@
    "title": null,
    "container": "A/energy/theorem/art:minor-hierarchy",
    "sha256": "c6af8d493fd0b043",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/theorem/art:minor-hierarchy"
   },
   {
    "id": "A/energy/disp/013",
@@ -295,7 +404,8 @@
    "title": null,
    "container": "A/energy/theorem/art:minor-hierarchy",
    "sha256": "4e30e33dce09e1a7",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/theorem/art:minor-hierarchy"
   },
   {
    "id": "A/energy/proof/003",
@@ -309,7 +419,17 @@
    "title": null,
    "container": null,
    "sha256": "2aab099669b04ecc",
-   "status": null
+   "status": "PROOF",
+   "of": "A/energy/theorem/art:minor-hierarchy",
+   "lean": [
+    "BfgsVerification.sum_transformed_coordinate_grams",
+    "BfgsVerification.PrincipalInvariance.principalSum_conjugate",
+    "BfgsVerification.posDef_orthogonal_diagonalization",
+    "BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound_generic",
+    "BfgsCoverage.Article.MatrixAlgebra.gram_compression",
+    "BfgsCoverage.Article.MatrixAlgebra.full_dimension_case"
+   ],
+   "note": "The library's principalMinorHierarchy follows this proof: an orthogonal eigenbasis (posDef_orthogonal_diagonalization), the compression bound for each selection Z_I (compressed_inverseBFGS_bound_generic, i.e. Lemma art:gram-compression), the eigenbasis sum (display 015) and orthogonal invariance (sum_transformed_coordinate_grams, principalSum_conjugate). The last assertion is the full-size case of Lemma art:gram-compression (MatrixAlgebra.full_dimension_case)."
   },
   {
    "id": "A/energy/disp/014",
@@ -323,7 +443,13 @@
    "title": null,
    "container": "A/energy/proof/003",
    "sha256": "3d6d2d5552f370d2",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.compression_bound",
+    "BfgsVerification.BFGSCompression.compressed_inverseBFGS_bound",
+    "BfgsCoverage.Article.MatrixAlgebra.gram_compression"
+   ],
+   "note": "Under the assumptions of the theorem, for 1 ≤ j ≤ n and Z : Matrix (Fin n) (Fin j) ℝ with Zᵀ * Z = 1. Gram_H(y,Z) = [y Z]ᵀH[y Z] is metricGram H (fromCols (replicateCol Unit y) Z), as in MatrixAlgebra.lean, whose gram_compression states Lemma art:gram-compression in the same form."
   },
   {
    "id": "A/energy/disp/015",
@@ -337,7 +463,16 @@
    "title": null,
    "container": "A/energy/proof/003",
    "sha256": "7d52e9b3ea4c6921",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.eigenbasis_gram_sum",
+    "BfgsVerification.diagonal_coordinate_gram_det",
+    "BfgsVerification.principal_product_augmented_sum_eq",
+    "BfgsVerification.principal_product_augmented_sum_le",
+    "BfgsVerification.orthogonal_coordinate_gram_sum_eq",
+    "BfgsVerification.principalGramSumIdentity"
+   ],
+   "note": "The orthonormal eigenbasis is U with Uᵀ * U = 1 and H * U = U * diagonal lam (λ_i > 0); y_i are the coordinates yc = Uᵀ *ᵥ y; the j-column selection Z_I is U.submatrix id (fun i : I => i). All three relations (two equalities and the final inequality, with ‖y‖² = sqNorm y) are stated."
   },
   {
    "id": "A/energy/theorem/art:reciprocal-growth",
@@ -354,7 +489,16 @@
    "title": "Reciprocal growth",
    "container": null,
    "sha256": "3672787a031e6af2",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.reciprocal_growth",
+    "BfgsVerification.objectiveReciprocalGrowth",
+    "BfgsVerification.reciprocalGrowth",
+    "BfgsVerification.ReciprocalGrowthTarget",
+    "BfgsVerification.AdmissibleBFGSRun.toFullBFGSRun",
+    "BfgsVerification.AdmissibleBFGSRun.beta_lower_bound"
+   ],
+   "note": "\"Bounded gradients\" is ∃ Λ, ∀ k, ‖euclideanVector (R.g k)‖ ≤ Λ (the notion does not depend on the norm); d_k → 0 is Tendsto R.d atTop (𝓝 0). The limits are stated as written: (∏_{k<N} q_k⁻¹)^(1/N) (real power) and (1/N)∑_{k<N} q_k⁻¹ tend to +∞ (Tendsto ... atTop atTop). The library's reciprocalGrowth is for FullBFGSRun with a lower bound c ≤ β_k; the bridge is toFullBFGSRun with c = ω (beta_lower_bound)."
   },
   {
    "id": "A/energy/disp/016",
@@ -370,7 +514,8 @@
    "title": null,
    "container": "A/energy/theorem/art:reciprocal-growth",
    "sha256": "87c900c3aac8ae82",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/theorem/art:reciprocal-growth"
   },
   {
    "id": "A/energy/proof/004",
@@ -386,7 +531,18 @@
    "title": null,
    "container": null,
    "sha256": "47cbafe3cccecd57",
-   "status": null
+   "status": "PROOF",
+   "of": "A/energy/theorem/art:reciprocal-growth",
+   "lean": [
+    "BfgsCoverage.Article.Energy.q_le_potential",
+    "BfgsCoverage.Article.Energy.potential_eq_weighted",
+    "BfgsVerification.ScalarHierarchy.hierarchy_tail_potentials",
+    "BfgsVerification.ReciprocalGrowth.tail_log_product_upper",
+    "BfgsVerification.ReciprocalGrowth.global_log_product_upper",
+    "BfgsVerification.ReciprocalGrowth.logMean_le_arithmeticMean",
+    "BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth"
+   ],
+   "note": "The library proves the theorem by the logarithmic form of this argument: one weighted potential V_η and tail per η (hierarchy_tail_potentials), the product bound of display 020 in log form (tail_log_product_upper), the fixed prefix (global_log_product_upper), and log u ≤ u - 1 in place of AM-GM (logMean_le_arithmeticMean). q_le_potential states the undisplayed q_k ≤ Λ² tr H_k ≤ Λ² V_η(H_k) (line 196). Notation: β_k in display 017 is not defined in the text before its use; it is read as the β of Theorem art:minor-hierarchy for the k-th update (R.beta k), which makes β_k = t_k/d_k an identity."
   },
   {
    "id": "A/energy/disp/017",
@@ -400,7 +556,13 @@
    "title": null,
    "container": "A/energy/proof/004",
    "sha256": "a706e60aeca906ea",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.run_bounds",
+    "BfgsVerification.curvature_eq_alpha_beta_q",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound"
+   ],
+   "note": "Standing assumptions: those of the theorem, Λ > 0 with ‖g_k‖ ≤ Λ for all k, and K0 = 4Λ²/ω². β_k is R.beta k = -y_kᵀH_kg_k/q_k (see the note on proof/004); the conclusion is β_k = t_k/d_k, t_k/d_k ≥ ω, ‖y_k‖ ≤ 2Λ, α_k = d_k/q_k for every k."
   },
   {
    "id": "A/energy/disp/018",
@@ -416,7 +578,12 @@
    "title": null,
    "container": "A/energy/proof/004",
    "sha256": "f3cf9af50d721a0d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.normalized_hierarchy",
+    "BfgsVerification.fullBFGS_normalizedHierarchy"
+   ],
+   "note": "For every k and 1 ≤ j ≤ n (the range of (art:hierarchy)), with K0 = 4Λ²/ω² and ω = 1 - R.c₂."
   },
   {
    "id": "A/energy/disp/019",
@@ -430,7 +597,13 @@
    "title": null,
    "container": "A/energy/proof/004",
    "sha256": "99e9978fa435144c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.potential_pos",
+    "BfgsVerification.ScalarHierarchy.first_le_weighted",
+    "BfgsVerification.principalSum_one_pos"
+   ],
+   "note": "Adds η > 0 and J with d_k/ω ≤ η for k ≥ J. V_η is the variable V with V H = ∑_{j=1}^n (K0/η)^{j-1} e_j(H) for H ≻ 0 (Finset.Icc 1 n). The claim is V_η(H) > 0 for every H ≻ 0."
   },
   {
    "id": "A/energy/disp/020",
@@ -444,7 +617,12 @@
    "title": null,
    "container": "A/energy/proof/004",
    "sha256": "1f869266ba1dba14",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.potential_contraction",
+    "BfgsVerification.ScalarHierarchy.weighted_step"
+   ],
+   "note": "V_η(H_{k+1}) ≤ (2η/q_k)V_η(H_k) for k ≥ J, and ∏_{k=J}^{J+m-1} q_k⁻¹ ≥ 1/(Λ²V_η(H_J)(2η)^{m-1}) for every m ≥ 1 (the text leaves m ≥ 1 implicit; the product is over Finset.Ico J (J + m))."
   },
   {
    "id": "A/energy/disp/021",
@@ -458,7 +636,15 @@
    "title": null,
    "container": null,
    "sha256": "ecadcf18121e5cf6",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.EligiblePair",
+    "BfgsVerification.TransportedCertificate.pairStep",
+    "BfgsVerification.TransportedCertificate.pairDecrease",
+    "BfgsVerification.TransportedCertificate.pairCurvature",
+    "BfgsCoverage.Article.Energy.eligiblePair_iff"
+   ],
+   "note": "eligiblePair_iff unfolds EligiblePair F c₁ c₂ x z g h to the display with the notation of lines 238-240 (g, h the gradients at the differentiable points x, z; s, y, d, Δ, t as variables with their defining equations) and ω = 1 - c₂: d > 0, c₁d ≤ Δ ≤ d, t ≥ ωd."
   },
   {
    "id": "A/energy/definition/art:band-certificate",
@@ -477,7 +663,17 @@
    "title": "Band certificate",
    "container": null,
    "sha256": "8e998ee095e8db8e",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.BandCertificate",
+    "BfgsVerification.TransportedCertificate.HasBandCertificates",
+    "BfgsVerification.TransportedCertificate.positiveBand",
+    "BfgsVerification.TransportedCertificate.stepProjector",
+    "BfgsCoverage.Article.Energy.bandCertificate_iff",
+    "BfgsCoverage.Article.Energy.hasBandCertificates_iff",
+    "BfgsCoverage.Article.Energy.eligiblePair_iff"
+   ],
+   "note": "bandCertificate_iff (under the definition's standing assumptions K = {F ≤ b} compact, b > F_* = min F, 0 < c₁ < c₂ < 1, η > 0): a library BandCertificate on K_η with 0 ≤ C is exactly a field W : Vec n → Mat n and constants m > 0, C ≥ 0, L ≥ 0, δ > 0 with W(x) PSD (symmetric) at differentiable points of K_η, (art:visibility) at every differentiable point of K_η, and (art:secant-control), (art:transport) for all eligible pairs in K_η with d ≤ δ (A ⪯ B is (B - A).PosSemidef). The library's BandCertificate does not require C ≥ 0; hasBandCertificates_iff shows that \"K admits the band certificates\" (with C ≥ 0) is equivalent to the library's HasBandCertificates (any C), by replacing C with max{C,0} (t ≥ ωd > 0). The field is total but constrained only at differentiable band points, which is the text's field \"on its differentiable points\"."
   },
   {
    "id": "A/energy/disp/022",
@@ -495,7 +691,8 @@
    "title": null,
    "container": "A/energy/definition/art:band-certificate",
    "sha256": "aa453e775fa463a2",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/definition/art:band-certificate"
   },
   {
    "id": "A/energy/theorem/art:certificate",
@@ -511,7 +708,14 @@
    "title": "Transported comparison certificate",
    "container": null,
    "sha256": "0195dbacb7892409",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.certificate",
+    "BfgsVerification.transportedCertificateConvergence",
+    "BfgsVerification.TransportedCertificateTarget",
+    "BfgsCoverage.Article.Energy.hasBandCertificates_iff"
+   ],
+   "note": "Hypotheses as in the text: K = {F ≤ b} compact, F_* = min F (IsLeast (Set.range F) Fstar), b > F_* (unused by the proof), K admits the band certificates of Definition art:band-certificate with C ≥ 0 (for the run's constants c₁, c₂, on which eligibility depends), x_0 ∈ K. Conclusions: F(x_k) → F_*, Euclidean dist(x_k, argmin F) → 0 (euclideanSolutionDistance), and x_k → x_* whenever x_* is the unique minimizer. The library's transportedCertificateConvergence needs neither C ≥ 0 nor b > F_*."
   },
   {
    "id": "A/energy/disp/023",
@@ -525,7 +729,8 @@
    "title": null,
    "container": "A/energy/theorem/art:certificate",
    "sha256": "0bdf62d72a6688cf",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/energy/theorem/art:certificate"
   },
   {
    "id": "A/energy/proof/005",
@@ -539,7 +744,23 @@
    "title": null,
    "container": null,
    "sha256": "4e518ed43dc17b61",
-   "status": null
+   "status": "PROOF",
+   "of": "A/energy/theorem/art:certificate",
+   "lean": [
+    "BfgsCoverage.Article.Energy.iterates_in_band",
+    "BfgsCoverage.Article.Energy.certificate_energy_nonneg",
+    "BfgsCoverage.Article.Energy.certificate_step_general",
+    "BfgsCoverage.Article.Energy.normalization_bounds",
+    "BfgsCoverage.Article.Energy.finite_reciprocal_sum_le",
+    "BfgsCoverage.Article.Energy.certificate_budget_general",
+    "BfgsVerification.AdmissibleBFGSRun.transported_certificate_values",
+    "BfgsVerification.AdmissibleBFGSRun.band_certificate_incompatible",
+    "BfgsVerification.AdmissibleBFGSRun.bounded_gradients_of_compact_set",
+    "BfgsVerification.AdmissibleBFGSRun.iterates_tendsto_unique_min_of_values",
+    "BfgsVerification.euclidean_distance_to_argmin_of_values",
+    "BfgsVerification.ScalarTransport.reciprocal_sum_le"
+   ],
+   "note": "Undisplayed steps stated in this module: iterates_in_band (Armijo keeps the run in K; with limiting gap ℓ > 0 every iterate is in K_{ℓ/2}), certificate_energy_nonneg (E_k ≥ 0), normalization_bounds (1 ≤ P_k ≤ P̄), finite_reciprocal_sum_le (dividing by P_{k+1} and summing). The library proves the theorem (transported_certificate_values) with the same trace step but the bound C(k+1) and its superquadratic theorem; the article's linear budget is ScalarTransport.reciprocal_sum_le, and certificate_budget_general here. Gradient bounds: bounded_gradients_of_compact_set; distance: euclidean_distance_to_argmin_of_values."
   },
   {
    "id": "A/energy/disp/024",
@@ -553,7 +774,14 @@
    "title": null,
    "container": "A/energy/proof/005",
    "sha256": "f5a9957361325bc9",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.certificate_energy_step",
+    "BfgsCoverage.Article.Energy.certificate_step_general",
+    "BfgsVerification.AdmissibleBFGSRun.certificate_trace_step",
+    "BfgsVerification.TransportedCertificate.projected_transport_trace"
+   ],
+   "note": "Standing assumptions: the theorem's hypotheses, limiting gap lim(F(x_k) - F_*) = ℓ > 0, the certificate Cert of K_{ℓ/2} with C ≥ 0 (W, m, C, L, δ = Cert.W, ...), J with d_k ≤ δ for k ≥ J, E_k = tr(B_kW(x_k)), and B̂_k. The chain (equality, two inequalities) is stated for every k ≥ J. These assumptions are those of a proof by contradiction and cannot all hold; the proof uses only certificate_step_general (one k, any band, x_k, x_{k+1} ∈ K_η, d_k ≤ δ), whose assumptions are satisfiable (example at the end of the module)."
   },
   {
    "id": "A/energy/disp/025",
@@ -567,8 +795,526 @@
    "title": null,
    "container": "A/energy/proof/005",
    "sha256": "8ddb2e331aba3f82",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.certificate_reciprocal_budget",
+    "BfgsCoverage.Article.Energy.certificate_budget_general",
+    "BfgsCoverage.Article.Energy.finite_reciprocal_sum_le",
+    "BfgsVerification.ScalarTransport.reciprocal_sum_le"
+   ],
+   "note": "Standing assumptions of display 024 and P̄ = exp(L∑_{j≥J} d_j) (Pbar with its defining equation); the bound holds for every N ≥ J, with ∑_{k=J}^{N-1} over Finset.Ico J N. As for display 024 the assumptions cannot all hold; the proof uses certificate_budget_general (a finite window J ≤ k ≤ N in one band, ∑d_k < ∞), whose assumptions are satisfiable."
+  },
+  {
+   "id": "A/energy/prose/001",
+   "kind": "prose",
+   "anchor": "Smooth convergence proofs can relate a gradient difference to curvature along",
+   "lines": [
+    3,
+    4
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Motivation: describes how classical smooth convergence proofs use secants (a Lipschitz gradient bounds y by a multiple of s); nothing in the article depends on it."
+  },
+  {
+   "id": "A/energy/prose/002",
+   "kind": "prose",
+   "anchor": "A nonsmooth secant can instead contain a jump that remains large",
+   "lines": [
+    4,
+    5
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.secant_jump_persists",
+    "BfgsVerification.ScalarCounterexamples.coordinate_hasGradient"
+   ],
+   "note": "Stated with F(x)=|x| on R^1: for every ε>0 there are differentiable points x,z with gradients g,h, ‖z-x‖²=4ε² and ‖h-g‖²=4."
+  },
+  {
+   "id": "A/energy/prose/003",
+   "kind": "prose",
+   "anchor": "Our starting point is to measure how much of that secant",
+   "lines": [
+    5,
+    6
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Plan of the section (what the comparison energy is designed to measure); the precise statements are Lemma art:reference-energy and Definition art:band-certificate."
+  },
+  {
+   "id": "A/energy/prose/004",
+   "kind": "prose",
+   "anchor": "comparison energy separates the cost of this component from a negative term",
+   "lines": [
+    6,
+    8
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/energy/lemma/art:reference-energy"
+   ],
+   "note": "Informal reading of the energy identity E_{k+1}=E_k-a_k²/q_k+R_k: R_k is the secant cost, -a_k²/q_k the negative term measuring missed progress."
+  },
+  {
+   "id": "A/energy/prose/005",
+   "kind": "prose",
+   "anchor": "The matrix hierarchy then shows that persistent",
+   "lines": [
+    8,
+    9
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/energy/prose/010"
+   ],
+   "note": "Summary of the contradiction of lines 101-109: with bounded gradients and d_k→0, a persistent gap and bounded secant corrections R_k≤C are incompatible (persistent_gap_contradiction)."
+  },
+  {
+   "id": "A/energy/prose/006",
+   "kind": "prose",
+   "anchor": "The argument uses the matrices actually generated by BFGS throughout.",
+   "lines": [
+    10,
+    10
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Methodological remark: every Lean statement of this module about runs concerns the run's own matrices R.H k (no surrogate or limit matrices are assumed); no separate claim."
+  },
+  {
+   "id": "A/energy/prose/007",
+   "kind": "prose",
+   "anchor": "These are the usual actual-gradient, full-BFGS conventions",
+   "lines": [
+    29,
+    30
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Attribution of the conventions of Definition art:admissible to the literature (LO, XW)."
+  },
+  {
+   "id": "A/energy/prose/008",
+   "kind": "prose",
+   "anchor": "A zero gradient is successful termination.",
+   "lines": [
+    31,
+    31
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.zero_gradient_minimizer",
+    "BfgsVerification.global_minimum_of_zero_gradient"
+   ],
+   "note": "The mathematical content of calling a zero gradient a successful termination: at a differentiable point of a finite convex F with ∇F(x)=0, x is a global minimizer. The termination convention itself is part of the definition (admissible runs have nonzero gradients)."
+  },
+  {
+   "id": "A/energy/prose/009",
+   "kind": "prose",
+   "anchor": "admissible runs do not assert that a differentiable acceptable point exists on",
+   "lines": [
+    31,
+    33
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope disclaimer: Definition art:admissible (AdmissibleBFGSRun) assumes a run and asserts nothing about the existence of acceptable points or about implementations."
+  },
+  {
+   "id": "A/energy/prose/010",
+   "kind": "prose",
+   "anchor": "The identity makes the intended contradiction visible.",
+   "lines": [
+    101,
+    101
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.persistent_gap_contradiction",
+    "BfgsCoverage.Article.Energy.persistent_gap_budget",
+    "BfgsCoverage.Article.Energy.reciprocal_sum_superlinear"
+   ],
+   "note": "The contradiction of the paragraph (lines 101-109), made precise: for an admissible run with bounded gradients and d_k→0, a minimizer x_*, and R_k≤C for all k, the gap F(x_k)-F_* cannot stay ≥η>0 for all k (display 010 against Theorem art:reciprocal-growth). The paragraph leaves the hypotheses of Theorem art:reciprocal-growth (bounded gradients, d_k→0) implicit; the Lean statement includes them. The missing statement of bounded gradients is recorded in the discrepancy of A/energy/prose/012."
+  },
+  {
+   "id": "A/energy/prose/011",
+   "kind": "prose",
+   "anchor": "Thus an objective-level bound on one component of a gradient jump would",
+   "lines": [
+    107,
+    108
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.reciprocal_sum_linear",
+    "BfgsCoverage.Article.Energy.reciprocal_sum_linear_general",
+    "BfgsCoverage.Article.Energy.persistent_gap_budget_general"
+   ],
+   "note": "Under the hypotheses of display 010 (minimizer x_*, gap ≥ η > 0 for all k, R_k ≤ C for all k): ∑_{k<N} q_k⁻¹ ≤ E_0/η² + (C/η²)N for every N. As for display 010, these hypotheses cannot all hold together with bounded gradients, and without bounded gradients their satisfiability is not settled here; the proof is the finite-horizon form reciprocal_sum_linear_general (gap at N, R_k ≤ C for k < N), whose assumptions are satisfiable (example in the module, N = 1)."
+  },
+  {
+   "id": "A/energy/prose/012",
+   "kind": "prose",
+   "anchor": "The next theorem proves",
+   "lines": [
+    108,
+    109
+   ],
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Article.Energy.reciprocal_sum_superlinear",
+    "BfgsCoverage.Article.Energy.reciprocal_sum_superlinear_of_minimizer",
+    "BfgsCoverage.Article.Energy.reciprocal_growth"
+   ],
+   "note": "Lean statement of the corrected claim: reciprocal_sum_superlinear (bounded gradients and d_k → 0 exclude ∑_{k<N} q_k⁻¹ ≤ A + BN for all N); in the paragraph's setting, where x_* minimizes F and so d_k → 0 by Armijo, bounded gradients suffice (reciprocal_sum_superlinear_of_minimizer). See the discrepancy entry."
+  },
+  {
+   "id": "A/energy/prose/013",
+   "kind": "prose",
+   "anchor": "the initial energy is finite, and the",
+   "lines": [
+    109,
+    111
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.energy_nonneg",
+    "BfgsVerification.AdmissibleBFGSRun.referenceEnergy_nonneg"
+   ],
+   "note": "The asserted facts: E_k=r_k^TB_kr_k ≥ 0 for every k (and E_0 is a real number). \"Neither step requires a bound on ‖B_k‖ or a limit for H_k\" is visible in the statements: persistent_gap_budget and reciprocal_growth have no such hypothesis."
+  },
+  {
+   "id": "A/energy/prose/014",
+   "kind": "prose",
+   "anchor": "Multilinearity of the determinant identifies these sums with the coefficients of $\\det(I+zH)$",
+   "lines": [
+    120,
+    122
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.principal_sums_coefficients",
+    "BfgsVerification.PrincipalInvariance.principalPolynomial_coeff",
+    "BfgsVerification.PrincipalInvariance.det_one_add_smul_eq_sum_principal",
+    "BfgsVerification.PrincipalInvariance.principalSum_conjugate",
+    "BfgsVerification.principalSum_diagonal"
+   ],
+   "note": "For symmetric H (H.IsHermitian, i.e. Hᵀ=H for a real matrix): the z^j coefficient of the polynomial det(I+zH) is e_j(H) (proved by multilinearity of the determinant, det_one_add_smul_eq_sum_principal), so det(I+zH)=∑_{j=0}^n e_j(H)z^j for real z; e_j(QᵀHQ)=e_j(H) for orthogonal Q; e_j(H) = esymm_j of the eigenvalues (Multiset.esymm of hH.eigenvalues)."
+  },
+  {
+   "id": "A/energy/prose/015",
+   "kind": "prose",
+   "anchor": "In particular $e_1=\\tr$ and $e_n=\\det$.",
+   "lines": [
+    122,
+    122
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.principal_trace_det",
+    "BfgsVerification.principalSum_one",
+    "BfgsVerification.principalSum_top"
+   ]
+  },
+  {
+   "id": "A/energy/prose/016",
+   "kind": "prose",
+   "anchor": "Trace and determinant potentials are central to classical BFGS analysis",
+   "lines": [
+    123,
+    124
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature context (FND_N92, FND_BN89); no claim is used."
+  },
+  {
+   "id": "A/energy/prose/017",
+   "kind": "prose",
+   "anchor": "The determinant records volume, while the intermediate",
+   "lines": [
+    124,
+    126
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.compressions_and_volume",
+    "BfgsVerification.sum_transformed_coordinate_grams"
+   ],
+   "note": "Made precise as: x↦Hx multiplies Lebesgue measure by |det H|; and for every orthonormal basis U and every j, e_j(H) is the sum of det(Z_IᵀHZ_I) over the j-column selections Z_I of U, i.e. of the determinants of the j-dimensional compressions of H."
+  },
+  {
+   "id": "A/energy/prose/018",
+   "kind": "prose",
+   "anchor": "The inequality below couples each degree to the next one.",
+   "lines": [
+    126,
+    126
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/energy/theorem/art:minor-hierarchy"
+   ],
+   "note": "Describes (art:hierarchy): e_j(H_+) is bounded by e_{j+1}(H) and e_j(H)."
+  },
+  {
+   "id": "A/energy/prose/019",
+   "kind": "prose",
+   "anchor": "After normalization, this coupling supplies a positive weighted potential",
+   "lines": [
+    127,
+    128
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/energy/disp/019",
+    "A/energy/disp/020"
+   ],
+   "note": "The positive weighted potential is V_η of the proof of Theorem art:reciprocal-growth (potential_pos, potential_contraction); no conditioning bound is assumed there."
+  },
+  {
+   "id": "A/energy/prose/020",
+   "kind": "prose",
+   "anchor": "The argument extends the product-estimate tradition in BFGS analysis",
+   "lines": [
+    209,
+    212
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature positioning (S16, FND_JJM24AW)."
+  },
+  {
+   "id": "A/energy/prose/021",
+   "kind": "prose",
+   "anchor": "The assumption $d_k\\to0$ is weaker than the",
+   "lines": [
+    212,
+    213
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.summability_stronger",
+    "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_compact_sublevel"
+   ],
+   "note": "For every admissible run: a compact initial sublevel {F≤F(x_0)} gives ∑_k d_k<∞ (Armijo), and ∑_k d_k<∞ implies d_k→0; so the hypothesis d_k→0 of Theorem art:reciprocal-growth is implied by summability."
+  },
+  {
+   "id": "A/energy/prose/022",
+   "kind": "prose",
+   "anchor": "Finite-horizon bounds",
+   "lines": [
+    213,
+    216
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.finite_horizon_bound",
+    "BfgsCoverage.Article.Energy.superquadratic_growth",
+    "BfgsVerification.finiteHorizon",
+    "BfgsVerification.objectiveFiniteHorizon_of_lower_bound",
+    "BfgsVerification.superquadraticReciprocalGrowth"
+   ],
+   "note": "Both consequences of the companion's Theorem M:superquadratic (C/02_M/theorem/M:superquadratic), for admissible runs with bounded gradients ‖g_k‖ ≤ G (G > 0) and ∑_k d_k < ∞, ω = 1 - c₂. finite_horizon_bound is (M:finitehorizon): for every tail J, η > 0 and m ≥ 2, ∑_{k=J}^{J+m-1} q_k⁻¹ ≥ m [G² V_η(H_J)]^{-1/m} (η + D_J/(ω(m-1)))^{-(m-1)/m} with D_J = ∑_{k≥J} d_k, K_0 = 4G²/ω² and V_η(H) = ∑_{j=1}^n (K_0/η)^{j-1} e_j(H) (from the library's finiteHorizon, whose block length is m + 1). superquadratic_growth is (M:superquad): (∑_{k<N} q_k⁻¹)/N² → +∞."
+  },
+  {
+   "id": "A/energy/prose/023",
+   "kind": "prose",
+   "anchor": "Neither limit in \\eqref{art:reciprocal-limits} asserts that",
+   "lines": [
+    216,
+    217
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope statement: says what Theorem art:reciprocal-growth does not assert (pointwise q_k→0, convergence of H_k); reciprocal_growth contains neither."
+  },
+  {
+   "id": "A/energy/prose/024",
+   "kind": "prose",
+   "anchor": "The radial direction is effective for a centered homogeneous term, but a",
+   "lines": [
+    221,
+    223
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/global/theorem/art:centered",
+    "A/local/theorem/art:nonradial-example"
+   ],
+   "note": "Forward summary: the radial field proves convergence for centered objectives (Section art:global), while the curved planar example of Section art:local fails the radial condition and needs a moving field."
+  },
+  {
+   "id": "A/energy/prose/025",
+   "kind": "prose",
+   "anchor": "\\emph{Visibility} keeps the remaining objective gap detectable on a",
+   "lines": [
+    223,
+    227
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Explains the roles of the three conditions of Definition art:band-certificate (visibility, secant control, transport); no claim beyond the definition."
+  },
+  {
+   "id": "A/energy/prose/026",
+   "kind": "prose",
+   "anchor": "The identity $\\widehat B_ks_k=0$ means that",
+   "lines": [
+    227,
+    230
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.projection_no_cost",
+    "BfgsVerification.TransportedCertificate.annihilated_projector",
+    "BfgsVerification.TransportedCertificate.trace_projected",
+    "BfgsVerification.EnergyIdentities.energy_add_kernel"
+   ],
+   "note": "Made precise as: (v+cs_k)ᵀB̂_k(v+cs_k)=vᵀB̂_kv for all v,c; Π_{s_k}B̂_kΠ_{s_k}=B̂_k; tr(B̂_kW)=tr(B̂_kΠ_{s_k}WΠ_{s_k}) for every W."
+  },
+  {
+   "id": "A/energy/prose/027",
+   "kind": "prose",
+   "anchor": "A positive-semidefinite field packages one or several comparison directions.",
+   "lines": [
+    232,
+    236
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Explanation: the field is an analysis device (AdmissibleBFGSRun has no field; Definition art:band-certificate is a property of F alone) and forward references to the radial and contour fields of Sections art:global and art:local."
+  },
+  {
+   "id": "A/energy/prose/028",
+   "kind": "prose",
+   "anchor": "All accepted pairs are eligible.",
+   "lines": [
+    244,
+    244
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.accepted_pairs_eligible",
+    "BfgsVerification.AdmissibleBFGSRun.accepted_pair_eligible"
+   ],
+   "note": "For every admissible run and k, (x_k,x_{k+1}) with gradients (g_k,g_{k+1}) is an eligible pair for the run's constants, with d=d_k and t=t_k."
+  },
+  {
+   "id": "A/energy/prose/029",
+   "kind": "prose",
+   "anchor": "Requiring a property of every eligible pair",
+   "lines": [
+    244,
+    246
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: eligibility depends only on F and the constants (EligiblePair F c₁ c₂ x z g h); the sentence disclaims that eligible pairs are realizable by BFGS."
+  },
+  {
+   "id": "A/energy/prose/030",
+   "kind": "prose",
+   "anchor": "$\\Pi_s=I-ss^T/(s^Ts)$.",
+   "lines": [
+    246,
+    247
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.stepProjector",
+    "BfgsCoverage.Article.Energy.stepProjector_eq"
+   ],
+   "note": "stepProjector s = 1 - (sqNorm s)⁻¹ • outer s s, and sqNorm s = sᵀs (stepProjector_eq)."
+  },
+  {
+   "id": "A/energy/prose/031",
+   "kind": "prose",
+   "anchor": "Neither continuity, uniform boundedness nor positive definiteness of $W_\\eta$",
+   "lines": [
+    264,
+    265
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/energy/definition/art:band-certificate"
+   ],
+   "note": "Remark on the definition: bandCertificate_iff requires only PSD at differentiable points of K_η, the three inequalities and the constants; no continuity, uniform bound or positive definiteness."
+  },
+  {
+   "id": "A/energy/prose/032",
+   "kind": "prose",
+   "anchor": "The constants and field may depend on the positive band.",
+   "lines": [
+    265,
+    265
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/energy/definition/art:band-certificate"
+   ],
+   "note": "Restates the quantifier order of the definition: one certificate (field and constants) per band η."
+  },
+  {
+   "id": "A/energy/prose/033",
+   "kind": "prose",
+   "anchor": "The positive-band restriction permits these constants to deteriorate near the",
+   "lines": [
+    266,
+    268
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Explains the proof strategy of Theorem art:certificate (only a limiting gap ℓ>0 is ruled out, with the single band K_{ℓ/2}); the precise content is in the theorem and the proof displays."
+  },
+  {
+   "id": "A/energy/prose/034",
+   "kind": "prose",
+   "anchor": "In particular, the condition allows nonsmoothness at an optimizer.",
+   "lines": [
+    268,
+    268
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.nonsmooth_optimizer_certificates",
+    "BfgsCoverage.Article.Energy.band_excludes_minimizers",
+    "BfgsCoverage.Article.Energy.absCert",
+    "BfgsCoverage.Article.Energy.absF_grad"
+   ],
+   "note": "Witness (nonsmooth_optimizer_certificates): F(x) = |x| on R^1 (absF) is convex with unique minimizer 0 and F_* = min F = 0, is not differentiable at 0, has compact sublevels, and for all 0 < c₁ < c₂ < 1 and b > 0 the set K = {F ≤ b} admits the band certificates of Definition art:band-certificate with C ≥ 0 (absCert: W = I, m = 1, C = 1/η, L = 0, δ = 1 on K_η). So the hypotheses of Theorem art:certificate hold for an objective that is nonsmooth at its optimizer. band_excludes_minimizers gives the reason: with F_* = min F no band K_η (η > 0) contains a minimizer, so the conditions impose nothing at an optimizer."
+  },
+  {
+   "id": "A/energy/prose/035",
+   "kind": "prose",
+   "anchor": "The companion's scalar convergence and certificate-nonexistence results",
+   "lines": [
+    316,
+    317
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Energy.certificate_not_necessary",
+    "BfgsVerification.AccumulatingKinks.actual_bfgs_converges",
+    "BfgsVerification.AccumulatingKinks.every_neighborhood_no_certificates"
+   ],
+   "note": "Witness: the accumulating-kink objective h(x)=x²/2+3∑_j 4^{-j}(x-4^{-j})_+ of companion Chapter G (AccumulatingKinks.coordinateObjective): convex, unique minimizer 0, min 0, compact sublevels, every admissible run converges (values and iterates), yet for (c₁,c₂)=(1/4,1/2) no K={h≤b}, b>0, admits the band certificates of Definition art:band-certificate."
+  },
+  {
+   "id": "A/energy/prose/036",
+   "kind": "prose",
+   "anchor": "The planar application below shows a different point: moving geometry can",
+   "lines": [
+    318,
+    319
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/theorem/art:nonradial-example"
+   ],
+   "note": "Forward reference to Theorem art:nonradial-example (Section art:local)."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "A/energy/prose/012",
+   "description": "The sentence \"The next theorem proves that the full update requires faster growth\" (energy.tex:108-109) means growth of ∑_{k<N} q_k⁻¹ faster than the linear bound of display A/energy/disp/010 (energy.tex:104-106). In text order the next theorem is Theorem art:minor-hierarchy (energy.tex:130-141), a one-step inequality for a single update that says nothing about the growth of ∑_{k<N} q_k⁻¹. The faster growth is Theorem art:reciprocal-growth, which assumes bounded gradients and d_k → 0; the paragraph (energy.tex:101-111) states neither. In its setting x_* minimizes F, so the values are bounded below and Armijo gives d_k → 0, but bounded gradients remain an extra hypothesis. With it the corrected claim holds: the reciprocal sum is not O(N) (Lean). The paragraph's contradiction (A/energy/prose/010) relies on the same hypothesis.",
+   "severity": "imprecision",
+   "proposed": "Theorem~\\ref{art:reciprocal-growth} proves that, along runs with bounded gradients, the full update requires faster growth.",
+   "lean": [
+    "BfgsCoverage.Article.Energy.reciprocal_sum_superlinear",
+    "BfgsCoverage.Article.Energy.reciprocal_sum_superlinear_of_minimizer"
+   ]
+  }
+ ]
 }
