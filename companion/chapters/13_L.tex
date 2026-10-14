@@ -28,8 +28,9 @@ Positive lower curvature requires a separate construction. The local finite-bran
 
 All runs use ordinary full BFGS, $H_0\succ0$, differentiable oracle queries, and a fixed unit-first Armijo--weak-Wolfe search. The search starts with $\alpha=1$, lower bracket zero and upper bracket infinity; an Armijo failure updates the upper bracket, a Wolfe failure the lower bracket; use the midpoint after bracketing and doubling otherwise. Fix
 \[
- c_1=10^{-4},\qquad c_2=\tfrac12.
+ 0<c_1\le\tfrac13,\qquad c_1<c_2<1.
 \]
+Theorem~\ref{L:thm:local} takes $c_1=10^{-4}$ and $c_2=\tfrac12$.
 The update is unmodified:
 \[
  s=-\alpha Hg,\qquad y=g^+-g,\qquad
@@ -39,7 +40,7 @@ The update is unmodified:
 The seed inequalities have strict margins, so there are no equality-convention issues.
 
 \begin{theorem}[Global failure with constant positive branch Hessians]\label{L:thm:global}
-There are three fixed slopes $g_0,g_1,g_2\in\R^2$ such that, for every $\mu>0$,
+There are three fixed slopes $g_0,g_1,g_2\in\R^2$ such that, for every $\mu>0$ and every such pair $(c_1,c_2)$,
 \[
  Q_\mu(x)=\tfrac\mu2\norm{x}^2+\max_{i=0,1,2}g_i\T x
 \]
@@ -168,7 +169,7 @@ At a query $\tau Z$, the common quadratic does not affect which slope is active.
 \[
  G(Z)+\tfrac{\mu\tau}{2}\norm Z^2,
 \]
-and its gradient is $g_i+\mu\tau Z$. All Armijo and weak-Wolfe comparisons, divided by their common positive scale when needed, are continuous in the normalized state. The seed has strict branch gaps and strict decisions at its finite list of nine queries. Intersecting the corresponding open neighborhoods preserves the entire decision tree. The normalized secant and update formulas are exactly~\eqref{L:eq:formal1}--\eqref{L:eq:formal2}; no reset of the actual matrix is made.
+and its gradient is $g_i+\mu\tau Z$. All Armijo and weak-Wolfe comparisons, divided by their common positive scale when needed, are continuous in the normalized state. The seed has strict branch gaps and, for every such pair $(c_1,c_2)$, strict decisions at its finite list of nine queries. Intersecting the corresponding open neighborhoods preserves the entire decision tree. The normalized secant and update formulas are exactly~\eqref{L:eq:formal1}--\eqref{L:eq:formal2}; no reset of the actual matrix is made.
 \end{proof}
 
 
@@ -351,7 +352,7 @@ The fourth branch is negative relative to its quadratic part there if $y$ is suf
 \begin{equation}\label{L:eq:local-model}
  F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}.
 \end{equation}
-Use Theorem~\ref{L:thm:global} to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
+Use Theorem~\ref{L:thm:global} with $c_1=10^{-4}$ and $c_2=\tfrac12$ to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
 \[
  x_0^{(n)}=p_n+a_n\bar x_0,\qquad H_0^{(n)}=\bar H_0.
 \]

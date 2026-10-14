@@ -260,9 +260,22 @@ is resolved. Resolutions are recorded under each item and in
     - The unedited source rebuilds to the same text as
       `release/BFGS_Journal_Article.pdf`, apart from how large delimiters
       are encoded in the PDF text layer.
-    - The companion (`companion/chapters/13_L.tex`, generated from the
-      source report) keeps the special case c₁ = 10⁻⁴, c₂ = 1/2.
     - `release/` PDFs predate this edit.
+  - Companion, updated on the author's request through logged transformations
+    in `editorial/generate_companion.py` (the frozen source chapters are
+    unchanged):
+    - Chapter 13 fixes the constants to the same range and states Theorem
+      13.1 (global failure on Q_μ) for every such pair. The agreement lemma
+      notes that the seed decisions are strict for every pair. The local
+      embedding takes c₁ = 10⁻⁴, c₂ = 1/2.
+    - Chapter 1's N3 summary states the range.
+    - `companion/current_verification.tex` gains a short "13 October 2026 Lean
+      review" paragraph.
+    - The companion was rebuilt and is now 108 pages; the extra page comes from
+      that paragraph. The changed pages were inspected visually.
+    - A logged `\needspace` keeps the "Rebuild the corrected report" heading
+      with its commands.
+    - Pages 100–108 are the old pages 99–107 shifted by one page.
 
 ### New items from the second pass
 

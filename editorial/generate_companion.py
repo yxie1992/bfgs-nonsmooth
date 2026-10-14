@@ -129,6 +129,35 @@ for module,title in order:
   replacement=block.replace(r'\begin{align*}',r'\[\begin{aligned}').replace(r'\end{align*}',r'\end{aligned}\]')
   text=text.replace(block,replacement)
   transform_log.append({'module':module,'kind':'keep_three_branch_definition_together','reason':'Visual review found the definition split across pages. Unbreakable aligned display retains every formula and all theorem hypotheses.'})
+ # October 2026 Lean review: the global lower-curvature failure holds for every
+ # admissible pair of line-search constants (bfgs_lean_article,
+ # LGlobalFailure.nonstrict_actual_global_failure), as in the article's
+ # Proposition art:quadratic_failure. The local theorem keeps c1=1e-4, c2=1/2.
+ constant_range={
+  'L':[('state_global_lower_failure_for_admissible_constants',
+        'otherwise. Fix\n\\[\n c_1=10^{-4},\\qquad c_2=\\tfrac12.\n\\]\n',
+        'otherwise. Fix\n\\[\n 0<c_1\\le\\tfrac13,\\qquad c_1<c_2<1.\n\\]\nTheorem~\\ref{L:thm:local} takes $c_1=10^{-4}$ and $c_2=\\tfrac12$.\n'),
+       ('quantify_global_lower_failure_over_constants',
+        'There are three fixed slopes $g_0,g_1,g_2\\in\\R^2$ such that, for every $\\mu>0$,\n',
+        'There are three fixed slopes $g_0,g_1,g_2\\in\\R^2$ such that, for every $\\mu>0$ and every such pair $(c_1,c_2)$,\n'),
+       ('seed_decisions_strict_for_admissible_constants',
+        'The seed has strict branch gaps and strict decisions at its finite list of nine queries.',
+        'The seed has strict branch gaps and, for every such pair $(c_1,c_2)$, strict decisions at its finite list of nine queries.'),
+       ('local_embedding_uses_literal_constants',
+        'Use Theorem~\\ref{L:thm:global} to choose one entire bad orbit',
+        'Use Theorem~\\ref{L:thm:global} with $c_1=10^{-4}$ and $c_2=\\tfrac12$ to choose one entire bad orbit')],
+  'I':[('state_global_lower_failure_for_admissible_constants',
+        'For every \\(\\mu>0\\), suitable initial states produce deterministic nonstationary convergence to zero.',
+        'For every \\(\\mu>0\\) and every fixed \\(0<c_1\\le1/3\\), \\(c_1<c_2<1\\), suitable initial states produce deterministic nonstationary convergence to zero.')]}
+ for kind,old,new in constant_range.get(module,[]):
+  assert text.count(old)==1,(module,kind)
+  text=text.replace(old,new)
+  transform_log.append({'module':module,'kind':kind,'reason':'The seed decisions are strict for every 0<c1<=1/3 and c1<c2<1 (accepted decrease ratios exceed 1/3; rejected values exceed the current value), so the stable-manifold argument holds for each such pair. Lean: bfgs_lean_article, LGlobalFailure.nonstrict_actual_global_failure; article: Proposition art:quadratic_failure. The local theorem keeps c1=1e-4, c2=1/2.'})
+ if module=='E':
+  heading=r'\section{Rebuild the corrected report}'
+  assert text.count(heading)==1
+  text=text.replace(heading,'\\needspace{6\\baselineskip}\n'+heading)
+  transform_log.append({'module':module,'kind':'keep_rebuild_heading_with_commands','reason':'Visual review after the 13 October 2026 verification paragraph found this heading and its first line separated from the command block. needspace changes layout only.'})
  intro='\\chapter{'+title+'}\\label{comp:'+module+'}\\label{'+module+':chapter}\n\\renewcommand{\\ModuleTag}{'+number[module]+'}\n'+introductions[module]+'\n\n'
  if module=='E':intro+='\\input{current_verification}\n'
  content=intro+text
