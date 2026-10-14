@@ -4,7 +4,9 @@
 Runs `#print axioms` (via `lake env lean`) on every declaration that
 `editorial/CLAIM_LEDGER.json` cites, for the article and for the companion (every
 export field of every record, and the declaration lists of the article
-supplements), plus the principal declarations of this package. Fails if a cited
+supplements), on every Lean name of the coverage register
+(`editorial/lean_coverage/register/*.json`, items with status LEAN, DEFINITION or
+OPEN), plus the principal declarations of this package. Fails if a cited
 name does not exist or if any declaration depends on an axiom other than
 propext, Classical.choice and Quot.sound. The names are split across `--jobs`
 concurrent Lean processes. Private names (`_private.…`) in the supplements'
@@ -29,6 +31,7 @@ HERE = Path(__file__).resolve().parent
 PACKAGE = HERE.parent
 ROOT = PACKAGE.parent
 LEDGER = ROOT / 'editorial' / 'CLAIM_LEDGER.json'
+COVERAGE = ROOT / 'editorial' / 'lean_coverage' / 'register'
 GUARD = PACKAGE / 'BfgsArticleAxioms.lean'
 STANDARD = ['propext', 'Classical.choice', 'Quot.sound']
 
@@ -118,6 +121,16 @@ def ledger_names():
     return sorted(principal), sorted(article), sorted(companion), private
 
 
+def coverage_names():
+    """Lean names of the coverage register (statuses LEAN, DEFINITION, OPEN)."""
+    names = set()
+    for path in sorted(COVERAGE.glob('*.json')):
+        for item in json.loads(path.read_text())['items']:
+            if item.get('status') in ('LEAN', 'DEFINITION', 'OPEN'):
+                names.update(item.get('lean') or [])
+    return sorted(names)
+
+
 def run_lean(sources):
     """Run `lake env lean` on generated files concurrently; return [(code, output)]."""
     work = PACKAGE / '.lake' / 'axiom_audit'
@@ -172,7 +185,8 @@ def main():
     source_tree_clean = command_output(['git', 'status', '--porcelain'], ROOT) == ''
 
     principal, article, companion, private = ledger_names()
-    cited = sorted(set(article) | set(companion))
+    coverage = coverage_names()
+    cited = sorted(set(article) | set(companion) | set(coverage))
     names = sorted(set(cited) | set(PACKAGE_PRINCIPAL))
     jobs = max(1, min(args.jobs, len(names)))
     sources = [(f'AxiomAudit{i}.lean', 'import BfgsArticle\n\n' +
@@ -203,12 +217,13 @@ def main():
         'source_commit': source_commit,
         'source_tree_clean': source_tree_clean,
         'command': 'python3 scripts/axiom_audit.py' + (' --write-guard' if args.write_guard else ''),
-        'policy': 'every declaration cited by the claim ledger (article and companion) exists and depends on no axiom outside ' + ', '.join(STANDARD),
+        'policy': 'every declaration cited by the claim ledger (article and companion) or by the coverage register exists and depends on no axiom outside ' + ', '.join(STANDARD),
         'declarations_checked': len(names),
         'ledger_principal_exports': len(principal),
         'ledger_cited_exports': len(article),
         'ledger_companion_exports': len(companion),
         'ledger_companion_only_exports': len(set(companion) - set(article)),
+        'coverage_register_names': len(coverage),
         'package_principal_declarations': len(PACKAGE_PRINCIPAL),
         'axiom_set_counts': counts,
         'missing_or_unresolved': missing,
