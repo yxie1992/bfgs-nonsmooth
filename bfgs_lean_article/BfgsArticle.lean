@@ -10,3 +10,5 @@ import BfgsArticle.LNonStrictGlobal
 import BfgsArticle.LNonStrictLocal
 import BfgsArticle.LNonStrictBranch
 import BfgsArticle.HomogeneousModels
+import BfgsArticle.LUniformGlobal
+import BfgsArticle.LUniformLocal

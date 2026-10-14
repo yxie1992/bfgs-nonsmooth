@@ -6,7 +6,7 @@ Scope: notation, typesetting and claim wording in the article (`paper/`). The se
 numerics were re-checked in the first reading and all matched. Unless an item says
 otherwise, no mathematical statement and no Lean declaration changed.
 
-**Status (13 October 2026):** M1 to M5 are resolved; M6 awaits an author decision.
+**Status (13 October 2026):** M1 to M6 are resolved.
 
 ## Resolved
 
@@ -65,19 +65,41 @@ improved from badness 10000 to 4608. `editorial/CLAIM_LEDGER.json` and
 positions changed. `python3 editorial/generate_companion.py --check` passes. The
 PDFs under `release/` predate these edits.
 
-## Open
-
-- [ ] **M6: Theorem `art:local-failure-lower` fixes $c_1=10^{-4}$, $c_2=1/2$.**
-  The upper-curvature Theorem `art:local-failure` and Proposition
-  `art:quadratic_failure` cover every $0<c_1\le1/3$, $c_1<c_2<1$. Mathematically the
-  local lower-curvature theorem should extend in the same way, and even uniformly:
-  the seed's Armijo margins hold at $c_1=1/3$ and its weak-Wolfe margins hold for
-  every $c_2>0$, so one stable-manifold orbit should serve every admissible pair,
-  and the copying and whitening steps do not depend on the constants. The Lean
-  targets do not cover this yet. `LActualCopies`/`LWhitening` and their non-strict
-  versions in `bfgs_lean_article/BfgsArticle/LNonStrictLocal.lean` fix
-  `1/10000` and `1/2` through the library's source run `LSeedCopies.run`. Closing
-  this item needs a source run with margins at $1/3$ whose queries lie in
-  `LEmbedding.localDomain`, new copy and whitening families in
-  `bfgs_lean_article`, a new axiom audit, ledger additions, and statement edits
-  in the article and companion. Awaiting author decision.
+- [x] **M6: Theorem `art:local-failure-lower` fixed $c_1=10^{-4}$, $c_2=1/2$.**
+  It now holds for every $0<c_1\le1/3$, $c_1<c_2<1$ at once, like Theorem
+  `art:local-failure`: one objective and one family of starts with $H_0=I$, and
+  for every admissible pair the same iterates, matrices and complete decision tree.
+  Proposition `art:quadratic_failure` now chooses its initial state before the pair.
+  - Mathematics: every Armijo and weak-Wolfe margin is affine in its constant. At
+    the seed, accepted queries pass Armijo with $c_1=1/3$, lower the value and have
+    a positive new directional derivative, and rejected queries raise the value.
+    These corner margins persist on one neighbourhood of the seed, so one
+    stable-manifold orbit serves every pair, and copying and whitening it does not
+    involve the constants.
+  - Lean (`bfgs_lean_article`): `LUniformGlobal.lean`
+    (`LNormalizedOracle.uniform_conditions_eventually`,
+    `UniformConditions.conditions`, `LUniform.uniform_global_failure`) and
+    `LUniformLocal.lean` (`LUniform.uniformSmoothLocalFailure`,
+    `uniform_identity_failure`, `uniform_fixed_metric_failure`,
+    `branch_not_twice_differentiable_zero`). The library's local construction
+    starts from an orbit chosen for $c_1=10^{-4}$, $c_2=1/2$, so the new module
+    selects its own source orbit and repeats the copying and whitening with the
+    library's generic lemmas. The new objective is the same four-branch function
+    whitened by the new orbit's initial matrix. All new declarations use only
+    `propext`, `Classical.choice` and `Quot.sound` (`AXIOM_AUDIT.json`).
+  - Article: Theorem `art:local-failure-lower`, Proposition `art:quadratic_failure`,
+    Lemma `art:lower_hyperbolic` and its proof, the appendix introduction, the
+    copy step, the caption of Table `art:regularity-map`, and one sentence in
+    Section `art:failure`. The theorem keeps its original length, so pages 32 to
+    42 keep their layout; pages 43 to 49 reflow without bad breaks, and the
+    article stays at 49 pages.
+  - Companion: Theorems 13.1 and 13.2, Lemma 13.1 and its proof, the setup of
+    Chapter 13, the copy step, the N2/N3 summaries in Chapter 1 (logged
+    transformations in `editorial/generate_companion.py`), and the Lean-review note
+    in `companion/current_verification.tex`. Still 108 pages, same warnings.
+  - Ledger: `editorial/lean_review_20261013/LEDGER_ADDITIONS.json` adds the new
+    names to `art:local-failure-lower`, `art:quadratic_failure`,
+    `art:lower_hyperbolic`, `art:lower_local_model`, `art:lower_curvature`,
+    `art:lower_objective` and `art:regularity-map`, and (new `companion_additions`,
+    merged by `editorial/ledger_addenda.py`) to the companion records
+    `L:thm:global`, `L:thm:local` and `L:lem:agreement`.

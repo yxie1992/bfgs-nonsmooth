@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "revision": "lean_review_20261013",
-  "scope": "Additional principal Lean exports identified in the October 2026 Lean review (TODO_LEAN_REVIEW.md). Additions only; no existing export or review record is changed. Package declarations are compiled by bfgs_lean_article and recorded, with exact signatures and axioms, in its AXIOM_AUDIT.json.",
+  "scope": "Additional principal Lean exports identified in the October 2026 Lean review (TODO_LEAN_REVIEW.md). Additions only, to article records and three companion theorem records; no existing export or review record is changed. Package declarations are compiled by bfgs_lean_article and recorded, with exact signatures and axioms, in its AXIOM_AUDIT.json.",
   "package_audit": "bfgs_lean_article/AXIOM_AUDIT.json",
   "additions": [
     {
@@ -27,48 +27,63 @@
         "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
         "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure",
         "BfgsVerification.LWhitening.NonStrictIdentityFailureTarget",
-        "BfgsVerification.LWhitening.nonstrict_identity_failure"
+        "BfgsVerification.LWhitening.nonstrict_identity_failure",
+        "BfgsVerification.LUniform.UniformSmoothLocalFailureTarget",
+        "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+        "BfgsVerification.LUniform.UniformFailureTarget",
+        "BfgsVerification.LUniform.FailureRun",
+        "BfgsVerification.LUniform.UniformlyLocal",
+        "BfgsVerification.LUniform.ObjectiveGeometry",
+        "BfgsVerification.LUniform.uniform_identity_failure",
+        "BfgsVerification.LUniform.branch_not_twice_differentiable_zero"
       ],
-      "note": "The same runs with the non-strict acceptance tests of Section art:failure (Armijo <=, weak Wolfe >=); the strict trace is kept alongside. Closes the strict-only formalization recorded in TODO_LEAN_REVIEW.md."
+      "note": "The same runs with the non-strict acceptance tests of Section art:failure (Armijo <=, weak Wolfe >=); the strict trace is kept alongside. Closes the strict-only formalization recorded in TODO_LEAN_REVIEW.md. LUniform.uniformSmoothLocalFailure states the theorem for every 0<c1<=1/3, c1<c2<1 at once: one objective, one family of starts with H0=I, and the same iterates, matrices and complete non-strict and strict traces for every admissible pair."
     },
     {
       "id": "art:lower_curvature",
       "principal_exports": [
-        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction"
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
+        "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+        "BfgsVerification.LUniform.uniform_global_failure"
       ],
-      "note": "Endpoint with the non-strict acceptance tests of Section art:failure."
+      "note": "Endpoint with the non-strict acceptance tests of Section art:failure; the LUniform forms hold for every admissible pair with one orbit, objective and family of starts."
     },
     {
       "id": "art:lower_objective",
       "principal_exports": [
-        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction"
+        "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
+        "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+        "BfgsVerification.LUniform.branch_not_twice_differentiable_zero"
       ],
-      "note": "Endpoint with the non-strict acceptance tests of Section art:failure."
+      "note": "Endpoint with the non-strict acceptance tests of Section art:failure; LUniform.uniformSmoothLocalFailure is the same objective construction whitened by the matrix of the constant-independent orbit."
     },
     {
       "id": "art:regularity-map",
       "principal_exports": [
         "ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction",
         "BfgsVerification.LWhitening.NonStrictSmoothLocalFailureTarget",
-        "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure"
+        "BfgsVerification.LWhitening.nonstrictSmoothLocalFailure",
+        "BfgsVerification.LUniform.uniformSmoothLocalFailure"
       ],
-      "note": "Lower-curvature regime with the non-strict acceptance tests of Section art:failure."
+      "note": "Lower-curvature regime with the non-strict acceptance tests of Section art:failure, for every admissible pair (LUniform.uniformSmoothLocalFailure)."
     },
     {
       "id": "art:lower_local_model",
       "principal_exports": [
         "BfgsVerification.LActualCopies.NonStrictFixedMetricFailureTarget",
-        "BfgsVerification.LActualCopies.nonstrict_fixed_metric_failure"
+        "BfgsVerification.LActualCopies.nonstrict_fixed_metric_failure",
+        "BfgsVerification.LUniform.uniform_fixed_metric_failure"
       ],
-      "note": "Fixed-matrix copy family with the non-strict acceptance tests of Section art:failure."
+      "note": "Fixed-matrix copy family with the non-strict acceptance tests of Section art:failure; LUniform.uniform_fixed_metric_failure copies one orbit that serves every admissible pair."
     },
     {
       "id": "art:quadratic_failure",
       "principal_exports": [
         "BfgsVerification.LGlobalFailure.nonstrict_actual_global_failure",
-        "BfgsVerification.LGlobalFailure.nonstrict_source_global_failure"
+        "BfgsVerification.LGlobalFailure.nonstrict_source_global_failure",
+        "BfgsVerification.LUniform.uniform_global_failure"
       ],
-      "note": "The same runs with the non-strict acceptance tests of Section art:failure, for every mu>0, 0<c1<=1/3 and c1<c2<1, and for the literal c1=1e-4, c2=1/2."
+      "note": "The same runs with the non-strict acceptance tests of Section art:failure, for every mu>0, 0<c1<=1/3 and c1<c2<1, and for the literal c1=1e-4, c2=1/2. LUniform.uniform_global_failure chooses one initial state and trajectory before the constants; it is an actual run for every admissible pair."
     },
     {
       "id": "art:homogeneous-examples",
@@ -79,6 +94,41 @@
         "BfgsVerification.AdmissibleBFGSRun.homogeneous_conclusion_of_bounded_zero_sublevel"
       ],
       "note": "Explicit Lean forms of the three cases (every norm, bounded unit sublevel gauge, finite linear maximum with bounded zero sublevel) with the full conclusion of Theorem art:homogeneous."
+    },
+    {
+      "id": "art:lower_hyperbolic",
+      "principal_exports": [
+        "BfgsVerification.LNormalizedOracle.uniform_conditions_eventually",
+        "BfgsVerification.LNormalizedOracle.UniformConditions.conditions"
+      ],
+      "note": "The seed's corner margins (Armijo at c1=1/3 and c1=0 for accepted trials, value increase at rejected trials, positive new slope at accepted trials) persist on one neighborhood and give the query decisions for every admissible pair."
+    }
+  ],
+  "companion_additions": [
+    {
+      "id": "companion.L:thm:global",
+      "exports": [
+        "BfgsVerification.LUniform.uniform_global_failure"
+      ],
+      "note": "The generated chapter states the global failure for every 0<c1<=1/3, c1<c2<1 with initial states chosen before the pair; LUniform.uniform_global_failure is that uniform form, with the complete non-strict and strict traces."
+    },
+    {
+      "id": "companion.L:thm:local",
+      "exports": [
+        "BfgsVerification.LUniform.UniformSmoothLocalFailureTarget",
+        "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+        "BfgsVerification.LUniform.uniform_identity_failure",
+        "BfgsVerification.LUniform.uniform_fixed_metric_failure"
+      ],
+      "note": "The generated chapter states the local failure for every 0<c1<=1/3, c1<c2<1 with one objective and the same initial points; LUniform.uniformSmoothLocalFailure is that uniform form."
+    },
+    {
+      "id": "companion.L:lem:agreement",
+      "exports": [
+        "BfgsVerification.LNormalizedOracle.uniform_conditions_eventually",
+        "BfgsVerification.LNormalizedOracle.UniformConditions.conditions"
+      ],
+      "note": "One neighborhood of the boundary seed gives the actual decision tree for every admissible pair."
     }
   ]
 }

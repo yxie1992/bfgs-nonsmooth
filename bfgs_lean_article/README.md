@@ -56,6 +56,14 @@ records the result and the exact signatures of the package declarations.
 | `BfgsArticle/LNonStrictLocal.lean` | Fixed-matrix and identity-initialized lower-curvature families with the non-strict search: `LActualCopies.nonstrict_fixed_metric_failure`, `LWhitening.nonstrict_identity_failure`, `LWhitening.nonstrictSmoothLocalFailure`, `LWhitening.nonstrictStepLocalFailure`. |
 | `BfgsArticle/LNonStrictBranch.lean` | Theorem `art:local-failure-lower` endpoint: `ArticleBranchRegularity.nonstrictSmoothLocalFailure_with_branch_obstruction`. |
 | `BfgsArticle/HomogeneousModels.lean` | Corollary `art:homogeneous-examples`: `AdmissibleBFGSRun.norm_conclusion` (every norm), `gauge_conclusion` (bounded unit sublevel), `finiteMaxLinear_conclusion`. |
+| `BfgsArticle/LUniformGlobal.lean` | One lower-curvature orbit for every admissible pair. `LNormalizedOracle.UniformConditions` holds the seed's decision margins at `c₁∈{0,1/3}`, `c₂∈{0,1}`; `uniform_conditions_eventually` keeps them on one neighbourhood of the seed and `UniformConditions.conditions` gives the oracle conditions for every `0≤c₁≤1/3`, `0≤c₂≤1`. Proposition `art:quadratic_failure` with the initial state chosen before the constants: `LUniform.uniform_global_failure`. |
+| `BfgsArticle/LUniformLocal.lean` | Theorem `art:local-failure-lower` for every `0<c₁≤1/3`, `c₁<c₂<1`: `LUniform.uniformSmoothLocalFailure` (target `UniformSmoothLocalFailureTarget`), with one objective, one family of starts with `H₀=I`, and the same iterates, matrices and complete traces for every pair. Also `uniform_identity_failure`, `uniform_fixed_metric_failure` and `branch_not_twice_differentiable_zero`. |
+
+The library's local construction starts from `LSeedCopies.run`, an orbit chosen for
+`c₁=10⁻⁴`, `c₂=1/2` only. `LUniformLocal.lean` therefore selects a new source orbit
+(`LUniform.source`) and repeats the copying and whitening with the library's generic
+lemmas. Its objective `LUniform.smoothObjective` is the library's
+`LEmbedding.objective` whitened by the new orbit's initial matrix.
 
 The lower-curvature declarations keep the strict trace next to the non-strict one,
 for the same runs. Each non-strict proof reuses the strict margins already proved

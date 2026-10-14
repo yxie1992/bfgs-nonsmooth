@@ -74,14 +74,14 @@ is resolved. Resolutions are recorded under each item and in
   - Supplements: all five now compile through the standard `lake build` of the
     new package `bfgs_lean_article/` (see P3).
   - Axioms: `bfgs_lean_article/scripts/axiom_audit.py` ran `#print axioms` on
-    2014 declarations. These are every Lean name that
+    2026 declarations (2014 before the third pass). These are every Lean name that
     `editorial/CLAIM_LEDGER.json` cites for an article statement (principal and
     full exports) plus the new package's principal declarations.
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (2013 use all three; one uses only `propext` and `Quot.sound`).
+      `Quot.sound` (2025 use all three; one uses only `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
-    - The 170 principal exports are pinned with `#guard_msgs` in
+    - The 182 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
   - Found along the way: 14 ledger-cited names
@@ -293,14 +293,22 @@ is resolved. Resolutions are recorded under each item and in
   - Since the P3d edit, the `proof_locations` line numbers and passage hashes
     for `paper/appendices/lower_curvature.tex` in the ledger are also stale.
     They are copied from the sealed 13 September negative review and are now
-    off by up to 4 lines. The records' `location` fields are recomputed and
-    current.
+    off by several lines (the M6 edits in `TODO_MANUSCRIPT_REVIEW.md` added four
+    more). The records' `location` fields are recomputed and current.
   - `refresh_correspondence.py` cannot refresh these, because it rejects any
     statement change. That needs a new correspondence revision.
 - [ ] **Lean linter warnings (optional, cosmetic).**
   - The main library emits 1244 style warnings.
   - Cleaning them would change hash-pinned library files, so do it only together
     with a deliberate re-baseline.
+
+### Third pass
+
+- [x] **Lower-curvature failure for every admissible pair at once.** Theorem
+  `art:local-failure-lower` and Proposition `art:quadratic_failure` now hold for
+  every $0<c_1\le1/3$, $c_1<c_2<1$ with one orbit, objective and family of starts.
+  New modules `bfgs_lean_article/BfgsArticle/LUniformGlobal.lean` and
+  `LUniformLocal.lean`; details under M6 in `TODO_MANUSCRIPT_REVIEW.md`.
 
 ## Checked and matching (no action needed)
 

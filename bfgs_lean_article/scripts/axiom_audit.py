@@ -46,6 +46,18 @@ PACKAGE_PRINCIPAL = [
     'BfgsVerification.AdmissibleBFGSRun.norm_conclusion',
     'BfgsVerification.AdmissibleBFGSRun.gauge_conclusion',
     'BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion',
+    'BfgsVerification.LNormalizedOracle.uniform_conditions_eventually',
+    'BfgsVerification.LNormalizedOracle.UniformConditions.conditions',
+    'BfgsVerification.LUniform.uniform_global_failure',
+    'BfgsVerification.LUniform.FailureRun',
+    'BfgsVerification.LUniform.UniformlyLocal',
+    'BfgsVerification.LUniform.UniformFailureTarget',
+    'BfgsVerification.LUniform.uniform_fixed_metric_failure',
+    'BfgsVerification.LUniform.uniform_identity_failure',
+    'BfgsVerification.LUniform.ObjectiveGeometry',
+    'BfgsVerification.LUniform.branch_not_twice_differentiable_zero',
+    'BfgsVerification.LUniform.UniformSmoothLocalFailureTarget',
+    'BfgsVerification.LUniform.uniformSmoothLocalFailure',
 ]
 
 AXIOMS = re.compile(r"'([^']+)'\s+(?:depends on axioms:\s*\[([^\]]*)\]|does not depend on any axioms)")

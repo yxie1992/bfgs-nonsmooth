@@ -129,30 +129,41 @@ for module,title in order:
   replacement=block.replace(r'\begin{align*}',r'\[\begin{aligned}').replace(r'\end{align*}',r'\end{aligned}\]')
   text=text.replace(block,replacement)
   transform_log.append({'module':module,'kind':'keep_three_branch_definition_together','reason':'Visual review found the definition split across pages. Unbreakable aligned display retains every formula and all theorem hypotheses.'})
- # October 2026 Lean review: the global lower-curvature failure holds for every
- # admissible pair of line-search constants (bfgs_lean_article,
- # LGlobalFailure.nonstrict_actual_global_failure), as in the article's
- # Proposition art:quadratic_failure. The local theorem keeps c1=1e-4, c2=1/2.
+ # October 2026 Lean review: the lower-curvature failures hold for every
+ # admissible pair of line-search constants, with one orbit, objective and
+ # family of initial points chosen before the pair (bfgs_lean_article,
+ # LUniform.uniform_global_failure and LUniform.uniformSmoothLocalFailure), as
+ # in the article's Proposition art:quadratic_failure and Theorem
+ # art:local-failure-lower.
  constant_range={
-  'L':[('state_global_lower_failure_for_admissible_constants',
+  'L':[('state_lower_failures_for_admissible_constants',
         'otherwise. Fix\n\\[\n c_1=10^{-4},\\qquad c_2=\\tfrac12.\n\\]\n',
-        'otherwise. Fix\n\\[\n 0<c_1\\le\\tfrac13,\\qquad c_1<c_2<1.\n\\]\nTheorem~\\ref{L:thm:local} takes $c_1=10^{-4}$ and $c_2=\\tfrac12$.\n'),
-       ('quantify_global_lower_failure_over_constants',
-        'There are three fixed slopes $g_0,g_1,g_2\\in\\R^2$ such that, for every $\\mu>0$,\n',
-        'There are three fixed slopes $g_0,g_1,g_2\\in\\R^2$ such that, for every $\\mu>0$ and every such pair $(c_1,c_2)$,\n'),
-       ('seed_decisions_strict_for_admissible_constants',
+        'otherwise. Fix\n\\[\n 0<c_1\\le\\tfrac13,\\qquad c_1<c_2<1.\n\\]\nThe orbits, objectives and initial points below are chosen before this pair.\n'),
+       ('choose_global_initial_states_before_constants',
+        'yet admits initial states $(x_0,H_0)$ producing deterministic full-BFGS iterates converging to the nonstationary origin.',
+        'yet admits initial states $(x_0,H_0)$ that produce, for every such pair $(c_1,c_2)$, the same deterministic full-BFGS iterates converging to the nonstationary origin.'),
+       ('seed_decisions_strict_for_all_admissible_constants',
         'The seed has strict branch gaps and strict decisions at its finite list of nine queries.',
-        'The seed has strict branch gaps and, for every such pair $(c_1,c_2)$, strict decisions at its finite list of nine queries.'),
-       ('local_embedding_uses_literal_constants',
+        'The seed has strict branch gaps and strict decisions at its finite list of nine queries: accepted queries pass Armijo with $c_1=1/3$ and have positive new directional derivatives, and rejected queries raise the value, so the same finitely many strict inequalities decide every such pair $(c_1,c_2)$.'),
+       ('agreement_neighborhood_for_all_constants',
+        'such that for every state in $\\mathcal N$ with $\\tau>0$, the actual three consecutive',
+        'such that for every state in $\\mathcal N$ with $\\tau>0$ and every such pair $(c_1,c_2)$, the actual three consecutive'),
+       ('local_embedding_uses_one_orbit_for_all_constants',
         'Use Theorem~\\ref{L:thm:global} to choose one entire bad orbit',
-        'Use Theorem~\\ref{L:thm:global} with $c_1=10^{-4}$ and $c_2=\\tfrac12$ to choose one entire bad orbit')],
+        'Use Theorem~\\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to choose one entire bad orbit'),
+       ('local_failure_for_admissible_constants',
+        'yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initial points $x_0^{(n)}\\to0$ converging to nonstationary points $p_n\\to0$.',
+        'yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initial points $x_0^{(n)}\\to0$ whose runs, the same for every such pair $(c_1,c_2)$, converge to nonstationary points $p_n\\to0$.')],
   'I':[('state_global_lower_failure_for_admissible_constants',
         'For every \\(\\mu>0\\), suitable initial states produce deterministic nonstationary convergence to zero.',
-        'For every \\(\\mu>0\\) and every fixed \\(0<c_1\\le1/3\\), \\(c_1<c_2<1\\), suitable initial states produce deterministic nonstationary convergence to zero.')]}
+        'For every \\(\\mu>0\\), suitable initial states produce, for every fixed \\(0<c_1\\le1/3\\), \\(c_1<c_2<1\\), the same deterministic nonstationary convergence to zero.'),
+       ('state_local_lower_failure_for_admissible_constants',
+        'The source uses \\(c_1=10^{-4}\\), \\(c_2=1/2\\).',
+        'The source fixed \\(c_1=10^{-4}\\), \\(c_2=1/2\\); the same objective and bad starts serve every \\(0<c_1\\le1/3\\), \\(c_1<c_2<1\\).')]}
  for kind,old,new in constant_range.get(module,[]):
   assert text.count(old)==1,(module,kind)
   text=text.replace(old,new)
-  transform_log.append({'module':module,'kind':kind,'reason':'The seed decisions are strict for every 0<c1<=1/3 and c1<c2<1 (accepted decrease ratios exceed 1/3; rejected values exceed the current value), so the stable-manifold argument holds for each such pair. Lean: bfgs_lean_article, LGlobalFailure.nonstrict_actual_global_failure; article: Proposition art:quadratic_failure. The local theorem keeps c1=1e-4, c2=1/2.'})
+  transform_log.append({'module':module,'kind':kind,'reason':'The seed decisions are strict at the corners of the admissible range (accepted queries pass Armijo with c1=1/3 and have positive new slopes; rejected values exceed the current value), so one neighborhood of the seed, and hence one stable-manifold orbit, serves every 0<c1<=1/3 and c1<c2<1. Lean: bfgs_lean_article, LUniform.uniform_global_failure and LUniform.uniformSmoothLocalFailure; article: Proposition art:quadratic_failure and Theorem art:local-failure-lower.'})
  if module=='E':
   heading=r'\section{Rebuild the corrected report}'
   assert text.count(heading)==1

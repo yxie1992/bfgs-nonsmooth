@@ -1,17 +1,17 @@
 {
   "status": "PASS",
-  "started_utc": "2026-10-14T03:14:51.300945+00:00",
+  "started_utc": "2026-10-14T05:09:47.536330+00:00",
   "lean_version": "Lean (version 4.19.0, x86_64-unknown-linux-gnu, commit 6caaee842e94, Release)",
-  "source_commit": "f8ca4cc093be23295b5f1f4d9ef21fc7b3a318cc",
-  "source_tree_clean": true,
+  "source_commit": "721c324aa44a9e1f87fecdafbde48630e95bd53d",
+  "source_tree_clean": false,
   "command": "python3 scripts/axiom_audit.py --write-guard",
   "policy": "every cited declaration exists and depends on no axiom outside propext, Classical.choice, Quot.sound",
-  "declarations_checked": 2014,
+  "declarations_checked": 2026,
   "ledger_principal_exports": 166,
   "ledger_cited_exports": 2010,
-  "package_principal_declarations": 17,
+  "package_principal_declarations": 29,
   "axiom_set_counts": {
-    "propext, Classical.choice, Quot.sound": 2013,
+    "propext, Classical.choice, Quot.sound": 2025,
     "propext, Quot.sound": 1
   },
   "missing_or_unresolved": [],
@@ -181,6 +181,126 @@
       "name": "BfgsVerification.AdmissibleBFGSRun.finiteMaxLinear_conclusion",
       "module": "BfgsArticle.HomogeneousModels",
       "signature": "∀ {n : ℕ} (A : Finset (BfgsVerification.Vec n)) (hA : A.Nonempty),\n  Bornology.IsBounded {x | BfgsVerification.Homogeneous.finiteMaxLinear A hA x ≤ 0} →\n    ∀ (R : BfgsVerification.AdmissibleBFGSRun n (BfgsVerification.Homogeneous.finiteMaxLinear A hA)),\n      BfgsVerification.Homogeneous.finiteMaxLinear A hA 0 = 0 ∧\n        (∀ (x : BfgsVerification.Vec n), x ≠ 0 → 0 < BfgsVerification.Homogeneous.finiteMaxLinear A hA x) ∧\n          Filter.Tendsto (fun k => BfgsVerification.Homogeneous.finiteMaxLinear A hA (R.x k)) Filter.atTop (nhds 0) ∧\n            Filter.Tendsto R.x Filter.atTop (nhds 0)",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LNormalizedOracle.uniform_conditions_eventually",
+      "module": "BfgsArticle.LUniformGlobal",
+      "signature": "∀ (μ : ℝ),\n  ∀ᶠ (w : BfgsVerification.LNormalizedReturn.State) in nhds BfgsVerification.LNormalizedReturn.seed,\n    BfgsVerification.LNormalizedOracle.UniformConditions μ w",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LNormalizedOracle.UniformConditions.conditions",
+      "module": "BfgsArticle.LUniformGlobal",
+      "signature": "∀ {μ : ℝ} {w : BfgsVerification.LNormalizedReturn.State},\n  BfgsVerification.LNormalizedOracle.UniformConditions μ w →\n    ∀ {c₁ c₂ : ℝ}, 0 ≤ c₁ → c₁ ≤ 1 / 3 → 0 ≤ c₂ → c₂ ≤ 1 → BfgsVerification.LNormalizedOracle.Conditions μ c₁ c₂ w",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.uniform_global_failure",
+      "module": "BfgsArticle.LUniformGlobal",
+      "signature": "∀ {μ : ℝ},\n  0 < μ →\n    ∀ U ∈ nhds 0,\n      ∃ x H,\n        Matrix.PosDef (H 0) ∧\n          ∀ (c₁ c₂ : ℝ),\n            0 < c₁ →\n              c₁ ≤ 1 / 3 →\n                c₁ < c₂ →\n                  c₂ < 1 →\n                    ∃ R,\n                      R.x = x ∧\n                        R.H = H ∧\n                          R.c₁ = c₁ ∧\n                            R.c₂ = c₂ ∧\n                              Filter.Tendsto R.x Filter.atTop (nhds 0) ∧\n                                Filter.Tendsto R.H Filter.atTop (nhds 0) ∧\n                                  Filter.Tendsto (fun k => BfgsVerification.LQuadraticSeed.objective μ (R.x k))\n                                      Filter.atTop (nhds 0) ∧\n                                    (∀ (k : ℕ), 0 < BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧\n                                      (∀ (k : ℕ),\n                                          BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <\n                                            BfgsVerification.LQuadraticSeed.objective μ (R.x k)) ∧\n                                        (∀ (k : ℕ),\n                                            R.α k =\n                                              BfgsVerification.SeedOrbit.length (BfgsVerification.SeedOrbit.phase k)) ∧\n                                          (∀ (k : ℕ),\n                                              BfgsVerification.NonStrictLineSearch.fromMetric\n                                                  (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) c₁ c₂\n                                                  5 =\n                                                (Option.some (R.α k),\n                                                  BfgsVerification.SeedOrbit.trialHistory\n                                                    (BfgsVerification.SeedOrbit.phase k))) ∧\n                                            (∀ (k : ℕ),\n                                                BfgsVerification.DeterministicLineSearch.fromMetric\n                                                    (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) c₁ c₂\n                                                    5 =\n                                                  (Option.some (R.α k),\n                                                    BfgsVerification.SeedOrbit.trialHistory\n                                                      (BfgsVerification.SeedOrbit.phase k))) ∧\n                                              (∀ (k : ℕ), R.x k ∈ U) ∧\n                                                (∀ (k : ℕ) (q : Fin 9),\n                                                    BfgsVerification.SeedOrbit.trialPhase q =\n                                                        BfgsVerification.SeedOrbit.phase k →\n                                                      DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)\n                                                          (R.x k +\n                                                            BfgsVerification.SeedOrbit.trialLength q •\n                                                              BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧\n                                                        0 <\n                                                            BfgsVerification.LQuadraticSeed.objective μ\n                                                              (R.x k +\n                                                                BfgsVerification.SeedOrbit.trialLength q •\n                                                                  BfgsVerification.bfgsStep (R.H k) (R.g k) 1) ∧\n                                                          R.x k +\n                                                              BfgsVerification.SeedOrbit.trialLength q •\n                                                                BfgsVerification.bfgsStep (R.H k) (R.g k) 1 ∈\n                                                            U) ∧\n                                                  (∀ (q : ℕ → Fin 9),\n                                                      (∀ (k : ℕ),\n                                                          BfgsVerification.SeedOrbit.trialPhase (q k) =\n                                                            BfgsVerification.SeedOrbit.phase k) →\n                                                        Filter.Tendsto\n                                                          (fun k =>\n                                                            R.x k +\n                                                              BfgsVerification.SeedOrbit.trialLength (q k) •\n                                                                BfgsVerification.bfgsStep (R.H k) (R.g k) 1)\n                                                          Filter.atTop (nhds 0)) ∧\n                                                    (∀ (k : ℕ),\n                                                        BfgsVerification.LQuadraticSeed.objective μ (R.x (k + 1)) <\n                                                            BfgsVerification.LQuadraticSeed.objective μ (R.x k) +\n                                                              c₁ *\n                                                                BfgsVerification.dot (R.g k)\n                                                                  (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) ∧\n                                                          c₂ *\n                                                              BfgsVerification.dot (R.g k)\n                                                                (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k)) <\n                                                            BfgsVerification.dot (R.g (k + 1))\n                                                              (BfgsVerification.bfgsStep (R.H k) (R.g k) (R.α k))) ∧\n                                                      0 ∉\n                                                        BfgsVerification.ConvexSubdifferential.subdifferential\n                                                          (BfgsVerification.LQuadraticSeed.objective μ) 0",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.FailureRun",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "(F : BfgsVerification.Vec 2 → ℝ) → BfgsVerification.Vec 2 → ℝ → ℝ → ℝ → BfgsVerification.AdmissibleBFGSRun 2 F → Prop",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.UniformlyLocal",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "{F : BfgsVerification.Vec 2 → ℝ} → (ℕ → BfgsVerification.AdmissibleBFGSRun 2 F) → Prop",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.UniformFailureTarget",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "(BfgsVerification.Vec 2 → ℝ) → BfgsVerification.Mat 2 → (ℕ → BfgsVerification.Vec 2) → Prop",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.uniform_fixed_metric_failure",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "∀ {F : BfgsVerification.Vec 2 → ℝ},\n  BfgsVerification.LActualCopies.CopyData F →\n    F 0 = 0 →\n      ∃ B, Matrix.PosDef B ∧ BfgsVerification.LUniform.UniformFailureTarget F B BfgsVerification.LEmbedding.copyCenter",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.uniform_identity_failure",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "∀ {F : BfgsVerification.Vec 2 → ℝ},\n  BfgsVerification.LActualCopies.CopyData F →\n    F 0 = 0 →\n      BfgsVerification.LUniform.UniformFailureTarget\n        (BfgsVerification.AffineWhitening.objective BfgsVerification.LUniform.coordinateMatrix F) 1\n        BfgsVerification.LUniform.failureCenter",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.ObjectiveGeometry",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "ℝ → (BfgsVerification.Vec 2 → ℝ) → Prop",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.branch_not_twice_differentiable_zero",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (BfgsVerification.LUniform.smoothBranch i.castSucc)) 0",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.UniformSmoothLocalFailureTarget",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "Prop",
+      "axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    {
+      "name": "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+      "module": "BfgsArticle.LUniformLocal",
+      "signature": "BfgsVerification.LUniform.UniformSmoothLocalFailureTarget",
       "axioms": [
         "propext",
         "Classical.choice",

@@ -30,7 +30,7 @@ All runs use ordinary full BFGS, $H_0\succ0$, differentiable oracle queries, and
 \[
  0<c_1\le\tfrac13,\qquad c_1<c_2<1.
 \]
-Theorem~\ref{L:thm:local} takes $c_1=10^{-4}$ and $c_2=\tfrac12$.
+The orbits, objectives and initial points below are chosen before this pair.
 The update is unmodified:
 \[
  s=-\alpha Hg,\qquad y=g^+-g,\qquad
@@ -40,11 +40,11 @@ The update is unmodified:
 The seed inequalities have strict margins, so there are no equality-convention issues.
 
 \begin{theorem}[Global failure with constant positive branch Hessians]\label{L:thm:global}
-There are three fixed slopes $g_0,g_1,g_2\in\R^2$ such that, for every $\mu>0$ and every such pair $(c_1,c_2)$,
+There are three fixed slopes $g_0,g_1,g_2\in\R^2$ such that, for every $\mu>0$,
 \[
  Q_\mu(x)=\tfrac\mu2\norm{x}^2+\max_{i=0,1,2}g_i\T x
 \]
-is $\mu$-strongly convex, coercive, and has a unique nonsmooth minimizer $x_*\ne0$, yet admits initial states $(x_0,H_0)$ producing deterministic full-BFGS iterates converging to the nonstationary origin. Initial states and every future trial may be chosen arbitrarily close to the origin in the sense made precise in Section~\ref{L:sec:blowup}. Every branch has Hessian exactly $\mu I$ globally. The accepted lengths repeat $1,1/4,1/16$.
+is $\mu$-strongly convex, coercive, and has a unique nonsmooth minimizer $x_*\ne0$, yet admits initial states $(x_0,H_0)$ that produce, for every such pair $(c_1,c_2)$, the same deterministic full-BFGS iterates converging to the nonstationary origin. Initial states and every future trial may be chosen arbitrarily close to the origin in the sense made precise in Section~\ref{L:sec:blowup}. Every branch has Hessian exactly $\mu I$ globally. The accepted lengths repeat $1,1/4,1/16$.
 \end{theorem}
 \noindent This is \emph{global} failure: approaching the wrong vertex is not the same as approaching the actual minimizer. It does not contradict our local PLQ theorem.
 
@@ -54,7 +54,7 @@ There is a finite strongly convex objective $F:\R^2\to\R$ with compact sublevels
  \underline\mu I\preceq \nabla^2F(x)\preceq\overline L I
  \quad\text{at every twice-differentiable point},
 \]
-yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initial points $x_0^{(n)}\to0$ converging to nonstationary points $p_n\to0$. All trial points of the $n$th run remain uniformly near zero as $n\to\infty$.
+yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initial points $x_0^{(n)}\to0$ whose runs, the same for every such pair $(c_1,c_2)$, converge to nonstationary points $p_n\to0$. All trial points of the $n$th run remain uniformly near zero as $n\to\infty$.
 
 The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly strongly convex, globally gradient-Lipschitz branches. Alternatively, it can be chosen so that its Hessian is one fixed positive-definite matrix wherever it is twice differentiable; the latter version has a countable polyhedral nonsmooth part, not a finite smooth-branch representation.
 \end{theorem}
@@ -162,14 +162,14 @@ Gradient indices are cyclic and $\alpha=(1,1/4,1/16)$. Let the final quantities 
 All denominators are nonzero at $P_*$, and $r=\rho>0$ there. This is a real-analytic map on an open neighborhood of $P_*$, allowing an artificial negative $\tau$ in that analytic extension. Only its positive-$\tau$ part represents actual BFGS.
 
 \begin{lemma}[Agreement with the actual implementation]\label{L:lem:agreement}
-There is an open neighborhood $\mathcal N$ of $P_*$ such that for every state in $\mathcal N$ with $\tau>0$, the actual three consecutive full-BFGS iterations on $Q_\mu$ have exactly the certified trial lists and return map~\eqref{L:eq:return}.
+There is an open neighborhood $\mathcal N$ of $P_*$ such that for every state in $\mathcal N$ with $\tau>0$ and every such pair $(c_1,c_2)$, the actual three consecutive full-BFGS iterations on $Q_\mu$ have exactly the certified trial lists and return map~\eqref{L:eq:return}.
 \end{lemma}
 \begin{proof}
 At a query $\tau Z$, the common quadratic does not affect which slope is active. Its function value divided by $\tau$ is
 \[
  G(Z)+\tfrac{\mu\tau}{2}\norm Z^2,
 \]
-and its gradient is $g_i+\mu\tau Z$. All Armijo and weak-Wolfe comparisons, divided by their common positive scale when needed, are continuous in the normalized state. The seed has strict branch gaps and, for every such pair $(c_1,c_2)$, strict decisions at its finite list of nine queries. Intersecting the corresponding open neighborhoods preserves the entire decision tree. The normalized secant and update formulas are exactly~\eqref{L:eq:formal1}--\eqref{L:eq:formal2}; no reset of the actual matrix is made.
+and its gradient is $g_i+\mu\tau Z$. All Armijo and weak-Wolfe comparisons, divided by their common positive scale when needed, are continuous in the normalized state. The seed has strict branch gaps and strict decisions at its finite list of nine queries: accepted queries pass Armijo with $c_1=1/3$ and have positive new directional derivatives, and rejected queries raise the value, so the same finitely many strict inequalities decide every such pair $(c_1,c_2)$. Intersecting the corresponding open neighborhoods preserves the entire decision tree. The normalized secant and update formulas are exactly~\eqref{L:eq:formal1}--\eqref{L:eq:formal2}; no reset of the actual matrix is made.
 \end{proof}
 
 
@@ -352,7 +352,7 @@ The fourth branch is negative relative to its quadratic part there if $y$ is suf
 \begin{equation}\label{L:eq:local-model}
  F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}.
 \end{equation}
-Use Theorem~\ref{L:thm:global} with $c_1=10^{-4}$ and $c_2=\tfrac12$ to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
+Use Theorem~\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
 \[
  x_0^{(n)}=p_n+a_n\bar x_0,\qquad H_0^{(n)}=\bar H_0.
 \]

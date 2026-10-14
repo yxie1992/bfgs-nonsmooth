@@ -388,6 +388,14 @@ and of the principal declarations of this package. -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.LGlobalFailure.nonstrict_source_global_failure
 
+/-- info: 'BfgsVerification.LNormalizedOracle.UniformConditions.conditions' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LNormalizedOracle.UniformConditions.conditions
+
+/-- info: 'BfgsVerification.LNormalizedOracle.uniform_conditions_eventually' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LNormalizedOracle.uniform_conditions_eventually
+
 /-- info: 'BfgsVerification.LQuadraticSeed.branchGradient' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.LQuadraticSeed.branchGradient
@@ -419,6 +427,46 @@ and of the principal declarations of this package. -/
 /-- info: 'BfgsVerification.LShapeSpectrum.source_jacobian_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.LShapeSpectrum.source_jacobian_bounds
+
+/-- info: 'BfgsVerification.LUniform.FailureRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.FailureRun
+
+/-- info: 'BfgsVerification.LUniform.ObjectiveGeometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.ObjectiveGeometry
+
+/-- info: 'BfgsVerification.LUniform.UniformFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.UniformFailureTarget
+
+/-- info: 'BfgsVerification.LUniform.UniformSmoothLocalFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.UniformSmoothLocalFailureTarget
+
+/-- info: 'BfgsVerification.LUniform.UniformlyLocal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.UniformlyLocal
+
+/-- info: 'BfgsVerification.LUniform.branch_not_twice_differentiable_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.branch_not_twice_differentiable_zero
+
+/-- info: 'BfgsVerification.LUniform.uniformSmoothLocalFailure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.uniformSmoothLocalFailure
+
+/-- info: 'BfgsVerification.LUniform.uniform_fixed_metric_failure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.uniform_fixed_metric_failure
+
+/-- info: 'BfgsVerification.LUniform.uniform_global_failure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.uniform_global_failure
+
+/-- info: 'BfgsVerification.LUniform.uniform_identity_failure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.LUniform.uniform_identity_failure
 
 /-- info: 'BfgsVerification.LWhitening.NonStrictIdentityFailureTarget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

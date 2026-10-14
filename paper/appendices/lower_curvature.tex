@@ -10,9 +10,9 @@ from a suitable matrix; the copying step makes bad starts approach the
 minimizer of one fixed objective; a final fixed change of coordinates
 makes their common initial matrix the identity. The price of retaining
 a positive lower curvature bound is the loss of second differentiability
-of the branches at the accumulation point. The line-search constants are a
+of the branches at the accumulation point. The line-search constants are any
 fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, as in Theorem~\ref{art:local-failure};
-Theorem~\ref{art:local-failure-lower} takes $c_1=10^{-4}$ and $c_2=1/2$.
+the orbit, the objective and the starting points are chosen before the pair.
 
 \subsection{A strongly convex global example}
 A common positive quadratic leaves the active-branch geometry unchanged
@@ -42,12 +42,12 @@ minimizer is nonsmooth. At zero the subdifferential is the nonstationary
 triangle of the original seed.
 
 \begin{proposition}[A perturbed bad orbit]\label{art:quadratic_failure}
-Let $\mu>0$ and fix $0<c_1\le1/3$ and $c_1<c_2<1$. For every neighborhood
-$V$ of zero, some initial state
-$(x_0,H_0)$, $H_0\succ0$, produces a deterministic full-BFGS run on
-$Q_\mu$ converging to zero, with positive objective values decreasing to
-zero. Its accepted lengths repeat $1,1/4,1/16$, and all accepted and
-rejected query points are differentiable and belong to $V$.
+Let $\mu>0$. For every neighborhood $V$ of zero, some initial state
+$(x_0,H_0)$, $H_0\succ0$, produces for every fixed pair $0<c_1\le1/3$,
+$c_1<c_2<1$ the same deterministic full-BFGS run on $Q_\mu$, converging to
+zero with positive objective values decreasing to zero. Its accepted lengths
+repeat $1,1/4,1/16$, and all accepted and rejected query points are
+differentiable and belong to $V$.
 \end{proposition}
 
 The right object for persistence is the three-step return map after
@@ -85,7 +85,8 @@ analytic extension.
 \begin{lemma}[Implementation and hyperbolicity]\label{art:lower_hyperbolic}
 On a sufficiently small neighborhood of $P_*$, positive-$\tau$ states
 follow exactly the three query lists of Table~\ref{art:trial_table} under
-the actual algorithm, and \eqref{art:lower_return} is their return map.
+the actual algorithm for every admissible pair $(c_1,c_2)$, and
+\eqref{art:lower_return} is their return map.
 Its derivative has eigenvalues
 \[
  \rho^{-1},\quad\rho^{-1},\quad\lambda_s,\quad\lambda_u,\quad\rho,
@@ -98,9 +99,10 @@ At a query $\tau Z$, the value divided by $\tau$ is
 $G(Z)+\mu\tau\|Z\|^2/2$ and the gradient is $g_i+\mu\tau Z$.
 The common quadratic does not affect which slope is active. All finite
 branch gaps and normalized search comparisons are continuous in the
-normalized state. The seed margins of Section~\ref{art:failure} are strict
-for every admissible pair $(c_1,c_2)$ and therefore persist on a common
-neighborhood. The physical step and secant are exactly the ones in
+normalized state. The strict inequalities of Lemma~\ref{art:seed_cycle},
+\eqref{art:seed_margins} at each acceptance and a value increase at each
+rejection, decide every test for all admissible pairs $(c_1,c_2)$ at once;
+being finitely many, they persist on one neighborhood. The physical step and secant are exactly the ones in
 \eqref{art:lower_return_substep} after restoring the scale, proving
 agreement with the actual update and the entire search tree.
 
@@ -176,7 +178,8 @@ the form $\Phi_q(w)=\tau q(w)$ and satisfies $\Phi_q(P_*)=0$.
 Choose the normalized neighborhood inside
 $\bigcap_q\Phi_q^{-1}(V)$, then take a positive-scale local stable orbit
 that stays in this neighborhood. Every physical query lies in $V$.
-This proves the proposition. The initial
+Neither the neighborhood nor the chosen point depends on $(c_1,c_2)$, so
+the same run serves every admissible pair. This proves the proposition. The initial
 matrix is supplied by the stable-manifold point, not presumed to be
 identity or obtained by rounded forward shooting.
 \end{proof}
@@ -287,9 +290,9 @@ region, and expansion of the common quadratic uses $q_i+\mu c_*=g_i$.
 The fourth branch is inactive there: its residual $a_\ell(-32+y_2)$ is
 negative, while each old scalar residual is at least $a_\ell^2/2$.
 
-Choose, by Proposition~\ref{art:quadratic_failure} with $c_1=10^{-4}$ and
-$c_2=1/2$, one bad orbit
-$(x_k^{\rm seed},H_k^{\rm seed})$ all of whose queries lie in this neighborhood.
+Choose, by Proposition~\ref{art:quadratic_failure}, one bad orbit
+$(x_k^{\rm seed},H_k^{\rm seed})$ all of whose queries lie in this
+neighborhood; it is the same for every admissible pair $(c_1,c_2)$.
 For every $\ell$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
 $H_0^{\rm seed}$. Induction on the actual query tree gives
 \[

@@ -87,7 +87,7 @@ out['literal_branch_regularity_supplement']=branch_supplement
 for row in article:
  if 'exact_contracts' in row and any(n.startswith('ArticleBranchRegularity.') for n in row['full_formal_exports']):
   row['exact_contracts'].append(branch_supplement['declarations'])
-ledger_addenda.apply(ROOT,index,article)
+ledger_addenda.apply(ROOT,index,article,companion)
 (ROOT/'editorial/CLAIM_LEDGER.json').write_text(json.dumps(out,indent=2)+'\n')
 # Portable readable navigation: complete exports, exact signatures and source definitions are expandable.
 parts=['<!doctype html><html lang="en"><meta charset="utf-8"><title>BFGS article and companion correspondence</title><style>body{font:16px system-ui;max-width:1050px;margin:3em auto;padding:0 1em;line-height:1.5}pre{white-space:pre-wrap;background:#f3f4f5;padding:1em}summary{cursor:pointer}details{margin:.6em 0}code{overflow-wrap:anywhere}</style><h1>Article and companion correspondence</h1><p>Full formal export lists and exact types. A reviewed correspondence is distinct from Lean checking natural-language text. Original definitions and complete dependency records remain in the sealed declaration index.</p>']
