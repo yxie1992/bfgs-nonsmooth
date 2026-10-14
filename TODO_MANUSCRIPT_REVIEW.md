@@ -26,14 +26,18 @@ confirmed each one.
   and Table `art:positive-outcomes` state the containment correctly. Proposed:
   "…applies in arbitrary dimension on compact initial sublevels contained in the
   region of the centered representation." (`A/master/prose/003`)
-- [ ] **M8: "Branches that lose second differentiability".** `paper/master.tex:52-54`
-  and `paper/sections/verification.tex` (item `A/verification/prose/017`) speak of
-  the lower-curvature branches losing second differentiability; only three of the
-  four do, as Theorem `art:local-failure-lower` says. The fourth is a quadratic
-  (`Verification.lower_branch_second_differentiability`). Proposed: "…with
+- [ ] **M8: "Branches that lose second differentiability".** `paper/master.tex:52-54`,
+  `paper/sections/verification.tex` (item `A/verification/prose/017`) and
+  `paper/appendices/lower_curvature.tex:11-13` speak of the lower-curvature branches
+  losing second differentiability; only three of the four do, as Theorem
+  `art:local-failure-lower` says. The fourth is a quadratic
+  (`Verification.lower_branch_second_differentiability`,
+  `LowerCurvature.branch_second_differentiability`). Proposed: "…with
   $C^{1,1}$ branches, three of which lose second differentiability at the
-  accumulation point" and "Three of the four lower-curvature branches also lose
-  second differentiability at zero." (`A/master/prose/009`, `A/verification/prose/017`)
+  accumulation point", "Three of the four lower-curvature branches also lose
+  second differentiability at zero." and "…the loss of second differentiability of
+  three of the four branches at the accumulation point."
+  (`A/master/prose/009`, `A/verification/prose/017`, `A/lower_curvature/prose/010`)
 - [ ] **M9: Ray identity without its range (typo).** `paper/sections/verification.tex`
   (item `A/verification/prose/004`): "$G(t(-1,16))=-t$" holds only for $t\ge0$, as
   `failure.tex:200` says (`Verification.seed_ray`, counterexample
@@ -58,7 +62,11 @@ confirmed each one.
   is Table~\ref{art:trial_table}." and add to the table caption "The decisions are
   those of the specified search for every $0<c_1\le1/3$ and $c_2>0$."
   (`A/failure/lemma/art:seed_cycle`, `A/failure/table/art:trial_table`; corrected
-  statements `Failure.seed_cycle`, `trial_table`)
+  statements `Failure.seed_cycle`, `trial_table`). The closing sentence of the
+  seed appendix, "these calculations complete the proof of
+  Lemma~\ref{art:seed_cycle}" (`paper/appendices/seed_certificate.tex:199-200`,
+  `A/seed_certificate/prose/012`), needs no separate change: it is correct once
+  the lemma states the range. Flip that item to `PROOF` when fixing M11.
 
 ## Resolved
 

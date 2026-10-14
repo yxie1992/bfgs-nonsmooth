@@ -21,6 +21,9 @@ import BfgsArticle.Coverage.Article.Local
 import BfgsArticle.Coverage.Article.PositivePartition
 import BfgsArticle.Coverage.Article.Failure
 import BfgsArticle.Coverage.Article.NegativeUpper
+import BfgsArticle.Coverage.Article.NegativeLower
 import BfgsArticle.Coverage.Article.Verification
 import BfgsArticle.Coverage.Article.MatrixAlgebra
 import BfgsArticle.Coverage.Article.PlanarGeometry
+import BfgsArticle.Coverage.Article.SeedCertificate
+import BfgsArticle.Coverage.Article.LowerCurvature
