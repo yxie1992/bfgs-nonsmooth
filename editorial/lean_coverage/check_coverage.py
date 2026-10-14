@@ -65,6 +65,8 @@ def docstring_refs(path):
 def known_names():
     names = set(json.loads((ROOT / 'bfgs_lean_stage1/master_report/DECLARATION_INDEX.json').read_text()))
     sources = list((ROOT / 'bfgs_lean_article').glob('BfgsArticle/**/*.lean'))
+    # The declaration index misses a few library declarations; read the sources too.
+    sources += list((ROOT / 'bfgs_lean_stage1').glob('BfgsVerification/**/*.lean'))
     sources += [ROOT / p for p in ['editorial/narrative_rebuild/positive_formal/MixedBenchmark.lean',
                                    'editorial/satisfaction_review/branch_formal/ArticleBranchRegularity.lean',
                                    'editorial/article_formal/ArticleGeometry.lean',
