@@ -16,7 +16,13 @@
    "title": "A common local basin",
    "container": null,
    "sha256": "d3d8e72d8fac5f07",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.localization",
+    "BfgsVerification.Localization.sublevel_compact",
+    "BfgsVerification.Localization.neighborhood_basin"
+   ],
+   "note": "For F : Vec n → ℝ convex with unique minimizer x* (hmin, huniq): every sublevel {F ≤ c} is compact; for every U ∈ 𝓝 x* there is ε > 0 with {F ≤ F(x*)+ε} ⊆ U and every admissible run with F(x_0) ≤ F(x*)+ε stays in U (ε is chosen before the run R, hence independently of H_0). No n ≥ 1 is needed for the lemma itself."
   },
   {
    "id": "A/local/proof/001",
@@ -30,7 +36,14 @@
    "title": null,
    "container": null,
    "sha256": "dac61035a59dd4fa",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/lemma/art:localization",
+   "lean": [
+    "BfgsVerification.Localization.positive_sphere_lower_gap",
+    "BfgsVerification.Localization.radial_lower_bound",
+    "BfgsVerification.Localization.low_sublevel_subset_ball"
+   ],
+   "note": "The library proof follows the paper (positive gap on a sphere, radial lower bound by convexity, ε = gap/2); it works in any finite-dimensional normed space, so with the sup norm of Vec n; the displays are stated with the Euclidean norm of the paper."
   },
   {
    "id": "A/local/disp/001",
@@ -44,7 +57,12 @@
    "title": null,
    "container": "A/local/proof/001",
    "sha256": "1e9f794901ed726c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.localization_sphere_min",
+    "BfgsVerification.Localization.sphere_gap"
+   ],
+   "note": "δ is a variable with defining equation δ = sInf {F(x*+u) − F(x*) : ‖u‖ = r} (Euclidean norm ‖euclideanVector u‖); the theorem proves that this infimum is a minimum (IsLeast) and is positive. Standing assumptions: the lemma's, U ∈ 𝓝 x*, r > 0 with the closed Euclidean ball B̄_r(x*) ⊆ U. The sphere is nonempty only for n ≥ 1: hn : 1 ≤ n is the article's convention (Definition art:admissible, n ≥ 1); the lemma's statement does not repeat it."
   },
   {
    "id": "A/local/disp/002",
@@ -58,7 +76,12 @@
    "title": null,
    "container": "A/local/proof/001",
    "sha256": "50c94eecdb7b8c0d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.localization_radial_lower",
+    "BfgsVerification.Localization.radial_lower_bound"
+   ],
+   "note": "Under the assumptions of disp/001 (δ as defined there), for every x with ‖x − x*‖ ≥ r (Euclidean)."
   },
   {
    "id": "A/local/proof/002",
@@ -72,7 +95,16 @@
    "title": null,
    "container": null,
    "sha256": "8ce56fe3353e17d0",
-   "status": null
+   "status": "PROOF",
+   "of": "A/positive_partition/theorem/art:polyhedral",
+   "lean": [
+    "BfgsCoverage.Article.Local.polyhedral_local_partition",
+    "BfgsCoverage.Article.Local.taylor_upper_of_lipschitz",
+    "BfgsVerification.ConvexCellRadial.incident_neighborhood",
+    "BfgsVerification.ConvexCellRadial.local_cells_inward",
+    "BfgsVerification.ConvexCellRadial.local_cells_basin"
+   ],
+   "note": "PositivePartition.polyhedral is proved by the library's finite_polyhedral_basin → local_cells_basin, which follows this proof: discard the cells not containing x* and shrink (incident_neighborhood), radial derivative equality and local Taylor bounds give the inward condition on compact sets in the ball (local_cells_inward), then Lemma art:localization and the radial convergence corollary. Notation: r is both the radius of B_r(x*) and, in r_x, the global.tex vector r_x = x − x*; the Lean statements write r for the radius and x − xstar for r_x."
   },
   {
    "id": "A/local/disp/003",
@@ -86,7 +118,12 @@
    "title": null,
    "container": "A/local/proof/002",
    "sha256": "91b040579020147c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.polyhedral_radial_derivative",
+    "BfgsVerification.ConvexCellRadial.radial_derivative_eq"
+   ],
+   "note": "Stated under the theorem's hypotheses plus the objects of local.tex:49-57: the Euclidean ball B = B_r(x*) (hB) with B ⊆ U and B ⊆ V_i for every cell containing x* (hBU, hBV), the discarded cells (hdisc: every cell meeting B contains x*), a common Lipschitz bound L ≥ 0 of the remaining extension gradients on B (hLip, Euclidean norms), a differentiability point x ∈ B with gradient g, and a cell P_i ∋ x. ∇f_i(x) is coordinateGradient (f i) x."
   },
   {
    "id": "A/local/disp/004",
@@ -100,7 +137,12 @@
    "title": null,
    "container": "A/local/proof/002",
    "sha256": "08d2e8b54b5d3017",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.polyhedral_inward_taylor",
+    "BfgsCoverage.Article.Local.taylor_upper_of_lipschitz"
+   ],
+   "note": "Same standing assumptions as disp/003, for 0 ≤ τ ≤ 1 (the inward segment of local.tex:59); ‖r_x‖² is sqNorm (x − xstar). The middle inequality is the sharp Taylor bound f(y) − f(x) − ∇f(x)^T(y−x) ≤ (L/2)‖y−x‖² for an L-Lipschitz gradient (taylor_upper_of_lipschitz, proved here; the library's taylor_remainder_le has the constant L instead of L/2)."
   },
   {
    "id": "A/local/corollary/art:plq",
@@ -116,7 +158,14 @@
    "title": "Smooth losses with polyhedral or quadratic pieces",
    "container": null,
    "sha256": "721d759aaa3d94f0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.plq",
+    "BfgsCoverage.Article.Local.plq_loss_regularizer",
+    "BfgsVerification.ConvexCellRadial.piecewise_quadratic_basin",
+    "BfgsVerification.ConvexCellRadial.smooth_plus_piecewise_quadratic_basin"
+   ],
+   "note": "Piecewise linear-quadratic is the meaning fixed in the proof (local.tex:85-86): F(x) = x^T Q_i x + c_i^T x + d_i on each cell of a finite cover of ℝⁿ by closed full-dimensional polyhedra P_i = {x | a_ij^T x ≤ b_ij}. 'Has the local convergence property of Theorem art:polyhedral' is stated for every open neighborhood U of x* (the representation is global, so the theorem applies with any U): ∃ ε > 0, chosen before the run, with x_k ∈ U, F(x_k) → F(x*), x_k → x* for every admissible run with F(x_0) ≤ F(x*)+ε. plq is the first sentence; plq_loss_regularizer the second (loss convex and locally C^{1,1} on ℝⁿ, regularizer convex and PLQ, F = loss + reg with a unique minimizer). Full-dimensionality (_hfull) is not used."
   },
   {
    "id": "A/local/proof/003",
@@ -130,7 +179,14 @@
    "title": null,
    "container": null,
    "sha256": "74954b16b5cbd34d",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/corollary/art:plq",
+   "lean": [
+    "BfgsCoverage.Article.Local.quadratic_eq",
+    "BfgsVerification.ConvexCellRadial.quadratic_locallyC11",
+    "BfgsVerification.ConvexCellRadial.locallyC11_add"
+   ],
+   "note": "The proof's sentence 'By piecewise linear-quadratic we mean ...' is a definition used in the statement of plq (see the corollary's note); quadratic_eq identifies the library's quadratic Q c d with x^TQx + c^Tx + d."
   },
   {
    "id": "A/local/corollary/art:local-centered",
@@ -146,7 +202,12 @@
    "title": "A local centered-composite basin",
    "container": null,
    "sha256": "631ce174cf5e6d3a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.local_centered",
+    "BfgsVerification.CenteredSmoothSublinear.local_centered_basin"
+   ],
+   "note": "'The representation and smoothness assumptions of Theorem art:centered hold on a neighborhood of x*' is read with the set U of Theorem art:centered taken as a neighborhood of x*: U open and convex, x* ∈ U, ψ convex and locally C^{1,1} on U, γ finite, convex and positively homogeneous of degree one (Homogeneous.PositiveDegreeOne γ: γ(t•x) = t γ(x) for t ≥ 0), F = ψ + γ(· − x*) on U, x* the unique minimizer. Convexity of U (_hUc) is not used beyond ConvexOn ℝ U ψ."
   },
   {
    "id": "A/local/proof/004",
@@ -160,7 +221,13 @@
    "title": null,
    "container": null,
    "sha256": "0d8c072d6da3b8c5",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/corollary/art:local-centered",
+   "lean": [
+    "BfgsVerification.Localization.neighborhood_basin",
+    "BfgsVerification.AdmissibleBFGSRun.centered_values"
+   ],
+   "note": "The library proof follows the paper: localization, compact initial sublevel in U, Theorem art:centered (centered_values)."
   },
   {
    "id": "A/local/disp/005",
@@ -176,7 +243,11 @@
    "title": null,
    "container": null,
    "sha256": "8450d530e2a0b7dc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.lasso_decomposition"
+   ],
+   "note": "The display defines ψ and γ (variables with these defining equations; Σ_{i∉I_0} is the sum over the complement I0ᶜ) and asserts F(x) = ψ(x) + γ(x − x*) on the open convex neighborhood N = {σ_i x_i > 0, i ∉ I_0} of local.tex:120 (see prose/012). Standing assumptions of local.tex:115-121: A ∈ ℝ^{m×n}, b ∈ ℝ^m, λ > 0, x* the unique minimizer, I_0 = {i : x*_i = 0}, σ_i = sign(x*_i) (Real.sign) for i ∉ I_0."
   },
   {
    "id": "A/local/disp/006",
@@ -190,7 +261,15 @@
    "title": null,
    "container": null,
    "sha256": "aed8a21a0a6cd1ee",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AffineCriticalObjective.IsAffineCritical",
+    "BfgsVerification.ConvexSubdifferential.subdifferential",
+    "BfgsCoverage.Article.Local.affineCritical_set_eq",
+    "BfgsVerification.ConvexSubdifferential.mem_subdifferential",
+    "BfgsVerification.AffineCriticalObjective.isAffineCritical_iff_coordinate_affineSpan"
+   ],
+   "note": "C_aff is {p | IsAffineCritical F p}. The library predicate is stated with the Euclidean copy euclideanVector '' ∂F(p); affineCritical_set_eq unfolds C_aff to {p | 0 ∈ affineSpan ℝ (subdifferential F p)}, i.e. 0 ∈ aff ∂F(p), where subdifferential F p = {g | ∀ z, g^T(z − p) ≤ F z − F p} (mem_subdifferential)."
   },
   {
    "id": "A/local/theorem/art:planar-cluster",
@@ -206,7 +285,14 @@
    "title": "An affine-critical cluster point in the plane",
    "container": null,
    "sha256": "676dbd3f655ef10e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_cluster",
+    "BfgsCoverage.Article.Local.regular_of_paper",
+    "BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster_on_sublevel",
+    "BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster"
+   ],
+   "note": "F_* is Fstar with IsLeast (Set.range F) Fstar (attained minimum). Hypothesis 1 is stated literally with frontier. Hypothesis 2 is stated literally (F is C² on an open neighborhood of p, or F = max{f₁,f₂} on an open neighborhood V of p where f₁, f₂ are convex and C² on V, both active at p, with linearly independent gradients); regular_of_paper converts it to the library's ContDiffAt ℝ 2 F p ∨ PlanarCornerCharts.ConvexTwoBranchRegularAt F p (paper_of_regular is the converse). 'Starting in K' is R.x 0 ∈ {F ≤ b}; a cluster point is MapClusterPt p atTop R.x. The hypotheses _hF (convexity is also part of AdmissibleBFGSRun) and _hb (b > F_*) are not needed by the Lean proof. The library proof differs from the paper's in the transport bookkeeping (|log λ_k| ≤ C d_k and a scalar energy instead of λ_k² ≤ 1 + L d_k); the paper's steps are covered by disp/007-009. Non-vacuity, with an actual admissible run starting in K: the Local module's example for F(u,v) = u² + |v| (b = 1, the library's UnexcitedMetric.run), which also covers planar_convergence, disp/007 and disp/009."
   },
   {
    "id": "A/local/proof/005",
@@ -220,7 +306,17 @@
    "title": null,
    "container": null,
    "sha256": "e1f9466ee60fcb15",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/theorem/art:planar-cluster",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.positive_limit_of_no_affineCritical_cluster",
+    "BfgsVerification.AdmissibleBFGSRun.steps_tendsto_zero_of_strict_contour",
+    "BfgsVerification.AdmissibleBFGSRun.cluster_pair_segment_constant",
+    "BfgsVerification.StrictContours.level_mem_frontier",
+    "BfgsVerification.AdmissibleBFGSRun.structured_secant_field_incompatible",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_frame_reciprocal_sum_bound"
+   ],
+   "note": "The library theorems listed state the undisplayed steps: ℓ > F_* when no cluster point is affine critical, steps tending to zero under strict contours, constancy of F on the limit segment and its position in the boundary, and the final energy contradiction (the O(N) reciprocal bound against Theorem art:reciprocal-growth). Notation: in display 008 the letter t is the curvature y^T s while in hypothesis 1 of the theorem t is a level; β and C are reused from other sections. Attribution 'exactly as in the proof of Theorem art:certificate' (local.tex:270) is correct (energy.tex:301-307)."
   },
   {
    "id": "A/local/disp/007",
@@ -234,7 +330,12 @@
    "title": null,
    "container": "A/local/proof/005",
    "sha256": "ce9cf7475c3576cd",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_cluster_segment_values",
+    "BfgsVerification.AdmissibleBFGSRun.segment_value_lower"
+   ],
+   "note": "Stated under the theorem's hypotheses for the run R starting in K, for every k and 0 ≤ θ ≤ 1; the proof uses it along a subsequence x_k → x, x_{k+1} → z ≠ x (the subsequence and the contradiction hypothesis are not needed). d_k = α_k q_k = R.d k."
   },
   {
    "id": "A/local/disp/008",
@@ -248,7 +349,13 @@
    "title": null,
    "container": "A/local/proof/005",
    "sha256": "4043ced640c757f7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_cluster_field",
+    "BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates",
+    "BfgsVerification.convex_supporting_bound_on_compact"
+   ],
+   "note": "Standing assumptions at this point: the theorem's hypotheses, the run R starting in K, its value limit ℓ, the contradiction hypothesis (no cluster point is affine critical) and ℓ > F_*; they cannot all hold (that is the theorem). The Lean proof applies the library's all-pair form of Lemma art:planar-field (item A/planar_geometry/lemma/art:planar-field) to the compact cluster set Γ at level ℓ and shrinks δ so that d ≤ 1 (the lemma gives λ² ≤ 1 + Ld for d ≤ 1, and sufficiently close pairs have d ≤ ‖g‖‖s‖ ≤ 1 by the subgradient bound on the compact buffer); m = η², C = C₀, L = C'. 'Sufficiently close' is ‖s‖ < δ (Euclidean); eligibility is for the run's constants c1, c2; g = ∇F(x), h = ∇F(z), s = z − x, y = h − g, t = y^Ts, d = −g^Ts."
   },
   {
    "id": "A/local/disp/009",
@@ -262,7 +369,13 @@
    "title": null,
    "container": "A/local/proof/005",
    "sha256": "47e9a6a6bcf772fc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_cluster_energy",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_frame_energy",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_frame_residual_nonneg"
+   ],
+   "note": "E_k = w(x_k)^T H_k^{-1} w(x_k) is a variable with its defining equation; λ_k, β_k, m, C, L are variables with the four properties that disp/008 gives for the accepted pair (x_k, x_{k+1}) of the tail. 'The parenthesized quadratic form is nonnegative' (local.tex:268) is scalar_frame_residual_nonneg."
   },
   {
    "id": "A/local/corollary/art:planar-convergence",
@@ -278,7 +391,12 @@
    "title": "When affine criticality is correct",
    "container": null,
    "sha256": "1b52dc76fa86d68c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.planar_convergence_on_sublevel"
+   ],
+   "note": "Under the hypotheses of planar_cluster plus C_aff ∩ K ⊆ argmin F: for every admissible run starting in K, F(x_k) → F_*, the Euclidean distance to argmin F tends to 0 (euclideanSolutionDistance), and if argmin F = {x*} then x_k → x*. Its hypotheses, including C_aff ∩ K ⊆ argmin F, hold with an actual admissible run starting in K (the Local module's example for F(u,v) = u² + |v|, b = 1, UnexcitedMetric.run)."
   },
   {
    "id": "A/local/proof/006",
@@ -292,7 +410,12 @@
    "title": null,
    "container": null,
    "sha256": "785e990b67a0298e",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/corollary/art:planar-convergence",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.convergence_of_affineCritical_cluster"
+   ],
+   "note": "The library proof follows the paper (an affine-critical cluster point is optimal; compactness gives distance and uniqueness conclusions)."
   },
   {
    "id": "A/local/corollary/art:planar-max",
@@ -308,7 +431,15 @@
    "title": "Nondegenerate planar smooth maxima",
    "container": null,
    "sha256": "7fb6da74450d5f3b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_max",
+    "BfgsCoverage.Article.Local.planar_max_hessian_contours",
+    "BfgsCoverage.Article.Local.active_family_conversion",
+    "BfgsVerification.PlanarMaxRegular.finite_max_local_basin",
+    "BfgsVerification.PlanarMaxRegular.finite_max_hessian_local_basin"
+   ],
+   "note": "'Near x*, F = max_i f_i with convex C² branches' is an open U ∋ x* on which the f_i are convex and C² and F(x) is the largest f_i(x) (IsGreatest). The contour hypothesis is ∃ b > F_* with no boundary segments for F_* < t ≤ b. I_* = {i : f_i(x*) = F(x*)} with the gradient family and the weights indexed by I_* itself; F_* = F(x*). The last sentence is planar_max_hessian_contours: a common bound ∇²f_i − μI ⪰ 0 (μ > 0) on U for the active branches i ∈ I_* (the 'locally relevant branches'; RadialHessian.matrix is the matrix of the second Fréchet derivative) implies the contour hypothesis. active_family_conversion translates to the library's Fin-enumeration of I_*."
   },
   {
    "id": "A/local/disp/010",
@@ -322,7 +453,9 @@
    "title": null,
    "container": "A/local/corollary/art:planar-max",
    "sha256": "27c28fb0a345b9cd",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/local/corollary/art:planar-max",
+   "note": "Hypotheses hpos, hsum, hzero of planar_max (weights indexed by I_*)."
   },
   {
    "id": "A/local/disp/011",
@@ -336,7 +469,9 @@
    "title": null,
    "container": "A/local/corollary/art:planar-max",
    "sha256": "48b77edbcb89c0a7",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/local/corollary/art:planar-max",
+   "note": "The conclusion of planar_max (∃ ε > 0 before ∀ R)."
   },
   {
    "id": "A/local/proof/007",
@@ -350,7 +485,22 @@
    "title": null,
    "container": null,
    "sha256": "540ad0189ae8ea08",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/corollary/art:planar-max",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_max_affine_correct_near",
+    "BfgsCoverage.Article.Local.planar_max_regular_near",
+    "BfgsCoverage.Article.Local.planar_max_balance_continuous",
+    "BfgsCoverage.Article.Local.augmented_injective",
+    "BfgsCoverage.Article.Local.augmented_continuousAt",
+    "BfgsCoverage.Article.Local.gram_solution",
+    "BfgsCoverage.Article.Local.gram_det_ne_zero",
+    "BfgsVerification.ConvexSubdifferential.local_affine_critical_correctness",
+    "BfgsVerification.ConvexSubdifferential.localFiniteMax_restrict_active",
+    "BfgsVerification.PlanarMaxRegular.regular_of_finite_max_independent",
+    "BfgsVerification.PlanarMaxRegular.strictConvexOn_finite_max"
+   ],
+   "note": "Undisplayed steps: discarding inactive branches (localFiniteMax_restrict_active), 'this expression is continuous and equals λ* at x*' (local.tex:329, planar_max_balance_continuous), nearby affine-critical points are minimizers and keep all of I_* active (planar_max_affine_correct_near), at most two active branches and the regular two-branch chart away from affine criticality (planar_max_regular_near), strict convexity of the maximum under the Hessian bound (strictConvexOn_finite_max). The proof's description of ∂F(p) of a finite smooth maximum (local.tex:330-338) is the library's local_affine_critical_correctness."
   },
   {
    "id": "A/local/disp/012",
@@ -364,7 +514,12 @@
    "title": null,
    "container": "A/local/proof/007",
    "sha256": "2ad0eecbd62ed330",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_max_barycentric",
+    "BfgsVerification.AffineBarycentric.solution_eq_coefficients"
+   ],
+   "note": "A(x) is a variable with its defining equation (the 3 × |I_*| matrix with columns (∇f_i(x), 1), i ∈ I_*). The theorem also states the preceding sentence: A(x*) has full column rank by affine independence and this persists near x*; there every solution of A(p)λ = (0,0,1)^T equals (A(p)^TA(p))^{-1}A(p)^T(0,0,1)^T."
   },
   {
    "id": "A/local/theorem/art:nonradial-example",
@@ -380,7 +535,16 @@
    "title": "Convergence with curved, nonradial switching",
    "container": null,
    "sha256": "80e9e4188b20b61c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.nonradial_example",
+    "BfgsCoverage.Article.Local.example_eq",
+    "BfgsVerification.PlanarQuadraticExample.fullBFGS_explicit_basin",
+    "BfgsVerification.PlanarQuadraticExample.eligible_radial_unbounded_on_neighborhood",
+    "BfgsVerification.PlanarQuadraticExample.not_radial_secant_on_neighborhood",
+    "BfgsVerification.planarQuadraticSeparation"
+   ],
+   "note": "f_i and F are variables with the defining equations of disp/013 (u = x 0, v = x 1); example_eq identifies them with PlanarQuadraticExample.branch/objective. The convergence part is the library's fullBFGS_explicit_basin, which applies the general planar theorem (planar_convergence_on_sublevel; its hypotheses hold for this F, see the non-vacuity example of the Local module). The failure part is stated explicitly: for every neighborhood N₀ of 0 there is η > 0 such that for every C some differentiable pair x, z ∈ N₀ with F(0)+η ≤ F(z) ≤ F(x), T = (h−g)^T(z−x) > 0 violates N² ≤ CT, N = (h−g)^T z (r_z = z, x* = 0); this negates (art:radial-condition) (A/global/disp/002) on N₀, for every C (not only C ≥ 0); the same pairs are eligible for c1 = 1/4, c2 = 1/2 (EligiblePair). The library's PlanarQuadraticSeparationTarget (planarQuadraticSeparation) also gives a realizing SPD H with bfgsStep H g 1 = z − x."
   },
   {
    "id": "A/local/disp/013",
@@ -394,7 +558,9 @@
    "title": null,
    "container": "A/local/theorem/art:nonradial-example",
    "sha256": "30a29994500949ec",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/local/theorem/art:nonradial-example",
+   "note": "The defining equations hf (f_0, f_1, f_2 in u = x 0, v = x 1) and hF (F = max_i f_i) of nonradial_example and of the display theorems of its proof."
   },
   {
    "id": "A/local/proof/008",
@@ -408,7 +574,19 @@
    "title": null,
    "container": null,
    "sha256": "67a47b7db0c32531",
-   "status": null
+   "status": "PROOF",
+   "of": "A/local/theorem/art:nonradial-example",
+   "lean": [
+    "BfgsCoverage.Article.Local.example_model_facts",
+    "BfgsCoverage.Article.Local.example_box_facts",
+    "BfgsCoverage.Article.Local.example_tie",
+    "BfgsCoverage.Article.Local.example_ratio_limits",
+    "BfgsVerification.PlanarQuadraticExample.eventually_eligible",
+    "BfgsVerification.PlanarQuadraticExample.radial_numerator_tendsto",
+    "BfgsVerification.PlanarQuadraticExample.pair_curvature_tendsto",
+    "BfgsVerification.PlanarQuadraticExample.radial_quotient_tendsto"
+   ],
+   "note": "Every quantitative claim of the proof was checked in Lean: Hessians between I and 3I, (f_0+f_1+f_2)/3 = u²+v², F ≥ u²+v², unique minimizer 0, strict positive contours, active gradients (1,0),(0,1),(−1,−1) with weights 1/3 (example_model_facts); D = 3(1+v−uv) is the determinant of the augmented gradient matrix (rows ∂_u, ∂_v, 1), D ≥ 267/100 and the numerators ≥ 23/100, 49/100, 45/100 on |u|,|v| ≤ 1/10, coefficients sum to one with zero weighted gradient, affine independence, affine correctness and regularity on the box, {F ≤ 1/100} in the box (example_box_facts); the positive tie with f_2 inactive (example_tie); Δ/d → 1/2 and t/d → 1 as u, e → 0⁺ (example_ratio_limits); eventual eligibility, y^Tz → u²/2 − v² ≠ 0, t → 0⁺, unbounded quotient and the fixed band (library, used in eligible_radial_unbounded_on_neighborhood). All hold."
   },
   {
    "id": "A/local/disp/014",
@@ -422,7 +600,12 @@
    "title": null,
    "container": "A/local/proof/008",
    "sha256": "8b6893914d95457a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.example_coefficients",
+    "BfgsVerification.PlanarQuadraticExample.coefficients_unique"
+   ],
+   "note": "For every solution λ of Σλ_i = 1, Σλ_i∇f_i(x) = 0 (Cramer's rule; D need not be nonzero), with D = 3(1+v−uv) a variable with its defining equation."
   },
   {
    "id": "A/local/disp/015",
@@ -436,7 +619,13 @@
    "title": null,
    "container": "A/local/proof/008",
    "sha256": "6bbaf24b92ca07c2",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.example_tie_expansion",
+    "BfgsVerification.PlanarQuadraticExample.tieHeight_expansion",
+    "BfgsVerification.PlanarQuadraticExample.tieHeight_cubic_remainder"
+   ],
+   "note": "v is a variable with the displayed defining equation; the expansion is as u → 0⁺ (the proof fixes u > 0). The library also proves |v(u) − u + u²/2| ≤ u³ for 0 < u < 1/10."
   },
   {
    "id": "A/local/disp/016",
@@ -450,7 +639,13 @@
    "title": null,
    "container": "A/local/proof/008",
    "sha256": "b8578291a8add2dc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.example_radial_jump",
+    "BfgsVerification.PlanarQuadraticExample.tie_radial_jump",
+    "BfgsVerification.PlanarQuadraticExample.tie_radial_jump_neg"
+   ],
+   "note": "At (u, v(u)); 'for small u' is 0 < u < 1/10 (where u²/2 − v² < 0)."
   },
   {
    "id": "A/local/disp/017",
@@ -464,7 +659,644 @@
    "title": null,
    "container": "A/local/proof/008",
    "sha256": "5eef13ea8ccfa07e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.example_pair_values",
+    "BfgsVerification.PlanarQuadraticExample.pair_decrease",
+    "BfgsVerification.PlanarQuadraticExample.pair_curvature",
+    "BfgsVerification.PlanarQuadraticExample.crossing_value_difference",
+    "BfgsVerification.PlanarQuadraticExample.eventually_crossing_active"
+   ],
+   "note": "For fixed 0 < u < 1/10 and all sufficiently small e > 0 (∀ᶠ e in 𝓝[>] 0): unique activity of branches 1 and 0 at x and z (the sentence before the display), g = ∇F(x) = ∇f_1(x), h = ∇F(z) = ∇f_0(z), and the three identities."
+  },
+  {
+   "id": "A/local/prose/001",
+   "kind": "prose",
+   "anchor": "The global theorem requires the initial sublevel to lie in the region where",
+   "lines": [
+    3,
+    5
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Motivation: describes the hypothesis of Theorem art:centered (initial sublevel compact and inside U) and the quantifier order the local results need (a region chosen before the run); the local statements themselves are the items of this file."
+  },
+  {
+   "id": "A/local/prose/002",
+   "kind": "prose",
+   "anchor": "Convexity and a unique minimizer supply precisely this localization.",
+   "lines": [
+    5,
+    6
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/lemma/art:localization"
+   ]
+  },
+  {
+   "id": "A/local/prose/003",
+   "kind": "prose",
+   "anchor": "We first use it for finite polyhedral",
+   "lines": [
+    6,
+    9
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/positive_partition/theorem/art:polyhedral",
+    "A/local/corollary/art:planar-max",
+    "A/local/theorem/art:nonradial-example"
+   ],
+   "note": "Roadmap. 'It' is the localization of Lemma art:localization, used for finite polyhedral pieces (Theorem art:polyhedral, proof local.tex:72-73; inward accuracy: prose/005) and for curved planar switching (Corollary art:planar-max, proof local.tex:351); that a moving comparison direction is essential there is the failure of the radial condition in Theorem art:nonradial-example."
+  },
+  {
+   "id": "A/local/prose/004",
+   "kind": "prose",
+   "anchor": "The distinction between a local objective hypothesis and a hypothesis on the",
+   "lines": [
+    13,
+    14
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/lemma/art:localization"
+   ]
+  },
+  {
+   "id": "A/local/prose/005",
+   "kind": "prose",
+   "anchor": "A finite local partition controls which formulas an inward comparison segment",
+   "lines": [
+    38,
+    42
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.polyhedral_local_partition",
+    "BfgsVerification.ConvexCellRadial.incident_neighborhood",
+    "BfgsVerification.ConvexCellRadial.inward_mem",
+    "BfgsVerification.ConvexCellRadial.local_cells_inward"
+   ],
+   "note": "Stated under the hypotheses of Theorem art:polyhedral. 'After removing the cells that miss x*, every remaining cell contains x*' is literally a tautology; its content, that near x* only cells containing x* occur, is the first conjunct."
+  },
+  {
+   "id": "A/local/prose/006",
+   "kind": "prose",
+   "anchor": "The algorithm need not identify a cell or a manifold;",
+   "lines": [
+    43,
+    44
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on the method: the hypotheses of Theorem art:polyhedral concern only the objective and BFGS uses no cell data; the comparison segment is an analysis device."
+  },
+  {
+   "id": "A/local/prose/007",
+   "kind": "prose",
+   "anchor": "In particular, a finite convex polyhedral penalty,",
+   "lines": [
+    91,
+    93
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.polyhedral_penalty_partition",
+    "BfgsCoverage.Article.Local.abs_hinge_sum_polyhedral",
+    "BfgsVerification.AffineKinks.cells_cover",
+    "BfgsVerification.AffineKinks.penalty_eq_piece"
+   ],
+   "note": "Ledger positive.deduction.3. A finite convex polyhedral penalty is a finite maximum of affine functions; 'piecewise affine on a finite polyhedral partition' is proved with closed full-dimensional polyhedral cells covering ℝⁿ with pairwise disjoint interiors, the penalty affine on each. abs_hinge_sum_polyhedral shows that finite sums of absolute-value and hinge terms are such penalties."
+  },
+  {
+   "id": "A/local/prose/008",
+   "kind": "prose",
+   "anchor": "It therefore falls under this corollary when added to a locally",
+   "lines": [
+    93,
+    95
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.loss_plus_polyhedral_penalty",
+    "BfgsCoverage.Article.Local.plq_loss_regularizer"
+   ],
+   "note": "Proved by applying plq_loss_regularizer (Corollary art:plq, second sentence) to the full-dimensional cells given by polyhedral_penalty_partition (affine pieces, Q_i = 0)."
+  },
+  {
+   "id": "A/local/prose/009",
+   "kind": "prose",
+   "anchor": "Different cells may have different",
+   "lines": [
+    95,
+    96
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.plq_different_hessians"
+   ],
+   "note": "Permission remark on Corollary art:plq; the example F(x) = x² + max{x,0}² satisfies all hypotheses of plq with Q_0 = 1 ≠ Q_1 = 2."
+  },
+  {
+   "id": "A/local/prose/010",
+   "kind": "prose",
+   "anchor": "A finite maximum of arbitrary quadratic formulas need not",
+   "lines": [
+    96,
+    97
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.quadratic_max_no_polyhedral_cells",
+    "BfgsVerification.RadialCertificate.radial_of_inward_on_compact",
+    "BfgsVerification.PlanarQuadraticExample.not_radial_secant_on_neighborhood"
+   ],
+   "note": "Witness: the maximum of the three quadratics of Theorem art:nonradial-example admits no representation as in Theorem art:polyhedral on any neighborhood of its minimizer (even with lower-dimensional cells), so neither Theorem art:polyhedral nor Corollary art:plq covers it."
+  },
+  {
+   "id": "A/local/prose/011",
+   "kind": "prose",
+   "anchor": "There is also no claim that iterates identify a cell",
+   "lines": [
+    98,
+    99
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer: states what is not claimed (cell identification, containment of rejected trials)."
+  },
+  {
+   "id": "A/local/prose/012",
+   "kind": "prose",
+   "anchor": "For a concrete reduction, let",
+   "lines": [
+    115,
+    121
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.lasso_neighborhood"
+   ],
+   "note": "Ledger positive.deduction.9. The setup (A ∈ ℝ^{m×n}, b, λ > 0, unique minimizer x*, I_0, σ_i = sign(x*_i)) is the standing assumption of lasso_neighborhood, lasso_decomposition (disp/005), lasso_parts and lasso_local_basin; this item's claim is that N = {σ_i x_i > 0, i ∉ I_0} is an open convex neighborhood of x*."
+  },
+  {
+   "id": "A/local/prose/013",
+   "kind": "prose",
+   "anchor": "The nonzero optimal coordinates contribute affine terms to the smooth",
+   "lines": [
+    130,
+    132
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.lasso_parts"
+   ],
+   "note": "ψ is C^∞ and convex (½‖Ax−b‖² plus affine terms); γ is finite, convex and positively homogeneous."
+  },
+  {
+   "id": "A/local/prose/014",
+   "kind": "prose",
+   "anchor": "Corollary~\\ref{art:local-centered} therefore gives a",
+   "lines": [
+    132,
+    134
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.lasso_local_basin",
+    "BfgsCoverage.Article.Local.local_centered",
+    "BfgsVerification.AffineKinks.local_matrix_l1_basin"
+   ],
+   "note": "Derived by applying local_centered (Corollary art:local-centered) with U = N and the decomposition disp/005. The library also has the direct route local_matrix_l1_basin."
+  },
+  {
+   "id": "A/local/prose/015",
+   "kind": "prose",
+   "anchor": "Uniqueness is a hypothesis here; $\\lambda>0$ alone does not supply it.",
+   "lines": [
+    135,
+    135
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.lasso_uniqueness_not_automatic"
+   ],
+   "note": "A = (1 1), b = 2, λ = 1: F(x) = ½(x₁+x₂−2)² + |x₁| + |x₂| has the two minimizers (1,0) and (0,1)."
+  },
+  {
+   "id": "A/local/prose/016",
+   "kind": "prose",
+   "anchor": "A locally $C^{1,1}$ convex loss plus finitely many Euclidean",
+   "lines": [
+    137,
+    141
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.euclidean_residuals_local_form",
+    "BfgsVerification.EuclideanResidual.exact_decomposition",
+    "BfgsVerification.EuclideanResidual.smooth_neighborhood"
+   ],
+   "note": "Ledger positive.deduction.4. 'This local form' is the representation and smoothness assumptions of Corollary art:local-centered; stated at any point x* (minimality is not needed for the decomposition), with ψ = loss + Σ_{A_jx*≠b_j}‖A_jx−b_j‖ and γ(r) = Σ_{A_jx*=b_j}‖A_jr‖."
+  },
+  {
+   "id": "A/local/prose/017",
+   "kind": "prose",
+   "anchor": "Under uniqueness,",
+   "lines": [
+    141,
+    142
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.euclidean_residuals_basin",
+    "BfgsCoverage.Article.Local.local_centered"
+   ]
+  },
+  {
+   "id": "A/local/prose/018",
+   "kind": "prose",
+   "anchor": "This example allows nonpolyhedral penalties while",
+   "lines": [
+    142,
+    143
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.euclidean_norm_not_polyhedral"
+   ],
+   "note": "'Allows nonpolyhedral penalties': the residual-norm class contains x ↦ ‖x‖ on ℝ² (A = I, b = 0), which is not a finite maximum of affine functions. 'While retaining the same radial mechanism' describes the proof route (Corollary art:local-centered, via the radial certificate), which is how euclidean_residuals_basin is proved."
+  },
+  {
+   "id": "A/local/prose/019",
+   "kind": "prose",
+   "anchor": "The radial direction can fail for a different reason:",
+   "lines": [
+    147,
+    149
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/theorem/art:nonradial-example",
+    "A/local/disp/016"
+   ],
+   "note": "The curved interface's nonzero radial jump is disp/016; the blow-up of the secant correction as the endpoints approach the interface from opposite sides is the failure part of Theorem art:nonradial-example (proof local.tex:417-428)."
+  },
+  {
+   "id": "A/local/prose/020",
+   "kind": "prose",
+   "anchor": "The transported framework allows the comparison direction to follow the",
+   "lines": [
+    150,
+    154
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Motivation: describes the design requirements of the comparison field (visibility, secant control, transport: Definition art:band-certificate) and that the field is an analysis device; the mathematical content is Lemma art:planar-field and Theorem art:planar-cluster."
+  },
+  {
+   "id": "A/local/prose/021",
+   "kind": "prose",
+   "anchor": "At a point outside this set, let $a$ be the least-norm point of",
+   "lines": [
+    161,
+    164
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.least_norm_point",
+    "BfgsVerification.AffineCriticalObjective.canonicalVector_pairing"
+   ],
+   "note": "Ledger positive.deduction.5. Euclidean norm (sqNorm a = ‖a‖²); existence and uniqueness of the least-norm point are included."
+  },
+  {
+   "id": "A/local/prose/022",
+   "kind": "prose",
+   "anchor": "Affine criticality concerns failure of this common-rate direction;",
+   "lines": [
+    165,
+    167
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.affineCritical_and_stationarity",
+    "BfgsCoverage.Article.Local.affineCritical_not_stationary_example",
+    "BfgsVerification.AffineCriticalObjective.equal_rate_exists_iff_not_affineCritical"
+   ],
+   "note": "'They need not coincide': F(u,v) = max{u, 2u} at 0 is affine critical but not stationary."
+  },
+  {
+   "id": "A/local/prose/023",
+   "kind": "prose",
+   "anchor": "prohibit long accepted chords with vanishing value decrease.",
+   "lines": [
+    169,
+    170
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.strict_contours_short_chords",
+    "BfgsVerification.AdmissibleBFGSRun.differences_tendsto_zero_of_strict_contour"
+   ],
+   "note": "The opening 'The two planar hypotheses have separate roles' introduces this item and prose/024."
+  },
+  {
+   "id": "A/local/prose/024",
+   "kind": "prose",
+   "anchor": "Regular two-branch switching makes each positive-level corner move",
+   "lines": [
+    171,
+    172
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.corner_moves_with_level",
+    "BfgsVerification.PlanarCornerCharts.exists_corner_chart",
+    "BfgsVerification.PlanarCornerCharts.curve_velocity_pairing"
+   ]
+  },
+  {
+   "id": "A/local/prose/025",
+   "kind": "prose",
+   "anchor": "Neither condition imposes a matrix limit or a lower bound on all eigenvalues",
+   "lines": [
+    173,
+    174
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on the hypotheses of Theorem art:planar-cluster, which visibly contain no matrix limit and no eigenvalue bound."
+  },
+  {
+   "id": "A/local/prose/026",
+   "kind": "prose",
+   "anchor": "A common positive lower Hessian bound is one sufficient way",
+   "lines": [
+    174,
+    175
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.hessian_bound_strict_contours",
+    "BfgsCoverage.Article.Local.strict_contours_without_hessian_bound",
+    "BfgsCoverage.Article.Local.planar_max_hessian_contours"
+   ],
+   "note": "Sufficiency, as a remark on hypothesis 1 of Theorem art:planar-cluster: hessian_bound_strict_contours (F convex attaining F_*, F = max_i f_i on an open convex V ⊇ {F ≤ b} with C² branches and ∇²f_i − μI ⪰ 0 on V, μ > 0 ⇒ for every F_* < t ≤ b the boundary of {F ≤ t} contains no nontrivial segment, in the exact form of hypothesis 1; one branch is the case of a C² objective). The local version for Corollary art:planar-max is planar_max_hessian_contours. 'Not required': F = ‖x‖⁴ has strict positive contours but its Hessian at the minimizer is 0."
+  },
+  {
+   "id": "A/local/prose/027",
+   "kind": "prose",
+   "anchor": "Here is the construction near a compact noncritical part of a positive",
+   "lines": [
+    177,
+    183
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.corner_moves_with_level",
+    "BfgsCoverage.Article.PlanarGeometry.corner_field_formula"
+   ],
+   "note": "Ledger positive.deduction.7, whose paragraphs local.tex:177-210 are split into prose/027-034. This item: solving f_1(p_j(t)) = f_2(p_j(t)) = t, the velocity pairing ∇f_i(p_j(t))^T v_j(t) = 1, and −v_j as an equal-rate descent direction. 'v_j is the positively paired field used in the energy' refers to the corner identity w = v_j(F(x)) (A/planar_geometry/disp/006, PlanarGeometry.corner_field_formula; cited only, coverage modules do not import each other)."
+  },
+  {
+   "id": "A/local/prose/028",
+   "kind": "prose",
+   "anchor": "There are finitely many such corners in the compact",
+   "lines": [
+    183,
+    186
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.finitely_many_corners",
+    "BfgsCoverage.Article.Local.common_normal_exposes_segment",
+    "BfgsVerification.PlanarCornerCharts.finite_nonsmooth_on_compact_level",
+    "BfgsVerification.PlanarNormalGeometry.points_equal_of_common_normal"
+   ],
+   "note": "Disjointness of the supporting-normal arcs: distinct points of a strict contour have no common nonzero supporting normal, because such a normal exposes the whole segment in the boundary (common_normal_exposes_segment)."
+  },
+  {
+   "id": "A/local/prose/029",
+   "kind": "prose",
+   "anchor": "Their angular separation leaves room to join",
+   "lines": [
+    186,
+    187
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/planar_geometry/lemma/art:planar-field",
+    "A/planar_geometry/disp/004"
+   ],
+   "note": "The joined height function (art:planar-height) and the field of Lemma art:planar-field."
+  },
+  {
+   "id": "A/local/prose/030",
+   "kind": "prose",
+   "anchor": "The joining also has to control derivatives.",
+   "lines": [
+    189,
+    198
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/planar_geometry/disp/004",
+    "A/planar_geometry/disp/005",
+    "A/planar_geometry/disp/006",
+    "A/planar_geometry/disp/008",
+    "A/planar_geometry/disp/009"
+   ],
+   "note": "Summary of the appendix construction: the height h (art:planar-height), the field w = hn + h_θT (art:planar-field-formula), w = v_j(F(x)) near the corner (art:planar-corner-field), the angular derivative (h + h_θθ)T (art:planar-tangent-cancellation) and the triangular Dw preserving the tangent line."
+  },
+  {
+   "id": "A/local/prose/031",
+   "kind": "prose",
+   "anchor": "The one-dimensional tangent is essential here:",
+   "lines": [
+    198,
+    199
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.tangent_step_det_zero"
+   ],
+   "note": "See also A/planar_geometry/disp/011 (det(s, Dw s) = s_n[(a−e)s_T + b s_n], zero for s_n = 0)."
+  },
+  {
+   "id": "A/local/prose/032",
+   "kind": "prose",
+   "anchor": "For a sufficiently short eligible chord, weak Wolfe makes",
+   "lines": [
+    201,
+    205
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/planar_geometry/lemma/art:planar-field",
+    "A/planar_geometry/disp/010",
+    "A/planar_geometry/disp/012",
+    "A/planar_geometry/disp/013",
+    "A/planar_geometry/disp/014"
+   ],
+   "note": "Transversality |det(s,w)| ≥ κ‖s‖ and |log λ| ≤ C₁d are items 2-3 of Lemma art:planar-field; the variation bound and |H(1) − H(0)| ≤ 2Ad are its proof's displays."
+  },
+  {
+   "id": "A/local/prose/033",
+   "kind": "prose",
+   "anchor": "Since Armijo gives $d\\le(F(x)-F(z))/c_1$, transport is charged to summable",
+   "lines": [
+    206,
+    207
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.armijo_charges_transport",
+    "BfgsCoverage.Article.Local.run_transport_budget"
+   ],
+   "note": "'Finite total path length is not required' is a remark: the hypotheses of Lemma art:planar-field and Theorem art:planar-cluster contain no path-length assumption."
+  },
+  {
+   "id": "A/local/prose/034",
+   "kind": "prose",
+   "anchor": "Appendix~\\ref{art:planar-appendix} supplies the cutoffs, estimates through",
+   "lines": [
+    208,
+    210
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/planar_geometry/lemma/art:planar-field"
+   ]
+  },
+  {
+   "id": "A/local/prose/035",
+   "kind": "prose",
+   "anchor": "This condition says that nonoptimal points retain equal-rate descent, which",
+   "lines": [
+    287,
+    288
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.affineCorrect_iff_equal_rate",
+    "BfgsCoverage.Article.Local.affineCritical_not_stationary_example",
+    "BfgsVerification.AffineCriticalObjective.affineCorrectAt_iff_nonoptimal_equal_rate"
+   ],
+   "note": "Equivalence of C_aff ∩ K ⊆ argmin F with equal-rate descent at nonoptimal points of K; equal-rate descent implies strict common descent, not conversely (max{u, 2u} at 0)."
+  },
+  {
+   "id": "A/local/prose/036",
+   "kind": "prose",
+   "anchor": "The strict-contour and regular-switching",
+   "lines": [
+    288,
+    290
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on scope: the planar route is a sufficient condition and does not characterize convergent runs; 'remain essential to this route' refers to the hypotheses its proof uses."
+  },
+  {
+   "id": "A/local/prose/037",
+   "kind": "prose",
+   "anchor": "The extra affine-correctness condition can be verified from the active",
+   "lines": [
+    294,
+    297
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_max_affine_correct_near",
+    "BfgsCoverage.Article.Local.planar_max_barycentric",
+    "BfgsCoverage.Article.Local.planar_max_balance_continuous"
+   ],
+   "note": "Under the hypotheses of Corollary art:planar-max: near x* every affine-critical point is a minimizer and keeps all branches of I_* active (planar_max_affine_correct_near); the balance λ(p) = (A(p)^TA(p))^{-1}A(p)^T(0,0,1)^T is unique (disp/012, planar_max_barycentric) and continuous at x* with λ(x*) = λ* (planar_max_balance_continuous)."
+  },
+  {
+   "id": "A/local/prose/038",
+   "kind": "prose",
+   "anchor": "same assumptions leave at most two active branches at a noncritical point,",
+   "lines": [
+    297,
+    299
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_max_regular_near",
+    "BfgsVerification.PlanarActiveGeometry.cardinal_le_two_of_affineIndependent_not_critical"
+   ]
+  },
+  {
+   "id": "A/local/prose/039",
+   "kind": "prose",
+   "anchor": "The multiplier geometry is related to the nondegeneracy used in local bundle",
+   "lines": [
+    361,
+    363
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (LW, BG); no result is used."
+  },
+  {
+   "id": "A/local/prose/040",
+   "kind": "prose",
+   "anchor": "Here the full-BFGS conclusion is derived without assumed iterate or matrix",
+   "lines": [
+    364,
+    365
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/corollary/art:planar-max"
+   ],
+   "note": "The hypotheses of planar_max concern only the objective; the conclusion quantifies over all admissible runs."
+  },
+  {
+   "id": "A/local/prose/041",
+   "kind": "prose",
+   "anchor": "The example identifies the extra freedom supplied by moving geometry.",
+   "lines": [
+    435,
+    437
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/theorem/art:nonradial-example",
+    "A/local/disp/016",
+    "A/planar_geometry/lemma/art:planar-field"
+   ],
+   "note": "Radial jump: disp/016; the contour-based field cancels it (common pairing at corners) and its motion costs |log λ| ≤ C₁d (Lemma art:planar-field)."
+  },
+  {
+   "id": "A/local/prose/042",
+   "kind": "prose",
+   "anchor": "The proof uses the original coordinates and the unmodified BFGS update;",
+   "lines": [
+    438,
+    438
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Description of the proof: nonradial_example is stated for AdmissibleBFGSRun 2 F of the original objective with the unmodified update."
+  },
+  {
+   "id": "A/local/prose/043",
+   "kind": "prose",
+   "anchor": "a nonlinear change of variables",
+   "lines": [
+    439,
+    440
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Methodological remark: BFGS is not invariant under nonlinear changes of variables, so an argument in transformed coordinates would concern a different run; this is a statement about proof strategies, not about the objects of the paper."
+  },
+  {
+   "id": "A/local/prose/044",
+   "kind": "prose",
+   "anchor": "a replacement by polyhedral cells",
+   "lines": [
+    439,
+    440
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Local.quadratic_max_no_polyhedral_cells"
+   ],
+   "note": "The example's objective admits no polyhedral-cell representation as in Theorem art:polyhedral near its minimizer, so that theorem cannot establish its convergence."
   }
  ],
  "discrepancies": []
