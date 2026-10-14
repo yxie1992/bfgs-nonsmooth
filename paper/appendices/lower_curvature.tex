@@ -58,12 +58,12 @@ region. This gives exact perturbed orbits; closeness of a finite
 floating-point trajectory would not. To prove the proposition, use
 normalized coordinates
 \[
- x=\tau z,\qquad H=\tau M(b,e),\qquad
- M(b,e)=\begin{pmatrix}1&b\\b&e\end{pmatrix},\qquad\tau>0.
+ x=\tau z,\qquad H=\tau M(\zeta,\eta),\qquad
+ M(\zeta,\eta)=\begin{pmatrix}1&\zeta\\\zeta&\eta\end{pmatrix},\qquad\tau>0.
 \]
-The boundary seed is $P_*=(z_0,0,1,0)$ in coordinates $(z,b,e,\tau)$.
+The boundary seed is $P_*=(z_0,0,1,0)$ in coordinates $(z,\zeta,\eta,\tau)$.
 Keep the input $\tau$ fixed during three substeps. Starting with
-$(Z,M)=(z,M(b,e))$, for $j=0,1,2$ perform
+$(Z,M)=(z,M(\zeta,\eta))$, for $j=0,1,2$ perform
 \begin{align}
  \gamma_j&=g_j+\mu\tau Z,\qquad S=-\alpha_jM\gamma_j,
        \qquad Z^+=Z+S,\label{art:lower_return_substep}\\
@@ -72,12 +72,12 @@ $(Z,M)=(z,M(b,e))$, for $j=0,1,2$ perform
           \left(I-\frac{YS^T}{Y^TS}\right)+\frac{SS^T}{Y^TS}.\notag
 \end{align}
 with cyclic gradient indices and $\alpha=(1,1/4,1/16)$.
-For the resulting $(Z_3,M_3)$, let $r=(M_3)_{11}$ and define
+For the resulting $(Z_3,M_3)$, let $\hat\rho=(M_3)_{11}$ and define
 \begin{equation}\label{art:lower_return}
- \mathcal T_\mu(z,b,e,\tau)
- =\left(Z_3/r, (M_3)_{12}/r, (M_3)_{22}/r, \tau r\right).
+ \mathcal T_\mu(z,\zeta,\eta,\tau)
+ =\left(Z_3/\hat\rho, (M_3)_{12}/\hat\rho, (M_3)_{22}/\hat\rho, \tau\hat\rho\right).
 \end{equation}
-The seed closure gives $\mathcal T_\mu(P_*)=P_*$ and $r(P_*)=\rho$.
+The seed closure gives $\mathcal T_\mu(P_*)=P_*$ and $\hat\rho(P_*)=\rho$.
 All denominators are nonzero there. Hence the map is real analytic on an
 open neighborhood of $P_*$, using negative $\tau$ only to define this
 analytic extension.
@@ -105,7 +105,7 @@ neighborhood. The physical step and secant are exactly the ones in
 agreement with the actual update and the entire search tree.
 
 At $\tau=0$ the matrix return is independent of $z$. Let $J$ be the
-derivative at $(b,e)=(0,1)$ of its normalized shape map.
+derivative at $(\zeta,\eta)=(0,1)$ of its normalized shape map.
 The following rational enclosures specify the spectral certificate:
 \begin{equation}\label{art:shape_certificate}
  10^{10}J\ \in
@@ -134,16 +134,16 @@ $p(\lambda)=\lambda^2-\operatorname{tr}(J)\lambda+\det J$ gives
 These rational sign comparisons locate two distinct real roots and exhaust
 the degree-two polynomial; no numerical eigenvector is used.
 
-At $\tau=0$, $Z_3=z+v(b,e)$ and $r$ is independent of $z$.
-The last coordinate of the return is $\tau r$. Thus its full derivative
+At $\tau=0$, $Z_3=z+v(\zeta,\eta)$ and $\hat\rho$ is independent of $z$.
+The last coordinate of the return is $\tau\hat\rho$. Thus its full derivative
 has the block form
 \[
  D\mathcal T_\mu(P_*)=
  \begin{pmatrix}
- \rho^{-1}I_2&C&\mu a\\0&J&\mu b'\\0&0&\rho
+ \rho^{-1}I_2&*&*\\0&J&*\\0&0&\rho
  \end{pmatrix}.
 \]
-The unspecified blocks are finite derivatives of the displayed rational
+The blocks marked $*$ are finite derivatives of the displayed rational
 map and do not affect its spectrum. None of the five eigenvalues is zero
 or has modulus one. Moreover $\rho$ is not an eigenvalue of the upper
 left four-dimensional block. Assigning last coordinate one and solving
@@ -162,8 +162,8 @@ By the last assertion of
 Lemma~\ref{art:lower_hyperbolic}, this manifold contains points with
 arbitrarily small positive $\tau$.
 Choose such a point whose forward return orbit stays in the implementation
-neighborhood and tends to $P_*$. Shrinking the neighborhood keeps $r>0$
-and $M(b,e)\succ0$, so $\tau^+=\tau r$ preserves positivity. The actual
+neighborhood and tends to $P_*$. Shrinking the neighborhood keeps $\hat\rho>0$
+and $M(\zeta,\eta)\succ0$, so $\tau^+=\tau\hat\rho$ preserves positivity. The actual
 intermediate matrices remain positive definite by positive curvature.
 
 The physical iterates are $x_{3m}=\tau_mz_m\to0$. Intermediate points

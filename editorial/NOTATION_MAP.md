@@ -7,7 +7,8 @@ finite-cell and planar geometry (Section 5). The latter now has a complete
 article proof appendix. Its local field is `w`, with normal-angle variables
 `t, theta`, unit normal `n`, unit tangent `T`, and scalar height `h`; these are
 not the BFGS curvature scalar `t_k`, global constant `omega=1-c_2`, or a Hessian
-approximation. The benchmark `(u,v)` coordinates are literal Euclidean
+approximation. Inside the appendix proof, `M` is a local Lipschitz constant for
+the branch gradients, distinct from the transport constant `L`. The benchmark `(u,v)` coordinates are literal Euclidean
 coordinates in `ArticlePositive.mixed_benchmark_global`. The negative matched
 model `F(xbar+lambda z)=C+sigma G(z)` uses positive spatial and objective scales;
 `H_F=(lambda^2/sigma)H_G`. The choice `sigma=lambda^2` preserves the initial
@@ -41,11 +42,12 @@ An admissible-run theorem assumes an infinite sequence of successful accepted st
 | Symbol | Meaning | Scope distinctions |
 |---|---|---|
 | $x_*$, $F_*$ | A minimizer and minimum value | A fixed reference point in an energy identity need not be a minimizer until a gap inequality explicitly uses that assumption. |
-| $r_x=x-x_*$, $r_k=x_k-x_*$ | Radial reference displacement | The lower-curvature scale ratio $r=1/128$ and a return-map normalization factor also named $r$ are different local scalars. |
+| $r_x=x-x_*$, $r_k=x_k-x_*$ | Radial reference displacement | The lower-curvature scale ratio $r=1/128$ is a different local scalar. The return-map normalization factor, companion $r$, is $\hat\rho$ in the article. |
 | $E_k=r_k^TB_kr_k$ | Fixed-reference energy | In the PSD-field proof, $E_k=\operatorname{tr}(B_kW(x_k))$ is the corresponding generalized energy. |
 | $a_k=g_k^Tr_k$ | Scalar supporting-gradient pairing | In a moving frame, $a_k=V_k^Tg_k$ is a vector; in both article scalar embeddings $a_\ell$ is a geometric scale (companion $a_n$). |
 | $R_k=(y_k^Tr_{k+1})^2/t_k$ | Radial correction | $R$ may also denote a radius bound, while seed polynomial $R=c-8d$ is local to its certificate. |
-| $K=\{F\le b\}$, $K_\eta$ | Compact sublevel and its positive-gap band | The level $b$ is not a scalar-interpolation parameter $b$ or normalized matrix-shape coordinate $b$. |
+| $\Lambda$ | Bound on gradient or subgradient norms in the proofs of reciprocal growth and of the inward-to-radial estimate | The companion writes $G$ (Chapters 2 and 4); the article reserves $G$ for the seed maximum. |
+| $K=\{F\le b\}$, $K_\eta$ | Compact sublevel and its positive-gap band | The level $b$ is not a scalar-interpolation parameter $b$. The companion's normalized matrix-shape coordinate $b$ is $\zeta$ in the article. |
 | $\Pi_s=I-ss^T/(s^Ts)$ | Euclidean projection perpendicular to a nonzero executed/pair step | Its denominator is valid on eligible pairs because $d>0$ implies $s\ne0$. |
 | $W_\eta(x)\succeq0$ | Finite-valued comparison field on a band | It need not be SPD, bounded or continuous. It is objective data, not a stored BFGS matrix. |
 | (V), (S), (T) | Visibility, secant control, projected transport | Companion Chapters 3 and 5 use these lettered names. The article uses named inequalities with the same roles. |
@@ -63,7 +65,7 @@ An admissible-run theorem assumes an infinite sequence of successful accepted st
 
 The article's $G(z)=\max(g_0^Tz,g_1^Tz,g_2^Tz)$ and companion Chapters 12–13 use the same algebraically isolated pair: article $(c_\circ,d_\circ)$ and companion $(c,d)$. The article has gradients $g_0=(1,0)^T$, $g_1=(-1,-1/8)^T$, $g_2=(c_\circ,d_\circ)^T$, contraction factor $\rho$, phase matrices $M_j$, displacements $s_j$ and phase points $z_j$. The seed variables $U,V,R,K,T,Y$ are polynomial abbreviations local to the algebraic certificate. They are not the geometric subspaces, sublevel set, frame or curvature quantities of earlier chapters.
 
-Here $j=0,1,2$ is the phase and $m\ge0$ counts complete cycles. The article uses $\ell$ for the embedded copy, with starts $x_0^{(\ell)}$ and bad limits $\bar x_\ell$; the companion retains $n$ and $p_n$. The article's search direction remains $p=-Hg$. A seed point $z_2$ is distinct from a coordinate written $[z]_2$. The objective and initial matrix are fixed across the starts within each theorem.
+Here $j=0,1,2$ is the phase and $m\ge0$ counts complete cycles. The article uses $\ell$ for the embedded copy, with starts $x_0^{(\ell)}$ and bad limits $\bar x_\ell$; the companion retains $n$ and $p_n$. The article's search direction remains $p=-Hg$. A seed point $z_2$ is distinct from the second coordinate $[z]_2$ of a point $z$; the article defines this bracket where Lemma `art:seed_cycle` uses it. The objective and initial matrix are fixed across the starts within each theorem.
 
 ## Upper-curvature scalar construction: article and Chapter 12
 
@@ -94,7 +96,7 @@ The article embedded starts are $\bar x_\ell+a_\ell^2z_0$. Gradients and steps h
 | $\psi_b$ | $\varphi_b$ | Convex $C^{1,1}$ scalar with article node value $a_\ell^2$ and derivative $a_\ell$ (companion index $n$). The article deliberately renames it to distinguish the two constructions. |
 | $P_b$, $J_b$ | Same symbols | Reinstantiated with this construction's center and half-width; they are not numerically the upper-curvature ramps. |
 | $Q_\mu=\mu\|x\|^2/2+G(x)$ | Same formula | Strongly convex seed objective, whose bad orbit is supplied by the stable-manifold theorem. |
-| $\mathcal T_\mu$ | $\mathcal T_\mu$ | Five-dimensional normalized return map in $(z,b,e,\tau)$; here $b,e$ are matrix-shape coordinates. |
+| $\mathcal T_\mu$ in $(z,\zeta,\eta,\tau)$, factor $\hat\rho$ | $\mathcal T_\mu$ in $(z,b,e,\tau)$, factor $r$ | Five-dimensional normalized return map. Here $\zeta,\eta$ (companion $b,e$) are matrix-shape coordinates and $\hat\rho=(M_3)_{11}$ (companion $r$) is the return factor, with $\hat\rho(P_*)=\rho$. |
 | $A=(H_0^{\rm seed})^{1/2}$ | $A=\bar H_0^{1/2}$ | $\widetilde F(z)=F(Az)$ converts the one common SPD initialization to identity. This $A$ is not a tangential gradient field. |
 
 The article local copy uses $\bar x_\ell+a_\ell y$ and scales objective differences by $a_\ell^2$. The chosen perturbed orbit is $(x_k^{\rm seed},H_k^{\rm seed})$; only the transformed matrix is $\widetilde H$, with $\widetilde H_0=I$. The scalar's negative side is $x^2/2$, and its derivative is not differentiable at zero on the accumulating positive side. These functions therefore do not acquire the upper construction's $C^{2,1}$ regularity by a notation change. The separate constant-classical-Hessian alternative replaces the ramp by a step, the integral by a hinge, and the negative scalar side by $-x$; it has a countably piecewise-affine remainder, not the finite smooth-branch claim.
