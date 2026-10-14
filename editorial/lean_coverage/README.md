@@ -119,7 +119,9 @@ are coarse unions.
 
 Checking a module takes seconds once the library is built (loading even
 `import BfgsVerification` takes about 3 s). Never run `lake build`, `lake update`
-or `lake clean` while other agents work in the package.
+or `lake clean` while other agents work in the package. A recorded
+`DISCREPANCY` stays open until the manuscript is corrected, so while it is open
+use `check_coverage.py --strict --allow-discrepancies`.
 
 `lake build` compiles every coverage module (they are imported by
 `BfgsArticle.lean`); the axiom audit includes every Lean name in the registers;

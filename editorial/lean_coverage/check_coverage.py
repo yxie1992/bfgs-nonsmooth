@@ -10,9 +10,10 @@ The axiom audit (`bfgs_lean_article/scripts/axiom_audit.py`) separately checks
 with Lean that every cited name exists and uses only the standard axioms.
 
 Usage:
-    python3 editorial/lean_coverage/check_coverage.py [--strict] [TEX_FILE ...]
+    python3 editorial/lean_coverage/check_coverage.py [--strict [--allow-discrepancies]] [TEX_FILE ...]
 With --strict the exit code is 1 unless every item has a final status and no
-problem is found.
+problem is found. A DISCREPANCY stays open until the manuscript is corrected;
+--allow-discrepancies accepts recorded discrepancies as final.
 """
 from pathlib import Path
 import json, re, sys
@@ -82,7 +83,7 @@ def module_file(module):
     return ROOT / 'bfgs_lean_article' / Path(*module.split('.')).with_suffix('.lean')
 
 
-def check(files, strict):
+def check(files, strict, allow_discrepancies=False):
     registers, problems = {}, []
     for path in files:
         target = ex.register_path(path)
@@ -154,14 +155,14 @@ def check(files, strict):
             print(f"DISCREPANCY {d.get('item')}: {d.get('description')}")
     for p in problems:
         print('PROBLEM', p)
-    unfinished = sum(v for k, v in totals.items() if k not in FINAL)
+    unfinished = sum(v for k, v in totals.items() if k not in FINAL and not (allow_discrepancies and k == 'DISCREPANCY'))
     return 1 if strict and (problems or unfinished) else 0
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     files = args or (ex.ARTICLE + ex.COMPANION)
-    sys.exit(check(files, '--strict' in sys.argv))
+    sys.exit(check(files, '--strict' in sys.argv, '--allow-discrepancies' in sys.argv))
 
 
 if __name__ == '__main__':
