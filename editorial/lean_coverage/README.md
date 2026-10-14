@@ -39,7 +39,7 @@ standard axioms. Agreed scope (author, 14 October 2026):
 | `DEFINITION` | Defines notation or an object. | `lean`: the Lean definitions, plus a coverage theorem that unfolds them to the displayed formula when they are not literally that formula |
 | `PART_OF` | Part of another item's statement (e.g. a display inside a theorem). | `of` |
 | `PROOF` | A proof; covered by the Lean proof of item `of`. | `of` |
-| `SAME_AS` | Restates or weakens another item (abstract, introduction, summaries). | `of` |
+| `SAME_AS` | Restates or weakens another item, or combines several (abstract, introduction, summaries). | `of`: an item id or a list of ids |
 | `OPEN` | An open question, stated in Lean without proof. | `lean` |
 | `NON_CLAIM` | Not a mathematical claim. | `reason` |
 | `DISCREPANCY` | False or not provable as written. | an entry in `discrepancies` |

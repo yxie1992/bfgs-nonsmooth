@@ -116,8 +116,10 @@ def check(files, strict):
                         problems.append(f'{item_id}: unknown Lean name {name}')
                 if status == 'LEAN' and cited and cited[0] not in module_names:
                     problems.append(f'{item_id}: first lean name must be declared in {module}')
-            if status in {'PART_OF', 'PROOF', 'SAME_AS'} and item.get('of') not in all_ids:
-                problems.append(f'{item_id}: status {status} needs an existing item in field of')
+            if status in {'PART_OF', 'PROOF', 'SAME_AS'}:
+                targets = item.get('of') if isinstance(item.get('of'), list) else [item.get('of')]
+                if not targets or any(t not in all_ids for t in targets) or (status != 'SAME_AS' and len(targets) > 1):
+                    problems.append(f'{item_id}: status {status} needs existing item id(s) in field of')
             if status in {'NON_CLAIM', 'TODO'} and not item.get('reason'):
                 problems.append(f'{item_id}: status {status} needs a reason')
             if status == 'DISCREPANCY' and not any(d.get('item') == item_id for d in register.get('discrepancies', [])):
