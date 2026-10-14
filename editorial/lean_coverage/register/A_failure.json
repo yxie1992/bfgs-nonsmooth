@@ -16,7 +16,13 @@
    "title": null,
    "container": null,
    "sha256": "323bc22ac29e1626",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.NonStrictLineSearch.Armijo",
+    "BfgsVerification.NonStrictLineSearch.Wolfe",
+    "BfgsCoverage.Article.Failure.failure_tests"
+   ],
+   "note": "The tests of the specified search. NonStrictLineSearch.Armijo F x p g c₁ α is literally F(x+αp) ≤ F(x)+c₁αgᵀp; NonStrictLineSearch.Wolfe uses coordinateGradient F (x+α•p), which is ∇F(x+αp) at a differentiable trial point (failure_tests, hypothesis hg'). The constructions only query differentiable points."
   },
   {
    "id": "A/failure/disp/002",
@@ -32,7 +38,15 @@
    "title": null,
    "container": null,
    "sha256": "fbfb00bc3e4b29fb",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.fullUpdate",
+    "BfgsCoverage.Article.Failure.failure_update",
+    "BfgsCoverage.Article.Failure.fullUpdate_eq_update",
+    "BfgsVerification.inverseBFGS",
+    "BfgsVerification.SeedCycle.update"
+   ],
+   "note": "fullUpdate H g g⁺ α = inverseBFGS H (bfgsStep H g α) (g⁺ - g); failure_update unfolds it to the displayed formula with s = -αHg, y = g⁺-g. In dimension two it is the library's SeedCycle.update (fullUpdate_eq_update)."
   },
   {
    "id": "A/failure/disp/003",
@@ -46,7 +60,18 @@
    "title": null,
    "container": null,
    "sha256": "ee014e7140010d06",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.SeedCycle.g0",
+    "BfgsVerification.SeedCycle.g1",
+    "BfgsVerification.SeedCycle.g2",
+    "BfgsVerification.SeedOrbit.gradient",
+    "BfgsVerification.SeedOrbit.objective",
+    "BfgsVerification.SeedOrbit.seedC",
+    "BfgsVerification.SeedOrbit.seedD",
+    "BfgsCoverage.Article.Failure.seed_slopes"
+   ],
+   "note": "(c∘,d∘) = (seedC, seedD) = (AlgebraicSeed.root 0, AlgebraicSeed.root 1), the unique root in the box of Lemma art:root_certificate (A/seed_certificate/lemma/art:root_certificate). seed_slopes unfolds g_i = SeedOrbit.gradient seedC seedD i and G = SeedOrbit.objective seedC seedD to G(z) = max{g₀ᵀz, g₁ᵀz, g₂ᵀz}."
   },
   {
    "id": "A/failure/disp/004",
@@ -62,7 +87,13 @@
    "title": null,
    "container": null,
    "sha256": "f17dc785ea0e3ae8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_rho",
+    "BfgsVerification.AlgebraicSeed.ratio",
+    "BfgsVerification.AlgebraicSeed.box_denominators_and_ratio"
+   ],
+   "note": "The display defines ρ (Lean seedRatio = AlgebraicSeed.ratio seedC seedD; the first conjunct of seed_rho is the displayed formula) and asserts 0.060 < ρ < 0.061 (the claim; also part of Lemma art:root_certificate)."
   },
   {
    "id": "A/failure/disp/005",
@@ -79,7 +110,14 @@
    "title": null,
    "container": null,
    "sha256": "03330d9ba6a5b9d5",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.SeedOrbit.metric",
+    "BfgsVerification.SeedCycle.M1",
+    "BfgsCoverage.Article.Failure.seedStep",
+    "BfgsCoverage.Article.Failure.seed_matrices_steps"
+   ],
+   "note": "M_j = SeedOrbit.metric seedC seedD j (M₂ = 𝓑(M₁,g₁,g₂,1/4) by definition) and s_j = seedStep j, literally. seed_matrices_steps also proves s_j = -α_jM_jg_j with (α₀,α₁,α₂) = (1,1/4,1/16) (SeedOrbit.length), which the display leaves implicit: the defined steps are the accepted BFGS steps."
   },
   {
    "id": "A/failure/disp/006",
@@ -95,7 +133,15 @@
    "title": null,
    "container": null,
    "sha256": "2134b680004e106d",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seedStart",
+    "BfgsCoverage.Article.Failure.seedPoint",
+    "BfgsCoverage.Article.Failure.seed_points",
+    "BfgsVerification.SeedOrbit.point",
+    "BfgsVerification.SeedOrbit.initialPoint"
+   ],
+   "note": "seedStart is z₀ and seedPoint is (z₀,z₁,z₂,z₃) with z_{j+1} = z_j + s_j, literally; seed_points identifies z₀,z₁,z₂ with the library's SeedOrbit.point seedC seedD seedRatio j."
   },
   {
    "id": "A/failure/lemma/art:seed_cycle",
@@ -113,7 +159,26 @@
    "title": "Exact cycle and strict trial decisions",
    "container": null,
    "sha256": "6a80ab8aca77f5e2",
-   "status": null
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsCoverage.Article.Failure.seed_search",
+    "BfgsCoverage.Article.Failure.seed_closures",
+    "BfgsCoverage.Article.Failure.seed_rejections_raise",
+    "BfgsCoverage.Article.Failure.seed_margins",
+    "BfgsCoverage.Article.Failure.seed_query_bounds",
+    "BfgsCoverage.Article.Failure.accepted_armijo_iff",
+    "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
+    "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample",
+    "BfgsVerification.SeedCycle.source_cycle",
+    "BfgsVerification.SeedOrbit.source_metric_posDef",
+    "BfgsVerification.SeedOrbit.source_base_certificate",
+    "BfgsVerification.SeedOrbit.source_trial_certificate",
+    "BfgsVerification.SeedOrbit.source_accepted_certificate",
+    "BfgsVerification.DNonStrictObjectives.seed_fromMetric",
+    "BfgsVerification.DDisplayPrecision.actual_bounds"
+   ],
+   "note": "The lemma fixes no line-search constants, and 'the entire line-search query list is Table art:trial_table' (lines 107-108) is false for c₁ > 0.37521 (see the discrepancy entry). Lean statement of the corrected claim: seed_cycle, the lemma with 'for every 0<c₁≤1/3 and c₂>0' in that sentence: M₀,M₁,M₂ ≻ 0; 𝓑(I,g₀,g₁,1) = M₁, 𝓑(M₂,g₂,g₀,1/16) = ρI, z₃ = ρz₀; g_j is the unique (strict) active gradient at z_j; for every 0<c₁≤1/3, c₂>0 the specified search from (z_j,M_j) on G returns (1,[1]), (1/4,[1,1/2,1/4]), (1/16,[1,1/2,1/4,1/8,1/16]) (seed_search); every rejected query has a larger value than G(z_j); the margins art:seed_margins with g₃ = g₀ (seedSlope); and the bounds art:seed_query_bounds with unique active branch at z₀,z₁,z₂ and at the nine queries z_j+αp_j, p_j = -M_jg_j (seedDir), [z]₂ = z 1. Everything except the query-list sentence holds as printed, for all parameters (the displays are LEAN items disp/007-009). The corrected range contains the range 0<c₁≤1/3, c₁<c₂<1 of Theorems art:local-failure and art:local-failure-lower, which the paragraph after the table (lines 159-161) names (prose/022), so no later result is affected. Counterexample to the printed lemma: seed_cycle_range_counterexample (c₁ = 0.38, c₂ = 1/2); the exact Armijo thresholds: accepted_armijo_iff, accepted_armijo_ratios. The proof is in Appendix art:seed_certificate (register A_seed_certificate)."
   },
   {
    "id": "A/failure/disp/007",
@@ -127,7 +192,14 @@
    "title": null,
    "container": "A/failure/lemma/art:seed_cycle",
    "sha256": "e0c015efd439d641",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_closures",
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsVerification.SeedCycle.first_update",
+    "BfgsVerification.SeedOrbit.source_metric_two_update"
+   ],
+   "note": "Holds as printed (no parameters): 𝓑(I,g₀,g₁,1) = M₁, 𝓑(M₂,g₂,g₀,1/16) = ρI, z₃ = ρz₀ (fullUpdate, metric seedC seedD j, seedPoint). Also conjuncts of the corrected lemma seed_cycle; the lemma's discrepancy does not concern this display."
   },
   {
    "id": "A/failure/disp/008",
@@ -143,7 +215,13 @@
    "title": null,
    "container": "A/failure/lemma/art:seed_cycle",
    "sha256": "92a54169c1772846",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_margins",
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsVerification.SeedOrbit.source_accepted_certificate"
+   ],
+   "note": "Holds as printed (no parameters): for j = 0,1,2, G(z_j)+(1/3)g_jᵀs_j−G(z_{j+1}) > 0 and g_{j+1}ᵀs_j > 0 > g_jᵀs_j with g₃ = g₀ (seedSlope). Also a conjunct of the corrected lemma seed_cycle; the lemma's discrepancy does not concern this display."
   },
   {
    "id": "A/failure/disp/009",
@@ -159,7 +237,14 @@
    "title": null,
    "container": "A/failure/lemma/art:seed_cycle",
    "sha256": "9bcfe2f0252b0265",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_query_bounds",
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsVerification.SeedOrbit.source_base_certificate",
+    "BfgsVerification.SeedOrbit.source_trial_certificate"
+   ],
+   "note": "Holds as printed (no parameters): at z₀,z₁,z₂ and at the nine listed queries z_j+αp_j (the rows of Table art:trial_table, p_j = -M_jg_j = seedDir j) the active branch is unique (strict) and |g_iᵀz| < 3, [z]₂ = z 1 < 2, G(z) > 0. Also a conjunct of the corrected lemma seed_cycle; the lemma's discrepancy does not concern this display."
   },
   {
    "id": "A/failure/table/art:trial_table",
@@ -175,7 +260,23 @@
    "title": null,
    "container": null,
    "sha256": "0ac38c82ec4d7bef",
-   "status": null
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Article.Failure.trial_table",
+    "BfgsCoverage.Article.Failure.table_current",
+    "BfgsCoverage.Article.Failure.table_trial",
+    "BfgsCoverage.Article.Failure.table_decision",
+    "BfgsCoverage.Article.Failure.table_reject",
+    "BfgsCoverage.Article.Failure.seed_search",
+    "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
+    "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample",
+    "BfgsVerification.DDisplayPrecision.actual_bounds",
+    "BfgsVerification.SeedOrbit.trialPhase",
+    "BfgsVerification.SeedOrbit.trialLength",
+    "BfgsVerification.SeedOrbit.trialActive",
+    "BfgsVerification.SeedOrbit.trialAccept"
+   ],
+   "note": "Same omission as Lemma art:seed_cycle (see the discrepancy entries): the Decision column, 'the deterministic trial tree', depends on (c₁,c₂), which neither the table nor its caption fixes, and the 'accept' of the row (2, 1/16) is false for c₁ = 0.38 (seed_cycle_range_counterexample). Lean statement of the corrected table: trial_table. Rows are q : Fin 9; the columns Phase, Trial α, Active branch, Decision are trialPhase, trialLength, trialActive, trialAccept (literally the table, first four conjuncts). The 12 open intervals (currentLower/currentUpper, trialLower/trialUpper) enclose 10⁴G(z_j) and 10⁴G(z_j+αp_j); they are proved from the library's certified rational enclosures (DDisplayPrecision.actual_bounds, about 45 digits). These cells hold as printed. The decisions are those of the specified search for every 0<c₁≤1/3 and c₂>0 (the proposed caption sentence), and the phase-j rows are exactly the trial list of the search from (z_j,M_j). Caption claims: prose items A/failure/prose/016 to 018 ('Current' and 'trial' are defined by the statement), which hold as printed."
   },
   {
    "id": "A/failure/figure/art:cycle-figure",
@@ -191,7 +292,8 @@
    "title": null,
    "container": null,
    "sha256": "55a6c6d2417e979d",
-   "status": null
+   "status": "NON_CLAIM",
+   "reason": "Illustration: a drawing rendered from the rational center of the certified root box. Its factual content is covered by other items. Caption: the accepted cycle with lengths 1, 1/4, 1/16 in phases 0, 1, 2 and the nonstationary origin (prose item A/failure/prose/025, i.e. A/failure/disp/005, A/failure/prose/022, A/failure/prose/028). Annotations in the drawing: 'Closure: z₃ = ρz₀' (A/failure/disp/007; also A/failure/prose/015); 'the origin is nonstationary' and the 'wrong corner' of panel (c) (A/failure/prose/028); the legend 'phase 0, accepted α = 1', 'phase 1, accepted α = 1/4', 'phase 2, accepted α = 1/16' and, in panel (b) 'All nine trial queries', the labelled rejected lengths 1, 1/2 (phase 1) and 1, 1/2, 1/4, 1/8 (phase 2) (the trial lists of A/failure/prose/022, the rows of Table art:trial_table; for the parameter range of that sentence); the points z₀,…,z₃ (A/failure/disp/006). The other caption sentences and annotations describe the rendering (panel scales, 'Vertical scale enlarged by 22/4.6', line styles, markers) or disclaim (exact closure and decisions come from the appendix; the drawing is not evidence of stable-manifold membership)."
   },
   {
    "id": "A/failure/disp/010",
@@ -207,7 +309,16 @@
    "title": null,
    "container": null,
    "sha256": "e0b170c721e7c4ef",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.cone_orbit",
+    "BfgsCoverage.Article.Failure.implemented_run_unique",
+    "BfgsCoverage.Article.Failure.fromMetric_fuel_mono",
+    "BfgsVerification.SeedOrbit.run",
+    "BfgsVerification.SeedOrbit.orbit_phase_parameters",
+    "BfgsVerification.DNonStrictObjectives.seed_fromMetric"
+   ],
+   "note": "For every 0<c₁≤1/3, c₁<c₂<1: the run produced on G by the specified implementation from x₀ = z₀, H₀ = I (any trial budget N ≥ 5) exists, is unique (implemented_run_unique), is the library's seed run (orbitPoint, orbitMetric), and satisfies x_{3m+j} = ρ^m z_j, H_{3m+j} = ρ^m M_j."
   },
   {
    "id": "A/failure/disp/011",
@@ -221,7 +332,11 @@
    "title": null,
    "container": null,
    "sha256": "5c8f27f945d251a9",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.downhill_direction",
+    "BfgsVerification.SeedOrbit.source_downhill_pairings"
+   ]
   },
   {
    "id": "A/failure/corollary/art:failure_polyhedral",
@@ -237,7 +352,16 @@
    "title": "Coercive polyhedral global failure",
    "container": null,
    "sha256": "7af1c374ff6dcd69",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.failure_polyhedral",
+    "BfgsVerification.SeedOrbit.actual_coercive_deterministic_failure",
+    "BfgsVerification.SeedOrbit.coerciveRun",
+    "BfgsVerification.DNonStrictObjectives.coercive_fromMetric",
+    "BfgsVerification.SeedOrbit.coercive_sublevels_compact",
+    "BfgsVerification.SeedOrbit.coercive_unique_optimizer"
+   ],
+   "note": "Ḡ is a variable with its defining equation (disp/012). 'The same deterministic run, with H₀ = I': for every 0<c₁≤1/3, c₁<c₂<1 the run produced on Ḡ by the specified implementation from z₀ with H₀ = I is unique and has the iterates and matrices of the run on G (orbitPoint, orbitMetric, equation art:cone_orbit). 'Fails': it converges to the origin, Ḡ(x_k) → Ḡ(0) = 0 > -1 = min Ḡ, and 0 ∉ ∂Ḡ(0). Coercive: Ḡ → ∞ along the cocompact filter."
   },
   {
    "id": "A/failure/disp/012",
@@ -251,7 +375,8 @@
    "title": null,
    "container": "A/failure/corollary/art:failure_polyhedral",
    "sha256": "42c9da2ec3826423",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/failure/corollary/art:failure_polyhedral"
   },
   {
    "id": "A/failure/proof/001",
@@ -265,7 +390,18 @@
    "title": null,
    "container": null,
    "sha256": "4bd884db51dc5946",
-   "status": null
+   "status": "PROOF",
+   "of": "A/failure/corollary/art:failure_polyhedral",
+   "lean": [
+    "BfgsVerification.SeedOrbit.coercive_strict_active",
+    "BfgsVerification.SeedOrbit.coercive_value_eq",
+    "BfgsVerification.DLiteralIdentities.coercive_weights_convex",
+    "BfgsVerification.DLiteralIdentities.coercive_exact_affine_combination",
+    "BfgsVerification.SeedOrbit.coercive_unique_optimizer",
+    "BfgsVerification.SeedOrbit.coercive_coordinate_bounds",
+    "BfgsVerification.SeedOrbit.coercive_sublevels_compact"
+   ],
+   "note": "The undisplayed steps are library theorems: the fourth branch is inactive at every query (coercive_strict_active, coercive_value_eq, from the certificate bounds [z]₂ < 2 < 17 and G > 0); the combination with weights 8/17, 8/17, 1/17 is identically -1 (coercive_weights_convex, coercive_exact_affine_combination); equality forces (u,v) = (-1,16) (coercive_unique_optimizer); the sublevel bounds (coercive_coordinate_bounds, coercive_sublevels_compact)."
   },
   {
    "id": "A/failure/disp/013",
@@ -281,7 +417,9 @@
    "title": null,
    "container": null,
    "sha256": "26dda50cd6cacb42",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/failure/disp/014",
+   "note": "The local model is a hypothesis (hmodel: F(x̄+λz) = C+σ𝒢(z) for z in an open set U, λ,σ > 0) of matched_scaling, matched_update, matched_comparisons, matched_search_transfer and matched_run_transfer."
   },
   {
    "id": "A/failure/disp/014",
@@ -297,7 +435,12 @@
    "title": null,
    "container": null,
    "sha256": "87b92be1ff708c92",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.matched_scaling",
+    "BfgsCoverage.Article.Failure.matched_hasGradient"
+   ],
+   "note": "Under the local model on an open U ∋ z: F has gradient g_F = (σ/λ)g_𝒢 at x̄+λz, and with the corresponding matrix H_F = (λ²/σ)H_𝒢 (the display's definition of 'corresponding') p_F = -H_Fg_F = λp_𝒢 and s_F = -αH_Fg_F = λs_𝒢. 'Near the current and queried points' is read as an open set U containing them."
   },
   {
    "id": "A/failure/disp/015",
@@ -311,7 +454,13 @@
    "title": null,
    "container": null,
    "sha256": "b6774a20db80d4d1",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.DScalarRamp.center",
+    "BfgsVerification.DScalarRamp.rampCoordinate",
+    "BfgsCoverage.Article.Failure.ramp_center_coordinate"
+   ],
+   "note": "t_b = DScalarRamp.center b and v = DScalarRamp.rampCoordinate b ξ, literally (θ = 1/16, ε = 1/128: scalar_constants)."
   },
   {
    "id": "A/failure/disp/016",
@@ -325,7 +474,14 @@
    "title": null,
    "container": null,
    "sha256": "0d24d9327bc31f5b",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.DScalarRamp.ramp",
+    "BfgsVerification.DScalarRamp.primitive",
+    "BfgsCoverage.Article.Failure.ramp_primitive",
+    "BfgsVerification.DScalarRamp.primitive_eq_integral"
+   ],
+   "note": "P_b = DScalarRamp.ramp b (the three cases are ramp_primitive) and J_b = DScalarRamp.primitive b = ∫₀^ξ P_b (for 2 ≤ b ≤ 34, in particular b ∈ {2,b*})."
   },
   {
    "id": "A/failure/disp/017",
@@ -341,7 +497,14 @@
    "title": null,
    "container": null,
    "sha256": "d2f73e70d46ff316",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.DScalar.phi",
+    "BfgsCoverage.Article.Failure.phi_formulas",
+    "BfgsCoverage.Article.Failure.phi_unique",
+    "BfgsVerification.DScalar.phi_interval"
+   ],
+   "note": "φ_b = DScalar.phi b satisfies the defining formula on every [bθa_ℓ, ba_ℓ] (phi_formulas) and the formulas determine it (phi_unique)."
   },
   {
    "id": "A/failure/disp/018",
@@ -355,7 +518,13 @@
    "title": null,
    "container": null,
    "sha256": "568b19c6b0d46413",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.DScalar.phi",
+    "BfgsCoverage.Article.Failure.phi_formulas",
+    "BfgsCoverage.Article.Failure.phi_unique"
+   ],
+   "note": "The completion formulas for x < -1, -1 ≤ x ≤ 0 and x ≥ b (phi_formulas); with art:upper_scalar they determine φ_b (phi_unique)."
   },
   {
    "id": "A/failure/lemma/art:upper_scalar_lemma",
@@ -373,7 +542,14 @@
    "title": "Scalar interpolation",
    "container": null,
    "sha256": "3199d3244215835d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.upper_scalar_lemma",
+    "BfgsVerification.DScalar.scalar_function_contract",
+    "BfgsVerification.DScalar.phi_second_derivative_lipschitz",
+    "BfgsVerification.DScalar.phi_plateau"
+   ],
+   "note": "For b ∈ {2, b*} (b* = DEmbedding.bStar): convex, coercive (→ ∞ along the cocompact filter), ContDiff ℝ 2, nonnegative, zero only at 0, 0 ≤ φ_b'' ≤ max{6,102/b}, the plateau formula for every ℓ ≥ 0 and |h| ≤ a_ℓ/2, and |φ_b''(x)-φ_b''(y)| ≤ max{6,139264/(5b²)}|x-y| (globally C^{2,1} with constant L_b). φ_b'' is deriv (deriv (DScalar.phi b))."
   },
   {
    "id": "A/failure/disp/019",
@@ -390,7 +566,8 @@
    "title": null,
    "container": "A/failure/lemma/art:upper_scalar_lemma",
    "sha256": "8e854817e63d9411",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/failure/lemma/art:upper_scalar_lemma"
   },
   {
    "id": "A/failure/disp/020",
@@ -404,7 +581,8 @@
    "title": null,
    "container": "A/failure/lemma/art:upper_scalar_lemma",
    "sha256": "efa6c8c74214c112",
-   "status": null
+   "status": "PART_OF",
+   "of": "A/failure/lemma/art:upper_scalar_lemma"
   },
   {
    "id": "A/failure/proof/002",
@@ -418,7 +596,22 @@
    "title": null,
    "container": null,
    "sha256": "0e8cb28573bbff0c",
-   "status": null
+   "status": "PROOF",
+   "of": "A/failure/lemma/art:upper_scalar_lemma",
+   "lean": [
+    "BfgsCoverage.Article.Failure.positive_interval_derivatives",
+    "BfgsCoverage.Article.Failure.constant_derivative_lengths",
+    "BfgsCoverage.Article.Failure.scalar_nodes",
+    "BfgsVerification.DScalarRamp.rampDerivative_bounds",
+    "BfgsVerification.DScalarRamp.integral_ramp",
+    "BfgsVerification.DScalarRamp.matching_identity",
+    "BfgsVerification.DScalarRamp.plateau_lengths",
+    "BfgsVerification.DScalarRamp.ramp_second_derivative_bound",
+    "BfgsVerification.DScalar.positive_asymptotic_orders",
+    "BfgsVerification.DScalar.phiFirst_negative",
+    "BfgsVerification.DScalar.phiFirst_positive"
+   ],
+   "note": "Undisplayed steps as library theorems: 0 ≤ P_b' ≤ 96 (rampDerivative_bounds), ∫₀¹P_b = 1-t_b (integral_ramp), the matching identity (matching_identity), node values and slopes (scalar_nodes), the small-x orders (positive_asymptotic_orders), the signs of φ_b' (phiFirst_negative, phiFirst_positive), both constant-derivative lengths exceed 1/2 (plateau_lengths), |P_b''| ≤ 3/(2ε²) = 24576 (ramp_second_derivative_bound)."
   },
   {
    "id": "A/failure/disp/021",
@@ -432,7 +625,13 @@
    "title": null,
    "container": "A/failure/proof/002",
    "sha256": "bcb895fc5d600612",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.positive_interval_derivatives",
+    "BfgsVerification.DScalar.positiveSlope_interval",
+    "BfgsVerification.DScalar.positiveCurvature_interval"
+   ],
+   "note": "For x ∈ [bθa_ℓ, ba_ℓ] (closed interval), with ξ = (x/(ba_ℓ)-θ)/(1-θ) and P_b' = deriv P_b."
   },
   {
    "id": "A/failure/disp/022",
@@ -446,7 +645,15 @@
    "title": null,
    "container": "A/failure/proof/002",
    "sha256": "90a1aea996a1bdbb",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.constant_derivative_lengths",
+    "BfgsCoverage.Article.Failure.ramp_eq_one_iff",
+    "BfgsCoverage.Article.Failure.ramp_eq_zero_iff",
+    "BfgsVerification.DScalar.lower_threshold_identity",
+    "BfgsVerification.DScalar.upper_threshold_identity"
+   ],
+   "note": "Read as: on the interval below the node ba_ℓ, φ_b' equals the node slope a_ℓ² exactly on [ba_ℓ - a_ℓ·b(1-θ)(1-t_b-ε), ba_ℓ]; on the interval [ba_{ℓ+1}, ba_ℓ] above the node ba_{ℓ+1}, φ_b' equals a_{ℓ+1}² exactly on [ba_{ℓ+1}, ba_{ℓ+1} + a_{ℓ+1}·b(1-θ)(t_b-ε)/θ]. So the displayed numbers are the lengths of the maximal constant-derivative pieces, divided by the node scale. For the node ba₀ = b the upper side is the affine extension (as the proof says)."
   },
   {
    "id": "A/failure/disp/023",
@@ -462,7 +669,14 @@
    "title": null,
    "container": null,
    "sha256": "9d58612c8d18f66d",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.DEmbedding.objective",
+    "BfgsVerification.DEmbedding.branch",
+    "BfgsCoverage.Article.Failure.upper_objective",
+    "BfgsVerification.DEmbedding.objective_literal"
+   ],
+   "note": "DEmbedding.objective is the maximum of the four branches DEmbedding.branch i; upper_objective unfolds it to the displayed formula (u = x 0, v = x 1)."
   },
   {
    "id": "A/failure/disp/024",
@@ -478,7 +692,12 @@
    "title": null,
    "container": null,
    "sha256": "94b15be22ceb3d6b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.upper_local_model",
+    "BfgsVerification.DEmbedding.local_cone"
+   ],
+   "note": "For every ℓ ≥ 0 (the text uses it for ℓ ≥ 1)."
   },
   {
    "id": "A/failure/proof/003",
@@ -494,7 +713,20 @@
    "title": null,
    "container": null,
    "sha256": "a7fe0492c7f5a739",
-   "status": null
+   "status": "PROOF",
+   "of": "A/negative_upper/theorem/art:local-failure",
+   "lean": [
+    "BfgsCoverage.Article.Failure.upper_orbit",
+    "BfgsCoverage.Article.Failure.query_slab",
+    "BfgsCoverage.Article.Failure.query_values",
+    "BfgsCoverage.Article.Failure.query_norm_bound",
+    "BfgsCoverage.Article.Failure.matched_search_transfer",
+    "BfgsVerification.DEmbedding.deterministic_embedding_failure",
+    "BfgsVerification.DNonStrictObjectives.embedding_fromMetric",
+    "BfgsVerification.DEmbedding.actualOracleData",
+    "BfgsVerification.SeedEmbedding.NonStrict.fromMetric_exact"
+   ],
+   "note": "The proof of Theorem art:local-failure; its Lean proof (BfgsCoverage.Article.NegativeUpper.local_failure) assembles the library's DEmbedding construction, which follows this proof: the slab containment of all queries (query_slab, DEmbedding.certified_plateau), the local values and gradients (query_values, DEmbedding.certified_value, certified_hasGradient), the transfer of every decision (SeedEmbedding.NonStrict.fromMetric_exact with DEmbedding.actualOracleData), the update scaling (SeedEmbedding.metric_update) and the norm bound (query_norm_bound, DEuclideanLocality.euclideanLocality). The undisplayed claims 'The finite matrices are positive definite' and 'The starting points also tend to zero' are AdmissibleBFGSRun.positive_definite and DEmbedding.initial_points_tendsto."
   },
   {
    "id": "A/failure/disp/025",
@@ -510,7 +742,14 @@
    "title": null,
    "container": "A/failure/proof/003",
    "sha256": "cb08b940fbbb2519",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.upper_orbit",
+    "BfgsCoverage.Article.Failure.implemented_run_unique",
+    "BfgsVerification.DEmbedding.run",
+    "BfgsVerification.DEmbedding.run_phase_parameters"
+   ],
+   "note": "Under the proof's standing assumptions (ℓ ≥ 1, an admissible pair, x₀ = x̄_ℓ + a_ℓ²z₀, H₀ = I): the run produced by the specified implementation is unique and satisfies the display (a_ℓ²ρ^m z_j written ((scale ℓ)²·ρ^m) • z_j)."
   },
   {
    "id": "A/failure/disp/026",
@@ -524,7 +763,12 @@
    "title": null,
    "container": "A/failure/proof/003",
    "sha256": "e865ecca16463c1a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.query_slab",
+    "BfgsVerification.DEmbedding.certified_plateau"
+   ],
+   "note": "z_trial ranges over the nine base queries z_j + αp_j (rows of Table art:trial_table); i = 0,1,2."
   },
   {
    "id": "A/failure/disp/027",
@@ -538,7 +782,12 @@
    "title": null,
    "container": "A/failure/proof/003",
    "sha256": "13b9cdb54a64aaa4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.query_values",
+    "BfgsVerification.DEmbedding.certified_value",
+    "BfgsVerification.DEmbedding.certified_hasGradient"
+   ]
   },
   {
    "id": "A/failure/disp/028",
@@ -552,7 +801,13 @@
    "title": null,
    "container": "A/failure/proof/003",
    "sha256": "c480cd9e0df25b01",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.query_norm_bound",
+    "BfgsCoverage.Article.Failure.baseQueryMax",
+    "BfgsVerification.DEuclideanLocality.euclideanLocality"
+   ],
+   "note": "‖·‖ Euclidean; the maximum is over the three base points z₀,z₁,z₂ and the nine base queries (baseQueryMax). The bound is proved for all accepted points and all queries of the ℓth run (DEmbedding.run, the run of upper_orbit), and it tends to 0."
   },
   {
    "id": "A/failure/figure/art:shrinking-scales",
@@ -568,7 +823,8 @@
    "title": null,
    "container": null,
    "sha256": "995d5218963956d5",
-   "status": null
+   "status": "NON_CLAIM",
+   "reason": "Schematic illustration ('Locations, neighborhood shapes and relative scales are schematic, not a plot'; in the drawing: 'Schematic: locations and relative scales exaggerated'). Its factual content is covered by other items. Caption: A/failure/prose/050 (bad centers x̄_ℓ → x_*, affine-model neighborhoods of width O(a_ℓ), each copied query orbit inside a region of size O(a_ℓ²) and converging to x̄_ℓ) and A/failure/prose/051 (the lower-curvature spatial factor); 'The C^{2,1} local embedding' is the construction of Theorem art:local-failure (A/negative_upper/theorem/art:local-failure). Annotations in the drawing: 'One fixed objective F: x̄_ℓ → x_*' and 'x_* = 0' (A/negative_upper/theorem/art:local-failure, A/failure/prose/050); 'bad starts arbitrarily near x_*' (A/negative_upper/theorem/art:local-failure, A/failure/prose/049); 'Enlarged affine-model neighborhood' with 'model width O(a_ℓ)' (A/failure/disp/024, A/failure/prose/050); 'O(a_ℓ²)' and 'All accepted and rejected queries fit inside. Their contraction copies accumulate at x̄_ℓ, not at x_*' (A/failure/prose/050, A/failure/disp/025, A/failure/disp/026); 'This panel concerns the C^{2,1} embedding only' (the C^{2,1} branches of Theorem art:local-failure). 'The inset shows the seed and two contraction copies' and the labels x̄_ℓ, x̄_{ℓ+1}, x̄_{ℓ+2}, x₀^{(ℓ)} describe the drawing."
   },
   {
    "id": "A/failure/table/art:regularity-map",
@@ -584,8 +840,1036 @@
    "title": null,
    "container": null,
    "sha256": "44b8ab1589b53f1c",
-   "status": null
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/prose/056",
+    "A/failure/prose/057",
+    "A/failure/prose/058"
+   ],
+   "note": "Row 1: prose/056 (LEAN regularity_map_first_row); row 2: prose/057 (Theorem art:local-failure-lower); caption: prose/058."
+  },
+  {
+   "id": "A/failure/prose/001",
+   "kind": "prose",
+   "lines": [
+    4,
+    11
+   ],
+   "anchor": "actual failure of each assertion, and then examine what changes when positive",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/corollary/art:failure_polyhedral",
+    "A/negative_upper/theorem/art:local-failure",
+    "A/negative_lower/theorem/art:local-failure-lower"
+   ],
+   "note": "The global assertion (compact sublevels suffice) fails by Corollary art:failure_polyhedral, the local one by Theorem art:local-failure; 'what changes when positive lower curvature is imposed' is Theorem art:local-failure-lower. The opening sentences are motivation."
+  },
+  {
+   "id": "A/failure/prose/002",
+   "kind": "prose",
+   "lines": [
+    13,
+    18
+   ],
+   "anchor": "A three-step BFGS cycle returns the inverse",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/disp/007",
+    "A/failure/disp/004",
+    "A/failure/prose/028",
+    "A/failure/disp/008",
+    "A/failure/prose/020",
+    "A/failure/prose/022",
+    "A/failure/disp/010",
+    "A/negative_upper/theorem/art:local-failure",
+    "A/failure/disp/014"
+   ],
+   "note": "Summary of the mechanism: the cycle 𝓑(M₂,g₂,g₀,1/16) = ρI and z₃ = ρz₀ (disp/007) with ρ < 1 (disp/004, 0.060 < ρ < 0.061), approaching the nonstationary corner 0 (prose/028); the strict function and gradient inequalities (the margins disp/008 and the value increase at every rejection, prose/020) force the specified search to produce the cycle (prose/022, for the parameter range of Theorem art:local-failure, and the run disp/010); the local copies (Theorem art:local-failure) and the matched scales (disp/014, σ = λ²). These are the parts of Lemma art:seed_cycle and Table art:trial_table that hold as printed; the lemma and the table themselves are DISCREPANCY items (missing parameter range). The last sentence ('The distinction between a formal cycle and an implemented run matters...') is methodological."
+  },
+  {
+   "id": "A/failure/prose/003",
+   "kind": "prose",
+   "lines": [
+    22,
+    32
+   ],
+   "anchor": "The line search starts with lower bracket",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.NonStrictLineSearch.search",
+    "BfgsVerification.NonStrictLineSearch.fromMetric",
+    "BfgsVerification.NonStrictLineSearch.nextTrial",
+    "BfgsCoverage.Article.Failure.specified_search",
+    "BfgsCoverage.Article.Failure.fromMetric_fuel_mono",
+    "BfgsCoverage.Article.Failure.implemented_run_unique"
+   ],
+   "note": "The specified search. specified_search unfolds NonStrictLineSearch.fromMetric F x H c₁ c₂ N at a differentiable point (g = ∇F(x), p = -Hg) to the bracketing search started with α_lo = 0, α_hi = +∞ (none), α = 1, and states one step of it: Armijo first, weak Wolfe second, accept if both hold; after an Armijo rejection α_hi := α and the next length is (α_lo+α)/2; after a Wolfe rejection α_lo := α and the next length is (α+α_hi)/2, or 2α while α_hi = ∞. The output is the accepted length and all trial lengths; N only bounds the number of trials (fromMetric_fuel_mono). Runs of the implementation are AdmissibleBFGSRun's whose lengths are search outputs; they are determined by (x₀,H₀) (implemented_run_unique)."
+  },
+  {
+   "id": "A/failure/prose/004",
+   "kind": "prose",
+   "lines": [
+    32,
+    33
+   ],
+   "anchor": "This is the unit-first",
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution: the specified procedure (prose item A/failure/prose/003) is the bracketing line search of Lewis-Overton [LO, Algorithm 4.6]. The procedure itself is formalized; whether [LO] states its tests strictly or not, prose item A/failure/prose/005 shows that strict and non-strict tests decide identically in this section's runs."
+  },
+  {
+   "id": "A/failure/prose/005",
+   "kind": "prose",
+   "lines": [
+    34,
+    35
+   ],
+   "anchor": "All comparisons in the construction are strict, so strict acceptance tests",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.strict_tests_same_decisions",
+    "BfgsCoverage.Article.Failure.strict_tests_same_decisions_lower",
+    "BfgsVerification.DLiteralTargets.nonStrictRun",
+    "BfgsVerification.DNonStrictObjectives.embedding_same_search",
+    "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+    "BfgsVerification.LUniform.uniform_global_failure"
+   ],
+   "note": "The sentence describes the implementation used by both Theorem art:local-failure and Theorem art:local-failure-lower; both constructions are covered. For every 0<c₁≤1/3, c₁<c₂<1, the search with the non-strict tests and the search with the strict tests (DeterministicLineSearch) return the same accepted length and trial list at every iterate of: the seed run on G, the run on Ḡ and every run of Theorem art:local-failure (strict_tests_same_decisions); the runs of Theorem art:local-failure-lower on the lower-curvature objective LUniform.smoothObjective (H₀ = I, starts → 0, chosen before the pair, converging to the centers LUniform.failureCenter ℓ) and, for every μ > 0 and every neighborhood U of 0, the perturbed bad orbit on Q_μ of Proposition art:quadratic_failure (strict_tests_same_decisions_lower, from the library's LUniform.uniformSmoothLocalFailure and LUniform.uniform_global_failure, which state both traces for the same runs)."
+  },
+  {
+   "id": "A/failure/prose/006",
+   "kind": "prose",
+   "lines": [
+    44,
+    44
+   ],
+   "anchor": "No resetting or rescaling of the stored matrix is performed.",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsCoverage.Article.Failure.run_update_full"
+   ],
+   "note": "Part of the specification: every run (AdmissibleBFGSRun.update) uses the full update H_{k+1} = 𝓑(H_k,g_k,g_{k+1},α_k) at every step (run_update_full)."
+  },
+  {
+   "id": "A/failure/prose/007",
+   "kind": "prose",
+   "lines": [
+    46,
+    48
+   ],
+   "anchor": "For this routine, even identity initialization does not give a neighborhood",
+   "status": "SAME_AS",
+   "of": "A/negative_upper/theorem/art:local-failure",
+   "note": "Theorem art:local-failure gives differentiable starts x₀^(ℓ) → 0 (the unique minimizer) with H₀ = I whose runs converge to x̄_ℓ ≠ 0."
+  },
+  {
+   "id": "A/failure/prose/008",
+   "kind": "prose",
+   "lines": [
+    51,
+    52
+   ],
+   "anchor": "The objective and all starts are chosen before the displayed line-search",
+   "status": "SAME_AS",
+   "of": "A/negative_upper/theorem/art:local-failure",
+   "note": "The quantifier order of local_failure: the branches, the objective, the starts and all run data are chosen before ∀ c₁ c₂."
+  },
+  {
+   "id": "A/failure/prose/009",
+   "kind": "prose",
+   "lines": [
+    52,
+    53
+   ],
+   "anchor": "The failure set supplied by the theorem is a sequence of starts;",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.failure_starts_null"
+   ],
+   "note": "The starts x₀^(ℓ), ℓ ≥ 1, form a countable set of Lebesgue measure zero (the theorem does not claim more)."
+  },
+  {
+   "id": "A/failure/prose/010",
+   "kind": "prose",
+   "lines": [
+    53,
+    54
+   ],
+   "anchor": "There is no uniform positive lower",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.no_uniform_lower_curvature"
+   ],
+   "note": "Read as a statement about the branches of Theorem art:local-failure (the theorem has no lower-curvature hypothesis, and the branches have none): every branch Hessian vanishes on the flat plateaus around the centers and at 0, so no branch has ∇²f_i ⪰ μI with μ > 0."
+  },
+  {
+   "id": "A/failure/prose/011",
+   "kind": "prose",
+   "lines": [
+    57,
+    64
+   ],
+   "anchor": "of linear functions, those two identities allow the same geometry to repeat",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/disp/007",
+    "A/failure/disp/010",
+    "A/failure/disp/011",
+    "A/failure/prose/028"
+   ],
+   "note": "Design paragraph. Its factual content: the corner 0 has the strict descent direction w (disp/011: g_iᵀw = -1, so G(tw) = -t) and is nonstationary, while the cycle converges to it (prose/028); the unit step from H₀ = I has the exact update 𝓑(I,g₀,g₁,1) = M₁, the third slope closes the matrix cycle at ρI and the start closes the displacement cycle at ρz₀ (disp/007, in Lemma art:seed_cycle); and the identities repeat the geometry at every scale (art:cone_orbit, disp/010). 'Three slopes in the plane provide the needed freedom' is heuristic."
+  },
+  {
+   "id": "A/failure/prose/012",
+   "kind": "prose",
+   "lines": [
+    66,
+    66
+   ],
+   "anchor": "The target lengths $1,1/4,1/16$ fit the bisections of the unit-first search.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.target_lengths_bisections"
+   ],
+   "note": "From α = 1 with α_lo = 0, successive Armijo rejections give the trials 2^{-k}; 1, 1/4, 1/16 are k = 0, 2, 4."
+  },
+  {
+   "id": "A/failure/prose/013",
+   "kind": "prose",
+   "lines": [
+    67,
+    70
+   ],
+   "anchor": "The strict trial certificate below supplies exactly this",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/prose/020",
+    "A/failure/prose/021",
+    "A/failure/prose/022"
+   ],
+   "note": "Methodological remark; the 'missing dynamical condition' supplied by the strict trial certificate (Lemma art:seed_cycle and Table art:trial_table) is: every earlier candidate is rejected (prose/020), both tests hold at the accepted length (prose/021), so the lengths are outputs of the specified search (prose/022, for the parameter range of Theorem art:local-failure). The lemma and the table themselves are DISCREPANCY items (they omit that range)."
+  },
+  {
+   "id": "A/failure/prose/014",
+   "kind": "prose",
+   "lines": [
+    78,
+    79
+   ],
+   "anchor": "The useful coarse bounds are $0.318<c_\\circ<0.319$ and",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_coarse_bounds",
+    "BfgsVerification.AlgebraicSeed.box_coarse"
+   ]
+  },
+  {
+   "id": "A/failure/prose/015",
+   "kind": "prose",
+   "lines": [
+    92,
+    93
+   ],
+   "anchor": "The point is then determined by the displacement closure",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.displacement_closure"
+   ],
+   "note": "s₀+s₁+s₂ = -(1-ρ)z₀ for the displayed z₀ (and conversely this equation determines z₀ since ρ ≠ 1)."
+  },
+  {
+   "id": "A/failure/prose/016",
+   "kind": "prose",
+   "lines": [
+    145,
+    146
+   ],
+   "anchor": "Every rejected trial raises the objective and",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.rejected_raise_value"
+   ],
+   "note": "Caption of Table art:trial_table; holds as printed for every c₁ > 0 (the table's discrepancy concerns only the Decision column)."
+  },
+  {
+   "id": "A/failure/prose/017",
+   "kind": "prose",
+   "lines": [
+    146,
+    147
+   ],
+   "anchor": "The accepted rows also satisfy the strict",
+   "status": "SAME_AS",
+   "of": "A/failure/disp/008",
+   "note": "Caption of Table art:trial_table; the margins art:seed_margins are display disp/008 (seed_margins), which holds as printed."
+  },
+  {
+   "id": "A/failure/prose/018",
+   "kind": "prose",
+   "lines": [
+    148,
+    148
+   ],
+   "anchor": "All displayed intervals are rational enclosures, not rounded values.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.trial_table",
+    "BfgsCoverage.Article.Failure.table_current",
+    "BfgsCoverage.Article.Failure.table_trial"
+   ],
+   "note": "Caption of Table art:trial_table: each displayed open interval contains the exact value of 10⁴G (proved from certified rational bounds). Holds as printed (the table's discrepancy concerns only the Decision column)."
+  },
+  {
+   "id": "A/failure/prose/019",
+   "kind": "prose",
+   "lines": [
+    152,
+    153
+   ],
+   "anchor": "The proof of the lemma, including the root isolation, matrix closure and",
+   "status": "NON_CLAIM",
+   "reason": "Pointer to the proof in Appendix art:seed_certificate (register A_seed_certificate)."
+  },
+  {
+   "id": "A/failure/prose/020",
+   "kind": "prose",
+   "lines": [
+    154,
+    156
+   ],
+   "anchor": "Every rejected candidate",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.rejected_raise_value",
+    "BfgsCoverage.Article.Failure.table_reject"
+   ],
+   "note": "For every rejected row: G(z_j+αp_j) > G(z_j) and the non-strict Armijo test fails for every c₁ > 0."
+  },
+  {
+   "id": "A/failure/prose/021",
+   "kind": "prose",
+   "lines": [
+    156,
+    159
+   ],
+   "anchor": "At each accepted candidate the decrease exceeds one third of the",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.accepted_pass_tests",
+    "BfgsCoverage.Article.Failure.seed_margins"
+   ],
+   "note": "The first sentence restates art:seed_margins (seed_margins); accepted_pass_tests: at every accepted row Armijo holds for every c₁ ≤ 1/3 and weak Wolfe for every c₂ > 0."
+  },
+  {
+   "id": "A/failure/prose/022",
+   "kind": "prose",
+   "lines": [
+    159,
+    161
+   ],
+   "anchor": "Thus the displayed lengths are outputs of the",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_search",
+    "BfgsCoverage.Article.Failure.table_decision"
+   ],
+   "note": "seed_search holds for all 0<c₁≤1/3 and c₂>0, which contains the range of Theorem art:local-failure; the accepted lengths are search outputs, not assumptions. This sentence supplies the parameter range that Lemma art:seed_cycle and Table art:trial_table omit (see the discrepancies)."
+  },
+  {
+   "id": "A/failure/prose/023",
+   "kind": "prose",
+   "lines": [
+    162,
+    162
+   ],
+   "anchor": "The routine never needs a Wolfe rejection on this example.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.no_wolfe_rejection"
+   ],
+   "note": "At every trial of every search of the seed run, for every admissible pair, Armijo implies weak Wolfe."
+  },
+  {
+   "id": "A/failure/prose/024",
+   "kind": "prose",
+   "lines": [
+    164,
+    166
+   ],
+   "anchor": "accepts its first query, while the next two phases bisect past the rejected",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/prose/022"
+   ],
+   "note": "For the parameter range named just before (lines 159-161): phase 0 accepts its first trial, phases 1 and 2 bisect past their rejected trials before the accepted ones (the trial lists [1], [1,1/2,1/4], [1,1/2,1/4,1/8,1/16] of seed_search, i.e. the rows of Table art:trial_table). The remaining sentences (lines 166-168) describe the panels and line styles of the figure."
+  },
+  {
+   "id": "A/failure/prose/025",
+   "kind": "prose",
+   "lines": [
+    173,
+    175
+   ],
+   "anchor": "whose accepted lengths are $1,1/4,1/16$",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/disp/005",
+    "A/failure/prose/022",
+    "A/failure/prose/028"
+   ],
+   "note": "Caption of Figure art:cycle-figure: the accepted lengths of phases 0, 1, 2 are 1, 1/4, 1/16 (s_j = -α_jM_jg_j, disp/005; and they are the search outputs, prose/022) and the origin is nonstationary (prose/028)."
+  },
+  {
+   "id": "A/failure/prose/026",
+   "kind": "prose",
+   "lines": [
+    184,
+    186
+   ],
+   "anchor": "copy has the same active slopes, and its inverse matrix produces proportionally",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.cone_orbit_scaling",
+    "BfgsCoverage.Article.Failure.seed_objective_homogeneous"
+   ],
+   "note": "For k = 3m+j: the query is ρ^m times the base query, the active slopes (gradients) are the base ones, the step of ρ^mM_j is ρ^m times the base step, function differences and gradient-step products scale by ρ^m, and both tests decide as at the base point."
+  },
+  {
+   "id": "A/failure/prose/027",
+   "kind": "prose",
+   "lines": [
+    191,
+    195
+   ],
+   "anchor": "Each query in phase $j$ is $\\rho^m$ times its base query.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.cone_orbit_scaling",
+    "BfgsCoverage.Article.Failure.fullUpdate_scale"
+   ],
+   "note": "Including 'art:failure_update scales the updated matrix by ρ^m' (fullUpdate_scale) and 'every branch choice and every rejection is preserved, as well as acceptance' (the Armijo and Wolfe equivalences of cone_orbit_scaling)."
+  },
+  {
+   "id": "A/failure/prose/028",
+   "kind": "prose",
+   "lines": [
+    195,
+    200
+   ],
+   "anchor": "The iterates converge to zero, but the direction",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.cone_limit_nonstationary",
+    "BfgsVerification.SeedOrbit.objective_downhill_ray",
+    "BfgsVerification.SeedOrbit.limit_not_stationary"
+   ],
+   "note": "The iterates orbitPoint (of the run of cone_orbit) converge to 0; G(tw) = -t for t ≥ 0; G(0) = 0 and 0 ∉ ∂G(0)."
+  },
+  {
+   "id": "A/failure/prose/029",
+   "kind": "prose",
+   "lines": [
+    220,
+    221
+   ],
+   "anchor": "This already excludes global convergence from every start for coercive finite",
+   "status": "SAME_AS",
+   "of": "A/failure/corollary/art:failure_polyhedral"
+  },
+  {
+   "id": "A/failure/prose/030",
+   "kind": "prose",
+   "lines": [
+    221,
+    223
+   ],
+   "anchor": "Its wrong corner is away from the",
+   "status": "SAME_AS",
+   "of": "A/failure/corollary/art:failure_polyhedral",
+   "note": "The corner 0 differs from the unique minimizer (-1,16) (Corollary art:failure_polyhedral); 'consistent with the local finite-partition convergence theorem' is a logical remark (the example concerns convergence to a point away from the minimizer). The next sentence is motivation."
+  },
+  {
+   "id": "A/failure/prose/031",
+   "kind": "prose",
+   "lines": [
+    227,
+    228
+   ],
+   "anchor": "A change of scale also changes which inverse matrix represents the same",
+   "status": "SAME_AS",
+   "of": "A/failure/disp/014",
+   "note": "The inverse matrix giving the same (scaled) direction is H_F = (λ²/σ)H_𝒢 (art:matched-scaling). 'This simple covariance explains both local constructions' is explanatory."
+  },
+  {
+   "id": "A/failure/prose/032",
+   "kind": "prose",
+   "lines": [
+    233,
+    233
+   ],
+   "anchor": "Differentiation gives $g_F=(\\sigma/\\lambda)g_{\\mathcal G}$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.matched_scaling",
+    "BfgsCoverage.Article.Failure.matched_hasGradient"
+   ]
+  },
+  {
+   "id": "A/failure/prose/033",
+   "kind": "prose",
+   "lines": [
+    239,
+    243
+   ],
+   "anchor": "At an accepted pair $y_F=(\\sigma/\\lambda)y_{\\mathcal G}$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.matched_update"
+   ],
+   "note": "y_F = (σ/λ)y, s_F = λs, y_Fᵀs_F = σyᵀs, both projection factors unchanged, rank-one term multiplied by λ²/σ, and 𝓑(H_F,g_F,g_F⁺,α) = (λ²/σ)𝓑(H_𝒢,g_𝒢,g_𝒢⁺,α); no condition on yᵀs is needed."
+  },
+  {
+   "id": "A/failure/prose/034",
+   "kind": "prose",
+   "lines": [
+    243,
+    245
+   ],
+   "anchor": "Function differences",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.matched_comparisons"
+   ],
+   "note": "For a point z and trial point z+αp in U (𝒢 differentiable at the trial point): the function difference and every gradient-step product are multiplied by σ, and the non-strict and the strict Armijo and weak Wolfe tests of F and 𝒢 agree."
+  },
+  {
+   "id": "A/failure/prose/035",
+   "kind": "prose",
+   "lines": [
+    247,
+    248
+   ],
+   "anchor": "This is a covariance calculation, not an existence theorem for a local",
+   "status": "NON_CLAIM",
+   "reason": "Remark on the logical status of the preceding calculation."
+  },
+  {
+   "id": "A/failure/prose/036",
+   "kind": "prose",
+   "lines": [
+    248,
+    251
+   ],
+   "anchor": "To transfer a particular run, the local model must cover the",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.matched_search_transfer",
+    "BfgsCoverage.Article.Failure.matched_run_transfer"
+   ],
+   "note": "If the model holds on an open U containing the current point and all candidates visited (where 𝒢 is differentiable), the specified search on F from (x̄+λz,(λ²/σ)H) has the same output (matched_search_transfer); applied along a run, the scaled sequence is a run of the implementation on F with the same trial lists and H_F = (λ²/σ)H_𝒢 (matched_run_transfer). 'We verify that containment separately in each construction below' is a pointer (disp/026 here; Appendix art:lower_curvature for the other construction)."
+  },
+  {
+   "id": "A/failure/prose/037",
+   "kind": "prose",
+   "lines": [
+    254,
+    255
+   ],
+   "anchor": "The choice $\\sigma=\\lambda^2$ is decisive: it leaves the initial matrix",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.matched_identity_matrix"
+   ]
+  },
+  {
+   "id": "A/failure/prose/038",
+   "kind": "prose",
+   "lines": [
+    255,
+    260
+   ],
+   "anchor": "In the first embedding, the corner's objective height is $a_\\ell^3$",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.first_embedding_scales"
+   ],
+   "note": "F(x̄_ℓ) = a_ℓ³; gradients a_ℓ²g_i on the open slab; the local model with λ = a_ℓ², σ = a_ℓ⁴ = λ², C = a_ℓ³ on the slab, so λ²/σ = 1 (every copy starts with I); the affine neighborhood is the slab |g_iᵀh| ≤ a_ℓ/2 and every point of the copied trial tree satisfies |g_iᵀ(x-x̄_ℓ)| < 3a_ℓ² < a_ℓ/2 (ℓ ≥ 1). 'This separation of scales makes all-query containment possible' is the containment, disp/026."
+  },
+  {
+   "id": "A/failure/prose/039",
+   "kind": "prose",
+   "lines": [
+    263,
+    265
+   ],
+   "anchor": "values are $a_\\ell^3$ and their node slopes are $a_\\ell^2$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.scalar_nodes"
+   ],
+   "note": "φ_b(ba_ℓ) = a_ℓ³, φ_b'(ba_ℓ) = a_ℓ², φ_b' monotone and constant (= a_ℓ²) on |x-ba_ℓ| < a_ℓ/2."
+  },
+  {
+   "id": "A/failure/prose/040",
+   "kind": "prose",
+   "lines": [
+    266,
+    268
+   ],
+   "anchor": "The constant regions create the local affine corner; the cubic transition",
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/lemma/art:upper_scalar_lemma",
+    "A/failure/disp/024"
+   ],
+   "note": "The affine corner is art:upper_local_model; continuity and global Lipschitz continuity of φ_b'' is Lemma art:upper_scalar_lemma."
+  },
+  {
+   "id": "A/failure/prose/041",
+   "kind": "prose",
+   "lines": [
+    268,
+    269
+   ],
+   "anchor": "The following formulas fix the construction",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.phi_unique"
+   ],
+   "note": "Every function satisfying the defining formulas art:upper_scalar and the completion equals DScalar.phi b."
+  },
+  {
+   "id": "A/failure/prose/042",
+   "kind": "prose",
+   "lines": [
+    271,
+    272
+   ],
+   "anchor": "Let $\\theta=1/16$, $a_\\ell=\\theta^\\ell$, $\\varepsilon=1/128$, and",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.scalar_constants",
+    "BfgsVerification.DEmbedding.bStar_bounds"
+   ],
+   "note": "Definitions θ, a_ℓ, ε, b* (Lean values) and the claim b* ∈ (33,34)."
+  },
+  {
+   "id": "A/failure/prose/043",
+   "kind": "prose",
+   "lines": [
+    286,
+    287
+   ],
+   "anchor": "The middle formula for $J_b$ is $2\\varepsilon(v^3-v^4/2)$; its outer",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.primitive_formulas",
+    "BfgsVerification.DScalarRamp.primitive_eq_quartic",
+    "BfgsVerification.DScalarRamp.primitive_eq_zero",
+    "BfgsVerification.DScalarRamp.primitive_eq_affine"
+   ],
+   "note": "With J_b = ∫₀^ξ P_b: zero for ξ ≤ t_b-ε, 2ε(v³-v⁴/2) for |ξ-t_b| < ε, ξ-t_b for ξ ≥ t_b+ε."
+  },
+  {
+   "id": "A/failure/prose/044",
+   "kind": "prose",
+   "lines": [
+    362,
+    367
+   ],
+   "anchor": "The Hessian of each of the first three branches is a nonnegative scalar",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.objective_branch_hessians",
+    "BfgsVerification.DEmbedding.branch_individual_hessian_bounds",
+    "BfgsVerification.DEmbedding.branch_hessian_lipschitz"
+   ],
+   "note": "Euclidean operator norms; the Hessian Lipschitz constant is 60000 (Euclidean). The library proves the stronger bound < 12 for the third branch."
+  },
+  {
+   "id": "A/failure/prose/045",
+   "kind": "prose",
+   "lines": [
+    367,
+    371
+   ],
+   "anchor": "The first two scalar arguments are independent, so their",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.objective_minimizer",
+    "BfgsVerification.DEmbedding.objective_directional_derivative_zero",
+    "BfgsVerification.DEmbedding.objective_not_differentiable_zero"
+   ],
+   "note": "Compact sublevels, F ≥ 0 with F(x) = 0 iff x = 0, branch gradients 0 (i < 3) and (0,1) at 0, F'(0;h) = max{0,h₂} (h₂ = h 1), F not differentiable at 0."
+  },
+  {
+   "id": "A/failure/prose/046",
+   "kind": "prose",
+   "lines": [
+    373,
+    374
+   ],
+   "anchor": "The first two scalar arguments at $\\bar x_\\ell$ equal",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.center_arguments",
+    "BfgsVerification.DEmbedding.center_argument"
+   ],
+   "note": "x̄_ℓ = DEmbedding.center ℓ = a_ℓ•(2,-32)."
+  },
+  {
+   "id": "A/failure/prose/047",
+   "kind": "prose",
+   "lines": [
+    379,
+    381
+   ],
+   "anchor": "Indeed, the first three branches are on their affine regions and each",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.local_model_branches"
+   ],
+   "note": "h₁ = h 0, h₂ = h 1."
+  },
+  {
+   "id": "A/failure/prose/048",
+   "kind": "prose",
+   "lines": [
+    382,
+    383
+   ],
+   "anchor": "In particular $F(\\bar x_\\ell)=a_\\ell^3$ and",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.center_value_slope",
+    "BfgsVerification.DEmbedding.center_directional_derivative"
+   ],
+   "note": "F'(x̄_ℓ;(-1,16)) is the one-sided difference-quotient limit."
+  },
+  {
+   "id": "A/failure/prose/049",
+   "kind": "prose",
+   "lines": [
+    428,
+    431
+   ],
+   "anchor": "one function contains every shrinking copy.",
+   "status": "SAME_AS",
+   "of": "A/negative_upper/theorem/art:local-failure",
+   "note": "One objective; each run converges to its own center x̄_ℓ ≠ 0; the starts and all queries of the ℓth run approach the minimizer 0 (the sup of the query norms tends to 0)."
+  },
+  {
+   "id": "A/failure/prose/050",
+   "kind": "prose",
+   "lines": [
+    436,
+    439
+   ],
+   "anchor": "bad centers $\\bar x_\\ell\\to x_*$ have affine-model",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.shrinking_scales"
+   ],
+   "note": "Caption of Figure art:shrinking-scales: x̄_ℓ → x* = 0; the affine model holds on the slab |g_iᵀh| ≤ a_ℓ/2, which lies in |h₁| ≤ a_ℓ/2, |h₂| ≤ 8a_ℓ and contains ‖h‖∞ ≤ a_ℓ/6 (width ≍ a_ℓ); for ℓ ≥ 1 every accepted point and query of the ℓth run is within Euclidean distance a_ℓ²·max‖z_q‖ of x̄_ℓ (size O(a_ℓ²)), and the run converges to x̄_ℓ."
+  },
+  {
+   "id": "A/failure/prose/051",
+   "kind": "prose",
+   "lines": [
+    443,
+    444
+   ],
+   "anchor": "The lower-curvature construction uses the different spatial factor",
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/021",
+   "note": "Caption of Figure art:shrinking-scales: x_k^(ℓ) = x̄_ℓ + a_ℓx_k^seed in the lower-curvature construction."
+  },
+  {
+   "id": "A/failure/prose/052",
+   "kind": "prose",
+   "lines": [
+    449,
+    450
+   ],
+   "anchor": "The flat affine regions in the first construction explain why its convex",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.no_uniform_lower_curvature",
+    "BfgsCoverage.Article.Failure.phiSecond_plateau"
+   ],
+   "note": "The branch Hessians vanish on the plateaus (flat affine regions) around the centers and at 0, so no branch has a uniform positive lower curvature bound."
+  },
+  {
+   "id": "A/failure/prose/053",
+   "kind": "prose",
+   "lines": [
+    450,
+    451
+   ],
+   "anchor": "Adding the same positive",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.quadratic_restores_curvature"
+   ],
+   "note": "Each branch plus (μ/2)‖x‖² is μ-strongly convex (FixedNormal.EuclideanStrongConvexOn, the notion used for Theorem art:local-failure-lower)."
+  },
+  {
+   "id": "A/failure/prose/054",
+   "kind": "prose",
+   "lines": [
+    451,
+    452
+   ],
+   "anchor": "but changes the dynamics.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.quadratic_changes_dynamics",
+    "BfgsVerification.LQuadraticSeed.quadratic_hasGradient"
+   ],
+   "note": "Read concretely: for Q_μ = (μ/2)‖·‖² + G (μ > 0) the gradient at z₀ is g₀+μz₀, and no step -α(g₀+μz₀) from z₀ reaches z₁, so the seed cycle is not a run on Q_μ."
+  },
+  {
+   "id": "A/failure/prose/055",
+   "kind": "prose",
+   "lines": [
+    452,
+    453
+   ],
+   "anchor": "The next result constructs",
+   "status": "SAME_AS",
+   "of": [
+    "A/negative_lower/theorem/art:local-failure-lower",
+    "A/lower_curvature/proposition/art:quadratic_failure"
+   ],
+   "note": "Describes Theorem art:local-failure-lower and its proof via the stable manifold (Proposition art:quadratic_failure)."
+  },
+  {
+   "id": "A/failure/prose/056",
+   "kind": "prose",
+   "lines": [
+    467,
+    469
+   ],
+   "anchor": "Four convex $C^{2,1}$ branches",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.Failure.regularity_map_first_row",
+    "BfgsCoverage.Article.Failure.no_uniform_lower_curvature"
+   ],
+   "note": "Row 1 of Table art:regularity-map (the branches of Theorem art:local-failure): convex, C², 0 ⪯ ∇²f_i ⪯ 64I everywhere, the Hessians exist at the accumulation point 0 and are globally Lipschitz, and no uniform positive lower bound. Since the branches are C², they are differentiable everywhere and their derivative maps are differentiable (at 0 in particular), so RadialHessian.matrix is the classical Hessian of prose/059."
+  },
+  {
+   "id": "A/failure/prose/057",
+   "kind": "prose",
+   "lines": [
+    470,
+    472
+   ],
+   "anchor": "Four uniformly strongly convex $C^{1,1}$ branches",
+   "status": "SAME_AS",
+   "of": "A/negative_lower/theorem/art:local-failure-lower",
+   "note": "Row 2 of Table art:regularity-map."
+  },
+  {
+   "id": "A/failure/prose/058",
+   "kind": "prose",
+   "lines": [
+    475,
+    480
+   ],
+   "anchor": "The two independent local failure regimes.",
+   "status": "SAME_AS",
+   "of": [
+    "A/negative_upper/theorem/art:local-failure",
+    "A/negative_lower/theorem/art:local-failure-lower"
+   ],
+   "note": "Caption of Table art:regularity-map: one fixed objective, H₀ = I, starts approaching the unique minimizer, differentiable queries in shrinking neighborhoods, every 0<c₁≤1/3, c₁<c₂<1 (Theorems art:local-failure and art:local-failure-lower)."
+  },
+  {
+   "id": "A/failure/prose/059",
+   "kind": "prose",
+   "lines": [
+    484,
+    486
+   ],
+   "anchor": "Here a classical Hessian is the derivative of the gradient map, with that",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.classical_hessian",
+    "BfgsVerification.RadialHessian.matrix",
+    "BfgsVerification.coordinateGradient"
+   ],
+   "note": "Convention: F has a classical Hessian at x (x is a twice-differentiable point) when F is differentiable on a neighborhood of x and its derivative map is differentiable at x, (∀ᶠ z in 𝓝 x, DifferentiableAt ℝ F z) ∧ DifferentiableAt ℝ (fderiv ℝ F) x — the form of 'at every twice-differentiable point' in NegativeLower.local_failure_lower. classical_hessian: under the neighborhood condition, the gradient map near x is coordinateGradient F (F has that gradient at every nearby point); differentiability of the derivative map at x is equivalent to differentiability of the gradient map at x; and then RadialHessian.matrix F x, with entries fderiv ℝ (fderiv ℝ F) x eᵢ eⱼ, is symmetric and is the derivative of the gradient map at x. The neighborhood condition cannot be dropped: fderiv is 0 wherever F is not differentiable, so for instance F(t) = t²·1_ℚ(t) has fderiv ≡ 0, which is differentiable at 0, although F is differentiable at no other point; 'a pointwise second-order expansion alone is not the convention'. The branches of Theorem art:local-failure are C², so RadialHessian.matrix is their classical Hessian at every point."
+  },
+  {
+   "id": "A/failure/prose/060",
+   "kind": "prose",
+   "lines": [
+    489,
+    491
+   ],
+   "anchor": "It starts from the explicit strongly convex",
+   "status": "SAME_AS",
+   "of": [
+    "A/lower_curvature/disp/003",
+    "A/lower_curvature/disp/001"
+   ],
+   "note": "Q_μ and its minimizer x* = -ḡ/μ ≠ 0 (Appendix art:lower_curvature)."
+  },
+  {
+   "id": "A/failure/prose/061",
+   "kind": "prose",
+   "lines": [
+    491,
+    492
+   ],
+   "anchor": "A normalized three-step return map has the original seed",
+   "status": "SAME_AS",
+   "of": [
+    "A/lower_curvature/prose/009",
+    "A/lower_curvature/lemma/art:lower_hyperbolic"
+   ],
+   "note": "The boundary seed P_* = (z₀,0,1,0), with scale τ = 0 (A/lower_curvature/prose/008), is a fixed point of the normalized return map T_μ (A/lower_curvature/disp/006): T_μ(P_*) = P_* (A/lower_curvature/prose/009, lower_curvature.tex:80); it is hyperbolic, with eigenvalues ρ⁻¹, ρ⁻¹, λ_s, λ_u, ρ (Lemma art:lower_hyperbolic)."
+  },
+  {
+   "id": "A/failure/prose/062",
+   "kind": "prose",
+   "lines": [
+    492,
+    493
+   ],
+   "anchor": "Its stable manifold contains positive",
+   "status": "SAME_AS",
+   "of": [
+    "A/lower_curvature/proposition/art:quadratic_failure",
+    "A/lower_curvature/lemma/art:lower_hyperbolic"
+   ],
+   "note": "The stable eigenspace contains a vector with τ-coordinate one (Lemma art:lower_hyperbolic), and positive-scale states on the stable manifold give the actual perturbed bad orbit (Proposition art:quadratic_failure)."
+  },
+  {
+   "id": "A/failure/prose/063",
+   "kind": "prose",
+   "lines": [
+    493,
+    495
+   ],
+   "anchor": "The seed's strict",
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/lemma/art:lower_hyperbolic"
+  },
+  {
+   "id": "A/failure/prose/064",
+   "kind": "prose",
+   "lines": [
+    495,
+    496
+   ],
+   "anchor": "No rounded initial state is asserted to lie on",
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer about the scope of the lower-curvature construction (no numerical initial state is claimed)."
+  },
+  {
+   "id": "A/failure/prose/065",
+   "kind": "prose",
+   "lines": [
+    498,
+    499
+   ],
+   "anchor": "For the local embedding the scalar node values are now $a_\\ell^2$ and the",
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/017",
+   "note": "ψ_b(ba_ℓ+h) = a_ℓ²+a_ℓh (art:lower_plateau): node value a_ℓ², node slope a_ℓ."
+  },
+  {
+   "id": "A/failure/prose/066",
+   "kind": "prose",
+   "lines": [
+    499,
+    502
+   ],
+   "anchor": "The resulting model is",
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/020",
+   "note": "art:lower_local_model; λ = a_ℓ, σ = a_ℓ², λ²/σ = 1."
+  },
+  {
+   "id": "A/failure/prose/067",
+   "kind": "prose",
+   "lines": [
+    502,
+    504
+   ],
+   "anchor": "We choose one entire perturbed orbit small enough",
+   "status": "SAME_AS",
+   "of": [
+    "A/lower_curvature/disp/021",
+    "A/lower_curvature/disp/022",
+    "A/negative_lower/theorem/art:local-failure-lower"
+   ]
+  },
+  {
+   "id": "A/failure/prose/068",
+   "kind": "prose",
+   "lines": [
+    505,
+    506
+   ],
+   "anchor": "The faster variation of the scalar derivative retains global $C^{1,1}$",
+   "status": "SAME_AS",
+   "of": "A/negative_lower/theorem/art:local-failure-lower"
+  },
+  {
+   "id": "A/failure/prose/069",
+   "kind": "prose",
+   "lines": [
+    507,
+    508
+   ],
+   "anchor": "This is why the theorem does not supply a finite strongly convex $C^2$",
+   "status": "NON_CLAIM",
+   "reason": "Scope remark on Theorem art:local-failure-lower (what it does not claim)."
+  },
+  {
+   "id": "A/failure/prose/070",
+   "kind": "prose",
+   "lines": [
+    510,
+    513
+   ],
+   "anchor": "The two constructions separate upper branch regularity from positive lower",
+   "status": "SAME_AS",
+   "of": [
+    "A/negative_upper/theorem/art:local-failure",
+    "A/negative_lower/theorem/art:local-failure-lower"
+   ],
+   "note": "Summary of the two theorems; 'the different scalar scales determine which regularity survives' is explanatory."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "A/failure/lemma/art:seed_cycle",
+   "description": "Lemma art:seed_cycle states 'With p_j=-M_jg_j, the entire line-search query list is Table art:trial_table' (failure.tex:107-108) without fixing the line-search constants (c₁,c₂), and the query list depends on them. The rejected rows fail Armijo for every c₁ > 0 and the accepted rows pass weak Wolfe for every c₂ > 0, but the accepted row of phase j passes Armijo only for c₁ ≤ r_j = (G(z_j)-G(z_{j+1}))/(-g_jᵀs_j) (Lean: accepted_armijo_iff), and the exact ratios are r₀ ≈ 0.76658, r₁ ≈ 0.39319, r₂ ≈ 0.37521 (Lean: accepted_armijo_ratios, 0.37520 < r₂ < 0.37521). So the claim is false for every c₁ > r₂: the phase-2 trial 1/16 fails Armijo. For example, for c₁ = 0.38, c₂ = 1/2 (0 < c₁ < c₂ < 1) the specified search from (z₂,M₂) does not return (1/16,[1,1/2,1/4,1/8,1/16]) for any trial budget (Lean: seed_cycle_range_counterexample). The range appears only after Table art:trial_table (lines 154-161), as a consequence of the margins ('Hence Armijo holds for c₁ ≤ 1/3 and weak Wolfe holds for every c₂ > 0'), not as a hypothesis of the lemma. With 'for every 0 < c₁ ≤ 1/3 and c₂ > 0' the claim holds (Lean: seed_cycle, seed_search); this range contains the range 0 < c₁ ≤ 1/3, c₁ < c₂ < 1 of Theorems art:local-failure and art:local-failure-lower, so no later result is affected. The rest of the lemma (positive definiteness, the closures, the unique active gradients, the value increase at every rejection, art:seed_margins and art:seed_query_bounds) holds as printed, for all parameters.",
+   "severity": "imprecision",
+   "proposed": "With $p_j=-M_jg_j$, for every $0<c_1\\le1/3$ and $c_2>0$ the entire line-search query list is Table~\\ref{art:trial_table}.",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsCoverage.Article.Failure.seed_search",
+    "BfgsCoverage.Article.Failure.accepted_armijo_iff",
+    "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
+    "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample"
+   ]
+  },
+  {
+   "item": "A/failure/table/art:trial_table",
+   "description": "Same omission as Lemma art:seed_cycle (see that entry). The Decision column and the caption's 'deterministic trial tree' (failure.tex:128-143) are decisions of the specified search, which depend on (c₁,c₂), and neither the table nor its caption fixes them. For 0 < c₁ ≤ 1/3 and c₂ > 0 every decision is correct (Lean: trial_table, table_decision, seed_search), but for c₁ = 0.38, c₂ = 1/2 the 'accept' of the row (phase 2, α = 1/16) is false: its Armijo ratio lies in (0.37520, 0.37521) (Lean: accepted_armijo_ratios, seed_cycle_range_counterexample). The other cells (phases, trial lengths, value enclosures, active branches) and the other caption claims hold as printed.",
+   "severity": "imprecision",
+   "proposed": "Add to the caption: \"The decisions are those of the specified search for every $0<c_1\\le1/3$ and $c_2>0$.\"",
+   "lean": [
+    "BfgsCoverage.Article.Failure.trial_table",
+    "BfgsCoverage.Article.Failure.table_decision",
+    "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
+    "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample"
+   ]
+  }
+ ]
 }

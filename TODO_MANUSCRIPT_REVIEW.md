@@ -46,6 +46,19 @@ confirmed each one.
   With it the corrected claim holds (`Energy.reciprocal_sum_superlinear_of_minimizer`).
   Proposed: "Theorem~\ref{art:reciprocal-growth} proves that, along runs with
   bounded gradients, the full update requires faster growth." (`A/energy/prose/012`)
+- [ ] **M11: Lemma `art:seed_cycle` and Table `art:trial_table` omit the range of
+  $(c_1,c_2)$.** `paper/sections/failure.tex:107-108`: "the entire line-search query
+  list is Table~\ref{art:trial_table}" fixes no constants; the range appears only
+  after the table (lines 154–161), as a consequence of the margins. Armijo holds at
+  the accepted trial of phase $j$ exactly when $c_1\le r_j$, with $r_0\approx0.76658$,
+  $r_1\approx0.39319$, $r_2\approx0.37521$, so for $c_1=0.38$ the phase-2 trial $1/16$
+  is rejected (`Failure.accepted_armijo_ratios`, `seed_cycle_range_counterexample`).
+  Both theorems use $0<c_1\le1/3$, so no later result is affected. Proposed: "With
+  $p_j=-M_jg_j$, for every $0<c_1\le1/3$ and $c_2>0$ the entire line-search query list
+  is Table~\ref{art:trial_table}." and add to the table caption "The decisions are
+  those of the specified search for every $0<c_1\le1/3$ and $c_2>0$."
+  (`A/failure/lemma/art:seed_cycle`, `A/failure/table/art:trial_table`; corrected
+  statements `Failure.seed_cycle`, `trial_table`)
 
 ## Resolved
 
