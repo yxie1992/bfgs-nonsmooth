@@ -37,15 +37,42 @@ library took about 12 minutes and peaked at about 10 GB.
 ## Axiom audit
 
 ```sh
-python3 scripts/axiom_audit.py --report AXIOM_AUDIT.json [--write-guard]
+python3 scripts/axiom_audit.py [--jobs 6] --report AXIOM_AUDIT.json [--write-guard]
 ```
 
-This runs `#print axioms` on every declaration cited for an article statement in
-`editorial/CLAIM_LEDGER.json` (principal and full exports) and on this package's
+This runs `#print axioms` on every Lean name that `editorial/CLAIM_LEDGER.json`
+cites, for the article and for the companion (every export field of every record,
+and the declaration lists of the article supplements), and on this package's
 principal declarations. It fails if a cited name is missing or if any axiom other
-than `propext`, `Classical.choice` and `Quot.sound` appears. `AXIOM_AUDIT.json`
-records the result and the exact signatures of the package declarations.
-`--write-guard` regenerates `BfgsArticleAxioms.lean`.
+than `propext`, `Classical.choice` and `Quot.sound` appears. The names are split
+across `--jobs` concurrent Lean processes (about 5 minutes with 6). Private helper
+names (`_private.…`) in the supplements' declaration lists cannot be named outside
+their module; they are listed in the report, and their axioms are part of those of
+the public declarations that use them. `AXIOM_AUDIT.json` records the result, the
+commit and tree state at the start of the run, and the exact signatures of the
+package declarations. `--write-guard` regenerates `BfgsArticleAxioms.lean`.
+
+## Kernel replay
+
+```sh
+git clone https://github.com/leanprover/lean4checker /path/to/lean4checker
+cd /path/to/lean4checker && git checkout v4.19.0 && lake build   # same Lean version
+cd -  # back to bfgs_lean_article
+python3 scripts/kernel_replay.py --checker-repo /path/to/lean4checker --self-test --report KERNEL_REPLAY.json
+```
+
+`#print axioms` trusts that every declaration in the compiled `.olean` files was
+checked by the kernel. lean4checker re-checks that: for each module it loads the
+module's imports and replays every declaration of the module through the Lean
+kernel, so a declaration that entered the environment without a kernel check
+(for example through `set_option debug.skipKernelTC`) makes it fail. The script
+runs it on every project module (the import closure of this package's default
+targets: the main library, the supplements and this package), one module per
+process, `--jobs` at a time. The two root modules contain only `import` lines and
+are listed instead of replayed. Mathlib and Lean core are not replayed. With
+`--self-test` the checker's own `test.sh` runs first and must detect its
+deliberately forged test declarations. `KERNEL_REPLAY.json` records the result
+and the checker's tag, commit and binary hash.
 
 ## New modules
 

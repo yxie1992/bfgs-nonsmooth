@@ -73,17 +73,22 @@ is resolved. Resolutions are recorded under each item and in
       run or do nothing, `<;>` where `;` suffices, and 6 deprecations.
   - Supplements: all five now compile through the standard `lake build` of the
     new package `bfgs_lean_article/` (see P3).
-  - Axioms: `bfgs_lean_article/scripts/axiom_audit.py` ran `#print axioms` on
-    2026 declarations (2014 before the third pass). These are every Lean name that
-    `editorial/CLAIM_LEDGER.json` cites for an article statement (principal and
-    full exports) plus the new package's principal declarations.
+  - Axioms: `bfgs_lean_article/scripts/axiom_audit.py` runs `#print axioms` on
+    every Lean name that `editorial/CLAIM_LEDGER.json` cites, for the article and
+    (since 14 October) the companion, plus the new package's principal
+    declarations: 3177 declarations (2026 before the companion was added).
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (2025 use all three; one uses only `propext` and `Quot.sound`).
+      `Quot.sound` (3174 use all three; two use only `propext`; one uses only
+      `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
     - The 182 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
+  - Kernel replay (14 October): lean4checker v4.19.0 replayed every declaration
+    of all 749 project modules through the kernel; no failures
+    (`bfgs_lean_article/KERNEL_REPLAY.json`). Its own self-test, which must
+    reject deliberately forged declarations, passed first.
   - Found along the way: 14 ledger-cited names
     (`BfgsVerification.OriginalClaimInterpretation.*`, supporting exports of
     `art:mixed-benchmark` and `art:mixed-inward-remainder`) live in an
@@ -309,6 +314,17 @@ is resolved. Resolutions are recorded under each item and in
   every $0<c_1\le1/3$, $c_1<c_2<1$ with one orbit, objective and family of starts.
   New modules `bfgs_lean_article/BfgsArticle/LUniformGlobal.lean` and
   `LUniformLocal.lean`; details under M6 in `TODO_MANUSCRIPT_REVIEW.md`.
+
+### Fourth pass (14 October 2026)
+
+- [x] **Axiom audit of the companion's Lean names.** 1141 names cited only by
+  the companion were outside the audit. They are now included (3177 names in
+  all); every one exists and uses only the standard axioms.
+- [x] **Independent kernel replay.** lean4checker re-checked every declaration of
+  every project module (749 modules; the two root modules only import). See the
+  P1 item above.
+- [ ] **Literal Lean coverage of every claim** of the article and the companion:
+  tracked in `TODO_LEAN_COVERAGE.md`.
 
 ## Checked and matching (no action needed)
 
