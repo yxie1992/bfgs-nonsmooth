@@ -217,8 +217,8 @@ is resolved. Resolutions are recorded under each item and in
   - `gauge_conclusion`: positively homogeneous of degree one, with bounded
     `{F ≤ 1}`.
   - `finiteMaxLinear_conclusion`: bounded zero sublevel.
-- [ ] **Paper understates the Lean result for the global lower-curvature
-  failure.** *(Optional; awaiting the author's decision. The paper is unchanged.)*
+- [x] **Paper understates the Lean result for the global lower-curvature
+  failure.** *(Done on the author's instruction, 13 October 2026.)*
   - Paper: Proposition `art:quadratic_failure` is stated for c₁ = 10⁻⁴ and
     c₂ = 1/2 only ("Throughout this appendix …", `lower_curvature.tex:14`).
   - Lean: `LGlobalFailure.actual_global_failure` proves it for every μ > 0,
@@ -240,6 +240,30 @@ is resolved. Resolutions are recorded under each item and in
       to change. That sentence would then apply from the copy construction on.
     - Since this changes a theorem statement, it is left for the author.
 
+  **Done** in `paper/appendices/lower_curvature.tex`:
+  - Prop `art:quadratic_failure` now reads "Let μ>0 and fix 0<c₁≤1/3 and
+    c₁<c₂<1. For every neighborhood V of zero, …". This matches
+    `LGlobalFailure.nonstrict_actual_global_failure`.
+  - The appendix's opening sentence now says the constants are a fixed pair
+    in that range, as in Thm `art:local-failure`, and that Thm
+    `art:local-failure-lower` takes c₁ = 10⁻⁴, c₂ = 1/2.
+  - The proof of Lemma `art:lower_hyperbolic` now cites the margins of
+    Section `art:failure` for every admissible pair.
+  - The copy construction picks the orbit with c₁ = 10⁻⁴, c₂ = 1/2.
+  - Theorem `art:local-failure-lower` is unchanged; its Lean form fixes
+    (10⁻⁴, 1/2).
+  - Checks:
+    - The paper was rebuilt with TeX Live 2026 (TinyTeX). It is still 49
+      pages, and only pages 43, 44 and 47 changed.
+    - Those three pages were inspected visually.
+    - The LaTeX warnings are the same as before the edit.
+    - The unedited source rebuilds to the same text as
+      `release/BFGS_Journal_Article.pdf`, apart from how large delimiters
+      are encoded in the PDF text layer.
+    - The companion (`companion/chapters/13_L.tex`, generated from the
+      source report) keeps the special case c₁ = 10⁻⁴, c₂ = 1/2.
+    - `release/` PDFs predate this edit.
+
 ### New items from the second pass
 
 - [ ] **Release receipts are now stale (expected).**
@@ -253,6 +277,13 @@ is resolved. Resolutions are recorded under each item and in
     this machine lacks. They failed for that reason before any change here.
   - A new release run (`editorial/build.sh` and the release scripts) on a machine
     with TeX and Node will refresh them.
+  - Since the P3d edit, the `proof_locations` line numbers and passage hashes
+    for `paper/appendices/lower_curvature.tex` in the ledger are also stale.
+    They are copied from the sealed 13 September negative review and are now
+    off by up to 4 lines. The records' `location` fields are recomputed and
+    current.
+  - `refresh_correspondence.py` cannot refresh these, because it rejects any
+    statement change. That needs a new correspondence revision.
 - [ ] **Lean linter warnings (optional, cosmetic).**
   - The main library emits 1244 style warnings.
   - Cleaning them would change hash-pinned library files, so do it only together

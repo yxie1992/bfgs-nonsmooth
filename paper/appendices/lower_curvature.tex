@@ -10,8 +10,9 @@ from a suitable matrix; the copying step makes bad starts approach the
 minimizer of one fixed objective; a final fixed change of coordinates
 makes their common initial matrix the identity. The price of retaining
 a positive lower curvature bound is the loss of second differentiability
-of the branches at the accumulation point. Throughout this appendix the
-line-search constants are $c_1=10^{-4}$ and $c_2=1/2$.
+of the branches at the accumulation point. The line-search constants are a
+fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, as in Theorem~\ref{art:local-failure};
+Theorem~\ref{art:local-failure-lower} takes $c_1=10^{-4}$ and $c_2=1/2$.
 
 \subsection{A strongly convex global example}
 A common positive quadratic leaves the active-branch geometry unchanged
@@ -41,7 +42,8 @@ minimizer is nonsmooth. At zero the subdifferential is the nonstationary
 triangle of the original seed.
 
 \begin{proposition}[A perturbed bad orbit]\label{art:quadratic_failure}
-For every $\mu>0$ and every neighborhood $V$ of zero, some initial state
+Let $\mu>0$ and fix $0<c_1\le1/3$ and $c_1<c_2<1$. For every neighborhood
+$V$ of zero, some initial state
 $(x_0,H_0)$, $H_0\succ0$, produces a deterministic full-BFGS run on
 $Q_\mu$ converging to zero, with positive objective values decreasing to
 zero. Its accepted lengths repeat $1,1/4,1/16$, and all accepted and
@@ -96,7 +98,8 @@ At a query $\tau Z$, the value divided by $\tau$ is
 $G(Z)+\mu\tau\|Z\|^2/2$ and the gradient is $g_i+\mu\tau Z$.
 The common quadratic does not affect which slope is active. All finite
 branch gaps and normalized search comparisons are continuous in the
-normalized state. The strict seed margins therefore persist on a common
+normalized state. The seed margins of Section~\ref{art:failure} are strict
+for every admissible pair $(c_1,c_2)$ and therefore persist on a common
 neighborhood. The physical step and secant are exactly the ones in
 \eqref{art:lower_return_substep} after restoring the scale, proving
 agreement with the actual update and the entire search tree.
@@ -284,7 +287,8 @@ region, and expansion of the common quadratic uses $q_i+\mu c_*=g_i$.
 The fourth branch is inactive there: its residual $a_\ell(-32+y_2)$ is
 negative, while each old scalar residual is at least $a_\ell^2/2$.
 
-Choose, by Proposition~\ref{art:quadratic_failure}, one bad orbit
+Choose, by Proposition~\ref{art:quadratic_failure} with $c_1=10^{-4}$ and
+$c_2=1/2$, one bad orbit
 $(x_k^{\rm seed},H_k^{\rm seed})$ all of whose queries lie in this neighborhood.
 For every $\ell$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
 $H_0^{\rm seed}$. Induction on the actual query tree gives
