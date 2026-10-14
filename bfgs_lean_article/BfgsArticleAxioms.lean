@@ -316,6 +316,10 @@ and of the principal declarations of this package. -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.DScalar.scalar_function_contract
 
+/-- info: 'BfgsVerification.HessianInvariantTarget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.HessianInvariantTarget
+
 /-- info: 'BfgsVerification.Homogeneous.bounded_zero_sublevel_of_coercive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.Homogeneous.bounded_zero_sublevel_of_coercive
@@ -612,6 +616,10 @@ and of the principal declarations of this package. -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.fullBFGS_normalizedHierarchy
 
+/-- info: 'BfgsVerification.hessianInvariants' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.hessianInvariants
+
 /-- info: 'BfgsVerification.inverseBFGS_scale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.inverseBFGS_scale
@@ -619,6 +627,10 @@ and of the principal declarations of this package. -/
 /-- info: 'BfgsVerification.inverseBFGS_scale_secant_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms BfgsVerification.inverseBFGS_scale_secant_pair
+
+/-- info: 'BfgsVerification.inverseBFGS_step_det_beta' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms BfgsVerification.inverseBFGS_step_det_beta
 
 /-- info: 'BfgsVerification.inwardCertificateConvergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

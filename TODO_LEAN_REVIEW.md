@@ -74,14 +74,14 @@ is resolved. Resolutions are recorded under each item and in
   - Supplements: all five now compile through the standard `lake build` of the
     new package `bfgs_lean_article/` (see P3).
   - Axioms: `bfgs_lean_article/scripts/axiom_audit.py` ran `#print axioms` on
-    2013 declarations. These are every Lean name that
+    2014 declarations. These are every Lean name that
     `editorial/CLAIM_LEDGER.json` cites for an article statement (principal and
     full exports) plus the new package's principal declarations.
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (2012 use all three; one uses only `propext` and `Quot.sound`).
+      `Quot.sound` (2013 use all three; one uses only `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
-    - The principal exports are pinned with `#guard_msgs` in
+    - The 170 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
   - Found along the way: 14 ledger-cited names
