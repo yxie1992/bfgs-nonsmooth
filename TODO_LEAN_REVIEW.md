@@ -82,23 +82,26 @@ that may not exist.
     every Lean name that `editorial/CLAIM_LEDGER.json` cites, for the article and
     (since 14 October) the companion, every Lean name of the coverage register
     (`editorial/lean_coverage/register/`), and the new package's principal
-    declarations: 5403 declarations at commit `9f03d7c` (15 October, with every
-    coverage module; 3862 at `a2028c9`, 2026 before the companion was added, 3177
-    before the coverage register).
+    declarations: 5420 declarations at commit `2cfa27a` (15 October, step 6 of
+    the release run, after all corrections; 5403 at `9f03d7c`, with every coverage
+    module, 3862 at `a2028c9`, 2026 before the companion was added, 3177 before
+    the coverage register).
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (5396 use all three; five use only `propext`; two use only
+      `Quot.sound` (5413 use all three; five use only `propext`; two use only
       `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
     - The 182 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
-  - Kernel replay (15 October, commit `9f03d7c`, with every coverage module):
-    lean4checker v4.19.0 replayed every declaration of all 783 project modules
-    through the kernel; no failures (`bfgs_lean_article/KERNEL_REPLAY.json`). Its
-    own self-test, which must reject deliberately forged declarations, passed
-    first. The replay of 14 October (commit `023f555`) covered the 749 modules
-    that existed before the coverage modules.
+  - Kernel replay (15 October, commit `2cfa27a`, step 6 of the release run, after
+    all corrections): lean4checker v4.19.0 replayed every declaration of all 783
+    project modules through the kernel; no failures
+    (`bfgs_lean_article/KERNEL_REPLAY.json`). Its own self-test, which must reject
+    deliberately forged declarations, passed first. The replays of 15 October
+    before the corrections (commit `9f03d7c`, 783 modules) and of 14 October
+    (commit `023f555`, the 749 modules that existed before the coverage modules)
+    also passed.
   - Found along the way: 14 ledger-cited names
     (`BfgsVerification.OriginalClaimInterpretation.*`, supporting exports of
     `art:mixed-benchmark` and `art:mixed-inward-remainder`) live in an
@@ -363,7 +366,9 @@ that may not exist.
       re-baseline), `generate_companion.py --check`, `check_documents.py`.
     - [ ] C10: regenerate the render manifest (`render_review.py`) and review
       every page.
-    - [ ] C11: no release script checks the October Lean evidence. Rerun the axiom
+    - [x] C11 (done on 15 October 2026, step 6 of the release run, on commit
+      `2cfa27a`: axiom audit PASS, 5420 names; kernel replay PASS, 783 modules):
+      no release script checks the October Lean evidence. Rerun the axiom
       audit and the kernel replay on the final pre-freeze commit, and add
       read-only checks that bind them to the release (T3); the archive validation
       also runs `check_coverage.py --strict` (T2). Tooling ready:
@@ -449,10 +454,12 @@ that may not exist.
   all); every one exists and uses only the standard axioms. Since the Lean
   coverage began, the audit also checks every Lean name of the coverage
   registers (3862 names at `a2028c9`; 5403 at `9f03d7c`, with every coverage
-  module, 15 October).
+  module, 15 October; 5420 at `2cfa27a`, after all corrections, in step 6 of the
+  release run).
 - [x] **Independent kernel replay.** lean4checker re-checked every declaration of
   every project module (749 modules at `023f555`; 783 at `9f03d7c`, with every
-  coverage module, 15 October; the two root modules only import). See the P1 item
+  coverage module, and at `2cfa27a`, after all corrections, 15 October; the two
+  root modules only import). See the P1 item
   above.
 - [x] **Literal Lean coverage of every claim** of the article and the companion:
   tracked in `TODO_LEAN_COVERAGE.md`. Complete: the article on 14 October, the

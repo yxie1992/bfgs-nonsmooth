@@ -31,19 +31,22 @@ author are at the top of `TODO_MANUSCRIPT_REVIEW.md`.
 
 Latest checks:
 
-- Axiom audit of commit `9f03d7c` (15 October, every coverage module) on a clean
-  tree: PASS. 5403 declarations (every ledger, coverage-register and package name)
-  use only `propext`, `Classical.choice` and `Quot.sound`
-  (`bfgs_lean_article/AXIOM_AUDIT.json`); 6.5 minutes on the MacBook.
-- Kernel replay of `9f03d7c` with lean4checker v4.19.0: PASS, 783 modules
-  (`bfgs_lean_article/KERNEL_REPLAY.json`); 27 minutes on the MacBook with 8 jobs.
+- Axiom audit of commit `2cfa27a` (15 October, step 6 of the release run, after all
+  corrections) on a clean tree: PASS. 5420 declarations (every ledger,
+  coverage-register and package name) use only `propext`, `Classical.choice` and
+  `Quot.sound` (`bfgs_lean_article/AXIOM_AUDIT.json`); 6.5 minutes on the MacBook.
+- Kernel replay of `2cfa27a` with lean4checker v4.19.0: PASS, 783 modules (every
+  project module except the two root modules, which only import), self-test passed
+  (`bfgs_lean_article/KERNEL_REPLAY.json`); 25 minutes on the MacBook with 8 jobs.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
-  modules (last run on 15 October after the corrections M30–M41: 192 s);
-  `check_coverage.py --strict` exits 0 on every article and companion file, without
-  `--allow-discrepancies`; `generate_companion.py --check` passes.
-- The audit and the replay above predate the Lean docstring and declaration changes
-  of the corrections (from `613cb77` on); they are rerun on the final commit before
-  the release.
+  modules (last full run on 15 October after the corrections M30–M41: 192 s; a
+  no-op on `2cfa27a`); `check_coverage.py --strict` exits 0 on every article and
+  companion file, without `--allow-discrepancies`; `generate_companion.py --check`
+  passes.
+- From here until the release, no Lean file, Lake configuration, script in
+  `bfgs_lean_article/scripts/`, claim ledger, coverage register or input of
+  `editorial/release_20261015/` may change: `editorial/verify_release_inputs.py`
+  binds the audit and the replay to them.
 
 ## Setting up the Mac
 

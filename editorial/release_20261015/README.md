@@ -301,6 +301,7 @@ unchanged. C10 and C13–C18 are steps of the run.
 Until step 4 of the run order, `refresh_correspondence.py --check` fails (no
 receipt; the changes are not listed yet), and so do `04_current_correspondence`
 and the three "Reviewed source contracts" checks of `verify_release_inputs.py`;
-until step 6, so does "October Lean evidence bound to the frozen sources" (the
-committed reports describe `9f03d7c`, and their counts are no longer those of the
-sources): expected.
+until step 6, so does "October Lean evidence bound to the frozen sources" (until
+then the committed reports described `9f03d7c`, whose counts are no longer those
+of the sources): expected. Steps 4 to 6 were done on 15 October 2026: the table
+of changes and its receipt are committed, and the reports describe `2cfa27a`.

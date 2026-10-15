@@ -50,7 +50,7 @@ axiom other than `propext`, `Classical.choice` and `Quot.sound` appears. The aud
 imports `BfgsArticle`, so the names of a coverage module resolve only once
 `BfgsArticle.lean` imports it. The names are split across `--jobs` concurrent Lean
 processes (with 6: about 5 minutes for 3862 names on 24 cores, 6.5 minutes for
-the 5403 names of 15 October 2026 on a 10-core MacBook). Private helper
+the 5420 names of 15 October 2026 on a 10-core MacBook). Private helper
 names (`_private.…`) in the supplements' declaration lists cannot be named outside
 their module; they are listed in the report, and their axioms are part of those of
 the public declarations that use them. `AXIOM_AUDIT.json` records the result, the
@@ -78,7 +78,7 @@ are listed instead of replayed. Mathlib and Lean core are not replayed. With
 `--self-test` the checker's own `test.sh` runs first and must detect its
 deliberately forged test declarations. `KERNEL_REPLAY.json` records the result
 and the checker's tag, commit and binary hash. With the default 8 jobs, the
-replay of the 783 modules of 15 October 2026 took 27 minutes on a 10-core
+replay of the 783 modules of 15 October 2026 took 25 to 27 minutes on a 10-core
 MacBook.
 
 ## New modules

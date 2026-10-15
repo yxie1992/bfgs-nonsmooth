@@ -66,8 +66,11 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       `a2028c9`: 3862 declarations, PASS).
 - [x] When the companion is done: rerun the axiom audit and the kernel replay
       (15 October 2026, commit `9f03d7c`, clean tree: audit PASS, 5403
-      declarations, standard axioms only; kernel replay PASS, 783 modules;
-      `bfgs_lean_article/AXIOM_AUDIT.json`, `KERNEL_REPLAY.json`).
+      declarations, standard axioms only; kernel replay PASS, 783 modules).
+      Rerun after all corrections, in step 6 of the release run (15 October,
+      commit `2cfa27a`, clean tree): audit PASS, 5420 declarations, standard
+      axioms only; kernel replay PASS, 783 modules
+      (`bfgs_lean_article/AXIOM_AUDIT.json`, `KERNEL_REPLAY.json`).
 - [x] Discrepancies go to `TODO_MANUSCRIPT_REVIEW.md` (article: M7–M11; companion:
       M12–M29 and the recurrences under M8, M12 and M24; wording points W1–W47). When the
       manuscript is corrected, give each `DISCREPANCY` item its final status and carry
