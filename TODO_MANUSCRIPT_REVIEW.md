@@ -49,6 +49,150 @@ Decisions the agents left to the author. Everything else found so far is correct
   corner index $j$ does not occur in the secant paragraph), R-E-8 (e) (the inset of
   Figure 3 is schematic), R-E-9 (e) (the ramp coordinate lives in another subsection),
   and R-D-4 for Theorems 5 and 8 (the layout gets worse).
+- [ ] **Q7: Typesetting points from the release visual review (15 October 2026).**
+  Three visual-review agents looked at every page of the release PDFs, built at
+  `2cfa27a` (the documents' text is unchanged at `8ca8bac`): V1 the article, V2 and V3
+  the companion (PDF pages 1–56 and 57–108). They checked the edition date "15 October
+  2026" on both title pages and in every footer of the companion, the page numbers,
+  running heads and cross-references, and found no clipped or overfull text. None of
+  the points below is blocking. They are left for a later edition: most fixes would
+  change sources that the release checks pin (the receipt of
+  `editorial/release_20261015/` and, through the coverage registers and the claim
+  ledger, the Lean evidence of `2cfa27a`), so steps 4 to 6 of the release run
+  (`editorial/release_20261015/README.md`, "Run order") would have to be repeated.
+  Only the fixes for Figure 3 of the article (drawn by
+  `paper/figures/generate_figures.py`) and for the companion's contents and
+  bibliography touch files that have no register and are not in the receipt. For the
+  two points on companion PDF page 94, the printed-count check of
+  `editorial/verify_release_inputs.py` looks for the strings `checked <n> Lean names`
+  and `(<m> modules;` literally, so "5,420" or a tie `783~modules` would need that
+  check changed as well.
+  - Article (V1; PDF pages):
+    - p. 4, Figure 1(b): the vertical axis runs through the origin label 0, which
+      reads like a slashed zero or a phi (already so on 13 September). Fix:
+      `paper/figures/gradient_geometry.tex:22`, place the label as in panel (a), e.g.
+      `\node[above left] at (0,0) {$0$};`, or end the vertical axis below the label.
+    - p. 18, paragraph "For a concrete reduction", above (17): the inline set $I_0$
+      breaks across lines after "$i:$" (already so on 13 September). Fix: keep it
+      together, `\mbox{$I_0=\{i:x_{*,i}=0\}$}`, at `paper/sections/local.tex:119`.
+    - p. 20, last display of the page, in the proof of Theorem 8
+      ($E_{k+1}=\dots\le(1+Ld_k)(E_k-m/q_k)+C$): it runs from margin to margin, and
+      the spaces around $+$ and $-$ shrink to nothing, though no box is overfull
+      (already so on 13 September). Fix: `paper/sections/local.tex:264-269`, break
+      it before the $\le$ with `aligned`.
+    - p. 20, paragraph above that display, in wording edited in October: the line
+      "Compactness implies $\operatorname{dist}(x_k,\Gamma)\to0$; with $s_k\to0$ and
+      $d_k\to0$, these" is loose, with wide spaces between words. Fix:
+      `paper/sections/local.tex:261`, rephrase slightly (e.g. "Since $s_k\to0$ and
+      $d_k\to0$, compactness gives $\operatorname{dist}(x_k,\Gamma)\to0$ and these
+      estimates …") or accept.
+    - p. 24, display (19), the full inverse update (Section 6.1): it fills the line
+      and its number drops to a line of its own (already so on 13 September; display
+      (1) on p. 4, the same case, was fixed in this edition). Fix:
+      `paper/sections/failure.tex:40-45`, take $s=-\alpha Hg$, $y=g^+-g$ out of the
+      numbered line, onto a second line (`multline` or `split`) or into the text
+      after the display.
+    - pp. 26, 35, 38 and 44: in four 2×2 matrices the columns are only about 3pt
+      apart (svjour3 sets `\arraycolsep` to 1.5pt), so a row reads almost like one
+      expression or a product: $M_1$ in (21), first row "129/256 −1/16" (p. 26;
+      already so on 13 September); the matrix in $Z^TFZ=A-\dots$ in the proof of
+      Lemma 6 (p. 35); $Dw$ below (41) (p. 38); $M(\zeta,\eta)$ before (49) (p. 44).
+      Fix: a wider gap, e.g. `{\arraycolsep=5pt\begin{pmatrix}…\end{pmatrix}}`, at
+      `paper/sections/failure.tex:89`, `paper/appendices/matrix_algebra.tex:31`,
+      `planar_geometry.tex:118` and `lower_curvature.tex:63`, or `\arraycolsep` set
+      once for every `pmatrix`.
+    - p. 28, after the proof of Corollary 8: the paragraph "This already excludes
+      global convergence …" has no indent, the only paragraph after a proof without
+      one (already so on 13 September). Fix: a blank line between `\end{proof}` and
+      that paragraph (`paper/sections/failure.tex:226-227`).
+    - p. 32, Figure 3, right panel (enlarged affine-model neighborhood): the right
+      edge of the dotted box runs through the label $x_0^{(\ell)}$, and $\bar x_\ell$
+      is drawn over its lower-left corner, so both look garbled at normal size
+      (already so on 13 September). Fix: `paper/figures/generate_figures.py:142-143`
+      (it generates `shrinking_scales.tex`), move both labels outside the box (e.g.
+      `node[below left=2pt]` for $\bar x_\ell$, `node[right=4pt]` for $x_0^{(\ell)}$)
+      and rerun the figure build.
+    - p. 38, paragraph "Transport charged to decrease" and the paragraph after (42),
+      in wording edited in October: loose lines with stretched spaces around "=",
+      the two from "Write $q(\theta)=x+\theta s$" to "and $D(\theta)=$" and the line
+      "Since $D'(\theta)=\det(s,Dw\,s)$ there, …". Fix:
+      `paper/appendices/planar_geometry.tex:144-154`, rephrase slightly (e.g. the
+      parenthesis about $\theta$ as a sentence of its own) or accept.
+    - p. 41, Section C.2, first three lines of the proof of the algebraic part of
+      Lemma 4, in wording edited in October: very loose, with wide gaps, especially
+      around "=" in "$\mathcal B(I,g_0,g_1,1)=M_1$, is immediate from $s_0=(-1,0)^T$
+      and $g_1-g_0=$". Fix: `paper/appendices/seed_certificate.tex:99` (shared with
+      the companion through `editorial/prepare_shared_appendix.py`), rephrase so that
+      the formulas break better (e.g. "From $s_0=(-1,0)^T$ and $g_1-g_0=(-2,-1/8)^T$,
+      the first update of the cycle is immediate: $\mathcal B(I,g_0,g_1,1)=M_1$.") or
+      accept.
+    - p. 42, end of the same proof, paragraph "This gives the matrix and displacement
+      closures", lines 2–3, in wording edited in October: two loose lines with
+      stretched spaces around "=" ("$s_j=-\alpha_jM_jg_j$ with $\alpha_0=1$, …").
+      Fix: `paper/appendices/seed_certificate.tex:140` (shared with the companion),
+      rephrase slightly or accept.
+    - p. 44, Section D.1: the display
+      $\bar g=(1,-16)^T/257=\frac{129}{257}g_0+\frac{128}{257}g_1$ between "The
+      vector" and "is the least-norm point …" has almost no space below it, and its
+      fractions nearly touch the next line (already so on 13 September). Fix:
+      `paper/appendices/lower_curvature.tex:30-35`, lengthen the lead-in (e.g. "The
+      vector $\bar g$ defined by"), or end the display with a comma and go on with
+      "which is …"; a gap of `\belowdisplayskip` would also do.
+  - Companion (V2 and V3; PDF pages):
+    - p. 6, Contents: the last entry is Appendix B (printed page 97); the bibliography
+      (PDF p. 105, printed 99) has no entry (already so on 13 September). Fix
+      (optional): `\addcontentsline{toc}{chapter}{Bibliography}` before the
+      bibliography, or the class's option for a bibliography entry in the contents.
+    - p. 14, "Relation to earlier work", second paragraph: the date breaks after
+      "through 11", and "September 2026" starts the next line (already so on 13
+      September). Fix: a tie, `11~September 2026`.
+    - p. 38, Section 5.7 (continued): the display of $d$, $\Delta$ and $t$, an
+      `align*` with three column pairs, spreads over the full width with a large gap
+      above it, while the line of $g_x$, $g_z$, $y$ just above is compact; it looks
+      detached (already so on 13 September). Fix: through the generator's
+      transformations (`companion/chapters/05_G.tex:311-315`), one display with
+      `\quad` separators, or a `gather*` with the $g_x$ line.
+    - p. 38, "Relation to earlier work", second paragraph: the range breaks after the
+      en dash, "Lemmas 2.2–" / "2.3." (already so on 13 September). Fix:
+      `Lemmas~\mbox{2.2--2.3}`, through the generator's transformations.
+    - pp. 49 and 50, Sections 7.6 and 7.7.3: "Theorem" ends a line and its number,
+      "7.B." and "7.C.", starts the next (already so on 13 September). Fix: ties,
+      `Theorem~7.B` and `Theorem~7.C`, through the generator's transformations.
+    - p. 76 (printed 70): about five empty lines at the foot of the page, mid-chapter.
+      The edited last paragraph gained a line, so the heading of Section 11.7.1, its
+      two-line paragraph and the $P(t)$, $Q(t)$ display moved to p. 77 (on 13
+      September they ended p. 76). Fix: none needed; if wanted, shorten the paragraph
+      "This is a function-class gain beyond RS …" by one line in its transformation.
+    - p. 94 (printed 88), "The October 2026 Lean review": "checked 5420 Lean names"
+      has no thousands separator, unlike every other count of four or more digits in
+      Chapter 14 (9,672; 31,960; …). Fix: "5,420" at
+      `companion/current_verification.tex:8`, with the release check changed (see
+      above), or leave it.
+    - p. 94 (printed 88), same section, last two lines: "(783" ends a line and
+      "modules;" starts the next. Fix: a tie, `(783~modules;`, at
+      `companion/current_verification.tex:11`, with the release check changed (see
+      above).
+    - p. 95 (printed 89), Section 14.2: the Record/Meaning register table now breaks
+      after its second row, with the header and two rows at the foot of the page and
+      the header again with four rows on p. 96 (on 13 September the table was on one
+      page); readable, nothing lost. Fix: none needed; if wanted, keep the six rows
+      together (start the table on p. 96 or let it float).
+    - pp. 98–99 (printed 92–93), Section 14.5: the page break splits the two-line
+      command block of the read-only validators
+      (`validate_report_reconstruction_19.py` / `verify_report_claim_review_20.py`;
+      on one page on 13 September), although p. 99, where Chapter 14 now ends, has
+      room. Fix: keep the block together, e.g. `\needspace{3\baselineskip}` before
+      "The earlier source/correspondence records also have read-only validators:",
+      through the generator's transformation of `chapters/14_E.tex`.
+    - p. 106 (printed 100), bibliography entry [13] (Griewank): the opening quotation
+      mark before "semi-smooth" has no closing one (already so on 13 September).
+      Fix: add `''` after `semi-smooth` in `\bibitem{GR91}` of
+      `companion/bibliography.tex`.
+    - p. 106 (printed 100), entry [16] (Powell): an explicit `\par` after the title
+      splits the entry into two paragraphs, with a blank line inside it (already so
+      on 13 September). Fix: remove that `\par` in `\bibitem{FND_P76}` of
+      `companion/bibliography.tex`, so that the entry runs on ("… exact line
+      searches. In R. W. Cottle …").
 
 ## Wording points in the companion (no discrepancy)
 
