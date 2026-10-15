@@ -14,7 +14,8 @@ A plain `lake build` here compiles and checks:
   - `editorial/narrative_rebuild/negative_scaling.lean`;
 - the audit-source lemmas `OriginalClaimInterpretation` cited by the claim ledger
   (`bfgs_lean_stage1/master_report/audit/sources/`);
-- the new modules in `BfgsArticle/` (below);
+- the new modules in `BfgsArticle/`, including the Lean coverage modules in
+  `BfgsArticle/Coverage/` (below);
 - `BfgsArticleAxioms.lean`: generated `#guard_msgs` pins of `#print axioms` for
   every principal export in `editorial/CLAIM_LEDGER.json` and for this package's
   principal declarations. The build fails if any of them gains an axiom.
@@ -42,10 +43,13 @@ python3 scripts/axiom_audit.py [--jobs 6] --report AXIOM_AUDIT.json [--write-gua
 
 This runs `#print axioms` on every Lean name that `editorial/CLAIM_LEDGER.json`
 cites, for the article and for the companion (every export field of every record,
-and the declaration lists of the article supplements), and on this package's
-principal declarations. It fails if a cited name is missing or if any axiom other
-than `propext`, `Classical.choice` and `Quot.sound` appears. The names are split
-across `--jobs` concurrent Lean processes (about 5 minutes with 6). Private helper
+and the declaration lists of the article supplements), on every Lean name of the
+Lean coverage registers (`editorial/lean_coverage/register/`), and on this
+package's principal declarations. It fails if a cited name is missing or if any
+axiom other than `propext`, `Classical.choice` and `Quot.sound` appears. The audit
+imports `BfgsArticle`, so the names of a coverage module resolve only once
+`BfgsArticle.lean` imports it. The names are split across `--jobs` concurrent Lean
+processes (about 5 minutes with 6). Private helper
 names (`_private.…`) in the supplements' declaration lists cannot be named outside
 their module; they are listed in the report, and their axioms are part of those of
 the public declarations that use them. `AXIOM_AUDIT.json` records the result, the
@@ -101,3 +105,16 @@ non-strict test.
 The declarations use the main library's namespaces (`BfgsVerification.*`,
 `ArticleBranchRegularity`), so that names resolve exactly as in the strict
 originals. Their files are all in this package.
+
+## Coverage modules
+
+`BfgsArticle/Coverage/Article/` (15 modules, complete) and
+`BfgsArticle/Coverage/Companion/` (in progress) are the Lean coverage of the
+article and the companion: one module per TeX file, namespaces
+`BfgsCoverage.Article.<Name>` and `BfgsCoverage.Companion.<Name>`. Each
+declaration states a claim of the documents, and its docstring names the claim's
+register item and source lines. The registers in
+`editorial/lean_coverage/register/` link every item to its declarations. Method
+and rules: `editorial/lean_coverage/README.md`; progress: `TODO_LEAN_COVERAGE.md`
+at the repository root. `BfgsArticle.lean` imports every finished coverage
+module, so `lake build` checks it and the axiom audit includes its names.

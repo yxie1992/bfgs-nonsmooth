@@ -75,20 +75,23 @@ is resolved. Resolutions are recorded under each item and in
     new package `bfgs_lean_article/` (see P3).
   - Axioms: `bfgs_lean_article/scripts/axiom_audit.py` runs `#print axioms` on
     every Lean name that `editorial/CLAIM_LEDGER.json` cites, for the article and
-    (since 14 October) the companion, plus the new package's principal
-    declarations: 3177 declarations (2026 before the companion was added).
+    (since 14 October) the companion, every Lean name of the coverage register
+    (`editorial/lean_coverage/register/`), and the new package's principal
+    declarations: 3862 declarations at commit `a2028c9` (2026 before the
+    companion was added, 3177 before the coverage register).
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (3174 use all three; two use only `propext`; one uses only
+      `Quot.sound` (3856 use all three; five use only `propext`; one uses only
       `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
     - The 182 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
-  - Kernel replay (14 October): lean4checker v4.19.0 replayed every declaration
-    of all 749 project modules through the kernel; no failures
+  - Kernel replay (14 October, commit `023f555`): lean4checker v4.19.0 replayed
+    every declaration of all 749 project modules through the kernel; no failures
     (`bfgs_lean_article/KERNEL_REPLAY.json`). Its own self-test, which must
-    reject deliberately forged declarations, passed first.
+    reject deliberately forged declarations, passed first. This replay predates
+    the Lean coverage modules; it is rerun when the coverage is complete.
   - Found along the way: 14 ledger-cited names
     (`BfgsVerification.OriginalClaimInterpretation.*`, supporting exports of
     `art:mixed-benchmark` and `art:mixed-inward-remainder`) live in an
@@ -319,12 +322,15 @@ is resolved. Resolutions are recorded under each item and in
 
 - [x] **Axiom audit of the companion's Lean names.** 1141 names cited only by
   the companion were outside the audit. They are now included (3177 names in
-  all); every one exists and uses only the standard axioms.
+  all); every one exists and uses only the standard axioms. Since the Lean
+  coverage began, the audit also checks every Lean name of the coverage
+  registers (3862 names at `a2028c9`).
 - [x] **Independent kernel replay.** lean4checker re-checked every declaration of
   every project module (749 modules; the two root modules only import). See the
-  P1 item above.
+  P1 item above. To be rerun once the coverage modules are complete.
 - [ ] **Literal Lean coverage of every claim** of the article and the companion:
-  tracked in `TODO_LEAN_COVERAGE.md`.
+  tracked in `TODO_LEAN_COVERAGE.md`. The article is complete (14 October); the
+  companion is in progress.
 
 ## Checked and matching (no action needed)
 
