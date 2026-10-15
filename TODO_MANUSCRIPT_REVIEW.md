@@ -400,8 +400,8 @@ in the line-by-line reading. The chapters are generated: change them through
   `04_R.tex:83`, `07_H.tex:23` ("This note continues the investigation…") and
   `09_C.tex:110` ("the subject of this note"); also "the previous note
   Chapter~8" at `09_C.tex:93` and "earlier notes" at `11_U.tex:354`. Optional: "in
-  this chapter", "Chapter~8". (`C/12_D/lemma/D:root`, `C/07_H/prose/002`,
-  `C/09_C/prose/016`, `C/09_C/prose/020`, `C/11_U/prose/031`)
+  this chapter", "Chapter~8". (`C/12_D/lemma/D:root`, `C/04_R/prose/010`,
+  `C/07_H/prose/002`, `C/09_C/prose/016`, `C/09_C/prose/020`, `C/11_U/prose/031`)
 - [ ] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
   "The two unknown coordinates of the third slope …": "slope" is the article's term;
   the companion calls the $g_i$ gradients (`12_D.tex:160`). Optional: "of the third
@@ -432,6 +432,7 @@ in the line-by-line reading. The chapters are generated: change them through
   numbers: Chapter 3 starts at 3.2, Chapter 4 has no 4.4, Chapter 5 no 5.5 or 5.8,
   Chapter 7 no 7.3 or 7.4, Chapter 10 has only 10.5 and 10.6, and Chapter 11 has no
   11.3 or 11.4; equation tags start late in the same way (Chapter 11 at (11.10)).
+  Chapter 4 leaves (4.1) and (4.4) unused.
   Chapter 5 also leaves (5.1), (5.3), (5.5) unused, numbers subsections 5.2.1, 5.3.1,
   5.6.1 like its propositions, and refers to its tags (5.V), (5.S), (5.T), (5.T0) as
   "(V)", "(S)", "(T)", "(T0)". Cosmetic. Renumbering would change the numbers proposed in M17, M18 and the other
@@ -467,6 +468,73 @@ in the line-by-line reading. The chapters are generated: change them through
   pointer. Optional: "Given the radial secant condition (RS) of
   Chapter~\ref{comp:R}, take" (T.tex:191, occurs once). (`C/03_T/disp/026`,
   `prose/029`)
+- [ ] **W19: Nonnegative constants in (RS) and (IR) (Chapter 4, proof gap).**
+  `04_R.tex:55` ((4.RS)): "$\forall\eta>0\ \exists C_\eta<\infty$"; `04_R.tex:74`
+  ((4.IR)): "there exist $M_\eta<\infty$ and $\theta_\eta\in(0,1/2]$". The proofs use
+  $C\ge0$ without saying so: line 149, "If $a=0$, the same conclusion follows from
+  $\DF(z,x)\le ta=0$" (the bound $\le4C_{\eta/2}t^2$ of lines 146–148 needs
+  $C_{\eta/2}\ge0$); the cases $a_\pm=0<t$ of "$a_+\le Ct,\ a_-\le Ct/(1-t)^2$"
+  (lines 174–176); and line 177, "The central difference is at most
+  $t(a_++a_-)\le5Ct^2$ for $t\le1/2$". True as stated: an (RS) constant on a band
+  with a point strictly between the band threshold and $b$ is $\ge0$, since a
+  differentiable pair on opposite sides of $x_*$ with $T>0$ forces it. Proposed:
+  "$\exists C_\eta\ge0$" in (4.RS) and "there exist $M_\eta\ge0$ and
+  $\theta_\eta\in(0,1/2]$" in (4.IR), as in the article
+  (`paper/sections/global.tex:31,40`; source R.tex:49, 64). Lean:
+  `Ch04R.rs_constant_nonneg`, `error_bound_zero`, `radial_pair_bounds`,
+  `central_le_five`, `RS_iff_article`, `IR_iff_article`. (`C/04_R/disp/006`,
+  `disp/007`, `disp/019`, `disp/023`, `prose/014`, `prose/018`)
+- [ ] **W20: "For differentiable $x,z$" without "$\in K$" (Chapter 4).**
+  `04_R.tex:40`: "For differentiable $x,z$, put" introduces $T$ and the bound "$0\le
+  T\le T_{\max}:=4GR$" (line 51), which holds only for $x,z\in K$ ($R$ and $G$ are
+  bounds on $K$): for $F(x)=|x|$, $b=1$, $R=G=1$, the points $x=-10$, $z=10$ give
+  $T=40>4GR$. The article has "$x,z\in K$" (`paper/sections/global.tex:20`); the
+  all-of-$\mathbb R^n$ reading is not a reasonable one, so no discrepancy. Proposed:
+  "For differentiable $x,z\in K$, put" (source R.tex:34). Lean:
+  `Ch04R.curvature_split`, `secant_notation`. (`C/04_R/disp/003`, `disp/005`)
+- [ ] **W21: References to unnamed, later or absent material (Chapter 4).** Each
+  phrase occurs once in the source R.tex. (a) Line 307, proof of Theorem 4.5.1: "the
+  preceding convergence theorem applies" is Theorem 3.1 (`03_T.tex:90`, no
+  `\label`), through Section 3.4 and the local form of Section 3.3.2; proposed "…and
+  the convergence theorem of Chapter~\ref{comp:T} (Theorem 3.1, through Section 3.4
+  and its local form in Section 3.3.2) applies." (R.tex:277; `Ch04R.plq_theorem`;
+  `C/04_R/proof/001`). (b) Line 368: "shortening the earlier segment-based proof":
+  no such proof is in the companion; optional: drop the clause (R.tex:322;
+  `Ch04R.finite_max_branch_test`; `C/04_R/prose/079`). (c) Line 370: "the old
+  radial condition" is (RS); proposed "The necessity for (RS) is also clear on
+  genuine active ties" (R.tex:324; `Ch04R.finite_max_necessity`;
+  `C/04_R/prose/080`). (d) Line 429: "the original local radial criterion" is (RS)
+  on neighbourhoods of $X_*$, which fails on every neighbourhood; proposed "…need not
+  satisfy (RS) on any neighborhood of a nonzero rank-deficient minimizer."
+  (R.tex:375; `Ch04R.spectral_RS_fails`; `C/04_R/prose/095`). (e) Line 230: "the
+  breadth of the preceding sufficient classes": the classes come later, in Section
+  4.6; optional "of the sufficient classes of Section~4.6" (R.tex:204;
+  `C/04_R/prose/040`, NON_CLAIM).
+- [ ] **W22: The letter "D" for Chapter 12's objects (Chapter 4).** `04_R.tex:255`:
+  "the certified D parameters" and "The unique D optimizer $(-1,16)$"; line 265:
+  "the verified D run"; line 276: "$a$ times those of D". "D" is the source letter of
+  Chapter 12, which the chapter cites correctly as Chapter~\ref{comp:D} at lines 233
+  and 253; in print the letter names nothing, but no wrong number is printed and the
+  claims are true. Optional: "Chapter 12's certified parameters", "Chapter 12's
+  unique optimizer", "the verified run of Chapter 12", "those of the run of
+  Chapter 12" (source R.tex:229 (twice), 239, 250). Lean:
+  `Ch04R.fourPiece_constants`, `fourPiece_optimizer`, `fourPiece_transformed_data`,
+  `fourPiece_curvatures`. (`C/04_R/prose/043`, `prose/045`, `disp/037`, `prose/054`)
+- [ ] **W23: The reason given for "broader" (Chapter 4).** `04_R.tex:309`: "This is
+  broader than merely having affine pieces plus one common smooth summand: different
+  cells can have different quadratic Hessians and different gradient jumps." The
+  claim is true for every reading of "smooth" (`Ch04R.plq_broader_2d`:
+  $u^2+v^2+(2+|u|)|v|$ is covered and is no differentiable function plus a finite
+  max of affine functions), but the reason separates the classes only when "smooth"
+  means $C^2$: with a $C^{1,1}$ summand, the chapter's own use of "smooth" (lines
+  300–307), different Hessians also occur ($x^2+\max\{x,0\}^2+|x-1|$), and affine
+  pieces give different jumps across different boundaries. What such a sum cannot
+  produce is a gradient jump that varies along one cell boundary. Proposed:
+  "…different cells can have different quadratic Hessians, and the gradient jump can
+  vary along a cell boundary (for example $u^2+v^2+(2+|u|)|v|$ near the origin)."
+  (source R.tex:279). Lean: `Ch04R.plq_broader_2d`,
+  `plq2d_not_smooth_plus_max_affine`, `plq2d_covered`, `plq2d_jump`, `plq_broader`
+  ($C^2$ summands, dimension one). (`C/04_R/prose/059`, `prose/060`)
 
 ## Resolved
 

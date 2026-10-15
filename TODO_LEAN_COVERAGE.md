@@ -22,7 +22,7 @@ Progress (`python3 editorial/lean_coverage/check_coverage.py`), 14 October 2026:
 | Document | Items | Status |
 |---|---|---|
 | Article (`paper/`, 15 files) | 616 (221 mechanical, 395 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
-| Companion (`companion/`, 18 files) | 573 mechanical; prose items not yet added | waves 1 and 2 in progress on the MacBook (14 October; done: M, L, D, H, U, C, G, T, A); wave 3 not started |
+| Companion (`companion/`, 18 files) | 573 mechanical; prose items not yet added | waves 1 and 2 in progress on the MacBook (14 and 15 October; done: M, L, D, H, U, C, G, T, A, R); wave 3 not started |
 
 Article items by status: LEAN 280, SAME_AS 124, NON_CLAIM 89, DEFINITION 51,
 PART_OF 34, PROOF 28, DISCREPANCY 9 (manuscript items M7–M11), OPEN 1.
@@ -35,7 +35,7 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
 | Group | Files | Modules | State |
 |---|---|---|---|
 | compM | `chapters/02_M.tex` | `Ch02M` | done: 95 items (LEAN 41, DEFINITION 6, PART_OF 12, PROOF 6, SAME_AS 11, NON_CLAIM 19), no discrepancy, wording points W1–W5; reviewed, fix pass done |
-| compR | `chapters/04_R.tex` | `Ch04R` | wave 1: resumed from its pause note, in progress |
+| compR | `chapters/04_R.tex` | `Ch04R` | done: 161 items (LEAN 103, NON_CLAIM 19, SAME_AS 15, DEFINITION 11, PART_OF 8, PROOF 5), no discrepancy; wording points W8, W13, W19–W23; reviewed, fix pass done |
 | compC | `chapters/09_C.tex` | `Ch09C` | done: 180 items (LEAN 108, NON_CLAIM 21, SAME_AS 20, DEFINITION 12, PROOF 10, PART_OF 8, DISCREPANCY 1: M20); wording points W8, W14, W15; reviewed, fix pass done |
 | compH | `chapters/07_H.tex` | `Ch07H` | done: 118 items (LEAN 73, PROOF 7, SAME_AS 11, NON_CLAIM 11, PART_OF 10, DEFINITION 3, OPEN 2, DISCREPANCY 1: M17); OPEN: lines 142–146 (`ZeroValueIterateQuestion`) and lines 461–463, runs on the common-tilt family (`TiltNoInfiniteRunQuestion`; see `TODO_LEAN_REVIEW.md`); reviewed, fix pass done |
 | compD | `chapters/12_D.tex`, `appendices/seed_certificate.tex` | `Ch12D`, `SeedCertificate` | done: `12_D.tex` 133 items (LEAN 77, DEFINITION 15, SAME_AS 23, PART_OF 4, PROOF 3, NON_CLAIM 10, DISCREPANCY 1: M14); `seed_certificate.tex` 43 items (SAME_AS 27, NON_CLAIM 8, LEAN 3, PROOF 2, DISCREPANCY 3: M15, M16); wording points W6–W9; M11 does not recur; reviewed, fix pass done |
