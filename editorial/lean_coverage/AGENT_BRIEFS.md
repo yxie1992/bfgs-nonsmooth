@@ -71,7 +71,14 @@ per-group parts.
 - `SAME_AS` must not point at a `DISCREPANCY` item; point at the parts that are true.
 - "For every run" statements need an exhibited admissible run on that objective (non-vacuity);
   existing runs: `UnexcitedMetric.run` (u²+|v|), the |x| run in `Global.lean` (`absRun`),
-  `fourMaxRun` in `Verification.lean`, the quadratic run in `Energy.lean`.
+  `fourMaxRun` in `Verification.lean`, the quadratic run in `Energy.lean`. Since 14 October 2026
+  there is also a general existence theorem,
+  `BfgsVerification.AdmissibleRunExistence.exists_admissible_run` (module
+  `BfgsArticle.AdmissibleRunExistence`): F convex, bounded below, differentiable at all but
+  countably many points of every line through a point of differentiability, and no point of
+  differentiability with gradient zero; then runs exist from every point of differentiability,
+  for every H₀ ≻ 0 and all 0 < c₁ < c₂ < 1. `PlanarQuadraticExample.nonradial_example_nonvacuous`
+  applies it to a maximum of three quadratics (each tie set meets a line finitely often).
 - Statements narrower or wider than the TeX are mismatches: state the paper's version (add a
   specialization when the Lean result is more general).
 - Hessian convention: `(∀ᶠ z in 𝓝 x, DifferentiableAt ℝ F z) ∧ DifferentiableAt ℝ (fderiv ℝ F) x`.
