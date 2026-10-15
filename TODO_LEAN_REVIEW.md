@@ -331,6 +331,25 @@ is resolved. Resolutions are recorded under each item and in
 - [ ] **Literal Lean coverage of every claim** of the article and the companion:
   tracked in `TODO_LEAN_COVERAGE.md`. The article is complete (14 October); the
   companion is in progress.
+- [ ] **Companion Chapter 7 (H): run statements that may be vacuous.** Theorem 7.B
+  (ii) (`companion/chapters/07_H.tex:72-89`, `C/07_H/heading/002`) and the
+  common-tilt family $f(u,t)=t+\max_i b_i^\top u$ (lines 94–100, 448–464:
+  `disp/005`, `prose/011`, `disp/027`, `prose/043`, `prose/046`) speak about
+  infinite admissible runs, but no run on these objectives is known. Proved
+  (`BfgsCoverage.Companion.Ch07H`): no admissible run exists on a finite max-linear
+  objective whose slopes lie on one affine line missing 0, in any dimension
+  (`maxLinear_line_no_run`); hence none for any objective of Theorem 7.B (ii) in
+  dimension at most 2 (`maxLinear_affine_free_no_run`), and none on the family when
+  the $b_i$ lie on one line (`tilt_collinear_no_run`), in particular with at most
+  two distinct $b_i$ (`tilt_two_values_no_run`) and for every member in
+  $\mathbb R^2$ (`tilt_plane_no_run`). Open: slopes not on one line (at least three
+  pieces, dimension at least 3), stated as `TiltNoInfiniteRunQuestion`
+  (`C/07_H/prose/045`, `OPEN`). The text conditions every run statement on infinite
+  runs and disclaims finite termination (lines 99–100, 461–463 and 731), so this is
+  not a discrepancy, but it calls the family "useful" (line 94) without a run on it.
+  For the author: settle existence, or say that these statements may be vacuous.
+  `AdmissibleRunExistence.exists_admissible_run` does not apply: these objectives
+  are unbounded below.
 
 ## Checked and matching (no action needed)
 

@@ -154,6 +154,27 @@ under those items (M8). The chapters are generated: fix them through
   `Table~\ref{art:trial_table}` before the label loop).
   (`C/seed_certificate/prose/024`) The claims hold
   (`Article.SeedCertificate.clearing_denominators`, `query_lower_bounds`).
+- [ ] **M17: Chapter H's references keep its source note's numbering (typo).**
+  `companion/chapters/07_H.tex`: "Expanding (2.1)" (line 284) and "Equation (2.1)
+  then implies" (line 421) mean the Hessian form (7.2.1); "telescoping (5.2)" (line
+  341) means (7.5.2); "Equation (7.3)" (line 577) and "By (7.3)" (line 599) mean
+  (7.7.3); "using (7.1)" (line 655) means (7.7.1); "Formula (7.2)" (line 714) means
+  (7.7.2); and the title of Section 7.5 (lines 234–235, also in the table of
+  contents), "Homogeneous potential and proof of Theorem A", means Theorem 7.A. In
+  the PDF, (2.1) and (5.2) are unrelated displays of Chapters 2 and 5, while
+  (7.1)–(7.3) and Theorem A do not exist. Cause: `generate_companion.py:69` renumbers
+  only `H.`-prefixed references, and the source
+  (`bfgs_lean_stage1/master_report/latex/chapters/H.tex:200-201, 242, 294, 371, 511,
+  529, 585, 644`) writes these eight without the prefix. Fix: a logged module-H
+  transformation, applied before the numbering loop (lines 68–69), that adds the
+  prefix (`'Theorem\nA}'` → `'Theorem\nH.A}'`, `'(2.1)'` → `'(H.2.1)'` twice,
+  likewise `'(5.2)'`, `'(7.3)'` twice, `'(7.1)'` and `'(7.2)'`), each with an assert
+  on its occurrence count; then check Section 7.5's heading and the table of
+  contents. The mathematics holds with the intended references
+  (`Ch07H.energy_identity`, `weighted_sum_finite`, `common_vector_energy_step`,
+  `endpoint_pairings`, `iterate_lift`, `zero_limit_formula`, `theorem_7A`).
+  Related, not an error: the bold "Lemma 7.3" (line 405) is the source's Lemma H.3;
+  the chapter has no Lemma 7.1 or 7.2. (`C/07_H/prose/028`)
 
 ## Wording points in the companion (no discrepancy)
 
@@ -212,8 +233,9 @@ in the line-by-line reading. The chapters are generated: change them through
   (`C/12_D/prose/007`)
 - [ ] **W8: "In this note".** `12_D.tex:105` (Lemma `D:root`: "All denominators in
   this note are nonzero there"), and the same remnant of the source reports at
-  `04_R.tex:83`, `07_H.tex:23` and `09_C.tex:110`. Optional: "in this chapter".
-  (`C/12_D/lemma/D:root`)
+  `04_R.tex:83`, `07_H.tex:23` ("This note continues the investigation…") and
+  `09_C.tex:110`. Optional: "in this chapter". (`C/12_D/lemma/D:root`,
+  `C/07_H/prose/002`)
 - [ ] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
   "The two unknown coordinates of the third slope …": "slope" is the article's term;
   the companion calls the $g_i$ gradients (`12_D.tex:160`). Optional: "of the third

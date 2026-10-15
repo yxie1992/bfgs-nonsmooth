@@ -14,7 +14,13 @@
    "title": null,
    "container": null,
    "sha256": "51414b1c856a99bb",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.maxLinear_family",
+    "BfgsCoverage.Companion.Ch07H.maxLinear_eq",
+    "BfgsVerification.Homogeneous.finiteMaxLinear"
+   ],
+   "note": "The principal family f(x) = max_{1≤i≤m} a_iᵀx, m < ∞. Throughout the module the family is a : Fin m → Vec n with hF_def : ∀ x, IsGreatest (Set.range fun i => dot (a i) x) (F x) (the article's form). maxLinear_family: for m ≥ 1 the maximum exists at every x and is the library's Homogeneous.finiteMaxLinear of the slope set (the Finset image of a), and it is the only F with hF_def; maxLinear_eq converts hF_def to F = finiteMaxLinear. Nothing else is asserted (m ≥ 1 is implicit in the maximum; hF_def itself forces m ≥ 1)."
   },
   {
    "id": "C/07_H/heading/001",
@@ -28,7 +34,13 @@
    "title": "Theorem 7.A: an unconditional objective-value dichotomy",
    "container": null,
    "sha256": "659a4e517fb4d876",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.theorem_7A",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_dichotomy",
+    "BfgsVerification.homogeneousDichotomy"
+   ],
+   "note": "Theorem 7.A (lines 47-56, with disp/002): for F : Vec n → ℝ (finite = real-valued) with ConvexOn ℝ univ F and Homogeneous.PositiveDegreeOne F (F(tx) = tF(x), t ≥ 0), every R : AdmissibleBFGSRun n F has F(x_k) → 0 or F(x_k) → -∞ (Tendsto … atBot). Dimension n arbitrary (n = 0 vacuous, prose/025). The admissible-run structure (01_I convention: nonzero gradients at differentiable accepted points, H₀ ≻ 0, α_k > 0, fixed 0 < c₁ < c₂ < 1, Armijo, weak Wolfe) records convexity, so _hF is unused. No bound on iterates, steps, lengths or matrices and no finite gradient alphabet is assumed (prose/006). The library proves it as AdmissibleBFGSRun.homogeneous_value_dichotomy (target homogeneousDichotomy). Non-vacuous: Global.absRun on |x| (example at the end)."
   },
   {
    "id": "C/07_H/disp/002",
@@ -42,7 +54,8 @@
    "title": null,
    "container": null,
    "sha256": "d4eb69b8934b17ee",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/07_H/heading/001"
   },
   {
    "id": "C/07_H/heading/002",
@@ -56,7 +69,15 @@
    "title": "Theorem 7.B: a many-piece extension of the common-tilt geometry",
    "container": null,
    "sha256": "fd8072f0945b2a2b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.theorem_7B",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_affine_zero",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_escape_of_zero_not_mem_affineSpan",
+    "BfgsVerification.recurrentAffineHull",
+    "BfgsVerification.maxLinearAffineEscape"
+   ],
+   "note": "Theorem 7.B (lines 72-89, with disp/003, disp/004): for F = max_i a_iᵀx (hF_def): (i) every admissible run R and G = {v | ∃ᶠ k in atTop, R.g k = v} (gradients occurring infinitely often): a finite limit of F(x_k) gives 0 ∈ affineSpan ℝ G; (ii) if 0 ∉ affineSpan ℝ (Set.range a), every admissible run has F(x_k) → -∞. No bounded-displacement hypothesis (prose/010). Proof: lines 405-438 (Lemma 7.3 and prose/041). Non-vacuity: (i) is witnessed by Global.absRun on |x| = max(x,-x) (values → 0). For (ii) no admissible run is exhibited, and on many of its objectives none exists, so (ii) is vacuous there: if the slopes lie on one affine line missing 0 (any dimension), F is linear or a linear image of the two-piece model |u|+t, and no admissible run exists (maxLinear_line_no_run, via linear_objective_no_run and TwoPieceBudget.no_infinite_independent_two_piece); this covers every objective of (ii) in dimension ≤ 2 (maxLinear_affine_free_no_run: in dimension 1 all slopes coincide, in dimension 2 they lie on a line missing 0). Whether an admissible run exists for an objective of (ii) whose slopes do not lie on one line (at least three slopes, dimension ≥ 3) is not known. The text does not claim that such a run exists (its run statements are conditional, and it disclaims finite termination: prose/012, prose/045, where the open question is stated for the common-tilt family). (ii) is stated as printed."
   },
   {
    "id": "C/07_H/disp/003",
@@ -70,7 +91,8 @@
    "title": null,
    "container": null,
    "sha256": "416c92b638e24dec",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/07_H/heading/002"
   },
   {
    "id": "C/07_H/disp/004",
@@ -84,7 +106,8 @@
    "title": null,
    "container": null,
    "sha256": "40b0877180e7ca9b",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/07_H/heading/002"
   },
   {
    "id": "C/07_H/disp/005",
@@ -98,7 +121,14 @@
    "title": null,
    "container": null,
    "sha256": "a9eb0ea393236049",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.tilt_family",
+    "BfgsCoverage.Companion.Ch07H.dot_snoc",
+    "BfgsVerification.Homogeneous.commonTilt",
+    "BfgsVerification.Homogeneous.commonTilt_eq_finiteMaxLinear"
+   ],
+   "note": "\"A useful arbitrary-many-piece family is f(u,t) = t + max_{1≤i≤m} b_iᵀu.\" Points of ℝ^{n+1} are (u,t) = Fin.snoc u t (t last, as in the TeX). tilt_family: if F(u,t) is the greatest of t + b_iᵀu for all u, t (hypothesis hF_def), then F is the finite max-linear objective (disp/001) with the m slopes (b_i,1), for every m and n. \"Useful\" is not a claim. The library's family Homogeneous.commonTilt puts t first."
   },
   {
    "id": "C/07_H/heading/003",
@@ -112,7 +142,14 @@
    "title": "Theorem 7.C: complete iterate dichotomy in the planar unbounded-below case",
    "container": null,
    "sha256": "61cb3b3b674aa11d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.theorem_7C",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_unbounded_complete",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_unbounded_dichotomy",
+    "BfgsVerification.planarHomogeneousEscape"
+   ],
+   "note": "Theorem 7.C (lines 106-122, with disp/006, disp/007): for F = max_i a_iᵀx on ℝ² with inf f = -∞ (¬ BddBelow (Set.range F)), every admissible run satisfies Xor' (x_k → 0 ∧ F(x_k) → 0 ∧ Antitone (F ∘ x)) (F(x_k) → -∞ ∧ ‖x_k‖ → ∞), with the Euclidean norm ‖euclideanVector (R.x k)‖. f(x_k)↓0 is read as convergence to 0 of the nonincreasing sequence (the values are in fact strictly decreasing and positive, library). Proof: lines 572-580 (prose/058); lines 582-585 (prose/075) prove the remark prose/013. Non-vacuous: the seed run attains the first alternative (prose/014; example at the end)."
   },
   {
    "id": "C/07_H/disp/006",
@@ -126,7 +163,8 @@
    "title": null,
    "container": null,
    "sha256": "f106cecf391051d4",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/07_H/heading/003"
   },
   {
    "id": "C/07_H/disp/007",
@@ -140,7 +178,8 @@
    "title": null,
    "container": null,
    "sha256": "44d0efcc3788227b",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/07_H/heading/003"
   },
   {
    "id": "C/07_H/disp/008",
@@ -154,7 +193,14 @@
    "title": null,
    "container": null,
    "sha256": "f9d67ad13fd0b951",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.notation_display",
+    "BfgsVerification.AdmissibleBFGSRun.q_pos",
+    "BfgsVerification.AdmissibleBFGSRun.d_pos",
+    "BfgsVerification.AdmissibleBFGSRun.dot_step_eq_neg_d"
+   ],
+   "note": "The display defines g_k, p_k, s_k, y_k, B_k, q_k, d_k, t_k, Δ_k and asserts g_k = ∇f(x_k) (HasFDerivAt F (gradientFunctional (R.g k)) (R.x k)), s_k = α_kp_k with p_k = -H_kg_k (variable p with its defining equation), x_{k+1} = x_k + s_k, q_k > 0, d_k = -g_kᵀs_k = α_kq_k > 0. Lean names: s_k = R.displacement k, y_k = R.gradientChange k, B_k = R.hessian k = (R.H k)⁻¹, q_k = R.q k, d_k = R.d k (defined as α_kq_k), t_k = R.curvature k; Δ_k is written out."
   },
   {
    "id": "C/07_H/disp/009",
@@ -168,7 +214,11 @@
    "title": null,
    "container": null,
    "sha256": "3b689aab637e2413",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.line_search_conditions"
+   ],
+   "note": "Armijo F(x_{k+1}) ≤ F(x_k) + c₁g_kᵀs_k and weak Wolfe g_{k+1}ᵀs_k ≥ c₂g_kᵀs_k at every step, with fixed 0 < c₁ < c₂ < 1: the fields of AdmissibleBFGSRun (same content as A/energy/disp/002)."
   },
   {
    "id": "C/07_H/disp/010",
@@ -182,7 +232,14 @@
    "title": null,
    "container": null,
    "sha256": "b76be08ee9582365",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.curvature_and_beta",
+    "BfgsVerification.FullBFGSRun.beta_ge_of_weakWolfe",
+    "BfgsVerification.FullBFGSRun.curvature_eq_beta_mul_d",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound"
+   ],
+   "note": "c = 1 - c₂ and β_k = t_k/d_k are variables with their defining equations. Stated: 0 < c, t_k ≥ c·d_k, c·d_k > 0, β_k = -y_kᵀH_kg_k/q_k (the library's R.beta k), β_k ≥ c."
   },
   {
    "id": "C/07_H/disp/011",
@@ -196,7 +253,11 @@
    "title": null,
    "container": null,
    "sha256": "9601fac62d7d6fad",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.inverse_update"
+   ],
+   "note": "H_{k+1} = (I - s_ky_kᵀ/t_k)H_k(I - y_ks_kᵀ/t_k) + s_ks_kᵀ/t_k with (R.curvature k)⁻¹ for 1/t_k (t_k > 0 by disp/010): the update field of AdmissibleBFGSRun (inverseBFGS)."
   },
   {
    "id": "C/07_H/disp/012",
@@ -210,7 +271,13 @@
    "title": null,
    "container": null,
    "sha256": "876fcde8ae508b47",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.hessian_form",
+    "BfgsVerification.AdmissibleBFGSRun.hessian_update",
+    "BfgsVerification.hessianUpdate"
+   ],
+   "note": "Equation (7.2.1): B_{k+1} = B_k - g_kg_kᵀ/q_k + y_ky_kᵀ/t_k for every admissible run (\"after substituting s_k = -α_kH_kg_k\" describes the derivation)."
   },
   {
    "id": "C/07_H/disp/013",
@@ -224,7 +291,13 @@
    "title": null,
    "container": null,
    "sha256": "b794b868430d78d2",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.euler_identity",
+    "BfgsVerification.Homogeneous.supporting_euler",
+    "BfgsVerification.Homogeneous.supporting_linear_le"
+   ],
+   "note": "For finite convex positively homogeneous F, every subgradient g at x (written out: F(x) + gᵀ(z - x) ≤ F(z) for all z) has gᵀx = F(x) and gᵀz ≤ F(z) for all z. Convexity is not used (_hF): only the subgradient inequality and homogeneity. Proof (prose/022) as in the library's supporting_euler (subgradient inequality at 0 and 2x)."
   },
   {
    "id": "C/07_H/disp/014",
@@ -238,7 +311,15 @@
    "title": null,
    "container": null,
    "sha256": "9d8e7c50fa50eb37",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.subgradient_sphere_bound",
+    "BfgsVerification.Homogeneous.supporting_unit_direction",
+    "BfgsVerification.convex_continuous",
+    "BfgsCoverage.Article.Global.unit_sphere_compact",
+    "BfgsCoverage.Article.Global.unit_sphere_nonempty"
+   ],
+   "note": "Including the claims of line 254 (prose/024). For n ≥ 1 and finite convex positively homogeneous F: the Euclidean unit sphere is nonempty, F is continuous, F attains a maximum M on the sphere (IsGreatest (F '' sphere) M; M is a real number, so < ∞), and every subgradient g at every point has ‖g‖ ≤ M (Euclidean norm). For g = 0 the bound needs M ≥ 0, which holds since a zero subgradient makes F ≥ 0."
   },
   {
    "id": "C/07_H/disp/015",
@@ -252,7 +333,12 @@
    "title": null,
    "container": null,
    "sha256": "31c3322b97c79674",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.new_pairing",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_new_pairing"
+   ],
+   "note": "Standing assumptions of Section 7.5.2: F finite, convex, positively homogeneous; R admissible. The display defines h_k = y_kᵀx_{k+1} and ℓ_k = -y_kᵀx_k (variables with defining equations; ℓ is used in prose/027) and asserts y_kᵀx_{k+1} = d_k - Δ_k."
   },
   {
    "id": "C/07_H/disp/016",
@@ -266,7 +352,14 @@
    "title": null,
    "container": null,
    "sha256": "d161655c3e408073",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.decrease_sandwich",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_decrease_sandwich",
+    "BfgsVerification.AdmissibleBFGSRun.armijo_decrease",
+    "BfgsVerification.AdmissibleBFGSRun.convexity_decrease_upper"
+   ],
+   "note": "c₁d_k ≤ Δ_k ≤ d_k (\"Armijo and convexity give\", line 278); homogeneity is not needed (_hhom)."
   },
   {
    "id": "C/07_H/disp/017",
@@ -280,7 +373,13 @@
    "title": null,
    "container": null,
    "sha256": "1b6dbdeb032114e5",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.energy_identity",
+    "BfgsCoverage.Companion.Ch07H.hessian_form",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_energy_identity"
+   ],
+   "note": "Equation (7.5.1): x_{k+1}ᵀB_{k+1}x_{k+1} = x_kᵀB_kx_k - f_k²/q_k + h_k²/t_k, with h_k = y_kᵀx_{k+1} (variable). x_kᵀB_kx_k is dot (R.x k) (R.hessian k *ᵥ R.x k) (the library's referenceEnergy 0 k). The introducing sentence \"Expanding (2.1) at …\" (line 284) cites (2.1) for the Hessian form (7.2.1): typo, see the discrepancy of prose/028."
   },
   {
    "id": "C/07_H/disp/018",
@@ -294,7 +393,13 @@
    "title": null,
    "container": null,
    "sha256": "79dd69dad18343b3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.alpha_terms_cancel",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_euler",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_old_endpoint_pairing"
+   ],
+   "note": "The display is the identity -2α_kf_k + α_k²q_k - (f_k - α_kq_k)²/q_k = -f_k²/q_k (q_k > 0). alpha_terms_cancel also states the explicit α-terms it cancels (prose/029): g_kᵀx_k = f_k (Euler), x_{k+1}ᵀB_kx_{k+1} = x_kᵀB_kx_k - 2α_kf_k + α_k²q_k and g_kᵀx_{k+1} = f_k - α_kq_k."
   },
   {
    "id": "C/07_H/disp/019",
@@ -308,7 +413,14 @@
    "title": null,
    "container": null,
    "sha256": "1457282f48d53ca3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.correction_bounds",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_referenceCorrection_le_drop",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_pairing_le_curvature",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_new_pairing_nonneg"
+   ],
+   "note": "h_k²/t_k ≤ h_k = d_k - Δ_k ≤ ((1-c₁)/c₁)Δ_k (the chain as three statements)."
   },
   {
    "id": "C/07_H/disp/020",
@@ -322,7 +434,14 @@
    "title": null,
    "container": null,
    "sha256": "240e4e9b455a8fcc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.potential_step",
+    "BfgsCoverage.Companion.Ch07H.potential_eq",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_potential_step",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneousPotential"
+   ],
+   "note": "Equation (7.5.2). γ = (1-c₁)/c₁ and Φ_k = x_kᵀB_kx_k + γf_k are variables with their defining equations (definitions); asserted: Φ_{k+1} ≤ Φ_k - f_k²/q_k. Φ is the library's homogeneousPotential (potential_eq)."
   },
   {
    "id": "C/07_H/disp/021",
@@ -336,7 +455,13 @@
    "title": null,
    "container": null,
    "sha256": "36b55e22f9616065",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.predicted_decrease_budget",
+    "BfgsVerification.AdmissibleBFGSRun.tail_budget_le",
+    "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_lower_bound"
+   ],
+   "note": "In the proof of Theorem 7.A (lines 330-365, prose/031). Standing assumptions: Theorem 7.A's and a finite limit L of F(x_k) (\"In the latter case\"). Stated: Summable d and ∑' d_k ≤ (f_0 - L)/c₁."
   },
   {
    "id": "C/07_H/disp/022",
@@ -350,7 +475,14 @@
    "title": null,
    "container": null,
    "sha256": "cb4ba9f418c4818f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.weighted_sum_finite",
+    "BfgsCoverage.Companion.Ch07H.potential_eq",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_summable",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_tsum_budget"
+   ],
+   "note": "In the proof of Theorem 7.A; standing assumptions as disp/021 with γ, Φ of disp/020. ∑_k f_k²/q_k < ∞ is summability; also the telescoped bound ∑' f_k²/q_k ≤ Φ_0 - γL. The step Φ_k ≥ γL (lines 339-340) is potential_lower_bound (listed in prose/031). \"telescoping (5.2)\" cites (5.2) for (7.5.2): typo, see prose/028."
   },
   {
    "id": "C/07_H/disp/023",
@@ -364,7 +496,12 @@
    "title": null,
    "container": null,
    "sha256": "f2141ebaafe35524",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.energy_bound",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_energy_bound_of_lower_bound"
+   ],
+   "note": "In the proof of Theorem 7.A; M = Φ_0 - γL is a variable with its defining equation (\"=: M\"; M is real, so M < ∞). Stated: x_kᵀB_kx_k ≤ M for every k."
   },
   {
    "id": "C/07_H/disp/024",
@@ -378,7 +515,14 @@
    "title": null,
    "container": null,
    "sha256": "1bcde33fcfb837d8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.value_sq_bound",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_sq_le_energy_mul_q",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_sq_le_budget_mul_q",
+    "BfgsVerification.QuadraticGauge.metric_cauchy_schwarz"
+   ],
+   "note": "In the proof of Theorem 7.A; standing assumptions of disp/023. The chain f_k² = (g_kᵀx_k)² ≤ (g_kᵀH_kg_k)(x_kᵀB_kx_k) ≤ Mq_k as three statements for every k."
   },
   {
    "id": "C/07_H/heading/004",
@@ -392,7 +536,16 @@
    "title": "Lemma 7.3.",
    "container": null,
    "sha256": "278beea284e4cb3e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.lemma_7_3",
+    "BfgsCoverage.Companion.Ch07H.lemmaRun",
+    "BfgsVerification.FullBFGSRun.zero_mem_recurrent_affineSpan",
+    "BfgsVerification.fullBFGS_positive_invariants",
+    "BfgsVerification.DescentBudget.armijo_summable",
+    "BfgsVerification.AdmissibleBFGSRun.recurrent_affine_zero_of_lower_bound"
+   ],
+   "note": "Lemma 7.3 (lines 405-408). Stated without convexity or homogeneity (lines 430-431 say none is needed): an arbitrary F : Vec n → ℝ and sequences x H g α with H₀ ≻ 0, α_k > 0, g_k ≠ 0, g_k = ∇F(x_k) (_hgrad, unused), x_{k+1} = x_k + s_k, s_k = bfgsStep (H k) (g k) (α k) = -α_kH_kg_k, the inverse-BFGS update, Armijo and weak Wolfe with fixed 0 < c₁ < c₂ < 1 (\"a full-BFGS run satisfies Armijo–weak-Wolfe\"); finite gradient alphabet (Set.range g).Finite; values bounded below along the run (∃ L, ∀ k, L ≤ F(x_k)); G = {v | ∃ᶠ k, g k = v}. Conclusion 0 ∈ affineSpan ℝ G. lemmaRun builds the library's FullBFGSRun (positive definiteness from fullBFGS_positive_invariants); the proof follows lines 410-428 through FullBFGSRun.zero_mem_recurrent_affineSpan. The library's version for admissible runs is AdmissibleBFGSRun.recurrent_affine_zero_of_lower_bound. Non-vacuous: the data of Global.absRun (example). The name \"Lemma 7.3\" is the source's \"Lemma H.3\" (generate_companion.py replaces the module letter H by 7); the chapter has no Lemma 7.1 or 7.2. A name used consistently, not a cross-reference, so not a discrepancy (cosmetic remark for the author)."
   },
   {
    "id": "C/07_H/disp/025",
@@ -406,7 +559,14 @@
    "title": null,
    "container": null,
    "sha256": "50a3dbd4ff0f6651",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.common_vector",
+    "BfgsCoverage.Companion.Ch07H.common_vector_general",
+    "BfgsVerification.Homogeneous.common_component_of_zero_not_mem_affineSpan",
+    "BfgsVerification.Homogeneous.recurrentValues_nonempty"
+   ],
+   "note": "In the proof of Lemma 7.3. Standing assumptions: the lemma's hypotheses, a prefix J after which every gradient is in G (line 414), and 0 ∉ aff G (the assumption of the proof by contradiction); conclusion ∃ v, ∀ g ∈ G, vᵀg = 1. These assumptions cannot all hold (Lemma 7.3); common_vector derives the display from the general form common_vector_general (every nonempty G with 0 ∉ aff G), whose assumptions are satisfiable (example: G = {(1)} in ℝ¹)."
   },
   {
    "id": "C/07_H/disp/026",
@@ -420,7 +580,14 @@
    "title": null,
    "container": null,
    "sha256": "54330fb9b3478b89",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.common_vector_energy_step",
+    "BfgsCoverage.Companion.Ch07H.common_vector_energy_step_general",
+    "BfgsVerification.FullBFGSRun.common_component_energy_step",
+    "BfgsVerification.hessianUpdate"
+   ],
+   "note": "In the proof of Lemma 7.3; standing assumptions of disp/025 plus v with vᵀg = 1 on G; for k ≥ J: vᵀy_k = 0 and vᵀB_{k+1}v = vᵀB_kv - 1/q_k (B_k = H_k⁻¹). Jointly inconsistent assumptions; the general form common_vector_energy_step_general is one inverse-BFGS update with vᵀg = vᵀg' = 1 (satisfiable: H = I, g = (1,1), g' = (-1,1), α = 1, v = (0,1), example). \"Equation (2.1)\" (line 421) means (7.2.1): typo, see prose/028."
   },
   {
    "id": "C/07_H/disp/027",
@@ -434,7 +601,12 @@
    "title": null,
    "container": null,
    "sha256": "00d69f8826f1149a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.tilt_model_gradients",
+    "BfgsCoverage.Companion.Ch07H.tilt_family_escape"
+   ],
+   "note": "\"The arbitrary-many-piece model f(u,t) = t + max_i b_iᵀu has precisely the same common-component property\": every gradient g = ∇F(x) at a differentiable point has last component g_{n+1} = 1 (t last, Fin.last n). The gradient statement does not involve runs. Its run consequence (prose/011, tilt_family_escape) is vacuous when the b_i lie on one line (no admissible run exists, tilt_collinear_no_run) and open otherwise (prose/045)."
   },
   {
    "id": "C/07_H/disp/028",
@@ -448,7 +620,14 @@
    "title": null,
    "container": null,
    "sha256": "9023f0f2fb6e0959",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.hat_definitions",
+    "BfgsVerification.AffineProjection.compress",
+    "BfgsVerification.AffineProjection.lift",
+    "BfgsVerification.AffineProjection.fiberPoint"
+   ],
+   "note": "Defines x̂_k = Uᵀx_k, Ĥ_k = UᵀH_kU, ĝ_k = Uᵀg_k (U with orthonormal columns spanning S, gradients in S after K: lines 495-496, standing assumptions of Section 7.7.1). The theorems of the section take xh, Hh, gh as variables with exactly these defining equations. hat_definitions unfolds the library's objects: AffineProjection.compress Uᵀ H = UᵀHU (Ĥ), lift Uᵀ H = HU(UᵀHU)⁻¹ (L_K of (7.7.1)), fiberPoint Uᵀ H x 0 = x - HU(UᵀHU)⁻¹Uᵀx ((7.7.2))."
   },
   {
    "id": "C/07_H/disp/029",
@@ -462,7 +641,14 @@
    "title": null,
    "container": null,
    "sha256": "15c4d400a29b87e7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.iterate_lift",
+    "BfgsCoverage.Companion.Ch07H.grad_lift",
+    "BfgsVerification.AdmissibleBFGSRun.affine_iterate_lift_tail",
+    "BfgsVerification.AffineProjection.matrix_lift_invariant"
+   ],
+   "note": "Equation (7.7.1), for every k ≥ K (\"all subsequent steps\"; for k < K it is not claimed): x_k = x_K + L_K(x̂_k - x̂_K), L_K = H_KU(UᵀH_KU)⁻¹ (variable L with its defining equation). Standing assumptions of Section 7.7: a finite max-linear objective (_hF_def, unused: the lifting holds for every admissible run), U with Uᵀ * U = 1 spanning S, gradients in S for k ≥ K."
   },
   {
    "id": "C/07_H/disp/030",
@@ -476,7 +662,13 @@
    "title": null,
    "container": null,
    "sha256": "bfdf7547ba643e34",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.zero_limit_formula",
+    "BfgsCoverage.Companion.Ch07H.limit_lift",
+    "BfgsVerification.AdmissibleBFGSRun.affine_limit_lift_tail"
+   ],
+   "note": "Equation (7.7.2): if x̂_k → 0 then x_k → x_K - H_KU(UᵀH_KU)⁻¹Uᵀx_K (the matrix product applied to x_K)."
   },
   {
    "id": "C/07_H/disp/031",
@@ -490,7 +682,14 @@
    "title": null,
    "container": null,
    "sha256": "360e624398d5bf38",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.endpoint_pairings",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_endpoint_pairings_tendsto_zero",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_old_endpoint_pairing",
+    "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_value_limit"
+   ],
+   "note": "Equation (7.7.3), with \"Then d_k → 0\" (line 543, prose/074). Standing assumptions: a finite max-linear objective (Section 7.7), an admissible run, f_k → 0 (line 543). Stated: d_k → 0; g_{k+1}ᵀx_{k+1} = f_{k+1}, g_kᵀx_{k+1} = f_k - d_k for all k; both pairings → 0. The library proves it for every finite convex positively homogeneous objective."
   },
   {
    "id": "C/07_H/disp/032",
@@ -504,7 +703,17 @@
    "title": null,
    "container": null,
    "sha256": "6d122e065edb2172",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.block_decrease",
+    "BfgsCoverage.Companion.Ch07H.block_general",
+    "BfgsCoverage.Companion.Ch07H.block_witness",
+    "BfgsCoverage.Companion.Ch07H.bw_run_exists",
+    "BfgsCoverage.Companion.Ch07H.prependStep",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_opposite_decrease",
+    "BfgsVerification.AdmissibleRunExistence.exists_admissible_run"
+   ],
+   "note": "In the proof of the planar finite-value branch (lines 598-654, prose/060). Standing assumptions: planar finite max-linear objective (slopes named slopes, since a, b are the anchor indices), admissible run with f_k → 0, consecutive anchors x_a, x_b (a ≥ 1, transitions a-1 and b-1 linearly independent, all transitions in between dependent) with an intermediate iterate (a + 2 ≤ b), g = g_a and κ > 0 with g_{a+1} = -κg (\"Write its initial gradient as g, and the next opposite gradient as -κg\"). Stated: d_a = f_a + f_{a+1}/κ. The anchor hypotheses are not used; block_general proves all displays of the block without them (its assumptions hold for Master.absVRun, example). All the standing assumptions, anchor hypotheses included, hold together (block_witness, example at the end): F(u,v) = |u| + |v| (slopes (±1,±1)) with the admissible run of bw_run_exists, c₁ = 1/4, c₂ = 1/2, whose first three steps are exact rational steps: x₀ = (1,3), H₀ = [[1,-1],[-1,2]], α₀ = 4; x₁ = (1,-1), H₁ = diag(1,2), α₁ = 21/20; x₂ = (-1/20,11/10), H₂ = [[101/120,19/60],[19/60,41/30]], α₂ = 1/10; x₃ = (1/400,199/200); gradients (1,1), (1,-1), (-1,1), (1,1). Transitions 0 and 2 are independent, transition 1 is dependent with g₂ = -g₁: a = 1, b = 3, g = g₁, κ = 1. The run continues from (x₃, H₃) by AdmissibleRunExistence.exists_admissible_run (|u|+|v| is convex, nonnegative, differentiable exactly off the axes, which meet every line through a point of differentiability in at most two points, and has no zero gradient); the three steps are prepended with prependStep."
   },
   {
    "id": "C/07_H/disp/033",
@@ -518,7 +727,13 @@
    "title": null,
    "container": null,
    "sha256": "52085897f81781ff",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.block_contraction",
+    "BfgsCoverage.Companion.Ch07H.block_general",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_opposite_contraction"
+   ],
+   "note": "Standing assumptions of disp/032. The chain f_{a+1} ≤ ((1-c₁)/(1+c₁/κ))f_a ≤ (1-c₁)f_a as two statements. The next step \"monotonicity gives f_b ≤ (1-c₁)f_a\" (line 623) is part of block_general."
   },
   {
    "id": "C/07_H/disp/034",
@@ -532,7 +747,13 @@
    "title": null,
    "container": null,
    "sha256": "34a2fec5fcf496b7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.block_window",
+    "BfgsCoverage.Companion.Ch07H.block_general",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_support"
+   ],
+   "note": "Standing assumptions of disp/032. -f_a/κ ≤ gᵀx_k ≤ f_a for every accepted point x_k of the block (a ≤ k ≤ b)."
   },
   {
    "id": "C/07_H/disp/035",
@@ -546,7 +767,12 @@
    "title": null,
    "container": null,
    "sha256": "c39f069c7c3e8588",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.block_endpoint_difference",
+    "BfgsCoverage.Companion.Ch07H.block_general"
+   ],
+   "note": "Standing assumptions of disp/032. gᵀ(x_b - x_a) ≤ -c₁f_a."
   },
   {
    "id": "C/07_H/disp/036",
@@ -560,7 +786,13 @@
    "title": null,
    "container": null,
    "sha256": "c8ba371597338a02",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.block_parameter_bound",
+    "BfgsCoverage.Companion.Ch07H.block_general",
+    "BfgsVerification.HomogeneousBlock.interpolation_parameter_bound"
+   ],
+   "note": "Standing assumptions of disp/032. For every block point x_k (a ≤ k ≤ b) and θ with x_k = x_a + θ(x_b - x_a): 0 ≤ θ ≤ (1+1/κ)/c₁. (That every block point has this form is the collinearity step of lines 601-607, library AdmissibleBFGSRun.planar_dependent_prefix_collinear.)"
   },
   {
    "id": "C/07_H/disp/037",
@@ -574,7 +806,12 @@
    "title": null,
    "container": null,
    "sha256": "5802bb2d03d4bc72",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.relint_def",
+    "BfgsVerification.Homogeneous.RelativeInteriorZero"
+   ],
+   "note": "Defines S = span{a_1,…,a_m} (Submodule.span ℝ (Set.range a)) and P = conv{a_1,…,a_m} (convexHull ℝ (Set.range a)); the theorems of Section 7.8 take S, P as variables with these defining equations, and \"0 ∈ relint P, with relative interior taken in S\" (lines 686-687) as (0 : S) ∈ interior {v : S | (v : Vec n) ∈ P} (interior in the subtype S). relint_def shows that this is exactly the library's Homogeneous.RelativeInteriorZero of the slope set."
   },
   {
    "id": "C/07_H/disp/038",
@@ -588,7 +825,13 @@
    "title": null,
    "container": null,
    "sha256": "8068df81a8370fb3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.relint_coercive",
+    "BfgsVerification.Homogeneous.finiteMaxLinear_projection_eq",
+    "BfgsVerification.Homogeneous.relativeInterior_euclidean_projection_bound"
+   ],
+   "note": "With the claims of lines 686-688 (prose/063). Standing assumptions: F = max_i a_iᵀx, S, P (disp/037), 0 ∈ relint P, U with Uᵀ * U = 1 whose columns span S. \"f depends only on the projection to S\": F(x) = F(UUᵀx) (UUᵀx is the orthogonal projection on S); \"coercive there\": ∃ μ > 0, ∀ x, μ‖Uᵀx‖ ≤ F(x) (Euclidean norm)."
   },
   {
    "id": "C/07_H/disp/039",
@@ -602,8 +845,1176 @@
    "title": null,
    "container": null,
    "sha256": "2b05f6aa2d0a9543",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.relint_limit",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_convergence",
+    "BfgsVerification.relativeInteriorConvergence"
+   ],
+   "note": "Equation (7.8.1), with \"Theorem 7.A implies Uᵀx_k → 0\" (line 694, prose/064). Standing assumptions of disp/038; for every admissible run: Uᵀx_k → 0 and x_k → x_0 - H_0U(UᵀH_0U)⁻¹Uᵀx_0."
+  },
+  {
+   "id": "C/07_H/prose/001",
+   "kind": "prose",
+   "anchor": "Coercive homogeneous objectives provide a broad global convergence family.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/global/theorem/art:homogeneous",
+    "C/07_H/heading/001",
+    "C/07_H/heading/004",
+    "C/07_H/heading/002",
+    "C/07_H/heading/003",
+    "C/07_H/prose/016"
+   ],
+   "note": "Chapter summary: the compact (coercive) family is the article's Theorem art:homogeneous; \"noncompact value alternatives\" Theorem 7.A, \"recurrent-gradient obstructions\" Lemma 7.3 and Theorem 7.B, \"conditional iterate conclusions\" Theorem 7.C and prose/016 (Sections 7.7-7.8). \"which remain distinct from finite line-search escape and from whole-iterate convergence\" is a scope remark (the value results do not give finite termination or iterate convergence; cf. prose/012, prose/019)."
+  },
+  {
+   "id": "C/07_H/prose/002",
+   "kind": "prose",
+   "anchor": "This note continues the investigation of ordinary, full-memory BFGS",
+   "lines": [
+    23,
+    24
+   ],
+   "status": "NON_CLAIM",
+   "reason": "History: places the note in the line of work of Xie–Wächter; no mathematical assertion."
+  },
+  {
+   "id": "C/07_H/prose/003",
+   "kind": "prose",
+   "anchor": "steps satisfy fixed Armijo and \\textbf{weak} Wolfe inequalities.",
+   "lines": [
+    24,
+    28
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.run_setting"
+   ],
+   "note": "Every admissible run: fixed 0 < c₁ < c₂ < 1 with Armijo and weak Wolfe at every step; F differentiable at every accepted iterate; every H_k ≻ 0 (proved; only H₀ ≻ 0 is assumed); H_{k+1} is exactly the inverse-BFGS update of H_k. \"No damping, restarts, smoothing, spectral safeguards, or particular line-search implementation is imposed\" describes the setting: the update is the plain formula and the run is any sequence of accepted steps (no line-search procedure is part of AdmissibleBFGSRun)."
+  },
+  {
+   "id": "C/07_H/prose/004",
+   "kind": "prose",
+   "anchor": "The objective-value theorem below holds more generally for every finite",
+   "lines": [
+    36,
+    39
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/heading/001",
+   "note": "theorem_7A is stated for every real-valued (\"finite\" = real-valued everywhere, not finitely many pieces) convex positively homogeneous F : Vec n → ℝ, not only for max-linear objectives."
+  },
+  {
+   "id": "C/07_H/prose/005",
+   "kind": "prose",
+   "anchor": "Proof status.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the Lean formalization and its review (software/audit), not a mathematical claim."
+  },
+  {
+   "id": "C/07_H/prose/006",
+   "kind": "prose",
+   "anchor": "There is \\textbf{no assumption} that the iterates, displacements,",
+   "lines": [
+    58,
+    60
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/heading/001",
+   "note": "theorem_7A has no hypothesis bounding iterates, displacements, lengths or matrices and no finite-gradient-alphabet hypothesis: only convexity, positive homogeneity and admissibility."
+  },
+  {
+   "id": "C/07_H/prose/007",
+   "kind": "prose",
+   "anchor": "Consequently, if \\(f\\) is bounded below, then \\(f(x_k)\\to0=\\min f\\).",
+   "lines": [
+    62,
+    62
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.bounded_below_consequence",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_bounded_below_convergence",
+    "BfgsVerification.Homogeneous.nonneg_of_bounded_below"
+   ],
+   "note": "Under the hypotheses of Theorem 7.A and ∃ L, ∀ x, L ≤ F x: IsLeast (Set.range F) 0 (\"0 = min f\") and every admissible run has F(x_k) → 0."
+  },
+  {
+   "id": "C/07_H/prose/008",
+   "kind": "prose",
+   "anchor": "is coercive, then \\(x_k\\to0\\), its unique minimizer.",
+   "lines": [
+    63,
+    63
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.coercive_consequence",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_iterates_zero",
+    "BfgsCoverage.Article.Global.coercive_homogeneous_positive"
+   ],
+   "note": "Coercive is Tendsto F (cocompact (Vec n)) atTop. Stated: 0 is the unique minimizer of F and every admissible run has x_k → 0."
+  },
+  {
+   "id": "C/07_H/prose/009",
+   "kind": "prose",
+   "anchor": "infinite run ever attains \\(f(x_k)\\le0\\), its values must tend to",
+   "lines": [
+    63,
+    66
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.nonpositive_value_consequence",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_nonpositive_forces_escape",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_finite_branch_positive"
+   ],
+   "note": "For every admissible run: some F(x_k) ≤ 0 forces F(x_k) → -∞; a finite limit of the values (the finite-value branch) forces F(x_k) > 0 for every k."
+  },
+  {
+   "id": "C/07_H/prose/010",
+   "kind": "prose",
+   "anchor": "This no longer needs a bounded-displacement hypothesis.",
+   "lines": [
+    83,
+    83
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/heading/002",
+   "note": "theorem_7B assumes no bound on displacements (the earlier common-tilt result referred to did); comparison with that earlier result is history."
+  },
+  {
+   "id": "C/07_H/prose/011",
+   "kind": "prose",
+   "anchor": "All its gradients have last component one, so every infinite admissible",
+   "lines": [
+    98,
+    99
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.tilt_family_escape",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_common_component_escape",
+    "BfgsVerification.AdmissibleBFGSRun.commonTilt_value_escape",
+    "BfgsVerification.Homogeneous.finiteMaxLinear_gradient_mem"
+   ],
+   "note": "For F(u,t) = t + max_i b_iᵀu (t last): every gradient at a differentiable point has last component one, and every admissible run has F(x_k) → -∞. As for Theorem 7.B (ii) (all slopes (b_i,1) lie on the affine hyperplane {last coordinate 1}, which misses 0), no admissible run on this family is exhibited, and on many members none exists, so the run statement is vacuous there: when the b_i lie on one line, in every dimension (tilt_collinear_no_run), in particular with at most two distinct b_i (tilt_two_values_no_run, tilt_two_pieces_no_run) and for every member in ℝ², n = 1 (tilt_plane_no_run). For b_i not on one line (at least three pieces, ambient dimension ≥ 3) existence is not known (open question TiltNoInfiniteRunQuestion, prose/045). The text does not claim that a run exists; the statement is stated as printed."
+  },
+  {
+   "id": "C/07_H/prose/012",
+   "kind": "prose",
+   "anchor": "This is an infinite-run result,",
+   "lines": [
+    99,
+    100
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/prose/045",
+   "note": "The same disclaimer as prose/045 (lines 461-463): finite termination for every many-piece objective is not proved here. The open question is stated there (TiltNoInfiniteRunQuestion); \"This is an infinite-run result\" refers to prose/011."
+  },
+  {
+   "id": "C/07_H/prose/013",
+   "kind": "prose",
+   "anchor": "In the first alternative the limit is nonstationary.",
+   "lines": [
+    124,
+    124
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.theorem_7C_nonstationary",
+    "BfgsVerification.Homogeneous.no_stationary_support_of_unboundedBelow"
+   ],
+   "note": "Under the hypotheses of Theorem 7.C, the limit 0 of the first alternative is not stationary: 0 ∉ ConvexSubdifferential.subdifferential F 0 (the convex subdifferential). In fact no point is stationary (proof, lines 582-585: prose/075, no_stationary_point)."
+  },
+  {
+   "id": "C/07_H/prose/014",
+   "kind": "prose",
+   "anchor": "exact three-piece example attains that alternative.",
+   "lines": [
+    124,
+    125
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.seed_attains_first_alternative",
+    "BfgsCoverage.Companion.Ch07H.seed_isGreatest",
+    "BfgsCoverage.Companion.Ch07H.seed_unbounded",
+    "BfgsVerification.SeedOrbit.actual_run_failure",
+    "BfgsVerification.SeedOrbit.seed_gradient_injective",
+    "BfgsVerification.SeedOrbit.objective_downhill_ray"
+   ],
+   "note": "The seed objective G(z) = max_{i<3} g_iᵀz (SeedOrbit.objective seedC seedD; three distinct slopes) is a finite max-linear objective on ℝ² with inf G = -∞, and for every 0 < c₁ ≤ 1/3, c₁ < c₂ < 1 its admissible run SeedOrbit.run satisfies x_k → 0, G(x_k) → 0, values nonincreasing. The run exists for c₁ ≤ 1/3 (the range of the article's seed, cf. M11); the claim is existential (\"attains\"), so this suffices."
+  },
+  {
+   "id": "C/07_H/prose/015",
+   "kind": "prose",
+   "anchor": "convergence of the \\emph{directions}",
+   "lines": [
+    125,
+    127
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: says that convergence of the directions x_k/‖x_k‖ is not asserted."
+  },
+  {
+   "id": "C/07_H/prose/016",
+   "kind": "prose",
+   "anchor": "More generally, for any finite max-linear objective, if the span of the",
+   "lines": [
+    129,
+    132
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.recurrent_rank_le_two_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_span_le_two_finite_value",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_span_le_two_lower_bound"
+   ],
+   "note": "For F = max_i a_iᵀx on ℝⁿ and an admissible run with dim span G ≤ 2 (Module.finrank ℝ (Submodule.span ℝ G) ≤ 2): a finite value limit gives convergent iterates; if F is bounded below (\"the noncoercive bounded-below case\"; coercive or not), the iterates converge. \"Section 7.7 proves this broader statement\" is a pointer (correct: Sections 7.7.1-7.7.4)."
+  },
+  {
+   "id": "C/07_H/prose/017",
+   "kind": "prose",
+   "anchor": "The objective-value classification is now unconditional in every",
+   "lines": [
+    141,
+    142
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/heading/001",
+   "note": "Theorem 7.A holds in every dimension with no hypothesis beyond finiteness, convexity and positive homogeneity."
+  },
+  {
+   "id": "C/07_H/prose/018",
+   "kind": "prose",
+   "anchor": "The remaining unresolved iterate question in this",
+   "lines": [
+    142,
+    146
+   ],
+   "status": "OPEN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.ZeroValueIterateQuestion"
+   ],
+   "note": "Open question, stated without proof: for every finite max-linear objective that is not coercive and every admissible run with dim span G ≥ 3 and F(x_k) → 0, do the iterates converge? A nonconvergent zero-value-limit trajectory would refute the Prop. \"noncompact objectives\" is ¬ Tendsto F (cocompact (Vec n)) atTop (noncoercive; for these objectives the coercive case is settled by prose/008)."
+  },
+  {
+   "id": "C/07_H/prose/019",
+   "kind": "prose",
+   "anchor": "This distinction is essential:",
+   "lines": [
+    148,
+    151
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: the results close a previous gap for function values and are not presented as a classification of the iterates; no mathematical assertion beyond those of heading/001 and prose/018."
+  },
+  {
+   "id": "C/07_H/prose/020",
+   "kind": "prose",
+   "anchor": "A zero gradient corresponds to a stationary termination rather than an",
+   "lines": [
+    215,
+    216
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.zero_gradient_stationary",
+    "BfgsVerification.convex_supporting_inequality"
+   ],
+   "note": "For finite convex F, a zero gradient at x makes x a global minimizer (stationary; no point has a smaller value, so no strict descent) and the BFGS step from x is zero for every H and α (the iteration stops)."
+  },
+  {
+   "id": "C/07_H/prose/021",
+   "kind": "prose",
+   "anchor": "Throughout, ``infinite admissible''",
+   "lines": [
+    216,
+    218
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.admissible_convention",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_pos"
+   ],
+   "note": "Convention: every admissible run has g_k ≠ 0 (a field of AdmissibleBFGSRun) and t_k > 0 (proved from weak Wolfe), so the updates are well defined."
+  },
+  {
+   "id": "C/07_H/prose/022",
+   "kind": "prose",
+   "anchor": "The first equality follows by applying the subgradient inequality to",
+   "lines": [
+    251,
+    253
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/disp/013",
+   "lean": [
+    "BfgsVerification.Homogeneous.supporting_euler",
+    "BfgsVerification.Homogeneous.supporting_linear_le"
+   ],
+   "note": "Prose proof of disp/013; the library's supporting_euler applies the subgradient inequality at 0 and 2x, supporting_linear_le substitutes the equality back."
+  },
+  {
+   "id": "C/07_H/prose/023",
+   "kind": "prose",
+   "anchor": "In particular, all subgradients belong to",
+   "lines": [
+    253,
+    254
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.subgradients_at_zero",
+    "BfgsVerification.Homogeneous.supports_at_zero"
+   ],
+   "note": "Every subgradient of F at any x is a subgradient at 0."
+  },
+  {
+   "id": "C/07_H/prose/024",
+   "kind": "prose",
+   "anchor": "In positive dimension, the unit sphere is nonempty and \\(f\\) is finite and continuous there",
+   "lines": [
+    254,
+    254
+   ],
+   "status": "PART_OF",
+   "of": "C/07_H/disp/014",
+   "note": "subgradient_sphere_bound states these claims (sphere nonempty for n ≥ 1, F continuous) together with the display."
+  },
+  {
+   "id": "C/07_H/prose/025",
+   "kind": "prose",
+   "anchor": "In dimension zero the space is a singleton and every gradient is zero;",
+   "lines": [
+    258,
+    258
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.dimension_zero",
+    "BfgsVerification.AdmissibleBFGSRun.dimension_pos"
+   ],
+   "note": "In ℝ⁰: every vector is 0 (so every gradient is 0 and gradients are bounded), every sublevel is bounded, every sequence converges to 0 (the bounded-sublevel and coercive conclusions hold directly), and no admissible run exists. \"This leaves the value theorem in arbitrary finite dimension\": theorem_7A is stated for every n. \"All uses of a sphere minimum or maximum below concern positive dimension\" is a remark about the text's arguments (the sphere bounds used later, e.g. prose/035, hold trivially for n = 0)."
+  },
+  {
+   "id": "C/07_H/prose/026",
+   "kind": "prose",
+   "anchor": "Thus the bounded-gradient assumption in Theorem~\\ref{M:average} is automatic, even for",
+   "lines": [
+    260,
+    261
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.bounded_gradients_automatic",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_global_gradient_bound",
+    "BfgsVerification.Homogeneous.global_supporting_bound",
+    "BfgsCoverage.Article.Energy.reciprocal_growth",
+    "BfgsCoverage.Article.Global.euclidean_norm_not_maxLinear"
+   ],
+   "note": "For every finite convex positively homogeneous F, every admissible run has bounded gradients (∃ Λ, ∀ k, ‖g_k‖ ≤ Λ, Euclidean), the hypothesis of Theorem M:average (02_M; the article's Theorem art:reciprocal-growth, Energy.reciprocal_growth, stated in the same form); so its conclusion (geometric and arithmetic means of q_k⁻¹ → ∞) holds when d_k → 0. \"Even for an infinite-piece sublinear function\": no finite-piece hypothesis; e.g. the Euclidean norm, which is not a finite linear maximum (Global.euclidean_norm_not_maxLinear). Theorem M:average is not imported from Ch02M (rule: no companion-module imports); the article's equivalent statement is used."
+  },
+  {
+   "id": "C/07_H/prose/027",
+   "kind": "prose",
+   "anchor": "Convexity and homogeneity give \\(h_k,\\ell_k\\ge0\\) and",
+   "lines": [
+    277,
+    278
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.pairings_nonneg",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_new_pairing_nonneg",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_old_pairing_nonpos",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_curvature_pairings"
+   ],
+   "note": "h_k ≥ 0, ℓ_k ≥ 0, t_k = h_k + ℓ_k with h, ℓ the variables of disp/015."
+  },
+  {
+   "id": "C/07_H/prose/028",
+   "kind": "prose",
+   "anchor": "Expanding (2.1) at \\(x_{k+1}=x_k-\\alpha_kH_kg_k\\) yields",
+   "lines": [
+    284,
+    284
+   ],
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.energy_identity",
+    "BfgsCoverage.Companion.Ch07H.hessian_form"
+   ],
+   "note": "Typo in cross-references (one entry for the seven equation references, lines 284, 341, 421, 577, 599, 655 and 714, and the title of Section 7.5, lines 234-235, \"proof of Theorem A\" for Theorem 7.A, which belongs to no register item; see discrepancies). The mathematics of this sentence (expanding the Hessian form (7.2.1) at x_{k+1} gives (7.5.1)) is energy_identity, proved from hessian_form."
+  },
+  {
+   "id": "C/07_H/prose/029",
+   "kind": "prose",
+   "anchor": "The explicit terms involving \\(\\alpha_k\\) cancel because",
+   "lines": [
+    294,
+    295
+   ],
+   "status": "PART_OF",
+   "of": "C/07_H/disp/018",
+   "note": "alpha_terms_cancel states g_kᵀx_k = f_k and the explicit α-terms together with the display."
+  },
+  {
+   "id": "C/07_H/prose/030",
+   "kind": "prose",
+   "anchor": "This potential inequality was established in the earlier note.",
+   "lines": [
+    319,
+    321
+   ],
+   "status": "NON_CLAIM",
+   "reason": "History of the argument (which ingredient is new relative to an earlier note); the mathematics is disp/020 and Theorem M:average."
+  },
+  {
+   "id": "C/07_H/prose/031",
+   "kind": "prose",
+   "anchor": "Armijo gives strictly decreasing values.",
+   "lines": [
+    330,
+    365
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/heading/001",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.values_dichotomy",
+    "BfgsCoverage.Companion.Ch07H.q_not_bounded_away",
+    "BfgsCoverage.Companion.Ch07H.potential_lower_bound",
+    "BfgsCoverage.Companion.Ch07H.reciprocal_summable_of_weighted",
+    "BfgsCoverage.Companion.Ch07H.bounded_away_of_pointwise",
+    "BfgsCoverage.Companion.Ch07H.finite_limit_zero",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_finite_value_limit_zero",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_value_dichotomy"
+   ],
+   "note": "Proof of Theorem 7.A (Sections 7.5.1-7.5.3 provide the tools; this item is lines 330-365, which end \"proving Theorem 7.A. □\"). Displays: disp/021-disp/024. Undisplayed steps stated: values_dichotomy (330-331: strict decrease; F(x_k) → -∞ or a finite limit), q_not_bounded_away (339: d_k → 0 and q_k < ε infinitely often for every ε > 0, i.e. lim inf q_k = 0, via Theorem M:average = Energy.reciprocal_growth on the tail), potential_lower_bound (339-340: Φ_k ≥ γL), reciprocal_summable_of_weighted (346-347, general form: f_k → L ≠ 0 and ∑f_k²/q_k < ∞ give ∑1/q_k < ∞ and q_k → ∞), bounded_away_of_pointwise (363-364, general form: f_k² ≤ Mq_k and f_k → L ≠ 0 give q_k ≥ ε > 0 eventually), finite_limit_zero (364: L = 0, library homogeneous_finite_value_limit_zero). With the standing assumptions, L ≠ 0 is contradictory, hence the general forms. \"(5.2)\" (line 341) means (7.5.2): typo, prose/028."
+  },
+  {
+   "id": "C/07_H/prose/032",
+   "kind": "prose",
+   "anchor": "If \\(L\\ne0\\), shift to a tail with \\(|f_k|\\ge|L|/2\\).",
+   "lines": [
+    367,
+    367
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.alternative_arrangement",
+    "BfgsCoverage.Companion.Ch07H.tail_energy_bound",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_corrections_summable",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_referenceCorrection_le_d",
+    "BfgsVerification.objectiveGrowth_of_value_limit",
+    "BfgsVerification.EnergyBudget.tendsto_atTop_of_superquadratic"
+   ],
+   "note": "The mathematics of the paragraph on the formal proof, under Theorem 7.A's hypotheses with a finite limit L: the corrections h_k²/t_k lie in [0, d_k] and are summable; ∑_{k<N} q_k⁻¹ → ∞ (from the superquadratic theorem, as the paragraph says); if L ≠ 0 a tail k ≥ J with |f_k| ≥ |L|/2 exists; on such a tail (|L|/2)²∑_{k<N} q_{J+k}⁻¹ ≤ x_JᵀB_Jx_J + ∑_{k<N} h_{J+k}²/t_{J+k}; hence L = 0. The sentences about the formal proof itself are prose/033."
+  },
+  {
+   "id": "C/07_H/prose/033",
+   "kind": "prose",
+   "anchor": "The formal finite-value theorem uses the same energy identity in a shorter alternative arrangement.",
+   "lines": [
+    367,
+    367
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the Lean proof (which argument the formal theorem uses, that the displayed budgets are separately proved, and what their presence does not assert): software. The mathematics of the paragraph is prose/032."
+  },
+  {
+   "id": "C/07_H/prose/034",
+   "kind": "prose",
+   "anchor": "A positively homogeneous function bounded below cannot take a negative",
+   "lines": [
+    377,
+    380
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.bounded_below_nonneg",
+    "BfgsVerification.Homogeneous.nonneg_of_bounded_below",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_bounded_below_convergence"
+   ],
+   "note": "For positively homogeneous F (no convexity for the first claims): F(x) < 0 gives F(tx) → -∞ as t → ∞ (\"otherwise f(tx) = tf(x) → -∞\"); if F is bounded below then F ≥ 0, IsLeast (Set.range F) 0 and F(0) = 0 (\"minimum value zero, attained at the origin\"); every admissible run (whose structure includes convexity) has F(x_k) → 0."
+  },
+  {
+   "id": "C/07_H/prose/035",
+   "kind": "prose",
+   "anchor": "If its sublevels are bounded, then \\(f(x)>0\\) for \\(x\\ne0\\).",
+   "lines": [
+    382,
+    384
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.bounded_sublevels_iterates",
+    "BfgsVerification.Homogeneous.positive_of_bounded_zero_sublevel",
+    "BfgsVerification.Homogeneous.positive_homogeneous_euclidean_lower_bound",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_iterates_zero_of_bounded_zero_sublevel",
+    "BfgsCoverage.Article.Global.iterates_of_values"
+   ],
+   "note": "For finite convex positively homogeneous F with all sublevels bounded: F(x) > 0 for x ≠ 0; ∃ μ > 0, F(x) ≥ μ‖x‖ (Euclidean; in dimension 0 trivially); F(x_k) → 0 forces x_k → 0 for every sequence; every admissible run has x_k → 0."
+  },
+  {
+   "id": "C/07_H/prose/036",
+   "kind": "prose",
+   "anchor": "These consequences now hold for all finite convex sublinear objectives,",
+   "lines": [
+    386,
+    387
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/07_H/prose/034",
+    "C/07_H/prose/035"
+   ],
+   "note": "Both are stated for every finite convex positively homogeneous (sublinear) F, with no finite-piece hypothesis."
+  },
+  {
+   "id": "C/07_H/prose/037",
+   "kind": "prose",
+   "anchor": "No rate or finite-path-length",
+   "lines": [
+    387,
+    388
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: says that no rate or path-length estimate is asserted."
+  },
+  {
+   "id": "C/07_H/prose/038",
+   "kind": "prose",
+   "anchor": "Finite objective decrease gives \\(d_k\\to0\\).",
+   "lines": [
+    410,
+    428
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/heading/004",
+   "lean": [
+    "BfgsVerification.FullBFGSRun.zero_mem_recurrent_affineSpan",
+    "BfgsVerification.FullBFGSRun.common_component_incompatible",
+    "BfgsVerification.FullBFGSRun.common_component_tail_sum_le",
+    "BfgsVerification.Homogeneous.eventually_mem_recurrentValues",
+    "BfgsVerification.reciprocalGrowth",
+    "BfgsVerification.DescentBudget.armijo_summable"
+   ],
+   "note": "Proof of Lemma 7.3 (\\textbf{Proof.} … □). lemma_7_3 follows it: Armijo and the lower bound give ∑d_k < ∞ (DescentBudget.armijo_summable), bounded gradients (finite alphabet) and Theorem M:average (reciprocalGrowth) give divergent reciprocal means, the prefix is discarded (eventually_mem_recurrentValues), the common vector (disp/025) and the energy step (disp/026) bound the tail reciprocal sum by vᵀB_Jv (common_component_tail_sum_le), a contradiction (common_component_incompatible). \"Equation (2.1)\" (line 421) means (7.2.1): typo, prose/028."
+  },
+  {
+   "id": "C/07_H/prose/039",
+   "kind": "prose",
+   "anchor": "This lemma does not need homogeneity, or even convexity, beyond what may",
+   "lines": [
+    430,
+    431
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/heading/004",
+   "note": "lemma_7_3 is stated for an arbitrary F : Vec n → ℝ with no convexity or homogeneity hypothesis."
+  },
+  {
+   "id": "C/07_H/prose/040",
+   "kind": "prose",
+   "anchor": "It is a necessary condition for",
+   "lines": [
+    431,
+    433
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.lemma_7_3_value_limit",
+    "BfgsVerification.AdmissibleBFGSRun.recurrent_affine_zero_of_value_limit"
+   ],
+   "note": "Under the assumptions of Lemma 7.3 with a finite limit of the values instead of the lower bound (finite gradient alphabet, finite-value-limit trajectory): 0 ∈ aff G (the values are nonincreasing by Armijo, so the limit is a lower bound)."
+  },
+  {
+   "id": "C/07_H/prose/041",
+   "kind": "prose",
+   "anchor": "For max-linear objectives, if \\(0\\notin\\operatorname{aff}\\{a_i\\}\\), no",
+   "lines": [
+    435,
+    438
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/heading/002",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.no_recurrent_subset",
+    "BfgsCoverage.Companion.Ch07H.lemma_7_3_value_limit",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_escape_of_zero_not_mem_affineSpan",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_affine_zero",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_value_dichotomy"
+   ],
+   "note": "Proof of Theorem 7.B (\"This proves Theorem 7.B\"): no_recurrent_subset (no subset of the slopes has an affine hull containing 0), Lemma 7.3 (finite value limit ⇒ 0 ∈ aff G), monotonicity (Theorem 7.A's dichotomy) ⇒ F(x_k) → -∞."
+  },
+  {
+   "id": "C/07_H/prose/042",
+   "kind": "prose",
+   "anchor": "The model \\(|u|+t\\) has gradients \\((1,1)\\) and \\((-1,1)\\), both with",
+   "lines": [
+    448,
+    449
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.two_piece_gradients",
+    "BfgsVerification.TwoPieceBudget.actual_gradient_shape",
+    "BfgsVerification.TwoPieceBudget.support_positive",
+    "BfgsVerification.TwoPieceBudget.support_negative",
+    "BfgsVerification.TwoPieceBudget.differentiableAt_of_ne",
+    "BfgsVerification.supporting_vector_eq_gradient",
+    "BfgsVerification.hasFDerivAt_coordinateGradient"
+   ],
+   "note": "For F(u,t) = |u| + t on ℝ² (u first): gradient (1,1) where u > 0, (-1,1) where u < 0, every gradient is one of these two, and both have last component 1."
+  },
+  {
+   "id": "C/07_H/prose/043",
+   "kind": "prose",
+   "anchor": "The new theorem proves",
+   "lines": [
+    455,
+    457
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/prose/011",
+   "note": "F(x_k) → -∞ excludes a finite limit (\"cannot stagnate on any finite value\") for every infinite run on the family. As for prose/011: vacuous when the b_i lie on one line (tilt_collinear_no_run), open otherwise (prose/045)."
+  },
+  {
+   "id": "C/07_H/prose/044",
+   "kind": "prose",
+   "anchor": "proves the stronger finite-termination conclusion",
+   "lines": [
+    459,
+    461
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.two_piece_finite_termination",
+    "BfgsVerification.TwoPieceBudget.twoPieceTermination",
+    "BfgsVerification.TwoPieceBudget.wellFounded_actual_steps",
+    "BfgsVerification.TwoPieceBudget.finite_path_to_terminal",
+    "BfgsVerification.TwoPieceBudget.terminal_direction_unbounded",
+    "BfgsVerification.TwoPieceBudget.Step",
+    "BfgsVerification.TwoPieceBudget.State"
+   ],
+   "note": "A literature result, proved in the library (TwoPieceTerminationTarget) for the two-piece model F(u,t) = |u| + t and every 0 < c₁ < c₂ < 1: with states (x, H ≻ 0, g = ∇F(x)) and steps = accepted Armijo–weak-Wolfe full-BFGS steps, (a) there is no infinite sequence of states joined by steps (and the reversed step relation is well founded), so every run of accepted steps is finite; (b) every state with no accepted step exposes unboundedness along its search direction -Hg (F(x - tHg) → -∞ as t → ∞, TwoPieceBudget.terminal_direction_unbounded); (c) from every state finitely many steps reach such a state. (a) and (b) give the text's claim: every run reaches, after finitely many iterations, a search direction exposing unboundedness. The Lean statement covers every Armijo–weak-Wolfe step choice, which includes the formulation of Xie–Wächter; the attribution itself is not checked."
+  },
+  {
+   "id": "C/07_H/prose/045",
+   "kind": "prose",
+   "anchor": "\\textbf{not} establish finite termination for the general many-piece",
+   "lines": [
+    461,
+    463
+   ],
+   "status": "OPEN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.TiltNoInfiniteRunQuestion",
+    "BfgsCoverage.Companion.Ch07H.tilt_collinear_no_run",
+    "BfgsCoverage.Companion.Ch07H.tilt_two_values_no_run",
+    "BfgsCoverage.Companion.Ch07H.tilt_two_pieces_no_run",
+    "BfgsCoverage.Companion.Ch07H.tilt_plane_no_run",
+    "BfgsCoverage.Companion.Ch07H.maxLinear_line_no_run",
+    "BfgsCoverage.Companion.Ch07H.maxLinear_affine_free_no_run",
+    "BfgsCoverage.Companion.Ch07H.linear_objective_no_run",
+    "BfgsVerification.TwoPieceBudget.no_infinite_independent_two_piece"
+   ],
+   "note": "Open question, stated without proof: the text says that its argument does not establish finite termination for the general many-piece family f(u,t) = t + max_i b_iᵀu. Finite termination of every run on a member implies that no infinite admissible run exists on it; TiltNoInfiniteRunQuestion states this part (for all n, m, b: IsEmpty (AdmissibleBFGSRun (n + 1) F)). Proved here: it holds when the b_i lie on one line (tilt_collinear_no_run), in particular with at most two distinct b_i in every dimension (tilt_two_values_no_run, tilt_two_pieces_no_run) and for every member in ℝ² (tilt_plane_no_run); the same reduction (maxLinear_line_no_run: F is linear, linear_objective_no_run, or a linear image of |u|+t, TwoPieceBudget.no_infinite_independent_two_piece) shows that Theorem 7.B (ii) has no admissible run in dimension ≤ 2 (maxLinear_affine_free_no_run). Not known: b_i not on one line (at least three pieces, ambient dimension ≥ 3). Where the Prop holds, the run statements on the family (prose/011, disp/027, prose/043, prose/046) are vacuous. Earlier classified NON_CLAIM (scope remark); OPEN gives the question a precise Lean form."
+  },
+  {
+   "id": "C/07_H/prose/046",
+   "kind": "prose",
+   "anchor": "It does show that any infinite admissible continuation must",
+   "lines": [
+    463,
+    464
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/prose/011",
+   "note": "Every infinite admissible run on the many-piece family has F(x_k) → -∞. As for prose/011: vacuous when the b_i lie on one line (tilt_collinear_no_run), open otherwise (prose/045)."
+  },
+  {
+   "id": "C/07_H/prose/047",
+   "kind": "prose",
+   "anchor": "If \\(r=\\dim\\operatorname{span}G\\), a finite-value-limit run needs at",
+   "lines": [
+    466,
+    469
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.recurrent_cardinality",
+    "BfgsCoverage.Companion.Ch07H.vectorSpan_le_span",
+    "BfgsCoverage.Companion.Ch07H.lemma_7_3_value_limit",
+    "BfgsVerification.Homogeneous.finrank_span_add_one_le_ncard",
+    "BfgsVerification.Homogeneous.span_le_vectorSpan_of_affine_zero",
+    "BfgsVerification.AdmissibleBFGSRun.recurrent_gradient_cardinality_of_value_limit"
+   ],
+   "note": "In the setting of Lemma 7.3 (its proof gives 0 ∈ aff G for every finite-gradient finite-value-limit run, prose/040): with r = dim span G (variable), r + 1 ≤ |G| (Set.ncard; G is finite), and the differences span the same space: vectorSpan ℝ G = Submodule.span ℝ G (\"|G|-1 differences must span it\" is the dimension count inside finrank_span_add_one_le_ncard). The library's version for admissible runs is recurrent_gradient_cardinality_of_value_limit."
+  },
+  {
+   "id": "C/07_H/prose/048",
+   "kind": "prose",
+   "anchor": "The earlier three-gradient, rank-two stagnation example attains this",
+   "lines": [
+    470,
+    471
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.seed_cardinality_sharp",
+    "BfgsVerification.SeedOrbit.sharpRecurrentCardinality",
+    "BfgsVerification.SeedOrbit.actual_recurrent_cardinality",
+    "BfgsVerification.SeedOrbit.actual_recurrent_rank"
+   ],
+   "note": "For every 0 < c₁ ≤ 1/3, c₁ < c₂ < 1 the seed run has G(x_k) → 0 (a finite value limit), |G| = 3, dim span G = 2, so r + 1 = |G|."
+  },
+  {
+   "id": "C/07_H/prose/049",
+   "kind": "prose",
+   "anchor": "Projection of the inverse-BFGS formula gives exactly the same",
+   "lines": [
+    504,
+    506
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.projected_run",
+    "BfgsCoverage.Companion.Ch07H.grad_lift",
+    "BfgsCoverage.Companion.Ch07H.hat_definitions",
+    "BfgsVerification.AffineProjection.inverseBFGS_compress",
+    "BfgsVerification.AffineProjection.project_step",
+    "BfgsVerification.AffineProjection.project_energy",
+    "BfgsVerification.AdmissibleBFGSRun.projected_subspace_accepted_identities"
+   ],
+   "note": "Standing assumptions of Section 7.7.1 (disp/028, disp/029). For k ≥ K: Ĥ_k ≻ 0; projected step Uᵀs_k = -α_kĤ_kĝ_k and x̂_{k+1} = x̂_k + Uᵀs_k; Ĥ_{k+1} = inverseBFGS Ĥ_k (Uᵀs_k) (ĝ_{k+1} - ĝ_k); ĝ_kᵀĤ_kĝ_k = q_k, -ĝ_kᵀUᵀs_k = d_k, (ĝ_{k+1} - ĝ_k)ᵀUᵀs_k = t_k; Armijo and weak Wolfe in the hatted variables (with the values f(x_k))."
+  },
+  {
+   "id": "C/07_H/prose/050",
+   "kind": "prose",
+   "anchor": "Moreover, all subsequent steps belong to the",
+   "lines": [
+    508,
+    512
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.steps_in_fixed_subspace",
+    "BfgsVerification.AffineProjection.matrix_lift_invariant",
+    "BfgsVerification.AdmissibleBFGSRun.shift"
+   ],
+   "note": "For k ≥ K: H_kS ⊆ H_KS (every H_kUz is some H_KUz') and s_k ∈ H_KS. The induction of the text is the library's matrix_lift_invariant on the tail run from K."
+  },
+  {
+   "id": "C/07_H/prose/051",
+   "kind": "prose",
+   "anchor": "The restriction of \\(U^\\top\\) to \\(H_KS\\) is invertible because",
+   "lines": [
+    514,
+    515
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.restriction_invertible",
+    "BfgsVerification.AffineProjection.compress_posDef"
+   ],
+   "note": "UᵀH_KU ≻ 0, and for every z exactly one w ∈ H_KS (w = H_KUz') has Uᵀw = z."
+  },
+  {
+   "id": "C/07_H/prose/052",
+   "kind": "prose",
+   "anchor": "In particular, convergence of the projected iterates implies convergence",
+   "lines": [
+    525,
+    526
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.limit_lift",
+    "BfgsVerification.AdmissibleBFGSRun.affine_limit_lift_tail"
+   ],
+   "note": "If x̂_k → z_* then x_k → x_K + L_K(z_* - x̂_K)."
+  },
+  {
+   "id": "C/07_H/prose/053",
+   "kind": "prose",
+   "anchor": "The projected Hessian is \\((U^\\top H_kU)^{-1}\\), not \\(U^\\top B_kU\\).",
+   "lines": [
+    533,
+    534
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.projected_hessian_distinction",
+    "BfgsVerification.hessianUpdate"
+   ],
+   "note": "(i) For k ≥ K the matrices (UᵀH_kU)⁻¹ = Ĥ_k⁻¹ follow the Hessian form (7.2.1) of the projected run with ĝ_k, ŷ_k, q_k, t_k (they are its Hessian approximations). (ii) In general (UᵀHU)⁻¹ ≠ UᵀH⁻¹U, and using UᵀBU as projected Hessian gives the wrong projected step: H = [[2,1],[1,1]], U = e₁, g = e₁ ∈ S: (UᵀBU)⁻¹Uᵀg = 1 ≠ 2 = UᵀHg. \"necessary for a valid reduction\" is read as (ii)."
+  },
+  {
+   "id": "C/07_H/prose/054",
+   "kind": "prose",
+   "anchor": "In two dimensions, if \\(g_k\\) and \\(g_{k+1}\\) are linearly independent,",
+   "lines": [
+    552,
+    556
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.independent_endpoints",
+    "BfgsCoverage.Companion.Ch07H.linearIndependent_pair_iff",
+    "BfgsVerification.HomogeneousPlanar.pair_inverse_bound",
+    "BfgsVerification.HomogeneousPlanar.finite_pair_inverse_bound",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_anchor_small",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_independent_anchors_tendsto_zero"
+   ],
+   "note": "Standing assumptions of Section 7.7.2 in the plane: F = max_i a_iᵀx on ℝ², admissible run, f_k → 0. (i) for an independent transition the two pairings determine x_{k+1} (any z with the same two pairings equals x_{k+1}); (ii) one constant C with ‖z‖ ≤ C(|g_kᵀz| + |g_{k+1}ᵀz|) for all independent transitions and all z (\"inverse norms uniformly bounded\"; sup norm of Vec 2); (iii) endpoints x_{j+1} of independent transitions → 0 (for every ε, eventually ‖x_{j+1}‖ < ε along independent transitions), with no boundedness hypothesis. Linear independence is LinearIndependent ℝ ![u, v] (= pairDet ≠ 0 in the plane, linearIndependent_pair_iff)."
+  },
+  {
+   "id": "C/07_H/prose/055",
+   "kind": "prose",
+   "anchor": "An unchanged nonzero gradient cannot satisfy weak Wolfe on a strict",
+   "lines": [
+    558,
+    558
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.unchanged_gradient_fails_wolfe",
+    "BfgsVerification.AdmissibleBFGSRun.gradient_transition_ne"
+   ],
+   "note": "If gᵀs < 0 (strict descent) and c₂ < 1, then gᵀs ≥ c₂gᵀs fails; hence g_{k+1} ≠ g_k along every admissible run."
+  },
+  {
+   "id": "C/07_H/prose/056",
+   "kind": "prose",
+   "anchor": "Distinct gradients that are positive multiples of one",
+   "lines": [
+    559,
+    562
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.positive_multiples_active",
+    "BfgsVerification.HomogeneousBlock.positive_parallel_supports_eq"
+   ],
+   "note": "For F = max_i a_iᵀx: along an admissible run, g_k = cg_j with c > 0 at iterates of positive value forces g_k = g_j; and if a_{i'} = ca_i with c > 1, a_i is active (F(x) = a_iᵀx) at no point with F(x) > 0 (\"only the largest multiple can attain a positive maximum\")."
+  },
+  {
+   "id": "C/07_H/prose/057",
+   "kind": "prose",
+   "anchor": "Consequently, any dependent transition on the",
+   "lines": [
+    562,
+    563
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.dependent_transition_opposite",
+    "BfgsCoverage.Companion.Ch07H.positive_multiples_active",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_dependent_transition_opposite"
+   ],
+   "note": "For F = max_i a_iᵀx (any dimension) and an admissible run with F(x_k) > 0 for all k: if g_k, g_{k+1} are linearly dependent then g_{k+1} = -κg_k with κ > 0. The library's planar form uses pairDet."
+  },
+  {
+   "id": "C/07_H/prose/058",
+   "kind": "prose",
+   "anchor": "If the global objective is unbounded below, its slope set cannot contain",
+   "lines": [
+    572,
+    580
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/heading/003",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.unbounded_transitions_independent",
+    "BfgsVerification.Homogeneous.unbounded_finiteMax_no_opposite_slopes",
+    "BfgsVerification.Homogeneous.finiteMax_opposite_slopes_nonneg",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_transition_independent",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_zero_branch_iterates",
+    "BfgsVerification.Homogeneous.finiteMaxLinear_abs_euclidean_bound",
+    "BfgsVerification.Homogeneous.finiteMaxLinear_value_escape_norm"
+   ],
+   "note": "Proof of Theorem 7.C (Section 7.7.3, \"this proves Theorem 7.C\"). No displays. unbounded_transitions_independent states lines 572-575: the slope set has no opposite pair a, -κa (κ > 0), and every transition is linearly independent on the branch f_k → 0. The second sentence (\"Every accepted gradient transition is therefore linearly independent in the plane\") uses the standing assumption f_k → 0 of line 543 (positive values; the dependent transitions of that branch are opposite, prose/057), as \"In the other branch\" (line 578) confirms; it is not claimed for the escaping branch. Lines 577-578: maxLinear_planar_zero_branch_iterates; 578-580: |f(x)| ≤ M‖x‖ (finiteMaxLinear_abs_euclidean_bound) and ‖x_k‖ → ∞ (finiteMaxLinear_value_escape_norm). The next paragraph (lines 582-585) proves the remark prose/013, not Theorem 7.C: item prose/075. \"Equation (7.3)\" (line 577) means (7.7.3): typo, prose/028. For the line-by-line reading: \"On this branch, every accepted gradient transition is linearly independent\" (lines 574-575) would make the branch explicit."
+  },
+  {
+   "id": "C/07_H/prose/059",
+   "kind": "prose",
+   "anchor": "For completeness, opposing-gradient transitions can also be handled,",
+   "lines": [
+    594,
+    596
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.planar_finite_value_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_finite_value_has_limit",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_lower_bound_has_limit"
+   ],
+   "note": "For every finite max-linear objective on ℝ²: every admissible run with a finite value limit has convergent iterates; if the objective is bounded below (\"including noncompact bounded-below ones\": coercive or not) every admissible run converges. \"Convergence for all planar finite max-linear objectives\" is read on the finite-value branch (the escaping branch is Theorem 7.C's second alternative, where ‖x_k‖ → ∞ for unbounded-below objectives)."
+  },
+  {
+   "id": "C/07_H/prose/060",
+   "kind": "prose",
+   "anchor": "Call an endpoint of an independent-gradient transition an",
+   "lines": [
+    598,
+    654
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/prose/059",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.block_general",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_anchor_small",
+    "BfgsVerification.AdmissibleBFGSRun.planar_dependent_prefix_line",
+    "BfgsVerification.AdmissibleBFGSRun.planar_dependent_prefix_collinear",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_dependent_transition_opposite",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_uniform_anchor_blocks",
+    "BfgsVerification.HomogeneousBlock.tendsto_zero_of_anchor_blocks",
+    "BfgsVerification.HomogeneousBlock.interpolation_norm_bound",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_fixed_line_tail_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_zero_branch_has_limit",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_planar_finite_value_has_limit"
+   ],
+   "note": "Proof of the claim of lines 594-596 (\"This proves planar iterate convergence in every finite-value-limit case\", line 654). Displays: disp/032-disp/036. Steps in the library: anchors → 0 (maxLinear_planar_anchor_small, line 599; \"(7.3)\" means (7.7.3), typo prose/028); block gradients on one line and points collinear (planar_dependent_prefix_line, planar_dependent_prefix_collinear, lines 601-607; the dependent transitions are opposite, homogeneous_dependent_transition_opposite, and alternate between g and -κg since positive multiples coincide, prose/056); f_b ≤ (1-c₁)f_a (line 623, block_general); uniform bound across blocks and stitching (maxLinear_planar_uniform_anchor_blocks, tendsto_zero_of_anchor_blocks, lines 643-645); finitely many anchors: convergence on a fixed line (maxLinear_fixed_line_tail_convergence, lines 647-652); conclusion maxLinear_planar_zero_branch_has_limit / maxLinear_planar_finite_value_has_limit (line 654)."
+  },
+  {
+   "id": "C/07_H/prose/061",
+   "kind": "prose",
+   "anchor": "Reducing to the span of the recurrent gradients and using (7.1) proves",
+   "lines": [
+    655,
+    657
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.recurrent_reduction_nonzero_limit",
+    "BfgsCoverage.Companion.Ch07H.recurrent_rank_le_two_convergence",
+    "BfgsCoverage.Companion.Ch07H.absV_isGreatest",
+    "BfgsCoverage.Companion.Ch07H.absVRun_tendsto",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_span_le_two_finite_value",
+    "BfgsCoverage.Article.Master.absVRun"
+   ],
+   "note": "(i) In every ambient dimension, a finite value limit and dim span G ≤ 2 give convergent iterates (same as prose/016). (ii) \"The limit may be nonzero\": F(u,v) = |v| = max(v,-v) on ℝ² and its run Master.absVRun 1 1 (dim span G ≤ 2, values → 0) converge to (1,0) ≠ 0. \"(7.1)\" means (7.7.1): typo, prose/028."
+  },
+  {
+   "id": "C/07_H/prose/062",
+   "kind": "prose",
+   "anchor": "One source of noncompactness is a subspace of directions on which the",
+   "lines": [
+    675,
+    677
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.flat_directions_noncompact"
+   ],
+   "note": "(i) If F is constant along a nonzero subspace V (F(x+v) = F(x) for v ∈ V), every nonempty sublevel is unbounded (noncompact). (ii) A finite max-linear objective is constant along the directions w with a_iᵀw = 0 for all i (the subspace S^⊥). The second sentence (\"When this is the only source of noncompactness, the case is fully tractable in all dimensions\") announces the theorem of disp/038, disp/039 and prose/065."
+  },
+  {
+   "id": "C/07_H/prose/063",
+   "kind": "prose",
+   "anchor": "and suppose \\(0\\in\\operatorname{relint}P\\), with relative interior taken",
+   "lines": [
+    686,
+    688
+   ],
+   "status": "PART_OF",
+   "of": "C/07_H/disp/038",
+   "note": "The hypothesis 0 ∈ relint P (see disp/037) and the claims \"f depends only on the projection to S and is coercive there\" are stated by relint_coercive with the display."
+  },
+  {
+   "id": "C/07_H/prose/064",
+   "kind": "prose",
+   "anchor": "Theorem 7.A implies \\(U^\\top x_k\\to0\\).",
+   "lines": [
+    694,
+    694
+   ],
+   "status": "PART_OF",
+   "of": "C/07_H/disp/039",
+   "note": "relint_limit states Uᵀx_k → 0 together with the limit (7.8.1)."
+  },
+  {
+   "id": "C/07_H/prose/065",
+   "kind": "prose",
+   "anchor": "The limit is a minimizer, and in fact the projection of \\(x_0\\) onto",
+   "lines": [
+    705,
+    707
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.relint_limit_projection",
+    "BfgsCoverage.Companion.Ch07H.perp_iff",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_relativeInterior_complete",
+    "BfgsVerification.Homogeneous.relativeInteriorZero_nonneg"
+   ],
+   "note": "With x_* = x_0 - H_0U(UᵀH_0U)⁻¹Uᵀx_0 (variable with its defining equation; the limit of disp/039): x_* minimizes F; x_* ∈ S^⊥ (vᵀx_* = 0 for v ∈ S) and x_* is the unique minimizer over S^⊥ of (x - x_0)ᵀH_0⁻¹(x - x_0) (\"projection in the H_0⁻¹ metric\"); every admissible run with the same x_0 and H_0 converges to x_* (\"independent of the choices of admissible accepted lengths\", also of the line-search constants)."
+  },
+  {
+   "id": "C/07_H/prose/066",
+   "kind": "prose",
+   "anchor": "This includes all finite polyhedral",
+   "lines": [
+    707,
+    709
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.relint_includes_seminorms",
+    "BfgsVerification.Homogeneous.relativeInteriorZero_of_seminorm",
+    "BfgsVerification.Homogeneous.relativeInteriorZero_iff_nonneg_linear_zero_fiber",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_seminorm_has_limit",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_linear_zero_fiber_limit"
+   ],
+   "note": "For a finite max-linear objective: if it is a seminorm, or if it is nonnegative (a gauge) and its set of minimizers is a linear subspace, then 0 ∈ relint P, so the theorem applies. \"noncoercive\" does not restrict the claim (the inclusion holds for coercive gauges too)."
+  },
+  {
+   "id": "C/07_H/prose/067",
+   "kind": "prose",
+   "anchor": "The same argument applies after a finite prefix if",
+   "lines": [
+    711,
+    715
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.recurrent_relint_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_convergence",
+    "BfgsVerification.Homogeneous.relativeInterior_euclidean_projection_bound",
+    "BfgsVerification.recurrentRelativeInterior"
+   ],
+   "note": "With G the recurrent gradients, 0 in the interior of conv G relative to span G, and U with orthonormal columns spanning span G: the projected tail objective z ↦ max_{g∈G} gᵀUz satisfies max ≥ μ‖z‖ for some μ > 0 (coercive; nonrecurrent slopes do not enter); for some K, x_k → x_K - H_KU(UᵀH_KU)⁻¹Uᵀx_K (formula (7.7.2)). \"Formula (7.2)\" means (7.7.2): typo, prose/028."
+  },
+  {
+   "id": "C/07_H/prose/068",
+   "kind": "prose",
+   "anchor": "For \\(f\\equiv0\\), the algorithm is already stationary;",
+   "lines": [
+    717,
+    719
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.zero_objective_no_run",
+    "BfgsVerification.AdmissibleBFGSRun.identically_zero_no_infinite_run",
+    "BfgsVerification.AdmissibleBFGSRun.zero_objective_no_infinite_run"
+   ],
+   "note": "If F ≡ 0, its gradient is 0 at every point (every point stationary) and no admissible run exists. \"The projection formula above concerns a nontrivial slope span\" is a remark on the scope of (7.8.1)."
+  },
+  {
+   "id": "C/07_H/prose/069",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.",
+   "lines": [
+    727,
+    727
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Announces the bibliographic comparisons of the section."
+  },
+  {
+   "id": "C/07_H/prose/070",
+   "kind": "prose",
+   "anchor": "The Euclidean-norm consequence is already Guo--Lewis",
+   "lines": [
+    729,
+    729
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (Guo–Lewis Corollary 4.2, Lewis–Overton Section 5.1), not used by a proof. The Euclidean-norm case itself is covered by prose/008 and the article's Global.euclidean_norm_case."
+  },
+  {
+   "id": "C/07_H/prose/071",
+   "kind": "prose",
+   "anchor": "The theorem here treats the larger finite convex homogeneous class without assuming bounded iterates.",
+   "lines": [
+    729,
+    729
+   ],
+   "status": "SAME_AS",
+   "of": "C/07_H/heading/001",
+   "note": "Theorem 7.A is stated for every finite convex positively homogeneous F without bounded iterates (prose/006)."
+  },
+  {
+   "id": "C/07_H/prose/072",
+   "kind": "prose",
+   "anchor": "The precise prior result is",
+   "lines": [
+    731,
+    731
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution and comparison (Xie–Wächter Theorem IV.1 is stronger in its finite detection); the two results compared are prose/044 and prose/011."
+  },
+  {
+   "id": "C/07_H/prose/073",
+   "kind": "prose",
+   "anchor": "The invariant-subspace argument extends the affine-invariance background",
+   "lines": [
+    733,
+    733
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature background and an unresolved attribution question; \"not an additional hypothesis of the theorem\" asserts nothing mathematical."
+  },
+  {
+   "id": "C/07_H/prose/074",
+   "kind": "prose",
+   "anchor": "Assume \\(f_k\\to0\\). Then \\(d_k\\to0\\), and every endpoint satisfies",
+   "lines": [
+    543,
+    543
+   ],
+   "status": "PART_OF",
+   "of": "C/07_H/disp/031",
+   "note": "\"Then d_k → 0\" is stated by endpoint_pairings with the display; \"Assume f_k → 0\" is the standing assumption of Section 7.7.2."
+  },
+  {
+   "id": "C/07_H/prose/075",
+   "kind": "prose",
+   "anchor": "For an unbounded-below max-linear objective there is no stationary",
+   "lines": [
+    582,
+    585
+   ],
+   "status": "PROOF",
+   "of": "C/07_H/prose/013",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.no_stationary_point",
+    "BfgsVerification.Homogeneous.no_stationary_support_of_unboundedBelow"
+   ],
+   "note": "Proof of the remark of line 124 (prose/013: the zero limit of Theorem 7.C's first alternative is nonstationary). no_stationary_point states the paragraph for every finite max-linear objective unbounded below (any dimension): a point x with 0 ∈ ∂f(x) is a global minimizer, no global minimizer exists, so 0 ∉ ∂f(x) for every x (\"there is no stationary point\"), in particular at the limit 0 (theorem_7C_nonstationary). Split from prose/058 (lines 572-580, the proof of Theorem 7.C)."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/07_H/prose/028",
+   "description": "The cross-references of the chapter use the numbering of its source note (bfgs_lean_stage1/master_report/latex/chapters/H.tex), not the chapter's. Seven equation references: \"Expanding (2.1)\" (line 284) and \"Equation (2.1) then implies\" (line 421) mean the Hessian form (7.2.1); \"telescoping (5.2)\" (line 341) means (7.5.2); \"Equation (7.3)\" (line 577) and \"By (7.3)\" (line 599) mean (7.7.3); \"using (7.1)\" (line 655) means (7.7.1); \"Formula (7.2)\" (line 714) means (7.7.2). And the title of Section 7.5 (lines 234-235, also in the table of contents), \"Homogeneous potential and proof of Theorem A\", means Theorem 7.A. In the companion's numbering (\\theequation = ModuleTag.arabic), (2.1) is Chapter 2's display c₁d_k ≤ Δ_k ≤ d_k, t_k ≥ cd_k > 0 (M:basic) and (5.2) is Chapter 5's range W(z) ⊆ range W(x) + span{s} (checked in the built companion PDF); (7.1)-(7.3) exist nowhere (Chapter 7 numbers its displays only by \\tag: (7.2.1), (7.5.1), (7.5.2), (7.7.1)-(7.7.3), (7.8.1)), and there is no Theorem A (the chapter's theorems are 7.A, 7.B, 7.C). Cause: editorial/generate_companion.py:69 replaces the module letter only in H.-prefixed tags (Theorem H.A → Theorem 7.A, \\tag{H.2.1} → (7.2.1)), and the source writes these eight references without the prefix (H.tex:200-201, 242, 294, 371, 511, 529, 585, 644). The mathematics holds with the intended references: energy_identity (from hessian_form), weighted_sum_finite (from potential_step), common_vector_energy_step, unbounded_transitions_independent and endpoint_pairings, iterate_lift, zero_limit_formula; Section 7.5 proves Theorem 7.A (theorem_7A).",
+   "severity": "typo",
+   "proposed": "Intended text of companion/chapters/07_H.tex: Section 7.5 title (lines 234-235) \"Homogeneous potential and proof of Theorem 7.A\"; (7.2.1) instead of (2.1) at lines 284 and 421; (7.5.2) instead of (5.2) at line 341; (7.7.3) instead of (7.3) at lines 577 and 599; (7.7.1) instead of (7.1) at line 655; (7.7.2) instead of (7.2) at line 714. Fix location: the chapter is generated, so not by hand. Add to editorial/generate_companion.py a logged module-H transformation (a transform_log entry), applied to the source text before the numbering loop of lines 68-69, that adds the missing prefix: 'Theorem\\nA}' → 'Theorem\\nH.A}' (H.tex:200-201, one occurrence), '(2.1)' → '(H.2.1)' (H.tex:242 and 371, two), '(5.2)' → '(H.5.2)' (H.tex:294, one), '(7.3)' → '(H.7.3)' (H.tex:511 and 529, two), '(7.1)' → '(H.7.1)' (H.tex:585, one), '(7.2)' → '(H.7.2)' (H.tex:644, one), each with an assert on its occurrence count; the existing substitution at line 69 then prints 7.A, (7.2.1), (7.5.2), (7.7.3), (7.7.1), (7.7.2). Then regenerate (python3 editorial/generate_companion.py), rebuild the companion and inspect Section 7.5's heading and the table of contents.",
+   "lean": [
+    "BfgsCoverage.Companion.Ch07H.energy_identity",
+    "BfgsCoverage.Companion.Ch07H.hessian_form",
+    "BfgsCoverage.Companion.Ch07H.weighted_sum_finite",
+    "BfgsCoverage.Companion.Ch07H.potential_step",
+    "BfgsCoverage.Companion.Ch07H.common_vector_energy_step",
+    "BfgsCoverage.Companion.Ch07H.endpoint_pairings",
+    "BfgsCoverage.Companion.Ch07H.iterate_lift",
+    "BfgsCoverage.Companion.Ch07H.zero_limit_formula",
+    "BfgsCoverage.Companion.Ch07H.theorem_7A"
+   ]
+  }
+ ]
 }
