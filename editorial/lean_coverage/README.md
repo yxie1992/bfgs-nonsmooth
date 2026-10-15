@@ -160,7 +160,10 @@ Lean files are still those of the base commit:
    hashes of the accepted items), the `file.tex:a-b` references in the Lean
    modules and in the notes of the same document's registers, and the docstring
    item references checked by `check_coverage.py`. It refuses a second run on a
-   tree with changed registers or Lean files (`--force` overrides).
+   tree with changed registers or Lean files (`--force` overrides). For a further
+   edit before the first one is committed, add `--snapshot DIR` to the `--write`
+   run (it saves the TeX files as written); a later run with `--base-dir DIR`
+   compares against that copy instead of a commit.
 4. By hand: the statuses, anchors and notes of the edited items, and the Lean
    docstrings that quote the old text. A resolved discrepancy gets a final status,
    a note "Corrected on <date> (M<n>)", and its entry moves from `discrepancies`

@@ -25,10 +25,13 @@ discrepancies (key resolved_discrepancies) keep the lines of their time.
 --write refuses to run when the document's registers or the package's Lean
 files differ from the base, since a second run would move the references again
 (--force overrides): run it once, right after editing the TeX files, then
-change statuses, anchors and docstrings by hand.
+change statuses, anchors and docstrings by hand. For a further edit before the
+first one is committed, --snapshot DIR saves the TeX files as written; a later
+run with --base-dir DIR compares against that copy instead of a commit.
 
 Usage:
-    python3 editorial/lean_coverage/resync_register.py [--write [--force]] [--base REV] [--accept ID ...] TEX_FILE ...
+    python3 editorial/lean_coverage/resync_register.py [--write [--force]] [--base REV | --base-dir DIR]
+        [--snapshot DIR] [--accept ID ...] TEX_FILE ...
 """
 from pathlib import Path
 import argparse, bisect, difflib, json, re, subprocess, sys
@@ -41,7 +44,9 @@ ROOT = ex.ROOT
 LEAN = ROOT / 'bfgs_lean_article' / 'BfgsArticle'
 
 
-def committed(path, rev):
+def committed(path, rev, base_dir=None):
+    if base_dir:
+        return (Path(base_dir) / path).read_text()
     return subprocess.run(['git', 'show', f'{rev}:{path}'], cwd=ROOT, capture_output=True, text=True,
                           check=True).stdout
 
@@ -152,11 +157,13 @@ def item_ref_edits(text, path, listed):
     return edits
 
 
-def resync(path, base, accept, write):
+def resync(path, base, accept, write, base_dir=None):
     article = path.startswith('paper/')
     register_file = ex.register_path(path)
     register = json.loads(register_file.read_text())
-    old, new = committed(path, base), (ROOT / path).read_text()
+    old, new = committed(path, base, base_dir), (ROOT / path).read_text()
+    if base_dir:
+        base = base_dir
     start, end, touched = line_maps(old, new)
     mapper = Mapper(path, start, end, touched)
     old_items = {item['id']: item for item in ex.items_of(path, old)}
@@ -259,8 +266,10 @@ def main():
     parser.add_argument('--write', action='store_true')
     parser.add_argument('--force', action='store_true',
                         help='write even if registers or Lean files differ from the base')
+    parser.add_argument('--base-dir', help='compare against the TeX files saved in this directory by --snapshot')
+    parser.add_argument('--snapshot', help='after --write, save the TeX files to this directory')
     args = parser.parse_args()
-    if args.write and not args.force:
+    if args.write and not args.force and not args.base_dir:
         # A second run would move the references again: write only onto the base's registers
         # and Lean files, then edit statuses, anchors and docstrings by hand.
         paths = ['bfgs_lean_article/BfgsArticle', 'bfgs_lean_article/BfgsArticle.lean',
@@ -271,7 +280,13 @@ def main():
             sys.exit('resync_register: these files differ from ' + args.base + ' (run --write before editing them '
                      'by hand, or pass --force):\n  ' + '\n  '.join(dirty))
     for path in args.files:
-        resync(path, args.base, set(args.accept), args.write)
+        resync(path, args.base, set(args.accept), args.write, args.base_dir)
+    if args.write and args.snapshot:
+        for path in args.files:
+            target = Path(args.snapshot) / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text((ROOT / path).read_text())
+        print('saved the TeX files to', args.snapshot)
 
 
 if __name__ == '__main__':
