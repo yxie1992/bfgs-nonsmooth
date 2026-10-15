@@ -14,7 +14,16 @@
    "title": "Finite multi-branch parabolic maxima",
    "container": null,
    "sha256": "3a21c34632e028c8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.parabolic_convergence",
+    "BfgsCoverage.Companion.Ch10Q.essential_branches_arbitrary",
+    "BfgsCoverage.Companion.Ch10Q.flat_branch_allowed",
+    "BfgsCoverage.Companion.Ch10Q.family_objective_eq",
+    "BfgsVerification.AdmissibleBFGSRun.parabolic_convergence",
+    "BfgsVerification.Parabolic.Family.hasBandCertificates"
+   ],
+   "note": "parabolic_convergence: m < oo is Fin m; a, b : Fin m -> R with a_i > 0, some b_i < 0, some b_i > 0; F(u,v) is the greatest of the a_i u^2 + b_i v (IsGreatest of the range), (u,v) = (x 0, x 1); every R : AdmissibleBFGSRun 2 F (arbitrary H_0 > 0, fixed 0 < c_1 < c_2 < 1 are fields of the run) has x_k -> 0 and F(x_k) -> 0. \"The number of essential branches is arbitrary\": essential_branches_arbitrary (for every N >= 2 a family with N branches, all essential: a_i = N^2 - t_i^2, b_i = 2 t_i, t_i = i - (N-1)/2; N >= 2 is forced by the sign condition on the slopes). \"Branches with b_i = 0, giving a region flat in the normal coordinate, are allowed\": flat_branch_allowed (the family of (10.18) has the branch 3u^2 with b = 0, and F = 3u^2 with v-derivative 0 on -u^2 < v < 2u^2). Proof: the library's band certificate on every positive band (Theorem art:objective-pair / band certificates) and the transported-certificate convergence theorem; the chapter's analysis (lines 55-217) is that proof."
   },
   {
    "id": "C/10_Q/disp/001",
@@ -28,7 +37,9 @@
    "title": null,
    "container": "C/10_Q/theorem/001",
    "sha256": "aa11545dfd7db23d",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/10_Q/theorem/001",
+   "note": "The objective and its hypotheses (hypotheses ha, hneg, hpos, hF of parabolic_convergence)."
   },
   {
    "id": "C/10_Q/disp/002",
@@ -42,7 +53,9 @@
    "title": null,
    "container": "C/10_Q/theorem/001",
    "sha256": "fdbf0bbdb255f1d7",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/10_Q/theorem/001",
+   "note": "The conclusion of parabolic_convergence."
   },
   {
    "id": "C/10_Q/disp/003",
@@ -56,7 +69,12 @@
    "title": null,
    "container": null,
    "sha256": "39ba835abeb3747f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.quadratic_lower",
+    "BfgsVerification.Parabolic.Family.quadratic_lower_bound"
+   ],
+   "note": "With the claim of line 56: some convex combination lam b_j + (1 - lam) b_i of a positive slope b_j and a negative slope b_i is 0, and F(u,v) >= a_min u^2 for all (u,v), a_min = minQuadratic (amin_def)."
   },
   {
    "id": "C/10_Q/disp/004",
@@ -70,7 +88,13 @@
    "title": null,
    "container": null,
    "sha256": "6fc0c9330d3cd080",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.upper_envelope",
+    "BfgsVerification.Parabolic.Family.prunedOrder",
+    "BfgsVerification.Parabolic.Family.exists_essential_profileActive"
+   ],
+   "note": "For an ordered list O of the remaining (essential) pieces (PrunedOrder) and phi a variable with its defining equation (phi(xi) the greatest of the a_i + b_i xi over the list): phi is also the maximum over all original pieces (\"they form the upper envelope\"), and F(u,v) = u^2 phi(v/u^2) for u != 0."
   },
   {
    "id": "C/10_Q/disp/005",
@@ -84,7 +108,14 @@
    "title": null,
    "container": null,
    "sha256": "86f101010c3f5e74",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.breakpoint_value",
+    "BfgsVerification.Parabolic.Family.breakpoint",
+    "BfgsVerification.Parabolic.Family.adjacent_breakpoint_value_pos",
+    "BfgsVerification.Parabolic.Family.adjacent_breakpoint_active"
+   ],
+   "note": "For consecutive pieces p = sigma(k), q = sigma(k+1) of the ordered list, xi_k = (a_p - a_q)/(b_q - b_p) (breakpoint) and A a variable with its defining equation: both expressions agree, A > 0, and both pieces are maximal at xi_k."
   },
   {
    "id": "C/10_Q/disp/006",
@@ -98,7 +129,13 @@
    "title": null,
    "container": null,
    "sha256": "22509294315697cd",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.calibration_recursion",
+    "BfgsVerification.Parabolic.Family.calibration",
+    "BfgsVerification.Parabolic.Family.adjacent_calibration"
+   ],
+   "note": "(10.7) defines the k_i up to one additive constant. The library constants calibration i (defined for every original index, including duplicates and tie-only pieces) satisfy the recursion for every pair of consecutive pieces of every ordered pruned list (calibration_recursion)."
   },
   {
    "id": "C/10_Q/disp/007",
@@ -112,7 +149,15 @@
    "title": null,
    "container": null,
    "sha256": "d4748698ca0b6ee3",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.scale_def",
+    "BfgsVerification.Parabolic.Family.radialDirection",
+    "BfgsVerification.Parabolic.Family.calibratedScale",
+    "BfgsVerification.Parabolic.Family.calibratedVector",
+    "BfgsVerification.Parabolic.Family.calibratedScale_eq_active"
+   ],
+   "note": "r = radialDirection = (u, 2v); theta = calibratedScale, which at every point with F > 0 and every active branch i equals exp{a_i u^2/(2F) + k_i} with k_i = calibration i (the library defines it without choosing an active branch); W = theta^2 r r^T = outer (calibratedVector x) (calibratedVector x)."
   },
   {
    "id": "C/10_Q/disp/008",
@@ -126,7 +171,12 @@
    "title": null,
    "container": null,
    "sha256": "2709396452259403",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.tie_difference",
+    "BfgsVerification.Parabolic.Family.adjacent_calibration"
+   ],
+   "note": "For consecutive pieces p, q with breakpoint xi and A as in disp/005, and every u != 0: at (u, xi u^2) both pieces are active, F = A u^2, the exponent difference is (a_q - a_p)/(2A) + k_q - k_p, and it is 0."
   },
   {
    "id": "C/10_Q/disp/009",
@@ -140,7 +190,12 @@
    "title": null,
    "container": null,
    "sha256": "c20fba70f29023d1",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.scale_bounds",
+    "BfgsVerification.Parabolic.Family.calibratedScale_uniform_bounds"
+   ],
+   "note": "With the claim of line 84 (0 <= u^2/F <= 1/a_min on F > 0): constants 0 < theta_min <= theta_max with theta_min <= theta <= theta_max on F > 0."
   },
   {
    "id": "C/10_Q/disp/010",
@@ -154,7 +209,14 @@
    "title": null,
    "container": null,
    "sha256": "27fd372751505d43",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.step_notation",
+    "BfgsVerification.Parabolic.Family.horizontalStep",
+    "BfgsVerification.Parabolic.Family.normalStep",
+    "BfgsVerification.TransportedCertificate.pairStep"
+   ],
+   "note": "h = horizontalStep x z = u' - u, l = normalStep x z = v' - v, s = pairStep x z = z - x = (h, l)."
   },
   {
    "id": "C/10_Q/disp/011",
@@ -168,7 +230,12 @@
    "title": null,
    "container": null,
    "sha256": "1cc735d8613dba88",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.deficits_nonneg",
+    "BfgsVerification.Parabolic.Family.deficit_nonneg"
+   ],
+   "note": "Standing assumptions (line 95): the positive band {eta <= F <= B}, eta > 0, compact (band_compact), points x, z of the band, gradients g, g' there (y = g' - g), old branch i active at x, new branch j active at z. e and e-bar are variables with their defining equations (the library deficit i z, deficit j x); e >= 0 and e-bar >= 0 hold for all branches and points (the band hypotheses are not used)."
   },
   {
    "id": "C/10_Q/disp/012",
@@ -182,7 +249,15 @@
    "title": null,
    "container": null,
    "sha256": "438dd7b978eb440d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.pair_identities",
+    "BfgsVerification.Parabolic.Family.decrease_gap_identity",
+    "BfgsVerification.Parabolic.Family.curvature_identity",
+    "BfgsVerification.Parabolic.Family.visibility_identity",
+    "BfgsVerification.Parabolic.Family.secant_radial_identity"
+   ],
+   "note": "Standing assumptions (line 95): the positive band {eta <= F <= B}, eta > 0, compact (band_compact), points x, z of the band, gradients g, g' there (y = g' - g), old branch i active at x, new branch j active at z. d = -g^T s (pairDecrease), Delta = F(x) - F(z), t = y^T s (pairCurvature), r = radialDirection; h, e, e-bar variables with their defining equations."
   },
   {
    "id": "C/10_Q/disp/013",
@@ -196,7 +271,12 @@
    "title": null,
    "container": null,
    "sha256": "0ea224031a8a45c0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.secant_quotient",
+    "BfgsVerification.Parabolic.Family.secant_quotient_bound"
+   ],
+   "note": "Standing assumptions (line 95): the positive band {eta <= F <= B}, eta > 0, compact (band_compact), points x, z of the band, gradients g, g' there (y = g' - g), old branch i active at x, new branch j active at z. For t > 0 (eligible pairs have t >= (1 - c_2) d > 0)."
   },
   {
    "id": "C/10_Q/disp/014",
@@ -210,7 +290,13 @@
    "title": null,
    "container": null,
    "sha256": "0b947582d3b32e41",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.step_determinant",
+    "BfgsVerification.Parabolic.Family.stepDeterminant",
+    "BfgsVerification.Parabolic.determinant"
+   ],
+   "note": "D = stepDeterminant x z = 2vh - u l, and it equals the determinant of the columns s, r(x)."
   },
   {
    "id": "C/10_Q/disp/015",
@@ -224,7 +310,12 @@
    "title": null,
    "container": null,
    "sha256": "254344517aa5f5c7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.denominator_bounds",
+    "BfgsVerification.Parabolic.Family.exists_small_denominator_bounds"
+   ],
+   "note": "\"Uniformly on the band for sufficiently small eligible d\" is: constants and a threshold delta > 0 chosen from the family, eta, B, c_1, c_2 before the pairs, and the estimate for every eligible pair (EligiblePair: differentiable endpoints, d > 0, Armijo, Delta <= d, weak Wolfe; 0 <= c_1, c_2 < 1) in the band with d <= delta. Conclusion: D != 0, d <= C|D| and |h| <= C|D| (lines 149-153 are the proof)."
   },
   {
    "id": "C/10_Q/disp/016",
@@ -238,7 +329,12 @@
    "title": null,
    "container": null,
    "sha256": "0d2d5855e94eaf85",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.old_radial",
+    "BfgsCoverage.Companion.Ch10Q.radial_difference"
+   ],
+   "note": "N = y^T r(z) (variable), y_u = y 0; the identity holds for all points and all vectors y with t = y^T s."
   },
   {
    "id": "C/10_Q/disp/017",
@@ -252,7 +348,12 @@
    "title": null,
    "container": null,
    "sha256": "4b77b0cad0c4be9d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.radial_error",
+    "BfgsCoverage.Companion.Ch10Q.band_bounds"
+   ],
+   "note": "With the claim of line 136 (\"By (12)\" means (10.12): typo, see prose/014). On the band (0 <= c_1): one C >= 0 gives |y^T r(x) + 2t| <= C(|h| + d) for every eligible pair in the band (epsilon = y^T r(x) + 2t)."
   },
   {
    "id": "C/10_Q/disp/018",
@@ -266,7 +367,12 @@
    "title": null,
    "container": null,
    "sha256": "9e210a95254c4b76",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.determinant_identity'",
+    "BfgsVerification.Parabolic.determinant_dot_identity"
+   ],
+   "note": "For x differentiable with gradient g (so g^T r(x) = 2F(x) by (10.11)), any z and y; det(g, y) is determinant g y."
   },
   {
    "id": "C/10_Q/disp/019",
@@ -280,7 +386,11 @@
    "title": null,
    "container": null,
    "sha256": "c6d3c756d79a1e29",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.absorption_inequality"
+   ],
+   "note": "On the band (0 <= c_1): one C works for every eligible pair in the band."
   },
   {
    "id": "C/10_Q/disp/020",
@@ -294,7 +404,12 @@
    "title": null,
    "container": null,
    "sha256": "8f4e33a2cc6815b0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.slope_determinant",
+    "BfgsVerification.Parabolic.Family.slope_determinant_identity"
+   ],
+   "note": "For an active branch i at x with gradient g there and every z; no assumption b_i != 0."
   },
   {
    "id": "C/10_Q/disp/021",
@@ -308,7 +423,12 @@
    "title": null,
    "container": null,
    "sha256": "80bd7fcda94aefe8",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.quotient_multiplier",
+    "BfgsVerification.Parabolic.Family.quotientMultiplier"
+   ],
+   "note": "lambda (variable, for D != 0) is the library quotientMultiplier x z; the claim of line 164 that r(z) - lambda r(x) is parallel to s is prose/019."
   },
   {
    "id": "C/10_Q/disp/022",
@@ -322,7 +442,12 @@
    "title": null,
    "container": null,
    "sha256": "493a1ed053b37c90",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.cancellation",
+    "BfgsVerification.Parabolic.Family.quotient_cancellation"
+   ],
+   "note": "With the identity d = -2 a_i u h - b_i l of the lead-in (line 164); for an active branch i at x with gradient g there, F(x) != 0 and D != 0."
   },
   {
    "id": "C/10_Q/disp/023",
@@ -336,7 +461,12 @@
    "title": null,
    "container": null,
    "sha256": "ad009cb54dc33cd4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.multiplier_estimates",
+    "BfgsCoverage.Companion.Ch10Q.band_radius"
+   ],
+   "note": "\"Uniformly on the band for sufficiently small eligible d\" is: constants and a threshold delta > 0 chosen from the family, eta, B, c_1, c_2 before the pairs, and the estimate for every eligible pair (EligiblePair: differentiable endpoints, d > 0, Armijo, Delta <= d, weak Wolfe; 0 <= c_1, c_2 < 1) in the band with d <= delta. With the claims of line 169: |vhd/(F(x)D)| <= C d, h^2 <= C d, |lambda - 1| <= C sqrt d, lambda > 0 and |log lambda + (a_i u/F(x)) h| <= C d, for every active i at x. New proof in the coverage module (from denominator_bounds and cancellation)."
   },
   {
    "id": "C/10_Q/disp/024",
@@ -350,7 +480,11 @@
    "title": null,
    "container": null,
    "sha256": "aefe0704e998ed5a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.exponent_estimates"
+   ],
+   "note": "\"Uniformly on the band for sufficiently small eligible d\" is: constants and a threshold delta > 0 chosen from the family, eta, B, c_1, c_2 before the pairs, and the estimate for every eligible pair (EligiblePair: differentiable endpoints, d > 0, Armijo, Delta <= d, weak Wolfe; 0 <= c_1, c_2 < 1) in the band with d <= delta. L_i is a variable with its defining equation (L_i(x) = a_i u^2/(2F(x)) + k_i). With the claim of line 174: the remainder L_i(z) - L_i(x) - (a_i u/F(x)) h is exactly a_i h^2/(2F(x)) + a_i u'^2 Delta/(2F(x)F(z)), bounded by C(h^2 + Delta) and by C d; and the conclusion of line 179, |log lambda + L_i(z) - L_i(x)| <= C d. The \"smoothness in (u, F)\" argument is replaced by this exact identity. New proof in the coverage module."
   },
   {
    "id": "C/10_Q/disp/025",
@@ -364,7 +498,12 @@
    "title": null,
    "container": null,
    "sha256": "2e9b22dbe667e52b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.branch_change",
+    "BfgsVerification.Parabolic.Family.exists_calibration_deficit_bound"
+   ],
+   "note": "With the lead-in of line 181. A constant C from the family alone gives |L_j(z) - L_i(z)| <= C e/F(z) at every z with F(z) > 0, every branch i and every active j at z (e = F(z) - (a_i u'^2 + b_i v')); on the band (0 <= c_1) C_eta = C/eta gives the second inequality for eligible pairs with i active at x."
   },
   {
    "id": "C/10_Q/disp/026",
@@ -378,7 +517,12 @@
    "title": null,
    "container": null,
    "sha256": "bf96bf825fcf7397",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.normalized_arc",
+    "BfgsVerification.Parabolic.Family.active_normalized_cell"
+   ],
+   "note": "t_0 = u'^2/F(z), v_0 = v'/F(z) (written out in normalized_arc, F(z) > 0). The lead-in \"A complete justification is as follows\" (line 185) announces the argument of lines 185-198."
   },
   {
    "id": "C/10_Q/disp/027",
@@ -392,7 +536,13 @@
    "title": null,
    "container": null,
    "sha256": "ca640040fd5e194b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.normalized_arc",
+    "BfgsCoverage.Companion.Ch10Q.arc_graph",
+    "BfgsVerification.Parabolic.Family.normalized_normal_bounds"
+   ],
+   "note": "S is a variable with its defining equation (the max written with Finset.sup'). normalized_arc: the normalized point lies in S for F(z) > 0 (\"It lies on\", line 189), every point of S has t_0 <= 1/a_min and v_0 in [normalLeft, normalRight], S is compact. arc_graph (\"polygonal arc\"): S is the graph of the continuous piecewise-affine tau(v_0) = min_i (1 - b_i v_0)/a_i over [1/min_i b_i, 1/max_i b_i] and the union of the convex pieces S cap {a_i t_0 + b_i v_0 = 1}."
   },
   {
    "id": "C/10_Q/disp/028",
@@ -406,7 +556,13 @@
    "title": null,
    "container": null,
    "sha256": "b39b1273d7a42f20",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.segment_affine",
+    "BfgsVerification.Parabolic.Family.envelopeDeficit_affine",
+    "BfgsVerification.Parabolic.Family.envelopeExponentDifference_affine"
+   ],
+   "note": "For F(z) > 0, j active at z, t_0, v_0 the normalized coordinates and L_i as in disp/024: both identities, t_0 = (1 - b_j v_0)/a_j on j's segment, and both functions are affine in v_0 there."
   },
   {
    "id": "C/10_Q/disp/029",
@@ -420,7 +576,12 @@
    "title": null,
    "container": null,
    "sha256": "8b2306fb11d88e8a",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.compensated_def",
+    "BfgsVerification.Parabolic.Family.compensatedMultiplier"
+   ],
+   "note": "lambda-tilde (variable) is the library compensatedMultiplier x z = theta(z) lambda/theta(x)."
   },
   {
    "id": "C/10_Q/disp/030",
@@ -434,7 +595,12 @@
    "title": null,
    "container": null,
    "sha256": "0ba16425052cc6f2",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.compensated_log",
+    "BfgsVerification.Parabolic.Family.exists_uniform_log_transport"
+   ],
+   "note": "\"Uniformly on the band for sufficiently small eligible d\" is: constants and a threshold delta > 0 chosen from the family, eta, B, c_1, c_2 before the pairs, and the estimate for every eligible pair (EligiblePair: differentiable endpoints, d > 0, Armijo, Delta <= d, weak Wolfe; 0 <= c_1, c_2 < 1) in the band with d <= delta. Conclusion: D != 0, lambda-tilde > 0 and |log lambda-tilde| <= C_eta d (\"It follows\", line 200: from disp/023-025)."
   },
   {
    "id": "C/10_Q/disp/031",
@@ -448,7 +614,12 @@
    "title": null,
    "container": null,
    "sha256": "2cb939900b7fbd19",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.projected_transport",
+    "BfgsVerification.Parabolic.Family.calibrated_vector_transport"
+   ],
+   "note": "Pi_s is stepProjector (the projector perpendicular to s); for every pair with D != 0."
   },
   {
    "id": "C/10_Q/disp/032",
@@ -462,7 +633,12 @@
    "title": null,
    "container": null,
    "sha256": "bc8fa65fb1a2e82e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.transport_loewner",
+    "BfgsVerification.Parabolic.Family.exists_uniform_log_transport"
+   ],
+   "note": "\"Uniformly on the band for sufficiently small eligible d\" is: constants and a threshold delta > 0 chosen from the family, eta, B, c_1, c_2 before the pairs, and the estimate for every eligible pair (EligiblePair: differentiable endpoints, d > 0, Armijo, Delta <= d, weak Wolfe; 0 <= c_1, c_2 < 1) in the band with d <= delta. \"On a sufficiently small-decrease tail\" (line 217) is d <= delta. With W = (theta r)(theta r)^T: C_eta, L_eta >= 0 and delta > 0 such that e^{2 C_eta d} Pi_s W(x) Pi_s - Pi_s W(z) Pi_s and (1 + L_eta d) Pi_s W(x) Pi_s - e^{2 C_eta d} Pi_s W(x) Pi_s are positive semidefinite (Loewner order). New proof in the coverage module (L_eta = e^{2 C_eta} - 1, using d <= delta <= 1)."
   },
   {
    "id": "C/10_Q/disp/033",
@@ -476,7 +652,14 @@
    "title": null,
    "container": null,
    "sha256": "93f607f119f4d946",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_objective",
+    "BfgsVerification.Parabolic.Example.objective",
+    "BfgsVerification.Parabolic.Example.family",
+    "BfgsVerification.Parabolic.Example.objective_eq_max"
+   ],
+   "note": "F (variable with the defining equation (10.18)) is Example.objective, the maximum of Example.family (a = (1,3,2), b = (1,0,-1)), a family of Theorem theorem/001."
   },
   {
    "id": "C/10_Q/disp/034",
@@ -490,7 +673,14 @@
    "title": null,
    "container": null,
    "sha256": "0e6ca320083d12fb",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_scale",
+    "BfgsVerification.Parabolic.Example.sourceScale",
+    "BfgsVerification.Parabolic.Example.sourceScale_eq_normalized",
+    "BfgsVerification.Parabolic.Example.calibration_differences"
+   ],
+   "note": "With the lead-in \"An especially simple scaling for (8) is\" (line 238, prose/032). theta is a variable with the three defining equations on the open regions. Off the interfaces theta = Example.sourceScale (which takes the middle value 1 on the interfaces); theta has the form (10.8), exp{a_i u^2/(2F) + k_i} for the active branch, with k = (-1/6, -1/2, -1/3) for (u^2 + v, 3u^2, 2u^2 - v); these k satisfy (10.7) along the branches ordered by slope (breakpoints -1 and 2, both with A = 3) and differ from the library calibration by one constant, so theta = sourceNormalization * calibratedScale on F > 0 (\"a scaling for (8)\")."
   },
   {
    "id": "C/10_Q/disp/035",
@@ -504,7 +694,13 @@
    "title": null,
    "container": null,
    "sha256": "6c4ce71b5c0004f1",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_points",
+    "BfgsVerification.Parabolic.Example.oldPoint",
+    "BfgsVerification.Parabolic.Example.newPoint"
+   ],
+   "note": "With the standing assumptions of line 249 (u != 0, A > 0, 0 < eps < 6u^2): x_eps = Example.oldPoint u eps, z_eps = Example.newPoint u (1/2) eps."
   },
   {
    "id": "C/10_Q/disp/036",
@@ -518,7 +714,13 @@
    "title": null,
    "container": null,
    "sha256": "8cceb1b0fdf8acc5",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_metric",
+    "BfgsVerification.Parabolic.Example.initialMetric",
+    "BfgsVerification.Parabolic.Example.initialMetric_posDef"
+   ],
+   "note": "H_eps (variable with the displayed defining equation) is Example.initialMetric u A (1/2) eps and is positive definite (A > 0, eps > 0)."
   },
   {
    "id": "C/10_Q/disp/037",
@@ -532,7 +734,16 @@
    "title": null,
    "container": null,
    "sha256": "12887e7af8e1fb6f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_identities",
+    "BfgsCoverage.Companion.Ch10Q.family_identities",
+    "BfgsVerification.Parabolic.Example.initialMetric_step",
+    "BfgsVerification.Parabolic.Example.pair_decrease",
+    "BfgsVerification.Parabolic.Example.pair_curvature",
+    "BfgsVerification.Parabolic.Example.pair_values"
+   ],
+   "note": "With the gradient claim of line 260 (prose/035). Under the standing assumptions of line 249 (A arbitrary): gradients (2u,1) at x_eps and (6u,0) at z_eps, -H_eps g = z_eps - x_eps, d = t = 3 eps/2, Delta = eps."
   },
   {
    "id": "C/10_Q/disp/038",
@@ -546,7 +757,14 @@
    "title": null,
    "container": null,
    "sha256": "04907169b68ed280",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_radial",
+    "BfgsCoverage.Companion.Ch10Q.family_radial",
+    "BfgsVerification.Parabolic.Example.radial_numerator",
+    "BfgsVerification.Parabolic.Example.radial_quotient_tendsto"
+   ],
+   "note": "With the claim y = (4u, -1) of line 267. y^T z_eps = y^T (z_eps - x_*) with x_* = 0 (the radial numerator of (RS)); the identity for every eps, the limit as eps -> 0+ with u != 0 fixed."
   },
   {
    "id": "C/10_Q/disp/039",
@@ -560,7 +778,12 @@
    "title": null,
    "container": null,
    "sha256": "dd87c7e52ae98793",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.rho_choice",
+    "BfgsVerification.Parabolic.Example.exists_strict_armijo_parameter"
+   ],
+   "note": "For a fixed ordinary pair 0 < c_1 < c_2 < 1 (line 274) and rho a variable with its defining equation: rho > 0, c_1(1 + rho) = (1 + c_1)/2 < 1."
   },
   {
    "id": "C/10_Q/disp/040",
@@ -574,7 +797,13 @@
    "title": null,
    "container": null,
    "sha256": "d5406f5135bd54cd",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_pair_def",
+    "BfgsVerification.Parabolic.Example.newPoint",
+    "BfgsVerification.Parabolic.Example.initialMetric"
+   ],
+   "note": "z_{eps,rho} = Example.newPoint u rho eps, H_{eps,rho} = Example.initialMetric u A rho eps; the condition 0 < rho eps < 3u^2 is a standing assumption of the following claims."
   },
   {
    "id": "C/10_Q/disp/041",
@@ -588,7 +817,16 @@
    "title": null,
    "container": null,
    "sha256": "78a70d179d258584",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_identities",
+    "BfgsVerification.Parabolic.Example.pair_gradients",
+    "BfgsVerification.Parabolic.Example.initialMetric_step",
+    "BfgsVerification.Parabolic.Example.pair_decrease",
+    "BfgsVerification.Parabolic.Example.pair_curvature",
+    "BfgsVerification.Parabolic.Example.pair_values"
+   ],
+   "note": "With the gradient claim of line 289 (prose/044). For rho > 0, eps > 0, rho eps < 3u^2 and every A."
   },
   {
    "id": "C/10_Q/disp/042",
@@ -602,7 +840,13 @@
    "title": null,
    "container": null,
    "sha256": "b50581682829d333",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_radial",
+    "BfgsVerification.Parabolic.Example.radial_numerator",
+    "BfgsVerification.Parabolic.Example.radial_quotient_tendsto"
+   ],
+   "note": "With the lead-in \"Their radial quotient is\" (line 294). The identity for every eps; the limit as eps -> 0+ with u != 0 and rho > 0 fixed."
   },
   {
    "id": "C/10_Q/disp/043",
@@ -616,7 +860,15 @@
    "title": null,
    "container": null,
    "sha256": "d661dcc13a4ff004",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_transported",
+    "BfgsVerification.Parabolic.Example.sourceScale_pair",
+    "BfgsVerification.Parabolic.Example.transported_numerator",
+    "BfgsVerification.Parabolic.Example.transported_quotient_tendsto",
+    "BfgsCoverage.Companion.Ch10Q.rankOne_energy"
+   ],
+   "note": "With the claim theta(z_eps) = 1 of line 304. W = (theta r)(theta r)^T with the printed scale (example_field); for 0 < eps < 6u^2; the limit as eps -> 0+ with u != 0 fixed."
   },
   {
    "id": "C/10_Q/disp/044",
@@ -630,8 +882,854 @@
    "title": null,
    "container": null,
    "sha256": "a558ce00f0347cdc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_multiplier",
+    "BfgsVerification.Parabolic.Example.quotientMultiplier_eq_one",
+    "BfgsVerification.Parabolic.Example.source_compensated_log",
+    "BfgsVerification.Parabolic.Example.sourceScale_eq_normalized"
+   ],
+   "note": "With the claims of lines 309 and 314. For 0 < eps < 6u^2: lambda = 1; lambda-tilde = theta(z) lambda/theta(x) with the printed scale satisfies log lambda-tilde = eps/(6(3u^2 + eps)) and equals the library compensatedMultiplier (the normalization cancels); \"= O(d) on each fixed positive band\": for every eta > 0 with F(z_eps) >= eta, 0 <= log lambda-tilde <= d/(9 eta)."
+  },
+  {
+   "id": "C/10_Q/prose/001",
+   "kind": "prose",
+   "anchor": "Flat contour segments are allowed in this finite parabolic family.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_flat_contour",
+    "BfgsVerification.Parabolic.Example.objective_middle_closed",
+    "BfgsVerification.AdmissibleBFGSRun.parabolic_convergence",
+    "BfgsCoverage.Companion.Ch10Q.example_run_exists",
+    "BfgsCoverage.Companion.Ch10Q.exampleRun_nonempty"
+   ],
+   "note": "Both sentences of line 3. The example family (a member of the finite parabolic family) has, at every positive level t, the vertical segment {(sqrt(t/3), v) : -t/3 <= v <= 2t/3} in the level set {F = t} on the boundary of the sublevel {F <= t}, which is therefore not strictly convex: the strict-contour hypothesis of the planar theorem (strictly convex positive sublevels, 09_C.tex:47, also in its local form for low sublevels) fails at every positive level, while every admissible run converges by the theorem of this chapter. Non-vacuity of the \"every run\" conclusion: admissible runs on the example objective exist from every point of differentiability, for every H_0 and 0 < c_1 < c_2 < 1 (example_run_exists, from AdmissibleRunExistence.exists_admissible_run; exampleRun_nonempty), and example_flat_contour applies to them (example after exampleRun_nonempty)."
+  },
+  {
+   "id": "C/10_Q/prose/002",
+   "kind": "prose",
+   "anchor": "This is a concrete application of the objective-pair theorem, not the definition of its scope.",
+   "lines": [
+    49,
+    49
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.band_certificate",
+    "BfgsCoverage.Companion.Ch10Q.parabolic_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.transported_certificate_convergence_on_sublevel"
+   ],
+   "note": "Both sentences of line 49. \"A concrete application of the objective-pair theorem\": the theorem is proved by band certificates on every positive band and the transported-certificate convergence theorem (band_certificate; library proof of AdmissibleBFGSRun.parabolic_convergence); \"not the definition of its scope\" is a remark. \"The abstract condition is dimension-independent\": the library certificate theorem transported_certificate_convergence_on_sublevel is stated for every dimension n (Vec n); \"this explicitly verified class has two variables\": the family lives on Vec 2. Wording point (no discrepancy): \"the objective-pair theorem\" (also \"The general theorem\", line 217) is Chapter 3's transported-certificate theorem, named only by description. Optional: \"of Chapter~\\ref{comp:T}\"."
+  },
+  {
+   "id": "C/10_Q/prose/003",
+   "kind": "prose",
+   "anchor": "Set $a_{\\min}=\\min_i a_i>0$.",
+   "lines": [
+    56,
+    56
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.amin_def",
+    "BfgsVerification.Parabolic.Family.minQuadratic",
+    "BfgsVerification.Parabolic.Family.minQuadratic_pos"
+   ],
+   "note": "minQuadratic is a lower bound of the a_i, attained, and positive. The next sentence of line 56 is part of disp/003."
+  },
+  {
+   "id": "C/10_Q/prose/004",
+   "kind": "prose",
+   "anchor": "The positive extreme slope bounds $v$ above on a sublevel",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.sublevel_bounds",
+    "BfgsVerification.Parabolic.Family.sublevel_compact"
+   ],
+   "note": "On {F <= c}: v <= c/b_j for a positive slope, v >= c/b_i for a negative slope, u^2 <= c/a_min; every sublevel is compact."
+  },
+  {
+   "id": "C/10_Q/prose/005",
+   "kind": "prose",
+   "anchor": "proving uniqueness of the minimum zero.",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.unique_minimum_zero",
+    "BfgsVerification.Parabolic.Family.unique_zero",
+    "BfgsVerification.Parabolic.Family.objective_zero"
+   ],
+   "note": "F(0, v) > 0 for v != 0, F(0) = 0 is the minimum, and F(x) = 0 only at x = 0."
+  },
+  {
+   "id": "C/10_Q/prose/006",
+   "kind": "prose",
+   "anchor": "Discard globally redundant pieces",
+   "lines": [
+    62,
+    62
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.pruning",
+    "BfgsVerification.Parabolic.Family.Essential",
+    "BfgsVerification.Parabolic.Family.prunedOrder",
+    "BfgsVerification.Parabolic.Family.prunedFamily_objective"
+   ],
+   "note": "The remaining pieces are the essential ones (Essential: one canonical copy per coefficient pair, strictly maximal on an open interval of xi = v/u^2, hence neither redundant nor active only on a tie); an essential piece has the largest a_i among the pieces with its slope; essential slopes are distinct and ordered by strictly increasing b_i (prunedOrder); the pruned family has the same objective."
+  },
+  {
+   "id": "C/10_Q/prose/007",
+   "kind": "prose",
+   "anchor": "The neighboring breakpoints",
+   "lines": [
+    66,
+    66
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.breakpoints_increasing",
+    "BfgsVerification.Parabolic.Family.PrunedOrder.consecutive_breakpoints_increasing"
+   ]
+  },
+  {
+   "id": "C/10_Q/prose/008",
+   "kind": "prose",
+   "anchor": "The constants make",
+   "lines": [
+    80,
+    80
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.scale_interfaces",
+    "BfgsVerification.Parabolic.Family.calibration_active_eq"
+   ],
+   "note": "At every point with F > 0, any two active branches (adjacent or not) give the same exponent a_i u^2/(2F) + k_i."
+  },
+  {
+   "id": "C/10_Q/prose/009",
+   "kind": "prose",
+   "anchor": "The field is well-defined on $F>0$, including by continuous extension across ties.",
+   "lines": [
+    84,
+    84
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.scale_continuous",
+    "BfgsCoverage.Companion.Ch10Q.scale_interfaces",
+    "BfgsVerification.Parabolic.Family.calibratedScale_continuousOn",
+    "BfgsVerification.Parabolic.Family.certificateField_continuousOn"
+   ],
+   "note": "theta does not depend on the active branch (scale_interfaces); theta, theta r and W are continuous on F > 0."
+  },
+  {
+   "id": "C/10_Q/prose/010",
+   "kind": "prose",
+   "anchor": "It is only used at differentiable endpoints in the theorem.",
+   "lines": [
+    84,
+    84
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on the proof: the certificate conditions (BandCertificate) are evaluated only at the differentiable endpoints of eligible pairs."
+  },
+  {
+   "id": "C/10_Q/prose/011",
+   "kind": "prose",
+   "anchor": "There is no coordinate change in the BFGS algorithm.",
+   "lines": [
+    88,
+    88
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark: the runs of the theorem are unmodified BFGS runs (AdmissibleBFGSRun on F); the normalized envelope only enters the construction of the certificate."
+  },
+  {
+   "id": "C/10_Q/prose/012",
+   "kind": "prose",
+   "anchor": "Fix a compact positive band",
+   "lines": [
+    95,
+    95
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.band_compact"
+   ],
+   "note": "Standing assumptions of the visibility paragraph: the band {eta <= F <= B} (compact: band_compact), the old branch i active at x = (u,v), the new branch j active at z = (u',v'); they are hypotheses of the theorems of disp/011-013."
+  },
+  {
+   "id": "C/10_Q/prose/013",
+   "kind": "prose",
+   "anchor": "For eligible pairs, $h^2\\le d/a_{\\min}$ and $e\\le d$.",
+   "lines": [
+    110,
+    110
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.eligible_step_bounds",
+    "BfgsVerification.Parabolic.Family.eligible_horizontal_sq_le",
+    "BfgsVerification.Parabolic.Family.eligible_deficit_le"
+   ],
+   "note": "For every eligible pair (0 <= c_1) and active i at x."
+  },
+  {
+   "id": "C/10_Q/prose/014",
+   "kind": "prose",
+   "anchor": "The right side is uniformly bounded on the compact band for small $d$.",
+   "lines": [
+    115,
+    115
+   ],
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.secant_visibility",
+    "BfgsCoverage.Companion.Ch10Q.rankOne_energy"
+   ],
+   "note": "Typo in cross-references (one entry for the six equation references of the chapter: \"(11)\" line 115, \"(12)\" line 136, \"(13)\" line 169, \"(7)\" and \"(16)\" line 198, \"(8)\" line 238; see discrepancies). The mathematics of the three sentences of line 115, with (11) read as (10.11), is secant_visibility, on the band (0 <= c_1, c_2 < 1): some C bounds the right side of disp/013 for eligible pairs with d <= 1; some C' gives (S) y^T W(z) y <= C' t for those pairs; (V) g^T W(x) g >= 4 theta_min^2 eta^2 at every differentiable point of the band, theta_min any lower bound of theta on F > 0. Wording point (no discrepancy): the condition names (S) and (V) of line 115 (and (T) of line 217) are Chapter 3's conditions, tagged (3.S), (3.V), (3.T) there; Chapter 3 itself calls them (V), (S), (T), so they are not wrong numbers. Optional: \"(S) of Chapter~\\ref{comp:T}\"."
+  },
+  {
+   "id": "C/10_Q/prose/015",
+   "kind": "prose",
+   "anchor": "This is the essential denominator estimate.",
+   "lines": [
+    130,
+    130
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.denominator_bounds"
+   ],
+   "note": "\"It does not assume s -> 0 in both coordinates or that successive active pieces are adjacent\": the hypotheses of denominator_bounds contain neither; the active branches at x and z are arbitrary."
+  },
+  {
+   "id": "C/10_Q/prose/016",
+   "kind": "prose",
+   "anchor": "Let $N=y\\T r(z)$.",
+   "lines": [
+    132,
+    132
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.radial_difference"
+   ],
+   "note": "r(z) - r(x) = diag(1,2) s; N only names y^T r(z)."
+  },
+  {
+   "id": "C/10_Q/prose/017",
+   "kind": "prose",
+   "anchor": "Taking $d$ sufficiently small absorbs the final term into the left side",
+   "lines": [
+    149,
+    149
+   ],
+   "status": "PROOF",
+   "of": "C/10_Q/disp/015",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.absorption_inequality",
+    "BfgsCoverage.Companion.Ch10Q.eligible_step_bounds",
+    "BfgsVerification.Parabolic.Family.exists_small_denominator_bounds"
+   ],
+   "note": "The absorption argument proving d <= C|D|; the library proof exists_small_denominator_bounds follows it."
+  },
+  {
+   "id": "C/10_Q/prose/018",
+   "kind": "prose",
+   "anchor": "including when $b_i=0$.",
+   "lines": [
+    153,
+    153
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.denominator_bounds",
+    "BfgsCoverage.Companion.Ch10Q.slope_determinant"
+   ],
+   "note": "|h| <= C|D| and D != 0 for every eligible pair in the band with d <= delta, with no assumption b_i != 0."
+  },
+  {
+   "id": "C/10_Q/prose/019",
+   "kind": "prose",
+   "anchor": "Then $r(z)-\\lambda r(x)$ is parallel to $s$.",
+   "lines": [
+    164,
+    164
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.quotient_multiplier",
+    "BfgsVerification.Parabolic.Family.radial_direction_transport"
+   ],
+   "note": "For D != 0: r(z) - lambda r(x) = mu s for some mu."
+  },
+  {
+   "id": "C/10_Q/prose/020",
+   "kind": "prose",
+   "anchor": "the right side is $O(d)$ uniformly on the band.",
+   "lines": [
+    169,
+    169
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.multiplier_estimates"
+   ],
+   "note": "Part of multiplier_estimates (|vhd/(F(x)D)| <= C d and h^2 <= C d, uniformly in the sense of disp/023). \"By (13)\" means (10.13): typo, see prose/014."
+  },
+  {
+   "id": "C/10_Q/prose/021",
+   "kind": "prose",
+   "anchor": "Thus $\\log\\lambda+L_i(z)-L_i(x)=O(d)$.",
+   "lines": [
+    179,
+    179
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.exponent_estimates"
+   ],
+   "note": "Last conclusion of exponent_estimates."
+  },
+  {
+   "id": "C/10_Q/prose/022",
+   "kind": "prose",
+   "anchor": "It lies on the compact polygonal arc",
+   "lines": [
+    189,
+    189
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.arc_graph",
+    "BfgsCoverage.Companion.Ch10Q.normalized_arc"
+   ],
+   "note": "See disp/027: membership and compactness (normalized_arc); polygonal arc (arc_graph: graph of a continuous minimum of finitely many affine functions over a compact interval, union of convex pieces of lines)."
+  },
+  {
+   "id": "C/10_Q/prose/023",
+   "kind": "prose",
+   "anchor": "Compactness follows from",
+   "lines": [
+    193,
+    193
+   ],
+   "status": "PROOF",
+   "of": "C/10_Q/disp/027",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.normalized_arc",
+    "BfgsVerification.Parabolic.Family.normalized_normal_bounds"
+   ],
+   "note": "normalized_arc proves compactness from t_0 <= 1/a_min and the bounds on v_0 given by a negative and a positive slope."
+  },
+  {
+   "id": "C/10_Q/prose/024",
+   "kind": "prose",
+   "anchor": "The first is nonnegative.",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.segment_bound_facts",
+    "BfgsVerification.Parabolic.Family.envelopeDeficit_nonneg",
+    "BfgsVerification.Parabolic.Family.envelopeExponentDifference_zero_of_deficit_zero"
+   ],
+   "note": "On every segment (envelopeCell j, parametrized by v_0) and for every branch i. \"by (7)\" means (10.7): typo, see prose/014."
+  },
+  {
+   "id": "C/10_Q/prose/025",
+   "kind": "prose",
+   "anchor": "On an adjacent segment the two functions are proportional",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.segment_cases",
+    "BfgsCoverage.Companion.Ch10Q.arc_range_iff",
+    "BfgsVerification.Parabolic.Family.normalized_cell_of_active",
+    "BfgsVerification.Parabolic.Family.envelopeExponentDifference_zero_of_deficit_zero"
+   ],
+   "note": "With S the arc of disp/027 and the segment of branch k in the coordinate v_0, S_k = {v_0 : exists t_0, (t_0, v_0) in S and a_k t_0 + b_k v_0 = 1} (variables with their defining equations): S_k is the library cell envelopeCell k cut to the arc's range [1/min_i b_i, 1/max_i b_i] (arc_range_iff); the first function vanishes somewhere on S_j exactly when the segments S_i and S_j meet (adjacent segments); then the two functions are proportional on the whole line; when they do not meet (nonadjacent) and S_j is nonempty, the first function has a positive minimum on S_j (compactness). New proof in the coverage module; the library proves the uniform bound (16) with one lemma on affine functions instead of this case analysis. The earlier version spoke of the cells over [normalLeft, normalRight] (reciprocals of slopes picked by Classical.choose), which may extend beyond the arc; the segments are now those of the arc."
+  },
+  {
+   "id": "C/10_Q/prose/026",
+   "kind": "prose",
+   "anchor": "There are finitely many segments and pairs, proving (16).",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.segment_bound_facts",
+    "BfgsCoverage.Companion.Ch10Q.branch_change",
+    "BfgsVerification.Parabolic.Family.exists_uniform_cell_deficit_bound",
+    "BfgsVerification.Parabolic.Family.exists_calibration_deficit_bound"
+   ],
+   "note": "One constant C for all pairs (i, j) bounds the second function by C times the first on every segment (segment_bound_facts); (16), i.e. (10.16) (typo, see prose/014), is branch_change."
+  },
+  {
+   "id": "C/10_Q/prose/027",
+   "kind": "prose",
+   "anchor": "Removal of zero-length envelope pieces avoids spurious triple junctions",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.no_triple_junction",
+    "BfgsVerification.Parabolic.Family.prunedFamily_objective",
+    "BfgsVerification.Parabolic.Family.prunedFamily_gradient"
+   ],
+   "note": "After the removal (essential pieces only) no three distinct pieces are maximal at a common xi; the pruned family has the same objective and the same gradient at every differentiable point. New proof in the coverage module for the triple-junction statement."
+  },
+  {
+   "id": "C/10_Q/prose/028",
+   "kind": "prose",
+   "anchor": "This is (T).",
+   "lines": [
+    217,
+    217
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.band_certificate",
+    "BfgsVerification.Parabolic.Family.exists_bandCertificate",
+    "BfgsVerification.AdmissibleBFGSRun.parabolic_convergence"
+   ],
+   "note": "(V), (S), (T) together: W = (theta r)(theta r)^T is a band certificate on the positive band of every compact K (0 <= c_1, c_2 < 1, eta > 0), and every admissible run converges (\"the general theorem proves convergence from every admissible initialization\"). Wording point (no discrepancy): \"(T)\" is the condition (3.T) of Chapter 3 and \"The general theorem\" is Chapter 3's transported-certificate theorem, both named only by description. Optional: \"of Chapter~\\ref{comp:T}\"."
+  },
+  {
+   "id": "C/10_Q/prose/029",
+   "kind": "prose",
+   "anchor": "The switching parabolas are",
+   "lines": [
+    236,
+    236
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_switching"
+   ],
+   "note": "Branch u^2 + v is active exactly on v >= 2u^2, 3u^2 exactly on -u^2 <= v <= 2u^2, 2u^2 - v exactly on v <= -u^2; two different branches are active exactly on v = 2u^2 or v = -u^2."
+  },
+  {
+   "id": "C/10_Q/prose/030",
+   "kind": "prose",
+   "anchor": "Between them the objective is flat in $v$, but the origin is its unique minimizer.",
+   "lines": [
+    236,
+    236
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_flat_unique",
+    "BfgsVerification.Parabolic.Example.objective_middle_closed",
+    "BfgsVerification.Parabolic.Example.middle_hasGradient"
+   ],
+   "note": "F = 3u^2 on -u^2 <= v <= 2u^2 (v-derivative 0 on the open region); F(0) = 0 < F(x) for x != 0."
+  },
+  {
+   "id": "C/10_Q/prose/031",
+   "kind": "prose",
+   "anchor": "The theorem applies globally.",
+   "lines": [
+    236,
+    236
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_applies",
+    "BfgsCoverage.Companion.Ch10Q.parabolic_convergence",
+    "BfgsCoverage.Companion.Ch10Q.example_run_exists",
+    "BfgsCoverage.Companion.Ch10Q.exampleRun_nonempty"
+   ],
+   "note": "a = (1,3,2), b = (1,0,-1) satisfy the hypotheses; parabolic_convergence gives x_k -> 0 and F(x_k) -> 0 for every admissible run, from every initial point and H_0. Non-vacuity of the \"every run\" conclusion: admissible runs on the example objective exist from every point of differentiability, for every H_0 and 0 < c_1 < c_2 < 1 (example_run_exists, from AdmissibleRunExistence.exists_admissible_run; exampleRun_nonempty), and example_applies applies to them (example after exampleRun_nonempty)."
+  },
+  {
+   "id": "C/10_Q/prose/032",
+   "kind": "prose",
+   "anchor": "An especially simple scaling for (8) is",
+   "lines": [
+    238,
+    238
+   ],
+   "status": "PART_OF",
+   "of": "C/10_Q/disp/034",
+   "note": "The lead-in of disp/034, whose claim (\"a scaling for (8)\") is stated by example_scale; \"especially simple\" is not a mathematical claim. \"(8)\" means (10.8): typo, see prose/014."
+  },
+  {
+   "id": "C/10_Q/prose/033",
+   "kind": "prose",
+   "anchor": "It is continuous across both interfaces",
+   "lines": [
+    247,
+    247
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_scale_continuous",
+    "BfgsVerification.Parabolic.Example.sourceScale_continuousOn",
+    "BfgsVerification.Parabolic.Example.sourceScale_bounds"
+   ],
+   "note": "The scale extended across the interfaces (Example.sourceScale, = theta off the interfaces by example_scale) is continuous on F > 0; on each interface (u != 0) the formula of the outer region takes the middle value 1; e^{-1/3} <= theta <= 1 on F > 0."
+  },
+  {
+   "id": "C/10_Q/prose/034",
+   "kind": "prose",
+   "anchor": "Take $W=\\theta^2(u,2v)(u,2v)\\T$.",
+   "lines": [
+    247,
+    247
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.example_field",
+    "BfgsVerification.Parabolic.Example.sourceVector",
+    "BfgsVerification.Parabolic.Example.exists_source_bandCertificate"
+   ],
+   "note": "W (variable with this defining equation) is (theta r)(theta r)^T and is a band certificate on every compact set and positive band."
+  },
+  {
+   "id": "C/10_Q/prose/035",
+   "kind": "prose",
+   "anchor": "The gradients are $g=(2u,1)",
+   "lines": [
+    260,
+    260
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_identities",
+    "BfgsVerification.Parabolic.Example.pair_gradients"
+   ],
+   "note": "First two conclusions of printed_identities (gradients of F at x_eps and z_eps)."
+  },
+  {
+   "id": "C/10_Q/prose/036",
+   "kind": "prose",
+   "anchor": "is an actual first full-BFGS step exactly when the Armijo condition",
+   "lines": [
+    265,
+    265
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_acceptance",
+    "BfgsVerification.Parabolic.Example.printed_armijo_iff",
+    "BfgsVerification.Parabolic.Example.strict_weak_wolfe"
+   ],
+   "note": "For 0 < c_1 < c_2 < 1 and the standing assumptions of line 249: H_eps is SPD, x_eps + bfgsStep H_eps g 1 = z_eps, F is differentiable at both points with gradients g, g', and the Armijo and weak Wolfe conditions of AdmissibleBFGSRun (alpha = 1) hold together iff c_1 <= 2/3."
+  },
+  {
+   "id": "C/10_Q/prose/037",
+   "kind": "prose",
+   "anchor": "Armijo is strict for",
+   "lines": [
+    265,
+    265
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_strict",
+    "BfgsVerification.Parabolic.Example.printed_strict_acceptance"
+   ]
+  },
+  {
+   "id": "C/10_Q/prose/038",
+   "kind": "prose",
+   "anchor": "The displayed pair alone is not used for",
+   "lines": [
+    265,
+    265
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Says which construction is used for c_1 > 2/3 (the rho-family of lines 274-300)."
+  },
+  {
+   "id": "C/10_Q/prose/039",
+   "kind": "prose",
+   "anchor": "Here $y=(4u,-1)",
+   "lines": [
+    267,
+    267
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_radial"
+   ],
+   "note": "First conclusion of printed_radial (y = g' - g)."
+  },
+  {
+   "id": "C/10_Q/prose/040",
+   "kind": "prose",
+   "anchor": "The values tend to the positive level $3u^2$ while",
+   "lines": [
+    272,
+    272
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_limits",
+    "BfgsVerification.Parabolic.Example.pair_values_tendsto",
+    "BfgsVerification.Parabolic.Example.pair_decrease_tendsto"
+   ],
+   "note": "As eps -> 0+ with u != 0 fixed: F(x_eps), F(z_eps) -> 3u^2 > 0 and d -> 0."
+  },
+  {
+   "id": "C/10_Q/prose/041",
+   "kind": "prose",
+   "anchor": "Such pairs exist in every neighborhood of zero",
+   "lines": [
+    272,
+    272
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.printed_every_neighborhood",
+    "BfgsVerification.Parabolic.Example.exists_nonzero_base_in_neighborhood",
+    "BfgsVerification.Parabolic.Example.pair_points_tendsto"
+   ],
+   "note": "For every neighborhood K of 0 some u != 0 (fixed first) such that for all sufficiently small eps > 0, eps < 6u^2 and x_eps, z_eps lie in K."
+  },
+  {
+   "id": "C/10_Q/prose/042",
+   "kind": "prose",
+   "anchor": "The same separation holds for every fixed ordinary pair",
+   "lines": [
+    274,
+    274
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/10_Q/prose/046",
+    "C/10_Q/prose/047"
+   ],
+   "note": "Announces the separation proved in lines 275-300 for every 0 < c_1 < c_2 < 1."
+  },
+  {
+   "id": "C/10_Q/prose/043",
+   "kind": "prose",
+   "anchor": "For any $A>0$, the quadratic form is",
+   "lines": [
+    288,
+    289
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_metric",
+    "BfgsVerification.Parabolic.Example.initialMetric_posDef"
+   ],
+   "note": "w_1, w_2 are w 0, w 1; rho > 0, eps > 0."
+  },
+  {
+   "id": "C/10_Q/prose/044",
+   "kind": "prose",
+   "anchor": "The active gradients remain",
+   "lines": [
+    289,
+    289
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_identities",
+    "BfgsVerification.Parabolic.Example.pair_gradients"
+   ],
+   "note": "First two conclusions of family_identities."
+  },
+  {
+   "id": "C/10_Q/prose/045",
+   "kind": "prose",
+   "anchor": "Thus these are strictly Armijo--weak-Wolfe eligible unit steps.",
+   "lines": [
+    294,
+    294
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_eligible",
+    "BfgsVerification.Parabolic.Example.strict_armijo",
+    "BfgsVerification.Parabolic.Example.strict_weak_wolfe",
+    "BfgsVerification.Parabolic.Example.pair_eligible"
+   ],
+   "note": "For 0 < c_1 < c_2 < 1, rho of disp/039, eps > 0, rho eps < 3u^2, A > 0: H_{eps,rho} SPD, the unit step lands at z_{eps,rho}, strict Armijo, strict weak Wolfe, EligiblePair."
+  },
+  {
+   "id": "C/10_Q/prose/046",
+   "kind": "prose",
+   "anchor": "In each neighborhood first fix a sufficiently small nonzero $u$",
+   "lines": [
+    300,
+    300
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.separation",
+    "BfgsVerification.Parabolic.Example.exists_small_eligible_excess_at_base",
+    "BfgsVerification.Parabolic.Example.eligible_radial_unbounded_on_neighborhood"
+   ],
+   "note": "For every neighborhood K of 0, 0 < c_1 < c_2 < 1, rho of disp/039 and A > 0: some u != 0, fixed first (the pairs lie in the band F >= 3u^2), such that for every delta > 0 and bound C some eps gives an eligible pair in K with F(z) = 3u^2, d <= delta and C t < (y^T z)^2, with its SPD unit-step metric."
+  },
+  {
+   "id": "C/10_Q/prose/047",
+   "kind": "prose",
+   "anchor": "Hence the original (RS) condition fails",
+   "lines": [
+    300,
+    300
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.rs_fails",
+    "BfgsVerification.Parabolic.Example.not_radial_secant_on_neighborhood",
+    "BfgsVerification.RadialCertificate.HasRadialSecantBounds"
+   ],
+   "note": "For every neighborhood K of 0 and 0 < c_1 < c_2 < 1: (RS) on K fails, and on some positive band no C and delta > 0 give (y^T z)^2 <= C t on the eligible pairs in K with d <= delta."
+  },
+  {
+   "id": "C/10_Q/prose/048",
+   "kind": "prose",
+   "anchor": "These metrics supply individual accepted first steps and vary with",
+   "lines": [
+    300,
+    300
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.family_eligible",
+    "BfgsCoverage.Companion.Ch10Q.printed_acceptance"
+   ],
+   "note": "The accepted first steps: family_eligible (H_{eps,rho} SPD, unit step to z_{eps,rho}, Armijo and weak Wolfe). \"They are not a single infinite bad BFGS history\" is a remark on the scope of the witnesses (no run is claimed)."
+  },
+  {
+   "id": "C/10_Q/prose/049",
+   "kind": "prose",
+   "anchor": "Every actual infinite admissible run still converges by the main parabolic theorem.",
+   "lines": [
+    300,
+    300
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.converges_without_rs",
+    "BfgsVerification.Parabolic.Example.converges_without_radial_secant",
+    "BfgsCoverage.Companion.Ch10Q.example_run_exists",
+    "BfgsCoverage.Companion.Ch10Q.exampleRun_nonempty"
+   ],
+   "note": "Non-vacuity of the \"every run\" conclusion: admissible runs on the example objective exist from every point of differentiability, for every H_0 and 0 < c_1 < c_2 < 1 (example_run_exists, from AdmissibleRunExistence.exists_admissible_run; exampleRun_nonempty), and converges_without_rs applies to them (example after exampleRun_nonempty)."
+  },
+  {
+   "id": "C/10_Q/prose/050",
+   "kind": "prose",
+   "anchor": "For the original printed choice",
+   "lines": [
+    302,
+    302
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/10_Q/disp/043",
+    "C/10_Q/disp/044"
+   ],
+   "note": "Announces disp/043 and disp/044."
+  },
+  {
+   "id": "C/10_Q/prose/051",
+   "kind": "prose",
+   "anchor": "This displays both parts of the mechanism",
+   "lines": [
+    314,
+    314
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/10_Q/disp/043",
+    "C/10_Q/disp/044"
+   ],
+   "note": "\"Removing the radial mismatch makes the secant correction small\": the transported quotient 2 eps/3 -> 0 (disp/043), against the radial quotient -> oo (disp/038); \"a mild objective-defined rescaling controls accumulated transport\": log lambda-tilde = O(d) (disp/044)."
+  },
+  {
+   "id": "C/10_Q/prose/052",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship",
+   "lines": [
+    322,
+    322
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the section."
+  },
+  {
+   "id": "C/10_Q/prose/053",
+   "kind": "prose",
+   "anchor": "Guo--Lewis proves a subsequence approaching the nonsmooth axis",
+   "lines": [
+    324,
+    324
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (GL18)."
+  },
+  {
+   "id": "C/10_Q/prose/054",
+   "kind": "prose",
+   "anchor": "The theorem in this chapter treats the complete stated finite family.",
+   "lines": [
+    324,
+    324
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.mixed_in_family",
+    "BfgsCoverage.Companion.Ch10Q.parabolic_convergence"
+   ],
+   "note": "u^2 + |v| is the member a = (1,1), b = (1,-1), and every admissible run on it converges fully."
+  },
+  {
+   "id": "C/10_Q/prose/055",
+   "kind": "prose",
+   "anchor": "related quasi-Newton conclusions retain behavior assumptions",
+   "lines": [
+    324,
+    324
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (BG) and a priority disclaimer."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/10_Q/prose/014",
+   "description": "The cross-references of the chapter use the numbering of its source note (bfgs_lean_stage1/master_report/latex/chapters/Q.tex), not the chapter's. Six equation references: \"Equation (11) proves (V)\" (line 115) means (10.11); \"By (12)\" (line 136) means (10.12); \"By (13)\" (line 169) means (10.13); \"the second vanishes by (7)\" and \"proving (16)\" (line 198) mean (10.7) and (10.16); \"An especially simple scaling for (8)\" (line 238) means (10.8). In the companion's numbering (\\theequation = ModuleTag.arabic) no equation is numbered (7), (8), (11), (12), (13) or (16): the chapter's displays are tagged (10.7)-(10.18), and the six references print literally, in Sections 10.5.2-10.6, printed pages 62-64 (PDF pages 68-70) of the built companion companion/build/master.pdf of 14 October: \"(11)\", \"(12)\" on page 62, \"(13)\", \"(7)\", \"(16)\" on page 63, \"(8)\" on page 64. Cause: editorial/generate_companion.py:69 replaces the module letter only in Q.-prefixed tags (\\tag{Q.12} -> (10.12)), and the source writes these six references without the prefix (Q.tex:101, 118, 147, 176 twice, 212). The mathematics holds with the intended references: secant_visibility ((V) from (10.11)), radial_error (from (10.12)), multiplier_estimates (from (10.13)), segment_bound_facts (the vanishing from (10.7)), branch_change ((10.16)), example_scale (the example's scale has the form (10.8)). The same kind of slip as M17 (Chapter H).",
+   "severity": "typo",
+   "proposed": "Intended text of companion/chapters/10_Q.tex: (10.11) instead of (11) at line 115; (10.12) instead of (12) at line 136; (10.13) instead of (13) at line 169; (10.7) and (10.16) instead of (7) and (16) at line 198; (10.8) instead of (8) at line 238. Fix location: the chapter is generated, so not by hand. Add to editorial/generate_companion.py a logged module-Q transformation (a transform_log entry), applied to the source text before the numbering loop of lines 68-69, that adds the missing prefix: '(11)' -> '(Q.11)' (Q.tex:101), '(12)' -> '(Q.12)' (Q.tex:118), '(13)' -> '(Q.13)' (Q.tex:147), '(7)' -> '(Q.7)' and '(16)' -> '(Q.16)' (Q.tex:176), '(8)' -> '(Q.8)' (Q.tex:212), each occurring exactly once in Q.tex (assert the counts); the existing substitution at line 69 then prints (10.11), (10.12), (10.13), (10.7), (10.16), (10.8). Then regenerate (python3 editorial/generate_companion.py), rebuild the companion and inspect Sections 10.5.2-10.6, printed pages 62-64.",
+   "lean": [
+    "BfgsCoverage.Companion.Ch10Q.secant_visibility",
+    "BfgsCoverage.Companion.Ch10Q.radial_error",
+    "BfgsCoverage.Companion.Ch10Q.multiplier_estimates",
+    "BfgsCoverage.Companion.Ch10Q.segment_bound_facts",
+    "BfgsCoverage.Companion.Ch10Q.branch_change",
+    "BfgsCoverage.Companion.Ch10Q.example_scale"
+   ]
+  }
+ ]
 }

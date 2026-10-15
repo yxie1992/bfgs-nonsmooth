@@ -39,3 +39,5 @@ import BfgsArticle.Coverage.Companion.Ch05G
 import BfgsArticle.Coverage.Companion.Ch03T
 import BfgsArticle.Coverage.Companion.Ch08A
 import BfgsArticle.Coverage.Companion.Ch04R
+import BfgsArticle.Coverage.Companion.Ch06F
+import BfgsArticle.Coverage.Companion.Ch10Q

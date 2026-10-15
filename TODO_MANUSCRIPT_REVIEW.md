@@ -331,6 +331,45 @@ under those items (M8). The chapters are generated: fix them through
   TeX quotations in the docstrings of `Ch03T.trace_recurrence`, `reciprocal_budget`,
   `radial_secant_exact` and `rank_one_degenerate`, then build and inspect pages
   23–24 (printed 17–18).
+- [ ] **M27: Chapter 6 names its source working reports by bare letters (typo).**
+  `06_F.tex:9` (first paragraph of Section 6.1, printed page 34): "This module
+  collects the nonredundant structural consequences from [M], [P], [E] and [Q]." The
+  bracketed letters print literally and resolve to nothing: the companion has no
+  bibliography entry or label [M], [P], [E] or [Q], [P] matches no chapter, and [M],
+  [E], [Q] read as the letters of Chapters 2, 14 and 10, which they do not mean. In
+  the sources they are the working reports [SM], [SP], [SE] and [SQ] of the original
+  master report (`BFGS_MASTER_REPORT_LaTeX/report/master.tex:130`, module F:
+  "Consolidated proofs from [SM], [SP], [SE] and [SQ]"; `report/bibliography.tex:11,
+  17, 18, 19`). `generate_companion.py:29` maps the citation keys SP, SQ, SE to
+  Chapter F itself and SM to Chapter M, but bare bracketed letters are not
+  citations; "This module" is the sources' word for a chapter (W8). No mathematical
+  content. Proposed: "This chapter collects nonredundant structural consequences of
+  the general theory." (or "… of the energy theory of Chapter~\ref{comp:M}.", or
+  drop the sentence). Fix: a logged `if module=='F':` replacement of `This module
+  collects the nonredundant structural consequences from [M], [P], [E] and [Q].`
+  (`master_report/latex/chapters/families.tex:7`, span `F.span.1`, occurs once);
+  regenerate, inspect printed page 34. The item then becomes `NON_CLAIM`.
+  (`C/06_F/prose/002`)
+- [ ] **M28: Chapter 10's references keep its source note's numbering (typo).**
+  `10_Q.tex`, Sections 10.5.2–10.6, printed pages 62–64: "Equation (11) proves (V)
+  with $m=4\theta_{\min}^2\eta^2$" (line 115) means (10.11); "By (12), bounded
+  endpoints and gradients, and $e\le d$," (line 136) means (10.12); "By (13), the
+  right side is $O(d)$ uniformly on the band." (line 169) means (10.13); "Whenever it
+  vanishes, the second vanishes by (7)." and "There are finitely many segments and
+  pairs, proving (16)." (line 198) mean (10.7) and (10.16); "An especially simple
+  scaling for (8) is" (line 238) means (10.8). No companion equation is numbered (7),
+  (8), (11), (12), (13) or (16); the six print literally. Cause:
+  `generate_companion.py:69` renumbers only `Q.`-prefixed references, and the source
+  writes these six without the prefix. Same slip as M17, M18 and M25; the
+  mathematics holds with the intended references. Fix: a logged `if module=='Q':`
+  block applied before the numbering loop (lines 68–69) that adds the prefix, with
+  these strings of `master_report/latex/chapters/Q.tex`, each occurring once (assert
+  the counts): `(11)` (Q.tex:101), `(12)` (:118), `(13)` (:147), `(7)` and `(16)`
+  (:176), `(8)` (:212); the existing substitution then prints (10.11), (10.12),
+  (10.13), (10.7), (10.16), (10.8). Only Q's text is touched, so Chapter 11's bare
+  "(11)" (M18) is unaffected. Regenerate, inspect printed pages 62–64. Lean:
+  `Ch10Q.secant_visibility`, `radial_error`, `multiplier_estimates`,
+  `segment_bound_facts`, `branch_change`, `example_scale`. (`C/10_Q/prose/014`)
 
 ## Wording points in the companion (no discrepancy)
 
@@ -535,6 +574,43 @@ in the line-by-line reading. The chapters are generated: change them through
   (source R.tex:279). Lean: `Ch04R.plq_broader_2d`,
   `plq2d_not_smooth_plus_max_affine`, `plq2d_covered`, `plq2d_jump`, `plq_broader`
   ($C^2$ summands, dimension one). (`C/04_R/prose/059`, `prose/060`)
+- [ ] **W24: Bounded gradients left implicit (Chapter 6).** `06_F.tex:122-125`: "If
+  $R_k\le\bar R$, then \eqref{M:energybound} gives
+  $F(x_N)-F_*\le\sqrt{(E_0+\bar RN)/S_N}=o(N^{-1/2})$, because $S_N/N^2\to\infty$.
+  The same estimate holds for a linear cumulative correction budget." The inequality
+  needs nothing more; the little-$o$ uses Theorem `M:superquadratic`, whose
+  bounded-gradient hypothesis is left implicit (same point as W1 and M10). The
+  hypothesis is not automatic ($\max\{x^2-y,0\}$ is convex with minimizers and has
+  unbounded gradients on every positive sublevel), but no admissible run violating
+  the literal claim is known. Proposed: "…, and along runs with bounded gradients
+  this is $o(N^{-1/2})$, because $S_N/N^2\to\infty$." Lean:
+  `Ch06F.bounded_correction_rate`, `linear_budget_rate` (the inequality without, the
+  little-$o$ with bounded gradients). (`C/06_F/disp/013`, `C/06_F/prose/029`)
+- [ ] **W25: References to source material absent from the companion (Chapter 6).**
+  `06_F.tex:118`: "The source rate note recorded big-$O$ bounds. The little-$o$
+  versions below are explicit consolidation deductions from the later superquadratic
+  theorem; they do not assert a sharp rate." The rate note (working report [SQ], see
+  M27) is not in the companion, and the superquadratic theorem is Theorem
+  `M:superquadratic` of Chapter 2, earlier in the companion ("later" is historical).
+  `06_F.tex:161`: "Summing first recovers the source bounds $\sqrt{A_N}=O(\log N)$
+  and $F(x_N)=O(\log N/N)$." `06_F.tex:197`: "This is the proved tilted-minimum
+  construction, replacing the earlier first-right-derivative-threshold route." (W7,
+  W8, W21 type.) Proposed: "Big-$O$ versions of these bounds appeared in the source
+  notes. The little-$o$ versions below follow from Theorem~\ref{M:superquadratic};
+  they do not assert a sharp rate."; "Summing first gives the bounds …"; "This is
+  the proved tilted-minimum construction." (`C/06_F/prose/028`, `prose/036`,
+  `prose/047`)
+- [ ] **W26: Chapter 3's theorem and conditions named only by description
+  (Chapter 10).** `10_Q.tex:49`: "This is a concrete application of the
+  objective-pair theorem, not the definition of its scope."; `10_Q.tex:115`:
+  "Multiplication by $\theta(z)^2$ proves (S). Equation (11) proves (V) …";
+  `10_Q.tex:217`: "This is (T). The general theorem proves convergence from every
+  admissible initialization." The theorem is Chapter 3's transported-certificate
+  theorem (`03_T.tex:90-111`), and (V), (S), (T) are its conditions, tagged (3.V),
+  (3.S), (3.T); Chapter 3 itself calls them (V), (S), (T), so these are not wrong
+  numbers. Proposed (optional): "… of the transported-certificate theorem of
+  Chapter~\ref{comp:T}"; "(S) of Chapter~\ref{comp:T}". (`C/10_Q/prose/002`,
+  `prose/014`, `prose/028`)
 
 ## Resolved
 

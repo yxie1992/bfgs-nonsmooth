@@ -16,7 +16,19 @@
    "title": "Centered smooth-plus-sublinear convergence",
    "container": null,
    "sha256": "d132710c97963b3e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered",
+    "BfgsCoverage.Companion.Ch06F.centered_local",
+    "BfgsCoverage.Article.Global.centered",
+    "BfgsCoverage.Article.Local.local_centered",
+    "BfgsVerification.AdmissibleBFGSRun.centered_values",
+    "BfgsVerification.AdmissibleBFGSRun.centered_iterates",
+    "BfgsVerification.CenteredSmoothSublinear.local_centered_basin",
+    "BfgsCoverage.Companion.Ch06F.basinRun_start",
+    "BfgsCoverage.Companion.Ch06F.mixed_local_facts"
+   ],
+   "note": "centered: the representation F(x) = psi(x) + gamma(x - x_*) is global (hrep), psi is convex and locally C^{1,1} (LocallyC11On U psi) on the open convex U, gamma is finite convex and positively homogeneous of degree one (Homogeneous.PositiveDegreeOne), x_* minimizes F; for every admissible run R (F convex is part of AdmissibleBFGSRun) whose initial sublevel {F <= F(x_0)} is compact and contained in U: F(x_k) -> F(x_*), and x_k -> x_* if x_* is the unique minimizer. The TeX states the containment of the compact initial sublevel in the neighborhood, so the M7 issue of the article abstract does not recur here. Proof: the article Theorem art:centered (representation only on U, which the global one implies); the library proves the same by the route of this proof (centered_values, centered_iterates). Last sentence: centered_local (F finite convex with unique minimizer, representation and regularity only on an open convex U containing x_*): some eps > 0, chosen before the run, gives iterates in U and convergence in value and iterates for every run with F(x_0) <= F(x_*) + eps; this is the article Corollary art:local-centered, proved with the localization lemma (Lemma M:localization). Non-vacuity: mixedRun for centered; for centered_local, u^2+|v| (psi = u^2, gamma = |v|, U = R^2) and basinRun (UnexcitedMetric.run started at F(x_0) = delta), which starts in every basin (example after mixed_local_facts)."
   },
   {
    "id": "C/06_F/proof/001",
@@ -30,7 +42,18 @@
    "title": null,
    "container": null,
    "sha256": "3ec25e684d44303c",
-   "status": null
+   "status": "PROOF",
+   "of": "C/06_F/theorem/F:centered",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered_split_bounds",
+    "BfgsCoverage.Companion.Ch06F.gamma_gradient",
+    "BfgsVerification.CenteredSmoothSublinear.exists_pair_correction_bound",
+    "BfgsVerification.CenteredSmoothSublinear.correction_le_of_split",
+    "BfgsVerification.CenteredSmoothSublinear.homogeneous_secant_pairing",
+    "BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact",
+    "BfgsVerification.AdmissibleBFGSRun.centered_uniform_correction"
+   ],
+   "note": "The library proof follows this proof: cocoercivity on the compact initial sublevel, the homogeneous secant pairing 0 <= zeta <= b, the subgradient bound G_gamma, the weighted Cauchy-Schwarz bound L R^2 + 2 G_gamma R for every accepted pair (exists_pair_correction_bound, centered_uniform_correction), then the fixed-reference energy bound with a quadratic cumulative correction (compact_objective_tendsto_min_of_quadratic_corrections). The undisplayed claims of lines 15-22 are centered_split_notation (gamma differentiable at the translated endpoints, y = y_psi + y_gamma, t = a + b) and centered_split_bounds (a, b >= 0, ||y_psi||^2 <= L a, xi^2 <= L R^2 a, 0 <= zeta <= b, zeta <= 2 G_gamma R). The coverage theorem centered is derived from the article theorem art:centered (inward-condition route)."
   },
   {
    "id": "C/06_F/disp/001",
@@ -44,7 +67,11 @@
    "title": null,
    "container": "C/06_F/proof/001",
    "sha256": "21d374d3a7a95707",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered_split_notation"
+   ],
+   "note": "Notation in the proof: a, b, xi, zeta (and y_psi, y_gamma) are variables with their defining equations; x' = x_{k+1} - x_* (translation x_* = 0), s = s_k. centered_split_notation states what the notation rests on: gamma is differentiable at x_k - x_* and x_{k+1} - x_* with gradients g - grad psi, so y_gamma is the secant difference of gamma; y_k = y_psi + y_gamma, t_k = a + b and y_k^T x' = xi + zeta."
   },
   {
    "id": "C/06_F/disp/002",
@@ -58,7 +85,13 @@
    "title": null,
    "container": "C/06_F/proof/001",
    "sha256": "299312b372d180c9",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered_secant_bound",
+    "BfgsCoverage.Companion.Ch06F.centered_split_bounds",
+    "BfgsVerification.CenteredSmoothSublinear.correction_le_of_split"
+   ],
+   "note": "Standing assumptions: the theorem's hypotheses, a run with compact initial sublevel K contained in U, a radius R (Rad) with ||x - x_*|| <= R on K, L > 0 with the cocoercivity estimate on K, G_gamma bounding all subgradients of gamma (Euclidean norms); for every k. Lean division by zero is 0, which is the convention of the last sentence (and the numerators do vanish)."
   },
   {
    "id": "C/06_F/theorem/F:transform",
@@ -74,7 +107,14 @@
    "title": "Transformed-gauge convergence",
    "container": null,
    "sha256": "2f8627f4ae4aa331",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform",
+    "BfgsCoverage.Companion.Ch06F.increasingTransform_iff",
+    "BfgsVerification.AdmissibleBFGSRun.transformedGauge_convergence",
+    "BfgsVerification.TransformedGauge.IncreasingTransform"
+   ],
+   "note": "gamma finite convex, Homogeneous.PositiveDegreeOne, coercive (Tendsto gamma (cocompact) atTop); Phi : R -> R constrained on [0, oo): ContinuousOn (Ici 0), ConvexOn (Ici 0), StrictMonoOn (Ici 0), Phi 0 = 0, ContDiffOn R 2 (Ioi 0), deriv Phi r > 0 for r > 0 (the library structure IncreasingTransform, increasingTransform_iff); every admissible run on F(x) = Phi(gamma(x - x_*)) has x_k -> x_*."
   },
   {
    "id": "C/06_F/proof/002",
@@ -88,7 +128,16 @@
    "title": null,
    "container": null,
    "sha256": "cc5bac65681c861d",
-   "status": null
+   "status": "PROOF",
+   "of": "C/06_F/theorem/F:transform",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_inverse",
+    "BfgsCoverage.Companion.Ch06F.transform_correction_annulus",
+    "BfgsVerification.AdmissibleBFGSRun.transformedGauge_correction_on_positive_band",
+    "BfgsVerification.TransformedGauge.objective_sublevel_compact",
+    "BfgsVerification.TransformedGauge.theta_lipschitz_on_positive_interval"
+   ],
+   "note": "The library proves the theorem by the inverse-free annulus route described after the proof (prose/007): a correction bound R_k <= (1+C)^2 Delta_k/((1-c_2)c_1) on every positive band, summable corrections, contradiction with the energy bound, then coercivity and strict increase. The inverse route of the displays is proved separately: transform_inverse (Phi maps [0,oo) bijectively onto itself; the library inverse is unique there), disp/003-006. Undisplayed: compact sublevels (objective_sublevel_compact)."
   },
   {
    "id": "C/06_F/disp/003",
@@ -102,7 +151,14 @@
    "title": null,
    "container": "C/06_F/proof/002",
    "sha256": "900bdf687728aa4f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_euler",
+    "BfgsCoverage.Companion.Ch06F.transform_inverse",
+    "BfgsVerification.AdmissibleBFGSRun.transformedGauge_euler",
+    "BfgsVerification.TransformedGauge.theta"
+   ],
+   "note": "After the translation x_* = 0, x_k is x_k - x_*. a_k (variable) = g_k^T(x_k - x_*) = gamma(x_k - x_*) Phi'(gamma(x_k - x_*)) = Theta(F_k), with Phi^{-1} any inverse of Phi on [0, oo) (Phiinv; it agrees there with the library inverse, transform_inverse) and Theta(t) = Phi^{-1}(t) Phi'(Phi^{-1}(t)) a variable with its defining equation. Stated for every admissible run and every k, without the proof's contradiction hypothesis F_k >= L > 0 for all k (which no run satisfies; the identity does not need it)."
   },
   {
    "id": "C/06_F/disp/004",
@@ -116,7 +172,13 @@
    "title": null,
    "container": "C/06_F/proof/002",
    "sha256": "34e4015ee1889254",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_theta_derivative",
+    "BfgsVerification.TransformedGauge.theta_hasDerivAt",
+    "BfgsVerification.TransformedGauge.theta_derivative_bounded"
+   ],
+   "note": "For every L > 0 (in the proof, the lower bound of its contradiction hypothesis, not needed here) and every t in [L, F_0] (F_0 = F(x_0)), Theta has derivative 1 + r Phi''(r)/Phi'(r) at t with r = Phi^{-1}(t) (Phi'' = deriv (deriv Phi)), and this expression is bounded on [L, F_0]."
   },
   {
    "id": "C/06_F/disp/005",
@@ -130,7 +192,11 @@
    "title": null,
    "container": "C/06_F/proof/002",
    "sha256": "67cbc0070fe8521e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_secant_pairing"
+   ],
+   "note": "y_k^T(x_{k+1} - x_*) = d_k + a_{k+1} - a_k with a_k = g_k^T(x_k - x_*); for every admissible run and every k, without the contradiction hypothesis; it holds for every reference point (the hypotheses on gamma and Phi are unused)."
   },
   {
    "id": "C/06_F/disp/006",
@@ -144,7 +210,11 @@
    "title": null,
    "container": "C/06_F/proof/002",
    "sha256": "c059f481f36d0c28",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_correction"
+   ],
+   "note": "With L > 0 and C >= 0 a Lipschitz constant of Theta on [L, F_0] (supplied by the bounded derivative of disp/004), for every k with F(x_{k+1}) >= L: |a_{k+1} - a_k| <= C Delta_k (the preceding undisplayed claim) and R_k = (y_k^T(x_{k+1}-x_*))^2/t_k <= (1+C)^2/((1-c_2)c_1) Delta_k, via (M:basic). The proof's contradiction hypothesis F_k >= L for all k (which no run satisfies) is weakened to this pointwise one (F(x_k) >= F(x_{k+1}) by monotonicity). Satisfiable: the example after transform_correction_annulus (absRun on |x|, Phi = id, Theta = id, C = 1, k = 0, L = F(x_1) > 0)."
   },
   {
    "id": "C/06_F/disp/007",
@@ -160,7 +230,14 @@
    "title": null,
    "container": null,
    "sha256": "dbf2a1b832920d27",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_active",
+    "BfgsCoverage.Companion.Ch06F.family_objective_eq",
+    "BfgsCoverage.Companion.Ch06F.family_activeGauge_eq",
+    "BfgsVerification.MaxAffine.Family.local_active_identity"
+   ],
+   "note": "Setting of line 67 as hypotheses: m >= 1 pieces l_i(x) = a_i^T x + b_i, p(x) the greatest of the l_i(x) (IsGreatest), psi convex and locally C^{1,1} on R^n, F = psi + p, x_* the unique minimizer; I_* (Finset with defining property) and q(z) = max_{i in I_*} a_i^T z (IsGreatest over I_*) are variables. Conclusion: some Euclidean ball radius eps > 0 with p(x_* + z) = p(x_*) + q(z) for ||z|| < eps. The identity only uses hp (it holds at every point)."
   },
   {
    "id": "C/06_F/disp/008",
@@ -174,7 +251,14 @@
    "title": null,
    "container": null,
    "sha256": "8903db282eb4774d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_inactive",
+    "BfgsVerification.MaxAffine.Family.inactive_gap_pos",
+    "BfgsVerification.MaxAffine.Family.inactive_radius_domination",
+    "BfgsVerification.MaxAffine.Family.parallel_inactive_domination"
+   ],
+   "note": "For i_0 in I_*, j not in I_*, delta_j (variable) = p(x_*) - l_j(x_*): the identity l_{i_0}(x_*+z) - l_j(x_*+z) = delta_j + (a_{i_0} - a_j)^T z for all z, delta_j > 0, positivity for ||z|| <= delta_j/(2||a_{i_0} - a_j||) when a_{i_0} != a_j (Euclidean norms), and positivity for all z when a_{i_0} = a_j (the parallel case). Non-vacuity: p = max{x, -x, x-1} on R (x_* = 0, I_* = {0, 1}, inactive j = 2, delta_j = 1)."
   },
   {
    "id": "C/06_F/disp/009",
@@ -188,7 +272,12 @@
    "title": null,
    "container": null,
    "sha256": "54ea1af33185544c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_active_region",
+    "BfgsVerification.MaxAffine.Family.activeRegion_iff"
+   ],
+   "note": "The display defines P_j (variable with the first set as defining equation) and asserts the equality with {x : (a_j - a_i)^T x >= b_i - b_j for all i}; LEAN for the assertion. Uses only hp."
   },
   {
    "id": "C/06_F/disp/010",
@@ -204,7 +293,14 @@
    "title": null,
    "container": null,
    "sha256": "39c4feec81db615c",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_threshold_def",
+    "BfgsCoverage.Companion.Ch06F.threshold_eq_library",
+    "BfgsVerification.MaxAffine.Family.threshold",
+    "BfgsVerification.MaxAffine.Family.threshold_eq_inactive_infima"
+   ],
+   "note": "tau_* is the EReal variable tau with defining equation tau = iInf over the inactive indices j of sInf of F over P_j. maxAffine_threshold_def unfolds it: it equals the library threshold (the infimum of F over the union of the inactive P_j); an empty P_j has infimum +oo; with no inactive index tau_* = +oo; otherwise the minimum over the finitely many inactive indices is attained (the \"min\" of the display)."
   },
   {
    "id": "C/06_F/theorem/F:lifting",
@@ -220,7 +316,15 @@
    "title": "Exact linear-image lifting",
    "container": null,
    "sha256": "251f96f61101aa66",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.lifting",
+    "BfgsVerification.AffineProjection.projectRun_limit_lift",
+    "BfgsVerification.AffineProjection.projectRun",
+    "BfgsVerification.AffineProjection.fiberPoint",
+    "BfgsVerification.AdmissibleBFGSRun.affine_limit_lift"
+   ],
+   "note": "A : Matrix (Fin r) (Fin n) R with full row rank (injective A^T, i.e. linearly independent rows), F = Fbar o A, an admissible run R on F, z_* the unique minimizer of Fbar (hypothesis, not used), and the projected run converging: A x_k -> z_* (A x_k are the iterates of the projected admissible run AffineProjection.projectRun, lifting_steps); conclusion x_k -> x_0 + H_0 A^T (A H_0 A^T)^{-1} (z_* - A x_0) (disp/011). \"Under any of the retained sufficient hypotheses\": only the convergence of the projected run is used. The library also proves the H_0^{-1}-metric fiber characterization of the limit (projectRun_limit_lift)."
   },
   {
    "id": "C/06_F/disp/011",
@@ -234,7 +338,9 @@
    "title": null,
    "container": "C/06_F/theorem/F:lifting",
    "sha256": "6f4926d0924c59a4",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/06_F/theorem/F:lifting",
+   "note": "The conclusion of lifting."
   },
   {
    "id": "C/06_F/proof/003",
@@ -248,7 +354,16 @@
    "title": null,
    "container": null,
    "sha256": "b9970d335f3078cb",
-   "status": null
+   "status": "PROOF",
+   "of": "C/06_F/theorem/F:lifting",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.lifting_steps",
+    "BfgsVerification.AffineProjection.image_objective_matrix_image",
+    "BfgsVerification.AffineProjection.projectRun_iterate_lift",
+    "BfgsVerification.AdmissibleBFGSRun.affine_iterate_lift",
+    "BfgsVerification.AffineProjection.matrix_lift_invariant"
+   ],
+   "note": "lifting_steps states the undisplayed claims: an admissible run on Fbar with iterates A x_k, matrices A H_k A^T, the same lengths and constants (projectRun); range(H_k A^T) = range(H_0 A^T) for all k; x_k - x_0 = L_0(A x_k - A x_0). The last sentence (H_0^{-1}-metric projection onto the fiber) is part of the library projectRun_limit_lift."
   },
   {
    "id": "C/06_F/disp/012",
@@ -262,7 +377,12 @@
    "title": null,
    "container": "C/06_F/proof/003",
    "sha256": "734304e20b828bd1",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.lifting_right_inverse",
+    "BfgsVerification.AffineProjection.mul_lift"
+   ],
+   "note": "L_0 is a variable with its defining equation; A L_0 = I, L_0 maps into H_0 S (the range of H_0 A^T), and L_0 A w = w for w in H_0 S."
   },
   {
    "id": "C/06_F/disp/013",
@@ -276,7 +396,15 @@
    "title": null,
    "container": null,
    "sha256": "b7de115b2906215f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.bounded_correction_rate",
+    "BfgsCoverage.Companion.Ch06F.linear_budget_rate",
+    "BfgsCoverage.Companion.Ch06F.superquadratic_of_bounded",
+    "BfgsCoverage.Companion.Ch06F.sqrt_bound_littleO",
+    "BfgsVerification.AdmissibleBFGSRun.reference_linear_budget_sqrt_bound"
+   ],
+   "note": "For an admissible run, a minimizer x_* (F_* = F(x_*)), R_k <= Rbar for all k, S_N and E_0 as variables: for N >= 1 (S_0 = 0) F(x_N) - F_* <= sqrt((E_0 + Rbar N)/S_N) with no further hypothesis (first conjunct, from (M:energybound)); for runs with bounded gradients, sqrt(N) times the bound tends to 0 (o(N^{-1/2})) and S_N/N^2 -> oo (second conjunct). Wording point (W1/M10 type, no discrepancy): \"because S_N/N^2 -> oo\" uses Theorem M:superquadratic, whose hypothesis of bounded gradients the text leaves implicit (sum d_k < oo follows from the minimizer). The hypothesis is not automatic (F(x,y) = max{x^2 - y, 0} is convex with minimizers and unbounded gradients on every positive sublevel), but no admissible run violating the literal claim is known."
   },
   {
    "id": "C/06_F/disp/014",
@@ -290,7 +418,13 @@
    "title": null,
    "container": null,
    "sha256": "39bce812c178df2b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.homogeneous_weighted_sum",
+    "BfgsCoverage.Companion.Ch06F.homogeneous_nonneg",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_weighted_sum_bound"
+   ],
+   "note": "F finite convex (the run), positively homogeneous of degree one, bounded below (the paragraph title); Phi_0 is a variable with its defining equation (= the library homogeneousPotential 0); for every N."
   },
   {
    "id": "C/06_F/disp/015",
@@ -304,7 +438,12 @@
    "title": null,
    "container": null,
    "sha256": "e91cb6462d980c13",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_split",
+    "BfgsCoverage.Companion.Ch06F.quadGauge_objective_eq"
+   ],
+   "note": "Standing (lines 136): Q > 0 (m x m), gamma finite convex positively homogeneous with mu||v|| <= gamma(v) <= Lambda||v|| (Euclidean, mu > 0), F(u,v) = u^TQu/2 + gamma(v) (QuadraticGauge.left/right are u, v), an admissible run, reference x_* = 0. For x = x_k, x' = x_{k+1}: delta u, delta v, h, h' (the v-parts of g_k, g_{k+1}) and a, b, xi, zeta are variables with their defining equations. The claims: h in d gamma(v), h' in d gamma(v'), t = a + b (and y^T x' = xi + zeta)."
   },
   {
    "id": "C/06_F/disp/016",
@@ -318,7 +457,13 @@
    "title": null,
    "container": null,
    "sha256": "a7aaad317edc54f9",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_split_bounds",
+    "BfgsVerification.QuadraticGauge.gauge_pairing_bounds",
+    "BfgsVerification.QuadraticGauge.metric_cauchy_schwarz"
+   ],
+   "note": "xi^2/a <= u'^TQu' (Lean xi^2/0 = 0 when a = 0, where xi = 0), 0 <= zeta <= b, zeta <= (1 + Lambda/mu) gamma(v') (exactly as displayed; the library bound uses max(2, 1+Lambda/mu))."
   },
   {
    "id": "C/06_F/disp/017",
@@ -332,7 +477,12 @@
    "title": null,
    "container": null,
    "sha256": "c632879cbcd87026",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_correction",
+    "BfgsVerification.AdmissibleBFGSRun.quadraticGauge_referenceCorrection"
+   ],
+   "note": "R_k = (y_k^T x_{k+1})^2/t_k (x_* = 0) <= C_gamma F(x_{k+1}) with C_gamma = max{2, 1 + Lambda/mu} (variable with defining equation)."
   },
   {
    "id": "C/06_F/disp/018",
@@ -346,7 +496,12 @@
    "title": null,
    "container": null,
    "sha256": "c45a0f45dea60642",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_budget",
+    "BfgsVerification.AdmissibleBFGSRun.valueCorrectionBudget"
+   ],
+   "note": "A_N = E_0 + C_gamma sum_{j=1}^N F(x_j) is the variable A with its defining equation (sum written as sum_{k<N} F(x_{k+1})), E_0 = x_0^T H_0^{-1} x_0. quadGauge_budget: it is the library valueCorrectionBudget 0 C_gamma, A_{N+1} = A_N + C_gamma F(x_{N+1}), F(x_N)^2 S_N <= A_N, A_N >= E_0 > 0."
   },
   {
    "id": "C/06_F/disp/019",
@@ -360,7 +515,11 @@
    "title": null,
    "container": null,
    "sha256": "5e437c8513602e09",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_increment"
+   ],
+   "note": "With a_0 > 0, N_0 such that S_N >= a_0 N^2 for N >= N_0 (prose/034), for every N >= max(N_0, 1): F(x_N) <= sqrt(A_N)/(sqrt(a_0) N) (prose/035), the exact increment identity and the bound C_gamma/(sqrt(a_0) N)."
   },
   {
    "id": "C/06_F/disp/020",
@@ -374,7 +533,13 @@
    "title": null,
    "container": null,
    "sha256": "b55ce25cf7c94792",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_increment_exact",
+    "BfgsVerification.HarmonicRates.sqrt_increment_bound",
+    "BfgsVerification.HarmonicRates.inverse_sqrt_scale_tendsto"
+   ],
+   "note": "For N >= 1: sqrt(A_N) - sqrt(A_{N-1}) <= C_gamma/sqrt(S_N), and N C_gamma/sqrt(S_N) -> 0 (o(N^{-1}))."
   },
   {
    "id": "C/06_F/disp/021",
@@ -388,7 +553,12 @@
    "title": null,
    "container": null,
    "sha256": "4a661577a43fb375",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_rate",
+    "BfgsVerification.AdmissibleBFGSRun.quadraticGauge_euclidean_value_log_orders"
+   ],
+   "note": "F(x_N) =o[atTop] log N / N for every admissible run on F(u,v) = u^TQu/2 + gamma(v)."
   },
   {
    "id": "C/06_F/disp/022",
@@ -402,7 +572,9 @@
    "title": null,
    "container": null,
    "sha256": "360f1a35d790863a",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/06_F/disp/023",
+   "note": "The data x_0, H_0, alpha_k = 2 rho of the example are hypotheses (and the existence part) of unexcited_run."
   },
   {
    "id": "C/06_F/disp/023",
@@ -416,7 +588,13 @@
    "title": null,
    "container": null,
    "sha256": "fd851bb3d841839c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.unexcited_run",
+    "BfgsCoverage.Companion.Ch06F.unexcited_closed_form",
+    "BfgsVerification.UnexcitedMetric.run"
+   ],
+   "note": "For fixed 0 < c_1 < c_2 < 1, A > 0, v_0 > 0, 0 < rho < (1-c_1)/(1+c_1) on F(u,v) = u^2 + |v|: an admissible run with x_0 = (0, v_0), H_0 = diag(A, (1+rho)/(2 rho) v_0), alpha_k = 2 rho exists (UnexcitedMetric.run), and every admissible run with these x_0, H_0 and lengths has x_k = (0, (-rho)^k v_0) and H_k = diag(A, (1+rho)/(2 rho) rho^k v_0) (ordinary BFGS is deterministic once the lengths are fixed)."
   },
   {
    "id": "C/06_F/disp/024",
@@ -430,7 +608,11 @@
    "title": null,
    "container": null,
    "sha256": "108b141d46482c1f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.tilted_armijo"
+   ],
+   "note": "Standing (lines 189): phi : R -> R convex, bounded below on [0, oo), phi'(0) = a < 0, 0 < c_1 < c_2 < 1, sigma = (c_1+c_2)/2, psi(t) = phi(t) - sigma a t (variables), and M, z with 0 < z < M, z a minimizer of psi on [0, M], psi(z) < psi(0) (which tilted_setup supplies)."
   },
   {
    "id": "C/06_F/disp/025",
@@ -444,7 +626,11 @@
    "title": null,
    "container": null,
    "sha256": "90651c9a6613fb18",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.tilted_wolfe"
+   ],
+   "note": "Under the standing assumptions of disp/024, for every t in (z, M] and every derivative b of phi at t: (phi(t) - phi(z))/(t - z) <= b, sigma a <= (phi(t) - phi(z))/(t - z), c_2 a < sigma a."
   },
   {
    "id": "C/06_F/disp/026",
@@ -458,8 +644,946 @@
    "title": null,
    "container": null,
    "sha256": "bd912cef175a69e9",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.FivePieceObstruction.objective",
+    "BfgsVerification.FivePieceObstruction.family",
+    "BfgsCoverage.Companion.Ch06F.five_piece_def",
+    "BfgsCoverage.Companion.Ch06F.five_piece_branches"
+   ],
+   "note": "h is the library FivePieceObstruction.objective (maximum of the five affine pieces of FivePieceObstruction.family); five_piece_def unfolds it to max{-x, y+z, -y+z, x/4, -z} with (x,y,z) = (w_0,w_1,w_2). The claims of the sentence (coercive, unique minimizer zero) are prose/051."
+  },
+  {
+   "id": "C/06_F/prose/001",
+   "kind": "prose",
+   "anchor": "These applications turn the common analytic mechanism into verifiable objective classes.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Chapter introduction: describes the purpose of the chapter and that the affine-fiber formula and quantitative statements keep their own hypotheses (which their statements show)."
+  },
+  {
+   "id": "C/06_F/prose/002",
+   "kind": "prose",
+   "anchor": "This module collects the nonredundant structural consequences",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "DISCREPANCY",
+   "note": "Typo: unresolved source-note labels \"[M], [P], [E] and [Q]\" (see the discrepancy entry). The sentence has no mathematical content, so the item has no Lean name. The other two sentences of line 9 (which arguments are reproduced in Chapter R, what the chapter retains) are a roadmap."
+  },
+  {
+   "id": "C/06_F/prose/003",
+   "kind": "prose",
+   "anchor": "The original summands need not separately be minimized at the center.",
+   "lines": [
+    30,
+    30
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/global/prose/024"
+   ],
+   "note": "The article claim (Global.centered_summands_not_minimized): an instance of all hypotheses of the centered theorem with neither summand minimized at x_*; the same instance has a global representation and compact sublevels, so it satisfies Theorem F:centered."
+  },
+  {
+   "id": "C/06_F/prose/004",
+   "kind": "prose",
+   "anchor": "Optimality implies $-\\nabla\\psi(x_*)\\in\\partial\\gamma(0)$.",
+   "lines": [
+    30,
+    30
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered_center_support",
+    "BfgsVerification.CenteredSmoothSublinear.center_support"
+   ],
+   "note": "For a minimizer x_* in the open set U of the representation, with psi differentiable at x_* (gradient p) and gamma positively homogeneous: -p supports gamma at 0."
+  },
+  {
+   "id": "C/06_F/prose/005",
+   "kind": "prose",
+   "anchor": "After translating, subtract the smooth tangent plane from $\\psi$ and add it to $\\gamma$",
+   "lines": [
+    30,
+    30
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered_recentering",
+    "BfgsVerification.CenteredSmoothSublinear.centered_rewriting",
+    "BfgsVerification.CenteredSmoothSublinear.smoothRemainder_locallyC11"
+   ],
+   "note": "The adjusted summands psi~ and gamma~ are variables with their defining equations; both nonnegative (psi~ on U) and zero at x_*, resp. 0, and F - F(x_*) = psi~ + gamma~(. - x_*) on U."
+  },
+  {
+   "id": "C/06_F/prose/006",
+   "kind": "prose",
+   "anchor": "This is a permissible rewriting of the same objective, not invariance of BFGS",
+   "lines": [
+    30,
+    30
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Methodological remark: the rewriting changes the summands, not the objective; nothing about BFGS invariance is asserted."
+  },
+  {
+   "id": "C/06_F/prose/007",
+   "kind": "prose",
+   "anchor": "The same correction estimate can be obtained without introducing an inverse",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_correction_annulus",
+    "BfgsVerification.TransformedGauge.actual_pairing_variation_on_positive_band",
+    "BfgsVerification.TransformedGauge.correction_numeric",
+    "BfgsVerification.AdmissibleBFGSRun.transformedGauge_correction_on_positive_band"
+   ],
+   "note": "For every admissible run and every eta > 0, some C > 0 gives R_k <= (1+C)^2 Delta_k/((1-c_2)c_1) for every k with F(x_{k+1}) >= eta (both endpoints then lie in the compact positive gauge annulus eta <= F <= F(x_0)). This pointwise hypothesis replaces the earlier \"F(x_k) >= eta for all k\", which no run satisfies (Theorem F:transform gives F(x_k) -> 0). The library proof is the annulus route described: actual_pairing_variation_on_positive_band (derivative of r Phi'(r), Phi' bounded away from zero on the annulus, mean-value theorem) and correction_numeric."
+  },
+  {
+   "id": "C/06_F/prose/008",
+   "kind": "prose",
+   "anchor": "The formal convergence argument uses this annulus route",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the formal proofs (which route the Lean proof uses, and that the displayed identities are proved separately: transform_euler, transform_theta_derivative)."
+  },
+  {
+   "id": "C/06_F/prose/009",
+   "kind": "prose",
+   "anchor": "Neither route claims invariance of BFGS under a nonlinear scalar transform.",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer about what is not claimed."
+  },
+  {
+   "id": "C/06_F/prose/010",
+   "kind": "prose",
+   "anchor": "It includes cases whose scalar second derivative is unbounded at zero.",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.transform_unbounded_second_derivative",
+    "BfgsCoverage.Companion.Ch06F.rpow32_deriv"
+   ],
+   "note": "Phi(r) = r^{3/2} satisfies every hypothesis of Theorem F:transform and Phi'' = (3/4) r^{-1/2} is unbounded on every (0, delta)."
+  },
+  {
+   "id": "C/06_F/prose/011",
+   "kind": "prose",
+   "anchor": "Finite sums of differently powered gauges are instead covered by the radial argument",
+   "lines": [
+    60,
+    60
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.powered_gauges_covered",
+    "BfgsVerification.AdmissibleBFGSRun.mixed_linear_powers_convergence"
+   ],
+   "note": "The radial theorem of Chapter R for F = psi + sum_j gamma_j(A_j(x - x_*))^{p_j} with p_j >= 1 (so 1 < p_j < 2 allowed), restated; see also the Chapter R item C/04_R/disp/043. Non-vacuity: u^2+|v| = psi + |A x|^1 (psi = u^2, A(u,v) = v, p = 1) with mixedRun."
+  },
+  {
+   "id": "C/06_F/prose/012",
+   "kind": "prose",
+   "anchor": "Inactive pieces have positive gaps",
+   "lines": [
+    67,
+    67
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/06_F/disp/008"
+   ],
+   "note": "delta_j > 0 for every inactive j is part of maxAffine_inactive; the setting of line 67 is the standing assumption of disp/007-010."
+  },
+  {
+   "id": "C/06_F/prose/013",
+   "kind": "prose",
+   "anchor": "This exact local identity and Theorem~\\ref{F:centered} prove local convergence",
+   "lines": [
+    75,
+    75
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_local_basin",
+    "BfgsVerification.MaxAffine.Family.local_basin",
+    "BfgsCoverage.Companion.Ch06F.basinRun_start"
+   ],
+   "note": "No strict complementarity or second-order hypothesis appears: some delta > 0 chosen before the run gives convergence in value and iterates for every run with F(x_0) <= F(x_*) + delta. Non-vacuity: u^2+|v| = u^2 + max{v, -v} and basinRun, which starts in the basin."
+  },
+  {
+   "id": "C/06_F/prose/014",
+   "kind": "prose",
+   "anchor": "with empty infima or minima equal to $+\\infty$",
+   "lines": [
+    86,
+    86
+   ],
+   "status": "PART_OF",
+   "of": "C/06_F/disp/010",
+   "note": "Convention of the definition of tau_* (EReal: sInf of the empty set and iInf over no index are +oo), stated in maxAffine_threshold_def."
+  },
+  {
+   "id": "C/06_F/prose/015",
+   "kind": "prose",
+   "anchor": "Then $\\tau_*>F_*$.",
+   "lines": [
+    86,
+    86
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_threshold_gt",
+    "BfgsVerification.MaxAffine.Family.threshold_gt_minimum"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/016",
+   "kind": "prose",
+   "anchor": "To prove it, note that unique-minimizer convexity gives compact sublevels",
+   "lines": [
+    86,
+    86
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_threshold_steps",
+    "BfgsVerification.MaxAffine.Family.exists_min_on_closed",
+    "BfgsVerification.Localization.sublevel_compact"
+   ],
+   "note": "Compact sublevels; P_j closed; the infimum over a nonempty P_j is attained; x_* not in P_j for inactive j; each inner infimum exceeds F_* (finitely many give the strict gap of the minimum, maxAffine_threshold_gt)."
+  },
+  {
+   "id": "C/06_F/prose/017",
+   "kind": "prose",
+   "anchor": "Every admissible run with $F(x_0)<\\tau_*$ converges.",
+   "lines": [
+    88,
+    88
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_threshold_convergence",
+    "BfgsVerification.MaxAffine.Family.threshold_convergence"
+   ],
+   "note": "Value and iterate convergence to x_*."
+  },
+  {
+   "id": "C/06_F/prose/018",
+   "kind": "prose",
+   "anchor": "On its full compact initial sublevel, only indices in $I_*$ can be active",
+   "lines": [
+    88,
+    88
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_sublevel_active",
+    "BfgsVerification.MaxAffine.Family.active_identity_outside_badRegion",
+    "BfgsVerification.AdmissibleBFGSRun.centered_uniform_correction"
+   ],
+   "note": "For a run with F(x_0) < tau_*: the initial sublevel is compact, every active index at its points lies in I_*, p(x) = p(x_*) + q(x - x_*) there, and the corrections R_k are uniformly bounded (the centered estimate for the representation (psi + p(x_*)) + q(. - x_*) on an open convex sublevel below tau_*)."
+  },
+  {
+   "id": "C/06_F/prose/019",
+   "kind": "prose",
+   "anchor": "A tail that first enters this sublevel enjoys the same conclusion",
+   "lines": [
+    88,
+    88
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_threshold_tail",
+    "BfgsVerification.MaxAffine.Family.threshold_tail_convergence"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/020",
+   "kind": "prose",
+   "anchor": "The threshold is sufficient, not a characterization",
+   "lines": [
+    88,
+    88
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer: no necessity of the threshold is claimed."
+  },
+  {
+   "id": "C/06_F/prose/021",
+   "kind": "prose",
+   "anchor": "Each inner infimum is a convex program over the displayed linear inequalities.",
+   "lines": [
+    88,
+    88
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.maxAffine_inner_convex",
+    "BfgsVerification.MaxAffine.Family.activeRegion_convex"
+   ],
+   "note": "F convex; each P_j closed convex and equal to the solution set of the linear inequalities of disp/009."
+  },
+  {
+   "id": "C/06_F/prose/022",
+   "kind": "prose",
+   "anchor": "For a scalar affine residual nonzero at the solution, its absolute-value or hinge term is locally affine.",
+   "lines": [
+    96,
+    96
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.residual_nonzero_locally_affine"
+   ],
+   "note": "Stated at any point x_* with c^T x_* != beta (minimality not needed): near x_*, |c^Tx - beta| = sigma (c^Tx - beta) and max{0, c^Tx - beta} = tau (c^Tx - beta) for constants sigma, tau."
+  },
+  {
+   "id": "C/06_F/prose/023",
+   "kind": "prose",
+   "anchor": "A zero optimal residual produces a centered sublinear term.",
+   "lines": [
+    96,
+    96
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.residual_zero_centered"
+   ],
+   "note": "|c^Tx - beta| = |c^T(x - x_*)| and max{0, c^Tx - beta} = max{0, c^T(x - x_*)} with finite convex positively homogeneous r -> |c^Tr|, r -> max{0, c^Tr}."
+  },
+  {
+   "id": "C/06_F/prose/024",
+   "kind": "prose",
+   "anchor": "The same decomposition applies to an affine-composed Euclidean norm",
+   "lines": [
+    96,
+    96
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/prose/016"
+   ],
+   "note": "The article decomposition (Local.euclidean_residuals_local_form): residual norms nonzero at x_* go into the smooth part, locally C^{1,1} near x_*, and zero residuals give the centered norms ||A_j(x - x_*)||."
+  },
+  {
+   "id": "C/06_F/prose/025",
+   "kind": "prose",
+   "anchor": "Finite sums with a convex locally $C^{1,1}$ smooth part reduce to Theorem",
+   "lines": [
+    96,
+    96
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.residual_sums_basin",
+    "BfgsCoverage.Companion.Ch06F.kink_sums_basin",
+    "BfgsCoverage.Companion.Ch06F.rowMat_norm",
+    "BfgsCoverage.Article.Local.euclidean_residuals_basin",
+    "BfgsVerification.AffineKinks.local_kink_basin",
+    "BfgsCoverage.Companion.Ch06F.basinRun_start"
+   ],
+   "note": "residual_sums_basin: for F = loss + sum_i |a_i^Tx - b_i| + sum_j max{0, c_j^Tx - d_j} + sum_l ||A_lx - e_l|| (loss convex, locally C^{1,1} on R^n) with unique minimizer x_*: a neighborhood U of x_* and eps > 0 chosen before the run give, for every run with F(x_0) <= F(x_*) + eps, iterates in U and convergence in value and iterates; proof through the article reduction to the centered theorem (hinge = (|r| + r)/2, absolute values as one-row Euclidean residuals). kink_sums_basin: the same for absolute-value and hinge sums when the representation and regularity only hold on an open U (library local_kink_basin). Non-vacuity: u^2+|v| (loss u^2, one absolute-value term) and basinRun, which starts in the basins of both theorems."
+  },
+  {
+   "id": "C/06_F/prose/026",
+   "kind": "prose",
+   "anchor": "a spectral penalty may fail it",
+   "lines": [
+    96,
+    96
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.spectral_penalty_not_smooth",
+    "BfgsCoverage.Companion.Ch06F.spectral_diag_le",
+    "BfgsVerification.CenteredSpectral.objective"
+   ],
+   "note": "The spectral norm (largest singular value) of a 2x2 residual composed with the coordinate map of R^4 is not differentiable, hence not locally C^{1,1} on any neighborhood, at a point whose residual is the nonzero matrix I (along I + t e_1e_1^T it is >= max{1+t, 1} and equals 1 at t = 0)."
+  },
+  {
+   "id": "C/06_F/prose/027",
+   "kind": "prose",
+   "anchor": "Let $S_N=\\sum_{k<N}q_k^{-1}$.",
+   "lines": [
+    118,
+    118
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.linear_budget_rate",
+    "BfgsCoverage.Companion.Ch06F.bounded_correction_rate",
+    "BfgsCoverage.Companion.Ch06F.homogeneous_rate"
+   ],
+   "note": "S_N is the variable S with defining equation S N = sum_{k<N} (R.q k)^{-1} in the rate theorems."
+  },
+  {
+   "id": "C/06_F/prose/028",
+   "kind": "prose",
+   "anchor": "Retain the explicit lower bound \\eqref{M:finitehorizon}, which is meaningful at a fixed horizon.",
+   "lines": [
+    118,
+    118
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope and history of the rate paragraphs: the finite-horizon bound of Chapter M is retained, rates concern fixed data and count accepted iterations, the source recorded big-O bounds, the little-o versions are consolidation deductions and no sharpness is asserted.",
+   "note": "Wording point (no discrepancy): \"The source rate note recorded big-O bounds\" refers to material absent from the companion (the working note [SQ] of the original master report), and \"the later superquadratic theorem\" is Theorem M:superquadratic of Chapter 2, earlier in the companion (\"later\" is historical). Optional: \"Big-O versions of these bounds appeared in the source notes. The little-o versions below follow from Theorem M:superquadratic; they do not assert a sharp rate.\""
+  },
+  {
+   "id": "C/06_F/prose/029",
+   "kind": "prose",
+   "anchor": "The same estimate holds for a linear cumulative correction budget.",
+   "lines": [
+    125,
+    125
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.linear_budget_rate",
+    "BfgsVerification.AdmissibleBFGSRun.reference_linear_budget_sqrt_bound",
+    "BfgsCoverage.Companion.Ch06F.superquadratic_of_bounded",
+    "BfgsCoverage.Companion.Ch06F.sqrt_bound_littleO"
+   ],
+   "note": "sum_{k<N} R_k <= Rbar N for all N gives the same bound for N >= 1 with no further hypothesis, and, for runs with bounded gradients, o(N^{-1/2}) and S_N/N^2 -> oo (the implicit hypothesis of disp/013, see the wording point there)."
+  },
+  {
+   "id": "C/06_F/prose/030",
+   "kind": "prose",
+   "anchor": "This is not a rate for arbitrary band-dependent certificates.",
+   "lines": [
+    125,
+    125
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer."
+  },
+  {
+   "id": "C/06_F/prose/031",
+   "kind": "prose",
+   "anchor": "Hence $F(x_N)\\le\\sqrt{\\Phi_0/S_N}=o(N^{-1})$.",
+   "lines": [
+    133,
+    133
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.homogeneous_rate",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_sqrt_bound_of_lower_bound"
+   ],
+   "note": "For N >= 1 the bound; N sqrt(Phi_0/S_N) -> 0. Bounded gradients and summability are automatic for a bounded-below homogeneous objective."
+  },
+  {
+   "id": "C/06_F/prose/032",
+   "kind": "prose",
+   "anchor": "Coercivity gives $F(x)\\ge\\mu\\|x\\|$ and the same order for the iterate norm.",
+   "lines": [
+    133,
+    133
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.homogeneous_coercive_rate",
+    "BfgsVerification.Homogeneous.coercive_euclidean_lower_bound",
+    "BfgsVerification.AdmissibleBFGSRun.homogeneous_coercive_norm_rate"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/033",
+   "kind": "prose",
+   "anchor": "The little-$o$ conclusion uses the superquadratic theorem",
+   "lines": [
+    133,
+    133
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the proof route and disclaims sharpness."
+  },
+  {
+   "id": "C/06_F/prose/034",
+   "kind": "prose",
+   "anchor": "Choose $a_0>0,N_0$ with $S_N\\ge a_0N^2$ for $N\\ge N_0$",
+   "lines": [
+    151,
+    151
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_choose",
+    "BfgsCoverage.Companion.Ch06F.quadGauge_superquadratic_aux"
+   ],
+   "note": "S_N/N^2 -> oo on this objective (compact sublevels give bounded gradients and summable d_k), so such a_0, N_0 exist, for every a_0 > 0."
+  },
+  {
+   "id": "C/06_F/prose/035",
+   "kind": "prose",
+   "anchor": "Then $F(x_N)\\le\\sqrt{A_N}/(\\sqrt{a_0}N)$, and",
+   "lines": [
+    155,
+    155
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_increment"
+   ],
+   "note": "First conclusion of quadGauge_increment (N >= max(N_0, 1))."
+  },
+  {
+   "id": "C/06_F/prose/036",
+   "kind": "prose",
+   "anchor": "Summing first recovers the source bounds",
+   "lines": [
+    161,
+    161
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_bigO",
+    "BfgsVerification.AdmissibleBFGSRun.quadraticGauge_sqrt_budget_log_rate"
+   ],
+   "note": "sqrt(A_N) = O(log N) and F(x_N) = O(log N/N). Wording point (no discrepancy): \"the source bounds\" refers to material absent from the companion (the rate note [SQ] of the original master report); the bounds themselves are stated in the sentence. Optional: \"Summing first gives the bounds\"."
+  },
+  {
+   "id": "C/06_F/prose/037",
+   "kind": "prose",
+   "anchor": "A sum of $o(1/N)$ increments is $o(\\log N)$",
+   "lines": [
+    165,
+    165
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.littleO_increments_log",
+    "BfgsVerification.HarmonicRates.log_rate_of_harmonic_increments"
+   ],
+   "note": "For a real sequence with (N+1)(a_{N+1} - a_N) -> 0, a_N/log N -> 0."
+  },
+  {
+   "id": "C/06_F/prose/038",
+   "kind": "prose",
+   "anchor": "Thus $\\sqrt{A_N}=o(\\log N)$.",
+   "lines": [
+    165,
+    165
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.quadGauge_sqrt_budget",
+    "BfgsVerification.AdmissibleBFGSRun.quadraticGauge_sqrt_budget_log_rate"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/039",
+   "kind": "prose",
+   "anchor": "These strengthened asymptotic corollaries follow from already recorded estimates",
+   "lines": [
+    169,
+    169
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer: no uniform complexity bound, no linear or superlinear convergence is claimed."
+  },
+  {
+   "id": "C/06_F/prose/040",
+   "kind": "prose",
+   "anchor": "The convergence theorems do not assert a universal inverse-Hessian limit.",
+   "lines": [
+    177,
+    177
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer about the theorems (which contain no matrix-limit conclusion); the example that follows is covered by disp/023 and prose/041-042."
+  },
+  {
+   "id": "C/06_F/prose/041",
+   "kind": "prose",
+   "anchor": "The Armijo ratio is $(1-\\rho)/(1+\\rho)>c_1$ and the weak-Wolfe ratio is $-1$.",
+   "lines": [
+    187,
+    187
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.unexcited_ratios",
+    "BfgsVerification.UnexcitedMetric.acceptance_ratios"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/042",
+   "kind": "prose",
+   "anchor": "The unexcited tangential entry tends to its arbitrary initial value $A$",
+   "lines": [
+    187,
+    187
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.unexcited_limit",
+    "BfgsVerification.UnexcitedMetric.run_limits",
+    "BfgsVerification.UnexcitedMetric.tangential_second_derivative"
+   ],
+   "note": "H_k -> diag(A, 0) and (H_k)_{11} = A for every A > 0, while the true tangential second derivative is 2 (inverse 1/2)."
+  },
+  {
+   "id": "C/06_F/prose/043",
+   "kind": "prose",
+   "anchor": "For a finite convex line restriction $\\varphi$ bounded below on the positive ray",
+   "lines": [
+    189,
+    189
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.tilted_setup",
+    "BfgsVerification.FiniteRayLineSearch.negative_derivative_descends"
+   ],
+   "note": "psi'(0) = (1 - sigma) a < 0, psi(t) -> +oo, and M, z with 0 < z < M, z a minimizer of psi on [0, M], psi(z) < psi(0)."
+  },
+  {
+   "id": "C/06_F/prose/044",
+   "kind": "prose",
+   "anchor": "Continuity preserves strict Armijo on an interval immediately to the right of $z$.",
+   "lines": [
+    193,
+    193
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.tilted_armijo_interval"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/045",
+   "kind": "prose",
+   "anchor": "Thus there is a nonempty open interval of strict Armijo points",
+   "lines": [
+    197,
+    197
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.tilted_interval",
+    "BfgsVerification.FiniteRayLineSearch.acceptable_interval"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/046",
+   "kind": "prose",
+   "anchor": "If full-space nondifferentiability occurs at only finitely many positive ray times",
+   "lines": [
+    197,
+    197
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.finite_bad_ray_step",
+    "BfgsVerification.FiniteRayLineSearch.fullBFGS_step_exists",
+    "BfgsVerification.FiniteRayLineSearch.finite_nondifferentiability_step"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/047",
+   "kind": "prose",
+   "anchor": "This is the proved tilted-minimum construction, replacing the earlier",
+   "lines": [
+    197,
+    197
+   ],
+   "status": "NON_CLAIM",
+   "reason": "History of the proof route.",
+   "note": "Wording point (no discrepancy, W7/W8 type): \"replacing the earlier first-right-derivative-threshold route\" refers to a construction absent from the companion. Optional: drop the clause."
+  },
+  {
+   "id": "C/06_F/prose/048",
+   "kind": "prose",
+   "anchor": "It applies to finite affine absolute-value/hinge sums and suitable Euclidean residual sums",
+   "lines": [
+    197,
+    197
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.abs_hinge_step",
+    "BfgsCoverage.Companion.Ch06F.euclidean_residual_step",
+    "BfgsVerification.AffineKinks.absolute_fullBFGS_step_exists",
+    "BfgsVerification.AffineKinks.hinge_fullBFGS_step_exists",
+    "BfgsVerification.EuclideanResidual.matrix_euclidean_residual_fullBFGS_step_exists",
+    "BfgsCoverage.Companion.Ch06F.mixed_kink_step",
+    "BfgsVerification.AffineKinks.fullBFGS_step_of_representation"
+   ],
+   "note": "psi differentiable, F convex, bounded below on the ray: a differentiable strict Armijo-weak-Wolfe step exists for absolute-value sums, hinge sums and rectangular Euclidean residual sums (\"suitable\" = smooth part differentiable everywhere). Mixed sums psi + sum_i |a_i^Tz - b_i| + sum_j max{0, c_j^Tz - d_j}: mixed_kink_step (fullBFGS_step_of_representation with the kinks of both kinds)."
+  },
+  {
+   "id": "C/06_F/prose/049",
+   "kind": "prose",
+   "anchor": "It gives existence, not a trial-complexity guarantee for every implementation.",
+   "lines": [
+    197,
+    197
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer."
+  },
+  {
+   "id": "C/06_F/prose/050",
+   "kind": "prose",
+   "anchor": "For arbitrary max-functions there is a genuine exception.",
+   "lines": [
+    199,
+    199
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/06_F/prose/053"
+   ],
+   "note": "The exception is the five-piece finite obstruction."
+  },
+  {
+   "id": "C/06_F/prose/051",
+   "kind": "prose",
+   "anchor": "has unique minimizer zero",
+   "lines": [
+    199,
+    203
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.five_piece_minimizer",
+    "BfgsVerification.FivePieceObstruction.unique_minimum",
+    "BfgsVerification.FivePieceObstruction.objective_coercive"
+   ],
+   "note": "Also \"The coercive function\" (line 199) and convexity."
+  },
+  {
+   "id": "C/06_F/prose/052",
+   "kind": "prose",
+   "anchor": "At $(-2,0,1)$ with $H_0=I$, the direction is $(1,0,0)$",
+   "lines": [
+    203,
+    203
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.five_piece_ray",
+    "BfgsCoverage.Companion.Ch06F.five_piece_data"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/053",
+   "kind": "prose",
+   "anchor": "times $0<\\alpha<1$ fail weak Wolfe",
+   "lines": [
+    203,
+    203
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.five_piece_obstruction",
+    "BfgsVerification.FivePieceObstruction.no_differentiable_armijo_wolfe"
+   ],
+   "note": "With (c_1,c_2) = (1/4,1/2), x_0 = (-2,0,1), g_0 = (-1,0,0), H_0 = I: weak Wolfe fails on (0,1), h is not differentiable on [1,6], for alpha >= 6 Armijo holds iff alpha <= 5; no alpha > 0 gives a differentiable Armijo-weak-Wolfe point."
+  },
+  {
+   "id": "C/06_F/prose/054",
+   "kind": "prose",
+   "anchor": "Scaling the point and matrix places the same finite obstruction arbitrarily close",
+   "lines": [
+    203,
+    203
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.five_piece_every_neighborhood",
+    "BfgsVerification.FivePieceObstruction.obstruction_in_every_neighborhood"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/055",
+   "kind": "prose",
+   "anchor": "It is not an infinite admissible run and does not contradict the positive theorems.",
+   "lines": [
+    203,
+    203
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on the scope of the obstruction (a single iteration without an acceptable step, hence no infinite admissible run)."
+  },
+  {
+   "id": "C/06_F/prose/056",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship",
+   "lines": [
+    208,
+    208
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the section."
+  },
+  {
+   "id": "C/06_F/prose/057",
+   "kind": "prose",
+   "anchor": "uses smooth extension and proves a weaker subsequential conclusion",
+   "lines": [
+    210,
+    210
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (GL18)."
+  },
+  {
+   "id": "C/06_F/prose/058",
+   "kind": "prose",
+   "anchor": "The theorem in this chapter gives full convergence for that example within its centered family.",
+   "lines": [
+    210,
+    210
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.mixed_full_convergence",
+    "BfgsCoverage.Article.Global.mixed_benchmark"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/059",
+   "kind": "prose",
+   "anchor": "Its smooth secant estimate uses established cocoercivity",
+   "lines": [
+    210,
+    210
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.cocoercivity_on_compact",
+    "BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact",
+    "BfgsVerification.CenteredSmoothSublinear.bregman_lower_of_descent"
+   ],
+   "note": "The literature result used by the proof (WW, Theorem 2.5) in the local form used, proved in Lean: on a compact subset of the open set where psi is convex and locally C^{1,1}, ||grad psi(y) - grad psi(x)||^2 <= L (grad psi(y) - grad psi(x))^T (y - x)."
+  },
+  {
+   "id": "C/06_F/prose/060",
+   "kind": "prose",
+   "anchor": "It does not require a globally Lipschitz gradient or minimization of each original summand at the center.",
+   "lines": [
+    210,
+    210
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.centered_no_global_lipschitz",
+    "BfgsCoverage.Companion.Ch06F.coordinateGradient_of_hasFDerivAt",
+    "BfgsCoverage.Article.Global.centered_summands_not_minimized",
+    "BfgsCoverage.Companion.Ch06F.quarticAbs_run_exists"
+   ],
+   "note": "x^4 + |x| on R satisfies every hypothesis of Theorem F:centered (so every run converges) while grad psi(x) = 4x^3 has no global Lipschitz constant; the summands-not-minimized instance is the article one. Non-vacuity: admissible runs on x^4+|x| exist (quarticAbs_run_exists, from AdmissibleRunExistence.exists_admissible_run)."
+  },
+  {
+   "id": "C/06_F/prose/061",
+   "kind": "prose",
+   "anchor": "Invertible affine invariance is established in Lewis--Overton",
+   "lines": [
+    212,
+    212
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned; no proof here uses it."
+  },
+  {
+   "id": "C/06_F/prose/062",
+   "kind": "prose",
+   "anchor": "The rectangular reduction in this chapter additionally identifies the point selected on an affine fiber.",
+   "lines": [
+    212,
+    212
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/06_F/theorem/F:lifting"
+   ]
+  },
+  {
+   "id": "C/06_F/prose/063",
+   "kind": "prose",
+   "anchor": "Sch\\\"opfer's smooth noncompact convergence results",
+   "lines": [
+    212,
+    212
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned and a priority disclaimer."
+  },
+  {
+   "id": "C/06_F/prose/064",
+   "kind": "prose",
+   "anchor": "Related quantitative work includes smooth strongly convex Armijo--Wolfe rates",
+   "lines": [
+    214,
+    214
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned and comparison of settings; the last sentence describes the rate statements (accepted iterations)."
+  },
+  {
+   "id": "C/06_F/prose/065",
+   "kind": "prose",
+   "anchor": "supplies scalar Armijo--weak-Wolfe existence theory",
+   "lines": [
+    216,
+    216
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned; the existence argument of the chapter is self-contained (tilted_interval)."
+  },
+  {
+   "id": "C/06_F/prose/066",
+   "kind": "prose",
+   "anchor": "Differentiability of the restriction to a ray does not imply full-space differentiability at acceptance.",
+   "lines": [
+    216,
+    216
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch06F.ray_differentiability_not_full"
+   ],
+   "note": "Five-piece ray: the ray function is differentiable at alpha = 3 (derivative 0) and alpha = 3 passes the scalar Armijo and weak-Wolfe tests, but h is not differentiable at the point."
+  },
+  {
+   "id": "C/06_F/prose/067",
+   "kind": "prose",
+   "anchor": "The existence argument and the finite obstruction in this chapter preserve that distinction",
+   "lines": [
+    216,
+    216
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on what is not asserted."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/06_F/prose/002",
+   "description": "Unresolved source-note labels. companion/chapters/06_F.tex:9 (first paragraph of Section 6.1, before Theorem 6.1 = F:centered; frozen span F.span.1, source bfgs_lean_stage1/master_report/latex/chapters/families.tex:7) prints, on printed page 34 of the built companion (companion/build/master.pdf, PDF page 40): \"This module collects the nonredundant structural consequences from [M], [P], [E] and [Q].\" The bracketed letters print literally, like citation keys, and resolve to nothing: the companion has no bibliography entry or label [M], [P], [E] or [Q], its chapters are numbered 1 to 14, [P] matches no chapter, and [M], [E], [Q] read as the letters of Chapters 2, 14 and 10, which they do not mean ([Q] in particular is not Chapter 10, Flat contours and parabolic branches). In the sources they are working reports of the research record, cited in the original master report as [SM], [SP], [SE], [SQ] (BFGS_MASTER_REPORT_LaTeX/report/master.tex:130, module F: \"Consolidated proofs from [SM], [SP], [SE] and [SQ]\"; bibliography.tex:11, 17, 18, 19): [SM] \"Full BFGS on mixed smooth--nonsmooth convex objectives\" (common principal-minor and fixed-reference energy foundation), [SP] \"Local convergence of full BFGS for smooth convex plus polyhedral objectives\" (local reduction, certified basin, affine-fiber lifting), [SE] \"BFGS after the convex nonsmooth counterexample\", Section 3 (increasing smooth transforms of coercive gauges), [SQ] \"Next BFGS research directions, with finite-horizon rate corollaries\" (rates). editorial/generate_companion.py:29 maps the citation keys SP, SQ, SE to Chapter F itself and SM to Chapter M, but it rewrites only \\cite keys, not these bare bracketed letters; \"This module\" is the source report's term for a chapter (W8 type). The sentence has no mathematical content (no Lean statement).",
+   "severity": "typo",
+   "proposed": "\"This chapter collects nonredundant structural consequences of the general theory.\" (three of the four sources were merged into this chapter itself, the fourth is Chapter~\\ref{comp:M}); or, with a pointer that resolves, \"This chapter collects the nonredundant structural consequences of the energy theory of Chapter~\\ref{comp:M}.\"; or drop the sentence. Fix: the chapter is generated, so not by hand. Add to editorial/generate_companion.py a module-F block (if module=='F':) with a logged transformation (a transform_log entry with kind, old, new and reason) replacing the exact source text \"This module collects the nonredundant structural consequences from [M], [P], [E] and [Q].\" (bfgs_lean_stage1/master_report/latex/chapters/families.tex:7; exactly one occurrence, assert the count) by the chosen sentence; then regenerate (python3 editorial/generate_companion.py), rebuild the companion and inspect printed page 34."
+  }
+ ]
 }
