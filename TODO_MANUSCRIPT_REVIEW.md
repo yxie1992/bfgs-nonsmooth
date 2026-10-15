@@ -110,14 +110,60 @@ under those items (M8). The chapters are generated: fix them through
   (`12_D.tex:58-60`). No result is affected. Proposed: delete the sentence, or
   "Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$,
   $c_1<c_2<1$." Fix: a new `constant_range['L']` entry. (`C/13_L/prose/082`)
+- [ ] **M14: Chapter D denies analyticity of all four branches.**
+  `companion/chapters/12_D.tex:380`: "Thus the branches below are in $C^{2,1}$ as
+  well. This does not make them analytic or uniformly strongly convex." The fourth
+  branch of `D:fullobjective`, $f_3(u,v)=v$, is linear, hence analytic
+  (`Ch12D.branch3_analytic`). The rest holds (`Ch12D.not_analytic`): $f_0,f_1,f_2$
+  are not analytic, and no branch, $f_3$ included, is uniformly strongly convex
+  (each is constant along a nonzero direction). The same kind of slip as M8.
+  Proposed: "This does not make $f_0,f_1,f_2$ analytic, nor any branch uniformly
+  strongly convex." ($f_0,f_1,f_2$ are defined only in Section 12.5; "the first
+  three branches" avoids the forward reference.) Fix: a logged transformation of
+  module D (the sentence is in the frozen span `D.span.7`, source
+  `bfgs_lean_stage1/master_report/latex/chapters/D.tex:358`). (`C/12_D/prose/047`)
+- [ ] **M15: Companion appendix: the interval operations do not give the table's
+  decimals.** `companion/appendices/seed_certificate.tex:190`: "The same interval
+  operations give the value enclosures in that table." is copied from the article
+  (`paper/appendices/seed_certificate.tex:191`), whose Table `art:trial_table` lists
+  rational enclosures of $10^4G$. The companion's table (Section 12.3,
+  `12_D.tex:205-218`, with the current values in the display after it) lists
+  twelve-digit decimals, and the appendix's interval operations, which run on the
+  query box, cannot give them: $G(z_0)$ varies by about $4.4\cdot10^{-6}$ over that
+  box, so every enclosure valid on it is wider than $10^{-6}$
+  (`Companion.SeedCertificate.query_box_too_coarse`). They give enclosures of width
+  at most $4\cdot10^{-4}$ of every current and trial value
+  (`Companion.SeedCertificate.table_enclosure_widths`); the decimals are nearest
+  roundings, proved separately (`Ch12D.trial_table`, `Ch12D.starting_values`).
+  Proposed (companion only): "For each trial value $G(z_j+\alpha p_j)$ in the table
+  of Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display
+  after it, the same interval operations give a rational enclosure of width at most
+  $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory.", or drop the
+  sentence. Fix: a companion-only replacement in `prepare_shared_appendix.py`.
+  (`C/seed_certificate/prose/006`)
+- [ ] **M16: Companion appendix: two references keep the article's structure
+  (typo).** `prepare_shared_appendix.py` turns the article's subsections into
+  sections and maps the table label `art:trial_table` to `comp:trial_table`, which
+  labels a section heading of Chapter D. (a) `seed_certificate.tex:13-15`: "The
+  matrix calculation in the next subsection" means the next section, A.2. Proposed:
+  "in the next section" (the source breaks the line after "next": replace
+  `'the next\nsubsection'`). (`C/seed_certificate/prose/002`) (b) Lines 185–186:
+  "in the order of Table~\ref{comp:trial_table}" prints "Table 12.3", but 12.3 is a
+  section (and the number of equation `D:rho`); there is no Table 12.3. Proposed:
+  "in the order of the table in Section~\ref{comp:trial_table}" (replace
+  `Table~\ref{art:trial_table}` before the label loop).
+  (`C/seed_certificate/prose/024`) The claims hold
+  (`Article.SeedCertificate.clearing_denominators`, `query_lower_bounds`).
 
 ## Wording points in the companion (no discrepancy)
 
 Found by the companion coverage and its reviews. Each statement is true as
 intended, so its register item is not a `DISCREPANCY`, but a hypothesis is left
-implicit, a symbol is undefined or a sentence is an editorial remnant. Optional;
-decide in the line-by-line reading. The chapters are generated: change them
-through `editorial/generate_companion.py` and regenerate.
+implicit, a symbol is undefined, a sentence is an editorial remnant or a printed
+proof shows less than its statement (Lean proves the statement). Optional; decide
+in the line-by-line reading. The chapters are generated: change them through
+`editorial/generate_companion.py` (the seed appendix through
+`editorial/prepare_shared_appendix.py`) and regenerate.
 
 - [ ] **W1: Bounded gradients left implicit (Chapter M).**
   `companion/chapters/02_M.tex:194`: "$\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes
@@ -144,6 +190,35 @@ through `editorial/generate_companion.py` and regenerate.
   sources~Chapters~\ref{comp:M}, \ref{comp:H}, …" lists Chapter M among its own
   sources, because the generator maps the frozen source's `\cite{SM,…}` to chapter
   labels. Cosmetic. (`C/02_M/prose/002`)
+- [ ] **W6: The proof of Lemma `comp:root_certificate` does not give the thirty
+  digits of `D:rho` (proof gap).** `companion/appendices/seed_certificate.tex:37-40`:
+  "\eqref{D:rho} holds" claims, through the label map `art:seed_rho` → `D:rho`, the
+  value $\rho\simeq0.060199206107543764815373666287$ of `12_D.tex:99-102` on the whole
+  box, where the article's same words claim only $0.060<\rho<0.061$. The printed
+  proof (lines 41–92) still derives only $0.060<\rho<0.061$, which is what Lemma
+  `D:root` states; `12_D.tex:117` says the interval calculation "certifies
+  \eqref{D:rho}", but the companion never shows the thirty digits. The claim is true
+  (`Companion.SeedCertificate.root_certificate`, interval evaluation on the root
+  box). Options: map the reference to "$0.060<\rho<0.061$" in
+  `prepare_shared_appendix.py` and call the thirty digits explanatory at line 117,
+  or add to the proof "The same interval rules on the root box give the thirty
+  digits in \eqref{D:rho}". (`C/seed_certificate/lemma/comp:root_certificate`,
+  `C/seed_certificate/proof/001`, `C/12_D/proof/001`)
+- [ ] **W7: "The previous admissible-length counterexample" (Chapter D).**
+  `12_D.tex:68`: "…resolves the implementation-selection issue left open by the
+  previous admissible-length counterexample." Nothing in the companion is that
+  counterexample (the phrase comes from the history of the source report).
+  Optional: drop the clause or name the construction (frozen span `D.span.2`).
+  (`C/12_D/prose/007`)
+- [ ] **W8: "In this note".** `12_D.tex:105` (Lemma `D:root`: "All denominators in
+  this note are nonzero there"), and the same remnant of the source reports at
+  `04_R.tex:83`, `07_H.tex:23` and `09_C.tex:110`. Optional: "in this chapter".
+  (`C/12_D/lemma/D:root`)
+- [ ] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
+  "The two unknown coordinates of the third slope …": "slope" is the article's term;
+  the companion calls the $g_i$ gradients (`12_D.tex:160`). Optional: "of the third
+  gradient $g_2=(c,d)^T$", a companion-only replacement in
+  `prepare_shared_appendix.py`. (`C/seed_certificate/prose/017`)
 
 ## Resolved
 

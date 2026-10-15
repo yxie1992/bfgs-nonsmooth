@@ -30,3 +30,5 @@ import BfgsArticle.Coverage.Article.SeedCertificate
 import BfgsArticle.Coverage.Article.LowerCurvature
 import BfgsArticle.Coverage.Companion.Ch02M
 import BfgsArticle.Coverage.Companion.Ch13L
+import BfgsArticle.Coverage.Companion.Ch12D
+import BfgsArticle.Coverage.Companion.SeedCertificate
