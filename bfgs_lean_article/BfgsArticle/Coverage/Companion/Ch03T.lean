@@ -63,22 +63,27 @@ $\arg\min F$ is Euclidean (`euclideanSolutionDistance`).
   `transport_perpendicular` (disp/029), `affine_covariance` (prose/034), `energy_warning`
   (prose/035).
 
-## Discrepancies
+## Corrected discrepancies (15 October 2026)
 
-Three items of the register are discrepancies; Lean states what holds.
-* `C/03_T/prose/029` (line 225, imprecision): "Condition (S) is exactly (RS)". For the radial field
-  $W(x)=(x-x_*)(x-x_*)^T$, (S) is the inequality of (RS) restricted to eligible pairs in $K_\eta$
-  with $d\le\delta_\eta$: (RS) gives (S) with the same constant (`radial_secant_exact`,
-  `rs_gives_s`), but (S) does not give (RS) (`s_not_exactly_rs`, $F(x)=\max\{|x|,2x-1\}$ on $\R$,
-  adapted from the independent review's witness).
-* `C/03_T/prose/042` (lines 148, 160, 165, typo): the proof cites its equations (3.3)-(3.6) as
-  "(3)--(4)", "(6)" and "(5)", numbers that the companion does not print.
-* `C/03_T/prose/043` (line 196, typo): "Unlike the preceding moving-frame theorem": the only
-  moving-frame theorem before this chapter, Theorem `M:residualtheorem` (`02_M.tex:220-237`),
-  requires no invertible transport either; the contrast holds with the moving-frame criterion of
-  Section 2.4 (`02_M.tex:196-211`, `BfgsCoverage.Companion.Ch02M.frame_criterion`), which assumes
-  bounded inverse norms of the cumulative transports. That the scalar form needs no invertible
-  $\lambda$ is `rank_one_degenerate` and `degenerate_multiplier`.
+Three items of the register were discrepancies; the chapter was corrected and Lean states the
+corrected text.
+* `C/03_T/prose/029` (line 225, M24): "Condition (S) is exactly (RS), while" now reads "With this
+  $W$, (S) is the inequality of (RS) restricted to eligible pairs in $K_\eta$ with
+  $d\le\delta_\eta$, so (RS) gives (S) with the same constant, while" (`rs_gives_s`,
+  `radial_secant_exact`); (S) does not give (RS) (`s_not_exactly_rs`, $F(x)=\max\{|x|,2x-1\}$ on
+  $\R$, adapted from the independent review's witness).
+* `C/03_T/prose/042` (lines 148, 160, 165, M25): the proof cited its equations (3.3)-(3.6) as
+  "(3)--(4)", "(6)" and "(5)", numbers that the companion does not print; it now prints
+  (3.3)--(3.4), (3.6) and (3.5).
+* `C/03_T/prose/043` (line 196, M26): "Unlike the preceding moving-frame theorem" now reads "Unlike
+  the moving-frame criterion of Section~\ref{M:energy}" (Section 2.4, `02_M.tex:196-211`,
+  `BfgsCoverage.Companion.Ch02M.frame_criterion`, which assumes bounded inverse norms of the
+  cumulative transports); the only moving-frame theorem before this chapter, Theorem
+  `M:residualtheorem` (`02_M.tex:220-237`), requires no invertible transport either. That the
+  scalar form needs no invertible $\lambda$ is `rank_one_degenerate` and
+  `degenerate_multiplier`.
+* Wording points W17 (line 192, "Conditions (V) and (S) become") and W18 (line 217, "Given the
+  radial secant condition (RS) of Chapter~\ref{comp:R}, take") were applied on the same day.
 
 ## Standing assumptions inside the proof
 
@@ -210,7 +215,7 @@ theorem line_search_display {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun
         dot (R.g (k + 1)) (R.displacement k) ≥ R.c₂ * dot (R.g k) (R.displacement k) :=
   ⟨⟨R.c₁_pos, R.c₁_lt_c₂, R.c₂_lt_one⟩, fun k => ⟨R.armijo k, R.weak_wolfe k⟩⟩
 
-/-- Item `C/03_T/prose/003` (`companion/chapters/03_T.tex:55-55`): "An infinite admissible run
+/-- Item `C/03_T/prose/003` (`companion/chapters/03_T.tex:55`): "An infinite admissible run
 has nonzero gradients and well-defined accepted steps." The definition is the library structure
 `AdmissibleBFGSRun` (see `BfgsCoverage.Article.Energy.admissible_iff`). Its gradients are nonzero,
 every accepted step is nonzero and has $t_k>0$, so the update is well defined, and
@@ -244,7 +249,7 @@ theorem eligible_iff {n : ℕ} (F : Vec n → ℝ) (c₁ c₂ : ℝ) (x z g h : 
         d > 0 ∧ c₁ * d ≤ Δ ∧ Δ ≤ d ∧ t ≥ (1 - c₂) * d :=
   BfgsCoverage.Article.Energy.eligiblePair_iff F c₁ c₂ x z g h s y hs hy d Δ t hd hΔ ht
 
-/-- Item `C/03_T/prose/006` (`companion/chapters/03_T.tex:68-68`): "Every accepted step is
+/-- Item `C/03_T/prose/006` (`companion/chapters/03_T.tex:68`): "Every accepted step is
 eligible." For every admissible run and every $k$, the pair $(x_k,x_{k+1})$ with gradients
 $(g_k,g_{k+1})$ is eligible for the run's constants, and its $d$ and $t$ are $d_k$ and $t_k$. -/
 theorem accepted_eligible {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ) :
@@ -253,7 +258,7 @@ theorem accepted_eligible {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n
       dot (R.g (k + 1) - R.g k) (R.x (k + 1) - R.x k) = R.curvature k :=
   ⟨R.accepted_pair_eligible k, R.accepted_pair_decrease k, R.accepted_pair_curvature k⟩
 
-/-- Item `C/03_T/prose/007` (`companion/chapters/03_T.tex:68-68`): "The upper bound
+/-- Item `C/03_T/prose/007` (`companion/chapters/03_T.tex:68`): "The upper bound
 $\Delta\le d$ follows from convexity." For finite convex $F$, a differentiable point $x$ with
 $g=\nabla F(x)$ and any $z$: $F(x)-F(z)\le-g^T(z-x)$. -/
 theorem convexity_upper_bound {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
@@ -372,7 +377,7 @@ theorem one_sided_convergence {n : ℕ} {F : Vec n → ℝ} (Fstar : ℝ)
   have h := transportedCertificateConvergence R b hK xstar hxstar hx0 (hFx ▸ hlib)
   exact h.2.2 fun x hx => huniq x fun z => by rw [hx]; exact hxstar z
 
-/-- Item `C/03_T/prose/010` (`companion/chapters/03_T.tex:112-112`): "Condition (V) says that
+/-- Item `C/03_T/prose/010` (`companion/chapters/03_T.tex:112`): "Condition (V) says that
 the comparison directions retain a nonzero component of the gradient on a positive band.
 Condition (S) controls the secant correction in those directions. Condition (T) controls their
 expansion only in directions perpendicular to the proposed step." Made precise: (V) with $m>0$
@@ -457,14 +462,14 @@ theorem annihilation_projection {n : ℕ} {F : Vec n → ℝ} (Fstar : ℝ)
     exact R.annihilated_hessian_isSymm k
   exact ⟨hker, (TransportedCertificate.annihilated_projector (M k) hsymm _ hker).symm⟩
 
-/-- Item `C/03_T/prose/015` (`companion/chapters/03_T.tex:140-140`): "Armijo implies
+/-- Item `C/03_T/prose/015` (`companion/chapters/03_T.tex:140`): "Armijo implies
 $\sum d_k<\infty$." For an admissible run whose values are bounded below (here by $F_*$),
 the Armijo decreases $c_1d_k\le F(x_k)-F(x_{k+1})$ telescope, so $\sum_kd_k<\infty$. -/
 theorem armijo_summable {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (Fstar : ℝ)
     (hlow : ∀ k, Fstar ≤ F (R.x k)) : Summable R.d :=
   R.summable_predicted_decreases_of_lower_bound Fstar hlow
 
-/-- Item `C/03_T/prose/016` (`companion/chapters/03_T.tex:140-140`): "a finite convex function
+/-- Item `C/03_T/prose/016` (`companion/chapters/03_T.tex:140`): "a finite convex function
 has uniformly bounded subgradients on a compact set". For finite convex $F$ and compact $K$ there
 is $G$ with $\|g\|\le G$ (Euclidean norm) for every $x\in K$ and every subgradient $g$ of $F$ at
 $x$ ($F(y)\ge F(x)+g^T(y-x)$ for all $y$). In particular the gradients of a run that stays in $K$
@@ -594,14 +599,18 @@ theorem trace_step_general {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
   linarith
 
 /-- Item `C/03_T/disp/019`, equation (3.6) (`companion/chapters/03_T.tex:149-155`): "Using
-(3)--(4), the Loewner inequality (T), and (S),
+(3.3)--(3.4), the Loewner inequality (T), and (S),
 \[ E_{k+1}=\tr(M_kW(x_{k+1}))+y_k^TW(x_{k+1})y_k/t_k\le a_k\tr(M_kW(x_k))+C
    =a_k\Bigl(E_k-\frac{g_k^TW(x_k)g_k}{q_k}\Bigr)+C\le a_k(E_k-m/q_k)+C." \]
 Under the standing assumptions of display `C/03_T/disp/018` (and $M_k$ of line 132), for every
 $k\ge k_0$. These assumptions are jointly inconsistent (the theorem shows that the gap tends to
-$0$); the proof uses only `trace_step_general`, whose assumptions are satisfiable. ("(3)--(4)" in
-the lead-in, line 148, means (3.3)-(3.4), `hessian_form` and `annihilation_projection`: a typo,
-recorded as item `C/03_T/prose/042`.) -/
+$0$); the proof uses only `trace_step_general`, whose assumptions are satisfiable.
+
+Also Item `C/03_T/prose/042` (`companion/chapters/03_T.tex:148`), corrected on 15 October 2026
+(M25): the lead-in "Using (3.3)--(3.4), the Loewner inequality (T), and (S)," cites
+`hessian_form` (3.3) and `annihilation_projection` (3.4); with "Divide (3.6) by $P_{k+1}$ and sum"
+(line 160, `reciprocal_budget`) and "This contradicts (3.5)." (line 165,
+`reciprocal_mean_diverges`) it printed "(3)--(4)", "(6)" and "(5)" before the correction. -/
 theorem trace_recurrence {n : ℕ} {F : Vec n → ℝ} (Fstar : ℝ)
     (_hFstar : IsLeast (Set.range F) Fstar) (b : ℝ) (K : Set (Vec n))
     (hK_def : K = {x | F x ≤ b}) (_hb : b > Fstar) (_hK : IsCompact K)
@@ -682,16 +691,16 @@ theorem C_nonneg_of_pair {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n 
       Cert.C * R.curvature k := hS
   linarith
 
-/-- Item `C/03_T/disp/021` (`companion/chapters/03_T.tex:161-164`): "Divide (6) by $P_{k+1}$ and
+/-- Item `C/03_T/disp/021` (`companion/chapters/03_T.tex:161-164`): "Divide (3.6) by $P_{k+1}$ and
 sum:
 \[ \frac m{\overline P}\sum_{k=k_0}^{N-1}\frac1{q_k}\le E_{k_0}+C(N-k_0)." \]
 Under the standing assumptions of displays `C/03_T/disp/018` and `C/03_T/disp/020`, for every
 $N\ge k_0$. Here $C$ is the real constant of (S); it is nonnegative, because (S) applies to the
 accepted pair $(x_{k_0},x_{k_0+1})$ (`C_nonneg_of_pair`). As for display `C/03_T/disp/019`, these
 assumptions are jointly inconsistent; the proof uses the article's `certificate_budget_general`,
-whose assumptions are satisfiable. ("Divide (6)" means (3.6), `trace_recurrence`, and "This
-contradicts (5)" at line 165 means (3.5), `reciprocal_mean_diverges`: typos, recorded as item
-`C/03_T/prose/042`.) -/
+whose assumptions are satisfiable. ("Divide (3.6)" cites `trace_recurrence`, and "This
+contradicts (3.5)" at line 165 cites `reciprocal_mean_diverges`; until the correction M25 of 15
+October 2026 they printed "(6)" and "(5)", item `C/03_T/prose/042`.) -/
 theorem reciprocal_budget {n : ℕ} {F : Vec n → ℝ} (Fstar : ℝ)
     (hFstar : IsLeast (Set.range F) Fstar) (b : ℝ) (K : Set (Vec n))
     (hK_def : K = {x | F x ≤ b}) (_hb : b > Fstar) (_hK : IsCompact K)
@@ -716,7 +725,7 @@ theorem reciprocal_budget {n : ℕ} {F : Vec n → ℝ} (Fstar : ℝ)
 
 /-! ### The formal proof route (line 167) -/
 
-/-- Item `C/03_T/prose/017` (`companion/chapters/03_T.tex:167-167`): "The formal principal theorem
+/-- Item `C/03_T/prose/017` (`companion/chapters/03_T.tex:167`): "The formal principal theorem
 uses the same derived trace recurrence with a harmless larger additive bound
 $C_+(k+1)$, where $C_+=\max\{C,0\}$." For a certificate on a band $K_\eta$ and an index $k$ with
 $x_k,x_{k+1}\in K_\eta$ and $d_k\le\delta$, the recurrence (3.6) implies
@@ -763,7 +772,7 @@ theorem superquadratic_growth {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
   superquadraticReciprocalGrowth n R.toFullBFGSRun G (1 - R.c₂) hG R.wolfe_constant_pos hg
     R.beta_lower_bound hs
 
-/-- Item `C/03_T/prose/018` (`companion/chapters/03_T.tex:167-167`): "The normalized energy
+/-- Item `C/03_T/prose/018` (`companion/chapters/03_T.tex:167`): "The normalized energy
 estimate then gives an $O(N^2)$ reciprocal-sum bound and contradicts Chapter~M's
 superquadratic theorem." If every iterate of a run lies in one band $K_\eta$ of a certificate
 and $d_k\le\delta$ for all $k$, with $\sum_kd_k<\infty$, then for every $N$
@@ -823,14 +832,14 @@ theorem quadratic_budget_finite {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFG
   push_cast at h
   linarith
 
-/-- Item `C/03_T/prose/019` (`companion/chapters/03_T.tex:167-167`): "Its additional
+/-- Item `C/03_T/prose/019` (`companion/chapters/03_T.tex:167`): "Its additional
 summability requirement is already a consequence of Armijo and the finite limiting value." If the
 values $F(x_k)$ of an admissible run have a finite limit, then $\sum_kd_k<\infty$. -/
 theorem summable_of_limit {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (ℓ : ℝ)
     (hℓ : Tendsto (fun k => F (R.x k)) atTop (𝓝 ℓ)) : Summable R.d :=
   R.summable_predicted_decreases_of_value_limit ℓ hℓ
 
-/-- Item `C/03_T/prose/021` (`companion/chapters/03_T.tex:167-167`): "The sharper linear
+/-- Item `C/03_T/prose/021` (`companion/chapters/03_T.tex:167`): "The sharper linear
 telescoping estimate above follows from the separately proved scalar transport budget". If every
 iterate lies in one band $K_\eta$ of a certificate, $d_k\le\delta$ for all $k$ and
 $\sum_kd_k<\infty$, then for every $N$
@@ -897,7 +906,7 @@ theorem local_basin {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
     huniq b hb hU hcert
   exact ⟨δ, hδ, fun R h1 h2 h0 => h R h1 h2 h0⟩
 
-/-- Item `C/03_T/prose/023` (`companion/chapters/03_T.tex:178-178`): "Rejected trial points need
+/-- Item `C/03_T/prose/023` (`companion/chapters/03_T.tex:178`): "Rejected trial points need
 not stay in $U$." Example: $F(x)=x^2/2$ on $\R$ with minimizer $0$, the neighborhood
 $U=\{|x|<1\}$, the start $x_0=1/2\in U$ (with $F(x_0)=1/8$) and $H_0=4$: the unit trial point
 $x_0-H_0\nabla F(x_0)=-3/2$ lies outside $U$ and violates Armijo for every $0<c_1<1$, so it is
@@ -947,7 +956,7 @@ theorem rejected_trial_outside :
     simp [BfgsCoverage.Article.Energy.Example.quad, bfgsStep, Matrix.mulVec_diagonal, dot]
     nlinarith
 
-/-- Item `C/03_T/prose/024` (`companion/chapters/03_T.tex:178-178`): "For multiple minimizers,
+/-- Item `C/03_T/prose/024` (`companion/chapters/03_T.tex:178`): "For multiple minimizers,
 one may instead use a neighborhood of the entire compact solution set or directly assume that the
 initial sublevel lies in the structural region." (a) With a neighborhood $U$ of every minimizer
 and certificates on $\{F\le b\}\cap U$ ($\{F\le b\}$ compact, $b>F_*$), there is $\delta>0$ such
@@ -969,7 +978,7 @@ theorem solution_set_basin {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.
       hmin b hb hK hU hcert
   exact ⟨δ, hδ, fun R h1 h2 h0 => ⟨(h R h1 h2 h0).1, (h R h1 h2 h0).2.1, (h R h1 h2 h0).2.2.1⟩⟩
 
-/-- Item `C/03_T/prose/024` (`companion/chapters/03_T.tex:178-178`), part (b): certificates on a
+/-- Item `C/03_T/prose/024` (`companion/chapters/03_T.tex:178`), part (b): certificates on a
 structural region $S$ containing the compact initial sublevel $\{F\le F(x_0)\}$ give
 $F(x_k)\to F_*$ and $\operatorname{dist}(x_k,\arg\min F)\to0$, and $x_k\to x_*$ when the minimizer
 $x_*$ is unique. -/
@@ -992,7 +1001,7 @@ theorem shell_band_eq {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (Fstar ℓ
   simp only [Set.mem_setOf_eq, Set.mem_inter_iff, add_sub_cancel]
   tauto
 
-/-- Item `C/03_T/prose/025` (`companion/chapters/03_T.tex:180-180`): "The proof only needs a
+/-- Item `C/03_T/prose/025` (`companion/chapters/03_T.tex:180`): "The proof only needs a
 certificate in a small one-sided level neighborhood of each possible finite limit $\ell>F_*$.
 Requiring a field on every whole positive band is a cleaner, stronger formulation; certificates
 on shells $\ell\le F\le\ell+\epsilon_\ell$ also suffice." (a) Band certificates give shell
@@ -1008,7 +1017,7 @@ theorem shell_certificates {n : ℕ} {F : Vec n → ℝ} (Fstar : ℝ) (K : Set 
   obtain ⟨Cert⟩ := h (ℓ - Fstar) (by linarith) ⟨x, hxK, by linarith⟩
   exact ⟨1, one_pos, ⟨Cert.restrict _ Set.inter_subset_left⟩⟩
 
-/-- Item `C/03_T/prose/025` (`companion/chapters/03_T.tex:180-180`), part (b): shell
+/-- Item `C/03_T/prose/025` (`companion/chapters/03_T.tex:180`), part (b): shell
 certificates suffice for the conclusions of the theorem. -/
 theorem shell_convergence {n : ℕ} {F : Vec n → ℝ} (xstar : Vec n) (hmin : ∀ x, F xstar ≤ F x)
     (b : ℝ) (K : Set (Vec n)) (hK_def : K = {x | F x ≤ b}) (hK : IsCompact K)
@@ -1040,7 +1049,7 @@ theorem rank_one_sufficient {n : ℕ} (vx vz s : Vec n) (lam β L d : ℝ)
         TransportedCertificate.stepProjector s).PosSemidef :=
   TransportedCertificate.rank_one_transport s vx vz lam β (1 + L * d) hv (by rwa [sq_abs] at hlam)
 
-/-- Item `C/03_T/disp/024` (`companion/chapters/03_T.tex:193-195`): "Conditions (V)--(S) become
+/-- Item `C/03_T/disp/024` (`companion/chapters/03_T.tex:193-195`): "Conditions (V) and (S) become
 $|g^Tv(x)|^2\ge m$, $|y^Tv(z)|^2\le Ct$." For $W=vv^T$: $g^TWg=|g^Tv|^2$ and $y^TWy=|y^Tv|^2$, so
 (V) and (S) for $W(x)=v(x)v(x)^T$ read as displayed (`rank_one_certificate` assembles the band
 certificate from these scalar conditions and the transport of display `C/03_T/disp/023`). -/
@@ -1081,14 +1090,16 @@ theorem rank_one_certificate {n : ℕ} {F : Vec n → ℝ} {K : Set (Vec n)} {Fs
       obtain ⟨lam, β, h1, h2⟩ := hT x hx z hz g h hp hd
       exact ⟨lam, β, h1, by rwa [sq_abs] at h2⟩), rfl, rfl, rfl, rfl, rfl⟩
 
-/-- Item `C/03_T/prose/026` (`companion/chapters/03_T.tex:196-196`): "there is no requirement that
+/-- Item `C/03_T/prose/026` (`companion/chapters/03_T.tex:196`): "there is no requirement that
 $\lambda$ be invertible or bounded away from zero." The sufficient condition of display
 `C/03_T/disp/023` asks only $|\lambda|^2\le1+Ld$, and the degenerate multiplier $\lambda=0$ is
 allowed: if $v(z)=\beta s$, then (T) holds for $W=vv^T$ with every $L,d$ such that $1+Ld\ge0$.
-(The sentence opens with a contrast, "Unlike the preceding moving-frame theorem", recorded as the
-discrepancy item `C/03_T/prose/043`: the moving-frame criterion of Chapter~M, `02_M.tex:196-211`,
-assumes bounded inverse norms of the cumulative transports; Theorem `M:residualtheorem` does
-not.) -/
+Also Item `C/03_T/prose/043` (`companion/chapters/03_T.tex:196`), corrected on 15 October 2026
+(M26; before "Unlike the preceding moving-frame theorem,"): "Unlike the moving-frame criterion of
+Section~\ref{M:energy}, there is no requirement that $\lambda$ be invertible or bounded away from
+zero." The moving-frame criterion of Section 2.4 (`02_M.tex:196-211`, `Ch02M.frame_criterion`)
+assumes bounded inverse norms of the cumulative transports; the scalar form here allows
+$\lambda=0$. -/
 theorem rank_one_degenerate {n : ℕ} (vx vz s : Vec n) (β L d : ℝ) (hv : vz = β • s)
     (hLd : 0 ≤ 1 + L * d) :
     ((1 + L * d) • (TransportedCertificate.stepProjector s * outer vx vx *
@@ -1097,7 +1108,7 @@ theorem rank_one_degenerate {n : ℕ} (vx vz s : Vec n) (β L d : ℝ) (hv : vz 
         TransportedCertificate.stepProjector s).PosSemidef :=
   rank_one_sufficient vx vz s 0 β L d (by rw [hv, zero_smul, zero_add]) (by simpa using hLd)
 
-/-- Item `C/03_T/prose/026` (`companion/chapters/03_T.tex:196-196`), an instance where the
+/-- Item `C/03_T/prose/026` (`companion/chapters/03_T.tex:196`), an instance where the
 multiplier must vanish: in $\R^2$, with $v(x)=e_1$, $s=e_2$ and $v(z)=e_2$, every decomposition
 $v(z)=\lambda v(x)+\beta s$ has $\lambda=0$ (one exists, with $\beta=1$), and (T) holds for $W=vv^T$
 with $L=0$ and every $d$. -/
@@ -1116,7 +1127,7 @@ theorem degenerate_multiplier :
     fin_cases i <;> simp
   · exact rank_one_degenerate ![1, 0] ![0, 1] ![0, 1] 1 0 d (by rw [one_smul]) (by simp)
 
-/-- Item `C/03_T/prose/027` (`companion/chapters/03_T.tex:196-196`): "The PSD form also
+/-- Item `C/03_T/prose/027` (`companion/chapters/03_T.tex:196`): "The PSD form also
 accommodates multiple comparison directions and varying rank, without choosing an exact frame
 transport." The sum of two certificates on the same band (for instance of two rank-one fields, or
 of fields of different ranks) is again a certificate, with $m=m_1+m_2$, $C=C_1+C_2$,
@@ -1206,10 +1217,12 @@ theorem potential_absorption {n : ℕ} {F : Vec n → ℝ} {K : Set (Vec n)} {Fs
 
 /-! ### Section "Why this is genuinely weaker than RS" (lines 216-239) -/
 
-/-- The radial secant condition (RS) of Chapter~R (`companion/chapters/04_R.tex:53-59`, with
-$C_\eta<\infty$) is the library's `HasRadialSecantBounds F K x_*`, literally: for every $\eta>0$
-there is $C$ with $N^2\le CT$ whenever $x,z\in K$ are differentiable with gradients $g,h$,
-$F_*+\eta\le F(z)\le F(x)$ and $T>0$, where $T=(h-g)^T(z-x)$, $N=(h-g)^T(z-x_*)$. -/
+/-- The radial secant condition (RS) of Chapter~R (`companion/chapters/04_R.tex:53-59`; printed
+with $C_\eta\ge0$ since 15 October 2026, wording point W19, which is equivalent to real constants
+by `Ch04R.RSNonneg_iff`) is, with real constants, the library's `HasRadialSecantBounds F K x_*`:
+for every $\eta>0$ there is $C$ with $N^2\le CT$ whenever $x,z\in K$ are differentiable with
+gradients $g,h$, $F_*+\eta\le F(z)\le F(x)$ and $T>0$, where $T=(h-g)^T(z-x)$,
+$N=(h-g)^T(z-x_*)$. -/
 theorem rs_iff {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (xstar : Vec n) :
     RadialCertificate.HasRadialSecantBounds F K xstar ↔
       ∀ η : ℝ, 0 < η → ∃ C : ℝ, ∀ x z g h : Vec n, x ∈ K → z ∈ K → F xstar + η ≤ F z →
@@ -1217,7 +1230,8 @@ theorem rs_iff {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (xstar : Vec n) :
         HasFDerivAt F (gradientFunctional h) z → 0 < dot (h - g) (z - x) →
         (dot (h - g) (z - xstar)) ^ 2 ≤ C * dot (h - g) (z - x) := Iff.rfl
 
-/-- Item `C/03_T/disp/026` (`companion/chapters/03_T.tex:218-220`): "Given (RS), take
+/-- Item `C/03_T/disp/026` (`companion/chapters/03_T.tex:218-220`): "Given the radial secant
+condition (RS) of Chapter~\ref{comp:R}, take
 $W(x)=(x-x_*)(x-x_*)^T$." The field is `outer (x - xstar) (x - xstar)`, and its quadratic form is
 $a^TW(x)a=(a^T(x-x_*))^2$. -/
 theorem radial_field_energy {n : ℕ} (xstar x a : Vec n) :
@@ -1248,8 +1262,10 @@ theorem radial_visibility {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.u
   · nlinarith
   · nlinarith
 
-/-- Item `C/03_T/prose/029` (`companion/chapters/03_T.tex:225-225`): "Condition (S) is exactly
-(RS)", a discrepancy (imprecision); this is what holds. For $W(z)=(z-x_*)(z-x_*)^T$ the left side of
+/-- Item `C/03_T/prose/029` (`companion/chapters/03_T.tex:225`), corrected on 15 October 2026
+(M24; before "Condition (S) is exactly (RS), while"): "With this $W$, (S) is the inequality of
+(RS) restricted to eligible pairs in $K_\eta$ with $d\le\delta_\eta$, so (RS) gives (S) with the
+same constant, while". For $W(z)=(z-x_*)(z-x_*)^T$ the left side of
 (S) is $y^TW(z)y=N^2$ with $N=(h-g)^T(z-x_*)$, and $t=T$; and every eligible pair $x,z\in K_\eta$
 (for $0<c_1$, $c_2<1$) satisfies the premises of (RS): $x,z\in K$, $F_*+\eta\le F(z)\le F(x)$,
 $T>0$. So, with this $W$, (S) is the inequality of (RS) restricted to eligible pairs in $K_\eta$
@@ -1267,9 +1283,9 @@ theorem radial_secant_exact {n : ℕ} {F : Vec n → ℝ} (xstar : Vec n) (K : S
   exact ⟨radial_field_energy xstar z (h - g), hx.1, hz.1, hz.2, hdec,
     TransportedCertificate.eligible_curvature_pos hp hc₂⟩
 
-/-- Item `C/03_T/prose/029` (`companion/chapters/03_T.tex:225-225`), the implication that holds:
-(RS) gives (S) with the same constant. If the (RS) inequality $N^2\le CT$ holds at the level
-$\eta$ (for all differentiable $x,z\in K$ with $F_*+\eta\le F(z)\le F(x)$ and $T>0$), then the
+/-- Item `C/03_T/prose/029` (`companion/chapters/03_T.tex:225`), as corrected on 15 October 2026
+(M24): "(RS) gives (S) with the same constant". If the (RS) inequality $N^2\le CT$ holds at the
+level $\eta$ (for all differentiable $x,z\in K$ with $F_*+\eta\le F(z)\le F(x)$ and $T>0$), then the
 radial field $W(z)=(z-x_*)(z-x_*)^T$ satisfies (S), $y^TW(z)y\le Ct$, with the same $C$ on every
 eligible pair $x,z\in K_\eta$ (for $0<c_1$, $c_2<1$), whatever $d$. -/
 theorem rs_gives_s {n : ℕ} {F : Vec n → ℝ} (xstar : Vec n) (K : Set (Vec n))
@@ -1535,8 +1551,9 @@ theorem radial_certificate (c₁ c₂ : ℝ) (hc₂ : c₂ < 1 / 2) (η : ℝ) (
 
 end Kink
 
-/-- Item `C/03_T/prose/029` (`companion/chapters/03_T.tex:225-225`), the counterexample to the
-literal reading of "Condition (S) is exactly (RS)": (S) for the radial field does not give (RS).
+/-- Item `C/03_T/prose/029` (`companion/chapters/03_T.tex:225`), the counterexample to the
+literal reading of the sentence before its correction of 15 October 2026 (M24), "Condition (S) is
+exactly (RS)": (S) for the radial field does not give (RS).
 For $F(x)=\max\{|x|,2x-1\}$ on $\R$ (finite, convex, unique minimizer $x_*=0$, $F_*=0$, compact
 $K=\{F\le2\}$) and every pair with $c_2<1/2$: (S) holds for $W(x)=(x-x_*)(x-x_*)^T$ with $C_\eta=6$
 on every band $K_\eta$ (for every eligible pair, whatever $d$), and the radial field is a band
@@ -1600,7 +1617,7 @@ theorem radial_transport_equality {n : ℕ} (xstar x z : Vec n) (d : ℝ) :
   rw [heq, zero_mul, add_zero, one_smul, sub_self]
   exact Matrix.PosSemidef.zero
 
-/-- Item `C/03_T/prose/031` (`companion/chapters/03_T.tex:229-229`): "Thus every objective
+/-- Item `C/03_T/prose/031` (`companion/chapters/03_T.tex:229`): "Thus every objective
 covered by RS is covered by the new condition." For finite convex $F$ with minimizer $x_*$ and
 (RS) on $K$: for every pair $0<c_1$, $c_2<1$ and every $\eta>0$ there is a band certificate on
 $K_\eta$ with field $W(x)=(x-x_*)(x-x_*)^T$, $m=\eta^2$ and $L=0$; so $K$ admits the band
@@ -1641,7 +1658,7 @@ theorem rs_covered {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F) 
       · simp
   exact ⟨hcert, fun η hη _ => (hcert η hη).elim fun Cert _ => ⟨Cert⟩⟩
 
-/-- Item `C/03_T/prose/032` (`companion/chapters/03_T.tex:231-231`): "The reverse implication
+/-- Item `C/03_T/prose/032` (`companion/chapters/03_T.tex:231`): "The reverse implication
 fails. Chapter~\ref{comp:Q} constructs fields satisfying the new condition for a multi-branch
 curved objective that violates even the eligible-pair radial condition on every positive
 neighborhood of its minimizer." The three-branch parabolic objective of Chapter~Q,
@@ -1691,7 +1708,7 @@ theorem transport_perpendicular {n : ℕ} (Wx Wz : Mat n) (hWx : Wx.IsSymm) (hWz
       ↔ ∀ a : Vec n, dot a s = 0 → dot a (Wz *ᵥ a) ≤ (1 + L * d) * dot a (Wx *ᵥ a) :=
   TransportedCertificate.projected_transport_iff_perpendicular Wx Wz hWx hWz s (1 + L * d)
 
-/-- Item `C/03_T/prose/034` (`companion/chapters/03_T.tex:237-237`): "Under an invertible affine
+/-- Item `C/03_T/prose/034` (`companion/chapters/03_T.tex:237`): "Under an invertible affine
 change of variables with linear part $A$, gradients transform by $A^{-\mathsf T}$ and the
 certificate transforms by $W\mapsto AWA^T$. The three conditions are therefore affine-covariant;
 no preferred coordinate system is essential." For $\det A\ne0$, the new variable $z=Ax+b$
@@ -1729,7 +1746,7 @@ theorem affine_covariance {n : ℕ} (A : Mat n) (hA : A.det ≠ 0) (b : Vec n) (
     rwa [AffineCertificate.backward_forward A hA]
   exact AffineCertificate.transformed_gradient A b hg'
 
-/-- Item `C/03_T/prose/035` (`companion/chapters/03_T.tex:239-239`): "The extra transport clause
+/-- Item `C/03_T/prose/035` (`companion/chapters/03_T.tex:239`): "The extra transport clause
 cannot simply be omitted: changing a comparison vector creates terms involving $B_k$, which may be
 unbounded. A small Euclidean change is not by itself a small change in the $B_k$ energy." There
 are SPD matrices $B_k=\operatorname{diag}(1,(k+1)^4)$ (unbounded) and vectors $v_k\to v$ with

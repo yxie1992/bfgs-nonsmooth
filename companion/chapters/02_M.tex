@@ -6,7 +6,7 @@ The same matrix calculation supports every positive result in this volume. We es
 % SOURCE_BEGIN M.span.1
 \section{Notation, elementary consequences, and localization}
 \label{M:notation}
-This module consolidates the common algebra from sources~Chapters~\ref{comp:M}, \ref{comp:H}, \ref{comp:F}, \ref{comp:U}. No outside BFGS convergence theorem is substituted for this algebra. All results inherit the infinite-admissible-run convention in the inventory.
+This chapter consolidates the common algebra of the source notes. No outside BFGS convergence theorem is substituted for this algebra. All results inherit the infinite-admissible-run convention in the inventory.
 
 Put
 \[
@@ -63,7 +63,7 @@ Armijo and compactness give $d_k\to0$. If the accepted steps do not vanish, comp
 For SPD $H$, let $e_j(H)$ be the elementary symmetric polynomial of degree $j$ of its eigenvalues, with $e_{n+1}=0$. Thus $e_1=\operatorname{tr}$ and $e_n=\det$.
 
 \begin{theorem}[Principal-minor hierarchy]\label{M:hierarchy}
-For an ordinary inverse-BFGS update with $s=-\alpha Hg$, $q=g^THg>0$ and $\beta=-y^THg/q>0$,
+For $H\succ0$ and an ordinary inverse-BFGS update with $s=-\alpha Hg$, $\alpha>0$, $q=g^THg>0$ and $\beta=-y^THg/q>0$,
 \begin{equation}\label{M:minor}
  e_j(H_+)\le \frac{\|y\|^2}{\beta^2q}e_{j+1}(H)+\frac\alpha\beta e_j(H),\qquad1\le j\le n.
 \end{equation}
@@ -142,7 +142,7 @@ Taking $m$th roots and then allowing the fixed $\eta$ to be arbitrarily small pr
 \end{proof}
 
 \begin{theorem}[Finite horizon and superquadratic growth under summability]\label{M:superquadratic}
-Assume bounded gradients, fixed weak Wolfe, and $\sum_kd_k<\infty$. For a fixed tail $J$, let $D_J=\sum_{k\ge J}d_k>0$. For every $\eta>0$ and $m\ge2$,
+Assume bounded gradients, fixed weak Wolfe, and $\sum_kd_k<\infty$. For a fixed tail $J$, let $D_J=\sum_{k\ge J}d_k>0$. For every $\eta>0$ and $m\ge2$, with $G$, $K_0$ and $V_\eta$ as in the proof of Theorem~\ref{M:average},
 \begin{equation}\label{M:finitehorizon}
  \sum_{k=J}^{J+m-1}q_k^{-1}\ge
  m[G^2V_\eta(H_J)]^{-1/m}
@@ -191,7 +191,7 @@ The cancellation is $-2\alpha a+\alpha^2q-(a-\alpha q)^2/q=-a^2/q$. If $x_*$ is 
 \begin{equation}\label{M:energybound}
  [F(x_N)-F_*]^2\sum_{k<N}q_k^{-1}\le E_0+\sum_{k<N}R_k.
 \end{equation}
-Thus $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes a positive gap. With the summability assumptions of Theorem~\ref{M:superquadratic}, an $O(N^2)$ cumulative correction suffices. This last observation is an explicit consolidation deduction from the recorded energy and reciprocal results; no new regularity hypothesis is inferred.
+Thus, along runs with bounded gradients, $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes a positive gap. With the summability assumptions of Theorem~\ref{M:superquadratic}, an $O(N^2)$ cumulative correction suffices. This last observation is an explicit consolidation deduction from the recorded energy and reciprocal results; no new regularity hypothesis is inferred.
 
 For $V_k\in\mathbb R^{n\times r}$, suppose
 \[
@@ -208,7 +208,7 @@ Suppose on a hypothetical nonoptimal tail $\|a_k\|\ge\epsilon>0$, $\|c_k\|^2/t_k
  +\frac{\|P_{k+1}^{-T}c_k\|^2}{t_k},\quad
  \widetilde A_k=P_k^{-T}A_kP_k^{-1}.
 \]
-Positivity gives $\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\ref{M:average}. This is a trajectory criterion; one still has to derive its hypotheses from the objective. Neither $P_k$ nor $T_k$ is a BFGS matrix.
+Positivity gives $\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\ref{M:average} under its hypotheses. This is a trajectory criterion; one still has to derive its hypotheses from the objective. Neither $P_k$ nor $T_k$ is a BFGS matrix.
 
 % SOURCE_END M.span.4
 

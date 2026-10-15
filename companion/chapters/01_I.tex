@@ -11,7 +11,7 @@ The scope map separates objective convergence, convergence to the solution set a
 \section*{Status and reading convention}\label{status-and-reading-convention}
 
 
-Every retained mathematical assertion is paired with its reviewed formal statement and Lean proof in the claim/proof index. Named results, intermediate identities, substantive unnamed deductions and actual objective applications are included. Definitions, assumptions, explicit open questions and process evidence are separately classified. Some informal proof routes have been replaced by different formal proofs; these changes are disclosed rather than described as literal translations.
+Every retained mathematical assertion is classified in the claim/proof index, and each asserted result is paired there with its formal statement and Lean proof. Named results, intermediate identities, substantive unnamed deductions and actual objective applications are included. Definitions, assumptions, explicit open questions and process evidence are separately classified. Some informal proof routes have been replaced by different formal proofs; these changes are disclosed rather than described as literal translations.
 
 The chapters use ordinary chapter numbering and shared algebra in Chapter~\ref{comp:M}. The original chapter sources remain at \path{BFGS_MASTER_REPORT_LaTeX/report/chapters/}; the corrected sources, edit ledger and complete correspondence index are delivered together. No unavailable provenance archive is required to reproduce the formal proofs.
 
@@ -100,11 +100,11 @@ There is also a strongly convex finite objective, with a unique nonsmooth minimi
 
 wherever its classical Hessian exists, yet the same specified deterministic implementation admits bad starts arbitrarily close to the minimizer. A single fixed affine change of coordinates makes the common initial matrix \(I\).
 
-One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex, gradient-Lipschitz branches. The individual branches \textbf{are not twice differentiable at the accumulation point}. Another version has one constant SPD classical Hessian wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.
+One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex, gradient-Lipschitz branches. Three of the four branches \textbf{are not twice differentiable at the minimizer}. Another version has one constant SPD classical Hessian wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.
 
 The source fixed \(c_1=10^{-4}\), \(c_2=1/2\); the same objective and bad starts serve every \(0<c_1\le1/3\), \(c_1<c_2<1\). Its bad seed is an existence object on a certified hyperbolic stable manifold, not a displayed rounded point claimed to lie exactly on that manifold. \textbf{Proof: Chapter~\ref{comp:L}.}
 
-\textbf{N1 and N2 are not merged into a fictitious stronger theorem.} N1 has more branch differentiability and no uniform positive lower curvature. N2 has positive lower curvature and less differentiability at the accumulation point. Neither proves local failure for a finite maximum of uniformly strongly convex \(C^2\) branches through the optimizer.
+\textbf{N1 and N2 are not merged into a fictitious stronger theorem.} N1 has more branch differentiability and no uniform positive lower curvature. N2 has positive lower curvature and less differentiability at the accumulation point. Neither is constructed from finitely many uniformly strongly convex \(C^2\) branches through the optimizer, so neither proves local failure for that class.
 
 % SOURCE_END I.span.6
 
@@ -120,7 +120,7 @@ Adding a common positive quadratic to the three-piece seed yields
  Q_\mu(x)=\frac\mu2\|x\|^2+\max_{i=0,1,2}g_i^Tx.
 \]
 
-For every \(\mu>0\), suitable initial states produce, for every fixed \(0<c_1\le1/3\), \(c_1<c_2<1\), the same deterministic nonstationary convergence to zero. Each branch is quadratic, analytic, and has Hessian exactly \(\mu I\). The true minimizer lies elsewhere. This is \textbf{global failure}, and is consistent with local convergence near the true minimizer. The stable-manifold argument is required; the unperturbed orbit cannot simply be reused. \textbf{Proofs: 12.3.1 and Chapter~\ref{comp:L}.}
+For every \(\mu>0\), suitable initial states produce, for every fixed \(0<c_1\le1/3\), \(c_1<c_2<1\), the same deterministic nonstationary convergence to zero. Each branch is quadratic, analytic, and has Hessian exactly \(\mu I\). The true minimizer lies elsewhere. This is \textbf{global failure}, and is consistent with local convergence near the true minimizer. The stable-manifold argument is required; the unperturbed orbit cannot simply be reused. \textbf{Proofs: Section~12.3.1 and Chapter~\ref{comp:L}.}
 
 % SOURCE_END I.span.7
 
@@ -150,7 +150,7 @@ Then every admissible run on the compact sublevel has value and solution-set con
 
 The normalization with exact projected nonexpansion is equivalent to allowing \((1+Ld)\): multiply \(W\) by \(\exp((L/c_1)(F-F_*))\). \textbf{Proof: Chapter~\ref{comp:T}; normalization and geometry: Chapter~\ref{comp:G}.}
 
-RS is the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\). Its equivalent inward Taylor condition is useful for checking functions, but is not a separate strongest certificate theorem. The inclusion of RS is strict. The transported condition itself is not necessary for actual convergence.
+RS implies the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\). Its equivalent inward Taylor condition is useful for checking functions, but is not a separate strongest certificate theorem. The inclusion of RS is strict. The transported condition itself is not necessary for actual convergence.
 
 % SOURCE_END I.span.9
 
@@ -158,7 +158,7 @@ RS is the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\). Its equivalent inward
 % SOURCE_BEGIN I.span.10
 \subsection{P2. Moving frames with controlled cumulative transport}\label{p2.-moving-frames-with-controlled-cumulative-transport}
 
-A frame satisfying \(V_{k+1}=V_kT_k+s_kb_k^T\) has an exact BFGS comparison-energy identity. Uniform visibility, bounded secant correction, and bounded cumulative transport products and inverses exclude positive-level stagnation. This trajectory mechanism need not produce a single position-only certificate. \textbf{Proof: Chapter~\ref{comp:M}.}
+A frame satisfying \(V_{k+1}=V_kT_k+s_kb_k^T\) has an exact BFGS comparison-energy identity. Uniform visibility, bounded secant correction, and bounded cumulative transport products and inverses exclude positive-level stagnation along runs with bounded gradients. This trajectory mechanism need not produce a single position-only certificate. \textbf{Proof: Chapter~\ref{comp:M}.}
 
 % SOURCE_END I.span.10
 
@@ -166,14 +166,14 @@ A frame satisfying \(V_{k+1}=V_kT_k+s_kb_k^T\) has an exact BFGS comparison-ener
 % SOURCE_BEGIN I.span.11
 \subsection{P3. Imperfect transport in fixed smooth directions}\label{p3.-imperfect-transport-in-fixed-smooth-directions}
 
-If a fixed subspace \(S\) satisfies \(\|P_Sy_k\|^2\le L_Sy_k^Ts_k\), the actual update gives \(\operatorname{tr}(P_SB_k)=O(k)\). Frame residuals are then permitted:
+If a fixed subspace \(S\) satisfies \(\|P_Sy_k\|^2\le L_Sy_k^Ts_k\), the actual update gives \(\operatorname{tr}(P_SB_k)=O(k)\) for \(B_k=H_k^{-1}\). Frame residuals are then permitted:
 
 \[V_{k+1}=V_kT_k+s_kb_k^T+R_k,\]
 
 \[\|T_k\|^2\le1+Cd_k,\qquad \operatorname{range}R_k\subset S,
 \qquad\|R_k\|_F^2\le Cd_k.\]
 
-Together with uniform visibility and bounded secant correction, the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below. This extends the proof mechanism; \textbf{a strict inclusion between the existential function classes of P1 and P3 has not been proved}. \textbf{Proof: Chapter~\ref{comp:M}; objective applications: Chapter~\ref{comp:U}.}
+Together with uniform visibility and bounded secant correction, along runs with bounded gradients and \(\sum d_k<\infty\), the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below. This extends the proof mechanism; \textbf{a strict inclusion between the existential function classes of P1 and P3 has not been proved}. \textbf{Proof: Chapter~\ref{comp:M}; objective applications: Chapter~\ref{comp:U}.}
 
 % SOURCE_END I.span.11
 
@@ -215,7 +215,7 @@ For smooth-plus-polyhedral objectives, retain the explicit sufficient basin thre
 % SOURCE_BEGIN I.span.14
 \subsection{P5. Planar affine-critical cluster points}\label{p5.-planar-affine-critical-cluster-points}
 
-Let \(F:\mathbb R^2\to\mathbb R\) be finite convex, have an attained minimum and a compact sublevel, and have strictly convex positive sublevels. Away from affine-critical points, assume either local convex \(C^2\) smoothness or a local maximum of two convex \(C^2\) branches whose active gradients are linearly independent.
+Let \(F:\mathbb R^2\to\mathbb R\) be finite convex, have an attained minimum and a compact sublevel above the minimum, and have strictly convex positive sublevels. Away from affine-critical points, assume either local convex \(C^2\) smoothness or a local maximum of two convex \(C^2\) branches whose active gradients are linearly independent.
 
 Then every infinite admissible run has an affine-critical cluster point. Adding no false affine criticality on the local basin gives convergence. For finite smooth maxima, affine independence and strictly positive optimal barycentric weights at a unique optimizer make the required local geometry automatic in the plane. Strictly convex low contours then suffice; uniformly strongly convex branches are a stronger convenient assumption. \textbf{Complete proof: Chapter~\ref{comp:C}.}
 
@@ -288,7 +288,7 @@ For finite max-linear objectives, retain three refinements: a finite-value-limit
 
 The noncompact zero-value iterate branch in recurrent dimension at least three is \textbf{not completely classified}. A compact-level certificate theorem cannot replace these noncompact statements. \textbf{Full proofs: Chapter~\ref{comp:H}.}
 
-The two-piece finite-escape theorem from Xie--Wächter is pre-existing background and remains stronger in its finite-termination conclusion than the new many-piece infinite-run escape statement. The user's paper is supplied separately, not rebranded as a new result.
+The two-piece finite-escape theorem from Xie--Wächter is pre-existing background and remains stronger in its finite-termination conclusion than the new many-piece infinite-run escape statement. That paper~\cite{XW} is prior work, not a new result of this report.
 
 % SOURCE_END I.span.19
 
@@ -309,14 +309,14 @@ With bounded gradients, fixed weak Wolfe and \(d_k\to0\), both the geometric and
 
 Retain the explicit finite-horizon bound as well; an asymptotic statement does not replace its finite constants. The former \(\liminf q_k=0\) and \(\Omega(N^2)\) headlines are retired as main results. They remain consequences used by older proofs.
 
-The fixed-reference identity is
+For a fixed reference point \(x_*\) and \(E_k=(x_k-x_*)^TB_k(x_k-x_*)\), the fixed-reference identity is
 
 \[E_{k+1}=E_k-\frac{[g_k^T(x_k-x_*)]^2}{q_k}
 +\frac{[y_k^T(x_{k+1}-x_*)]^2}{y_k^Ts_k}.\]
 
-A cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap. In particular, by the final reciprocal result, an \(O(N^2)\) cumulative correction suffices. This last sentence is an explicit consolidation consequence of the two displayed inequalities, not a claim of an additional source theorem.
+Along runs with bounded gradients, a cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap. In particular, by the final reciprocal result, an \(O(N^2)\) cumulative correction suffices. This last sentence is an explicit consolidation consequence of the two displayed inequalities, not a claim of an additional source theorem.
 
-The original rate note recorded big-\(O\) corollaries. The later superquadratic reciprocal theorem strengthens them to \(o(N^{-1/2})\) for uniformly bounded radial correction, \(o(N^{-1})\) for bounded-below degree-one homogeneous objectives, and \(o(\log N/N)\) for positive-definite quadratic plus coercive gauge. These are disclosed consolidation deductions, proved in Chapter~\ref{comp:F} while preserving the stronger explicit finite-horizon inequalities. They are not uniform rates over arbitrary certificates, sharpness statements, or line-search evaluation bounds.
+Big-\(O\) versions of the following rates appeared in the source notes. Theorem~\ref{M:superquadratic} strengthens them to \(o(N^{-1/2})\) for uniformly bounded radial correction along runs with bounded gradients, \(o(N^{-1})\) for bounded-below degree-one homogeneous objectives, and \(o(\log N/N)\) for positive-definite quadratic plus coercive gauge. These are disclosed consolidation deductions, proved in Chapter~\ref{comp:F} while preserving the stronger explicit finite-horizon inequalities. They are not uniform rates over arbitrary certificates, sharpness statements, or line-search evaluation bounds.
 
 % SOURCE_END I.span.20
 
@@ -388,6 +388,6 @@ The scope of the positive and negative programs is now substantially clearer, bu
 \section*{Relation to earlier work}
 The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
 
-The bibliographic notes distinguish established results and proof ingredients from the particular full-BFGS statements in this chapter. They record the primary-literature comparison through 11 September 2026, rather than certify publication priority. Such historical and comparative notes are separate from the mathematical assertions paired with Lean proofs. The detailed source/version register is delivered in \path{literature_audit/}; internal topic labels are not independently published sources.
+The bibliographic notes distinguish established results and proof ingredients from the particular full-BFGS statements in this chapter. They record the primary-literature comparison through 11 September 2026, rather than certify publication priority. Such historical and comparative notes are separate from the mathematical assertions paired with Lean proofs. The detailed source/version register is delivered in \path{bfgs_lean_stage1/literature_audit/}; internal topic labels are not independently published sources.
 
-These families include established special cases: Guo--Lewis proves Euclidean-norm convergence in arbitrary finite dimension \cite[Corollary 4.2]{GL18}. The broader applications retain their own hypotheses and proofs. The existence of a known special case does not identify the complete family theorem with that earlier result.
+The positive families of Section~\ref{strongest-concrete-local-and-global-positive-families} include established special cases: Guo--Lewis proves Euclidean-norm convergence in arbitrary finite dimension \cite[Corollary 4.2]{GL18}. The broader applications retain their own hypotheses and proofs. The existence of a known special case does not identify the complete family theorem with that earlier result.

@@ -8,13 +8,17 @@ Register: `editorial/lean_coverage/register/C_research_story.json`. The text is 
 motivation; its mathematical sentences restate results of the chapters and of the article and are
 `SAME_AS` their items (no sentence needs a new statement). The sentence "A different embedding
 preserves uniform strong convexity with $C^{1,1}$ branches that lose second differentiability at
-the accumulation point" (line 52) repeats the article's discrepancy M8 (only three of the four
-branches lose it, `BfgsCoverage.Companion.Ch13L.branch_regularity`); see the register.
+the accumulation point" (lines 51-53) repeated the article's discrepancy M8 and its wording issue
+M30; it was corrected on 15 October 2026 to "…with $C^{1,1}$ branches, three of which lose second
+differentiability at the minimizer" (`BfgsCoverage.Companion.Ch13L.branch_regularity_at_minimizer`);
+see the register.
 
 ## Value convergence and bounded iterates (lines 30-31)
 
-"The full noncompact homogeneous value alternatives are retained separately: value convergence does
-not imply bounded iterates, …" is a scope remark (`NON_CLAIM` in the register): Theorem 7.A
+"The full noncompact homogeneous value alternatives are retained separately: they conclude
+objective-value convergence without any conclusion about the iterates, …" (wording point W39,
+applied on 15 October 2026; before "value convergence does not imply bounded iterates") is a scope
+remark (`NON_CLAIM` in the register): Theorem 7.A
 (`C/07_H/heading/001`) concludes objective values only and asserts nothing about the iterates;
 whether the zero-value iterates of the degree-one homogeneous objectives converge in recurrent
 dimension at least three is open (`BfgsCoverage.Companion.Ch07H.ZeroValueIterateQuestion`).
@@ -76,8 +80,9 @@ theorem exp_run_contraction (R : AdmissibleBFGSRun 1 expObjective) (k : ℕ) :
 
 /-- Illustration for Item `C/research_story/prose/017` (`companion/research_story.tex:30-31`), a
 scope remark (`NON_CLAIM` in the register, not a claim covered by this theorem): "The full
-noncompact homogeneous value alternatives are retained separately: value convergence does not imply
-bounded iterates".
+noncompact homogeneous value alternatives are retained separately: they conclude objective-value
+convergence without any conclusion about the iterates" (since 15 October 2026, wording point W39;
+before "value convergence does not imply bounded iterates").
 
 The general non-implication behind the remark, outside the homogeneous class, with $F(x)=e^x$:
 $F$ is finite and convex with $\inf F=0$ (not attained); admissible runs exist (from every point,

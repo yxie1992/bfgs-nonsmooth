@@ -37,7 +37,7 @@ be compact. Write $r_x=x-\st$. Fix bounds $R>0$ and $G>0$ such that
 \]
 Such a subgradient bound exists because a finite convex function is locally Lipschitz on the whole space.
 
-For differentiable $x,z$, put
+For differentiable $x,z\in K$, put
 \begin{align*}
  g&=\nabla F(x),& h&=\nabla F(z),&y&=h-g,&s&=z-x,\\
  T(x,z)&=y^Ts,&N(x,z)&=y^Tr_z.
@@ -50,9 +50,9 @@ Unlike the strictly convex smooth setting of many standard presentations \cite{B
 \[
  T=\DF(z,x)+\DF(x,z),\qquad 0\le T\le T_{\max}:=4GR.
 \]
-The preceding report assumes the following positive-band condition:
+The radial secant condition is the following positive-band condition:
 \begin{equation}
- \forall\eta>0\ \exists C_\eta<\infty:\quad
+ \forall\eta>0\ \exists C_\eta\ge0:\quad
  N(x,z)^2\le C_\eta T(x,z)
  \quad\text{if }\fs+\eta\le F(z)\le F(x),\ x,z\in K,\ T>0.
  \tag{4.RS}\label{R:eq:RS}
@@ -71,7 +71,7 @@ The algorithm remains ordinary full BFGS with arbitrary $H_0\succ0$, differentia
 % SOURCE_BEGIN R.span.3
 \section{Equivalent formulation: smooth only toward the minimizer}
 \begin{theorem}[Inward radial smoothness is equivalent to (RS)]\label{R:thm:equiv}
-On the compact sublevel $K$, condition (RS) is equivalent, up to constants, to the following hypothesis. For every $\eta>0$, there exist $M_\eta<\infty$ and $\theta_\eta\in(0,1/2]$ such that, at every differentiable $x\in K$ with $F(x)\ge\fs+\eta$,
+On the compact sublevel $K$, condition (RS) is equivalent, up to constants, to the following hypothesis. For every $\eta>0$, there exist $M_\eta\ge0$ and $\theta_\eta\in(0,1/2]$ such that, at every differentiable $x\in K$ with $F(x)\ge\fs+\eta$,
 \begin{equation}
  0\le F(x-t r_x)-F(x)+t\nabla F(x)^Tr_x
  \le \frac{M_\eta}{2}t^2,
@@ -80,7 +80,7 @@ On the compact sublevel $K$, condition (RS) is equivalent, up to constants, to t
 \end{equation}
 No differentiability of $x-t r_x$ is required. The sampled point is a convex combination of $x$ and $\st$, so it remains in $K$.
 \end{theorem}
-The label ``inward radial smoothness'' is descriptive terminology in this note, not a claim of a standardized definition or of novelty for the terminology. The parameter $t$ is a fraction of the distance to the minimizer. A factor $\|r_x\|^2$ can alternatively be placed in the upper bound: on a positive objective band, the two conventions are equivalent because $\eta/G\le\|r_x\|\le R$.
+The label ``inward radial smoothness'' is descriptive terminology in this chapter, not a claim of a standardized definition or of novelty for the terminology. The parameter $t$ is a fraction of the distance to the minimizer. A factor $\|r_x\|^2$ can alternatively be placed in the upper bound: on a positive objective band, the two conventions are equivalent because $\eta/G\le\|r_x\|\le R$.
 
 % SOURCE_END R.span.3
 
@@ -227,7 +227,7 @@ Positive degree gives $F(0)=0$. Any optimizer $x_*$ therefore has value zero. If
 \[
  b_F(x)=(p-1)F(x).
 \]
-The chapter's hypothesis $b>F_*$ supplies the strict witness by taking $z=x_*$. Outside this compact context, the positive constant function $F\equiv1$ has degree zero and intercept zero, whereas $(p-1)F=-1$; its positive sublevels are noncompact. These identities explain the breadth of the preceding sufficient classes without changing their compact-basin hypotheses.
+The chapter's hypothesis $b>F_*$ supplies the strict witness by taking $z=x_*$. Outside this compact context, the positive constant function $F\equiv1$ has degree zero and intercept zero, whereas $(p-1)F=-1$; its positive sublevels are noncompact. These identities explain the breadth of the sufficient classes of Section~4.6 without changing their compact-basin hypotheses.
 
 \paragraph{An explicit four-piece realization.}
 Let $c,d$ be the exact algebraic seed parameters of Chapter~\ref{comp:D}, and let
@@ -252,7 +252,7 @@ Thus $F_R$ is the maximum of the four affine functions
 \]
 This definition is an explicit reconstruction for this edition, not an identification of an unspecified earlier objective. Chapter~\ref{comp:D}'s own optimizer remains $(-1,16)$.
 
-The positivity of $\delta$ follows from the certified D parameters. Since $\mathcal L$ is invertible and $a>0$, $F_R$ is finite and convex with compact sublevels. The unique D optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$. At this optimizer the first three branches have values
+The positivity of $\delta$ follows from Chapter~\ref{comp:D}'s certified parameters. Since $\mathcal L$ is invertible and $a>0$, $F_R$ is finite and convex with compact sublevels. Chapter~\ref{comp:D}'s unique optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$. At this optimizer the first three branches have values
 \[
  -1,\quad-1,\quad -1-a\delta=-29/4,
 \]
@@ -262,7 +262,7 @@ This objective has an actual infinite unmodified full-BFGS failure run. For any 
 \[
  0<c_1\le1/3,\qquad c_1<c_2<1,
 \]
-let $x_k,g_k,H_k,\alpha_k$ be the verified D run. Define
+let $x_k,g_k,H_k,\alpha_k$ be the verified run of Chapter~\ref{comp:D}. Define
 \[
  \begin{aligned}
  \widehat x_k&=\mathcal L^{-1}x_k,&
@@ -273,7 +273,7 @@ let $x_k,g_k,H_k,\alpha_k$ be the verified D run. Define
 \]
 The gradients are the actual derivatives of $F_R$ at the accepted points, and $\widehat H_0\succ0$. Direct substitution in the inverse-BFGS update proves that these are its exact next matrices and steps. Both the predicted and actual objective decreases and the secant curvature are multiplied by $a$, so Armijo and weak Wolfe hold with the same constants. This proves a transformed full-BFGS run, rather than prescribing an unrelated sequence of endpoint pairs.
 
-The iterates satisfy $\widehat x_k\to0$, while their strictly decreasing values tend to $a-1>-1$; zero is nonstationary. In every three phases the actual supporting errors repeat $0,0,25/4$. The actual positive secant curvatures are $a$ times those of D and tend to zero. On the fixed band
+The iterates satisfy $\widehat x_k\to0$, while their strictly decreasing values tend to $a-1>-1$; zero is nonstationary. In every three phases the actual supporting errors repeat $0,0,25/4$. The actual positive secant curvatures are $a$ times those of the run of Chapter~\ref{comp:D} and tend to zero. On the fixed band
 \[
  K=\{F_R\le F_R(\widehat x_0)\},\qquad
  F_R\ge -1+a,
@@ -304,9 +304,9 @@ Let $L$ bound the Lipschitz constants of the finitely many smooth extensions on 
  0\le F(x-t r_x)-F(x)+t\nabla F(x)^Tr_x
  \le\frac L2 t^2\|r_x\|^2\le\frac{LR^2}{2}t^2.
 \]
-The lower bound follows from convexity of $F$; individual smooth extensions need not be convex outside their cells. Thus uniform (IR), hence (RS), holds locally. A low compact sublevel is trapped there, and the preceding convergence theorem applies. No cell or active-manifold identification is assumed of the iterates.
+The lower bound follows from convexity of $F$; individual smooth extensions need not be convex outside their cells. Thus uniform (IR), hence (RS), holds locally. A low compact sublevel is trapped there, and the convergence theorem of Chapter~\ref{comp:T} (Theorem 3.1, through Section 3.4 and its local form in Section 3.3.2) applies. No cell or active-manifold identification is assumed of the iterates.
 \end{proof}
-In particular this covers every finite convex \emph{piecewise linear-quadratic} objective, and a convex smooth loss plus a finite convex piecewise linear-quadratic regularizer. This is broader than merely having affine pieces plus one common smooth summand: different cells can have different quadratic Hessians and different gradient jumps. Convexity of the full objective remains essential. A finite maximum of arbitrary convex quadratics need not have a polyhedral partition and is not automatically included.
+In particular this covers every finite convex \emph{piecewise linear-quadratic} objective, and a convex smooth loss plus a finite convex piecewise linear-quadratic regularizer. This is broader than merely having affine pieces plus one common smooth summand: different cells can have different quadratic Hessians, and the gradient jump can vary along a cell boundary (for example $u^2+v^2+(2+|u|)|v|$ near the origin). Convexity of the full objective remains essential. A finite maximum of arbitrary convex quadratics need not have a polyhedral partition and is not automatically included.
 
 
 \setcounter{section}{5}
@@ -365,9 +365,9 @@ If locally $F=\max_i f_i$ with finitely many convex $C^2$ branches, it suffices 
  (\nabla f_i(w)-\nabla f_j(w))^T(w-\st)=0
  \quad(i,j\in I(w))
 \]
-at every active tie near $\st$. Along a fixed ray, active branches then agree in the scalar first derivative. That derivative is a continuous selection of finitely many Lipschitz branch derivatives, and has their common Lipschitz bound on compact intervals. This proves (IR) directly, shortening the earlier segment-based proof.
+at every active tie near $\st$. Along a fixed ray, active branches then agree in the scalar first derivative. That derivative is a continuous selection of finitely many Lipschitz branch derivatives, and has their common Lipschitz bound on compact intervals. This proves (IR) directly.
 
-The necessity for the old radial condition is also clear on genuine active ties: if the active radial derivatives differ by $J>0$, the one-dimensional central second difference at the tie is $J|t|+O(t^2)$, not $O(t^2)$. Thus radial compatibility describes the exact no-jump part of the criterion for this finite smooth-branch class. It is not a necessary condition for BFGS convergence itself.
+The necessity for (RS) is also clear on genuine active ties: if the active radial derivatives differ by $J>0$, the one-dimensional central second difference at the tie is $J|t|+O(t^2)$, not $O(t^2)$. Thus radial compatibility describes the exact no-jump part of the criterion for this finite smooth-branch class. It is not a necessary condition for BFGS convergence itself.
 
 
 \setcounter{section}{6}
@@ -426,7 +426,7 @@ both nuclear norms are differentiable, since the matrices have nonzero eigenvalu
  N=2(1+\epsilon)(\epsilon-a),\qquad
  \frac{N^2}{T}=\frac{(1+\epsilon)(\epsilon-a)^2}{\epsilon}\to\infty.
 \]
-Also $F(W)-F(X_*)=2a>0$. Choosing small $\theta$ puts such points arbitrarily close to $X_*$. Thus this familiar smooth-plus-nuclear-norm problem need not satisfy the original local radial criterion at a nonzero rank-deficient minimizer. The nuclear norm centered at zero \emph{is} covered. No failure of BFGS on this spectral problem is being claimed.
+Also $F(W)-F(X_*)=2a>0$. Choosing small $\theta$ puts such points arbitrarily close to $X_*$. Thus this familiar smooth-plus-nuclear-norm problem need not satisfy (RS) on any neighborhood of a nonzero rank-deficient minimizer. The nuclear norm centered at zero \emph{is} covered. No failure of BFGS on this spectral problem is being claimed.
 
 
 \endgroup

@@ -74,7 +74,7 @@
     "BfgsVerification.DDisplayPrecision.raw_bounds_on_original_ball",
     "BfgsVerification.DDisplayPrecision.corrected_interval"
    ],
-   "note": "Differs from the article lemma: \"(D:rho) holds\" refers to companion/chapters/12_D.tex:99-102, ρ = 129R/(V(U+129)) ≃ 0.060199206107543764815373666287 (the article's art:seed_rho asserts 0.060 < ρ < 0.061). Read as: at every point of the closed box (‖x − r̄‖∞ ≤ 10^-30, Vec 2 carries the sup norm) the denominator V(U+129) is positive and |129R/(V(U+129)) − 0.060199206107543764815373666287| < 10^-30/2 (nearest rounding to the printed thirty digits). Proved from the library: contraction (exists_unique_root), coarse positivity (box_denominators_and_ratio) and the rational interval evaluation of ρ on the root box (DDisplayPrecision.raw_bounds_on_original_ball, corrected_interval). Proof gap (for the line-by-line reading; no status change): the label map art:seed_rho → D:rho of editorial/prepare_shared_appendix.py turned the article's claim 0.060 < ρ < 0.061 into the thirty-digit claim, but the printed proof (lines 41-92) still derives only 0.060 < ρ < 0.061; see C/seed_certificate/proof/001."
+   "note": "Differs from the article lemma: \"(D:rho) holds\" refers to companion/chapters/12_D.tex:99-102, ρ = 129R/(V(U+129)) ≃ 0.060199206107543764815373666287 (the article's art:seed_rho asserts 0.060 < ρ < 0.061). Read as: at every point of the closed box (‖x − r̄‖∞ ≤ 10^-30, Vec 2 carries the sup norm) the denominator V(U+129) is positive and |129R/(V(U+129)) − 0.060199206107543764815373666287| < 10^-30/2 (nearest rounding to the printed thirty digits). Proved from the library: contraction (exists_unique_root), coarse positivity (box_denominators_and_ratio) and the rational interval evaluation of ρ on the root box (DDisplayPrecision.raw_bounds_on_original_ball, corrected_interval). The label map art:seed_rho → D:rho of editorial/prepare_shared_appendix.py turned the article's claim 0.060 < ρ < 0.061 into the thirty-digit claim; the printed proof (lines 41-92) derived only 0.060 < ρ < 0.061 until 15 October 2026, when wording point W6 was applied: the proof now ends \"The same interval rules on the root box give the thirty digits in \\eqref{D:rho}\" (see C/seed_certificate/proof/001)."
   },
   {
    "id": "C/seed_certificate/proof/001",
@@ -89,7 +89,7 @@
    ],
    "title": null,
    "container": null,
-   "sha256": "8d7a27e752048d8e",
+   "sha256": "ef1aa62714ff552f",
    "status": "PROOF",
    "of": "C/seed_certificate/lemma/comp:root_certificate",
    "lean": [
@@ -104,9 +104,11 @@
     "BfgsVerification.AlgebraicSeed.newton_contracting",
     "BfgsVerification.AlgebraicSeed.fixed_iff_root",
     "BfgsVerification.AlgebraicSeed.coarse_ratio",
-    "BfgsVerification.AlgebraicSeed.box_coarse"
+    "BfgsVerification.AlgebraicSeed.box_coarse",
+    "BfgsVerification.DDisplayPrecision.raw_bounds_on_original_ball",
+    "BfgsVerification.DDisplayPrecision.corrected_interval"
    ],
-   "note": "The article proof (A/seed_certificate/proof/001) with renamed labels; its undisplayed steps are stated in the article module (see that item). Proof gap (for the line-by-line reading; no status change): the printed proof derives only 60/1000 < ρ < 61/1000 (\"Multiplying positive endpoints ...\"), which is the article's art:seed_rho and what Lemma D:root states (12_D.tex:104-106), not the thirty-digit value ρ ≃ 0.060199206107543764815373666287 that \"(D:rho) holds\" now claims. Chapter D says that \"the interval calculation ... certifies (D:rho)\" (12_D.tex:117), but the companion never shows how the thirty digits are obtained. The claim is true: Lean proves it on the whole box by rational interval evaluation of ρ on the root box (Companion.SeedCertificate.root_certificate; DDisplayPrecision.raw_bounds_on_original_ball, corrected_interval). \"compare Rump [Theorem 13.3]\": literature comparison only."
+   "note": "The article proof (A/seed_certificate/proof/001) with renamed labels; its undisplayed steps are stated in the article module (see that item). Wording point W6 applied on 15 October 2026: the proof derived only 60/1000 < ρ < 61/1000 (\"Multiplying positive endpoints ...\"), the article's art:seed_rho and what Lemma D:root states (12_D.tex:104-106), not the thirty-digit value ρ ≃ 0.060199206107543764815373666287 that \"(D:rho) holds\" claims (a proof gap, also behind \"certifies (D:rho)\" at 12_D.tex:117); it now ends \"The same interval rules on the root box give the thirty digits in \\eqref{D:rho}\" (a companion-only replacement in editorial/prepare_shared_appendix.py). That claim is true: Lean proves it on the whole box by rational interval evaluation of ρ on the root box (Companion.SeedCertificate.root_certificate; DDisplayPrecision.raw_bounds_on_original_ball, corrected_interval). \"compare Rump [Theorem 13.3]\": literature comparison only."
   },
   {
    "id": "C/seed_certificate/disp/004",
@@ -380,11 +382,12 @@
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
-   "note": "Typo from the generator: the next subsection of the article appendix is the next section of the companion appendix. The mathematics (clearing the positive denominators of β = 1/4 and γ = 1/16 gives the two equations) holds: BfgsCoverage.Article.SeedCertificate.clearing_denominators (A/seed_certificate/prose/002).",
+   "status": "SAME_AS",
+   "of": "A/seed_certificate/prose/002",
    "lean": [
     "BfgsCoverage.Article.SeedCertificate.clearing_denominators"
-   ]
+   ],
+   "note": "Corrected on 15 October 2026 (M16 (a), a companion-only replacement in editorial/prepare_shared_appendix.py): \"The matrix calculation in the next subsection\" now reads \"… in the next section\" (the next section, A.2, of the companion appendix; the article's next subsection). The mathematics (clearing the positive denominators of β = 1/4 and γ = 1/16 gives the two equations) is the article's A/seed_certificate/prose/002 (BfgsCoverage.Article.SeedCertificate.clearing_denominators)."
   },
   {
    "id": "C/seed_certificate/prose/003",
@@ -441,18 +444,18 @@
     190,
     190
    ],
-   "anchor": "The same interval operations give the value enclosures in that table.",
+   "anchor": "For each trial value $G(z_j+\\alpha p_j)$ in the table of Section~\\ref{comp:trial_table} and each current value $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width at most $4\\cdot10^{-4}$; the twelve-digit decimals there are explanatory.",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "LEAN",
    "lean": [
-    "BfgsCoverage.Companion.SeedCertificate.query_box_too_coarse",
     "BfgsCoverage.Companion.SeedCertificate.table_enclosure_widths",
     "BfgsCoverage.Article.SeedCertificate.table_value_enclosures",
+    "BfgsCoverage.Companion.SeedCertificate.query_box_too_coarse",
     "BfgsVerification.DDisplayPrecision.corrected_error"
    ],
-   "note": "In the companion \"that table\" is the table of Section comp:trial_table (12_D.tex:205-218, with the current values G(z_j) in the display 12_D.tex:219-222), which lists twelve-digit decimals, not enclosures; see the discrepancy entry."
+   "note": "Corrected on 15 October 2026 (M15, a companion-only replacement in editorial/prepare_shared_appendix.py): \"The same interval operations give the value enclosures in that table.\" now reads \"For each trial value $G(z_j+\\alpha p_j)$ in the table of Section~\\ref{comp:trial_table} and each current value $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width at most $4\\cdot10^{-4}$; the twelve-digit decimals there are explanatory.\" table_enclosure_widths: on the query box the interval rules enclose 10^4 G(z_j) and 10^4 G(z_j + αp_j) of every row in rational intervals of width at most 4 (so G in width at most 4·10^-4), and at the root these are the actual values. The decimals are nearest roundings, proved separately (DDisplayPrecision.corrected_error; Ch12D.trial_table, Ch12D.starting_values; \"explanatory\" as at 12_D.tex:234); query_box_too_coarse shows why the query box cannot give them."
   },
   {
    "id": "C/seed_certificate/prose/007",
@@ -647,13 +650,13 @@
     12,
     13
    ],
-   "anchor": "The two unknown coordinates of the third slope are used to enforce the",
+   "anchor": "The two unknown coordinates of the third gradient $g_2=(c,d)^T$ are used to enforce the",
    "labels": [],
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
    "reason": "Design of the construction; the resulting equations are prose/002.",
-   "note": "Wording remnant (no status change): \"the third slope\" is the article's term (paper/sections/failure.tex:58-60 calls g₀, g₁, g₂ slopes); the companion calls gᵢ gradients (12_D.tex:160) and never slopes. The third one is g₂ = (c,d)ᵀ (12_D.tex:121-124)."
+   "note": "Wording point W9 applied on 15 October 2026 (a companion-only replacement in editorial/prepare_shared_appendix.py; before \"the third slope\", the article's term; the companion calls the g_i gradients, 12_D.tex:160, and the third one is g₂ = (c,d)ᵀ, 12_D.tex:121-124)."
   },
   {
    "id": "C/seed_certificate/prose/018",
@@ -755,18 +758,30 @@
     185,
     186
    ],
-   "anchor": "in the order of Table~\\ref{comp:trial_table}:",
+   "anchor": "in the order of the table in Section~\\ref{comp:trial_table}:",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "SAME_AS",
+   "of": "C/seed_certificate/disp/016",
    "lean": [
     "BfgsCoverage.Article.SeedCertificate.query_lower_bounds"
    ],
-   "note": "Typo from the generator: comp:trial_table labels Section 12.3, so the reference prints \"Table 12.3\", a table that does not exist (the table of that section is an unnumbered tabular). The claim itself (every expression of a row exceeds the displayed bound, in the order of the rows of that table) is display 016 (SAME_AS A/seed_certificate/disp/016)."
+   "note": "Corrected on 15 October 2026 (M16 (b), a companion-only replacement in editorial/prepare_shared_appendix.py): \"in the order of Table~\\ref{comp:trial_table}\" (which printed \"Table 12.3\", a section of Chapter 12; no Table 12.3 exists) now reads \"in the order of the table in Section~\\ref{comp:trial_table}\". The claim (every expression of a row exceeds the displayed bound, in the order of the rows of that table) is display 016 (SAME_AS A/seed_certificate/disp/016; BfgsCoverage.Article.SeedCertificate.query_lower_bounds)."
   }
  ],
- "discrepancies": [
+ "discrepancies": [],
+ "resolved_discrepancies": [
+  {
+   "item": "C/seed_certificate/prose/002",
+   "description": "\"The matrix calculation in the next subsection first expresses the lengths needed for closure as rational functions β(c,d) and γ(c,d).\" (seed_certificate.tex:13-15). The companion appendix is a chapter (Appendix A) whose parts are sections, because editorial/prepare_shared_appendix.py turns the article's \\subsection into \\section; the PDF says \"in the next subsection\" for the next section, A.2 \"The matrix identity\". The mathematical claim (clearing the positive denominators of β = 1/4 and γ = 1/16 gives the two equations comp:seed_polynomials) holds: Article.SeedCertificate.clearing_denominators.",
+   "severity": "typo",
+   "proposed": "\"The matrix calculation in the next section first expresses …\". Fix location: editorial/prepare_shared_appendix.py, src = src.replace(\"the next\\nsubsection\", \"the next\\nsection\"): the source breaks the line between \"next\" and \"subsection\" (paper/appendices/seed_certificate.tex:14-15, one occurrence), and the \\subsection{ → \\section{ replacement does not touch it; then regenerate.",
+   "lean": [
+    "BfgsCoverage.Article.SeedCertificate.clearing_denominators"
+   ],
+   "resolved": "Corrected on 15 October 2026 (M16 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
+  },
   {
    "item": "C/seed_certificate/prose/006",
    "description": "\"The same interval operations give the value enclosures in that table.\" (seed_certificate.tex:190) is copied from the article (paper/appendices/seed_certificate.tex:191), where \"that table\" is Table art:trial_table, whose value column lists rational enclosures of 10^4 G. In the companion the table is the one of Section comp:trial_table (12_D.tex:205-218, an unnumbered tabular; the current values G(z₀), G(z₁), G(z₂) follow in the display 12_D.tex:219-222), and it lists twelve-digit decimals, no enclosures. Read literally, the interval operations of this section, which run on the query box comp:query_box, would give those decimals. They cannot: G(z₀) = g₀ᵀz₀ = (897/1024 − ρ(1−c))/(1−ρ) varies by about 4.4·10^-6 over the query box (∂G(z₀)/∂ρ ≈ 0.22, Δρ = 2·10^-5), so every enclosure valid on that box has width > 10^-6 (Lean counterexample: Companion.SeedCertificate.query_box_too_coarse). (On the much smaller root box the same rules do give the twelve digits, DDisplayPrecision.raw_bounds_on_original_ball, but the appendix never evaluates there, so the sentence is at best ambiguous.) What the operations on the query box give are rational enclosures of width at most 4·10^-4 of every current value G(z_j) and trial value G(z_j+αp_j) (Lean: Article.SeedCertificate.table_value_enclosures; widths and the values at the root: Companion.SeedCertificate.table_enclosure_widths). The twelve-digit decimals are nearest roundings of the actual values, proved separately in Lean (DDisplayPrecision.corrected_error; Ch12D.trial_table, Ch12D.starting_values).",
@@ -777,7 +792,8 @@
     "BfgsCoverage.Companion.SeedCertificate.table_enclosure_widths",
     "BfgsCoverage.Article.SeedCertificate.table_value_enclosures",
     "BfgsVerification.DDisplayPrecision.corrected_error"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M15 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   },
   {
    "item": "C/seed_certificate/prose/024",
@@ -786,16 +802,8 @@
    "proposed": "\"…positive rational lower bound, in the order of the table in Section~\\ref{comp:trial_table}:\". Fix location: editorial/prepare_shared_appendix.py, before the label loop, src = src.replace(\"Table~\\\\ref{art:trial_table}\", \"the table in Section~\\\\ref{art:trial_table}\") (one occurrence, paper/appendices/seed_certificate.tex:187; the loop then maps the label to comp:trial_table); then regenerate.",
    "lean": [
     "BfgsCoverage.Article.SeedCertificate.query_lower_bounds"
-   ]
-  },
-  {
-   "item": "C/seed_certificate/prose/002",
-   "description": "\"The matrix calculation in the next subsection first expresses the lengths needed for closure as rational functions β(c,d) and γ(c,d).\" (seed_certificate.tex:13-15). The companion appendix is a chapter (Appendix A) whose parts are sections, because editorial/prepare_shared_appendix.py turns the article's \\subsection into \\section; the PDF says \"in the next subsection\" for the next section, A.2 \"The matrix identity\". The mathematical claim (clearing the positive denominators of β = 1/4 and γ = 1/16 gives the two equations comp:seed_polynomials) holds: Article.SeedCertificate.clearing_denominators.",
-   "severity": "typo",
-   "proposed": "\"The matrix calculation in the next section first expresses …\". Fix location: editorial/prepare_shared_appendix.py, src = src.replace(\"the next\\nsubsection\", \"the next\\nsection\"): the source breaks the line between \"next\" and \"subsection\" (paper/appendices/seed_certificate.tex:14-15, one occurrence), and the \\subsection{ → \\section{ replacement does not touch it; then regenerate.",
-   "lean": [
-    "BfgsCoverage.Article.SeedCertificate.clearing_denominators"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M16 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   }
  ]
 }

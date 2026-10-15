@@ -47,19 +47,24 @@ the closing list (line 347) that no chapter states.
 * "Semialgebraic" objectives are `RealAlgebraicGeometry.IsSemialgebraicObjective` (a
   semialgebraic graph).
 
-## Discrepancies (see the register)
+## Corrected discrepancies (15 October 2026, see the register)
 
-* Line 103 (`C/01_I/prose/023`, recurrence of M8): "The individual branches are not twice
-  differentiable at the accumulation point": only three of the four branches of the four-branch
-  version lose second differentiability; the fourth is a quadratic (`Ch13L.branch_regularity`).
+* Line 103 (`C/01_I/prose/023`, recurrence of M8 and M30): "The individual branches are not twice
+  differentiable at the accumulation point" now reads "Three of the four branches are not twice
+  differentiable at the minimizer"; the fourth is a quadratic
+  (`Ch13L.branch_regularity_at_minimizer`).
 * Line 103 (`C/01_I/prose/024`, recurrence of M12): "…but a countably piecewise-affine nonsmooth
-  component rather than finitely many smooth branches", read literally ("has no representation by
-  finitely many smooth branches"), is false: the step version is also a maximum of ten globally
-  $C^{1,1}$, uniformly strongly convex branches (the sketch of `C/13_L/theorem/L:thm:local`). The
-  descriptive reading is `Ch13L.local_failure` and `Ch13L.step_decomposition`.
+  component rather than finitely many smooth branches", false when read literally ("has no
+  representation by finitely many smooth branches": the step version is also a maximum of ten
+  globally $C^{1,1}$, uniformly strongly convex branches, the sketch of
+  `C/13_L/theorem/L:thm:local`), now reads "…wherever it exists; it is constructed from a countably
+  piecewise-affine nonsmooth component rather than from four smooth branches"
+  (`Ch13L.local_failure`, `Ch13L.step_decomposition`).
 * Line 153 (`C/01_I/prose/048`, recurrence of M24): "RS is the radial specialization
-  $W(x)=(x-x_*)(x-x_*)^T$": RS gives the radial specialization of the transported condition
-  (`Ch03T.rs_covered`) but is strictly stronger than it (`Ch03T.s_not_exactly_rs`).
+  $W(x)=(x-x_*)(x-x_*)^T$" now reads "RS implies the radial specialization …": RS gives the radial
+  specialization of the transported condition (`Ch03T.rs_covered`) but is strictly stronger than
+  it (`Ch03T.s_not_exactly_rs`).
+* Wording points W31-W38 and W40-W43 were applied on the same day (see the register notes).
 
 ## Items
 
@@ -99,7 +104,7 @@ namespace BfgsCoverage.Companion.Ch01I
 /-! ## Section 1.1: algorithm, quantifiers and notions of convergence -/
 
 /-- Item `C/01_I/disp/001` (`companion/chapters/01_I.tex:29-32`), Item `C/01_I/disp/002`
-(`companion/chapters/01_I.tex:34-38`), Item `C/01_I/prose/006` (`companion/chapters/01_I.tex:40-40`)
+(`companion/chapters/01_I.tex:34-38`), Item `C/01_I/prose/006` (`companion/chapters/01_I.tex:40`)
 and Item `C/01_I/disp/003` (`companion/chapters/01_I.tex:42-45`): the definition of an infinite
 admissible run of ordinary full BFGS.
 
@@ -267,7 +272,7 @@ theorem three_conclusions_distinct :
     simp only [Matrix.cons_val_zero] at h0
     exact not_tendsto_nhds_of_tendsto_atTop tendsto_natCast_atTop_atTop _ h0
 
-/-- Item `C/01_I/prose/009` (`companion/chapters/01_I.tex:55-55`): "On a compact sublevel,
+/-- Item `C/01_I/prose/009` (`companion/chapters/01_I.tex:55`): "On a compact sublevel,
 objective convergence implies distance to the solution set tends to zero. Uniqueness then gives
 whole-sequence convergence."
 
@@ -291,7 +296,7 @@ theorem compact_value_distance {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ 
   simp only [Metric.infDist_singleton] at h
   exact tendsto_iff_dist_tendsto_zero.mpr h
 
-/-- Item `C/01_I/prose/013` (`companion/chapters/01_I.tex:57-57`): "A ray with no differentiable
+/-- Item `C/01_I/prose/013` (`companion/chapters/01_I.tex:57`): "A ray with no differentiable
 acceptable point is not an infinite admissible run."
 
 At a differentiable point $x$ with gradient $g$ and a matrix $H$, suppose that no length
@@ -454,8 +459,8 @@ sublevels, such that
 wherever its classical Hessian exists, yet the same specified deterministic implementation admits
 bad starts arbitrarily close to the minimizer."
 
-Lean form: the first paragraph of Theorem `L:thm:local` of Chapter 13 (`Ch13L.local_failure`; the
-chapter's theorem item is a discrepancy only for its last clause, M12), stated for the named
+Lean form: the first paragraph of Theorem `L:thm:local` of Chapter 13 (`Ch13L.local_failure`;
+the last clause of that theorem was corrected on 15 October 2026, M12), stated for the named
 objective that witnesses "There is also a strongly convex finite objective": the four-branch
 objective `LUniform.smoothObjective` of Chapter 13 (`F` is a variable with its defining equation),
 the objective compared in `n1_n2_comparison`. Strongly convex in the Euclidean sense; the Hessian
@@ -501,7 +506,7 @@ theorem n2_local_failure (F : Vec 2 → ℝ) (hF : F = LUniform.smoothObjective)
   · rw [hF0] at hy
     exact hzero y hy
 
-/-- Item `C/01_I/prose/022` (`companion/chapters/01_I.tex:103-103`): "One version is a maximum of
+/-- Item `C/01_I/prose/022` (`companion/chapters/01_I.tex:103`): "One version is a maximum of
 four globally $C^{1,1}$, uniformly strongly convex, gradient-Lipschitz branches."
 
 The objective of `n2_local_failure`, `LUniform.smoothObjective` (`F` is a variable with its
@@ -523,11 +528,13 @@ theorem n2_four_branch_version (F : Vec 2 → ℝ) (hF : F = LUniform.smoothObje
   exact BfgsCoverage.Article.LowerCurvature.euclid_le_of_sqNorm_le LUniform.upperConstant_pos.le
     ((hbranch i).2.2.2 y z)
 
-/-- Items `C/01_I/prose/028` (`companion/chapters/01_I.tex:107-107`) and
+/-- Items `C/01_I/prose/028` (`companion/chapters/01_I.tex:107`) and
 `C/01_I/prose/029` (`companion/chapters/01_I.tex:107-107`): "N1 has more branch differentiability
 and no uniform positive lower curvature. N2 has positive lower curvature and less
-differentiability at the accumulation point. Neither proves local failure for a finite maximum of
-uniformly strongly convex $C^2$ branches through the optimizer."
+differentiability at the accumulation point. Neither is constructed from finitely many uniformly
+strongly convex $C^2$ branches through the optimizer, so neither proves local failure for that
+class." (Wording point W41 applied on 15 October 2026; before "Neither proves local failure for a
+finite maximum of uniformly strongly convex $C^2$ branches through the optimizer.")
 
 N1 (the objective of `n1_local_failure`, the maximum of the branches `DEmbedding.branch`): all four
 branches are
@@ -541,7 +548,7 @@ construction is a finite maximum of uniformly strongly convex $C^2$ branches: th
 are not uniformly strongly convex and those of N2 are not all $C^2$ (the step version of N2 is
 built from a countable polyhedral part, not from smooth branches); local failure for that class is
 the open question of `BfgsCoverage.Article.Verification.C2StronglyConvexLocalFailure`. The last
-sentence is read for the constructed branch representations, as Chapter 13 reads its own sentence
+sentence speaks of the constructed branch representations, as Chapter 13 reads its own sentence
 (`C/13_L/prose/011`); that the objectives admit no other representation by finitely many uniformly
 strongly convex $C^2$ branches is not claimed. -/
 theorem n1_n2_comparison :
@@ -584,9 +591,9 @@ theorem max_affine_semialgebraic {n m : ℕ} (a : Fin m → Vec n) (c : Fin m �
   intro x
   simpa only [affinePoly_eval] using hF x
 
-/-- Item `C/01_I/prose/032` (`companion/chapters/01_I.tex:115-115`): "This retains global failure
+/-- Item `C/01_I/prose/032` (`companion/chapters/01_I.tex:115`): "This retains global failure
 in the finite polyhedral and semialgebraic class." Also Item `C/01_I/prose/143`
-(`companion/chapters/01_I.tex:349-349`): "The blanket question is not answered by calling all
+(`companion/chapters/01_I.tex:349`): "The blanket question is not answered by calling all
 semialgebraic functions safe: global failure already occurs for affine maxima."
 
 The coercive function $\overline G(u,v)=\max\{u,-u-v/8,cu+dv,v-17\}$ of Section 12.3.1 (a variable
@@ -656,7 +663,7 @@ theorem quadratic_branch_analytic (μ : ℝ) (g x : Vec 2) :
   · exact Finset.analyticAt_sum _ fun i _ => (hproj i).pow 2
   · exact Finset.analyticAt_sum _ fun i _ => analyticAt_const.mul (hproj i)
 
-/-- Item `C/01_I/prose/035` (`companion/chapters/01_I.tex:123-123`): "Each branch is quadratic,
+/-- Item `C/01_I/prose/035` (`companion/chapters/01_I.tex:123`): "Each branch is quadratic,
 analytic, and has Hessian exactly $\mu I$." For the slopes $g_0,g_1,g_2$ of the three-piece seed
 and every $\mu>0$, each branch $\frac\mu2\|x\|^2+g_i^Tx$ of
 $Q_\mu$ (a quadratic polynomial by its formula) is analytic at every point, $C^2$, and has Hessian
@@ -673,7 +680,7 @@ theorem qmu_branches (μ : ℝ) (_hμ : 0 < μ) (i : Fin 3) :
   ⟨fun x => quadratic_branch_analytic μ _ x, LQuadraticSeed.branch_contDiff μ i,
     LQuadraticSeed.branch_hessian μ i⟩
 
-/-- Item `C/01_I/prose/037` (`companion/chapters/01_I.tex:123-123`): "This is global failure, and
+/-- Item `C/01_I/prose/037` (`companion/chapters/01_I.tex:123`): "This is global failure, and
 is consistent with local convergence near the true minimizer."
 
 For every $\mu>0$: the runs of `L:thm:global` converge to the vertex $0$, while the true minimizer
@@ -802,8 +809,8 @@ theorem pairwise_visibility_values {n : ℕ} {F : Vec n → ℝ} (R : Admissible
   simpa only [hvalue] using hlim
 
 /-- Item `C/01_I/prose/041` (`companion/chapters/01_I.tex:141-149`), the P1 summary, with its
-displays Item `C/01_I/disp/010` (`companion/chapters/01_I.tex:143-143`) and Item
-`C/01_I/disp/011` (`companion/chapters/01_I.tex:145-145`).
+displays Item `C/01_I/disp/010` (`companion/chapters/01_I.tex:143`) and Item
+`C/01_I/disp/011` (`companion/chapters/01_I.tex:145`).
 
 "On each compact positive objective band, it suffices that a finite-valued PSD field $W$ satisfy
 \[ g^TW(x)g\ge m>0,\qquad y^TW(z)y\le Ct, \]
@@ -858,9 +865,10 @@ theorem pairwise_certificate_convergence {n : ℕ} (F : Vec n → ℝ) (xstar : 
   obtain ⟨hdist, huniq⟩ := compact_value_distance F R.convex xstar hmin b hK R.x hxK hval
   exact ⟨hval, hdist, huniq⟩
 
-/-- Item `C/01_I/prose/055` (`companion/chapters/01_I.tex:169-169`): "If a fixed subspace $S$
+/-- Item `C/01_I/prose/055` (`companion/chapters/01_I.tex:169`): "If a fixed subspace $S$
 satisfies $\|P_Sy_k\|^2\le L_Sy_k^Ts_k$, the actual update gives
-$\operatorname{tr}(P_SB_k)=O(k)$."
+$\operatorname{tr}(P_SB_k)=O(k)$ for $B_k=H_k^{-1}$." ("for $B_k=H_k^{-1}$" added on 15 October
+2026, wording point W43.)
 
 For every admissible run, every subspace $S$ of Euclidean $\mathbb R^n$ with orthogonal projection
 $P_S$ (the matrix `PS`, `hPS`) and every $L_S$ with $\|P_Sy_k\|^2\le L_St_k$ for all $k$:
@@ -918,7 +926,7 @@ theorem principal_minor_run {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun
   exact Ch02M.hierarchy (R.H k) (R.H (k + 1)) (R.g k) (R.gradientChange k) (R.displacement k)
     (R.α k) q β (R.positive_definite k) rfl hα hq hqpos hβ' hβpos (R.update k)
 
-/-- Item `C/01_I/prose/116` (`companion/chapters/01_I.tex:310-310`): "The former $\liminf q_k=0$
+/-- Item `C/01_I/prose/116` (`companion/chapters/01_I.tex:310`): "The former $\liminf q_k=0$
 and $\Omega(N^2)$ headlines are retired as main results. They remain consequences used by older
 proofs."
 
@@ -1007,10 +1015,11 @@ theorem sublevels_compact_of_one {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn �
 open AffineCriticalObjective in
 /-- Item `C/01_I/prose/074` (`companion/chapters/01_I.tex:218-220`), anchor "Let
 \(F:\mathbb R^2\to\mathbb R\) be finite convex": "Let $F:\mathbb R^2\to\mathbb R$ be finite convex,
-have an attained minimum and a compact sublevel, and have strictly convex positive sublevels. Away
-from affine-critical points, assume either local convex $C^2$ smoothness or a local maximum of two
-convex $C^2$ branches whose active gradients are linearly independent. Then every infinite
-admissible run has an affine-critical cluster point."
+have an attained minimum and a compact sublevel above the minimum, and have strictly convex
+positive sublevels. Away from affine-critical points, assume either local convex $C^2$ smoothness
+or a local maximum of two convex $C^2$ branches whose active gradients are linearly independent.
+Then every infinite admissible run has an affine-critical cluster point." ("above the minimum"
+added on 15 October 2026, wording point W40.)
 
 The hypotheses are read globally (every positive sublevel strictly convex: its boundary contains
 no nontrivial segment; the regular-switching alternative of Chapter 9 at every non-affine-critical
@@ -1039,7 +1048,7 @@ theorem p5_cluster (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ)
     (fun p _ hp => hreg p hp) R (show F (R.x 0) ≤ max b (F (R.x 0)) from le_max_right _ _)
 
 /-- Item `C/01_I/prose/082` (`companion/chapters/01_I.tex:230-234`), anchor "The older theorem
-for", with its display Item `C/01_I/disp/016` (`companion/chapters/01_I.tex:232-232`): "The older
+for", with its display Item `C/01_I/disp/016` (`companion/chapters/01_I.tex:232`): "The older
 theorem for
 \[ F(u,v)=\max\{a(u)+pv,b(u)-qv\},\qquad p,q>0, \]
 with convex $C^2$ profiles, coercive $\phi=(qa+pb)/(p+q)$ having unique minimizer $u_*$, and
@@ -1084,7 +1093,7 @@ theorem ridge_supersession (a b : ℝ → ℝ) (p q : ℝ) (hp : 0 < p) (hq : 0 
     exact RidgeSupersession.localized_fullBFGS_convergence ha hb hca hcb hp hq hmin huniq ha'' hb''
       U hU
 
-/-- Item `C/01_I/prose/083` (`companion/chapters/01_I.tex:236-236`), the proof of the explicit
+/-- Item `C/01_I/prose/083` (`companion/chapters/01_I.tex:236`), the proof of the explicit
 supersession ("Here is the implication."), its determinant step: with $\phi=(qa+pb)/(p+q)$, at every $u$ the determinant of the
 gradients $(a'(u),p)$ and $(b'(u),-q)$ of the two branches is
 $-qa'(u)-pb'(u)=-(p+q)\phi'(u)$; under the hypotheses of `ridge_supersession` it vanishes only at
@@ -1118,7 +1127,7 @@ theorem ridge_tie_determinant (a b : ℝ → ℝ) (p q : ℝ) (hp : 0 < p) (hq :
 
 /-! ## Section 1.5: the noncompact homogeneous theory -/
 
-/-- Item `C/01_I/prose/110` (`companion/chapters/01_I.tex:289-289`): "A compact-level certificate
+/-- Item `C/01_I/prose/110` (`companion/chapters/01_I.tex:289`): "A compact-level certificate
 theorem cannot replace these noncompact statements."
 
 For the finite convex degree-one homogeneous $F(u,v)=|v|$ (bounded below, minimum $0$), no
@@ -1155,7 +1164,7 @@ theorem compact_theorem_cannot_replace :
 /-! ## Section 1.7: geometric findings -/
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/01_I/prose/127` (`companion/chapters/01_I.tex:333-333`): "Thus only finitely many
+/-- Item `C/01_I/prose/127` (`companion/chapters/01_I.tex:333`): "Thus only finitely many
 affine-critical values occur, giving no false affine criticality below a sufficiently low
 threshold."
 
@@ -1184,7 +1193,7 @@ The precise gaps are stated below without proof (status `OPEN`); the first and t
 open questions of Chapters 8 and 7 (`Ch08A.GeneralDimensionalConjecture`,
 `Ch07H.ZeroValueIterateQuestion`). -/
 
-/-- Item `C/01_I/prose/137` (`companion/chapters/01_I.tex:347-347`), OPEN (stated without proof):
+/-- Item `C/01_I/prose/137` (`companion/chapters/01_I.tex:347`), OPEN (stated without proof):
 "the general local theorem for finite uniformly strongly convex $C^2$ branches without the
 recorded nondegeneracy/geometric assumptions."
 
@@ -1229,7 +1238,7 @@ def failingStarts {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (c₁ c₂ : ℝ
     (∀ k, ∃ N : ℕ, (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ N).1 = some (R.α k)) ∧
     ¬ Tendsto (fun k => F (R.x k)) atTop (𝓝 (F xstar))}
 
-/-- Item `C/01_I/prose/138` (`companion/chapters/01_I.tex:347-347`), OPEN (stated without proof):
+/-- Item `C/01_I/prose/138` (`companion/chapters/01_I.tex:347`), OPEN (stated without proof):
 "generic or positive-measure failure."
 
 Some finite convex objective with an attained minimum and some pair $0<c_1<c_2<1$ have a large set
@@ -1247,7 +1256,7 @@ def GenericOrPositiveMeasureFailure : Prop :=
     ((∃ U : Set (Vec n), IsOpen U ∧ U.Nonempty ∧ IsMeagre (U \ failingStarts F xstar c₁ c₂)) ∨
       0 < MeasureTheory.volume (failingStarts F xstar c₁ c₂))
 
-/-- Item `C/01_I/prose/140` (`companion/chapters/01_I.tex:347-347`), OPEN (stated without proof):
+/-- Item `C/01_I/prose/140` (`companion/chapters/01_I.tex:347`), OPEN (stated without proof):
 "arbitrary nonunique solution-set iterate convergence."
 
 For every finite convex objective and every admissible run with a compact initial sublevel whose

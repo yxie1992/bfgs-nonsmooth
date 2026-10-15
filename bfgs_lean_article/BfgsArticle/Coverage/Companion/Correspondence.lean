@@ -13,11 +13,12 @@ Appendix B of the companion ("Complete correspondence and reproduction", label
   pinned project and the build tools are `NON_CLAIM`; every commit, path, count and command was
   checked (frozen commit `00362c02…` in `editorial/BASELINE.json`; release `7f53b4c`; 172 source
   spans in `companion/SOURCE_CORRESPONDENCE.json`; the records of the table; `scripts/bootstrap.sh`,
-  `editorial/build.sh`, `editorial/vendor/svjour3/`, `paper/figures/`). Stale (step 2): "Source
-  transformations preserve the corrected mathematical assertions" (line 62), since the 13 October
-  2026 transformations generalize the lower-curvature failures to every admissible pair of
-  line-search constants; the table row `SOURCE_CORRESPONDENCE.json` names the file
-  `companion/SOURCE_CORRESPONDENCE.json` without its directory.
+  `editorial/build.sh`, `editorial/vendor/svjour3/`, `paper/figures/`). Refreshed on 15 October
+  2026 (wording point W30): line 62 now excepts from "Source transformations preserve the corrected
+  mathematical assertions" the logged October 2026 generalization of the lower-curvature failures
+  to every admissible pair of line-search constants and the October 2026 corrections, line 13
+  points to it, the table row gives the path `companion/SOURCE_CORRESPONDENCE.json`, and line 22
+  no longer calls the listed results incomparable.
 * Three sentences restate results and are `SAME_AS` the article and chapter items: what the
   article proves (lines 15-17), the companion results outside the article (lines 17-20: Theorems 7.A
   and 7.C, 11.1 and 11.2, the parabolic family of Chapter 10, the lifting theorem, the rates, the

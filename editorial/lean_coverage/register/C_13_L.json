@@ -96,8 +96,8 @@
    ],
    "title": "Local failure under the pointwise Hessian bounds",
    "container": null,
-   "sha256": "8fc29001a7579b2c",
-   "status": "DISCREPANCY",
+   "sha256": "7fc5448e5a7a3329",
+   "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch13L.local_failure",
     "BfgsCoverage.Companion.Ch13L.runs_of_uniform",
@@ -110,7 +110,7 @@
     "BfgsVerification.LUniform.uniform_identity_failure",
     "BfgsVerification.LStepEmbedding.residual_countable_max"
    ],
-   "note": "Everything but the final clause is stated and proved by local_failure: two objectives F₁ (the whitened four-branch function LUniform.smoothObjective) and F₂ (the whitened step embedding stepObjective, same fixed matrix) each have every property of the first paragraph (strong convexity, compact sublevels, unique nonsmooth minimizer 0, 0<μ̲≤L̄ with the Hessian bounds at every twice-differentiable point, starts x₀⁽ⁿ⁾→0 with H₀=I whose runs, the same for every pair, converge to nonstationary p_n→0, differentiable trial points, uniform locality of all trial points); F₁ is the maximum of four C¹ branches with one Euclidean gradient-Lipschitz constant and one strong-convexity modulus; F₂ has Hessian one fixed positive-definite matrix B=μH̄₀ at every twice-differentiable point and F₂(x)-xᵀBx/2 is the attained maximum of a countable family of affine functions. The final clause \"not a finite smooth-branch representation\" is false when read literally (the step version is also a maximum of ten convex, globally C^{1,1}, uniformly strongly convex branches; see the discrepancy entry); local_failure states the descriptive reading (a countable polyhedral nonsmooth part)."
+   "note": "Corrected on 15 October 2026 (M12): the final clause \"the latter version has a countable polyhedral nonsmooth part, not a finite smooth-branch representation\", false when read literally (the step version is also a maximum of ten convex, globally C^{1,1}, uniformly strongly convex branches; see the resolved discrepancy entry), now ends \"the latter version has a countable polyhedral nonsmooth part.\". local_failure states the whole theorem: two objectives F₁ (the whitened four-branch function LUniform.smoothObjective) and F₂ (the whitened step embedding stepObjective, same fixed matrix) each have every property of the first paragraph (strong convexity, compact sublevels, unique nonsmooth minimizer 0, 0<μ̲≤L̄ with the Hessian bounds at every twice-differentiable point, starts x₀⁽ⁿ⁾→0 with H₀=I whose runs, the same for every pair, converge to nonstationary p_n→0, differentiable trial points, uniform locality of all trial points); F₁ is the maximum of four C¹ branches with one Euclidean gradient-Lipschitz constant and one strong-convexity modulus; F₂ has Hessian one fixed positive-definite matrix B=μH̄₀ at every twice-differentiable point and F₂(x)-xᵀBx/2 is the attained maximum of a countable family of affine functions (its countable polyhedral nonsmooth part)."
   },
   {
    "id": "C/13_L/disp/004",
@@ -130,7 +130,7 @@
     "BfgsVerification.LUniform.smooth_actual_hessian",
     "BfgsCoverage.Companion.Ch13L.stepHessian_bounds"
    ],
-   "note": "The display (μ̲I ⪯ ∇²F ⪯ L̄I at every twice-differentiable point, quadratic-form reading of the RadialHessian.matrix) is a conjunct of local_failure, for both objectives. The theorem item itself is a discrepancy only for its final clause."
+   "note": "The display (μ̲I ⪯ ∇²F ⪯ L̄I at every twice-differentiable point, quadratic-form reading of the RadialHessian.matrix) is a conjunct of local_failure, for both objectives. The theorem item was a discrepancy only for its final clause, corrected on 15 October 2026 (M12)."
   },
   {
    "id": "C/13_L/disp/005",
@@ -592,7 +592,7 @@
    "labels": [],
    "title": null,
    "container": null,
-   "sha256": "13304f1519453155",
+   "sha256": "7ecb60995e6c4a56",
    "status": "PROOF",
    "of": "C/13_L/theorem/L:thm:global",
    "lean": [
@@ -605,7 +605,7 @@
     "BfgsVerification.LFlatten.Data.whole_run_in_neighborhood",
     "BfgsVerification.LReturnLocalInverse.actual_local_inverse"
    ],
-   "note": "The local stable-manifold theorem used (Dyatlov, Sections 3-4) is proved in Lean (LReturnStableGraph.source_smooth_stable_graph, AnalyticStableGraph); the orbit is chosen in the intersection of the agreement neighbourhood and of the preimage of any neighbourhood of physical zero, which gives the small-orbit property (global_failure)."
+   "note": "The local stable-manifold theorem used (Dyatlov, Sections 3-4) is proved in Lean (LReturnStableGraph.source_smooth_stable_graph, AnalyticStableGraph); the orbit is chosen in the intersection of the agreement neighbourhood and of the preimage of any neighbourhood of physical zero, which gives the small-orbit property (global_failure). M33 (reader point R-F-1) applied on 15 October 2026: line 237 now says that the initial point and all queries of the orbit lie in the given neighbourhood (before only the queries); global_failure states it for every iterate (∀ k, x k ∈ V, in particular k = 0) and every trial, and LFlatten.Data.whole_run_in_neighborhood gives both."
   },
   {
    "id": "C/13_L/disp/024",
@@ -1090,16 +1090,17 @@
     3,
     3
    ],
-   "anchor": "The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point",
+   "anchor": "The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "LEAN",
    "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_regularity_at_minimizer",
     "BfgsCoverage.Companion.Ch13L.branch_regularity",
     "BfgsCoverage.Article.LowerCurvature.branch_second_differentiability"
    ],
-   "note": "Same wording issue as M8 (A/master/prose/009, A/verification/prose/017, A/lower_curvature/prose/010): only three of the four branches lose second differentiability. See the discrepancy entry."
+   "note": "Corrected on 15 October 2026 (M8 and M30, recurrence in the chapter introduction, introductions['L'] of editorial/generate_companion.py): \"The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point\" now reads \"The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer\". branch_regularity_at_minimizer: the four branches, before and after the fixed whitening, have globally Lipschitz gradients; 0 is the unique minimizer of the local objective and of its whitened version (the bad starts accumulate there); the first three branches are not twice differentiable at 0, the fourth is twice differentiable everywhere."
   },
   {
    "id": "C/13_L/prose/003",
@@ -1109,12 +1110,13 @@
     3,
     3
    ],
-   "anchor": "no claim combines uniform strong convexity with the preceding local C2,1 branch regularity",
+   "anchor": "no claim combines uniform strong convexity with the preceding local $C^{2,1}$ branch regularity",
    "labels": [],
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
-   "reason": "Disclaimer about what is claimed; the open combination is stated as prose item 012 (OPEN)."
+   "reason": "Disclaimer about what is claimed; the open combination is stated as prose item 012 (OPEN).",
+   "note": "Wording point W45 applied on 15 October 2026 (before \"C2,1\", printed as plain text; introductions['L'] of editorial/generate_companion.py)."
   },
   {
    "id": "C/13_L/prose/004",
@@ -1238,7 +1240,7 @@
     61,
     61
    ],
-   "anchor": "The local theorem satisfies the user's literal classical-Hessian assumption, and even actual strong convexity.",
+   "anchor": "The local theorem satisfies the literal classical-Hessian assumption, and even actual strong convexity.",
    "labels": [],
    "title": null,
    "container": null,
@@ -1246,7 +1248,7 @@
    "lean": [
     "BfgsCoverage.Companion.Ch13L.local_failure"
    ],
-   "note": "The Hessian bounds at every twice-differentiable point and the strong convexity are conjuncts of local_failure (for both objectives)."
+   "note": "The Hessian bounds at every twice-differentiable point and the strong convexity are conjuncts of local_failure (for both objectives). Wording point W44 applied on 15 October 2026 (before \"the user's literal classical-Hessian assumption\", a drafting remnant)."
   },
   {
    "id": "C/13_L/prose/011",
@@ -1308,7 +1310,7 @@
     76,
     76
    ],
-   "anchor": "Its exact symbolic closure and nine strict query decisions were certified in the preceding deterministic-bracketing report",
+   "anchor": "Its exact symbolic closure and nine strict query decisions were certified in Chapter~\\ref{comp:D}.",
    "labels": [],
    "title": null,
    "container": null,
@@ -1319,7 +1321,7 @@
     "A/failure/prose/020",
     "A/failure/prose/022"
    ],
-   "note": "Cross-reference to Chapter D (the article's Lemma art:seed_cycle, whose lemma item was a discrepancy for the omitted range until the correction M11 of 15 October 2026; the true parts are pointed to: closure, strict margins, rejections raise the value, the decisions for every 0<c₁≤1/3, c₂>0)."
+   "note": "Cross-reference to Chapter D (the article's Lemma art:seed_cycle, whose lemma item was a discrepancy for the omitted range until the correction M11 of 15 October 2026; the true parts are pointed to: closure, strict margins, rejections raise the value, the decisions for every 0<c₁≤1/3, c₂>0). Wording point W8 (further place) applied on 15 October 2026: \"…were certified in the preceding deterministic-bracketing report~Chapter~\\ref{comp:D}.\" (printed \"…report Chapter 12\") now reads \"…were certified in Chapter~\\ref{comp:D}.\""
   },
   {
    "id": "C/13_L/prose/015",
@@ -2168,9 +2170,13 @@
    "labels": [],
    "title": null,
    "container": null,
-   "status": "SAME_AS",
-   "of": "A/lower_curvature/prose/027",
-   "note": "copy_runs: the chosen orbit LUniform.source, all of whose queries lie in the neighbourhood of the local model, is an actual run on Q_μ for every pair."
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.chosen_orbit",
+    "BfgsCoverage.Article.LowerCurvature.copy_runs",
+    "BfgsVerification.LUniform.source_spec"
+   ],
+   "note": "M33 (reader point R-F-1; applied on 15 October 2026): the sentence now reads \"…to choose one entire bad orbit $\\{\\bar x_k,\\bar H_k\\}$ of $Q_\\mu$ whose initial point and accepted and rejected queries are all in that neighborhood\" (before only the queries; copy n starts at p_n + a_n x̄₀, where the local model must hold too). chosen_orbit: the orbit LUniform.source has its initial point, every later iterate and every accepted and rejected query in the domain LEmbedding.localDomain of the local model (L:eq:local-model), H̄₀ ≻ 0, and the same iterates and matrices are an actual run of the implementation on Q_μ for every admissible pair. Before the correction this item was SAME_AS the article's A/lower_curvature/prose/027, which still states only the queries (the article recurrence of R-F-1); its Lean statement copy_runs includes the initial point."
   },
   {
    "id": "C/13_L/prose/063",
@@ -2216,12 +2222,13 @@
    "labels": [],
    "title": null,
    "container": null,
-   "status": "SAME_AS",
-   "of": [
-    "A/lower_curvature/prose/028",
-    "A/lower_curvature/disp/021"
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_model_along_orbit",
+    "BfgsCoverage.Article.LowerCurvature.copy_transfer",
+    "BfgsCoverage.Article.LowerCurvature.copy_runs"
    ],
-   "note": "The whole paragraph of line 363 (the factors cancel in the inverse update; same decisions; the local model applies to every query; induction)."
+   "note": "The whole paragraph of line 363 (the factors cancel in the inverse update; same decisions; the local model applies at the initial point and to every query; induction). M33 (reader point R-F-1) applied on 15 October 2026: \"Equation~\\eqref{L:eq:local-model} applies at the initial point and to every query by the choice of the whole seed orbit\" (before \"applies to every query\"). local_model_along_orbit: for n ≥ 1 the model F(p_n + a_ny) = a_n²{C_* + Q_μ(y)} holds at y = x̄₀ (the start p_n + a_nx̄₀), at every iterate and at every query of the chosen orbit; the scaling of gradients, steps, differences and products is copy_transfer, the equal decisions and matrices copy_runs. Before the correction this item was SAME_AS the article's A/lower_curvature/prose/028 and disp/021, whose sentence still states only the queries."
   },
   {
    "id": "C/13_L/prose/066",
@@ -2531,17 +2538,17 @@
     413,
     413
    ],
-   "anchor": "This chapter uses the fixed line-search pair displayed in this chapter; D's wider parameter family is not imported.",
+   "anchor": "Like Chapter~\\ref{comp:D}, the chapter covers every pair $0<c_1\\le1/3$, $c_1<c_2<1$.",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch13L.global_failure",
     "BfgsCoverage.Companion.Ch13L.local_failure",
     "BfgsCoverage.Companion.Ch13L.admissible_iff"
    ],
-   "note": "Leftover of the fixed-pair edition (before the 13 October transformation); see the discrepancy entry."
+   "note": "Corrected on 15 October 2026 (M13): \"This chapter uses the fixed line-search pair displayed in this chapter; D's wider parameter family is not imported.\", a leftover of the fixed-pair edition, now reads \"Like Chapter~\\ref{comp:D}, the chapter covers every pair $0<c_1\\le1/3$, $c_1<c_2<1$.\". Theorems L:thm:global and L:thm:local hold for every such pair, with orbits, objectives and starts chosen before it (global_failure, local_failure; the range is admissible_iff), the family of Chapter D (12_D.tex:58-60)."
   },
   {
    "id": "C/13_L/prose/083",
@@ -2670,7 +2677,8 @@
    "note": "One matrix A = LUniform.coordinateMatrix for the objective and all starts (whitening_setup); the runs are runs of the unchanged algorithm (local_failure)."
   }
  ],
- "discrepancies": [
+ "discrepancies": [],
+ "resolved_discrepancies": [
   {
    "item": "C/13_L/prose/002",
    "description": "\"The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point\" (13_L.tex:3) reads as a statement about all branches of the local construction. All four branches have globally Lipschitz gradients, but only three lose second differentiability: the branches f₀, f₁, f₂ of L:eq:embedding (and their whitened versions f_i(Az)) are not twice differentiable at zero, where the bad starts accumulate, while the fourth branch f₃(x)=μ‖x‖²/2+x₂ is a quadratic, twice differentiable everywhere, also after the whitening (Lean: branch_regularity). The chapter itself says it correctly at line 413 (\"The first three branches ... fail to be twice differentiable at the accumulation point\"). (Read as a statement about the objective F, \"have Lipschitz gradients\" would be false instead: F is not differentiable at 0.) Same wording issue as M8 (A/master/prose/009, A/verification/prose/017, A/lower_curvature/prose/010). Fix location: introductions['L'] in editorial/generate_companion.py (line 43), a hand-written chapter introduction, not a frozen source span.",
@@ -2679,7 +2687,8 @@
    "lean": [
     "BfgsCoverage.Companion.Ch13L.branch_regularity",
     "BfgsCoverage.Article.LowerCurvature.branch_second_differentiability"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M8, with M30 for \"at the minimizer\", in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   },
   {
    "item": "C/13_L/theorem/L:thm:local",
@@ -2689,7 +2698,8 @@
    "lean": [
     "BfgsCoverage.Companion.Ch13L.local_failure",
     "BfgsCoverage.Companion.Ch13L.step_decomposition"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M12 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   },
   {
    "item": "C/13_L/prose/082",
@@ -2700,7 +2710,8 @@
     "BfgsCoverage.Companion.Ch13L.global_failure",
     "BfgsCoverage.Companion.Ch13L.local_failure",
     "BfgsCoverage.Companion.Ch13L.admissible_iff"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M13 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   }
  ]
 }

@@ -29,9 +29,10 @@ PART_OF 34, PROOF 29, OPEN 1. The nine `DISCREPANCY` items (manuscript items
 M7–M11) were resolved by the corrections of 15 October 2026; their register entries
 are kept under `resolved_discrepancies`.
 
-Companion items by status: LEAN 816, SAME_AS 366, NON_CLAIM 358, DEFINITION 138,
-PART_OF 86, PROOF 56, DISCREPANCY 25 (manuscript items M12–M29, and the
-recurrences listed under M8, M12 and M24), OPEN 11.
+Companion items by status: LEAN 834, SAME_AS 372, NON_CLAIM 358, DEFINITION 139,
+PART_OF 86, PROOF 56, OPEN 11. The 25 `DISCREPANCY` items (manuscript items M12–M29,
+and the recurrences listed under M8, M12 and M24) were resolved by the corrections
+of 15 October 2026; their register entries are kept under `resolved_discrepancies`.
 
 Companion groups (prompts and hints: `editorial/lean_coverage/AGENT_BRIEFS.md`;
 how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
@@ -67,13 +68,17 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       (15 October 2026, commit `9f03d7c`, clean tree: audit PASS, 5403
       declarations, standard axioms only; kernel replay PASS, 783 modules;
       `bfgs_lean_article/AXIOM_AUDIT.json`, `KERNEL_REPLAY.json`).
-- [ ] Discrepancies go to `TODO_MANUSCRIPT_REVIEW.md` (article: M7–M11; companion:
-      M12–M29 and the recurrences under M8, M12 and M24; wording points W1–W43). When the
+- [x] Discrepancies go to `TODO_MANUSCRIPT_REVIEW.md` (article: M7–M11; companion:
+      M12–M29 and the recurrences under M8, M12 and M24; wording points W1–W47). When the
       manuscript is corrected, give each `DISCREPANCY` item its final status and carry
       the registers across the edit (`editorial/lean_coverage/README.md`, "After a
       correction"). Article: done on 15 October 2026 (M7–M11 corrected; the nine items
       resolved, for example `A/seed_certificate/prose/012` is now `PROOF`).
-      Companion: open.
+      Companion: done on 15 October 2026 (M12–M29 and the recurrences corrected, the
+      25 items resolved, independently reviewed; wording points W1–W11 and W14–W46
+      applied, W12 and W13 left for the author, W31 and W47 open). Since then
+      `check_coverage.py --strict` passes on every file without
+      `--allow-discrepancies`.
 - [x] Non-vacuity follow-up (done 14 October 2026): no admissible run had been
       exhibited on the three-branch objective of Theorem `art:nonradial-example`.
       `bfgs_lean_article/BfgsArticle/AdmissibleRunExistence.lean` now proves a general

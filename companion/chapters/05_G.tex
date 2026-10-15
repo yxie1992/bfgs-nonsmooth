@@ -56,7 +56,7 @@ On each positive band, the condition asks for a finite-valued PSD field $W(x)$ a
 \end{align}
 The last two apply to all eligible pairs in the band with $d\le\delta$. The field may be singular, discontinuous, and unbounded as a function on the band; only its value at each point is finite. All constants may depend on the band and the fixed line-search parameters. No claim below silently imposes continuity or local boundedness on $W$.
 
-The preceding theorem says that this condition implies objective convergence for every admissible infinite full-BFGS run in $K$, and iterate convergence under uniqueness. A local theorem requires the condition only near the minimizer, then uses a sufficiently low trapped sublevel. Failure on a large sublevel and failure in every neighborhood of a minimizer are different statements.
+The one-sided transported-certificate convergence theorem of Chapter~\ref{comp:T} says that this condition implies objective convergence for every admissible infinite full-BFGS run in $K$, and iterate convergence under uniqueness. A local theorem requires the condition only near the minimizer, then uses a sufficiently low trapped sublevel. Failure on a large sublevel and failure in every neighborhood of a minimizer are different statements.
 
 
 \setcounter{section}{1}
@@ -86,7 +86,7 @@ On the compact value band this multiplier is bounded above and away from zero, p
 \]
 Multiplying (T) by $e^{\kappa(F(z)-F_*)}$ gives (T0). The converse is the case $L=0$.
 \end{proof}
-This is an equivalence, not a further relaxation. The accumulated-expansion budget was useful in the proof, but is not essential to the existential definition: an objective-value rescaling absorbs it.
+This is an equivalence, not a further relaxation. The accumulated-expansion budget was useful in the proof of the convergence theorem of Chapter~\ref{comp:T}, but is not essential to the existential definition: an objective-value rescaling absorbs it.
 
 % SOURCE_END G.span.3
 
@@ -139,7 +139,7 @@ There is a finite-valued PSD field satisfying (V) and (S) with uniform positive 
 This statement concerns only (V) and (S). It does not assert that the pointwise selections satisfy (T).
 \end{proposition}
 \begin{proof}
-If $C>0$ and $W$ satisfies (V)--(S), set $h=\nabla F(z)$ and
+If $C>0$ and $W$ satisfies (V) and (S), set $h=\nabla F(z)$ and
 \[
  v=\frac{W(z)h}{\sqrt C\sqrt{h^TW(z)h}}.
 \]
@@ -148,7 +148,7 @@ $|h^Tv|\ge\sqrt{m/C}$. If $C=0$, the same argument without $\sqrt C$ gives a non
 
 Conversely, if $\inf\nu\ge\nu_0>0$, choose, for each $z$, a finite vector $v_z\in\mathcal D(z)$ with $|\nabla F(z)^Tv_z|\ge\nu_0/2$. Then $W(z)=v_zv_z^T$ satisfies (S) with $C=1$ and (V) with $m=\nu_0^2/4$. No continuity is needed for these pointwise selections.
 \end{proof}
-Thus higher rank adds no pointwise power to (V)--(S); its potential advantage is compatibility of comparison geometries across endpoints through (T). The scalar $\nu(z)$ has a direct interpretation: how much descent remains visible after all low-curvature incoming jumps have been suppressed?
+Thus higher rank adds no pointwise power to (V) and (S); its potential advantage is compatibility of comparison geometries across endpoints through (T). The scalar $\nu(z)$ has a direct interpretation: how much descent remains visible after all low-curvature incoming jumps have been suppressed?
 
 % SOURCE_END G.span.5
 
@@ -266,7 +266,7 @@ Let $f:\R\to\R$ be finite and convex with unique minimizer and compact initial s
 \begin{proof}
 Suppose the monotone objective gap tends to $L>0$. Convexity gives $|g_k|\ge L/R$ on the compact sublevel. In one dimension a positive-metric descent step obeys $d_k=|g_k||s_k|$. Armijo makes $\sum d_k<\infty$, hence $\sum|s_k|<\infty$. Thus the iterates converge to a nonminimizer. On a tail they lie on one side of the unique minimizer, so all gradients have the same sign. Weak Wolfe then gives $|g_{k+1}|\le c_2|g_k|$, contradicting the positive lower bound. Objective convergence and compactness with uniqueness give iterate convergence.
 \end{proof}
-Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly convex example with global convergence but no global certificate on a sublevel containing zero. For $x=\epsilon$, $z=-\epsilon/2$,
+Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly convex example with global convergence but, for $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel containing zero in its interior. For $x=\epsilon$, $z=-\epsilon/2$ with $\epsilon>0$,
 \[
  g_x=3+\epsilon,\quad g_z=1-\epsilon/2,\quad y=-2-3\epsilon/2,
 \]
@@ -318,7 +318,7 @@ The pairs are strictly eligible for $(c_1,c_2)=(1/4,1/2)$ for small $\epsilon$. 
  \frac{|y|}{|s|\,g_z^2}
  =\frac{3a+2\epsilon}{2\epsilon(2a-\epsilon)^2}\longrightarrow\infty.
 \]
-No certificate exists on a positive band containing this knot. Every neighborhood of zero contains such a knot. Fixing a knot first, then taking $\epsilon\to0$, is essential: deterioration of band constants as $\eta\downarrow0$ cannot repair the divergence on the fixed knot's band.
+No certificate exists on a positive band whose interior contains this knot ($b>h(a)>\eta$). Every neighborhood of zero contains such a knot. Fixing a knot first, then taking $\epsilon\to0$, is essential: deterioration of band constants as $\eta\downarrow0$ cannot repair the divergence on the fixed knot's band.
 
 Nevertheless Proposition~\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$. The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it. Thus the transported condition is not necessary even for local convergence. This conclusion uses the explicitly defined infinite-series objective above; no unspecified archived auxiliary is needed.
 

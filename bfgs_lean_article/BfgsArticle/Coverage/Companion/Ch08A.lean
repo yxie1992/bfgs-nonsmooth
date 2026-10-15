@@ -111,7 +111,7 @@ theorem norm_euclideanVector_one (g : Vec 1) : ‖euclideanVector g‖ = |g 0| :
 
 /-! ### Section "Equal-rate descent and affine criticality" (lines 7-27) -/
 
-/-- Item `C/08_A/prose/001` (`companion/chapters/08_A.tex:3-3`): "Affine balance concerns
+/-- Item `C/08_A/prose/001` (`companion/chapters/08_A.tex:3`): "Affine balance concerns
 equal-rate descent, whereas convex balance concerns stationarity." For finite convex $F$ and
 every point $p$: $0\notin\operatorname{aff}\partial F(p)$ iff some $v$ has $g^Tv=-1$ for every
 $g\in\partial F(p)$; and $0\in\partial F(p)$ iff $p$ minimizes $F$ (stationarity). -/
@@ -139,7 +139,7 @@ theorem decomposition_notation {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ 
   · rw [jumpSpace, vectorSpan_def, range_subgradientFamily]
   · exact closest_eq_affine_orthogonalProjection (subgradientFamily F p) _
 
-/-- Item `C/08_A/prose/006` (`companion/chapters/08_A.tex:16-16`): "The affine hull equals
+/-- Item `C/08_A/prose/006` (`companion/chapters/08_A.tex:16`): "The affine hull equals
 $a(p)+V(p)$ and $a(p)\perp V(p)$." -/
 theorem affine_hull_decomposition {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
     (p : Vec n) :
@@ -169,7 +169,7 @@ theorem ac_def {n : ℕ} (F : Vec n → ℝ) (p : Vec n) :
   have h := isAffineCritical_iff_coordinate_affineSpan F p
   exact ⟨by rw [AffineCorrectAt, h], h⟩
 
-/-- Item `C/08_A/prose/007` (`companion/chapters/08_A.tex:24-24`): "[\eqref{A:AC}] is therefore
+/-- Item `C/08_A/prose/007` (`companion/chapters/08_A.tex:24`): "[\eqref{A:AC}] is therefore
 equivalent, at every nonoptimal point under consideration, to the existence of a direction $v$ with
 $g^Tv=-1$ for every $g\in\partial F(p)$." -/
 theorem ac_iff_equal_rate {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F) (p : Vec n)
@@ -178,7 +178,7 @@ theorem ac_iff_equal_rate {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.u
   rw [affineCorrectAt_iff_nonoptimal_equal_rate hF p]
   exact ⟨fun h => h hp, fun h _ => h⟩
 
-/-- Item `C/08_A/prose/008` (`companion/chapters/08_A.tex:24-24`): "One may take
+/-- Item `C/08_A/prose/008` (`companion/chapters/08_A.tex:24`): "One may take
 $v=-a(p)/\|a(p)\|^2$." At a point that is not affine critical (by (A:AC), every nonoptimal point
 where it holds): $a(p)\ne0$ and $v=-a(p)/\|a(p)\|^2$ has $g^Tv=-1$ for every $g\in\partial F(p)$
 (Euclidean pairing). -/
@@ -191,7 +191,7 @@ theorem canonical_direction {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set
   · intro g hg
     exact canonical_equal_rate (subgradientFamily F p) _ hp ⟨g, hg⟩
 
-/-- Item `C/08_A/prose/009` (`companion/chapters/08_A.tex:24-24`): "Conversely such an equal-rate
+/-- Item `C/08_A/prose/009` (`companion/chapters/08_A.tex:24`): "Conversely such an equal-rate
 direction rules out zero in the affine hull." -/
 theorem equal_rate_excludes {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F) (p : Vec n)
     (h : ∃ v : Vec n, ∀ g ∈ subdifferential F p, dot g v = -1) : ¬ IsAffineCritical F p :=
@@ -210,7 +210,7 @@ theorem maxTwo_convex : ConvexOn ℝ Set.univ maxTwo := by
     nlinarith
   exact h1.sup h2
 
-/-- Item `C/08_A/prose/010` (`companion/chapters/08_A.tex:24-24`): "This is stronger than ordinary
+/-- Item `C/08_A/prose/010` (`companion/chapters/08_A.tex:24`): "This is stronger than ordinary
 strict descent, which requires only negative, not equal, inner products." Every equal-rate
 direction is a strict descent direction ($g^Tv<0$ for all $g\in\partial F(p)$); the converse fails:
 for $F(x)=\max(x,2x)$ at $p=0$, $\partial F(0)\subseteq[1,2]$ contains $1$ and $2$, so $v=-1$ is a
@@ -241,7 +241,7 @@ theorem equal_rate_stronger :
     simp only [dot, Fin.sum_univ_one] at e1 e2
     linarith
 
-/-- Item `C/08_A/prose/011` (`companion/chapters/08_A.tex:26-26`): "On a compact admissible run,
+/-- Item `C/08_A/prose/011` (`companion/chapters/08_A.tex:26`): "On a compact admissible run,
 all cluster points share the limiting value $\ell$." For an admissible run staying in a compact
 set $K$, the values converge to some $\ell$ and every cluster point $p$ of $(x_k)$ has
 $F(p)=\ell$. -/
@@ -253,7 +253,7 @@ theorem cluster_values {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
   obtain ⟨ℓ, hℓ⟩ := R.objective_value_limit_of_lower_bound L (fun k => hL _ (hxK k))
   exact ⟨ℓ, hℓ, fun p hp => R.value_of_cluster hℓ hp⟩
 
-/-- Item `C/08_A/prose/012` (`companion/chapters/08_A.tex:26-26`): "If at least one cluster point
+/-- Item `C/08_A/prose/012` (`companion/chapters/08_A.tex:26`): "If at least one cluster point
 is affine critical and \eqref{A:AC} holds on the basin, that point is optimal, so $\ell=F_*$.
 Compactness gives convergence to the solution set, and uniqueness gives convergence of the entire
 sequence." For an admissible run in a compact $K$ on which (A:AC) holds, and an affine-critical
@@ -269,7 +269,7 @@ theorem cluster_reduction {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n
   obtain ⟨hmin, hv, -, hd, hu⟩ := R.convergence_of_affineCritical_cluster hK hxK hcorrect p hp ha
   exact ⟨hmin, hv, hd, hu⟩
 
-/-- Item `C/08_A/prose/014` (`companion/chapters/08_A.tex:26-26`): "It would be incorrect to
+/-- Item `C/08_A/prose/014` (`companion/chapters/08_A.tex:26`): "It would be incorrect to
 replace affine criticality of a cluster point by vanishing gradients at differentiable iterates:
 for example, the gradients of $|x|$ have unit magnitude away from its minimizer." For $F(x)=|x|$ on
 $\R$: every gradient at a point $x\ne0$ has norm $1$; and the admissible run $x_k=(-1/2)^k$
@@ -314,7 +314,7 @@ theorem abs_gradients_unit :
 
 /-! ### Section "Why pointwise affine separation need not be uniform" (lines 32-44) -/
 
-/-- Item `C/08_A/prose/015` (`companion/chapters/08_A.tex:34-34`): "Let
+/-- Item `C/08_A/prose/015` (`companion/chapters/08_A.tex:34`): "Let
 $\gamma(p)=\operatorname{dist}(0,\operatorname{aff}\partial F(p))$." This is the library's
 `AffineDistance.objectiveDistance F p`, the Euclidean distance from $0$ to the affine hull of the
 Euclidean copy of $\partial F(p)$; for finite convex $F$ it equals $\|a(p)\|$, and it is positive
@@ -327,7 +327,7 @@ theorem gamma_def {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F) (
   refine ⟨by rw [AffineDistance.objectiveDistance, range_subgradientFamily],
     affine_distance_eq_norm hF p, AffineDistance.objectiveDistance_pos_iff hF p⟩
 
-/-- Item `C/08_A/prose/016` (`companion/chapters/08_A.tex:34-34`): "A useful quantitative
+/-- Item `C/08_A/prose/016` (`companion/chapters/08_A.tex:34`): "A useful quantitative
 condition is a positive minimum of $\gamma$ on every compact positive objective band." The
 condition: on every band $\{F_*+\eta\le F\le b\}$ ($\eta>0$) that is compact and nonempty, $\gamma$
 attains a strictly positive minimum. -/
@@ -361,7 +361,7 @@ theorem rank_loss_objective (x : Vec 2) :
   refine ⟨rfl, ?_, h0, h1⟩
   rw [AffineRankLoss.objective_eq_max, h0, h1]
 
-/-- Item `C/08_A/prose/018` (`companion/chapters/08_A.tex:41-41`): "Both branch Hessians have
+/-- Item `C/08_A/prose/018` (`companion/chapters/08_A.tex:41`): "Both branch Hessians have
 eigenvalues $1$ and $3$, so $F$ is strongly convex, with unique minimizer $(-1/2,0)$ and value
 $-1/4$." Each branch is $C^\infty$ with constant Hessian matrix
 $\begin{pmatrix}2&\pm1\\\pm1&2\end{pmatrix}$ (the matrix of the second derivative,
@@ -381,7 +381,7 @@ theorem rank_loss_curvature :
   exact ⟨fun i => ⟨(hb i).1, (hb i).2.2.1, (hb i).2.2.2.1, (hb i).2.2.2.2, (hb i).2.1⟩, ho,
     AffineRankLoss.unique_minimum⟩
 
-/-- Item `C/08_A/prose/019` (`companion/chapters/08_A.tex:41-41`): "At $(0,t)$, $t\ne0$, the
+/-- Item `C/08_A/prose/019` (`companion/chapters/08_A.tex:41`): "At $(0,t)$, $t\ne0$, the
 active gradients are $(1+t,2t)$ and $(1-t,2t)$, giving $\gamma(0,t)=2|t|$." Both branches are
 active there, with these gradients, $\partial F(0,t)$ is their convex hull, and
 $\gamma(0,t)=2|t|$. -/
@@ -433,14 +433,14 @@ theorem rankLoss_hasGradient_origin :
   have hc3 : 3 * ‖h‖ ^ 2 ≤ c * ‖h‖ := by nlinarith
   linarith
 
-/-- Item `C/08_A/prose/020` (`companion/chapters/08_A.tex:41-41`): "At zero the gradient is
+/-- Item `C/08_A/prose/020` (`companion/chapters/08_A.tex:41`): "At zero the gradient is
 $(1,0)$, so $\gamma(0,0)=1$." -/
 theorem origin_point :
     HasFDerivAt AffineRankLoss.objective (gradientFunctional ![1, 0]) (0 : Vec 2) ∧
       AffineDistance.objectiveDistance AffineRankLoss.objective 0 = 1 :=
   ⟨rankLoss_hasGradient_origin, AffineRankLoss.actual_origin_distance⟩
 
-/-- Item `C/08_A/prose/021` (`companion/chapters/08_A.tex:41-41`): "On the other switching axis
+/-- Item `C/08_A/prose/021` (`companion/chapters/08_A.tex:41`): "On the other switching axis
 $\gamma(u,0)=|1+2u|$, vanishing only at the optimizer." -/
 theorem horizontal_axis (u : ℝ) :
     AffineDistance.objectiveDistance AffineRankLoss.objective ![u, 0] = |1 + 2 * u| ∧
@@ -474,7 +474,7 @@ theorem affineCritical_iff_gradient_zero {n : ℕ} {F : Vec n → ℝ} (hF : Con
     rw [hs, h0]
     exact Set.mem_singleton 0
 
-/-- Item `C/08_A/prose/022` (`companion/chapters/08_A.tex:41-41`): "Smooth points are affine
+/-- Item `C/08_A/prose/022` (`companion/chapters/08_A.tex:41`): "Smooth points are affine
 critical only when stationary." At every point where the rank-loss objective is differentiable
 with gradient $g$: affine critical iff $g=0$. -/
 theorem smooth_points_affine_critical (p g : Vec 2)
@@ -482,7 +482,7 @@ theorem smooth_points_affine_critical (p g : Vec 2)
     IsAffineCritical AffineRankLoss.objective p ↔ g = 0 :=
   affineCritical_iff_gradient_zero AffineRankLoss.objective_convex hg
 
-/-- Item `C/08_A/prose/023` (`companion/chapters/08_A.tex:41-41`): "Thus \eqref{A:AC} holds
+/-- Item `C/08_A/prose/023` (`companion/chapters/08_A.tex:41`): "Thus \eqref{A:AC} holds
 globally, but $\gamma(0,t)\to0$ while the objective gap tends to $1/4$." -/
 theorem ac_global_and_gap :
     (∀ x, AffineCorrectAt AffineRankLoss.objective x) ∧
@@ -494,7 +494,7 @@ theorem ac_global_and_gap :
   ⟨AffineRankLoss.globally_affine_correct, AffineRankLoss.vertical_distance_tendsto_zero,
     AffineRankLoss.vertical_positive_gap_limit⟩
 
-/-- Item `C/08_A/prose/017` (`companion/chapters/08_A.tex:34-34`): "Pointwise nonvanishing plus
+/-- Item `C/08_A/prose/017` (`companion/chapters/08_A.tex:34`): "Pointwise nonvanishing plus
 compactness does not establish it when ranks change." For the rank-loss objective ($F_*=-1/4$):
 $\gamma(p)>0$ at every point with $F(p)>F_*$, every band $\{F_*+\eta\le F\le b\}$ is compact, yet
 the
@@ -552,7 +552,7 @@ theorem rank_loss_no_positive_minimum :
   rw [rankLoss_gamma, AffineRankLoss.actual_vertical_distance htpos.ne', abs_of_pos htpos] at hγq
   linarith
 
-/-- Item `C/08_A/prose/025` (`companion/chapters/08_A.tex:43-43`): "A sufficiently small
+/-- Item `C/08_A/prose/025` (`companion/chapters/08_A.tex:43`): "A sufficiently small
 neighborhood of its actual optimizer excludes the rank-loss point." The rank loss happens along the
 axis $\{u=0\}$ at the origin ($\gamma(0,t)\to0\ne\gamma(0,0)$); the neighborhood
 $\{u<-1/4\}$ of the optimizer $(-1/2,0)$ contains no point of that axis. -/
@@ -817,7 +817,7 @@ theorem formula_positive_near {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → Vec
     (lastTarget n) lam h0 hpos] with p hp
   exact fun w hw => (hp.2 w hw).2
 
-/-- Item `C/08_A/prose/028` (`companion/chapters/08_A.tex:71-71`): "There is also local lower
+/-- Item `C/08_A/prose/028` (`companion/chapters/08_A.tex:71`): "There is also local lower
 semicontinuity of $\gamma$." In the setting of `local_affine_correctness`, $\gamma$ is lower
 semicontinuous at every point of a neighborhood of $x_*$. -/
 theorem gamma_lsc {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → Vec n → ℝ)
@@ -851,7 +851,7 @@ theorem eventually_affineIndependent {n m : ℕ} (F : Vec n → ℝ) (f : Fin m 
     ((AffineBarycentric.affineIndependent_iff_augmented_injective _).mp hind)] with p hp
   exact (AffineBarycentric.affineIndependent_iff_augmented_injective _).mpr hp
 
-/-- Item `C/08_A/prose/029` (`companion/chapters/08_A.tex:71-71`): "For each nonempty
+/-- Item `C/08_A/prose/029` (`companion/chapters/08_A.tex:71`): "For each nonempty
 $J\subset I_*$, the distance to the affine hull of the gradients in $J$ is continuous, because the
 relevant difference Gram matrix remains nonsingular." Near $x_*$, for every nonempty
 $J\subseteq I_*$
@@ -875,7 +875,7 @@ theorem subfamily_distance_continuous {n m : ℕ} (F : Vec n → ℝ) (f : Fin m
     (fun q i => coordinateGradient (f (activeIndexMap F f xstar i)) q) p J hJ
     (fun j => AffineDistance.coordinateGradient_continuousAt_of_contDiffAt (hC1 _).contDiffAt) hp
 
-/-- Item `C/08_A/prose/030` (`companion/chapters/08_A.tex:71-71`): "For $p_j\to p$, pass to a
+/-- Item `C/08_A/prose/030` (`companion/chapters/08_A.tex:71`): "For $p_j\to p$, pass to a
 subsequence of constant active set $J\subset I(p)$." Near $x_*$, for every sequence $p_j\to p$ there
 are a subsequence and a nonempty $J\subseteq I(p)$ (active indices of $I_*$ at $p$) such that the
 active set at every $p_{\varphi(j)}$ is $J$. -/
@@ -966,7 +966,7 @@ theorem limit_along_constant_active_set {n m : ℕ} (F : Vec n → ℝ) (f : Fin
   · rw [AffineDistance.objectiveDistance_eq_active hF hp (hgrad p)]
     exact AffineDistance.subfamilyDistance_antitone (g p) hJ hJp
 
-/-- Item `C/08_A/prose/031` (`companion/chapters/08_A.tex:75-75`): "On a compact positive band,
+/-- Item `C/08_A/prose/031` (`companion/chapters/08_A.tex:75`): "On a compact positive band,
 local \eqref{A:AC} therefore gives a strictly positive minimum." In the setting of
 `local_affine_correctness` there is a neighborhood $V$ of $x_*$ such that on every nonempty compact
 $K\subseteq V$ with $F>F(x_*)$ on $K$ the function $\gamma$ attains a strictly positive minimum. -/
@@ -988,7 +988,7 @@ theorem positive_minimum_on_bands {n m : ℕ} (F : Vec n → ℝ) (f : Fin m →
     hind lam hpos hsum hzero
   exact ⟨V, hVo.mem_nhds hxV, hK⟩
 
-/-- Item `C/08_A/prose/032` (`companion/chapters/08_A.tex:75-75`): "This establishes visibility,
+/-- Item `C/08_A/prose/032` (`companion/chapters/08_A.tex:75`): "This establishes visibility,
 not the full transport needed in arbitrary dimension." A positive lower bound $\gamma\ge\gamma_0>0$
 on a set $S$ gives the visibility condition (V) of Chapter~T there, for the field
 $W(x)=a(x)a(x)^T$: $g^TW(x)g=(g^Ta(x))^2=\|a(x)\|^4=\gamma(x)^4\ge\gamma_0^4$ at every
@@ -1119,7 +1119,7 @@ theorem finitely_many_values {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Se
     fun _ _ P => RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant hF hsa P,
     RealAlgebraicGeometry.semialgebraic_affine_critical_values hF hsa⟩
 
-/-- Item `C/08_A/prose/033` (`companion/chapters/08_A.tex:111-111`): "Here and below, a
+/-- Item `C/08_A/prose/033` (`companion/chapters/08_A.tex:111`): "Here and below, a
 piecewise $C^1$ path is continuous on $[0,1]$ and $C^1$ at every interior parameter outside a finite
 set. No derivative at $0$ or $1$, or derivative extension across a junction, is required." -/
 def PiecewiseC1 {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] (p : ℝ → E) : Prop :=
@@ -1134,7 +1134,7 @@ theorem piecewiseC1_of_smooth {E : Type*} [NormedAddCommGroup E] [NormedSpace �
     PiecewiseC1 P.curve :=
   ⟨P.continuousOn, P.exceptions, fun t ht he => (P.smoothAt t ht he).of_le (by norm_cast)⟩
 
-/-- Item `C/08_A/prose/035` (`companion/chapters/08_A.tex:113-113`): "The affine-critical set
+/-- Item `C/08_A/prose/035` (`companion/chapters/08_A.tex:113`): "The affine-critical set
 also has finitely many actual semialgebraic path classes, where two points are related when a
 continuous path with semialgebraic restricted graph joins them inside the set. Each class is
 semialgebraic and internally connected by such paths." The relation (a path continuous on $[0,1]$
@@ -1163,7 +1163,7 @@ theorem path_classes {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F
     fun x => ⟨(h.2 x).1, (h.2 x).2.1⟩⟩
 
 open scoped ContDiff in
-/-- Item `C/08_A/prose/036` (`companion/chapters/08_A.tex:113-113`): "Every continuous
+/-- Item `C/08_A/prose/036` (`companion/chapters/08_A.tex:113`): "Every continuous
 semialgebraic path admits the finite-exception regularity just specified on the same curve; for
 finite convex semialgebraic $F$, its actual composition with $F$ is likewise continuous and smooth
 off finitely many interior parameters." A path continuous on $[0,1]$ with semialgebraic graph is
@@ -1186,7 +1186,7 @@ theorem path_regularity {n : ℕ} :
       RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth hF hsa hc hs
     exact ⟨h1, h2⟩
 
-/-- Item `C/08_A/prose/037` (`companion/chapters/08_A.tex:113-113`): "The objective is constant
+/-- Item `C/08_A/prose/037` (`companion/chapters/08_A.tex:113`): "The objective is constant
 on each class." -/
 theorem classes_constant {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
     (hsa : RealAlgebraicGeometry.IsSemialgebraicObjective F) (x : Vec n) :
@@ -1195,7 +1195,7 @@ theorem classes_constant {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Set.un
         F p = F q :=
   ((RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components hF hsa).2 x).2.2
 
-/-- Item `C/08_A/prose/038` (`companion/chapters/08_A.tex:113-113`): "Ordinary topological
+/-- Item `C/08_A/prose/038` (`companion/chapters/08_A.tex:113`): "Ordinary topological
 connected components are separately finite and semialgebraic, with constant objective value". The
 connected components of $C_{\rm aff}$ are finitely many, each semialgebraic, and $F$ is constant on
 each. -/
@@ -1212,7 +1212,7 @@ theorem topological_components {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ 
     fun _ _ _ hp hq => RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant hF hsa
       hp hq⟩
 
-/-- Item `C/08_A/prose/039` (`companion/chapters/08_A.tex:115-115`): "This proposition concerns
+/-- Item `C/08_A/prose/039` (`companion/chapters/08_A.tex:115`): "This proposition concerns
 affine criticality rather than merely Clarke criticality." Every Clarke-critical point
 ($0\in\partial F(p)$, for convex $F$ exactly the minimizers) is affine critical; the proposition
 controls all affine-critical points below the level $F_*+\epsilon$. -/
@@ -1298,7 +1298,7 @@ theorem unstraighten_contDiff : ContDiff ℝ ⊤ unstraighten := by
   · simp only [unstraighten]
     exact (contDiff_apply ℝ ℝ 1).sub (contDiff_const.mul ((contDiff_apply ℝ ℝ 0).pow 2))
 
-/-- Item `C/08_A/prose/045` (`companion/chapters/08_A.tex:126-126`): "Straightening an active
+/-- Item `C/08_A/prose/045` (`companion/chapters/08_A.tex:126`): "Straightening an active
 manifold by a nonlinear coordinate change does not preserve ordinary BFGS, and cannot supply the
 missing implication." Example: $F(u,v)=\max\{18u^2+v^2+v,\ 2u^2+v^2-v\}=10u^2+v^2+|v+8u^2|$
 (finite and convex), whose active manifold (where both branches are active) is the parabola
@@ -1429,7 +1429,7 @@ theorem straightening_breaks_bfgs :
     rw [he, add_sub_cancel_left] at hpair
     linarith
 
-/-- Item `C/08_A/prose/056` (`companion/chapters/08_A.tex:139-139`): "Projecting an affine
+/-- Item `C/08_A/prose/056` (`companion/chapters/08_A.tex:139`): "Projecting an affine
 combination equal to zero, whose coefficients sum to one, makes that stratum gradient zero." If a
 linear map $P$ (the tangential projection) sends every $g_i$ to the same vector $r$ (the stratum
 gradient) and $\sum_i\lambda_ig_i=0$ with $\sum_i\lambda_i=1$, then $r=0$. -/

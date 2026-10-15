@@ -66,7 +66,7 @@ Families: `immediate_family`, `immediate_family_tangent`, `tangential_family`,
 `beta_bound`, `frame_transport`, `residual_bounds`, `transport_hypothesis`. Section 11.6:
 `projected_budget`, `composite_secant_projection`, `composite_secant_bound`. Section 11.7:
 `spike_scale_bump`, `bump_properties`, `spike_density_def`, `spike_def`, `bump_masses`,
-`spike_regularity`, `spike_small_bounds`/`spike_cubic_bound_fails` (discrepancy),
+`spike_regularity`, `spike_small_bounds`/`spike_cubic_bound_fails` (corrected discrepancy),
 `spike_peak_curvature`, `spike_second_derivative_zero`, `spike_objective_eq`,
 `spike_objective_geometry`, `spike_objective_interface`, `spike_objective_convergence`,
 `spike_sample_values`, `spike_sample_hessian`, `spike_ir_fails`, `spike_rs_fails_band`,
@@ -76,13 +76,16 @@ Families: `immediate_family`, `immediate_family_tangent`, `tangential_family`,
 `variable_region_geometry`, `variable_local_basin`, `variable_jump`, `variable_nonsplitting`,
 `variable_zero_split`, `variable_rs_fails`; literature: `cocoercivity_on_smooth_compact`.
 
-## Discrepancies
+## Corrected discrepancies (15 October 2026)
 
-`disp/026`: "$0\le r(v)\le6v^3$ near zero" is false for every $v<0$ (`spike_cubic_bound_fails`);
-the bounds hold for $v\ge0$ (`spike_small_bounds`). `prose/027`: "(6)" refers to no equation of
-the companion; the intended transport hypothesis of Theorem~\ref{M:residualtheorem} is
-`transport_hypothesis`; the chapter's seven other bare references ("Theorems 1 and 2", "(11)" twice,
-"(16)--(17)", "(18)", "(20)", "(21)") omit the prefix "11." and are listed in the same entry.
+`disp/026` (M19): "$0\le r(v)\le6v^3$ near zero" was false for every $v<0$
+(`spike_cubic_bound_fails`); the display is now followed by "for $v\ge0$", where the bounds hold
+(`spike_small_bounds`). `prose/027` (M18): "(6)" referred to no equation of the companion; the
+sentence now reads "Thus (11.14) is the transport hypothesis of Theorem~\ref{M:residualtheorem},
+with $T=I$, rank-one term $s(\beta e_n)^T$ and" (`transport_hypothesis`); the chapter's seven other
+bare references ("Theorems 1 and 2", "(11)" twice, "(16)--(17)", "(18)", "(20)", "(21)"), listed in
+the same entry, now carry the prefix "11.". Wording points W8 (line 354, "the source notes"), W10
+(line 492) and W11 (lines 111, 416, 422, 424) were applied on the same day.
 
 ## Non-vacuity
 
@@ -158,7 +161,7 @@ theorem diff_plane_eq_regularRegion {n : ℕ} (Ω : Set (Vec n)) (a : Vec n) (b 
   simp only [mem_diff, mem_setOf_eq, regularRegion, mem_inter_iff, normalCoordinate,
     mem_singleton_iff, sub_eq_zero]
 
-/-- Item `C/11_U/heading/001` (`companion/chapters/11_U.tex:30-30`), Theorem 11.1 (One
+/-- Item `C/11_U/heading/001` (`companion/chapters/11_U.tex:30`), Theorem 11.1 (One
 exceptional hyperplane), with its displays `disp/002` and `disp/003` (lines 33-51).
 
 Let $a$ be a unit vector, $b\in\mathbb R$, $P=\{x:a^Tx=b\}$ (`hP`), $S=a^\perp$, $P_S=I-aa^T$
@@ -315,7 +318,7 @@ theorem initialSublevel_sub {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun
     isClosed_le (convex_continuous R.convex) continuous_const
   exact ⟨hsub, hK.of_isClosed_subset hc hsub⟩
 
-/-- Item `C/11_U/heading/002` (`companion/chapters/11_U.tex:113-113`), Theorem 11.2 (Parallel
+/-- Item `C/11_U/heading/002` (`companion/chapters/11_U.tex:113`), Theorem 11.2 (Parallel
 singular interfaces), with its display `disp/006` (lines 113-133).
 
 Let $F$ be finite convex with attained minimum and compact sublevel $K=\{F\le c\}$. Assume $F$
@@ -1452,7 +1455,8 @@ accepted pair ($x=x_k$, $z=x_{k+1}$, $s=s_k$, $d=d_k$, $\beta=\beta_k$),
    \|R\|_F^2\le\operatorname{Lip}(\tau)^2\|P_Ss\|^2\le\frac{2\operatorname{Lip}(\tau)^2}{\mu}d. \]
 "$R\in S$": every column of $R$ lies in $S=a^\perp$; $\|R\|_F^2=\sum_{i,j}R_{ij}^2$. In the
 common setting with $U$ and the cutoff $\tau$ (Lipschitz constant `Lτ`). The transport form
-"(6) holds with $T=I$" is `transport_hypothesis` (item `prose/027`). Library:
+"(11.14) is the transport hypothesis of Theorem~\ref{M:residualtheorem}, with $T=I$" is
+`transport_hypothesis` (item `prose/027`). Library:
 `cutoffResidual_frobSq`, `AdmissibleBFGSRun.fixed_normal_cutoff_residual_budget`. -/
 theorem residual_bounds {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn ℝ univ F)
     (R : AdmissibleBFGSRun n F)
@@ -1513,8 +1517,10 @@ theorem residual_bounds {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn ℝ univ F
           mul_le_mul_of_nonneg_left (hpd.trans hd) (sq_nonneg _)
       _ = 2 * (Lτ : ℝ) ^ 2 / μ * R.d k := by ring
 
-/-- Item `C/11_U/prose/027` (`companion/chapters/11_U.tex:302`), corrected statement of "Thus (6)
-holds with $T=I$": along accepted pairs, (11.14) is the transport hypothesis of
+/-- Item `C/11_U/prose/027` (`companion/chapters/11_U.tex:302`), corrected on 15 October 2026 (M18;
+before "Thus (6) holds with $T=I$ and", where (6) was no equation of the companion): "Thus (11.14)
+is the transport hypothesis of Theorem~\ref{M:residualtheorem}, with $T=I$, rank-one term
+$s(\beta e_n)^T$ and $R=\dots$". Along accepted pairs, (11.14) is the transport hypothesis of
 Theorem~\ref{M:residualtheorem} (Chapter 2; there $V_{k+1}=V_kT_k+s_kb_k^T+R_k$) for the frames
 $V_k=V(x_k)$ of (11.12), with $T_k=I$, rank-one term $s_k(\beta_ke_n)^T$ and
 $R_k=-\beta_kP_Ss_k\,e_n^T$; the columns of $R_k$ lie in $S$ and
@@ -1562,8 +1568,10 @@ theorem transport_hypothesis {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ un
 
 /-! ### The conditions (RS) and (IR) of Chapter 4
 
-Literal forms of (4.RS) and (4.IR) (`companion/chapters/04_R.tex:53-80`), as used in Section 11.7;
-the companion coverage modules cannot import each other, so they are restated here. -/
+Forms of (4.RS) and (4.IR) with real constants (`companion/chapters/04_R.tex:53-80`), as used in
+Section 11.7; since 15 October 2026 (wording point W19) the chapter prints $C_\eta\ge0$ and
+$M_\eta\ge0$, which is equivalent (`Ch04R.RSNonneg_iff`, `Ch04R.IRNonneg_iff`). The companion
+coverage modules cannot import each other, so the conditions are restated here. -/
 
 /-- The radial secant condition (RS) of Chapter 4 on a set $K$, with optimizer $x_*$: for every
 $\eta>0$ some $C_\eta$ gives $N(x,z)^2\le C_\eta T(x,z)$ for differentiable $x,z\in K$ with
@@ -1708,9 +1716,9 @@ theorem spike_regularity :
     exact scaledDensity_above (scale_pos j) (hu j hj)
 
 open NormalSpike in
-/-- Corrected form of item `C/11_U/disp/026` (`companion/chapters/11_U.tex:389-391`), recorded as
-a discrepancy: the bounds hold for $v\ge0$ (for every $v\ge0$, not only near zero):
-$0\le r'(v)\le6v^2$ and $0\le r(v)\le6v^3$; the first also for $v<0$. Library:
+/-- Item `C/11_U/disp/026` (`companion/chapters/11_U.tex:389-391`), corrected on 15 October 2026
+(M19; before "near zero", false for $v<0$): "$0\le r'(v)\le6v^2$, $0\le r(v)\le6v^3$ for
+$v\ge0$." Both bounds hold for every $v\ge0$, and the first also for $v<0$. Library:
 `SourceSpikePropertiesTarget`, `seriesMass_abs_quadratic_bound`. -/
 theorem spike_small_bounds :
     (∀ v : ℝ, 0 ≤ v → 0 ≤ deriv sourcePrimitive v ∧ deriv sourcePrimitive v ≤ 6 * v ^ 2 ∧
@@ -1722,7 +1730,8 @@ theorem spike_small_bounds :
   exact ⟨seriesMass_nonneg v, (le_abs_self _).trans (seriesMass_abs_quadratic_bound v)⟩
 
 open NormalSpike in
-/-- Counterexample for item `C/11_U/disp/026`: "$0\le r(v)\le6v^3$ near zero" fails at every
+/-- Counterexample for item `C/11_U/disp/026` as printed before its correction of 15 October 2026
+(M19): "$0\le r(v)\le6v^3$ near zero" fails at every
 $v<0$, where $r(v)=0>6v^3$; so it fails in every neighborhood of zero. -/
 theorem spike_cubic_bound_fails :
     (∀ v : ℝ, v < 0 → 6 * v ^ 3 < sourcePrimitive v) ∧
@@ -2058,7 +2067,7 @@ theorem spike_inward_bound_hessian (m : ℕ) (F : Vec (m + 2) → ℝ)
 
 /-- Item `C/11_U/prose/043` (`companion/chapters/11_U.tex:413-415`): "A uniform inward Taylor
 estimate on that fixed positive band would, by taking its second-order limit at each $x_j$,
-bound the left side of (21). This is impossible." For $u_0\neq0$, $K=\{F\le b\}$ with
+bound the left side of (11.21). This is impossible." For $u_0\neq0$, $K=\{F\le b\}$ with
 $b>\|u_0\|^2/2$ and the band $\eta=\|u_0\|^2/4$ (eventually containing every $x_j$), no constants
 $M,\theta\in(0,1/2]$ give the inward estimate of (IR) on that band (the second-order limit is
 `spike_inward_bound_hessian`); in particular (IR) fails on $K$. -/
@@ -2107,14 +2116,15 @@ theorem spike_ir_fails (m : ℕ) (F : Vec (m + 2) → ℝ)
   exact ⟨M, θ, hθ, hθ', hM⟩
 
 open NormalSpike RadialCertificate in
-/-- Item `C/11_U/prose/044` (`companion/chapters/11_U.tex:415-416`): "The recorded equivalence
-between inward radial smoothness and RS therefore rules out RS on that band." For $u_0\neq0$,
-$K=\{F\le b\}$ with $b>\|u_0\|^2/2$ and the band $\eta=\|u_0\|^2/4$ (the band of `spike_ir_fails`,
-item `prose/043`), no constant $C$ satisfies the (RS) inequality on that band; in particular (RS)
-fails on $K$. The proof uses the pairs $(x_j,(1-t)x_j)$, $0<t\le1/4$, directly (as the library's
-`not_radial_secant_sublevel_of_tangent_height`), for an arbitrary $u_0$; the route through the
-equivalence (RS)$\Rightarrow$(IR) of Chapter 4 gives the weaker conclusion that (RS) fails on $K$
-(from `spike_ir_fails`). -/
+/-- Item `C/11_U/prose/044` (`companion/chapters/11_U.tex:415-416`): "The equivalence of
+Theorem~\ref{R:thm:equiv} between inward radial smoothness and RS therefore rules out RS on that
+band." (Wording point W11 applied on 15 October 2026; before "The recorded equivalence".) For
+$u_0\neq0$, $K=\{F\le b\}$ with $b>\|u_0\|^2/2$ and the band $\eta=\|u_0\|^2/4$ (the band of
+`spike_ir_fails`, item `prose/043`), no constant $C$ satisfies the (RS) inequality on that band; in
+particular (RS) fails on $K$. The proof uses the pairs $(x_j,(1-t)x_j)$, $0<t\le1/4$, directly (as
+the library's `not_radial_secant_sublevel_of_tangent_height`), for an arbitrary $u_0$; the route
+through the equivalence (RS)$\Rightarrow$(IR) of Chapter 4 gives the weaker conclusion that (RS)
+fails on $K$ (from `spike_ir_fails`). -/
 theorem spike_rs_fails_band (m : ℕ) (F : Vec (m + 2) → ℝ)
     (hF_def : ∀ (u : Vec (m + 1)) (v : ℝ),
       F (Fin.cons v u) = (1 / 2) * sqNorm u + (1 / 2) * v ^ 2 + |v| + sourcePrimitive v)
@@ -2193,7 +2203,7 @@ theorem spike_rs_fails_nhds (m : ℕ) (F : Vec (m + 2) → ℝ)
 
 open NormalSpike in
 /-- Item `C/11_U/prose/052` (`companion/chapters/11_U.tex:433-434`): "There is no need to
-truncate (18). All bumps below a query can be summed using geometric series, with at most one
+truncate (11.18). All bumps below a query can be summed using geometric series, with at most one
 partially included bump." Every query $v$ meets the support of at most one bump; for $v>0$ there is
 an index $N$ such that every bump $j\ge N$ lies below $v$, and then
 $r(v)=\sum_{j<N}\int_0^v(v-t)\,a_j^{-3}\eta((t-a_j)/a_j^5)\,dt+\frac{64}{45}a_N^2v-\frac{128}{105}a_N^3$

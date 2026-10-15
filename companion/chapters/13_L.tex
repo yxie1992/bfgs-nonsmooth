@@ -1,6 +1,6 @@
 \chapter{Failure with positive lower curvature}\label{comp:L}\label{L:chapter}
 \renewcommand{\ModuleTag}{13}
-Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point; no claim combines uniform strong convexity with the preceding local C2,1 branch regularity.
+Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer; no claim combines uniform strong convexity with the preceding local $C^{2,1}$ branch regularity.
 
 
 % SOURCE_BEGIN L.span.1
@@ -56,9 +56,9 @@ There is a finite strongly convex objective $F:\R^2\to\R$ with compact sublevels
 \]
 yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initial points $x_0^{(n)}\to0$ whose runs, the same for every such pair $(c_1,c_2)$, converge to nonstationary points $p_n\to0$. All trial points of the $n$th run remain uniformly near zero as $n\to\infty$.
 
-The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly strongly convex, globally gradient-Lipschitz branches. Alternatively, it can be chosen so that its Hessian is one fixed positive-definite matrix wherever it is twice differentiable; the latter version has a countable polyhedral nonsmooth part, not a finite smooth-branch representation.
+The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly strongly convex, globally gradient-Lipschitz branches. Alternatively, it can be chosen so that its Hessian is one fixed positive-definite matrix wherever it is twice differentiable; the latter version has a countable polyhedral nonsmooth part.
 \end{theorem}
-\noindent The local theorem satisfies the user's literal classical-Hessian assumption, and even actual strong convexity. It is \emph{not} a local counterexample with four globally $C^2$ branches having uniform lower curvature. That stronger combination remains unproved here.
+\noindent The local theorem satisfies the literal classical-Hessian assumption, and even actual strong convexity. It is \emph{not} a local counterexample with four globally $C^2$ branches having uniform lower curvature. That stronger combination remains unproved here.
 
 
 \setcounter{section}{1}
@@ -73,7 +73,7 @@ The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly st
 
 % SOURCE_BEGIN L.span.3
 \section{The inherited algebraic seed}
-The seed is reproduced sufficiently to specify the new calculations. Its exact symbolic closure and nine strict query decisions were certified in the preceding deterministic-bracketing report~Chapter~\ref{comp:D}.
+The seed is reproduced sufficiently to specify the new calculations. Its exact symbolic closure and nine strict query decisions were certified in Chapter~\ref{comp:D}.
 \[
  g_0=(1,0)\T,\qquad g_1=(-1,-1/8)\T,\qquad g_2=(c,d)\T.
 \]
@@ -179,7 +179,7 @@ and its gradient is $g_i+\mu\tau Z$. All Armijo and weak-Wolfe comparisons, divi
 \setcounter{corollary}{0}
 \setcounter{proposition}{0}
 \setcounter{remark}{0}
-\setcounter{equation}{2}
+\setcounter{equation}{5}
 % SOURCE_END L.span.4
 
 
@@ -234,7 +234,7 @@ The return-map orbit represents the actual deterministic full-BFGS orbit, with a
 \]
 The intermediate accepted states and all rejected queries are $\tau_m$ times bounded continuous functions of the normalized state, so they tend to zero too. They retain strict branch gaps and strict decisions. Their objective values are positive near the seed and decrease to zero. Equation~\eqref{L:eq:minimizer} and $0\notin\partial Q_\mu(0)$ prove actual nonstationary convergence.
 
-The same argument shows more: given any neighborhood of physical zero, the initial stable-manifold point can be chosen so that \emph{all queries of the orbit} lie inside it. This small-orbit property will be used for the embedding. The initial matrix is supplied by the stable manifold, not assumed to be $I$ in these particular coordinates.
+The same argument shows more: given any neighborhood of physical zero, the initial stable-manifold point can be chosen so that \emph{the initial point and all queries of the orbit} lie inside it. This small-orbit property will be used for the embedding. The initial matrix is supplied by the stable manifold, not assumed to be $I$ in these particular coordinates.
 \end{proof}
 \noindent This is an existence proof of an actual trajectory, not a claim that a numerically truncated stable eigenvector produces it forever. Expanding eigenvalues make ordinary floating-point forward shooting an inappropriate certificate of membership in the stable manifold.
 
@@ -245,7 +245,7 @@ The same argument shows more: given any neighborhood of physical zero, the initi
 \setcounter{corollary}{0}
 \setcounter{proposition}{0}
 \setcounter{remark}{0}
-\setcounter{equation}{4}
+\setcounter{equation}{7}
 % SOURCE_END L.span.5
 
 
@@ -335,7 +335,7 @@ This conclusion does not assume the maximum has a globally Lipschitz gradient.
 \setcounter{corollary}{0}
 \setcounter{proposition}{0}
 \setcounter{remark}{0}
-\setcounter{equation}{7}
+\setcounter{equation}{12}
 % SOURCE_END L.span.6
 
 
@@ -352,7 +352,7 @@ The fourth branch is negative relative to its quadratic part there if $y$ is suf
 \begin{equation}\label{L:eq:local-model}
  F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}.
 \end{equation}
-Use Theorem~\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
+Use Theorem~\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose initial point and accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
 \[
  x_0^{(n)}=p_n+a_n\bar x_0,\qquad H_0^{(n)}=\bar H_0.
 \]
@@ -360,7 +360,7 @@ Every query in the $n$th run is exactly $p_n+a_n$ times the corresponding seed q
 \[
  x_k^{(n)}=p_n+a_n\bar x_k,\qquad H_k^{(n)}=\bar H_k.
 \]
-Indeed, function differences and directional-derivative products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS formula both scale factors cancel. The line search therefore makes the same decisions, including all rejections. Equation~\eqref{L:eq:local-model} applies to every query by the choice of the whole seed orbit. Induction proves the claim without numerical approximation.
+Indeed, function differences and directional-derivative products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS formula both scale factors cancel. The line search therefore makes the same decisions, including all rejections. Equation~\eqref{L:eq:local-model} applies at the initial point and to every query by the choice of the whole seed orbit. Induction proves the claim without numerical approximation.
 
 Since $\bar x_k\to0$,
 \[
@@ -387,7 +387,7 @@ These constants are fixed for the one transformed objective, not changed between
 \setcounter{corollary}{0}
 \setcounter{proposition}{0}
 \setcounter{remark}{0}
-\setcounter{equation}{8}
+\setcounter{equation}{13}
 % SOURCE_END L.span.7
 
 
@@ -410,7 +410,7 @@ After the fixed affine transformation making $H_0=I$, that Hessian is the one fi
 \section*{Relation to earlier work}
 The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
 
-The negative-results comparisons in Chapter~\ref{comp:D} apply here with the stated stronger convexity and different branch regularity. This chapter uses the fixed line-search pair displayed in this chapter; D's wider parameter family is not imported. The first three branches of the local finite-branch construction fail to be twice differentiable at the accumulation point. The simpler global quadratic-plus-maximum example does not establish failure arbitrarily near its true minimizer. These distinctions are essential when comparing the theorem with smooth nonconvex counterexamples \cite{NEG_M07,NEG_M14,NEG_DIAO26}.
+The negative-results comparisons in Chapter~\ref{comp:D} apply here with the stated stronger convexity and different branch regularity. Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$, $c_1<c_2<1$. The first three branches of the local finite-branch construction fail to be twice differentiable at the accumulation point. The simpler global quadratic-plus-maximum example does not establish failure arbitrarily near its true minimizer. These distinctions are essential when comparing the theorem with smooth nonconvex counterexamples \cite{NEG_M07,NEG_M14,NEG_DIAO26}.
 
 The stable-manifold principle and graph-transform method are classical; this chapter already uses Dyatlov's exposition \cite[Sections 3--4]{DY}. The report-specific work identifies the derivative of the actual BFGS return map, certifies its spectral bounds, and applies the principle to that map. Its exact formal orbit construction is recorded with the proof correspondence.
 

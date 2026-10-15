@@ -670,8 +670,10 @@ theorem rankOne_energy (w y : Vec 2) : dot y (outer w w *ᵥ y) = (dot y w) ^ 2 
   ring
 
 /-- Item `C/10_Q/prose/014` (`companion/chapters/10_Q.tex:115`): "The right side is uniformly
-bounded on the compact band for small $d$. Multiplication by $\theta(z)^2$ proves (S). Equation
-(11) proves (V) with $m=4\theta_{\min}^2\eta^2$." On the band $K=\{\eta\le F\le B\}$, with
+bounded on the compact band for small $d$. Multiplication by $\theta(z)^2$ proves (S) of
+Chapter~\ref{comp:T}. Equation (10.11) proves (V) with $m=4\theta_{\min}^2\eta^2$." Corrected on
+15 October 2026 (M28: "Equation (11)" printed a number that no companion equation has; W26: "(S)
+of Chapter~\ref{comp:T}"). On the band $K=\{\eta\le F\le B\}$, with
 $0\le c_1$, $c_2<1$: some $C$ bounds the right side of display `disp/013` over eligible pairs with
 $d\le1$; some $C'$ gives (S) $y^TW(z)y=(y^T\theta(z)r(z))^2\le C't$ for those pairs; and (V)
 $g^TW(x)g=(g^T\theta(x)r(x))^2\ge4\theta_{\min}^2\eta^2$ at every differentiable point of the band,
@@ -795,7 +797,7 @@ theorem band_bounds {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) :
       (hgrad x hx g (convex_supporting_inequality P.objective_convex hg)) k
 
 /-- Item `C/10_Q/disp/017` (`companion/chapters/10_Q.tex:137-139`), with the claim of line 136:
-"By (12), bounded endpoints and gradients, and $e\le d$,
+"By (10.12), bounded endpoints and gradients, and $e\le d$,
 \[ y^Tr(x)=-2t+\varepsilon,\qquad |\varepsilon|\le C(|h|+d)." \]
 On the band $K$ ($0\le c_1$): some $C\ge0$ gives $|y^Tr(x)+2t|\le C(|h|+d)$ for every eligible
 pair in $K$ ($\varepsilon$ is $y^Tr(x)+2t$). -/
@@ -951,7 +953,7 @@ theorem band_radius {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) :
     abs_coordinate_of_sqNorm_le hR.le (by simpa only [sub_zero] using hrad x hx) k⟩
 
 /-- Item `C/10_Q/disp/023` (`companion/chapters/10_Q.tex:170-173`), with the claims of line 169:
-"By (13), the right side is $O(d)$ uniformly on the band. Since $h^2=O(d)$,
+"By (10.13), the right side is $O(d)$ uniformly on the band. Since $h^2=O(d)$,
 \[ \lambda=1+O(\sqrt d)>0,\qquad \log\lambda=-\frac{a_iu}{F(x)}h+O(d)." \]
 On the band $\{\eta\le F\le B\}$ ($\eta>0$, $0\le c_1$, $c_2<1$): constants $C$ and $\delta>0$
 chosen before the pairs such that every eligible pair in the band with $d\le\delta$ and every active
@@ -1394,13 +1396,15 @@ theorem segment_affine {m : ℕ} (P : Parabolic.Family m) (L : Fin m → Vec 2 �
   · rw [ht0']; field_simp; ring
 
 /-- Item `C/10_Q/prose/024` (`companion/chapters/10_Q.tex:198`): "The first is nonnegative.
-Whenever it vanishes, the second vanishes by (7)." On each cell (segment) of the envelope,
+Whenever it vanishes, the second vanishes by (10.7)." On each cell (segment) of the envelope,
 parametrized by $v_0$ (`envelopeCell j`), for every branch $i$: the first function
 (`envelopeDeficit i j`) is nonnegative and where it vanishes so does the second
 (`envelopeExponentDifference i j`). Also (item `prose/026`, "There are finitely many segments and
-pairs, proving (16)"): one constant $C$ for the finitely many pairs bounds the second by $C$ times
-the first on every segment (the case analysis of `segment_cases` is replaced in the library proof
-of `cell_pair_deficit_bound` by one affine-function lemma); (16) itself is `branch_change`. And the
+pairs, proving (10.16)"): one constant $C$ for the finitely many pairs bounds the second by $C$
+times the first on every segment (the case analysis of `segment_cases` is replaced in the library
+proof of `cell_pair_deficit_bound` by one affine-function lemma); (10.16) itself is `branch_change`.
+(The references printed "(12)", "(13)", "(7)" and "(16)" before the correction M28 of 15 October
+2026.) And the
 pruned family has the same objective and the same gradients at differentiable points. -/
 theorem segment_bound_facts {m : ℕ} (P : Parabolic.Family m) :
     (∀ i j v, v ∈ P.envelopeCell j → 0 ≤ P.envelopeDeficit i j v) ∧
@@ -1683,10 +1687,12 @@ theorem transport_loewner {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (hη :
   refine ⟨DEmbedding.rankOne_posSemidef (by linarith) v,
     DEmbedding.rankOne_posSemidef (by linarith) v⟩
 
-/-- Item `C/10_Q/prose/028` (`companion/chapters/10_Q.tex:217`): "This is (T). The general theorem
-proves convergence from every admissible initialization." (V), (S) and (T) together: for every
-compact $K$, $\eta>0$, $0\le c_1$, $c_2<1$, the field $W=(\theta r)(\theta r)^T$ is a band
-certificate (Definition `art:band-certificate`) on the positive band of $K$ (library
+/-- Item `C/10_Q/prose/028` (`companion/chapters/10_Q.tex:217`): "This is (T). The
+transported-certificate theorem of Chapter~\ref{comp:T} proves convergence from every admissible
+initialization." (Wording point W26 applied on 15 October 2026; before "The general
+theorem".) (V), (S) and (T) together: for every compact $K$, $\eta>0$, $0\le c_1$, $c_2<1$, the
+field $W=(\theta r)(\theta r)^T$ is a band certificate (Definition `art:band-certificate`) on the
+positive band of $K$ (library
 `exists_bandCertificate`), and the certificate theorem then gives convergence of every admissible
 run (`parabolic_convergence`). -/
 theorem band_certificate {m : ℕ} (P : Parabolic.Family m) {K : Set (Vec 2)} (hK : IsCompact K)
@@ -1833,7 +1839,7 @@ theorem example_applies :
     (objective_isGreatest Example.family) R⟩
 
 /-- Item `C/10_Q/disp/034` (`companion/chapters/10_Q.tex:239-246`), with the lead-in of line 238:
-"An especially simple scaling for (8) is
+"An especially simple scaling for (10.8) is
 \[ \theta(u,v)=\begin{cases}\exp\{u^2/F-1/3\},&v<-u^2,\\ 1,&-u^2<v<2u^2,\\
    \exp\{u^2/(2F)-1/6\},&v>2u^2.\end{cases} \]"
 $\theta$ is a variable with these defining equations on the three open regions. Off the two

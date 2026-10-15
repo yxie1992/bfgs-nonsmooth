@@ -5,9 +5,9 @@ import BfgsArticle.Coverage.Article.Global
 # Lean coverage: `companion/current_verification.tex`
 
 The dated verification record that opens Chapter 14 of the companion (`\input` at
-`companion/chapters/14_E.tex:5`): "The 13 October 2026 Lean review" and "The 12 September 2026
-narrative-revision replay". The file is written by hand. Register:
-`editorial/lean_coverage/register/C_current_verification.json`.
+`companion/chapters/14_E.tex:5`): "The October 2026 Lean review" (before 15 October 2026 "The 13
+October 2026 Lean review") and "The 12 September 2026 narrative-revision replay". The file is
+written by hand. Register: `editorial/lean_coverage/register/C_current_verification.json`.
 
 ## Reading
 
@@ -15,8 +15,12 @@ narrative-revision replay". The file is written by hand. Register:
   path was checked (736 modules; the 12 September audit `SUMMARY.json`: 9,672 / 9,781 / 7,954, nine
   dependencies unchanged, status PASS; the two supplements: 3 module-owned theorems and 31,960
   dependencies, 11 declarations and 10,697; the article-geometry review: 14 declarations and 26,496;
-  the branch review: 3 declarations and 37,525). Stale, as expected: "All 2026 Lean names" (line 8);
-  `bfgs_lean_article/AXIOM_AUDIT.json` now checks 3862 names.
+  the branch review: 3 declarations and 37,525). Lines 8-11 were refreshed on 15 October 2026
+  (wording point W30): "All 2026 Lean names" became the 5403 names of the axiom audit of that day
+  (`bfgs_lean_article/AXIOM_AUDIT.json`, commit `9f03d7c`, PASS: every name then cited by the
+  claim ledger or the coverage registers and the principal declarations of the package), and the
+  kernel replay re-checked every project module except the two root modules, which contain only
+  imports (783 of 785 modules; `bfgs_lean_article/KERNEL_REPLAY.json`, PASS).
 * The mathematical sentences restate article and chapter results and are `SAME_AS` those items:
   the lower-curvature failures for every $0<c_1\le1/3$, $c_1<c_2<1$ with one orbit, objective and
   set of starts (lines 6-8: Proposition `art:quadratic_failure`, Theorem

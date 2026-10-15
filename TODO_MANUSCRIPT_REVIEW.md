@@ -7,388 +7,13 @@ M12 on and in the W items, in the companion (`companion/`). The seed
 numerics were re-checked in the first reading and all matched. Unless an item says
 otherwise, no mathematical statement and no Lean declaration changed.
 
-**Status (15 October 2026):** M1 to M11 are resolved in the article (M7 to M11 on
-15 October, after the Lean coverage); the companion still repeats M8. M12 to M29
-and the wording points W1 to W43 were found by the Lean coverage work
-(`TODO_LEAN_COVERAGE.md`); M30 to M41 by the line-by-line reading of the article
-(15 October). All are open and are being applied in step 2.
-
-## Open (found by the Lean coverage, 14 October 2026)
-
-The article's items M7 to M11 were corrected on 15 October 2026 (see "Resolved").
-The companion recurrences of M8 stay open here.
-
-- [ ] **M8 in the companion: "branches that lose second differentiability".**
-  The article's three sentences now say that three of the four branches lose
-  second differentiability (M8 under "Resolved"). The companion still says it of
-  all branches:
-  - Chapter 13: `companion/chapters/13_L.tex:3`, "The local finite-branch functions
-    have Lipschitz gradients but lose second differentiability at the accumulation
-    point", says the same (`Ch13L.branch_regularity`; line 413 of that chapter has it
-    right). It is the hand-written introduction `introductions['L']` in
-    `editorial/generate_companion.py`. Proposed: "…have Lipschitz gradients; three of
-    the four lose second differentiability at the accumulation point."
-    (`C/13_L/prose/002`)
-  - Chapter 1 repeats it at `companion/chapters/01_I.tex:103` (N2): "The individual
-    branches \textbf{are not twice differentiable at the accumulation point}." follows
-    "One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex,
-    gradient-Lipschitz branches", so it speaks of all four (`Ch13L.branch_regularity`,
-    `Ch01I.n1_n2_comparison`). Proposed: "Three of the four branches \textbf{are not
-    twice differentiable at the accumulation point}." Fix: a logged replacement in the
-    `if module=='I':` block of `editorial/generate_companion.py`, with its own kind and
-    reason (not `constant_range['I']`, whose reason concerns the line-search range), of
-    `The individual branches \textbf{are not twice differentiable at the accumulation point}.`
-    (frozen `bfgs_lean_stage1/master_report/latex/chapters/inventory.tex:81`, span
-    `I.span.6`, occurs once). The item then becomes `LEAN`. (`C/01_I/prose/023`)
-  - The research story paraphrases the abstract's sentence at
-    `companion/research_story.tex:51-53`: "A different embedding preserves uniform
-    strong convexity with $C^{1,1}$ branches that lose second differentiability at the
-    accumulation point" (`Ch13L.branch_regularity`, `Ch01I.n2_four_branch_version`).
-    Proposed, a direct edit (the file is written by hand): `branches that lose second
-    differentiability at` (occurs once) → `branches, three of which lose second
-    differentiability at`. (`C/research_story/prose/029`)
-## Open: companion discrepancies (found by the Lean coverage, 14 October 2026)
-
-Each item is a `DISCREPANCY` in `editorial/lean_coverage/register/C_*.json`; the
-intended statement is proved in `bfgs_lean_article/BfgsArticle/Coverage/Companion/`,
-and independent review confirmed each item. Recurrences of earlier items are listed
-under those items (M8, M12, M24). The chapters are generated: fix them through
-`editorial/generate_companion.py` (the seed appendix through
-`editorial/prepare_shared_appendix.py`) and regenerate.
-
-- [ ] **M12: Theorem `L:thm:local` denies a finite smooth-branch representation.**
-  `companion/chapters/13_L.tex:59`: the last clause, "the latter version has a
-  countable polyhedral nonsmooth part, not a finite smooth-branch representation",
-  read literally ("has no finite smooth-branch representation"), is false even for
-  branches of the class of the theorem's first version: the step version is the
-  maximum of ten globally $C^{1,1}$, uniformly strongly convex branches (quadratic
-  splines on the geometric pieces; checked with exact rational arithmetic by the
-  independent review, not formalized in Lean). The descriptive reading, a countable
-  polyhedral nonsmooth part, is true (`Ch13L.local_failure`) and intended (line 403:
-  "No claim of four smooth branches is made for this alternative"). Proposed: drop
-  ", not a finite smooth-branch representation", or "…constructed from a countable
-  polyhedral nonsmooth part rather than from four smooth branches". The clause is
-  in the frozen span `L.span.2` (`bfgs_lean_stage1/master_report/latex/chapters/L.tex:52`):
-  add a logged `if module=='L':` transformation with its own reason. The item then
-  becomes `LEAN`. (`C/13_L/theorem/L:thm:local`)
-  Chapter 1 repeats the clause at `companion/chapters/01_I.tex:103` (N2): "Another
-  version has one constant SPD classical Hessian wherever it exists, but a countably
-  piecewise-affine nonsmooth component rather than finitely many smooth branches."
-  The descriptive reading is proved (`Ch13L.local_failure`,
-  `Ch13L.step_decomposition`). Proposed: "…wherever it exists; it is constructed from
-  a countably piecewise-affine nonsmooth component rather than from four smooth
-  branches." Fix: in the same module-I block as M8's Chapter 1 fix, replace
-  `wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.`
-  (`inventory.tex:81`, span `I.span.6`, occurs once) by
-  `wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.`
-  The item then becomes `LEAN`. (`C/01_I/prose/024`)
-- [ ] **M13: Chapter L says it uses a fixed line-search pair.** `13_L.tex:413`:
-  "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
-  parameter family is not imported." is a remnant of the fixed-pair edition. Since
-  the transformation of 13 October (`constant_range['L']` in
-  `editorial/generate_companion.py`), the chapter fixes an arbitrary pair
-  $0<c_1\le1/3$, $c_1<c_2<1$ and proves its theorems for every such pair
-  (`Ch13L.global_failure`, `local_failure`), which is Chapter D's family
-  (`12_D.tex:58-60`). No result is affected. Proposed: delete the sentence, or
-  "Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$,
-  $c_1<c_2<1$." Fix: a new `constant_range['L']` entry. (`C/13_L/prose/082`)
-- [ ] **M14: Chapter D denies analyticity of all four branches.**
-  `companion/chapters/12_D.tex:380`: "Thus the branches below are in $C^{2,1}$ as
-  well. This does not make them analytic or uniformly strongly convex." The fourth
-  branch of `D:fullobjective`, $f_3(u,v)=v$, is linear, hence analytic
-  (`Ch12D.branch3_analytic`). The rest holds (`Ch12D.not_analytic`): $f_0,f_1,f_2$
-  are not analytic, and no branch, $f_3$ included, is uniformly strongly convex
-  (each is constant along a nonzero direction). The same kind of slip as M8.
-  Proposed: "This does not make $f_0,f_1,f_2$ analytic, nor any branch uniformly
-  strongly convex." ($f_0,f_1,f_2$ are defined only in Section 12.5; "the first
-  three branches" avoids the forward reference.) Fix: a logged transformation of
-  module D (the sentence is in the frozen span `D.span.7`, source
-  `bfgs_lean_stage1/master_report/latex/chapters/D.tex:358`). (`C/12_D/prose/047`)
-- [ ] **M15: Companion appendix: the interval operations do not give the table's
-  decimals.** `companion/appendices/seed_certificate.tex:190`: "The same interval
-  operations give the value enclosures in that table." is copied from the article
-  (`paper/appendices/seed_certificate.tex:191`), whose Table `art:trial_table` lists
-  rational enclosures of $10^4G$. The companion's table (Section 12.3,
-  `12_D.tex:205-218`, with the current values in the display after it) lists
-  twelve-digit decimals, and the appendix's interval operations, which run on the
-  query box, cannot give them: $G(z_0)$ varies by about $4.4\cdot10^{-6}$ over that
-  box, so every enclosure valid on it is wider than $10^{-6}$
-  (`Companion.SeedCertificate.query_box_too_coarse`). They give enclosures of width
-  at most $4\cdot10^{-4}$ of every current and trial value
-  (`Companion.SeedCertificate.table_enclosure_widths`); the decimals are nearest
-  roundings, proved separately (`Ch12D.trial_table`, `Ch12D.starting_values`).
-  Proposed (companion only): "For each trial value $G(z_j+\alpha p_j)$ in the table
-  of Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display
-  after it, the same interval operations give a rational enclosure of width at most
-  $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory.", or drop the
-  sentence. Fix: a companion-only replacement in `prepare_shared_appendix.py`.
-  (`C/seed_certificate/prose/006`)
-- [ ] **M16: Companion appendix: two references keep the article's structure
-  (typo).** `prepare_shared_appendix.py` turns the article's subsections into
-  sections and maps the table label `art:trial_table` to `comp:trial_table`, which
-  labels a section heading of Chapter D. (a) `seed_certificate.tex:13-15`: "The
-  matrix calculation in the next subsection" means the next section, A.2. Proposed:
-  "in the next section" (the source breaks the line after "next": replace
-  `'the next\nsubsection'`). (`C/seed_certificate/prose/002`) (b) Lines 185–186:
-  "in the order of Table~\ref{comp:trial_table}" prints "Table 12.3", but 12.3 is a
-  section (and the number of equation `D:rho`); there is no Table 12.3. Proposed:
-  "in the order of the table in Section~\ref{comp:trial_table}" (replace
-  `Table~\ref{art:trial_table}` before the label loop).
-  (`C/seed_certificate/prose/024`) The claims hold
-  (`Article.SeedCertificate.clearing_denominators`, `query_lower_bounds`).
-- [ ] **M17: Chapter H's references keep its source note's numbering (typo).**
-  `companion/chapters/07_H.tex`: "Expanding (2.1)" (line 284) and "Equation (2.1)
-  then implies" (line 421) mean the Hessian form (7.2.1); "telescoping (5.2)" (line
-  341) means (7.5.2); "Equation (7.3)" (line 577) and "By (7.3)" (line 599) mean
-  (7.7.3); "using (7.1)" (line 655) means (7.7.1); "Formula (7.2)" (line 714) means
-  (7.7.2); and the title of Section 7.5 (lines 234–235, also in the table of
-  contents), "Homogeneous potential and proof of Theorem A", means Theorem 7.A. In
-  the PDF, (2.1) and (5.2) are unrelated displays of Chapters 2 and 5, while
-  (7.1)–(7.3) and Theorem A do not exist. Cause: `generate_companion.py:69` renumbers
-  only `H.`-prefixed references, and the source
-  (`bfgs_lean_stage1/master_report/latex/chapters/H.tex:200-201, 242, 294, 371, 511,
-  529, 585, 644`) writes these eight without the prefix. Fix: a logged module-H
-  transformation, applied before the numbering loop (lines 68–69), that adds the
-  prefix (`'Theorem\nA}'` → `'Theorem\nH.A}'`, `'(2.1)'` → `'(H.2.1)'` twice,
-  likewise `'(5.2)'`, `'(7.3)'` twice, `'(7.1)'` and `'(7.2)'`), each with an assert
-  on its occurrence count; then check Section 7.5's heading and the table of
-  contents. The mathematics holds with the intended references
-  (`Ch07H.energy_identity`, `weighted_sum_finite`, `common_vector_energy_step`,
-  `endpoint_pairings`, `iterate_lift`, `zero_limit_formula`, `theorem_7A`).
-  Related, not an error: the bold "Lemma 7.3" (line 405) is the source's Lemma H.3;
-  the chapter has no Lemma 7.1 or 7.2. (`C/07_H/prose/028`)
-- [ ] **M18: Chapter 11's references keep its source note's numbering (typo).**
-  `companion/chapters/11_U.tex`: eight bare references print literally and point to
-  nothing (companion equations and theorems are numbered c.n, and this chapter's
-  equation tags are (11.10)–(11.21)). "Theorems 1 and 2" (line 171) means Theorems
-  11.1 and 11.2; "(11)" (lines 269 and 340) means (11.11); "Thus (6) holds with
-  $T=I$ and" (line 302) means the transport hypothesis
-  $V_{k+1}=V_kT_k+s_kb_k^T+R_k$ of Theorem `M:residualtheorem` (Theorem 2.4, an
-  unnumbered display at `02_M.tex:230`); "(16)--(17)" (line 352) means
-  (11.16)–(11.17); "(21)" (line 415) means (11.21); "(18)" (line 433) means (11.18);
-  "(20)" (line 447) means (11.20). The mathematics holds with the intended
-  references: along accepted pairs, (11.14) is that transport hypothesis with
-  $T_k=I$, rank-one term $s_k(\beta_ke_n)^T$ and $R_k=-\beta_kP_Ss_ke_n^T$
-  (`Ch11U.transport_hypothesis`). Fix: a logged `if module=='U':` transformation in
-  `generate_companion.py` on the frozen
-  `bfgs_lean_stage1/master_report/latex/chapters/U.tex`; each old string occurs once:
-  `covers Theorems 1 and 2.` (U.tex:153) → `covers Theorems 11.1 and 11.2.`;
-  `follows from (11).` (239) → `follows from (11.11).`;
-  `Thus (6) holds with \(T=I\) and` (268) → `Thus (11.14) is the transport
-  hypothesis of Theorem~\ref{M:residualtheorem}, with \(T=I\), rank-one term
-  \(s(\beta e_n)^T\) and` (this avoids the letter $b$, which is the hyperplane offset
-  in this chapter); `This replaces (11).` (302) → `This replaces (11.11).`;
-  `Equations (16)--(17)` (314) → `Equations (11.16)--(11.17)`; `bound the left side
-  of` + newline + `(21).` (376–377) → `… (11.21).`; `truncate (18).` (391) →
-  `truncate (11.18).`; `For the objective (20),` (405) → `For the objective (11.20),`.
-  Do not replace "(11)" globally: Chapter 10 prints a bare "(11)" that means (10.11).
-  If the section numbering changes as well (W13), these numbers change with it.
-  (`C/11_U/prose/027`; notes on `prose/026`, `prose/029`, `prose/043`)
-- [ ] **M19: Chapter 11: a cubic bound printed without its range (typo).**
-  `11_U.tex:389-391`: "$0\le r'(v)\le6v^2$, $0\le r(v)\le6v^3$ near zero" omits
-  $v\ge0$. The spike $r$ of (11.18) vanishes for $v\le0$, so $r(v)=0>6v^3$ for every
-  $v<0$ (`Ch11U.spike_cubic_bound_fails`). Both bounds hold for every $v\ge0$
-  (`Ch11U.spike_small_bounds`), and the chapter uses only $v\ge0$. A parallel of M9.
-  Proposed: "… for $v\ge0$." Fix: in the module-U transformation of M18,
-  `\] near zero. However,` (U.tex:353, occurs once) → `\] for \(v\ge0\). However,`.
-  (`C/11_U/disp/026`)
-- [ ] **M20: Chapter 9 refers to a result by its source note's letter (typo).**
-  `companion/chapters/09_C.tex:398` (Section 9.7.1, page 57 of the built companion):
-  "Combining A's low affine-critical gap with Theorem 9.1 gives the following
-  restricted planar basin conclusion." The printed companion numbers its chapters
-  and shows no source letters; its only "A" is Appendix A (the seed certificate),
-  which has no such gap. Meant: Proposition 8.1 (`A:semialgebraic`, "A low-level
-  affine-critical gap"). The generator rewrites module letters only in prefixed tags,
-  "Module A" phrases and citation keys. Proposed: "Combining the low affine-critical
-  gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster} gives the
-  following restricted planar basin conclusion." Fix: a logged transformation in the
-  `if module=='C':` block of `generate_companion.py` on the frozen
-  `master_report/latex/chapters/C.tex:364` (span `C.span.12`), old string
-  `Combining A's low affine-critical gap with Theorem~\ref{C:thm:cluster}` (occurs
-  once). The corrected claim is `Ch09C.semialgebraic_low_basin` (with
-  `RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap`, the Lean form of
-  Proposition 8.1, and `semialgebraic_planar_low_basin`). (`C/09_C/prose/117`)
-- [ ] **M21: Chapter 5 cites "the preceding theorem" for Chapter 3's theorem (typo).**
-  `companion/chapters/05_G.tex:59` (Section 5.1): "The preceding theorem says that this
-  condition implies objective convergence for every admissible infinite full-BFGS run
-  in $K$, and iterate convergence under uniqueness." In the companion the theorem
-  before this sentence is Theorem `R:thm:plq` (finite polyhedral partitions,
-  `04_R.tex:292`), which says nothing of the kind. Meant: Chapter 3's "One-sided
-  transported-certificate convergence" (`03_T.tex:90-111`, no label; item
-  `C/03_T/theorem/001`, `Ch03T.one_sided_convergence`), whose hypothesis is this
-  condition. The stale reference is already in the frozen source. A parallel of M10.
-  Proposed: "The one-sided transported-certificate convergence theorem of
-  Chapter~\ref{comp:T} says that this condition implies …". Fix: a new logged
-  `if module=='G':` block of `generate_companion.py` (with M22 and M23), old string
-  `The preceding theorem says that this condition implies` (G.tex:49, occurs once).
-  The content holds as intended (`Ch05G.preceding_theorem`,
-  `Ch05G.sufficient_condition`). (`C/05_G/prose/008`)
-- [ ] **M22: Chapter 5: no certificate "on a sublevel containing zero" (imprecision).**
-  `05_G.tex:269` (Section 5.6): "Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite
-  strongly convex example with global convergence but no global certificate on a
-  sublevel containing zero." Read for every sublevel containing zero, this is false
-  at the boundary: $\{f\le2\}=[-2,0]$ is compact and contains $0$ ($f(0)=2$), yet each
-  of its positive bands carries a certificate for $(c_1,c_2)=(1/4,1/2)$ ($W\equiv1$,
-  $m=2\eta$, $C=1$, $L=0$, $\delta=1$: every differentiable point of $\{f\le2\}$ is
-  negative, where $f(x)=\frac12(x+1)^2+\frac32$; `Ch05G.two_sublevel_counterexample`,
-  `twoCert`, found by the independent review). The sentence also leaves the
-  line-search constants implicit: with the constants $(1/8,1/4)$ that Section 5.4 uses
-  for the same $f$ (line 219), every compact positive band carries $W\equiv1$; the
-  claim needs $(1/4,1/2)$, stated at line 278. Proposed: "… but, for
-  $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel containing zero in its
-  interior." Fix: in the module-G block, `but no global certificate on a sublevel
-  containing zero.` (G.tex:251, occurs once). The corrected claim:
-  `Ch05G.shifted_global_nonnecessity_interior` (with `interior_sublevel_no_certificate`
-  and `zero_mem_interior_iff`: $0$ is interior to $\{f\le b\}$ iff $b>2$); runs exist
-  (`Ch05G.shiftedRun`). (`C/05_G/prose/053`)
-- [ ] **M23: Chapter 5: no certificate "on a positive band containing this knot"
-  (imprecision).** `05_G.tex:321` (Section 5.7): "No certificate exists on a positive
-  band containing this knot." False when the knot lies on the boundary of the band:
-  for every knot $a=(1/4)^j$, $K=\{h\le h(a)\}$ and $\eta=h(a/4)$, the band $K_\eta$
-  contains $a$ and carries the certificate $W\equiv1$, $m=2h(a/4)=13a^2/80$, $C=1$,
-  $L=0$, $\delta=a^2/8$ for $(c_1,c_2)=(1/4,1/2)$
-  (`Ch05G.knot_band_literal_counterexample`, `edgeCert`). The argument of lines
-  307–320 needs the pairs $a\pm\epsilon$ in the band, that is, the knot in its
-  interior. Proposed: "No certificate exists on a positive band whose interior
-  contains this knot ($b>h(a)>\eta$)." Fix: in the module-G block, `No certificate
-  exists on a positive band containing this knot.` (G.tex:299, occurs once). The
-  corrected claim: `Ch05G.no_certificate_knot_band` (every knot, every
-  $b>h(a)>\eta>0$, via `Ch05G.small_crossing_no_certificate`). (`C/05_G/prose/063`)
-
-  For M21–M23: no replacement adds a line, so the register's line numbers stay;
-  after regenerating, update the three items' anchors and set them to `LEAN` with
-  the names above, then build and inspect Chapter 5 (pages 33–39).
-- [ ] **M24: Chapter 3 says that (S) "is exactly" (RS) (imprecision).**
-  `03_T.tex:225`: "Condition (S) is exactly (RS), while
-  $\Pi_s(z-x_*)=\Pi_s(x-x_*)$ makes (T) an equality with $L=0$." With the radial
-  field $W(x)=(x-x_*)(x-x_*)^T$ of line 219 the two inequalities coincide
-  ($y^TW(z)y=N^2$, $t=T$), but they cover different pairs: (S) only eligible pairs
-  $x,z\in K_\eta$ with $d\le\delta_\eta$ (line 106), (RS) (`04_R.tex:53-59`) all
-  differentiable $x,z\in K$ with $F_*+\eta\le F(z)\le F(x)$ and $T>0$. So (RS) gives
-  (S) with the same constant (`Ch03T.rs_gives_s`, `radial_secant_exact`), and the
-  conclusion at line 229 holds (`Ch03T.rs_covered`), but not conversely: for
-  $F(x)=\max\{|x|,2x-1\}$, $K=\{F\le2\}$ and any $c_2<1/2$, (S) holds for the radial
-  field with $C_\eta=6$ on every band and the field is a band certificate, yet (RS)
-  fails at $\eta=1/2$: the pairs $x=1+\varepsilon$, $z=1-\varepsilon$ have
-  $N^2/T=(1-\varepsilon)^2/(2\varepsilon)\to\infty$ and are not eligible ($t=d/2$)
-  (`Ch03T.s_not_exactly_rs`). The companion itself separates the two (line 231,
-  "violates even the eligible-pair radial condition"; `10_Q.tex:300`). Proposed:
-  "With this $W$, (S) is the inequality of (RS) restricted to eligible pairs in
-  $K_\eta$ with $d\le\delta_\eta$, so (RS) gives (S) with the same constant, while".
-  Fix: a logged module-T replacement of `Condition (S) is exactly (RS), while`
-  (`master_report/latex/chapters/T.tex:199`, occurs once). (`C/03_T/prose/029`)
-  Chapter 1 repeats it at `companion/chapters/01_I.tex:153` (P1): "RS is the radial
-  specialization \(W(x)=(x-x_*)(x-x_*)^T\)." (`Ch03T.rs_gives_s`, `Ch03T.rs_covered`,
-  `Ch03T.s_not_exactly_rs`; the rest of the paragraph, "The inclusion of RS is
-  strict", agrees). Proposed: "RS implies the radial specialization
-  \(W(x)=(x-x_*)(x-x_*)^T\)." Fix: in the module-I block of
-  `editorial/generate_companion.py`, replace
-  `RS is the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\).` (frozen
-  `inventory.tex:119`, span `I.span.9`, occurs once); "Its equivalent inward Taylor
-  condition…" then still refers to RS. The item then becomes `LEAN`.
-  (`C/01_I/prose/048`)
-- [ ] **M25: Chapter 3's proof cites (3.3)–(3.6) as (3)–(6) (typo).** `03_T.tex:148`
-  "Using (3)--(4), the Loewner inequality (T), and (S)," means (3.3)–(3.4); line 160
-  "Divide (6) by $P_{k+1}$ and sum" means (3.6); line 165 "This contradicts (5)."
-  means (3.5). The source tags these equations (T.3)–(T.6) but cites them without
-  the prefix (T.tex:134, 146, 151), and `generate_companion.py:69` renumbers only
-  prefixed references, so the PDF (page 23, printed 17) prints numbers that exist
-  nowhere in the companion; the same slip as M17 and M18. The mathematics holds with
-  the intended references (`Ch03T.hessian_form`, `annihilation_projection`,
-  `trace_recurrence`, `reciprocal_budget`, `reciprocal_mean_diverges`,
-  `one_sided_convergence`). Fix: logged module-T replacements, each occurring once
-  in T.tex: `Using (3)--(4),` → `Using (3.3)--(3.4),`, `Divide (6) by` →
-  `Divide (3.6) by`, `This contradicts (5).` → `This contradicts (3.5).`
-  (`C/03_T/prose/042`)
-- [ ] **M26: "The preceding moving-frame theorem" (Chapter 3, typo).**
-  `03_T.tex:196`: "Unlike the preceding moving-frame theorem, there is no requirement
-  that $\lambda$ be invertible or bounded away from zero." The only moving-frame
-  theorem before it is Theorem `M:residualtheorem` (`02_M.tex:220-237`), which
-  requires no invertible transport either (`02_M.tex:236`: "No full-rank frame or
-  invertible transport is required."; `Ch02M.residual_theorem`), so the contrast is
-  false for the literal referent. Meant: the moving-frame criterion stated in prose
-  in Section 2.4 (`02_M.tex:196-211`), which assumes bounded norms and bounded inverse
-  norms of the products $P_{k+1}=P_kT_k$ (`Ch02M.frame_criterion`). The claim about
-  Chapter 3 holds: its scalar condition allows $\lambda=0$
-  (`Ch03T.rank_one_degenerate`), even where $\lambda=0$ is forced
-  (`Ch03T.degenerate_multiplier`). Same kind as M21. Proposed: "Unlike the
-  moving-frame criterion of Section~\ref{M:energy}, …" (prints "Section 2.4"). Fix: a
-  logged module-T replacement of `Unlike the preceding moving-frame theorem,`
-  (T.tex:174, occurs once). (`C/03_T/prose/043`)
-
-  For M24–M26: one `if module=='T':` block in `generate_companion.py`, after the
-  `constant_range` loop and before `if module=='E':`. No replacement adds a line.
-  After regenerating, update the anchors of the three items and set them to `LEAN`
-  (first names `rs_gives_s`, `trace_recurrence`, `rank_one_degenerate`), update the
-  TeX quotations in the docstrings of `Ch03T.trace_recurrence`, `reciprocal_budget`,
-  `radial_secant_exact` and `rank_one_degenerate`, then build and inspect pages
-  23–24 (printed 17–18).
-- [ ] **M27: Chapter 6 names its source working reports by bare letters (typo).**
-  `06_F.tex:9` (first paragraph of Section 6.1, printed page 34): "This module
-  collects the nonredundant structural consequences from [M], [P], [E] and [Q]." The
-  bracketed letters print literally and resolve to nothing: the companion has no
-  bibliography entry or label [M], [P], [E] or [Q], [P] matches no chapter, and [M],
-  [E], [Q] read as the letters of Chapters 2, 14 and 10, which they do not mean. In
-  the sources they are the working reports [SM], [SP], [SE] and [SQ] of the original
-  master report (`BFGS_MASTER_REPORT_LaTeX/report/master.tex:130`, module F:
-  "Consolidated proofs from [SM], [SP], [SE] and [SQ]"; `report/bibliography.tex:11,
-  17, 18, 19`). `generate_companion.py:29` maps the citation keys SP, SQ, SE to
-  Chapter F itself and SM to Chapter M, but bare bracketed letters are not
-  citations; "This module" is the sources' word for a chapter (W8). No mathematical
-  content. Proposed: "This chapter collects nonredundant structural consequences of
-  the general theory." (or "… of the energy theory of Chapter~\ref{comp:M}.", or
-  drop the sentence). Fix: a logged `if module=='F':` replacement of `This module
-  collects the nonredundant structural consequences from [M], [P], [E] and [Q].`
-  (`master_report/latex/chapters/families.tex:7`, span `F.span.1`, occurs once);
-  regenerate, inspect printed page 34. The item then becomes `NON_CLAIM`.
-  (`C/06_F/prose/002`)
-- [ ] **M28: Chapter 10's references keep its source note's numbering (typo).**
-  `10_Q.tex`, Sections 10.5.2–10.6, printed pages 62–64: "Equation (11) proves (V)
-  with $m=4\theta_{\min}^2\eta^2$" (line 115) means (10.11); "By (12), bounded
-  endpoints and gradients, and $e\le d$," (line 136) means (10.12); "By (13), the
-  right side is $O(d)$ uniformly on the band." (line 169) means (10.13); "Whenever it
-  vanishes, the second vanishes by (7)." and "There are finitely many segments and
-  pairs, proving (16)." (line 198) mean (10.7) and (10.16); "An especially simple
-  scaling for (8) is" (line 238) means (10.8). No companion equation is numbered (7),
-  (8), (11), (12), (13) or (16); the six print literally. Cause:
-  `generate_companion.py:69` renumbers only `Q.`-prefixed references, and the source
-  writes these six without the prefix. Same slip as M17, M18 and M25; the
-  mathematics holds with the intended references. Fix: a logged `if module=='Q':`
-  block applied before the numbering loop (lines 68–69) that adds the prefix, with
-  these strings of `master_report/latex/chapters/Q.tex`, each occurring once (assert
-  the counts): `(11)` (Q.tex:101), `(12)` (:118), `(13)` (:147), `(7)` and `(16)`
-  (:176), `(8)` (:212); the existing substitution then prints (10.11), (10.12),
-  (10.13), (10.7), (10.16), (10.8). Only Q's text is touched, so Chapter 11's bare
-  "(11)" (M18) is unaffected. Regenerate, inspect printed pages 62–64. Lean:
-  `Ch10Q.secant_visibility`, `radial_error`, `multiplier_estimates`,
-  `segment_bound_facts`, `branch_change`, `example_scale`. (`C/10_Q/prose/014`)
-- [ ] **M29: Chapter 14 refers to Chapters 13 and 4 by their source letters (typo).**
-  (a) `companion/chapters/14_E.tex:18` (Section 14.1, printed page 89): "The
-  stable-manifold conclusion in L follows from the actual return map and a proved
-  analytic argument, not a numerical starting vector assumed to lie on that manifold."
-  (b) `14_E.tex:136` (Section 14.3.11 "R-interpretation", printed page 91): "The
-  explicit four-piece objective in R is a new specified reconstruction with an actual
-  full-BFGS failure run; it is not asserted to be an unidentified historical
-  objective." "L" and "R" are the source letters of Chapter 13 (lower curvature) and
-  Chapter 4 (radial modeling; the four-piece objective is built in Section 4.3). The
-  printed companion numbers its chapters 1 to 14 and its appendices A and B, so the
-  two labels resolve to nothing; the suite names of Section 14.3 ("L-hyperbolicity",
-  "R-interpretation", …) do not define them. The letters are used as places ("in L",
-  "in R"), so this is the pattern of M20 and M27, not of W22 (letters naming
-  objects). The generator rewrites module letters only in prefixed tags, "Module X"
-  phrases and citation keys. Proposed: "in Chapter~\ref{comp:L}" and "in
-  Chapter~\ref{comp:R}". Fix: two logged transformations in the `if module=='E':`
-  block of `editorial/generate_companion.py`, on the frozen
-  `master_report/latex/chapters/verification.tex` (assert the counts): (a) line 7,
-  span `E.span.2`: `The stable-manifold conclusion in L follows` (occurs once) →
-  `The stable-manifold conclusion in Chapter~\ref{comp:L} follows`; (b) line 73, span
-  `E.span.15`: `The explicit four-piece objective in R is` (occurs once) → `The
-  explicit four-piece objective in Chapter~\ref{comp:R} is`. No line is added.
-  Regenerate, inspect printed pages 89 and 91. The mathematics holds: (a)
-  `LowerCurvature.stable_manifold_positive_scale`, `Ch13L.global_failure`,
-  `LowerCurvature.quadratic_failure`; (b) `Ch04R.fourPiece_failure_run`,
-  `reconstructedFourPieceFailure`, `Ch04R.fourPiece_objective_formula`.
-  (`C/14_E/prose/013`, `C/14_E/prose/061`)
+**Status (15 October 2026):** M1 to M29 are resolved: M1 to M6 on 13 October; M7 to
+M11 in the article and M12 to M29, with the companion's recurrences of M8, on 15
+October, after the Lean coverage. The companion's wording points W1 to W11 and W14 to
+W46 were applied on 15 October (W44 to W46 were found while applying the others or by
+their independent review); W12 and W13 are left for the author. Open: M30 to M41,
+found by the line-by-line reading of the article (15 October) and being applied in
+step 2, W31's claim/proof index, and W47.
 
 ## Open: line-by-line reading of the article (15 October 2026)
 
@@ -416,9 +41,10 @@ All are to be applied in step 2; the points marked "author" are left for step 3.
   smooth. The branches fail to be $C^2$ only at $0$, the minimizer, where the copies
   accumulate (Theorem `art:local-failure-lower` says "at zero", the introduction "at
   the minimizer"). Proposed: "at the minimizer" (in Section 6 once with "where the
-  copies accumulate"). The companion has the same phrase (`13_L.tex:3`,
-  `01_I.tex:103`, `research_story.tex:52-53`); it is fixed with M8's companion
-  recurrences. (R-A-1, R-E-2; `A/master/prose/009`, `A/failure/table/art:regularity-map`,
+  copies accumulate"). The companion had the same phrase at `13_L.tex:3`,
+  `01_I.tex:103` and `research_story.tex:52-53`, corrected with M8's companion
+  recurrences on 15 October; `01_I.tex:107` and `13_L.tex:413` remain.
+  (R-A-1, R-E-2; `A/master/prose/009`, `A/failure/table/art:regularity-map`,
   `A/lower_curvature/prose/010` and the Section 6 prose items.)
 - [ ] **M31: Table `art:positive-outcomes` omits two hypotheses.** (a) The caption
   infers global convergence for $u^2+|v|$ from compact sublevels alone; the
@@ -451,8 +77,9 @@ All are to be applied in step 2; the points marked "author" are left for step 3.
   (`LUniform.orbit_exists`, `LUniform.source_spec`: every iterate in $U$;
   `LUniform.uniform_global_failure`; `copy_runs`); the register's reading
   `LowerCurvature.quadratic_failure` has to gain `x 0 ∈ V`. Four replacements in
-  `lower_curvature.tex`; the companion repeats the slip at `13_L.tex:237`, `355`,
-  `363` (fixed with the companion corrections). (R-F-1;
+  `lower_curvature.tex`; the companion repeated the slip at `13_L.tex:237`, `355`,
+  `363`; it was corrected there on 15 October (see "M33, companion part" under
+  "Resolved"). (R-F-1;
   `A/lower_curvature/proposition/art:quadratic_failure`, `proof/002`, `prose/027`,
   `prose/028`, `disp/021`.)
 - [ ] **M34: Proof steps left out.** Each fix adds a clause or a sentence.
@@ -537,33 +164,40 @@ All are to be applied in step 2; the points marked "author" are left for step 3.
 Found by the companion coverage and its reviews. Each statement is true as
 intended, so its register item is not a `DISCREPANCY`, but a hypothesis is left
 implicit, a symbol is undefined, a sentence is an editorial remnant or a printed
-proof shows less than its statement (Lean proves the statement). Optional; decide
-in the line-by-line reading. The chapters are generated: change them through
+proof shows less than its statement (Lean proves the statement). W1 to W11 and W14 to
+W46 were applied on 15 October 2026 with the companion corrections, as proposed in
+each entry unless the entry says otherwise; W12 and W13 are left for the author.
+W44 to W47 were found while applying the others or by the independent review of
+the corrections; W47 is open. The chapters are generated: change them through
 `editorial/generate_companion.py` (the seed appendix through
 `editorial/prepare_shared_appendix.py`) and regenerate.
 
-- [ ] **W1: Bounded gradients left implicit (Chapter M).**
+- [x] **W1: Bounded gradients left implicit (Chapter M).**
   `companion/chapters/02_M.tex:194`: "$\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes
   a positive gap" needs $\sum_kq_k^{-1}\to\infty$, which Theorem `M:average`
   provides along runs with bounded gradients. No counterexample without that
   hypothesis is known; the same point as M10, to be applied with it. Proposed:
   "Thus, along runs with bounded gradients, …" (`C/02_M/prose/018`)
-- [ ] **W2: Hypotheses of the contradiction at `02_M.tex:211`.** "Positivity gives
+  Applied 15 October 2026.
+- [x] **W2: Hypotheses of the contradiction at `02_M.tex:211`.** "Positivity gives
   $\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\ref{M:average}" is correct,
   but the contradiction needs the hypotheses of Theorem `M:average` (bounded
   gradients, $d_k\to0$): the moving-frame suppositions alone are satisfiable, by a
   one-dimensional run whose values tend to $-\infty$. Optional: "…contradicting
   Theorem~\ref{M:average} under its hypotheses." (`C/02_M/prose/023`)
-- [ ] **W3: Undefined symbols in Theorem `M:superquadratic`.** `02_M.tex:144-155`
+  Applied 15 October 2026.
+- [x] **W3: Undefined symbols in Theorem `M:superquadratic`.** `02_M.tex:144-155`
   uses $G$ and $V_\eta$ (which involves $K_0$); all three are defined only in the
   proof of Theorem `M:average`. The claim holds for every gradient bound $G$.
   Proposed: add "with $G$, $K_0$ and $V_\eta$ as in the proof of
   Theorem~\ref{M:average}". (`C/02_M/theorem/M:superquadratic`)
-- [ ] **W4: Implicit hypotheses in Theorem `M:hierarchy`.** `02_M.tex:65-70` leaves
+  Applied 15 October 2026.
+- [x] **W4: Implicit hypotheses in Theorem `M:hierarchy`.** `02_M.tex:65-70` leaves
   $H\succ0$ and $\alpha>0$ implicit ($e_j$ is defined only for positive definite
   matrices, and $H_+\succ0$ exactly when $\alpha>0$). Optional: state both, as the
   article does. (`C/02_M/theorem/M:hierarchy`)
-- [ ] **W5: Chapters cite themselves (M, A).** `02_M.tex:9`: "from
+  Applied 15 October 2026.
+- [x] **W5: Chapters cite themselves (M, A).** `02_M.tex:9`: "from
   sources~Chapters~\ref{comp:M}, \ref{comp:H}, …" lists Chapter M among its own
   sources, because the generator maps the frozen source's `\cite{SM,…}` to chapter
   labels. The same in Chapter 8: `08_A.tex:9` "…the geometric propositions of the
@@ -575,7 +209,9 @@ in the line-by-line reading. The chapters are generated: change them through
   current chapter inside `cite()` alone would leave "note~." at `08_A.tex:9`, so use
   logged replacements. Cosmetic. (`C/02_M/prose/002`, `C/08_A/prose/003`,
   `prose/034`)
-- [ ] **W6: The proof of Lemma `comp:root_certificate` does not give the thirty
+  Applied 15 October 2026; Chapter 2 now says "This chapter consolidates the common
+  algebra of the source notes."
+- [x] **W6: The proof of Lemma `comp:root_certificate` does not give the thirty
   digits of `D:rho` (proof gap).** `companion/appendices/seed_certificate.tex:37-40`:
   "\eqref{D:rho} holds" claims, through the label map `art:seed_rho` → `D:rho`, the
   value $\rho\simeq0.060199206107543764815373666287$ of `12_D.tex:99-102` on the whole
@@ -589,30 +225,50 @@ in the line-by-line reading. The chapters are generated: change them through
   or add to the proof "The same interval rules on the root box give the thirty
   digits in \eqref{D:rho}". (`C/seed_certificate/lemma/comp:root_certificate`,
   `C/seed_certificate/proof/001`, `C/12_D/proof/001`)
-- [ ] **W7: "The previous admissible-length counterexample" (Chapter D).**
+  Applied 15 October 2026 (option 2): the root lemma's proof ends "The same interval
+  rules on the root box give the thirty digits in \eqref{D:rho}."
+- [x] **W7: "The previous admissible-length counterexample" (Chapter D).**
   `12_D.tex:68`: "…resolves the implementation-selection issue left open by the
   previous admissible-length counterexample." Nothing in the companion is that
   counterexample (the phrase comes from the history of the source report).
   Optional: drop the clause or name the construction (frozen span `D.span.2`).
   (`C/12_D/prose/007`)
-- [ ] **W8: "In this note".** `12_D.tex:105` (Lemma `D:root`: "All denominators in
+  Applied 15 October 2026: the clause is dropped.
+- [x] **W8: "In this note".** `12_D.tex:105` (Lemma `D:root`: "All denominators in
   this note are nonzero there"), and the same remnant of the source reports at
   `04_R.tex:83`, `07_H.tex:23` ("This note continues the investigation…") and
   `09_C.tex:110` ("the subject of this note"); also "the previous note
   Chapter~8" at `09_C.tex:93` and "earlier notes" at `11_U.tex:354`. Optional: "in
   this chapter", "Chapter~8". (`C/12_D/lemma/D:root`, `C/04_R/prose/010`,
   `C/07_H/prose/002`, `C/09_C/prose/016`, `C/09_C/prose/020`, `C/11_U/prose/031`)
-- [ ] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
+  Applied 15 October 2026; at `11_U.tex:354` "the source notes". Further places (found
+  by the independent review, applied 15 October 2026): `13_L.tex:76` "…were certified
+  in the preceding deterministic-bracketing report~Chapter~\ref{comp:D}." (printed
+  "…report Chapter 12") → "…were certified in Chapter~\ref{comp:D}."
+  (`C/13_L/prose/014`); `07_H.tex:319` "This potential inequality was established in
+  the earlier note." → "…in an earlier source note." (`C/07_H/prose/030`);
+  `04_R.tex:53` "The preceding report assumes the following positive-band condition:"
+  → "The radial secant condition is the following positive-band condition:"
+  (`C/04_R/prose/006`, now DEFINITION: it names (4.RS), with the name that W18 uses in
+  Chapter 3 and that the article uses).
+- [x] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
   "The two unknown coordinates of the third slope …": "slope" is the article's term;
   the companion calls the $g_i$ gradients (`12_D.tex:160`). Optional: "of the third
   gradient $g_2=(c,d)^T$", a companion-only replacement in
   `prepare_shared_appendix.py`. (`C/seed_certificate/prose/017`)
-- [ ] **W10: "The later nonsplitting conclusion" (Chapter 11).** `11_U.tex:492`, in
+  Applied 15 October 2026.
+- [x] **W10: "The later nonsplitting conclusion" (Chapter 11).** `11_U.tex:492`, in
   "Relation to earlier work": the conclusion comes earlier, in Section 11.7 (subsection
   "The objective need not split as a smooth function plus …", line 453); the word is
   a remnant of the source's order. Proposed: "The nonsplitting conclusion of
   Section 11.7". (`C/11_U/prose/079`)
-- [ ] **W11: Unnamed references to results the companion states (Chapters 5 and 11).**
+  Applied 15 October 2026 with `Section~\ref{...}` (prints 11.7.2). The same slip
+  (applied 15 October 2026): `07_H.tex:470` "The earlier three-gradient, rank-two
+  stagnation example attains this lower bound." → "The three-gradient, rank-two
+  stagnation example of Chapter~\ref{comp:D} attains this lower bound." (the example
+  is the seed run of Chapter 12, later in the companion; `C/07_H/prose/048`,
+  `Ch07H.seed_cardinality_sharp`).
+- [x] **W11: Unnamed references to results the companion states (Chapters 5 and 11).**
   `11_U.tex:111` "the affine-criticality program" (Chapter 8); 416 "the recorded
   equivalence between inward radial smoothness and RS" (Theorem `R:thm:equiv`); 422
   "the original arbitrary curved finite-$C^2$-max conjecture" (the conjecture of
@@ -621,6 +277,7 @@ in the line-by-line reading. The chapters are generated: change them through
   useful in the proof" (the proof of Chapter 3's theorem; source G.tex:79). Optional:
   cite them with `\ref`. (`C/11_U/prose/019`, `prose/044`, `prose/049`, `prose/050`,
   `C/05_G/prose/012`)
+  Applied 15 October 2026.
 - [ ] **W12: Redundant compactness hypothesis (Chapter 11).** Theorem 11.1
   (`11_U.tex:31-32`) assumes $F$ finite, convex, with a unique minimizer, and then
   "Let $K=\{F\le F(x_0)\}$ be compact"; lines 87–88 repeat "A compact initial
@@ -638,19 +295,27 @@ in the line-by-line reading. The chapters are generated: change them through
   "(V)", "(S)", "(T)", "(T0)". Cosmetic. Renumbering would change the numbers proposed in M17, M18 and the other
   reference fixes, so decide them together. (Notes on `C/11_U/prose/026`,
   `C/11_U/disp/009`.)
-- [ ] **W14: "We will argue by contradiction that Γ contains no affine-critical
+  Numbers written out by hand would break under a renumbering: `04_R.tex:307` "Theorem
+  3.1, through Section 3.4 and its local form in Section 3.3.2", `04_R.tex:230`
+  "Section~4.6", `01_I.tex:123` "Section~12.3.1", Chapter 11's "Theorems 11.1 and
+  11.2", (11.11), (11.14), (11.16)--(11.17), (11.18), (11.20), (11.21) (M18) and
+  Chapter 3's (3.3)--(3.6) (M25); the references of Chapters 7 and 10 (M17, M28) go
+  through the numbering loop and would follow.
+- [x] **W14: "We will argue by contradiction that Γ contains no affine-critical
   point" (Chapter 9).** `09_C.tex:151` announces the conclusion as the thing argued
   by contradiction, while the paragraph goes on with its negation as the standing
   supposition ("Then $\ell>F_*$, every point of $\Gamma$ satisfies the
   regular-switching hypothesis, …"). Proposed: "We suppose, for a contradiction,
   that the compact cluster set $\Gamma$ contains no affine-critical point."
   (`C/09_C/prose/027`)
-- [ ] **W15: Range of the angular cutoffs (Chapter 9).** `09_C.tex:191` chooses
+  Applied 15 October 2026.
+- [x] **W15: Range of the angular cutoffs (Chapter 9).** `09_C.tex:191` chooses
   smooth angular cutoffs $\chi_j$ "with disjoint supports, equal to one on
   neighborhoods of the entire moving normal arcs"; the later estimates (line 202
   and the display at lines 218–220) also need $0\le\chi_j\le1$. Standard cutoffs
   have it; optional: say so. (`C/09_C/prose/041`; used by `prose/042`, `disp/020`)
-- [ ] **W16: Sign of $\epsilon$ left to the context (Chapter 5).** `05_G.tex:269-278`:
+  Applied 15 October 2026.
+- [x] **W16: Sign of $\epsilon$ left to the context (Chapter 5).** `05_G.tex:269-278`:
   "For $x=\epsilon$, $z=-\epsilon/2$," and the formulas that follow need $\epsilon>0$
   (for $\epsilon<0$, $g_x=1+\epsilon$); only line 278's "strictly eligible" and line
   307's $\epsilon\downarrow0$ fix the sign. Proposed: "For $x=\epsilon$,
@@ -658,17 +323,24 @@ in the line-by-line reading. The chapters are generated: change them through
   G.tex:251, occurs once). Lean: `Ch05G.shifted_crossing_gradients`,
   `shifted_crossing_quantities`, `shifted_crossing_eligible_divergent` (all with
   $\epsilon>0$). (`C/05_G/disp/025`, `disp/026`, `prose/054`)
-- [ ] **W17: "Conditions (V)--(S)" (Chapter 3).** `03_T.tex:192`: "Conditions
+  Applied 15 October 2026.
+- [x] **W17: "Conditions (V)--(S)" (Chapter 3).** `03_T.tex:192`: "Conditions
   (V)--(S) become" means "(V) and (S)" (tags (3.V), (3.S)): a range of condition
   names, not a wrong number. Optional: "Conditions (V) and (S) become" (T.tex:170,
   occurs once). (`C/03_T/disp/024`)
-- [ ] **W18: (RS) used before Chapter 4 defines it (Chapter 3).** The section title
+  Applied 15 October 2026. Chapter 5 too (applied 15 October 2026): `05_G.tex:142` "If
+  $C>0$ and $W$ satisfies (V)--(S)," and `:151` "Thus higher rank adds no pointwise
+  power to (V)--(S);" now read "(V) and (S)" (`C/05_G/proof/002`, `C/05_G/prose/022`);
+  `05_G.tex:72` "The existential condition (V)--(T)" is a true range of the three
+  conditions and is kept.
+- [x] **W18: (RS) used before Chapter 4 defines it (Chapter 3).** The section title
   at `03_T.tex:216`, "Given (RS), take" (line 217) and lines 225, 229 use "(RS)",
   which Chapter 4 defines ((4.RS), `04_R.tex:53-59`, label `R:eq:RS`), with no
   pointer. Optional: "Given the radial secant condition (RS) of
   Chapter~\ref{comp:R}, take" (T.tex:191, occurs once). (`C/03_T/disp/026`,
   `prose/029`)
-- [ ] **W19: Nonnegative constants in (RS) and (IR) (Chapter 4, proof gap).**
+  Applied 15 October 2026.
+- [x] **W19: Nonnegative constants in (RS) and (IR) (Chapter 4, proof gap).**
   `04_R.tex:55` ((4.RS)): "$\forall\eta>0\ \exists C_\eta<\infty$"; `04_R.tex:74`
   ((4.IR)): "there exist $M_\eta<\infty$ and $\theta_\eta\in(0,1/2]$". The proofs use
   $C\ge0$ without saying so: line 149, "If $a=0$, the same conclusion follows from
@@ -684,7 +356,8 @@ in the line-by-line reading. The chapters are generated: change them through
   `Ch04R.rs_constant_nonneg`, `error_bound_zero`, `radial_pair_bounds`,
   `central_le_five`, `RS_iff_article`, `IR_iff_article`. (`C/04_R/disp/006`,
   `disp/007`, `disp/019`, `disp/023`, `prose/014`, `prose/018`)
-- [ ] **W20: "For differentiable $x,z$" without "$\in K$" (Chapter 4).**
+  Applied 15 October 2026.
+- [x] **W20: "For differentiable $x,z$" without "$\in K$" (Chapter 4).**
   `04_R.tex:40`: "For differentiable $x,z$, put" introduces $T$ and the bound "$0\le
   T\le T_{\max}:=4GR$" (line 51), which holds only for $x,z\in K$ ($R$ and $G$ are
   bounds on $K$): for $F(x)=|x|$, $b=1$, $R=G=1$, the points $x=-10$, $z=10$ give
@@ -692,7 +365,8 @@ in the line-by-line reading. The chapters are generated: change them through
   all-of-$\mathbb R^n$ reading is not a reasonable one, so no discrepancy. Proposed:
   "For differentiable $x,z\in K$, put" (source R.tex:34). Lean:
   `Ch04R.curvature_split`, `secant_notation`. (`C/04_R/disp/003`, `disp/005`)
-- [ ] **W21: References to unnamed, later or absent material (Chapter 4).** Each
+  Applied 15 October 2026.
+- [x] **W21: References to unnamed, later or absent material (Chapter 4).** Each
   phrase occurs once in the source R.tex. (a) Line 307, proof of Theorem 4.5.1: "the
   preceding convergence theorem applies" is Theorem 3.1 (`03_T.tex:90`, no
   `\label`), through Section 3.4 and the local form of Section 3.3.2; proposed "…and
@@ -710,7 +384,8 @@ in the line-by-line reading. The chapters are generated: change them through
   breadth of the preceding sufficient classes": the classes come later, in Section
   4.6; optional "of the sufficient classes of Section~4.6" (R.tex:204;
   `C/04_R/prose/040`, NON_CLAIM).
-- [ ] **W22: The letter "D" for Chapter 12's objects (Chapter 4).** `04_R.tex:255`:
+  Applied 15 October 2026.
+- [x] **W22: The letter "D" for Chapter 12's objects (Chapter 4).** `04_R.tex:255`:
   "the certified D parameters" and "The unique D optimizer $(-1,16)$"; line 265:
   "the verified D run"; line 276: "$a$ times those of D". "D" is the source letter of
   Chapter 12, which the chapter cites correctly as Chapter~\ref{comp:D} at lines 233
@@ -720,7 +395,8 @@ in the line-by-line reading. The chapters are generated: change them through
   Chapter 12" (source R.tex:229 (twice), 239, 250). Lean:
   `Ch04R.fourPiece_constants`, `fourPiece_optimizer`, `fourPiece_transformed_data`,
   `fourPiece_curvatures`. (`C/04_R/prose/043`, `prose/045`, `disp/037`, `prose/054`)
-- [ ] **W23: The reason given for "broader" (Chapter 4).** `04_R.tex:309`: "This is
+  Applied 15 October 2026 with `Chapter~\ref{comp:D}'s`.
+- [x] **W23: The reason given for "broader" (Chapter 4).** `04_R.tex:309`: "This is
   broader than merely having affine pieces plus one common smooth summand: different
   cells can have different quadratic Hessians and different gradient jumps." The
   claim is true for every reading of "smooth" (`Ch04R.plq_broader_2d`:
@@ -735,7 +411,8 @@ in the line-by-line reading. The chapters are generated: change them through
   (source R.tex:279). Lean: `Ch04R.plq_broader_2d`,
   `plq2d_not_smooth_plus_max_affine`, `plq2d_covered`, `plq2d_jump`, `plq_broader`
   ($C^2$ summands, dimension one). (`C/04_R/prose/059`, `prose/060`)
-- [ ] **W24: Bounded gradients left implicit (Chapter 6).** `06_F.tex:122-125`: "If
+  Applied 15 October 2026.
+- [x] **W24: Bounded gradients left implicit (Chapter 6).** `06_F.tex:122-125`: "If
   $R_k\le\bar R$, then \eqref{M:energybound} gives
   $F(x_N)-F_*\le\sqrt{(E_0+\bar RN)/S_N}=o(N^{-1/2})$, because $S_N/N^2\to\infty$.
   The same estimate holds for a linear cumulative correction budget." The inequality
@@ -747,7 +424,8 @@ in the line-by-line reading. The chapters are generated: change them through
   this is $o(N^{-1/2})$, because $S_N/N^2\to\infty$." Lean:
   `Ch06F.bounded_correction_rate`, `linear_budget_rate` (the inequality without, the
   little-$o$ with bounded gradients). (`C/06_F/disp/013`, `C/06_F/prose/029`)
-- [ ] **W25: References to source material absent from the companion (Chapter 6).**
+  Applied 15 October 2026.
+- [x] **W25: References to source material absent from the companion (Chapter 6).**
   `06_F.tex:118`: "The source rate note recorded big-$O$ bounds. The little-$o$
   versions below are explicit consolidation deductions from the later superquadratic
   theorem; they do not assert a sharp rate." The rate note (working report [SQ], see
@@ -761,7 +439,11 @@ in the line-by-line reading. The chapters are generated: change them through
   they do not assert a sharp rate."; "Summing first gives the bounds …"; "This is
   the proved tilted-minimum construction." (`C/06_F/prose/028`, `prose/036`,
   `prose/047`)
-- [ ] **W26: Chapter 3's theorem and conditions named only by description
+  Applied 15 October 2026. The proposal's "these bounds" at `06_F.tex:118` pointed
+  forward; it now reads "Big-$O$ versions of these rates appeared in the source
+  notes." ("these rates" are the "rates below" of the preceding sentence;
+  `C/06_F/prose/028`).
+- [x] **W26: Chapter 3's theorem and conditions named only by description
   (Chapter 10).** `10_Q.tex:49`: "This is a concrete application of the
   objective-pair theorem, not the definition of its scope."; `10_Q.tex:115`:
   "Multiplication by $\theta(z)^2$ proves (S). Equation (11) proves (V) …";
@@ -772,7 +454,8 @@ in the line-by-line reading. The chapters are generated: change them through
   numbers. Proposed (optional): "… of the transported-certificate theorem of
   Chapter~\ref{comp:T}"; "(S) of Chapter~\ref{comp:T}". (`C/10_Q/prose/002`,
   `prose/014`, `prose/028`)
-- [ ] **W27: Tolerances and the implicit basin in Chapter 14's numerical suites.**
+  Applied 15 October 2026.
+- [x] **W27: Tolerances and the implicit basin in Chapter 14's numerical suites.**
   `14_E.tex:184` (Section 14.3.17, printed page 92): "The operative statement is
   analytic: the stated planar example converges, and hence every positive displayed
   tolerance is eventually attained." `14_E.tex:192` (Section 14.3.18, same page): "Its
@@ -798,7 +481,8 @@ in the line-by-line reading. The chapters are generated: change them through
   `Ch14E.spike_tolerance` (every $\varepsilon>0$); the historical values are
   `EReconstruction.planar_eventual_printed_tolerance` and
   `spike_eventual_printed_tolerance`. (`C/14_E/prose/076`, `prose/079`)
-- [ ] **W28: Bounded gradients left implicit (Chapter 14).** `14_E.tex:112`
+  Applied 15 October 2026.
+- [x] **W28: Bounded gradients left implicit (Chapter 14).** `14_E.tex:112`
   (Section 14.3.8 "M-mixed", printed page 91): "The actual full-matrix hierarchy
   yields the normalized hierarchy, weighted potential, qualitative reciprocal growth
   and superquadratic reciprocal growth under summable predicted decreases." Every
@@ -812,7 +496,8 @@ in the line-by-line reading. The chapters are generated: change them through
   yields the normalized hierarchy`. Lean: `Ch02M.hierarchy_step`,
   `Ch02M.potential_ge_trace`, `Ch02M.weighted_step`, `Ch02M.average`,
   `Ch02M.superquadratic` (all with the gradient bound). (`C/14_E/prose/052`)
-- [ ] **W29: The suite labels of Chapter 14 are names, not chapter letters
+  Applied 15 October 2026.
+- [x] **W29: The suite labels of Chapter 14 are names, not chapter letters
   (optional).** `14_E.tex:48` (Section 14.3, printed page 90): "The labels below
   preserve correspondence with the original report." The 19 subsection titles of
   Section 14.3 (D-root, …, G-oscillatory-numerical) are the original report's suite
@@ -824,7 +509,8 @@ in the line-by-line reading. The chapters are generated: change them through
   report.` (occurs once) → `The labels below are the original report's suite names,
   whose letters are not chapter letters; they preserve correspondence with that
   report.` (`C/14_E/prose/029`)
-- [ ] **W30: Stale or inaccurate statements about the verification and the records
+  Applied 15 October 2026.
+- [x] **W30: Stale or inaccurate statements about the verification and the records
   (Chapter 14 and Appendix B).** All are `NON_CLAIM`; refresh them in step 2.
   - `current_verification.tex:8` (hand-written; printed page 88): "All 2026 Lean
     names cited by the article ledger or declared in the package depend only on …".
@@ -884,6 +570,15 @@ in the line-by-line reading. The chapters are generated: change them through
     evidence check and the exact default output path.` (occurs once) → `Its README
     describes the read-only evidence check; the runner prints the new timestamped
     output directory.` (`C/14_E/prose/095`)
+  Applied 15 October 2026: `correspondence.tex:62` adds "and the October 2026
+  corrections recorded in \path{TODO_MANUSCRIPT_REVIEW.md}", and
+  `current_verification.tex:8-11`, under the new heading "The October 2026 Lean
+  review", gives the axiom audit of 15 October 2026 (5403 Lean names, namely every
+  name then cited by the claim ledger or by the coverage registers, and the principal
+  declarations of the package; PASS) and the kernel replay (every project module
+  except the two root modules, which contain only imports: 783 modules; PASS);
+  `14_E.tex:16` holds after the corrections and is unchanged. The counts are refreshed
+  again with the final audit of step 2.
 
 The wording points W31–W43 are in Chapter 1 and the research story (compI, 15
 October). Chapter 1 is generated: unless an item says otherwise, its old string
@@ -901,39 +596,47 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   `Every retained mathematical assertion is classified in the claim/proof index, and
   each asserted result is paired there with its formal statement and Lean proof.`
   (`C/01_I/prose/003`)
-- [ ] **W32: Bare subsection number (Chapter 1).** `01_I.tex:123`:
+  The sentence was applied on 15 October 2026, but the claim/proof index
+  (`editorial/assemble_claim_ledger.py`, `companion/PROOF_CORRESPONDENCE.html`) does
+  not yet list the coverage registers; open until it does.
+- [x] **W32: Bare subsection number (Chapter 1).** `01_I.tex:123`:
   "\textbf{Proofs: 12.3.1 and Chapter~\ref{comp:L}.}" prints the right subsection
   (12.3.1, "A simple coercive global failure", which has no label); the source reads
   `\textbf{Proofs: D.3.1 and Module L.}` (`inventory.tex:97`). Proposed, in the
   module-I block (after the renumbering): `\textbf{Proofs: 12.3.1 and Chapter~\ref{comp:L}.}`
   → `\textbf{Proofs: Section~12.3.1 and Chapter~\ref{comp:L}.}` (`C/01_I/prose/039`)
-- [ ] **W33: Hypotheses of Theorem M:average left implicit in P2 (Chapter 1; as W2).**
+  Applied 15 October 2026.
+- [x] **W33: Hypotheses of Theorem M:average left implicit in P2 (Chapter 1; as W2).**
   `01_I.tex:161`: "Uniform visibility, bounded secant correction, and bounded
   cumulative transport products and inverses exclude positive-level stagnation." As
   at `02_M.tex:211`, the contradiction needs bounded gradients and $d_k\to0$.
   Proposed (`inventory.tex:123`): `exclude positive-level stagnation.` →
   `exclude positive-level stagnation along runs with bounded gradients.`
   (`Ch02M.frame_criterion`; `C/01_I/prose/053`)
-- [ ] **W34: Hypotheses of Theorem M:residualtheorem left implicit in P3 (Chapter 1;
+  Applied 15 October 2026.
+- [x] **W34: Hypotheses of Theorem M:residualtheorem left implicit in P3 (Chapter 1;
   as W1 and M10).** `01_I.tex:176`: the theorem assumes bounded gradients and
   $\sum d_k<\infty$; "the superquadratic reciprocal theorem below" (lines 306–308)
   states them, the sentence does not. Proposed (`inventory.tex:134`):
   `Together with uniform visibility and bounded secant correction, the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below.`
   → `Together with uniform visibility and bounded secant correction, along runs with bounded gradients and \(\sum d_k<\infty\), the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below.`
   (`Ch02M.residual_theorem`; `C/01_I/prose/056`)
-- [ ] **W35: "The user's paper" (Chapter 1).** `01_I.tex:291`: "The user's paper is
+  Applied 15 October 2026.
+- [x] **W35: "The user's paper" (Chapter 1).** `01_I.tex:291`: "The user's paper is
   supplied separately, not rebranded as a new result." A remnant of the drafting.
   Proposed: delete the sentence, or replace it (`inventory.tex:221`) by `That
   paper~\cite{XW} is prior work, not a new result of this report.` (the key `XW` is in
   `companion/bibliography.tex`). (`C/01_I/prose/113`)
-- [ ] **W36: Bounded gradients left implicit (Chapter 1; as W1).** `01_I.tex:317`: "A
+  Applied 15 October 2026.
+- [x] **W36: Bounded gradients left implicit (Chapter 1; as W1).** `01_I.tex:317`: "A
   cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap." This needs
   $\sum q_k^{-1}\to\infty$, which Theorem M:average gives along runs with bounded
   gradients. Proposed (`inventory.tex:243`): `A cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap.`
   → `Along runs with bounded gradients, a cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap.`
   (`Ch02M.negligible_corrections`, `Ch02M.negligible_corrections_of_divergent`;
   `C/01_I/prose/117`)
-- [ ] **W37: A source rate note and implicit bounded gradients (Chapter 1; as W24 and
+  Applied 15 October 2026.
+- [x] **W37: A source rate note and implicit bounded gradients (Chapter 1; as W24 and
   W25).** `01_I.tex:319`: "The original rate note" is not in the companion, "later" is
   historical (Theorem M:superquadratic is in Chapter 2), and the \(o(N^{-1/2})\) rate
   needs bounded gradients. Proposed (`inventory.tex:245`):
@@ -941,13 +644,17 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   → `Big-\(O\) versions of these rates appeared in the source notes. Theorem~\ref{M:superquadratic} strengthens them to \(o(N^{-1/2})\) for uniformly bounded radial correction along runs with bounded gradients,`
   (`Ch06F.bounded_correction_rate`, `Ch06F.linear_budget_rate`,
   `Ch06F.homogeneous_rate`, `Ch06F.quadGauge_rate`; `C/01_I/prose/120`, `prose/121`)
-- [ ] **W38: Path of the literature register (Chapter 1).** `01_I.tex:391`:
+  Applied 15 October 2026. The proposal's "these rates" at `01_I.tex:319` pointed
+  forward; it now reads "Big-\(O\) versions of the following rates appeared in the
+  source notes." (`C/01_I/prose/120`).
+- [x] **W38: Path of the literature register (Chapter 1).** `01_I.tex:391`:
   `\path{literature_audit/}` exists only as `bfgs_lean_stage1/literature_audit/`.
   Proposed (`inventory.tex:6`, in the relocated attribution note):
   `The detailed source/version register is delivered in \path{literature_audit/};` →
   `The detailed source/version register is delivered in \path{bfgs_lean_stage1/literature_audit/};`
   (a software description, as in W30; `C/01_I/prose/159`)
-- [ ] **W39: "Value convergence does not imply bounded iterates" (research story).**
+  Applied 15 October 2026.
+- [x] **W39: "Value convergence does not imply bounded iterates" (research story).**
   `research_story.tex:30-31`: "The full noncompact homogeneous value alternatives are
   retained separately: value convergence does not imply bounded iterates, and it does
   not subsume Xie--Wächter's finite detection…" A scope remark (Theorem 7.A concludes
@@ -960,14 +667,16 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   without any conclusion about the iterates, and they do not subsume`.
   (`ResearchStory.value_convergence_unbounded_iterates` illustrates the general
   non-implication with $F=e^x$; `C/research_story/prose/017`)
-- [ ] **W40: "A compact sublevel" (Chapter 1, minor).** `01_I.tex:218` (P5): "have an
+  Applied 15 October 2026.
+- [x] **W40: "A compact sublevel" (Chapter 1, minor).** `01_I.tex:218` (P5): "have an
   attained minimum and a compact sublevel" leaves Chapter 9's $b>F_*$ implicit (an
   empty sublevel is compact); harmless, since for convex $F$ one nonempty compact
   sublevel makes all sublevels compact. Optional (`inventory.tex:168`):
   `have an attained minimum and a compact sublevel,` → `have an attained minimum and a
   compact sublevel above the minimum,` (`Ch01I.p5_cluster`,
   `Ch01I.sublevels_compact_of_one`; `C/01_I/prose/074`)
-- [ ] **W41: "Neither proves local failure for …" (Chapter 1).** `01_I.tex:107`:
+  Applied 15 October 2026.
+- [x] **W41: "Neither proves local failure for …" (Chapter 1).** `01_I.tex:107`:
   "Neither proves local failure for a finite maximum of uniformly strongly convex
   \(C^2\) branches through the optimizer." This reads as a claim about every
   representation of the two objectives; what is proved is that the constructed
@@ -977,7 +686,8 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   → `Neither is constructed from finitely many uniformly strongly convex \(C^2\) branches through the optimizer, so neither proves local failure for that class.`
   (`Ch01I.n1_n2_comparison`; open question
   `Article.Verification.C2StronglyConvexLocalFailure`; `C/01_I/prose/029`)
-- [ ] **W42: "These families" without antecedent (Chapter 1).** `01_I.tex:393`: "These
+  Applied 15 October 2026.
+- [x] **W42: "These families" without antecedent (Chapter 1).** `01_I.tex:393`: "These
   families include established special cases: Guo--Lewis proves …". The generator
   moved this attribution note (`i.known_special_cases`) from the start of Section 1.4,
   "Strongest concrete local and global positive families" (`inventory.tex:137-140`),
@@ -987,7 +697,8 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   Section~\ref{strongest-concrete-local-and-global-positive-families} include
   established special cases` (the label is at `01_I.tex:182`).
   (`Ch04R.euclidean_norm_recovered`; `C/01_I/prose/160`)
-- [ ] **W43: $E_k$ and $B_k$ undefined in Chapter 1 (cosmetic).** `01_I.tex:312-315`:
+  Applied 15 October 2026.
+- [x] **W43: $E_k$ and $B_k$ undefined in Chapter 1 (cosmetic).** `01_I.tex:312-315`:
   "The fixed-reference identity is $E_{k+1}=\dots$"; $E_k$, $r_k$ and $B_k$ are
   defined only in Chapter 2 (`02_M.tex:182`, `02_M.tex:14`), and $B_k$ also appears at
   `01_I.tex:169`. Proposed, two replacements: `The fixed-reference identity is`
@@ -997,6 +708,35 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   → `the actual update gives \(\operatorname{tr}(P_SB_k)=O(k)\) for \(B_k=H_k^{-1}\).`
   (`Ch02M.fixed_energy`, `Ch01I.smooth_subspace_trace_linear`; `C/01_I/disp/021`,
   `prose/055`)
+  Applied 15 October 2026.
+- [x] **W44: "the user's" in Chapter 13 (as W35).** `13_L.tex:61`: "The local
+  theorem satisfies the user's literal classical-Hessian assumption, and even actual
+  strong convexity." "The user" is the person who asked for the source note. It now
+  reads "The local theorem satisfies the literal classical-Hessian assumption, and
+  even actual strong convexity." (logged module-L replacement; frozen `L.tex:54`,
+  span `L.span.2`; `C/13_L/prose/010`, LEAN, `Ch13L.local_failure`). Found while
+  applying the companion corrections. Applied 15 October 2026.
+- [x] **W45: "C2,1" printed as plain text (Chapter 13 introduction).**
+  `introductions['L']` of `editorial/generate_companion.py` (`13_L.tex:3`): "…with
+  the preceding local C2,1 branch regularity." now reads "…with the preceding local
+  $C^{2,1}$ branch regularity." (`C/13_L/prose/003`). Applied 15 October 2026. The
+  same plain "C2,1" remains in a title of Chapter 1 (W47).
+- [x] **W46: Duplicate equation numbers in Chapters 12 and 13.** The
+  `\setcounter{equation}` values of the frozen sources omit the numbered lines of
+  `gather`/`align` displays, so the companion printed (12.9)–(12.11), (13.3)–(13.5)
+  and (13.8) twice (for example, "Equation~(13.8) applies at the initial point…" was
+  ambiguous). Six logged transformations (modules D and L) make the counter
+  continue: `D:fullobjective`, `D:localcone` and `D:finalorbit` are now
+  (12.12)–(12.14), and `L:eq:eigshape` to `L:eq:local-model` are now (13.6)–(13.13).
+  All references are `\eqref` and print the intended numbers; no number written out
+  by hand needed a change. Found by the independent review of the companion
+  corrections. Applied 15 October 2026. The gaps of W13 remain.
+- [ ] **W47: "C2,1" printed as plain text (Chapter 1).** `01_I.tex:69`:
+  `\subsection{N1. Deterministic local failure with globally C2,1 convex branches}`
+  prints "C2,1" (PDF page 8, printed page 2; frozen `inventory.tex:51`). Proposed: a
+  logged module-I replacement `globally C2,1 convex branches}` →
+  `globally \texorpdfstring{$C^{2,1}$}{C2,1} convex branches}` (hyperref is loaded).
+  Found by the fix pass of the companion corrections. (`C/01_I/prose/015`)
 
 ## Resolved
 
@@ -1115,8 +855,8 @@ PDFs under `release/` predate these edits.
   zero." (`paper/sections/verification.tex:33-34`, `A/verification/prose/017`) and
   "…the loss of second differentiability of three of the four branches at the
   accumulation point." (`paper/appendices/lower_curvature.tex:11-13`,
-  `A/lower_curvature/prose/010`). The companion's recurrences are still open (M8
-  in the companion, above).
+  `A/lower_curvature/prose/010`). The companion's recurrences were corrected the
+  same day (M8 in the companion, below).
 
 - [x] **M9: Ray identity without its range** (corrected 15 October 2026).
   Section 7 now says "$G(t(-1,16))=-t$ for $t\ge0$", as `failure.tex` does
@@ -1156,3 +896,523 @@ changed, and `lake build` passes. `editorial/CLAIM_LEDGER.json` and
 `companion/PROOF_CORRESPONDENCE.html` were regenerated (file hashes and line
 positions only); `generate_companion.py --check` passes. The companion's text does
 not depend on the edited files.
+
+The companion corrections of 15 October 2026 follow. Each entry keeps the text
+as found by the Lean coverage (with its proposals) and ends with what was done.
+
+- [x] **M8 in the companion: "branches that lose second differentiability"**
+  (corrected 15 October 2026).
+  The article's three sentences now say that three of the four branches lose
+  second differentiability (M8 under "Resolved"). The companion still says it of
+  all branches:
+  - Chapter 13: `companion/chapters/13_L.tex:3`, "The local finite-branch functions
+    have Lipschitz gradients but lose second differentiability at the accumulation
+    point", says the same (`Ch13L.branch_regularity`; line 413 of that chapter has it
+    right). It is the hand-written introduction `introductions['L']` in
+    `editorial/generate_companion.py`. Proposed: "…have Lipschitz gradients; three of
+    the four lose second differentiability at the accumulation point."
+    (`C/13_L/prose/002`)
+  - Chapter 1 repeats it at `companion/chapters/01_I.tex:103` (N2): "The individual
+    branches \textbf{are not twice differentiable at the accumulation point}." follows
+    "One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex,
+    gradient-Lipschitz branches", so it speaks of all four (`Ch13L.branch_regularity`,
+    `Ch01I.n1_n2_comparison`). Proposed: "Three of the four branches \textbf{are not
+    twice differentiable at the accumulation point}." Fix: a logged replacement in the
+    `if module=='I':` block of `editorial/generate_companion.py`, with its own kind and
+    reason (not `constant_range['I']`, whose reason concerns the line-search range), of
+    `The individual branches \textbf{are not twice differentiable at the accumulation point}.`
+    (frozen `bfgs_lean_stage1/master_report/latex/chapters/inventory.tex:81`, span
+    `I.span.6`, occurs once). The item then becomes `LEAN`. (`C/01_I/prose/023`)
+  - The research story paraphrases the abstract's sentence at
+    `companion/research_story.tex:51-53`: "A different embedding preserves uniform
+    strong convexity with $C^{1,1}$ branches that lose second differentiability at the
+    accumulation point" (`Ch13L.branch_regularity`, `Ch01I.n2_four_branch_version`).
+    Proposed, a direct edit (the file is written by hand): `branches that lose second
+    differentiability at` (occurs once) → `branches, three of which lose second
+    differentiability at`. (`C/research_story/prose/029`)
+  Corrected: The three recurrences now say that three of the four branches lose second
+  differentiability, and they say "at the minimizer" (the minimizer 0 of the local
+  objective, where the bad starts accumulate) instead of "at the accumulation point".
+  Chapter 13's introduction (`introductions['L']` in
+  `editorial/generate_companion.py`) now reads "…have Lipschitz gradients, and three
+  of the four lose second differentiability at the minimizer" (`C/13_L/prose/002`, now
+  `LEAN`, `Ch13L.branch_regularity_at_minimizer`). Chapter 1 now reads "Three of the
+  four branches \textbf{are not twice differentiable at the minimizer}."
+  (`01_I.tex:103`; `C/01_I/prose/023`, now `SAME_AS` `C/13_L/prose/002`). The research
+  story now reads "…with $C^{1,1}$ branches, three of which lose second
+  differentiability at the minimizer." (`research_story.tex:52-53`;
+  `C/research_story/prose/029`, now `SAME_AS` `C/01_I/prose/022`, `prose/023`).
+  `12_D.tex:380` is unchanged.
+
+- [x] **M12: Theorem `L:thm:local` denies a finite smooth-branch representation**
+  (corrected 15 October 2026).
+  `companion/chapters/13_L.tex:59`: the last clause, "the latter version has a
+  countable polyhedral nonsmooth part, not a finite smooth-branch representation",
+  read literally ("has no finite smooth-branch representation"), is false even for
+  branches of the class of the theorem's first version: the step version is the
+  maximum of ten globally $C^{1,1}$, uniformly strongly convex branches (quadratic
+  splines on the geometric pieces; checked with exact rational arithmetic by the
+  independent review, not formalized in Lean). The descriptive reading, a countable
+  polyhedral nonsmooth part, is true (`Ch13L.local_failure`) and intended (line 403:
+  "No claim of four smooth branches is made for this alternative"). Proposed: drop
+  ", not a finite smooth-branch representation", or "…constructed from a countable
+  polyhedral nonsmooth part rather than from four smooth branches". The clause is
+  in the frozen span `L.span.2` (`bfgs_lean_stage1/master_report/latex/chapters/L.tex:52`):
+  add a logged `if module=='L':` transformation with its own reason. The item then
+  becomes `LEAN`. (`C/13_L/theorem/L:thm:local`)
+  Chapter 1 repeats the clause at `companion/chapters/01_I.tex:103` (N2): "Another
+  version has one constant SPD classical Hessian wherever it exists, but a countably
+  piecewise-affine nonsmooth component rather than finitely many smooth branches."
+  The descriptive reading is proved (`Ch13L.local_failure`,
+  `Ch13L.step_decomposition`). Proposed: "…wherever it exists; it is constructed from
+  a countably piecewise-affine nonsmooth component rather than from four smooth
+  branches." Fix: in the same module-I block as M8's Chapter 1 fix, replace
+  `wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.`
+  (`inventory.tex:81`, span `I.span.6`, occurs once) by
+  `wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.`
+  The item then becomes `LEAN`. (`C/01_I/prose/024`)
+  Corrected: The final clause now ends "the latter version has a countable polyhedral
+  nonsmooth part." (`13_L.tex:59`; `C/13_L/theorem/L:thm:local`, now `LEAN` with
+  `Ch13L.local_failure`). Chapter 1 now says "…wherever it exists; it is constructed
+  from a countably piecewise-affine nonsmooth component rather than from four smooth
+  branches." (`01_I.tex:103`; `C/01_I/prose/024`, now `SAME_AS` the theorem).
+
+- [x] **M13: Chapter L says it uses a fixed line-search pair**
+  (corrected 15 October 2026). `13_L.tex:413`:
+  "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
+  parameter family is not imported." is a remnant of the fixed-pair edition. Since
+  the transformation of 13 October (`constant_range['L']` in
+  `editorial/generate_companion.py`), the chapter fixes an arbitrary pair
+  $0<c_1\le1/3$, $c_1<c_2<1$ and proves its theorems for every such pair
+  (`Ch13L.global_failure`, `local_failure`), which is Chapter D's family
+  (`12_D.tex:58-60`). No result is affected. Proposed: delete the sentence, or
+  "Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$,
+  $c_1<c_2<1$." Fix: a new `constant_range['L']` entry. (`C/13_L/prose/082`)
+  Corrected: The leftover sentence is now "Like Chapter~\ref{comp:D}, the chapter
+  covers every pair $0<c_1\le1/3$, $c_1<c_2<1$." (`13_L.tex:413`; `C/13_L/prose/082`,
+  now `LEAN`: `Ch13L.global_failure`, `local_failure`, `admissible_iff`).
+
+- [x] **M14: Chapter D denies analyticity of all four branches**
+  (corrected 15 October 2026).
+  `companion/chapters/12_D.tex:380`: "Thus the branches below are in $C^{2,1}$ as
+  well. This does not make them analytic or uniformly strongly convex." The fourth
+  branch of `D:fullobjective`, $f_3(u,v)=v$, is linear, hence analytic
+  (`Ch12D.branch3_analytic`). The rest holds (`Ch12D.not_analytic`): $f_0,f_1,f_2$
+  are not analytic, and no branch, $f_3$ included, is uniformly strongly convex
+  (each is constant along a nonzero direction). The same kind of slip as M8.
+  Proposed: "This does not make $f_0,f_1,f_2$ analytic, nor any branch uniformly
+  strongly convex." ($f_0,f_1,f_2$ are defined only in Section 12.5; "the first
+  three branches" avoids the forward reference.) Fix: a logged transformation of
+  module D (the sentence is in the frozen span `D.span.7`, source
+  `bfgs_lean_stage1/master_report/latex/chapters/D.tex:358`). (`C/12_D/prose/047`)
+  Corrected: The sentence now reads "This does not make the first three branches
+  analytic, nor any branch uniformly strongly convex." (`12_D.tex:380`;
+  `C/12_D/prose/047`, now `LEAN`: `Ch12D.not_analytic`; the former wording is refuted
+  by `branch3_analytic`). "The first three branches" avoids the forward reference to
+  $f_0,f_1,f_2$.
+
+- [x] **M15: Companion appendix: the interval operations do not give the table's
+  decimals**
+  (corrected 15 October 2026). `companion/appendices/seed_certificate.tex:190`: "The
+  same interval
+  operations give the value enclosures in that table." is copied from the article
+  (`paper/appendices/seed_certificate.tex:191`), whose Table `art:trial_table` lists
+  rational enclosures of $10^4G$. The companion's table (Section 12.3,
+  `12_D.tex:205-218`, with the current values in the display after it) lists
+  twelve-digit decimals, and the appendix's interval operations, which run on the
+  query box, cannot give them: $G(z_0)$ varies by about $4.4\cdot10^{-6}$ over that
+  box, so every enclosure valid on it is wider than $10^{-6}$
+  (`Companion.SeedCertificate.query_box_too_coarse`). They give enclosures of width
+  at most $4\cdot10^{-4}$ of every current and trial value
+  (`Companion.SeedCertificate.table_enclosure_widths`); the decimals are nearest
+  roundings, proved separately (`Ch12D.trial_table`, `Ch12D.starting_values`).
+  Proposed (companion only): "For each trial value $G(z_j+\alpha p_j)$ in the table
+  of Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display
+  after it, the same interval operations give a rational enclosure of width at most
+  $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory.", or drop the
+  sentence. Fix: a companion-only replacement in `prepare_shared_appendix.py`.
+  (`C/seed_certificate/prose/006`)
+  Corrected: The sentence now reads "For each trial value $G(z_j+\alpha p_j)$ in the
+  table of Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the
+  display after it, the same interval operations give a rational enclosure of width at
+  most $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory."
+  (`seed_certificate.tex:190`; `C/seed_certificate/prose/006`, now `LEAN`:
+  `SeedCertificate.table_enclosure_widths`).
+
+- [x] **M16: Companion appendix: two references keep the article's structure
+  (typo)**
+  (corrected 15 October 2026). `prepare_shared_appendix.py` turns the article's
+  subsections into
+  sections and maps the table label `art:trial_table` to `comp:trial_table`, which
+  labels a section heading of Chapter D. (a) `seed_certificate.tex:13-15`: "The
+  matrix calculation in the next subsection" means the next section, A.2. Proposed:
+  "in the next section" (the source breaks the line after "next": replace
+  `'the next\nsubsection'`). (`C/seed_certificate/prose/002`) (b) Lines 185–186:
+  "in the order of Table~\ref{comp:trial_table}" prints "Table 12.3", but 12.3 is a
+  section (and the number of equation `D:rho`); there is no Table 12.3. Proposed:
+  "in the order of the table in Section~\ref{comp:trial_table}" (replace
+  `Table~\ref{art:trial_table}` before the label loop).
+  (`C/seed_certificate/prose/024`) The claims hold
+  (`Article.SeedCertificate.clearing_denominators`, `query_lower_bounds`).
+  Corrected: (a) "in the next section" (`seed_certificate.tex:14`;
+  `C/seed_certificate/prose/002`, now `SAME_AS` `A/seed_certificate/prose/002`). (b)
+  "in the order of the table in Section~\ref{comp:trial_table}" (prints "Section
+  12.3"; `C/seed_certificate/prose/024`, now `SAME_AS` `C/seed_certificate/disp/016`).
+
+- [x] **M17: Chapter H's references keep its source note's numbering (typo)**
+  (corrected 15 October 2026).
+  `companion/chapters/07_H.tex`: "Expanding (2.1)" (line 284) and "Equation (2.1)
+  then implies" (line 421) mean the Hessian form (7.2.1); "telescoping (5.2)" (line
+  341) means (7.5.2); "Equation (7.3)" (line 577) and "By (7.3)" (line 599) mean
+  (7.7.3); "using (7.1)" (line 655) means (7.7.1); "Formula (7.2)" (line 714) means
+  (7.7.2); and the title of Section 7.5 (lines 234–235, also in the table of
+  contents), "Homogeneous potential and proof of Theorem A", means Theorem 7.A. In
+  the PDF, (2.1) and (5.2) are unrelated displays of Chapters 2 and 5, while
+  (7.1)–(7.3) and Theorem A do not exist. Cause: `generate_companion.py:69` renumbers
+  only `H.`-prefixed references, and the source
+  (`bfgs_lean_stage1/master_report/latex/chapters/H.tex:200-201, 242, 294, 371, 511,
+  529, 585, 644`) writes these eight without the prefix. Fix: a logged module-H
+  transformation, applied before the numbering loop (lines 68–69), that adds the
+  prefix (`'Theorem\nA}'` → `'Theorem\nH.A}'`, `'(2.1)'` → `'(H.2.1)'` twice,
+  likewise `'(5.2)'`, `'(7.3)'` twice, `'(7.1)'` and `'(7.2)'`), each with an assert
+  on its occurrence count; then check Section 7.5's heading and the table of
+  contents. The mathematics holds with the intended references
+  (`Ch07H.energy_identity`, `weighted_sum_finite`, `common_vector_energy_step`,
+  `endpoint_pairings`, `iterate_lift`, `zero_limit_formula`, `theorem_7A`).
+  Related, not an error: the bold "Lemma 7.3" (line 405) is the source's Lemma H.3;
+  the chapter has no Lemma 7.1 or 7.2. (`C/07_H/prose/028`)
+  Corrected: A logged module-H transformation, applied before the numbering loop, adds
+  the prefix `H.` to `Theorem\nA}`, `(2.1)` ×2, `(5.2)`, `(7.3)` ×2, `(7.1)` and
+  `(7.2)`. The chapter now prints (7.2.1), (7.5.2), (7.7.3), (7.7.1), (7.7.2), and
+  "Homogeneous potential and proof of Theorem 7.A" as the title of Section 7.5 and in
+  the table of contents (`C/07_H/prose/028`, now `LEAN`: `Ch07H.energy_identity`).
+
+- [x] **M18: Chapter 11's references keep its source note's numbering (typo)**
+  (corrected 15 October 2026).
+  `companion/chapters/11_U.tex`: eight bare references print literally and point to
+  nothing (companion equations and theorems are numbered c.n, and this chapter's
+  equation tags are (11.10)–(11.21)). "Theorems 1 and 2" (line 171) means Theorems
+  11.1 and 11.2; "(11)" (lines 269 and 340) means (11.11); "Thus (6) holds with
+  $T=I$ and" (line 302) means the transport hypothesis
+  $V_{k+1}=V_kT_k+s_kb_k^T+R_k$ of Theorem `M:residualtheorem` (Theorem 2.4, an
+  unnumbered display at `02_M.tex:230`); "(16)--(17)" (line 352) means
+  (11.16)–(11.17); "(21)" (line 415) means (11.21); "(18)" (line 433) means (11.18);
+  "(20)" (line 447) means (11.20). The mathematics holds with the intended
+  references: along accepted pairs, (11.14) is that transport hypothesis with
+  $T_k=I$, rank-one term $s_k(\beta_ke_n)^T$ and $R_k=-\beta_kP_Ss_ke_n^T$
+  (`Ch11U.transport_hypothesis`). Fix: a logged `if module=='U':` transformation in
+  `generate_companion.py` on the frozen
+  `bfgs_lean_stage1/master_report/latex/chapters/U.tex`; each old string occurs once:
+  `covers Theorems 1 and 2.` (U.tex:153) → `covers Theorems 11.1 and 11.2.`;
+  `follows from (11).` (239) → `follows from (11.11).`;
+  `Thus (6) holds with \(T=I\) and` (268) → `Thus (11.14) is the transport
+  hypothesis of Theorem~\ref{M:residualtheorem}, with \(T=I\), rank-one term
+  \(s(\beta e_n)^T\) and` (this avoids the letter $b$, which is the hyperplane offset
+  in this chapter); `This replaces (11).` (302) → `This replaces (11.11).`;
+  `Equations (16)--(17)` (314) → `Equations (11.16)--(11.17)`; `bound the left side
+  of` + newline + `(21).` (376–377) → `… (11.21).`; `truncate (18).` (391) →
+  `truncate (11.18).`; `For the objective (20),` (405) → `For the objective (11.20),`.
+  Do not replace "(11)" globally: Chapter 10 prints a bare "(11)" that means (10.11).
+  If the section numbering changes as well (W13), these numbers change with it.
+  (`C/11_U/prose/027`; notes on `prose/026`, `prose/029`, `prose/043`)
+  Corrected: The eight replacements of the TODO entry (module U): Theorems 11.1 and
+  11.2; (11.11) twice; "Thus (11.14) is the transport hypothesis of
+  Theorem~\ref{M:residualtheorem}, with \(T=I\), rank-one term \(s(\beta e_n)^T\)
+  and"; (11.16)--(11.17); (11.21); (11.18); (11.20). (`C/11_U/prose/027`, now `LEAN`:
+  `Ch11U.transport_hypothesis`.)
+
+- [x] **M19: Chapter 11: a cubic bound printed without its range (typo)**
+  (corrected 15 October 2026).
+  `11_U.tex:389-391`: "$0\le r'(v)\le6v^2$, $0\le r(v)\le6v^3$ near zero" omits
+  $v\ge0$. The spike $r$ of (11.18) vanishes for $v\le0$, so $r(v)=0>6v^3$ for every
+  $v<0$ (`Ch11U.spike_cubic_bound_fails`). Both bounds hold for every $v\ge0$
+  (`Ch11U.spike_small_bounds`), and the chapter uses only $v\ge0$. A parallel of M9.
+  Proposed: "… for $v\ge0$." Fix: in the module-U transformation of M18,
+  `\] near zero. However,` (U.tex:353, occurs once) → `\] for \(v\ge0\). However,`.
+  (`C/11_U/disp/026`)
+  Corrected: The display is now followed by "for \(v\ge0\)" instead of "near zero"
+  (`11_U.tex:391`; `C/11_U/disp/026`, now `LEAN`: `Ch11U.spike_small_bounds`).
+
+- [x] **M20: Chapter 9 refers to a result by its source note's letter (typo)**
+  (corrected 15 October 2026).
+  `companion/chapters/09_C.tex:398` (Section 9.7.1, page 57 of the built companion):
+  "Combining A's low affine-critical gap with Theorem 9.1 gives the following
+  restricted planar basin conclusion." The printed companion numbers its chapters
+  and shows no source letters; its only "A" is Appendix A (the seed certificate),
+  which has no such gap. Meant: Proposition 8.1 (`A:semialgebraic`, "A low-level
+  affine-critical gap"). The generator rewrites module letters only in prefixed tags,
+  "Module A" phrases and citation keys. Proposed: "Combining the low affine-critical
+  gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster} gives the
+  following restricted planar basin conclusion." Fix: a logged transformation in the
+  `if module=='C':` block of `generate_companion.py` on the frozen
+  `master_report/latex/chapters/C.tex:364` (span `C.span.12`), old string
+  `Combining A's low affine-critical gap with Theorem~\ref{C:thm:cluster}` (occurs
+  once). The corrected claim is `Ch09C.semialgebraic_low_basin` (with
+  `RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap`, the Lean form of
+  Proposition 8.1, and `semialgebraic_planar_low_basin`). (`C/09_C/prose/117`)
+  Corrected: It now reads "Combining the low affine-critical gap of
+  Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster}" (prints
+  Proposition 8.1; `09_C.tex:398`; `C/09_C/prose/117`, now `LEAN`:
+  `Ch09C.semialgebraic_low_basin`).
+
+- [x] **M21: Chapter 5 cites "the preceding theorem" for Chapter 3's theorem (typo)**
+  (corrected 15 October 2026).
+  `companion/chapters/05_G.tex:59` (Section 5.1): "The preceding theorem says that this
+  condition implies objective convergence for every admissible infinite full-BFGS run
+  in $K$, and iterate convergence under uniqueness." In the companion the theorem
+  before this sentence is Theorem `R:thm:plq` (finite polyhedral partitions,
+  `04_R.tex:292`), which says nothing of the kind. Meant: Chapter 3's "One-sided
+  transported-certificate convergence" (`03_T.tex:90-111`, no label; item
+  `C/03_T/theorem/001`, `Ch03T.one_sided_convergence`), whose hypothesis is this
+  condition. The stale reference is already in the frozen source. A parallel of M10.
+  Proposed: "The one-sided transported-certificate convergence theorem of
+  Chapter~\ref{comp:T} says that this condition implies …". Fix: a new logged
+  `if module=='G':` block of `generate_companion.py` (with M22 and M23), old string
+  `The preceding theorem says that this condition implies` (G.tex:49, occurs once).
+  The content holds as intended (`Ch05G.preceding_theorem`,
+  `Ch05G.sufficient_condition`). (`C/05_G/prose/008`)
+  Corrected: It now reads "The one-sided transported-certificate convergence theorem
+  of Chapter~\ref{comp:T} says that…" (`05_G.tex:59`; `C/05_G/prose/008`, now `LEAN`:
+  `Ch05G.preceding_theorem`).
+
+- [x] **M22: Chapter 5: no certificate "on a sublevel containing zero" (imprecision)**
+  (corrected 15 October 2026).
+  `05_G.tex:269` (Section 5.6): "Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite
+  strongly convex example with global convergence but no global certificate on a
+  sublevel containing zero." Read for every sublevel containing zero, this is false
+  at the boundary: $\{f\le2\}=[-2,0]$ is compact and contains $0$ ($f(0)=2$), yet each
+  of its positive bands carries a certificate for $(c_1,c_2)=(1/4,1/2)$ ($W\equiv1$,
+  $m=2\eta$, $C=1$, $L=0$, $\delta=1$: every differentiable point of $\{f\le2\}$ is
+  negative, where $f(x)=\frac12(x+1)^2+\frac32$; `Ch05G.two_sublevel_counterexample`,
+  `twoCert`, found by the independent review). The sentence also leaves the
+  line-search constants implicit: with the constants $(1/8,1/4)$ that Section 5.4 uses
+  for the same $f$ (line 219), every compact positive band carries $W\equiv1$; the
+  claim needs $(1/4,1/2)$, stated at line 278. Proposed: "… but, for
+  $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel containing zero in its
+  interior." Fix: in the module-G block, `but no global certificate on a sublevel
+  containing zero.` (G.tex:251, occurs once). The corrected claim:
+  `Ch05G.shifted_global_nonnecessity_interior` (with `interior_sublevel_no_certificate`
+  and `zero_mem_interior_iff`: $0$ is interior to $\{f\le b\}$ iff $b>2$); runs exist
+  (`Ch05G.shiftedRun`). (`C/05_G/prose/053`)
+  Corrected: It now reads "…but, for $(c_1,c_2)=(1/4,1/2)$, no global certificate on
+  any sublevel containing zero in its interior." (`05_G.tex:269`; `C/05_G/prose/053`,
+  now `LEAN`: `Ch05G.shifted_global_nonnecessity_interior`).
+
+- [x] **M23: Chapter 5: no certificate "on a positive band containing this knot"
+  (imprecision)**
+  (corrected 15 October 2026). `05_G.tex:321` (Section 5.7): "No certificate exists on
+  a positive
+  band containing this knot." False when the knot lies on the boundary of the band:
+  for every knot $a=(1/4)^j$, $K=\{h\le h(a)\}$ and $\eta=h(a/4)$, the band $K_\eta$
+  contains $a$ and carries the certificate $W\equiv1$, $m=2h(a/4)=13a^2/80$, $C=1$,
+  $L=0$, $\delta=a^2/8$ for $(c_1,c_2)=(1/4,1/2)$
+  (`Ch05G.knot_band_literal_counterexample`, `edgeCert`). The argument of lines
+  307–320 needs the pairs $a\pm\epsilon$ in the band, that is, the knot in its
+  interior. Proposed: "No certificate exists on a positive band whose interior
+  contains this knot ($b>h(a)>\eta$)." Fix: in the module-G block, `No certificate
+  exists on a positive band containing this knot.` (G.tex:299, occurs once). The
+  corrected claim: `Ch05G.no_certificate_knot_band` (every knot, every
+  $b>h(a)>\eta>0$, via `Ch05G.small_crossing_no_certificate`). (`C/05_G/prose/063`)
+
+  For M21–M23: no replacement adds a line, so the register's line numbers stay;
+  after regenerating, update the three items' anchors and set them to `LEAN` with
+  the names above, then build and inspect Chapter 5 (pages 33–39).
+  Corrected: It now reads "No certificate exists on a positive band whose interior
+  contains this knot ($b>h(a)>\eta$)." (`05_G.tex:321`; `C/05_G/prose/063`, now
+  `LEAN`: `Ch05G.no_certificate_knot_band`).
+
+- [x] **M24: Chapter 3 says that (S) "is exactly" (RS) (imprecision)**
+  (corrected 15 October 2026).
+  `03_T.tex:225`: "Condition (S) is exactly (RS), while
+  $\Pi_s(z-x_*)=\Pi_s(x-x_*)$ makes (T) an equality with $L=0$." With the radial
+  field $W(x)=(x-x_*)(x-x_*)^T$ of line 219 the two inequalities coincide
+  ($y^TW(z)y=N^2$, $t=T$), but they cover different pairs: (S) only eligible pairs
+  $x,z\in K_\eta$ with $d\le\delta_\eta$ (line 106), (RS) (`04_R.tex:53-59`) all
+  differentiable $x,z\in K$ with $F_*+\eta\le F(z)\le F(x)$ and $T>0$. So (RS) gives
+  (S) with the same constant (`Ch03T.rs_gives_s`, `radial_secant_exact`), and the
+  conclusion at line 229 holds (`Ch03T.rs_covered`), but not conversely: for
+  $F(x)=\max\{|x|,2x-1\}$, $K=\{F\le2\}$ and any $c_2<1/2$, (S) holds for the radial
+  field with $C_\eta=6$ on every band and the field is a band certificate, yet (RS)
+  fails at $\eta=1/2$: the pairs $x=1+\varepsilon$, $z=1-\varepsilon$ have
+  $N^2/T=(1-\varepsilon)^2/(2\varepsilon)\to\infty$ and are not eligible ($t=d/2$)
+  (`Ch03T.s_not_exactly_rs`). The companion itself separates the two (line 231,
+  "violates even the eligible-pair radial condition"; `10_Q.tex:300`). Proposed:
+  "With this $W$, (S) is the inequality of (RS) restricted to eligible pairs in
+  $K_\eta$ with $d\le\delta_\eta$, so (RS) gives (S) with the same constant, while".
+  Fix: a logged module-T replacement of `Condition (S) is exactly (RS), while`
+  (`master_report/latex/chapters/T.tex:199`, occurs once). (`C/03_T/prose/029`)
+  Chapter 1 repeats it at `companion/chapters/01_I.tex:153` (P1): "RS is the radial
+  specialization \(W(x)=(x-x_*)(x-x_*)^T\)." (`Ch03T.rs_gives_s`, `Ch03T.rs_covered`,
+  `Ch03T.s_not_exactly_rs`; the rest of the paragraph, "The inclusion of RS is
+  strict", agrees). Proposed: "RS implies the radial specialization
+  \(W(x)=(x-x_*)(x-x_*)^T\)." Fix: in the module-I block of
+  `editorial/generate_companion.py`, replace
+  `RS is the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\).` (frozen
+  `inventory.tex:119`, span `I.span.9`, occurs once); "Its equivalent inward Taylor
+  condition…" then still refers to RS. The item then becomes `LEAN`.
+  (`C/01_I/prose/048`)
+  Corrected: Chapter 3 now says "With this $W$, (S) is the inequality of (RS)
+  restricted to eligible pairs in $K_\eta$ with $d\le\delta_\eta$, so (RS) gives (S)
+  with the same constant, while" (`03_T.tex:225`; `C/03_T/prose/029`, now `LEAN`:
+  `Ch03T.rs_gives_s`). Chapter 1 now says "RS implies the radial specialization …"
+  (`01_I.tex:153`; `C/01_I/prose/048`, now `SAME_AS` `C/03_T/prose/029`, `prose/031`).
+
+- [x] **M25: Chapter 3's proof cites (3.3)–(3.6) as (3)–(6) (typo)**
+  (corrected 15 October 2026). `03_T.tex:148`
+  "Using (3)--(4), the Loewner inequality (T), and (S)," means (3.3)–(3.4); line 160
+  "Divide (6) by $P_{k+1}$ and sum" means (3.6); line 165 "This contradicts (5)."
+  means (3.5). The source tags these equations (T.3)–(T.6) but cites them without
+  the prefix (T.tex:134, 146, 151), and `generate_companion.py:69` renumbers only
+  prefixed references, so the PDF (page 23, printed 17) prints numbers that exist
+  nowhere in the companion; the same slip as M17 and M18. The mathematics holds with
+  the intended references (`Ch03T.hessian_form`, `annihilation_projection`,
+  `trace_recurrence`, `reciprocal_budget`, `reciprocal_mean_diverges`,
+  `one_sided_convergence`). Fix: logged module-T replacements, each occurring once
+  in T.tex: `Using (3)--(4),` → `Using (3.3)--(3.4),`, `Divide (6) by` →
+  `Divide (3.6) by`, `This contradicts (5).` → `This contradicts (3.5).`
+  (`C/03_T/prose/042`)
+  Corrected: The proof now prints (3.3)--(3.4), (3.6) and (3.5) (`03_T.tex:148, 160,
+  165`; `C/03_T/prose/042`, now `LEAN`: `Ch03T.trace_recurrence`).
+
+- [x] **M26: "The preceding moving-frame theorem" (Chapter 3, typo)**
+  (corrected 15 October 2026).
+  `03_T.tex:196`: "Unlike the preceding moving-frame theorem, there is no requirement
+  that $\lambda$ be invertible or bounded away from zero." The only moving-frame
+  theorem before it is Theorem `M:residualtheorem` (`02_M.tex:220-237`), which
+  requires no invertible transport either (`02_M.tex:236`: "No full-rank frame or
+  invertible transport is required."; `Ch02M.residual_theorem`), so the contrast is
+  false for the literal referent. Meant: the moving-frame criterion stated in prose
+  in Section 2.4 (`02_M.tex:196-211`), which assumes bounded norms and bounded inverse
+  norms of the products $P_{k+1}=P_kT_k$ (`Ch02M.frame_criterion`). The claim about
+  Chapter 3 holds: its scalar condition allows $\lambda=0$
+  (`Ch03T.rank_one_degenerate`), even where $\lambda=0$ is forced
+  (`Ch03T.degenerate_multiplier`). Same kind as M21. Proposed: "Unlike the
+  moving-frame criterion of Section~\ref{M:energy}, …" (prints "Section 2.4"). Fix: a
+  logged module-T replacement of `Unlike the preceding moving-frame theorem,`
+  (T.tex:174, occurs once). (`C/03_T/prose/043`)
+
+  For M24–M26: one `if module=='T':` block in `generate_companion.py`, after the
+  `constant_range` loop and before `if module=='E':`. No replacement adds a line.
+  After regenerating, update the anchors of the three items and set them to `LEAN`
+  (first names `rs_gives_s`, `trace_recurrence`, `rank_one_degenerate`), update the
+  TeX quotations in the docstrings of `Ch03T.trace_recurrence`, `reciprocal_budget`,
+  `radial_secant_exact` and `rank_one_degenerate`, then build and inspect pages
+  23–24 (printed 17–18).
+  Corrected: It now reads "Unlike the moving-frame criterion of
+  Section~\ref{M:energy}," (prints Section 2.4; `03_T.tex:196`; `C/03_T/prose/043`,
+  now `LEAN`: `Ch03T.rank_one_degenerate`).
+
+- [x] **M27: Chapter 6 names its source working reports by bare letters (typo)**
+  (corrected 15 October 2026).
+  `06_F.tex:9` (first paragraph of Section 6.1, printed page 34): "This module
+  collects the nonredundant structural consequences from [M], [P], [E] and [Q]." The
+  bracketed letters print literally and resolve to nothing: the companion has no
+  bibliography entry or label [M], [P], [E] or [Q], [P] matches no chapter, and [M],
+  [E], [Q] read as the letters of Chapters 2, 14 and 10, which they do not mean. In
+  the sources they are the working reports [SM], [SP], [SE] and [SQ] of the original
+  master report (`BFGS_MASTER_REPORT_LaTeX/report/master.tex:130`, module F:
+  "Consolidated proofs from [SM], [SP], [SE] and [SQ]"; `report/bibliography.tex:11,
+  17, 18, 19`). `generate_companion.py:29` maps the citation keys SP, SQ, SE to
+  Chapter F itself and SM to Chapter M, but bare bracketed letters are not
+  citations; "This module" is the sources' word for a chapter (W8). No mathematical
+  content. Proposed: "This chapter collects nonredundant structural consequences of
+  the general theory." (or "… of the energy theory of Chapter~\ref{comp:M}.", or
+  drop the sentence). Fix: a logged `if module=='F':` replacement of `This module
+  collects the nonredundant structural consequences from [M], [P], [E] and [Q].`
+  (`master_report/latex/chapters/families.tex:7`, span `F.span.1`, occurs once);
+  regenerate, inspect printed page 34. The item then becomes `NON_CLAIM`.
+  (`C/06_F/prose/002`)
+  Corrected: The sentence is now "This chapter collects nonredundant structural
+  consequences of the general theory." (`06_F.tex:9`; `C/06_F/prose/002`, now
+  `NON_CLAIM`).
+
+- [x] **M28: Chapter 10's references keep its source note's numbering (typo)**
+  (corrected 15 October 2026).
+  `10_Q.tex`, Sections 10.5.2–10.6, printed pages 62–64: "Equation (11) proves (V)
+  with $m=4\theta_{\min}^2\eta^2$" (line 115) means (10.11); "By (12), bounded
+  endpoints and gradients, and $e\le d$," (line 136) means (10.12); "By (13), the
+  right side is $O(d)$ uniformly on the band." (line 169) means (10.13); "Whenever it
+  vanishes, the second vanishes by (7)." and "There are finitely many segments and
+  pairs, proving (16)." (line 198) mean (10.7) and (10.16); "An especially simple
+  scaling for (8) is" (line 238) means (10.8). No companion equation is numbered (7),
+  (8), (11), (12), (13) or (16); the six print literally. Cause:
+  `generate_companion.py:69` renumbers only `Q.`-prefixed references, and the source
+  writes these six without the prefix. Same slip as M17, M18 and M25; the
+  mathematics holds with the intended references. Fix: a logged `if module=='Q':`
+  block applied before the numbering loop (lines 68–69) that adds the prefix, with
+  these strings of `master_report/latex/chapters/Q.tex`, each occurring once (assert
+  the counts): `(11)` (Q.tex:101), `(12)` (:118), `(13)` (:147), `(7)` and `(16)`
+  (:176), `(8)` (:212); the existing substitution then prints (10.11), (10.12),
+  (10.13), (10.7), (10.16), (10.8). Only Q's text is touched, so Chapter 11's bare
+  "(11)" (M18) is unaffected. Regenerate, inspect printed pages 62–64. Lean:
+  `Ch10Q.secant_visibility`, `radial_error`, `multiplier_estimates`,
+  `segment_bound_facts`, `branch_change`, `example_scale`. (`C/10_Q/prose/014`)
+  Corrected: A logged module-Q transformation, applied before the numbering loop, adds
+  the prefix `Q.`. The chapter now prints (10.11), (10.12), (10.13), (10.7), (10.16)
+  and (10.8) (`C/10_Q/prose/014`, now `LEAN`: `Ch10Q.secant_visibility`).
+
+- [x] **M29: Chapter 14 refers to Chapters 13 and 4 by their source letters (typo)**
+  (corrected 15 October 2026).
+  (a) `companion/chapters/14_E.tex:18` (Section 14.1, printed page 89): "The
+  stable-manifold conclusion in L follows from the actual return map and a proved
+  analytic argument, not a numerical starting vector assumed to lie on that manifold."
+  (b) `14_E.tex:136` (Section 14.3.11 "R-interpretation", printed page 91): "The
+  explicit four-piece objective in R is a new specified reconstruction with an actual
+  full-BFGS failure run; it is not asserted to be an unidentified historical
+  objective." "L" and "R" are the source letters of Chapter 13 (lower curvature) and
+  Chapter 4 (radial modeling; the four-piece objective is built in Section 4.3). The
+  printed companion numbers its chapters 1 to 14 and its appendices A and B, so the
+  two labels resolve to nothing; the suite names of Section 14.3 ("L-hyperbolicity",
+  "R-interpretation", …) do not define them. The letters are used as places ("in L",
+  "in R"), so this is the pattern of M20 and M27, not of W22 (letters naming
+  objects). The generator rewrites module letters only in prefixed tags, "Module X"
+  phrases and citation keys. Proposed: "in Chapter~\ref{comp:L}" and "in
+  Chapter~\ref{comp:R}". Fix: two logged transformations in the `if module=='E':`
+  block of `editorial/generate_companion.py`, on the frozen
+  `master_report/latex/chapters/verification.tex` (assert the counts): (a) line 7,
+  span `E.span.2`: `The stable-manifold conclusion in L follows` (occurs once) →
+  `The stable-manifold conclusion in Chapter~\ref{comp:L} follows`; (b) line 73, span
+  `E.span.15`: `The explicit four-piece objective in R is` (occurs once) → `The
+  explicit four-piece objective in Chapter~\ref{comp:R} is`. No line is added.
+  Regenerate, inspect printed pages 89 and 91. The mathematics holds: (a)
+  `LowerCurvature.stable_manifold_positive_scale`, `Ch13L.global_failure`,
+  `LowerCurvature.quadratic_failure`; (b) `Ch04R.fourPiece_failure_run`,
+  `reconstructedFourPieceFailure`, `Ch04R.fourPiece_objective_formula`.
+  (`C/14_E/prose/013`, `C/14_E/prose/061`)
+  Corrected: They now read "in Chapter~\ref{comp:L}" and "in Chapter~\ref{comp:R}"
+  (`14_E.tex:18, 136`; `C/14_E/prose/013`, now `SAME_AS`
+  `A/lower_curvature/prose/036`, `C/13_L/theorem/L:thm:global`; `C/14_E/prose/061`,
+  now `SAME_AS` `C/04_R/prose/047`, `disp/033`).
+
+- [x] **M33, companion part (reader point R-F-1): the initial point of the chosen
+  orbit** (corrected 15 October 2026). Chapter 13 now puts the initial point in the
+  neighbourhood too: "so that \emph{the initial point and all queries of the orbit}
+  lie inside it" (`13_L.tex:237`), "whose initial point and accepted and rejected
+  queries are all in that neighborhood" (line 355), "applies at the initial point and
+  to every query" (line 363). New Lean: `Ch13L.chosen_orbit` and
+  `Ch13L.local_model_along_orbit` (`C/13_L/prose/062` and `prose/065`, `SAME_AS` →
+  `LEAN`; `proof/002` cites `global_failure`, whose `∀ k, x k ∈ V` includes the
+  initial point). The article's recurrence (Proposition `art:quadratic_failure`,
+  `A/lower_curvature/prose/027-028`) is still open.
+
+**Verification of the companion corrections.** The companion was rebuilt: still 108
+pages, LaTeX warnings unchanged (the same three underfull hboxes, no undefined
+references, no overfull boxes). The text changed on 75 pages: 72 contain edits (PDF 2,
+5, 7–10, 12–18, 23–26, 28–31, 33–35, 37, 38, 40, 42–45, 47–53, 55, 58, 59, 63, 67–70,
+73–80, 84, 85, 87, 88, 90–98, 100–104), and pages 3, 11 and 99 only reflow. Every
+replacement was rendered at 110 dpi and inspected, every new `\ref`/`\eqref` prints
+the intended number, the table of contents shows "Theorem 7.A", and Chapters 12 and 13
+print each equation number once ((12.1)–(12.14), (13.1)–(13.13)).
+`generate_companion.py --check` passes, and each new string occurs exactly once in the
+output with each old string gone. The registers were carried across the edits with
+`resync_register.py` (no line moved; 11 accepted hashes). The 25 companion
+`DISCREPANCY` items are resolved (entries under `resolved_discrepancies`), and
+`check_coverage.py --strict` passes on every companion file without
+`--allow-discrepancies` (and on every file overall). In `bfgs_lean_article`, 18
+companion coverage modules changed (docstrings; 9 new declarations in `Ch13L` and
+`Ch04R`; no existing statement changed), and each compiles with `lake env lean`
+without errors or warnings. `editorial/CLAIM_LEDGER.json` and
+`companion/PROOF_CORRESPONDENCE.html` were regenerated (file hashes and the title
+"Theorem 7.A" only). The independent review found the work sound; its findings F1–F7,
+F9 and F10 and its observations O1–O3 were applied the same day (W44–W46 and further
+places of W8, W10, W17, W25, W37), and F8 (W31) is open.

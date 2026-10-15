@@ -92,20 +92,25 @@ does not use.
   `local_nonnecessity`.
 * Section 5.9: `finite_sample_feasible`, `sample_constant`, `finite_tests_not_existence`.
 
-## Discrepancies
+## Corrected discrepancies (15 October 2026)
 
-* `C/05_G/prose/008` (line 59, typo): "The preceding theorem" is, in the companion, Theorem
-  `R:thm:plq` of Chapter R; the theorem meant is Chapter T's one-sided transported-certificate
-  theorem (`C/03_T/theorem/001`). Its content holds: `preceding_theorem`, `sufficient_condition`.
-* `C/05_G/prose/053` (line 269, imprecision): "no global certificate on a sublevel containing
-  zero" fails for the sublevel $\{f\le2\}=[-2,0]$, which contains zero on its boundary
-  (`two_sublevel_counterexample`, `twoCert`), and leaves the constants $(1/4,1/2)$ implicit; for
-  sublevels with zero in their interior it holds: `shifted_global_nonnecessity_interior`
-  (`interior_sublevel_no_certificate`).
-* `C/05_G/prose/063` (line 321, imprecision): "No certificate exists on a positive band
-  containing this knot" fails when the knot lies on the boundary of the band
-  (`knot_band_literal_counterexample`, `edgeCert`); with the knot in the interior of the band
-  ($b>h(a)>\eta$) it holds: `no_certificate_knot_band`.
+* `C/05_G/prose/008` (line 59, M21): "The preceding theorem" was, in the companion, Theorem
+  `R:thm:plq` of Chapter R; the sentence now names "The one-sided transported-certificate
+  convergence theorem of Chapter~\ref{comp:T}" (`C/03_T/theorem/001`): `preceding_theorem`,
+  `sufficient_condition`.
+* `C/05_G/prose/053` (line 269, M22): "no global certificate on a sublevel containing zero" failed
+  for the sublevel $\{f\le2\}=[-2,0]$, which contains zero on its boundary
+  (`two_sublevel_counterexample`, `twoCert`), and left the constants $(1/4,1/2)$ implicit; it now
+  reads "but, for $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel containing zero in
+  its interior": `shifted_global_nonnecessity_interior` (`interior_sublevel_no_certificate`).
+* `C/05_G/prose/063` (line 321, M23): "No certificate exists on a positive band containing this
+  knot" failed when the knot lies on the boundary of the band (`knot_band_literal_counterexample`,
+  `edgeCert`); it now reads "…on a positive band whose interior contains this knot
+  ($b>h(a)>\eta$)": `no_certificate_knot_band`.
+* Wording points W16 (line 269, "with $\epsilon>0$") and W11 (line 89, "the proof of the
+  convergence theorem of Chapter~\ref{comp:T}") were applied on the same day, and W17 as in
+  Chapter 3 (lines 142 and 151, "(V) and (S)"; before "(V)--(S)"; line 72 keeps "(V)--(T)", the
+  range of the three conditions).
 
 ## Non-vacuity
 
@@ -184,7 +189,7 @@ theorem eligible_iff {n : ℕ} (F : Vec n → ℝ) (c₁ c₂ : ℝ) (x z g h : 
         d > 0 ∧ c₁ * d ≤ Δ ∧ Δ ≤ d ∧ t ≥ (1 - c₂) * d :=
   BfgsCoverage.Article.Energy.eligiblePair_iff F c₁ c₂ x z g h s y hs hy d Δ t hd hΔ ht
 
-/-- Item `C/05_G/prose/003` (`companion/chapters/05_G.tex:48-48`): "These are the necessary
+/-- Item `C/05_G/prose/003` (`companion/chapters/05_G.tex:48`): "These are the necessary
 endpoint inequalities of the Armijo--weak-Wolfe formulation in Xie--Wächter." For finite convex
 $F$, an Armijo--weak-Wolfe step from a differentiable $x$ to a differentiable $z=x+s$ along a
 descent direction ($g^Ts<0$),
@@ -213,7 +218,7 @@ theorem armijo_wolfe_eligible {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ u
     rw [he]
     linarith
 
-/-- Item `C/05_G/prose/004` (`companion/chapters/05_G.tex:48-48`): "In particular $t>0$ and
+/-- Item `C/05_G/prose/004` (`companion/chapters/05_G.tex:48`): "In particular $t>0$ and
 $s\ne0$." Every eligible pair (for $c_2<1$) has $t>0$ and $s=z-x\ne0$. -/
 theorem eligible_t_pos_s_ne {n : ℕ} {F : Vec n → ℝ} {c₁ c₂ : ℝ} (hc₂ : c₂ < 1)
     {x z g h : Vec n} (hp : EligiblePair F c₁ c₂ x z g h) :
@@ -325,10 +330,11 @@ theorem visibilitySecant_iff {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (Fs
              positive_semidefinite := hpsd, visibility := hvis
              secant := fun x z g h hx hz hp hd => hsec x hx z hz g h hp hd }⟩
 
-/-- Item `C/05_G/prose/008` (`companion/chapters/05_G.tex:59-59`): "The preceding theorem says
-that this condition implies objective convergence for every admissible infinite full-BFGS run in
-$K$, and iterate convergence under uniqueness." Corrected reference: the theorem meant is the
-one-sided transported-certificate theorem of Chapter T (`companion/chapters/03_T.tex:90`). Under
+/-- Item `C/05_G/prose/008` (`companion/chapters/05_G.tex:59`), corrected on 15 October 2026
+(M21; before "The preceding theorem says that"): "The one-sided transported-certificate
+convergence theorem of Chapter~\ref{comp:T} says that this condition implies objective
+convergence for every admissible infinite full-BFGS run in $K$, and iterate convergence under
+uniqueness." That theorem is `companion/chapters/03_T.tex:90` (`C/03_T/theorem/001`). Under
 the standing assumptions of Section 5.1, if every nonempty positive band $K_\eta$ carries the
 condition (5.V)--(5.T) (`condition_iff`), every admissible run with constants $c_1,c_2$ and
 $x_0\in K$ has $F(x_k)\to F_*$, and $x_k\to x_*$ when the minimizer $x_*$ is unique. -/
@@ -353,7 +359,7 @@ theorem preceding_theorem {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ
   exact (R.transported_certificate_convergence_on_sublevel b hK xstar hxstar hx0 hcert').2.2
     fun x hx => huniq x fun z => by rw [hx]; exact hxstar z
 
-/-- Item `C/05_G/prose/001` (`companion/chapters/05_G.tex:3-3`): "The certificate is a
+/-- Item `C/05_G/prose/001` (`companion/chapters/05_G.tex:3`): "The certificate is a
 sufficient analytic condition." Sufficient for convergence: under the standing assumptions of
 Section 5.1, if every nonempty positive band $K_\eta$ carries the condition (5.V)--(5.T)
 (`condition_iff`), every admissible run with the constants $c_1,c_2$ and $x_0\in K$ has
@@ -372,7 +378,7 @@ theorem sufficient_condition {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ un
         Tendsto R.x atTop (𝓝 xstar) :=
   preceding_theorem hF Fstar hFstar b K hK_def hK c₁ c₂ hc hcert R hR₁ hR₂ hx0
 
-/-- Item `C/05_G/prose/009` (`companion/chapters/05_G.tex:59-59`): "A local theorem requires the
+/-- Item `C/05_G/prose/009` (`companion/chapters/05_G.tex:59`): "A local theorem requires the
 condition only near the minimizer, then uses a sufficiently low trapped sublevel." For finite
 convex $F$ with unique minimizer $x_*$, a compact sublevel $\{F\le b\}$ ($b>F(x_*)$) and a
 neighborhood $U$ of $x_*$: if the condition holds on the bands of $\{F\le b\}\cap U$, there is
@@ -431,7 +437,7 @@ def leftCert (K : Set (Vec 1)) (hK : K ⊆ {x | x 0 < 0}) (c₁ c₂ η : ℝ) (
     simpa using Matrix.PosSemidef.zero
 
 open ScalarCounterexamples OneDimensional in
-/-- Item `C/05_G/prose/010` (`companion/chapters/05_G.tex:59-59`): "Failure on a large sublevel
+/-- Item `C/05_G/prose/010` (`companion/chapters/05_G.tex:59`): "Failure on a large sublevel
 and failure in every neighborhood of a minimizer are different statements." For
 $f(x)=\frac12(x+2)^2+|x|$ (minimizer $-1$) and $(c_1,c_2)=(1/4,1/2)$ the condition fails on
 the sublevel $\{f\le3\}$, which contains the minimizer, yet it holds on $\{f\le3\}\cap U$ for a
@@ -572,7 +578,7 @@ theorem ellipsoid_eq {n : ℕ} {W : Mat n} (hW : W.PosSemidef) :
   ext v
   simp
 
-/-- Item `C/05_G/prose/013` (`companion/chapters/05_G.tex:100-100`): "Its support function is
+/-- Item `C/05_G/prose/013` (`companion/chapters/05_G.tex:100`): "Its support function is
 $h_{\mathcal E_x}(a)=\sqrt{a^TW(x)a}$." For every PSD $W$ and every $a$,
 $\sup_{v\in\mathcal E}a^Tv=\sqrt{a^TWa}$ (the supremum is attained). -/
 theorem support_function {n : ℕ} {W : Mat n} (hW : W.PosSemidef) (a : Vec n) :
@@ -626,7 +632,7 @@ theorem loewner_range {n : ℕ} {A B : Mat n} (hA : A.PosSemidef) (hB : B.PosSem
     (by rw [hP]; simpa using hAB)
   simpa using h
 
-/-- Item `C/05_G/prose/017` (`companion/chapters/05_G.tex:112-112`): "Indeed, Loewner ordering
+/-- Item `C/05_G/prose/017` (`companion/chapters/05_G.tex:112`): "Indeed, Loewner ordering
 implies inclusion of the ranges of the projected PSD matrices. The range of $\Pi_sW\Pi_s$ is
 $\Pi_s\range W$, because it equals the range of $(\Pi_sW^{1/2})(\Pi_sW^{1/2})^T$. Lifting the
 projected inclusion proves \eqref{G:eq:range}." For PSD $W(x)$, $W(z)$ with (5.T0): the range of
@@ -659,7 +665,7 @@ theorem range_argument {n : ℕ} {Wx Wz : Mat n} (hWx : Wx.PosSemidef) (hWz : Wz
     rw [hPs] at h
     exact h
 
-/-- Item `C/05_G/prose/018` (`companion/chapters/05_G.tex:112-112`): "For a rank-one field, a
+/-- Item `C/05_G/prose/018` (`companion/chapters/05_G.tex:112`): "For a rank-one field, a
 new comparison direction must therefore lie in the plane spanned by the old comparison direction
 and the step." If $W(x)=ww^T$, $W(z)=vv^T$ satisfy (5.T0) for the step $s$, then
 $v\in\operatorname{span}\{w,s\}$. -/
@@ -671,7 +677,7 @@ theorem rank_one_plane {n : ℕ} (w v s : Vec n)
 
 /-! ### Section 5.3: removing the matrix from pointwise feasibility (lines 121-153) -/
 
-/-- Item `C/05_G/prose/019` (`companion/chapters/05_G.tex:124-124`): "For each differentiable
+/-- Item `C/05_G/prose/019` (`companion/chapters/05_G.tex:124`): "For each differentiable
 endpoint $z$, let $\mathcal I(z)$ be all differentiable predecessors $x$ for which $(x,z)$ is
 eligible, belongs to the band, and has $d\le\delta$." The differentiable band points are the
 library's `BandPoint F K Fstar η`, and $\mathcal I(z)$ is `IncomingPoint F K Fstar c₁ c₂ η δ z`
@@ -714,7 +720,7 @@ theorem nu_eq {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (Fstar c₁ c₂ �
   rw [sSup_image']
   rfl
 
-/-- Item `C/05_G/prose/020` (`companion/chapters/05_G.tex:132-132`): "An empty predecessor set
+/-- Item `C/05_G/prose/020` (`companion/chapters/05_G.tex:132`): "An empty predecessor set
 gives $\mathcal D(z)=\R^n$." -/
 theorem empty_predecessors {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (Fstar c₁ c₂ η δ : ℝ)
     (z : PointwiseFeasibility.BandPoint F K Fstar η)
@@ -723,7 +729,7 @@ theorem empty_predecessors {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (Fsta
       (δ := δ) z) (PointwiseFeasibility.sourceCurvature z) = univ :=
   PointwiseFeasibility.incomingPolar_empty _ _
 
-/-- Item `C/05_G/prose/021` (`companion/chapters/05_G.tex:132-132`): "The set $\mathcal D(z)$
+/-- Item `C/05_G/prose/021` (`companion/chapters/05_G.tex:132`): "The set $\mathcal D(z)$
 is the polar of the closed absolutely convex hull of the normalized incoming jumps $y/\sqrt t$."
 With $y=\nabla F(z)-\nabla F(x)$, $t=t(x,z)$ for $x\in\mathcal I(z)$ (and $c_2<1$, so $t>0$),
 $\mathcal D(z)=\{v:|w^Tv|\le1\text{ for all }w\in\overline{\operatorname{absconv}}\{y/\sqrt t\}\}$. -/
@@ -846,8 +852,9 @@ theorem proof_direction {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F
     rw [heq, abs_of_nonneg (div_nonneg hsq.le hsC.le), Real.sqrt_div' _ hC.le]
     exact div_le_div_of_nonneg_right (Real.sqrt_le_sqrt hq) hsC.le
 
-/-- Item `C/05_G/prose/022` (`companion/chapters/05_G.tex:151-151`): "Thus higher rank adds no
-pointwise power to (V)--(S)". Under the standing assumptions of Section 5.1 and a threshold
+/-- Item `C/05_G/prose/022` (`companion/chapters/05_G.tex:151`): "Thus higher rank adds no
+pointwise power to (V) and (S)" (since 15 October 2026, wording point W17; before "(V)--(S)").
+Under the standing assumptions of Section 5.1 and a threshold
 $\delta>0$, if some finite-valued PSD field satisfies (5.V) and (5.S), then a rank-one field
 $W(x)=v(x)v(x)^T$ satisfies (5.V) (with some $m'>0$) and (5.S) with $C=1$. -/
 theorem rank_one_suffices {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
@@ -1038,7 +1045,7 @@ theorem seminorm_display {ι : Type*} {l : Filter ι} {n r : ℕ}
   rw [sqrt_max_zero, ← hrep ε] at hb
   exact hb
 
-/-- Item `C/05_G/prose/024` (`companion/chapters/05_G.tex:176-176`): "In particular, the
+/-- Item `C/05_G/prose/024` (`companion/chapters/05_G.tex:176`): "In particular, the
 obstruction holds if $n$ incoming jumps converge to a basis of $\R^n$, their curvature products
 tend to zero, and endpoint gradients remain bounded." In the setting of Proposition
 `G:prop:star` with $r=n$: if $y_{j,\varepsilon}\to b_j$ for a basis $(b_j)$,
@@ -1065,7 +1072,7 @@ theorem basis_obstruction {ι : Type*} {l : Filter ι} [NeBot l] {n : ℕ}
     basis_limit_no_band_certificate hc.2.2 z h x g hz hx hdiff hp hd basis hy ht B
       (Eventually.of_forall hB)⟩
 
-/-- Item `C/05_G/prose/025` (`companion/chapters/05_G.tex:176-176`): "The coefficients
+/-- Item `C/05_G/prose/025` (`companion/chapters/05_G.tex:176`): "The coefficients
 expressing the gradient in that basis then remain bounded." If the jumps
 $y_{j,\varepsilon}\to b_j$ (a basis) and $\|\nabla F(z_\varepsilon)\|\le B$, there is $D$ such
 that, for $\varepsilon$ near the limit, every representation
@@ -1130,7 +1137,7 @@ theorem basis_coefficients_bounded {ι : Type*} {l : Filter ι} {n : ℕ}
     exact Finset.single_le_sum (f := fun j => ∑ i, (|Y₀⁻¹ j i| + 1) * max B 0)
       (fun j _ => Finset.sum_nonneg fun i _ => by positivity) (Finset.mem_univ j)
 
-/-- Item `C/05_G/prose/027` (`companion/chapters/05_G.tex:178-178`): "Moreover, every eligible
+/-- Item `C/05_G/prose/027` (`companion/chapters/05_G.tex:178`): "Moreover, every eligible
 pair is individually realizable as a first BFGS step." With "Hence $\alpha=1$ realizes it"
 (line 182): for every eligible pair (and $c_2<1$) there is $H_0\succ0$ (the matrix of display
 `disp/017`) such that the BFGS step from $x$ with $H_0$ and $\alpha=1$ lands at $z$, satisfies
@@ -1174,7 +1181,7 @@ theorem realizing_metric {n : ℕ} (g s : Vec n) (d : ℝ) (hd_def : d = -dot g 
   rw [hHeq]
   exact ⟨realizingMetric_posDef g s hd, realizingMetric_mul_gradient g s hd⟩
 
-/-- Item `C/05_G/prose/029` (`companion/chapters/05_G.tex:182-182`): "Positive definiteness
+/-- Item `C/05_G/prose/029` (`companion/chapters/05_G.tex:182`): "Positive definiteness
 follows because a vector in both nullspaces would be parallel to $g$ and orthogonal to $s$, and
 therefore zero." If $d=-g^Ts>0$ and $v$ lies in the null spaces of $ss^T/d$ and of
 $I-gg^T/(g^Tg)$, then $v$ is parallel to $g$, orthogonal to $s$, and $v=0$. -/
@@ -1209,7 +1216,7 @@ theorem nullspaces_meet_trivially {n : ℕ} (g s : Vec n) (d : ℝ) (hd_def : d 
     · exact absurd h (by linarith)
   rw [hpar, hc, zero_smul]
 
-/-- Item `C/05_G/prose/078` (`companion/chapters/05_G.tex:359-359`): "The proof uses the
+/-- Item `C/05_G/prose/078` (`companion/chapters/05_G.tex:359`): "The proof uses the
 standard triangle inequality for a PSD seminorm." For PSD $W$,
 $\sqrt{(\sum_j\lambda_jy_j)^TW(\sum_j\lambda_jy_j)}\le\sum_j|\lambda_j|\sqrt{y_j^TWy_j}$. -/
 theorem psd_seminorm_triangle {n r : ℕ} {W : Mat n} (hW : W.PosSemidef) (coeff : Fin r → ℝ)
@@ -1239,7 +1246,7 @@ theorem jumpSpace_eq {n r : ℕ} (g : Fin r → EuclideanSpace ℝ (Fin n)) :
   · rintro ⟨i, j, rfl⟩
     exact ⟨_, ⟨i, rfl⟩, _, ⟨j, rfl⟩, rfl⟩
 
-/-- Item `C/05_G/prose/030` (`companion/chapters/05_G.tex:198-198`): "The projected gradients
+/-- Item `C/05_G/prose/030` (`companion/chapters/05_G.tex:198`): "The projected gradients
 $P_Ug_i$ agree." -/
 theorem projections_agree {n r : ℕ} (g : Fin r → EuclideanSpace ℝ (Fin n)) (i j : Fin r) :
     (AccessibleJumpGeometry.tangentSpace g).orthogonalProjection (g i) =
@@ -1259,7 +1266,7 @@ def AccessibleJump {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) (Fstar c₁ c
     Tendsto (fun k => dot (h k - g k) (z k - x k)) atTop (𝓝 0) ∧
     Tendsto (fun k => h k - g k) atTop (𝓝 j)
 
-/-- Item `C/05_G/prose/033` (`companion/chapters/05_G.tex:204-204`): "Let $N_{\rm acc}$ be the
+/-- Item `C/05_G/prose/033` (`companion/chapters/05_G.tex:204`): "Let $N_{\rm acc}$ be the
 span of all such accessible limiting jumps, and set $U_{\rm acc}=N_{\rm acc}^{\perp}$." The
 span, in `EuclideanSpace ℝ (Fin n)`, of the Euclidean images of all accessible limiting jumps at
 $p$ (`AccessibleJump`); $U_{\rm acc}$ is `(accessibleSpan …)ᗮ`. -/
@@ -1364,7 +1371,7 @@ theorem accessibleSpan_le_ker {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ u
   rw [h0]
   rfl
 
-/-- Item `C/05_G/prose/034` (`companion/chapters/05_G.tex:208-208`): "For a limiting gradient
+/-- Item `C/05_G/prose/034` (`companion/chapters/05_G.tex:208`): "For a limiting gradient
 $g$ at which visibility persists, $g^TW(p)g>0$ implies $P_{U_{\rm acc}}g\ne0$." (Visibility
 does persist at limits of gradients of band points: `visibility_persists`.) -/
 theorem visible_accessible_projection {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
@@ -1405,7 +1412,7 @@ theorem visibility_persists {n : ℕ} {F : Vec n → ℝ} {K : Set (Vec n)} {Fst
   exact AccessibleJumpGeometry.visibility_limit Cert.m hW hgl
     (Eventually.of_forall fun k => Cert.visibility (zs k) (hzs k).1 (hs k) (hzs k).2)
 
-/-- Item `C/05_G/prose/036` (`companion/chapters/05_G.tex:210-210`): "A nonzero common
+/-- Item `C/05_G/prose/036` (`companion/chapters/05_G.tex:210`): "A nonzero common
 projection onto $U=N^\perp$ follows if the accessible jumps span $N$, or if $W(p)$ is otherwise
 known to annihilate all active differences. Under that additional hypothesis, the common
 projection is nonzero by visibility." For active gradients $g_1,\dots,g_r$ and a visible
@@ -1442,7 +1449,7 @@ theorem projection_zero_iff_affine {n r : ℕ} (g : Fin r → EuclideanSpace ℝ
   AccessibleJumpGeometry.tangent_projection_zero_iff_zero_mem_affineSpan g i
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/037` (`companion/chapters/05_G.tex:214-214`): "The affine-hull condition
+/-- Item `C/05_G/prose/037` (`companion/chapters/05_G.tex:214`): "The affine-hull condition
 is weaker than $0\in\conv\{g_1,\dots,g_r\}$ and need not imply stationarity for the convex
 objective." $0\in\conv\Rightarrow0\in\aff$ for every finite family; for the limiting active
 gradients $1,3$ of $f(x)=\frac12(x+2)^2+|x|$ at the kink $0$ (`limiting_gradients_at_kink`),
@@ -1476,7 +1483,7 @@ theorem affine_weaker_than_convex :
     norm_num [shiftedAbs] at this
 
 open ScalarCounterexamples in
-/-- Item `C/05_G/prose/038` (`companion/chapters/05_G.tex:216-216`): "The distinction is
+/-- Item `C/05_G/prose/038` (`companion/chapters/05_G.tex:216`): "The distinction is
 realized by the finite strongly convex objective" $f(x)=\frac12(x+2)^2+|x|$: it is real-valued
 and $1$-strongly convex on $\R$ (and $F(x)=f(x_0)$ on $\R^1$ is convex). -/
 theorem shifted_strongly_convex :
@@ -1500,7 +1507,7 @@ def IsLimitingGradient {n : ℕ} (F : Vec n → ℝ) (p g : Vec n) : Prop :=
     Tendsto x atTop (𝓝 p) ∧ Tendsto gs atTop (𝓝 g)
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/039` (`companion/chapters/05_G.tex:221-221`): "On every compact positive
+/-- Item `C/05_G/prose/039` (`companion/chapters/05_G.tex:221`): "On every compact positive
 band, $W\equiv1$ is a transported certificate." For $f(x)=\frac12(x+2)^2+|x|$ with
 $(c_1,c_2)=(1/8,1/4)$, every compact $K$ and every $\eta>0$ there is a band certificate on
 $K_\eta$ ($F_*=f(-1)$) with field $W\equiv1$. -/
@@ -1510,7 +1517,7 @@ theorem identity_certificate (K : Set (Vec 1)) (hK : IsCompact K) (η : ℝ) (h�
   ⟨identityCertificate hK hη (by norm_num), rfl⟩
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/040` (`companion/chapters/05_G.tex:221-221`): "Indeed, every eligible pair
+/-- Item `C/05_G/prose/040` (`companion/chapters/05_G.tex:221`): "Indeed, every eligible pair
 with $d\le1/4$ stays on one smooth side of zero: a right-to-left crossing contradicts weak Wolfe,
 and a left-to-right crossing contradicts Armijo and the small-decrease bound." -/
 theorem small_pairs_same_side {x z g h : Vec 1}
@@ -1522,7 +1529,7 @@ theorem small_pairs_same_side {x z g h : Vec 1}
     fun hc => no_small_left_right_crossing (by norm_num) hp hd hc.1 hc.2⟩
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/041` (`companion/chapters/05_G.tex:221-221`): "Hence
+/-- Item `C/05_G/prose/041` (`companion/chapters/05_G.tex:221`): "Hence
 $f'(z)-f'(x)=z-x$, proving (S) with $C=1$; transport is equality, and the positive-band gradient
 bound proves visibility." For eligible pairs with $d\le1/4$: $y=s$, so
 $y^TIy=1\cdot t$; $\Pi_sI\Pi_s-\Pi_sI\Pi_s=0$; and on a compact band $K_\eta$ the gradients are
@@ -1550,7 +1557,7 @@ theorem identity_certificate_reasons :
     nlinarith [sq_abs (g 0), abs_nonneg (g 0)]
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/042` (`companion/chapters/05_G.tex:221-221`): "Weak Wolfe gives
+/-- Item `C/05_G/prose/042` (`companion/chapters/05_G.tex:221`): "Weak Wolfe gives
 $d\le4t/3$, so $t\to0$ eventually makes $d\le1/4$; as both endpoints tend to the same point,
 every accessible limiting jump is therefore zero." For $f$ and $(c_1,c_2)=(1/8,1/4)$: every
 eligible pair has $d\le\frac43t$, and on every band every accessible limiting jump
@@ -1570,7 +1577,7 @@ theorem accessible_jumps_vanish (K : Set (Vec 1)) (η : ℝ) :
       (Eventually.of_forall fun k => (hp k).2.2) hx hz ht hy
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/043` (`companion/chapters/05_G.tex:221-221`): "Nevertheless the actual
+/-- Item `C/05_G/prose/043` (`companion/chapters/05_G.tex:221`): "Nevertheless the actual
 limiting active gradients at zero are $1$ and $3$, so $N=\mathbb R$ and $U=\{0\}$." The
 limiting gradients of $f$ at $0$ are exactly $1$ and $3$ (`activeGradients`), and for them
 $N=\R$, $U=\{0\}$. -/
@@ -1621,7 +1628,7 @@ theorem limiting_gradients_at_kink :
     simpa [AccessibleJumpGeometry.tangentSpace, Submodule.orthogonal_orthogonal] using h
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/044` (`companion/chapters/05_G.tex:221-221`): "The full-active
+/-- Item `C/05_G/prose/044` (`companion/chapters/05_G.tex:221`): "The full-active
 tangential conclusion would be false here." On the compact band $\{f\le3\}_{1/4}$, which
 contains the kink $0$, the continuous certificate $W\equiv1$ ($(c_1,c_2)=(1/8,1/4)$) is visible
 at both limiting active gradients $1,3$ at $0$ ($g^TW(0)g>0$), yet $P_Ug=0$ for $U=N^\perp$:
@@ -1644,7 +1651,7 @@ theorem full_active_conclusion_fails :
     hvis, hproj⟩
 
 open ScalarCounterexamples OneDimensional in
-/-- Item `C/05_G/prose/045` (`companion/chapters/05_G.tex:221-221`): "The later no-certificate
+/-- Item `C/05_G/prose/045` (`companion/chapters/05_G.tex:221`): "The later no-certificate
 example uses the different constants $(1/4,1/2)$ and is consistent with this distinction." On
 the compact sublevel $\{f\le3\}$ the band certificates exist for $(1/8,1/4)$ and fail for
 $(1/4,1/2)$. -/
@@ -1658,7 +1665,7 @@ theorem constants_consistency :
     shifted_no_band_certificates⟩
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/048` (`companion/chapters/05_G.tex:223-223`): "Eligibility matters:
+/-- Item `C/05_G/prose/048` (`companion/chapters/05_G.tex:223`): "Eligibility matters:
 arbitrary active-gradient jumps need not be accessible under a fixed weak-Wolfe condition." For
 $f$ and $(c_1,c_2)=(1/8,1/4)$ the active jump $3-1=2$ at the kink is not an accessible limiting
 jump on any band. -/
@@ -1673,7 +1680,7 @@ theorem active_jump_not_accessible (K : Set (Vec 1)) (η : ℝ) :
   exact ⟨hne, fun hj => hne ((accessible_jumps_vanish K η).2 _ _ hj)⟩
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/prose/035` (`companion/chapters/05_G.tex:210-210`): "This conclusion concerns
+/-- Item `C/05_G/prose/035` (`companion/chapters/05_G.tex:210`): "This conclusion concerns
 the accessible span. It does not identify $N_{\rm acc}$ with the earlier space $N$ generated by
 all active-gradient differences." For $f(x)=\frac12(x+2)^2+|x|$ and $(c_1,c_2)=(1/8,1/4)$, at
 the kink $p=0$ (on every band) $N_{\rm acc}=\{0\}$, while the active gradients $1,3$ give
@@ -1795,7 +1802,7 @@ theorem uv_limiting_gradients (F : Vec 2 → ℝ) (hF : ∀ x, F x = x 0 ^ 2 + |
       rw [if_neg (not_lt.mpr hneg.le)] at h
       simpa using h
 
-/-- Item `C/05_G/prose/049` (`companion/chapters/05_G.tex:225-225`): "For $u^2+|v|$ at $(u,0)$
+/-- Item `C/05_G/prose/049` (`companion/chapters/05_G.tex:225`): "For $u^2+|v|$ at $(u,0)$
 with $u\ne0$, the jump space is vertical and a nonzero horizontal derivative remains." For
 $F(u,v)=u^2+|v|$ and $u_0\ne0$: the limiting active gradients at $(u_0,0)$ are $(2u_0,\pm1)$,
 their jump space is $N=\operatorname{span}\{e_2\}$, and $P_U$ of each of them is the nonzero
@@ -1986,7 +1993,7 @@ theorem spanning_jumps_obstruction {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn 
   exact no_vanishing_limit hF Cert p z h (fun k => (hp k).2.1)
     (fun k => (hp k).2.2.gradient_z) hz hW
 
-/-- Item `C/05_G/prose/050` (`companion/chapters/05_G.tex:225-225`): "At a generic
+/-- Item `C/05_G/prose/050` (`companion/chapters/05_G.tex:225`): "At a generic
 two-dimensional vertex with independent accessible jumps in both coordinates, there may be no
 remaining comparison direction." Obstruction form, as the next sentence reads it ("The
 common-target obstruction above makes that interpretation rigorous without continuity of a
@@ -2052,7 +2059,7 @@ theorem exact_scalar_characterization {F : Vec 1 → ℝ} (hF : ConvexOn ℝ uni
     have := hA ⟨x, z, g, h, hx, hz, hp, hd, rfl⟩
     rwa [sq_abs] at this
 
-/-- Item `C/05_G/prose/052` (`companion/chapters/05_G.tex:255-255`): "This reveals a genuine
+/-- Item `C/05_G/prose/052` (`companion/chapters/05_G.tex:255`): "This reveals a genuine
 restriction: an eligible arbitrarily small crossing of a nonoptimal derivative jump rules out
 every certificate." In the setting of the Proposition (Exact scalar characterization): let the
 scalar function $f(t)=F(t)$ have one-sided derivatives $f'_-(a)=l<r=f'_+(a)$ at a nonoptimal
@@ -2142,9 +2149,10 @@ theorem scalar_bfgs_convergence {F : Vec 1 → ℝ} (R : AdmissibleBFGSRun 1 F)
   R.scalar_convergence hK xstar hmin huniq
 
 open ScalarCounterexamples OneDimensional in
-/-- The existential reading of item `C/05_G/prose/053` (line 269, "Already
-$f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly convex example with global convergence but no
-global certificate on a sublevel containing zero", recorded as a discrepancy): $f$ is $1$-strongly
+/-- The existential reading of item `C/05_G/prose/053` (line 269) as printed before its
+correction of 15 October 2026 (M22; "Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly
+convex example with global convergence but no global certificate on a sublevel containing
+zero"): $f$ is $1$-strongly
 convex with unique minimizer $-1$; every admissible run converges to it; and with
 $(c_1,c_2)=(1/4,1/2)$ (lines 277-278) the sublevel $\{f\le3\}$ contains $0$ but carries no band
 certificates. Read for every sublevel containing zero the claim fails at $\{f\le2\}$
@@ -2215,8 +2223,9 @@ def twoCert (c₁ c₂ η : ℝ) (hη : 0 < η) :
     simpa using Matrix.PosSemidef.zero
 
 open ScalarCounterexamples OneDimensional in
-/-- Counterexample to item `C/05_G/prose/053` (line 269, "... no global certificate on a
-sublevel containing zero", recorded as a discrepancy) read for every sublevel containing zero:
+/-- Counterexample to item `C/05_G/prose/053` (line 269) as printed before its correction of 15
+October 2026 (M22; "... no global certificate on a sublevel containing zero"), read for every
+sublevel containing zero:
 $\{f\le2\}=[-2,0]$ is compact and contains $0$ (on its boundary), yet it carries the band
 certificates for $(c_1,c_2)=(1/4,1/2)$ (`twoCert`; due to the independent review). -/
 theorem two_sublevel_counterexample :
@@ -2310,8 +2319,8 @@ theorem zero_mem_interior_iff (b : ℝ) :
     linarith
 
 open ScalarCounterexamples OneDimensional in
-/-- Corrected form of item `C/05_G/prose/053` (`companion/chapters/05_G.tex:269-269`, recorded
-as a discrepancy): "Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly convex example with
+/-- Item `C/05_G/prose/053` (`companion/chapters/05_G.tex:269`), as corrected on 15 October 2026
+(M22): "Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite strongly convex example with
 global convergence but, for $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel
 containing zero in its interior." $f$ is $1$-strongly convex with unique minimizer $-1$, every
 admissible run converges to it, and no sublevel $\{f\le b\}$ with $0$ in its interior carries
@@ -2329,8 +2338,9 @@ theorem shifted_global_nonnecessity_interior :
     fun b hb => (interior_sublevel_no_certificate b ((zero_mem_interior_iff b).mp hb)).2⟩
 
 open ScalarCounterexamples OneDimensional ShiftedAbsAccessibility in
-/-- Item `C/05_G/disp/025` (`companion/chapters/05_G.tex:270-272`): for $x=\varepsilon$,
-$z=-\varepsilon/2$ ($\varepsilon>0$),
+/-- Item `C/05_G/disp/025` (`companion/chapters/05_G.tex:270-272`): "For $x=\epsilon$,
+$z=-\epsilon/2$ with $\epsilon>0$," (line 269; "with $\epsilon>0$" added on 15 October 2026,
+wording point W16)
 \[ g_x=3+\varepsilon,\quad g_z=1-\varepsilon/2,\quad y=-2-3\varepsilon/2, \]
 for the gradients $g_x,g_z$ of $f$ at these points (they exist: `crossing_gradients`). -/
 theorem shifted_crossing_gradients (ε : ℝ) (hε : 0 < ε) (gx gz y : Vec 1)
@@ -2371,7 +2381,7 @@ theorem shifted_crossing_quantities (ε : ℝ) (hε : 0 < ε) (gx gz : Vec 1)
     ring
 
 open ScalarCounterexamples OneDimensional in
-/-- Item `C/05_G/prose/054` (`companion/chapters/05_G.tex:278-278`): "These pairs are strictly
+/-- Item `C/05_G/prose/054` (`companion/chapters/05_G.tex:278`): "These pairs are strictly
 eligible for $(1/4,1/2)$ for small $\varepsilon$, and their scalar quotient in
 \eqref{G:eq:scalar} diverges." For $\varepsilon>0$ near $0$: $d>0$,
 $\frac14d<\Delta<d$, $t>(1-\frac12)d$ (strict eligibility), and
@@ -2473,7 +2483,7 @@ theorem knot_of_index (j : ℕ) (hj : 1 ≤ j) :
   rw [AccumulatingKinks.knot, Nat.sub_add_cancel hj]
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/056` (`companion/chapters/05_G.tex:295-295`): "The series converges
+/-- Item `C/05_G/prose/056` (`companion/chapters/05_G.tex:295`): "The series converges
 uniformly on compact sets: its absolute value is bounded by a constant times $\sum a_j$." On every
 compact $K$ the partial sums converge uniformly, and $|\sum_ja_j(x-a_j)_+|\le R\sum_ja_j$ for
 $x\in K$. -/
@@ -2498,7 +2508,7 @@ theorem series_uniform :
   nlinarith
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/057` (`companion/chapters/05_G.tex:295-295`): "Every summand is convex,
+/-- Item `C/05_G/prose/057` (`companion/chapters/05_G.tex:295`): "Every summand is convex,
 and $h(x)\ge x^2/2$ with $h(0)=0$." -/
 theorem h_basic :
     (∀ j : ℕ, ConvexOn ℝ univ fun x : ℝ => (1 / 4 : ℝ) ^ (j + 1) * max (x - (1 / 4 : ℝ) ^ (j + 1)) 0) ∧
@@ -2506,7 +2516,7 @@ theorem h_basic :
   ⟨term_convex, objective_lower, objective_zero⟩
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/058` (`companion/chapters/05_G.tex:295-295`): "Thus $h$ is finite,
+/-- Item `C/05_G/prose/058` (`companion/chapters/05_G.tex:295`): "Thus $h$ is finite,
 $1$-strongly convex, coercive, and uniquely minimized at zero." The series converges at every
 $x$ (so $h$ is real-valued), $h$ is $1$-strongly convex, $h(x)\to\infty$ as $|x|\to\infty$, and
 $0$ is its unique minimizer. -/
@@ -2517,7 +2527,7 @@ theorem h_properties :
   ⟨term_summable, objective_strongConvex, objective_coercive, objective_minimum, objective_unique⟩
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/059` (`companion/chapters/05_G.tex:297-297`): "At a knot $a=a_j$, the
+/-- Item `C/05_G/prose/059` (`companion/chapters/05_G.tex:297`): "At a knot $a=a_j$, the
 one-sided derivatives are $2a$ and $5a$." -/
 theorem knot_one_sided (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha : a = (1 / 4 : ℝ) ^ j) :
     HasDerivWithinAt objective (2 * a) (Iic a) a ∧ HasDerivWithinAt objective (5 * a) (Ici a) a := by
@@ -2553,7 +2563,7 @@ theorem formula_above (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha : a = (1 / 4 : ℝ)
   exact formula_above_interval j hj a ha x hx.1.le hx.2.le
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/061` (`companion/chapters/05_G.tex:305-305`): "Also $h(a)=13a^2/10$." -/
+/-- Item `C/05_G/prose/061` (`companion/chapters/05_G.tex:305`): "Also $h(a)=13a^2/10$." -/
 theorem h_at_knot (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha : a = (1 / 4 : ℝ) ^ j) :
     objective a = 13 * a ^ 2 / 10 := by
   rw [ha, knot_of_index j hj, objective_knot]
@@ -2596,7 +2606,7 @@ theorem knot_crossing_quantities (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha : a = (1
   ring
 
 open AccumulatingKinks OneDimensional in
-/-- Item `C/05_G/prose/062` (`companion/chapters/05_G.tex:316-316`): "The pairs are strictly
+/-- Item `C/05_G/prose/062` (`companion/chapters/05_G.tex:316`): "The pairs are strictly
 eligible for $(c_1,c_2)=(1/4,1/2)$ for small $\varepsilon$." -/
 theorem knot_crossing_eligible (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha : a = (1 / 4 : ℝ) ^ j) :
     ∀ᶠ ε in 𝓝[>] (0 : ℝ),
@@ -2636,15 +2646,18 @@ theorem tendsto_zero_of_continuous {p : ℝ → ℝ} (hp : Continuous p) (h0 : p
   exact this.mono_left nhdsWithin_le_nhds
 
 open AccumulatingKinks OneDimensional in
-/-- Item `C/05_G/prose/065` (`companion/chapters/05_G.tex:321-321`): "Fixing a knot first, then
+/-- Item `C/05_G/prose/065` (`companion/chapters/05_G.tex:321`): "Fixing a knot first, then
 taking $\epsilon\to0$, is essential: deterioration of band constants as $\eta\downarrow0$ cannot
 repair the divergence on the fixed knot's band." For a knot $a=a_j$, every compact sublevel
 $K=\{h\le b\}$ with $b>h(a)$ and every $0<\eta<h(a)$ (the knot lies in the interior of the band
 $K_\eta$: the fixed knot's band; $F_*=h(0)=0$), there is no band certificate on $K_\eta$ for
-$(c_1,c_2)=(1/4,1/2)$, whatever its constants. This is also the corrected form of item
-`C/05_G/prose/063` (same line, "No certificate exists on a positive band containing this knot",
-recorded as a discrepancy). Proof: the crossing pairs $a\pm\varepsilon$ are eligible
-arbitrarily small crossings of the derivative jump $2a<5a$ (`small_crossing_no_certificate`). -/
+$(c_1,c_2)=(1/4,1/2)$, whatever its constants.
+
+Also Item `C/05_G/prose/063` (`companion/chapters/05_G.tex:321`), corrected on 15 October 2026
+(M23; before "No certificate exists on a positive band containing this knot."): "No certificate
+exists on a positive band whose interior contains this knot ($b>h(a)>\eta$)." Proof: the crossing
+pairs $a\pm\varepsilon$ are eligible arbitrarily small crossings of the derivative jump $2a<5a$
+(`small_crossing_no_certificate`). -/
 theorem no_certificate_knot_band (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha : a = (1 / 4 : ℝ) ^ j)
     (b : ℝ) (hb : objective a < b) (η : ℝ) (hη : 0 < η) (hηa : η < objective a) :
     ¬ Nonempty (BandCertificate coordinateObjective {x | coordinateObjective x ≤ b} 0
@@ -2809,8 +2822,9 @@ def edgeCert (i : ℕ) (c₁ c₂ : ℝ) :
     simpa using Matrix.PosSemidef.zero
 
 open AccumulatingKinks in
-/-- Counterexample to the literal reading of item `C/05_G/prose/063` (line 321, "No certificate
-exists on a positive band containing this knot"): for every knot $a=a_j$ the band $K_\eta$ with
+/-- Counterexample to the literal reading of item `C/05_G/prose/063` (line 321) as printed before
+its correction of 15 October 2026 (M23; "No certificate exists on a positive band containing this
+knot"): for every knot $a=a_j$ the band $K_\eta$ with
 $K=\{h\le h(a)\}$ and $\eta=h(a/4)>0$ contains the knot $a$, yet it carries a band certificate
 (`edgeCert`) for $(c_1,c_2)=(1/4,1/2)$. The knot lies on the boundary of this band; the corrected
 statement (`no_certificate_knot_band`) requires $b>h(a)>\eta$. -/
@@ -2832,7 +2846,7 @@ theorem knot_band_literal_counterexample (j : ℕ) (hj : 1 ≤ j) (a : ℝ) (ha 
   rw [hq, objective_knot]
   nlinarith
 
-/-- Item `C/05_G/prose/064` (`companion/chapters/05_G.tex:321-321`): "Every neighborhood of zero
+/-- Item `C/05_G/prose/064` (`companion/chapters/05_G.tex:321`): "Every neighborhood of zero
 contains such a knot." -/
 theorem every_neighborhood_knot (U : Set ℝ) (hU : U ∈ 𝓝 (0 : ℝ)) :
     ∃ j : ℕ, 1 ≤ j ∧ (1 / 4 : ℝ) ^ j ∈ U := by
@@ -2840,7 +2854,7 @@ theorem every_neighborhood_knot (U : Set ℝ) (hU : U ∈ 𝓝 (0 : ℝ)) :
   exact ⟨i + 1, by omega, by simpa [AccumulatingKinks.knot] using hi⟩
 
 open AccumulatingKinks OneDimensional in
-/-- Item `C/05_G/prose/066` (`companion/chapters/05_G.tex:323-323`): "Nevertheless Proposition
+/-- Item `C/05_G/prose/066` (`companion/chapters/05_G.tex:323`): "Nevertheless Proposition
 `G:prop:scalarconv` proves convergence of every admissible run on $h$." Every admissible run on
 $h$ (on $\R^1$), and every positive-metric scalar run, converges to the minimizer $0$ (values and
 iterates); such runs exist (`kinkRun`). -/
@@ -2852,7 +2866,7 @@ theorem h_runs_converge :
   ⟨actual_bfgs_converges, scalar_run_converges⟩
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/067` (`companion/chapters/05_G.tex:323-323`): "The minimizer is
+/-- Item `C/05_G/prose/067` (`companion/chapters/05_G.tex:323`): "The minimizer is
 differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of
 it." $h'(0)=0$, and every neighborhood of $0$ contains a point where $h$ is not
 differentiable (a knot). -/
@@ -2861,7 +2875,7 @@ theorem h_smoothness :
   ⟨hasDerivAt_zero, fun _ hU => nonsmooth_in_every_neighborhood hU⟩
 
 open AccumulatingKinks in
-/-- Item `C/05_G/prose/068` (`companion/chapters/05_G.tex:323-323`): "Thus the transported
+/-- Item `C/05_G/prose/068` (`companion/chapters/05_G.tex:323`): "Thus the transported
 condition is not necessary even for local convergence." For $h$ and $(c_1,c_2)=(1/4,1/2)$: no
 neighborhood $K$ of the minimizer carries the band certificates, yet every admissible run
 converges to the minimizer. -/
@@ -2873,7 +2887,7 @@ theorem local_nonnecessity :
   ⟨fun _ hK => every_neighborhood_no_certificates hK, actual_bfgs_converges⟩
 
 open ScalarCounterexamples OneDimensional in
-/-- Item `C/05_G/prose/002` (`companion/chapters/05_G.tex:3-3`): "Its normalization and
+/-- Item `C/05_G/prose/002` (`companion/chapters/05_G.tex:3`): "Its normalization and
 pointwise geometry help interpret it, while scalar examples separate failure of the condition
 from failure of BFGS." Two scalar examples where the condition fails and BFGS does not:
 $f(x)=\frac12(x+2)^2+|x|$ has no band certificates on $\{f\le3\}$ for $(1/4,1/2)$, and the
@@ -2939,7 +2953,7 @@ theorem sample_constant {n r : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ
     exact Finset.single_le_sum ha hp
 
 open ScalarCounterexamples OneDimensional in
-/-- Item `C/05_G/prose/073` (`companion/chapters/05_G.tex:345-345`): "Conversely, passing many
+/-- Item `C/05_G/prose/073` (`companion/chapters/05_G.tex:345`): "Conversely, passing many
 finite tests is not an existence theorem for a uniform field on the continuum." For
 $f(x)=\frac12(x+2)^2+|x|$, $(c_1,c_2)=(1/4,1/2)$ and the band $K_{1/4}$ of $K=\{f\le3\}$: every
 finite sample of differentiable band points and eligible pairs passes the test with $W\equiv I$

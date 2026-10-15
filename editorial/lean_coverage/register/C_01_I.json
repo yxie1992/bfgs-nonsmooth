@@ -355,7 +355,7 @@
    "of": [
     "C/02_M/disp/026"
    ],
-   "note": "With line 312 ('The fixed-reference identity is'): E_{k+1} = E_k - a_k²/q_k + R_k for any fixed x_*. Wording point: E_k (and B_k) are not defined in Chapter 1 (they are defined at 02_M.tex:182: r_k = x_k - x_*, E_k = r_kᵀB_kr_k, B_k = H_k⁻¹). Proposed: a logged module-I replacement of 'The fixed-reference identity is' (inventory.tex:238, one occurrence) by 'For a fixed reference point \\(x_*\\) and \\(E_k=(x_k-x_*)^TB_k(x_k-x_*)\\), the fixed-reference identity is' (with B_k defined at line 169, see prose/055)."
+   "note": "With line 312 ('For a fixed reference point \\(x_*\\) and \\(E_k=(x_k-x_*)^TB_k(x_k-x_*)\\), the fixed-reference identity is'): E_{k+1} = E_k - a_k²/q_k + R_k for any fixed x_*. Wording point W43 applied on 15 October 2026: E_k and B_k (line 169, prose/055) are now defined in Chapter 1 (before only at 02_M.tex:182 and 02_M.tex:14)."
   },
   {
    "id": "C/01_I/disp/022",
@@ -413,12 +413,13 @@
     14,
     14
    ],
-   "anchor": "Every retained mathematical assertion is paired with its reviewed formal statement and Lean proof in the claim/proof index.",
+   "anchor": "Every retained mathematical assertion is classified in the claim/proof index, and each asserted result is paired there with its formal statement and Lean proof.",
    "labels": [],
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
-   "reason": "Description of the claim/proof index and of how claims are classified (editorial apparatus, not mathematics). Wording point: the sentence describes the index as complete; the literal Lean coverage (editorial/lean_coverage/register/) was needed because the index paired many sentences only coarsely, so the description should be checked against the final index in step 2."
+   "reason": "Description of the claim/proof index and of how claims are classified (editorial apparatus, not mathematics).",
+   "note": "Wording point W31 applied on 15 October 2026. Before: \"Every retained mathematical assertion is paired with its reviewed formal statement and Lean proof in the claim/proof index.\", which described the index as complete. The new sentence holds at the granularity of the index (editorial/CLAIM_LEDGER.json, companion/SOURCE_CORRESPONDENCE.json): every retained source span is classified, and the named results and inline results carry their Lean exports; the sentence-level pairing is the coverage register (editorial/lean_coverage/register/)."
   },
   {
    "id": "C/01_I/prose/004",
@@ -713,7 +714,7 @@
     "BfgsCoverage.Companion.Ch13L.strict_margins_same_decisions",
     "BfgsVerification.LUniform.uniformSmoothLocalFailure"
    ],
-   "note": "Lines 95-101 up to 'arbitrarily close to the minimizer' (with disp/007): the first paragraph of Theorem L:thm:local, whose register item is a DISCREPANCY only for its last clause (M12), stated for the named objective that witnesses 'There is also a strongly convex finite objective': F = LUniform.smoothObjective, the four-branch objective of Chapter 13 (a variable with its defining equation; the objective compared in n1_n2_comparison). Strongly convex (Euclidean), compact sublevels, unique minimizer 0 where F is not differentiable; 0 < μ ≤ L with μ‖v‖² ≤ vᵀ∇²F(x)v ≤ L‖v‖² wherever the classical Hessian exists (F differentiable near x and ∇F differentiable at x); starts x_0^{(n)} → 0 with H_0 = I whose runs of the specified search (NonStrictLineSearch.fromMetric, every budget N ≥ 5), the same for every 0 < c₁ ≤ 1/3, c₁ < c₂ < 1, converge to nonstationary points p_n → 0, with differentiable trial points that all lie in any given neighbourhood of 0 for large n. 'The same specified deterministic implementation': on these runs the strict tests of N1 take the same decisions (Ch13L.strict_margins_same_decisions)."
+   "note": "Lines 95-101 up to 'arbitrarily close to the minimizer' (with disp/007): the first paragraph of Theorem L:thm:local (whose last clause was corrected on 15 October 2026, M12), stated for the named objective that witnesses 'There is also a strongly convex finite objective': F = LUniform.smoothObjective, the four-branch objective of Chapter 13 (a variable with its defining equation; the objective compared in n1_n2_comparison). Strongly convex (Euclidean), compact sublevels, unique minimizer 0 where F is not differentiable; 0 < μ ≤ L with μ‖v‖² ≤ vᵀ∇²F(x)v ≤ L‖v‖² wherever the classical Hessian exists (F differentiable near x and ∇F differentiable at x); starts x_0^{(n)} → 0 with H_0 = I whose runs of the specified search (NonStrictLineSearch.fromMetric, every budget N ≥ 5), the same for every 0 < c₁ ≤ 1/3, c₁ < c₂ < 1, converge to nonstationary points p_n → 0, with differentiable trial points that all lie in any given neighbourhood of 0 for large n. 'The same specified deterministic implementation': on these runs the strict tests of N1 take the same decisions (Ch13L.strict_margins_same_decisions)."
   },
   {
    "id": "C/01_I/prose/021",
@@ -762,16 +763,20 @@
     103,
     103
    ],
-   "anchor": "The individual branches \\textbf{are not twice differentiable at the accumulation point}.",
+   "anchor": "Three of the four branches \\textbf{are not twice differentiable at the minimizer}.",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "SAME_AS",
+   "of": [
+    "C/13_L/prose/002"
+   ],
    "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_regularity_at_minimizer",
     "BfgsCoverage.Companion.Ch13L.branch_regularity",
     "BfgsCoverage.Companion.Ch01I.n1_n2_comparison"
    ],
-   "note": "Recurrence of M8 (C/13_L/prose/002; article A/master/prose/009): only three of the four branches of the four-branch version lose second differentiability at the accumulation point; see the discrepancy entry."
+   "note": "Corrected on 15 October 2026 (M8 and M30, recurrence in Chapter 1): \"The individual branches \\textbf{are not twice differentiable at the accumulation point}.\" now reads \"Three of the four branches \\textbf{are not twice differentiable at the minimizer}.\". The branches are those of the four-branch version of N2 (LUniform.smoothBranch); the minimizer is 0, where the bad starts accumulate; the first three are not twice differentiable there and the fourth is twice differentiable everywhere (Ch13L.branch_regularity_at_minimizer), as Chapter 13 says (C/13_L/prose/002, prose/083)."
   },
   {
    "id": "C/01_I/prose/024",
@@ -781,16 +786,19 @@
     103,
     103
    ],
-   "anchor": "Another version has one constant SPD classical Hessian wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.",
+   "anchor": "Another version has one constant SPD classical Hessian wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "SAME_AS",
+   "of": [
+    "C/13_L/theorem/L:thm:local"
+   ],
    "lean": [
     "BfgsCoverage.Companion.Ch13L.local_failure",
     "BfgsCoverage.Companion.Ch13L.step_decomposition"
    ],
-   "note": "Recurrence of M12 (C/13_L/theorem/L:thm:local): the literal reading 'has no finite smooth-branch representation' is false; the descriptive reading is proved (local_failure, step_decomposition); see the discrepancy entry."
+   "note": "Corrected on 15 October 2026 (M12, recurrence in Chapter 1): \"…wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.\" now reads \"…wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.\". This is the second version of Theorem L:thm:local (one fixed SPD Hessian wherever it is twice differentiable, a countable polyhedral nonsmooth part: Ch13L.local_failure, Ch13L.step_decomposition) and its description at 13_L.tex:403 (\"No claim of four smooth branches is made for this alternative\"); that the objective has no representation by finitely many smooth branches is not claimed (it has one, see the resolved discrepancy of C/13_L/theorem/L:thm:local)."
   },
   {
    "id": "C/01_I/prose/025",
@@ -869,7 +877,7 @@
     107,
     107
    ],
-   "anchor": "Neither proves local failure for a finite maximum of uniformly strongly convex \\(C^2\\) branches through the optimizer.",
+   "anchor": "Neither is constructed from finitely many uniformly strongly convex \\(C^2\\) branches through the optimizer, so neither proves local failure for that class.",
    "labels": [],
    "title": null,
    "container": null,
@@ -878,7 +886,7 @@
     "BfgsCoverage.Companion.Ch01I.n1_n2_comparison",
     "BfgsCoverage.Article.Verification.C2StronglyConvexLocalFailure"
    ],
-   "note": "Read for the constructed branch representations, as Chapter 13 reads its own sentence (C/13_L/prose/011): the branches of N1 are not uniformly strongly convex, and three of the four branches of N2's four-branch version are not C² (n1_n2_comparison); the step version of N2 is constructed from a countable polyhedral part, not from smooth branches (prose/024; that its objective has no representation by finitely many C² branches is not claimed). Local failure in that class is the article's open question Article.Verification.C2StronglyConvexLocalFailure, complementary to the open local theorem of prose/137. LEAN, while the similar disclaimer prose/145 is NON_CLAIM: the class here (uniformly strongly convex C² branches) is excluded for the constructed branches by proved facts, whereas 'a finite analytic or semialgebraic description' (prose/145) concerns every description of the objectives, and non-semialgebraicity is neither claimed nor proved. Wording point: 'Neither proves local failure for …' reads as a claim about every representation of the objectives; proposed 'Neither is constructed from finitely many uniformly strongly convex \\(C^2\\) branches through the optimizer, so neither proves local failure for that class.' (logged module-I replacement of 'Neither proves local failure for a finite maximum of uniformly strongly convex \\(C^2\\) branches through the optimizer.', inventory.tex:85, span I.span.6, one occurrence)."
+   "note": "About the constructed branch representations, as Chapter 13 reads its own sentence (C/13_L/prose/011): the branches of N1 are not uniformly strongly convex, and three of the four branches of N2's four-branch version are not C² (n1_n2_comparison); the step version of N2 is constructed from a countable polyhedral part, not from smooth branches (prose/024; that its objective has no representation by finitely many C² branches is not claimed). Local failure in that class is the article's open question Article.Verification.C2StronglyConvexLocalFailure, complementary to the open local theorem of prose/137. LEAN, while the similar disclaimer prose/145 is NON_CLAIM: the class here (uniformly strongly convex C² branches) is excluded for the constructed branches by proved facts, whereas 'a finite analytic or semialgebraic description' (prose/145) concerns every description of the objectives, and non-semialgebraicity is neither claimed nor proved. Wording point W41 applied on 15 October 2026: before 'Neither proves local failure for a finite maximum of uniformly strongly convex \\(C^2\\) branches through the optimizer.', which read as a claim about every representation of the objectives; the sentence now speaks of the constructed branches, as the Lean statement does."
   },
   {
    "id": "C/01_I/prose/030",
@@ -1057,12 +1065,13 @@
     123,
     123
    ],
-   "anchor": "\\textbf{Proofs: 12.3.1 and Chapter~\\ref{comp:L}.}",
+   "anchor": "\\textbf{Proofs: Section~12.3.1 and Chapter~\\ref{comp:L}.}",
    "labels": [],
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
-   "reason": "Pointer to Subsection 12.3.1 ('A simple coercive global failure', the polyhedral example) and Chapter 13; correct. Wording point: the bare number '12.3.1' could read 'Section 12.3.1'."
+   "reason": "Pointer to Section 12.3.1 ('A simple coercive global failure', the polyhedral example) and Chapter 13; correct.",
+   "note": "Wording point W32 applied on 15 October 2026. Before: '\\textbf{Proofs: 12.3.1 and Chapter~\\ref{comp:L}.}' (a bare subsection number)."
   },
   {
    "id": "C/01_I/prose/040",
@@ -1221,17 +1230,21 @@
     153,
     153
    ],
-   "anchor": "RS is the radial specialization \\(W(x)=(x-x_*)(x-x_*)^T\\).",
+   "anchor": "RS implies the radial specialization \\(W(x)=(x-x_*)(x-x_*)^T\\).",
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
-   "lean": [
-    "BfgsCoverage.Companion.Ch03T.s_not_exactly_rs",
-    "BfgsCoverage.Companion.Ch03T.rs_covered",
-    "BfgsCoverage.Companion.Ch03T.rs_gives_s"
+   "status": "SAME_AS",
+   "of": [
+    "C/03_T/prose/029",
+    "C/03_T/prose/031"
    ],
-   "note": "Recurrence of M24 (C/03_T/prose/029, 'Condition (S) is exactly (RS)'): RS gives the radial specialization but is strictly stronger; see the discrepancy entry."
+   "lean": [
+    "BfgsCoverage.Companion.Ch03T.rs_gives_s",
+    "BfgsCoverage.Companion.Ch03T.rs_covered",
+    "BfgsCoverage.Companion.Ch03T.s_not_exactly_rs"
+   ],
+   "note": "Corrected on 15 October 2026 (M24, recurrence in Chapter 1): \"RS is the radial specialization \\(W(x)=(x-x_*)(x-x_*)^T\\).\" now reads \"RS implies the radial specialization \\(W(x)=(x-x_*)(x-x_*)^T\\).\": (RS) gives (S) for the radial field with the same constant, (T) holds with L = 0, so every objective covered by RS is covered by the transported condition with this field (C/03_T/prose/029, prose/031; Ch03T.rs_gives_s, Ch03T.rs_covered); the converse fails (Ch03T.s_not_exactly_rs), as \"The inclusion of RS is strict\" (prose/050) says."
   },
   {
    "id": "C/01_I/prose/049",
@@ -1313,7 +1326,7 @@
     161,
     161
    ],
-   "anchor": "Uniform visibility, bounded secant correction, and bounded cumulative transport products and inverses exclude positive-level stagnation.",
+   "anchor": "Uniform visibility, bounded secant correction, and bounded cumulative transport products and inverses exclude positive-level stagnation along runs with bounded gradients.",
    "labels": [],
    "title": null,
    "container": null,
@@ -1321,7 +1334,7 @@
    "of": [
     "C/02_M/prose/023"
    ],
-   "note": "The moving-frame criterion of Section 2.4 (C/02_M/prose/022-023, Ch02M.frame_criterion): the suppositions contradict Theorem M:average. Its hypotheses (bounded gradients, d_k → 0) are left implicit here as at 02_M.tex:211 (wording point W2)."
+   "note": "The moving-frame criterion of Section 2.4 (C/02_M/prose/022-023, Ch02M.frame_criterion): the suppositions contradict Theorem M:average. Wording point W33 applied on 15 October 2026: the sentence now states the bounded gradients that Theorem M:average needs; d_k → 0 holds on a stagnating tail (Armijo with values bounded below)."
   },
   {
    "id": "C/01_I/prose/054",
@@ -1346,7 +1359,7 @@
     169,
     169
    ],
-   "anchor": "If a fixed subspace \\(S\\) satisfies \\(\\|P_Sy_k\\|^2\\le L_Sy_k^Ts_k\\), the actual update gives \\(\\operatorname{tr}(P_SB_k)=O(k)\\).",
+   "anchor": "If a fixed subspace \\(S\\) satisfies \\(\\|P_Sy_k\\|^2\\le L_Sy_k^Ts_k\\), the actual update gives \\(\\operatorname{tr}(P_SB_k)=O(k)\\) for \\(B_k=H_k^{-1}\\).",
    "labels": [],
    "title": null,
    "container": null,
@@ -1355,7 +1368,7 @@
     "BfgsCoverage.Companion.Ch01I.smooth_subspace_trace_linear",
     "BfgsCoverage.Companion.Ch02M.projection_trace_step"
    ],
-   "note": "Along every admissible run, for every subspace S of Euclidean ℝⁿ with orthogonal projection P_S and every L_S with ‖P_Sy_k‖² ≤ L_S y_kᵀs_k for all k: tr(P_SB_k) ≤ tr(P_SB_0) + L_S k for every k (the O(k) bound), from the trace step of Chapter 2 (C/02_M/disp/035). Wording point: B_k is not defined in Chapter 1 (B_k = H_k⁻¹, 02_M.tex:14). Proposed: a logged module-I replacement of 'the actual update gives \\(\\operatorname{tr}(P_SB_k)=O(k)\\).' (inventory.tex:127, one occurrence) by 'the actual update gives \\(\\operatorname{tr}(P_SB_k)=O(k)\\) for \\(B_k=H_k^{-1}\\).' (cosmetic)."
+   "note": "Along every admissible run, for every subspace S of Euclidean ℝⁿ with orthogonal projection P_S and every L_S with ‖P_Sy_k‖² ≤ L_S y_kᵀs_k for all k: tr(P_SB_k) ≤ tr(P_SB_0) + L_S k for every k (the O(k) bound), from the trace step of Chapter 2 (C/02_M/disp/035). Wording point W43 applied on 15 October 2026: B_k = H_k⁻¹ is now defined here (it was defined only at 02_M.tex:14)."
   },
   {
    "id": "C/01_I/prose/056",
@@ -1373,7 +1386,7 @@
    "of": [
     "C/02_M/theorem/M:residualtheorem"
    ],
-   "note": "Theorem M:residualtheorem (lines 169-176 with disp/012 and disp/013, up to 'the superquadratic reciprocal theorem below'): no tail admits frames V_{k+1} = V_kT_k + s_kb_kᵀ + R_k with ‖T_k‖² ≤ 1 + Cd_k, range R_k ⊂ S, ‖R_k‖_F² ≤ Cd_k, uniform visibility and bounded secant correction. The theorem's hypotheses bounded gradients and ∑d_k < ∞ are those of 'the superquadratic reciprocal theorem below' (line 306; W1-type wording point)."
+   "note": "Theorem M:residualtheorem (lines 169-176 with disp/012 and disp/013, up to 'the superquadratic reciprocal theorem below'): no tail admits frames V_{k+1} = V_kT_k + s_kb_kᵀ + R_k with ‖T_k‖² ≤ 1 + Cd_k, range R_k ⊂ S, ‖R_k‖_F² ≤ Cd_k, uniform visibility and bounded secant correction. The theorem's hypotheses bounded gradients and ∑d_k < ∞ are stated at line 176 since 15 October 2026 (wording point W34 applied)."
   },
   {
    "id": "C/01_I/prose/057",
@@ -1691,7 +1704,7 @@
     "BfgsCoverage.Companion.Ch01I.sublevels_compact_of_one",
     "BfgsCoverage.Companion.Ch09C.cluster"
    ],
-   "note": "Lines 218-220 up to 'has an affine-critical cluster point': Theorem C:thm:cluster with the hypotheses read globally, as the summary states them (every positive sublevel strictly convex: its boundary contains no nontrivial segment; at every point that is not affine-critical, local convex C² smoothness or a local maximum of two convex C² branches, both active, with linearly independent gradients), for every admissible run, wherever it starts. 'A compact sublevel' as in Chapter 9: {F ≤ b} compact for some b > F_*; it makes every sublevel compact (sublevels_compact_of_one), so the theorem applies on {F ≤ max(b, F(x_0))}. Non-vacuity: u² + |v| (example at the end of the module)."
+   "note": "Lines 218-220 up to 'has an affine-critical cluster point': Theorem C:thm:cluster with the hypotheses read globally, as the summary states them (every positive sublevel strictly convex: its boundary contains no nontrivial segment; at every point that is not affine-critical, local convex C² smoothness or a local maximum of two convex C² branches, both active, with linearly independent gradients), for every admissible run, wherever it starts. 'A compact sublevel above the minimum' (wording point W40 applied on 15 October 2026; before 'a compact sublevel') as in Chapter 9: {F ≤ b} compact for some b > F_*; it makes every sublevel compact (sublevels_compact_of_one), so the theorem applies on {F ≤ max(b, F(x_0))}. Non-vacuity: u² + |v| (example at the end of the module)."
   },
   {
    "id": "C/01_I/prose/075",
@@ -2367,12 +2380,13 @@
     291,
     291
    ],
-   "anchor": "The user's paper is supplied separately, not rebranded as a new result.",
+   "anchor": "That paper~\\cite{XW} is prior work, not a new result of this report.",
    "labels": [],
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
-   "reason": "Provenance remark. Wording point: 'The user's paper' is a remnant of the drafting process (the paper is the author's own [XW])."
+   "reason": "Provenance remark: the Xie–Wächter paper [XW] is prior work.",
+   "note": "Wording point W35 applied on 15 October 2026. Before: 'The user's paper is supplied separately, not rebranded as a new result.' (a remnant of the drafting)."
   },
   {
    "id": "C/01_I/prose/114",
@@ -2434,7 +2448,7 @@
     317,
     317
    ],
-   "anchor": "A cumulative correction \\(o(\\sum q_k^{-1})\\) excludes a positive gap.",
+   "anchor": "Along runs with bounded gradients, a cumulative correction \\(o(\\sum q_k^{-1})\\) excludes a positive gap.",
    "labels": [],
    "title": null,
    "container": null,
@@ -2442,7 +2456,7 @@
    "of": [
     "C/02_M/prose/018"
    ],
-   "note": "As at 02_M.tex:194, the deduction needs ∑q_k⁻¹ → ∞, which Theorem M:average gives along runs with bounded gradients (wording point W1)."
+   "note": "As at 02_M.tex:194, the deduction needs ∑q_k⁻¹ → ∞, which Theorem M:average gives along runs with bounded gradients. Wording point W36 applied on 15 October 2026 (the bounded gradients are now stated)."
   },
   {
    "id": "C/01_I/prose/118",
@@ -2485,12 +2499,13 @@
     319,
     319
    ],
-   "anchor": "The original rate note recorded big-\\(O\\) corollaries.",
+   "anchor": "Big-\\(O\\) versions of the following rates appeared in the source notes.",
    "labels": [],
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
-   "reason": "History of the source notes. Wording point (W25 type): the rate note is not in the companion, and 'the later superquadratic reciprocal theorem' is Theorem M:superquadratic of Chapter 2, earlier in the companion."
+   "reason": "History of the source notes.",
+   "note": "Wording point W37 applied on 15 October 2026. Before: 'The original rate note recorded big-\\(O\\) corollaries.' (the rate note is not in the companion). The same day, after the independent review, \"these rates\" became \"the following rates\" (the rates are named in the next sentence)."
   },
   {
    "id": "C/01_I/prose/121",
@@ -2500,7 +2515,7 @@
     319,
     319
    ],
-   "anchor": "The later superquadratic reciprocal theorem strengthens them to",
+   "anchor": "Theorem~\\ref{M:superquadratic} strengthens them to",
    "labels": [],
    "title": null,
    "container": null,
@@ -2510,7 +2525,7 @@
     "C/06_F/prose/031",
     "C/06_F/disp/021"
    ],
-   "note": "o(N^{-1/2}) for uniformly bounded radial correction (C/06_F/disp/013: along runs with bounded gradients, a hypothesis left implicit here as at 06_F.tex:122-125, wording point W24), o(N^{-1}) for bounded-below degree-one homogeneous objectives (C/06_F/prose/031), o(log N/N) for positive-definite quadratic plus coercive gauge (C/06_F/disp/021)."
+   "note": "o(N^{-1/2}) for uniformly bounded radial correction (C/06_F/disp/013: along runs with bounded gradients, a hypothesis stated here since 15 October 2026 (wording point W37 applied; before \"The later superquadratic reciprocal theorem strengthens them ... for uniformly bounded radial correction,\" without it), as at 06_F.tex:122-125 (W24)), o(N^{-1}) for bounded-below degree-one homogeneous objectives (C/06_F/prose/031), o(log N/N) for positive-definite quadratic plus coercive gauge (C/06_F/disp/021)."
   },
   {
    "id": "C/01_I/prose/122",
@@ -3154,7 +3169,8 @@
    "title": null,
    "container": null,
    "status": "NON_CLAIM",
-   "reason": "Description of the literature notes. The source/version register \\path{literature_audit/} is bfgs_lean_stage1/literature_audit/ in the repository (minor wording point: the printed path is relative to bfgs_lean_stage1/)."
+   "reason": "Description of the literature notes. The source/version register is \\path{bfgs_lean_stage1/literature_audit/} in the repository.",
+   "note": "Wording point W38 applied on 15 October 2026 (before \\path{literature_audit/}, a path relative to bfgs_lean_stage1/)."
   },
   {
    "id": "C/01_I/prose/160",
@@ -3172,7 +3188,7 @@
    "of": [
     "C/04_R/prose/104"
    ],
-   "note": "Literature attribution; its mathematics (every admissible run on the Euclidean norm converges, in every dimension) is recovered by Chapter 4 (C/04_R/prose/104). Wording point: 'These families' has no antecedent here; the paragraph is the attribution note that the generator moved from the start of Section 1.4 ('Strongest concrete local and global positive families', inventory.tex:137-140) to 'Relation to earlier work'. Proposed: a logged module-I replacement of 'These families include established special cases' (inventory.tex:139, one occurrence) by 'The positive families of Section~\\ref{strongest-concrete-local-and-global-positive-families} include established special cases' (the label is at 01_I.tex:182)."
+   "note": "Literature attribution; its mathematics (every admissible run on the Euclidean norm converges, in every dimension) is recovered by Chapter 4 (C/04_R/prose/104). Wording point W42 applied on 15 October 2026: the attribution note, moved by the generator from the start of Section 1.4 to 'Relation to earlier work', said 'These families' without antecedent; it now names 'The positive families of Section~\\ref{strongest-concrete-local-and-global-positive-families}'."
   },
   {
    "id": "C/01_I/prose/161",
@@ -3190,7 +3206,8 @@
    "reason": "Scholarship remark (the family theorems are not identified with the known special case)."
   }
  ],
- "discrepancies": [
+ "discrepancies": [],
+ "resolved_discrepancies": [
   {
    "item": "C/01_I/prose/023",
    "description": "\"The individual branches \\textbf{are not twice differentiable at the accumulation point}.\" (01_I.tex:103) follows \"One version is a maximum of four globally C^{1,1}, uniformly strongly convex, gradient-Lipschitz branches\" and reads as a statement about each of the four branches. Only three of them lose second differentiability: in the four-branch version of N2 (Theorem L:thm:local, the whitened LUniform.smoothObjective, the maximum of LUniform.smoothBranch i), the branches i = 0, 1, 2 are not twice differentiable at 0, where the bad starts accumulate, while the fourth branch is a quadratic, twice differentiable everywhere (Ch13L.branch_regularity; n1_n2_comparison). Chapter 13 says it correctly at 13_L.tex:413 (\"The first three branches ... fail to be twice differentiable at the accumulation point\"). Recurrence of M8 (A/master/prose/009, A/verification/prose/017, A/lower_curvature/prose/010, C/13_L/prose/002). Fix location: the sentence is in the frozen span I.span.6 (corrected source bfgs_lean_stage1/master_report/latex/chapters/inventory.tex, line 81); add a logged replacement to the if module=='I': block of editorial/generate_companion.py (line 120), with its own kind and reason (not an entry of constant_range['I'], whose shared reason concerns the line-search range).",
@@ -3200,7 +3217,8 @@
     "BfgsCoverage.Companion.Ch13L.branch_regularity",
     "BfgsCoverage.Companion.Ch01I.n1_n2_comparison",
     "BfgsCoverage.Article.LowerCurvature.branch_second_differentiability"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M8, with M30 for \"at the minimizer\", in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   },
   {
    "item": "C/01_I/prose/024",
@@ -3210,7 +3228,8 @@
    "lean": [
     "BfgsCoverage.Companion.Ch13L.local_failure",
     "BfgsCoverage.Companion.Ch13L.step_decomposition"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M12 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   },
   {
    "item": "C/01_I/prose/048",
@@ -3221,7 +3240,8 @@
     "BfgsCoverage.Companion.Ch03T.s_not_exactly_rs",
     "BfgsCoverage.Companion.Ch03T.rs_covered",
     "BfgsCoverage.Companion.Ch03T.rs_gives_s"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M24 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   }
  ]
 }

@@ -55,7 +55,7 @@
     "BfgsVerification.RadialCertificate.radialNumerator",
     "BfgsVerification.gradientFunctional"
    ],
-   "note": "g = ∇F(x) is HasFDerivAt F (gradientFunctional g) x; y, s are variables with their defining equations in secant_notation; T(x,z) = y^T s is secantCurvature x z g h = dot (h - g) (z - x) and N(x,z) = y^T r_z is radialNumerator xstar z g h = dot (h - g) (z - xstar). Coverage theorems write T and N as these dot products. Wording point W-R2: line 40, \"For differentiable $x,z$\", leaves x, z ∈ K implicit; the bound T ≤ T_max of disp/005 needs it."
+   "note": "g = ∇F(x) is HasFDerivAt F (gradientFunctional g) x; y, s are variables with their defining equations in secant_notation; T(x,z) = y^T s is secantCurvature x z g h = dot (h - g) (z - x) and N(x,z) = y^T r_z is radialNumerator xstar z g h = dot (h - g) (z - xstar). Coverage theorems write T and N as these dot products. Wording point W20 applied on 15 October 2026: line 40 reads \"For differentiable $x,z\\in K$, put\" (before \"$x,z$\", leaving x, z ∈ K implicit; the bound T ≤ T_max of disp/005 needs it)."
   },
   {
    "id": "C/04_R/disp/004",
@@ -95,7 +95,7 @@
     "BfgsVerification.RadialCertificate.secantCurvature_eq_errors",
     "BfgsVerification.RadialCertificate.secantCurvature_le_four_mul"
    ],
-   "note": "For differentiable x, z ∈ K with gradients g, h: T = D_F(z,x) + D_F(x,z), 0 ≤ T ≤ T_max = 4GR (T, Tmax variables with their defining equations). Setting of lines 30-36 written out: hF : ConvexOn ℝ univ F (F finite convex), hmin : ∀ x, F xstar ≤ F x (x_* a minimizer, F_* = F xstar), hb : F xstar < b, hK_def : K = {x | F x ≤ b}, hK : IsCompact K; the bounds R, G of disp/002 as hR, hG, hRK : ∀ x ∈ K, ‖euclideanVector (x - xstar)‖ ≤ R, hGK : every subgradient v at x ∈ K has ‖euclideanVector v‖ ≤ G (Euclidean norms). Line 40 says \"For differentiable $x,z$\" without \"∈ K\" (the article, paper/sections/global.tex:20, says x, z ∈ K); the Lean statement assumes x, z ∈ K, which line 51's 0 ≤ T ≤ T_max := 4GR needs: off K it fails, e.g. F(x) = |x| on ℝ, x_* = 0, b = 1 (K = [-1, 1]), R = G = 1 (valid bounds on K), x = -10, z = 10 (gradients -1, 1): T = (h - g)(z - x) = 2·20 = 40 > 4 = 4GR. Not a discrepancy (R, G and T_max are explicitly bounds on K, so the all-of-ℝⁿ reading is not reasonable); wording point W-R2: \"For differentiable $x,z\\in K$\"."
+   "note": "For differentiable x, z ∈ K with gradients g, h: T = D_F(z,x) + D_F(x,z), 0 ≤ T ≤ T_max = 4GR (T, Tmax variables with their defining equations). Setting of lines 30-36 written out: hF : ConvexOn ℝ univ F (F finite convex), hmin : ∀ x, F xstar ≤ F x (x_* a minimizer, F_* = F xstar), hb : F xstar < b, hK_def : K = {x | F x ≤ b}, hK : IsCompact K; the bounds R, G of disp/002 as hR, hG, hRK : ∀ x ∈ K, ‖euclideanVector (x - xstar)‖ ≤ R, hGK : every subgradient v at x ∈ K has ‖euclideanVector v‖ ≤ G (Euclidean norms). Line 40 said \"For differentiable $x,z$\" without \"∈ K\" until 15 October 2026 (wording point W20 applied: \"For differentiable $x,z\\in K$, put\", as the article, paper/sections/global.tex:20); the Lean statement assumes x, z ∈ K, which line 51's 0 ≤ T ≤ T_max := 4GR needs: off K it fails, e.g. F(x) = |x| on ℝ, x_* = 0, b = 1 (K = [-1, 1]), R = G = 1 (valid bounds on K), x = -10, z = 10 (gradients -1, 1): T = (h - g)(z - x) = 2·20 = 40 > 4 = 4GR."
   },
   {
    "id": "C/04_R/disp/006",
@@ -110,16 +110,18 @@
    ],
    "title": null,
    "container": null,
-   "sha256": "7ffeac6a6c126edc",
+   "sha256": "ad3a77a987692c70",
    "status": "DEFINITION",
    "lean": [
+    "BfgsCoverage.Companion.Ch04R.RSNonneg",
+    "BfgsCoverage.Companion.Ch04R.RSNonneg_iff",
     "BfgsCoverage.Companion.Ch04R.RS",
     "BfgsCoverage.Companion.Ch04R.RS_iff_library",
     "BfgsCoverage.Companion.Ch04R.RS_iff_article",
     "BfgsVerification.RadialCertificate.HasRadialSecantBounds",
     "BfgsCoverage.Article.Global.RadialSecantCondition"
    ],
-   "note": "RS F xstar K: ∀ η > 0 ∃ C : ℝ, for all differentiable x, z ∈ K (gradients g, h) with F_* + η ≤ F(z) ≤ F(x) and T > 0, N² ≤ C T. \"C_η < ∞\" is read as a real constant; RS_iff_article shows this is the article's condition art:radial-condition with C_η ≥ 0 (a constant can be replaced by max(C_η, 0)), RS_iff_library the library's HasRadialSecantBounds. Wording point W-R1: \"∃ C_η < ∞\"; the proofs use C_η ≥ 0 (line 149 with a = 0, disp/023, line 177), true by rs_constant_nonneg; proposed \"∃ C_η ≥ 0\", as in the article (paper/sections/global.tex:31)."
+   "note": "RSNonneg F xstar K: ∀ η > 0 ∃ C ≥ 0, for all differentiable x, z ∈ K (gradients g, h) with F_* + η ≤ F(z) ≤ F(x) and T > 0, N² ≤ C T: the display as printed since 15 October 2026 (wording point W19 applied: \"∃ C_η ≥ 0\", before \"∃ C_η < ∞\", as in the article, paper/sections/global.tex:31). RSNonneg_iff: it is equivalent to RS (real constants; a constant can be replaced by max(C, 0)), the form the coverage theorems of the chapter assume; RS_iff_article: the article's condition art:radial-condition; RS_iff_library: the library's HasRadialSecantBounds. The proofs use C_η ≥ 0 (line 149 with a = 0, disp/023, line 177), now part of the definition; rs_constant_nonneg shows that it holds anyway for a real (RS) constant."
   },
   {
    "id": "C/04_R/theorem/R:thm:equiv",
@@ -135,15 +137,16 @@
    ],
    "title": "Inward radial smoothness is equivalent to (RS)",
    "container": null,
-   "sha256": "e6da2bf90993d183",
+   "sha256": "5e777d7f5a3de8e3",
    "status": "LEAN",
    "lean": [
+    "BfgsCoverage.Companion.Ch04R.equiv_nonneg",
     "BfgsCoverage.Companion.Ch04R.equiv",
     "BfgsVerification.RadialCertificate.radial_iff_inward_on_compact_sublevel",
     "BfgsVerification.RadialCertificate.radial_of_inward_on_compact",
     "BfgsVerification.RadialCertificate.inward_of_radial_on_compact_sublevel"
    ],
-   "note": "In the setting of lines 30-34 (F finite convex, x_* a minimizer, K = {F ≤ b} compact, b > F_*): RS F xstar K ↔ IR F xstar K (\"up to constants\": the constants change). \"No differentiability of x - t r_x is required\" is built into IR (a gradient only at x). Last sentence: for x ∈ K and 0 ≤ t ≤ 1/2 (θ_η ≤ 1/2), x - t r_x = (1-t)x + t x_* ∈ K."
+   "note": "In the setting of lines 30-34 (F finite convex, x_* a minimizer, K = {F ≤ b} compact, b > F_*): RSNonneg F xstar K ↔ IRNonneg F xstar K (equiv_nonneg; the conditions with nonnegative constants as printed since 15 October 2026, wording point W19), equivalently RS F xstar K ↔ IR F xstar K (equiv; \"up to constants\": the constants change). \"No differentiability of x - t r_x is required\" is built into IR (a gradient only at x). Last sentence: for x ∈ K and 0 ≤ t ≤ 1/2 (θ_η ≤ 1/2), x - t r_x = (1-t)x + t x_* ∈ K."
   },
   {
    "id": "C/04_R/disp/007",
@@ -161,13 +164,15 @@
    "sha256": "c049c51251484fb1",
    "status": "DEFINITION",
    "lean": [
+    "BfgsCoverage.Companion.Ch04R.IRNonneg",
+    "BfgsCoverage.Companion.Ch04R.IRNonneg_iff",
     "BfgsCoverage.Companion.Ch04R.IR",
     "BfgsCoverage.Companion.Ch04R.IR_iff_library",
     "BfgsCoverage.Companion.Ch04R.IR_iff_article",
     "BfgsVerification.RadialCertificate.HasInwardTaylorBounds",
     "BfgsCoverage.Article.Global.InwardModelCondition"
    ],
-   "note": "IR F xstar K: ∀ η > 0 ∃ M θ : ℝ, 0 < θ ≤ 1/2, at every differentiable x ∈ K (gradient g) with F(x) ≥ F_* + η and 0 ≤ t ≤ θ: 0 ≤ F(x - t r_x) - F(x) + t g^T r_x ≤ (M/2) t². \"M_η < ∞\" read as a real constant; IR_iff_article: equivalent to the article's art:inward-condition (M_η ≥ 0). Wording point W-R1: \"there exist M_η < ∞\"; proposed \"M_η ≥ 0\", as in the article (paper/sections/global.tex:40); for real M both readings give the same condition (IR_iff_article)."
+   "note": "IRNonneg F xstar K: ∀ η > 0 ∃ M ≥ 0, θ with 0 < θ ≤ 1/2, at every differentiable x ∈ K (gradient g) with F(x) ≥ F_* + η and 0 ≤ t ≤ θ: 0 ≤ F(x - t r_x) - F(x) + t g^T r_x ≤ (M/2) t², the condition as printed since 15 October 2026 (wording point W19 applied: \"there exist $M_\\eta\\ge0$ and …\", before \"$M_\\eta<\\infty$\", as in the article, paper/sections/global.tex:40). IRNonneg_iff: equivalent to IR (real constants), IR_iff_article: the article's art:inward-condition."
   },
   {
    "id": "C/04_R/disp/008",
@@ -394,7 +399,7 @@
     "BfgsCoverage.Companion.Ch04R.error_bound_zero",
     "BfgsCoverage.Companion.Ch04R.rs_constant_nonneg"
    ],
-   "note": "Standing assumptions of the subsection (lines 123-131): the setting with R, G, condition (RS), η > 0; θ = θ_η with its defining equation (disp/014), x ∈ K with F(x) ≥ F_* + η, 0 ≤ t ≤ θ, z = x - t r_x (variable with its defining equation); from disp/016 on both endpoints differentiable with gradients g, h and a = (g - h)^T r_x a variable with its defining equation; from disp/018 on C is a constant of (RS) on the η/2-band (hypothesis hC). D = D_F(z,x) is a variable with its defining equation. In the case a > 0 of disp/018: 0 ≤ D ≤ ta ≤ 4C t² (error_bound_pos; (1-t)² ≥ 1/4). The case a = 0 of line 149 (\"D_F(z,x) ≤ ta = 0\") needs C ≥ 0, which the TeX does not justify (C_η is only \"< ∞\"); it holds because the η/2-band contains z strictly between its threshold and b when t > 0 (rs_constant_nonneg: an RS constant is ≥ 0 as soon as the band contains such a point, via a differentiable pair on opposite sides of x_* with T > 0): error_bound_zero. Wording point W-R1 (C_{η/2} ≥ 0 in the case a = 0 of line 149)."
+   "note": "Standing assumptions of the subsection (lines 123-131): the setting with R, G, condition (RS), η > 0; θ = θ_η with its defining equation (disp/014), x ∈ K with F(x) ≥ F_* + η, 0 ≤ t ≤ θ, z = x - t r_x (variable with its defining equation); from disp/016 on both endpoints differentiable with gradients g, h and a = (g - h)^T r_x a variable with its defining equation; from disp/018 on C is a constant of (RS) on the η/2-band (hypothesis hC). D = D_F(z,x) is a variable with its defining equation. In the case a > 0 of disp/018: 0 ≤ D ≤ ta ≤ 4C t² (error_bound_pos; (1-t)² ≥ 1/4). The case a = 0 of line 149 (\"D_F(z,x) ≤ ta = 0\") needs C ≥ 0, which the TeX does not justify (C_η is only \"< ∞\"); it holds because the η/2-band contains z strictly between its threshold and b when t > 0 (rs_constant_nonneg: an RS constant is ≥ 0 as soon as the band contains such a point, via a differentiable pair on opposite sides of x_* with T > 0): error_bound_zero. Wording point W19 applied on 15 October 2026: (4.RS) now states C_η ≥ 0, which justifies these cases directly; the Lean statements assume only a real (RS) constant (rs_constant_nonneg)."
   },
   {
    "id": "C/04_R/disp/020",
@@ -478,7 +483,7 @@
     "BfgsVerification.RadialCertificate.outward_error_le_of_pair_radial",
     "BfgsVerification.RadialCertificate.inward_error_le_of_pair_radial"
    ],
-   "note": "Standing assumptions: the setting (K = {F ≤ b} compact, b > F_*), (RS) with a constant C on a band η (hC), a radial triple x_* + (1+t)r, x_* + r, x_* + (1-t)r with 0 ≤ t ≤ 1/2, outer point in K, inner point on the η-band, all differentiable with gradients g_o, g_m, g_i; a_+ = (g_o - g_m)^T r, a_- = (g_m - g_i)^T r (variables with defining equations). Conclusion a_+ ≤ Ct and a_- ≤ Ct/(1-t)². The degenerate case a_± = 0 < t needs C ≥ 0 (the TeX does not say so): proved by rs_constant_nonneg, the middle point lying strictly inside the band (triple_order). Wording point W-R1 (C ≥ 0 in the degenerate cases a_± = 0)."
+   "note": "Standing assumptions: the setting (K = {F ≤ b} compact, b > F_*), (RS) with a constant C on a band η (hC), a radial triple x_* + (1+t)r, x_* + r, x_* + (1-t)r with 0 ≤ t ≤ 1/2, outer point in K, inner point on the η-band, all differentiable with gradients g_o, g_m, g_i; a_+ = (g_o - g_m)^T r, a_- = (g_m - g_i)^T r (variables with defining equations). Conclusion a_+ ≤ Ct and a_- ≤ Ct/(1-t)². The degenerate case a_± = 0 < t needs C ≥ 0 (the TeX does not say so): proved by rs_constant_nonneg, the middle point lying strictly inside the band (triple_order). Wording point W19 applied on 15 October 2026: (4.RS) now states C_η ≥ 0, which justifies these cases directly; the Lean statements assume only a real (RS) constant (rs_constant_nonneg)."
   },
   {
    "id": "C/04_R/disp/024",
@@ -751,7 +756,7 @@
     "BfgsVerification.AffineWhitening.metric",
     "BfgsVerification.AffineWhitening.gradient"
    ],
-   "note": "With the verified D run x_k, g_k, H_k, α_k = SeedOrbit.coerciveRun c₁ c₂ … (data orbitPoint, orbitGradient, orbitMetric, orbitLength), the run ReconstructedFourPiece.run has x̂_k = 𝓛⁻¹x_k, ĝ_k = a𝓛^T g_k, Ĥ_k = a⁻¹𝓛⁻¹H_k𝓛^{-T}, α̂_k = α_k and the same c₁, c₂ (fourPiece_transformed_data, by definition). Wording point W-R8: \"the verified D run\" (line 265); optional: \"the verified run of Chapter 12\"."
+   "note": "With the verified D run x_k, g_k, H_k, α_k = SeedOrbit.coerciveRun c₁ c₂ … (data orbitPoint, orbitGradient, orbitMetric, orbitLength), the run ReconstructedFourPiece.run has x̂_k = 𝓛⁻¹x_k, ĝ_k = a𝓛^T g_k, Ĥ_k = a⁻¹𝓛⁻¹H_k𝓛^{-T}, α̂_k = α_k and the same c₁, c₂ (fourPiece_transformed_data, by definition). Wording point W22 applied on 15 October 2026: line 265 reads \"the verified run of Chapter~\\ref{comp:D}\" (before \"the verified D run\")."
   },
   {
    "id": "C/04_R/disp/038",
@@ -821,7 +826,7 @@
    "labels": [],
    "title": null,
    "container": null,
-   "sha256": "ae45b4870de74c4d",
+   "sha256": "6ee42b2e1dd23778",
    "status": "PROOF",
    "of": "C/04_R/theorem/R:thm:plq",
    "lean": [
@@ -834,7 +839,7 @@
     "BfgsVerification.RadialCertificate.radial_of_inward_on_compact",
     "BfgsVerification.Localization.neighborhood_basin"
    ],
-   "note": "The library proof follows the TeX: discard the cells missing x_* (incident_neighborhood), keep the segments to x_* in the cells (inward_mem), match radial derivatives (radial_derivative_eq), Taylor bound and (IR) on compact subsets of a small ball (local_cells_inward), (RS), and the localization of a low sublevel. \"At a differentiable point of F, its gradient agrees with the smooth gradient of each adjacent full-dimensional cell\" is plq_gradient_agreement (uses full-dimensionality). Display disp/040 is its own item. Line 307, \"the preceding convergence theorem applies\", is the companion's Theorem 3.1 (printed number; \"One-sided transported-certificate convergence\", companion/chapters/03_T.tex:90), applied through Section 3.4 (given (RS), W = r_x r_x^T gives (V), (S) is exactly (RS), and (T) holds with L = 0) and its local statement, Section 3.3.2. Correct but implicit: wording point W-R3."
+   "note": "The library proof follows the TeX: discard the cells missing x_* (incident_neighborhood), keep the segments to x_* in the cells (inward_mem), match radial derivatives (radial_derivative_eq), Taylor bound and (IR) on compact subsets of a small ball (local_cells_inward), (RS), and the localization of a low sublevel. \"At a differentiable point of F, its gradient agrees with the smooth gradient of each adjacent full-dimensional cell\" is plq_gradient_agreement (uses full-dimensionality). Display disp/040 is its own item. Line 307 reads, since 15 October 2026 (wording point W21 (a) applied; before \"the preceding convergence theorem applies\"), \"the convergence theorem of Chapter~\\ref{comp:T} (Theorem 3.1, through Section 3.4 and its local form in Section 3.3.2) applies\": the companion's Theorem 3.1 (\"One-sided transported-certificate convergence\", companion/chapters/03_T.tex:90), applied through Section 3.4 (given (RS), W = r_x r_x^T gives (V), (RS) gives (S), and (T) holds with L = 0) and its local statement, Section 3.3.2."
   },
   {
    "id": "C/04_R/disp/040",
@@ -1145,13 +1150,19 @@
   {
    "id": "C/04_R/prose/006",
    "kind": "prose",
-   "anchor": "The preceding report assumes the following positive-band condition:",
+   "anchor": "The radial secant condition is the following positive-band condition:",
    "lines": [
     53,
     53
    ],
-   "status": "NON_CLAIM",
-   "reason": "History of the source report; introduces the definition disp/006."
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch04R.RSNonneg",
+    "BfgsCoverage.Companion.Ch04R.RSNonneg_iff",
+    "BfgsCoverage.Companion.Ch04R.RS_iff_article",
+    "BfgsCoverage.Article.Global.RadialSecantCondition"
+   ],
+   "note": "Names the condition of disp/006 (4.RS) \"the radial secant condition\", the name used at 03_T.tex:217 (wording point W18) and in the article (art:radial-condition, paper/sections/global.tex:28). RSNonneg is the condition as displayed; RSNonneg_iff and RS_iff_article show that it is the article's RadialSecantCondition. Wording point W8 (further place) applied on 15 October 2026: before \"The preceding report assumes the following positive-band condition:\" (NON_CLAIM: history of the source report, which the companion does not contain)."
   },
   {
    "id": "C/04_R/prose/007",
@@ -1195,14 +1206,14 @@
   {
    "id": "C/04_R/prose/010",
    "kind": "prose",
-   "anchor": "The label ``inward radial smoothness'' is descriptive terminology",
    "lines": [
     83,
     83
    ],
+   "anchor": "The label ``inward radial smoothness'' is descriptive terminology",
    "status": "NON_CLAIM",
    "reason": "Remark on terminology and novelty; no mathematical claim.",
-   "note": "Wording point W8 (already in TODO_MANUSCRIPT_REVIEW.md): \"in this note\" (line 83) is a remnant of the source report; optional: \"in this chapter\"."
+   "note": "Wording point W8 applied on 15 October 2026 (\"in this chapter\")."
   },
   {
    "id": "C/04_R/prose/011",
@@ -1252,11 +1263,11 @@
   {
    "id": "C/04_R/prose/014",
    "kind": "prose",
-   "anchor": "Fix $\\eta>0$ and choose",
    "lines": [
     122,
     151
    ],
+   "anchor": "Fix $\\eta>0$ and choose",
    "status": "PROOF",
    "of": "C/04_R/theorem/R:thm:equiv",
    "lean": [
@@ -1269,7 +1280,7 @@
     "BfgsVerification.convex_gradients_tendsto_at_differentiable",
     "BfgsVerification.RadialCertificate.inward_value_le"
    ],
-   "note": "Subsection \"Proof that (RS) implies (IR)\": displays disp/014-019 are items. \"Thus (IR) holds with M_η = 8C_{η/2}\" (line 149) for differentiable inner endpoints is ir_with_eight_C; its a = 0 case needs C_{η/2} ≥ 0 (true, rs_constant_nonneg; not justified in the TeX, where C_η is only \"< ∞\"; a note, not an error: (RS) constants may be enlarged, and the library uses 8 max(C_{η/2}, 0)). The approximation paragraph of line 151 (interior points x_j with x_j and x_j - t(x_j - x_*) differentiable, full measure and invertible dilation, the spare η/4 margin, ∇F(x_j) → ∇F(x), boundary points from the interior, t = 0 trivial) is the library's inward_of_radial_on_compact_sublevel with exists_inward_pair_approximation, dense_inward_differentiable_pairs and convex_gradients_tendsto_at_differentiable. Wording point W-R1 (C_{η/2} ≥ 0 at line 149)."
+   "note": "Subsection \"Proof that (RS) implies (IR)\": displays disp/014-019 are items. \"Thus (IR) holds with M_η = 8C_{η/2}\" (line 149) for differentiable inner endpoints is ir_with_eight_C; its a = 0 case needs C_{η/2} ≥ 0 (true, rs_constant_nonneg; not justified in the TeX, where C_η is only \"< ∞\"; a note, not an error: (RS) constants may be enlarged, and the library uses 8 max(C_{η/2}, 0)). The approximation paragraph of line 151 (interior points x_j with x_j and x_j - t(x_j - x_*) differentiable, full measure and invertible dilation, the spare η/4 margin, ∇F(x_j) → ∇F(x), boundary points from the interior, t = 0 trivial) is the library's inward_of_radial_on_compact_sublevel with exists_inward_pair_approximation, dense_inward_differentiable_pairs and convex_gradients_tendsto_at_differentiable. Wording point W19 applied on 15 October 2026: (4.RS) now states C_η ≥ 0, which justifies these cases directly; the Lean statements assume only a real (RS) constant (rs_constant_nonneg)."
   },
   {
    "id": "C/04_R/prose/015",
@@ -1317,11 +1328,11 @@
   {
    "id": "C/04_R/prose/018",
    "kind": "prose",
-   "anchor": "Indeed, this bound directly bounds each nonnegative tangent-plane remainder",
    "lines": [
     173,
     177
    ],
+   "anchor": "Indeed, this bound directly bounds each nonnegative tangent-plane remainder",
    "status": "PROOF",
    "of": "C/04_R/disp/022",
    "lean": [
@@ -1332,7 +1343,7 @@
     "BfgsVerification.RadialCertificate.central_of_radial_on_sublevel",
     "BfgsVerification.RadialCertificate.inward_of_central_on_smaller_sublevel"
    ],
-   "note": "Proof sketch of the equivalence of disp/022. Its display disp/023 and the claims of line 177 (\"local equivalence\", prose/019; outward points, prose/020) are items. \"The central difference is at most t(a_+ + a_-) ≤ 5Ct² for t ≤ 1/2\" is central_le_five (C ≥ 0 by rs_constant_nonneg); \"approximation by differentiable triples\" is the library's dense_radial_differentiable_triples used in central_of_radial_on_sublevel. Wording point W-R1 (C ≥ 0 in the cases a_± = 0 of disp/023 and in \"≤ 5Ct²\", line 177)."
+   "note": "Proof sketch of the equivalence of disp/022. Its display disp/023 and the claims of line 177 (\"local equivalence\", prose/019; outward points, prose/020) are items. \"The central difference is at most t(a_+ + a_-) ≤ 5Ct² for t ≤ 1/2\" is central_le_five (C ≥ 0 by rs_constant_nonneg); \"approximation by differentiable triples\" is the library's dense_radial_differentiable_triples used in central_of_radial_on_sublevel. Wording point W19 applied on 15 October 2026: (4.RS) now states C_η ≥ 0, which justifies these cases directly; the Lean statements assume only a real (RS) constant (rs_constant_nonneg)."
   },
   {
    "id": "C/04_R/prose/019",
@@ -1644,14 +1655,14 @@
   {
    "id": "C/04_R/prose/040",
    "kind": "prose",
-   "anchor": "These identities explain the breadth of the preceding sufficient classes",
    "lines": [
     230,
     230
    ],
+   "anchor": "These identities explain the breadth of the sufficient classes of Section~4.6",
    "status": "NON_CLAIM",
    "reason": "Expository remark; no claim.",
-   "note": "Wording point W-R7: \"the preceding sufficient classes\" (line 230): no sufficient classes precede in the chapter (the families come later, in Section 4.6); optional rewording."
+   "note": "Wording point W21 (e) applied on 15 October 2026: before \"the preceding sufficient classes\"; the sufficient classes come later, in Section 4.6."
   },
   {
    "id": "C/04_R/prose/041",
@@ -1683,14 +1694,14 @@
   {
    "id": "C/04_R/prose/043",
    "kind": "prose",
-   "anchor": "The positivity of $\\delta$ follows from the certified D parameters.",
    "lines": [
     255,
     255
    ],
+   "anchor": "The positivity of $\\delta$ follows from Chapter~\\ref{comp:D}'s certified parameters.",
    "status": "SAME_AS",
    "of": "C/04_R/disp/032",
-   "note": "δ > 0 is part of fourPiece_constants, proved from the certified seed (ReconstructedFourPiece.gap_pos via SeedOrbit.coercive_third_intercept_positive). Wording point W-R8: \"the certified D parameters\" (line 255) uses the source letter D for the objects of Chapter 12 (the letter denotes nothing in print; no wrong number is printed and the claim is true); optional: \"Chapter 12's certified parameters\"."
+   "note": "δ > 0 is part of fourPiece_constants, proved from the certified seed (ReconstructedFourPiece.gap_pos via SeedOrbit.coercive_third_intercept_positive). Wording point W22 applied on 15 October 2026 (before \"the certified D parameters\", with the source letter D of Chapter 12)."
   },
   {
    "id": "C/04_R/prose/044",
@@ -1711,18 +1722,18 @@
   {
    "id": "C/04_R/prose/045",
    "kind": "prose",
-   "anchor": "The unique D optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$.",
    "lines": [
     255,
     255
    ],
+   "anchor": "Chapter~\\ref{comp:D}'s unique optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$.",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch04R.fourPiece_optimizer",
     "BfgsVerification.ReconstructedFourPiece.unique_optimizer",
     "BfgsVerification.ReconstructedFourPiece.minimum_value"
    ],
-   "note": "𝓛(-1, 5) = (-1, 16); F_R(-1, 5) = -1 is the minimum, attained only at (-1, 5). Wording point W-R8: \"The unique D optimizer\" (line 255); optional: \"Chapter 12's unique optimizer\"."
+   "note": "𝓛(-1, 5) = (-1, 16); F_R(-1, 5) = -1 is the minimum, attained only at (-1, 5). Wording point W22 applied on 15 October 2026 (before \"The unique D optimizer\")."
   },
   {
    "id": "C/04_R/prose/046",
@@ -1849,18 +1860,18 @@
   {
    "id": "C/04_R/prose/054",
    "kind": "prose",
-   "anchor": "The actual positive secant curvatures are $a$ times those of D and tend to zero.",
    "lines": [
     276,
     276
    ],
+   "anchor": "The actual positive secant curvatures are $a$ times those of the run of Chapter~\\ref{comp:D} and tend to zero.",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch04R.fourPiece_curvatures",
     "BfgsVerification.ReconstructedFourPiece.secant_scale",
     "BfgsVerification.ReconstructedFourPiece.secant_tendsto_zero"
    ],
-   "note": "ŷ_k^T ŝ_k = a y_k^T s_k > 0 and → 0. Wording point W-R8: \"those of D\" (line 276); optional: \"those of the run of Chapter 12\"."
+   "note": "ŷ_k^T ŝ_k = a y_k^T s_k > 0 and → 0. Wording point W22 applied on 15 October 2026 (before \"those of D\")."
   },
   {
    "id": "C/04_R/prose/055",
@@ -1941,26 +1952,27 @@
     "BfgsCoverage.Companion.Ch04R.plq2d_low_runs",
     "BfgsCoverage.Article.Local.loss_plus_polyhedral_penalty"
    ],
-   "note": "\"Broader\": the class covered by Theorem R:thm:plq (prose/058) contains the objectives ψ + φ with ψ convex and smooth (\"one common smooth summand\", locally C^{1,1}, which includes C²) and φ a finite maximum of affine functions (\"affine pieces\"), with a unique minimizer (smooth_plus_polyhedral_covered, through the article's loss_plus_polyhedral_penalty, A/local/prose/008), and strictly, under both readings of \"smooth\": (i) C^{1,1} reading (the reading of lines 300-307, whose \"smooth extensions\" are the C^{1,1} extensions of the theorem, and of the article's parallel text): the two-dimensional witness F(u,v) = u² + v² + (2 + |u|)|v| (the reviewer's construction) is a convex piecewise linear-quadratic objective on the four quadrants with unique minimizer 0, covered by the theorem (plq2d_covered), but is not ψ + φ for any locally C^{1,1} ψ (plq_broader_2d), indeed for any everywhere differentiable ψ (plq2d_not_smooth_plus_max_affine: the jump of ∂_v F across v = 0 at (u, 0) is 2(2 + |u|), which varies along the boundary, while ψ + φ has only the finitely many jumps of φ); this settles the C¹, C^{1,1}, C² and C^∞ readings at once. (ii) C² reading: already in dimension one, F(x) = x² + max(x,0)² + |x - 1| is covered (plq_hessians_and_jumps) but is not ψ + φ with ψ of class C² (plq_broader; proof not_smooth_plus_max_affine: near 0, ψ'' would be 4 on the right and 2 on the left); under the C^{1,1} reading this one-dimensional example is representable (ψ = x² + max(x,0)², φ = |x - 1|), which is why the two-dimensional witness is needed. Non-vacuity: plq2d_low_runs, plq_example_run. Wording point W-R9: the sentence's reason (\"different cells can have different quadratic Hessians and different gradient jumps\") separates the classes only under the C² reading; with a C^{1,1} summand the Hessians may differ between cells as well, and affine pieces give different jumps across different boundaries; what a smooth summand plus affine pieces cannot produce is a gradient jump that varies along one cell boundary (plq2d_jump)."
+   "note": "\"Broader\": the class covered by Theorem R:thm:plq (prose/058) contains the objectives ψ + φ with ψ convex and smooth (\"one common smooth summand\", locally C^{1,1}, which includes C²) and φ a finite maximum of affine functions (\"affine pieces\"), with a unique minimizer (smooth_plus_polyhedral_covered, through the article's loss_plus_polyhedral_penalty, A/local/prose/008), and strictly, under both readings of \"smooth\": (i) C^{1,1} reading (the reading of lines 300-307, whose \"smooth extensions\" are the C^{1,1} extensions of the theorem, and of the article's parallel text): the two-dimensional witness F(u,v) = u² + v² + (2 + |u|)|v| (the reviewer's construction) is a convex piecewise linear-quadratic objective on the four quadrants with unique minimizer 0, covered by the theorem (plq2d_covered), but is not ψ + φ for any locally C^{1,1} ψ (plq_broader_2d), indeed for any everywhere differentiable ψ (plq2d_not_smooth_plus_max_affine: the jump of ∂_v F across v = 0 at (u, 0) is 2(2 + |u|), which varies along the boundary, while ψ + φ has only the finitely many jumps of φ); this settles the C¹, C^{1,1}, C² and C^∞ readings at once. (ii) C² reading: already in dimension one, F(x) = x² + max(x,0)² + |x - 1| is covered (plq_hessians_and_jumps) but is not ψ + φ with ψ of class C² (plq_broader; proof not_smooth_plus_max_affine: near 0, ψ'' would be 4 on the right and 2 on the left); under the C^{1,1} reading this one-dimensional example is representable (ψ = x² + max(x,0)², φ = |x - 1|), which is why the two-dimensional witness is needed. Non-vacuity: plq2d_low_runs, plq_example_run. Wording point W23 applied on 15 October 2026: the reason given was \"different cells can have different quadratic Hessians and different gradient jumps\", which separates the classes only under the C² reading (with a C^{1,1} summand the Hessians may differ between cells as well, and affine pieces give different jumps across different boundaries); it is now \"different cells can have different quadratic Hessians, and the gradient jump can vary along a cell boundary (for example $u^2+v^2+(2+|u|)|v|$ near the origin)\", which a smooth summand plus affine pieces cannot produce (plq2d_jump, plq2d_hessians_and_varying_jump)."
   },
   {
    "id": "C/04_R/prose/060",
    "kind": "prose",
-   "anchor": "different cells can have different quadratic Hessians and different gradient jumps.",
    "lines": [
     309,
     309
    ],
+   "anchor": "different cells can have different quadratic Hessians, and the gradient jump can vary along a cell boundary",
    "status": "LEAN",
    "lean": [
+    "BfgsCoverage.Companion.Ch04R.plq2d_hessians_and_varying_jump",
+    "BfgsCoverage.Companion.Ch04R.plq2d_covered",
+    "BfgsCoverage.Companion.Ch04R.plq2d_jump",
     "BfgsCoverage.Companion.Ch04R.plq_hessians_and_jumps",
     "BfgsCoverage.Companion.Ch04R.plq_covered_objective",
     "BfgsCoverage.Companion.Ch04R.hasDerivAt_quad",
-    "BfgsCoverage.Companion.Ch04R.plq2d_covered",
-    "BfgsCoverage.Companion.Ch04R.plq2d_jump",
     "BfgsCoverage.Article.Local.plq_different_hessians"
    ],
-   "note": "\"Can have\": an instance of all hypotheses of Theorem R:thm:plq in the form of prose/058 (finite convex piecewise quadratic objective with a unique minimizer; quadratic formulas on the cells of a finite cover of ℝ by closed full-dimensional polyhedra) whose cells carry different quadratic Hessians and whose gradient jumps across the cell boundaries differ: F(x) = x² + max(x,0)² + |x - 1| on ℝ (Vec 1), cells x ≤ 0, 0 ≤ x ≤ 1, x ≥ 1 with formulas x² - x + 1, 2x² - x + 1, 2x² + x - 1 (Q = 1, 2, 2), unique minimizer 1/4. The derivatives of F within the two adjacent cells are -1, -1 at x = 0 (jump 0: only the Hessian changes) and 3, 5 at x = 1 (jump 2). The conclusion of the theorem holds for it. A stronger instance is the two-dimensional witness of prose/059, F(u,v) = u² + v² + (2 + |u|)|v|: its quadrant cells carry different Hessians (plq2d_covered: Q_0 ≠ Q_1), and the jump of ∂_v F across the single boundary v = 0 at (u, 0) is 2(2 + |u|), varying along that boundary (plq2d_jump). The article's plq_different_hessians (A/local/prose/009) is the Hessian part alone. Wording point W-R9 (see prose/059)."
+   "note": "Corrected wording (W23, applied on 15 October 2026; before \"different cells can have different quadratic Hessians and different gradient jumps.\"): \"different cells can have different quadratic Hessians, and the gradient jump can vary along a cell boundary (for example $u^2+v^2+(2+|u|)|v|$ near the origin).\" plq2d_hessians_and_varying_jump: F(u,v) = u² + v² + (2 + |u|)|v| is a finite convex objective with unique minimizer 0, quadratic on the four closed quadrants (full-dimensional cells covering ℝ²) with different Hessians (Q_0 ≠ Q_1), covered by Theorem R:thm:plq (its conclusion holds, plq2d_covered); the jump of ∂_v F across the boundary v = 0 at (u, 0) is 2(2 + |u|) (plq2d_jump), which takes different values at boundary points arbitrarily near the origin. \"Can have\": an instance of the hypotheses of the theorem in the form of prose/058. The former one-dimensional witness F(x) = x² + max(x,0)² + |x - 1| (plq_hessians_and_jumps: Hessians 1, 2, 2 and jumps 0 and 2 across the boundaries 0 and 1) still shows different Hessians; the article's plq_different_hessians (A/local/prose/009) is the Hessian part alone."
   },
   {
    "id": "C/04_R/prose/061",
@@ -2231,23 +2243,23 @@
   {
    "id": "C/04_R/prose/079",
    "kind": "prose",
-   "anchor": "This proves (IR) directly, shortening the earlier segment-based proof.",
    "lines": [
     368,
     368
    ],
+   "anchor": "This proves (IR) directly.",
    "status": "SAME_AS",
    "of": "C/04_R/disp/044",
-   "note": "(IR) near x_* is the first conclusion of finite_max_branch_test; \"shortening the earlier segment-based proof\" is a remark on the proof. Wording point W-R4: \"shortening the earlier segment-based proof\" (line 368) refers to no proof in the companion (a remnant of the source history); optional: drop the clause."
+   "note": "(IR) near x_* is the first conclusion of finite_max_branch_test; Wording point W21 (b) applied on 15 October 2026: the clause \"shortening the earlier segment-based proof\", which referred to no proof in the companion, was dropped."
   },
   {
    "id": "C/04_R/prose/080",
    "kind": "prose",
-   "anchor": "The necessity for the old radial condition is also clear on genuine active ties",
    "lines": [
     370,
     370
    ],
+   "anchor": "The necessity for (RS) is also clear on genuine active ties",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch04R.finite_max_necessity",
@@ -2256,7 +2268,7 @@
     "BfgsVerification.FiniteMaxRadial.finite_max_central_not_isBigO",
     "BfgsVerification.FiniteMaxRadial.active_gap_forbids_radial"
    ],
-   "note": "At w ∈ U, with J the spread of the active radial derivatives ∇f_i(w)^T(w - x_*) (activeRadialJump): the central second difference F(w + t(w - x_*)) + F(w - t(w - x_*)) - 2F(w) is J|t| + O(t²) and, if J > 0, not O(t²). \"Necessity for the old radial condition\": with convex branches, a strict active gap at a tie w with F_* < F(w) < b excludes (RS) on {F ≤ b}. Wording point W-R5: \"the old radial condition\" (line 370) is (RS) of Section 4.1, display (4.RS); proposed: \"(RS)\"."
+   "note": "At w ∈ U, with J the spread of the active radial derivatives ∇f_i(w)^T(w - x_*) (activeRadialJump): the central second difference F(w + t(w - x_*)) + F(w - t(w - x_*)) - 2F(w) is J|t| + O(t²) and, if J > 0, not O(t²). \"Necessity for the old radial condition\": with convex branches, a strict active gap at a tie w with F_* < F(w) < b excludes (RS) on {F ≤ b}. Wording point W21 (c) applied on 15 October 2026 (before \"the old radial condition\", which is (RS) of Section 4.1, display (4.RS))."
   },
   {
    "id": "C/04_R/prose/081",
@@ -2470,18 +2482,18 @@
   {
    "id": "C/04_R/prose/095",
    "kind": "prose",
-   "anchor": "Thus this familiar smooth-plus-nuclear-norm problem need not satisfy the original local radial criterion",
    "lines": [
     429,
     429
    ],
+   "anchor": "Thus this familiar smooth-plus-nuclear-norm problem need not satisfy (RS) on any neighborhood of a nonzero rank-deficient minimizer.",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch04R.spectral_RS_fails",
     "BfgsVerification.NuclearSymmetric2.not_radial_secant_on_neighborhood",
     "BfgsVerification.NuclearSymmetric2.minimizer_matrix_rank"
    ],
-   "note": "(RS) fails on every neighborhood of X_*, X_* ≠ 0 and rank X_* = 1 < 2. Wording point W-R6: \"the original local radial criterion\" (line 429) is (RS) on neighborhoods of X_*; spectral_RS_fails proves its failure on every neighborhood, hence on every low sublevel; proposed: \"(RS) on any neighborhood of $X_*$\"."
+   "note": "(RS) fails on every neighborhood of X_*, X_* ≠ 0 and rank X_* = 1 < 2. Wording point W21 (d) applied on 15 October 2026 (before \"the original local radial criterion at a nonzero rank-deficient minimizer\"); spectral_RS_fails proves the failure of (RS) on every neighborhood, hence on every low sublevel."
   },
   {
    "id": "C/04_R/prose/096",

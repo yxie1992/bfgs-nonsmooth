@@ -13,9 +13,11 @@ The file is generated from the article's appendix `paper/appendices/seed_certifi
 `art:failure_update` to `D:bfgs`, `art:seed_matrices` to `D:closure`, `art:trial_table` to
 `comp:trial_table`, `art:seed_query_bounds` to `D:trialbounds`), the subsections become sections,
 and "Lemma art:seed_cycle" becomes "the seed and query assertions in Chapter D". A companion line
-is the article line minus one. The items that state the article's claims word for word are
-`SAME_AS` the article items in the register (their Lean statements are in
-`BfgsCoverage.Article.SeedCertificate`). This module states the claims that differ.
+is the article line minus one. Since 15 October 2026 the script also makes five companion-only
+replacements (M15, M16, W6, W9 of `TODO_MANUSCRIPT_REVIEW.md`). The items that state the
+article's claims word for word are `SAME_AS` the article items in the register (their Lean
+statements are in `BfgsCoverage.Article.SeedCertificate`). This module states the claims that
+differ.
 
 ## Items
 
@@ -24,27 +26,33 @@ is the article line minus one. The items that state the article's claims word fo
 | `lemma/comp:root_certificate` | 37-40 | `root_certificate` |
 | `prose/008` | 144-145 | `positive_slope_wolfe` |
 | `prose/009` | 145-147 | `increase_rejects_armijo` |
-| `prose/006` (discrepancy) | 190 | `query_box_too_coarse`, `table_enclosure_widths` |
+| `prose/006` (corrected discrepancy) | 190 | `table_enclosure_widths`, `query_box_too_coarse` |
 
 * Lemma `comp:root_certificate` refers to `D:rho` (`companion/chapters/12_D.tex:99-102`),
   $\rho=129R/(V(U+129))\simeq0.060199206107543764815373666287$, instead of the article's
   `art:seed_rho` ($0.060<\rho<0.061$). "$\simeq$" is read as nearest rounding to the 30 printed
-  digits; this holds at every point of the closed box. The printed proof derives only
-  $0.060<\rho<0.061$; the thirty digits come from a rational interval evaluation of $\rho$ on the
-  root box (`DDisplayPrecision.raw_bounds_on_original_ball`) that the companion does not print (a
-  proof gap, not a discrepancy).
+  digits; this holds at every point of the closed box. The printed proof derived only
+  $0.060<\rho<0.061$ (a proof gap, not a discrepancy); since 15 October 2026 (wording point W6) it
+  ends with "The same interval rules on the root box give the thirty digits in \eqref{D:rho}",
+  the rational interval evaluation of $\rho$ on the root box
+  (`DDisplayPrecision.raw_bounds_on_original_ball`).
 * The search of Chapter D is strict (`DeterministicLineSearch`: $F(x+\alpha p)<F(x)+c_1\alpha g^Tp$,
   $\nabla F(x+\alpha p)^Tp>c_2g^Tp$, `companion/chapters/12_D.tex:41-44`), so prose items 008 and
   009 are stated for the strict tests (the article's versions use the non-strict ones).
-* Prose item 006, "The same interval operations give the value enclosures in that table", is a
+* Prose item 006, "The same interval operations give the value enclosures in that table", was a
   discrepancy: the table of Section `comp:trial_table` lists twelve-digit decimals, not
   enclosures, and the query box cannot certify twelve digits (`query_box_too_coarse`; only the much
-  smaller root box can). The operations do give enclosures of width at most $4\cdot10^{-4}$
-  (`BfgsCoverage.Article.SeedCertificate.table_value_enclosures`, `table_enclosure_widths`).
+  smaller root box can). Corrected on 15 October 2026 (M15): "For each trial value
+  $G(z_j+\alpha p_j)$ in the table of Section~\ref{comp:trial_table} and each current value
+  $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width
+  at most $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory."
+  (`table_enclosure_widths`, `BfgsCoverage.Article.SeedCertificate.table_value_enclosures`).
 * Prose items 002 ("the next subsection", a section of the companion) and 024
-  ("Table~\ref{comp:trial_table}", which prints the section number 12.3) are typos of the
-  generator; their mathematics is the article's (`clearing_denominators`, `query_lower_bounds` in
-  `BfgsCoverage.Article.SeedCertificate`).
+  ("Table~\ref{comp:trial_table}", which prints the section number 12.3) were typos of the
+  generator, corrected on 15 October 2026 (M16: "the next section", "the table in
+  Section~\ref{comp:trial_table}"); their mathematics is the article's (`clearing_denominators`,
+  `query_lower_bounds` in `BfgsCoverage.Article.SeedCertificate`). Prose item 017 says "the third
+  gradient $g_2=(c,d)^T$" since the same day (wording point W9; before "the third slope").
 
 ## Notation
 
@@ -78,7 +86,9 @@ The closed box is $\{x:\|x-\bar r\|_\infty\le10^{-30}\}$ and a root is a zero of
 Equation `D:rho` (`companion/chapters/12_D.tex:99-102`) is
 $\rho=129R/(V(U+129))\simeq0.060199206107543764815373666287$; "holds on the box" is read as:
 at every point of the box the denominator $V(U+129)$ is positive and $129R/(V(U+129))$ rounds to
-the printed thirty digits, $|\rho-0.060199206107543764815373666287|<10^{-30}/2$. -/
+the printed thirty digits, $|\rho-0.060199206107543764815373666287|<10^{-30}/2$. The proof
+(`C/seed_certificate/proof/001`) ends, since 15 October 2026 (wording point W6), with "The same
+interval rules on the root box give the thirty digits in \eqref{D:rho}". -/
 theorem root_certificate :
     (∃! x : Vec 2, ‖x - AlgebraicSeed.center‖ ≤ 1 / 10 ^ 30 ∧ P x = 0) ∧
       ∀ x : Vec 2, ‖x - AlgebraicSeed.center‖ ≤ 1 / 10 ^ 30 →
@@ -207,7 +217,7 @@ theorem increase_rejects_armijo (q : Fin 9) (hq : trialAccept q = false) :
     linarith
   exact ⟨hna, fun fuel l hh => DeterministicLineSearch.search_armijo_reject fuel hna⟩
 
-/-! ### The value enclosures of the table (discrepancy of prose item 006) -/
+/-! ### The value enclosures of the table (prose item 006, corrected on 15 October 2026) -/
 
 /-- The value $G(z_0)=g_0^Tz_0$ of the first row ("current" value of phase 0) as a function of
 the query-box parameters $(c,d,\rho)$, the article's `currentValueExpr c d r 0`, is
@@ -218,13 +228,14 @@ theorem currentValueExpr_zero (c d r : ℝ) :
     Fin.sum_univ_two, trialPhase]
 
 /-- Counterexample to the literal reading of Item `C/seed_certificate/prose/006`
-(`companion/appendices/seed_certificate.tex:190`): "The same interval operations give the value
-enclosures in that table." The table of Section `comp:trial_table`
-(`companion/chapters/12_D.tex:205-222`) lists twelve-digit decimals such as $G(z_0)\approx
-0.888432624149$. Every interval $[\ell,h]$ that encloses $G(z_0)=g_0^Tz_0$, as a function of the
-parameters, on the whole query box `comp:query_box` (as any sound evaluation by the interval rules
-on that box does) has width $h-\ell>10^{-6}$: the value changes by about $4.4\cdot10^{-6}$ across
-the box. So the interval operations on the query box cannot give twelve-digit enclosures. -/
+(`companion/appendices/seed_certificate.tex:190`) as printed before its correction of 15 October
+2026 (M15): "The same interval operations give the value enclosures in that table." The table of
+Section `comp:trial_table` (`companion/chapters/12_D.tex:205-222`) lists twelve-digit decimals
+such as $G(z_0)\approx0.888432624149$. Every interval $[\ell,h]$ that encloses $G(z_0)=g_0^Tz_0$, as
+a function of the parameters, on the whole query box `comp:query_box` (as any sound evaluation by
+the interval rules on that box does) has width $h-\ell>10^{-6}$: the value changes by about
+$4.4\cdot10^{-6}$ across the box. So the interval operations on the query box cannot give
+twelve-digit enclosures. -/
 theorem query_box_too_coarse (lo hi : ℝ)
     (h : ∀ c d r : ℝ, Bounds (318481 / 1000000) c (318482 / 1000000) →
       Bounds (-1025233 / 1000000) d (-1025232 / 1000000) → Bounds (6019 / 100000) r (6021 / 100000) →
@@ -238,8 +249,11 @@ theorem query_box_too_coarse (lo hi : ℝ)
   norm_num at h1 h2
   linarith [h1.1, h2.2]
 
-/-- Corrected claim of Item `C/seed_certificate/prose/006`
-(`companion/appendices/seed_certificate.tex:190`): the interval rules on the query box enclose
+/-- Item `C/seed_certificate/prose/006` (`companion/appendices/seed_certificate.tex:190`),
+corrected on 15 October 2026 (M15): "For each trial value $G(z_j+\alpha p_j)$ in the table of
+Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display after it, the same
+interval operations give a rational enclosure of width at most $4\cdot10^{-4}$; the twelve-digit
+decimals there are explanatory." The interval rules on the query box enclose
 the values $G(z_j)$ and $G(z_j+\alpha p_j)$ of every row in rational intervals of width at most
 $4\cdot10^{-4}$ (the article's enclosures of $10^4G$, `tableCurrent`, `tableTrial`, of widths
 $1$ to $4$), and at the root these are the actual values. -/

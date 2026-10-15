@@ -38,12 +38,17 @@ Theorem `D:main` (line 52) and for the table
 holds (`main`, `trial_table`, `trial_tree_all`). Strict Armijo holds at the accepted trial of phase
 $j$ exactly when $c_1<r_j$, $r_j>1/3$ (`ratio_signs`), and weak Wolfe for every $c_2>0$.
 
-## Discrepancy (line 380)
+## Corrected discrepancy (line 380, 15 October 2026)
 
-"This does not make them analytic or uniformly strongly convex" speaks of the four branches of
+"This does not make them analytic or uniformly strongly convex" spoke of the four branches of
 `D:fullobjective`, but the fourth, $f_3(u,v)=v$, is analytic (`branch3_analytic`); the same kind
-of wording issue as the article's M8. `not_analytic` proves the corrected claim: $f_0,f_1,f_2$
-are not analytic, and no branch is uniformly strongly convex.
+of wording issue as the article's M8. Corrected on 15 October 2026 (M14): "This does not make the
+first three branches analytic, nor any branch uniformly strongly convex." `not_analytic` proves
+it: $f_0,f_1,f_2$ are not analytic, and no branch is uniformly strongly convex. Wording points W7
+(line 68) and W8 (line 105, "in this chapter") were applied on the same day, and W46: the
+equation counter set at lines 389 and 447 now continues after the three numbered lines of the
+`gather` display of Lemma `D:scalarlemma` (before, (12.9)-(12.11) were printed twice;
+`D:fullobjective`, `D:localcone`, `D:finalorbit` are now (12.12)-(12.14)).
 
 ## Notation
 
@@ -94,7 +99,7 @@ are not analytic, and no branch is uniformly strongly convex.
 | `disp/032`-`036`, `prose/041`, `prose/042` | 288-324 | `ramp_def`, `ramp_bounds`, `primitive_def`, `phi_def`, `intervals_cover` |
 | `lemma/D:scalarlemma` (`disp/037`), `disp/039`, `disp/040`, `disp/042` | 326-368 | `scalar_lemma`, `matching_identity`, `asymptotic_orders`, `scalar_table` |
 | `disp/043`, `prose/043`-`046` | 372-380 | `third_derivative_bound`, `second_derivative_regularity`, `branches_C21` |
-| `prose/047` (discrepancy) | 380 | `not_analytic` (corrected statement), `branch3_analytic` (counterexample) |
+| `prose/047` (corrected) | 380 | `not_analytic`, `branch3_analytic` (counterexample, former wording) |
 | `prose/048`-`053`, `disp/045`-`048`, `disp/050`, `prose/056` | 404-438 | `branch_hessians`, `hessian_bounds_01`, `bstar_curvature`, `hessian_bounds_23`, `common_bounds`, `objective_minimizer`, `center_def`, `center_branch_slopes`, `center_facts` |
 | `disp/051`-`053`, `prose/057`-`061`, `disp/056`, `disp/057` | 453-489 | `initial_def`, `final_orbit`, `trial_form`, `local_model_at_trials`, `embedded_decisions`, `scaled_update`, `spd_differentiable`, `final_limits`, `initial_limits`, `trajectory_bound` |
 
@@ -627,10 +632,11 @@ theorem dot_bfgsStep {n : ℕ} (H : Mat n) (g : Vec n) (α : ℝ) :
 /-- Item `C/12_D/lemma/D:root` (`companion/chapters/12_D.tex:104-106`), Lemma `D:root`.
 
 "The designated box contains exactly one solution of~\eqref{D:polys}. All denominators in this
-note are nonzero there, and $0.060<\rho<0.061$."
+chapter are nonzero there, and $0.060<\rho<0.061$." ("in this chapter" since 15 October 2026,
+wording point W8; before "in this note".)
 
 The box is $\{x:\|x-(c_0,d_0)\|_\infty\le10^{-30}\}$ and a solution of `D:polys` is a zero of $P$.
-"All denominators in this note" that depend on the point $(c,d)$ of the box are: $V(U+129)$ (of
+"All denominators in this chapter" that depend on the point $(c,d)$ of the box are: $V(U+129)$ (of
 $\rho$, `D:rho`, and of $\widetilde\rho-\rho$), $UV(U+129)$ (of $\beta$), $RUY$ (of $\gamma$),
 $U(U+129)Y$ (of $\widetilde\rho$), $1-\rho$ (of $z_0$, `D:x0`), $b_*=2c-32d$ (of $c_{b_*}$,
 $\xi$ and $\varphi_{b_*}$), $g_j^Ts_j$ (of the ratios at the accepted steps) and $t=y^Ts$ of the
@@ -2230,11 +2236,11 @@ theorem branch_flat (i : Fin 4) : ∃ w : Vec 2, w ≠ 0 ∧ ∀ t : ℝ,
   · exact ⟨![seedD, -seedC], fun h => hc (by simpa using congrFun h 1), h2⟩
   · exact ⟨![1, 0], fun h => by simpa using congrFun h 0, h3⟩
 
-/-- Corrected statement of Item `C/12_D/prose/047` (`companion/chapters/12_D.tex:380`), a
-discrepancy. The sentence "This does not make them analytic or uniformly strongly convex" speaks
-of "the branches below", the four branches $f_0,\dots,f_3$ of `D:fullobjective`; the fourth,
-$f_3(u,v)=v$, is analytic (`branch3_analytic`). Proposed wording: "This does not make
-$f_0,f_1,f_2$ analytic, nor any branch uniformly strongly convex." Proved here: for
+/-- Item `C/12_D/prose/047` (`companion/chapters/12_D.tex:380`), corrected on 15 October 2026
+(M14): "This does not make the first three branches analytic, nor any branch uniformly strongly
+convex." The former wording, "This does not make them analytic or uniformly strongly convex",
+spoke of "the branches below", the four branches $f_0,\dots,f_3$ of `D:fullobjective`; the fourth,
+$f_3(u,v)=v$, is analytic (`branch3_analytic`). Proved here: for
 $b\in\{2,b_*\}$, $\varphi_b$ is not analytic on $\mathbb R$ and $\varphi_b''$ has no positive
 lower bound; $f_0,f_1,f_2$ (built from $\varphi_2,\varphi_2,\varphi_{b_*}$) are not analytic on
 $\mathbb R^2$; and no branch $f_i$, $i=0,\dots,3$, is uniformly strongly convex: for every
@@ -2295,9 +2301,10 @@ theorem not_analytic :
     exact not_strongly_convex_of_flat hw hflat hμ
 
 /-- Counterexample to the literal reading of Item `C/12_D/prose/047`
-(`companion/chapters/12_D.tex:380`): "This does not make them analytic", "them" being the
-branches of `D:fullobjective`. The fourth branch $f_3(u,v)=v$ is linear, hence analytic at every
-point (the corrected statement is `not_analytic`). -/
+(`companion/chapters/12_D.tex:380`) as printed before its correction of 15 October 2026 (M14):
+"This does not make them analytic", "them" being the branches of `D:fullobjective`. The fourth
+branch $f_3(u,v)=v$ is linear, hence analytic at every point (the corrected statement is
+`not_analytic`). -/
 theorem branch3_analytic : ∀ x : Vec 2, AnalyticAt ℝ (DEmbedding.branch 3) x := by
   intro x
   have h : DEmbedding.branch 3 = fun y : Vec 2 => y 1 := by

@@ -100,15 +100,19 @@ standing assumptions of the proof (`common_vector`, `common_vector_energy_step`)
 jointly inconsistent, and in general forms (`common_vector_general`,
 `common_vector_energy_step_general`) whose assumptions are satisfiable.
 
-## Discrepancy
+## Corrected discrepancy (15 October 2026)
 
-Item `prose/028` (line 284, typo): the cross-references use the numbering of the source note, not
+Item `prose/028` (line 284, M17): the cross-references used the numbering of the source note, not
 the chapter's: the seven equation references "(2.1)" (lines 284, 421) for (7.2.1), "(5.2)"
 (line 341) for (7.5.2), "(7.3)" (lines 577, 599) for (7.7.3), "(7.1)" (line 655) for (7.7.1),
 "(7.2)" (line 714) for (7.7.2), and the title of Section 7.5 (lines 234-235), "proof of Theorem
 A", for Theorem 7.A. In the companion's numbering (2.1) and (5.2) are unrelated equations of
-Chapters 2 and 5, (7.1)-(7.3) and a Theorem A do not exist. The mathematics is proved with the
-intended equations (`energy_identity` from `hessian_form`, etc.).
+Chapters 2 and 5, (7.1)-(7.3) and a Theorem A do not exist. Since the correction the chapter
+prints the intended numbers; the mathematics is proved with them (`energy_identity` from
+`hessian_form`, etc.). Wording point W8 ("This chapter continues", line 23) was applied on the
+same day; after the independent review of that day also W8 at line 319 ("in an earlier source
+note") and W10 at line 470 ("The three-gradient, rank-two stagnation example of
+Chapter~\ref{comp:D}", the seed run of Chapter 12, which comes later; before "The earlier …").
 
 ## Non-vacuity
 
@@ -202,7 +206,7 @@ theorem theorem_7A {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
       Tendsto (fun k => F (R.x k)) atTop (𝓝 0) ∨ Tendsto (fun k => F (R.x k)) atTop atBot :=
   fun R => R.homogeneous_value_dichotomy hhom
 
-/-- Item `C/07_H/prose/007` (`companion/chapters/07_H.tex:62-62`): "Consequently, if $f$ is
+/-- Item `C/07_H/prose/007` (`companion/chapters/07_H.tex:62`): "Consequently, if $f$ is
 bounded below, then $f(x_k)\to0=\min f$." Under the hypotheses of Theorem 7.A, if $F$ is
 bounded below then $0$ is the least value of $F$ and every admissible run has $F(x_k)\to0$. -/
 theorem bounded_below_consequence {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
@@ -215,7 +219,7 @@ theorem bounded_below_consequence {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn 
   rintro _ ⟨x, rfl⟩
   exact Homogeneous.nonneg_of_bounded_below hhom L hL x
 
-/-- Item `C/07_H/prose/008` (`companion/chapters/07_H.tex:63-63`): "If $f$ is coercive, then
+/-- Item `C/07_H/prose/008` (`companion/chapters/07_H.tex:63`): "If $f$ is coercive, then
 $x_k\to0$, its unique minimizer." Under the hypotheses of Theorem 7.A, if $F$ is coercive
 (`Tendsto F (cocompact (Vec n)) atTop`), zero is the unique minimizer of $F$ and every
 admissible run has $x_k\to0$. -/
@@ -353,7 +357,7 @@ theorem theorem_7C {m : ℕ} (a : Fin m → Vec 2) (F : Vec 2 → ℝ)
   · right
     exact ⟨h, fun h' => not_tendsto_nhds_of_tendsto_atBot h.1 0 h'.2.1⟩
 
-/-- Item `C/07_H/prose/013` (`companion/chapters/07_H.tex:124-124`): "In the first alternative
+/-- Item `C/07_H/prose/013` (`companion/chapters/07_H.tex:124`): "In the first alternative
 the limit is nonstationary." Under the hypotheses of Theorem 7.C, the limit $0$ of the first
 alternative is not a stationary point: $0\notin\partial f(0)$ (the convex subdifferential,
 `ConvexSubdifferential.subdifferential`). In fact no point is stationary (`no_stationary_point`,
@@ -621,7 +625,7 @@ theorem subgradient_sphere_bound {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ}
       dsimp only at h
       exact h.2.trans (hmax h.1)
 
-/-- Item `C/07_H/prose/025` (`companion/chapters/07_H.tex:258-258`): "In dimension zero the
+/-- Item `C/07_H/prose/025` (`companion/chapters/07_H.tex:258`): "In dimension zero the
 space is a singleton and every gradient is zero; boundedness and the later bounded-sublevel or
 coercive convergence conclusions hold directly. [...] an infinite admissible run with nonzero
 gradients cannot occur in dimension zero." In $\R^0$ every vector is $0$ (so every gradient is
@@ -695,10 +699,14 @@ theorem decrease_sandwich {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ
   R.homogeneous_decrease_sandwich k
 
 /-- Item `C/07_H/disp/017` (`companion/chapters/07_H.tex:286-292`), equation (7.5.1):
-"Expanding (2.1) at $x_{k+1}=x_k-\alpha_kH_kg_k$ yields
+"Expanding (7.2.1) at $x_{k+1}=x_k-\alpha_kH_kg_k$ yields
 \[ x_{k+1}^\top B_{k+1}x_{k+1}=x_k^\top B_kx_k-\frac{f_k^2}{q_k}+\frac{h_k^2}{t_k}." \]
-(The reference (2.1) means the Hessian form (7.2.1), `hessian_form`; see the discrepancy of
-item `C/07_H/prose/028`.) Library: `AdmissibleBFGSRun.homogeneous_energy_identity`. -/
+(7.2.1) is the Hessian form, `hessian_form`.
+
+Also Item `C/07_H/prose/028` (`companion/chapters/07_H.tex:284`), the lead-in, corrected on 15
+October 2026 (M17; before "Expanding (2.1) at", with (2.1) an unrelated equation of Chapter 2):
+"Expanding (7.2.1) at $x_{k+1}=x_k-\alpha_kH_kg_k$ yields". Library:
+`AdmissibleBFGSRun.homogeneous_energy_identity`. -/
 theorem energy_identity {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
     (hhom : Homogeneous.PositiveDegreeOne F) (R : AdmissibleBFGSRun n F)
     (h : ℕ → ℝ) (hh : ∀ k, h k = dot (R.gradientChange k) (R.x (k + 1))) (k : ℕ) :
@@ -892,11 +900,11 @@ theorem potential_lower_bound {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ 
   nlinarith [mul_le_mul_of_nonneg_left (hlow k) hγ0]
 
 /-- Item `C/07_H/disp/022` (`companion/chapters/07_H.tex:342-344`), in the proof of Theorem
-7.A: "On the other hand, $\Phi_k\ge\gamma L$, and telescoping (5.2) gives
+7.A: "On the other hand, $\Phi_k\ge\gamma L$, and telescoping (7.5.2) gives
 \[ \sum_k\frac{f_k^2}{q_k}<\infty." \]
 Stated as summability, with the telescoped bound $\sum_kf_k^2/q_k\le\Phi_0-\gamma L$. (The
-reference (5.2) means (7.5.2), `potential_step`; see the discrepancy of item
-`C/07_H/prose/028`.) -/
+companion prints "telescoping (7.5.2)", `potential_step`, since the correction M17 of 15 October
+2026; before "(5.2)", item `C/07_H/prose/028`.) -/
 theorem weighted_sum_finite {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
     (hhom : Homogeneous.PositiveDegreeOne F) (R : AdmissibleBFGSRun n F) (L : ℝ)
     (hL : Tendsto (fun k => F (R.x k)) atTop (𝓝 L))
@@ -1041,7 +1049,7 @@ theorem tail_energy_bound {n : ℕ} {F : Vec n → ℝ} (hhom : Homogeneous.Posi
     metricEnergy] at h hE
   linarith
 
-/-- Item `C/07_H/prose/032` (`companion/chapters/07_H.tex:367-367`), the mathematics of the
+/-- Item `C/07_H/prose/032` (`companion/chapters/07_H.tex:367`), the mathematics of the
 paragraph on the formal finite-value theorem: "If $L\ne0$, shift to a tail with
 $|f_k|\ge|L|/2$. The actual homogeneous corrections are nonnegative and bounded by $d_k$, so
 they are summable. Chapter~\ref{comp:M} gives divergent reciprocal sums, and the energy identity
@@ -1246,11 +1254,12 @@ theorem common_vector_energy_step_general {n : ℕ} (H : Mat n) (hH : H.PosDef) 
   ring
 
 /-- Item `C/07_H/disp/026` (`companion/chapters/07_H.tex:423-425`), in the proof of Lemma 7.3:
-"In particular $v^\top y_k=0$. Equation (2.1) then implies
+"In particular $v^\top y_k=0$. Equation (7.2.1) then implies
 \[ v^\top B_{k+1}v=v^\top B_kv-\frac1{q_k}." \]
 Under the standing assumptions of `common_vector` and the vector $v$ of display
 `C/07_H/disp/025`: for $k\ge J$, $v^Ty_k=0$ and $v^TB_{k+1}v=v^TB_kv-1/q_k$ ($B_k=H_k^{-1}$).
-The reference (2.1) means (7.2.1) (discrepancy of item `C/07_H/prose/028`). The assumptions
+(7.2.1) printed "(2.1)" before the correction M17 of 15 October 2026 (item `C/07_H/prose/028`).
+The assumptions
 are jointly inconsistent; the proof uses only the general form
 `common_vector_energy_step_general`, whose assumptions are satisfiable. -/
 theorem common_vector_energy_step {n : ℕ} (F : Vec n → ℝ) (x : ℕ → Vec n) (H : ℕ → Mat n)
@@ -1707,8 +1716,10 @@ theorem recurrent_cardinality {n : ℕ} (F : Vec n → ℝ) (x : ℕ → Vec n) 
   exact ⟨Homogeneous.finrank_span_add_one_le_ncard hfin hne h0,
     le_antisymm (vectorSpan_le_span G) (Homogeneous.span_le_vectorSpan_of_affine_zero h0)⟩
 
-/-- Item `C/07_H/prose/048` (`companion/chapters/07_H.tex:470-471`): "The earlier
-three-gradient, rank-two stagnation example attains this lower bound." For every pair
+/-- Item `C/07_H/prose/048` (`companion/chapters/07_H.tex:470-471`): "The three-gradient,
+rank-two stagnation example of Chapter~\ref{comp:D} attains this lower bound." (since 15 October
+2026, wording point W10; before "The earlier three-gradient, …": the example is the seed run of
+Chapter 12, which comes later). For every pair
 $0<c_1\le1/3$, $c_1<c_2<1$, the seed run `SeedOrbit.run` has values converging (to $0$), three
 distinct recurrent gradients spanning a space of dimension two, so $r+1=|G|$. Library:
 `SeedOrbit.sharpRecurrentCardinality`. -/
@@ -2106,7 +2117,7 @@ theorem independent_endpoints {m : ℕ} (a : Fin m → Vec 2) (F : Vec 2 → ℝ
   · obtain ⟨J, hJ⟩ := R.maxLinear_planar_anchor_small _ hA hv ε hε
     exact ⟨J, fun j hj hind => hJ j hj ((linearIndependent_pair_iff _ _).mp hind)⟩
 
-/-- Item `C/07_H/prose/055` (`companion/chapters/07_H.tex:558-558`): "An unchanged nonzero
+/-- Item `C/07_H/prose/055` (`companion/chapters/07_H.tex:558`): "An unchanged nonzero
 gradient cannot satisfy weak Wolfe on a strict descent step." If $g^Ts<0$ and $c_2<1$, then
 $g^Ts\ge c_2g^Ts$ fails; hence consecutive gradients of an admissible run always differ. -/
 theorem unchanged_gradient_fails_wolfe {n : ℕ} :
@@ -2402,13 +2413,13 @@ theorem absVRun_tendsto :
   exact hlim
 
 /-- Item `C/07_H/prose/061` (`companion/chapters/07_H.tex:655-657`): "Reducing to the span of
-the recurrent gradients and using (7.1) proves the same conclusion whenever that span has
+the recurrent gradients and using (7.7.1) proves the same conclusion whenever that span has
 dimension at most two in any ambient dimension. The limit may be nonzero in the original
 coordinates." (i) For every finite max-linear objective in every dimension and every admissible
 run whose recurrent gradients span a space of dimension at most two, a finite value limit gives
 convergent iterates. (ii) The limit can be nonzero: $F(u,v)=|v|=\max(v,-v)$ on $\R^2$ and its
 admissible run `BfgsCoverage.Article.Master.absVRun 1 1` (iterates $(1,\pm2^{-k})$) converge to
-$(1,0)\ne0$. (The reference (7.1) means (7.7.1); see the discrepancy of item
+$(1,0)\ne0$. (The reference printed "(7.1)" before the correction M17 of 15 October 2026, item
 `C/07_H/prose/028`.) -/
 theorem recurrent_reduction_nonzero_limit :
     (∀ (n m : ℕ) (a : Fin m → Vec n) (F : Vec n → ℝ),
@@ -2640,12 +2651,12 @@ theorem relint_includes_seminorms {n m : ℕ} (a : Fin m → Vec n) (F : Vec n �
 /-- Item `C/07_H/prose/067` (`companion/chapters/07_H.tex:711-715`): "The same argument applies
 after a finite prefix if $0\in\operatorname{relint}\operatorname{conv}G$ for the recurrent
 gradients. The projected tail objective is then coercive even if some original, nonrecurrent
-slopes have disappeared. Formula (7.2) supplies the limit." With $G$ the recurrent gradients,
+slopes have disappeared. Formula (7.7.2) supplies the limit." With $G$ the recurrent gradients,
 $0$ in the interior of $\operatorname{conv}G$ relative to $\operatorname{span}G$, and $U$ with
 orthonormal columns spanning $\operatorname{span}G$: the tail objective
 $z\mapsto\max_{g\in G}g^TUz$ satisfies $\max_{g\in G}g^TUz\ge\mu\|z\|$ for some $\mu>0$; and for
-some $K$, $x_k\to x_K-H_KU(U^TH_KU)^{-1}U^Tx_K$ (formula (7.7.2); the reference (7.2) means
-(7.7.2), see the discrepancy of item `C/07_H/prose/028`). Library:
+some $K$, $x_k\to x_K-H_KU(U^TH_KU)^{-1}U^Tx_K$ (formula (7.7.2), printed "(7.2)" before the
+correction M17 of 15 October 2026, item `C/07_H/prose/028`). Library:
 `AdmissibleBFGSRun.maxLinear_recurrent_relativeInterior_convergence`. -/
 theorem recurrent_relint_convergence {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
     (hF_def : ∀ x, IsGreatest (Set.range fun i => dot (a i) x) (F x))

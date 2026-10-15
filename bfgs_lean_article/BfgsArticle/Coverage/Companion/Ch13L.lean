@@ -39,19 +39,31 @@ the register points identical items to the article items (`SAME_AS`).
   blocks $C,a,b$ are the same for every $\mu>0$ (`jacobian_block_form`, through
   `returnMap_scale`).
 
-## Discrepancies (see the register)
+## Corrected discrepancies (15 October 2026, see the register)
 
-* Line 3 (`C/13_L/prose/002`, the M8 pattern): "The local finite-branch functions have Lipschitz
-  gradients but lose second differentiability at the accumulation point": only three of the four
-  branches lose it (`branch_regularity`).
-* Theorem `L:thm:local` (line 59): the final clause "the latter version has a countable polyhedral
-  nonsmooth part, not a finite smooth-branch representation", read literally, is false: the step
-  version is also a maximum of ten convex, globally $C^{1,1}$, uniformly strongly convex branches
-  (sketch in the register, not formalized); `local_failure` states everything else and the
-  descriptive reading (the nonsmooth part is a countable polyhedral function).
-* Line 413 (`C/13_L/prose/082`): "This chapter uses the fixed line-search pair displayed in this
-  chapter; D's wider parameter family is not imported" is a leftover of the fixed-pair edition:
-  the chapter now states its theorems for the same family as Chapter D.
+* Line 3 (`C/13_L/prose/002`, M8 with M30): "The local finite-branch functions have Lipschitz
+  gradients but lose second differentiability at the accumulation point" now reads "…have
+  Lipschitz gradients, and three of the four lose second differentiability at the minimizer"
+  (`branch_regularity_at_minimizer`).
+* Theorem `L:thm:local` (line 59, M12): the final clause "the latter version has a countable
+  polyhedral nonsmooth part, not a finite smooth-branch representation", false when read
+  literally (the step version is also a maximum of ten convex, globally $C^{1,1}$, uniformly
+  strongly convex branches; sketch in the register, not formalized), now ends "…has a countable
+  polyhedral nonsmooth part", which `local_failure` states.
+* Line 413 (`C/13_L/prose/082`, M13): "This chapter uses the fixed line-search pair displayed in
+  this chapter; D's wider parameter family is not imported", a leftover of the fixed-pair edition,
+  now reads "Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$, $c_1<c_2<1$."
+* Lines 237, 355 and 363 (M33, reader point R-F-1): the chosen orbit has its initial point, not
+  only its queries, in the neighbourhood of the local model, since copy $n$ starts at
+  $p_n+a_n\bar x_0$ (`chosen_orbit`, `local_model_along_orbit`; `global_failure` states it for all
+  iterates).
+* Wording points applied the same day after the independent review: W45 (line 3, "$C^{2,1}$";
+  before the plain text "C2,1"), W44 (line 61, "the literal classical-Hessian assumption"; before
+  "the user's …"), W8 (line 76, "certified in Chapter~\ref{comp:D}"; before "…in the preceding
+  deterministic-bracketing report~Chapter~\ref{comp:D}") and W46 (the equation counter set at
+  lines 182, 248, 338 and 390 now continues after the numbered lines of the `align` displays;
+  before, (13.3)-(13.5) and (13.8) were printed twice; `L:eq:eigshape` to `L:eq:local-model` are
+  now (13.6)-(13.13)).
 
 ## Items
 
@@ -65,9 +77,9 @@ the register points identical items to the article items (`SAME_AS`).
 | `lemma/L:lem:agreement`, `disp/018`, prose `033` | 162-171 | `agreement`, `query_value_scaled`, `positive_scale_part` |
 | `disp/020`-`disp/024`, prose `034`-`043` | 189-234 | `boundary_shape_return`, `jacobian_display`, `characteristic_def`, `shape_eigenvalues`, `characteristic_signs_box`, `jacobian_block_form`, `block_reasons`, `return_eigenvalues`, `hyperbolic_spectrum`, `scale_eigenvector`, `orbit_physical_states` |
 | `lemma/L:lem:scalar`, `disp/029`, prose `048`, `053`-`057` | 267-322 | `scalar_lemma`, `monotone_ramp`, `ramp_integral_bounds`, `branch_hessian_bounds`, `objective_strongly_convex`, `directional_derivative` |
-| `disp/038`, `disp/044`, prose `061`, `066` | 345-380 | `branch_copy_formula`, `fourth_branch_negative`, `center_active_nonstationary`, `whitened_constants` |
+| `disp/038`, `disp/044`, prose `061`, `062`, `065`, `066` | 345-380 | `branch_copy_formula`, `fourth_branch_negative`, `chosen_orbit`, `local_model_along_orbit`, `center_active_nonstationary`, `whitened_constants` |
 | `disp/045`, prose `071`-`077` | 396-403 | `step_scalar_def`, `step_scalar_props`, `step_copies`, `step_objective_structure`, `step_zero_argument_inactive`, `step_local_polyhedral`, `step_hessian_identity`, `whitened_step_hessian` |
-| prose `083` | 413 | `branch_regularity` |
+| prose `002`, `083` | 3, 413 | `branch_regularity_at_minimizer`, `branch_regularity` |
 
 The other items (definitions, displays and prose identical to article items, proofs, remarks)
 are `DEFINITION`, `SAME_AS`, `PART_OF`, `PROOF` or `NON_CLAIM` in the register. Two `example`s at
@@ -156,10 +168,15 @@ Also Item `C/13_L/prose/006` (`companion/chapters/13_L.tex:33`): "The orbits, ob
 initial points below are chosen before this pair." Here the initial state and the iterates `x`,
 matrices `H` are chosen before the pair (likewise in `local_failure` and `agreement`).
 
-Also Item `C/13_L/prose/082` (`companion/chapters/13_L.tex:413`), a discrepancy ("This chapter uses
-the fixed line-search pair displayed in this chapter; D's wider parameter family is not
-imported."): this theorem and `local_failure` hold for every pair $0<c_1\le1/3$, $c_1<c_2<1$,
-the parameter family of Chapter D. -/
+Also Item `C/13_L/prose/082` (`companion/chapters/13_L.tex:413`), corrected on 15 October 2026
+(M13; before: "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
+parameter family is not imported."): "Like Chapter~\ref{comp:D}, the chapter covers every pair
+$0<c_1\le1/3$, $c_1<c_2<1$." This theorem and `local_failure` hold for every such pair, the
+parameter family of Chapter D (`admissible_iff`).
+
+The initial point (M33, reader point R-F-1, 15 October 2026): "the initial stable-manifold point
+can be chosen so that the initial point and all queries of the orbit lie inside it" (proof, line
+237) is the conjunct `∀ k, x k ∈ V` (with `k = 0`) together with the trial conjunct. -/
 theorem global_failure :
     ∃ g : Fin 3 → Vec 2, ∀ μ : ℝ, 0 < μ → ∀ Q : Vec 2 → ℝ,
       (∀ x, Q x = μ / 2 * sqNorm x + max (max (dot (g 0) x) (dot (g 1) x)) (dot (g 2) x)) →
@@ -376,8 +393,8 @@ theorem runs_of_uniform {F : Vec 2 → ℝ} (hT : LUniform.UniformFailureTarget 
       BfgsCoverage.Article.LowerCurvature.fromMetric_fuel_mono (hstep k).2.2.2.1 N hN⟩
 
 /-- Item `C/13_L/theorem/L:thm:local`, Theorem `L:thm:local` (`companion/chapters/13_L.tex:51-60`),
-"Local failure under the pointwise Hessian bounds" (a discrepancy for its last clause, see
-below), with its display Item `C/13_L/disp/004` (`companion/chapters/13_L.tex:53-56`).
+"Local failure under the pointwise Hessian bounds", with its display Item `C/13_L/disp/004`
+(`companion/chapters/13_L.tex:53-56`).
 
 "There is a finite strongly convex objective $F:\R^2\to\R$ with compact sublevels and a unique
 nonsmooth minimizer at zero, and constants $0<\underline\mu\le\overline L<\infty$, such that
@@ -390,7 +407,13 @@ points $p_n\to0$. All trial points of the $n$th run remain uniformly near zero a
 The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly strongly convex,
 globally gradient-Lipschitz branches. Alternatively, it can be chosen so that its Hessian is one
 fixed positive-definite matrix wherever it is twice differentiable; the latter version has a
-countable polyhedral nonsmooth part, not a finite smooth-branch representation."
+countable polyhedral nonsmooth part."
+
+Corrected on 15 October 2026 (M12): the final clause read "…has a countable polyhedral nonsmooth
+part, not a finite smooth-branch representation", which is false when read literally ("has no
+finite smooth-branch representation"): the step version is also a maximum of ten convex, globally
+$C^{1,1}$, uniformly strongly convex branches (sketch in the register, not formalized). The
+statement below is the corrected theorem.
 
 Reading. Two objectives `F₁` (the four-branch version, `LUniform.smoothObjective`) and `F₂` (the
 alternative, `stepObjective`) both have every property of the first paragraph. Twice
@@ -406,19 +429,15 @@ given neighbourhood of zero once `n` is large. $C^{1,1}$ and gradient-Lipschitz:
 Euclidean Lipschitz gradient (one constant for the four branches); uniformly strongly convex: one
 modulus for the four branches. The alternative: $\nabla^2F_2=B$ for one positive-definite `B`
 at every twice-differentiable point, and $F_2(x)-x^TBx/2$ (its nonsmooth part) is the pointwise
-maximum, attained, of a countable family of affine functions. The final clause "not a finite
-smooth-branch representation" is recorded as a discrepancy in the register: read literally ("the
-latter version has no finite smooth-branch representation") it is false, since the step version is
-also a maximum of ten convex, globally $C^{1,1}$, uniformly strongly convex branches (sketch in the
-register, not formalized). The statement below is the descriptive reading (the nonsmooth part of
-the latter version is a countable polyhedral function, in contrast with the four smooth branches of
-the first version; Section 13.7: "No claim of four smooth branches is made for this
-alternative").
+maximum, attained, of a countable family of affine functions: "the latter version has a countable
+polyhedral nonsmooth part", in contrast with the four smooth branches of the first version
+(Section 13.7: "No claim of four smooth branches is made for this alternative").
 
 Also the following items, stated by conjuncts of this theorem:
 * Item `C/13_L/prose/010` (`companion/chapters/13_L.tex:61`): "The local theorem satisfies the
-  user's literal classical-Hessian assumption, and even actual strong convexity." (the
-  strong-convexity and Hessian-bound conjuncts, for both objectives);
+  literal classical-Hessian assumption, and even actual strong convexity." (since 15 October 2026,
+  wording point W44; before "the user's literal …"; the strong-convexity and Hessian-bound
+  conjuncts, for both objectives);
 * Item `C/13_L/prose/046` (`companion/chapters/13_L.tex:254`): "We now construct a single objective
   satisfying the literal Hessian bounds and having no guaranteed local basin." (`F₁`);
 * Item `C/13_L/prose/070` (`companion/chapters/13_L.tex:381`): "These constants are fixed for the
@@ -568,11 +587,7 @@ local finite-branch construction fail to be twice differentiable at the accumula
 four branches of the local construction, before (`LEmbedding.branch`) and after
 (`LUniform.smoothBranch`) the fixed whitening: all four have globally Lipschitz (Euclidean)
 gradients; the first three are not twice differentiable at zero, the point where the bad starts
-accumulate; the fourth is twice differentiable everywhere.
-
-It is also the corrected claim of Item `C/13_L/prose/002` (`companion/chapters/13_L.tex:3`), a
-discrepancy: "The local finite-branch functions have Lipschitz gradients but lose second
-differentiability at the accumulation point" (only three of the four branches lose it). -/
+accumulate; the fourth is twice differentiable everywhere. -/
 theorem branch_regularity :
     (∀ i : Fin 4, ∃ L : ℝ, ∀ x y, ‖euclideanVector (coordinateGradient (LEmbedding.branch i) x -
         coordinateGradient (LEmbedding.branch i) y)‖ ≤ L * ‖euclideanVector (x - y)‖) ∧
@@ -586,6 +601,41 @@ theorem branch_regularity :
   refine ⟨fun i => (BfgsCoverage.Article.LowerCurvature.branches_regular i).2.2,
     fun i => ⟨LUniform.upperConstant,
       (BfgsCoverage.Article.LowerCurvature.whitening_constants).2.2.2.2.1 i⟩, h1, h2, h3, h4⟩
+
+/-- Item `C/13_L/prose/002` (`companion/chapters/13_L.tex:3`), the chapter introduction, corrected
+on 15 October 2026 (M8 with M30; before: "The local finite-branch functions have Lipschitz
+gradients but lose second differentiability at the accumulation point", said of every branch):
+"The local finite-branch functions have Lipschitz gradients, and three of the four lose second
+differentiability at the minimizer". The four branches of the local construction, before
+(`LEmbedding.branch`) and after (`LUniform.smoothBranch`) the fixed whitening, have globally
+Lipschitz (Euclidean) gradients; the minimizer is $0$, the unique minimizer of the local objective
+`LEmbedding.objective` and of its whitened version `LUniform.smoothObjective` (the bad starts
+accumulate there); the first three branches are not twice differentiable at $0$, and the fourth is
+twice differentiable everywhere (`branch_regularity`). -/
+theorem branch_regularity_at_minimizer :
+    (∀ x, LEmbedding.objective 0 ≤ LEmbedding.objective x) ∧
+      (∀ x, LEmbedding.objective x = LEmbedding.objective 0 → x = 0) ∧
+      (∀ x, LUniform.smoothObjective 0 ≤ LUniform.smoothObjective x) ∧
+      (∀ x, LUniform.smoothObjective x = LUniform.smoothObjective 0 → x = 0) ∧
+      (∀ i : Fin 4, ∃ L : ℝ, ∀ x y, ‖euclideanVector (coordinateGradient (LEmbedding.branch i) x -
+        coordinateGradient (LEmbedding.branch i) y)‖ ≤ L * ‖euclideanVector (x - y)‖) ∧
+      (∀ i : Fin 4, ∃ L : ℝ, ∀ x y, ‖euclideanVector (coordinateGradient (LUniform.smoothBranch i) x -
+        coordinateGradient (LUniform.smoothBranch i) y)‖ ≤ L * ‖euclideanVector (x - y)‖) ∧
+      (∀ i : Fin 3, ¬ DifferentiableAt ℝ (fderiv ℝ (LEmbedding.branch i.castSucc)) (0 : Vec 2)) ∧
+      (∀ i : Fin 3, ¬ DifferentiableAt ℝ (fderiv ℝ (LUniform.smoothBranch i.castSucc)) (0 : Vec 2)) ∧
+      (∀ x : Vec 2, DifferentiableAt ℝ (fderiv ℝ (LEmbedding.branch 3)) x) ∧
+      ∀ z : Vec 2, DifferentiableAt ℝ (fderiv ℝ (LUniform.smoothBranch 3)) z := by
+  obtain ⟨hκ, -, hgeom, -, -, -, -, -, -⟩ := LUniform.uniformSmoothLocalFailure
+  obtain ⟨-, -, hF0, hlower, hzero, -, -, -⟩ := hgeom
+  refine ⟨fun x => ?_, fun x hx => ?_, fun y => ?_, fun y hy => ?_, branch_regularity⟩
+  · rw [LEmbedding.objective_zero]
+    exact LEmbedding.objective_nonnegative x
+  · rw [LEmbedding.objective_zero] at hx
+    exact LEmbedding.objective_unique_zero hx
+  · rw [hF0]
+    exact (mul_nonneg (div_nonneg hκ.le (by norm_num)) (sqNorm_nonneg y)).trans (hlower y)
+  · rw [hF0] at hy
+    exact hzero y hy
 
 /-- `ContDiff ℝ 2` gives a differentiable derivative map. -/
 theorem fderiv_differentiable_of_contDiff_two {f : Vec 2 → ℝ} (hf : ContDiff ℝ 2 f) (x : Vec 2) :
@@ -1555,6 +1605,69 @@ theorem fourth_branch_negative :
     LEmbedding.residualBranch 3 (LEmbedding.copyPoint n y) - LEmbedding.mu / 2 * sqNorm (LEmbedding.copyPoint n y) < 0
   rw [LQuadraticSeed.quadratic]
   linarith
+
+/-- Item `C/13_L/prose/062` (`companion/chapters/13_L.tex:355`), corrected on 15 October 2026
+(M33, reader point R-F-1; before: "…whose accepted and rejected queries are all in that
+neighborhood"): "Use Theorem~\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to
+choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose initial point and accepted
+and rejected queries are all in that neighborhood." The orbit is `LUniform.source`
+($\mu=1/4096$) and "that neighborhood" is the domain `LEmbedding.localDomain` of the local model
+\eqref{L:eq:local-model}: the initial point $\bar x_0$ lies in it (copy $n$ starts at
+$p_n+a_n\bar x_0$, where the local model must hold too), and so do every later iterate and every
+accepted and rejected query $\bar x_k+a\bar p_k$, $a\in$ `trialHistory (phase k)`; $\bar H_0\succ0$;
+and the same iterates and matrices form an actual run of the implementation on $Q_\mu$ for every
+pair $0<c_1\le1/3$, $c_1<c_2<1$. -/
+theorem chosen_orbit :
+    (LUniform.source.H 0).PosDef ∧ LUniform.source.x 0 ∈ LEmbedding.localDomain ∧
+      (∀ k, LUniform.source.x k ∈ LEmbedding.localDomain ∧ ∀ a ∈ trialHistory (phase k),
+        LUniform.source.x k + a • bfgsStep (LUniform.source.H k)
+          (coordinateGradient (LQuadraticSeed.objective LEmbedding.mu) (LUniform.source.x k)) 1 ∈
+          LEmbedding.localDomain) ∧
+      ∀ c₁ c₂ : ℝ, 0 < c₁ → c₁ ≤ 1/3 → c₁ < c₂ → c₂ < 1 →
+        ∃ R : AdmissibleBFGSRun 2 (LQuadraticSeed.objective LEmbedding.mu),
+          R.c₁ = c₁ ∧ R.c₂ = c₂ ∧ R.x = LUniform.source.x ∧ R.H = LUniform.source.H ∧
+          ∀ k N, 5 ≤ N → NonStrictLineSearch.fromMetric (LQuadraticSeed.objective LEmbedding.mu)
+            (R.x k) (R.H k) c₁ c₂ N = (some (R.α k), trialHistory (phase k)) :=
+  ⟨BfgsCoverage.Article.LowerCurvature.copy_runs.1,
+    (BfgsCoverage.Article.LowerCurvature.copy_runs.2.1 0).1,
+    BfgsCoverage.Article.LowerCurvature.copy_runs.2.1,
+    BfgsCoverage.Article.LowerCurvature.copy_runs.2.2.1⟩
+
+/-- Item `C/13_L/prose/065` (`companion/chapters/13_L.tex:363`), corrected on 15 October 2026
+(M33, reader point R-F-1; before: "Equation~\eqref{L:eq:local-model} applies to every query by the
+choice of the whole seed orbit."): "Indeed, function differences and directional-derivative
+products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS
+formula both scale factors cancel. The line search therefore makes the same decisions, including
+all rejections. Equation~\eqref{L:eq:local-model} applies at the initial point and to every query
+by the choice of the whole seed orbit. Induction proves the claim without numerical
+approximation." For $n\ge1$ the local model $F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}$ holds at the
+initial point $y=\bar x_0$ (that is, at $x_0^{(n)}=p_n+a_n\bar x_0$), at every iterate $\bar x_k$
+and at every accepted and rejected query of the chosen orbit (`chosen_orbit`). The scaling of the
+gradients, steps, function differences and directional products is
+`LowerCurvature.copy_transfer`; the equal decisions and matrices, by induction, are
+`LowerCurvature.copy_runs`. -/
+theorem local_model_along_orbit (n : ℕ) (_hn : 1 ≤ n) :
+    LEmbedding.objective
+        (LEmbedding.copyCenter n + LScalarGeometric.scale n • LUniform.source.x 0) =
+        LScalarGeometric.scale n ^ 2 *
+          (LEmbedding.offset + LQuadraticSeed.objective LEmbedding.mu (LUniform.source.x 0)) ∧
+      ∀ k, LEmbedding.objective
+          (LEmbedding.copyCenter n + LScalarGeometric.scale n • LUniform.source.x k) =
+          LScalarGeometric.scale n ^ 2 *
+            (LEmbedding.offset + LQuadraticSeed.objective LEmbedding.mu (LUniform.source.x k)) ∧
+        ∀ a ∈ trialHistory (phase k),
+          LEmbedding.objective (LEmbedding.copyCenter n + LScalarGeometric.scale n •
+              (LUniform.source.x k + a • bfgsStep (LUniform.source.H k)
+                (coordinateGradient (LQuadraticSeed.objective LEmbedding.mu)
+                  (LUniform.source.x k)) 1)) =
+            LScalarGeometric.scale n ^ 2 *
+              (LEmbedding.offset + LQuadraticSeed.objective LEmbedding.mu
+                (LUniform.source.x k + a • bfgsStep (LUniform.source.H k)
+                  (coordinateGradient (LQuadraticSeed.objective LEmbedding.mu)
+                    (LUniform.source.x k)) 1)) := by
+  obtain ⟨-, h0, hdom, -⟩ := chosen_orbit
+  exact ⟨LEmbedding.local_model n h0, fun k => ⟨LEmbedding.local_model n (hdom k).1,
+    fun a ha => LEmbedding.local_model n ((hdom k).2 a ha)⟩⟩
 
 /-- Item `C/13_L/prose/066` (`companion/chapters/13_L.tex:369`): "At $p_n$ the three active
 gradients are $a_ng_i$, so $0\notin\partial F(p_n)$. Meanwhile $x_0^{(n)}\to0$". At $p_n$ the

@@ -1629,12 +1629,14 @@ theorem linear_budget_rate {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
 
 /-- Item `C/06_F/disp/013` (`companion/chapters/06_F.tex:122-124`): "Uniformly bounded reference
 correction. If $R_k\le\bar R$, then \eqref{M:energybound} gives
-\[ F(x_N)-F_*\le\sqrt{\frac{E_0+\bar RN}{S_N}}=o(N^{-1/2}), \]
-because $S_N/N^2\to\infty$."
+\[ F(x_N)-F_*\le\sqrt{\frac{E_0+\bar RN}{S_N}}, \]
+and along runs with bounded gradients this is $o(N^{-1/2})$, because $S_N/N^2\to\infty$."
+(Wording point W24 applied on 15 October 2026; before, the display ended "$=o(N^{-1/2})$" and the
+bounded gradients were implicit.)
 
 Under the hypotheses of `linear_budget_rate` with $R_k\le\bar R$ for all $k$: the inequality for
 $N\ge1$ ($S_0=0$) needs nothing more; the little-$o$ and $S_N/N^2\to\infty$ hold for runs with
-bounded gradients, the hypothesis of Theorem `M:superquadratic` that the text leaves implicit. -/
+bounded gradients, the hypothesis of Theorem `M:superquadratic`. -/
 theorem bounded_correction_rate {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (xstar : Vec n) (hmin : ∀ x, F xstar ≤ F x)
     (S : ℕ → ℝ) (hS : ∀ N, S N = ∑ k ∈ Finset.range N, (R.q k)⁻¹)
@@ -2064,8 +2066,9 @@ theorem quadGauge_increment {m p : ℕ} (Q : Mat m) (hQ : Q.PosDef) (γ : Vec p 
         exact mul_le_mul_of_nonneg_left hfirst hC0
     _ = Cγ / (Real.sqrt a0 * N) := by field_simp; ring
 
-/-- Item `C/06_F/prose/036` (`companion/chapters/06_F.tex:161`): "Summing first recovers the source
-bounds $\sqrt{A_N}=O(\log N)$ and $F(x_N)=O(\log N/N)$." Under the standing assumptions and the
+/-- Item `C/06_F/prose/036` (`companion/chapters/06_F.tex:161`): "Summing first gives the bounds
+$\sqrt{A_N}=O(\log N)$ and $F(x_N)=O(\log N/N)$." (Wording point W25 applied on 15 October 2026;
+before "recovers the source bounds".) Under the standing assumptions and the
 notation of display `disp/018` (library `quadraticGauge_sqrt_budget_log_rate`, which proves the
 stronger $o(\log N)$, and `quadraticGauge_euclidean_value_log_orders`). -/
 theorem quadGauge_bigO {m p : ℕ} (Q : Mat m) (hQ : Q.PosDef) (γ : Vec p → ℝ)

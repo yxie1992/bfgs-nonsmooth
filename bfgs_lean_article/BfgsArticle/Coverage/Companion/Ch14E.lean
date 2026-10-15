@@ -37,30 +37,32 @@ and the dated verification record `companion/current_verification.tex` (line 5; 
   module imports the finished chapter module `Ch11U`, for the spike objective (11.20)
   (`spike_objective_convergence`, `spike_run2`, `spike_objective_def2`).
 
-## Discrepancies (see the register)
+## Corrected discrepancies (15 October 2026, see the register)
 
 * Line 18 (`C/14_E/prose/013`), "The stable-manifold conclusion in L follows ...", and line 136
   (`C/14_E/prose/061`), "The explicit four-piece objective in R is ...": the source letters of
-  Chapters 13 and 4 are printed reference labels that resolve to nothing in the companion (typo,
-  as `C/09_C/prose/117`); proposed `Chapter~\ref{comp:L}`, `Chapter~\ref{comp:R}`. The
-  mathematics of both sentences is proved (`LowerCurvature.stable_manifold_positive_scale`,
-  `Ch13L.global_failure`; `Ch04R.fourPiece_failure_run`).
+  Chapters 13 and 4 were printed reference labels that resolve to nothing in the companion (typo,
+  as `C/09_C/prose/117`); since the correction M29 they read `Chapter~\ref{comp:L}` and
+  `Chapter~\ref{comp:R}`. The mathematics of both sentences is proved
+  (`LowerCurvature.stable_manifold_positive_scale`, `Ch13L.global_failure`;
+  `Ch04R.fourPiece_failure_run`).
 
-## Wording points (no discrepancy; see the register notes)
+## Wording points (applied on 15 October 2026; see the register notes)
 
-* Line 184: the basin is implicit ("the stated planar example converges": proved from its basin
-  $F(x_0)<1/100$; a second, falsely affine-critical triple point near $(3.51,2.65)$, found
+* Line 184 (W27): the basin was implicit ("the stated planar example converges": proved from its
+  basin $F(x_0)<1/100$; a second, falsely affine-critical triple point near $(3.51,2.65)$, found
   numerically, blocks the planar corollary on high sublevels), and "every positive displayed
-  tolerance" refers to nothing (no tolerance is displayed; the source report measured
-  $F<10^{-45}$). Line 192: "the printed positive tolerance" likewise ($F<10^{-28}$). Both
-  statements hold for every positive tolerance.
-* Line 112: the M-mixed summary leaves bounded gradients implicit; every result it names uses a
-  uniform gradient bound (as W1).
-* Line 48: the suite labels of Section 14.3 are the original report's suite names; their letters
-  are not chapter letters.
-* Software sentences that are no longer accurate (line 16, "each retained assertion here has a
-  reviewed formal correspondence"; line 226, the README and "the exact default output path") are
-  noted in the register.
+  tolerance" referred to nothing (no tolerance is displayed; the source report measured
+  $F<10^{-45}$); the sentence now reads "converges from its basin~\eqref{C:eq:explicitbasin}, and
+  hence every positive tolerance on its objective value is eventually attained". Line 192: "the
+  printed positive tolerance" ($F<10^{-28}$) now reads "every positive tolerance".
+* Line 112 (W28): the M-mixed summary now starts "Along runs with bounded gradients"; every result
+  it names uses a uniform gradient bound (as W1).
+* Line 48 (W29): the suite labels of Section 14.3 are the original report's suite names, whose
+  letters are not chapter letters, as the sentence now says.
+* Software sentences (W30): line 226 now says that the README describes the read-only check and
+  that the runner prints the new timestamped output directory; line 16, "each retained assertion
+  here has a reviewed formal correspondence", holds again after the corrections and is unchanged.
 
 ## Items
 
@@ -84,7 +86,7 @@ namespace BfgsCoverage.Companion.Ch14E
 
 /-! ### D-symbolic (line 64) -/
 
-/-- Item `C/14_E/prose/034` (`companion/chapters/14_E.tex:64-64`): "The inverse and Hessian updates,
+/-- Item `C/14_E/prose/034` (`companion/chapters/14_E.tex:64`): "The inverse and Hessian updates,
 their secant identities, determinant and positivity properties [...] are Lean equalities or
 inequalities." For $H\succ0$ and $t=y^Ts>0$, the inverse update
 $H_+=(I-sy^T/t)H(I-ys^T/t)+ss^T/t$ (the library's `inverseBFGS`) and $B=H^{-1}$:
@@ -134,7 +136,7 @@ theorem update_identities {n : ℕ} (H : Mat n) (hH : H.PosDef) (s y : Vec n)
 
 /-! ### V-ridges (line 152) -/
 
-/-- Item `C/14_E/prose/067` (`companion/chapters/14_E.tex:152-152`): "the scalar-ridge implication
+/-- Item `C/14_E/prose/067` (`companion/chapters/14_E.tex:152`): "the scalar-ridge implication
 into the planar convergence theorem [is an] operative formal result". The scalar-ridge objective
 $F(u,v)=\max\{a(u)+pv,\ b(u)-qv\}$, with $a,b$ convex and $C^2$, $p,q>0$, the profile
 $\varphi=(qa+pb)/(p+q)$ uniquely minimized at $u$, and $a'',b''>0$ away from $u$ (the hypotheses of
@@ -181,11 +183,13 @@ theorem scalar_ridge_implication {a b : ℝ → ℝ} (ha : ContDiff ℝ 2 a) (hb
 
 /-! ### The numerical suites (lines 184 and 192) -/
 
-/-- Item `C/14_E/prose/076` (`companion/chapters/14_E.tex:184-184`): "The operative statement is
-analytic: the stated planar example converges, and hence every positive displayed tolerance is
-eventually attained." The planar example is the explicit three-quadratic example of Section 9.8,
-$F=\max\{u+u^2+v^2/2,\ v+u^2/2+3v^2/2,\ -u-v+3u^2/2+v^2\}$, with its basin $F(x_0)<1/100$
-(`C:eq:explicitbasin`; the basin is implicit in the sentence, see the register note): every
+/-- Item `C/14_E/prose/076` (`companion/chapters/14_E.tex:184`): "The operative statement is
+analytic: the stated planar example converges from its basin~\eqref{C:eq:explicitbasin}, and hence
+every positive tolerance on its objective value is eventually attained." (Wording point W27
+applied on 15 October 2026; before "the stated planar example converges, and hence every positive
+displayed tolerance is eventually attained".) The planar example is the explicit three-quadratic
+example of Section 9.8, $F=\max\{u+u^2+v^2/2,\ v+u^2/2+3v^2/2,\ -u-v+3u^2/2+v^2\}$, with its basin
+$F(x_0)<1/100$ (`C:eq:explicitbasin`): every
 infinite admissible run from the basin has $F(x_k)\to0$ (the minimum value) and $x_k\to0$, and
 hence for every tolerance $\varepsilon>0$ (on the objective value, as the source suite's
 $F<10^{-45}$) eventually $F(x_k)<\varepsilon$. -/
@@ -200,8 +204,9 @@ theorem planar_tolerance (f : Fin 3 → Vec 2 → ℝ)
   have hc := PlanarQuadraticExample.fullBFGS_explicit_basin R h0
   exact ⟨hc, fun ε hε => EReconstruction.eventually_below_tolerance _ hc.1 hε⟩
 
-/-- Item `C/14_E/prose/079` (`companion/chapters/14_E.tex:192-192`): "Its convergence implies
-eventual attainment of the printed positive tolerance." For the fixed-normal spike objective
+/-- Item `C/14_E/prose/079` (`companion/chapters/14_E.tex:192`): "Its convergence implies
+eventual attainment of every positive tolerance." (Wording point W27 applied on 15 October 2026;
+before "the printed positive tolerance".) For the fixed-normal spike objective
 (11.20), $F(u,v)=\tfrac12\|u\|^2+\tfrac12v^2+|v|+r(v)$ on $\mathbb R^{m+2}$ (points $(v,u)$, every
 allowed dimension $n=m+2\ge2$), every infinite admissible run has $F(x_k)\to0$ (the minimum value)
 and $x_k\to0$, and hence for every tolerance $\varepsilon>0$ (on the objective value, as the source

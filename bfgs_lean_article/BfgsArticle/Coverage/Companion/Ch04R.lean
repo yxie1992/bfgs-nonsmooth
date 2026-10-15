@@ -57,12 +57,15 @@ proof does not use.
   is `dot g (x - xstar) - (F x - F xstar)` (`RadialCertificate.optimizerIntercept`).
 * `Vec n` carries the sup norm; Euclidean norms are explicit (`‖euclideanVector v‖`).
 * (RS), (IR), the central bound of display `disp/022` and (SP) are the definitions `RS`, `IR`,
-  `Central` and `SP`, stated literally: "$C_\eta<\infty$" is a real constant. `RS_iff_article`
-  and `IR_iff_article` show that they are the article's conditions (nonnegative constants);
-  `*_iff_library` relate them to the library's predicates. `rs_constant_nonneg` shows that an
-  (RS) constant is automatically nonnegative on bands that contain a point strictly between the
-  band threshold and $b$; this justifies the degenerate cases $a=0$ (line 149) and $a_\pm=0$
-  (display `disp/023`) of the proofs.
+  `Central` and `SP`, with real constants. Since 15 October 2026 (wording point W19) the chapter
+  states (RS) and (IR) with "$C_\eta\ge0$" and "$M_\eta\ge0$", as the article does: these are
+  `RSNonneg` and `IRNonneg`, equivalent to `RS` and `IR` (`RSNonneg_iff`, `IRNonneg_iff`; a
+  constant can be replaced by its positive part), and Theorem `R:thm:equiv` in that form is
+  `equiv_nonneg`. `RS_iff_article` and `IR_iff_article` show that they are the article's
+  conditions; `*_iff_library` relate them to the library's predicates. `rs_constant_nonneg` shows
+  that an (RS) constant is automatically nonnegative on bands that contain a point strictly between
+  the band threshold and $b$; the coverage theorems of the degenerate cases $a=0$ (line 149) and
+  $a_\pm=0$ (display `disp/023`) use it, so they hold for every real (RS) constant.
 * "Homogeneous of degree $p$" is `∀ t ≥ 0, ∀ x, F (t • x) = t ^ p * F x` with the real power
   (`InterceptExamples.PositiveDegree`); "sublinear" (gauge) is `Sublinear` (convex and positively
   homogeneous of degree one).
@@ -87,8 +90,8 @@ proof does not use.
 | `disp/002` | 35-37 | `bounds_exist` |
 | `disp/003` | 41-44 | `secant_notation` (notation) |
 | `disp/004`, `disp/005` | 46-52 | `supporting_error_nonneg`, `curvature_split` |
-| `disp/006` (RS) | 54-59 | `RS` |
-| `theorem/R:thm:equiv` with `disp/007` (IR) | 73-82 | `equiv`, `IR` |
+| prose `006`, `disp/006` (RS) | 53-59 | `RSNonneg`, `RS` (line 53 names it "the radial secant condition" since 15 October 2026, wording point W8) |
+| `theorem/R:thm:equiv` with `disp/007` (IR) | 73-82 | `equiv_nonneg`, `equiv`, `IRNonneg`, `IR` |
 | `disp/008`, `disp/009` | 91-97 | `inward_probe_at_z`, `swap_identity` |
 | `disp/010`, `disp/011` | 99-105 | `inward_probe_at_x`, `inward_probe_common` |
 | `disp/012`, `disp/013` | 107-115 | `inward_probe_large_case`, `inward_to_radial` |
@@ -162,12 +165,13 @@ namespace BfgsCoverage.Companion.Ch04R
 /-! ### The conditions of the chapter -/
 
 /-- Item `C/04_R/disp/006` (`companion/chapters/04_R.tex:54-59`), the radial secant condition
-(RS):
+(RS) with real constants, as printed before 15 October 2026:
 \[ \forall\eta>0\ \exists C_\eta<\infty:\quad N(x,z)^2\le C_\eta T(x,z)\quad\text{if }
 F_*+\eta\le F(z)\le F(x),\ x,z\in K,\ T>0, \]
 for differentiable endpoints $x,z$ (line 60) with gradients $g,h$, $T=(h-g)^T(z-x)$,
-$N=(h-g)^T(z-x_*)$. "$C_\eta<\infty$" is a real constant (`RS_iff_article`: the article's
-condition with $C_\eta\ge0$). -/
+$N=(h-g)^T(z-x_*)$. The display now states $C_\eta\ge0$ (wording point W19): that is `RSNonneg`,
+equivalent to this definition (`RSNonneg_iff`) and to the article's condition with $C_\eta\ge0$
+(`RS_iff_article`). The coverage theorems of the chapter use this form. -/
 def RS {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : Prop :=
   ∀ η : ℝ, 0 < η → ∃ C : ℝ,
     ∀ x z g h : Vec n, x ∈ K → z ∈ K →
@@ -175,18 +179,76 @@ def RS {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : Prop :=
       F xstar + η ≤ F z → F z ≤ F x → 0 < dot (h - g) (z - x) →
       (dot (h - g) (z - xstar)) ^ 2 ≤ C * dot (h - g) (z - x)
 
-/-- Item `C/04_R/disp/007` (`companion/chapters/04_R.tex:75-80`), inward radial smoothness (IR):
-"For every $\eta>0$, there exist $M_\eta<\infty$ and $\theta_\eta\in(0,1/2]$ such that, at
-every differentiable $x\in K$ with $F(x)\ge F_*+\eta$,
+/-- Item `C/04_R/disp/007` (`companion/chapters/04_R.tex:75-80`), inward radial smoothness (IR)
+with real constants, as printed before 15 October 2026: "For every $\eta>0$, there exist
+$M_\eta<\infty$ and $\theta_\eta\in(0,1/2]$ such that, at every differentiable $x\in K$ with
+$F(x)\ge F_*+\eta$,
 \[ 0\le F(x-tr_x)-F(x)+t\nabla F(x)^Tr_x\le\frac{M_\eta}2t^2,\qquad0\le t\le\theta_\eta." \]
-"$M_\eta<\infty$" is a real constant (`IR_iff_article`: the article's condition with
-$M_\eta\ge0$). -/
+The theorem now states $M_\eta\ge0$ (wording point W19): that is `IRNonneg`, equivalent to this
+definition (`IRNonneg_iff`) and to the article's condition with $M_\eta\ge0$ (`IR_iff_article`). -/
 def IR {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : Prop :=
   ∀ η : ℝ, 0 < η → ∃ M θ : ℝ, 0 < θ ∧ θ ≤ 1 / 2 ∧
     ∀ x g : Vec n, x ∈ K → HasFDerivAt F (gradientFunctional g) x → F xstar + η ≤ F x →
       ∀ t : ℝ, 0 ≤ t → t ≤ θ →
         0 ≤ F (x - t • (x - xstar)) - F x + t * dot g (x - xstar) ∧
           F (x - t • (x - xstar)) - F x + t * dot g (x - xstar) ≤ M / 2 * t ^ 2
+
+/-- Item `C/04_R/disp/006` (`companion/chapters/04_R.tex:54-59`), the radial secant condition (RS)
+as printed since 15 October 2026 (wording point W19; before "$\exists C_\eta<\infty$"):
+\[ \forall\eta>0\ \exists C_\eta\ge0:\quad N(x,z)^2\le C_\eta T(x,z)\quad\text{if }
+F_*+\eta\le F(z)\le F(x),\ x,z\in K,\ T>0, \]
+for differentiable endpoints $x,z$ (line 60) with gradients $g,h$, $T=(h-g)^T(z-x)$,
+$N=(h-g)^T(z-x_*)$. Item `C/04_R/prose/006` (`companion/chapters/04_R.tex:53`) names it: "The
+radial secant condition is the following positive-band condition:" (since 15 October 2026,
+wording point W8; before "The preceding report assumes the following positive-band
+condition:"). -/
+def RSNonneg {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : Prop :=
+  ∀ η : ℝ, 0 < η → ∃ C : ℝ, 0 ≤ C ∧
+    ∀ x z g h : Vec n, x ∈ K → z ∈ K →
+      HasFDerivAt F (gradientFunctional g) x → HasFDerivAt F (gradientFunctional h) z →
+      F xstar + η ≤ F z → F z ≤ F x → 0 < dot (h - g) (z - x) →
+      (dot (h - g) (z - xstar)) ^ 2 ≤ C * dot (h - g) (z - x)
+
+/-- Item `C/04_R/disp/007` (`companion/chapters/04_R.tex:75-80`), inward radial smoothness (IR) as
+printed since 15 October 2026 (wording point W19; before "$M_\eta<\infty$"): "For every
+$\eta>0$, there exist $M_\eta\ge0$ and $\theta_\eta\in(0,1/2]$ such that, at every differentiable
+$x\in K$ with $F(x)\ge F_*+\eta$,
+\[ 0\le F(x-tr_x)-F(x)+t\nabla F(x)^Tr_x\le\frac{M_\eta}2t^2,\qquad0\le t\le\theta_\eta." \] -/
+def IRNonneg {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : Prop :=
+  ∀ η : ℝ, 0 < η → ∃ M θ : ℝ, 0 ≤ M ∧ 0 < θ ∧ θ ≤ 1 / 2 ∧
+    ∀ x g : Vec n, x ∈ K → HasFDerivAt F (gradientFunctional g) x → F xstar + η ≤ F x →
+      ∀ t : ℝ, 0 ≤ t → t ≤ θ →
+        0 ≤ F (x - t • (x - xstar)) - F x + t * dot g (x - xstar) ∧
+          F (x - t • (x - xstar)) - F x + t * dot g (x - xstar) ≤ M / 2 * t ^ 2
+
+/-- (RS) with nonnegative constants is (RS) with real constants: a constant can be replaced by
+$\max(C_\eta,0)$. -/
+theorem RSNonneg_iff {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) :
+    RSNonneg F xstar K ↔ RS F xstar K := by
+  constructor
+  · intro hR η hη
+    obtain ⟨C, -, hC⟩ := hR η hη
+    exact ⟨C, hC⟩
+  · intro hR η hη
+    obtain ⟨C, hC⟩ := hR η hη
+    refine ⟨max C 0, le_max_right _ _, fun x z g k hx hz hg hk h1 h2 hT => ?_⟩
+    exact (hC x z g k hx hz hg hk h1 h2 hT).trans
+      (mul_le_mul_of_nonneg_right (le_max_left _ _) hT.le)
+
+/-- (IR) with nonnegative constants is (IR) with real constants: a constant can be replaced by
+$\max(M_\eta,0)$. -/
+theorem IRNonneg_iff {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) :
+    IRNonneg F xstar K ↔ IR F xstar K := by
+  constructor
+  · intro hI η hη
+    obtain ⟨M, θ, -, hθ, hθ', hM⟩ := hI η hη
+    exact ⟨M, θ, hθ, hθ', hM⟩
+  · intro hI η hη
+    obtain ⟨M, θ, hθ, hθ', hM⟩ := hI η hη
+    refine ⟨max M 0, θ, le_max_right _ _, hθ, hθ', fun x g hx hg hb t h0 h1 => ?_⟩
+    obtain ⟨hlo, hup⟩ := hM x g hx hg hb t h0 h1
+    exact ⟨hlo, hup.trans (mul_le_mul_of_nonneg_right (by linarith [le_max_left M 0])
+      (sq_nonneg t))⟩
 
 theorem RS_iff_library {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) :
     RS F xstar K ↔ RadialCertificate.HasRadialSecantBounds F K xstar := by
@@ -388,7 +450,7 @@ theorem bounds_exist {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F) (x
   obtain ⟨Λ, R, hΛ, hR, hΛK, hRK⟩ := Article.Global.exists_subgradient_and_radius_bounds hF xstar hK
   exact ⟨R, Λ, hR, hΛ, hRK, hΛK⟩
 
-/-- Item `C/04_R/prose/004` (`companion/chapters/04_R.tex:38-38`): "Such a subgradient bound
+/-- Item `C/04_R/prose/004` (`companion/chapters/04_R.tex:38`): "Such a subgradient bound
 exists because a finite convex function is locally Lipschitz on the whole space." A finite
 convex $F$ on $\R^n$ is locally Lipschitz, and on the compact $K$ its subgradients are bounded in
 Euclidean norm. (The library proves the bound from local boundedness of $F$.) -/
@@ -402,9 +464,10 @@ theorem locally_lipschitz_bound {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ
 
 /-- Item `C/04_R/disp/003` (`companion/chapters/04_R.tex:41-44`): the notation
 $g=\nabla F(x)$, $h=\nabla F(z)$, $y=h-g$, $s=z-x$, $T(x,z)=y^Ts$, $N(x,z)=y^Tr_z$ for
-differentiable $x,z$. A gradient $g=\nabla F(x)$ is `HasFDerivAt F (gradientFunctional g) x`,
-where `gradientFunctional g v = dot g v`; the library's `secantCurvature x z g h` is $T$ and
-`radialNumerator xstar z g h` is $N$. -/
+differentiable $x,z\in K$ (line 40, "For differentiable $x,z\in K$, put"; "$\in K$" added on 15
+October 2026, wording point W20). A gradient $g=\nabla F(x)$ is
+`HasFDerivAt F (gradientFunctional g) x`, where `gradientFunctional g v = dot g v`; the library's
+`secantCurvature x z g h` is $T$ and `radialNumerator xstar z g h` is $N$. -/
 theorem secant_notation {n : ℕ} (xstar x z g h y s : Vec n) (hy : y = h - g) (hs : s = z - x) :
     RadialCertificate.secantCurvature x z g h = dot y s ∧
       RadialCertificate.radialNumerator xstar z g h = dot y (z - xstar) ∧
@@ -485,7 +548,9 @@ $0\le t\le\theta_\eta\le1/2$.
 The proof is the library's `radial_iff_inward_on_compact_sublevel`: (IR)⇒(RS) is
 `radial_of_inward_on_compact` (the subsection of lines 89-116, displays `inward_probe_at_z` to
 `inward_to_radial` below), and (RS)⇒(IR) is `inward_of_radial_on_compact_sublevel` (lines
-122-151, displays `theta_choice` to `error_bound_pos` below, then approximation). -/
+122-151, displays `theta_choice` to `error_bound_pos` below, then approximation). Here (RS) and
+(IR) have real constants; with the nonnegative constants printed since 15 October 2026 (W19) the
+theorem is `equiv_nonneg`. -/
 theorem equiv {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F) (xstar : Vec n)
     (hmin : ∀ x, F xstar ≤ F x) (b : ℝ) (hb : F xstar < b) (K : Set (Vec n))
     (hK_def : K = {x | F x ≤ b}) (hK : IsCompact K) :
@@ -498,6 +563,21 @@ theorem equiv {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F) (xstar : 
   subst hK_def
   exact RadialCertificate.radial_iff_inward_on_compact_sublevel hF xstar hmin b hb hK
 
+/-- Item `C/04_R/theorem/R:thm:equiv` (`companion/chapters/04_R.tex:73-82`), Theorem
+`R:thm:equiv` as printed since 15 October 2026, with (RS) and (IR) stated with nonnegative
+constants (wording point W19: "$\exists C_\eta\ge0$" in (4.RS), "there exist $M_\eta\ge0$ and
+$\theta_\eta\in(0,1/2]$" in (4.IR)): on the compact sublevel $K$, (RS) is equivalent, up to
+constants, to (IR), and the sampled points $x-tr_x$, $0\le t\le1/2$, are convex combinations of
+$x$ and $x_*$ in $K$. From `equiv` with `RSNonneg_iff` and `IRNonneg_iff`. -/
+theorem equiv_nonneg {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F) (xstar : Vec n)
+    (hmin : ∀ x, F xstar ≤ F x) (b : ℝ) (hb : F xstar < b) (K : Set (Vec n))
+    (hK_def : K = {x | F x ≤ b}) (hK : IsCompact K) :
+    (RSNonneg F xstar K ↔ IRNonneg F xstar K) ∧
+      ∀ x ∈ K, ∀ t : ℝ, 0 ≤ t → t ≤ 1 / 2 →
+        x - t • (x - xstar) = (1 - t) • x + t • xstar ∧ x - t • (x - xstar) ∈ K := by
+  obtain ⟨h1, h2⟩ := equiv hF xstar hmin b hb K hK_def hK
+  exact ⟨(RSNonneg_iff F xstar K).trans (h1.trans (IRNonneg_iff F xstar K).symm), h2⟩
+
 /-- (IR) with the factor $\|r_x\|^2$ placed in the upper bound (line 83). -/
 def IRScaled {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : Prop :=
   ∀ η : ℝ, 0 < η → ∃ M θ : ℝ, 0 < θ ∧ θ ≤ 1 / 2 ∧
@@ -507,7 +587,7 @@ def IRScaled {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (Vec n)) : P
           F (x - t • (x - xstar)) - F x + t * dot g (x - xstar) ≤
             M / 2 * t ^ 2 * ‖euclideanVector (x - xstar)‖ ^ 2
 
-/-- Item `C/04_R/prose/012` (`companion/chapters/04_R.tex:83-83`): "A factor $\|r_x\|^2$ can
+/-- Item `C/04_R/prose/012` (`companion/chapters/04_R.tex:83`): "A factor $\|r_x\|^2$ can
 alternatively be placed in the upper bound: on a positive objective band, the two conventions
 are equivalent because $\eta/G\le\|r_x\|\le R$." In the setting with the bounds $R,G$: at every
 differentiable $x\in K$ with $F(x)\ge F_*+\eta$, $\eta/G\le\|r_x\|\le R$ (Euclidean norm); and
@@ -991,8 +1071,9 @@ theorem error_bound_pos {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
 
 /-- Proof of Theorem `R:thm:equiv`, undisplayed claim of line 149 (not a register item): "If
 $a=0$, the same conclusion follows from $D_F(z,x)\le ta=0$." This uses $C_{\eta/2}\ge0$, which
-holds because the $\eta/2$-band contains the point $z$ strictly between its threshold and $b$
-when $t>0$ (`rs_constant_nonneg`). -/
+(4.RS) states since 15 October 2026 (wording point W19) and which holds anyway for an (RS)
+constant with real values, because the $\eta/2$-band contains the point $z$ strictly between its
+threshold and $b$ when $t>0$ (`rs_constant_nonneg`); the statement below assumes only `RS`. -/
 theorem error_bound_zero {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
     (xstar : Vec n) (hmin : ∀ x, F xstar ≤ F x) (b : ℝ) (hb : F xstar < b)
     (K : Set (Vec n)) (hK_def : K = {x | F x ≤ b}) (hK : IsCompact K)
@@ -1084,7 +1165,7 @@ theorem profile_hasDerivAt {n : ℕ} {F : Vec n → ℝ} {xstar d g : Vec n} {ρ
   rw [gradientFunctional_apply] at h
   exact h
 
-/-- Item `C/04_R/prose/015` (`companion/chapters/04_R.tex:162-162`): "On compact positive objective
+/-- Item `C/04_R/prose/015` (`companion/chapters/04_R.tex:162`): "On compact positive objective
 bands, the equivalent conditions control the change of its scalar derivative uniformly over
 directions." In the setting with the bounds $R,G$, under (RS) (equivalently (IR), Theorem
 `R:thm:equiv`): for every $\eta>0$ there is $L$ such that for every Euclidean unit direction $d$
@@ -1174,7 +1255,7 @@ theorem scalar_derivative_control {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn �
     rw [div_mul_eq_mul_div, mul_assoc, le_div_iff₀ hη2] at *
     nlinarith
 
-/-- Item `C/04_R/prose/016` (`companion/chapters/04_R.tex:162-162`): "Angular derivatives may
+/-- Item `C/04_R/prose/016` (`companion/chapters/04_R.tex:162`): "Angular derivatives may
 jump." The benchmark $F(u,v)=u^2+|v|$, $x_*=0$, satisfies (IR) and (RS) on every compact
 sublevel $\{F\le b\}$, $b>0$, yet at every point $(u,0)$ its derivative in the direction
 $(0,1)$, orthogonal to the ray through $(u,0)$, jumps: $F((u,0)+s(0,1))=F(u,0)+|s|$, and $F$ is not
@@ -1438,7 +1519,7 @@ theorem exists_ray_exit {n : ℕ} {F : Vec n → ℝ} (xstar : Vec n) (b : ℝ) 
   rw [norm_smul, Real.norm_of_nonneg (by positivity), div_mul_cancel₀ _ hepos.ne'] at h3
   linarith [le_abs_self Mb]
 
-/-- Item `C/04_R/prose/020` (`companion/chapters/04_R.tex:177-177`): "an outward point need not
+/-- Item `C/04_R/prose/020` (`companion/chapters/04_R.tex:177`): "an outward point need not
 remain in the original top boundary of $K$." In the setting: for every $x$ on the top level
 $F(x)=b$ and every $t>0$, convexity gives
 $F(x_*+(1+t)r_x)\ge F(x)+t(F(x)-F_*)>b$, so the outward point leaves $K$; and for $n\ge1$ such
@@ -1508,7 +1589,7 @@ theorem intercept_def {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F) (
   rw [hbF]
   linarith [convex_supporting_inequality hF hg xstar]
 
-/-- Item `C/04_R/prose/022` (`companion/chapters/04_R.tex:193-193`): "It is also the supporting
+/-- Item `C/04_R/prose/022` (`companion/chapters/04_R.tex:193`): "It is also the supporting
 error $D_F(x_*,x)$." $b_F(x)=F(x_*)-F(x)-\nabla F(x)^T(x_*-x)$. -/
 theorem intercept_eq_error {n : ℕ} (F : Vec n → ℝ) (xstar x g : Vec n) :
     dot g (x - xstar) - (F x - F xstar) = F xstar - F x - dot g (xstar - x) := by
@@ -1551,7 +1632,7 @@ theorem SP_iff_library {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (V
     rw [sq_abs]
     exact hC x z g h hx hz hb ho hg hh ht
 
-/-- Item `C/04_R/prose/023` (`companion/chapters/04_R.tex:200-200`): "Since
+/-- Item `C/04_R/prose/023` (`companion/chapters/04_R.tex:200`): "Since
 $0\le D_F(z,x)\le T\le T_{\max}$, the radial condition is equivalent on the same bounded domains
 to [(SP)]." In the setting, (RS) and (SP) are equivalent on the compact sublevel $K$ (the library's
 `radial_iff_intercept_on_compact`, whose proof is the stated one: `error_le_curvature`,
@@ -1563,7 +1644,7 @@ theorem rs_iff_sp {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F) (xsta
   rw [RS_iff_library, SP_iff_library]
   exact RadialCertificate.radial_iff_intercept_on_compact hF hK xstar
 
-/-- Item `C/04_R/prose/024` (`companion/chapters/04_R.tex:205-205`): "For example, (RS) with $C$
+/-- Item `C/04_R/prose/024` (`companion/chapters/04_R.tex:205`): "For example, (RS) with $C$
 implies (SP) with $2C+2T_{\max}$, and conversely." For a band $\eta$, in the setting with the
 bounds $R,G$ and $T_{\max}=4GR$: if $N^2\le CT$ for all pairs of the band then
 $|b_F(z)-b_F(x)|^2\le(2C+2T_{\max})T$ for all of them, and if
@@ -1618,7 +1699,7 @@ theorem rs_sp_constants {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
     rw [sq_abs, ← h4] at hs
     exact RadialCertificate.radial_bound_of_intercept h1 h2 h3 hs
 
-/-- Item `C/04_R/prose/025` (`companion/chapters/04_R.tex:205-205`): "Thus the full gradient need
+/-- Item `C/04_R/prose/025` (`companion/chapters/04_R.tex:205`): "Thus the full gradient need
 not be Lipschitz; only the \emph{height at the optimizer} of its supporting plane needs this
 curvature-relative regularity." The benchmark $F(u,v)=u^2+|v|$, $x_*=0$, satisfies (SP) on every
 compact sublevel $\{F\le b\}$, $b>0$, but its gradient is not Lipschitz there: no $L$ satisfies
@@ -1666,7 +1747,7 @@ theorem sp_without_lipschitz_gradient (F : Vec 2 → ℝ) (hF_def : ∀ x, F x =
   nlinarith
 
 
-/-- Item `C/04_R/prose/027` (`companion/chapters/04_R.tex:207-207`): "For a degree-one homogeneous
+/-- Item `C/04_R/prose/027` (`companion/chapters/04_R.tex:207`): "For a degree-one homogeneous
 function minimized at zero, $b_F\equiv0$." For finite convex positively homogeneous $F$ of degree
 one with minimizer $x_*=0$: $b_F(x)=\nabla F(x)^Tx-(F(x)-F(0))=0$ at every differentiable $x$. -/
 theorem homogeneous_intercept_zero {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
@@ -1675,7 +1756,7 @@ theorem homogeneous_intercept_zero {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn 
     dot g (x - 0) - (F x - F 0) = 0 :=
   InterceptExamples.homogeneous_intercept_zero hF hh hg
 
-/-- Item `C/04_R/prose/028` (`companion/chapters/04_R.tex:211-211`), with its display
+/-- Item `C/04_R/prose/028` (`companion/chapters/04_R.tex:211`), with its display
 `C/04_R/disp/027` (lines 208-210): "For $F(u,v)=u^2+|v|$, we have $b_F(u,v)=u^2$: crossing $v=0$
 flips a gradient component but does not produce a jump in this scalar." Here $x_*=0$, and $(u,v)$
 is `x : Vec 2` with $u=x_0$, $v=x_1$: at every differentiable point $b_F(x)=x_0^2$; on either
@@ -1699,7 +1780,7 @@ theorem benchmark_intercept (F : Vec 2 → ℝ) (hF_def : ∀ x, F x = (x 0) ^ 2
   rw [Real.sign_of_neg (by linarith)] at h2
   exact ⟨h1, h2, by simpa using hall _ _ h1, by simpa using hall _ _ h2⟩
 
-/-- Item `C/04_R/prose/032` (`companion/chapters/04_R.tex:217-217`): "We use homogeneity under
+/-- Item `C/04_R/prose/032` (`companion/chapters/04_R.tex:217`): "We use homogeneity under
 nonnegative dilations, $F(tx)=t^pF(x)$ for $t\ge0$, with $t^0=1$ also at $t=0$." The library's
 `InterceptExamples.PositiveDegree p F`, with the real power `t ^ p` (`Real.rpow`), for which
 $0^0=1$. -/
@@ -1708,7 +1789,7 @@ theorem positiveDegree_def {n : ℕ} (p : ℝ) (F : Vec n → ℝ) :
       (0 : ℝ) ^ (0 : ℝ) = 1 :=
   ⟨Iff.rfl, Real.rpow_zero 0⟩
 
-/-- Item `C/04_R/prose/029` (`companion/chapters/04_R.tex:213-213`): "For a function homogeneous of
+/-- Item `C/04_R/prose/029` (`companion/chapters/04_R.tex:213`): "For a function homogeneous of
 degree $p$, Euler's identity at a differentiable point is $\nabla F(x)^Tx=pF(x)$." -/
 theorem euler_identity {n : ℕ} {F : Vec n → ℝ} {p : ℝ}
     (hh : ∀ t : ℝ, 0 ≤ t → ∀ x, F (t • x) = t ^ p * F x) (x g : Vec n)
@@ -1726,7 +1807,7 @@ theorem degree_intercept_at_reference {n : ℕ} {F : Vec n → ℝ} {p : ℝ}
     dot g (x - xstar) - (F x - F xstar) = (p - 1) * F x + F xstar - dot g xstar :=
   OriginalClaimInterpretation.degree_intercept_at_reference hh xstar hg
 
-/-- Item `C/04_R/prose/031` (`companion/chapters/04_R.tex:217-217`): "At reference zero it reduces
+/-- Item `C/04_R/prose/031` (`companion/chapters/04_R.tex:217`): "At reference zero it reduces
 to $(p-1)F(x)+F(0)$; the constant term cannot be discarded without a normalization." For $F$
 homogeneous of degree $p$: $b_{F,0}(x)=(p-1)F(x)+F(0)$; and the positive constant $F\equiv1$ on
 $\R^1$, homogeneous of degree $0$, has $b_{F,0}(x)=0\ne(0-1)F(x)$. -/
@@ -1744,13 +1825,13 @@ theorem reference_zero_intercept :
   unfold RadialCertificate.optimizerIntercept at this
   exact this
 
-/-- Item `C/04_R/prose/033` (`companion/chapters/04_R.tex:217-217`): "Thus degree zero forces $F$
+/-- Item `C/04_R/prose/033` (`companion/chapters/04_R.tex:217`): "Thus degree zero forces $F$
 to be constant." -/
 theorem degree_zero_constant {n : ℕ} {F : Vec n → ℝ}
     (hh : ∀ t : ℝ, 0 ≤ t → ∀ x, F (t • x) = t ^ (0 : ℝ) * F x) (x : Vec n) : F x = F 0 :=
   OriginalClaimInterpretation.degree_zero_constant hh x
 
-/-- Item `C/04_R/prose/035` (`companion/chapters/04_R.tex:219-219`): "More precisely, let $n\ge1$,
+/-- Item `C/04_R/prose/035` (`companion/chapters/04_R.tex:219`): "More precisely, let $n\ge1$,
 let $F:\mathbb R^n\to\mathbb R$ be finite, convex, nonnegative and homogeneous, and suppose
 $\{F\le b\}$ is compact with $F(z)<b$ for some $z$. Then $p>0$." -/
 theorem compact_positive_degree {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
@@ -1782,7 +1863,7 @@ theorem midpoint_bound {n : ℕ} (_hn : 1 ≤ n) {F : Vec n → ℝ} (hF : Conve
   · rw [hh 2 (by norm_num) x, Real.rpow_sub (by norm_num : (0 : ℝ) < 2), Real.rpow_one]
     ring
 
-/-- Item `C/04_R/prose/037` (`companion/chapters/04_R.tex:226-226`): "Positive degree gives
+/-- Item `C/04_R/prose/037` (`companion/chapters/04_R.tex:226`): "Positive degree gives
 $F(0)=0$. Any optimizer $x_*$ therefore has value zero. If $x_*\ne0$, homogeneity places the
 unbounded ray $\{tx_*:t\ge0\}$ inside the compact sublevel, another contradiction. Thus zero is the
 unique optimizer". Under the hypotheses of `compact_positive_degree`. -/
@@ -1813,13 +1894,13 @@ theorem compact_homogeneous_intercept {n : ℕ} (hn : 1 ≤ n) {F : Vec n → �
   exact OriginalClaimInterpretation.compact_homogeneous_optimizer_intercept m hF hnonneg hh hz hK
     (fun x _ => hmin x) hg
 
-/-- Item `C/04_R/prose/038` (`companion/chapters/04_R.tex:230-230`): "The chapter's hypothesis
+/-- Item `C/04_R/prose/038` (`companion/chapters/04_R.tex:230`): "The chapter's hypothesis
 $b>F_*$ supplies the strict witness by taking $z=x_*$." -/
 theorem strict_witness {n : ℕ} {F : Vec n → ℝ} (xstar : Vec n) (b : ℝ) (hb : F xstar < b) :
     ∃ z, F z < b :=
   ⟨xstar, hb⟩
 
-/-- Item `C/04_R/prose/039` (`companion/chapters/04_R.tex:230-230`): "Outside this compact context,
+/-- Item `C/04_R/prose/039` (`companion/chapters/04_R.tex:230`): "Outside this compact context,
 the positive constant function $F\equiv1$ has degree zero and intercept zero, whereas $(p-1)F=-1$;
 its positive sublevels are noncompact." On $\R^1$: $F\equiv1$ is convex, nonnegative, minimized
 everywhere, homogeneous of degree $0$, differentiable with $\nabla F=0$, $b_{F,0}(x)=0$,
@@ -1941,7 +2022,7 @@ theorem fourPiece_branches (δ a : ℝ) (L : Mat 2)
     · ring
   · ring
 
-/-- Item `C/04_R/prose/042` (`companion/chapters/04_R.tex:253-253`): "Chapter~D's own optimizer
+/-- Item `C/04_R/prose/042` (`companion/chapters/04_R.tex:253`): "Chapter~D's own optimizer
 remains $(-1,16)$." $(-1,16)$ is the unique minimizer of $F_D$, with value $-1$. -/
 theorem fourPiece_D_optimizer :
     (∀ x, SeedOrbit.coerciveObjective ![-1, 16] ≤ SeedOrbit.coerciveObjective x) ∧
@@ -1953,7 +2034,7 @@ theorem fourPiece_D_optimizer :
   exact ⟨fun x => by rw [h]; exact SeedOrbit.coercive_lower_bound x, h,
     fun x hx => SeedOrbit.coercive_unique_optimizer hx⟩
 
-/-- Item `C/04_R/prose/044` (`companion/chapters/04_R.tex:255-255`): "Since $\mathcal L$ is
+/-- Item `C/04_R/prose/044` (`companion/chapters/04_R.tex:255`): "Since $\mathcal L$ is
 invertible and $a>0$, $F_R$ is finite and convex with compact sublevels." -/
 theorem fourPiece_convex_compact (δ a : ℝ) (L : Mat 2)
     (hδ : δ = SeedOrbit.seedC - 16 * SeedOrbit.seedD - 1)
@@ -1965,8 +2046,9 @@ theorem fourPiece_convex_compact (δ a : ℝ) (L : Mat 2)
   exact ⟨ReconstructedFourPiece.coordinate_det_ne, hpos, ReconstructedFourPiece.objective_convex,
     ReconstructedFourPiece.sublevels_compact⟩
 
-/-- Item `C/04_R/prose/045` (`companion/chapters/04_R.tex:255-255`): "The unique D optimizer
-$(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$." $\mathcal L(-1,5)=(-1,16)$,
+/-- Item `C/04_R/prose/045` (`companion/chapters/04_R.tex:255`): "Chapter~\ref{comp:D}'s unique
+optimizer $(-1,16)$ is carried to $(-1,5)$, and the minimum value remains $-1$." (Wording point
+W22 applied on 15 October 2026; before "The unique D optimizer".) $\mathcal L(-1,5)=(-1,16)$,
 $F_R(-1,5)=-1$ is the minimum, attained only at $(-1,5)$. -/
 theorem fourPiece_optimizer (δ a : ℝ) (L : Mat 2)
     (hδ : δ = SeedOrbit.seedC - 16 * SeedOrbit.seedD - 1)
@@ -2013,7 +2095,7 @@ theorem active_affine_gradient {n : ℕ} {F : Vec n → ℝ} (v : Vec n) (β : �
     rw [← h0]; ext w; simp [gradientFunctional_apply, dot_sub_left]
   exact sub_eq_zero.mp (Article.Global.eq_zero_of_gradientFunctional_eq_zero h1)
 
-/-- Item `C/04_R/prose/046` (`companion/chapters/04_R.tex:259-259`): "so their supporting errors
+/-- Item `C/04_R/prose/046` (`companion/chapters/04_R.tex:259`): "so their supporting errors
 are exactly $0,0,25/4$." For each of the first three branches $\ell_i$ of display `disp/034`,
 $F_*-\ell_i(x_*)=0,0,25/4$ at $x_*=(-1,5)$; and at every differentiable point $x$ where the branch
 is active ($F_R(x)=\ell_i(x)$), $b_{F_R}(x)=0,0,25/4$ respectively. -/
@@ -2058,7 +2140,7 @@ theorem fourPiece_branch_errors (δ a : ℝ) (L : Mat 2)
     linear_combination (-1 : ℝ) * h3
 
 
-/-- Item `C/04_R/prose/047` (`companion/chapters/04_R.tex:261-261`): "This objective has an
+/-- Item `C/04_R/prose/047` (`companion/chapters/04_R.tex:261`): "This objective has an
 actual infinite unmodified full-BFGS failure run." For every pair $0<c_1\le1/3$, $c_1<c_2<1$
 there is an admissible run on $F_R$ with these constants whose iterates converge to $0$ and whose
 values converge to $a-1>-1=\min F_R$; $0$ is not stationary ($0\notin\partial F_R(0)$). -/
@@ -2077,7 +2159,8 @@ theorem fourPiece_failure_run (δ a : ℝ) (L : Mat 2)
   obtain ⟨h1, h2, -, -, -, -, h7, h8, h9, -, -⟩ := hrun c₁ c₂ hc₁ hc₁' hc hc₂
   exact ⟨_, h1, h2, h7, h8, h9, hns⟩
 
-/-- Item `C/04_R/disp/037` (`companion/chapters/04_R.tex:266-273`): with the verified D run
+/-- Item `C/04_R/disp/037` (`companion/chapters/04_R.tex:266-273`): with the verified run of
+Chapter 12 (wording point W22 applied on 15 October 2026; before "the verified D run")
 $x_k,g_k,H_k,\alpha_k$ (`SeedOrbit.coerciveRun`, for the parameters of display `disp/036`), the
 transformed data $\widehat x_k=\mathcal L^{-1}x_k$, $\widehat g_k=a\mathcal L^Tg_k$,
 $\widehat H_k=a^{-1}\mathcal L^{-1}H_k\mathcal L^{-T}$, $\widehat\alpha_k=\alpha_k$ are those of the
@@ -2094,7 +2177,7 @@ theorem fourPiece_transformed_data (δ a : ℝ) (L : Mat 2)
   obtain ⟨-, rfl, rfl⟩ := fourPiece_consts δ a L hδ ha hL
   exact ⟨rfl, rfl, rfl, rfl, fun k => ⟨rfl, rfl, rfl, rfl⟩⟩
 
-/-- Item `C/04_R/prose/048` (`companion/chapters/04_R.tex:274-274`): "The gradients are the actual
+/-- Item `C/04_R/prose/048` (`companion/chapters/04_R.tex:274`): "The gradients are the actual
 derivatives of $F_R$ at the accepted points, and $\widehat H_0\succ0$." -/
 theorem fourPiece_run_gradients (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
     (hc₂ : c₂ < 1) :
@@ -2104,7 +2187,7 @@ theorem fourPiece_run_gradients (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c
   ⟨(ReconstructedFourPiece.run hc₁ hc₁' hc hc₂).hasGradient,
     (ReconstructedFourPiece.run hc₁ hc₁' hc hc₂).initial_posDef⟩
 
-/-- Item `C/04_R/prose/049` (`companion/chapters/04_R.tex:274-274`): "Direct substitution in the
+/-- Item `C/04_R/prose/049` (`companion/chapters/04_R.tex:274`): "Direct substitution in the
 inverse-BFGS update proves that these are its exact next matrices and steps." The transformed
 data satisfy $\widehat x_{k+1}=\widehat x_k+\widehat s_k$ with
 $\widehat s_k=-\widehat\alpha_k\widehat H_k\widehat g_k=\mathcal L^{-1}s_k$, and
@@ -2138,7 +2221,7 @@ theorem fourPiece_run_updates (δ a : ℝ) (L : Mat 2)
     rw [← smul_sub]
     simp only [AffineWhitening.gradient, Matrix.mulVec_sub]
 
-/-- Item `C/04_R/prose/050` (`companion/chapters/04_R.tex:274-274`): "Both the predicted and actual
+/-- Item `C/04_R/prose/050` (`companion/chapters/04_R.tex:274`): "Both the predicted and actual
 objective decreases and the secant curvature are multiplied by $a$, so Armijo and weak Wolfe hold
 with the same constants." For every $k$:
 $F_R(\widehat x_k)-F_R(\widehat x_{k+1})=a(F_D(x_k)-F_D(x_{k+1}))$,
@@ -2183,7 +2266,7 @@ theorem fourPiece_run_scaling (δ a : ℝ) (L : Mat 2)
   · rw [hs, hy, PlanarUpdate.dot_scale_left, hdotp]
   · exact Rh.weak_wolfe k
 
-/-- Item `C/04_R/prose/051` (`companion/chapters/04_R.tex:274-274`): "This proves a transformed
+/-- Item `C/04_R/prose/051` (`companion/chapters/04_R.tex:274`): "This proves a transformed
 full-BFGS run, rather than prescribing an unrelated sequence of endpoint pairs." The transformed
 data of display `disp/037` form an admissible run on $F_R$ (Definition `art:admissible`) with the
 constants $c_1,c_2$. -/
@@ -2199,7 +2282,7 @@ theorem fourPiece_transformed_run (δ a : ℝ) (L : Mat 2)
   obtain ⟨-, rfl, rfl⟩ := fourPiece_consts δ a L hδ ha hL
   exact ⟨ReconstructedFourPiece.run hc₁ hc₁' hc hc₂, rfl, rfl, fun k => ⟨rfl, rfl, rfl, rfl⟩⟩
 
-/-- Item `C/04_R/prose/052` (`companion/chapters/04_R.tex:276-276`): "The iterates satisfy
+/-- Item `C/04_R/prose/052` (`companion/chapters/04_R.tex:276`): "The iterates satisfy
 $\widehat x_k\to0$, while their strictly decreasing values tend to $a-1>-1$; zero is
 nonstationary." -/
 theorem fourPiece_run_limits (δ a : ℝ) (L : Mat 2)
@@ -2217,7 +2300,7 @@ theorem fourPiece_run_limits (δ a : ℝ) (L : Mat 2)
   obtain ⟨-, -, -, -, -, -, h7, h8, h9, -, h11⟩ := hrun c₁ c₂ hc₁ hc₁' hc hc₂
   exact ⟨h7, h11, h8, h9, hns⟩
 
-/-- Item `C/04_R/prose/053` (`companion/chapters/04_R.tex:276-276`): "In every three phases the
+/-- Item `C/04_R/prose/053` (`companion/chapters/04_R.tex:276`): "In every three phases the
 actual supporting errors repeat $0,0,25/4$." $b_{F_R}(\widehat x_{3m+j})=0,0,25/4$ for
 $j=0,1,2$, with the run's gradients and $x_*=(-1,5)$. -/
 theorem fourPiece_phase_errors (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
@@ -2229,8 +2312,9 @@ theorem fourPiece_phase_errors (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c�
           ReconstructedFourPiece.objective ![-1, 5]) = (![0, 0, 25 / 4] : Vec 3) j :=
   fun m j => ReconstructedFourPiece.point_phase_intercepts m j
 
-/-- Item `C/04_R/prose/054` (`companion/chapters/04_R.tex:276-276`): "The actual positive secant
-curvatures are $a$ times those of D and tend to zero." -/
+/-- Item `C/04_R/prose/054` (`companion/chapters/04_R.tex:276`): "The actual positive secant
+curvatures are $a$ times those of the run of Chapter~\ref{comp:D} and tend to zero." (Wording
+point W22 applied on 15 October 2026; before "those of D".) -/
 theorem fourPiece_curvatures (δ a : ℝ) (L : Mat 2)
     (hδ : δ = SeedOrbit.seedC - 16 * SeedOrbit.seedD - 1)
     (ha : a = 25 / (4 * δ)) (hL : L = !![1, 0; 0, 16 / 5]) (c₁ c₂ : ℝ) (hc₁ : 0 < c₁)
@@ -2263,7 +2347,7 @@ theorem fourPiece_band (δ a : ℝ) (L : Mat 2) (hδ : δ = SeedOrbit.seedC - 16
   change _ < ReconstructedFourPiece.objective (ReconstructedFourPiece.point k)
   linarith
 
-/-- Item `C/04_R/prose/055` (`companion/chapters/04_R.tex:281-281`): "Applying (SP) to successive
+/-- Item `C/04_R/prose/055` (`companion/chapters/04_R.tex:281`): "Applying (SP) to successive
 points with indices $3m+1$ and $3m+2$ would give $(25/4)^2\le C'T_k$ for every cycle". For every
 constant $C'$ of (SP) on the band $\eta=a$ of $K$, $(25/4)^2\le C'T_{3m+1}$ for every $m$, with
 $T_k=(\widehat g_{k+1}-\widehat g_k)^T(\widehat x_{k+1}-\widehat x_k)$. -/
@@ -2304,7 +2388,7 @@ theorem fourPiece_SP_instance (δ a : ℝ) (L : Mat 2)
   rw [hi, hj, sub_zero, abs_of_pos (by norm_num : (0 : ℝ) < 25 / 4)] at hb
   exact hb
 
-/-- Item `C/04_R/prose/056` (`companion/chapters/04_R.tex:281-281`): "Thus (SP), and by the
+/-- Item `C/04_R/prose/056` (`companion/chapters/04_R.tex:281`): "Thus (SP), and by the
 compact-domain equivalence also (RS), fail on this actual initial sublevel." On
 $K=\{F_R\le F_R(\widehat x_0)\}$ with $x_*=(-1,5)$. -/
 theorem fourPiece_SP_RS_fail (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1 / 3) (hc : c₁ < c₂)
@@ -2467,7 +2551,7 @@ theorem plq_inward_taylor {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ 
     refine ⟨by simp [dot], by simp [dot], by simp; positivity⟩
 
 
-/-- Item `C/04_R/prose/058` (`companion/chapters/04_R.tex:309-309`): "In particular this covers
+/-- Item `C/04_R/prose/058` (`companion/chapters/04_R.tex:309`): "In particular this covers
 every finite convex \emph{piecewise linear-quadratic} objective, and a convex smooth loss plus a
 finite convex piecewise linear-quadratic regularizer." First case: a finite convex $F$ with unique
 minimizer $x_*$ and a quadratic formula $x^TQ_ix+c_i^Tx+d_i$ on each cell of a finite cover of
@@ -2493,7 +2577,7 @@ theorem locallyC11_of_contDiff_two {n : ℕ} {ψ : Vec n → ℝ} (hψ : ContDif
     CenteredSmoothSublinear.LocallyC11On univ ψ :=
   ConvexCellRadial.contDiffOn_two_locallyC11 isOpen_univ hψ.contDiffOn
 
-/-- Item `C/04_R/prose/058` (`companion/chapters/04_R.tex:309-309`), second case: a convex smooth
+/-- Item `C/04_R/prose/058` (`companion/chapters/04_R.tex:309`), second case: a convex smooth
 loss (locally $C^{1,1}$, `CenteredSmoothSublinear.LocallyC11On univ`, as in the article's parallel
 Corollary `art:plq`; $C^2$ losses are included by `locallyC11_of_contDiff_two`) plus a finite
 convex piecewise linear-quadratic regularizer, the sum having a unique minimizer $x_*$, has the
@@ -2628,8 +2712,9 @@ theorem not_smooth_plus_max_affine {k : ℕ} (ψ φ : ℝ → ℝ) (hψ : ContDi
     exact tendsto_nhds_unique hT hT'
   linarith
 
-/-- Item `C/04_R/prose/060` (`companion/chapters/04_R.tex:309-309`): "different cells can have
-different quadratic Hessians and different gradient jumps." Example: $F(x)=x^2+\max\{x,0\}^2+|x-1|$
+/-- Item `C/04_R/prose/060` (`companion/chapters/04_R.tex:309`), the wording before 15 October
+2026 (W23): "different cells can have different quadratic Hessians and different gradient jumps."
+The corrected sentence is `plq2d_hessians_and_varying_jump`. Example: $F(x)=x^2+\max\{x,0\}^2+|x-1|$
 on $\R$ (`Vec 1`), with the cells $P_0=\{x\le0\}$, $P_1=\{0\le x\le1\}$, $P_2=\{x\ge1\}$ (two
 constraints each) and the quadratic formulas $x^2-x+1$, $2x^2-x+1$, $2x^2+x-1$. $F$ is convex
 with unique minimizer $x_*=1/4$ ($F_*=7/8$); the cells are full-dimensional and cover $\R$; the
@@ -2778,7 +2863,7 @@ theorem plq_hessians_and_jumps (F : Vec 1 → ℝ)
     norm_num at this
     exact this
 
-/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309-309`), first part: "This is broader
+/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309`), first part: "This is broader
 than merely having affine pieces plus one common smooth summand". The narrower class is covered:
 a convex locally $C^{1,1}$ function $\psi$ ("one common smooth summand"; $C^2$ is included by
 `locallyC11_of_contDiff_two`) plus a finite maximum $\varphi$ of affine functions ("affine
@@ -2798,7 +2883,7 @@ theorem smooth_plus_polyhedral_covered {n k : ℕ} (ψ φ G : Vec n → ℝ) (h�
     hmin huniq univ isOpen_univ (mem_univ _)
   exact ⟨ε, hε, fun run hrun => (h run hrun).2.2⟩
 
-/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309-309`), strictness: the piecewise
+/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309`), strictness: the piecewise
 quadratic objective $F(x)=x^2+\max\{x,0\}^2+|x-1|$ of `plq_hessians_and_jumps` is covered (the
 conclusion of Theorem `R:thm:plq`), but it is not $\psi+\varphi$ with $\psi:\R^1\to\R$ of class
 $C^2$ and $\varphi$ a finite maximum of affine functions: near $0$, $F-\varphi$ would be a $C^2$
@@ -2915,7 +3000,7 @@ theorem one_sided_slopes_eq {g : ℝ → ℝ} (hg : DifferentiableAt ℝ g 0) (c
     (hq b₂).hasDerivWithinAt
   rw [← e1, ← e2]
 
-/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309-309`), the key step of
+/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309`), the key step of
 `plq_broader_2d`: $F(u,v)=u^2+v^2+(2+|u|)|v|$ is not $\psi+\varphi$ with $\psi$ differentiable
 everywhere (so neither $C^1$, $C^{1,1}$, $C^2$ nor $C^\infty$) and $\varphi$ a finite maximum of
 affine functions. At $(u,0)$, $0<u<1$, the jump of $\partial_vF$ across $v=0$ is $2(2+u)$; a
@@ -2997,7 +3082,7 @@ theorem quad_cross_convex (σ : ℝ) (hσ : σ ^ 2 ≤ 1) :
       mul_nonneg (sub_nonneg.mpr hσ) (sq_nonneg (x 1 - y 1))]
   nlinarith [mul_nonneg (mul_nonneg ha hb) hpsd]
 
-/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309-309`), the two-dimensional witness is
+/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309`), the two-dimensional witness is
 covered: $F(u,v)=u^2+v^2+(2+|u|)|v|$ is finite and convex with unique minimizer $0$; it is
 piecewise linear-quadratic on the four closed quadrants $P_i$ (full-dimensional, covering $\R^2$),
 with formulas $u^2+v^2+\sigma_iuv+2\tau_iv$, $\sigma_i,\tau_i=\pm1$, whose Hessians differ
@@ -3143,7 +3228,38 @@ theorem plq2d_jump (F : Vec 2 → ℝ)
         ring) right_mem_Iic
     simpa using h
 
-/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309-309`), strictness under the locally
+/-- Item `C/04_R/prose/060` (`companion/chapters/04_R.tex:309`), as corrected on 15 October 2026
+(wording point W23; before "different cells can have different quadratic Hessians and different
+gradient jumps."): "different cells can have different quadratic Hessians, and the gradient jump
+can vary along a cell boundary (for example $u^2+v^2+(2+|u|)|v|$ near the origin)." For
+$F(u,v)=u^2+v^2+(2+|u|)|v|$: $F$ is finite and convex with unique minimizer $0$, quadratic on the
+four closed quadrants (full-dimensional cells covering $\R^2$) whose Hessians differ
+($Q_0\ne Q_1$), and Theorem `R:thm:plq` applies to it (`plq2d_covered`); along the cell boundary
+$v=0$ the one-sided derivatives of $s\mapsto F(u,s)$ at $s=0$ are $\pm(2+|u|)$, so the jump of
+$\partial_vF$ across $v=0$ at $(u,0)$ is $2(2+|u|)$ (`plq2d_jump`), and it takes different values
+at boundary points arbitrarily near the origin. -/
+theorem plq2d_hessians_and_varying_jump (F : Vec 2 → ℝ)
+    (hF_def : ∀ x, F x = x 0 ^ 2 + x 1 ^ 2 + (2 + |x 0|) * |x 1|) :
+    (ConvexOn ℝ univ F ∧ (∀ x, F 0 ≤ F x) ∧ (∀ x, F x = F 0 → x = 0) ∧
+      (∃ (a : Fin 4 → Fin 2 → Vec 2) (b : Fin 4 → Fin 2 → ℝ) (P : Fin 4 → Set (Vec 2))
+        (Q : Fin 4 → Mat 2) (c : Fin 4 → Vec 2) (d : Fin 4 → ℝ),
+        (∀ i, P i = {x | ∀ j, dot (a i j) x ≤ b i j}) ∧ (∀ i, (interior (P i)).Nonempty) ∧
+          (∀ x, ∃ i, x ∈ P i) ∧
+          (∀ i, ∀ x ∈ P i, F x = dot x (Q i *ᵥ x) + dot (c i) x + d i) ∧ Q 0 ≠ Q 1) ∧
+      ∃ ε : ℝ, 0 < ε ∧ ∀ run : AdmissibleBFGSRun 2 F, F (run.x 0) ≤ F 0 + ε →
+        Tendsto run.x atTop (𝓝 0)) ∧
+      (∀ u : ℝ, HasDerivWithinAt (fun s : ℝ => F ![u, s]) (2 + |u|) (Ici 0) 0 ∧
+        HasDerivWithinAt (fun s : ℝ => F ![u, s]) (-(2 + |u|)) (Iic 0) 0) ∧
+      ∀ ε : ℝ, 0 < ε → ∃ u₁ u₂ : ℝ, |u₁| < ε ∧ |u₂| < ε ∧ 2 * (2 + |u₁|) ≠ 2 * (2 + |u₂|) := by
+  refine ⟨plq2d_covered F hF_def, plq2d_jump F hF_def, fun ε hε => ⟨0, ε / 2, by simpa using hε,
+    ?_, ?_⟩⟩
+  · rw [abs_of_pos (half_pos hε)]
+    linarith
+  · rw [abs_zero, abs_of_pos (half_pos hε)]
+    intro h
+    linarith
+
+/-- Item `C/04_R/prose/059` (`companion/chapters/04_R.tex:309`), strictness under the locally
 $C^{1,1}$ reading of "smooth" (the reading of lines 300-307, whose "smooth extensions" are the
 $C^{1,1}$ extensions of Theorem `R:thm:plq`, and of the article's parallel Corollary `art:plq`):
 $F(u,v)=u^2+v^2+(2+|u|)|v|$ on $\R^2$ is a finite convex piecewise linear-quadratic objective with
@@ -3189,7 +3305,7 @@ theorem sublinear_radial {n : ℕ} {γ : Vec n → ℝ} (hγ : Sublinear γ) (z 
     (_ht0 : 0 ≤ t) (ht1 : t < 1) : γ ((1 - t) • z) = (1 - t) * γ z :=
   hγ.2 (1 - t) (by linarith) z
 
-/-- Item `C/04_R/prose/064` (`companion/chapters/04_R.tex:332-332`): "There is exactly zero radial
+/-- Item `C/04_R/prose/064` (`companion/chapters/04_R.tex:332`): "There is exactly zero radial
 Taylor error, regardless of angular nonsmoothness." For finite sublinear $\gamma$ centered at zero,
 at every point $z$ where $\gamma$ is differentiable (whatever its nonsmoothness elsewhere),
 $\gamma(z-tz)-\gamma(z)+t\nabla\gamma(z)^Tz=0$ for $0\le t<1$. -/
@@ -3199,7 +3315,7 @@ theorem sublinear_zero_radial_error {n : ℕ} {γ : Vec n → ℝ} (hγ : Sublin
   obtain ⟨hc, hh⟩ := (sublinear_iff γ).mp hγ
   exact Article.Global.homogeneous_inward_remainder_zero hc hh hp t ht1.le
 
-/-- Item `C/04_R/prose/065` (`companion/chapters/04_R.tex:332-332`): "This includes polyhedral
+/-- Item `C/04_R/prose/065` (`companion/chapters/04_R.tex:332`): "This includes polyhedral
 norms, Euclidean norms, the spectral norm and nuclear norm when centered at zero, and asymmetric
 finite gauges." Each of the following is a finite sublinear function: a finite maximum of linear
 forms $\max_ia_i^Tx$ (polyhedral norms and gauges), the Euclidean norm, the spectral norm
@@ -3229,7 +3345,7 @@ theorem sublinear_examples :
   · simp only [Pi.smul_apply, smul_eq_mul]
     rw [show -2 * (t * x 0) = t * (-2 * x 0) by ring, mul_max_of_nonneg _ _ ht]
 
-/-- Item `C/04_R/prose/065` (`companion/chapters/04_R.tex:332-332`), the class of asymmetric finite
+/-- Item `C/04_R/prose/065` (`companion/chapters/04_R.tex:332`), the class of asymmetric finite
 gauges: the gauge (Minkowski functional) $\gamma_S(x)=\inf\{t>0:x\in tS\}$ of every convex
 absorbent set $S\subset\R^n$, symmetric or not, is a finite sublinear function, and it is
 nonnegative (Mathlib's `gauge`, with `gauge_add_le`, `gauge_smul_of_nonneg`, `gauge_nonneg`).
@@ -3247,7 +3363,7 @@ theorem powered_radial {n : ℕ} {γ : Vec n → ℝ} (hγ : Sublinear γ) (hγ0
     γ ((1 - t) • z) ^ p = (1 - t) ^ p * γ z ^ p := by
   rw [sublinear_radial hγ z t ht0 ht1, Real.mul_rpow (by linarith) (hγ0 z)]
 
-/-- Item `C/04_R/prose/066` (`companion/chapters/04_R.tex:338-338`): "On $0\le t\le1/2$, the second
+/-- Item `C/04_R/prose/066` (`companion/chapters/04_R.tex:338`): "On $0\le t\le1/2$, the second
 derivative in $t$ is bounded uniformly on any bounded set of $z$." For finite sublinear
 $\gamma\ge0$ and $p\ge1$ (the library's `RadialPower.powered_radial_second_derivative_bounded`). -/
 theorem powered_second_derivative_bounded {n : ℕ} {γ : Vec n → ℝ} (hγ : Sublinear γ)
@@ -3257,7 +3373,7 @@ theorem powered_second_derivative_bounded {n : ℕ} {γ : Vec n → ℝ} (hγ : 
   obtain ⟨hc, hh⟩ := (sublinear_iff γ).mp hγ
   exact RadialPower.powered_radial_second_derivative_bounded hc hh hγ0 hp hZ
 
-/-- Item `C/04_R/prose/067` (`companion/chapters/04_R.tex:338-338`): "This includes $1<p<2$, without
+/-- Item `C/04_R/prose/067` (`companion/chapters/04_R.tex:338`): "This includes $1<p<2$, without
 demanding a Lipschitz full gradient near zero." For $1<p<2$ and $\gamma(x)=|x|$ on $\R$: the bound
 of `powered_second_derivative_bounded` holds for $|x|^p$, whose derivative $p\,x^{p-1}$ ($x>0$) is
 Lipschitz on no interval $(0,\delta)$. -/
@@ -3391,7 +3507,7 @@ theorem not_coercive_of_line {n : ℕ} {f : Vec n → ℝ} (hc : Continuous f) (
   rw [norm_smul, Real.norm_of_nonneg (by positivity), div_mul_cancel₀ _ hvpos.ne'] at h
   linarith [le_abs_self M]
 
-/-- Item `C/04_R/prose/068` (`companion/chapters/04_R.tex:342-342`): "The individual terms need not
+/-- Item `C/04_R/prose/068` (`companion/chapters/04_R.tex:342`): "The individual terms need not
 be coercive." An instance of all hypotheses of display `disp/043` ($F(u,v)=u^2+|v|$, $x_*=0$,
 $\psi(z)=z_0^2$, one gauge $\gamma=|\cdot|$ on $\R^1$, $A=(0\ 1)$, $p=1$; all sublevels compact)
 in which neither $\psi$ nor the term $\gamma(Az)^p=|z_1|$ is coercive. -/
@@ -3434,7 +3550,7 @@ convergence of every admissible run with $F(x_0)\le F_*+\delta$. -/
 theorem dot_add_right' {n : ℕ} (a x z : Vec n) : dot a (x + z) = dot a x + dot a z := by
   simp only [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
-/-- Item `C/04_R/prose/069` (`companion/chapters/04_R.tex:349-349`): "Locally around any optimizer,
+/-- Item `C/04_R/prose/069` (`companion/chapters/04_R.tex:349`): "Locally around any optimizer,
 a nonzero scalar affine residual has fixed sign and is smooth; a zero residual becomes a centered
 absolute value or hinge." For $r(x)=a^Tx-\beta$ and any point $x_*$: if $r(x_*)\ne0$, then on an
 open neighborhood of $x_*$ the sign of $r$ is that of $r(x_*)$ and $|r|$ and $\max\{0,r\}$ equal
@@ -3463,7 +3579,7 @@ theorem affine_residual_local {n : ℕ} (a : Vec n) (β : ℝ) (xstar : Vec n) :
   · rw [dot_add_right', show dot a xstar + dot a z - β = dot a z by linarith]
     exact ⟨rfl, rfl⟩
 
-/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349-349`): "Hence smooth losses plus
+/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349`): "Hence smooth losses plus
 $\ell_1$, fused/generalized $\ell_1$, finite hinge and quantile losses are covered locally under
 uniqueness." The $\ell_1$ case $F=\psi+\sum_i|a_i^Tx-b_i|$ (the other cases:
 `generalized_l1_covered`, `fused_l1_covered`, `hinge_covered`, `quantile_covered`). -/
@@ -3480,7 +3596,7 @@ theorem l1_covered {n : ℕ} {ι : Type*} [Fintype ι] (ψ : Vec n → ℝ) (hψ
     (fun x _ => hFdef x) hmin huniq
   exact ⟨δ, hδ, fun run hrun => ⟨(h run hrun).2.1, (h run hrun).2.2⟩⟩
 
-/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349-349`), generalized $\ell_1$:
+/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349`), generalized $\ell_1$:
 $F=\psi+\|Dx-c\|_1$ for a matrix $D$. -/
 theorem generalized_l1_covered {n m : ℕ} (ψ : Vec n → ℝ) (hψ : ConvexOn ℝ univ ψ)
     (hψ11 : CenteredSmoothSublinear.LocallyC11On univ ψ) (D : Matrix (Fin m) (Fin n) ℝ)
@@ -3498,7 +3614,7 @@ theorem generalized_l1_covered {n m : ℕ} (ψ : Vec n → ℝ) (hψ : ConvexOn 
     (fun x _ => hFdef x) hmin huniq
   exact ⟨δ, hδ, fun run hrun => ⟨(h run hrun).2.1, (h run hrun).2.2⟩⟩
 
-/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349-349`), fused $\ell_1$:
+/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349`), fused $\ell_1$:
 $F(x)=\psi(x)+w\sum_{i<k}|x_{i+1}-x_i|$ on $\R^{k+1}$, $w\ge0$ (first differences). -/
 theorem fused_l1_covered {k : ℕ} (ψ : Vec (k + 1) → ℝ) (hψ : ConvexOn ℝ univ ψ)
     (hψ11 : CenteredSmoothSublinear.LocallyC11On univ ψ) (w : ℝ) (hw : 0 ≤ w)
@@ -3521,7 +3637,7 @@ theorem fused_l1_covered {k : ℕ} (ψ : Vec (k + 1) → ℝ) (hψ : ConvexOn �
     hmin huniq
   exact ⟨δ, hδ, fun run hrun => ⟨(h run hrun).2.1, (h run hrun).2.2⟩⟩
 
-/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349-349`), finite hinge losses:
+/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349`), finite hinge losses:
 $F=\psi+\sum_i\max\{0,a_i^Tx-b_i\}$. -/
 theorem hinge_covered {n : ℕ} {ι : Type*} [Fintype ι] (ψ : Vec n → ℝ) (hψ : ConvexOn ℝ univ ψ)
     (hψ11 : CenteredSmoothSublinear.LocallyC11On univ ψ) (a : ι → Vec n) (b : ι → ℝ)
@@ -3540,7 +3656,7 @@ theorem hinge_covered {n : ℕ} {ι : Type*} [Fintype ι] (ψ : Vec n → ℝ) (
     (fun x _ => hFdef x) hmin huniq
   exact ⟨δ, hδ, fun run hrun => ⟨(h run hrun).2.1, (h run hrun).2.2⟩⟩
 
-/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349-349`), finite quantile losses:
+/-- Item `C/04_R/prose/070` (`companion/chapters/04_R.tex:349`), finite quantile losses:
 $F=\psi+\sum_i\rho_{\tau_i}(a_i^Tx-b_i)$ with
 $\rho_\tau(r)=\tau\max\{r,0\}+(1-\tau)\max\{-r,0\}$, $0<\tau_i<1$. -/
 theorem quantile_covered {n : ℕ} {ι : Type*} [Fintype ι] (ψ : Vec n → ℝ) (hψ : ConvexOn ℝ univ ψ)
@@ -3566,7 +3682,7 @@ theorem quantile_covered {n : ℕ} {ι : Type*} [Fintype ι] (ψ : Vec n → ℝ
 
 /-! ### Section 4.6.3: affine Euclidean group residuals (line 356) -/
 
-/-- Item `C/04_R/prose/074` (`companion/chapters/04_R.tex:356-356`): "For terms $\|A_jx-b_j\|_2$,
+/-- Item `C/04_R/prose/074` (`companion/chapters/04_R.tex:356`): "For terms $\|A_jx-b_j\|_2$,
 a nonzero optimal residual is locally smooth, while a zero optimal residual becomes $\|A_jz\|_2$,
 which is homogeneous." For a matrix $A$, a vector $\beta$ and the optimal point $x_*$: if
 $Ax_*\ne\beta$ the term is $C^2$ on a ball around $x_*$; if $Ax_*=\beta$ it equals
@@ -3611,7 +3727,7 @@ theorem euclidean_residual_local {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (�
     · show ‖euclideanVector (A *ᵥ (t • z))‖ = t * ‖euclideanVector (A *ᵥ z)‖
       rw [Matrix.mulVec_smul, Article.Global.norm_euclideanVector_smul, abs_of_nonneg ht]
 
-/-- Item `C/04_R/prose/075` (`companion/chapters/04_R.tex:356-356`): "Thus sums of such terms,
+/-- Item `C/04_R/prose/075` (`companion/chapters/04_R.tex:356`): "Thus sums of such terms,
 including overlapping Euclidean group penalties and sums of distances, added to a suitable convex
 smooth objective, satisfy the local condition when the minimizer is unique." For
 $F=\ell+\sum_j\|A_jx-b_j\|_2$ with $\ell$ convex and locally $C^{1,1}$ (`LocallyC11On univ`; $C^2$
@@ -3660,7 +3776,7 @@ theorem euclidean_residuals_local_condition {n : ℕ} {J : Type*} [Fintype J] {m
     hFdef xstar hmin huniq
   exact ⟨ε, hε, fun run hrun => ⟨(h run hrun).2.1, (h run hrun).2.2⟩⟩
 
-/-- Item `C/04_R/prose/076` (`companion/chapters/04_R.tex:356-356`): "This does not imply that every
+/-- Item `C/04_R/prose/076` (`companion/chapters/04_R.tex:356`): "This does not imply that every
 spectral penalty is smooth near every nonzero residual." The nuclear norm on symmetric
 $2\times2$ matrices (orthonormal coordinates, `NuclearSymmetric2.nuclearCoords`) is not
 differentiable at the nonzero matrix $\operatorname{diag}(1,0)$: along
@@ -3763,7 +3879,7 @@ theorem finite_max_branch_test {n : ℕ} {ι : Type*} [Fintype ι]
     ⟨r2, hr2, fun K hK hKB => (RS_iff_library F xstar K).mpr (h2 K hK hKB)⟩, ?_⟩
   exact FiniteMaxRadial.local_finite_max_basin hne hF f hU hf hxU hrep hc hmin huniq
 
-/-- Item `C/04_R/prose/077` (`companion/chapters/04_R.tex:368-368`): "Along a fixed ray, active
+/-- Item `C/04_R/prose/077` (`companion/chapters/04_R.tex:368`): "Along a fixed ray, active
 branches then agree in the scalar first derivative." Under the condition of display `disp/044`:
 on the ray $t\mapsto x-t(x-x_*)$, at every parameter $u\ne1$ whose point $w$ lies in $U$, all
 active branches have the same scalar derivative $\nabla f_i(w)^T(-(x-x_*))$, and it is the
@@ -3812,7 +3928,7 @@ theorem ray_active_agreement {n : ℕ} {ι : Type*} [Fintype ι]
   filter_upwards [hcont.eventually (hU.mem_nhds huU)] with t ht
   exact hrep _ ht
 
-/-- Item `C/04_R/prose/078` (`companion/chapters/04_R.tex:368-368`): "That derivative is a
+/-- Item `C/04_R/prose/078` (`companion/chapters/04_R.tex:368`): "That derivative is a
 continuous selection of finitely many Lipschitz branch derivatives, and has their common Lipschitz
 bound on compact intervals." Under the condition of display `disp/044`: there are $M\ge0$ and a
 ball $B_\rho(x_*)\subset U$ such that for every $x$ in $B_{\rho/4}(x_*)$, on the parameter interval
@@ -3906,10 +4022,11 @@ theorem central_eq {n : ℕ} (F : Vec n → ℝ) (xstar w : Vec n) :
     RadialCertificate.inwardPoint
   rw [neg_smul, sub_neg_eq_add]
 
-/-- Item `C/04_R/prose/080` (`companion/chapters/04_R.tex:370-370`): "The necessity for the old
-radial condition is also clear on genuine active ties: if the active radial derivatives differ by
+/-- Item `C/04_R/prose/080` (`companion/chapters/04_R.tex:370`): "The necessity for (RS) is
+also clear on genuine active ties: if the active radial derivatives differ by
 $J>0$, the one-dimensional central second difference at the tie is $J|t|+O(t^2)$, not $O(t^2)$."
-At $w\in U$, with $J$ the spread (maximum minus minimum) of the active radial derivatives
+(Wording point W21 applied on 15 October 2026; before "the old radial condition".) At $w\in U$,
+with $J$ the spread (maximum minus minimum) of the active radial derivatives
 $\nabla f_i(w)^T(w-x_*)$, $i\in I(w)$ (`activeRadialJump`): the central second difference along the
 ray, $F(w+t(w-x_*))+F(w-t(w-x_*))-2F(w)$, is $J|t|+O(t^2)$, and is not $O(t^2)$ if $J>0$. For
 convex branches, a strict gap between two active radial derivatives at a tie $w$ with
@@ -3949,7 +4066,7 @@ theorem finite_max_necessity {n : ℕ} {ι : Type*} [Fintype ι]
     rw [branch_fderiv_eq_dot hU (hf i) hw, branch_fderiv_eq_dot hU (hf j) hw]
     exact hlt
 
-/-- Item `C/04_R/prose/081` (`companion/chapters/04_R.tex:370-370`): "Thus radial compatibility
+/-- Item `C/04_R/prose/081` (`companion/chapters/04_R.tex:370`): "Thus radial compatibility
 describes the exact no-jump part of the criterion for this finite smooth-branch class." At every
 $w\in U$: the central second difference along the ray is $O(t^2)$ exactly when all active branches
 satisfy the compatibility condition $(\nabla f_i(w)-\nabla f_j(w))^T(w-x_*)=0$ of display
@@ -4001,12 +4118,12 @@ theorem parabolic_objective (F : Vec 2 → ℝ)
     rw [h0] at hx; exact ParabolicRadialBoundary.unique_minimizer.2 x hx,
     ParabolicRadialBoundary.sublevel_compact⟩
 
-/-- Item `C/04_R/prose/083` (`companion/chapters/04_R.tex:390-390`): "the switching curve is
+/-- Item `C/04_R/prose/083` (`companion/chapters/04_R.tex:390`): "the switching curve is
 $v=u^2/2$": the two branches are equal exactly on $v=u^2/2$. -/
 theorem parabolic_switching (u v : ℝ) : u ^ 2 + v = 2 * u ^ 2 - v ↔ v = u ^ 2 / 2 := by
   constructor <;> intro h <;> linarith
 
-/-- Item `C/04_R/prose/084` (`companion/chapters/04_R.tex:390-390`): "At $w=(u,u^2/2)$, $u\ne0$, the
+/-- Item `C/04_R/prose/084` (`companion/chapters/04_R.tex:390`): "At $w=(u,u^2/2)$, $u\ne0$, the
 active gradient difference is $(-2u,2)$ and its radial inner product is $-u^2\ne0$." Both
 branches are active at $w$, their gradients are $(2u,1)$ and $(4u,-1)$, and
 $((2u,1)-(4u,-1))^T(w-0)=-u^2\ne0$. -/
@@ -4041,7 +4158,7 @@ theorem parabolic_tie (F : Vec 2 → ℝ)
   · ext i; fin_cases i <;> simp <;> ring
   · simp [dot, Fin.sum_univ_two]; ring
 
-/-- Item `C/04_R/prose/085` (`companion/chapters/04_R.tex:390-390`): "A ray crosses a genuine
+/-- Item `C/04_R/prose/085` (`companion/chapters/04_R.tex:390`): "A ray crosses a genuine
 one-dimensional kink there." For $u\ne0$ the restriction $s\mapsto F(sw)$ of $F$ to the ray
 through $w=(u,u^2/2)$ is not differentiable at $s=1$ (one-sided derivatives $5u^2/2$ and
 $7u^2/2$). -/
@@ -4131,7 +4248,7 @@ theorem parabolic_ratio (u : ℝ) :
   simp only [he]
   exact ParabolicRadialBoundary.radial_quotient_tendsto hu
 
-/-- Item `C/04_R/prose/086` (`companion/chapters/04_R.tex:400-400`): "This fails (RS) on a positive
+/-- Item `C/04_R/prose/086` (`companion/chapters/04_R.tex:400`): "This fails (RS) on a positive
 objective band in every neighborhood of zero." For every neighborhood $N$ of $0$ there is a band
 $\eta>0$ on which no constant works: (RS) fails on $N$. -/
 theorem parabolic_RS_fails (F : Vec 2 → ℝ)
@@ -4173,7 +4290,7 @@ theorem spectral_objective :
     NuclearSymmetric2.frobenius_matrix⟩
   rw [NuclearSymmetric2.objective_on_symmetric A hA, NuclearSymmetric2.matrix_center]
 
-/-- Item `C/04_R/prose/088` (`companion/chapters/04_R.tex:413-413`): "This is strongly convex and
+/-- Item `C/04_R/prose/088` (`companion/chapters/04_R.tex:413`): "This is strongly convex and
 uniquely minimized at $X_*$. Indeed $X_*-C=\operatorname{diag}(-1,0)$ is canceled by a nuclear-norm
 subgradient $\operatorname{diag}(1,0)$ there." Strong convexity with modulus one in the Frobenius
 norm; $X_*$ is the unique minimizer; $X_*-C=\operatorname{diag}(-1,0)$;
@@ -4215,7 +4332,7 @@ theorem spectral_vectors (θ : ℝ) :
       dot ![Real.cos θ, Real.sin θ] ![-Real.sin θ, Real.cos θ] = 0 :=
   ⟨rfl, rfl, (NuclearSymmetric2.trigRotation θ).vectors_orthonormal⟩
 
-/-- Item `C/04_R/prose/089` (`companion/chapters/04_R.tex:419-419`): the definitions $W=vv^T$,
+/-- Item `C/04_R/prose/089` (`companion/chapters/04_R.tex:419`): the definitions $W=vv^T$,
 $U=uu^T$, $a=\sin^2\theta$; $a>0$ exactly when $\sin\theta\ne0$, the hypothesis of the statements
 below. In coordinates, `W` and `U` are the library's `Rotation.W`, `Rotation.U`. -/
 theorem spectral_W_U (θ : ℝ) :
@@ -4238,7 +4355,7 @@ theorem spectral_pair_form (θ ε : ℝ) :
           ε • outer (NuclearSymmetric2.trigRotation θ).u (NuclearSymmetric2.trigRotation θ).u :=
   (NuclearSymmetric2.trigRotation θ).pair_matrix_form ε
 
-/-- Item `C/04_R/prose/090` (`companion/chapters/04_R.tex:423-423`): "both nuclear norms are
+/-- Item `C/04_R/prose/090` (`companion/chapters/04_R.tex:423`): "both nuclear norms are
 differentiable, since the matrices have nonzero eigenvalues." For $\epsilon>0$ (determinants
 $\mp\epsilon$). -/
 theorem spectral_pair_differentiable (θ ε : ℝ) (hε : 0 < ε) :
@@ -4256,7 +4373,7 @@ theorem spectral_pair_differentiable (θ ε : ℝ) (hε : 0 < ε) :
     (NuclearSymmetric2.nuclearCoords_hasGradient_pos
       ((NuclearSymmetric2.trigRotation θ).positive_branch_new hε)).differentiableAt⟩
 
-/-- Item `C/04_R/prose/091` (`companion/chapters/04_R.tex:423-423`): "The pair is descending:
+/-- Item `C/04_R/prose/091` (`companion/chapters/04_R.tex:423`): "The pair is descending:
 $F(Z_\epsilon)-F(X_\epsilon)=-4a\epsilon<0$", for $\epsilon>0$ and $a=\sin^2\theta>0$. -/
 theorem spectral_descent (θ ε : ℝ) (hε : 0 < ε) (hθ : Real.sin θ ≠ 0) :
     NuclearSymmetric2.objective ((NuclearSymmetric2.trigRotation θ).newPoint ε) -
@@ -4266,7 +4383,7 @@ theorem spectral_descent (θ ε : ℝ) (hε : 0 < ε) (hθ : Real.sin θ ≠ 0) 
   have : 0 < Real.sin θ ^ 2 := by positivity
   nlinarith
 
-/-- Item `C/04_R/prose/092` (`companion/chapters/04_R.tex:423-423`): "Its gradient difference is
+/-- Item `C/04_R/prose/092` (`companion/chapters/04_R.tex:423`): "Its gradient difference is
 $y=2(1+\epsilon)U$": for $\epsilon>0$ the gradients of $F$ at $X_\epsilon$, $Z_\epsilon$ are
 `oldGradient ε`, `newGradient ε`, and their difference is $2(1+\epsilon)U$. -/
 theorem spectral_gradient_difference (θ ε : ℝ) (hε : 0 < ε) :
@@ -4307,7 +4424,7 @@ theorem spectral_ratio (θ : ℝ) :
     fun _ hε => (NuclearSymmetric2.trigRotation θ).radial_quotient hε,
     fun h => (NuclearSymmetric2.trigRotation θ).radial_quotient_tendsto h⟩
 
-/-- Item `C/04_R/prose/093` (`companion/chapters/04_R.tex:429-429`): "Also $F(W)-F(X_*)=2a>0$", for
+/-- Item `C/04_R/prose/093` (`companion/chapters/04_R.tex:429`): "Also $F(W)-F(X_*)=2a>0$", for
 $a=\sin^2\theta>0$. -/
 theorem spectral_base_gap (θ : ℝ) (hθ : Real.sin θ ≠ 0) :
     NuclearSymmetric2.objective (NuclearSymmetric2.trigRotation θ).W -
@@ -4315,7 +4432,7 @@ theorem spectral_base_gap (θ : ℝ) (hθ : Real.sin θ ≠ 0) :
       0 < 2 * Real.sin θ ^ 2 :=
   ⟨(NuclearSymmetric2.trigRotation θ).base_value, by positivity⟩
 
-/-- Item `C/04_R/prose/094` (`companion/chapters/04_R.tex:429-429`): "Choosing small $\theta$ puts
+/-- Item `C/04_R/prose/094` (`companion/chapters/04_R.tex:429`): "Choosing small $\theta$ puts
 such points arbitrarily close to $X_*$." $W\to X_*$ as $\theta\to0$ and $X_\epsilon,Z_\epsilon\to W$
 as $\epsilon\to0^+$; hence every neighborhood of $X_*$ contains, for some $0<\theta<\pi$ (so
 $\sin\theta\ne0$), the pairs with all small $\epsilon>0$. -/
@@ -4331,10 +4448,11 @@ theorem spectral_small_theta :
     exact ⟨θ, hθ, hπ, ((NuclearSymmetric2.trigRotation θ).pair_points_tendsto.1.eventually hNθ).and
       ((NuclearSymmetric2.trigRotation θ).pair_points_tendsto.2.eventually hNθ)⟩
 
-/-- Item `C/04_R/prose/095` (`companion/chapters/04_R.tex:429-429`): "Thus this familiar
-smooth-plus-nuclear-norm problem need not satisfy the original local radial criterion at a nonzero
-rank-deficient minimizer." (RS) fails on every neighborhood of $X_*$, and $X_*\ne0$ has rank
-$1<2$. -/
+/-- Item `C/04_R/prose/095` (`companion/chapters/04_R.tex:429`): "Thus this familiar
+smooth-plus-nuclear-norm problem need not satisfy (RS) on any neighborhood of a nonzero
+rank-deficient minimizer." (Wording point W21 applied on 15 October 2026; before "the original
+local radial criterion at a nonzero rank-deficient minimizer".) (RS) fails on every neighborhood
+of $X_*$, and $X_*\ne0$ has rank $1<2$. -/
 theorem spectral_RS_fails :
     (∀ N ∈ 𝓝 NuclearSymmetric2.minimizer,
       ¬ RS NuclearSymmetric2.objective NuclearSymmetric2.minimizer N) ∧
@@ -4345,7 +4463,7 @@ theorem spectral_RS_fails :
     fun h => by simpa [NuclearSymmetric2.minimizer] using congrFun h 0,
     NuclearSymmetric2.minimizer_matrix_rank⟩
 
-/-- Item `C/04_R/prose/096` (`companion/chapters/04_R.tex:429-429`): "The nuclear norm centered at
+/-- Item `C/04_R/prose/096` (`companion/chapters/04_R.tex:429`): "The nuclear norm centered at
 zero \emph{is} covered." The nuclear norm of symmetric $2\times2$ matrices has zero inward
 remainder toward $0$, so (IR) holds on every set and (RS) on every compact set, and every
 admissible run converges: $\|X_k\|_*\to0$, $X_k\to0$. -/
@@ -4359,7 +4477,7 @@ theorem centered_nuclear_covered :
     fun K hK => (RS_iff_library _ _ K).mpr (NuclearSymmetric2.centered_nuclear_radial hK),
     NuclearSymmetric2.centered_nuclear_convergence⟩
 
-/-- Item `C/04_R/prose/096` (`companion/chapters/04_R.tex:429-429`), smooth plus nuclear norm with
+/-- Item `C/04_R/prose/096` (`companion/chapters/04_R.tex:429`), smooth plus nuclear norm with
 minimizer zero: "The nuclear norm centered at zero \emph{is} covered", read against the preceding
 sentence (a smooth-plus-nuclear-norm problem at a nonzero minimizer) and line 332 ("nuclear norm
 when centered at zero"). For $F=\psi+\|\cdot\|_*$ on symmetric $2\times2$ matrices (coordinates
@@ -4391,7 +4509,7 @@ theorem centered_nuclear_smooth_covered {F ψ : Vec 3 → ℝ} (hψ : ConvexOn �
 
 /-! ### Relation to earlier work (lines 436-443) -/
 
-/-- Item `C/04_R/prose/104` (`companion/chapters/04_R.tex:441-441`): "The Euclidean-norm theorem is
+/-- Item `C/04_R/prose/104` (`companion/chapters/04_R.tex:441`): "The Euclidean-norm theorem is
 a known case recovered here." The Euclidean norm on $\R^n$, $n\ge1$, is finite sublinear
 (`sublinear_examples`), so it satisfies (IR) toward $0$ on every sublevel (zero radial error), and
 the radial argument (Corollary `art:radial-convergence`, `Article.Global.radial_convergence`) gives
@@ -4423,7 +4541,7 @@ theorem euclidean_norm_recovered {n : ℕ} (hn : 1 ≤ n) :
   rw [h0] at hv
   exact ⟨hv, hi huniq⟩
 
-/-- Item `C/04_R/prose/106` (`companion/chapters/04_R.tex:443-443`): "The optimizer in this example
+/-- Item `C/04_R/prose/106` (`companion/chapters/04_R.tex:443`): "The optimizer in this example
 is a specialization of singular-value thresholding." For $C=\operatorname{diag}(2,0)$ (singular
 values $2,0$) and threshold $1$, soft-thresholding the singular values gives
 $\operatorname{diag}(\max\{2-1,0\},\max\{0-1,0\})=\operatorname{diag}(1,0)=X_*$, the unique

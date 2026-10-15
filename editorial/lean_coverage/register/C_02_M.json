@@ -239,7 +239,7 @@
    ],
    "title": "Principal-minor hierarchy",
    "container": null,
-   "sha256": "f4d0c4a5cc7f9526",
+   "sha256": "3a5ab778af1d6ac6",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch02M.hierarchy",
@@ -248,7 +248,7 @@
     "BfgsVerification.principalMinorHierarchy",
     "BfgsVerification.PrincipalMinorHierarchyTarget"
    ],
-   "note": "Standing assumptions written out as in the article's MatrixAlgebra.lean: hH : H ≻ 0, hs : s = -αHg, hα : α > 0, q = gᵀHg > 0, β = -yᵀHg/q > 0, H₊ = inverseBFGS H s y; ‖y‖² is sqNorm y; e_j is principalSum. The statement does not repeat H ≻ 0 and α > 0: the text defines e_j only for SPD matrices (line 63), so e_j(H) and e_j(H₊) presuppose H, H₊ ≻ 0, which (with q, β > 0, t = αβq) is equivalent to α > 0, and an ordinary update has a positive length (the inherited convention). Not a discrepancy; hierarchy_needs_positive_length shows that the inequality fails for α < 0 when e_j is extended to all matrices (Lean's principalSum). Same claim as the article's Theorem art:minor-hierarchy (A/energy/theorem/art:minor-hierarchy), which states H ≻ 0 and α > 0. Wording point (optional, not a discrepancy): state the assumptions as the article does, e.g. \"Let $H\\succ0$ and $\\alpha>0$. For the inverse-BFGS update with $s=-\\alpha Hg$, $q=g^THg>0$ and $\\beta=-y^THg/q>0$, ...\"."
+   "note": "Standing assumptions written out as in the article's MatrixAlgebra.lean: hH : H ≻ 0, hs : s = -αHg, hα : α > 0, q = gᵀHg > 0, β = -yᵀHg/q > 0, H₊ = inverseBFGS H s y; ‖y‖² is sqNorm y; e_j is principalSum. Wording point W4 applied on 15 October 2026: the theorem now states H ≻ 0 and α > 0 (\"For $H\\succ0$ and an ordinary inverse-BFGS update with $s=-\\alpha Hg$, $\\alpha>0$, …\"), as the article does; before they were implicit (e_j is defined only for SPD matrices, line 63, and an ordinary update has a positive length). hierarchy_needs_positive_length shows that the inequality fails for α < 0 when e_j is extended to all matrices (Lean's principalSum). Same claim as the article's Theorem art:minor-hierarchy (A/energy/theorem/art:minor-hierarchy), which states H ≻ 0 and α > 0."
   },
   {
    "id": "C/02_M/disp/007",
@@ -575,7 +575,7 @@
    ],
    "title": "Finite horizon and superquadratic growth under summability",
    "container": null,
-   "sha256": "aa59a82362bb45a8",
+   "sha256": "978514fd9742e5b2",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch02M.superquadratic",
@@ -587,7 +587,7 @@
     "BfgsVerification.SuperquadraticReciprocalTarget",
     "BfgsVerification.sharpPrincipalPotential"
    ],
-   "note": "\"Assume bounded gradients\": a bound G > 0 with ‖g_k‖ ≤ G for all k (Euclidean); fixed weak Wolfe: the run's c₂ < 1, c = 1 - c₂; ∑d_k < ∞: Summable R.d. G, K₀ and V_η appear in (M:finitehorizon) but are defined only in the proof of Theorem M:average: K₀ = 4G²/c² and V_η(H) = ∑_{j=1}^n (K₀/η)^{j-1}e_j(H) (the variable V η H, for η > 0 and SPD H). The claim holds for every gradient bound G > 0 (the Lean statement quantifies over all of them), so the truth value is unaffected. Wording point (not a discrepancy): proposed \"with $G$, $K_0=4G^2/c^2$ and $V_\\eta$ as in the proof of Theorem~\\ref{M:average}\". Conclusions: D_J = ∑_{k≥J} d_k > 0; for every η > 0 and m ≥ 2 the bound (M:finitehorizon) with real powers and the sum over Finset.Ico J (J + m); (1/N²)∑_{k<N} q_k⁻¹ → ∞. superquadratic_full_bfgs proves all three conclusions (D_J > 0 included) for full-BFGS sequences with weak Wolfe (no objective). The article cites both consequences (A/energy/prose/022)."
+   "note": "\"Assume bounded gradients\": a bound G > 0 with ‖g_k‖ ≤ G for all k (Euclidean); fixed weak Wolfe: the run's c₂ < 1, c = 1 - c₂; ∑d_k < ∞: Summable R.d. G, K₀ and V_η, used in (M:finitehorizon), are those of the proof of Theorem M:average, as the statement says since 15 October 2026 (wording point W3 applied): K₀ = 4G²/c² and V_η(H) = ∑_{j=1}^n (K₀/η)^{j-1}e_j(H) (the variable V η H, for η > 0 and SPD H). The claim holds for every gradient bound G > 0 (the Lean statement quantifies over all of them), so the truth value is unaffected. Conclusions: D_J = ∑_{k≥J} d_k > 0; for every η > 0 and m ≥ 2 the bound (M:finitehorizon) with real powers and the sum over Finset.Ico J (J + m); (1/N²)∑_{k<N} q_k⁻¹ → ∞. superquadratic_full_bfgs proves all three conclusions (D_J > 0 included) for full-BFGS sequences with weak Wolfe (no objective). The article cites both consequences (A/energy/prose/022)."
   },
   {
    "id": "C/02_M/disp/020",
@@ -1089,13 +1089,14 @@
   {
    "id": "C/02_M/prose/002",
    "kind": "prose",
-   "anchor": "This module consolidates the common algebra from sources",
    "lines": [
     9,
     9
    ],
+   "anchor": "This chapter consolidates the common algebra of the source notes.",
    "status": "NON_CLAIM",
-   "reason": "Provenance: which source chapters the algebra was consolidated from. (The chapter references in the sentence come from the generator's citation map of the original \\cite{SM,SH,SQ,SU}, so the chapter cites itself among its sources; cosmetic.)"
+   "reason": "Provenance: the chapter consolidates the common algebra of the source notes.",
+   "note": "Wording point W5 applied on 15 October 2026. Before: \"This module consolidates the common algebra from sources~Chapters~\\ref{comp:M}, \\ref{comp:H}, \\ref{comp:F}, \\ref{comp:U}.\", in which the chapter cited itself (the generator maps the source's \\cite{SM,SH,SQ,SU} to chapter references)."
   },
   {
    "id": "C/02_M/prose/003",
@@ -1313,11 +1314,11 @@
   {
    "id": "C/02_M/prose/018",
    "kind": "prose",
-   "anchor": "Thus $\\sum_{k<N}R_k=o(\\sum_{k<N}q_k^{-1})$ excludes a positive gap.",
    "lines": [
     194,
     194
    ],
+   "anchor": "Thus, along runs with bounded gradients, $\\sum_{k<N}R_k=o(\\sum_{k<N}q_k^{-1})$ excludes a positive gap.",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch02M.negligible_corrections",
@@ -1326,7 +1327,7 @@
     "BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_negligible_corrections",
     "BfgsVerification.EnergyBudget.energy_gap_tendsto_zero"
    ],
-   "note": "\"Thus ∑_{k<N}R_k = o(∑_{k<N}q_k⁻¹) excludes a positive gap\": with x_* a minimizer, F_* = F(x_*) and the o(·) as Asymptotics.IsLittleO, F(x_k) → F_* (no gap ≥ η > 0 persists). The deduction from (M:energybound) needs ∑_{k<N}q_k⁻¹ → ∞ (negligible_corrections_of_divergent assumes exactly that); the sentence leaves the hypothesis giving it implicit: Theorem M:average supplies it under bounded gradients (d_k → 0 follows from the minimizer), and negligible_corrections assumes bounded gradients, as the library's objective_tendsto_min_of_negligible_corrections. Without bounded gradients the claim is not proved here, but no counterexample is known (R_k = 0 for all k and ∑q_k⁻¹ < ∞ would be needed; impossible in one dimension), and \"Thus\" points correctly back to (M:energybound), so this is the article's A/energy/prose/010 situation, not a discrepancy (the secondary aspect of M10, without its wrong reference). Wording point (not a discrepancy): proposed \"Thus, along runs with bounded gradients, $\\sum_{k<N}R_k=o(\\sum_{k<N}q_k^{-1})$ excludes a positive gap.\""
+   "note": "\"Thus ∑_{k<N}R_k = o(∑_{k<N}q_k⁻¹) excludes a positive gap\": with x_* a minimizer, F_* = F(x_*) and the o(·) as Asymptotics.IsLittleO, F(x_k) → F_* (no gap ≥ η > 0 persists). The deduction from (M:energybound) needs ∑_{k<N}q_k⁻¹ → ∞ (negligible_corrections_of_divergent assumes exactly that); Theorem M:average supplies it under bounded gradients, which the sentence states since 15 October 2026 (wording point W1 applied) (d_k → 0 follows from the minimizer), and negligible_corrections assumes bounded gradients, as the library's objective_tendsto_min_of_negligible_corrections. Before the correction the sentence left the bounded gradients implicit (the article's A/energy/prose/010 situation, the secondary aspect of M10); no counterexample without them is known."
   },
   {
    "id": "C/02_M/prose/019",
@@ -1386,11 +1387,11 @@
   {
    "id": "C/02_M/prose/023",
    "kind": "prose",
-   "anchor": "Positivity gives $\\sum_{J\\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\\ref{M:average}.",
    "lines": [
     211,
     211
    ],
+   "anchor": "Positivity gives $\\sum_{J\\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\\ref{M:average} under its hypotheses.",
    "status": "LEAN",
    "lean": [
     "BfgsCoverage.Companion.Ch02M.frame_criterion",
@@ -1400,7 +1401,7 @@
     "BfgsVerification.MovingFrameCriterionTarget",
     "BfgsCoverage.Companion.Ch02M.Examples.logRun"
    ],
-   "note": "Under the suppositions of prose/022 (frames V_{k+1} = V_kT_k + s_kb_kᵀ, Euclidean operator norms): ∑_{J≤k<N} q_k⁻¹ = O(N) (IsBigO), and the suppositions cannot hold together with the hypotheses of Theorem M:average (bounded gradients and d_k → 0), which is the contradiction. The paragraph does not restate those hypotheses; \"contradicting Theorem M:average\" refers to them (a correct reference). Non-vacuity of the O(N) part: the suppositions are satisfiable (example logRun in the module: bounded gradients, d_k = 1, ∑_{J≤k<N} q_k⁻¹ = 2(N - J)), so the hypotheses of Theorem M:average are really needed for the contradiction; logRun's values tend to inf F = -∞, so it is not a nonoptimal tail and does not refute the sentence. Wording point (optional, not a discrepancy): \"..., contradicting Theorem~\\ref{M:average} when the gradients are bounded ($d_k\\to0$ holds on a nonoptimal tail of a bounded-below objective)\"."
+   "note": "Under the suppositions of prose/022 (frames V_{k+1} = V_kT_k + s_kb_kᵀ, Euclidean operator norms): ∑_{J≤k<N} q_k⁻¹ = O(N) (IsBigO), and the suppositions cannot hold together with the hypotheses of Theorem M:average (bounded gradients and d_k → 0), which is the contradiction. Since 15 October 2026 the sentence says \"contradicting Theorem~\\ref{M:average} under its hypotheses\" (wording point W2 applied). Non-vacuity of the O(N) part: the suppositions are satisfiable (example logRun in the module: bounded gradients, d_k = 1, ∑_{J≤k<N} q_k⁻¹ = 2(N - J)), so the hypotheses of Theorem M:average are really needed for the contradiction; logRun's values tend to inf F = -∞, so it is not a nonoptimal tail and does not refute the sentence."
   },
   {
    "id": "C/02_M/prose/024",

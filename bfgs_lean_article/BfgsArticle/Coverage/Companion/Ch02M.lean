@@ -75,20 +75,22 @@ The other displays of the proof of Theorem `M:hierarchy` (`disp/008`, `disp/010`
 
 ## Readings and implicit hypotheses
 
-* Theorem `M:hierarchy` does not repeat $H\succ0$ and $\alpha>0$. The text defines $e_j$ only
-  for SPD matrices (line 63), so $e_j(H)$ and $e_j(H_+)$ presuppose $H,H_+\succ0$, which (with
-  $q,\beta>0$) is equivalent to $\alpha>0$; an ordinary update has a positive length. Lean's
-  `principalSum` is defined for every matrix, and `hierarchy_needs_positive_length` shows that
-  the inequality fails for $\alpha<0$.
+* Theorem `M:hierarchy` did not state $H\succ0$ and $\alpha>0$ (both implicit: the text defines
+  $e_j$ only for SPD matrices, line 63, and an ordinary update has a positive length); since 15
+  October 2026 it states them, as the article does (wording point W4). Lean's `principalSum` is
+  defined for every matrix, and `hierarchy_needs_positive_length` shows that the inequality fails
+  for $\alpha<0$.
 * Theorems `M:average` and `M:superquadratic` say "an infinite full-BFGS run ... fixed weak
   Wolfe". Under the chapter's convention this is an admissible run (`average`,
   `superquadratic`); `average_full_bfgs` and `superquadratic_full_bfgs` prove them also for every
   full-BFGS sequence satisfying weak Wolfe, without an objective. The statement of Theorem
-  `M:superquadratic` uses $G$ and $V_\eta$ of the proof of Theorem `M:average`.
-* The sentence "Thus $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes a positive gap" (line 194)
-  needs $\sum_{k<N}q_k^{-1}\to\infty$, which Theorem `M:average` supplies under bounded gradients;
-  `negligible_corrections` assumes bounded gradients, `negligible_corrections_of_divergent` only
-  the divergence.
+  `M:superquadratic` uses $G$, $K_0$ and $V_\eta$ of the proof of Theorem `M:average`, as it says
+  since 15 October 2026 (wording point W3).
+* The sentence "Thus, along runs with bounded gradients, $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$
+  excludes a positive gap" (line 194; the bounded gradients stated since 15 October 2026, wording
+  point W1) needs $\sum_{k<N}q_k^{-1}\to\infty$, which Theorem `M:average` supplies under bounded
+  gradients; `negligible_corrections` assumes bounded gradients,
+  `negligible_corrections_of_divergent` only the divergence.
 * The proof of Theorem `M:residualtheorem` argues by contradiction, so the standing assumptions of
   its displays cannot all hold; each display is stated under them (`projection_trace`, ...,
   `residual_budget`) and proved from a general one-step form whose assumptions are satisfiable
@@ -162,7 +164,7 @@ theorem euclid_closedBall_compact {n : ℕ} (ρ : ℝ) :
 
 /-! ### Section `M:notation` -/
 
-/-- Item `C/02_M/prose/004` (`companion/chapters/02_M.tex:9-9`): "All results inherit the
+/-- Item `C/02_M/prose/004` (`companion/chapters/02_M.tex:9`): "All results inherit the
 infinite-admissible-run convention in the inventory." The convention of
 `companion/chapters/01_I.tex:40-47` (nonzero gradients at differentiable accepted iterates,
 positive lengths, fixed Armijo--weak-Wolfe constants $0<c_1<c_2<1$, $H_0\succ0$, the full BFGS
@@ -208,7 +210,7 @@ theorem basic {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ
   ⟨R.armijo_decrease k, R.convexity_decrease_upper k, R.curvature_lower_bound k,
     mul_pos R.wolfe_constant_pos (R.d_pos k)⟩
 
-/-- Item `C/02_M/prose/005` (`companion/chapters/02_M.tex:22-22`): "In particular
+/-- Item `C/02_M/prose/005` (`companion/chapters/02_M.tex:22`): "In particular
 $\sum d_k<\infty$ on a run with finite limiting value." If $F(x_k)$ has a finite limit, then
 $\sum_kd_k<\infty$ (`Summable R.d`; $d_k>0$). -/
 theorem summable_of_finite_limit {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
@@ -233,7 +235,7 @@ theorem annihilation {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (
   rw [hM k]
   exact ⟨R.annihilated_hessian_posSemidef k, R.annihilated_hessian_mul_displacement k⟩
 
-/-- Item `C/02_M/prose/006` (`companion/chapters/02_M.tex:30-30`): "For example
+/-- Item `C/02_M/prose/006` (`companion/chapters/02_M.tex:30`): "For example
 $(g_k^Tz)^2\le q_k z^TB_kz$, and $B_ks_k=-\alpha_kg_k$ proves the second identity." For every
 $k$ and every $z$, $(g_k^Tz)^2\le q_k\,z^TB_kz$; and $B_ks_k=-\alpha_kg_k$. -/
 theorem metric_cauchy_schwarz {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ) :
@@ -267,7 +269,7 @@ theorem metric_cauchy_schwarz {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
     rw [Matrix.mulVec_smul, Matrix.mulVec_mulVec,
       Matrix.nonsing_inv_mul _ (isUnit_iff_ne_zero.mpr hH.det_pos.ne'), Matrix.one_mulVec]
 
-/-- Item `C/02_M/prose/007` (`companion/chapters/02_M.tex:32-32`): "A finite convex function
+/-- Item `C/02_M/prose/007` (`companion/chapters/02_M.tex:32`): "A finite convex function
 has uniformly bounded subgradients on any compact set $K$." For a finite convex
 $F:\R^n\to\R$ and a compact $K$ there is $G$ with $\|g\|\le G$ (Euclidean norm) for every
 $x\in K$ and every subgradient $g$ of $F$ at $x$, i.e. every $g$ with
@@ -279,7 +281,7 @@ theorem bounded_subgradients {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ Se
   obtain ⟨G, hG, hbound⟩ := convex_supporting_bound_on_compact hF hK
   exact ⟨G, fun x hx g hg => euclid_norm_le_of_sqNorm_le hG.le (hbound x hx g hg)⟩
 
-/-- Item `C/02_M/prose/008` (`companion/chapters/02_M.tex:32-32`): "Indeed, choose
+/-- Item `C/02_M/prose/008` (`companion/chapters/02_M.tex:32`): "Indeed, choose
 $\epsilon>0$ and bound its continuous values on $K+\epsilon\overline B$. The supporting
 inequality at $x$ evaluated at $x+\epsilon u$ bounds $g^Tu$ for every unit $u$, hence
 $\|g\|$." For a finite convex $F$, a compact $K$ and $\epsilon>0$: $F$ is bounded above on
@@ -488,7 +490,7 @@ theorem strict_contours {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F
 
 /-! ### Section `M:principal` -/
 
-/-- Item `C/02_M/prose/010` (`companion/chapters/02_M.tex:63-63`), the definition "For SPD $H$,
+/-- Item `C/02_M/prose/010` (`companion/chapters/02_M.tex:63`), the definition "For SPD $H$,
 let $e_j(H)$ be the elementary symmetric polynomial of degree $j$ of its eigenvalues, with
 $e_{n+1}=0$." The Lean $e_j(H)$ is the library's `principalSum H j`, the sum of the
 $j\times j$ principal minors. This theorem unfolds it to the text's definition: for SPD $H$
@@ -501,7 +503,7 @@ theorem elementary_symmetric_def {n : ℕ} (H : Mat n) (hH : H.PosDef) :
   ⟨(BfgsCoverage.Article.Energy.principal_sums_coefficients H hH.isHermitian).2.2.2,
     principalSum_terminal H⟩
 
-/-- Item `C/02_M/prose/011` (`companion/chapters/02_M.tex:63-63`): "Thus $e_1=\tr$ and
+/-- Item `C/02_M/prose/011` (`companion/chapters/02_M.tex:63`): "Thus $e_1=\tr$ and
 $e_n=\det$." For SPD $H$, $e_1(H)=\tr H$ and $e_n(H)=\det H$. -/
 theorem trace_det {n : ℕ} (H : Mat n) (hH : H.PosDef) :
     principalSum H 1 = H.trace ∧ principalSum H n = H.det :=
@@ -511,10 +513,12 @@ theorem trace_det {n : ℕ} (H : Mat n) (hH : H.PosDef) :
 /-- Item `C/02_M/theorem/M:hierarchy` (`companion/chapters/02_M.tex:65-70`), Theorem
 `M:hierarchy` (Principal-minor hierarchy), with its display \eqref{M:minor}.
 
-For an ordinary inverse-BFGS update with $s=-\alpha Hg$, $q=g^THg>0$ and $\beta=-y^THg/q>0$,
+For $H\succ0$ and an ordinary inverse-BFGS update with $s=-\alpha Hg$, $\alpha>0$, $q=g^THg>0$
+and $\beta=-y^THg/q>0$,
 \[ e_j(H_+)\le \frac{\|y\|^2}{\beta^2q}e_{j+1}(H)+\frac\alpha\beta e_j(H),\qquad1\le j\le n. \]
-$H$ is SPD (the setting of $e_j$, line 63) and the step length is positive, $\alpha>0$ (the
-inherited convention: an ordinary update has a positive length); $H_+$ is the inverse update
+($H\succ0$ and $\alpha>0$ are stated since 15 October 2026, wording point W4; before, they were
+implicit in the setting of $e_j$, line 63, and in the convention that an ordinary update has a
+positive length.) $H_+$ is the inverse update
 `inverseBFGS H s y`. The standing assumptions are written as in the article's
 `MatrixAlgebra.lean`; $\|y\|^2$ is `sqNorm y` and $e_j$ is `principalSum`. -/
 theorem hierarchy {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)
@@ -528,7 +532,8 @@ theorem hierarchy {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)
   (BfgsCoverage.Article.Energy.minor_hierarchy H Hplus g y s α q β hH hs hα hq_def hq hβ_def hβ
     hHplus).1
 
-/-- The positivity $\alpha>0$ left implicit in Theorem `M:hierarchy` is needed: for $n=2$,
+/-- The positivity $\alpha>0$ stated in Theorem `M:hierarchy` (implicit there before 15 October
+2026) is needed: for $n=2$,
 $H=I$, $g=e_1$, $y=-e_1$ and $\alpha=-1$ (so $s=e_1$, $q=1$, $\beta=1$, $t=y^Ts=-1$), the
 update is $H_+=\operatorname{diag}(-1,1)$ and \eqref{M:minor} fails at $j=1$:
 $e_1(H_+)=0>-1=\|y\|^2e_2(H)/(\beta^2q)+(\alpha/\beta)e_1(H)$. -/
@@ -707,12 +712,14 @@ theorem potential_ge_trace {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
 displays \eqref{M:finitehorizon} and \eqref{M:superquad}.
 
 Assume bounded gradients, fixed weak Wolfe and $\sum_kd_k<\infty$. For a fixed tail $J$ let
-$D_J=\sum_{k\ge J}d_k>0$. For every $\eta>0$ and $m\ge2$,
+$D_J=\sum_{k\ge J}d_k>0$. For every $\eta>0$ and $m\ge2$, with $G$, $K_0$ and $V_\eta$ as in the
+proof of Theorem~\ref{M:average},
 \[ \sum_{k=J}^{J+m-1}q_k^{-1}\ge m[G^2V_\eta(H_J)]^{-1/m}
    \Bigl(\eta+\frac{D_J}{c(m-1)}\Bigr)^{-(m-1)/m}. \]
 In particular $\frac1{N^2}\sum_{k<N}q_k^{-1}\to\infty$.
 
-The statement uses $G$ and $V_\eta$ of the proof of Theorem `M:average`: $G>0$ is a bound
+The statement uses $G$, $K_0$ and $V_\eta$ of the proof of Theorem `M:average` (declared in the
+statement since 15 October 2026, wording point W3): $G>0$ is a bound
 $\|g_k\|\le G$ (this is how bounded gradients enter), $c=1-c_2$, $K_0=4G^2/c^2$ and
 $V_\eta(H)=\sum_{j=1}^n(K_0/\eta)^{j-1}e_j(H)$ for SPD $H$ (the variable `V η H`). Real powers;
 the sum over $k=J,\dots,J+m-1$ is over `Finset.Ico J (J + m)`. -/
@@ -1000,7 +1007,7 @@ theorem liminf_bound {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
       ((hev a ha).mono fun N hN => EReal.coe_le_coe_iff.mpr hN)
   | top => exact absurd hx (not_lt.mpr le_top)
 
-/-- Item `C/02_M/prose/013` (`companion/chapters/02_M.tex:173-173`): "The finite-horizon bound
+/-- Item `C/02_M/prose/013` (`companion/chapters/02_M.tex:173`): "The finite-horizon bound
 and the weaker-assumption geometric-mean theorem are retained alongside the strongest
 summable-budget asymptotic statement." The comparisons it asserts: the assumption $d_k\to0$ of
 Theorem `M:average` is weaker than $\sum_kd_k<\infty$ of Theorem `M:superquadratic`; and the
@@ -1024,7 +1031,7 @@ theorem retained_comparison {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun
 /-! ### Section `M:energy`: the fixed-reference energy -/
 
 /-- Item `C/02_M/disp/025` (`companion/chapters/02_M.tex:183-185`), with the definitions of the
-sentence that introduces it, Item `C/02_M/prose/014` (`companion/chapters/02_M.tex:182-182`): "For
+sentence that introduces it, Item `C/02_M/prose/014` (`companion/chapters/02_M.tex:182`): "For
 any fixed reference point $x_*$ define $r_k=x_k-x_*$, $a_k=g_k^Tr_k$, $E_k=r_k^TB_kr_k$ and
 $R_k=(y_k^Tr_{k+1})^2/t_k$." These are the library's `R.referencePairing xstar k`,
 `R.referenceEnergy xstar k` and `R.referenceCorrection xstar k`; $R_k$ is the variable `Rk`
@@ -1043,7 +1050,7 @@ theorem reference_notation {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
 
 /-- Item `C/02_M/disp/026`, equation `M:fixedenergy` (`companion/chapters/02_M.tex:187-189`),
 with the claim of the sentence that introduces it, Item `C/02_M/prose/015`
-(`companion/chapters/02_M.tex:186-186`): expansion of \eqref{M:hessian} at
+(`companion/chapters/02_M.tex:186`): expansion of \eqref{M:hessian} at
 $r_{k+1}=r_k-\alpha_kH_kg_k$ gives exactly
 \[ E_{k+1}=E_k-\frac{a_k^2}{q_k}+R_k \]
 for every fixed $x_*$ and every $k$ (notation of `reference_notation`). -/
@@ -1061,7 +1068,7 @@ theorem fixed_energy {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (
   rw [neg_smul]
   abel
 
-/-- Item `C/02_M/prose/016` (`companion/chapters/02_M.tex:190-190`): "The cancellation is
+/-- Item `C/02_M/prose/016` (`companion/chapters/02_M.tex:190`): "The cancellation is
 $-2\alpha a+\alpha^2q-(a-\alpha q)^2/q=-a^2/q$." For every fixed $x_*$ and every $k$, with
 $a=a_k$, $\alpha=\alpha_k$, $q=q_k$:
 $-2\alpha_ka_k+\alpha_k^2q_k-(a_k-\alpha_kq_k)^2/q_k=-a_k^2/q_k$. -/
@@ -1074,7 +1081,7 @@ theorem cancellation {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (
   field_simp
   ring
 
-/-- Item `C/02_M/prose/017` (`companion/chapters/02_M.tex:190-190`): "If $x_*$ is a minimizer,
+/-- Item `C/02_M/prose/017` (`companion/chapters/02_M.tex:190`): "If $x_*$ is a minimizer,
 convexity gives $a_k\ge F(x_k)-F_*$." With $F_*=F(x_*)$: $a_k\ge F(x_k)-F_*$ for every $k$. -/
 theorem pairing_ge_gap {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (xstar : Vec n)
     (_hmin : ∀ z, F xstar ≤ F z) (Fstar : ℝ) (hFstar : Fstar = F xstar)
@@ -1136,16 +1143,17 @@ theorem negligible_corrections_of_divergent {n : ℕ} {F : Vec n → ℝ} (R : A
     simpa only [sub_add_cancel, zero_add] using hgap.add_const (F xstar)
   exact ⟨hlim, no_positive_gap R _ hlim⟩
 
-/-- Item `C/02_M/prose/018` (`companion/chapters/02_M.tex:194-194`): "Thus
-$\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes a positive gap." With the notation of
+/-- Item `C/02_M/prose/018` (`companion/chapters/02_M.tex:194`): "Thus, along runs with bounded
+gradients, $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes a positive gap." (The bounded gradients
+are stated since 15 October 2026, wording point W1.) With the notation of
 `reference_notation`, $x_*$ a minimizer and $F_*=F(x_*)$: if
 $\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ as $N\to\infty$, then $F(x_k)\to F_*$, i.e. no gap
 $F(x_k)-F_*\ge\eta>0$ persists.
 
 The deduction from \eqref{M:energybound} needs $\sum_{k<N}q_k^{-1}\to\infty$
 (`negligible_corrections_of_divergent`), which Theorem `M:average` gives under bounded
-gradients ($d_k\to0$ follows from the minimizer). The sentence leaves this hypothesis implicit;
-it is the hypothesis `hbdd` here, as in the library's
+gradients ($d_k\to0$ follows from the minimizer). The bounded gradients, which the sentence
+states since 15 October 2026, are the hypothesis `hbdd` here, as in the library's
 `objective_tendsto_min_of_negligible_corrections`. -/
 theorem negligible_corrections {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (hbdd : ∃ Λ : ℝ, ∀ k, ‖euclideanVector (R.g k)‖ ≤ Λ)
@@ -1173,7 +1181,7 @@ theorem negligible_corrections {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGS
       _ = _ := one_mul _
   exact negligible_corrections_of_divergent R xstar hmin Fstar hFstar r hr Rk hRk hdiv ho
 
-/-- Item `C/02_M/prose/019` (`companion/chapters/02_M.tex:194-194`): "With the summability
+/-- Item `C/02_M/prose/019` (`companion/chapters/02_M.tex:194`): "With the summability
 assumptions of Theorem `M:superquadratic`, an $O(N^2)$ cumulative correction suffices." With
 the notation of `reference_notation`, $x_*$ a minimizer and $F_*=F(x_*)$, under bounded
 gradients and $\sum_kd_k<\infty$: if $\sum_{k<N}R_k=O(N^2)$, then $F(x_k)\to F_*$ (no positive
@@ -1204,7 +1212,7 @@ theorem quadratic_corrections {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
 
 /-- Item `C/02_M/disp/029`, equation `M:frameidentity` (`companion/chapters/02_M.tex:201-203`),
 under the supposition of display `C/02_M/disp/028` (lines 197-199) and the definitions of
-Item `C/02_M/prose/021` (`companion/chapters/02_M.tex:200-200`). For frames
+Item `C/02_M/prose/021` (`companion/chapters/02_M.tex:200`). For frames
 $V_k\in\R^{n\times r}$ with $V_{k+1}=V_kT_k+s_kb_k^T$ (`rectOuter s b` is $sb^T$), set
 $A_k=V_k^TB_kV_k$, $a_k=V_k^Tg_k$, $c_k=V_{k+1}^Ty_k$. Then for every $k$
 \[ A_{k+1}=T_k^T\Bigl(A_k-\frac{a_ka_k^T}{q_k}\Bigr)T_k+\frac{c_kc_k^T}{t_k}. \] -/
@@ -1249,7 +1257,7 @@ theorem normalized_trace_step {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
   ring
 
 /-- Item `C/02_M/disp/030` (`companion/chapters/02_M.tex:205-210`). Under the supposition of
-Item `C/02_M/prose/022` (`companion/chapters/02_M.tex:204-204`): on a tail $k\ge J$,
+Item `C/02_M/prose/022` (`companion/chapters/02_M.tex:204`): on a tail $k\ge J$,
 $\|a_k\|\ge\epsilon>0$, $\|c_k\|^2/t_k\le C$, and the cumulative products $P_J=I$,
 $P_{k+1}=P_kT_k$ have bounded norms and bounded inverse norms (Euclidean operator norms;
 $P_k$ invertible), congruence by $P_{k+1}^{-1}$ and a trace yield, for every $k\ge J$,
@@ -1286,8 +1294,9 @@ theorem sqNorm_transpose_le {r : ℕ} (M : Mat r) (K : ℝ)
     nlinarith
   exact ((FrameNorms.operatorSqBound_iff_opNorm_sq M (K ^ 2 + 1) (by positivity)).mpr hsq) v
 
-/-- Item `C/02_M/prose/023` (`companion/chapters/02_M.tex:211-211`): "Positivity gives
-$\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem `M:average`." Under the suppositions of
+/-- Item `C/02_M/prose/023` (`companion/chapters/02_M.tex:211`): "Positivity gives
+$\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem `M:average` under its hypotheses." ("under
+its hypotheses" added on 15 October 2026, wording point W2.) Under the suppositions of
 display `C/02_M/disp/030` (frames $V_{k+1}=V_kT_k+s_kb_k^T$; on the tail $k\ge J$:
 $\|a_k\|\ge\epsilon>0$, $\|c_k\|^2/t_k\le C$, $P_J=I$, $P_{k+1}=P_kT_k$ with bounded norms and
 bounded inverse norms): $\sum_{J\le k<N}q_k^{-1}=O(N)$; and this contradicts Theorem
@@ -2008,7 +2017,7 @@ theorem residual_budget {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F
       mul_le_mul_of_nonneg_left hsumN hC2
     nlinarith
 
-/-- Item `C/02_M/prose/027` (`companion/chapters/02_M.tex:275-275`): "Euclidean smallness alone
+/-- Item `C/02_M/prose/027` (`companion/chapters/02_M.tex:275`): "Euclidean smallness alone
 does not control a residual in a direction where $B_k$ may grow without this estimate." In
 positive dimension, no bound of the residual energy $\tr(R^TBR)$ by its Euclidean size
 $\|R\|_F^2$ holds uniformly over SPD metrics $B$: for every constant $c$ there are an SPD $B$
@@ -2031,7 +2040,7 @@ theorem euclidean_smallness_insufficient {n : ℕ} (hn : 1 ≤ n) :
   rw [hfrob, htr, mul_one] at h
   linarith [le_abs_self c]
 
-/-- Item `C/02_M/prose/043` (`companion/chapters/02_M.tex:288-288`): "Its additive errors need
+/-- Item `C/02_M/prose/043` (`companion/chapters/02_M.tex:288`): "Its additive errors need
 not be summable, so the earlier lemmas alone do not prove this residual theorem." The additive
 errors $C_2(k+1)$ of display `C/02_M/disp/039` are not summable unless $C_2=0$: for $C_2>0$,
 $\sum_kC_2(k+1)=\infty$. (The comparison with the cited lemmas is bibliographic.) -/
@@ -2046,7 +2055,7 @@ theorem additive_errors_not_summable (C2 : ℝ) (hC2 : 0 < C2) :
 
 /-! ### Relation to earlier work -/
 
-/-- Item `C/02_M/prose/030` (`companion/chapters/02_M.tex:282-282`): "The BFGS update, secant
+/-- Item `C/02_M/prose/030` (`companion/chapters/02_M.tex:282`): "The BFGS update, secant
 equation, positive-definiteness preservation and determinant identity are classical." The
 mathematical facts named (proved here; their attribution is bibliographic): for the inverse
 update $H_+=(I-sy^T/t)H(I-ys^T/t)+ss^T/t$, $t=y^Ts$:

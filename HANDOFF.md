@@ -12,7 +12,7 @@ the same day.
 | Work | State | Details |
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
-| Manuscript review | M1–M6 fixed on 13 October; M7–M11 fixed in the article on 15 October (step 2); open: the companion's recurrences of M8, its items M12–M29 and its wording points W1–W43, found by the Lean coverage, and M30–M41 from the line-by-line reading of the article | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
+| Manuscript review | M1–M6 fixed on 13 October; on 15 October (step 2) M7–M11 fixed in the article, and in the companion the recurrences of M8, M12–M29 and the wording points W1–W11 and W14–W46 (W12 and W13 left for the author); open: M30–M41 from the line-by-line reading of the article, W31 (the claim/proof index) and W47 | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 
@@ -20,9 +20,12 @@ The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Le
 coverage" below) started on 15 October: the article's corrections M7–M11 are done;
 six reader agents read the article line by line (reports and decisions in
 `editorial/line_by_line_reading_20261015/`), and their accepted findings are
-M30–M41 in `TODO_MANUSCRIPT_REVIEW.md`. An agent is applying the companion's
-corrections (M8's recurrences, M12–M29, W1–W43 except W12 and W13); the article's
-M30–M41 follow.
+M30–M41 in `TODO_MANUSCRIPT_REVIEW.md`. The companion's corrections (M8's
+recurrences, M12–M29, W1–W46 except W12 and W13) were applied by an agent,
+reviewed by another and committed. Next: the claim/proof index gains the Lean
+coverage of every item (W31); an agent applies the article's M30–M41 and W47; then
+the release run (`editorial/release_plan_20261015/PLAN.md`; its tooling is being
+prepared by another agent).
 
 Latest checks:
 
@@ -33,10 +36,12 @@ Latest checks:
 - Kernel replay of `9f03d7c` with lean4checker v4.19.0: PASS, 783 modules
   (`bfgs_lean_article/KERNEL_REPLAY.json`); 27 minutes on the MacBook with 8 jobs.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
-  modules (last run on 15 October after the corrections M7–M11: 184 s);
-  `check_coverage.py` exits 0 (also with `--strict` on every article file and with
-  `--strict --allow-discrepancies` on every companion file);
-  `generate_companion.py --check` passes.
+  modules (last run on 15 October after the companion corrections: 159 s);
+  `check_coverage.py --strict` exits 0 on every article and companion file, without
+  `--allow-discrepancies`; `generate_companion.py --check` passes.
+- The audit and the replay above predate the Lean docstring and declaration changes
+  of the corrections (from `613cb77` on); they are rerun on the final commit before
+  the release.
 
 ## Setting up the Mac
 

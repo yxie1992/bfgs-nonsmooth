@@ -74,9 +74,12 @@ statement and warning (§9), with the prose claims of the chapter. Register:
 Each declaration's docstring names its item(s); the register lists the Lean names of every item.
 Named results: `cluster`, `cor_AC` and `cor_AC_local`, `cor_max` and `cor_max_hessian`, `steps`,
 `transversality`, `transport`, `secant` (with `three_estimates` for their common field). Every
-item of the chapter has a final status except one discrepancy (typo): the stale reference "A's low
-affine-critical gap" (line 398, item `C/09_C/prose/117`), which means Proposition 8.1
-(`A:semialgebraic`); the corrected claim is `semialgebraic_low_basin`.
+item of the chapter has a final status. The one discrepancy (typo), the stale reference "A's low
+affine-critical gap" (line 398, item `C/09_C/prose/117`) for Proposition 8.1
+(`A:semialgebraic`), was corrected on 15 October 2026 (M20): the sentence now reads "Combining the
+low affine-critical gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster}";
+its claim is `semialgebraic_low_basin`. Wording points W8 (lines 93 and 110), W14 (line 151) and
+W15 (line 191, "$0\le\chi_j\le1$") were applied on the same day.
 
 ## Non-vacuity
 
@@ -101,7 +104,7 @@ namespace BfgsCoverage.Companion.Ch09C
 /-! ### §1. Statements and assumptions (lines 33-98) -/
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/004` (`companion/chapters/09_C.tex:43-43`), anchor "Ordinary
+/-- Item `C/09_C/prose/004` (`companion/chapters/09_C.tex:43`), anchor "Ordinary
 stationarity, $0\in\partial F(p)$, implies affine criticality": "Ordinary stationarity,
 $0\in\partial F(p)$, implies affine criticality, but not conversely."
 
@@ -119,7 +122,7 @@ theorem stationary_affineCritical :
   exact ⟨F, 0, hF, hc, hn⟩
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/004` (`companion/chapters/09_C.tex:43-43`), "but not conversely", within
+/-- Item `C/09_C/prose/004` (`companion/chapters/09_C.tex:43`), "but not conversely", within
 the standing assumptions of line 35: $F(u,v)=\max\{u,2u\}+u^2+v^2$ is finite and convex, attains
 $F_*=-1/4$ (at $(-1/2,0)$, the only minimizer), its sublevel $K=\{F\le0\}$ ($b=0>F_*$) is
 compact, and the point $0\in K$ is affine critical ($(1,0),(2,0)\in\partial F(0)$, whose affine
@@ -197,7 +200,7 @@ theorem affineCritical_not_stationary_standing (F : Vec 2 → ℝ)
   simp [dot] at h
   norm_num at h
 
-/-- Item `C/09_C/prose/005` (`companion/chapters/09_C.tex:47-47`), anchor "\textbf{Strictly
+/-- Item `C/09_C/prose/005` (`companion/chapters/09_C.tex:47`), anchor "\textbf{Strictly
 convex positive sublevels.}": the first objective-level hypothesis, "For every $F_*<t\le b$, the
 convex body $K_t=\{F\le t\}$ is strictly convex: its boundary contains no nontrivial line
 segment." (Theorem `cluster` writes it out as its hypothesis `hstrict`.) -/
@@ -222,7 +225,7 @@ def RegularSwitching (F : Vec 2 → ℝ) (b : ℝ) : Prop :=
       (∀ z ∈ V, F z = max (f₁ z) (f₂ z)) ∧ f₁ p = F p ∧ f₂ p = F p ∧
       LinearIndependent ℝ ![coordinateGradient f₁ p, coordinateGradient f₂ p])
 
-/-- Item `C/09_C/prose/006` (`companion/chapters/09_C.tex:47-47`), anchor "the convex body
+/-- Item `C/09_C/prose/006` (`companion/chapters/09_C.tex:47`), anchor "the convex body
 $K_t=\{F\le t\}$".
 
 Under the standing assumptions of line 35 ($F$ finite and convex, attaining $F_*$, with compact
@@ -246,7 +249,7 @@ theorem sublevel_convex_body (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
       exact ht
     exact ⟨xs, interior_mono (fun x (hx : F x < t) => (le_of_lt hx : F x ≤ t)) hxs'⟩
 
-/-- Item `C/09_C/prose/007` (`companion/chapters/09_C.tex:47-47`), anchor "This is a condition
+/-- Item `C/09_C/prose/007` (`companion/chapters/09_C.tex:47`), anchor "This is a condition
 on the contours, not a uniform lower Hessian bound."
 
 The strict-contour hypothesis does not require a positive lower Hessian bound:
@@ -259,7 +262,7 @@ theorem contour_condition_not_hessian_bound :
       ∀ μ : ℝ, 0 < μ → ¬ (RadialHessian.matrix F 0 - μ • (1 : Mat 2)).PosSemidef :=
   BfgsCoverage.Article.Local.strict_contours_without_hessian_bound
 
-/-- Item `C/09_C/prose/008` (`companion/chapters/09_C.tex:47-47`), anchor "Strong convexity of
+/-- Item `C/09_C/prose/008` (`companion/chapters/09_C.tex:47`), anchor "Strong convexity of
 $F$ suffices."
 
 Under the standing assumptions of line 35, if $F$ is strongly convex (with modulus $\mu>0$ for
@@ -283,7 +286,7 @@ theorem strong_convexity_suffices (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
   exact PlanarMaxRegular.no_segment_frontier_of_local_strictConvex (convex_continuous hF) hs
     (subset_univ _) x y hxy
 
-/-- Item `C/09_C/prose/010` (`companion/chapters/09_C.tex:53-53`), anchor "In particular, two
+/-- Item `C/09_C/prose/010` (`companion/chapters/09_C.tex:53`), anchor "In particular, two
 different smooth branches meet transversally".
 
 At a point $p$ with the two-branch structure of the regular-switching hypothesis (open `V ∋ p`,
@@ -363,7 +366,7 @@ theorem update_curvature {F : Vec 2 → ℝ} (R : AdmissibleBFGSRun 2 F) (s y : 
   · rw [ht k, hy k, hsk]
     exact R.curvature_pos k
 
-/-- Items `C/09_C/prose/013` and `C/09_C/prose/014` (`companion/chapters/09_C.tex:70-70`),
+/-- Items `C/09_C/prose/013` and `C/09_C/prose/014` (`companion/chapters/09_C.tex:70`),
 anchors "The positivity $t_k>0$ in the update is derived" and "The full update then preserves
 positive definiteness".
 
@@ -507,7 +510,7 @@ theorem cor_max_hessian (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (xstar : 
 
 /-! ### §2. Why one affine-critical cluster point is enough (lines 103-121) -/
 
-/-- Item `C/09_C/prose/018` (`companion/chapters/09_C.tex:104-104`), anchor "Armijo makes the
+/-- Item `C/09_C/prose/018` (`companion/chapters/09_C.tex:104`), anchor "Armijo makes the
 objective values decrease to a limit".
 
 "Armijo makes the objective values decrease to a limit $\ell\ge F_*$. Every cluster point has
@@ -662,7 +665,7 @@ theorem min_norm_pairing (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (p : Vec
   exact sub_eq_zero.mp ((CertificateGeometry.sqNorm_eq_zero_iff _).mp hz)
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/021` (`companion/chapters/09_C.tex:116-116`), anchor "At a
+/-- Item `C/09_C/prose/021` (`companion/chapters/09_C.tex:116`), anchor "At a
 non-affine-critical point, $-a(p)/\norm{a(p)}^2$ decreases".
 
 At $p\notin\mathcal C_{\rm aff}$ the least-norm point $a=a(p)$ of $\aff\partial F(p)$ is nonzero
@@ -676,7 +679,7 @@ theorem min_norm_rate_one (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (p : Ve
   exact ⟨hne, hrate⟩
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/022` (`companion/chapters/09_C.tex:116-116`), anchor "Thus
+/-- Item `C/09_C/prose/022` (`companion/chapters/09_C.tex:116`), anchor "Thus
 \eqref{C:eq:AC} says that every nonoptimal point retains equal-rate descent".
 
 For finite convex $F$ and a set $K$ (where \eqref{C:eq:AC} is required), \eqref{C:eq:AC} at
@@ -689,7 +692,7 @@ theorem AC_iff_equal_rate (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (K : Se
     fun h p hp => (affineCorrectAt_iff_nonoptimal_equal_rate hF p).mpr (h p hp)⟩
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/023` (`companion/chapters/09_C.tex:116-116`), anchor "It does not say
+/-- Item `C/09_C/prose/023` (`companion/chapters/09_C.tex:116`), anchor "It does not say
 that the gradients at differentiable accepted points tend to zero."
 
 \eqref{C:eq:AC} does not force vanishing accepted gradients: for $F(u,v)=u^2+|v|$
@@ -755,7 +758,7 @@ theorem accepted_eligible {F : Vec 2 → ℝ} (R : AdmissibleBFGSRun 2 F) (s y :
   rw [ht k, hy k, hs k, hc]
   exact R.curvature_lower_bound k
 
-/-- Item `C/09_C/prose/024` (`companion/chapters/09_C.tex:136-136`), anchor "In particular
+/-- Item `C/09_C/prose/024` (`companion/chapters/09_C.tex:136`), anchor "In particular
 $\sum_k d_k<\infty$."
 
 Under the standing assumptions of line 35, every admissible run starting in $K$ has summable
@@ -770,7 +773,7 @@ theorem summable_d (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : ℝ)
   simpa using R.finite_budget_le Fstar hL 0 N
 
 open ConvexSubdifferential in
-/-- Item `C/09_C/prose/025` (`companion/chapters/09_C.tex:136-136`), anchor "A finite convex
+/-- Item `C/09_C/prose/025` (`companion/chapters/09_C.tex:136`), anchor "A finite convex
 function has bounded subgradients on a compact set".
 
 For finite convex $F:\R^n\to\R$ and compact $K$, there is $G>0$ with $\norm{g}\le G$
@@ -786,7 +789,7 @@ theorem bounded_subgradients {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ un
   rw [← BfgsCoverage.Article.Local.euclid_norm_sq] at h1
   exact (pow_le_pow_iff_left₀ (norm_nonneg _) hG.le two_ne_zero).mp h1
 
-/-- Item `C/09_C/prose/026` (`companion/chapters/09_C.tex:136-136`), anchor "Hence the
+/-- Item `C/09_C/prose/026` (`companion/chapters/09_C.tex:136`), anchor "Hence the
 accepted gradients are bounded, and Chapter~\ref{comp:M} applies."
 
 Under the standing assumptions of line 35, for every admissible run starting in $K$: the
@@ -849,8 +852,10 @@ theorem steps_segment_values (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fs
     R.convex.2 (mem_univ _) (mem_univ _) (sub_nonneg.mpr hθ1) hθ0 (by ring)⟩
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/027` (`companion/chapters/09_C.tex:151-151`), anchor "We will argue by
-contradiction that the compact cluster set".
+/-- Item `C/09_C/prose/027` (`companion/chapters/09_C.tex:151`): "We suppose, for a
+contradiction, that the compact cluster set $\Gamma$ contains no affine-critical point." (Wording
+point W14 applied on 15 October 2026; before "We will argue by contradiction that the compact
+cluster set $\Gamma$ contains no affine-critical point.")
 
 Under the hypotheses of Theorem `C:thm:cluster`, for an admissible run starting in $K$ whose
 cluster set $\Gamma$ contains no affine-critical point (the contradiction hypothesis): $\Gamma$ is
@@ -913,7 +918,7 @@ point (`hnoncrit`) satisfying the regularity hypothesis (`hregular`, in the TeX 
 `RegularSwitching`). $C$ is not assumed nonempty. -/
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/030` (`companion/chapters/09_C.tex:169-169`), anchor "Near a nonsmooth
+/-- Item `C/09_C/prose/030` (`companion/chapters/09_C.tex:169`), anchor "Near a nonsmooth
 point of $C$, $F=\max\{f_1,f_2\}$".
 
 Under the standing assumptions of §4, at a nonsmooth point $c\in C$ ($F$ not differentiable at
@@ -979,7 +984,7 @@ theorem corner_curve (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ
     V hV hcV f₁ f₂ hf₁ hf₂ hC₁ hC₂ hmax hact₁ hact₂ hind
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/031` (`companion/chapters/09_C.tex:173-173`), anchor "On the level
+/-- Item `C/09_C/prose/031` (`companion/chapters/09_C.tex:173`), anchor "On the level
 $\ell$, the switching point is isolated."
 
 Under the standing assumptions of §4, every nonsmooth point $c\in C$ has a neighborhood whose
@@ -1005,7 +1010,7 @@ theorem switching_point_isolated (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F)
     exact h
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/032` (`companion/chapters/09_C.tex:173-173`), anchor "Smooth points of
+/-- Item `C/09_C/prose/032` (`companion/chapters/09_C.tex:173`), anchor "Smooth points of
 $C$ have smooth neighborhoods."
 
 Under the standing assumptions of §4, every point $p\in C$ at which $F$ is differentiable has an
@@ -1035,7 +1040,7 @@ theorem smooth_point_neighborhood (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
     · exact absurd hpd (PlanarCornerCharts.twoBranchRegular_not_differentiable hF ht.to_regular)
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/033` (`companion/chapters/09_C.tex:173-173`), anchor "A compactness
+/-- Item `C/09_C/prose/033` (`companion/chapters/09_C.tex:173`), anchor "A compactness
 argument gives finitely many relevant curves".
 
 Under the standing assumptions of §4 there are finitely many nonsmooth points $c_1,\dots,c_m$
@@ -1115,7 +1120,7 @@ theorem finitely_many_curves (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
     exact hWp x hx z hzx hnd
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/034` (`companion/chapters/09_C.tex:173-173`), anchor "Explicitly, an
+/-- Item `C/09_C/prose/034` (`companion/chapters/09_C.tex:173`), anchor "Explicitly, an
 infinite sequence of distinct level-$\ell$ corners".
 
 Under the standing assumptions of §4, $C$ contains only finitely many level-$\ell$ corners (points
@@ -1169,7 +1174,7 @@ theorem corner_velocity (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : 
   exact ⟨h2, h1⟩
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/036` (`companion/chapters/09_C.tex:181-181`), anchor "This vector is
+/-- Item `C/09_C/prose/036` (`companion/chapters/09_C.tex:181`), anchor "This vector is
 tangent to the switching curve".
 
 "This vector is tangent to the switching curve and detects a fixed nonzero increase in the
@@ -1264,7 +1269,7 @@ theorem along_curve (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ)
       rw [hFt, hdef.2]
 
 open AffineCriticalObjective PlanarNormalGeometry in
-/-- Item `C/09_C/prose/037` (`companion/chapters/09_C.tex:189-189`), anchor "the nonnegative
+/-- Item `C/09_C/prose/037` (`companion/chapters/09_C.tex:189`), anchor "the nonnegative
 combinations of its two active gradients generate a closed arc".
 
 In the setting of `corner_velocity`, for $t$ near $\ell$, with $a=\nabla f_1(p_j(t))$ and
@@ -1334,7 +1339,7 @@ theorem normal_arc (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ)
     exact mul_nonpos_of_nonneg_of_nonpos (inv_nonneg.mpr (norm_nonneg _)) hle
 
 open AffineCriticalObjective PlanarNormalGeometry in
-/-- Item `C/09_C/prose/038` (`companion/chapters/09_C.tex:189-189`), anchor "This arc has width
+/-- Item `C/09_C/prose/038` (`companion/chapters/09_C.tex:189`), anchor "This arc has width
 less than $\pi$".
 
 In the setting of `normal_arc`, for $t$ near $\ell$: any two unit normals of the arc make an
@@ -1386,7 +1391,7 @@ theorem normal_arc_width (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar :
   nlinarith
 
 open AffineCriticalObjective PlanarNormalGeometry ConvexSubdifferential in
-/-- Item `C/09_C/prose/039` (`companion/chapters/09_C.tex:191-191`), anchor "The normal arcs of
+/-- Item `C/09_C/prose/039` (`companion/chapters/09_C.tex:191`), anchor "The normal arcs of
 distinct corners at $t=\ell$ are disjoint."
 
 Under the standing assumptions of §4, for two distinct nonsmooth points $c\ne c'$ of $C$ with
@@ -1448,7 +1453,7 @@ theorem normal_arcs_disjoint (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
   exact normalSectors_disjoint hF hne (hcl.trans hcl'.symm) (by rw [hcl]; exact hstrict)
     hs₁ hs₂ hs₁' hs₂' hv₁ hv₂ hv₁' hv₂'
 
-/-- Item `C/09_C/prose/040` (`companion/chapters/09_C.tex:191-191`), anchor "The finitely many
+/-- Item `C/09_C/prose/040` (`companion/chapters/09_C.tex:191`), anchor "The finitely many
 compact arcs consequently have positive angular separation."
 
 Finitely many pairwise disjoint compact sets $A_1,\dots,A_m$ of unit vectors (the normal arcs at
@@ -1516,8 +1521,10 @@ theorem arcs_positive_separation {m : ℕ} (A : Fin m → Set (Vec 2)) (hA : ∀
     exact (hmin hmem).trans (hchord n n' (hunit i n hn) (hunit j n' hn'))
 
 open AffineCriticalObjective PlanarNormalGeometry in
-/-- Item `C/09_C/prose/041` (`companion/chapters/09_C.tex:191-191`), anchor "After slightly
-enlarging them and shrinking the interval of $t$".
+/-- Item `C/09_C/prose/041` (`companion/chapters/09_C.tex:191`), anchor "After slightly
+enlarging them and shrinking the interval of $t$"; the text chooses "fixed smooth angular cutoffs
+$0\le\chi_j\le1$ with disjoint supports" (the range added on 15 October 2026, wording point
+W15).
 
 Under the standing assumptions of §4, for finitely many moving normal arcs
 `normalSector (a j t) (b j t)` (the active gradients $a_j(t),b_j(t)$ at $p_j(t)$ and the
@@ -1563,13 +1570,13 @@ theorem normal_tangent_def (θ : ℝ) :
     PlanarTransport.normal θ = ![Real.cos θ, Real.sin θ] ∧
       PlanarTransport.tangent θ = ![-Real.sin θ, Real.cos θ] := ⟨rfl, rfl⟩
 
-/-- Item `C/09_C/prose/042` (`companion/chapters/09_C.tex:202-202`), anchor "The supports are
+/-- Item `C/09_C/prose/042` (`companion/chapters/09_C.tex:202`), anchor "The supports are
 disjoint, so this is a convex combination of positive numbers".
 
-For angular cutoffs $\chi_j$ (with values in $[0,1]$, as cutoffs are, and pairwise disjoint
-supports) and velocities $v_j$, at each angle $\theta$ the height
-$h(t,\theta)=1+\sum_j\chi_j(\theta)[n(\theta)^Tv_j(t)-1]$ (display `C/09_C/disp/017`) is either
-$1$ (no cutoff is nonzero at $\theta$) or the convex combination
+For angular cutoffs $\chi_j$ (with values in $[0,1]$, as line 191 states since 15 October 2026,
+wording point W15, and pairwise disjoint supports) and velocities $v_j$, at each angle $\theta$ the
+height $h(t,\theta)=1+\sum_j\chi_j(\theta)[n(\theta)^Tv_j(t)-1]$ (display `C/09_C/disp/017`) is
+either $1$ (no cutoff is nonzero at $\theta$) or the convex combination
 $(1-\chi_j(\theta))\cdot1+\chi_j(\theta)\,n(\theta)^Tv_j(t)$ for the only $j$ with
 $\chi_j(\theta)\ne0$. If, on a set $J$ of levels, $n(\theta)^Tv_j(t)\ge\eta>0$ wherever
 $\chi_j(\theta)\ne0$ (the supports chosen where $n^Tv_j>0$ uniformly) and $\norm{v_j(t)}\le B$,
@@ -1631,7 +1638,7 @@ theorem height_convex_combination {m : ℕ} (χ : Fin m → ℝ → ℝ)
       have h2 : d ≤ max 1 B := hdB.trans (le_max_right _ _)
       nlinarith [hc.1, hc.2]
 
-/-- Item `C/09_C/prose/043` (`companion/chapters/09_C.tex:202-202`), anchor "It is $C^1$ in $t$
+/-- Item `C/09_C/prose/043` (`companion/chapters/09_C.tex:202`), anchor "It is $C^1$ in $t$
 and smooth in $\theta$", first part.
 
 For smooth ambient cutoffs (angular cutoffs $\theta\mapsto\chi_j(n(\theta))$) and velocities
@@ -1653,7 +1660,7 @@ theorem height_regularity {m : ℕ} (χ : Fin m → Vec 2 → ℝ) (hχ : ∀ j,
   have h := (gradientFunctional (PlanarTransport.normal θ)).contDiff.comp_contDiffOn (hv j)
   simpa only [Function.comp_def, gradientFunctional_apply] using h
 
-/-- Item `C/09_C/prose/116` (`companion/chapters/09_C.tex:202-202`), anchor "with the mixed
+/-- Item `C/09_C/prose/116` (`companion/chapters/09_C.tex:202`), anchor "with the mixed
 derivatives used below bounded".
 
 For smooth ambient cutoffs (angular cutoffs $\theta\mapsto\chi_j(n(\theta))$) and velocities $v_j$
@@ -1995,7 +2002,7 @@ theorem smooth_point_normal_exists (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F
   exact ⟨hg0, BfgsCoverage.Article.PlanarGeometry.exists_angle _
     (PlanarObjectiveField.normalized_sqNorm hg0)⟩
 
-/-- Item `C/09_C/prose/045` (`companion/chapters/09_C.tex:209-209`), anchor "These expressions
+/-- Item `C/09_C/prose/045` (`companion/chapters/09_C.tex:209`), anchor "These expressions
 are periodic in $\theta$".
 
 For angular cutoffs $\theta\mapsto\chi_j(n(\theta))$ of differentiable ambient cutoffs: $h$ and
@@ -2090,7 +2097,7 @@ theorem corner_formula (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : 
   exact PlanarTransport.reconstruct θ (v j (F x))
 
 open AffineCriticalObjective PlanarNormalGeometry in
-/-- Item `C/09_C/prose/046` (`companion/chapters/09_C.tex:215-215`), anchor "This holds on a
+/-- Item `C/09_C/prose/046` (`companion/chapters/09_C.tex:215`), anchor "This holds on a
 whole neighborhood of the corresponding switching curve".
 
 "This holds on a whole neighborhood of the corresponding switching curve, on both sides. Define
@@ -2134,7 +2141,7 @@ theorem corner_field_neighborhood (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
     w hw
 
 open AffineCriticalObjective PlanarNormalGeometry ConvexSubdifferential in
-/-- Item `C/09_C/prose/047` (`companion/chapters/09_C.tex:215-215`), anchor "The field thus
+/-- Item `C/09_C/prose/047` (`companion/chapters/09_C.tex:215`), anchor "The field thus
 extends continuously and locally Lipschitzly".
 
 In the setting of `corner_field_neighborhood`: the field is continuous at the corner $c$ and
@@ -2199,7 +2206,7 @@ theorem field_lipschitz_at_corner (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
     v hχsupp hplateau hvC1
   exact ⟨(hLU.continuousOn.continuousAt hU), L, U, hU, hLU⟩
 
-/-- Item `C/09_C/prose/048` (`companion/chapters/09_C.tex:215-215`), anchor "Away from the curves
+/-- Item `C/09_C/prose/048` (`companion/chapters/09_C.tex:215`), anchor "Away from the curves
 it is $C^1$."
 
 At a point $x$ where $F$ is $C^2$ with $\nabla F(x)\ne0$ (away from the switching curves), for
@@ -2212,7 +2219,7 @@ theorem field_C1_off_curves {F : Vec 2 → ℝ} (hF : ConvexOn ℝ univ F) {m : 
     ContDiffAt ℝ 1 (PlanarObjectiveField.field hF χ v) x :=
   PlanarObjectiveField.field_contDiffAt_smooth hF hχ hvx hFx hgx
 
-/-- Item `C/09_C/prose/049` (`companion/chapters/09_C.tex:215-215`), anchor "On a smaller compact
+/-- Item `C/09_C/prose/049` (`companion/chapters/09_C.tex:215`), anchor "On a smaller compact
 neighborhood of $C$, all close-pair Lipschitz and piecewise derivative bounds are uniform."
 
 If the field $w$ is locally Lipschitz on an open $N\supseteq C$ ($C$ compact), then there are an
@@ -2296,7 +2303,7 @@ theorem visibility (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : ℝ)
   rw [hpair]
 
 open AffineCriticalObjective PlanarNormalGeometry ConvexSubdifferential in
-/-- Item `C/09_C/prose/050` (`companion/chapters/09_C.tex:221-221`), anchor "At a switching
+/-- Item `C/09_C/prose/050` (`companion/chapters/09_C.tex:221`), anchor "At a switching
 point, every subgradient has inner product one with $w$."
 
 In the setting of `corner_field_neighborhood`, at every switching point $p_j(t)$ of the curve
@@ -2381,7 +2388,7 @@ theorem angle_identity (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : 
 
 open AffineCriticalObjective in
 /-- Item `C/09_C/disp/022` (`companion/chapters/09_C.tex:233-235`), equation
-`C:eq:triangular`, and Item `C/09_C/prose/052` (`companion/chapters/09_C.tex:232-232`), anchor
+`C:eq:triangular`, and Item `C/09_C/prose/052` (`companion/chapters/09_C.tex:232`), anchor
 "Therefore, at a smooth point, $Dw(x)$ maps the one-dimensional tangent line".
 
 Under the standing assumptions of §4, with smooth ambient cutoffs, at a point $x$ where $F$ is
@@ -2418,7 +2425,7 @@ theorem triangular_derivative (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fs
     hn hT a b e ha hb he
 
 open AffineCriticalObjective in
-/-- Item `C/09_C/prose/054` (`companion/chapters/09_C.tex:236-236`), anchor "The coefficients are
+/-- Item `C/09_C/prose/054` (`companion/chapters/09_C.tex:236`), anchor "The coefficients are
 bounded in the compact neighborhood."
 
 Under the standing assumptions of §4, if $w$ is locally Lipschitz on an open $N$ containing the
@@ -2461,7 +2468,7 @@ theorem coefficients_bounded (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fs
 /-! ### §5. Three endpoint estimates (lines 246-329) -/
 
 open AffineCriticalObjective ConvexSubdifferential TransportedCertificate HomogeneousPlanar in
-/-- Item `C/09_C/prose/057` (`companion/chapters/09_C.tex:247-247`), anchor "For each fixed
+/-- Item `C/09_C/prose/057` (`companion/chapters/09_C.tex:247`), anchor "For each fixed
 valid pair $(c_1,c_2)$, the following three estimates".
 
 Under the standing assumptions of §§4-5, for each valid pair $0<c_1<c_2<1$, one
@@ -2531,7 +2538,7 @@ theorem three_estimates (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : 
     ⟨C₀, hC₀, fun x hx z hz g h hp hs => (hpairs x hx z hz g h hp hs).2.1⟩⟩
 
 open AffineCriticalObjective ConvexSubdifferential TransportedCertificate HomogeneousPlanar in
-/-- Item `C/09_C/prose/051` (`companion/chapters/09_C.tex:221-221`), anchor "Compactness on a
+/-- Item `C/09_C/prose/051` (`companion/chapters/09_C.tex:221`), anchor "Compactness on a
 positive level neighborhood gives a uniform positive lower bound".
 
 Under the standing assumptions of §4, the field of the construction has, on a compact
@@ -3500,7 +3507,7 @@ The branches and the objective are variables with their defining equations (`hf`
 the article's coverage (`Local.example_eq` identifies them with the library's
 `PlanarQuadraticExample.branch` and `objective`). -/
 
-/-- Item `C/09_C/prose/074` (`companion/chapters/09_C.tex:416-416`), anchor "All branch
+/-- Item `C/09_C/prose/074` (`companion/chapters/09_C.tex:416`), anchor "All branch
 Hessians lie between $I$ and $3I$."
 
 "All branch Hessians lie between $I$ and $3I$. Also $(f_0+f_1+f_2)/3=u^2+v^2$, so $F\ge u^2+v^2$
@@ -3555,7 +3562,7 @@ theorem example_coefficients_formula (f : Fin 3 → Vec 2 → ℝ)
     · rw [← h1]; field_simp
     · rw [← h2]; field_simp
 
-/-- Items `C/09_C/prose/076` and `C/09_C/prose/077` (`companion/chapters/09_C.tex:424-424`),
+/-- Items `C/09_C/prose/076` and `C/09_C/prose/077` (`companion/chapters/09_C.tex:424`),
 anchors "On $|u|,|v|\le1/10$, $D\ge267/100$" and "Hence affine independence and local
 \eqref{C:eq:AC} hold on this box."
 
@@ -3673,7 +3680,7 @@ theorem pair_values (f : Fin 3 → Vec 2 → ℝ)
   fin_cases i <;> simp
   ring
 
-/-- Item `C/09_C/prose/078` (`companion/chapters/09_C.tex:451-451`), anchor "For each
+/-- Item `C/09_C/prose/078` (`companion/chapters/09_C.tex:451`), anchor "For each
 sufficiently small fixed $u>0$ and $\epsilon\downarrow0$, these are eligible".
 
 For each fixed $0<u<1/10$ and all sufficiently small $\epsilon>0$, the pair $x=(u,v+\epsilon)$,
@@ -3697,7 +3704,7 @@ theorem pairs_eligible (f : Fin 3 → Vec 2 → ℝ)
   rw [PlanarQuadraticExample.coordinateGradient_eq, PlanarQuadraticExample.coordinateGradient_eq]
   exact hε
 
-/-- Item `C/09_C/prose/079` (`companion/chapters/09_C.tex:451-451`), anchor "The radial
+/-- Item `C/09_C/prose/079` (`companion/chapters/09_C.tex:451`), anchor "The radial
 numerator tends to the nonzero quantity".
 
 For fixed $0<u<1/10$, as $\epsilon\to0^+$ the radial numerator $(h-g)^Tz$ of the pairs of
@@ -3731,7 +3738,7 @@ theorem radial_numerator_limit (f : Fin 3 → Vec 2 → ℝ)
     rw [PlanarQuadraticExample.coordinateGradient_eq, PlanarQuadraticExample.coordinateGradient_eq]
     rfl
 
-/-- Item `C/09_C/prose/080` (`companion/chapters/09_C.tex:451-451`), anchor "Thus RS fails on a
+/-- Item `C/09_C/prose/080` (`companion/chapters/09_C.tex:451`), anchor "Thus RS fails on a
 positive band in every neighborhood of zero".
 
 "Thus RS fails on a positive band in every neighborhood of zero, even though
@@ -3760,7 +3767,7 @@ theorem RS_fails (f : Fin 3 → Vec 2 → ℝ)
 `RealAlgebraicGeometry.IsSemialgebraicObjective F` says that the graph of $F$ is
 semialgebraic. -/
 
-/-- Item `C/09_C/prose/061` (`companion/chapters/09_C.tex:394-394`), anchor
+/-- Item `C/09_C/prose/061` (`companion/chapters/09_C.tex:394`), anchor
 "Chapter~\ref{comp:A} proves that a finite convex semialgebraic function".
 
 A finite convex semialgebraic $F:\R^n\to\R$ has finitely many affine-critical values. -/
@@ -3769,7 +3776,7 @@ theorem semialgebraic_values {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ un
     (F '' {x | AffineCriticalObjective.IsAffineCritical F x}).Finite :=
   RealAlgebraicGeometry.semialgebraic_affine_critical_values hF hSA
 
-/-- Item `C/09_C/prose/062` (`companion/chapters/09_C.tex:394-394`), anchor "Its proof uses a
+/-- Item `C/09_C/prose/062` (`companion/chapters/09_C.tex:394`), anchor "Its proof uses a
 finite piecewise-smooth cover".
 
 "... so the point path and its actual objective composition have simultaneous derivatives off a
@@ -3789,7 +3796,7 @@ theorem path_composition_smooth {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ
   exact ⟨hE₂ t (Ioo_subset_Icc_self ht) htE.2, hE₁ t ht htE.1⟩
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/063` (`companion/chapters/09_C.tex:394-394`), anchor "The two-sided
+/-- Item `C/09_C/prose/063` (`companion/chapters/09_C.tex:394`), anchor "The two-sided
 supporting inequality and an affine combination".
 
 For finite convex $F:\R^n\to\R$, a path $p$ with derivative $v$ at $t$ and $F\circ p$ with
@@ -3802,8 +3809,8 @@ theorem critical_composition_derivative_zero {n : ℕ} (F : Vec n → ℝ) (p : 
   ⟨fun _ hg => AffineSupportPath.supporting_path_derivative_eq hg hp hFp,
     fun hc => AffineSupportPath.derivative_zero_of_affineCritical hc hp hFp⟩
 
-/-- Item `C/09_C/prose/064` (`companion/chapters/09_C.tex:394-394`), anchor "Continuity joins the
-resulting constants."; and Item `C/09_C/prose/067` (`companion/chapters/09_C.tex:396-396`),
+/-- Item `C/09_C/prose/064` (`companion/chapters/09_C.tex:394`), anchor "Continuity joins the
+resulting constants."; and Item `C/09_C/prose/067` (`companion/chapters/09_C.tex:396`),
 anchor "Once finite critical values are known".
 
 For a finite convex semialgebraic $F:\R^n\to\R$ and every piecewise-smooth path $p$ from $x$ to
@@ -3826,7 +3833,7 @@ theorem critical_path_values {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ un
     RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant hF hSA p⟩,
     fun x => (hcomp x).2.2⟩
 
-/-- Item `C/09_C/prose/066` (`companion/chapters/09_C.tex:396-396`), anchor "The actual
+/-- Item `C/09_C/prose/066` (`companion/chapters/09_C.tex:396`), anchor "The actual
 affine-critical set also has finitely many piecewise-smooth path classes".
 
 For a finite convex semialgebraic $F:\R^n\to\R$, the affine-critical set has finitely many
@@ -3846,7 +3853,7 @@ theorem critical_path_classes {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ u
     RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components hF hSA
   exact ⟨hfin, fun x => ⟨(hcomp x).1, (hcomp x).2.1⟩⟩
 
-/-- Item `C/09_C/prose/069` (`companion/chapters/09_C.tex:396-396`), anchor "These path classes
+/-- Item `C/09_C/prose/069` (`companion/chapters/09_C.tex:396`), anchor "These path classes
 are distinguished from ordinary topological connected components".
 
 For a semialgebraic $F$, the ordinary connected components of the affine-critical set are finitely
@@ -3866,11 +3873,12 @@ theorem critical_components {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ uni
       hp hq⟩
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/070` (`companion/chapters/09_C.tex:398-398`), anchor "On a compact
+/-- Item `C/09_C/prose/070` (`companion/chapters/09_C.tex:398`), anchor "On a compact
 structural sublevel above an attained minimum"; and Item `C/09_C/prose/117`
-(`companion/chapters/09_C.tex:398-398`), anchor "Combining A's low affine-critical gap with
-Theorem~\ref{C:thm:cluster}", in its corrected form (a discrepancy, typo: "A" is the source
-note's name for Chapter 8, and the result meant is its Proposition 8.1, `A:semialgebraic`).
+(`companion/chapters/09_C.tex:398`), corrected on 15 October 2026 (M20; before "Combining A's
+low affine-critical gap with Theorem~\ref{C:thm:cluster}", where "A" was the source note's name
+for Chapter 8): "Combining the low affine-critical gap of Proposition~\ref{A:semialgebraic} with
+Theorem~\ref{C:thm:cluster} gives the following restricted planar basin conclusion."
 
 For a finite convex semialgebraic $F:\R^2\to\R$ with an attained minimum ($x_*$ a minimizer): the
 low affine-critical gap of Proposition `A:semialgebraic` (some $\varepsilon>0$: every
@@ -3904,7 +3912,7 @@ theorem semialgebraic_low_basin (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
       (fun p hp hn => BfgsCoverage.Article.Local.regular_of_paper (hreg p hp hn))⟩
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/071` (`companion/chapters/09_C.tex:398-398`), anchor "Alternatively, with
+/-- Item `C/09_C/prose/071` (`companion/chapters/09_C.tex:398`), anchor "Alternatively, with
 a unique minimizer and the structural hypotheses on a neighborhood".
 
 For a finite convex semialgebraic $F:\R^2\to\R$ with a unique minimizer $x_*$, the regular
@@ -3937,7 +3945,7 @@ written `ConvexSubdifferential.LocalFiniteMax F f p` ($F(z)$ is the largest $f_i
 near $p$); "active at $p$" is $f_i(p)=F(p)$. -/
 
 open ConvexSubdifferential in
-/-- Item `C/09_C/prose/083` (`companion/chapters/09_C.tex:463-463`), anchor "Nearby inactive
+/-- Item `C/09_C/prose/083` (`companion/chapters/09_C.tex:463`), anchor "Nearby inactive
 branches can be removed by their strict gaps."
 
 If $F$ is finite and convex, $F=\max_if_i$ near $p$ with branches $C^2$ at $p$: every branch
@@ -3954,7 +3962,7 @@ theorem inactive_removed {n m : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ univ
     activeIndices_eventually_subset hFc hfc hrep⟩
 
 open ConvexSubdifferential in
-/-- Item `C/09_C/prose/084` (`companion/chapters/09_C.tex:463-463`), anchor "Affine independence
+/-- Item `C/09_C/prose/084` (`companion/chapters/09_C.tex:463`), anchor "Affine independence
 of the family at $p$ is a sufficient condition for this local rank hypothesis."
 
 If $F=\max_if_i$ near $p$ with branches $C^2$ at $p$ and the gradients of the family $J=I(p)$
@@ -3968,7 +3976,7 @@ theorem affine_independence_sufficient {n m : ℕ} (F : Vec n → ℝ) (f : Fin 
   ConstantRankFields.active_affineIndependent_implies_locallyConstantActiveRank hrep hC2 hind
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/09_C/prose/085` (`companion/chapters/09_C.tex:463-463`), anchor "The noncritical
+/-- Item `C/09_C/prose/085` (`companion/chapters/09_C.tex:463`), anchor "The noncritical
 restriction on $K$ is essential".
 
 "Unit pairing with all subgradients is impossible at an affine-critical point": for finite convex
@@ -3983,7 +3991,7 @@ theorem no_unit_pairing_at_affine_critical {n : ℕ} (F : Vec n → ℝ) (hF : C
   rw [h, hv g hg]
 
 open AffineCriticalGeometry in
-/-- Item `C/09_C/prose/086` (`companion/chapters/09_C.tex:465-465`), anchor "The minimum-norm
+/-- Item `C/09_C/prose/086` (`companion/chapters/09_C.tex:465`), anchor "The minimum-norm
 point $a_J(x)$ of the affine hull of these gradients is $C^1$".
 
 For a fixed family of gradients $g_j(x)=\nabla f_j(x)$, $j\in J$ (`g x j`), that are $C^1$ at
@@ -4047,7 +4055,7 @@ theorem rpow_half_not_differentiableAt_zero :
     exact h5
   linarith
 
-/-- Item `C/09_C/prose/088` (`companion/chapters/09_C.tex:465-465`), anchor "No $C^\infty$
+/-- Item `C/09_C/prose/088` (`companion/chapters/09_C.tex:465`), anchor "No $C^\infty$
 conclusion follows from $C^2$ branch data alone."
 
 $C^2$ branch data do not give more than $C^1$ regularity of the minimum-norm point: for the
@@ -4141,9 +4149,9 @@ theorem common_rate_pairing {n m : ℕ} (g : Fin m → Vec n) (i : Fin m)
   exact ⟨hvc, fun j => hvc ▸ ConstantRankFields.commonRate_pairing g i hne j⟩
 
 open AffineCriticalObjective ConvexSubdifferential TransportedCertificate in
-/-- Item `C/09_C/prose/089` (`companion/chapters/09_C.tex:470-470`), anchor "A finite
+/-- Item `C/09_C/prose/089` (`companion/chapters/09_C.tex:470`), anchor "A finite
 $C^\infty$ partition of unity on buffered charts yields one $C^1$ field"; and Item
-`C/09_C/prose/093` (`companion/chapters/09_C.tex:479-479`), anchor "Thus visibility and the secant
+`C/09_C/prose/093` (`companion/chapters/09_C.tex:479`), anchor "Thus visibility and the secant
 correction can be constructed without a BFGS matrix assumption."
 
 Let $K$ be a compact set with no affine-critical point, and let $F:\R^n\to\R$ be finite and
@@ -4308,7 +4316,7 @@ theorem cocoercivity_estimate {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ u
     simp only [dot, Pi.neg_apply, mul_neg, Finset.sum_neg_distrib]
   linarith
 
-/-- Item `C/09_C/prose/094` (`companion/chapters/09_C.tex:481-481`), anchor "\textbf{What does
+/-- Item `C/09_C/prose/094` (`companion/chapters/09_C.tex:481`), anchor "\textbf{What does
 not follow:}".
 
 "$C^1$ regularity of this field does not provide the projected transport needed by the BFGS
@@ -4342,7 +4350,7 @@ theorem C1_field_without_transport (ε : ℝ) (hε : 0 < ε) (hε' : ε < 1 / 10
   obtain ⟨helig, -, -, -, -, hsmooth, hrate, -, hfail⟩ := hw ε hε hε'
   exact ⟨fun N => hsmooth N, hrate, helig, hfail⟩
 
-/-- Item `C/09_C/prose/097` (`companion/chapters/09_C.tex:483-483`), anchor "A concrete warning
+/-- Item `C/09_C/prose/097` (`companion/chapters/09_C.tex:483`), anchor "A concrete warning
 uses the entirely smooth quadratic".
 
 The objects of the warning: $F(x)=x^TQx/2$ with $Q=\operatorname{diag}(1,2,3)\succ0$
@@ -4401,7 +4409,7 @@ theorem spatial_values (ε : ℝ) :
     SpatialQuadraticWarning.printed_determinant ε,
     fun hε => (SpatialQuadraticWarning.printed_determinant_pos hε).ne'⟩
 
-/-- Items `C/09_C/prose/098` and `C/09_C/prose/099` (`companion/chapters/09_C.tex:492-492`),
+/-- Items `C/09_C/prose/098` and `C/09_C/prose/099` (`companion/chapters/09_C.tex:492`),
 anchors "For small positive $\epsilon$ the pair is Armijo--weak-Wolfe eligible" and "Its
 rank-one projected transport therefore fails for any finite multiplier."
 
@@ -4432,7 +4440,7 @@ theorem spatial_not_in_span (ε : ℝ) (hε : 0 < ε) (hε' : ε < 1 / 10) :
   obtain ⟨helig, -, -, -, -, -, -, hspan, hfail⟩ := hw ε hε hε'
   exact ⟨helig, hspan, SpatialQuadraticWarning.canonicalField_not_scalar_transport hε, hfail⟩
 
-/-- Items `C/09_C/prose/100` and `C/09_C/prose/101` (`companion/chapters/09_C.tex:492-492`),
+/-- Items `C/09_C/prose/100` and `C/09_C/prose/101` (`companion/chapters/09_C.tex:492`),
 anchors "Another field, the radial field, works for this quadratic." and "This is not
 nonexistence of all certificates or a BFGS counterexample".
 
