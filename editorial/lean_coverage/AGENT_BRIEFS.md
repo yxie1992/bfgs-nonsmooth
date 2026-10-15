@@ -138,6 +138,44 @@ closest to your files (named in the prompt). (4) Your TeX files in full, plus
 - Aim for every item classified. `TODO` (with a reason) only for what you could not
   finish; say so in the final answer.
 
+**Lessons from the chapter groups (waves 1 and 2, 14–15 October 2026).**
+- References. A reference that prints a wrong or nonexistent equation, theorem, table
+  or section number in the PDF, a "preceding" or "next" theorem whose literal referent
+  exists but does not say the attached claim, and a printed label that resolves to
+  nothing or to the wrong object (a source-note letter such as "A's gap", where the
+  companion shows only Appendix A; bracket labels such as "[M], [P], [E] and [Q]") are
+  `DISCREPANCY` (typo), with the intended statement proved in Lean (M17, M18, M20, M21,
+  M25–M28 in `TODO_MANUSCRIPT_REVIEW.md`). Vague references to material the companion
+  does not contain ("in this note", "the previous note", "the earlier … proof"), source
+  letters used only as names of objects ("the D run") and self-citations are wording
+  points, unless the attached claim becomes false (W5, W8, W21, W22, W25).
+- Literal readings. A literal reading that is false while the intended reading is true
+  is a `DISCREPANCY` (imprecision) when the literal reading is a reasonable one and a
+  counterexample exists, preferably in Lean (M12, M14, M22–M24). An implicit hypothesis
+  without a counterexample (bounded gradients, the sign of ε, x ∈ K, H ≻ 0) is `LEAN`
+  with a note and a wording point (W1, W4, W16, W20, W24).
+- Wording points go into the item's note and the final answer, with file:line, item id
+  and a proposed wording; the coordinator copies them to `TODO_MANUSCRIPT_REVIEW.md`.
+- Each discrepancy entry gives the exact old string in the frozen source
+  (`bfgs_lean_stage1/master_report/latex/chapters/<X>.tex`, line and span), its number
+  of occurrences and the new string, so that the fix can be a logged transformation in
+  `editorial/generate_companion.py`.
+- Never point `SAME_AS` at a `DISCREPANCY` item (grep the registers for
+  `"status": "DISCREPANCY"`); a passage that repeats a discrepant claim is itself a
+  `DISCREPANCY` (a recurrence, listed under the original item).
+- Non-vacuity. `BfgsVerification.AdmissibleRunExistence.exists_admissible_run` (module
+  `BfgsArticle.AdmissibleRunExistence`) gives admissible runs for convex objectives that
+  are bounded below, differentiable at all but countably many points of every line
+  through a point of differentiability, and have no point of differentiability with
+  gradient zero; `BfgsCoverage.Companion.Ch07H.prependStep` prepends an accepted step to
+  a run. For a display inside a proof by contradiction, state its satisfiable core, not
+  a hypothesis set that no run satisfies.
+- Checker. `PROOF` and `PART_OF` take one target (`of` is a string); only `SAME_AS`
+  takes a list. The pattern Item `<id>` followed by (`<file>.tex:a-b`) in a docstring is
+  checked against your own register (item, file, lines): cite other registers' items
+  without it.
+- Lean. In some import contexts `by_contra` fails: use `Classical.byContradiction`.
+
 **Lean workflow.** `export PATH="$HOME/.elan/bin:$PATH"`; from `bfgs_lean_article/`:
 `LEAN_NUM_THREADS=4 lake env lean BfgsArticle/Coverage/Companion/<Name>.lean`. At most
 one Lean process at a time (several agents share the machine's memory); never
@@ -264,12 +302,48 @@ Wave 2 (not started):
   Library: `NormalSpikeBump`, `NormalSpikeSeries`, `NormalSpikeOracle`,
   `NormalSpikeRegularity`, `NormalSpikeRational`, `NormalSpikeGeometry`.
 
-Wave 3 (after all chapters; maps to chapter items):
+Wave 3 (after all chapters; maps to chapter items). The planned group compFront was
+split into two agents, started on 15 October 2026 after waves 1 and 2 were committed:
 
-- **compFront** — `01_I.tex` (393 lines; 22 displays), `14_E.tex` (251 lines),
-  `research_story.tex`, `current_verification.tex`, `correspondence.tex` (no mechanical
-  items: all prose), modules `Ch01I`, `Ch14E`, `ResearchStory`, `CurrentVerification`,
-  `Correspondence`. Mostly `SAME_AS` chapter items, plus `NON_CLAIM` for software, audit
-  and history sentences. M8 recurs at `01_I.tex:103` and `research_story.tex:52`. Stale
-  facts in `current_verification.tex` ("2026 Lean names"; the audit now checks 3862) are
-  descriptions of software, to be refreshed when the manuscript is edited.
+- **compI** — `01_I.tex` (393 lines; 22 displays) and `research_story.tex` (67 lines,
+  written by hand), modules `Ch01I`, `ResearchStory`. The introduction summarizes every
+  chapter (N1 = D, N2 = L, P1 = T, P2 = M, P4 = R and F, P5 = C, P6 = Q, P7 = U, the
+  noncompact homogeneous theory = H, shared algebra = M, the result map near line 375).
+  Each summary sentence is `SAME_AS` the chapter items when it says the same thing
+  (quantifiers, hypotheses, constants), a recurrence `DISCREPANCY` when it repeats a
+  discrepant claim, its own Lean statement when it combines or weakens results; `OPEN`
+  items stay open (a summary calling an open question settled is a `DISCREPANCY`). The
+  research story is history (`NON_CLAIM`), but its mathematics is covered.
+- **compE** — `14_E.tex` (251 lines) and the hand-written `current_verification.tex`
+  (76) and `correspondence.tex` (67) (no mechanical items: all prose), modules `Ch14E`,
+  `CurrentVerification`, `Correspondence`. Sentences about software, builds, audits,
+  files and commands are `NON_CLAIM`, but check that they are still true (missing
+  declarations or wrong counts go into the notes; the stale numbers of
+  `current_verification.tex`, "2026 Lean names" where the audit now checks 3862 and
+  more, are refreshed in step 2). What a suite proves, what remains unproved and what an
+  experiment shows are covered like any other claim (`OPEN` if the text says unproved;
+  `DISCREPANCY` if overstated, or if a "remaining boundary" has since been proved).
+  Printed values of exact objects are proved in Lean (as the compD agent did for the
+  trial table); reports of floating-point experiments are `NON_CLAIM`.
+
+Hints for both (from the chapter groups):
+- M8 recurs at `01_I.tex:103` (N2) and `research_story.tex:52`: only three of the four
+  branches lose second differentiability (`Ch13L.branch_regularity`; item
+  `C/13_L/prose/083` states it right). `01_I.tex:103` also says "rather than finitely many
+  smooth branches", whose literal reading is false (M12).
+- Chapter H summary (`01_I.tex` 275–291): `C/07_H/heading/001`, `prose/007`, `prose/008`,
+  `heading/002`, `heading/004`, `prose/016`, `prose/065`, `prose/018`, `prose/044`.
+- Chapter T restatements (P1): `C/03_T/theorem/001`, `prose/022`, `prose/044`. Chapter G:
+  `C/05_G/prose/001`, `prose/009` and the proposition items; `prose/002` is `LEAN`.
+  Chapter R: `C/04_R/theorem/R:thm:equiv`, `R:thm:plq`, the family items `prose/058`–`070`
+  ("smooth" summands are locally $C^{1,1}$). Chapter Q (`01_I.tex` 244–251, the table cell
+  near line 375): `Ch10Q.parabolic_convergence`, `flat_branch_allowed`,
+  `example_flat_contour`, `example_field`, `rs_fails`, `converges_without_rs`.
+- `DISCREPANCY` items of the chapters (never `SAME_AS` targets): `C/03_T/prose/029`,
+  `042`, `043`; `C/05_G/prose/008`, `053`, `063`; `C/06_F/prose/002`; `C/07_H/prose/028`;
+  `C/09_C/prose/117`; `C/10_Q/prose/014`; `C/11_U/prose/027`, `disp/026`;
+  `C/12_D/prose/047`; `C/13_L/prose/002`, `prose/082`, `theorem/L:thm:local`;
+  `C/seed_certificate/prose/002`, `006`, `024`.
+- Little-$o$ rates of Chapters 2 and 6 hold along runs with bounded gradients (W1, W24):
+  a summary without that hypothesis is a wording point, not a discrepancy, unless a
+  counterexample run exists. Check every summary for M7, M9, M10 and M11 as well.

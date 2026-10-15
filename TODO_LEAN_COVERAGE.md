@@ -22,7 +22,7 @@ Progress (`python3 editorial/lean_coverage/check_coverage.py`), 14 October 2026:
 | Document | Items | Status |
 |---|---|---|
 | Article (`paper/`, 15 files) | 616 (221 mechanical, 395 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
-| Companion (`companion/`, 18 files) | 573 mechanical; prose items not yet added | waves 1 and 2 done on the MacBook (14 and 15 October: Chapters 2–13 and the seed appendix); wave 3 not started |
+| Companion (`companion/`, 18 files) | 573 mechanical; prose items not yet added | waves 1 and 2 done on the MacBook (14 and 15 October: Chapters 2–13 and the seed appendix); wave 3 in progress (15 October) |
 
 Article items by status: LEAN 280, SAME_AS 124, NON_CLAIM 89, DEFINITION 51,
 PART_OF 34, PROOF 28, DISCREPANCY 9 (manuscript items M7–M11), OPEN 1.
@@ -44,7 +44,8 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
 | compG | `chapters/05_G.tex` | `Ch05G` | done: 127 items (LEAN 68, DEFINITION 16, SAME_AS 16, NON_CLAIM 13, PROOF 6, PART_OF 5, DISCREPANCY 3: M21–M23); wording points W11, W13, W16; reviewed, fix pass done |
 | compFQ | `chapters/06_F.tex`, `chapters/10_Q.tex` | `Ch06F`, `Ch10Q` | done: `06_F.tex` 99 items (LEAN 62, NON_CLAIM 20, DEFINITION 5, SAME_AS 5, PART_OF 3, PROOF 3, DISCREPANCY 1: M27); `10_Q.tex` 100 items (LEAN 73, DEFINITION 12, NON_CLAIM 6, PART_OF 3, SAME_AS 3, PROOF 2, DISCREPANCY 1: M28); wording points W13, W24–W26; reviewed, fix pass done |
 | compU | `chapters/11_U.tex` | `Ch11U` | done: 119 items (LEAN 61, SAME_AS 21, PART_OF 11, NON_CLAIM 11, DEFINITION 8, PROOF 5, DISCREPANCY 2: M18, M19); wording points W8, W10–W13; reviewed, fix pass done |
-| compFront | `chapters/01_I.tex`, `chapters/14_E.tex`, `research_story.tex`, `current_verification.tex`, `correspondence.tex` | `Ch01I`, `Ch14E`, `ResearchStory`, `CurrentVerification`, `Correspondence` | wave 3, after all chapters |
+| compI | `chapters/01_I.tex`, `research_story.tex` | `Ch01I`, `ResearchStory` | wave 3 (part of the planned compFront): in progress |
+| compE | `chapters/14_E.tex`, `current_verification.tex`, `correspondence.tex` | `Ch14E`, `CurrentVerification`, `Correspondence` | wave 3 (part of the planned compFront): in progress |
 
 ## Open items
 
@@ -75,8 +76,9 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       `A/global/prose/019`). The theorem does not apply when a kink set contains a
       segment of such a line (for example max(|v|, u − 10)); those objectives keep
       explicit runs.
-- [ ] Run `lake build` once no agent runs Lean (before wave 3). `BfgsArticle.lean`
-      now imports `BfgsArticle.AdmissibleRunExistence` and each companion coverage
-      module as it is committed, but agents run Lean continuously, so these were
-      checked only with `lake env lean` (no errors, no warnings). Until the build,
-      the axiom audit cannot resolve their names.
+- [x] Run `lake build` once no agent runs Lean (done 15 October 2026, before wave 3).
+      `BfgsArticle.lean` imports `BfgsArticle.AdmissibleRunExistence` and each
+      companion coverage module as it is committed; while agents ran Lean these were
+      checked with `lake env lean` only. The build rebuilt them and the two roots:
+      exit 0 in 144 s, no warning from the article package (the main library's 1244
+      style warnings stay).

@@ -4,16 +4,22 @@ Written by the coordinating agent (Claude in OpenCode) on the author's Linux
 machine, at the author's request, to continue on the author's MacBook with
 OpenCode and the same model. Standing instructions: `AGENTS.md`.
 
-## State at the handoff
+## State (updated 15 October 2026, on the MacBook)
 
-Everything is committed and pushed. Nothing is running and nothing was mid-edit.
+The work moved from the Linux machine to the MacBook on 14 October and resumed there
+the same day.
 
 | Work | State | Details |
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
-| Manuscript review | M1–M6 fixed on 13 October; M7–M11, found by the Lean coverage, stay open until step 2 | `TODO_MANUSCRIPT_REVIEW.md` |
+| Manuscript review | M1–M6 fixed on 13 October; M7–M28 (from M12 on in the companion) and the companion's wording points W1–W26, found by the Lean coverage, stay open until step 2 | `TODO_MANUSCRIPT_REVIEW.md` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
-| Lean coverage, companion | wave 1 (six groups) paused after reading and planning, with pause notes; waves 2 and 3 not started | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
+| Lean coverage, companion | waves 1 and 2 done: Chapters 2–13 and the seed appendix (ten groups, each reviewed by an independent agent, fixed, committed and imported); wave 3 (compI and compE) started on 15 October | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
+
+While wave 3 runs, its agents' partial modules and registers are uncommitted in the
+working tree, and their notes are in the session's scratch directory. If that work is
+lost, start new agents for compI and compE with the wave-3 entries of
+`editorial/lean_coverage/AGENT_BRIEFS.md`; they can continue from the files.
 
 Latest checks:
 
@@ -24,8 +30,10 @@ Latest checks:
   (`bfgs_lean_article/KERNEL_REPLAY.json`). It predates the coverage modules;
   rerun it at the end of the companion phase.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
-  modules; `check_coverage.py` exits 0 (also with `--strict --allow-discrepancies`
-  on the article files); `generate_companion.py --check` passes.
+  modules (last run on 15 October after commit `3184a5a`, with every chapter module
+  of the companion: 144 s); `check_coverage.py` exits 0 (also with `--strict
+  --allow-discrepancies` on the article files and the finished companion files);
+  `generate_companion.py --check` passes.
 
 ## Setting up the Mac
 
@@ -104,15 +112,22 @@ the Mac names another scratch directory, use that one.
    2. a fix pass by the coverage agent, continuing its session with the findings;
    3. the coordinator's check: `check_coverage.py --strict --allow-discrepancies
       <the group's TeX files>` exits 0, the module compiles, and every discrepancy
-      is judged; accepted ones go to `TODO_MANUSCRIPT_REVIEW.md` (next number M12);
+      is judged; accepted ones go to `TODO_MANUSCRIPT_REVIEW.md` (the numbering
+      continues after the highest M and W numbers there);
    4. add `import BfgsArticle.Coverage.Companion.<Name>` to
       `bfgs_lean_article/BfgsArticle.lean`; while no agent runs Lean,
       `lake build BfgsArticle.Coverage.Companion.<Name>`, then
-      `lake build BfgsArticle` (no warnings from coverage files);
+      `lake build BfgsArticle` (no warnings from coverage files). In waves 1 and 2
+      agents ran Lean all the time, so the coordinator checked each module with
+      `LEAN_NUM_THREADS=4 lake env lean <file>` (no errors, no warnings), added the
+      root import in the group's commit, and ran the full `lake build` once, before
+      wave 3;
    5. commit ("Lean coverage of companion chapter … (independently reviewed)")
       and push.
-4. **Wave 2:** compTA, compG, compFQ, compU (no pause notes). **Wave 3:**
-   compFront, after all chapters, since it maps onto chapter items.
+4. **Wave 2:** compTA, compG, compFQ, compU (no pause notes). **Wave 3:** compI
+   (`01_I.tex`, `research_story.tex`) and compE (`14_E.tex`,
+   `current_verification.tex`, `correspondence.tex`), the planned compFront split
+   in two, after all chapters, since they map onto chapter items.
 5. **End of the companion phase**, on a clean, committed tree. Each report records
    the commit and tree state at its start, so write the reports outside the
    repository and copy them in afterwards. Lower `--jobs` with less memory.
@@ -134,32 +149,20 @@ the Mac names another scratch directory, use that one.
    LEAN_CC=/usr/bin/clang lake build`. Once linked, `test.sh` and the replay run
    it without these variables (checked on 14 October 2026).
 
-## Findings in the pause notes (tentative)
+## Findings of waves 1 and 2
 
-- compD (`12_D.tex`, companion seed appendix): M11 does not recur in Chapter D,
-  which fixes c₁ = 10⁻⁴, c₂ = 1/2. Planned discrepancies: trial-table decimals
-  without value enclosures (line 190), and `Table~\ref{comp:trial_table}`
-  pointing at a section label (line 186). Theorem `D:main` needs its own theorem;
-  the appendix's closing sentence is correct.
-- compM (`02_M.tex`): possible parallels of M10 (line 194, "∑R_k = o(∑q_k⁻¹)
-  excludes a positive gap"; "O(N²) cumulative correction suffices"; line 211,
-  "contradicting Theorem M:average"); G and V_η are undefined in
-  `M:superquadratic`.
-- compH (`07_H.tex`): in-text equation references use an old numbering; the
-  linear independence at lines 574–575 may fail literally; an OPEN proposition for
-  lines 142–146.
-- compL (`13_L.tex`): M8 recurs at line 3; line 413 ("uses the fixed line-search
-  pair") may be stale after the 13 October change to uniform constants.
-- compC (`09_C.tex`): the cutoffs at lines 201–202 need the range (0, 1);
-  `C:lem:steps` uses compactness implicitly.
-- compR (`04_R.tex`): no recurrence of M7 so far; C_{η/2} ≥ 0 and sin θ ≠ 0 are
-  probably notes.
-- M8 also recurs at `01_I.tex:103` and `research_story.tex:52` (wave 3).
+The findings of the chapter groups are recorded: the companion's discrepancies as
+M12–M28 and its wording points as W1–W26 in `TODO_MANUSCRIPT_REVIEW.md` (with
+M8's recurrence in Chapter 13 under M8), and the possibly vacuous run statements
+of Chapter 7 in `TODO_LEAN_REVIEW.md`. The pause notes of 14 October stay in
+`editorial/lean_coverage/pause_notes/` as a record; their tentative findings were
+all settled by the chapter groups. M8 also recurs at `01_I.tex:103` and
+`research_story.tex:52` (wave 3).
 
 ## After the Lean coverage
 
 - **Step 2:** the line-by-line reading of the article's proofs, and the manuscript
-  corrections (M7–M11 and the companion's discrepancies). After each TeX edit,
+  corrections (M7 onwards, and the wording points W1 onwards). After each TeX edit,
   build the PDF and inspect the changed pages. Then run `check_coverage.py`, which
   reports every item whose source changed ("source changed since
   classification"): re-check those Lean statements, then update the items'
