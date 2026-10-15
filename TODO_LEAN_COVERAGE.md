@@ -39,7 +39,7 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
 | compC | `chapters/09_C.tex` | `Ch09C` | wave 1: resumed from its pause note, in progress |
 | compH | `chapters/07_H.tex` | `Ch07H` | wave 1: resumed from its pause note, in progress |
 | compD | `chapters/12_D.tex`, `appendices/seed_certificate.tex` | `Ch12D`, `SeedCertificate` | wave 1: resumed from its pause note, in progress |
-| compL | `chapters/13_L.tex` | `Ch13L` | wave 1: resumed from its pause note, in progress |
+| compL | `chapters/13_L.tex` | `Ch13L` | done: 142 items (LEAN 48, DEFINITION 29, PART_OF 3, PROOF 3, SAME_AS 38, NON_CLAIM 17, OPEN 1, DISCREPANCY 3: M8 recurrence, M12, M13); OPEN: line 61, four $C^2$ branches (`FourC2BranchLocalFailure`); reviewed, fix pass done |
 | compTA | `chapters/03_T.tex`, `chapters/08_A.tex` | `Ch03T`, `Ch08A` | wave 2: in progress |
 | compG | `chapters/05_G.tex` | `Ch05G` | wave 2: in progress |
 | compFQ | `chapters/06_F.tex`, `chapters/10_Q.tex` | `Ch06F`, `Ch10Q` | wave 2: in progress |

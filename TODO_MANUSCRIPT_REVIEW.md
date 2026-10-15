@@ -2,11 +2,12 @@
 
 Review date: 13 October 2026. Reviewer: AI assistant (Claude), at the author's request.
 
-Scope: notation, typesetting and claim wording in the article (`paper/`). The seed
+Scope: notation, typesetting and claim wording in the article (`paper/`) and, from
+M12 on and in the W items, in the companion (`companion/`). The seed
 numerics were re-checked in the first reading and all matched. Unless an item says
 otherwise, no mathematical statement and no Lean declaration changed.
 
-**Status (13 October 2026):** M1 to M6 are resolved. M7 onwards were found by the
+**Status (14 October 2026):** M1 to M6 are resolved. M7 onwards were found by the
 Lean coverage work (`TODO_LEAN_COVERAGE.md`) and are open; they will be fixed with
 the line-by-line reading of the proofs.
 
@@ -38,6 +39,13 @@ confirmed each one.
   second differentiability at zero." and "…the loss of second differentiability of
   three of the four branches at the accumulation point."
   (`A/master/prose/009`, `A/verification/prose/017`, `A/lower_curvature/prose/010`)
+  Companion: `companion/chapters/13_L.tex:3`, "The local finite-branch functions
+  have Lipschitz gradients but lose second differentiability at the accumulation
+  point", says the same (`Ch13L.branch_regularity`; line 413 of that chapter has it
+  right). It is the hand-written introduction `introductions['L']` in
+  `editorial/generate_companion.py`. Proposed: "…have Lipschitz gradients; three of
+  the four lose second differentiability at the accumulation point."
+  (`C/13_L/prose/002`)
 - [ ] **M9: Ray identity without its range (typo).** `paper/sections/verification.tex`
   (item `A/verification/prose/004`): "$G(t(-1,16))=-t$" holds only for $t\ge0$, as
   `failure.tex:200` says (`Verification.seed_ray`, counterexample
@@ -67,6 +75,41 @@ confirmed each one.
   Lemma~\ref{art:seed_cycle}" (`paper/appendices/seed_certificate.tex:199-200`,
   `A/seed_certificate/prose/012`), needs no separate change: it is correct once
   the lemma states the range. Flip that item to `PROOF` when fixing M11.
+
+## Open: companion discrepancies (found by the Lean coverage, 14 October 2026)
+
+Each item is a `DISCREPANCY` in `editorial/lean_coverage/register/C_*.json`; the
+intended statement is proved in `bfgs_lean_article/BfgsArticle/Coverage/Companion/`,
+and independent review confirmed each item. Recurrences of article items are listed
+under those items (M8). The chapters are generated: fix them through
+`editorial/generate_companion.py` (the seed appendix through
+`editorial/prepare_shared_appendix.py`) and regenerate.
+
+- [ ] **M12: Theorem `L:thm:local` denies a finite smooth-branch representation.**
+  `companion/chapters/13_L.tex:59`: the last clause, "the latter version has a
+  countable polyhedral nonsmooth part, not a finite smooth-branch representation",
+  read literally ("has no finite smooth-branch representation"), is false even for
+  branches of the class of the theorem's first version: the step version is the
+  maximum of ten globally $C^{1,1}$, uniformly strongly convex branches (quadratic
+  splines on the geometric pieces; checked with exact rational arithmetic by the
+  independent review, not formalized in Lean). The descriptive reading, a countable
+  polyhedral nonsmooth part, is true (`Ch13L.local_failure`) and intended (line 403:
+  "No claim of four smooth branches is made for this alternative"). Proposed: drop
+  ", not a finite smooth-branch representation", or "…constructed from a countable
+  polyhedral nonsmooth part rather than from four smooth branches". The clause is
+  in the frozen span `L.span.2` (`bfgs_lean_stage1/master_report/latex/chapters/L.tex:52`):
+  add a logged `if module=='L':` transformation with its own reason. The item then
+  becomes `LEAN`. (`C/13_L/theorem/L:thm:local`)
+- [ ] **M13: Chapter L says it uses a fixed line-search pair.** `13_L.tex:413`:
+  "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
+  parameter family is not imported." is a remnant of the fixed-pair edition. Since
+  the transformation of 13 October (`constant_range['L']` in
+  `editorial/generate_companion.py`), the chapter fixes an arbitrary pair
+  $0<c_1\le1/3$, $c_1<c_2<1$ and proves its theorems for every such pair
+  (`Ch13L.global_failure`, `local_failure`), which is Chapter D's family
+  (`12_D.tex:58-60`). No result is affected. Proposed: delete the sentence, or
+  "Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$,
+  $c_1<c_2<1$." Fix: a new `constant_range['L']` entry. (`C/13_L/prose/082`)
 
 ## Wording points in the companion (no discrepancy)
 

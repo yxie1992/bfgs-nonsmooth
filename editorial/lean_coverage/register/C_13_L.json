@@ -14,7 +14,12 @@
    "title": null,
    "container": null,
    "sha256": "26850a59b082ac72",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.admissible_iff",
+    "BfgsVerification.LUniform.Admissible"
+   ],
+   "note": "The fixed pair of the chapter: every statement below holds for each pair in this range, with orbits, objectives and initial points chosen before the pair (line 33)."
   },
   {
    "id": "C/13_L/disp/002",
@@ -28,7 +33,15 @@
    "title": null,
    "container": null,
    "sha256": "5441c21ec6708c4a",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.failure_update",
+    "BfgsCoverage.Article.Failure.fullUpdate",
+    "BfgsVerification.inverseBFGS",
+    "BfgsVerification.bfgsStep",
+    "BfgsVerification.AdmissibleBFGSRun"
+   ],
+   "note": "Same display as the article's art:failure_update (A/failure/disp/002): failure_update unfolds Failure.fullUpdate H g g⁺ α = inverseBFGS H s y to the displayed formula with s = -αHg, y = g⁺ - g. Every AdmissibleBFGSRun uses this update at every step (field update; \"unmodified\": no reset or rescaling)."
   },
   {
    "id": "C/13_L/theorem/L:thm:global",
@@ -44,7 +57,16 @@
    "title": "Global failure with constant positive branch Hessians",
    "container": null,
    "sha256": "7ddde2f9e585d3c8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.global_failure",
+    "BfgsCoverage.Companion.Ch13L.quadratic_objective_eq",
+    "BfgsVerification.LUniform.uniform_global_failure",
+    "BfgsVerification.LNormalizedOracle.uniform_oracle_orbit",
+    "BfgsVerification.LFlatten.physical_neighborhood",
+    "BfgsVerification.LQuadraticSeed.quadratic_seed_contract"
+   ],
+   "note": "Reading: Q_μ written with the slopes (a variable with its defining equation); μ-strongly convex in the Euclidean sense (FixedNormal.EuclideanStrongConvexOn); the runs are actual runs of the specified search (NonStrictLineSearch.fromMetric, every budget N ≥ 5) for every pair 0<c₁≤1/3, c₁<c₂<1, with the same iterates x and matrices H chosen before the pair; \"arbitrarily close to the origin in the sense of Section L:sec:blowup\": for every neighbourhood W of P_* (normalized coordinates x=τz, H=τM(b,e)) and every neighbourhood V of 0, the initial state is (τz, τM(b,e)) with (z,b,e,τ) ∈ W, τ>0, and every iterate and every trial point lies in V; trial points are differentiable (the chapter's convention of differentiable oracle queries, line 29); \"every branch has Hessian exactly μI globally\": each branch μ‖x‖²/2+g_iᵀx is C² with RadialHessian.matrix = μ•1 at every point."
   },
   {
    "id": "C/13_L/disp/003",
@@ -58,7 +80,8 @@
    "title": null,
    "container": "C/13_L/theorem/L:thm:global",
    "sha256": "a022ed367df1fbc5",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/13_L/theorem/L:thm:global"
   },
   {
    "id": "C/13_L/theorem/L:thm:local",
@@ -74,7 +97,20 @@
    "title": "Local failure under the pointwise Hessian bounds",
    "container": null,
    "sha256": "8fc29001a7579b2c",
-   "status": null
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.runs_of_uniform",
+    "BfgsCoverage.Companion.Ch13L.stepObjective",
+    "BfgsCoverage.Companion.Ch13L.stepHessian",
+    "BfgsCoverage.Companion.Ch13L.step_actual_hessian",
+    "BfgsCoverage.Companion.Ch13L.stepHessian_bounds",
+    "BfgsCoverage.Companion.Ch13L.step_decomposition",
+    "BfgsVerification.LUniform.uniformSmoothLocalFailure",
+    "BfgsVerification.LUniform.uniform_identity_failure",
+    "BfgsVerification.LStepEmbedding.residual_countable_max"
+   ],
+   "note": "Everything but the final clause is stated and proved by local_failure: two objectives F₁ (the whitened four-branch function LUniform.smoothObjective) and F₂ (the whitened step embedding stepObjective, same fixed matrix) each have every property of the first paragraph (strong convexity, compact sublevels, unique nonsmooth minimizer 0, 0<μ̲≤L̄ with the Hessian bounds at every twice-differentiable point, starts x₀⁽ⁿ⁾→0 with H₀=I whose runs, the same for every pair, converge to nonstationary p_n→0, differentiable trial points, uniform locality of all trial points); F₁ is the maximum of four C¹ branches with one Euclidean gradient-Lipschitz constant and one strong-convexity modulus; F₂ has Hessian one fixed positive-definite matrix B=μH̄₀ at every twice-differentiable point and F₂(x)-xᵀBx/2 is the attained maximum of a countable family of affine functions. The final clause \"not a finite smooth-branch representation\" is false when read literally (the step version is also a maximum of ten convex, globally C^{1,1}, uniformly strongly convex branches; see the discrepancy entry); local_failure states the descriptive reading (a countable polyhedral nonsmooth part)."
   },
   {
    "id": "C/13_L/disp/004",
@@ -88,7 +124,13 @@
    "title": null,
    "container": "C/13_L/theorem/L:thm:local",
    "sha256": "9d194b4c6efcc626",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsVerification.LUniform.smooth_actual_hessian",
+    "BfgsCoverage.Companion.Ch13L.stepHessian_bounds"
+   ],
+   "note": "The display (μ̲I ⪯ ∇²F ⪯ L̄I at every twice-differentiable point, quadratic-form reading of the RadialHessian.matrix) is a conjunct of local_failure, for both objectives. The theorem item itself is a discrepancy only for its final clause."
   },
   {
    "id": "C/13_L/disp/005",
@@ -102,7 +144,17 @@
    "title": null,
    "container": null,
    "sha256": "7cd1fdaa842bbfcd",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seed_slopes",
+    "BfgsVerification.SeedCycle.g0",
+    "BfgsVerification.SeedCycle.g1",
+    "BfgsVerification.SeedCycle.g2",
+    "BfgsVerification.SeedOrbit.gradient",
+    "BfgsVerification.SeedOrbit.seedC",
+    "BfgsVerification.SeedOrbit.seedD"
+   ],
+   "note": "Same slopes as the article's display A/failure/disp/003, with (c,d) = (c_∘,d_∘) = (seedC, seedD), the root of displays 007-008."
   },
   {
    "id": "C/13_L/disp/006",
@@ -116,7 +168,17 @@
    "title": null,
    "container": null,
    "sha256": "bd0bfb6c238db10c",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.SeedCertificate.factors_def",
+    "BfgsVerification.AlgebraicSeed.U",
+    "BfgsVerification.AlgebraicSeed.V",
+    "BfgsVerification.AlgebraicSeed.R",
+    "BfgsVerification.AlgebraicSeed.K",
+    "BfgsVerification.AlgebraicSeed.T",
+    "BfgsVerification.AlgebraicSeed.Y"
+   ],
+   "note": "Identical to A/seed_certificate/disp/001 with c_∘,d_∘ written c,d."
   },
   {
    "id": "C/13_L/disp/007",
@@ -130,7 +192,14 @@
    "title": null,
    "container": null,
    "sha256": "f95c627e6765c99e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.root_equations",
+    "BfgsCoverage.Article.SeedCertificate.root_def",
+    "BfgsCoverage.Article.SeedCertificate.seed_polynomials_def",
+    "BfgsCoverage.Article.SeedCertificate.center_def"
+   ],
+   "note": "The constants (c,d) = (seedC, seedD) solve both equations and lie in the closed ℓ∞ box of radius 10⁻³⁰ about (c₀,d₀); uniqueness is prose item 015."
   },
   {
    "id": "C/13_L/disp/008",
@@ -144,7 +213,12 @@
    "title": null,
    "container": null,
    "sha256": "ae3004f39a410cba",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.SeedCertificate.center_def",
+    "BfgsVerification.AlgebraicSeed.center"
+   ],
+   "note": "The center (c₀,d₀) of the root box: the article's r̄ (A/seed_certificate/disp/003)."
   },
   {
    "id": "C/13_L/disp/009",
@@ -158,7 +232,13 @@
    "title": null,
    "container": null,
    "sha256": "7c947396565a0c47",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.seed_ratio_def",
+    "BfgsCoverage.Article.Failure.seed_rho",
+    "BfgsCoverage.Article.Failure.seedStart_eq"
+   ],
+   "note": "Defines ρ (seedRatio, = 129R/(V(U+129)) at the root) and z₀ (SeedOrbit.point seedC seedD seedRatio 0); asserts 0.060<ρ<0.061."
   },
   {
    "id": "C/13_L/disp/010",
@@ -172,7 +252,14 @@
    "title": null,
    "container": null,
    "sha256": "0b4eedef0ac70181",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.seed_matrix_closure",
+    "BfgsCoverage.Article.Failure.seed_closures",
+    "BfgsCoverage.Article.Failure.seed_matrices_steps",
+    "BfgsCoverage.Article.Failure.seedStep_eq"
+   ],
+   "note": "Standing assumptions of lines 100 and 105 as hypotheses: M₀=I, M_{j+1} the full update with consecutive gradients g₀,g₁,g₂,g₀ and lengths 1,1/4,1/16, z₀ of display 009 and z_{j+1}=z_j-α_jM_jg_j."
   },
   {
    "id": "C/13_L/disp/011",
@@ -186,7 +273,13 @@
    "title": null,
    "container": null,
    "sha256": "be09621a2159b0cc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.query_lists",
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsCoverage.Article.LowerCurvature.fromMetric_fuel_mono"
+   ],
+   "note": "The query lists of the specified search on G from (z_j,M_j), for every pair 0<c₁≤1/3, c₁<c₂<1 (display 001) and every budget N≥5. The range is fixed by the chapter (lines 30-33), so the omission M11 of the article does not recur here."
   },
   {
    "id": "C/13_L/disp/012",
@@ -200,7 +293,9 @@
    "title": null,
    "container": null,
    "sha256": "e26461396bc29790",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/002",
+   "note": "Identical display."
   },
   {
    "id": "C/13_L/disp/013",
@@ -216,7 +311,9 @@
    "title": null,
    "container": null,
    "sha256": "89ee5d91529b83b8",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/003",
+   "note": "Identical display (equation art:quadratic_minimizer), for every μ>0."
   },
   {
    "id": "C/13_L/disp/014",
@@ -230,7 +327,16 @@
    "title": null,
    "container": null,
    "sha256": "11eb0e0237338b3e",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.normalized_coordinates_def",
+    "BfgsVerification.LNormalizedReturn.point",
+    "BfgsVerification.LNormalizedReturn.shape",
+    "BfgsVerification.LNormalizedReturn.scale",
+    "BfgsVerification.LNormalizedOracle.physicalPoint",
+    "BfgsVerification.LNormalizedOracle.physicalMetric"
+   ],
+   "note": "Same display as A/lower_curvature/disp/004 with (b,e) for the article's (ζ,η)."
   },
   {
    "id": "C/13_L/disp/015",
@@ -244,7 +350,12 @@
    "title": null,
    "container": null,
    "sha256": "5cbec34645ffd826",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.boundary_seed_def",
+    "BfgsVerification.LNormalizedReturn.seed"
+   ],
+   "note": "P_* = (z₀, b, e, τ) = (z₀, 0, 1, 0), as A/lower_curvature/prose/008."
   },
   {
    "id": "C/13_L/disp/016",
@@ -261,7 +372,16 @@
    "title": null,
    "container": null,
    "sha256": "af856259376f2c3d",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.return_substep_def",
+    "BfgsVerification.LNormalizedReturn.substep",
+    "BfgsVerification.LNormalizedReturn.currentGradient",
+    "BfgsVerification.LNormalizedReturn.step",
+    "BfgsVerification.LNormalizedReturn.secant",
+    "BfgsVerification.LNormalizedReturn.internal"
+   ],
+   "note": "Same substeps as A/lower_curvature/disp/005 (Y_j is the article's Y)."
   },
   {
    "id": "C/13_L/disp/017",
@@ -277,7 +397,13 @@
    "title": null,
    "container": null,
    "sha256": "32dc9b54335068d3",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.return_map_def",
+    "BfgsVerification.LNormalizedReturn.returnMap",
+    "BfgsVerification.LNormalizedReturn.returnFactor"
+   ],
+   "note": "Same map as A/lower_curvature/disp/006; r = (M₃)₁₁ is the article's ρ̂ (returnFactor)."
   },
   {
    "id": "C/13_L/lemma/L:lem:agreement",
@@ -293,7 +419,14 @@
    "title": "Agreement with the actual implementation",
    "container": null,
    "sha256": "a6e200e16fd00de0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.agreement",
+    "BfgsCoverage.Article.LowerCurvature.lower_hyperbolic",
+    "BfgsVerification.LNormalizedOracle.uniform_conditions_eventually",
+    "BfgsVerification.LNormalizedOracle.UniformConditions.conditions"
+   ],
+   "note": "For every μ>0. The open neighbourhood is the interior of the neighbourhood of part (i) of the article's lower_hyperbolic. \"Exactly the certified trial lists\": the specified search makes the trials trialHistory j and accepts α_j (every budget N≥5); \"and return map\": x₃=τ'z', H₃=τ'M(b',e') for (z',b',e',τ')=T_μ(w); the steps use actual gradients and the full update; matrices positive definite, points and trials differentiable with the certified unique active branches."
   },
   {
    "id": "C/13_L/proof/001",
@@ -307,7 +440,18 @@
    "title": null,
    "container": null,
    "sha256": "10cc457185f40e2f",
-   "status": null
+   "status": "PROOF",
+   "of": "C/13_L/lemma/L:lem:agreement",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.query_value_scaled",
+    "BfgsVerification.LNormalizedOracle.seed_accept_zero_margins",
+    "BfgsVerification.LNormalizedOracle.seed_reject_zero_margin",
+    "BfgsVerification.LNormalizedOracle.armijoMargin_interpolate",
+    "BfgsVerification.LNormalizedOracle.wolfeMargin_interpolate",
+    "BfgsVerification.LNormalizedOracle.Conditions.actual_point_update",
+    "BfgsVerification.LNormalizedOracle.Conditions.actual_matrix_update"
+   ],
+   "note": "The corner margins (accepted queries pass Armijo with c₁=1/3 and have positive new slopes; rejected queries raise the value) and their affine interpolation give every pair from one neighbourhood (LUniformGlobal.lean)."
   },
   {
    "id": "C/13_L/disp/018",
@@ -321,7 +465,12 @@
    "title": null,
    "container": "C/13_L/proof/001",
    "sha256": "61f858428d4d06e4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.query_value_scaled",
+    "BfgsCoverage.Article.Failure.seed_objective_homogeneous"
+   ],
+   "note": "Q_μ(τZ)/τ = G(Z)+μτ‖Z‖²/2 for τ>0 (the standing assumption of the proof: a state with τ>0)."
   },
   {
    "id": "C/13_L/disp/019",
@@ -335,7 +484,12 @@
    "title": null,
    "container": null,
    "sha256": "9a6bc4d683a6dcd1",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.shape_map_def",
+    "BfgsVerification.LShapeDerivative.shapeMap"
+   ],
+   "note": "The normalized shape map at τ=0; its values are the matrix coordinates of T_μ at every state with τ=0 (prose item 034)."
   },
   {
    "id": "C/13_L/disp/020",
@@ -349,7 +503,13 @@
    "title": null,
    "container": null,
    "sha256": "1759dd251602b2d2",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.jacobian_display",
+    "BfgsVerification.LShapePrecision.corrected_display_error",
+    "BfgsVerification.LShapePrecision.actualEntry"
+   ],
+   "note": "\"Decimal displays\": each displayed entry is the entry of J (the derivative of the shape map at (0,1)) rounded to 15 decimals, |J_ij - d_ij| < 10⁻¹⁵/2. The lower-left display ends 427498 (the corrected rounding of the ledger; the original 427499 is off by more than half a unit, LShapePrecision.original_lower_left_exceeds_half_unit)."
   },
   {
    "id": "C/13_L/disp/021",
@@ -365,7 +525,13 @@
    "title": null,
    "container": null,
    "sha256": "bef86ce7bb3456ff",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.shape_eigenvalues",
+    "BfgsCoverage.Companion.Ch13L.shape_jacobian",
+    "BfgsVerification.LShapeSpectrum.source_shape_roots"
+   ],
+   "note": "λ_s, λ_u are the eigenvalues of J: P_J(λ) = (λ-λ_s)(λ-λ_u) with λ_s ∈ (0.038,0.039), λ_u ∈ (1.564,1.565)."
   },
   {
    "id": "C/13_L/disp/022",
@@ -381,7 +547,19 @@
    "title": null,
    "container": null,
    "sha256": "27774712b5690b56",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.jacobian_block_form",
+    "BfgsCoverage.Companion.Ch13L.fderiv_returnMap_scale",
+    "BfgsCoverage.Companion.Ch13L.returnMap_scale",
+    "BfgsCoverage.Companion.Ch13L.internal_scale",
+    "BfgsCoverage.Companion.Ch13L.substep_scale",
+    "BfgsCoverage.Companion.Ch13L.scaleLast_apply",
+    "BfgsVerification.LNormalizedReturn.return_derivative_point_columns",
+    "BfgsVerification.LShapeSpectrum.actual_middle_block",
+    "BfgsVerification.LNormalizedReturn.return_derivative_last_row"
+   ],
+   "note": "The matrix of DT_μ(P_*) in the coordinates (z₁,z₂,b,e,τ). The factor μ is proved: the blocks C, a, b are the same for every μ>0 (T_μ depends on τ only through μτ in its first four coordinates, returnMap_scale)."
   },
   {
    "id": "C/13_L/disp/023",
@@ -395,7 +573,13 @@
    "title": null,
    "container": null,
    "sha256": "4bb2d4c815c4798f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.return_eigenvalues",
+    "BfgsVerification.LExactDiagonalization.exact_block_diagonalization",
+    "BfgsVerification.LExactDiagonalization.charpoly_of_exact_diagonalization"
+   ],
+   "note": "Stated as the factorization of the characteristic polynomial of DT_μ(P_*), with λ_s, λ_u the roots of P_J (display 021); for every μ."
   },
   {
    "id": "C/13_L/proof/002",
@@ -409,7 +593,19 @@
    "title": null,
    "container": null,
    "sha256": "13304f1519453155",
-   "status": null
+   "status": "PROOF",
+   "of": "C/13_L/theorem/L:thm:global",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.orbit_physical_states",
+    "BfgsCoverage.Article.LowerCurvature.stable_manifold_positive_scale",
+    "BfgsVerification.LReturnStableOrbit.source_positive_return_orbit",
+    "BfgsVerification.LNormalizedOracle.uniform_oracle_orbit",
+    "BfgsVerification.LFlatten.physical_neighborhood",
+    "BfgsVerification.LFlatten.Data.failure_contract",
+    "BfgsVerification.LFlatten.Data.whole_run_in_neighborhood",
+    "BfgsVerification.LReturnLocalInverse.actual_local_inverse"
+   ],
+   "note": "The local stable-manifold theorem used (Dyatlov, Sections 3-4) is proved in Lean (LReturnStableGraph.source_smooth_stable_graph, AnalyticStableGraph); the orbit is chosen in the intersection of the agreement neighbourhood and of the preimage of any neighbourhood of physical zero, which gives the small-orbit property (global_failure)."
   },
   {
    "id": "C/13_L/disp/024",
@@ -423,7 +619,13 @@
    "title": null,
    "container": "C/13_L/proof/002",
    "sha256": "d5e4b705254ce7eb",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.orbit_physical_states",
+    "BfgsVerification.LFlatten.Data.point_tendsto",
+    "BfgsVerification.LFlatten.Data.metric_tendsto"
+   ],
+   "note": "Standing assumptions: a return-map orbit O (LUniform.Orbit, decisions of every pair) converging to P_*; x_{3m}, H_{3m} are its physical states O.x (3m), O.H (3m)."
   },
   {
    "id": "C/13_L/disp/025",
@@ -437,7 +639,17 @@
    "title": null,
    "container": null,
    "sha256": "94a7bbec980568b5",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.embedding_constants_def",
+    "BfgsVerification.LEmbedding.mu",
+    "BfgsVerification.LEmbedding.center",
+    "BfgsVerification.LEmbedding.slope",
+    "BfgsVerification.LEmbedding.parameter",
+    "BfgsVerification.LScalarGeometric.theta",
+    "BfgsVerification.LScalarGeometric.scale"
+   ],
+   "note": "Same constants as A/lower_curvature/disp/012 (a_n for the article's a_ℓ)."
   },
   {
    "id": "C/13_L/disp/026",
@@ -451,7 +663,9 @@
    "title": null,
    "container": null,
    "sha256": "ad8c4ec8879f7110",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/012",
+   "note": "b₀=b₁=1791/1024 and 1.7<b_i<34 (parameter_values; \"the seed interval certificate proves\", line 259)."
   },
   {
    "id": "C/13_L/disp/027",
@@ -465,7 +679,13 @@
    "title": null,
    "container": null,
    "sha256": "27f4c75f63120beb",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.ramp_constants_def",
+    "BfgsVerification.LScalarRamp.center",
+    "BfgsVerification.LScalarRamp.epsilon"
+   ],
+   "note": "ϑ_b is the article's t_b (A/lower_curvature/disp/013)."
   },
   {
    "id": "C/13_L/disp/028",
@@ -479,7 +699,14 @@
    "title": null,
    "container": null,
    "sha256": "fdaf8876e1939f2d",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.ramp_def_bi",
+    "BfgsCoverage.Article.LowerCurvature.cubicRamp",
+    "BfgsVerification.LScalarRamp.ramp",
+    "BfgsCoverage.Companion.Ch13L.monotone_ramp"
+   ],
+   "note": "For the two values b=b_i: LScalarRamp.ramp b is the cubic ramp with center ϑ_b and width ε (ramp_def_bi; the formula on the intervening interval is also in monotone_ramp)."
   },
   {
    "id": "C/13_L/disp/029",
@@ -493,7 +720,13 @@
    "title": null,
    "container": null,
    "sha256": "a57ce35b575b2e1e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.ramp_integral_bounds",
+    "BfgsVerification.LScalarRamp.integral_ramp",
+    "BfgsVerification.LScalarRamp.deriv_ramp_bounds"
+   ],
+   "note": "For each of the values b=b_i; includes J_b(ξ)=∫₀^ξ P_b (line 271)."
   },
   {
    "id": "C/13_L/disp/030",
@@ -509,7 +742,14 @@
    "title": null,
    "container": null,
    "sha256": "f113bff371e1b166",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_def_bi",
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_def",
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_unique",
+    "BfgsVerification.LScalar.phi"
+   ],
+   "note": "φ_b of the companion is the article's ψ_b (same formulas: interval formula, φ_b(0)=0, x²/2 for x<0, 1+x-b for x≥b); lower_scalar_unique shows that the equations determine LScalar.phi b."
   },
   {
    "id": "C/13_L/lemma/L:lem:scalar",
@@ -526,7 +766,15 @@
    "title": "Scalar regularity and exact affine neighborhoods",
    "container": null,
    "sha256": "b4370458f1a20202",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.scalar_lemma",
+    "BfgsVerification.lScalarRegularity",
+    "BfgsVerification.LScalar.phi_node",
+    "BfgsVerification.LScalar.phi_node_hasDerivAt",
+    "BfgsVerification.LScalar.phi_plateau"
+   ],
+   "note": "For each of the two values b=b_i. Globally C^{1,1}: C¹ with a Lipschitz derivative; C² on (0,∞) and (-∞,0): ContDiffOn ℝ 2; not twice differentiable at zero: φ_b' not differentiable at 0; \"where its second derivative exists\": wherever φ_b' has a derivative s, 0≤s≤max{1,768/b}."
   },
   {
    "id": "C/13_L/disp/031",
@@ -540,7 +788,8 @@
    "title": null,
    "container": "C/13_L/lemma/L:lem:scalar",
    "sha256": "f41c9055e783a307",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/13_L/lemma/L:lem:scalar"
   },
   {
    "id": "C/13_L/disp/032",
@@ -556,7 +805,8 @@
    "title": null,
    "container": "C/13_L/lemma/L:lem:scalar",
    "sha256": "80cf2ec85b9ccf77",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/13_L/lemma/L:lem:scalar"
   },
   {
    "id": "C/13_L/proof/003",
@@ -570,7 +820,18 @@
    "title": null,
    "container": null,
    "sha256": "a0f4ef976019b185",
-   "status": null
+   "status": "PROOF",
+   "of": "C/13_L/lemma/L:lem:scalar",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_derivatives_bi",
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_nodes_bi",
+    "BfgsCoverage.Article.LowerCurvature.lower_plateau_lengths_bi",
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_not_twice_bi",
+    "BfgsVerification.LScalar.derivative_ratio_on_nodes",
+    "BfgsVerification.LScalar.derivative_ratio_on_shifted_nodes",
+    "BfgsVerification.LScalarRamp.matching_identity"
+   ],
+   "note": "Undisplayed steps (value matching via r+(1-r)(1-ϑ_b)=(1+r)/b, monotone derivative, the two plateau lengths exceed 1/2, the difference quotients 1/b and 1/(b+1/4)) are stated by the listed article theorems for b=b_i."
   },
   {
    "id": "C/13_L/disp/033",
@@ -584,7 +845,9 @@
    "title": null,
    "container": "C/13_L/proof/003",
    "sha256": "4709382ff583da1f",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/015",
+   "note": "Identical up to notation (φ_b for ψ_b, a_n for a_ℓ); the article display adds 0≤P_b'≤768."
   },
   {
    "id": "C/13_L/disp/034",
@@ -598,7 +861,9 @@
    "title": null,
    "container": "C/13_L/proof/003",
    "sha256": "3e0ee2cae21c68c0",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/016",
+   "note": "Identical up to notation (ϑ_b for t_b, ε); the article item also covers \"both exceed 1/2\" (line 308 here)."
   },
   {
    "id": "C/13_L/disp/035",
@@ -614,7 +879,13 @@
    "title": null,
    "container": null,
    "sha256": "9425a1b691913fd3",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.lower_objective_def",
+    "BfgsVerification.LEmbedding.branch",
+    "BfgsVerification.LEmbedding.objective"
+   ],
+   "note": "Same objective as A/lower_curvature/disp/018 (φ_{b_i} for ψ_{b_i})."
   },
   {
    "id": "C/13_L/disp/036",
@@ -628,7 +899,9 @@
    "title": null,
    "container": null,
    "sha256": "9567a6c9a5123653",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/022",
+   "note": "F(x) ≥ μ‖x‖²/2 and F(0)=0 (lower_objective_minimizer)."
   },
   {
    "id": "C/13_L/disp/037",
@@ -644,7 +917,9 @@
    "title": null,
    "container": null,
    "sha256": "96f4f228b4f2d73d",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/019",
+   "note": "Identical display."
   },
   {
    "id": "C/13_L/disp/038",
@@ -658,7 +933,12 @@
    "title": null,
    "container": null,
    "sha256": "55d4e3114afea10b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_copy_formula",
+    "BfgsVerification.LEmbedding.scalar_copy"
+   ],
+   "note": "For i=0,1,2, every n and every y with |q_iᵀy|≤1/2 (the plateau of Lemma L:lem:scalar); p_n = LEmbedding.copyCenter n, C_* = LEmbedding.offset (line 345)."
   },
   {
    "id": "C/13_L/disp/039",
@@ -674,7 +954,9 @@
    "title": null,
    "container": null,
    "sha256": "ab464cf600ae725a",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/020",
+   "note": "Equation L:eq:local-model is art:lower_local_model (n≥1, a fixed neighbourhood of y=0, Q_μ with μ=1/4096)."
   },
   {
    "id": "C/13_L/disp/040",
@@ -688,7 +970,14 @@
    "title": null,
    "container": null,
    "sha256": "df1b84a6cc03c951",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.LUniform.family",
+    "BfgsVerification.LUniform.family_x",
+    "BfgsVerification.LUniform.family_H",
+    "BfgsVerification.LUniform.source"
+   ],
+   "note": "The n-th copy starts at p_n + a_n x̄₀ with H̄₀ = LUniform.source.H 0 (family_x, family_H at k=0)."
   },
   {
    "id": "C/13_L/disp/041",
@@ -702,7 +991,9 @@
    "title": null,
    "container": null,
    "sha256": "ec2b80061e47b79e",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/021",
+   "note": "copy_runs: for every pair and every n the copy is a run of the implementation with x_k = p_n + a_n x̄_k and H_k = H̄_k."
   },
   {
    "id": "C/13_L/disp/042",
@@ -716,7 +1007,9 @@
    "title": null,
    "container": null,
    "sha256": "bc025d19f78e7151",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/029",
+   "note": "copy_limits: x_k⁽ⁿ⁾ → p_n, F(x_k⁽ⁿ⁾) strictly decreasing to a_n²C_* > 0."
   },
   {
    "id": "C/13_L/disp/043",
@@ -730,7 +1023,9 @@
    "title": null,
    "container": null,
    "sha256": "41477e3f9a699f5d",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/029",
+   "note": "copy_limits: every query norm of the n-th run is at most a_n(‖c_*‖+sup seed query norms), which tends to 0 (Euclidean norms)."
   },
   {
    "id": "C/13_L/disp/044",
@@ -744,7 +1039,13 @@
    "title": null,
    "container": null,
    "sha256": "71ddc51d1a1a7417",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.whitened_constants",
+    "BfgsCoverage.Article.LowerCurvature.whitening_constants",
+    "BfgsVerification.LUniform.lowerConstant_pos"
+   ],
+   "note": "\"< ∞\": L̄ is a real number."
   },
   {
    "id": "C/13_L/disp/045",
@@ -758,8 +1059,1648 @@
    "title": null,
    "container": null,
    "sha256": "dcaa300e140c283e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_hessian_identity",
+    "BfgsVerification.LStepEmbedding.objective_actual_hessian"
+   ],
+   "note": "For the step embedding F (before the whitening); the library proves it at every differentiable point."
+  },
+  {
+   "id": "C/13_L/prose/001",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    3,
+    3
+   ],
+   "anchor": "Positive lower curvature requires a separate construction.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/failure/prose/010",
+   "note": "The construction of Chapter D (the article's first construction, DEmbedding) has no uniform positive lower curvature (Failure.no_uniform_lower_curvature); \"requires a separate construction\" is motivation."
+  },
+  {
+   "id": "C/13_L/prose/002",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    3,
+    3
+   ],
+   "anchor": "The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_regularity",
+    "BfgsCoverage.Article.LowerCurvature.branch_second_differentiability"
+   ],
+   "note": "Same wording issue as M8 (A/master/prose/009, A/verification/prose/017, A/lower_curvature/prose/010): only three of the four branches lose second differentiability. See the discrepancy entry."
+  },
+  {
+   "id": "C/13_L/prose/003",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    3,
+    3
+   ],
+   "anchor": "no claim combines uniform strong convexity with the preceding local C2,1 branch regularity",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer about what is claimed; the open combination is stated as prose item 012 (OPEN)."
+  },
+  {
+   "id": "C/13_L/prose/004",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    29,
+    29
+   ],
+   "anchor": "All runs use ordinary full BFGS, $H_0\\succ0$, differentiable oracle queries, and a fixed unit-first Armijo--weak-Wolfe search.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsVerification.NonStrictLineSearch.fromMetric",
+    "BfgsCoverage.Article.Failure.specified_search",
+    "BfgsCoverage.Article.Failure.implemented_run_unique"
+   ],
+   "note": "Conventions of the chapter: runs are AdmissibleBFGSRun (full update, H₀≻0, actual gradients); the search is the specified unit-first search; the differentiability of every query is part of the statements of L:thm:global, L:thm:local and L:lem:agreement."
+  },
+  {
+   "id": "C/13_L/prose/005",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    29,
+    29
+   ],
+   "anchor": "The search starts with $\\alpha=1$, lower bracket zero and upper bracket infinity",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.specified_search",
+    "BfgsVerification.NonStrictLineSearch.search",
+    "BfgsVerification.NonStrictLineSearch.nextTrial",
+    "BfgsVerification.NonStrictLineSearch.Armijo",
+    "BfgsVerification.NonStrictLineSearch.Wolfe"
+   ],
+   "note": "specified_search unfolds the search: start α=1, l=0, h=∞; an Armijo failure sets h=α and tries (l+α)/2; a Wolfe failure sets l=α and tries 2α while h=∞, else the midpoint. The chapter does not display the tests; prose item 007 shows that the non-strict and the strict tests give the same decisions on every run of the chapter."
+  },
+  {
+   "id": "C/13_L/prose/006",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    33,
+    33
+   ],
+   "anchor": "The orbits, objectives and initial points below are chosen before this pair.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.global_failure",
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.agreement",
+    "BfgsCoverage.Companion.Ch13L.step_copies"
+   ],
+   "note": "The quantifier order (orbits, objectives and initial points before the pair) is part of the Lean statements."
+  },
+  {
+   "id": "C/13_L/prose/007",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    40,
+    40
+   ],
+   "anchor": "The seed inequalities have strict margins, so there are no equality-convention issues.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.strict_margins_same_decisions",
+    "BfgsCoverage.Article.Failure.seed_margins",
+    "BfgsCoverage.Article.Failure.seed_rejections_raise"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/008",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    49,
+    49
+   ],
+   "anchor": "This is \\emph{global} failure: approaching the wrong vertex is not the same as approaching the actual minimizer.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "C/13_L/theorem/L:thm:global",
+   "note": "The runs converge to the vertex 0 of G, while the unique minimizer x_* is not 0."
+  },
+  {
+   "id": "C/13_L/prose/009",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    49,
+    49
+   ],
+   "anchor": "It does not contradict our local PLQ theorem.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Remark on the consistency of two proved results (the runs approach 0, not the minimizer x_*, so a local theorem near x_* is not contradicted)."
+  },
+  {
+   "id": "C/13_L/prose/010",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    61,
+    61
+   ],
+   "anchor": "The local theorem satisfies the user's literal classical-Hessian assumption, and even actual strong convexity.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure"
+   ],
+   "note": "The Hessian bounds at every twice-differentiable point and the strong convexity are conjuncts of local_failure (for both objectives)."
+  },
+  {
+   "id": "C/13_L/prose/011",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    61,
+    61
+   ],
+   "anchor": "It is \\emph{not} a local counterexample with four globally $C^2$ branches having uniform lower curvature.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.not_four_C2_branches",
+    "BfgsVerification.LUniform.branch_not_twice_differentiable_zero"
+   ],
+   "note": "Read as a statement about the construction of Theorem L:thm:local: the four branches of its four-branch version are not all C² (the first three are not twice differentiable at 0, not_four_C2_branches), and its step version is not presented with branches. It does not assert that no local counterexample with four globally C² branches of uniform lower curvature exists; that is the open question of prose item 012."
+  },
+  {
+   "id": "C/13_L/prose/012",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    61,
+    61
+   ],
+   "anchor": "That stronger combination remains unproved here.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "OPEN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.FourC2BranchLocalFailure"
+   ],
+   "note": "Modelled on the article's open question BfgsCoverage.Article.Verification.C2StronglyConvexLocalFailure, specialised to four branches in the plane; this proposition implies that one."
+  },
+  {
+   "id": "C/13_L/prose/013",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    76,
+    76
+   ],
+   "anchor": "The seed is reproduced sufficiently to specify the new calculations.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Description of the section."
+  },
+  {
+   "id": "C/13_L/prose/014",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    76,
+    76
+   ],
+   "anchor": "Its exact symbolic closure and nine strict query decisions were certified in the preceding deterministic-bracketing report",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": [
+    "A/failure/disp/007",
+    "A/failure/disp/008",
+    "A/failure/prose/020",
+    "A/failure/prose/022"
+   ],
+   "note": "Cross-reference to Chapter D (the article's Lemma art:seed_cycle, whose lemma item is a discrepancy for the omitted range; the true parts are pointed to: closure, strict margins, rejections raise the value, the decisions for every 0<c₁≤1/3, c₂>0)."
+  },
+  {
+   "id": "C/13_L/prose/015",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    94,
+    94
+   ],
+   "anchor": "The Lean formalization proves existence and uniqueness of this root by a contracting self-map with exact rational bounds checked in Lean.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/seed_certificate/lemma/art:root_certificate",
+   "note": "The mathematics (exactly one root in the closed box) is the first part of Lemma art:root_certificate; the method (contraction certificate) is the article's proof (A/seed_certificate/proof/001); the sentence about the formalization is a description of software."
+  },
+  {
+   "id": "C/13_L/prose/016",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    105,
+    105
+   ],
+   "anchor": "Here $z_{j+1}=z_j-\\alpha_jM_jg_j$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.Failure.seedPoint",
+    "BfgsCoverage.Article.Failure.seed_points",
+    "BfgsCoverage.Article.Failure.seedStep_eq",
+    "BfgsCoverage.Companion.Ch13L.seed_matrix_closure"
+   ],
+   "note": "Defining equation of the points of display 010 (a hypothesis of seed_matrix_closure); Failure.seedPoint is z_j with z_{j+1}=z_j+s_j, s_j=-α_jM_jg_j."
+  },
+  {
+   "id": "C/13_L/prose/017",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    105,
+    105
+   ],
+   "anchor": "Every displayed accepted gradient is uniquely active for $G(z)=\\max_i g_i\\T z$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.accepted_gradients_active",
+    "BfgsCoverage.Article.Failure.seed_cycle",
+    "BfgsCoverage.Article.Failure.seed_slopes"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/018",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    111,
+    111
+   ],
+   "anchor": "Every rejected trial has a value larger than the current value.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/failure/prose/016",
+   "note": "rejected_raise_value (first conjunct)."
+  },
+  {
+   "id": "C/13_L/prose/019",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    111,
+    111
+   ],
+   "anchor": "The accepted decrease ratios exceed $1/3$, and the accepted new-to-old directional-derivative ratios are negative.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.accepted_ratios",
+    "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
+    "BfgsCoverage.Article.Failure.seed_margins"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/020",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    111,
+    111
+   ],
+   "anchor": "All query points have a unique active branch.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/failure/disp/009",
+   "note": "seed_query_bounds, first conjunct (the nine queries and the three starting points)."
+  },
+  {
+   "id": "C/13_L/prose/021",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    111,
+    111
+   ],
+   "anchor": "Thus the query decisions and branch itinerary persist in a sufficiently small open neighborhood of the normalized seed state.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "C/13_L/lemma/L:lem:agreement",
+   "note": "agreement: one open neighbourhood of P_* on which, for τ>0 and every pair, the trial lists (decisions) and the unique active branches (itinerary) are those of the seed."
+  },
+  {
+   "id": "C/13_L/prose/022",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    111,
+    111
+   ],
+   "anchor": "This strictness is essential below.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Remark on the role of the strict margins in the following proofs."
+  },
+  {
+   "id": "C/13_L/prose/023",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    113,
+    113
+   ],
+   "anchor": "The vector $(-1,16)\\T$ has negative inner product with every $g_i$, so $0\\notin\\operatorname{conv}\\{g_i\\}$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.downhill_pairings",
+    "BfgsCoverage.Article.Failure.downhill_direction",
+    "BfgsVerification.LQuadraticSeed.zero_not_mem_convexHull"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/024",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    118,
+    118
+   ],
+   "anchor": "is the least-norm point of this convex hull.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/003",
+   "note": "Identical claim (with \"Indeed g₀ᵀḡ=g₁ᵀḡ=1/257=‖ḡ‖² and g₂ᵀḡ>1/257\")."
+  },
+  {
+   "id": "C/13_L/prose/025",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    122,
+    122
+   ],
+   "anchor": "At $x_*$ precisely the first two branches are active; their gradients differ, so the unique minimizer is nonsmooth.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.minimizer_and_origin",
+    "BfgsCoverage.Article.LowerCurvature.minimizer_nonsmooth",
+    "BfgsVerification.LQuadraticSeed.origin_subdifferential"
+   ],
+   "note": "Includes the next sentence: Q_μ(0)=0 and ∂Q_μ(0)=∂G(0)=conv{g₀,g₁,g₂}, which does not contain 0."
+  },
+  {
+   "id": "C/13_L/prose/026",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    137,
+    137
+   ],
+   "anchor": "Adding a quadratic changes the BFGS iterates.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/006",
+   "note": "seed_not_orbit: for μ>0 no run on Q_μ from (z₀,I) has z₁ as its next iterate."
+  },
+  {
+   "id": "C/13_L/prose/027",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    137,
+    137
+   ],
+   "anchor": "We do not claim the old exact orbit survives unchanged.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer."
+  },
+  {
+   "id": "C/13_L/prose/028",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    137,
+    137
+   ],
+   "anchor": "Instead we prove existence of nearby perturbed orbits.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "C/13_L/theorem/L:thm:global",
+   "note": "Plan of the section; the perturbed orbits start at normalized states in any neighbourhood of P_*."
+  },
+  {
+   "id": "C/13_L/prose/029",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    148,
+    148
+   ],
+   "anchor": "where the last three entries denote $(b,e,\\tau)$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.boundary_seed_def",
+    "BfgsVerification.LNormalizedReturn.seed"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/030",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    148,
+    148
+   ],
+   "anchor": "keep the input scale $\\tau$ fixed during the three substeps. Start with $(Z,M)=(z,M(b,e))$",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.return_substep_def",
+    "BfgsVerification.LNormalizedReturn.internal"
+   ],
+   "note": "LNormalizedReturn.internal μ w k: k substeps at the fixed input scale, from (point w, shape w)."
+  },
+  {
+   "id": "C/13_L/prose/031",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    157,
+    157
+   ],
+   "anchor": "Gradient indices are cyclic and $\\alpha=(1,1/4,1/16)$. Let the final quantities be $(Z_3,M_3)$ and let $r=(M_3)_{11}$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.return_substep_def",
+    "BfgsCoverage.Article.LowerCurvature.return_map_def",
+    "BfgsVerification.LNormalizedReturn.returnFactor"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/032",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    162,
+    162
+   ],
+   "anchor": "All denominators are nonzero at $P_*$, and $r=\\rho>0$ there.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/009",
+   "note": "Includes the next sentence (real analytic on an open neighbourhood of P_*, which contains states with τ<0); seed_return."
+  },
+  {
+   "id": "C/13_L/prose/033",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    162,
+    162
+   ],
+   "anchor": "Only its positive-$\\tau$ part represents actual BFGS.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.positive_scale_part",
+    "BfgsCoverage.Companion.Ch13L.agreement"
+   ],
+   "note": "For τ≤0 the matrix τM(b,e) is not positive definite (no BFGS state); for τ>0 near P_* the map is the actual algorithm (Lemma L:lem:agreement)."
+  },
+  {
+   "id": "C/13_L/prose/034",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    189,
+    189
+   ],
+   "anchor": "At $\\tau=0$ the matrix return depends only on $(b,e)$, not on $z$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.boundary_shape_return",
+    "BfgsCoverage.Article.LowerCurvature.shape_map_def"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/035",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    193,
+    193
+   ],
+   "anchor": "Let $J$ be its derivative at $(0,1)$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.shape_jacobian",
+    "BfgsCoverage.Article.LowerCurvature.shape_jacobian_eq",
+    "BfgsVerification.LShapeDerivative.jacobian"
+   ],
+   "note": "J i j = ∂S_i/∂x_j at (0,1) for the shape map S; it equals the library's forward-mode derivative LShapeDerivative.jacobian seedC seedD."
+  },
+  {
+   "id": "C/13_L/prose/036",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    193,
+    193
+   ],
+   "anchor": "The supplied rational-interval automatic-differentiation program computes rigorous enclosures of all entries",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/008",
+   "note": "The enclosures are the Lean interval certificates of the entries of J (shape_certificate: 10¹⁰J in rational intervals; LShapePrecision.actual_precision at 10⁻²⁰); \"program\" describes software."
+  },
+  {
+   "id": "C/13_L/prose/037",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    200,
+    201
+   ],
+   "anchor": "using exact rational interval signs of",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.characteristic_def",
+    "BfgsVerification.LShapeSpectralAlgebra.characteristic"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/038",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    205,
+    205
+   ],
+   "anchor": "Specifically $P_J(0.038)>0$, $P_J(0.039)<0$, $P_J(1.564)<0$, and $P_J(1.565)>0$ throughout the algebraic root box.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.characteristic_signs_box",
+    "BfgsVerification.LShapeIntervalCertificate.jacobian_bounds",
+    "BfgsVerification.LShapeSpectralAlgebra.signs_of_entry_bounds",
+    "BfgsVerification.LShapeSpectralAlgebra.two_roots_of_signs"
+   ],
+   "note": "Includes the next sentence: for every point of the box the two sign-change intervals contain the two (distinct) real roots, and these are all the roots."
+  },
+  {
+   "id": "C/13_L/prose/039",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    205,
+    205
+   ],
+   "anchor": "No floating-point eigensolver is used for this assertion.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Description of the method (exact rational interval arithmetic)."
+  },
+  {
+   "id": "C/13_L/prose/040",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    216,
+    216
+   ],
+   "anchor": "The unneeded blocks $C,a,b$ are finite.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "C/13_L/disp/022",
+   "note": "In jacobian_block_form C, a, b are real matrices and vectors."
+  },
+  {
+   "id": "C/13_L/prose/041",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    216,
+    216
+   ],
+   "anchor": "The upper left block follows because, at $\\tau=0$, $Z_3=z+v(b,e)$ and $r$ is independent of $z$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.block_reasons",
+    "BfgsVerification.LNormalizedReturn.internal_boundary_translate",
+    "BfgsVerification.LNormalizedReturn.returnFactor_boundary_translate",
+    "BfgsVerification.LNormalizedReturn.return_derivative_last_row"
+   ],
+   "note": "Includes the next sentence (\"The last row follows from τ⁺=τr\")."
+  },
+  {
+   "id": "C/13_L/prose/042",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    222,
+    222
+   ],
+   "anchor": "None lies on the unit circle and none is zero. There are exactly two stable eigenvalues.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.hyperbolic_spectrum",
+    "BfgsCoverage.Companion.Ch13L.five_roots",
+    "BfgsVerification.LReturnSpectrum.actual_no_unit_complex_root",
+    "BfgsVerification.LReturnSpectrum.actual_no_zero_or_unit_real_root",
+    "BfgsVerification.LReturnLocalInverse.actual_derivative_equiv",
+    "BfgsVerification.LReturnLocalInverse.actual_local_inverse"
+   ],
+   "note": "Includes the next sentence (the derivative is invertible; by the inverse function theorem T_μ is a local diffeomorphism: T_μ smooth at P_* with a smooth local two-sided inverse). \"Exactly two stable eigenvalues\": the roots of the characteristic polynomial with multiplicity are ρ⁻¹,ρ⁻¹,λ_s,λ_u,ρ, and those of modulus <1 are λ_s and ρ."
+  },
+  {
+   "id": "C/13_L/prose/043",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    224,
+    224
+   ],
+   "anchor": "Crucially $\\rho$ is different from every eigenvalue of the upper left $4\\times4$ block.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.scale_eigenvector",
+    "BfgsCoverage.Companion.Ch13L.ratio_bounds",
+    "BfgsCoverage.Article.LowerCurvature.return_block_form",
+    "BfgsVerification.LReturnSpectrum.actual_scale_eigenvector",
+    "BfgsCoverage.Article.LowerCurvature.lower_hyperbolic"
+   ],
+   "note": "Includes the next two sentences: a ρ-eigenvector with last coordinate one exists, and the stable subspace (LowerCurvature.stableSubspace) contains a vector with τ ≠ 0."
+  },
+  {
+   "id": "C/13_L/prose/044",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    239,
+    239
+   ],
+   "anchor": "This is an existence proof of an actual trajectory, not a claim that a numerically truncated stable eigenvector produces it forever.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Remark on the nature of the proof."
+  },
+  {
+   "id": "C/13_L/prose/045",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    239,
+    239
+   ],
+   "anchor": "Expanding eigenvalues make ordinary floating-point forward shooting an inappropriate certificate of membership in the stable manifold.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Remark on numerical methods (not used)."
+  },
+  {
+   "id": "C/13_L/prose/046",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    254,
+    254
+   ],
+   "anchor": "We now construct a single objective satisfying the literal Hessian bounds and having no guaranteed local basin.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure"
+   ],
+   "note": "Plan of Sections 13.5-13.6: the objective F₁ of local_failure (bad starts approach the minimizer, so no neighbourhood of the minimizer is a basin)."
+  },
+  {
+   "id": "C/13_L/prose/047",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    263,
+    263
+   ],
+   "anchor": "Only two distinct values of $b_i$ occur.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/012",
+   "note": "parameter_values: b₀=b₁ and b₂≠b₀."
+  },
+  {
+   "id": "C/13_L/prose/048",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    267,
+    267
+   ],
+   "anchor": "Define a monotone $C^1$ ramp $P_b$ on $[0,1]$",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.monotone_ramp",
+    "BfgsVerification.LScalarRamp.ramp_monotone",
+    "BfgsVerification.LScalarRamp.ramp_contDiff"
+   ],
+   "note": "The definition itself is display 028; the claims are monotone and C¹, with the zero and one regions."
+  },
+  {
+   "id": "C/13_L/prose/049",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    271,
+    271
+   ],
+   "anchor": "Let $J_b(\\xi)=\\int_0^\\xi P_b(v)\\,dv$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.LScalarRamp.primitive",
+    "BfgsCoverage.Companion.Ch13L.ramp_integral_bounds",
+    "BfgsCoverage.Article.LowerCurvature.ramp_def_bi",
+    "BfgsCoverage.Article.LowerCurvature.cubicPrimitive"
+   ],
+   "note": "LScalarRamp.primitive b = J_b (first conjunct of ramp_integral_bounds; also LowerCurvature.ramp_def_bi)."
+  },
+  {
+   "id": "C/13_L/prose/050",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    281,
+    281
+   ],
+   "anchor": "Complete the definition by $\\varphi_b(0)=0$, $\\varphi_b(x)=x^2/2$ for $x<0$, and $\\varphi_b(x)=1+x-b$ for $x\\ge b$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_def_bi",
+    "BfgsCoverage.Article.LowerCurvature.lower_scalar_unique",
+    "BfgsVerification.LScalar.phi"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/051",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    316,
+    316
+   ],
+   "anchor": "Each branch is globally $\\mu$-strongly convex and has a globally Lipschitz gradient.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/019",
+   "note": "branches_regular."
+  },
+  {
+   "id": "C/13_L/prose/052",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    316,
+    316
+   ],
+   "anchor": "The Lean formalization proves the common gradient-Lipschitz constant $512$ from the actual scalar series and exact rational bounds",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/021",
+   "note": "The mathematics: 512 is a common Euclidean gradient-Lipschitz constant of the four branches (branch_gradient_constants); \"Lean formalization\" describes software."
+  },
+  {
+   "id": "C/13_L/prose/053",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    316,
+    316
+   ],
+   "anchor": "the first three Hessian upper bounds are less than $439,446,27$, respectively, wherever those Hessians exist, and the fourth has Hessian $\\mu I$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_hessian_bounds",
+    "BfgsVerification.LEmbedding.branch_old_actual_hessian_bounds",
+    "BfgsVerification.LEmbedding.gradientBound_source",
+    "BfgsVerification.LEmbedding.branch_last_hessian"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/054",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    316,
+    316
+   ],
+   "anchor": "The global gradient bounds are proved directly across the scalar nonsmooth-second-derivative points.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/021",
+   "note": "The global Lipschitz bounds hold for all pairs of points, across the points where φ_b'' does not exist; \"proved directly\" describes the method."
+  },
+  {
+   "id": "C/13_L/prose/055",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    316,
+    316
+   ],
+   "anchor": "Thus the maximum is $\\mu$-strongly convex.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.objective_strongly_convex",
+    "BfgsVerification.LEmbedding.objective_strongConvex"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/056",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    322,
+    322
+   ],
+   "anchor": "This proves compact sublevels and the unique minimum at zero. The first three gradients vanish there and the fourth is $(0,1)\\T$",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/022",
+   "note": "lower_objective_minimizer."
+  },
+  {
+   "id": "C/13_L/prose/057",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    322,
+    322
+   ],
+   "anchor": "consequently $F'(0;h)=\\max\\{0,h_2\\}$ and the minimizer is nonsmooth.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.directional_derivative",
+    "BfgsVerification.LEmbedding.objective_directional_derivative_zero",
+    "BfgsVerification.LEmbedding.objective_not_differentiable_zero"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/058",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    324,
+    324
+   ],
+   "anchor": "At any differentiable point of a finite maximum of $L$-smooth functions, all active gradients agree.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/023",
+   "note": "Identical claim (with the next sentence: inactive pieces stay inactive locally; local upper Taylor bound L‖h‖²/2); finite_max_local_taylor."
+  },
+  {
+   "id": "C/13_L/prose/059",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    329,
+    329
+   ],
+   "anchor": "This conclusion does not assume the maximum has a globally Lipschitz gradient.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Remark on the argument of display 037 (as A/lower_curvature/prose/024): the Lean proof uses only the branch gradient bounds."
+  },
+  {
+   "id": "C/13_L/prose/060",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    345,
+    345
+   ],
+   "anchor": "Set $p_n=a_nc_*$ and $C_*=1+\\mu\\norm{c_*}^2/2$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.copy_constants_def",
+    "BfgsVerification.LEmbedding.copyCenter",
+    "BfgsVerification.LEmbedding.offset"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/061",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    351,
+    351
+   ],
+   "anchor": "The fourth branch is negative relative to its quadratic part there if $y$ is sufficiently small and $n\\ge1$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.fourth_branch_negative",
+    "BfgsVerification.LEmbedding.last_residual_copy_negative"
+   ],
+   "note": "The condition n≥1 is sufficient, not needed (the residual a_n(-32+y₂) is negative for every n)."
+  },
+  {
+   "id": "C/13_L/prose/062",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    355,
+    355
+   ],
+   "anchor": "Use Theorem~\\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to choose one entire bad orbit",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/027",
+   "note": "copy_runs: the chosen orbit LUniform.source, all of whose queries lie in the neighbourhood of the local model, is an actual run on Q_μ for every pair."
+  },
+  {
+   "id": "C/13_L/prose/063",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    355,
+    355
+   ],
+   "anchor": "The same orbit can be made as small as needed, by the last part of its proof.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "C/13_L/theorem/L:thm:global",
+   "note": "global_failure: for every neighbourhood V of zero all iterates and trials lie in V."
+  },
+  {
+   "id": "C/13_L/prose/064",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    359,
+    359
+   ],
+   "anchor": "Every query in the $n$th run is exactly $p_n+a_n$ times the corresponding seed query",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/028",
+   "note": "copy_transfer: each query is p_n + a_n (seed query)."
+  },
+  {
+   "id": "C/13_L/prose/065",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    363,
+    363
+   ],
+   "anchor": "Indeed, function differences and directional-derivative products scale by $a_n^2$, while both gradients and steps scale by $a_n$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": [
+    "A/lower_curvature/prose/028",
+    "A/lower_curvature/disp/021"
+   ],
+   "note": "The whole paragraph of line 363 (the factors cancel in the inverse update; same decisions; the local model applies to every query; induction)."
+  },
+  {
+   "id": "C/13_L/prose/066",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    369,
+    369
+   ],
+   "anchor": "At $p_n$ the three active gradients are $a_ng_i$, so $0\\notin\\partial F(p_n)$. Meanwhile $x_0^{(n)}\\to0$",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.center_active_nonstationary",
+    "BfgsCoverage.Article.LowerCurvature.copy_limits",
+    "BfgsVerification.LEmbedding.center_nonstationary",
+    "BfgsVerification.LEmbedding.copyPoint_tendsto"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/067",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    373,
+    373
+   ],
+   "anchor": "The initial matrix is one fixed SPD matrix for every $n$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/021",
+   "note": "copy_runs: (H̄₀) positive definite and R.H 0 = H̄₀ for every copy and every pair."
+  },
+  {
+   "id": "C/13_L/prose/068",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    376,
+    376
+   ],
+   "anchor": "Let $A=\\bar H_0^{1/2}$ and define $\\widetilde F(z)=F(Az)$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.LowerCurvature.whitening_setup",
+    "BfgsVerification.LUniform.coordinateMatrix",
+    "BfgsVerification.LUniform.initialMetric",
+    "BfgsVerification.LUniform.smoothObjective"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/069",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    376,
+    376
+   ],
+   "anchor": "Full-BFGS affine invariance preserves the complete line-search decisions and gives initial matrix $I$ in the $z$ coordinates.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": [
+    "A/lower_curvature/disp/022",
+    "A/lower_curvature/prose/032"
+   ],
+   "note": "whitening_identities and whitening_initial."
+  },
+  {
+   "id": "C/13_L/prose/070",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    381,
+    381
+   ],
+   "anchor": "These constants are fixed for the one transformed objective, not changed between starts.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.whitened_constants"
+   ],
+   "note": "The whole paragraph of line 381 (one objective with fixed constants; the bad initial and limit points approach zero, all queries remain arbitrarily close; this proves the four-C^{1,1}-branch part of Theorem L:thm:local): the objective F₁ of local_failure."
+  },
+  {
+   "id": "C/13_L/prose/071",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "Replace the smooth ramp by the step $P_b(\\xi)=\\mathbf1_{\\{\\xi>\\vartheta_b\\}}$ and its primitive by $J_b(\\xi)=(\\xi-\\vartheta_b)_+$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_scalar_def",
+    "BfgsVerification.LScalarStep.ramp",
+    "BfgsVerification.LScalarStep.primitive",
+    "BfgsVerification.LScalarStep.phi",
+    "BfgsVerification.lScalarStepDefinition"
+   ],
+   "note": "Includes the next sentence (the interval formula, φ_b(x)=-x for x<0, the outer extension)."
+  },
+  {
+   "id": "C/13_L/prose/072",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "This scalar function is convex and piecewise affine with countably many pieces; it has the same node values, node slopes, and affine neighborhoods",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_scalar_props",
+    "BfgsVerification.lScalarStepGeometry",
+    "BfgsVerification.lScalarStepLocal",
+    "BfgsVerification.lScalarStepNodes"
+   ],
+   "note": "Piecewise affine with countably many pieces: the attained maximum of the countable family of affine functions LScalarStep.affineFamily b (indexed by Option ℕ), and near every nonzero point a maximum of at most two affine functions."
+  },
+  {
+   "id": "C/13_L/prose/073",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "Thus the entire local-copy construction and the same fixed initial matrix work unchanged.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_copies",
+    "BfgsVerification.lStepEmbeddingCopies",
+    "BfgsVerification.LUniform.copy_nonstrict_actual_search"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/074",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "For this variant $F=\\mu\\norm{x}^2/2+p(x)$, with convex countably piecewise-affine $p$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_objective_structure",
+    "BfgsVerification.LStepEmbedding.residual_convex",
+    "BfgsVerification.LStepEmbedding.residual_countable_max"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/075",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "At a nonzero point, any branch with $q_i\\T x=0$ is strictly below the maximum",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_zero_argument_inactive",
+    "BfgsVerification.LStepEmbedding.residual_positive_of_ne_zero",
+    "BfgsVerification.LStepEmbedding.slope_pair_joint_kernel"
+   ],
+   "note": "Includes the rest of the sentence and \"Here q₀,q₁ are independent\"."
+  },
+  {
+   "id": "C/13_L/prose/076",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "All potentially active scalar arguments are therefore nonzero and encounter only finitely many breakpoints in a small neighborhood.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.step_local_polyhedral",
+    "BfgsVerification.LStepEmbedding.active_scalar_argument_ne_zero",
+    "BfgsVerification.LStepEmbedding.ridge_binary_affine",
+    "BfgsVerification.LStepEmbedding.residual_polyhedral_of_ne_zero",
+    "BfgsVerification.LStepEmbedding.residual_affine_at_differentiable"
+   ],
+   "note": "Includes the next three sentences (p locally finite-polyhedral near every nonzero point, locally affine at differentiable points, the origin nonsmooth)."
+  },
+  {
+   "id": "C/13_L/prose/077",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    403,
+    403
+   ],
+   "anchor": "After the fixed affine transformation making $H_0=I$, that Hessian is the one fixed SPD matrix $\\mu\\bar H_0$.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.whitened_step_hessian",
+    "BfgsCoverage.Companion.Ch13L.step_actual_hessian",
+    "BfgsVerification.LUniform.failure_initial"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/078",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    403,
+    403
+   ],
+   "anchor": "This establishes the remaining version of Theorem~\\ref{L:thm:local}.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.whitened_step_hessian"
+   ],
+   "note": "The objective F₂ (stepObjective) of local_failure."
+  },
+  {
+   "id": "C/13_L/prose/079",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    403,
+    403
+   ],
+   "anchor": "No claim of four smooth branches is made for this alternative.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer."
+  },
+  {
+   "id": "C/13_L/prose/080",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    411,
+    411
+   ],
+   "anchor": "The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Description of the section."
+  },
+  {
+   "id": "C/13_L/prose/081",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    413,
+    413
+   ],
+   "anchor": "The negative-results comparisons in Chapter~\\ref{comp:D} apply here with the stated stronger convexity and different branch regularity.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Comparison with the literature discussed in Chapter D; the facts it relies on (uniform strong convexity, C^{1,1} branches) are in Theorem L:thm:local."
+  },
+  {
+   "id": "C/13_L/prose/082",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    413,
+    413
+   ],
+   "anchor": "This chapter uses the fixed line-search pair displayed in this chapter; D's wider parameter family is not imported.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.global_failure",
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.admissible_iff"
+   ],
+   "note": "Leftover of the fixed-pair edition (before the 13 October transformation); see the discrepancy entry."
+  },
+  {
+   "id": "C/13_L/prose/083",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    413,
+    413
+   ],
+   "anchor": "The first three branches of the local finite-branch construction fail to be twice differentiable at the accumulation point.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_regularity",
+    "BfgsCoverage.Article.LowerCurvature.branch_second_differentiability",
+    "ArticleBranchRegularity.branch_not_twice_differentiable_zero"
+   ]
+  },
+  {
+   "id": "C/13_L/prose/084",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    413,
+    413
+   ],
+   "anchor": "The simpler global quadratic-plus-maximum example does not establish failure arbitrarily near its true minimizer.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Remark on the scope of Theorem L:thm:global (its runs converge to 0, not near x_*)."
+  },
+  {
+   "id": "C/13_L/prose/085",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    413,
+    413
+   ],
+   "anchor": "These distinctions are essential when comparing the theorem with smooth nonconvex counterexamples",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Literature comparison (cited works only mentioned)."
+  },
+  {
+   "id": "C/13_L/prose/086",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    415,
+    415
+   ],
+   "anchor": "The stable-manifold principle and graph-transform method are classical; this chapter already uses Dyatlov's exposition",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution. The stable-manifold theorem used in the proof of L:thm:global is proved in Lean (LReturnStableGraph.source_smooth_stable_graph, AnalyticStableGraph; LowerCurvature.stable_manifold_positive_scale)."
+  },
+  {
+   "id": "C/13_L/prose/087",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    415,
+    415
+   ],
+   "anchor": "The report-specific work identifies the derivative of the actual BFGS return map, certifies its spectral bounds, and applies the principle to that map.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Description of the contribution; the mathematics is in displays 021-023 and Theorem L:thm:global."
+  },
+  {
+   "id": "C/13_L/prose/088",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    415,
+    415
+   ],
+   "anchor": "Its exact formal orbit construction is recorded with the proof correspondence.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "NON_CLAIM",
+   "reason": "Description of the formalization (software)."
+  },
+  {
+   "id": "C/13_L/prose/089",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    417,
+    417
+   ],
+   "anchor": "The final change of coordinates fixing the common SPD initialization to identity uses the established affine invariance of full BFGS",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/disp/022",
+   "note": "The literature result used (affine invariance, Lewis-Overton Section 2, Xie-Wächter Theorem II.1) is proved in Lean (whitening_identities)."
+  },
+  {
+   "id": "C/13_L/prose/090",
+   "kind": "prose",
+   "environment": null,
+   "lines": [
+    417,
+    417
+   ],
+   "anchor": "It is a single fixed transformation for the constructed family, not a per-iteration algorithm change.",
+   "labels": [],
+   "title": null,
+   "container": null,
+   "status": "SAME_AS",
+   "of": "A/lower_curvature/prose/030",
+   "note": "One matrix A = LUniform.coordinateMatrix for the objective and all starts (whitening_setup); the runs are runs of the unchanged algorithm (local_failure)."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/13_L/prose/002",
+   "description": "\"The local finite-branch functions have Lipschitz gradients but lose second differentiability at the accumulation point\" (13_L.tex:3) reads as a statement about all branches of the local construction. All four branches have globally Lipschitz gradients, but only three lose second differentiability: the branches f₀, f₁, f₂ of L:eq:embedding (and their whitened versions f_i(Az)) are not twice differentiable at zero, where the bad starts accumulate, while the fourth branch f₃(x)=μ‖x‖²/2+x₂ is a quadratic, twice differentiable everywhere, also after the whitening (Lean: branch_regularity). The chapter itself says it correctly at line 413 (\"The first three branches ... fail to be twice differentiable at the accumulation point\"). (Read as a statement about the objective F, \"have Lipschitz gradients\" would be false instead: F is not differentiable at 0.) Same wording issue as M8 (A/master/prose/009, A/verification/prose/017, A/lower_curvature/prose/010). Fix location: introductions['L'] in editorial/generate_companion.py (line 43), a hand-written chapter introduction, not a frozen source span.",
+   "severity": "imprecision",
+   "proposed": "Positive lower curvature requires a separate construction. The branches of the local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the accumulation point; no claim combines uniform strong convexity with the preceding local C2,1 branch regularity.",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.branch_regularity",
+    "BfgsCoverage.Article.LowerCurvature.branch_second_differentiability"
+   ]
+  },
+  {
+   "item": "C/13_L/theorem/L:thm:local",
+   "description": "The last clause of Theorem L:thm:local (13_L.tex:59), \"the latter version has a countable polyhedral nonsmooth part, not a finite smooth-branch representation\", is false when read literally (\"the latter version has no finite smooth-branch representation\"), even for branches of the class of the theorem's own first version. The step scalar function is φ_b = max(-x, h₀, h₁) with h₀, h₁ convex and globally C^{1,1}: h_j = 0 for x ≤ 0; h_j = φ_b on the affine pieces between consecutive kinks κ_{n+1} < κ_n (κ_n = a_n(1+r)(b-1), with r = 1/128, a_n = r^n as at 13_L.tex:257) with n ≡ j (mod 2); on each other piece, the convex quadratic spline with one knot that matches the values of φ_b at both ends and the slopes of the two neighbouring pieces (possible because the slope of φ_b on the skipped piece lies strictly between them); beyond κ₀ the function that does not touch there continues affinely. The pieces are scaled copies of one profile, so h_j'' is bounded uniformly (about 171 for b = 1791/1024); the dips below φ_b have height O(a_n²) and slope O(a_n), so h_j is C^{1,1} also at 0. Hence F₂ = F_step(A·) is the maximum of ten globally C^{1,1}, uniformly strongly convex (modulus μλ_min(H̄₀)), globally gradient-Lipschitz branches: μ‖Az‖²/2 + k(q_iᵀAz) with k ∈ {-x, h₀, h₁} (h_j built for b = b_i), i = 0, 1, 2, and μ‖Az‖²/2 + (Az)₂ (a fortiori for C¹ branches). This is a sketch, checked with exact rational arithmetic at 2613 sample points of the pieces n = -1, …, 11 for b = b₀ = b₁ = 1791/1024 (independent review of 14 October 2026, scratch script c11_check.py; self-similarity extends it to all n, and the same construction works for b₂); it is not formalized in Lean. The descriptive reading (the nonsmooth part of the latter version is a countable polyhedral function, in contrast with the four smooth branches of the first version) is true and is what local_failure states (F₂(x) - xᵀBx/2 is the attained maximum of countably many affine functions); line 403 (\"No claim of four smooth branches is made for this alternative\") shows that it is the intended one. All other parts of the theorem are stated and proved by local_failure. Fix location: a logged transformation in editorial/generate_companion.py, since the clause is in the frozen span L.span.2 (corrected source bfgs_lean_stage1/master_report/latex/chapters/L.tex, lines 17-63; the clause is at line 52): a new if module=='L': replacement with its own logged kind and reason, like the module-D, I and C blocks (lines 115-131) or the module-E block (line 167). Not an entry of constant_range['L']: the reason logged for those entries (line 166) is shared and concerns the admissible line-search range.",
+   "severity": "imprecision",
+   "proposed": "Alternatively, it can be chosen so that its Hessian is one fixed positive-definite matrix wherever it is twice differentiable; the latter version has a countable polyhedral nonsmooth part. (Or: \"…; the latter version is constructed from a countable polyhedral nonsmooth part rather than from four smooth branches.\")",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.step_decomposition"
+   ]
+  },
+  {
+   "item": "C/13_L/prose/082",
+   "description": "\"This chapter uses the fixed line-search pair displayed in this chapter; D's wider parameter family is not imported.\" (13_L.tex:413, relocated attribution note) is a leftover of the fixed-pair edition, in which the chapter fixed c₁=10⁻⁴, c₂=1/2. Since the 13 October 2026 transformation (editorial/generate_companion.py, constant_range['L']) the chapter fixes an arbitrary pair 0<c₁≤1/3, c₁<c₂<1 (lines 30-33) and states Theorems L:thm:global and L:thm:local and Lemma L:lem:agreement for every such pair, with orbits, objectives and starts chosen before the pair (Lean: global_failure, local_failure). That is exactly the family of Chapter D (12_D.tex:58-60: \"the same function, initial points, matrices, and trial decisions work for every fixed 0<c₁≤1/3, c₁<c₂<1\"), so D's family is not wider and is, in effect, the chapter's own. No mathematical result is affected. Fix location: a new entry of constant_range['L'] in editorial/generate_companion.py (line 139) replacing this sentence; the relocated attribution notes are appended to the chapter text (line 60) before the constant_range replacements run (line 163), so the replacement sees the sentence as printed.",
+   "severity": "imprecision",
+   "proposed": "This chapter states its results for every pair 0<c_1\\le1/3, c_1<c_2<1, the parameter family of Chapter~\\ref{comp:D}; the orbits, objectives and initial points are chosen before the pair.",
+   "lean": [
+    "BfgsCoverage.Companion.Ch13L.global_failure",
+    "BfgsCoverage.Companion.Ch13L.local_failure",
+    "BfgsCoverage.Companion.Ch13L.admissible_iff"
+   ]
+  }
+ ]
 }
