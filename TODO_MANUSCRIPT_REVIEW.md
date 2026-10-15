@@ -210,6 +210,22 @@ under those items (M8). The chapters are generated: fix them through
   Proposed: "… for $v\ge0$." Fix: in the module-U transformation of M18,
   `\] near zero. However,` (U.tex:353, occurs once) → `\] for \(v\ge0\). However,`.
   (`C/11_U/disp/026`)
+- [ ] **M20: Chapter 9 refers to a result by its source note's letter (typo).**
+  `companion/chapters/09_C.tex:398` (Section 9.7.1, page 57 of the built companion):
+  "Combining A's low affine-critical gap with Theorem 9.1 gives the following
+  restricted planar basin conclusion." The printed companion numbers its chapters
+  and shows no source letters; its only "A" is Appendix A (the seed certificate),
+  which has no such gap. Meant: Proposition 8.1 (`A:semialgebraic`, "A low-level
+  affine-critical gap"). The generator rewrites module letters only in prefixed tags,
+  "Module A" phrases and citation keys. Proposed: "Combining the low affine-critical
+  gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster} gives the
+  following restricted planar basin conclusion." Fix: a logged transformation in the
+  `if module=='C':` block of `generate_companion.py` on the frozen
+  `master_report/latex/chapters/C.tex:364` (span `C.span.12`), old string
+  `Combining A's low affine-critical gap with Theorem~\ref{C:thm:cluster}` (occurs
+  once). The corrected claim is `Ch09C.semialgebraic_low_basin` (with
+  `RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap`, the Lean form of
+  Proposition 8.1, and `semialgebraic_planar_low_basin`). (`C/09_C/prose/117`)
 
 ## Wording points in the companion (no discrepancy)
 
@@ -269,8 +285,10 @@ in the line-by-line reading. The chapters are generated: change them through
 - [ ] **W8: "In this note".** `12_D.tex:105` (Lemma `D:root`: "All denominators in
   this note are nonzero there"), and the same remnant of the source reports at
   `04_R.tex:83`, `07_H.tex:23` ("This note continues the investigation…") and
-  `09_C.tex:110`, and "earlier notes" at `11_U.tex:354`. Optional: "in this
-  chapter". (`C/12_D/lemma/D:root`, `C/07_H/prose/002`, `C/11_U/prose/031`)
+  `09_C.tex:110` ("the subject of this note"); also "the previous note
+  Chapter~8" at `09_C.tex:93` and "earlier notes" at `11_U.tex:354`. Optional: "in
+  this chapter", "Chapter~8". (`C/12_D/lemma/D:root`, `C/07_H/prose/002`,
+  `C/09_C/prose/016`, `C/09_C/prose/020`, `C/11_U/prose/031`)
 - [ ] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
   "The two unknown coordinates of the third slope …": "slope" is the article's term;
   the companion calls the $g_i$ gradients (`12_D.tex:160`). Optional: "of the third
@@ -302,6 +320,18 @@ in the line-by-line reading. The chapters are generated: change them through
   Cosmetic. Renumbering would change the numbers proposed in M17, M18 and the other
   reference fixes, so decide them together. (Notes on `C/11_U/prose/026`,
   `C/11_U/disp/009`.)
+- [ ] **W14: "We will argue by contradiction that Γ contains no affine-critical
+  point" (Chapter 9).** `09_C.tex:151` announces the conclusion as the thing argued
+  by contradiction, while the paragraph goes on with its negation as the standing
+  supposition ("Then $\ell>F_*$, every point of $\Gamma$ satisfies the
+  regular-switching hypothesis, …"). Proposed: "We suppose, for a contradiction,
+  that the compact cluster set $\Gamma$ contains no affine-critical point."
+  (`C/09_C/prose/027`)
+- [ ] **W15: Range of the angular cutoffs (Chapter 9).** `09_C.tex:191` chooses
+  smooth angular cutoffs $\chi_j$ "with disjoint supports, equal to one on
+  neighborhoods of the entire moving normal arcs"; the later estimates (line 202
+  and the display at lines 218–220) also need $0\le\chi_j\le1$. Standard cutoffs
+  have it; optional: say so. (`C/09_C/prose/041`; used by `prose/042`, `disp/020`)
 
 ## Resolved
 

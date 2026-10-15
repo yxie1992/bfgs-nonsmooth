@@ -14,7 +14,9 @@
    "title": null,
    "container": null,
    "sha256": "2d3e530fab953b22",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/theorem/C:thm:cluster",
+   "note": "Defines K = {F ≤ b} with b > F_*: a standing hypothesis of §1, written out in cluster (hK, hb)."
   },
   {
    "id": "C/09_C/disp/002",
@@ -28,7 +30,14 @@
    "title": null,
    "container": null,
    "sha256": "59e37abf09a69a8b",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AffineCriticalObjective.IsAffineCritical",
+    "BfgsCoverage.Article.Local.affineCritical_set_eq",
+    "BfgsVerification.AffineCriticalObjective.isAffineCritical_iff_coordinate_affineSpan",
+    "BfgsVerification.ConvexSubdifferential.subdifferential"
+   ],
+   "note": "Same definition as the article (A/local/disp/006); Local.affineCritical_set_eq unfolds IsAffineCritical to 0 ∈ affineSpan ℝ (subdifferential F p)."
   },
   {
    "id": "C/09_C/disp/003",
@@ -42,7 +51,9 @@
    "title": null,
    "container": null,
    "sha256": "33cd0ad028001e7b",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/prose/009",
+   "note": "The two-branch alternative of the regular-switching hypothesis (RegularSwitching, hreg)."
   },
   {
    "id": "C/09_C/theorem/C:thm:cluster",
@@ -58,7 +69,14 @@
    "title": "Forced affine-critical cluster point",
    "container": null,
    "sha256": "3c774657efec7919",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.cluster",
+    "BfgsCoverage.Article.Local.planar_cluster",
+    "BfgsCoverage.Article.Local.regular_of_paper",
+    "BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster_on_sublevel"
+   ],
+   "note": "Hypotheses of the theorem written out as in the TeX: F convex (hF), IsLeast (range F) Fstar, b > Fstar, K = {F ≤ b} compact, hstrict (= StrictlyConvexPositiveSublevels F Fstar b, line 47), hreg (= RegularSwitching F b, lines 49-53, TeX form), R : AdmissibleBFGSRun 2 F with R.x 0 ∈ K. Conclusion: ∃ p, MapClusterPt p atTop R.x ∧ IsAffineCritical F p. The second sentence (no iterate limit, condition number, eigenspace, matrix accuracy or path length assumed) is the absence of such hypotheses. The statement is the article Theorem art:planar-cluster word for word; cluster restates it."
   },
   {
    "id": "C/09_C/disp/004",
@@ -74,7 +92,13 @@
    "title": null,
    "container": null,
    "sha256": "f021b57b124a8ca3",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsCoverage.Article.Energy.armijo_weak_wolfe",
+    "BfgsCoverage.Article.Energy.admissible_iff"
+   ],
+   "note": "Armijo and weak Wolfe with fixed 0 < c₁ < c₂ < 1 are the fields armijo, weak_wolfe, c₁_pos, c₁_lt_c₂, c₂_lt_one of AdmissibleBFGSRun; Energy.armijo_weak_wolfe states them in this form (s_k = displacement = -α_k H_k g_k)."
   },
   {
    "id": "C/09_C/disp/005",
@@ -90,7 +114,13 @@
    "title": null,
    "container": null,
    "sha256": "df77cb12dce56f9a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.update_curvature",
+    "BfgsCoverage.Article.Energy.update_formula",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_pos"
+   ],
+   "note": "Defines y_k, t_k (variables with their defining equations) and the update; asserts t_k > 0 (derived, line 70). (t k)⁻¹ is Lean's total inverse, equal to 1/t_k since t_k > 0."
   },
   {
    "id": "C/09_C/corollary/C:cor:AC",
@@ -106,7 +136,14 @@
    "title": "No false affine criticality gives convergence",
    "container": null,
    "sha256": "07e02d493c9a2f9a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.cor_AC",
+    "BfgsCoverage.Companion.Ch09C.cor_AC_local",
+    "BfgsCoverage.Article.Local.planar_convergence",
+    "BfgsVerification.PlanarConvergence.local_convergence_basin"
+   ],
+   "note": "Hypotheses of the theorem written out as in the TeX: F convex (hF), IsLeast (range F) Fstar, b > Fstar, K = {F ≤ b} compact, hstrict (= StrictlyConvexPositiveSublevels F Fstar b, line 47), hreg (= RegularSwitching F b, lines 49-53, TeX form), R : AdmissibleBFGSRun 2 F with R.x 0 ∈ K. cor_AC: with C_aff ∩ K ⊆ argmin F, every run starting in K has F(x_k) → F_* and the Euclidean distance to argmin F (euclideanSolutionDistance) → 0, and argmin F = {x_*} gives x_k → x_*. cor_AC_local states the third sentence: unique minimizer, open structural neighborhood Ω ∋ x_* with the regular switching (off C_aff) and C_aff ∩ Ω ⊆ argmin F, strictly convex low positive sublevels (F_* < t ≤ b): ∃ ε > 0 (before the run) with F(x_0) < F_* + ε ⇒ F(x_k) → F_*, x_k → x_*. This reading follows the proof (line 373: localization puts a low sublevel inside the neighborhood and Armijo traps the iterates)."
   },
   {
    "id": "C/09_C/corollary/C:cor:max",
@@ -123,7 +160,15 @@
    "title": "Nondegenerate planar smooth maxima",
    "container": null,
    "sha256": "59a1edd76557a520",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.cor_max",
+    "BfgsCoverage.Companion.Ch09C.cor_max_hessian",
+    "BfgsCoverage.Article.Local.planar_max",
+    "BfgsCoverage.Article.Local.planar_max_hessian_contours",
+    "BfgsVerification.PlanarMaxRegular.finite_max_local_basin"
+   ],
+   "note": "Hypotheses as in the article Corollary art:planar-max (U open ∋ x_*, F = max_i f_i on U with convex C² branches (IsGreatest), hcontour, I = active set at x_*, affine independence, weights λ* > 0 summing to 1 with zero weighted gradient). The companion concludes only x_k → x_* (cor_max, from Local.planar_max). The last sentence (\"a common positive lower Hessian bound on the finitely many locally relevant branches\" replaces the contour hypothesis) is cor_max_hessian: Hess f_i - μI ⪰ 0 on U for i ∈ I_*, μ > 0, gives the same conclusion without hcontour. \"Arbitrary H_0 and any fixed valid constants; basin chosen independently\" is the quantifier order ∃ ε, ∀ R."
   },
   {
    "id": "C/09_C/disp/006",
@@ -137,7 +182,8 @@
    "title": null,
    "container": "C/09_C/corollary/C:cor:max",
    "sha256": "cb2927001840eece",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/corollary/C:cor:max"
   },
   {
    "id": "C/09_C/disp/007",
@@ -153,7 +199,8 @@
    "title": null,
    "container": "C/09_C/corollary/C:cor:max",
    "sha256": "12562be8b0b94a6d",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/corollary/C:cor:max"
   },
   {
    "id": "C/09_C/disp/008",
@@ -167,7 +214,8 @@
    "title": null,
    "container": "C/09_C/corollary/C:cor:max",
    "sha256": "460ef75aa637afb8",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/corollary/C:cor:max"
   },
   {
    "id": "C/09_C/disp/009",
@@ -183,7 +231,12 @@
    "title": null,
    "container": null,
    "sha256": "2a98d04486e03441",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AffineCriticalObjective.AffineCorrectAt",
+    "BfgsCoverage.Companion.Ch09C.affineCorrectAt_iff"
+   ],
+   "note": "The condition at p is AffineCorrectAt F p; affineCorrectAt_iff unfolds it to (0 ∈ affineSpan ℝ (∂F(p)) → 0 ∈ ∂F(p))."
   },
   {
    "id": "C/09_C/disp/010",
@@ -197,7 +250,12 @@
    "title": null,
    "container": null,
    "sha256": "60ff1fefdf2d1950",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.min_norm_pairing",
+    "BfgsCoverage.Article.Local.least_norm_orthogonal"
+   ],
+   "note": "For every p (affine critical or not): aff ∂F(p) has a unique least-(Euclidean)-norm point and every such point a satisfies gᵀa = ‖a‖² for g ∈ ∂F(p). (The article states it at non-affine-critical points, A/local/prose/021.)"
   },
   {
    "id": "C/09_C/disp/011",
@@ -211,7 +269,12 @@
    "title": null,
    "container": null,
    "sha256": "c13b5b2ee128829c",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.notation_facts",
+    "BfgsCoverage.Article.Energy.notation_display"
+   ],
+   "note": "Defines q_k (R.q k), d_k (R.d k = α_k q_k), Δ_k (written out), c = 1 - c₂ (variable with its definition); asserts -g_kᵀs_k = α_k q_k and c > 0."
   },
   {
    "id": "C/09_C/disp/012",
@@ -227,7 +290,13 @@
    "title": null,
    "container": null,
    "sha256": "c604a024f68bba0d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.accepted_eligible",
+    "BfgsVerification.AdmissibleBFGSRun.predicted_decrease_bounds",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound"
+   ],
+   "note": "For every admissible run and k (only convexity and Armijo-weak Wolfe are used, as the TeX says)."
   },
   {
    "id": "C/09_C/lemma/C:lem:steps",
@@ -243,7 +312,12 @@
    "title": "Strict contours force vanishing steps",
    "container": null,
    "sha256": "5430e16608f9fd4b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.steps",
+    "BfgsVerification.AdmissibleBFGSRun.steps_tendsto_zero_of_strict_contour"
+   ],
+   "note": "Stated under the standing assumptions of line 35 (F convex, attains F_*, K = {F ≤ b} compact, b > F_*) for a run starting in K, which the proof uses (\"compactness gives a subsequence\"); the two objective-level hypotheses are not needed (the lemma assumes strict convexity of K_ℓ itself). F(x_k) ↓ ℓ is Antitone + Tendsto (the antitone hypothesis is automatic for a run and unused); s_k = -α_k H_k g_k → 0. The restriction hR (run starting in K) is the contextual reading \"the runs of §§1-3\": under line 35 the compactness that the proof uses holds for every admissible run, since a finite convex F with one compact sublevel {F ≤ b}, b > F_*, has all its sublevels compact (common recession cone; Rockafellar, Corollary 8.7.1). The library has no general lemma for this, so steps keeps hR. Non-vacuity, including a limit level ℓ > F_*: the second example of the module (the library failure run LGlobalFailure.source_global_failure, μ = 1, on the strongly convex LQuadraticSeed.objective 1, with F(x_k) ↓ 0 > F_* = -1/514, b = F(x_0) and K_0 strictly convex by strong_convexity_suffices), which also derives s_k → 0 from steps."
   },
   {
    "id": "C/09_C/proof/001",
@@ -257,7 +331,15 @@
    "title": null,
    "container": null,
    "sha256": "91da9ed536a14dfe",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/lemma/C:lem:steps",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.segment_value_lower",
+    "BfgsVerification.AdmissibleBFGSRun.cluster_pair_segment_constant",
+    "BfgsVerification.StrictContours.level_mem_frontier",
+    "BfgsVerification.AdmissibleBFGSRun.differences_tendsto_zero_of_strict_contour"
+   ],
+   "note": "The library proof follows the TeX: segment values (display disp/013), F = ℓ on [x,z] (cluster_pair_segment_constant), level points lie on the boundary when a lower value exists (level_mem_frontier, the claim of line 148), contradiction with strict convexity."
   },
   {
    "id": "C/09_C/disp/013",
@@ -271,7 +353,12 @@
    "title": null,
    "container": "C/09_C/proof/001",
    "sha256": "ce9cf7475c3576cd",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.steps_segment_values",
+    "BfgsVerification.AdmissibleBFGSRun.segment_value_lower"
+   ],
+   "note": "Under the lemma's assumptions, for every k and θ ∈ [0,1] (the proof uses it along a subsequence); d_k = R.d k."
   },
   {
    "id": "C/09_C/disp/014",
@@ -285,7 +372,13 @@
    "title": null,
    "container": null,
    "sha256": "8270c3a528a31748",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.corner_curve",
+    "BfgsCoverage.Article.PlanarGeometry.corner_curve",
+    "BfgsVerification.PlanarCornerCharts.exists_corner_chart"
+   ],
+   "note": "Standing assumptions of §§4-5 (line 162 and the §1 hypotheses at the level ℓ): F convex, attains Fstar, Fstar < ℓ, K_ℓ strictly convex (hstrict at ℓ), C compact ⊆ {F = ℓ} (not assumed nonempty), no affine-critical point in C, regularity hypothesis on C (TeX form). At a nonsmooth c ∈ C with its two-branch data: the branch-value map has an invertible derivative, and a curve p, C² at ℓ, p(ℓ) = c, f₁(p t) = f₂(p t) = t near ℓ, the only solution of f₁ = f₂ near c."
   },
   {
    "id": "C/09_C/disp/015",
@@ -301,7 +394,13 @@
    "title": null,
    "container": null,
    "sha256": "f9b3d9a4a2d49f8f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.corner_velocity",
+    "BfgsCoverage.Article.PlanarGeometry.corner_velocity",
+    "BfgsVerification.PlanarCornerCharts.curve_velocity_pairing"
+   ],
+   "note": "v_j = p_j' is the variable v with hv : v = deriv p. Conclusion: both pairings equal 1 for t near ℓ, and v_j is C¹ at ℓ (the C¹ claim of line 181 is also in velocity_properties)."
   },
   {
    "id": "C/09_C/disp/016",
@@ -315,7 +414,12 @@
    "title": null,
    "container": null,
    "sha256": "3f5e7d523312a427",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.PlanarTransport.normal",
+    "BfgsVerification.PlanarTransport.tangent",
+    "BfgsCoverage.Companion.Ch09C.normal_tangent_def"
+   ]
   },
   {
    "id": "C/09_C/disp/017",
@@ -331,7 +435,13 @@
    "title": null,
    "container": null,
    "sha256": "f687e38d79748c0d",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.PlanarGeometry.height",
+    "BfgsCoverage.Article.PlanarGeometry.height_eq_library",
+    "BfgsVerification.PlanarJoinedFrame.height"
+   ],
+   "note": "height χ v t θ = 1 + Σ_j χ_j(θ)(n(θ)ᵀv_j(t) - 1) literally (article A/planar_geometry/disp/004)."
   },
   {
    "id": "C/09_C/disp/018",
@@ -347,7 +457,15 @@
    "title": null,
    "container": null,
    "sha256": "d7ec60b04627045a",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Article.PlanarGeometry.fieldFormula",
+    "BfgsCoverage.Article.PlanarGeometry.field_eq_fieldFormula",
+    "BfgsCoverage.Article.PlanarGeometry.exists_angle",
+    "BfgsCoverage.Companion.Ch09C.smooth_point_normal_exists",
+    "BfgsVerification.PlanarObjectiveField.field"
+   ],
+   "note": "fieldFormula χ v t θ = h n(θ) + h_θ T(θ) (h_θ = deriv (height χ v t)); w(x) = fieldFormula χ v (F x) θ(x). The precondition \"at a smooth point near C, n(θ(x)) = ∇F(x)/‖∇F(x)‖\" is smooth_point_normal_exists (near C gradients are nonzero, so an angle exists); field_eq_fieldFormula unfolds the field of the construction to this formula at every smooth point and every angle of its normal."
   },
   {
    "id": "C/09_C/disp/019",
@@ -363,7 +481,12 @@
    "title": null,
    "container": null,
    "sha256": "680d06747c9816b4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.corner_formula",
+    "BfgsCoverage.Article.PlanarGeometry.corner_field_formula"
+   ],
+   "note": "Includes the lead-in of line 211 (\"Where χ_j = 1, h = n^T v_j and h_θ = T^T v_j\"): angular cutoffs with disjoint supports, χ_j = 1 near θ, w(x) given by (C:eq:w)."
   },
   {
    "id": "C/09_C/disp/020",
@@ -379,7 +502,12 @@
    "title": null,
    "container": null,
    "sha256": "69e3652c83e3a1d4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.visibility",
+    "BfgsVerification.PlanarObjectiveField.field_gradient_pairing"
+   ],
+   "note": "With angular cutoffs 0 ≤ χ_j ≤ 1 (\"cutoffs\") with disjoint supports chosen where n^T v_j > 0 (line 191), at a point with gradient g ≠ 0. Wording point (line 191, prose/041): the positivity h > 0 used here needs 0 ≤ χ_j ≤ 1, which the text does not state."
   },
   {
    "id": "C/09_C/disp/021",
@@ -395,7 +523,12 @@
    "title": null,
    "container": null,
    "sha256": "0b5f7405d727d91f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.angle_identity",
+    "BfgsVerification.PlanarTransport.angularFrame_hasDerivAt"
+   ],
+   "note": "For C² angular cutoffs, any velocities and level t; no sign condition on h + h_θθ (line 236)."
   },
   {
    "id": "C/09_C/disp/022",
@@ -411,7 +544,13 @@
    "title": null,
    "container": null,
    "sha256": "59f7de7156eff2cb",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.triangular_derivative",
+    "BfgsCoverage.Article.PlanarGeometry.field_derivative_triangular",
+    "BfgsVerification.PlanarObjectiveField.actual_field_derivative_preserves_tangent"
+   ],
+   "note": "Dw T = aT, Dw n = bT + en with a = TᵀDwT, b = TᵀDw n, e = nᵀDw n: the matrix of Dw in the basis (T,n) is [[a,b],[0,e]]; also tangent preservation (prose/052)."
   },
   {
    "id": "C/09_C/lemma/C:lem:trans",
@@ -427,7 +566,13 @@
    "title": "Uniform transversality",
    "container": null,
    "sha256": "d7fa9a46f517e81f",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.transversality",
+    "BfgsCoverage.Companion.Ch09C.three_estimates",
+    "BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates"
+   ],
+   "note": "Standing assumptions of §§4-5 (line 162 and the §1 hypotheses at the level ℓ): F convex, attains Fstar, Fstar < ℓ, K_ℓ strictly convex (hstrict at ℓ), C compact ⊆ {F = ℓ} (not assumed nonempty), no affine-critical point in C, regularity hypothesis on C (TeX form). The field w is existentially quantified with the properties of the §5 setting (w = PlanarObjectiveField.field hF χ v for smooth cutoffs, U open ⊇ C, Q compact ⊇ closure U, uniform visibility η > 0 and common pairing on Q, uniform distance δ). \"Sufficiently close eligible pairs\" are eligible x, z ∈ U with Euclidean ‖s‖ < δ. three_estimates states the three lemmas for one and the same field."
   },
   {
    "id": "C/09_C/disp/023",
@@ -441,7 +586,8 @@
    "title": null,
    "container": "C/09_C/lemma/C:lem:trans",
    "sha256": "959c1e6fb96999fb",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/lemma/C:lem:trans"
   },
   {
    "id": "C/09_C/proof/002",
@@ -455,7 +601,14 @@
    "title": null,
    "container": null,
    "sha256": "a0ea527111c0e2b1",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/lemma/C:lem:trans",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.transversality_limit",
+    "BfgsVerification.PlanarTransversality.limiting_determinant_ne_zero",
+    "BfgsVerification.PlanarAllPairs.eligible_normalized_wolfe"
+   ],
+   "note": "The library proof (source_all_endpoint_estimates via compact_pair_transversality_length) argues by compactness and contradiction as the TeX."
   },
   {
    "id": "C/09_C/disp/024",
@@ -469,7 +622,11 @@
    "title": null,
    "container": "C/09_C/proof/002",
    "sha256": "b88239de7577602e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.transversality_limit"
+   ],
+   "note": "Stated with the objects of the proof (coalescing pairs, unit-step limit e, subgradient limits a, b ∈ ∂F(p), e = -w(p)/‖w(p)‖) and also the preceding claim d/‖s‖ → -aᵀe > 0. Eligibility is not assumed: with it these assumptions are contradictory, which is the next sentence of the proof (as in the article's transversality_limits)."
   },
   {
    "id": "C/09_C/lemma/C:lem:transport",
@@ -486,7 +643,12 @@
    "title": "Transport is charged to objective decrease",
    "container": null,
    "sha256": "47ac33c1d66763e0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.transport",
+    "BfgsCoverage.Companion.Ch09C.three_estimates"
+   ],
+   "note": "Setting as in transversality. Conclusion: ∃ C, C', d₀ > 0 (before the pair) with, for every such pair, λ > 0, β, w(z) = λw(x) + βs, |log λ| ≤ C d and (d ≤ d₀ → λ² ≤ 1 + C'd) — \"λ² ≤ 1 + C'd for sufficiently small d\" (the library gives d₀ = 1)."
   },
   {
    "id": "C/09_C/disp/025",
@@ -502,7 +664,8 @@
    "title": null,
    "container": "C/09_C/lemma/C:lem:transport",
    "sha256": "1c3648e574424837",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/lemma/C:lem:transport"
   },
   {
    "id": "C/09_C/proof/003",
@@ -518,7 +681,15 @@
    "title": null,
    "container": null,
    "sha256": "d50507e48ce4af48",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/lemma/C:lem:transport",
+   "lean": [
+    "BfgsCoverage.Article.PlanarGeometry.transport_constants",
+    "BfgsVerification.PlanarScalarTransport.positive_endpoint_ratio",
+    "BfgsVerification.PlanarTransport.determinant_transport",
+    "BfgsVerification.PlanarScalarTransport.right_derivative_transport_budget"
+   ],
+   "note": "Undisplayed steps (constant sign of D, λ = D(1)/D(0), solving in the basis s, w(x)) are in PlanarGeometry.transport_constants."
   },
   {
    "id": "C/09_C/disp/026",
@@ -532,7 +703,12 @@
    "title": null,
    "container": "C/09_C/proof/003",
    "sha256": "cbd4b551df541aad",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.determinant_identity",
+    "BfgsVerification.PlanarObjectiveField.actual_tangent_map_determinant"
+   ],
+   "note": "Also the preceding claims det(T,n) = -1 and s = s_T T + s_n n."
   },
   {
    "id": "C/09_C/disp/027",
@@ -546,7 +722,12 @@
    "title": null,
    "container": "C/09_C/proof/003",
    "sha256": "3bb81fd05c9befa7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.determinant_quotient_bound",
+    "BfgsVerification.PlanarObjectiveField.field_determinant_right_derivative_bound"
+   ],
+   "note": "One constant C ≥ 0 chosen before the pair; D'_+(θ) is derivWithin D (Ioi θ) θ with HasDerivWithinAt on Ici θ; φ'_+ likewise."
   },
   {
    "id": "C/09_C/disp/028",
@@ -562,7 +743,12 @@
    "title": null,
    "container": "C/09_C/proof/003",
    "sha256": "a9aa47a4ca224890",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.log_variation_bound",
+    "BfgsVerification.PlanarScalarTransport.convex_right_derivative_lower"
+   ],
+   "note": "The TeX's h = log|D| is the variable hl (h names the gradient at z elsewhere; here the gradients are g, gz). Uses the bound of disp/027 for the pair as hypothesis (established before)."
   },
   {
    "id": "C/09_C/disp/029",
@@ -576,7 +762,12 @@
    "title": null,
    "container": "C/09_C/proof/003",
    "sha256": "6f1e6a071ba60fe6",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.barrier",
+    "BfgsCoverage.Companion.Ch09C.barrier_comparison"
+   ],
+   "note": "barrier C d φ θ = C(φ(θ) - φ(0) + 2dθ) literally. barrier_comparison states the claims made about it (lines 292, 296): B(0) = 0, |h'_+| ≤ B'_+ = C(φ'_+ + 2d), and |h(1) - h(0)| ≤ B(1) ≤ 2Cd."
   },
   {
    "id": "C/09_C/lemma/C:lem:secant",
@@ -592,7 +783,12 @@
    "title": "Bounded secant correction",
    "container": null,
    "sha256": "a06babe228471d07",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.secant",
+    "BfgsCoverage.Companion.Ch09C.three_estimates"
+   ],
+   "note": "Setting as in transversality; one C₀ ≥ 0 for all such pairs: (yᵀw(z))²/t ≤ C₀ with t = yᵀs > 0."
   },
   {
    "id": "C/09_C/disp/030",
@@ -606,7 +802,8 @@
    "title": null,
    "container": "C/09_C/lemma/C:lem:secant",
    "sha256": "081e1ef30b018710",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/09_C/lemma/C:lem:secant"
   },
   {
    "id": "C/09_C/proof/004",
@@ -622,7 +819,16 @@
    "title": null,
    "container": null,
    "sha256": "0d49184c6ac1a893",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/lemma/C:lem:secant",
+   "lean": [
+    "BfgsCoverage.Article.PlanarGeometry.same_branch_secant",
+    "BfgsCoverage.Article.PlanarGeometry.crossing_tie_point",
+    "BfgsCoverage.Article.PlanarGeometry.crossing_secant",
+    "BfgsVerification.PlanarCrossing.compact_uniform_secant",
+    "BfgsVerification.CenteredSmoothSublinear.bregman_lower_of_descent"
+   ],
+   "note": "Same-branch case: PlanarGeometry.branch_cocoercivity/same_branch_secant (‖y‖² ≤ Lt, line 307); crossing case: tie point (crossing_tie_point), displays disp/031-033, absorption (crossing_secant)."
   },
   {
    "id": "C/09_C/disp/031",
@@ -638,7 +844,13 @@
    "title": null,
    "container": "C/09_C/proof/004",
    "sha256": "ea42db2695b7d7cb",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.numerator_bound",
+    "BfgsCoverage.Article.PlanarGeometry.crossing_core",
+    "BfgsVerification.PlanarCrossing.crossing_numerator_bound"
+   ],
+   "note": "Two-branch chart: open convex V, F = max{f₀,f₁} on V, convex C² branches with L-Lipschitz gradients bounded by H_b; w B_w-Lipschitz, bounded by G, common pairing on V (facts established before; Euclidean norms). One C₁ ≥ 0 for every eligible crossing pair."
   },
   {
    "id": "C/09_C/disp/032",
@@ -652,7 +864,12 @@
    "title": null,
    "container": "C/09_C/proof/004",
    "sha256": "c7a7c3d495ef4a71",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.crossing_identities",
+    "BfgsCoverage.Article.PlanarGeometry.crossing_pairings_core"
+   ],
+   "note": "a = ∇f_i(x), b = ∇f_j(x), r = ∇f_j(z) - ∇f_j(x) are variables with their definitions; also ‖r‖ ≤ L‖s‖."
   },
   {
    "id": "C/09_C/disp/033",
@@ -666,7 +883,12 @@
    "title": null,
    "container": "C/09_C/proof/004",
    "sha256": "6791485a34c6ee10",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.crossing_inequalities",
+    "BfgsVerification.PlanarCrossing.crossing_inverse_step_bound"
+   ],
+   "note": "\"The two gradient rows are uniformly independent\": the inverse bound ‖u‖ ≤ A(|∇f₀(x')ᵀu| + |∇f₁(x')ᵀu|) on the chart (hypothesis hrows)."
   },
   {
    "id": "C/09_C/proof/005",
@@ -682,7 +904,17 @@
    "title": null,
    "container": null,
    "sha256": "fa6d2e06315b0efd",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/theorem/C:thm:cluster",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.contradiction_setup",
+    "BfgsCoverage.Companion.Ch09C.energy_tail_inequality",
+    "BfgsCoverage.Companion.Ch09C.gradients_bounded_M_applies",
+    "BfgsVerification.AdmissibleBFGSRun.planar_affineCritical_cluster_on_sublevel",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_frame_reciprocal_sum_bound",
+    "BfgsVerification.ClusterSetGeometry.eventually_mem_of_open_superset"
+   ],
+   "note": "The library proof follows the TeX: positive limit (contradiction_setup), vanishing steps, field near Γ with the tail in its neighborhood, energy recursion, telescoping, contradiction with reciprocal growth (Chapter M)."
   },
   {
    "id": "C/09_C/disp/034",
@@ -696,7 +928,13 @@
    "title": null,
    "container": "C/09_C/proof/005",
    "sha256": "ef760ef8e5e71249",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.annihilated_matrix",
+    "BfgsVerification.AdmissibleBFGSRun.annihilated_hessian_posSemidef",
+    "BfgsVerification.AdmissibleBFGSRun.annihilated_hessian_mul_displacement"
+   ],
+   "note": "B_k, M_k are variables with their definitions; E_k (also defined here) is used in disp/035. Asserts M_k ⪰ 0 and M_k s_k = 0."
   },
   {
    "id": "C/09_C/disp/035",
@@ -712,7 +950,13 @@
    "title": null,
    "container": "C/09_C/proof/005",
    "sha256": "12ffdb609845b2d8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.energy_identity",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_frame_energy",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_frame_residual_nonneg"
+   ],
+   "note": "At an index where the transport representation w(x_{k+1}) = λ_k w(x_k) + β_k s_k holds; also \"the parenthesized expression is nonnegative\". The contradiction hypothesis is not needed."
   },
   {
    "id": "C/09_C/disp/036",
@@ -726,7 +970,14 @@
    "title": null,
    "container": "C/09_C/proof/005",
    "sha256": "f9df875025860a08",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.energy_tail_inequality",
+    "BfgsCoverage.Companion.Ch09C.energy_step_inequality",
+    "BfgsCoverage.Article.Local.planar_cluster_field",
+    "BfgsCoverage.Article.Local.planar_cluster_energy"
+   ],
+   "note": "energy_tail_inequality: under the hypotheses of the theorem and the contradiction hypothesis (no affine-critical cluster point), there are a field w, m > 0, C, C₀ ≥ 0 and K₀ with the inequality for all k ≥ K₀ (these assumptions cannot all hold: that is what the proof shows). energy_step_inequality: the step at a given index from the visibility, secant and transport facts (satisfiable assumptions)."
   },
   {
    "id": "C/09_C/disp/037",
@@ -740,7 +991,12 @@
    "title": null,
    "container": "C/09_C/proof/005",
    "sha256": "e88ec7a47f6ed7e1",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.telescoped_bound",
+    "BfgsCoverage.Companion.Ch09C.telescoping_algebra"
+   ],
+   "note": "telescoped_bound: for the run (E_k ≥ 0 from H_k⁻¹ ≻ 0, q_k > 0, d_k ≥ 0), m > 0, the tail inequality of disp/036 for k ≥ K, P_K = 1, P_{k+1} = P_k(1 + Cd_k), P_k ≤ P̄: (m/P̄) Σ_{k=K}^{N-1} 1/q_k ≤ E_K + C₀(N - K) for N ≥ K. For a run starting in K these assumptions cannot all hold (reciprocal growth), which is the contradiction the proof draws; telescoping_algebra is the same inequality for arbitrary real sequences (satisfiable, example)."
   },
   {
    "id": "C/09_C/proof/006",
@@ -754,7 +1010,13 @@
    "title": null,
    "container": null,
    "sha256": "c8ae17d51fe63863",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/corollary/C:cor:AC",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.convergence_of_affineCritical_cluster",
+    "BfgsVerification.PlanarConvergence.local_convergence_basin",
+    "BfgsVerification.Localization.neighborhood_basin"
+   ]
   },
   {
    "id": "C/09_C/proof/007",
@@ -768,7 +1030,17 @@
    "title": null,
    "container": null,
    "sha256": "ea5bade183244b00",
-   "status": null
+   "status": "PROOF",
+   "of": "C/09_C/corollary/C:cor:max",
+   "lean": [
+    "BfgsCoverage.Article.Local.planar_max_affine_correct_near",
+    "BfgsCoverage.Article.Local.planar_max_regular_near",
+    "BfgsCoverage.Article.Local.planar_max_balance_continuous",
+    "BfgsCoverage.Article.Local.planar_max_hessian_contours",
+    "BfgsVerification.PlanarMaxRegular.finite_max_local_basin",
+    "BfgsVerification.PlanarActiveGeometry.cardinal_le_two_of_affineIndependent_not_critical"
+   ],
+   "note": "The undisplayed steps are the article's (same argument, local.tex:321-359): continuity and positivity of the balance, local (C:eq:AC), at most two active branches off C_aff and the regular two-branch chart, localization, and the Hessian sufficiency."
   },
   {
    "id": "C/09_C/disp/038",
@@ -782,7 +1054,12 @@
    "title": null,
    "container": "C/09_C/proof/007",
    "sha256": "23eb81e2edd1d286",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.gram_formula",
+    "BfgsCoverage.Article.Local.planar_max_barycentric"
+   ],
+   "note": "Hypotheses of the corollary; A(x) is the variable with its defining equation; full column rank at x_* and nearby, and uniqueness of the solution with the inverse-Gram formula."
   },
   {
    "id": "C/09_C/disp/039",
@@ -796,7 +1073,13 @@
    "title": null,
    "container": null,
    "sha256": "913cd68eba8d62cb",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.PlanarQuadraticExample.branch",
+    "BfgsVerification.PlanarQuadraticExample.objective",
+    "BfgsCoverage.Article.Local.example_eq"
+   ],
+   "note": "The theorems of §8 take f and F as variables with these defining equations (hf, hF); Local.example_eq identifies them with the library's branch and objective."
   },
   {
    "id": "C/09_C/disp/040",
@@ -810,7 +1093,13 @@
    "title": null,
    "container": null,
    "sha256": "1aadaeeeff08de56",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.example_coefficients_formula",
+    "BfgsCoverage.Article.Local.example_coefficients",
+    "BfgsVerification.PlanarQuadraticExample.coefficients_unique"
+   ],
+   "note": "\"The solution\" presupposes D ≠ 0 (as on the box, D ≥ 267/100), stated as hypothesis hD0: then a solution exists and every solution is given by the formulas."
   },
   {
    "id": "C/09_C/disp/041",
@@ -826,7 +1115,12 @@
    "title": null,
    "container": null,
    "sha256": "ce71b79c58e6bf39",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.explicit_basin",
+    "BfgsVerification.PlanarQuadraticExample.fullBFGS_explicit_basin"
+   ],
+   "note": "For every admissible run (arbitrary H_0 ≻ 0 and valid constants): F(x_0) < 1/100 ⇒ x_k → 0. The lead-in \"Since F ≥ ‖x‖²\" ({F ≤ 1/100} lies in the box) is in example_box."
   },
   {
    "id": "C/09_C/disp/042",
@@ -840,7 +1134,13 @@
    "title": null,
    "container": null,
    "sha256": "67219c41573b3824",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.tie_curve",
+    "BfgsCoverage.Article.Local.example_tie_expansion",
+    "BfgsCoverage.Article.Local.example_tie"
+   ],
+   "note": "Includes \"the active tie f₀ = f₁ ... with f₂ inactive\" (lines 435, 440) for 0 < u < 1/10."
   },
   {
    "id": "C/09_C/disp/043",
@@ -854,7 +1154,11 @@
    "title": null,
    "container": null,
    "sha256": "8817e5776466da59",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.gradient_jump",
+    "BfgsCoverage.Article.Local.example_radial_jump"
+   ]
   },
   {
    "id": "C/09_C/disp/044",
@@ -868,7 +1172,13 @@
    "title": null,
    "container": null,
    "sha256": "8b11187e21a7f094",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.pair_values",
+    "BfgsCoverage.Article.Local.example_pair_values",
+    "BfgsVerification.PlanarQuadraticExample.pair_step"
+   ],
+   "note": "Includes line 445: x on branch 1, z on branch 0 (uniquely active), s = (0, -2ε); for fixed 0 < u < 1/10 and all small ε > 0."
   },
   {
    "id": "C/09_C/disp/045",
@@ -882,7 +1192,12 @@
    "title": null,
    "container": null,
    "sha256": "787af14447b9c0ed",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.common_rate_pairing",
+    "BfgsVerification.ConstantRankFields.commonRate_pairing"
+   ],
+   "note": "a = closestAffinePoint (min-norm point of the affine hull, min_norm_C1) and v = a/‖a‖² are variables with their definitions; the pairing is the Euclidean inner product (= dot)."
   },
   {
    "id": "C/09_C/disp/046",
@@ -896,7 +1211,12 @@
    "title": null,
    "container": null,
    "sha256": "d95a2e5368632a2e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.secant_numerator_identity",
+    "BfgsVerification.PlanarCrossing.actual_gradient_eq_active_branch"
+   ],
+   "note": "Premises of the display (line 470): i active at the differentiable point x (so ∇f_i(x) = g, derived), and the two unit pairings at z."
   },
   {
    "id": "C/09_C/disp/047",
@@ -910,7 +1230,13 @@
    "title": null,
    "container": null,
    "sha256": "707149dd9b5b8abf",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.cocoercivity_estimate",
+    "BfgsCoverage.Companion.Ch09C.descent_estimate_n",
+    "BfgsVerification.CenteredSmoothSublinear.bregman_lower_of_descent"
+   ],
+   "note": "In any dimension. f = f_i convex C² on a larger open convex chart V with L-Lipschitz gradient; endpoints in a buffer whose ρ-balls lie in V, ‖z - x‖ < ρ; f ≤ F on V with f(x) = F(x) (finite-max supporting gap) and ∇f(x) = g (disp/046); D = D_f(z,x) the variable with its definition."
   },
   {
    "id": "C/09_C/disp/048",
@@ -924,7 +1250,11 @@
    "title": null,
    "container": null,
    "sha256": "e99a1a51154fcb13",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.spatial_step"
+   ],
+   "note": "step ε is s; change ε = ∇F(x+s) - ∇F(x) is y, and y = Qs."
   },
   {
    "id": "C/09_C/disp/049",
@@ -938,8 +1268,1610 @@
    "title": null,
    "container": null,
    "sha256": "4c32b9082be7fead",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.spatial_values",
+    "BfgsVerification.spatialCanonicalWarning"
+   ],
+   "note": "d = pairDecrease, t = pairCurvature, det[g,s,y] = det(tripleColumns g s y) (columns g, s, y); the formulas for every ε, nonzero determinant for ε > 0."
+  },
+  {
+   "id": "C/09_C/prose/001",
+   "kind": "prose",
+   "lines": [
+    3,
+    3
+   ],
+   "anchor": "Curved switching interfaces can defeat inward radial accuracy even in a convergent problem.",
+   "status": "SAME_AS",
+   "of": [
+    "C/09_C/prose/080",
+    "C/09_C/disp/041"
+   ],
+   "note": "The example of §8: RS (inward radial secant accuracy) fails on a positive band in every neighborhood of zero (prose/080) although every run with F(x_0) < 1/100 converges (disp/041)."
+  },
+  {
+   "id": "C/09_C/prose/002",
+   "kind": "prose",
+   "lines": [
+    3,
+    3
+   ],
+   "anchor": "The planar contour construction supplies moving comparison geometry; the explicit three-quadratic basin demonstrates its added scope.",
+   "status": "SAME_AS",
+   "of": [
+    "C/09_C/prose/057",
+    "C/09_C/disp/041",
+    "C/09_C/prose/080"
+   ],
+   "note": "The construction: one field following the moving switching curves (three_estimates); added scope: the basin of §8 holds where RS fails."
+  },
+  {
+   "id": "C/09_C/prose/003",
+   "kind": "prose",
+   "lines": [
+    3,
+    3
+   ],
+   "anchor": "The signed determinant and one-sided transport proof make the resulting convergence theorem independent of assumed matrix behavior.",
+   "status": "SAME_AS",
+   "of": [
+    "C/09_C/theorem/C:thm:cluster",
+    "C/09_C/lemma/C:lem:transport"
+   ],
+   "note": "Theorem cluster assumes nothing about the matrices beyond H_0 ≻ 0; the transport lemma's proof uses the signed determinant D and one-sided derivatives."
+  },
+  {
+   "id": "C/09_C/prose/004",
+   "kind": "prose",
+   "lines": [
+    43,
+    43
+   ],
+   "anchor": "Ordinary stationarity, $0\\in\\partial F(p)$, implies affine criticality, but not conversely.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.stationary_affineCritical",
+    "BfgsCoverage.Companion.Ch09C.affineCritical_not_stationary_standing",
+    "BfgsCoverage.Article.Local.affineCritical_not_stationary_example"
+   ],
+   "note": "stationary_affineCritical: stationarity implies affine criticality for every F and p, and the converse fails for max{u,2u} (the article's witness, which has no minimum). affineCritical_not_stationary_standing: the converse fails also within the standing assumptions of line 35, for F = max{u,2u} + u² + v² at 0 (F convex, F_* = -1/4 attained only at (-1/2,0), compact sublevel {F ≤ 0} ∋ 0, (1,0),(2,0) ∈ ∂F(0), 0 ∉ ∂F(0))."
+  },
+  {
+   "id": "C/09_C/prose/005",
+   "kind": "prose",
+   "lines": [
+    47,
+    47
+   ],
+   "anchor": "\\textbf{Strictly convex positive sublevels.}",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.StrictlyConvexPositiveSublevels",
+    "BfgsCoverage.Companion.Ch09C.cluster"
+   ],
+   "note": "\"For every F_* < t ≤ b, ... its boundary contains no nontrivial line segment\": the definition StrictlyConvexPositiveSublevels F Fstar b, written out as hypothesis hstrict of cluster."
+  },
+  {
+   "id": "C/09_C/prose/006",
+   "kind": "prose",
+   "lines": [
+    47,
+    47
+   ],
+   "anchor": "the convex body $K_t=\\{F\\le t\\}$ is strictly convex",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.sublevel_convex_body"
+   ],
+   "note": "The implicit claim that K_t (F_* < t ≤ b) is a convex body: convex, compact, with nonempty interior. \"Strictly convex\" is the hypothesis (prose/005)."
+  },
+  {
+   "id": "C/09_C/prose/007",
+   "kind": "prose",
+   "lines": [
+    47,
+    47
+   ],
+   "anchor": "This is a condition on the contours, not a uniform lower Hessian bound.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.contour_condition_not_hessian_bound",
+    "BfgsCoverage.Article.Local.strict_contours_without_hessian_bound"
+   ],
+   "note": "Strict contours hold for ‖x‖⁴, whose Hessian at the minimizer has no positive lower bound."
+  },
+  {
+   "id": "C/09_C/prose/008",
+   "kind": "prose",
+   "lines": [
+    47,
+    47
+   ],
+   "anchor": "Strong convexity of $F$ suffices.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.strong_convexity_suffices"
+   ],
+   "note": "Strong convexity with modulus μ > 0 for the Euclidean norm, written out."
+  },
+  {
+   "id": "C/09_C/prose/009",
+   "kind": "prose",
+   "lines": [
+    49,
+    53
+   ],
+   "anchor": "\\textbf{Regular switching away from affine criticality.}",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.RegularSwitching",
+    "BfgsCoverage.Companion.Ch09C.cluster",
+    "BfgsCoverage.Article.PlanarGeometry.regularity_of_literal"
+   ],
+   "note": "The definition RegularSwitching F b in the TeX form (with display disp/003), written out as hypothesis hreg of cluster; regularity_of_literal converts it to the library form."
+  },
+  {
+   "id": "C/09_C/prose/010",
+   "kind": "prose",
+   "lines": [
+    53,
+    53
+   ],
+   "anchor": "In particular, two different smooth branches meet transversally both to each other and to the positive level.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.branches_meet_transversally",
+    "BfgsCoverage.Article.Local.corner_moves_with_level"
+   ],
+   "note": "Transversal to each other: independent gradients (det ≠ 0, distinct gradients); to the positive level: the tie curve c with f₁ = f₂ = F = t along it crosses the levels with unit pairing of its velocity with both gradients."
+  },
+  {
+   "id": "C/09_C/prose/011",
+   "kind": "prose",
+   "lines": [
+    53,
+    53
+   ],
+   "anchor": "No assumptions are made on the local structure at an affine-critical point.",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/009",
+   "note": "RegularSwitching quantifies only over p ∈ K ∖ C_aff."
+  },
+  {
+   "id": "C/09_C/prose/012",
+   "kind": "prose",
+   "lines": [
+    59,
+    59
+   ],
+   "anchor": "Here admissibility means $H_0\\succ0$, differentiable accepted iterates with nonzero gradients",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsCoverage.Article.Energy.admissible_iff"
+   ],
+   "note": "AdmissibleBFGSRun is exactly this definition (with the update of disp/005); Energy.admissible_iff unfolds it."
+  },
+  {
+   "id": "C/09_C/prose/013",
+   "kind": "prose",
+   "lines": [
+    70,
+    70
+   ],
+   "anchor": "The positivity $t_k>0$ in the update is derived, not an additional assumption on later matrices",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.curvature_derived",
+    "BfgsVerification.AdmissibleBFGSRun.q_pos",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/014",
+   "kind": "prose",
+   "lines": [
+    70,
+    70
+   ],
+   "anchor": "The full update then preserves positive definiteness, starting from $H_0\\succ0$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.curvature_derived",
+    "BfgsVerification.AdmissibleBFGSRun.positive_definite"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/015",
+   "kind": "prose",
+   "lines": [
+    70,
+    70
+   ],
+   "anchor": "Existence of differentiable acceptable lengths on every exceptional search ray is not part of the theorem.",
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: states what the theorem does not assert (all-ray line-search existence); no mathematical claim."
+  },
+  {
+   "id": "C/09_C/prose/016",
+   "kind": "prose",
+   "lines": [
+    93,
+    93
+   ],
+   "anchor": "This proves a planar, strictly-convex-contour version of the smooth-max conjecture",
+   "status": "SAME_AS",
+   "of": "C/09_C/corollary/C:cor:max",
+   "note": "The planar strict-contour version is Corollary C:cor:max; the conjecture is the one recorded in Chapter A (08_A.tex, \"What remains a conjecture\"). Wording point: \"recorded in the previous note~Chapter~\\ref{comp:A}\" prints \"the previous note Chapter 8\", an editorial remnant of the source notes (with \"this note\" at line 110, prose/020); suggested \"recorded in Chapter~\\ref{comp:A}\"."
+  },
+  {
+   "id": "C/09_C/prose/017",
+   "kind": "prose",
+   "lines": [
+    93,
+    93
+   ],
+   "anchor": "It does not prove its general-dimensional or merely weighted-tangential-curvature version.",
+   "status": "NON_CLAIM",
+   "reason": "Scope remark about what is not proved (the general conjecture remains open, as Chapter A records)."
+  },
+  {
+   "id": "C/09_C/prose/018",
+   "kind": "prose",
+   "lines": [
+    104,
+    104
+   ],
+   "anchor": "Armijo makes the objective values decrease to a limit $\\ell\\ge F_*$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.one_cluster_point_enough",
+    "BfgsVerification.AdmissibleBFGSRun.value_of_cluster"
+   ],
+   "note": "Covers the whole paragraph (line 104): limit ℓ ≥ F_*, cluster points have value ℓ, a stationary cluster point gives ℓ = F_*, distance to argmin → 0, uniqueness gives convergence; under the standing assumptions of line 35 for a run starting in K."
+  },
+  {
+   "id": "C/09_C/prose/019",
+   "kind": "prose",
+   "lines": [
+    106,
+    110
+   ],
+   "anchor": "therefore reduces the problem to Theorem~\\ref{C:thm:cluster}",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.reduction_to_cluster",
+    "BfgsVerification.AdmissibleBFGSRun.convergence_of_affineCritical_cluster"
+   ],
+   "note": "(C:eq:AC) on K plus an affine-critical cluster point (the theorem's conclusion) give value, distance and (unique minimizer) iterate convergence."
+  },
+  {
+   "id": "C/09_C/prose/020",
+   "kind": "prose",
+   "lines": [
+    110,
+    110
+   ],
+   "anchor": "This reduction was proved in~Chapter~\\ref{comp:A}; the missing algorithmic assertion is the subject of this note.",
+   "status": "NON_CLAIM",
+   "reason": "Cross-reference to Chapter A and exposition; the reduction itself is prose/019.",
+   "note": "Wording point (with line 93, prose/016): \"the subject of this note\" is an editorial remnant of the source notes (the companion consists of chapters); suggested \"the subject of this chapter\"."
+  },
+  {
+   "id": "C/09_C/prose/021",
+   "kind": "prose",
+   "lines": [
+    116,
+    116
+   ],
+   "anchor": "At a non-affine-critical point, $-a(p)/\\norm{a(p)}^2$ decreases every supporting model at rate one.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.min_norm_rate_one",
+    "BfgsCoverage.Article.Local.least_norm_point"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/022",
+   "kind": "prose",
+   "lines": [
+    116,
+    116
+   ],
+   "anchor": "Thus \\eqref{C:eq:AC} says that every nonoptimal point retains equal-rate descent across its active models.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.AC_iff_equal_rate",
+    "BfgsVerification.AffineCriticalObjective.affineCorrectAt_iff_nonoptimal_equal_rate"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/023",
+   "kind": "prose",
+   "lines": [
+    116,
+    116
+   ],
+   "anchor": "It does not say that the gradients at differentiable accepted points tend to zero.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.AC_without_vanishing_gradients"
+   ],
+   "note": "For u² + |v|, (C:eq:AC) holds everywhere, yet the admissible run UnexcitedMetric.run has ‖g_k‖ = 1."
+  },
+  {
+   "id": "C/09_C/prose/024",
+   "kind": "prose",
+   "lines": [
+    136,
+    136
+   ],
+   "anchor": "In particular $\\sum_k d_k<\\infty$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.summable_d"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/025",
+   "kind": "prose",
+   "lines": [
+    136,
+    136
+   ],
+   "anchor": "A finite convex function has bounded subgradients on a compact set",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.bounded_subgradients",
+    "BfgsVerification.convex_supporting_bound_on_compact"
+   ],
+   "note": "General n; the library proof compares supporting planes with values on an enlarged compact set, as the TeX says."
+  },
+  {
+   "id": "C/09_C/prose/026",
+   "kind": "prose",
+   "lines": [
+    136,
+    136
+   ],
+   "anchor": "Hence the accepted gradients are bounded, and Chapter~\\ref{comp:M} applies.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.gradients_bounded_M_applies",
+    "BfgsCoverage.Article.Energy.reciprocal_growth"
+   ],
+   "note": "\"Chapter M applies\": its hypotheses (bounded gradients, d_k → 0) hold and its conclusion follows: the average of 1/q_k diverges."
+  },
+  {
+   "id": "C/09_C/prose/027",
+   "kind": "prose",
+   "lines": [
+    151,
+    151
+   ],
+   "anchor": "We will argue by contradiction that the compact cluster set $\\Gamma$ contains no affine-critical point.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.contradiction_setup",
+    "BfgsVerification.AdmissibleBFGSRun.positive_limit_of_no_affineCritical_cluster"
+   ],
+   "note": "Under the contradiction hypothesis: Γ compact nonempty, ℓ > F_* (and ℓ ≤ b), Γ ⊆ K ∖ C_aff where the regular-switching alternative holds, and s_k → 0 (Lemma C:lem:steps applies). Vacuous by design: the hypothesis cannot hold together with those of the theorem, which is what the proof shows. Wording point: the sentence literally announces a proof that Γ contains no affine-critical point (the negation of Theorem 9.1); it is the supposition of the proof by contradiction, as the next sentence shows and as contradiction_setup reads it. Suggested: \"We suppose, for a contradiction, that the compact cluster set $\\Gamma$ contains no affine-critical point.\""
+  },
+  {
+   "id": "C/09_C/prose/028",
+   "kind": "prose",
+   "lines": [
+    151,
+    151
+   ],
+   "anchor": "This does not assume that $\\Gamma$ is a singleton, or even use its connectedness.",
+   "status": "NON_CLAIM",
+   "reason": "Describes the proof (no singleton or connectedness assumption); asserts no property of Γ."
+  },
+  {
+   "id": "C/09_C/prose/029",
+   "kind": "prose",
+   "lines": [
+    162,
+    162
+   ],
+   "anchor": "Fix a compact subset $C\\subset\\{F=\\ell\\}$ containing no affine-critical point",
+   "status": "NON_CLAIM",
+   "reason": "Introduces the standing assumptions of §§4-5 (see the module docstring); \"Eventually we use C = Γ\" is exposition."
+  },
+  {
+   "id": "C/09_C/prose/030",
+   "kind": "prose",
+   "lines": [
+    169,
+    169
+   ],
+   "anchor": "Near a nonsmooth point of $C$, $F=\\max\\{f_1,f_2\\}$ and the matrix with rows",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.nonsmooth_point_two_branch"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/031",
+   "kind": "prose",
+   "lines": [
+    173,
+    173
+   ],
+   "anchor": "On the level $\\ell$, the switching point is isolated.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.switching_point_isolated",
+    "BfgsVerification.PlanarCornerCharts.nonsmooth_level_isolated"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/032",
+   "kind": "prose",
+   "lines": [
+    173,
+    173
+   ],
+   "anchor": "Smooth points of $C$ have smooth neighborhoods.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.smooth_point_neighborhood"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/033",
+   "kind": "prose",
+   "lines": [
+    173,
+    173
+   ],
+   "anchor": "A compactness argument gives finitely many relevant curves $p_j(t)$",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.finitely_many_curves",
+    "BfgsVerification.PlanarCornerCharts.exists_regular_corner_motion"
+   ],
+   "note": "Finitely many level-ℓ corners c_j with C² curves p_j (F(p_j(t)) = t near ℓ) and an open N ⊇ C whose nonsmooth points z all satisfy z = p_j(F(z)) for some j."
+  },
+  {
+   "id": "C/09_C/prose/034",
+   "kind": "prose",
+   "lines": [
+    173,
+    173
+   ],
+   "anchor": "Explicitly, an infinite sequence of distinct level-$\\ell$ corners",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.finitely_many_level_corners",
+    "BfgsVerification.PlanarCornerCharts.finite_nonsmooth_on_compact_level"
+   ],
+   "note": "The conclusion of the argument: C contains finitely many level-ℓ corners."
+  },
+  {
+   "id": "C/09_C/prose/035",
+   "kind": "prose",
+   "lines": [
+    173,
+    173
+   ],
+   "anchor": "Shrinking the neighborhood and the level interval removes all other switching curves.",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/033"
+  },
+  {
+   "id": "C/09_C/prose/036",
+   "kind": "prose",
+   "lines": [
+    181,
+    181
+   ],
+   "anchor": "This vector is tangent to the switching curve and detects a fixed nonzero increase in the objective.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.velocity_properties"
+   ],
+   "note": "Also \"It is C¹ in t\": p has derivative v_j(t), F(p(t)) = t with derivative 1, unit pairings, v_j C¹ at ℓ."
+  },
+  {
+   "id": "C/09_C/prose/037",
+   "kind": "prose",
+   "lines": [
+    189,
+    189
+   ],
+   "anchor": "the nonnegative combinations of its two active gradients generate a closed arc of unit supporting normals",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.normal_arc",
+    "BfgsVerification.PlanarNormalGeometry.normalSector_eq_actual_normals"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/038",
+   "kind": "prose",
+   "lines": [
+    189,
+    189
+   ],
+   "anchor": "This arc has width less than $\\pi$",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.normal_arc_width",
+    "BfgsVerification.PlanarNormalGeometry.normalSector_pairing_pos"
+   ],
+   "note": "Width less than π: any two unit normals of the arc make an angle < π."
+  },
+  {
+   "id": "C/09_C/prose/039",
+   "kind": "prose",
+   "lines": [
+    191,
+    191
+   ],
+   "anchor": "The normal arcs of distinct corners at $t=\\ell$ are disjoint.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.normal_arcs_disjoint",
+    "BfgsCoverage.Article.Local.common_normal_exposes_segment",
+    "BfgsVerification.PlanarNormalGeometry.normalSectors_disjoint"
+   ],
+   "note": "With the two following sentences (a shared normal exposes the segment; strict convexity prohibits this)."
+  },
+  {
+   "id": "C/09_C/prose/040",
+   "kind": "prose",
+   "lines": [
+    191,
+    191
+   ],
+   "anchor": "The finitely many compact arcs consequently have positive angular separation.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.arcs_positive_separation"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/041",
+   "kind": "prose",
+   "lines": [
+    191,
+    191
+   ],
+   "anchor": "After slightly enlarging them and shrinking the interval of $t$",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.cutoffs_exist",
+    "BfgsVerification.PlanarNormalGeometry.exists_moving_normalSector_cutoffs"
+   ],
+   "note": "Also \"The supports can be chosen where n^T v_j(t) > 0 uniformly\". Ambient smooth cutoffs; the angular cutoffs are θ ↦ χ_j(n(θ)). cutoffs_exist produces cutoffs with values in [0,1]. Wording point: the sentence does not give the range of the cutoffs, and 0 ≤ χ_j ≤ 1 is needed (with χ_j = 2 where n^T v_j = 1/10, h = 1 + 2(1/10 - 1) = -4/5 < 0, so the convex-combination claim of line 202 and (9.10) fail); \"cutoff\" standardly means [0,1]-valued and the article states it (planar_geometry.tex:67). Suggested: \"choose fixed smooth angular cutoffs $0\\le\\chi_j\\le1$ with disjoint supports\"."
+  },
+  {
+   "id": "C/09_C/prose/042",
+   "kind": "prose",
+   "lines": [
+    202,
+    202
+   ],
+   "anchor": "The supports are disjoint, so this is a convex combination of positive numbers at each angle.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.height_convex_combination"
+   ],
+   "note": "With the next sentence (h bounded above and away from zero). Uses 0 ≤ χ_j ≤ 1, which \"cutoff\" means (the article states it, planar_geometry.tex:67). Wording point (line 191, prose/041): the text does not state this range, and the claim fails without it."
+  },
+  {
+   "id": "C/09_C/prose/043",
+   "kind": "prose",
+   "lines": [
+    202,
+    202
+   ],
+   "anchor": "It is $C^1$ in $t$ and smooth in $\\theta$",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.height_regularity"
+   ],
+   "note": "C¹ in t for C¹ velocities, C^∞ in θ for smooth ambient cutoffs. The remaining clause of the sentence (mixed derivatives bounded) is prose/116."
+  },
+  {
+   "id": "C/09_C/prose/044",
+   "kind": "prose",
+   "lines": [
+    202,
+    202
+   ],
+   "anchor": "No convex-support-function property of $h$ is asserted or needed.",
+   "status": "NON_CLAIM",
+   "reason": "States what is not asserted; the results above have no such hypothesis."
+  },
+  {
+   "id": "C/09_C/prose/045",
+   "kind": "prose",
+   "lines": [
+    209,
+    209
+   ],
+   "anchor": "These expressions are periodic in $\\theta$, so no choice of a global angle coordinate is needed.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.field_formula_periodic",
+    "BfgsCoverage.Article.PlanarGeometry.fieldFormula_periodic"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/046",
+   "kind": "prose",
+   "lines": [
+    215,
+    215
+   ],
+   "anchor": "This holds on a whole neighborhood of the corresponding switching curve, on both sides.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.corner_field_neighborhood",
+    "BfgsCoverage.Article.PlanarGeometry.corner_field"
+   ],
+   "note": "With \"Define w by (C:eq:nearcorner) on the curve itself\": the field of the construction equals v_j(F) near the corner, smooth or not."
+  },
+  {
+   "id": "C/09_C/prose/047",
+   "kind": "prose",
+   "lines": [
+    215,
+    215
+   ],
+   "anchor": "The field thus extends continuously and locally Lipschitzly across the gradient jump.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.field_lipschitz_at_corner",
+    "BfgsVerification.PlanarObjectiveField.field_lipschitz_near_corner"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/048",
+   "kind": "prose",
+   "lines": [
+    215,
+    215
+   ],
+   "anchor": "Away from the curves it is $C^1$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.field_C1_off_curves"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/049",
+   "kind": "prose",
+   "lines": [
+    215,
+    215
+   ],
+   "anchor": "On a smaller compact neighborhood of $C$, all close-pair Lipschitz and piecewise derivative bounds are uniform.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.uniform_buffer_bounds",
+    "BfgsCoverage.Companion.Ch09C.three_estimates"
+   ],
+   "note": "uniform_buffer_bounds is stated for a field w that is locally Lipschitz on an open N ⊇ C (hypothesis hLip). The constructed field satisfies hLip: three_estimates gives, for w = PlanarObjectiveField.field hF χ v, an open N ⊇ Q ⊇ closure U ⊇ C on which w is locally Lipschitz."
+  },
+  {
+   "id": "C/09_C/prose/050",
+   "kind": "prose",
+   "lines": [
+    221,
+    221
+   ],
+   "anchor": "At a switching point, every subgradient has inner product one with $w$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.corner_unit_pairing",
+    "BfgsVerification.PlanarObjectiveField.field_supports_pairing_corner"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/051",
+   "kind": "prose",
+   "lines": [
+    221,
+    221
+   ],
+   "anchor": "Compactness on a positive level neighborhood gives a uniform positive lower bound",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.uniform_visibility",
+    "BfgsCoverage.Companion.Ch09C.three_estimates"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/052",
+   "kind": "prose",
+   "lines": [
+    232,
+    232
+   ],
+   "anchor": "Therefore, at a smooth point, $Dw(x)$ maps the one-dimensional tangent line of the level curve into itself.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.triangular_derivative"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/053",
+   "kind": "prose",
+   "lines": [
+    232,
+    232
+   ],
+   "anchor": "It may vary arbitrarily in the normal direction.",
+   "status": "NON_CLAIM",
+   "reason": "Remark that no condition is imposed on Dw n (the coefficients b, e are unconstrained); asserts nothing."
+  },
+  {
+   "id": "C/09_C/prose/054",
+   "kind": "prose",
+   "lines": [
+    236,
+    236
+   ],
+   "anchor": "The coefficients are bounded in the compact neighborhood.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.coefficients_bounded",
+    "BfgsCoverage.Companion.Ch09C.three_estimates"
+   ],
+   "note": "coefficients_bounded is stated for a field w that is locally Lipschitz on an open N containing the compact neighborhood Q (hypothesis hLip). The constructed field satisfies hLip: three_estimates gives, for w = PlanarObjectiveField.field hF χ v, the compact buffer Q and an open N ⊇ Q on which w is locally Lipschitz."
+  },
+  {
+   "id": "C/09_C/prose/055",
+   "kind": "prose",
+   "lines": [
+    236,
+    236
+   ],
+   "anchor": "The sign of $h+h_{\\theta\\theta}$ is immaterial.",
+   "status": "NON_CLAIM",
+   "reason": "Remark that no sign condition is used (angle_identity and triangular_derivative have none)."
+  },
+  {
+   "id": "C/09_C/prose/056",
+   "kind": "prose",
+   "lines": [
+    247,
+    247
+   ],
+   "anchor": "An eligible pair means differentiable $x,z$ satisfying",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.EligiblePair",
+    "BfgsCoverage.Article.Energy.eligiblePair_iff"
+   ],
+   "note": "EligiblePair F c₁ c₂ x z g h: g, h gradients at x, z, d > 0, c₁d ≤ Δ ≤ d, t ≥ (1 - c₂)d (C:eq:eligible with c = 1 - c₂); eligiblePair_iff unfolds it."
+  },
+  {
+   "id": "C/09_C/prose/057",
+   "kind": "prose",
+   "lines": [
+    247,
+    247
+   ],
+   "anchor": "For each fixed valid pair $(c_1,c_2)$, the following three estimates hold for the same objective-constructed field $w$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.three_estimates",
+    "BfgsVerification.PlanarAllPairs.source_all_endpoint_estimates"
+   ],
+   "note": "Covers the paragraph up to \"bounded uniformly away from zero\" (U, Q, uniform distance and visibility constants, segments in Q, common positive pairing on Q)."
+  },
+  {
+   "id": "C/09_C/prose/058",
+   "kind": "prose",
+   "lines": [
+    247,
+    247
+   ],
+   "anchor": "All constants and neighborhoods are chosen before the endpoint pair",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/057",
+   "note": "Quantifier order of three_estimates (all ∃ before the pair); no BFGS matrix or run among its hypotheses."
+  },
+  {
+   "id": "C/09_C/prose/059",
+   "kind": "prose",
+   "lines": [
+    360,
+    360
+   ],
+   "anchor": "The argument constructs a field near the \\emph{whole hypothetical cluster set}.",
+   "status": "SAME_AS",
+   "of": [
+    "A/local/disp/008",
+    "C/09_C/disp/036"
+   ],
+   "note": "Local.planar_cluster_field: one field on an open U ⊇ Γ; energy_tail_inequality: the whole tail lies in U (no single cluster point is selected)."
+  },
+  {
+   "id": "C/09_C/prose/060",
+   "kind": "prose",
+   "lines": [
+    360,
+    360
+   ],
+   "anchor": "Nor is the field an extra algorithmic input",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/057",
+   "note": "The field is PlanarObjectiveField.field hF χ v, built from F alone; three_estimates has no run or matrix among its hypotheses."
+  },
+  {
+   "id": "C/09_C/prose/061",
+   "kind": "prose",
+   "lines": [
+    394,
+    394
+   ],
+   "anchor": "Chapter~\\ref{comp:A} proves that a finite convex semialgebraic function has finitely many affine-critical values.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.semialgebraic_values",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/062",
+   "kind": "prose",
+   "lines": [
+    394,
+    394
+   ],
+   "anchor": "Its proof uses a finite piecewise-smooth cover of the lifted critical graph",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.path_composition_smooth",
+    "BfgsVerification.objectiveSemialgebraicComposition",
+    "BfgsVerification.semialgebraicCurveSmooth"
+   ],
+   "note": "The mathematics asserted: for a continuous semialgebraic point path p, p and F∘p are smooth off one finite set. The description of the proof is history of Chapter A."
+  },
+  {
+   "id": "C/09_C/prose/063",
+   "kind": "prose",
+   "lines": [
+    394,
+    394
+   ],
+   "anchor": "The two-sided supporting inequality and an affine combination of supporting vectors equal to zero",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.critical_composition_derivative_zero",
+    "BfgsVerification.AffineSupportPath.derivative_zero_of_affineCritical"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/064",
+   "kind": "prose",
+   "lines": [
+    394,
+    394
+   ],
+   "anchor": "Continuity joins the resulting constants.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.critical_path_values"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/065",
+   "kind": "prose",
+   "lines": [
+    394,
+    394
+   ],
+   "anchor": "No finite-value, path-cover, or composition-differentiability premise is assumed in the final result.",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/061",
+   "note": "semialgebraic_values assumes only convexity and semialgebraicity."
+  },
+  {
+   "id": "C/09_C/prose/066",
+   "kind": "prose",
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "The actual affine-critical set also has finitely many piecewise-smooth path classes",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.critical_path_classes",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_smooth_components"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/067",
+   "kind": "prose",
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "Once finite critical values are known, continuity makes the value image of each such class a singleton",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.critical_path_values",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/068",
+   "kind": "prose",
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "This avoids presuming that an arbitrary smooth point path has a semialgebraic graph",
+   "status": "NON_CLAIM",
+   "reason": "Methodological remark on what the proof does not presume."
+  },
+  {
+   "id": "C/09_C/prose/069",
+   "kind": "prose",
+   "lines": [
+    396,
+    396
+   ],
+   "anchor": "These path classes are distinguished from ordinary topological connected components",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.critical_components",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/070",
+   "kind": "prose",
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "On a compact structural sublevel above an attained minimum",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.semialgebraic_low_basin",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap"
+   ],
+   "note": "The restricted planar basin conclusion (this sentence and the next): on a compact structural sublevel, a sufficiently low basin F(x_0) ≤ F_* + ε (non-strict) gives convergence in value and in distance (also Euclidean) to the minimizer set and, under uniqueness, of the whole sequence. The opening clause of the paragraph, with its stale reference \"A's low affine-critical gap\", is prose/117 (DISCREPANCY, typo)."
+  },
+  {
+   "id": "C/09_C/prose/071",
+   "kind": "prose",
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "Alternatively, with a unique minimizer and the structural hypotheses on a neighborhood",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.semialgebraic_local_basin",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_local_basin"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/072",
+   "kind": "prose",
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "In both versions the basin is chosen before the admissible run",
+   "status": "SAME_AS",
+   "of": [
+    "C/09_C/prose/070",
+    "C/09_C/prose/071"
+   ],
+   "note": "Quantifier order ∃ ε, ∀ R; no positive-multiplier hypothesis."
+  },
+  {
+   "id": "C/09_C/prose/073",
+   "kind": "prose",
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "Semialgebraicity alone does not give the dynamical conclusion",
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: the theorem needs the planar hypotheses besides semialgebraicity; it does not assert a semialgebraic counterexample."
+  },
+  {
+   "id": "C/09_C/prose/074",
+   "kind": "prose",
+   "lines": [
+    416,
+    416
+   ],
+   "anchor": "All branch Hessians lie between $I$ and $3I$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.example_model",
+    "BfgsCoverage.Article.Local.example_model_facts"
+   ],
+   "note": "Covers the whole of line 416."
+  },
+  {
+   "id": "C/09_C/prose/075",
+   "kind": "prose",
+   "lines": [
+    418,
+    418
+   ],
+   "anchor": "The affine coefficient calculation is exact.",
+   "status": "SAME_AS",
+   "of": "C/09_C/disp/040",
+   "note": "The formulas of disp/040 are exact identities."
+  },
+  {
+   "id": "C/09_C/prose/076",
+   "kind": "prose",
+   "lines": [
+    424,
+    424
+   ],
+   "anchor": "On $|u|,|v|\\le1/10$, $D\\ge267/100$ and the numerators are at least",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.example_box",
+    "BfgsCoverage.Article.Local.example_box_facts"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/077",
+   "kind": "prose",
+   "lines": [
+    424,
+    424
+   ],
+   "anchor": "Hence affine independence and local \\eqref{C:eq:AC} hold on this box.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.example_box",
+    "BfgsVerification.PlanarQuadraticExample.affineCorrect_on_box"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/078",
+   "kind": "prose",
+   "lines": [
+    451,
+    451
+   ],
+   "anchor": "For each sufficiently small fixed $u>0$ and $\\epsilon\\downarrow0$, these are eligible for $c_1=1/4,c_2=1/2$.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.pairs_eligible",
+    "BfgsVerification.PlanarQuadraticExample.eventually_eligible"
+   ],
+   "note": "For 0 < u < 1/10."
+  },
+  {
+   "id": "C/09_C/prose/079",
+   "kind": "prose",
+   "lines": [
+    451,
+    451
+   ],
+   "anchor": "The radial numerator tends to the nonzero quantity",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.radial_numerator_limit",
+    "BfgsVerification.PlanarQuadraticExample.radial_numerator_tendsto"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/080",
+   "kind": "prose",
+   "lines": [
+    451,
+    451
+   ],
+   "anchor": "Thus RS fails on a positive band in every neighborhood of zero",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.RS_fails",
+    "BfgsCoverage.Article.Local.nonradial_example"
+   ],
+   "note": "RS is Chapter R's condition (R:eq:RS) with x_* = 0; its failure is stated as in the article (A/local/theorem/art:nonradial-example), with the basin."
+  },
+  {
+   "id": "C/09_C/prose/081",
+   "kind": "prose",
+   "lines": [
+    451,
+    451
+   ],
+   "anchor": "Curved interfaces between arbitrary quadratic branches are not being replaced by finite polyhedral cells",
+   "status": "SAME_AS",
+   "of": "A/local/prose/044",
+   "note": "Read with the article's parallel sentence (local.tex:439-440): the example's objective admits no polyhedral-cell representation near its minimizer (Local.quadratic_max_no_polyhedral_cells), so its convergence does not come from replacing the curved interfaces by polyhedral cells. The clause \"or by a nonlinear change of BFGS coordinates\" describes the method (the proof uses the original coordinates and the unmodified update), like the article's A/local/prose/043 (NON_CLAIM)."
+  },
+  {
+   "id": "C/09_C/prose/082",
+   "kind": "prose",
+   "lines": [
+    463,
+    463
+   ],
+   "anchor": "There is a useful partial statement before transport.",
+   "status": "NON_CLAIM",
+   "reason": "Introduces the setting and hypotheses of the partial statement (prose/089, prose/093)."
+  },
+  {
+   "id": "C/09_C/prose/083",
+   "kind": "prose",
+   "lines": [
+    463,
+    463
+   ],
+   "anchor": "Nearby inactive branches can be removed by their strict gaps.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.inactive_removed"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/084",
+   "kind": "prose",
+   "lines": [
+    463,
+    463
+   ],
+   "anchor": "Affine independence of the family at $p$ is a sufficient condition for this local rank hypothesis.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.affine_independence_sufficient",
+    "BfgsVerification.ConstantRankFields.active_affineIndependent_implies_locallyConstantActiveRank"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/085",
+   "kind": "prose",
+   "lines": [
+    463,
+    463
+   ],
+   "anchor": "The noncritical restriction on $K$ is essential",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.no_unit_pairing_at_affine_critical"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/086",
+   "kind": "prose",
+   "lines": [
+    465,
+    465
+   ],
+   "anchor": "The minimum-norm point $a_J(x)$ of the affine hull of these gradients is $C^1$ in a smaller chart and remains nonzero.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.min_norm_C1",
+    "BfgsVerification.ConstantRankFields.closest_contDiffAt_of_constant_rank"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/087",
+   "kind": "prose",
+   "lines": [
+    465,
+    465
+   ],
+   "anchor": "To see the regularity, choose an affinely independent subfamily at $p$",
+   "status": "PROOF",
+   "of": "C/09_C/prose/086",
+   "lean": [
+    "BfgsVerification.ConstantRankFields.exists_affine_basis_indices",
+    "BfgsVerification.ConstantRankFields.fixed_basis_spans_near",
+    "BfgsVerification.ConstantRankFields.closest_contDiffAt_of_constant_rank"
+   ],
+   "note": "Prose proof of prose/086; the library proof of closest_contDiffAt_of_constant_rank follows it (basis subfamily, persistence, inverse-Gram formula)."
+  },
+  {
+   "id": "C/09_C/prose/088",
+   "kind": "prose",
+   "lines": [
+    465,
+    465
+   ],
+   "anchor": "No $C^\\infty$ conclusion follows from $C^2$ branch data alone.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.no_smooth_conclusion",
+    "BfgsCoverage.Companion.Ch09C.rpow_half_not_differentiableAt_zero"
+   ],
+   "note": "Counterexample in dimension one: the convex C² branch f(x) = x + x^{5/2} (real power, zero for x ≤ 0); for the one-member family J = {f} the minimum-norm point of the affine hull of the gradients is f'(x) itself; f'(0) = 1 ≠ 0, f' is C¹ but not C² at 0."
+  },
+  {
+   "id": "C/09_C/prose/089",
+   "kind": "prose",
+   "lines": [
+    470,
+    470
+   ],
+   "anchor": "A finite $C^\\infty$ partition of unity on buffered charts yields one $C^1$ field $v$",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.one_C1_field",
+    "BfgsVerification.ConstantRankFields.source_eligible_common_rate"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/090",
+   "kind": "prose",
+   "lines": [
+    470,
+    470
+   ],
+   "anchor": "The cutoff regularity does not increase the regularity of the local fields.",
+   "status": "NON_CLAIM",
+   "reason": "Qualification of the C¹ claim (the field is asserted C¹ only); no further claim."
+  },
+  {
+   "id": "C/09_C/prose/091",
+   "kind": "prose",
+   "lines": [
+    470,
+    470
+   ],
+   "anchor": "For sufficiently close endpoints, each chart contributing at $z$ also contains $x$.",
+   "status": "PROOF",
+   "of": "C/09_C/prose/093",
+   "lean": [
+    "BfgsVerification.ConstantRankFields.FiniteRatePatch.secant_bound"
+   ],
+   "note": "Steps of the prose proof of the secant correction (with \"If i is active at x, both ... equal one\", the premises of disp/046); covered by the library proof of FiniteRatePatch.secant_bound."
+  },
+  {
+   "id": "C/09_C/prose/092",
+   "kind": "prose",
+   "lines": [
+    479,
+    479
+   ],
+   "anchor": "To justify the local one-sided estimate, subtract the tangent plane at $x$",
+   "status": "PROOF",
+   "of": "C/09_C/disp/047",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.descent_estimate_n",
+    "BfgsVerification.CenteredSmoothSublinear.bregman_lower_of_descent"
+   ],
+   "note": "cocoercivity_estimate is proved this way (tangent plane, descent lemma at z for the step -(∇f(z) - ∇f(x))/L, which stays in the chart)."
+  },
+  {
+   "id": "C/09_C/prose/093",
+   "kind": "prose",
+   "lines": [
+    479,
+    479
+   ],
+   "anchor": "Thus visibility and the secant correction can be constructed without a BFGS matrix assumption.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.one_C1_field",
+    "BfgsVerification.ConstantRankFields.source_eligible_common_rate"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/094",
+   "kind": "prose",
+   "lines": [
+    481,
+    481
+   ],
+   "anchor": "\\textbf{What does not follow:}",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.C1_field_without_transport",
+    "BfgsVerification.spatialCanonicalWarning"
+   ],
+   "note": "\"C¹ regularity of this field does not provide the projected transport needed by the BFGS energy\": a C^∞ equal-rate field whose rank-one projected transport fails for every multiplier."
+  },
+  {
+   "id": "C/09_C/prose/095",
+   "kind": "prose",
+   "lines": [
+    481,
+    481
+   ],
+   "anchor": "The planar proof succeeds by making its derivative along the level tangent parallel to that tangent.",
+   "status": "SAME_AS",
+   "of": "C/09_C/disp/022"
+  },
+  {
+   "id": "C/09_C/prose/096",
+   "kind": "prose",
+   "lines": [
+    481,
+    481
+   ],
+   "anchor": "In dimension three and higher, mapping a tangent space into itself is not enough",
+   "status": "NON_CLAIM",
+   "reason": "Heuristic explanation of why the planar argument does not extend; its mathematical point (C¹ regularity alone gives no projected transport) is prose/094."
+  },
+  {
+   "id": "C/09_C/prose/097",
+   "kind": "prose",
+   "lines": [
+    483,
+    483
+   ],
+   "anchor": "A concrete warning uses the entirely smooth quadratic",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.spatial_setup",
+    "BfgsVerification.spatialCanonicalWarning"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/098",
+   "kind": "prose",
+   "lines": [
+    492,
+    492
+   ],
+   "anchor": "For small positive $\\epsilon$ the pair is Armijo--weak-Wolfe eligible",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.spatial_not_in_span",
+    "BfgsVerification.spatialCanonicalWarning"
+   ],
+   "note": "For 0 < ε < 1/10."
+  },
+  {
+   "id": "C/09_C/prose/099",
+   "kind": "prose",
+   "lines": [
+    492,
+    492
+   ],
+   "anchor": "Its rank-one projected transport therefore fails for any finite multiplier.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.spatial_not_in_span",
+    "BfgsCoverage.Companion.Ch09C.C1_field_without_transport"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/100",
+   "kind": "prose",
+   "lines": [
+    492,
+    492
+   ],
+   "anchor": "Another field, the radial field, works for this quadratic.",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.radial_field_works",
+    "BfgsVerification.spatialQuadraticRadial"
+   ]
+  },
+  {
+   "id": "C/09_C/prose/101",
+   "kind": "prose",
+   "lines": [
+    492,
+    492
+   ],
+   "anchor": "This is not nonexistence of all certificates or a BFGS counterexample",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.radial_field_works"
+   ],
+   "note": "A radial certificate exists and every admissible run on this quadratic converges. The rest of the sentence (\"it demonstrates the gap ...\") is interpretation."
+  },
+  {
+   "id": "C/09_C/prose/102",
+   "kind": "prose",
+   "lines": [
+    500,
+    500
+   ],
+   "anchor": "The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.",
+   "status": "NON_CLAIM",
+   "reason": "Bibliographic framing."
+  },
+  {
+   "id": "C/09_C/prose/103",
+   "kind": "prose",
+   "lines": [
+    502,
+    502
+   ],
+   "anchor": "Gebken's published Theorem~3.1 assumes an iterate limit",
+   "status": "NON_CLAIM",
+   "reason": "Description of the literature [BG]."
+  },
+  {
+   "id": "C/09_C/prose/104",
+   "kind": "prose",
+   "lines": [
+    502,
+    502
+   ],
+   "anchor": "The assertions in this chapter derive their cluster conclusions.",
+   "status": "SAME_AS",
+   "of": "C/09_C/theorem/C:thm:cluster",
+   "note": "cluster assumes no iterate limit or matrix behaviour."
+  },
+  {
+   "id": "C/09_C/prose/105",
+   "kind": "prose",
+   "lines": [
+    502,
+    502
+   ],
+   "anchor": "Lewis--Wylie's local Newton theory instead concerns a bundle algorithm",
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned, and a statement about the literature audit (priority)."
+  },
+  {
+   "id": "C/09_C/prose/106",
+   "kind": "prose",
+   "lines": [
+    504,
+    504
+   ],
+   "anchor": "The normal-angle expression $h n+h_\\theta T$ and its derivative cancellation are classical",
+   "status": "SAME_AS",
+   "of": "C/09_C/disp/021",
+   "note": "The cancellation used is proved (angle_identity); the attribution to Bogosel is bibliographic."
+  },
+  {
+   "id": "C/09_C/prose/107",
+   "kind": "prose",
+   "lines": [
+    504,
+    504
+   ],
+   "anchor": "Here $h$ is a glued comparison function, without an asserted convex-support-function property.",
+   "status": "NON_CLAIM",
+   "reason": "Remark on what is not asserted about h."
+  },
+  {
+   "id": "C/09_C/prose/108",
+   "kind": "prose",
+   "lines": [
+    506,
+    506
+   ],
+   "anchor": "The multiplier argument in this chapter uses the established nondegeneracy geometry",
+   "status": "NON_CLAIM",
+   "reason": "Literature and structure: the argument is proof/007; the dynamical theorem it needs is C:thm:cluster."
+  },
+  {
+   "id": "C/09_C/prose/109",
+   "kind": "prose",
+   "lines": [
+    508,
+    508
+   ],
+   "anchor": "Chapter~\\ref{comp:A}'s finite-value result is a reproof of a consequence",
+   "status": "NON_CLAIM",
+   "reason": "Relation to the literature [BDLS]."
+  },
+  {
+   "id": "C/09_C/prose/110",
+   "kind": "prose",
+   "lines": [
+    508,
+    508
+   ],
+   "anchor": "The planar dynamical hypotheses in this chapter are retained in this application.",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/070",
+   "note": "semialgebraic_low_basin keeps strict contours and regular switching among its hypotheses."
+  },
+  {
+   "id": "C/09_C/prose/111",
+   "kind": "prose",
+   "lines": [
+    510,
+    510
+   ],
+   "anchor": "The audit found no exact match for these coefficients and the certified basin.",
+   "status": "NON_CLAIM",
+   "reason": "Result of the literature audit (history)."
+  },
+  {
+   "id": "C/09_C/prose/112",
+   "kind": "prose",
+   "lines": [
+    510,
+    510
+   ],
+   "anchor": "The subsequent radial obstruction excludes the stated RS condition, rather than every convergence criterion.",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/080",
+   "note": "RS fails while the explicit basin holds."
+  },
+  {
+   "id": "C/09_C/prose/113",
+   "kind": "prose",
+   "lines": [
+    512,
+    512
+   ],
+   "anchor": "Rank-stable projections and partitions of unity are standard tools.",
+   "status": "NON_CLAIM",
+   "reason": "Bibliographic remark."
+  },
+  {
+   "id": "C/09_C/prose/114",
+   "kind": "prose",
+   "lines": [
+    512,
+    512
+   ],
+   "anchor": "The buffered smooth secant estimate uses Baillon--Haddad cocoercivity",
+   "status": "SAME_AS",
+   "of": "C/09_C/disp/047",
+   "note": "The local estimate used is proved (cocoercivity_estimate); the open-domain formulation of [WW] is only cited."
+  },
+  {
+   "id": "C/09_C/prose/115",
+   "kind": "prose",
+   "lines": [
+    512,
+    512
+   ],
+   "anchor": "Neither this antecedent nor the partial statement supplies the missing transport estimate in arbitrary dimension.",
+   "status": "SAME_AS",
+   "of": "C/09_C/prose/094",
+   "note": "The three-dimensional warning shows that the C¹ equal-rate field does not give the projected transport."
+  },
+  {
+   "id": "C/09_C/prose/116",
+   "kind": "prose",
+   "lines": [
+    202,
+    202
+   ],
+   "anchor": "with the mixed derivatives used below bounded",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.height_mixed_derivatives_bounded",
+    "BfgsVerification.PlanarAmbientFrame.angularSlope_eq_deriv"
+   ],
+   "note": "Read as all derivatives of h that w and Dw use (displays C:eq:w and C:eq:angleidentity): one constant bounds ∂_θh, ∂_th, the mixed derivative ∂_t∂_θh and ∂_θ²h for all θ and all levels t in a set where ‖v_j‖ ≤ B and ‖v_j'‖ ≤ B' (as on the compact level interval, PlanarObjectiveField.compact_velocity_derivative_bound). Smooth ambient cutoffs; the angular cutoffs are θ ↦ χ_j(n(θ))."
+  },
+  {
+   "id": "C/09_C/prose/117",
+   "kind": "prose",
+   "lines": [
+    398,
+    398
+   ],
+   "anchor": "Combining A's low affine-critical gap with Theorem~\\ref{C:thm:cluster}",
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.semialgebraic_low_basin",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin"
+   ],
+   "note": "Wrong reference (typo): \"A\" is the source note's name of Chapter 8; the result meant is Proposition 8.1 (A:semialgebraic, \"A low-level affine-critical gap\"), while the printed companion's only \"A\" is Appendix A (the seed certificate). The corrected claim is semialgebraic_low_basin: its first conjunct is the gap, its second the basin conclusion obtained by combining it with Theorem C:thm:cluster (the basin itself is prose/070). See the discrepancy entry."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/09_C/prose/117",
+   "description": "Wrong reference. companion/chapters/09_C.tex:398 (Section 9.7.1, \"A tame-geometric alternative\"; frozen span C.span.12, source bfgs_lean_stage1/master_report/latex/chapters/C.tex:364) prints, on page 57 of the built companion: \"Combining A's low affine-critical gap with Theorem 9.1 gives the following restricted planar basin conclusion.\" The printed companion never shows source module letters (its chapters are numbered 1 to 14), and the only \"A\" a reader sees is Appendix A, \"The finite rational seed certificate\", which contains no affine-critical gap. \"A\" is the source note's name for Chapter 8 (\"Affine criticality and stratified geometry\"), and the result meant is its Proposition 8.1 (label A:semialgebraic, \"A low-level affine-critical gap\": if a finite convex semialgebraic F attains F_*, some epsilon > 0 makes every affine-critical point p with F(p) < F_* + epsilon stationary). The stale letter survived generation because editorial/generate_companion.py rewrites module letters only in prefixed tags (\"A.1\"), in \"Module A\" phrases and in citation keys, not in a bare possessive \"A's\". The mathematics of the corrected sentence holds: BfgsCoverage.Companion.Ch09C.semialgebraic_low_basin states the gap (its first conjunct, from RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap, the Lean form of Proposition 8.1) and the restricted planar basin conclusion obtained by combining it with Theorem 9.1 (its second conjunct, from RealAlgebraicGeometry.semialgebraic_planar_low_basin). Fix: the chapter is generated, so not by hand. Add to editorial/generate_companion.py, in its block for module C (if module=='C':), a logged transformation (a transform_log entry with kind, old, new and reason) that replaces the exact source text \"Combining A's low affine-critical gap with Theorem~\\ref{C:thm:cluster}\" (one occurrence, assert its count) by the proposed wording; then regenerate (python3 editorial/generate_companion.py), rebuild the companion and inspect page 57.",
+   "severity": "typo",
+   "proposed": "\"Combining the low affine-critical gap of Proposition~\\ref{A:semialgebraic} with Theorem~\\ref{C:thm:cluster} gives the following restricted planar basin conclusion.\" (It prints \"Combining the low affine-critical gap of Proposition 8.1 with Theorem 9.1 ...\".)",
+   "lean": [
+    "BfgsCoverage.Companion.Ch09C.semialgebraic_low_basin",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_planar_low_basin"
+   ]
+  }
+ ]
 }
