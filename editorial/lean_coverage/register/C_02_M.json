@@ -14,7 +14,15 @@
    "title": null,
    "container": null,
    "sha256": "8cee2c2fecbebb3e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.notation_display",
+    "BfgsCoverage.Article.Energy.run_notation",
+    "BfgsVerification.AdmissibleBFGSRun.q_pos",
+    "BfgsVerification.AdmissibleBFGSRun.wolfe_constant_pos",
+    "BfgsVerification.AdmissibleBFGSRun.dot_step_eq_neg_d"
+   ],
+   "note": "The display defines B_k, q_k, d_k, t_k, Δ_k, c and asserts q_k > 0, -g_kᵀs_k = α_kq_k and c = 1 - c₂ > 0. notation_display states these with the library names (R.hessian k = (R.H k)⁻¹, R.q k, R.d k := α_k q_k, R.curvature k = y_kᵀs_k); Δ_k and c are written out as F (R.x k) - F (R.x (k + 1)) and 1 - R.c₂. Run = R : AdmissibleBFGSRun n F (the chapter inherits the infinite-admissible-run convention, line 9)."
   },
   {
    "id": "C/02_M/disp/002",
@@ -30,7 +38,14 @@
    "title": null,
    "container": null,
    "sha256": "94b40b12e1508cf3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.basic",
+    "BfgsVerification.AdmissibleBFGSRun.predicted_decrease_bounds",
+    "BfgsVerification.AdmissibleBFGSRun.curvature_lower_bound",
+    "BfgsVerification.AdmissibleBFGSRun.d_pos"
+   ],
+   "note": "For every k: c₁d_k ≤ Δ_k ≤ d_k, t_k ≥ (1 - c₂)d_k and (1 - c₂)d_k > 0 (the display's \"t_k ≥ c d_k > 0\"). Same claim as the article's A/energy/disp/004 (part of Lemma art:run-invariants)."
   },
   {
    "id": "C/02_M/disp/003",
@@ -46,7 +61,14 @@
    "title": null,
    "container": null,
    "sha256": "b391bc0a809b15c3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.hessian_form",
+    "BfgsVerification.AdmissibleBFGSRun.hessian_update",
+    "BfgsVerification.hessianUpdate",
+    "BfgsVerification.hessianInvariants"
+   ],
+   "note": "B_{k+1} = B_k - g_kg_kᵀ/q_k + y_ky_kᵀ/t_k for every k (outer, total inverse; q_k, t_k > 0)."
   },
   {
    "id": "C/02_M/disp/004",
@@ -62,7 +84,14 @@
    "title": null,
    "container": null,
    "sha256": "743dbdf96ee7a9c6",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.annihilation",
+    "BfgsVerification.AdmissibleBFGSRun.annihilated_hessian_posSemidef",
+    "BfgsVerification.AdmissibleBFGSRun.annihilated_hessian_mul_displacement",
+    "BfgsVerification.annihilatedMatrix_posSemidef"
+   ],
+   "note": "M_k is the variable M k with its defining equation M k = B_k - q_k⁻¹ g_kg_kᵀ; conclusion: M_k ⪰ 0 (PosSemidef) and M_k s_k = 0."
   },
   {
    "id": "C/02_M/lemma/M:localization",
@@ -78,7 +107,18 @@
    "title": "A low sublevel is an invariant local basin",
    "container": null,
    "sha256": "4c610a7a097840d1",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.localization",
+    "BfgsCoverage.Companion.Ch02M.sphere_min",
+    "BfgsCoverage.Companion.Ch02M.localization_radial",
+    "BfgsVerification.Localization.sphere_gap",
+    "BfgsVerification.Localization.low_sublevel_subset_ball",
+    "BfgsVerification.Localization.neighborhood_basin",
+    "BfgsVerification.localization",
+    "BfgsVerification.LocalizationTarget"
+   ],
+   "note": "Hypotheses as in the text: F finite convex (ConvexOn ℝ univ F) with unique minimizer x_* (hmin, huniq), positive dimension (1 ≤ n), a specified neighborhood U ∈ 𝓝 x_* and r > 0 with the closed Euclidean ball B̄_r(x_*) ⊆ U; ω_r is the variable ω with ω = sInf of F(x_*+z) - F(x_*) over the Euclidean sphere ‖z‖ = r. Conclusions: the sphere is nonempty; ω_r is attained (IsLeast, the \"min\" of the display); ω_r > 0; for every x_0 with F(x_0) - F(x_*) < ω_r the sublevel {F ≤ F(x_0)} lies in the open Euclidean ball B_r(x_*); and, for the title's \"invariant basin\", every admissible run with F(x_0) - F(x_*) < ω_r stays in B_r(x_*) ⊆ U (no assumption on H_0). The library's Localization lemmas are for a general normed space (on Vec n the sup norm); the Euclidean statements are proved here along the text's radial argument. Non-vacuity (example in the module): x²/2 on ℝ¹, x_* = 0, U = ℝ, r = 2 (ω₂ = 2, computed from sphere_min), and the article's quadratic run, which starts with F(x_0) - F(x_*) = 1/2 < ω₂, so the condition of the run-invariance conjunct holds for an actual run."
   },
   {
    "id": "C/02_M/disp/005",
@@ -92,7 +132,8 @@
    "title": null,
    "container": "C/02_M/lemma/M:localization",
    "sha256": "5b44f63ea408ecb2",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/lemma/M:localization"
   },
   {
    "id": "C/02_M/proof/001",
@@ -106,7 +147,17 @@
    "title": null,
    "container": null,
    "sha256": "5731ebc66060edf8",
-   "status": null
+   "status": "PROOF",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.localization_radial",
+    "BfgsCoverage.Companion.Ch02M.sphere_min",
+    "BfgsCoverage.Companion.Ch02M.localization_remarks",
+    "BfgsVerification.AdmissibleBFGSRun.objective_le_initial",
+    "BfgsVerification.Localization.sublevel_bounded",
+    "BfgsVerification.Localization.sublevel_compact"
+   ],
+   "of": "C/02_M/lemma/M:localization",
+   "note": "Undisplayed steps: continuity, compactness of the sphere and uniqueness give ω_r > 0 (sphere_min); Armijo keeps every accepted iterate in the initial sublevel (objective_le_initial, used in localization); no bound on H_0 is assumed and rejected trials are not part of a run; \"This argument also proves boundedness of every sublevel ...\" and the dimension-zero remark are localization_remarks (every sublevel bounded and compact; for n = 0 all points coincide)."
   },
   {
    "id": "C/02_M/disp/006",
@@ -120,7 +171,12 @@
    "title": null,
    "container": "C/02_M/proof/001",
    "sha256": "128068ef0bd25623",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.localization_radial",
+    "BfgsVerification.Localization.radial_lower_bound"
+   ],
+   "note": "Under the lemma's assumptions (ω_r as in the lemma), for ‖x - x_*‖ ≥ r (Euclidean): F(x) - F(x_*) ≥ (‖x - x_*‖/r)ω_r and (‖x - x_*‖/r)ω_r ≥ ω_r."
   },
   {
    "id": "C/02_M/lemma/M:strictcontours",
@@ -136,7 +192,15 @@
    "title": "Strict contours give vanishing steps on a positive limiting level",
    "container": null,
    "sha256": "bdcaddf583a4f81d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.strict_contours",
+    "BfgsVerification.AdmissibleBFGSRun.steps_tendsto_zero_of_strict_contour",
+    "BfgsVerification.strictContourSteps",
+    "BfgsVerification.StrictContourTarget",
+    "BfgsCoverage.Companion.Ch02M.strong_convex_strict_contours"
+   ],
+   "note": "\"The run is contained in a compact sublevel\": b with {F ≤ b} compact and F(x_k) ≤ b for all k; \"F(x_k) ↓ ℓ\": the values are antitone (automatic for admissible runs, hypothesis _hmono unused) and tend to ℓ; F_* = min F is IsLeast (Set.range F) Fstar; ℓ > F_*; \"the boundary of {F ≤ ℓ} contains no nontrivial line segment\": every segment [x,z] ⊆ frontier {F ≤ ℓ} has x = z. Conclusion s_k → 0 (Tendsto R.displacement atTop (𝓝 0); every norm gives the same topology). Non-vacuity, with a positive limiting level, by an actual failing run of the article's Theorem art:local-failure-lower on its strongly convex objective (example in the module)."
   },
   {
    "id": "C/02_M/proof/002",
@@ -150,7 +214,16 @@
    "title": null,
    "container": null,
    "sha256": "eb26b87128049c1a",
-   "status": null
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.differences_tendsto_zero_of_strict_contour",
+    "BfgsVerification.AdmissibleBFGSRun.cluster_pair_segment_constant",
+    "BfgsVerification.AdmissibleBFGSRun.segment_value_lower",
+    "BfgsVerification.StrictContours.level_mem_frontier",
+    "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_value_limit"
+   ],
+   "of": "C/02_M/lemma/M:strictcontours",
+   "note": "The library proof follows this route: d_k → 0 from Armijo; compact consecutive-pair limits x ≠ z; convexity bounds values on the accepted segment above by F(x_k) and the supporting inequality below by F(x_k) - d_k (segment_value_lower), so F = ℓ on [x,z] (cluster_pair_segment_constant); a point with value below ℓ puts the segment in the frontier (level_mem_frontier). The last sentence describes the proof route."
   },
   {
    "id": "C/02_M/theorem/M:hierarchy",
@@ -167,7 +240,15 @@
    "title": "Principal-minor hierarchy",
    "container": null,
    "sha256": "f4d0c4a5cc7f9526",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.hierarchy",
+    "BfgsCoverage.Companion.Ch02M.hierarchy_needs_positive_length",
+    "BfgsCoverage.Article.Energy.minor_hierarchy",
+    "BfgsVerification.principalMinorHierarchy",
+    "BfgsVerification.PrincipalMinorHierarchyTarget"
+   ],
+   "note": "Standing assumptions written out as in the article's MatrixAlgebra.lean: hH : H ≻ 0, hs : s = -αHg, hα : α > 0, q = gᵀHg > 0, β = -yᵀHg/q > 0, H₊ = inverseBFGS H s y; ‖y‖² is sqNorm y; e_j is principalSum. The statement does not repeat H ≻ 0 and α > 0: the text defines e_j only for SPD matrices (line 63), so e_j(H) and e_j(H₊) presuppose H, H₊ ≻ 0, which (with q, β > 0, t = αβq) is equivalent to α > 0, and an ordinary update has a positive length (the inherited convention). Not a discrepancy; hierarchy_needs_positive_length shows that the inequality fails for α < 0 when e_j is extended to all matrices (Lean's principalSum). Same claim as the article's Theorem art:minor-hierarchy (A/energy/theorem/art:minor-hierarchy), which states H ≻ 0 and α > 0. Wording point (optional, not a discrepancy): state the assumptions as the article does, e.g. \"Let $H\\succ0$ and $\\alpha>0$. For the inverse-BFGS update with $s=-\\alpha Hg$, $q=g^THg>0$ and $\\beta=-y^THg/q>0$, ...\"."
   },
   {
    "id": "C/02_M/disp/007",
@@ -183,7 +264,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:hierarchy",
    "sha256": "c6fb431aea712cf8",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:hierarchy"
   },
   {
    "id": "C/02_M/proof/003",
@@ -199,7 +281,23 @@
    "title": null,
    "container": null,
    "sha256": "4cb06b6de4d6d0cf",
-   "status": null
+   "status": "PROOF",
+   "lean": [
+    "BfgsCoverage.Article.MatrixAlgebra.kappa_eq_and_curvature",
+    "BfgsCoverage.Article.MatrixAlgebra.compression_formula",
+    "BfgsCoverage.Article.MatrixAlgebra.gram_dets_nonneg",
+    "BfgsCoverage.Article.MatrixAlgebra.compression_update",
+    "BfgsCoverage.Article.MatrixAlgebra.gram_compression",
+    "BfgsCoverage.Article.MatrixAlgebra.full_dimension_case",
+    "BfgsCoverage.Article.MatrixAlgebra.det_update",
+    "BfgsCoverage.Article.Energy.compression_bound",
+    "BfgsCoverage.Article.Energy.eigenbasis_gram_sum",
+    "BfgsVerification.principalGramSumIdentity",
+    "BfgsVerification.orthogonal_coordinate_gram_sum_eq",
+    "BfgsVerification.principal_product_augmented_sum_eq"
+   ],
+   "of": "C/02_M/theorem/M:hierarchy",
+   "note": "The library's principalMinorHierarchy follows this proof (as for the article's A/energy/proof/003). Undisplayed steps, stated in the article's MatrixAlgebra.lean: κ = gᵀHy = -βq (kappa_eq_and_curvature); the compression formula of line 81 (compression_formula); \"All Gram determinants are nonnegative\" (gram_dets_nonneg); \"only A must be invertible, which it is\" (Ch02M.compression_notation); the compressed rank-one step (compression_update); the per-subspace bound (gram_compression); \"The rank-one increases sum to at most (α/β)e_j(H)\" and the conclusion (principalMinorHierarchy, via eigenbasis_gram_sum and principalGramSumIdentity); \"For j = n ... det H₊ = (α/β) det H\" (full_dimension_case, det_update). Gram_H(g,y,Z) is read as [g y Z]ᵀH[g y Z]."
   },
   {
    "id": "C/02_M/disp/008",
@@ -213,7 +311,9 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "4949bdd4581b7ea5",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/matrix_algebra/disp/002",
+   "note": "Verbatim the article's display (H₊ = 𝓕 + α/(βq) vvᵀ) with the same definitions v = Hg, κ = gᵀHy = -βq, P = I - vyᵀ/κ, 𝓕 = PHPᵀ, under the same assumptions (those of Theorem M:hierarchy; the article states H ≻ 0 and α > 0, see the note on C/02_M/theorem/M:hierarchy). Lean: BfgsCoverage.Article.MatrixAlgebra.update_split."
   },
   {
    "id": "C/02_M/disp/009",
@@ -227,7 +327,12 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "4b2625beab0a8526",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.compression_notation",
+    "BfgsCoverage.Article.MatrixAlgebra.compression_posDef"
+   ],
+   "note": "Defines A = ZᵀHZ, a = ZᵀHg, b = ZᵀHy, r = yᵀHy, u = aᵀA⁻¹a, w = aᵀA⁻¹b, z = bᵀA⁻¹b for Z with j orthonormal columns. The theorems of the proof take these as variables with exactly these defining equations (MatrixAlgebra.compression_determinant, gram_schur, ...). compression_notation shows that they are meaningful: A ≻ 0 and A⁻¹ is a two-sided inverse (also the claim \"only A must be invertible, which it is\", line 103). Unlike the article's display, the companion's does not assert A ≻ 0."
   },
   {
    "id": "C/02_M/disp/010",
@@ -241,7 +346,9 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "4b16ff743e793e2a",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/matrix_algebra/disp/005",
+   "note": "Verbatim the article's equation art:compression-determinant, same notation and assumptions (Lean: MatrixAlgebra.compression_determinant)."
   },
   {
    "id": "C/02_M/disp/011",
@@ -255,7 +362,9 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "7b87643ac9d78bd2",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/matrix_algebra/disp/006",
+   "note": "The first identity of the article's display, det Gram_H(y,Z) = det A (r - z), same notation (Lean: MatrixAlgebra.gram_schur, first conjunct)."
   },
   {
    "id": "C/02_M/disp/012",
@@ -269,7 +378,9 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "aad1ca39a5f47140",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/matrix_algebra/disp/006",
+   "note": "The second identity of the article's display, det Gram_H(g,y,Z) = det A((q-u)(r-z) - (κ-w)²) (Lean: MatrixAlgebra.gram_schur, second conjunct); Gram_H(g,y,Z) = [g y Z]ᵀH[g y Z]."
   },
   {
    "id": "C/02_M/disp/013",
@@ -285,7 +396,9 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "9cb82fd93044a3e2",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/matrix_algebra/disp/007",
+   "note": "Verbatim the article's display (the companion labels it M:compression); Lean: MatrixAlgebra.compression_gram_bound."
   },
   {
    "id": "C/02_M/disp/014",
@@ -299,7 +412,14 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "3dfb161b497c2c34",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.rank_one_increase",
+    "BfgsCoverage.Article.MatrixAlgebra.compression_update",
+    "BfgsCoverage.Article.MatrixAlgebra.compression_add_rank_one",
+    "BfgsCoverage.Article.MatrixAlgebra.u_bounds"
+   ],
+   "note": "Under the theorem's assumptions, with Z, v, κ, P, 𝓕 (Lean F), A, a, b, r, u as defined: det(ZᵀH₊Z) = det(Zᵀ𝓕Z) + (α/(βq)) det A u (the change is exactly that), (α/(βq)) det A u ≤ (α/β) det A, and u ≤ q."
   },
   {
    "id": "C/02_M/disp/015",
@@ -313,7 +433,9 @@
    "title": null,
    "container": "C/02_M/proof/003",
    "sha256": "ac3f9f015ba19745",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/energy/disp/015",
+   "note": "The article's display with its middle sum omitted (both remaining relations are parts of the article's chain); the companion's E_I (coordinate j-subsets of an orthonormal eigenbasis) is the article's Z_I, y_i the coordinates of y in that basis. Lean: Energy.eigenbasis_gram_sum."
   },
   {
    "id": "C/02_M/theorem/M:average",
@@ -329,7 +451,17 @@
    "title": "Bounded gradients and vanishing predicted decrease",
    "container": null,
    "sha256": "e5be0f860f1ed976",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.average",
+    "BfgsCoverage.Companion.Ch02M.average_full_bfgs",
+    "BfgsCoverage.Companion.Ch02M.weakWolfeRun",
+    "BfgsCoverage.Article.Energy.reciprocal_growth",
+    "BfgsVerification.objectiveReciprocalGrowth",
+    "BfgsVerification.reciprocalGrowth",
+    "BfgsVerification.ReciprocalGrowthTarget"
+   ],
+   "note": "\"An infinite full-BFGS run ... fixed weak Wolfe\": under the chapter's convention an admissible run (average; its weak-Wolfe constant c₂ < 1 is fixed). average_full_bfgs proves the same for every full-BFGS sequence (H₀ ≻ 0, g_k ≠ 0, α_k > 0, the inverse update) satisfying weak Wolfe with a fixed 0 < c₂ < 1, with no objective. Bounded gradients: ∃ Λ, ∀ k, ‖g_k‖ ≤ Λ (Euclidean); d_k → 0: Tendsto R.d atTop (𝓝 0); the limits are stated as written (real power 1/N; (1/N)∑_{k<N} q_k⁻¹). Same claim as the article's Theorem art:reciprocal-growth."
   },
   {
    "id": "C/02_M/disp/016",
@@ -343,7 +475,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:average",
    "sha256": "5d8d478ce743a867",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:average"
   },
   {
    "id": "C/02_M/proof/004",
@@ -357,7 +490,19 @@
    "title": null,
    "container": null,
    "sha256": "fff97e23cfadda0b",
-   "status": null
+   "status": "PROOF",
+   "lean": [
+    "BfgsCoverage.Article.Energy.run_bounds",
+    "BfgsCoverage.Article.Energy.potential_contraction",
+    "BfgsCoverage.Companion.Ch02M.q_le_potential",
+    "BfgsCoverage.Article.Energy.potential_pos",
+    "BfgsVerification.ScalarHierarchy.hierarchy_tail_potentials",
+    "BfgsVerification.ReciprocalGrowth.tail_log_product_upper",
+    "BfgsVerification.ReciprocalGrowth.logMean_le_arithmeticMean",
+    "BfgsVerification.ReciprocalGrowth.hierarchy_reciprocal_growth"
+   ],
+   "of": "C/02_M/theorem/M:average",
+   "note": "Same proof as the article's A/energy/proof/004 (G = Λ, c = ω); the library proves it in logarithmic form. Undisplayed steps: β_k ≥ c and ‖y_k‖ ≤ 2G (Energy.run_bounds); \"Multiplying and summing yields V_η(H_{k+1}) ≤ (2η/q_k)V_η(H_k), while q_k ≤ G²V_η(H_k)\" (Energy.potential_contraction, Ch02M.q_le_potential); arithmetic-geometric mean (logMean_le_arithmeticMean)."
   },
   {
    "id": "C/02_M/disp/017",
@@ -371,7 +516,13 @@
    "title": null,
    "container": "C/02_M/proof/004",
    "sha256": "6e71a29bb512fec5",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.hierarchy_step",
+    "BfgsCoverage.Article.Energy.normalized_hierarchy",
+    "BfgsVerification.fullBFGS_normalizedHierarchy"
+   ],
+   "note": "Standing assumptions: those of the theorem, G > 0 with ‖g_k‖ ≤ G for all k, K₀ = 4G²/c² (c = 1 - c₂). For every k and 1 ≤ j ≤ n: e_j(H_{k+1}) ≤ q_k⁻¹(K₀e_{j+1}(H_k) + (d_k/c)e_j(H_k)) (the article's display A/energy/disp/018 multiplied out)."
   },
   {
    "id": "C/02_M/disp/018",
@@ -385,7 +536,13 @@
    "title": null,
    "container": "C/02_M/proof/004",
    "sha256": "d4b75e55e09fb35e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.potential_ge_trace",
+    "BfgsVerification.ScalarHierarchy.first_le_weighted",
+    "BfgsVerification.principalSum_one"
+   ],
+   "note": "Adds η > 0 and J with d_k/c ≤ η for k ≥ J; V_η is the variable V with V H = ∑_{j=1}^n (K₀/η)^{j-1} e_j(H) for SPD H (Finset.Icc 1 n). The claim is V_η(H) ≥ tr H for every SPD H."
   },
   {
    "id": "C/02_M/disp/019",
@@ -399,7 +556,9 @@
    "title": null,
    "container": "C/02_M/proof/004",
    "sha256": "752430dc4e7c9073",
-   "status": null
+   "status": "SAME_AS",
+   "of": "A/energy/disp/020",
+   "note": "The product bound of the article's display (its second part), with Λ = G and ω = c and the same standing assumptions (G > 0, ‖g_k‖ ≤ G, K₀ = 4G²/c², η > 0, d_k/c ≤ η for k ≥ J, V_η); m ≥ 1 is implicit (Lean: Energy.potential_contraction)."
   },
   {
    "id": "C/02_M/theorem/M:superquadratic",
@@ -417,7 +576,18 @@
    "title": "Finite horizon and superquadratic growth under summability",
    "container": null,
    "sha256": "aa59a82362bb45a8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.superquadratic",
+    "BfgsCoverage.Companion.Ch02M.superquadratic_full_bfgs",
+    "BfgsCoverage.Article.Energy.finite_horizon_bound",
+    "BfgsCoverage.Article.Energy.superquadratic_growth",
+    "BfgsVerification.finiteHorizon",
+    "BfgsVerification.superquadraticReciprocalGrowth",
+    "BfgsVerification.SuperquadraticReciprocalTarget",
+    "BfgsVerification.sharpPrincipalPotential"
+   ],
+   "note": "\"Assume bounded gradients\": a bound G > 0 with ‖g_k‖ ≤ G for all k (Euclidean); fixed weak Wolfe: the run's c₂ < 1, c = 1 - c₂; ∑d_k < ∞: Summable R.d. G, K₀ and V_η appear in (M:finitehorizon) but are defined only in the proof of Theorem M:average: K₀ = 4G²/c² and V_η(H) = ∑_{j=1}^n (K₀/η)^{j-1}e_j(H) (the variable V η H, for η > 0 and SPD H). The claim holds for every gradient bound G > 0 (the Lean statement quantifies over all of them), so the truth value is unaffected. Wording point (not a discrepancy): proposed \"with $G$, $K_0=4G^2/c^2$ and $V_\\eta$ as in the proof of Theorem~\\ref{M:average}\". Conclusions: D_J = ∑_{k≥J} d_k > 0; for every η > 0 and m ≥ 2 the bound (M:finitehorizon) with real powers and the sum over Finset.Ico J (J + m); (1/N²)∑_{k<N} q_k⁻¹ → ∞. superquadratic_full_bfgs proves all three conclusions (D_J > 0 included) for full-BFGS sequences with weak Wolfe (no objective). The article cites both consequences (A/energy/prose/022)."
   },
   {
    "id": "C/02_M/disp/020",
@@ -433,7 +603,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:superquadratic",
    "sha256": "d27dc6f49610a706",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:superquadratic"
   },
   {
    "id": "C/02_M/disp/021",
@@ -449,7 +620,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:superquadratic",
    "sha256": "274d4439637d85ce",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:superquadratic"
   },
   {
    "id": "C/02_M/proof/005",
@@ -463,7 +635,19 @@
    "title": null,
    "container": null,
    "sha256": "313a39584fcdd77e",
-   "status": null
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.QuantitativeGrowth.hierarchy_finite_horizon_rpow",
+    "BfgsVerification.QuantitativeGrowth.reciprocal_sum_ge_exp",
+    "BfgsVerification.QuantitativeGrowth.hierarchy_fixed_tail_lower_eventually",
+    "BfgsVerification.QuantitativeGrowth.hierarchy_superquadratic_growth",
+    "BfgsVerification.SharpPotentialDegree.run_optimized_bound",
+    "BfgsVerification.SharpPotentialDegree.run_optimized_root_tendsto",
+    "BfgsVerification.SharpPotentialDegree.potentialPolynomial_natDegree",
+    "BfgsVerification.sharpPrincipalPotential"
+   ],
+   "of": "C/02_M/theorem/M:superquadratic",
+   "note": "Undisplayed steps: arithmetic-geometric mean for the reciprocals (reciprocal_sum_ge_exp, hierarchy_finite_horizon_rpow); \"With J fixed, V_η(H_J) grows at most polynomially in m, of degree n-1. Its mth root tends to one\" for η = D_J/[c(m-1)] (SharpPotentialDegree.run_optimized_bound, potentialPolynomial_natDegree, run_optimized_root_tendsto, sharpPrincipalPotential); the fixed prefix and J → ∞ (hierarchy_superquadratic_growth). \"No uniform bound on H_J as J varies is used\" is visible in the statements (no such hypothesis)."
   },
   {
    "id": "C/02_M/disp/022",
@@ -477,7 +661,12 @@
    "title": null,
    "container": "C/02_M/proof/005",
    "sha256": "88b551f7bf1fa501",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.weighted_step",
+    "BfgsVerification.ScalarHierarchy.weighted_step"
+   ],
+   "note": "Under the theorem's assumptions and the given η > 0, m ≥ 2: V_η(H_{k+1}) ≤ ((η + d_k/c)/q_k) V_η(H_k) for every k (no tail restriction)."
   },
   {
    "id": "C/02_M/disp/023",
@@ -491,7 +680,14 @@
    "title": null,
    "container": "C/02_M/proof/005",
    "sha256": "658fc0f2f0f6dbc4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.product_bound",
+    "BfgsCoverage.Companion.Ch02M.prod_le_pow_of_sum_le",
+    "BfgsVerification.QuantitativeGrowth.log_product_upper_of_potential",
+    "BfgsVerification.QuantitativeGrowth.sum_log_le_of_sum_le"
+   ],
+   "note": "Both inequalities for the given η > 0 and m ≥ 2: ∏_{k=J}^{J+m-1} q_k ≤ G²V_η(H_J)∏_{k=J}^{J+m-2} (η + d_k/c) ≤ G²V_η(H_J)(η + D_J/(c(m-1)))^{m-1} (products over Finset.Ico; the first by iterating display disp/022 and the endpoint bound q ≤ G²V_η, the second by arithmetic-geometric mean)."
   },
   {
    "id": "C/02_M/disp/024",
@@ -505,7 +701,13 @@
    "title": null,
    "container": "C/02_M/proof/005",
    "sha256": "3f4105535dcf8bb4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.liminf_bound",
+    "BfgsVerification.QuantitativeGrowth.hierarchy_fixed_tail_lower_eventually",
+    "BfgsVerification.fullBFGS_normalizedHierarchy"
+   ],
+   "note": "With the tail J fixed and D_J = ∑_{k≥J} d_k: liminf_{N→∞} N⁻²∑_{k<N} q_k⁻¹ ≥ c/(2D_J), stated as (i) every a < c/(2D_J) is eventually ≤ N⁻²∑_{k<N} q_k⁻¹ and (ii) the liminf in EReal is ≥ c/(2D_J) (a real-valued liminf is not used: the sequence is unbounded). Proved along the text's route (η = D_J/[c(m-1)], polynomial potential) by the library's hierarchy_fixed_tail_lower_eventually."
   },
   {
    "id": "C/02_M/disp/025",
@@ -519,7 +721,15 @@
    "title": null,
    "container": null,
    "sha256": "d717a98e84be1134",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.reference_notation",
+    "BfgsVerification.AdmissibleBFGSRun.referenceCorrection",
+    "BfgsVerification.AdmissibleBFGSRun.referenceEnergy",
+    "BfgsVerification.AdmissibleBFGSRun.referencePairing",
+    "BfgsCoverage.Article.Energy.reference_notation"
+   ],
+   "note": "R_k = (y_kᵀr_{k+1})²/t_k (variable Rk, R names the run) is the library's referenceCorrection; reference_notation unfolds r_k, a_k, E_k, R_k to the library definitions. Same notation as the article's A/energy/disp/006."
   },
   {
    "id": "C/02_M/disp/026",
@@ -535,7 +745,14 @@
    "title": null,
    "container": null,
    "sha256": "21c4b06d4ba2c40e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.fixed_energy",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_reference_energy",
+    "BfgsVerification.EnergyIdentities.fixed_reference",
+    "BfgsVerification.referenceEnergy"
+   ],
+   "note": "For any fixed x_* and every k: r_{k+1} = r_k - α_kH_kg_k (the expansion point named in the lead-in, prose/015) and E_{k+1} = E_k - a_k²/q_k + R_k (as the article's A/energy/disp/007)."
   },
   {
    "id": "C/02_M/disp/027",
@@ -551,7 +768,13 @@
    "title": null,
    "container": null,
    "sha256": "6b48f05d91c61f3b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.energy_bound",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_reference_energy_bound",
+    "BfgsVerification.EnergyBudget.gap_sq_mul_reciprocal_sum_le"
+   ],
+   "note": "x_* a minimizer (∀ z, F x_* ≤ F z), F_* = F(x_*); for every N: [F(x_N) - F_*]²∑_{k<N} q_k⁻¹ ≤ E_0 + ∑_{k<N} R_k (as the article's A/energy/disp/008)."
   },
   {
    "id": "C/02_M/disp/028",
@@ -565,7 +788,9 @@
    "title": null,
    "container": null,
    "sha256": "dc90d2333528dc1a",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/disp/029",
+   "note": "The supposition V_{k+1} = V_kT_k + s_kb_kᵀ (frames V_k ∈ ℝ^{n×r}) is hypothesis hV of frame_identity (EnergyIdentities.rectOuter s b is s bᵀ)."
   },
   {
    "id": "C/02_M/disp/029",
@@ -581,7 +806,13 @@
    "title": null,
    "container": null,
    "sha256": "d9c223fbf2a8abf3",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.frame_identity",
+    "BfgsVerification.AdmissibleBFGSRun.moving_frame_energy",
+    "BfgsVerification.EnergyIdentities.moving_frame"
+   ],
+   "note": "Under the supposition of disp/028, with A_k = V_kᵀB_kV_k, a_k = V_kᵀg_k, c_k = V_{k+1}ᵀy_k (variables with defining equations; c_k is unrelated to c = 1 - c₂): for every k, A_{k+1} = T_kᵀ(A_k - a_ka_kᵀ/q_k)T_k + c_kc_kᵀ/t_k. Frames may be rectangular and rank deficient."
   },
   {
    "id": "C/02_M/disp/030",
@@ -595,7 +826,16 @@
    "title": null,
    "container": null,
    "sha256": "168bb4e1b40a3c21",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.normalized_trace",
+    "BfgsCoverage.Companion.Ch02M.normalized_trace_step",
+    "BfgsVerification.AdmissibleBFGSRun.normalized_frame_trace_recurrence",
+    "BfgsVerification.MovingFrame.normalized_frame_step",
+    "BfgsVerification.AdmissibleBFGSRun.normalizedFrameEnergy_eq",
+    "BfgsCoverage.Companion.Ch02M.Examples.logRun"
+   ],
+   "note": "Stated under the suppositions of line 204 (prose/022): a tail J; ‖a_k‖ ≥ ε > 0 and ‖c_k‖²/t_k ≤ C for k ≥ J (unused); P_J = I (unused), P_{k+1} = P_kT_k for k ≥ J; bounded norms ∃ K, ‖P_k‖_op ≤ K (unused) and bounded inverse norms: P_k invertible (det ≠ 0) and ∃ L, ‖P_k⁻¹‖_op ≤ L (unused), Euclidean operator norms. Ã_k = P_k^{-T}A_kP_k^{-1} (variable At, ((P k)⁻¹)ᵀ for P_k^{-T}). Conclusion for every k ≥ J. Proved from normalized_trace_step (one step: V_{k+1} = V_kT_k + s_kb_kᵀ, P_k, P_{k+1} invertible, P_{k+1} = P_kT_k). The full suppositions are satisfiable (example in the module, logRun: n = 1, F(x) = 1 - x for x ≤ 1 and -log x for x ≥ 1, x_k = 2^{k+1}, H_k = x_k²/2, α_k = 2, (c₁,c₂) = (1/4,1/2); frames V_k = [x_k], T_k = 1, b_k = 1, P_k = 1, J = 0, ε = 1, C = 2; bounded gradients and d_k = 1); they cannot hold together with bounded gradients and d_k → 0 (frame_criterion)."
   },
   {
    "id": "C/02_M/theorem/M:residualtheorem",
@@ -611,7 +851,19 @@
    "title": "Residuals in fixed smooth directions",
    "container": null,
    "sha256": "9c12a68b5b485d49",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.residual_theorem",
+    "BfgsCoverage.Companion.Ch02M.projection_basis",
+    "BfgsCoverage.Companion.Ch02M.orthogonalProjection_eq",
+    "BfgsCoverage.Companion.Ch02M.range_projection",
+    "BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible_source",
+    "BfgsVerification.residualFrameCriterion",
+    "BfgsVerification.ResidualFrameCriterionTarget",
+    "BfgsVerification.FrameNorms.operatorSqBound_iff_opNorm_sq",
+    "BfgsVerification.FrameNorms.orthonormal_matrix_for_subspace"
+   ],
+   "note": "Bounded gradients (∃ Λ, ∀ k, ‖g_k‖ ≤ Λ), fixed weak Wolfe (the run), ∑d_k < ∞ (Summable R.d); a fixed subspace S of Euclidean ℝⁿ (Submodule of EuclideanSpace ℝ (Fin n)) with P_S its orthogonal projection (S.orthogonalProjection); ‖P_Sy_k‖² ≤ L_St_k for all k (the library needs it only on the tail). Conclusion: no J, width p, frames V_k ∈ ℝ^{n×p}, T_k, b_k, residuals R_k (Rres) and constants m, C₀, C_T, C_R (arbitrary reals) with m > 0 and, for all k ≥ J, ‖V_kᵀg_k‖² ≥ m, ‖V_{k+1}ᵀy_k‖² ≤ C₀t_k, V_{k+1} = V_kT_k + s_kb_kᵀ + R_k, ‖T_k‖²_op ≤ 1 + C_Td_k (Euclidean operator norm, FrameNorms.euclideanOpNorm), range R_k ⊆ S (every R_k v ∈ S), ‖R_k‖_F² ≤ C_Rd_k (SmoothSubspace.frobSq, the sum of squared entries). \"No full-rank frame or invertible transport is required\": the statement has no such hypothesis. The library represents S by an orthonormal basis matrix U with P_S = UUᵀ (orthogonalProjection_eq, projection_basis, range_projection connect the two forms)."
   },
   {
    "id": "C/02_M/disp/031",
@@ -625,7 +877,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:residualtheorem",
    "sha256": "cbb1f4431ac1d4bf",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:residualtheorem"
   },
   {
    "id": "C/02_M/disp/032",
@@ -639,7 +892,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:residualtheorem",
    "sha256": "b5caeaf783ed5b33",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:residualtheorem"
   },
   {
    "id": "C/02_M/disp/033",
@@ -653,7 +907,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:residualtheorem",
    "sha256": "33e4e9117e464c8d",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:residualtheorem"
   },
   {
    "id": "C/02_M/disp/034",
@@ -667,7 +922,8 @@
    "title": null,
    "container": "C/02_M/theorem/M:residualtheorem",
    "sha256": "51d2871512e5c644",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/02_M/theorem/M:residualtheorem"
   },
   {
    "id": "C/02_M/proof/006",
@@ -681,7 +937,21 @@
    "title": null,
    "container": null,
    "sha256": "1e707cea9b7dd4ce",
-   "status": null
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible",
+    "BfgsVerification.AdmissibleBFGSRun.residual_frame_step",
+    "BfgsVerification.AdmissibleBFGSRun.smooth_subspace_projection_trace_bound",
+    "BfgsVerification.AdmissibleBFGSRun.frame_descent_nonneg",
+    "BfgsVerification.FrameBounds.gram_trace_square",
+    "BfgsVerification.FrameBounds.scalar_young",
+    "BfgsVerification.FrameBounds.gram_trace_add_le",
+    "BfgsVerification.ResidualBudget.residual_recurrence_incompatible",
+    "BfgsVerification.ResidualBudget.driftProduct_le_exp_tsum",
+    "BfgsCoverage.Article.Energy.normalization_bounds"
+   ],
+   "of": "C/02_M/theorem/M:residualtheorem",
+   "note": "The library proof follows this route (residual_frame_step, residual_frames_incompatible). Undisplayed steps: \"Consequently tr(P_SB_k) ≤ C_S + L_Sk\", derived not imposed (smooth_subspace_projection_trace_bound; C_S = tr(P_SB_0)); the real factor C_k with M_k = C_kᵀC_k and the entrywise Young inequality (gram_trace_square, scalar_young, gram_trace_add_le); \"The parenthesized energy is nonnegative\" (second conclusion of Ch02M.frame_young_step; frame_descent_nonneg); \"Finite ∑d_k gives 1 ≤ P_k ≤ P̄ < ∞\" (Energy.normalization_bounds, with P̄ = exp(C₁∑_{j≥J}d_j)); \"contrary to Theorem M:superquadratic\" (residual_recurrence_incompatible). The displays are proof-by-contradiction displays: see the notes on disp/035-disp/040."
   },
   {
    "id": "C/02_M/disp/035",
@@ -695,7 +965,14 @@
    "title": null,
    "container": "C/02_M/proof/006",
    "sha256": "22654f78fc57ee7e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.projection_trace",
+    "BfgsCoverage.Companion.Ch02M.projection_trace_step",
+    "BfgsCoverage.Companion.Ch02M.projection_matrix_eq",
+    "BfgsVerification.AdmissibleBFGSRun.smooth_subspace_projection_trace_update"
+   ],
+   "note": "Standing assumptions: the theorem's hypotheses and the frames on the tail J that the proof assumes (unused here), and P_S as a matrix PS of the orthogonal projection (hPS). For every k: tr(P_SB_{k+1}) = tr(P_SB_k) - ‖P_Sg_k‖²/q_k + ‖P_Sy_k‖²/t_k ≤ tr(P_SB_k) + L_S. The standing assumptions of the proof cannot all hold (that is the theorem); the general form projection_trace_step (one k, only ‖P_Sy_k‖² ≤ L_St_k) has satisfiable assumptions."
   },
   {
    "id": "C/02_M/disp/036",
@@ -709,7 +986,13 @@
    "title": null,
    "container": "C/02_M/proof/006",
    "sha256": "3e910a22609b739e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.frame_energy",
+    "BfgsCoverage.Companion.Ch02M.frame_energy_step",
+    "BfgsVerification.EnergyIdentities.gram_add_kernel"
+   ],
+   "note": "Adds E_k = tr(V_kᵀB_kV_k) and M_k of (M:annihilation) (variables). For every k ≥ J: E_{k+1} = tr[(V_kT_k + R_k)ᵀM_k(V_kT_k + R_k)] + ‖V_{k+1}ᵀy_k‖²/t_k. General form frame_energy_step (one k, only the frame relation at k)."
   },
   {
    "id": "C/02_M/disp/037",
@@ -723,7 +1006,14 @@
    "title": null,
    "container": "C/02_M/proof/006",
    "sha256": "e038f5196c504eca",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.frame_young",
+    "BfgsCoverage.Companion.Ch02M.frame_young_step",
+    "BfgsVerification.FrameBounds.gram_trace_add_le",
+    "BfgsVerification.FrameBounds.gram_trace_transport_le"
+   ],
+   "note": "For every k ≥ J: E_{k+1} ≤ (1+d_k)‖T_k‖²(E_k - ‖V_kᵀg_k‖²/q_k) + (1+d_k⁻¹)tr(R_kᵀM_kR_k) + C₀, ‖T_k‖ the Euclidean operator norm. General form frame_young_step (one k: frame relation and ‖V_{k+1}ᵀy_k‖² ≤ C₀t_k), which also states that the parenthesized energy is nonnegative."
   },
   {
    "id": "C/02_M/disp/038",
@@ -737,7 +1027,14 @@
    "title": null,
    "container": "C/02_M/proof/006",
    "sha256": "d268c339d94ba8e7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.residual_energy",
+    "BfgsCoverage.Companion.Ch02M.residual_energy_step",
+    "BfgsVerification.SmoothSubspace.residual_energy_le",
+    "BfgsVerification.AdmissibleBFGSRun.smooth_subspace_projection_trace_bound"
+   ],
+   "note": "Adds C_S = tr(P_SB_0) (the constant of the derived bound tr(P_SB_k) ≤ C_S + L_Sk). For every k ≥ J: tr(R_kᵀM_kR_k) ≤ ‖R_k‖_F² tr(P_SB_k) ≤ C_Rd_k(C_S + L_Sk). General form residual_energy_step (one k: range R_k ⊆ S, ‖R_k‖_F² ≤ C_Rd_k, the smoothness bound for all k)."
   },
   {
    "id": "C/02_M/disp/039",
@@ -751,7 +1048,12 @@
    "title": null,
    "container": "C/02_M/proof/006",
    "sha256": "5aeb93521251f67b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.residual_recurrence",
+    "BfgsCoverage.Companion.Ch02M.residual_recurrence_step"
+   ],
+   "note": "\"On a tail with d_k ≤ 1\" (the text keeps the name J; hypothesis d_k ≤ 1 for k ≥ J): there are C₁, C₂ ≥ 0 with E_{k+1} ≤ (1 + C₁d_k)(E_k - m/q_k) + C₂(k+1) for every k ≥ J. The text leaves C₁, C₂ unspecified; the proof takes C₁ = 1 + 2max(C_T,0), C₂ = 2C_R(C_S + L_S) + C₀ (residual_recurrence_step, the general form at one k with explicit constants)."
   },
   {
    "id": "C/02_M/disp/040",
@@ -765,7 +1067,587 @@
    "title": null,
    "container": "C/02_M/proof/006",
    "sha256": "b5f5856838d3c81a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.residual_budget",
+    "BfgsCoverage.Companion.Ch02M.normalized_budget",
+    "BfgsCoverage.Article.Energy.normalization_bounds"
+   ],
+   "note": "Adds the conclusion of disp/039 (C₁, C₂ ≥ 0 and the recurrence on the tail), P_{k+1} = P_k(1 + C₁d_k) with P_J = 1, and P̄ with P_k ≤ P̄ for k ≥ J (such P̄ exists by finite ∑d_k: Energy.normalization_bounds). For every N ≥ J: (m/P̄)∑_{k=J}^{N-1} q_k⁻¹ ≤ E_J + C₂∑_{k=J}^{N-1}(k+1), and the right side is O(N²) (Asymptotics.IsBigO). The scalar step is normalized_budget."
+  },
+  {
+   "id": "C/02_M/prose/001",
+   "kind": "prose",
+   "anchor": "The same matrix calculation supports every positive result in this volume.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Chapter overview: the role of the chapter's algebra in the volume and the plan of the chapter (\"We establish it once ...\"); the results are the chapter's items."
+  },
+  {
+   "id": "C/02_M/prose/002",
+   "kind": "prose",
+   "anchor": "This module consolidates the common algebra from sources",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Provenance: which source chapters the algebra was consolidated from. (The chapter references in the sentence come from the generator's citation map of the original \\cite{SM,SH,SQ,SU}, so the chapter cites itself among its sources; cosmetic.)"
+  },
+  {
+   "id": "C/02_M/prose/003",
+   "kind": "prose",
+   "anchor": "No outside BFGS convergence theorem is substituted for this algebra.",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Method statement: the chapter's proofs do not invoke outside convergence theorems (in Lean they are proved from the library's matrix algebra)."
+  },
+  {
+   "id": "C/02_M/prose/004",
+   "kind": "prose",
+   "anchor": "All results inherit the infinite-admissible-run convention in the inventory.",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.admissible_convention",
+    "BfgsVerification.AdmissibleBFGSRun",
+    "BfgsCoverage.Article.Energy.admissible_iff"
+   ],
+   "note": "The convention of companion/chapters/01_I.tex:40-47 is Definition art:admissible (AdmissibleBFGSRun, characterized by Energy.admissible_iff); every run in Ch02M is R : AdmissibleBFGSRun n F. admissible_convention unfolds its fields."
+  },
+  {
+   "id": "C/02_M/prose/005",
+   "kind": "prose",
+   "anchor": "In particular $\\sum d_k<\\infty$ on a run with finite limiting value.",
+   "lines": [
+    22,
+    22
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.summable_of_finite_limit",
+    "BfgsVerification.AdmissibleBFGSRun.summable_predicted_decreases_of_value_limit"
+   ],
+   "note": "If F(x_k) has a finite limit then Summable R.d. Non-vacuity: the article's quadratic run has values tending to 0 (first example of the module)."
+  },
+  {
+   "id": "C/02_M/prose/006",
+   "kind": "prose",
+   "anchor": "For example $(g_k^Tz)^2\\le q_k z^TB_kz$",
+   "lines": [
+    30,
+    30
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.metric_cauchy_schwarz"
+   ],
+   "note": "For every k and z: (g_kᵀz)² ≤ q_k zᵀB_kz (metric Cauchy-Schwarz) and B_ks_k = -α_kg_k. The introducing sentence \"Metric Cauchy--Schwarz proves\" (line 26) is the lead-in of disp/004."
+  },
+  {
+   "id": "C/02_M/prose/007",
+   "kind": "prose",
+   "anchor": "A finite convex function has uniformly bounded subgradients on any compact set $K$.",
+   "lines": [
+    32,
+    32
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.bounded_subgradients",
+    "BfgsVerification.convex_supporting_bound_on_compact"
+   ],
+   "note": "∃ G, ∀ x ∈ K, every subgradient g of F at x (∀ y, gᵀ(y-x) ≤ F(y) - F(x)) has ‖g‖ ≤ G (Euclidean). Used in the chapter (and the library) to bound gradients on compact sublevels."
+  },
+  {
+   "id": "C/02_M/prose/008",
+   "kind": "prose",
+   "anchor": "Indeed, choose $\\epsilon>0$ and bound its continuous values on $K+\\epsilon\\overline B$.",
+   "lines": [
+    32,
+    32
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.bounded_subgradients_argument",
+    "BfgsCoverage.Companion.Ch02M.euclid_closedBall_compact"
+   ],
+   "note": "The two sentences of the argument: for ε > 0 there are M (bound of F on K + εB̄, compact) and m (lower bound on K) with gᵀu ≤ (M - m)/ε for every subgradient g at x ∈ K and every Euclidean unit u, hence ‖g‖ ≤ (M - m)/ε."
+  },
+  {
+   "id": "C/02_M/prose/009",
+   "kind": "prose",
+   "anchor": "This does not require differentiability throughout $K$.",
+   "lines": [
+    32,
+    32
+   ],
+   "status": "SAME_AS",
+   "of": "C/02_M/prose/007",
+   "note": "The bound of prose/007 concerns every supporting vector at every point of K and has no differentiability hypothesis."
+  },
+  {
+   "id": "C/02_M/prose/010",
+   "kind": "prose",
+   "anchor": "For SPD $H$, let $e_j(H)$ be the elementary symmetric polynomial of degree $j$ of its eigenvalues",
+   "lines": [
+    63,
+    63
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.principalSum",
+    "BfgsCoverage.Companion.Ch02M.elementary_symmetric_def",
+    "BfgsCoverage.Article.Energy.principal_sums_coefficients",
+    "BfgsVerification.principalSum_terminal"
+   ],
+   "note": "Lean's e_j(H) is principalSum H j (sum of the j×j principal minors, defined for every matrix); elementary_symmetric_def proves that for SPD H it equals the j-th elementary symmetric polynomial of the eigenvalues (Multiset.esymm of hH.isHermitian.eigenvalues, with multiplicity) for every j, and e_{n+1}(H) = 0."
+  },
+  {
+   "id": "C/02_M/prose/011",
+   "kind": "prose",
+   "anchor": "Thus $e_1=\\operatorname{tr}$ and $e_n=\\det$.",
+   "lines": [
+    63,
+    63
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.trace_det",
+    "BfgsVerification.principalSum_one",
+    "BfgsVerification.principalSum_top"
+   ],
+   "note": "For SPD H: e_1(H) = tr H and e_n(H) = det H."
+  },
+  {
+   "id": "C/02_M/prose/012",
+   "kind": "prose",
+   "anchor": "These conclusions do not say $H_k\\to0$, $q_k\\to0$ pointwise, or that eigenvectors converge.",
+   "lines": [
+    173,
+    173
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope statement: says what Theorems M:average and M:superquadratic do not assert; their Lean statements contain none of these conclusions."
+  },
+  {
+   "id": "C/02_M/prose/013",
+   "kind": "prose",
+   "anchor": "The finite-horizon bound and the weaker-assumption geometric-mean theorem are retained",
+   "lines": [
+    173,
+    173
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.retained_comparison"
+   ],
+   "note": "The comparisons asserted: d_k → 0 (Theorem M:average) is weaker than ∑d_k < ∞ (Theorem M:superquadratic), and (M:superquad) is the stronger asymptotic statement, since N⁻²∑ → ∞ implies N⁻¹∑ → ∞. \"Retained\" describes the document."
+  },
+  {
+   "id": "C/02_M/prose/014",
+   "kind": "prose",
+   "anchor": "For any fixed reference point $x_*$ define $r_k=x_k-x_*$, $a_k=g_k^Tr_k$, $E_k=r_k^TB_kr_k$ and",
+   "lines": [
+    182,
+    182
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.reference_notation",
+    "BfgsVerification.AdmissibleBFGSRun.referencePairing",
+    "BfgsVerification.AdmissibleBFGSRun.referenceEnergy"
+   ],
+   "note": "r_k, a_k, E_k are variables with their defining equations; reference_notation identifies them with the library's referencePairing and referenceEnergy."
+  },
+  {
+   "id": "C/02_M/prose/015",
+   "kind": "prose",
+   "anchor": "Expansion of \\eqref{M:hessian} at $r_{k+1}=r_k-\\alpha_kH_kg_k$ gives exactly",
+   "lines": [
+    186,
+    186
+   ],
+   "status": "PART_OF",
+   "of": "C/02_M/disp/026",
+   "note": "The asserted r_{k+1} = r_k - α_kH_kg_k is the first conjunct of fixed_energy."
+  },
+  {
+   "id": "C/02_M/prose/016",
+   "kind": "prose",
+   "anchor": "The cancellation is $-2\\alpha a+\\alpha^2q-(a-\\alpha q)^2/q=-a^2/q$.",
+   "lines": [
+    190,
+    190
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.cancellation"
+   ],
+   "note": "For every k: -2α_ka_k + α_k²q_k - (a_k - α_kq_k)²/q_k = -a_k²/q_k (q_k > 0)."
+  },
+  {
+   "id": "C/02_M/prose/017",
+   "kind": "prose",
+   "anchor": "If $x_*$ is a minimizer, convexity gives $a_k\\ge F(x_k)-F_*$.",
+   "lines": [
+    190,
+    190
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.pairing_ge_gap",
+    "BfgsVerification.AdmissibleBFGSRun.gap_le_referencePairing"
+   ],
+   "note": "x_* a minimizer, F_* = F(x_*): a_k ≥ F(x_k) - F_* for every k."
+  },
+  {
+   "id": "C/02_M/prose/018",
+   "kind": "prose",
+   "anchor": "Thus $\\sum_{k<N}R_k=o(\\sum_{k<N}q_k^{-1})$ excludes a positive gap.",
+   "lines": [
+    194,
+    194
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.negligible_corrections",
+    "BfgsCoverage.Companion.Ch02M.negligible_corrections_of_divergent",
+    "BfgsCoverage.Companion.Ch02M.no_positive_gap",
+    "BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_negligible_corrections",
+    "BfgsVerification.EnergyBudget.energy_gap_tendsto_zero"
+   ],
+   "note": "\"Thus ∑_{k<N}R_k = o(∑_{k<N}q_k⁻¹) excludes a positive gap\": with x_* a minimizer, F_* = F(x_*) and the o(·) as Asymptotics.IsLittleO, F(x_k) → F_* (no gap ≥ η > 0 persists). The deduction from (M:energybound) needs ∑_{k<N}q_k⁻¹ → ∞ (negligible_corrections_of_divergent assumes exactly that); the sentence leaves the hypothesis giving it implicit: Theorem M:average supplies it under bounded gradients (d_k → 0 follows from the minimizer), and negligible_corrections assumes bounded gradients, as the library's objective_tendsto_min_of_negligible_corrections. Without bounded gradients the claim is not proved here, but no counterexample is known (R_k = 0 for all k and ∑q_k⁻¹ < ∞ would be needed; impossible in one dimension), and \"Thus\" points correctly back to (M:energybound), so this is the article's A/energy/prose/010 situation, not a discrepancy (the secondary aspect of M10, without its wrong reference). Wording point (not a discrepancy): proposed \"Thus, along runs with bounded gradients, $\\sum_{k<N}R_k=o(\\sum_{k<N}q_k^{-1})$ excludes a positive gap.\""
+  },
+  {
+   "id": "C/02_M/prose/019",
+   "kind": "prose",
+   "anchor": "With the summability assumptions of Theorem~\\ref{M:superquadratic}, an $O(N^2)$ cumulative correction suffices.",
+   "lines": [
+    194,
+    194
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.quadratic_corrections",
+    "BfgsVerification.AdmissibleBFGSRun.objective_tendsto_min_of_quadratic_corrections",
+    "BfgsVerification.quadraticCorrectionConvergence",
+    "BfgsVerification.QuadraticCorrectionTarget"
+   ],
+   "note": "Bounded gradients and Summable R.d (the assumptions of Theorem M:superquadratic), x_* a minimizer, F_* = F(x_*): if ∑_{k<N}R_k = O(N²) (Asymptotics.IsBigO), then F(x_k) → F_* (no positive gap). The library's QuadraticCorrectionTarget proves the same with a unique minimizer instead of bounded gradients."
+  },
+  {
+   "id": "C/02_M/prose/020",
+   "kind": "prose",
+   "anchor": "This last observation is an explicit consolidation deduction from the recorded energy and reciprocal results",
+   "lines": [
+    194,
+    194
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Provenance remark (how the observation was obtained; no new hypothesis inferred)."
+  },
+  {
+   "id": "C/02_M/prose/021",
+   "kind": "prose",
+   "anchor": "Set $A_k=V_k^TB_kV_k$, $a_k=V_k^Tg_k$, $c_k=V_{k+1}^Ty_k$.",
+   "lines": [
+    200,
+    200
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.frame_identity",
+    "BfgsVerification.metricGram"
+   ],
+   "note": "A_k, a_k, c_k are variables with their defining equations in frame_identity, normalized_trace and frame_criterion (A_k is metricGram (R.hessian k) (V k)). \"By (M:annihilation)\" names the step of disp/029."
+  },
+  {
+   "id": "C/02_M/prose/022",
+   "kind": "prose",
+   "anchor": "Suppose on a hypothetical nonoptimal tail",
+   "lines": [
+    204,
+    204
+   ],
+   "status": "PART_OF",
+   "of": "C/02_M/prose/023",
+   "note": "The suppositions of the moving-frame criterion (‖a_k‖ ≥ ε > 0, ‖c_k‖²/t_k ≤ C, P_J = I, P_{k+1} = P_kT_k with bounded norms and bounded inverse norms) are the hypotheses of frame_criterion and normalized_trace; \"Congruence by P_{k+1}^{-1} and a trace yield\" is the lead-in of disp/030. \"Nonoptimal\" is descriptive, not a hypothesis of the Lean statements (frame_criterion, normalized_trace), which are therefore more general; the suppositions are satisfiable (example logRun in the module, whose values tend to inf F = -∞)."
+  },
+  {
+   "id": "C/02_M/prose/023",
+   "kind": "prose",
+   "anchor": "Positivity gives $\\sum_{J\\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\\ref{M:average}.",
+   "lines": [
+    211,
+    211
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.frame_criterion",
+    "BfgsVerification.AdmissibleBFGSRun.moving_frame_reciprocal_sum_bound",
+    "BfgsVerification.AdmissibleBFGSRun.moving_frame_tail_criterion",
+    "BfgsVerification.movingFrameCriterion",
+    "BfgsVerification.MovingFrameCriterionTarget",
+    "BfgsCoverage.Companion.Ch02M.Examples.logRun"
+   ],
+   "note": "Under the suppositions of prose/022 (frames V_{k+1} = V_kT_k + s_kb_kᵀ, Euclidean operator norms): ∑_{J≤k<N} q_k⁻¹ = O(N) (IsBigO), and the suppositions cannot hold together with the hypotheses of Theorem M:average (bounded gradients and d_k → 0), which is the contradiction. The paragraph does not restate those hypotheses; \"contradicting Theorem M:average\" refers to them (a correct reference). Non-vacuity of the O(N) part: the suppositions are satisfiable (example logRun in the module: bounded gradients, d_k = 1, ∑_{J≤k<N} q_k⁻¹ = 2(N - J)), so the hypotheses of Theorem M:average are really needed for the contradiction; logRun's values tend to inf F = -∞, so it is not a nonoptimal tail and does not refute the sentence. Wording point (optional, not a discrepancy): \"..., contradicting Theorem~\\ref{M:average} when the gradients are bounded ($d_k\\to0$ holds on a nonoptimal tail of a bounded-below objective)\"."
+  },
+  {
+   "id": "C/02_M/prose/024",
+   "kind": "prose",
+   "anchor": "This is a trajectory criterion; one still has to derive its hypotheses from the objective.",
+   "lines": [
+    211,
+    211
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Methodological remark: frame_criterion is conditional on trajectory hypotheses; nothing is asserted about objectives."
+  },
+  {
+   "id": "C/02_M/prose/025",
+   "kind": "prose",
+   "anchor": "Neither $P_k$ nor $T_k$ is a BFGS matrix.",
+   "lines": [
+    211,
+    211
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Clarification of the roles of P_k and T_k: in the Lean statements they are arbitrary auxiliary matrices, unrelated to the run's H_k."
+  },
+  {
+   "id": "C/02_M/prose/026",
+   "kind": "prose",
+   "anchor": "Only residuals in the fixed subspace are controlled.",
+   "lines": [
+    275,
+    275
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark on Theorem M:residualtheorem: its residual hypothesis is range R_k ⊆ S (the statement allows no other residuals)."
+  },
+  {
+   "id": "C/02_M/prose/027",
+   "kind": "prose",
+   "anchor": "Euclidean smallness alone does not control a residual in a direction where $B_k$ may grow without this estimate.",
+   "lines": [
+    275,
+    275
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.euclidean_smallness_insufficient"
+   ],
+   "note": "Made precise as: in positive dimension no bound tr(RᵀBR) ≤ c‖R‖_F² holds uniformly over SPD metrics B (B large in the direction of R); hence the proof bounds the residual energy through the derived estimate tr(P_SB_k) ≤ C_S + L_Sk on S."
+  },
+  {
+   "id": "C/02_M/prose/028",
+   "kind": "prose",
+   "anchor": "No strict inclusion of all existential objective-certificate classes is claimed.",
+   "lines": [
+    275,
+    275
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer: states what is not claimed."
+  },
+  {
+   "id": "C/02_M/prose/029",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.",
+   "lines": [
+    280,
+    280
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the status of the section (bibliographic)."
+  },
+  {
+   "id": "C/02_M/prose/030",
+   "kind": "prose",
+   "anchor": "The BFGS update, secant equation, positive-definiteness preservation and determinant identity are classical.",
+   "lines": [
+    282,
+    282
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.classical_facts",
+    "BfgsVerification.inverseBFGS_posDef",
+    "BfgsVerification.inverseBFGS_step_det_beta",
+    "BfgsCoverage.Article.MatrixAlgebra.det_update"
+   ],
+   "note": "The attribution is bibliographic; the facts named are proved: H₊y = s when t = yᵀs ≠ 0; H ≻ 0 and t > 0 give H₊ ≻ 0; det H₊ = (α/β) det H under the assumptions of Theorem M:hierarchy. The update itself is the definition inverseBFGS."
+  },
+  {
+   "id": "C/02_M/prose/031",
+   "kind": "prose",
+   "anchor": "Trace/determinant analysis is developed in Nocedal",
+   "lines": [
+    282,
+    282
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution (FND_N92, FND_BN89)."
+  },
+  {
+   "id": "C/02_M/prose/032",
+   "kind": "prose",
+   "anchor": "The determinant endpoint in this chapter belongs to that established theory.",
+   "lines": [
+    282,
+    282
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Attribution of the identity det H₊ = (α/β) det H (proved: classical_facts, MatrixAlgebra.det_update) to the literature."
+  },
+  {
+   "id": "C/02_M/prose/033",
+   "kind": "prose",
+   "anchor": "The complete adjacent-degree principal-minor inequality is distinguished from it",
+   "lines": [
+    282,
+    282
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature comparison and audit history (no exact match found; no priority claimed)."
+  },
+  {
+   "id": "C/02_M/prose/034",
+   "kind": "prose",
+   "anchor": "Gram determinants, Schur complements and Cauchy--Binet are standard tools.",
+   "lines": [
+    282,
+    282
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Names standard tools; those the chapter's proofs use are proved in Lean (Schur complements: metricGram_det_append_one/_two; Gram determinants: metricGram_det_nonneg)."
+  },
+  {
+   "id": "C/02_M/prose/035",
+   "kind": "prose",
+   "anchor": "Product bounds and arithmetic--geometric mean already occur in BFGS convergence proofs",
+   "lines": [
+    284,
+    284
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution (S16, FND_JJM24AW)."
+  },
+  {
+   "id": "C/02_M/prose/036",
+   "kind": "prose",
+   "anchor": "Their smooth hypotheses and normalized quantities differ from those in this chapter.",
+   "lines": [
+    284,
+    284
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Comparison with the cited literature."
+  },
+  {
+   "id": "C/02_M/prose/037",
+   "kind": "prose",
+   "anchor": "Here the actual principal-minor hierarchy supplies reciprocal bounds for $q_k=g_k^TH_kg_k$",
+   "lines": [
+    284,
+    284
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/02_M/theorem/M:hierarchy",
+    "C/02_M/theorem/M:average",
+    "C/02_M/theorem/M:superquadratic"
+   ],
+   "note": "Summary: the reciprocal bounds, including the finite-horizon and summable-decrease conclusions, are Theorems M:average and M:superquadratic, proved from the hierarchy of Theorem M:hierarchy for the actual run."
+  },
+  {
+   "id": "C/02_M/prose/038",
+   "kind": "prose",
+   "anchor": "those specific conclusions were not located in the accessed literature.",
+   "lines": [
+    284,
+    284
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature search report."
+  },
+  {
+   "id": "C/02_M/prose/039",
+   "kind": "prose",
+   "anchor": "The energy cancellations in this chapter are algebraic consequences of the classical Hessian update",
+   "lines": [
+    286,
+    286
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/02_M/disp/026",
+    "C/02_M/disp/029",
+    "C/02_M/disp/030",
+    "C/02_M/disp/036"
+   ],
+   "note": "The energy identities are proved from the Hessian update (M:hessian) by algebra (fixed_energy, frame_identity, normalized_trace and the residual-proof identity frame_energy use only hessian_update and the annihilation identity); the attribution and \"established tools\" are bibliographic."
+  },
+  {
+   "id": "C/02_M/prose/040",
+   "kind": "prose",
+   "anchor": "Their use in a moving-frame criterion still requires the separately stated visibility, secant and transport hypotheses.",
+   "lines": [
+    286,
+    286
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on the hypotheses of the criterion (they are explicit hypotheses of frame_criterion)."
+  },
+  {
+   "id": "C/02_M/prose/041",
+   "kind": "prose",
+   "anchor": "Summable multiplicative-error estimates and normalization have precedents in Combettes",
+   "lines": [
+    288,
+    288
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution (FND_CV13)."
+  },
+  {
+   "id": "C/02_M/prose/042",
+   "kind": "prose",
+   "anchor": "The argument in this chapter additionally derives the restricted trace bound and an $O(N^2)$ cumulative allowance.",
+   "lines": [
+    288,
+    288
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/02_M/disp/035",
+    "C/02_M/disp/040"
+   ],
+   "note": "The restricted trace bound tr(P_SB_k) ≤ C_S + L_Sk follows from disp/035 by induction; it is stated in Lean by the library's smooth_subspace_projection_trace_bound (used in residual_energy_step for disp/038). The O(N²) cumulative allowance is disp/040."
+  },
+  {
+   "id": "C/02_M/prose/043",
+   "kind": "prose",
+   "anchor": "Its additive errors need not be summable",
+   "lines": [
+    288,
+    288
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch02M.additive_errors_not_summable"
+   ],
+   "note": "The additive errors C₂(k+1) of disp/039 are not summable for C₂ > 0. \"so the earlier lemmas alone do not prove this residual theorem\" is a comparison with the cited lemmas (bibliographic)."
   }
  ],
  "discrepancies": []

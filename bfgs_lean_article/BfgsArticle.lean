@@ -12,6 +12,7 @@ import BfgsArticle.LNonStrictBranch
 import BfgsArticle.HomogeneousModels
 import BfgsArticle.LUniformGlobal
 import BfgsArticle.LUniformLocal
+import BfgsArticle.AdmissibleRunExistence
 import BfgsArticle.Coverage.Article.Master
 import BfgsArticle.Coverage.Article.Introduction
 import BfgsArticle.Coverage.Article.Geometry
@@ -27,3 +28,4 @@ import BfgsArticle.Coverage.Article.MatrixAlgebra
 import BfgsArticle.Coverage.Article.PlanarGeometry
 import BfgsArticle.Coverage.Article.SeedCertificate
 import BfgsArticle.Coverage.Article.LowerCurvature
+import BfgsArticle.Coverage.Companion.Ch02M

@@ -68,6 +68,40 @@ confirmed each one.
   `A/seed_certificate/prose/012`), needs no separate change: it is correct once
   the lemma states the range. Flip that item to `PROOF` when fixing M11.
 
+## Wording points in the companion (no discrepancy)
+
+Found by the companion coverage and its reviews. Each statement is true as
+intended, so its register item is not a `DISCREPANCY`, but a hypothesis is left
+implicit, a symbol is undefined or a sentence is an editorial remnant. Optional;
+decide in the line-by-line reading. The chapters are generated: change them
+through `editorial/generate_companion.py` and regenerate.
+
+- [ ] **W1: Bounded gradients left implicit (Chapter M).**
+  `companion/chapters/02_M.tex:194`: "$\sum_{k<N}R_k=o(\sum_{k<N}q_k^{-1})$ excludes
+  a positive gap" needs $\sum_kq_k^{-1}\to\infty$, which Theorem `M:average`
+  provides along runs with bounded gradients. No counterexample without that
+  hypothesis is known; the same point as M10, to be applied with it. Proposed:
+  "Thus, along runs with bounded gradients, …" (`C/02_M/prose/018`)
+- [ ] **W2: Hypotheses of the contradiction at `02_M.tex:211`.** "Positivity gives
+  $\sum_{J\le k<N}q_k^{-1}=O(N)$, contradicting Theorem~\ref{M:average}" is correct,
+  but the contradiction needs the hypotheses of Theorem `M:average` (bounded
+  gradients, $d_k\to0$): the moving-frame suppositions alone are satisfiable, by a
+  one-dimensional run whose values tend to $-\infty$. Optional: "…contradicting
+  Theorem~\ref{M:average} under its hypotheses." (`C/02_M/prose/023`)
+- [ ] **W3: Undefined symbols in Theorem `M:superquadratic`.** `02_M.tex:144-155`
+  uses $G$ and $V_\eta$ (which involves $K_0$); all three are defined only in the
+  proof of Theorem `M:average`. The claim holds for every gradient bound $G$.
+  Proposed: add "with $G$, $K_0$ and $V_\eta$ as in the proof of
+  Theorem~\ref{M:average}". (`C/02_M/theorem/M:superquadratic`)
+- [ ] **W4: Implicit hypotheses in Theorem `M:hierarchy`.** `02_M.tex:65-70` leaves
+  $H\succ0$ and $\alpha>0$ implicit ($e_j$ is defined only for positive definite
+  matrices, and $H_+\succ0$ exactly when $\alpha>0$). Optional: state both, as the
+  article does. (`C/02_M/theorem/M:hierarchy`)
+- [ ] **W5: Chapter M cites itself.** `02_M.tex:9`: "from
+  sources~Chapters~\ref{comp:M}, \ref{comp:H}, …" lists Chapter M among its own
+  sources, because the generator maps the frozen source's `\cite{SM,…}` to chapter
+  labels. Cosmetic. (`C/02_M/prose/002`)
+
 ## Resolved
 
 - [x] **M1: Qualifier spacing in displays.** In `paper/sections/failure.tex`, the
