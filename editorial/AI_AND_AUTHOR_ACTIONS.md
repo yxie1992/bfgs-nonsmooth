@@ -17,5 +17,6 @@ The remaining author actions are concrete:
 3. Approve or correct the AI-use paragraph and the applicable responsibility, funding, conflict-of-interest and data/code-availability declarations. Unknown declarations must not be replaced by assertions such as “none.”
 4. Choose the target journal and approve the final proof selection and length; disclose overlap with the corrected master report and any earlier paper or public version. The repository's historical sources remain research provenance, not evidence of a publication status.
 5. Decide whether, where and under what licence to release or deposit the article/companion. Confirm the final stable archival identifier, if one is later created, before using it in a submission. No DOI, deposit, submission, editor contact, author approval or human review is claimed by this authoring run.
+6. Answer the questions for the author at the top of `TODO_MANUSCRIPT_REVIEW.md`; Q1 is to confirm or change the AI-use wording above, which the companion of the 15 October 2026 edition prints (`companion/master.tex`). Then make the expert check of that edition (step 3 of the plan in `AGENTS.md`).
 
 The absence of these human attestations does not prevent preparation, reproducible builds or mathematical review of the draft. It does prevent truthfully presenting it as approved for submission.

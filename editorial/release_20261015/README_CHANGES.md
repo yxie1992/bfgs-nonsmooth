@@ -1,0 +1,55 @@
+# `release/README.md`: what changed from the 13 September text, and why (C13)
+
+Written by the release agent (Claude in OpenCode) for the freeze of the 15 October
+2026 edition. The 13 September text is
+`release/history/20260913_exposition/README.md` (5544 bytes; `git show db4dc37:release/README.md`). Its sentences are numbered S0–S35 below;
+each row says whether the sentence was kept, updated or replaced, and why. The counts
+of the new text (pages, coverage items, Lean evidence, correspondence rows) were filled
+in from the files of the freeze. As on 13 September, the commit that records the
+validation (B) changes two sentences of the freeze text (S6 "later" becomes
+"completed", S30 becomes S30'), and the completion commit (C) adds S35.
+
+| # | 13 September sentence (abridged) | Now | Why |
+|---|---|---|---|
+| S0 | Title "… — focused exposition revision" | Replaced: "… — 15 October 2026 Lean-coverage and correction edition" | The edition changed; the label matches `RELEASE.json` `edition` and the printed date. |
+| S1 | "The author-review article has **49 pages** …; the complete companion has **107 pages**." | Kept, with the counts of the final build (49 and 108 pages) | The companion had 108 pages from 13 October (the Lean-review paragraph); the counts must be those of the final build. |
+| S2 | "The seven-section article architecture and its positive and negative theorem selection are unchanged." | Kept | Still true: seven sections, same named statements (T4 refuses an added or removed named statement); statements were corrected or strengthened, which S3 says. |
+| S3 | "The revision clarifies the historical increment, teaches the planar field construction, …" | Replaced by the October summary: Lean coverage of every item; the corrections M1–M6 (13 October) and M7–M41 (15 October); the wording points W1–W11 and W14–W47 (15 October), W12 and W13 left to the author; the lower-curvature failure for every admissible pair | It described the 13 September revision. M1–M6 are included because they too postdate the 13 September edition. |
+| S4 | "The PDFs are `BFGS_Journal_Article.pdf` and `BFGS_Complete_Companion.pdf`." | Kept, plus the printed edition date | Unchanged file names; the date is decision D1 / Q4. |
+| S5 | "LaTeX entry points are `paper/master.tex` and `companion/master.tex`." | Kept | True. |
+| S6 | "Exact page counts, hashes, source freeze and completed extraction validation are recorded in `RELEASE.json` and `SOURCE_MANIFEST.json`." | Kept; "later" at commit A, "completed" from commit B | As on 13 September (commit A said "later"). |
+| S7 | "The preceding 12 September edition and receipts are preserved in `history/20260912_satisfaction/`." | Replaced: the 13 September edition in `history/20260913_exposition/`, the 12 September editions in the other folders | The preceding edition is now that of 13 September. |
+| S8 | "In an existing repository checkout:" + commands `build.sh`, the 13 September `refresh_correspondence.py --check`, `verify_release_inputs.py` | Commands replaced: `build.sh`; the October `refresh_correspondence.py --check`; `verify_historical_correspondence.py`; `check_coverage.py --strict`; `verify_release_inputs.py`; plus the Lean commands of `bfgs_lean_article` and a note on Git history and the cache rule | The 13 September check fails at every later commit by design (C1); its role passed to T4 (C2); the strict coverage and the Lean evidence are new checks (T3). The cache rule is C6. |
+| S9 | "The source archive … preserves the outer `BFGS-non-smooth/` directory and every committed relative path, including Lean sources, pinned dependencies, complete proof/source maps, actual audits and review records." | Kept | The release workspace is named `BFGS-non-smooth` (decision D2 = R), so the archive root is unchanged. |
+| S10 | "It excludes dependency caches, compiled objects, untracked user files and temporary build debris." | Kept | `package_release.py` unchanged in this respect. |
+| S11 | "The Git history bundle supports immutable historical checks." | Kept | True. |
+| S12 | "After a fresh extraction, run `python3 _archive/restore_git_history.py` before any other command." | Kept | True. |
+| S13 | "`_archive/RELEASE_SNAPSHOT.json` identifies the immutable source commit; any older receipt inside that snapshot is explicitly historical." | Kept | True. |
+| S14 | "The archive's own hash and its later validation record are external, avoiding a circular hash or future-execution claim." | Kept | True. |
+| S15 | "Python 3, TeX Live, latexmk/pdflatex and Poppler are required." | Replaced: Python 3.11 or newer, TeX Live with latexmk/pdflatex, Poppler, Node.js; Pillow for `render_review.py`; elan for Lean | C13: the scripts need 3.11 (`tomllib`), the historical gate needs Node.js, rendering needs Pillow, Lean needs elan. |
+| S16 | "The supplied journal class retains its original notices." | Kept | True (`editorial/vendor/svjour3`). |
+| S17 | "Figure generation is reproducible standard-library Python/TikZ." | Kept | True (`build.sh` regenerates the figures byte-identically). |
+| S18 | "`paper/figures/check_trial_display.py` independently checks … diagnostic evidence, not a premise imported into Lean." | Kept | True; Phase 3 runs it once as a pre-flight check (it writes nothing). |
+| S19 | "The revision adds no Lean theorem, custom axiom or weakened guard." | Replaced by two paragraphs: the coverage registers; the unchanged main library and supplements, the new package (no axiom), the axiom audit and the kernel replay, their binding | False now: the package `bfgs_lean_article` adds theorems (new modules and coverage modules). "No custom axiom" stays true and is said; "no weakened guard" is said in the tooling paragraph ("keeping every existing check"). |
+| S20 | "All 31 named article statements, 52 existing labeled displays, the deterministic bracket algorithm and the full seed/lower appendices agree with the baseline under explicit scoped notation aliases." | Replaced by the October correspondence revision: the listed changed units with their correction and coverage items, the unchanged rest after whitespace normalization without aliases, the counts from the receipt | False now: statements, displays and both appendices changed (C1, C2). |
+| S21 | "New explanatory deductions are tied to exact existing contracts and identified as reviewed compositions, rather than newly compiled endpoints." | Removed | It described the 13 September deductions; the October edition covers every item by the registers (first paragraph of the section). The 13 September statement stays true of that edition and is preserved in its README. |
+| S22 | "All 172 companion source spans and 3,087 distinct original exports are preserved." | Kept | Checked by `verify_release_inputs.py` ("Complete companion source and export preservation"). |
+| S23 | "Full mappings are in `editorial/CLAIM_LEDGER.json`, `companion/PROOF_CORRESPONDENCE.html` and `editorial/scientific_exposition_20260913/mapping_refresh.json`." | Kept with the October receipt `editorial/release_20261015/mapping_refresh.json` | The receipt of the current mapping is the October one. |
+| S24 | "The three self-review passes and N1–N6 response are in `editorial/scientific_exposition_20260913/REVIEW_LOG.md` and `RESPONSE.md`." | Replaced by the list of the October reviews (all by AI agents) and `editorial/release_20261015/REVIEW_LOG.md`; the 13 September records named as kept | The reviews of this edition are different ones. |
+| S25 | "Page-level visual evidence is in `editorial/reviews/render_manifest.json`." | Kept, plus `VISUAL_ARTICLE.json`, `VISUAL_COMPANION.json` | Same file, new content (D8). |
+| S26 | "The existing source/audit integrity gate authenticates the actual pinned main and four supplemental proof audits; it checks present sealed cache bytes when available." | Kept | True; the gate now also binds the October evidence, said in the paragraph on the Lean evidence. |
+| S27 | "Reproduced compilation is reported only by actual dated run receipts." | Kept | True. |
+| S28 | "Counts overlap, and only `propext`, `Classical.choice` and `Quot.sound` are permitted." | Kept | True (also of the October audit). |
+| S29 | "No empty-cache original-library or Mathlib rebuild, foundational consistency proof, publication-priority certification or floating-point robustness is asserted." | Kept in substance, split: the release validation claims no empty-cache rebuild; the October Lean review's own rebuild of the main library from an empty build directory (pinned Mathlib cache) is named with its record | The companion now reports that rebuild (`current_verification.tex`); without the split the README would contradict it. |
+| S30 | Commit A: "The source freeze is reviewed before packaging. `RELEASE.json` distinguishes … The historical citation-only checker remains unchanged …" | Kept at commit A | True at the freeze; T1 changes the wrapper, not the checker, and the tooling paragraph says so. |
+| S30' | Commit B: "The reviewed source freeze is `3e8b5c6…` … passed all 39 recorded commands …" | Kept from commit B with the October values (commit A, run `coverage_20261015_01`, command count, pages, 23 gate checks), plus the October checks (historical and current correspondence, strict coverage, Lean evidence binding) and the APFS host | Same receipt structure; the validation has new steps (T2, T3) and a new host (C5). |
+| S31 | "Human mathematical/literature and novelty review, … remain with the author; see `editorial/AI_AND_AUTHOR_ACTIONS.md`." | Kept, plus the pointer to the questions for the author, Q1–Q7, at the top of `TODO_MANUSCRIPT_REVIEW.md` (Q7: the typesetting points of the visual review, none blocking) | The October work left Q1–Q7 to the author. |
+| S32 | "The article retains an honest substantive AI-use disclosure." | Kept, plus: the companion and `AI_AND_AUTHOR_ACTIONS.md` now name Anthropic Claude (in OpenCode), wording to be confirmed by the author | M37 / Q1. The article's own paragraph names no system and points to the companion. |
+| S33 | "The 49-page length exceeds the earlier editorial aim …; `editorial/JOURNAL_FIT.md` explains this and dates the policy access." | Kept, page count from the build | `JOURNAL_FIT.md` is a dated record (its last section speaks of the 13 September build). |
+| S34 | "No DOI, deposit, submission, author approval or independent human peer review has been invented." | Kept | True. |
+| S35 | Commit C: "The validated release and its execution evidence are committed at `fa54d6a…` … `final_push.json`. The later completion receipt does not change the reviewed PDFs or source archive." | Kept at commit C with commit B and `editorial/release_20261015/final_push.json` | Same receipt structure. |
+
+New sentences without a 13 September counterpart: the printed edition date (S4), the
+note on Git history and the cache rule (S8), the Lean commands (S8), the release-tooling
+paragraph (T1–T5), the APFS host (S30'), the line-by-line reading (Proof and review
+scope, first paragraph).

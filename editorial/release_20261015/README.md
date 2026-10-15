@@ -2,8 +2,8 @@
 
 This directory holds the records of the next author-review release, the October
 2026 Lean-coverage and correction edition. It is named after the day the release
-preparation started (15 October 2026); the freeze date is recorded here when the
-sources are frozen. The plan of the release run is
+preparation started (15 October 2026); its sources were frozen on the same day
+(`release/RELEASE.json`). The plan of the release run is
 `editorial/release_plan_20261015/PLAN.md` (D2 = R, D3 = H, D4 = the strict
 correspondence revision, D5 = T1, D6 = T3, D7 = freeze only when
 `check_coverage.py --strict` exits 0); its Phase 2 and its host are replaced by
