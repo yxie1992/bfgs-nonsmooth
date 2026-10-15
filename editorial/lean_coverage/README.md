@@ -90,7 +90,11 @@ with `register/A_matrix_algebra.json`, is the model to follow.
    existing `BfgsArticle.<Module>` files, never the root `BfgsArticle`. An article
    coverage module imports no other coverage module. A companion coverage module
    may import the article coverage modules (`BfgsArticle.Coverage.Article.*`,
-   complete since 14 October 2026), never another companion coverage module.
+   complete since 14 October 2026), never another companion coverage module,
+   with one exception: the wave-3 modules (`Ch01I`, `ResearchStory`, `Ch14E`,
+   `CurrentVerification`, `Correspondence`), written after every chapter module
+   was final, may import finished chapter modules, since their sentences restate
+   chapter results (for example `Ch14E` imports `Ch11U`).
 7. **Conventions.** `Vec n := Fin n → ℝ` carries the sup norm; Euclidean
    quantities are explicit (`sqNorm`, `dot`, `euclideanVector`).
 8. **Non-vacuity.** Each module with standing assumptions ends with an `example`

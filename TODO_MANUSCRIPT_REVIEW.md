@@ -370,6 +370,33 @@ under those items (M8). The chapters are generated: fix them through
   "(11)" (M18) is unaffected. Regenerate, inspect printed pages 62–64. Lean:
   `Ch10Q.secant_visibility`, `radial_error`, `multiplier_estimates`,
   `segment_bound_facts`, `branch_change`, `example_scale`. (`C/10_Q/prose/014`)
+- [ ] **M29: Chapter 14 refers to Chapters 13 and 4 by their source letters (typo).**
+  (a) `companion/chapters/14_E.tex:18` (Section 14.1, printed page 89): "The
+  stable-manifold conclusion in L follows from the actual return map and a proved
+  analytic argument, not a numerical starting vector assumed to lie on that manifold."
+  (b) `14_E.tex:136` (Section 14.3.11 "R-interpretation", printed page 91): "The
+  explicit four-piece objective in R is a new specified reconstruction with an actual
+  full-BFGS failure run; it is not asserted to be an unidentified historical
+  objective." "L" and "R" are the source letters of Chapter 13 (lower curvature) and
+  Chapter 4 (radial modeling; the four-piece objective is built in Section 4.3). The
+  printed companion numbers its chapters 1 to 14 and its appendices A and B, so the
+  two labels resolve to nothing; the suite names of Section 14.3 ("L-hyperbolicity",
+  "R-interpretation", …) do not define them. The letters are used as places ("in L",
+  "in R"), so this is the pattern of M20 and M27, not of W22 (letters naming
+  objects). The generator rewrites module letters only in prefixed tags, "Module X"
+  phrases and citation keys. Proposed: "in Chapter~\ref{comp:L}" and "in
+  Chapter~\ref{comp:R}". Fix: two logged transformations in the `if module=='E':`
+  block of `editorial/generate_companion.py`, on the frozen
+  `master_report/latex/chapters/verification.tex` (assert the counts): (a) line 7,
+  span `E.span.2`: `The stable-manifold conclusion in L follows` (occurs once) →
+  `The stable-manifold conclusion in Chapter~\ref{comp:L} follows`; (b) line 73, span
+  `E.span.15`: `The explicit four-piece objective in R is` (occurs once) → `The
+  explicit four-piece objective in Chapter~\ref{comp:R} is`. No line is added.
+  Regenerate, inspect printed pages 89 and 91. The mathematics holds: (a)
+  `LowerCurvature.stable_manifold_positive_scale`, `Ch13L.global_failure`,
+  `LowerCurvature.quadratic_failure`; (b) `Ch04R.fourPiece_failure_run`,
+  `reconstructedFourPieceFailure`, `Ch04R.fourPiece_objective_formula`.
+  (`C/14_E/prose/013`, `C/14_E/prose/061`)
 
 ## Wording points in the companion (no discrepancy)
 
@@ -611,6 +638,118 @@ in the line-by-line reading. The chapters are generated: change them through
   numbers. Proposed (optional): "… of the transported-certificate theorem of
   Chapter~\ref{comp:T}"; "(S) of Chapter~\ref{comp:T}". (`C/10_Q/prose/002`,
   `prose/014`, `prose/028`)
+- [ ] **W27: Tolerances and the implicit basin in Chapter 14's numerical suites.**
+  `14_E.tex:184` (Section 14.3.17, printed page 92): "The operative statement is
+  analytic: the stated planar example converges, and hence every positive displayed
+  tolerance is eventually attained." `14_E.tex:192` (Section 14.3.18, same page): "Its
+  convergence implies eventual attainment of the printed positive tolerance." No
+  tolerance is displayed or printed anywhere in the companion (the source suites
+  measured $F<10^{-45}$ and $F<10^{-28}$; that execution record was removed), so both
+  phrases refer to nothing; both claims hold for every positive tolerance. At line 184
+  the basin is also left implicit: the example of Section 9.8 is proved to converge
+  from its basin $F(x_0)<1/100$ (\eqref{C:eq:explicitbasin}). Convergence from every
+  start is not available: $F$ has a second triple point $p\approx(3.5098,2.6494)$ with
+  $F(p)\approx19.34$ whose three active gradients are affinely independent, so $p$ is
+  affine-critical but not a minimizer and the planar corollary does not apply to
+  sublevels containing it (floating-point computation, not formalized; no
+  counterexample run is known). Generated file; logged transformations in the
+  `if module=='E':` block of `editorial/generate_companion.py`, on the frozen
+  `verification.tex`: line 97, span `E.span.21`: `the stated planar example converges,
+  and hence every positive displayed tolerance is eventually attained.` (occurs once)
+  → `the stated planar example converges from its basin~\eqref{C:eq:explicitbasin},
+  and hence every positive tolerance on its objective value is eventually attained.`
+  (the generator's letter substitution does not touch `C:eq:`); line 101, span
+  `E.span.22`: `eventual attainment of the printed positive tolerance` (occurs once) →
+  `eventual attainment of every positive tolerance`. Lean: `Ch14E.planar_tolerance`,
+  `Ch14E.spike_tolerance` (every $\varepsilon>0$); the historical values are
+  `EReconstruction.planar_eventual_printed_tolerance` and
+  `spike_eventual_printed_tolerance`. (`C/14_E/prose/076`, `prose/079`)
+- [ ] **W28: Bounded gradients left implicit (Chapter 14).** `14_E.tex:112`
+  (Section 14.3.8 "M-mixed", printed page 91): "The actual full-matrix hierarchy
+  yields the normalized hierarchy, weighted potential, qualitative reciprocal growth
+  and superquadratic reciprocal growth under summable predicted decreases." Every
+  result named uses a uniform gradient bound $G$: the normalized hierarchy and the
+  weighted potential through $K_0=4G^2/c^2$, and Theorems `M:average` and
+  `M:superquadratic` by hypothesis; only the summability is stated. Same point as W1
+  and W24; no counterexample run is known. Generated file; proposed, on the frozen
+  `verification.tex:61` (span `E.span.12`), as a logged transformation in the
+  module-E block: `The actual full-matrix hierarchy yields the normalized hierarchy`
+  (occurs once) → `Along runs with bounded gradients, the actual full-matrix hierarchy
+  yields the normalized hierarchy`. Lean: `Ch02M.hierarchy_step`,
+  `Ch02M.potential_ge_trace`, `Ch02M.weighted_step`, `Ch02M.average`,
+  `Ch02M.superquadratic` (all with the gradient bound). (`C/14_E/prose/052`)
+- [ ] **W29: The suite labels of Chapter 14 are names, not chapter letters
+  (optional).** `14_E.tex:48` (Section 14.3, printed page 90): "The labels below
+  preserve correspondence with the original report." The 19 subsection titles of
+  Section 14.3 (D-root, …, G-oscillatory-numerical) are the original report's suite
+  names, and their letters are not chapter letters: "A-minors" is Chapter 2 material
+  (not Chapter 8 or Appendix A), "H-lifting" is Chapters 6–7, and "P-" and "V-" match
+  no chapter. They are names, not references (W22 type). Generated file; optional, on
+  the frozen `verification.tex:29` (span `E.span.4`), as a logged transformation in
+  the module-E block: `The labels below preserve correspondence with the original
+  report.` (occurs once) → `The labels below are the original report's suite names,
+  whose letters are not chapter letters; they preserve correspondence with that
+  report.` (`C/14_E/prose/029`)
+- [ ] **W30: Stale or inaccurate statements about the verification and the records
+  (Chapter 14 and Appendix B).** All are `NON_CLAIM`; refresh them in step 2.
+  - `current_verification.tex:8` (hand-written; printed page 88): "All 2026 Lean
+    names cited by the article ledger or declared in the package depend only on …".
+    `bfgs_lean_article/AXIOM_AUDIT.json` checks 3862 names, and the number grows with
+    the companion coverage. Replace `All 2026 Lean names` (occurs once) by the count of
+    the final audit. (`C/current_verification/prose/004`)
+  - `14_E.tex:16` (generated; Section 14.1, printed page 89): "… but each retained
+    assertion here has a reviewed formal correspondence." The coverage found retained
+    assertions that are false or misreferenced as written (M12–M29). Once those
+    corrections are applied the sentence holds again; check it then. Otherwise, on the
+    frozen `verification.tex:5` (span `E.span.2`): `but each retained assertion here
+    has a reviewed formal correspondence` (occurs once) → `… correspondence or a
+    recorded correction`. (`C/14_E/prose/007`)
+  - `correspondence.tex:12–13` (hand-written; Appendix B, printed page 97): "The new
+    opening changes their scientific presentation and reading order, not their
+    mathematical assertions." Accurate for the opening; read it with the next point.
+    Optional: after `not their mathematical assertions.` (occurs once), point to the
+    logged generalization of the next point. (`C/correspondence/prose/006`)
+  - `correspondence.tex:62` (hand-written; printed page 98): "Source transformations
+    preserve the corrected mathematical assertions." The 13 October `constant_range`
+    transformations of `editorial/generate_companion.py` generalize the
+    lower-curvature failures of Chapters 1 and 13 from $c_1=10^{-4}$, $c_2=1/2$ to
+    every $0<c_1\le1/3$, $c_1<c_2<1$, a proved strengthening
+    (`LUniform.uniform_global_failure`, `LUniform.uniformSmoothLocalFailure`).
+    Proposed: `Source transformations preserve the corrected mathematical assertions.`
+    (occurs once) → `Source transformations preserve the corrected mathematical
+    assertions, except the logged October 2026 generalization of the lower-curvature
+    failures to every admissible pair of line-search constants.`
+    (`C/correspondence/prose/028`)
+  - `correspondence.tex:22` (hand-written; printed page 97): "None of these
+    incomparable results is treated as superseded …". "Incomparable" is inaccurate:
+    the constant-Hessian family of Chapter 13 is the family of the article's appendix
+    Proposition `art:quadratic_failure`, and the consequences of Theorem 7.A for
+    bounded-below and coercive objectives give the article's Theorem
+    `art:homogeneous`. The policy itself is unaffected. Proposed: `None of these
+    incomparable results` (occurs once; "incomparable" at line 32, in the
+    supersession-ledger row, is not concerned) → `None of these results`.
+    (`C/correspondence/prose/010`)
+  - `correspondence.tex:27` (hand-written; table, printed page 97):
+    `\path{SOURCE_CORRESPONDENCE.json}`; the file is
+    `companion/SOURCE_CORRESPONDENCE.json`, and the other rows give paths from the
+    repository root. Proposed: `\path{companion/SOURCE_CORRESPONDENCE.json}`.
+    (`C/correspondence/prose/011`)
+  - `correspondence.tex:29–30` (hand-written; row of `editorial/CLAIM_LEDGER.json`,
+    printed page 97): "… their proof locations …". The ledger's `proof_locations` for
+    `paper/appendices/lower_curvature.tex` are stale (see `TODO_LEAN_REVIEW.md` and
+    `AGENTS.md`, "Known stale or frozen items"). The fix is in the data, through a new
+    correspondence revision (`refresh_correspondence.py` rejects statement changes),
+    not in this sentence. (`C/correspondence/prose/012`)
+  - `14_E.tex:226` (generated; Section 14.5, printed page 92): "Its README describes
+    the read-only evidence check and the exact default output path."
+    `bfgs_lean_stage1/master_report/audit/README.md` describes the read-only check
+    (`--check`) and says that `--run` creates and prints a new timestamped directory;
+    the default path (`master_report/audit/runs/<UTC timestamp>`) is defined in
+    `run.py`. Proposed, on the frozen `verification.tex:123` (span `E.span.25`), as a
+    logged transformation in the module-E block: `Its README describes the read-only
+    evidence check and the exact default output path.` (occurs once) → `Its README
+    describes the read-only evidence check; the runner prints the new timestamped
+    output directory.` (`C/14_E/prose/095`)
 
 ## Resolved
 
