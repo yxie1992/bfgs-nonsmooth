@@ -12,14 +12,12 @@ the same day.
 | Work | State | Details |
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
-| Manuscript review | M1–M6 fixed on 13 October; M7–M28 (from M12 on in the companion) and the companion's wording points W1–W26, found by the Lean coverage, stay open until step 2 | `TODO_MANUSCRIPT_REVIEW.md` |
+| Manuscript review | M1–M6 fixed on 13 October; M7–M29 (from M12 on in the companion) and the companion's wording points W1–W43, found by the Lean coverage, stay open until step 2 | `TODO_MANUSCRIPT_REVIEW.md` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
-| Lean coverage, companion | waves 1 and 2 done: Chapters 2–13 and the seed appendix (ten groups, each reviewed by an independent agent, fixed, committed and imported); wave 3 (compI and compE) started on 15 October | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
+| Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, fixed, committed and imported | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 
-While wave 3 runs, its agents' partial modules and registers are uncommitted in the
-working tree, and their notes are in the session's scratch directory. If that work is
-lost, start new agents for compI and compE with the wave-3 entries of
-`editorial/lean_coverage/AGENT_BRIEFS.md`; they can continue from the files.
+Next: the end of the companion phase (step 5 under "Resuming the companion
+coverage"): the axiom audit and the kernel replay on a clean tree.
 
 Latest checks:
 
@@ -30,10 +28,9 @@ Latest checks:
   (`bfgs_lean_article/KERNEL_REPLAY.json`). It predates the coverage modules;
   rerun it at the end of the companion phase.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
-  modules (last run on 15 October after commit `3184a5a`, with every chapter module
-  of the companion: 144 s); `check_coverage.py` exits 0 (also with `--strict
-  --allow-discrepancies` on the article files and the finished companion files);
-  `generate_companion.py --check` passes.
+  modules (last run on 15 October with every companion module: 104 s);
+  `check_coverage.py` exits 0 (also with `--strict --allow-discrepancies` on every
+  article and companion file); `generate_companion.py --check` passes.
 
 ## Setting up the Mac
 
@@ -149,15 +146,15 @@ the Mac names another scratch directory, use that one.
    LEAN_CC=/usr/bin/clang lake build`. Once linked, `test.sh` and the replay run
    it without these variables (checked on 14 October 2026).
 
-## Findings of waves 1 and 2
+## Findings of the companion coverage
 
-The findings of the chapter groups are recorded: the companion's discrepancies as
-M12–M28 and its wording points as W1–W26 in `TODO_MANUSCRIPT_REVIEW.md` (with
-M8's recurrence in Chapter 13 under M8), and the possibly vacuous run statements
-of Chapter 7 in `TODO_LEAN_REVIEW.md`. The pause notes of 14 October stay in
+The findings of the twelve groups are recorded: the companion's discrepancies as
+M12–M29 and its wording points as W1–W43 in `TODO_MANUSCRIPT_REVIEW.md` (the
+recurrences in Chapters 1 and 13 and in the research story are listed under M8, M12
+and M24), and the possibly vacuous run statements of Chapter 7 in
+`TODO_LEAN_REVIEW.md`. The pause notes of 14 October stay in
 `editorial/lean_coverage/pause_notes/` as a record; their tentative findings were
-all settled by the chapter groups. M8 also recurs at `01_I.tex:103` and
-`research_story.tex:52` (wave 3).
+all settled by the chapter groups.
 
 ## After the Lean coverage
 

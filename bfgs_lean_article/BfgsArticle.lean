@@ -44,3 +44,5 @@ import BfgsArticle.Coverage.Companion.Ch10Q
 import BfgsArticle.Coverage.Companion.Ch14E
 import BfgsArticle.Coverage.Companion.CurrentVerification
 import BfgsArticle.Coverage.Companion.Correspondence
+import BfgsArticle.Coverage.Companion.Ch01I
+import BfgsArticle.Coverage.Companion.ResearchStory

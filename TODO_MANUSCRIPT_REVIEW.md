@@ -7,9 +7,9 @@ M12 on and in the W items, in the companion (`companion/`). The seed
 numerics were re-checked in the first reading and all matched. Unless an item says
 otherwise, no mathematical statement and no Lean declaration changed.
 
-**Status (14 October 2026):** M1 to M6 are resolved. M7 onwards were found by the
-Lean coverage work (`TODO_LEAN_COVERAGE.md`) and are open; they will be fixed with
-the line-by-line reading of the proofs.
+**Status (15 October 2026):** M1 to M6 are resolved. M7 to M29 and the wording
+points W1 to W43 were found by the Lean coverage work (`TODO_LEAN_COVERAGE.md`) and
+are open; they will be settled with the line-by-line reading of the proofs.
 
 ## Open (found by the Lean coverage, 14 October 2026)
 
@@ -46,6 +46,24 @@ confirmed each one.
   `editorial/generate_companion.py`. Proposed: "…have Lipschitz gradients; three of
   the four lose second differentiability at the accumulation point."
   (`C/13_L/prose/002`)
+  Chapter 1 repeats it at `companion/chapters/01_I.tex:103` (N2): "The individual
+  branches \textbf{are not twice differentiable at the accumulation point}." follows
+  "One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex,
+  gradient-Lipschitz branches", so it speaks of all four (`Ch13L.branch_regularity`,
+  `Ch01I.n1_n2_comparison`). Proposed: "Three of the four branches \textbf{are not
+  twice differentiable at the accumulation point}." Fix: a logged replacement in the
+  `if module=='I':` block of `editorial/generate_companion.py`, with its own kind and
+  reason (not `constant_range['I']`, whose reason concerns the line-search range), of
+  `The individual branches \textbf{are not twice differentiable at the accumulation point}.`
+  (frozen `bfgs_lean_stage1/master_report/latex/chapters/inventory.tex:81`, span
+  `I.span.6`, occurs once). The item then becomes `LEAN`. (`C/01_I/prose/023`)
+  The research story paraphrases the abstract's sentence at
+  `companion/research_story.tex:51-53`: "A different embedding preserves uniform
+  strong convexity with $C^{1,1}$ branches that lose second differentiability at the
+  accumulation point" (`Ch13L.branch_regularity`, `Ch01I.n2_four_branch_version`).
+  Proposed, a direct edit (the file is written by hand): `branches that lose second
+  differentiability at` (occurs once) → `branches, three of which lose second
+  differentiability at`. (`C/research_story/prose/029`)
 - [ ] **M9: Ray identity without its range (typo).** `paper/sections/verification.tex`
   (item `A/verification/prose/004`): "$G(t(-1,16))=-t$" holds only for $t\ge0$, as
   `failure.tex:200` says (`Verification.seed_ray`, counterexample
@@ -80,8 +98,8 @@ confirmed each one.
 
 Each item is a `DISCREPANCY` in `editorial/lean_coverage/register/C_*.json`; the
 intended statement is proved in `bfgs_lean_article/BfgsArticle/Coverage/Companion/`,
-and independent review confirmed each item. Recurrences of article items are listed
-under those items (M8). The chapters are generated: fix them through
+and independent review confirmed each item. Recurrences of earlier items are listed
+under those items (M8, M12, M24). The chapters are generated: fix them through
 `editorial/generate_companion.py` (the seed appendix through
 `editorial/prepare_shared_appendix.py`) and regenerate.
 
@@ -100,6 +118,17 @@ under those items (M8). The chapters are generated: fix them through
   in the frozen span `L.span.2` (`bfgs_lean_stage1/master_report/latex/chapters/L.tex:52`):
   add a logged `if module=='L':` transformation with its own reason. The item then
   becomes `LEAN`. (`C/13_L/theorem/L:thm:local`)
+  Chapter 1 repeats the clause at `companion/chapters/01_I.tex:103` (N2): "Another
+  version has one constant SPD classical Hessian wherever it exists, but a countably
+  piecewise-affine nonsmooth component rather than finitely many smooth branches."
+  The descriptive reading is proved (`Ch13L.local_failure`,
+  `Ch13L.step_decomposition`). Proposed: "…wherever it exists; it is constructed from
+  a countably piecewise-affine nonsmooth component rather than from four smooth
+  branches." Fix: in the same module-I block as M8's Chapter 1 fix, replace
+  `wherever it exists, but a countably piecewise-affine nonsmooth component rather than finitely many smooth branches.`
+  (`inventory.tex:81`, span `I.span.6`, occurs once) by
+  `wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.`
+  The item then becomes `LEAN`. (`C/01_I/prose/024`)
 - [ ] **M13: Chapter L says it uses a fixed line-search pair.** `13_L.tex:413`:
   "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
   parameter family is not imported." is a remnant of the fixed-pair edition. Since
@@ -295,6 +324,16 @@ under those items (M8). The chapters are generated: fix them through
   $K_\eta$ with $d\le\delta_\eta$, so (RS) gives (S) with the same constant, while".
   Fix: a logged module-T replacement of `Condition (S) is exactly (RS), while`
   (`master_report/latex/chapters/T.tex:199`, occurs once). (`C/03_T/prose/029`)
+  Chapter 1 repeats it at `companion/chapters/01_I.tex:153` (P1): "RS is the radial
+  specialization \(W(x)=(x-x_*)(x-x_*)^T\)." (`Ch03T.rs_gives_s`, `Ch03T.rs_covered`,
+  `Ch03T.s_not_exactly_rs`; the rest of the paragraph, "The inclusion of RS is
+  strict", agrees). Proposed: "RS implies the radial specialization
+  \(W(x)=(x-x_*)(x-x_*)^T\)." Fix: in the module-I block of
+  `editorial/generate_companion.py`, replace
+  `RS is the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\).` (frozen
+  `inventory.tex:119`, span `I.span.9`, occurs once); "Its equivalent inward Taylor
+  condition…" then still refers to RS. The item then becomes `LEAN`.
+  (`C/01_I/prose/048`)
 - [ ] **M25: Chapter 3's proof cites (3.3)–(3.6) as (3)–(6) (typo).** `03_T.tex:148`
   "Using (3)--(4), the Loewner inequality (T), and (S)," means (3.3)–(3.4); line 160
   "Divide (6) by $P_{k+1}$ and sum" means (3.6); line 165 "This contradicts (5)."
@@ -750,6 +789,119 @@ in the line-by-line reading. The chapters are generated: change them through
     evidence check and the exact default output path.` (occurs once) → `Its README
     describes the read-only evidence check; the runner prints the new timestamped
     output directory.` (`C/14_E/prose/095`)
+
+The wording points W31–W43 are in Chapter 1 and the research story (compI, 15
+October). Chapter 1 is generated: unless an item says otherwise, its old string
+occurs once in the frozen `bfgs_lean_stage1/master_report/latex/chapters/inventory.tex`
+and once in `01_I.tex`, and the fix is a logged replacement in the `if module=='I':`
+block of `editorial/generate_companion.py`, which runs after the renumbering and the
+relocation of the attribution notes, so it sees the printed strings quoted here. No
+replacement adds a line; after regenerating, update the anchors of the items named.
+
+- [ ] **W31: The claim/proof index described as complete (Chapter 1).** `01_I.tex:14`:
+  "Every retained mathematical assertion is paired with its reviewed formal statement
+  and Lean proof in the claim/proof index." The index paired many sentences only
+  coarsely, which is why the literal Lean coverage was needed. Proposed, once the
+  index is regenerated from the coverage registers in step 2 (`inventory.tex:10`):
+  `Every retained mathematical assertion is classified in the claim/proof index, and
+  each asserted result is paired there with its formal statement and Lean proof.`
+  (`C/01_I/prose/003`)
+- [ ] **W32: Bare subsection number (Chapter 1).** `01_I.tex:123`:
+  "\textbf{Proofs: 12.3.1 and Chapter~\ref{comp:L}.}" prints the right subsection
+  (12.3.1, "A simple coercive global failure", which has no label); the source reads
+  `\textbf{Proofs: D.3.1 and Module L.}` (`inventory.tex:97`). Proposed, in the
+  module-I block (after the renumbering): `\textbf{Proofs: 12.3.1 and Chapter~\ref{comp:L}.}`
+  → `\textbf{Proofs: Section~12.3.1 and Chapter~\ref{comp:L}.}` (`C/01_I/prose/039`)
+- [ ] **W33: Hypotheses of Theorem M:average left implicit in P2 (Chapter 1; as W2).**
+  `01_I.tex:161`: "Uniform visibility, bounded secant correction, and bounded
+  cumulative transport products and inverses exclude positive-level stagnation." As
+  at `02_M.tex:211`, the contradiction needs bounded gradients and $d_k\to0$.
+  Proposed (`inventory.tex:123`): `exclude positive-level stagnation.` →
+  `exclude positive-level stagnation along runs with bounded gradients.`
+  (`Ch02M.frame_criterion`; `C/01_I/prose/053`)
+- [ ] **W34: Hypotheses of Theorem M:residualtheorem left implicit in P3 (Chapter 1;
+  as W1 and M10).** `01_I.tex:176`: the theorem assumes bounded gradients and
+  $\sum d_k<\infty$; "the superquadratic reciprocal theorem below" (lines 306–308)
+  states them, the sentence does not. Proposed (`inventory.tex:134`):
+  `Together with uniform visibility and bounded secant correction, the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below.`
+  → `Together with uniform visibility and bounded secant correction, along runs with bounded gradients and \(\sum d_k<\infty\), the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below.`
+  (`Ch02M.residual_theorem`; `C/01_I/prose/056`)
+- [ ] **W35: "The user's paper" (Chapter 1).** `01_I.tex:291`: "The user's paper is
+  supplied separately, not rebranded as a new result." A remnant of the drafting.
+  Proposed: delete the sentence, or replace it (`inventory.tex:221`) by `That
+  paper~\cite{XW} is prior work, not a new result of this report.` (the key `XW` is in
+  `companion/bibliography.tex`). (`C/01_I/prose/113`)
+- [ ] **W36: Bounded gradients left implicit (Chapter 1; as W1).** `01_I.tex:317`: "A
+  cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap." This needs
+  $\sum q_k^{-1}\to\infty$, which Theorem M:average gives along runs with bounded
+  gradients. Proposed (`inventory.tex:243`): `A cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap.`
+  → `Along runs with bounded gradients, a cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap.`
+  (`Ch02M.negligible_corrections`, `Ch02M.negligible_corrections_of_divergent`;
+  `C/01_I/prose/117`)
+- [ ] **W37: A source rate note and implicit bounded gradients (Chapter 1; as W24 and
+  W25).** `01_I.tex:319`: "The original rate note" is not in the companion, "later" is
+  historical (Theorem M:superquadratic is in Chapter 2), and the \(o(N^{-1/2})\) rate
+  needs bounded gradients. Proposed (`inventory.tex:245`):
+  `The original rate note recorded big-\(O\) corollaries. The later superquadratic reciprocal theorem strengthens them to \(o(N^{-1/2})\) for uniformly bounded radial correction,`
+  → `Big-\(O\) versions of these rates appeared in the source notes. Theorem~\ref{M:superquadratic} strengthens them to \(o(N^{-1/2})\) for uniformly bounded radial correction along runs with bounded gradients,`
+  (`Ch06F.bounded_correction_rate`, `Ch06F.linear_budget_rate`,
+  `Ch06F.homogeneous_rate`, `Ch06F.quadGauge_rate`; `C/01_I/prose/120`, `prose/121`)
+- [ ] **W38: Path of the literature register (Chapter 1).** `01_I.tex:391`:
+  `\path{literature_audit/}` exists only as `bfgs_lean_stage1/literature_audit/`.
+  Proposed (`inventory.tex:6`, in the relocated attribution note):
+  `The detailed source/version register is delivered in \path{literature_audit/};` →
+  `The detailed source/version register is delivered in \path{bfgs_lean_stage1/literature_audit/};`
+  (a software description, as in W30; `C/01_I/prose/159`)
+- [ ] **W39: "Value convergence does not imply bounded iterates" (research story).**
+  `research_story.tex:30-31`: "The full noncompact homogeneous value alternatives are
+  retained separately: value convergence does not imply bounded iterates, and it does
+  not subsume Xie--Wächter's finite detection…" A scope remark (Theorem 7.A concludes
+  values only), classified `NON_CLAIM`; it reads as the claim that some homogeneous
+  run has value convergence with unbounded iterates, which is not established (open
+  in recurrent dimension $\ge3$, `Ch07H.ZeroValueIterateQuestion`; the iterates
+  converge for max-linear objectives of recurrent dimension $\le2$). Proposed, a
+  direct edit (hand-written file): `value convergence does not imply bounded iterates,
+  and it does not subsume` (occurs once) → `they conclude objective-value convergence
+  without any conclusion about the iterates, and they do not subsume`.
+  (`ResearchStory.value_convergence_unbounded_iterates` illustrates the general
+  non-implication with $F=e^x$; `C/research_story/prose/017`)
+- [ ] **W40: "A compact sublevel" (Chapter 1, minor).** `01_I.tex:218` (P5): "have an
+  attained minimum and a compact sublevel" leaves Chapter 9's $b>F_*$ implicit (an
+  empty sublevel is compact); harmless, since for convex $F$ one nonempty compact
+  sublevel makes all sublevels compact. Optional (`inventory.tex:168`):
+  `have an attained minimum and a compact sublevel,` → `have an attained minimum and a
+  compact sublevel above the minimum,` (`Ch01I.p5_cluster`,
+  `Ch01I.sublevels_compact_of_one`; `C/01_I/prose/074`)
+- [ ] **W41: "Neither proves local failure for …" (Chapter 1).** `01_I.tex:107`:
+  "Neither proves local failure for a finite maximum of uniformly strongly convex
+  \(C^2\) branches through the optimizer." This reads as a claim about every
+  representation of the two objectives; what is proved is that the constructed
+  branches are not in that class (N1's are not uniformly strongly convex, three of
+  N2's four are not $C^2$). Proposed (`inventory.tex:85`, span `I.span.6`):
+  `Neither proves local failure for a finite maximum of uniformly strongly convex \(C^2\) branches through the optimizer.`
+  → `Neither is constructed from finitely many uniformly strongly convex \(C^2\) branches through the optimizer, so neither proves local failure for that class.`
+  (`Ch01I.n1_n2_comparison`; open question
+  `Article.Verification.C2StronglyConvexLocalFailure`; `C/01_I/prose/029`)
+- [ ] **W42: "These families" without antecedent (Chapter 1).** `01_I.tex:393`: "These
+  families include established special cases: Guo--Lewis proves …". The generator
+  moved this attribution note (`i.known_special_cases`) from the start of Section 1.4,
+  "Strongest concrete local and global positive families" (`inventory.tex:137-140`),
+  to "Relation to earlier work", after a paragraph on bibliographic notes. Proposed
+  (`inventory.tex:139`; the module-I block sees the relocated note):
+  `These families include established special cases` → `The positive families of
+  Section~\ref{strongest-concrete-local-and-global-positive-families} include
+  established special cases` (the label is at `01_I.tex:182`).
+  (`Ch04R.euclidean_norm_recovered`; `C/01_I/prose/160`)
+- [ ] **W43: $E_k$ and $B_k$ undefined in Chapter 1 (cosmetic).** `01_I.tex:312-315`:
+  "The fixed-reference identity is $E_{k+1}=\dots$"; $E_k$, $r_k$ and $B_k$ are
+  defined only in Chapter 2 (`02_M.tex:182`, `02_M.tex:14`), and $B_k$ also appears at
+  `01_I.tex:169`. Proposed, two replacements: `The fixed-reference identity is`
+  (`inventory.tex:238`) → `For a fixed reference point \(x_*\) and
+  \(E_k=(x_k-x_*)^TB_k(x_k-x_*)\), the fixed-reference identity is`; and
+  `the actual update gives \(\operatorname{tr}(P_SB_k)=O(k)\).` (`inventory.tex:127`)
+  → `the actual update gives \(\operatorname{tr}(P_SB_k)=O(k)\) for \(B_k=H_k^{-1}\).`
+  (`Ch02M.fixed_energy`, `Ch01I.smooth_subspace_trace_linear`; `C/01_I/disp/021`,
+  `prose/055`)
 
 ## Resolved
 
