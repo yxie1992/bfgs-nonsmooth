@@ -309,28 +309,53 @@ that may not exist.
     September release was made on this MacBook, in
     `/Users/yxie/Documents/ChatGPT/BFGS-non-smooth` (at `db4dc37`, with the sealed
     Lean host cache and the earlier editions' archives): keep that checkout
-    untouched. The checks to settle in the release run (numbers of the plan):
+    untouched. Its tooling (phase A of the plan's section 6) was written,
+    independently reviewed and fixed on 15 October 2026
+    (`editorial/release_20261015/TOOLING_REVIEW.md`): T1 in
+    `editorial/verify_historical_baseline.py`, T2 in `editorial/validate_archive.py`
+    and the new `editorial/verify_historical_correspondence.py`, T3 in
+    `editorial/verify_release_inputs.py`, T4 in `editorial/release_20261015/` (its
+    table of changes is filled in the release run) and T5 in
+    `editorial/package_release.py`. The run follows the order in
+    `editorial/release_20261015/README.md` ("Run order"), which replaces Phase 2
+    of the plan: the Lean evidence comes after every change to the claim ledger,
+    the coverage registers and the counts printed in
+    `companion/current_verification.tex`, since the release-input check binds it
+    to them. The checks to settle in the release run (numbers of the plan):
     - [ ] C1: the 13 September check `refresh_correspondence.py --check` fails at
       HEAD; it rejects every statement change, and passes at its release commit
       `3e8b5c6`. Retire it as historical (replay it unchanged in a worktree at
-      `3e8b5c6`) and give its current role to C2's revision.
+      `3e8b5c6`) and give its current role to C2's revision. Tooling ready:
+      `editorial/verify_historical_correspondence.py` replays it at `3e8b5c6` and
+      records its result at HEAD; `validate_archive.py` runs it.
     - [ ] C2: the three "Reviewed source contracts" checks of
       `verify_release_inputs.py` fail (hashes of the corrected files). Fix: a new
       bounded correspondence revision, baseline `3e8b5c6`, that lists every
       changed statement and display with its correction item and Lean coverage
-      item (tooling T4 of the plan).
+      item (tooling T4 of the plan). Tooling ready:
+      `editorial/release_20261015/refresh_correspondence.py` (`--propose`,
+      `--write`, `--check`); its `CHANGES.json` is filled for the final sources
+      and `--write` is run in step 4 of the run order.
     - [ ] C3: the ledger's copied `proof_locations` (for example those of
-      `lower_curvature.tex`, below) are refreshed by C2's revision.
+      `lower_curvature.tex`, below) are refreshed by C2's revision (T4's
+      `--write`).
     - [ ] C4: `verify_historical_baseline.py` fails on the files added under
       `bfgs_lean_article/`. Fix: allow added paths there too, with a recorded
-      reason (T1; tested by the study).
+      reason (T1; tested by the study). Tooling ready (T1); the September
+      editorial Lean files are now also required unchanged since `3e8b5c6`.
     - [ ] C5: `validate_archive.py` cannot use this repository as its Lean host
       (no `bfgs_lean_stage1/.toolchain`; the rebuilt `.lake` fails the seal,
       although its `.olean` files are byte-identical). Use the sealed September
-      host.
+      host. Settled: an APFS clone (`cp -cR`) of its `bfgs_lean_stage1/.lake`
+      and `.toolchain`, outside the macOS temporary directory (for example
+      `/Users/yxie/Projects/release_host_<date>/bfgs_lean_stage1/`), checked once
+      with `cache_binding.py --check`; the workspace links to the copy, never to
+      the September checkout itself (`editorial/release_20261015/README.md`,
+      "Release host").
     - [ ] C6: the cache check of `verify_release_inputs.py` fails here ("only
       partially available"). Run it where `.lake` and `.toolchain` both point at
-      the September host, or where both are absent; keep the rule.
+      the September host, or where both are absent; keep the rule. With the
+      APFS copy of C5 both point at the copy.
     - C7–C9 pass: `editorial/BASELINE.json` and the frozen inputs (do not
       re-baseline), `generate_companion.py --check`, `check_documents.py`.
     - [ ] C10: regenerate the render manifest (`render_review.py`) and review
@@ -338,9 +363,17 @@ that may not exist.
     - [ ] C11: no release script checks the October Lean evidence. Rerun the axiom
       audit and the kernel replay on the final pre-freeze commit, and add
       read-only checks that bind them to the release (T3); the archive validation
-      also runs `check_coverage.py --strict` (T2).
+      also runs `check_coverage.py --strict` (T2). Tooling ready:
+      `verify_release_inputs.py` has two more checks (23 in all). The first
+      requires that the audit and the replay pass and ran on a clean tree at an
+      ancestor of HEAD, recounts (without Lean) the names and modules they must
+      have checked, compares the counts printed in
+      `companion/current_verification.tex`, and requires that no Lean file, Lake
+      configuration, script of `bfgs_lean_article/scripts`, ledger or register
+      changed after them.
     - [ ] C12: freeze only when `check_coverage.py --strict` exits 0 (decision D7,
-      with the author).
+      with the author). Tooling ready: the second new check of
+      `verify_release_inputs.py` runs `check_coverage.py --strict`.
     - [ ] C13: rewrite `release/README.md`; several of its statements are false
       now ("The revision adds no Lean theorem", 107 companion pages, the
       reproduction command of C1).
@@ -352,7 +385,7 @@ that may not exist.
       (decision D1, with the author).
     - [ ] C16: the archive's `AUTHOR_REVIEW_README.md` (template in
       `editorial/package_release.py`) should give the commands for the October
-      package `bfgs_lean_article` (T5).
+      package `bfgs_lean_article` (T5). Tooling ready (T5).
     - [ ] C17: update the 13 September records `editorial/STATUS.json`,
       `NEXT_STATE.json`, `COMPLETION_GATES.json` and `AI_AND_AUTHOR_ACTIONS.md`
       (the AI statement is M37 of `TODO_MANUSCRIPT_REVIEW.md`).
@@ -360,6 +393,26 @@ that may not exist.
       of `HANDOFF.md` and `AGENTS.md`.
     - Preserve the 13 September edition under
       `release/history/20260913_exposition/` (plan, section 4).
+    - Linking the September checkout itself into a scratch clone lets elan and
+      git write into it outside its seal: the phase-A dry runs of 15 October
+      added three scratch paths to its `bfgs_lean_stage1/.toolchain/elan/known-projects`
+      and took transient index locks in the nine dependency checkouts under
+      `bfgs_lean_stage1/.lake/packages/` (the seal is unaffected; the cache binding
+      passed before and after). A full scratch validation against an APFS copy
+      passed and left the checkout unchanged; hence the host of C5.
+    - Limits of T4 (`editorial/release_20261015/README.md`, "Limits, by design"):
+      text outside its units (prose outside the root and deduction passages,
+      unmapped tables and figures and the files they input, headings) needs only
+      `--write`, no row; correction items are checked for existence only, so the
+      review of each row checks their relevance (`--propose` prints their texts);
+      a `TODO_LEAN_REVIEW.md` title cited by a row must stay unchanged; a named
+      statement or active TeX input added or removed, a negative-review proof
+      moved to another file and a numbered display without `\label` are refused
+      and need an extension. Besides statements and displays it covers tables
+      and figures, proofs, the algorithm, macro definitions, the full text of the
+      two appendices the September revision preserved, and the root and
+      deduction passages.
+    - `release/work/` stays as an empty directory after an archive validation.
   - Since the P3d edit, the `proof_locations` line numbers and passage hashes
     for `paper/appendices/lower_curvature.tex` in the ledger are also stale.
     They are copied from the sealed 13 September negative review and are now

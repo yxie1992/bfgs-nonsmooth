@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
-"""Replay a source archive in a fresh extraction, retaining every validation run."""
+"""Replay a source archive in a fresh extraction, retaining every validation run.
+
+Release tooling T2 (October 2026 edition). The 13 September correspondence check,
+which rejects every statement change by design, is no longer run at the current
+commit as 04_focused_correspondence. It is replayed unchanged at its release
+commit 3e8b5c6 by editorial/verify_historical_correspondence.py
+(04_historical_correspondence; PASS required there, its script and inputs
+unchanged at the current commit, its result at the current commit recorded), and
+its current role passes to the October correspondence revision
+(04_current_correspondence: editorial/release_20261015/refresh_correspondence.py
+--check). 04_coverage_register runs the strict Lean coverage register check
+(editorial/lean_coverage/check_coverage.py --strict). The wrapper's run directory
+is copied into the validation output. Every other step is unchanged.
+"""
 from pathlib import Path, PurePosixPath
 from concurrent.futures import ThreadPoolExecutor
 import argparse
@@ -68,7 +81,7 @@ def main():
     summary = {
         'status': 'RUNNING', 'run_id': run_id, 'output_directory': str(out.relative_to(ROOT)),
         'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        'scope': 'Fresh source extraction, document regeneration, all-page pixel comparison, fresh supplemental Lean compilation/full structural audits using disclosed pinned host library caches, and historical/current evidence validation. No empty-cache or fresh original-library build is claimed.',
+        'scope': 'Fresh source extraction, document regeneration, all-page pixel comparison, the 13 September correspondence check replayed unchanged at its release commit (its result at the current commit recorded), the October correspondence revision check, the strict Lean coverage register check, fresh supplemental Lean compilation/full structural audits using disclosed pinned host library caches, and historical/current evidence validation, including the read-only binding of the October axiom audit and kernel replay to the sources. No empty-cache or fresh original-library build is claimed, and the October package bfgs_lean_article is not compiled here.',
         'commands': commands,
         'subprocess_environment': subprocess_environment,
     }
@@ -291,11 +304,27 @@ def main():
             with ThreadPoolExecutor(max_workers=2) as pool:
                 summary['documents'] = list(pool.map(compare_document, reviews['documents']))
             run([sys.executable, 'editorial/generate_companion.py', '--check'], '04_companion_preservation', tree)
-            # This edition's additional source correspondence check preserves
-            # the existing proof/audit gates and runs against the fresh extraction.
-            focused = tree / 'editorial/scientific_exposition_20260913/refresh_correspondence.py'
-            if focused.is_file():
-                run([sys.executable, str(focused), '--check'], '04_focused_correspondence', tree)
+            # The 13 September correspondence check is replayed unchanged at its
+            # release commit (T2); its current role belongs to the October revision.
+            correspondence_id = 'archive_validation_' + run_id
+            correspondence_run = tree / 'editorial/historical_correspondence/runs' / correspondence_id
+            try:
+                run([sys.executable, 'editorial/verify_historical_correspondence.py', '--run-id', correspondence_id],
+                    '04_historical_correspondence', tree)
+            finally:
+                if correspondence_run.is_dir():
+                    shutil.copytree(correspondence_run, out / 'historical_correspondence')
+            historical_correspondence = json.loads((out / 'historical_correspondence/SUMMARY.json').read_text())
+            assert historical_correspondence['status'] == 'PASS'
+            assert historical_correspondence['release_commit_result'].startswith('PASS: 31 named contracts; 52 existing labeled displays')
+            summary['historical_correspondence'] = {
+                key: historical_correspondence.get(key) for key in
+                ['status', 'release_commit', 'release_commit_result', 'current_commit', 'current_commit_result',
+                 'current_commit_failure', 'unchanged_inputs']}
+            summary['historical_correspondence']['summary_sha256'] = sha(out / 'historical_correspondence/SUMMARY.json')
+            run([sys.executable, 'editorial/release_20261015/refresh_correspondence.py', '--check'],
+                '04_current_correspondence', tree)
+            run([sys.executable, 'editorial/lean_coverage/check_coverage.py', '--strict'], '04_coverage_register', tree)
             binding, cache = authenticate_cache_binding(tree)
             attach_pinned_library_cache(tree)
             check_cache_bytes(tree, binding, cache, 'before_library_use')

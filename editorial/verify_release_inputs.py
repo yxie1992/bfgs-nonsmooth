@@ -1,5 +1,24 @@
 #!/usr/bin/env python3
-"""Read-only final source, contract, build and audit integrity gate."""
+"""Read-only final source, contract, build and audit integrity gate.
+
+Release tooling T3 (October 2026 edition) adds two checks after the 21 existing
+ones, which are unchanged; the gate has 23 checks:
+- "October Lean evidence bound to the frozen sources": bfgs_lean_article/AXIOM_AUDIT.json
+  and KERNEL_REPLAY.json report PASS, no missing name, nonstandard axiom or replay
+  failure, a clean source tree and the pinned Lean version, and the replay names
+  lean4checker at the tag of that version with a passing self-test; the commit each
+  one audited is an ancestor of HEAD, and no Lean file, Lake configuration, script
+  of bfgs_lean_article/scripts, claim ledger or coverage register (for the replay:
+  no Lean file, Lake configuration or script) differs between that commit, HEAD and
+  the working tree. The reports must also cover what their scripts would collect
+  now: the audit's name counts (axiom_audit.ledger_names, coverage_names,
+  PACKAGE_PRINCIPAL) and the replay's module closure (kernel_replay.project_modules)
+  are recomputed without Lean and compared; and companion/current_verification.tex
+  must state the bound counts ("checked <N> Lean names", "(<M> modules;"). It needs
+  git history. Any malformed report is recorded as a FAIL of this check.
+- "Lean coverage register strict check": editorial/lean_coverage/check_coverage.py
+  --strict exits 0.
+"""
 from pathlib import Path
 import hashlib,json,os,re,subprocess,sys
 ROOT=Path(__file__).resolve().parents[1]
@@ -374,7 +393,91 @@ for p in [ROOT/'paper/sections',ROOT/'paper/appendices',ROOT/'paper/statements']
  for f in p.glob('*.tex'):
   if re.search(r'\b(TODO|TBD|FIXME|placeholder)\b',f.read_text()):todo.append(str(f.relative_to(ROOT)))
  record('No substantive authoring placeholders in '+p.name,not todo,todo)
-out={'status':'PASS' if all(r['status']=='PASS' for r in results) else 'FAIL','scope':'Read-only release inputs; fresh compilation is evidenced by separate hashed logs. Page-level visual approval is recorded separately.','checks':results}
+
+# T3 (October 2026): bind the October Lean evidence to these sources; it is not re-run here.
+LEAN_INPUTS=['*.lean','*lean-toolchain','*lakefile.toml','*lake-manifest.json','bfgs_lean_article/scripts']
+def load_script(name):
+    import importlib.util
+    sys.dont_write_bytecode=True
+    spec=importlib.util.spec_from_file_location('release_'+name,ROOT/'bfgs_lean_article/scripts'/(name+'.py'))
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+def expected_audit():
+    # The audit's own name collection, recomputed from the current ledger and registers (no Lean).
+    a=load_script('axiom_audit');principal,article,companion,private=a.ledger_names();coverage=a.coverage_names()
+    return {'declarations_checked':len(set(article)|set(companion)|set(coverage)|set(a.PACKAGE_PRINCIPAL)),
+            'ledger_principal_exports':len(principal),'ledger_cited_exports':len(article),
+            'ledger_companion_exports':len(companion),'coverage_register_names':len(coverage),
+            'private_names_not_referable':private}
+def expected_replay():
+    # The replay's module closure, recomputed from the current lakefiles and imports (no Lean).
+    k=load_script('kernel_replay');modules=k.project_modules();names=sorted(modules)
+    prefixes={m for m in names if any(o.startswith(m+'.') for o in names)}
+    imports_only=sorted(m for m in prefixes if all(l.startswith('import ') for l in k.code_lines(modules[m])))
+    roots={}
+    for m in names:roots[m.split('.')[0]]=roots.get(m.split('.')[0],0)+1
+    return {'modules_in_closure':len(names),'modules_replayed':len(names)-len(imports_only),
+            'imports_only_modules_not_replayed':imports_only,'modules_by_root':roots}
+def git_output(*argv):
+    result=subprocess.run(['git',*argv],cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    if result.returncode:
+        raise ValueError('git '+' '.join(argv)+' failed (git history is required): '+result.stderr.strip())
+    return result.stdout
+try:
+    pinned=(ROOT/'bfgs_lean_article/lean-toolchain').read_text().strip().rsplit(':v',1)[-1]
+    if pinned!=(ROOT/'bfgs_lean_stage1/lean-toolchain').read_text().strip().rsplit(':v',1)[-1]:
+        raise ValueError('The October package and the main library pin different Lean versions')
+    head=git_output('rev-parse','HEAD').strip()
+    evidence={}
+    for name,paths in [('AXIOM_AUDIT.json',LEAN_INPUTS+['editorial/CLAIM_LEDGER.json','editorial/lean_coverage/register']),
+                       ('KERNEL_REPLAY.json',LEAN_INPUTS)]:
+        relative='bfgs_lean_article/'+name
+        report=read(relative)
+        if report.get('status')!='PASS' or report.get('source_tree_clean') is not True:
+            raise ValueError(name+' is not a PASS on a clean source tree')
+        if not report.get('lean_version','').startswith('Lean (version '+pinned+','):
+            raise ValueError(name+' was not produced with the pinned Lean '+pinned)
+        if name=='AXIOM_AUDIT.json' and (report.get('missing_or_unresolved')!=[] or report.get('nonstandard_axioms')!={} or not report.get('declarations_checked')):
+            raise ValueError('Axiom audit reports missing names or nonstandard axioms')
+        if name=='KERNEL_REPLAY.json' and (report.get('failures')!=[] or not report.get('modules_replayed') or report.get('checker',{}).get('self_test')!='PASS'):
+            raise ValueError('Kernel replay reports failures or lacks its checker self-test')
+        if name=='KERNEL_REPLAY.json' and report['checker'].get('tag')!='v'+pinned:
+            raise ValueError('Kernel replay used lean4checker '+str(report['checker'].get('tag'))+', not v'+pinned)
+        commit=report.get('source_commit','')
+        if not re.fullmatch(r'[0-9a-f]{40}',commit):
+            raise ValueError(name+' lacks its audited commit')
+        if subprocess.run(['git','merge-base','--is-ancestor',commit,head],cwd=ROOT).returncode:
+            raise ValueError(name+' audited '+commit+', which is not an ancestor of HEAD '+head)
+        since=git_output('diff','--name-only',commit,head,'--',*paths).split()
+        if since:
+            raise ValueError(name+' audited '+commit+'; Lean or ledger inputs changed since: '+', '.join(since[:20]))
+        uncommitted=git_output('status','--porcelain','--untracked-files=all','--',*paths).splitlines()
+        if uncommitted:
+            raise ValueError(name+': the working tree changes Lean or ledger inputs: '+', '.join(uncommitted[:20]))
+        # The bound sources equal those of the audited commit, so the scripts' own collection must match the report.
+        expected=expected_audit() if name=='AXIOM_AUDIT.json' else expected_replay()
+        wrong={key:[report.get(key),value] for key,value in expected.items() if report.get(key)!=value}
+        if wrong:
+            raise ValueError(name+' does not cover the names or modules recomputed from the sources: '+json.dumps(wrong)[:600])
+        evidence[name]={'sha256':sha(ROOT/relative),'audited_commit':commit,'lean_version':report['lean_version'],
+                        'bound_paths':paths,'unchanged_since_audited_commit':True,
+                        'recomputed_from_sources':{key:value for key,value in expected.items() if not isinstance(value,(list,dict))},
+                        **({'declarations_checked':report['declarations_checked']} if name=='AXIOM_AUDIT.json' else
+                           {'modules_replayed':report['modules_replayed'],'checker':report['checker']})}
+    text=(ROOT/'companion/current_verification.tex').read_text()
+    stated=['checked '+str(evidence['AXIOM_AUDIT.json']['declarations_checked'])+' Lean names','('+str(evidence['KERNEL_REPLAY.json']['modules_replayed'])+' modules;']
+    if not all(phrase in re.sub(r'\s+',' ',text) for phrase in stated):
+        raise ValueError('companion/current_verification.tex does not state the counts of the bound reports: '+json.dumps(stated))
+    record('October Lean evidence bound to the frozen sources',True,{'head':head,'reports':evidence,'companion_states':stated,
+           'scope':'Recorded October axiom audit and kernel replay, bound by git history; not re-run here.'})
+except Exception as error:
+    record('October Lean evidence bound to the frozen sources',False,type(error).__name__+': '+str(error))
+coverage=subprocess.run([sys.executable,'editorial/lean_coverage/check_coverage.py','--strict'],cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+coverage_lines=coverage.stdout.splitlines()
+record('Lean coverage register strict check',coverage.returncode==0,{'command':['python3','editorial/lean_coverage/check_coverage.py','--strict'],
+       'exit_code':coverage.returncode,'total':next((l for l in coverage_lines if l.startswith('TOTAL: ')),None),
+       'open_discrepancies':sum(1 for l in coverage_lines if l.startswith('DISCREPANCY ')),
+       'problems':[l for l in coverage_lines if l.startswith('PROBLEM ')][:20],'stderr':coverage.stderr[-2000:]})
+out={'status':'PASS' if all(r['status']=='PASS' for r in results) else 'FAIL','scope':'Read-only release inputs; fresh compilation is evidenced by separate hashed logs. Page-level visual approval is recorded separately. The October axiom audit and kernel replay are bound to the sources by git history, not re-run.','checks':results}
 (ROOT/'editorial/logs/release_integrity.json').write_text(json.dumps(out,indent=2)+'\n')
 print(json.dumps(out,indent=2))
 if out['status']!='PASS':raise SystemExit(1)

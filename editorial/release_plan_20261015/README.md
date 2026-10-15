@@ -20,3 +20,17 @@ repository will do), and `H` is the September checkout on the MacBook, which hol
 the sealed Lean host cache and the earlier editions' archives and must stay
 untouched. The open items are tracked in `TODO_LEAN_REVIEW.md` ("Release receipts
 are now stale").
+
+After an independent review of the release tooling (15 October,
+`editorial/release_20261015/TOOLING_REVIEW.md`), two parts of the plan changed:
+
+- the order of Phase 2: the Lean evidence (axiom audit and kernel replay) comes
+  after every change to the claim ledger, the coverage registers and the counts
+  printed in `companion/current_verification.tex`, since the release-input check
+  binds the evidence to them (section "Run order" of
+  `editorial/release_20261015/README.md`);
+- the Lean host (D2, D3): an APFS copy (`cp -cR`) of H's `bfgs_lean_stage1/.lake`
+  and `.toolchain`, outside the temporary directories, instead of H itself. The
+  copy passes the cache-binding check, and a full scratch validation against it
+  left H unchanged, while linking H itself writes to it (elan's `known-projects`
+  file, git index locks in its dependency checkouts).

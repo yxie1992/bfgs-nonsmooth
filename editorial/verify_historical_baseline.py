@@ -8,6 +8,21 @@ This wrapper preserves that failure, compares the frozen inputs, and runs the
 entire unmodified gate in a clean detached worktree at the historical release.
 It does not replace the current article/companion or supplemental Lean gates.
 Git history (including the baseline) must first be restored in an archive.
+
+Release tooling T1 (October 2026 edition): the added paths that the wrapper
+accepts in the global Lean diff are recorded in ADDED_LEAN_SCOPES. Besides the
+added editorial Lean files of the September supplements, they now include the
+added October package bfgs_lean_article/ (status A only), which requires the main
+library ../bfgs_lean_stage1 by path and changes none of its files. Relative to
+the citation baseline every path in these scopes is new, so the scope test cannot
+see later edits there: the September editorial Lean files are therefore required
+unchanged since the 13 September release 3e8b5c6 (any added, modified, deleted or
+renamed editorial/**/*.lean path fails), and the October package is bound by
+editorial/verify_release_inputs.py (T3). A modified, deleted or renamed Lean path
+of the main library still fails. The diff is read with -z, so a non-ASCII path is
+not misread. The legacy gate, its expected failure at the current commit and every
+other check are unchanged; SUMMARY.json records the allowed scopes and the diff
+entries of each scope.
 """
 from __future__ import annotations
 
@@ -25,10 +40,48 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = '00362c0249262d182866f14bac756a7c4edac95c'
+SEPTEMBER_RELEASE = '3e8b5c6ff5f4ef663718c74776ecc78ca3527db4'
 PROJECT_NAME = 'bfgs_lean_stage1'
 GATE = 'scripts/verify_rigorous_master_report.py'
 ATTRIBUTION_GATE = 'scripts/verify_report_attributions.py'
 LEAN_PATHS = ['*.lean', '*lean-toolchain', '*lakefile.toml', '*lake-manifest.json']
+# Added (status A) paths that the historical global-diff assertion may meet at
+# the current commit, each with its recorded reason (T1, October 2026).
+ADDED_LEAN_SCOPES = [
+    {'scope': 'editorial/**/*.lean', 'status': 'A',
+     'reason': 'Added article-only editorial Lean supplements (September 2026); compiled and audited by their own runners.'},
+    {'scope': 'bfgs_lean_article/**', 'status': 'A',
+     'reason': 'Added October 2026 article package (supplements compiled in place, new modules, Lean coverage modules); '
+               'it requires the unchanged main library ../bfgs_lean_stage1 by path and modifies none of its files.'},
+]
+
+
+def added_scope(status, name):
+    """The recorded scope of an allowed added Lean path, or None."""
+    parts = Path(name).parts
+    if status != 'A' or not parts:
+        return None
+    if parts[0] == 'editorial' and name.endswith('.lean'):
+        return ADDED_LEAN_SCOPES[0]['scope']
+    if parts[0] == 'bfgs_lean_article' and len(parts) > 1:
+        return ADDED_LEAN_SCOPES[1]['scope']
+    return None
+
+
+def name_status(text):
+    """Records of `git diff --name-status -z`: [status, path], or [status, 'old<TAB>new'] for a rename or copy."""
+    fields = text.split('\0')
+    if fields and fields[-1] == '':
+        fields.pop()
+    rows, i = [], 0
+    while i < len(fields):
+        status = fields[i]
+        count = 2 if status[:1] in ('R', 'C') else 1
+        require(status and i + count < len(fields) + 1 and len(fields[i + 1:i + 1 + count]) == count,
+                'Unexpected Git diff record format')
+        rows.append([status, '\t'.join(fields[i + 1:i + 1 + count])])
+        i += 1 + count
+    return rows
 
 
 def utc():
@@ -188,20 +241,32 @@ def main():
 
         citation_baseline = json.loads((historical / PROJECT_NAME /
             'master_report/authoring/citation_revision/BASELINE.json').read_text())['source_commit']
-        changed_text = git('diff', '--name-status', citation_baseline, '--', *LEAN_PATHS,
+        changed_text = git('diff', '--name-status', '-z', citation_baseline, '--', *LEAN_PATHS,
                            label='08_current_global_lean_diff', cwd=current)
-        changed = [line.split('\t', 1) for line in changed_text.splitlines()]
+        changed = name_status(changed_text)
         require(all(len(row) == 2 for row in changed), 'Unexpected Git diff record format')
         summary['historical_citation_baseline'] = citation_baseline
         summary['current_global_lean_diff'] = changed
+        # Relative to the citation baseline every editorial supplement path is 'added', so the scope test
+        # below cannot see a later edit, rename or deletion there; bind them to the 13 September release.
+        git('cat-file', '-e', SEPTEMBER_RELEASE + '^{commit}', label='08b_september_release_history')
+        since_september = git('diff', '--name-status', SEPTEMBER_RELEASE, current_commit, '--', 'editorial/*.lean',
+                              label='08c_editorial_lean_since_september_release')
+        require(not since_september, 'Editorial Lean files changed since the 13 September release: '
+                + since_september[:400])
+        summary['editorial_lean_unchanged_since_september_release'] = SEPTEMBER_RELEASE
 
         argv = [sys.executable, GATE, '--node', node]
         code, out, err = command(argv, '09_current_head_public_gate', current / PROJECT_NAME)
         summary['current_head_public_gate_exit_code'] = code
+        summary['allowed_added_lean_scopes'] = ADDED_LEAN_SCOPES
+        summary['current_global_lean_diff_by_scope'] = {
+            scope['scope']: sum(1 for status, name in changed if added_scope(status, name) == scope['scope'])
+            for scope in ADDED_LEAN_SCOPES}
         if changed:
-            require(all(status == 'A' and Path(name).parts[0] == 'editorial'
-                        and name.endswith('.lean') for status, name in changed),
-                    'Current history differs beyond added editorial Lean files; investigate explicitly')
+            require(all(added_scope(status, name) is not None for status, name in changed),
+                    'Current history differs beyond added editorial Lean files and the added article package; '
+                    'investigate explicitly')
             require(code != 0 and 'Changed Lean proof or toolchain inputs' in err
                     and 'verify_report_attributions.py' in err,
                     'Current HEAD did not fail at the expected unchanged historical global-diff assertion')

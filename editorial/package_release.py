@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Package a committed, reviewed source freeze with unambiguous release metadata."""
+"""Package a committed, reviewed source freeze with unambiguous release metadata.
+
+Release tooling T5 (October 2026 edition): the AUTHOR_REVIEW_README.md written
+into the archive also gives the two correspondence checks and the commands for
+the October Lean package bfgs_lean_article (build, axiom audit, kernel replay,
+coverage check), as in bfgs_lean_article/README.md, and what the release gate
+checks of the recorded audit and replay. Packaging is unchanged.
+"""
 from pathlib import Path, PurePosixPath
 import datetime
 import hashlib
@@ -169,12 +176,20 @@ helper checks the original member hashes and refuses an existing .git:
     python3 _archive/restore_git_history.py
     bash editorial/build.sh
     python3 editorial/verify_historical_baseline.py
+    python3 editorial/verify_historical_correspondence.py
+    python3 editorial/release_20261015/refresh_correspondence.py --check
+    python3 editorial/lean_coverage/check_coverage.py --strict
     python3 editorial/verify_release_inputs.py
 
 Entry points are paper/master.tex and companion/master.tex. The unchanged
 historical gate is replayed at its exact original release commit; the wrapper
 preserves the later-HEAD citation-only failure and verifies the frozen inputs.
-Current article/companion checks and supplemental Lean audits are separate.
+Likewise the 13 September correspondence check, which rejects every statement
+change, is replayed unchanged at its release commit 3e8b5c6; the October
+correspondence revision (editorial/release_20261015/) lists every changed
+statement, display, proof passage and anchored passage with its correction items
+and Lean coverage register items. Current article/companion checks and
+supplemental Lean audits are separate.
 
 Fresh Lean compilation requires the pinned toolchain and dependencies omitted
 as reproducible caches. Follow bfgs_lean_stage1/README.md and its bootstrap
@@ -194,6 +209,31 @@ state what was actually built; no new empty-cache library build is implied.
 _archive/CONTENTS.json records the bytes, permissions and hashes of every other
 archive member. The delivered text is for author review; reserved human actions
 remain in editorial/AI_AND_AUTHOR_ACTIONS.md.
+
+The October 2026 Lean package bfgs_lean_article (the article supplements
+compiled in place, new modules, and the Lean coverage modules of every claim of
+both documents, registered in editorial/lean_coverage/register/) requires the
+main library ../bfgs_lean_stage1 by path and reuses its Mathlib checkout and
+cache. With that cache in place (bfgs_lean_article/README.md; never run lake
+update there), from the repository root:
+
+    cd bfgs_lean_article && lake build
+    python3 scripts/axiom_audit.py --jobs 6 --report /tmp/AXIOM_AUDIT.json
+    python3 scripts/kernel_replay.py --checker-repo /path/to/lean4checker --self-test --report /tmp/KERNEL_REPLAY.json
+    cd .. && python3 editorial/lean_coverage/check_coverage.py --strict
+
+lean4checker must be checked out at the tag of lean-toolchain (v4.19.0) and
+built with lake build first (on macOS 26 with the system linker:
+LIBRARY_PATH=$HOME/.elan/toolchains/leanprover--lean4---v4.19.0/lib
+LEAN_CC=/usr/bin/clang lake build; see HANDOFF.md); --write-guard, which
+regenerates bfgs_lean_article/BfgsArticleAxioms.lean, is not needed to reproduce
+the audit. The committed bfgs_lean_article/AXIOM_AUDIT.json and KERNEL_REPLAY.json
+record the October runs and the commit they audited; editorial/verify_release_inputs.py
+checks that no Lean file, Lake configuration, audit script, claim ledger or
+coverage register (for the kernel replay: no Lean file, Lake configuration or
+script) changed since that commit, and that the reports cover every name and
+module that their scripts collect from the sources. The archive validation does
+not compile this package.
 '''
             add('AUTHOR_REVIEW_README.md', readme.encode())
             contents = {'schema_version': 2, 'source_commit': commit, 'root_directory': ROOT.name,
