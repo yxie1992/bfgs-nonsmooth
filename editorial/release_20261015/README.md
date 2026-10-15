@@ -10,19 +10,20 @@ correspondence revision, D5 = T1, D6 = T3, D7 = freeze only when
 "Run order" and "Release host" below. The open release checks C1–C18 are tracked
 in `TODO_LEAN_REVIEW.md` ("Release receipts are now stale").
 
-Contents now (release tooling, phase A and its fix pass, by AI agents, Claude in
-OpenCode):
+Contents now (release tooling, phase A and its fix pass, and step 4 of the run
+order, by AI agents, Claude in OpenCode):
 
 | File | Role |
 |---|---|
 | `refresh_correspondence.py` | The October correspondence revision (T4): `--snapshot`, `--propose`, `--write`, `--check` |
 | `prior_mapping/` | Byte copies of the baseline commit `3e8b5c6`, with `MANIFEST.json` (SHA-256 of each file) |
-| `CHANGES.json` | The reviewed table of changes; **empty until the sources are final** |
+| `CHANGES.json` | The reviewed table of changes: 77 rows, one per changed unit (step 4 of "Run order") |
+| `mapping_refresh.json` | The receipt of `--write` |
+| `T4_REVIEW.md` | The independent review of the 77 rows and its fix pass |
 | `TOOLING_REVIEW.md` | The independent review of the release tooling and its fix pass |
 | `README.md` | This file |
 
-Written by the run (phase B and later): `mapping_refresh.json` (the receipt of
-`--write`), and the release records, as in
+Written by the run (after step 4): the release records, as in
 `editorial/scientific_exposition_20260913/`: `REVIEW_LOG.md`, `WORKLOG.md`, the
 visual review records, `release_integrity.log`, `package.log`,
 `archive_validation.log`, `final_receipt_review.json`, `source_push.json`,
@@ -179,7 +180,9 @@ since `3e8b5c6`: statements `art:local-failure-lower`, `art:lower_hyperbolic`,
 `art:quadratic_failure`, `art:seed_cycle`; four displays; tables
 `art:regularity-map` and `art:trial_table`; six proofs; three negative proof
 passages; six root passages (two of them in `research_story.tex`); both
-appendices. The article corrections M30–M41 will add more.
+appendices. The article corrections M30–M41 will add more. The table of step 4,
+for the sources at `5b5c273`, lists 77 changes; its independent review and fix
+pass are `T4_REVIEW.md`.
 
 ## Release host
 
@@ -202,9 +205,14 @@ outside the macOS temporary directory (which macOS may purge):
     # expect "status": "PASS", "object_count": 8853, "sealed_cache_file_count": 32470
 
 The release workspace W links `bfgs_lean_stage1/.lake` and `.toolchain` to
-`$HOST`, never to H; `validate_archive.py` then uses W's links (or
-`--lean-cache-root $HOST`). Never run `lake` in `$HOST`. Delete `$HOST` after the
-release; that does not touch H.
+`$HOST`, never to H. Run `validate_archive.py` from W without `--lean-cache-root`:
+its default host is W's own `bfgs_lean_stage1`, whose frozen sources, Lake files
+and dependency checkouts it compares with the extraction, and it links the
+extraction's `.lake` and `.toolchain` to the targets of W's links, the copy. Do not
+pass `--lean-cache-root $HOST`: that option expects a complete `bfgs_lean_stage1`
+directory (sources, Lake files and caches), and the copy holds only `.lake` and
+`.toolchain`. Never run `lake` in `$HOST`. Delete `$HOST` after the release; that
+does not touch H.
 
 ## Run order
 

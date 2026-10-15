@@ -328,17 +328,20 @@ that may not exist.
       `3e8b5c6`) and give its current role to C2's revision. Tooling ready:
       `editorial/verify_historical_correspondence.py` replays it at `3e8b5c6` and
       records its result at HEAD; `validate_archive.py` runs it.
-    - [ ] C2: the three "Reviewed source contracts" checks of
+    - [x] C2: the three "Reviewed source contracts" checks of
       `verify_release_inputs.py` fail (hashes of the corrected files). Fix: a new
       bounded correspondence revision, baseline `3e8b5c6`, that lists every
       changed statement and display with its correction item and Lean coverage
       item (tooling T4 of the plan). Tooling ready:
       `editorial/release_20261015/refresh_correspondence.py` (`--propose`,
       `--write`, `--check`); its `CHANGES.json` is filled for the final sources
-      and `--write` is run in step 4 of the run order.
-    - [ ] C3: the ledger's copied `proof_locations` (for example those of
+      and `--write` is run in step 4 of the run order. Done on 15 October 2026:
+      77 rows, each with its correction items and coverage items, independently
+      reviewed (`editorial/release_20261015/T4_REVIEW.md`); `--check` passes,
+      and in a scratch clone the three checks pass.
+    - [x] C3: the ledger's copied `proof_locations` (for example those of
       `lower_curvature.tex`, below) are refreshed by C2's revision (T4's
-      `--write`).
+      `--write`). Done on 15 October 2026 with C2.
     - [ ] C4: `verify_historical_baseline.py` fails on the files added under
       `bfgs_lean_article/`. Fix: allow added paths there too, with a recorded
       reason (T1; tested by the study). Tooling ready (T1); the September
@@ -413,13 +416,19 @@ that may not exist.
       two appendices the September revision preserved, and the root and
       deduction passages.
     - `release/work/` stays as an empty directory after an archive validation.
+    - Optional (O-6 of the review of C2's revision):
+      `companion/PROOF_CORRESPONDENCE.html` does not show the October row ids
+      that the ledger records (`october_revision`). Changing
+      `editorial/assemble_claim_ledger.py` needs a new `--write` of
+      `editorial/release_20261015/`, whose receipt pins it.
   - Since the P3d edit, the `proof_locations` line numbers and passage hashes
     for `paper/appendices/lower_curvature.tex` in the ledger are also stale.
     They are copied from the sealed 13 September negative review and are now
     off by several lines (the M6 edits in `TODO_MANUSCRIPT_REVIEW.md` added four
     more). The records' `location` fields are recomputed and current.
   - `refresh_correspondence.py` cannot refresh these, because it rejects any
-    statement change. That needs a new correspondence revision.
+    statement change. That needs a new correspondence revision. (Done on 15
+    October 2026: C2's revision refreshed them.)
 - [ ] **Lean linter warnings (optional, cosmetic).**
   - The main library emits 1244 style warnings.
   - Cleaning them would change hash-pinned library files, so do it only together

@@ -1111,7 +1111,10 @@ def build(mode):
         'changes_table': {'path': CHANGES.relative_to(ROOT).as_posix(), 'sha256': sha(CHANGES), 'rows': len(table['changes'])},
         'active_article_inputs': {p: sha(ROOT / p) for p in paths},
         'companion_inputs': {p: sha(ROOT / p) for p in COMPANION_INPUTS},
-        'normalization': 'All whitespace removed; no notation aliases.',
+        'normalization': 'Whitespace removed, except where it separates TeX tokens: whitespace after a control word '
+                         'and before a letter is kept as one space, and a control space (the control symbol formed by '
+                         'a backslash and a space or a line end) is kept as a backslash and one space; no notation '
+                         'aliases.',
         'statement_preservation': preserved('statement:'),
         'labeled_display_preservation': preserved('display:'),
         'table_and_figure_preservation': preserved('float:'),

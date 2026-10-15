@@ -387,7 +387,10 @@ record('All named article statements mapped',not ledger['unmapped_named_article_
 record('Complete companion source and export preservation',len(ledger['companion_source_span_records'])==172 and len({n for r in ledger['companion_source_span_records'] for n in r['full_formal_exports']})==3087)
 record('Root mathematical deductions have no remaining obligations',not root['remaining_math_obligations'])
 for d in read('editorial/logs/document_checks.json')['documents']:
- record(d['document']+' PDF matches successful resolved, overflow-free build',sha(ROOT/d['pdf'])==d['sha256'] and not d['errors'] and not d['overfull_warnings'],{'pages':d['pages'],'sha256':d['sha256']})
+ details={'pages':d['pages'],'sha256':d['sha256']}
+ try:matches=sha(ROOT/d['pdf'])==d['sha256']
+ except OSError as error:matches=False;details['error']=type(error).__name__+': '+str(error)
+ record(d['document']+' PDF matches successful resolved, overflow-free build',matches and not d['errors'] and not d['overfull_warnings'],details)
 for p in [ROOT/'paper/sections',ROOT/'paper/appendices',ROOT/'paper/statements']:
  todo=[]
  for f in p.glob('*.tex'):
