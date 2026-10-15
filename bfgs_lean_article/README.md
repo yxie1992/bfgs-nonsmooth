@@ -49,7 +49,8 @@ package's principal declarations. It fails if a cited name is missing or if any
 axiom other than `propext`, `Classical.choice` and `Quot.sound` appears. The audit
 imports `BfgsArticle`, so the names of a coverage module resolve only once
 `BfgsArticle.lean` imports it. The names are split across `--jobs` concurrent Lean
-processes (about 5 minutes with 6). Private helper
+processes (with 6: about 5 minutes for 3862 names on 24 cores, 6.5 minutes for
+the 5403 names of 15 October 2026 on a 10-core MacBook). Private helper
 names (`_private.…`) in the supplements' declaration lists cannot be named outside
 their module; they are listed in the report, and their axioms are part of those of
 the public declarations that use them. `AXIOM_AUDIT.json` records the result, the
@@ -76,7 +77,9 @@ process, `--jobs` at a time. The two root modules contain only `import` lines an
 are listed instead of replayed. Mathlib and Lean core are not replayed. With
 `--self-test` the checker's own `test.sh` runs first and must detect its
 deliberately forged test declarations. `KERNEL_REPLAY.json` records the result
-and the checker's tag, commit and binary hash.
+and the checker's tag, commit and binary hash. With the default 8 jobs, the
+replay of the 783 modules of 15 October 2026 took 27 minutes on a 10-core
+MacBook.
 
 ## New modules
 
@@ -109,9 +112,9 @@ originals. Their files are all in this package.
 
 ## Coverage modules
 
-`BfgsArticle/Coverage/Article/` (15 modules, complete) and
-`BfgsArticle/Coverage/Companion/` (in progress) are the Lean coverage of the
-article and the companion: one module per TeX file, namespaces
+`BfgsArticle/Coverage/Article/` (15 modules) and
+`BfgsArticle/Coverage/Companion/` (18 modules) are the Lean coverage of the
+article and the companion, both complete: one module per TeX file, namespaces
 `BfgsCoverage.Article.<Name>` and `BfgsCoverage.Companion.<Name>`. Each
 declaration states a claim of the documents, and its docstring names the claim's
 register item and source lines. The registers in

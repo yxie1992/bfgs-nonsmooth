@@ -733,9 +733,9 @@ in the line-by-line reading. The chapters are generated: change them through
   (Chapter 14 and Appendix B).** All are `NON_CLAIM`; refresh them in step 2.
   - `current_verification.tex:8` (hand-written; printed page 88): "All 2026 Lean
     names cited by the article ledger or declared in the package depend only on …".
-    `bfgs_lean_article/AXIOM_AUDIT.json` checks 3862 names, and the number grows with
-    the companion coverage. Replace `All 2026 Lean names` (occurs once) by the count of
-    the final audit. (`C/current_verification/prose/004`)
+    `bfgs_lean_article/AXIOM_AUDIT.json` checks 5403 names (15 October, with every
+    coverage module). Replace `All 2026 Lean names` (occurs once) by the count of the
+    final audit. (`C/current_verification/prose/004`)
   - `14_E.tex:16` (generated; Section 14.1, printed page 89): "… but each retained
     assertion here has a reviewed formal correspondence." The coverage found retained
     assertions that are false or misreferenced as written (M12–M29). Once those

@@ -12,6 +12,11 @@ was built from scratch here, and every item below except P3d (an optional paper 
 is resolved. Resolutions are recorded under each item and in
 `bfgs_lean_article/README.md`.
 
+**Status (15 October 2026):** the Lean coverage of every claim of the article and
+the companion is complete (fourth pass below). Three items are open: the stale
+release receipts (expected), the optional linter warnings, and the Chapter 7 runs
+that may not exist.
+
 ## Summary
 
 - No Lean misuse found. A static scan of `bfgs_lean_stage1/BfgsVerification/`
@@ -77,21 +82,23 @@ is resolved. Resolutions are recorded under each item and in
     every Lean name that `editorial/CLAIM_LEDGER.json` cites, for the article and
     (since 14 October) the companion, every Lean name of the coverage register
     (`editorial/lean_coverage/register/`), and the new package's principal
-    declarations: 3862 declarations at commit `a2028c9` (2026 before the
-    companion was added, 3177 before the coverage register).
+    declarations: 5403 declarations at commit `9f03d7c` (15 October, with every
+    coverage module; 3862 at `a2028c9`, 2026 before the companion was added, 3177
+    before the coverage register).
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (3856 use all three; five use only `propext`; one uses only
+      `Quot.sound` (5396 use all three; five use only `propext`; two use only
       `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
     - The 182 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
-  - Kernel replay (14 October, commit `023f555`): lean4checker v4.19.0 replayed
-    every declaration of all 749 project modules through the kernel; no failures
-    (`bfgs_lean_article/KERNEL_REPLAY.json`). Its own self-test, which must
-    reject deliberately forged declarations, passed first. This replay predates
-    the Lean coverage modules; it is rerun when the coverage is complete.
+  - Kernel replay (15 October, commit `9f03d7c`, with every coverage module):
+    lean4checker v4.19.0 replayed every declaration of all 783 project modules
+    through the kernel; no failures (`bfgs_lean_article/KERNEL_REPLAY.json`). Its
+    own self-test, which must reject deliberately forged declarations, passed
+    first. The replay of 14 October (commit `023f555`) covered the 749 modules
+    that existed before the coverage modules.
   - Found along the way: 14 ledger-cited names
     (`BfgsVerification.OriginalClaimInterpretation.*`, supporting exports of
     `art:mixed-benchmark` and `art:mixed-inward-remainder`) live in an
@@ -324,13 +331,16 @@ is resolved. Resolutions are recorded under each item and in
   the companion were outside the audit. They are now included (3177 names in
   all); every one exists and uses only the standard axioms. Since the Lean
   coverage began, the audit also checks every Lean name of the coverage
-  registers (3862 names at `a2028c9`).
+  registers (3862 names at `a2028c9`; 5403 at `9f03d7c`, with every coverage
+  module, 15 October).
 - [x] **Independent kernel replay.** lean4checker re-checked every declaration of
-  every project module (749 modules; the two root modules only import). See the
-  P1 item above. To be rerun once the coverage modules are complete.
-- [ ] **Literal Lean coverage of every claim** of the article and the companion:
-  tracked in `TODO_LEAN_COVERAGE.md`. The article is complete (14 October); the
-  companion is in progress.
+  every project module (749 modules at `023f555`; 783 at `9f03d7c`, with every
+  coverage module, 15 October; the two root modules only import). See the P1 item
+  above.
+- [x] **Literal Lean coverage of every claim** of the article and the companion:
+  tracked in `TODO_LEAN_COVERAGE.md`. Complete: the article on 14 October, the
+  companion on 15 October. The discrepancies it found are M7–M29 and the
+  wording points W1–W43 in `TODO_MANUSCRIPT_REVIEW.md`.
 - [ ] **Companion Chapter 7 (H): run statements that may be vacuous.** Theorem 7.B
   (ii) (`companion/chapters/07_H.tex:72-89`, `C/07_H/heading/002`) and the
   common-tilt family $f(u,t)=t+\max_i b_i^\top u$ (lines 94–100, 448–464:

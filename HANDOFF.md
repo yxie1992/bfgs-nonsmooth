@@ -14,19 +14,19 @@ the same day.
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
 | Manuscript review | M1–M6 fixed on 13 October; M7–M29 (from M12 on in the companion) and the companion's wording points W1–W43, found by the Lean coverage, stay open until step 2 | `TODO_MANUSCRIPT_REVIEW.md` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
-| Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, fixed, committed and imported | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
+| Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 
-Next: the end of the companion phase (step 5 under "Resuming the companion
-coverage"): the axiom audit and the kernel replay on a clean tree.
+The Lean work (step 1 of the plan in `AGENTS.md`) is done. Next: step 2, under
+"After the Lean coverage" below.
 
 Latest checks:
 
-- Axiom audit of commit `a2028c9` on a clean tree: PASS. 3862 declarations (every
-  ledger, coverage-register and package name) use only `propext`,
-  `Classical.choice` and `Quot.sound` (`bfgs_lean_article/AXIOM_AUDIT.json`).
-- Kernel replay of `023f555` with lean4checker v4.19.0: PASS, 749 modules
-  (`bfgs_lean_article/KERNEL_REPLAY.json`). It predates the coverage modules;
-  rerun it at the end of the companion phase.
+- Axiom audit of commit `9f03d7c` (15 October, every coverage module) on a clean
+  tree: PASS. 5403 declarations (every ledger, coverage-register and package name)
+  use only `propext`, `Classical.choice` and `Quot.sound`
+  (`bfgs_lean_article/AXIOM_AUDIT.json`); 6.5 minutes on the MacBook.
+- Kernel replay of `9f03d7c` with lean4checker v4.19.0: PASS, 783 modules
+  (`bfgs_lean_article/KERNEL_REPLAY.json`); 27 minutes on the MacBook with 8 jobs.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
   modules (last run on 15 October with every companion module: 104 s);
   `check_coverage.py` exits 0 (also with `--strict --allow-discrepancies` on every
@@ -125,17 +125,18 @@ the Mac names another scratch directory, use that one.
    (`01_I.tex`, `research_story.tex`) and compE (`14_E.tex`,
    `current_verification.tex`, `correspondence.tex`), the planned compFront split
    in two, after all chapters, since they map onto chapter items.
-5. **End of the companion phase**, on a clean, committed tree. Each report records
-   the commit and tree state at its start, so write the reports outside the
-   repository and copy them in afterwards. Lower `--jobs` with less memory.
+5. **End of the companion phase**, on a clean, committed tree (done on 15 October
+   2026; results under "Latest checks"). Each report records the commit and tree
+   state at its start, so write the reports outside the repository and copy them in
+   afterwards. Lower `--jobs` with less memory. `python3` must be 3.11 or newer.
 
        cd bfgs_lean_article && lake build
-       mkdir -p /tmp/opencode
-       LEAN_NUM_THREADS=10 python3.12 scripts/axiom_audit.py --jobs 6 --write-guard --report /tmp/opencode/AXIOM_AUDIT.json
-       git clone https://github.com/leanprover/lean4checker /tmp/opencode/lean4checker
-       (cd /tmp/opencode/lean4checker && git checkout v4.19.0 && lake build)
-       python3.12 scripts/kernel_replay.py --checker-repo /tmp/opencode/lean4checker --self-test --jobs 8 --report /tmp/opencode/KERNEL_REPLAY.json
-       cp /tmp/opencode/AXIOM_AUDIT.json /tmp/opencode/KERNEL_REPLAY.json .
+       S=/tmp/opencode; mkdir -p $S   # any scratch directory outside the repository
+       LEAN_NUM_THREADS=10 python3 scripts/axiom_audit.py --jobs 6 --write-guard --report $S/AXIOM_AUDIT.json
+       git clone https://github.com/leanprover/lean4checker $S/lean4checker
+       (cd $S/lean4checker && git checkout v4.19.0 && lake build)
+       python3 scripts/kernel_replay.py --checker-repo $S/lean4checker --self-test --jobs 8 --report $S/KERNEL_REPLAY.json
+       cp $S/AXIOM_AUDIT.json $S/KERNEL_REPLAY.json .
 
    `BfgsArticleAxioms.lean` should stay unchanged (182 pinned declarations).
    Commit the reports, update `TODO_LEAN_COVERAGE.md`, `TODO_LEAN_REVIEW.md` and

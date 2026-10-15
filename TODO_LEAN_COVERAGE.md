@@ -61,8 +61,10 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       and imported by `BfgsArticle.lean` (groups above).
 - [x] The axiom audit includes every Lean name of the registers (audit of
       `a2028c9`: 3862 declarations, PASS).
-- [ ] When the companion is done: rerun the axiom audit and the kernel replay
-      (the committed replay predates the coverage modules).
+- [x] When the companion is done: rerun the axiom audit and the kernel replay
+      (15 October 2026, commit `9f03d7c`, clean tree: audit PASS, 5403
+      declarations, standard axioms only; kernel replay PASS, 783 modules;
+      `bfgs_lean_article/AXIOM_AUDIT.json`, `KERNEL_REPLAY.json`).
 - [ ] Discrepancies go to `TODO_MANUSCRIPT_REVIEW.md` (article: M7–M11; companion:
       M12–M29 and the recurrences under M8, M12 and M24; wording points W1–W43). When the
       manuscript is corrected, give each `DISCREPANCY` item its final status (for

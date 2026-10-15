@@ -13,11 +13,12 @@ to resume.
 1. **Lean coverage of every claim** of the article and the companion. The author:
    "We want lean to have 100% coverage for all proofs and claims on both main
    manuscript and companion. Feel free to author lean codes." Method:
-   `editorial/lean_coverage/README.md`; progress: `TODO_LEAN_COVERAGE.md`. The
-   article is done; the companion is in progress.
+   `editorial/lean_coverage/README.md`; progress: `TODO_LEAN_COVERAGE.md`. Done:
+   the article on 14 October 2026, the companion on 15 October.
 2. **Only after the Lean work is completely done:** a line-by-line reading of the
    article's proofs, and the manuscript corrections listed in
-   `TODO_MANUSCRIPT_REVIEW.md` (M7 onwards).
+   `TODO_MANUSCRIPT_REVIEW.md` (M7 onwards, and the companion's wording points
+   W1 onwards).
 3. The author's own expert check.
 
 ## Standing preferences
@@ -91,7 +92,8 @@ The scripts in `editorial/`, `editorial/lean_coverage/` and
 `bfgs_lean_article/scripts/` need Python 3.11 or newer (`kernel_replay.py` uses
 `tomllib`) and only its standard library; `editorial/render_review.py` also needs
 Pillow and Poppler. Long runs (a clean build of the main library: 10+ minutes;
-the axiom audit and the kernel replay: about 5 minutes each) go in the background
+the axiom audit and the kernel replay: about 5 minutes each on the 24-core Linux
+machine, 6.5 and 27 minutes on the 10-core MacBook) go in the background
 or get a long timeout. To wait for a detached run, poll its log for an end marker
 (`pgrep -f` also matches the waiting shell).
 

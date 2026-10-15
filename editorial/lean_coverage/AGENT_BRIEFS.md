@@ -234,7 +234,8 @@ Prompt header used for every companion group (fill the braces):
 > Do everything the brief says (modules, registers, discrepancies, checker exit 0), edit no
 > other file, do not commit, and finish with the final answer the brief describes.
 
-Wave 1 (started 14 October 2026, paused after the reading phase; pause notes exist):
+Wave 1 (started 14 October 2026, paused after the reading phase, resumed on the MacBook
+the same day from the pause notes, done on 14 October):
 
 - **compM** — `02_M.tex` (288 lines; 52 items), module `Ch02M`. Article: `Energy.lean`
   (`AdmissibleBFGSRun`, invariants, reference energy, art:minor-hierarchy,
@@ -277,7 +278,7 @@ Wave 1 (started 14 October 2026, paused after the reading phase; pause notes exi
   such as line 413 ("This chapter uses the fixed line-search pair…"). M8 recurs at line 3.
   φ_b (line 284) vs the article's ψ_b.
 
-Wave 2 (not started):
+Wave 2 (started 14 October 2026, done on 15 October):
 
 - **compTA** — `03_T.tex` (249 lines; 30 items) and `08_A.tex` (139 lines; 16 items),
   modules `Ch03T`, `Ch08A`. Library (T): `ParabolicExampleSeparation`,
@@ -303,7 +304,8 @@ Wave 2 (not started):
   `NormalSpikeRegularity`, `NormalSpikeRational`, `NormalSpikeGeometry`.
 
 Wave 3 (after all chapters; maps to chapter items). The planned group compFront was
-split into two agents, started on 15 October 2026 after waves 1 and 2 were committed:
+split into two agents, started on 15 October 2026 after waves 1 and 2 were committed,
+and done the same day:
 
 - **compI** — `01_I.tex` (393 lines; 22 displays) and `research_story.tex` (67 lines,
   written by hand), modules `Ch01I`, `ResearchStory`. The introduction summarizes every
