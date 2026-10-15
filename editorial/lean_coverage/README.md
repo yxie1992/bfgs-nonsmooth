@@ -30,6 +30,12 @@ standard axioms. Agreed scope (author, 14 October 2026):
 - Lean: `bfgs_lean_article/BfgsArticle/Coverage/Article/<Name>.lean` and
   `.../Coverage/Companion/<Name>.lean`, namespace `BfgsCoverage.Article.<Name>`
   or `BfgsCoverage.Companion.<Name>`. The register field `lean_module` names it.
+- `AGENT_BRIEFS.md`: the briefs of the coverage and reviewer agents, and the
+  prompts of the companion groups.
+- `companion_hints.py` writes `hints/<stem>.json` (git-ignored): for each
+  companion file, its claim-ledger records with their Lean exports.
+- `pause_notes/<group>.md`: the reading notes and item plans of the companion
+  agents paused on 14 October 2026 (see `HANDOFF.md`).
 
 ## Statuses
 
@@ -81,8 +87,10 @@ with `register/A_matrix_algebra.json`, is the model to follow.
 6. **Imports.** Import library modules (`BfgsVerification...`), the article
    supplements (`MixedBenchmark`, `ArticleBranchRegularity`, `ArticleGeometry`,
    `ConvexBalance`, `negative_scaling`, `OriginalClaimInterpretation`) and
-   existing `BfgsArticle.<Module>` files, never the root `BfgsArticle` and never
-   another coverage module.
+   existing `BfgsArticle.<Module>` files, never the root `BfgsArticle`. An article
+   coverage module imports no other coverage module. A companion coverage module
+   may import the article coverage modules (`BfgsArticle.Coverage.Article.*`,
+   complete since 14 October 2026), never another companion coverage module.
 7. **Conventions.** `Vec n := Fin n → ℝ` carries the sup norm; Euclidean
    quantities are explicit (`sqNorm`, `dot`, `euclideanVector`).
 8. **Non-vacuity.** Each module with standing assumptions ends with an `example`
