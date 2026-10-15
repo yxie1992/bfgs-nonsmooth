@@ -1,6 +1,6 @@
 \section{Local convergence: geometry that survives near a minimizer}\label{art:local}\label{art:positive}
 
-The global theorem requires the initial sublevel to lie in the region where
+Theorem~\ref{art:centered} requires the initial sublevel to lie in the region where
 its representation is valid. A local theorem must choose that region before
 seeing a BFGS run or its initial metric. Convexity and a unique minimizer
 supply precisely this localization. We first use it for finite polyhedral
@@ -32,12 +32,12 @@ segment from $x_*$ to $x$ gives
  F(x)-F(x_*)\ge\frac{\norm{x-x_*}}r\delta.
 \]
 Consequently $F$ is coercive, hence has compact sublevels, and
-$\varepsilon=\delta/2$ gives the asserted inclusion. Armijo preserves it.
+$\varepsilon=\delta/2$ gives the asserted inclusion. Armijo preserves it.\qed
 \end{proof}
 
 A finite local partition controls which formulas an inward comparison segment
-can cross. After removing the finitely many cells that miss $x_*$, every
-remaining cell contains $x_*$. Convexity of a cell then keeps the entire
+can cross. Near $x_*$ only cells containing $x_*$ occur: the finitely many
+closed cells that miss $x_*$ avoid a ball around it. Convexity of a cell then keeps the entire
 inward segment in that same cell. Its smooth extension yields quadratic
 model accuracy even if the full gradient jumps across cell boundaries.
 The algorithm need not identify a cell or a manifold; only the comparison
@@ -49,7 +49,7 @@ segment uses the cell geometry.
 First discard cells not containing $x_*$. Each such closed cell has an open
 complement containing $x_*$; finiteness supplies one ball that avoids them all.
 For every remaining cell, its extension domain $V_i$ contains $x_*$.
-Shrink to a common ball $B_r(x_*)\subset U\cap\bigcap_{i:x_*\in P_i}V_i$,
+Shrink to a common ball $B_\rho(x_*)\subset U\cap\bigcap_{i:x_*\in P_i}V_i$,
 and then shrink again so that the gradients of all remaining extensions have
 one Lipschitz bound $L$ there. This uses only finitely many local extensions;
 they need not have shared a domain before shrinking.
@@ -66,13 +66,14 @@ The smooth Taylor estimate along the same segment gives
 \[
  0\le F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x
        \le\tfrac12L\tau^2\norm{r_x}^2
-       \le\tfrac12Lr^2\tau^2.
+       \le\tfrac12L\rho^2\tau^2.
 \]
 The first inequality uses convexity of $F$, not convexity of the extension.
 Lemma~\ref{art:localization} supplies a compact positive sublevel wholly
 contained in this ball, chosen before the run or its matrix. The inward
-condition holds on that sublevel, so Corollary~\ref{art:radial-convergence}
-gives value and iterate convergence. Armijo gives the asserted containment.
+condition holds on that sublevel, with $M=L\rho^2$ and $\theta=1/2$ for every
+band, so Corollary~\ref{art:radial-convergence}
+gives value and iterate convergence. Armijo gives the asserted containment.\qed
 \end{proof}
 
 \begin{corollary}[Smooth losses with polyhedral or quadratic pieces]\label{art:plq}
@@ -85,7 +86,7 @@ piecewise linear-quadratic regularizer, provided the sum has a unique minimizer.
 By piecewise linear-quadratic we mean a representation by quadratic polynomials
 on a finite cover by closed full-dimensional polyhedral cells. Each polynomial is a smooth
 extension of its cell formula; adding the smooth loss preserves the required
-local $C^{1,1}$ extensions. Theorem~\ref{art:polyhedral} applies.
+local $C^{1,1}$ extensions. Theorem~\ref{art:polyhedral} applies.\qed
 \end{proof}
 
 In particular, a finite convex polyhedral penalty, such as a finite sum of
@@ -96,7 +97,7 @@ under the stated uniqueness assumption. Different cells may have different
 quadratic Hessians. A finite maximum of arbitrary quadratic formulas need not
 admit such a polyhedral partition and is not automatically covered.
 There is also no claim that iterates identify a cell or that rejected trials
-remain in the local structural neighborhood.
+remain in the neighborhood $U$ of Theorem~\ref{art:polyhedral}.
 
 \begin{corollary}[A local centered-composite basin]\label{art:local-centered}
 If the representation and smoothness assumptions of
@@ -109,7 +110,7 @@ $x_*$ in value and iterates.
 \begin{proof}
 Shrink to an open convex neighborhood where the representation holds.
 Lemma~\ref{art:localization} gives a compact sublevel contained there.
-Armijo traps the accepted points, and Theorem~\ref{art:centered} applies.
+Armijo traps the accepted points, and Theorem~\ref{art:centered} applies.\qed
 \end{proof}
 
 For a concrete reduction, let
@@ -174,7 +175,7 @@ Neither condition imposes a matrix limit or a lower bound on all eigenvalues
 of a Hessian. A common positive lower Hessian bound is one sufficient way
 to obtain strict contours, but is not required.
 
-Here is the construction near a compact noncritical part of a positive
+Here is the construction near a compact non-affine-critical part of a positive
 level. At a two-branch corner, the independent gradients let us solve
 $f_1(p_j(t))=f_2(p_j(t))=t$ for the corner as the level varies.
 Its velocity $v_j(t)=p_j'(t)$ satisfies
@@ -202,12 +203,13 @@ For a sufficiently short eligible chord, weak Wolfe makes
 $\det(s,w)$ uniformly nonzero relative to $\norm{s}$. Tangent preservation
 then bounds the change of $\log|\det(s,w)|$ by a constant times the
 variation of $F$ along the chord. Convexity bounds that variation by
-$2d$, giving the transport factor $|\log\lambda|\le C d$.
+$2d$, giving $|\log\lambda|\le C d$ for the transport factor $\lambda$ in
+$w(z)=\lambda w(x)+\beta s$.
 Since Armijo gives $d\le(F(x)-F(z))/c_1$, transport is charged to summable
 objective decreases; finite total path length is not required.
 Appendix~\ref{art:planar-appendix} supplies the cutoffs, estimates through
 switching points, and secant bound. These yield one field on a neighborhood
-of the compact level set, not just separate directions at its corners.
+of that compact part of the level, not just separate directions at its corners.
 
 \begin{theorem}[An affine-critical cluster point in the plane]\label{art:planar-cluster}
 Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$, and have
@@ -248,7 +250,7 @@ contradicts the first hypothesis.
 
 Lemma~\ref{art:planar-field}, proved in Appendix~\ref{art:planar-appendix},
 constructs a continuous comparison field $w$ on a neighborhood of the whole
-set $\Gamma$. For each sufficiently close eligible pair in that neighborhood,
+set $\Gamma$. For each sufficiently close eligible pair in that neighborhood with $d\le1$,
 it gives uniform constants $m>0,C,L\ge0$ and scalars $\lambda>0,\beta$ with
 \[
  \begin{gathered}
@@ -256,7 +258,7 @@ it gives uniform constants $m>0,C,L\ge0$ and scalars $\lambda>0,\beta$ with
  w(z)=\lambda w(x)+\beta s,\qquad \lambda^2\le1+Ld.
  \end{gathered}
 \]
-Compactness implies $\operatorname{dist}(x_k,\Gamma)\to0$, so these estimates
+Compactness implies $\operatorname{dist}(x_k,\Gamma)\to0$; with $s_k\to0$ and $d_k\to0$, these estimates
 apply to the entire tail, not just a selected subsequence.
 With $E_k=w(x_k)^TB_kw(x_k)$, the Hessian update and $\widehat B_ks_k=0$ yield
 \[
@@ -268,7 +270,7 @@ With $E_k=w(x_k)^TB_kw(x_k)$, the Hessian update and $\widehat B_ks_k=0$ yield
 The parenthesized quadratic form is nonnegative. Dividing by
 $\prod_{j=J}^{k}(1+Ld_j)$ and summing, exactly as in the proof of
 Theorem~\ref{art:certificate}, bounds $\sum_{k=J}^{N-1}q_k^{-1}$ by a constant
-times $N-J+1$. This contradicts Theorem~\ref{art:reciprocal-growth}.
+times $N-J+1$. This contradicts Theorem~\ref{art:reciprocal-growth}.\qed
 \end{proof}
 
 \begin{corollary}[When affine criticality is correct]\label{art:planar-convergence}
@@ -281,7 +283,7 @@ $\arg\min F$. A unique minimizer gives convergence of the entire sequence.
 The theorem supplies an affine-critical cluster point, which is optimal by
 hypothesis. Its value equals the limiting value of the decreasing objective
 sequence. Hence that value is $F_*$, and compactness gives the distance and
-uniqueness conclusions as in Theorem~\ref{art:certificate}.
+uniqueness conclusions as in Theorem~\ref{art:certificate}.\qed
 \end{proof}
 
 This condition says that nonoptimal points retain equal-rate descent, which
@@ -295,11 +297,11 @@ The extra affine-correctness condition can be verified from the active
 models at the minimizer. Positive optimal multipliers ensure that an affine
 balance cannot lose a branch nearby without losing stationarity; affine
 independence makes that balance unique and continuous. In the plane these
-same assumptions leave at most two active branches at a noncritical point,
+same assumptions leave at most two active branches at a non-affine-critical point,
 which supplies the required regular switching.
 
 \begin{corollary}[Nondegenerate planar smooth maxima]\label{art:planar-max}
-Let $F:\R^2\to\R$ be finite and convex with a unique minimizer $x_*$. Near
+Let ${F:\R^2\to\R}$ be finite and convex with a unique minimizer $x_*$. Near
 $x_*$ suppose $F=\max_{1\le i\le m}f_i$, where the branches are convex and
 $C^2$. Suppose sufficiently low positive sublevels are strictly convex in
 the boundary-segment sense of Theorem~\ref{art:planar-cluster}. For the
@@ -355,7 +357,7 @@ If all relevant branch Hessians have a common positive lower bound on a
 convex neighborhood, subtracting the corresponding positive quadratic
 makes every branch convex. Their maximum is therefore strongly convex
 there. A sufficiently low sublevel lies in that neighborhood and cannot have
-a nontrivial boundary segment, proving the last assertion.
+a nontrivial boundary segment, proving the last assertion.\qed
 \end{proof}
 
 The multiplier geometry is related to the nondegeneracy used in local bundle
@@ -429,7 +431,7 @@ $u^2/2-v^2\ne0$ while $t\to0^+$. The quotient $(y^Tz)^2/t$ is unbounded.
 For each chosen $u$ both endpoint values stay above half the positive tie
 value; hence one fixed positive band precedes the unbounded sequence.
 Choosing $u$ arbitrarily small places that band and those pairs in any
-given neighborhood of zero.
+given neighborhood of zero.\qed
 \end{proof}
 
 The example identifies the extra freedom supplied by moving geometry.

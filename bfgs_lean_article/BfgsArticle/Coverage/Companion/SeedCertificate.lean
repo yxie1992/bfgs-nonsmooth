@@ -116,7 +116,7 @@ theorem root_certificate :
 
 /-! ### The decisions at the nine queries (strict tests of Chapter D) -/
 
-/-- Item `C/seed_certificate/prose/008` (`companion/appendices/seed_certificate.tex:144-145`): "A
+/-- Item `C/seed_certificate/prose/008` (`companion/appendices/seed_certificate.tex:153-154`): "A
 positive derivative at each accepted query supplies weak Wolfe for every permitted curvature
 constant." At each accepted row the derivative of $G$ at the query along $p_j$ is positive, and
 the strict weak Wolfe test of Chapter D, $\nabla G(z_j+\alpha p_j)^Tp_j>c_2g_j^Tp_j$
@@ -151,7 +151,7 @@ theorem positive_slope_wolfe (q : Fin 9) (hq : trialAccept q = true) :
     query_gradient]
   nlinarith
 
-/-- Item `C/seed_certificate/prose/009` (`companion/appendices/seed_certificate.tex:145-147`):
+/-- Item `C/seed_certificate/prose/009` (`companion/appendices/seed_certificate.tex:154-156`):
 "Strict value increase at each rejected query makes Armijo fail, so the routine reaches exactly the
 next displayed bisection." At each rejected row, $G$ at the query exceeds $G(z_j)$, the strict
 Armijo test of Chapter D, $G(z_j+\alpha p_j)<G(z_j)+c_1\alpha g_j^Tp_j$
@@ -228,7 +228,7 @@ theorem currentValueExpr_zero (c d r : ℝ) :
     Fin.sum_univ_two, trialPhase]
 
 /-- Counterexample to the literal reading of Item `C/seed_certificate/prose/006`
-(`companion/appendices/seed_certificate.tex:190`) as printed before its correction of 15 October
+(`companion/appendices/seed_certificate.tex:201`) as printed before its correction of 15 October
 2026 (M15): "The same interval operations give the value enclosures in that table." The table of
 Section `comp:trial_table` (`companion/chapters/12_D.tex:205-222`) lists twelve-digit decimals
 such as $G(z_0)\approx0.888432624149$. Every interval $[\ell,h]$ that encloses $G(z_0)=g_0^Tz_0$, as
@@ -249,7 +249,7 @@ theorem query_box_too_coarse (lo hi : ℝ)
   norm_num at h1 h2
   linarith [h1.1, h2.2]
 
-/-- Item `C/seed_certificate/prose/006` (`companion/appendices/seed_certificate.tex:190`),
+/-- Item `C/seed_certificate/prose/006` (`companion/appendices/seed_certificate.tex:201`),
 corrected on 15 October 2026 (M15): "For each trial value $G(z_j+\alpha p_j)$ in the table of
 Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display after it, the same
 interval operations give a rational enclosure of width at most $4\cdot10^{-4}$; the twelve-digit

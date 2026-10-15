@@ -4,7 +4,7 @@ import BfgsVerification.QuadraticCellRadial
 # Lean coverage: `paper/statements/positive_partition.tex`
 
 Theorem `art:polyhedral` ("Local convergence on finite polyhedral cells"), which
-`paper/sections/local.tex` inputs at line 46. Its proof (`local.tex:48-76`) and the displays
+`paper/sections/local.tex` inputs at line 46. Its proof (`local.tex:48-77`) and the displays
 of that proof are covered in `BfgsArticle.Coverage.Article.Local`. Register:
 `editorial/lean_coverage/register/A_positive_partition.json`.
 

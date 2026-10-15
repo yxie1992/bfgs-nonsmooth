@@ -38,9 +38,9 @@ the section. Register: `editorial/lean_coverage/register/A_local.json`.
   (`DifferentiableOn ℝ f V ∧ LocallyLipschitzOn V (fderiv ℝ f)`); $\partial F(p)$ is
   `ConvexSubdifferential.subdifferential F p`; $\mathcal C_{\rm aff}$ is
   `{p | AffineCriticalObjective.IsAffineCritical F p}` (display `disp/006`); a cluster point $p$ of
-  the iterates is `MapClusterPt p atTop R.x`; eligibility of a pair (`energy.tex:241-244`) is
+  the iterates is `MapClusterPt p atTop R.x`; eligibility of a pair (`energy.tex:242-245`) is
   `TransportedCertificate.EligiblePair F c₁ c₂ x z g h`.
-* Objects introduced by the text ($\delta$, $B_r(x_*)$, $L$, $\psi$, $\gamma$, $I_0$, $\sigma$,
+* Objects introduced by the text ($\delta$, $B_r(x_*)$, $B_\rho(x_*)$, $L$, $\psi$, $\gamma$, $I_0$, $\sigma$,
   $A(x)$, $E_k$, $v(u)$, $D$, the branches $f_i$ and $F$ of the example) are variables with their
   defining equations as hypotheses. A hypothesis whose name starts with `_` is a standing
   assumption that the Lean proof does not use.
@@ -242,7 +242,7 @@ theorem localization_radial_lower {n : ℕ} (hn : 1 ≤ n) (F : Vec n → ℝ) (
         mul_le_mul_of_nonneg_left h1 (div_nonneg hR.le hr.le)
     _ = F x - F xstar := by rw [htdef]; field_simp; ring
 
-/-! ### The proof of Theorem `art:polyhedral` (`local.tex:48-76`) -/
+/-! ### The proof of Theorem `art:polyhedral` (`local.tex:48-77`) -/
 
 /-- Sharp Taylor bound for a gradient that is `L`-Lipschitz in the Euclidean norm on an open
 convex set: $f(y)-f(x)-\nabla f(x)^T(y-x)\le\frac L2\|y-x\|^2$. -/
@@ -309,7 +309,7 @@ theorem taylor_upper_of_lipschitz {n : ℕ} {f : Vec n → ℝ} {B : Set (Vec n)
 
 Under the assumptions of Theorem `art:polyhedral` (`positive_partition.tex:1-18`, written out as
 in `PositivePartition.polyhedral`), the proof first discards the cells not containing $x_*$ and
-shrinks to a common Euclidean ball $B=B_r(x_*)\subset U\cap\bigcap_{i:x_*\in P_i}V_i$ that meets
+shrinks to a common Euclidean ball $B=B_\rho(x_*)\subset U\cap\bigcap_{i:x_*\in P_i}V_i$ that meets
 only cells containing $x_*$ (`hdisc`), on which the gradients of the remaining extensions have
 one Lipschitz bound $L$ (`hLip`). Let $x\in B$ be a differentiability point of $F$, with
 gradient $g=\nabla F(x)$, and $P_i$ a cell containing it. Comparing right derivatives at $\tau=0$
@@ -353,12 +353,12 @@ theorem polyhedral_radial_derivative {n : ℕ} (_hn : 1 ≤ n) (F : Vec n → �
 /-- Item `A/local/disp/004` (`paper/sections/local.tex:66-70`), in the proof of Theorem
 `art:polyhedral`.
 
-Under the assumptions of display `disp/003` (the theorem's hypotheses, the ball $B=B_r(x_*)$, the
+Under the assumptions of display `disp/003` (the theorem's hypotheses, the ball $B=B_\rho(x_*)$, the
 common Lipschitz bound $L$ of the remaining extension gradients, a differentiability point
 $x\in B$ of $F$ with gradient $g$, and a cell $P_i\ni x$), with $r_x=x-x_*$, the smooth Taylor
 estimate along the same segment gives, for $0\le\tau\le1$,
 \[ 0\le F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x\le\tfrac12L\tau^2\norm{r_x}^2
-   \le\tfrac12Lr^2\tau^2. \]
+   \le\tfrac12L\rho^2\tau^2. \]
 The first inequality uses convexity of $F$, not convexity of the extension. -/
 theorem polyhedral_inward_taylor {n : ℕ} (_hn : 1 ≤ n) (F : Vec n → ℝ)
     (hF : ConvexOn ℝ univ F) (xstar : Vec n) (_hmin : ∀ x, F xstar ≤ F x)
@@ -418,8 +418,8 @@ theorem polyhedral_inward_taylor {n : ℕ} (_hn : 1 ≤ n) (F : Vec n → ℝ)
 /-- Item `A/local/prose/005` (`paper/sections/local.tex:38-42`), anchor "A finite local
 partition controls which formulas", stated under the assumptions of Theorem `art:polyhedral`.
 
-"After removing the finitely many cells that miss $x_*$, every remaining cell contains $x_*$.
-Convexity of a cell then keeps the entire inward segment in that same cell. Its smooth extension
+"Near $x_*$ only cells containing $x_*$ occur: the finitely many closed cells that miss $x_*$
+avoid a ball around it. Convexity of a cell then keeps the entire inward segment in that same cell. Its smooth extension
 yields quadratic model accuracy even if the full gradient jumps across cell boundaries."
 Stated as: there is a ball $B_\rho(x_*)\subset U$ meeting only cells that contain $x_*$; for a
 cell containing $x$ and $x_*$ the whole inward segment $x-\tau(x-x_*)$, $0\le\tau\le1$, stays in
@@ -469,12 +469,12 @@ theorem quadratic_eq {n : ℕ} (Q : Mat n) (c : Vec n) (d : ℝ) (x : Vec n) :
   congr 2
   · apply Finset.sum_congr rfl; intro i _; apply Finset.sum_congr rfl; intro j _; ring
 
-/-- Item `A/local/corollary/art:plq` (`paper/sections/local.tex:78-83`), Corollary `art:plq`,
+/-- Item `A/local/corollary/art:plq` (`paper/sections/local.tex:79-84`), Corollary `art:plq`,
 first sentence.
 
 "A finite convex piecewise linear-quadratic objective with a unique minimizer has the local
 convergence property of Theorem `art:polyhedral`." Piecewise linear-quadratic is the meaning fixed
-in the proof (`local.tex:85-86`): a representation $F=x^TQ_ix+c_i^Tx+d_i$ on each cell of a
+in the proof (`local.tex:86-87`): a representation $F=x^TQ_ix+c_i^Tx+d_i$ on each cell of a
 finite cover of $\R^n$ by closed full-dimensional polyhedral cells $P_i$. Since the
 representation is global, the property holds for every open neighborhood $U$ of $x_*$: some
 $\varepsilon>0$, chosen before the run, gives $x_k\in U$, $F(x_k)\to F(x_*)$, $x_k\to x_*$ for
@@ -496,7 +496,7 @@ theorem plq {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ univ F) (xstar : Ve
     (fun x _ => by obtain ⟨i, hi⟩ := hcover x; exact ⟨i, by rw [← hPe i]; exact hi⟩)
     (fun i x _ hx => by rw [quadratic_eq]; exact hrep i x (by rw [hPe i]; exact hx)) hmin huniq
 
-/-- Item `A/local/corollary/art:plq` (`paper/sections/local.tex:78-83`), Corollary `art:plq`,
+/-- Item `A/local/corollary/art:plq` (`paper/sections/local.tex:79-84`), Corollary `art:plq`,
 second sentence.
 
 "The same holds for a convex locally $C^{1,1}$ loss plus a finite convex piecewise
@@ -528,7 +528,7 @@ theorem plq_loss_regularizer {n : ℕ} (loss reg F : Vec n → ℝ) (hloss : Con
     hmin huniq
 
 
-/-! ### The deductions after Corollary `art:plq` (`local.tex:91-99`) -/
+/-! ### The deductions after Corollary `art:plq` (`local.tex:92-100`) -/
 
 /-- The interior of a finite union of closed sets with empty interiors is empty. -/
 theorem interior_biUnion_closed_empty {X : Type*} [TopologicalSpace X] {ι : Type*}
@@ -571,7 +571,7 @@ theorem affine_eq_zero_of_open {n : ℕ} (v : Vec n) (c : ℝ) {O : Set (Vec n)}
   have h0 := h z hz
   simpa [hv, dot] using h0
 
-/-- Item `A/local/prose/007` (`paper/sections/local.tex:91-93`), anchor "In particular, a finite
+/-- Item `A/local/prose/007` (`paper/sections/local.tex:92-94`), anchor "In particular, a finite
 convex polyhedral penalty,": a finite convex polyhedral penalty is piecewise affine on a finite
 polyhedral partition.
 
@@ -702,7 +702,7 @@ theorem dot_sum_smul {n : ℕ} {ι : Type*} [Fintype ι] (s : ι → ℝ) (u : �
   intro k _
   ring
 
-/-- Item `A/local/prose/007` (`paper/sections/local.tex:91-93`), anchor "In particular, a finite
+/-- Item `A/local/prose/007` (`paper/sections/local.tex:92-94`), anchor "In particular, a finite
 convex polyhedral penalty,": "such as a finite sum of absolute-value or hinge terms".
 
 A finite sum $\sum_j|a_j^Tx-b_j|+\sum_k\max\{0,c_k^Tx-e_k\}$ of absolute-value and hinge terms is
@@ -745,7 +745,7 @@ theorem abs_hinge_sum_polyhedral {n : ℕ} {J K : Type*} [Fintype J] [Fintype K]
     · exact le_max_right _ _
     · exact le_max_left _ _
 
-/-- Item `A/local/prose/008` (`paper/sections/local.tex:93-95`), anchor "It therefore falls under
+/-- Item `A/local/prose/008` (`paper/sections/local.tex:94-96`), anchor "It therefore falls under
 this corollary".
 
 A finite convex polyhedral penalty $\varphi=\max_j(p_j^Tx+q_j)$ added to a convex, locally
@@ -771,8 +771,8 @@ theorem loss_plus_polyhedral_penalty {n k : ℕ} (loss φ F : Vec n → ℝ)
     (fun _ => 0) (fun j => p j) (fun j => q j)
     (fun j x hx => by rw [hpiece j x hx]; simp [dot]) hFdef xstar hmin huniq
 
-/-- Item `A/local/prose/010` (`paper/sections/local.tex:96-97`), anchor "A finite maximum of
-arbitrary quadratic formulas"; and Item `A/local/prose/044` (`paper/sections/local.tex:439-440`),
+/-- Item `A/local/prose/010` (`paper/sections/local.tex:97-98`), anchor "A finite maximum of
+arbitrary quadratic formulas"; and Item `A/local/prose/044` (`paper/sections/local.tex:441-442`),
 anchor "a replacement by polyhedral cells".
 
 The finite maximum of the three quadratic formulas of Theorem `art:nonradial-example` admits no
@@ -814,7 +814,7 @@ theorem quadratic_max_no_polyhedral_cells (F : Vec 2 → ℝ)
 
 /-! ### Corollary `art:local-centered` and its two examples -/
 
-/-- Item `A/local/corollary/art:local-centered` (`paper/sections/local.tex:101-108`), Corollary
+/-- Item `A/local/corollary/art:local-centered` (`paper/sections/local.tex:102-109`), Corollary
 `art:local-centered`.
 
 If the representation and smoothness assumptions of Theorem `art:centered` hold on a neighborhood
@@ -892,7 +892,7 @@ theorem abs_eq_sign_mul {a x : ℝ} (ha : a ≠ 0) (hx : 0 < Real.sign a * x) :
     rw [abs_of_pos (by linarith)]
     ring
 
-/-- Item `A/local/prose/012` (`paper/sections/local.tex:115-121`), anchor "For a concrete
+/-- Item `A/local/prose/012` (`paper/sections/local.tex:116-122`), anchor "For a concrete
 reduction, let": the set where the lasso decomposition is claimed.
 
 For $F(x)=\frac12\|Ax-b\|^2+\lambda\|x\|_1$ with $A\in\R^{m\times n}$, $b\in\R^m$, $\lambda>0$
@@ -937,7 +937,7 @@ theorem lasso_neighborhood {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Vec
     · rw [Real.sign_of_pos h]; linarith
 
 /-- Item `A/local/disp/005`, equation `art:local-l1-decomposition`
-(`paper/sections/local.tex:122-129`).
+(`paper/sections/local.tex:123-130`).
 
 With $F$, $x_*$, $I_0$, $\sigma$ and the neighborhood $N$ of `lasso_neighborhood`, and
 \[ \psi(x)=\tfrac12\norm{Ax-b}^2+\lambda\sum_{i\notin I_0}\sigma_ix_i,\qquad
@@ -977,7 +977,7 @@ theorem lasso_decomposition {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Ve
   rw [hFdef, hψ, hγ, ← Finset.sum_add_sum_compl I0, h1, h2]
   ring
 
-/-- Item `A/local/prose/013` (`paper/sections/local.tex:130-132`), anchor "The nonzero optimal
+/-- Item `A/local/prose/013` (`paper/sections/local.tex:131-133`), anchor "The nonzero optimal
 coordinates contribute affine terms".
 
 With $\psi,\gamma$ as in display `disp/005`: $\psi$ ($=\frac12\|Ax-b\|^2$ plus the affine terms of
@@ -1031,7 +1031,7 @@ theorem lasso_convex {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Vec m) (l
   (((sqNorm_affine_convex A b).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)).add
     (weighted_abs_sum_convex lam hlam Finset.univ)).congr (fun x _ => (hFdef x).symm)
 
-/-- Item `A/local/prose/014` (`paper/sections/local.tex:132-134`), anchor
+/-- Item `A/local/prose/014` (`paper/sections/local.tex:133-135`), anchor
 "Corollary~\ref{art:local-centered} therefore gives a".
 
 For the lasso objective with a unique minimizer, Corollary `art:local-centered` (applied with the
@@ -1062,7 +1062,7 @@ theorem lasso_local_basin {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Vec 
     hγc hγh
     (lasso_decomposition A b lam hlam F hFdef xstar hmin huniq I0 hI0 σ hσ N hN ψ γ hψ' hγ')
 
-/-- Item `A/local/prose/015` (`paper/sections/local.tex:135`), anchor "Uniqueness is a hypothesis
+/-- Item `A/local/prose/015` (`paper/sections/local.tex:136`), anchor "Uniqueness is a hypothesis
 here".
 
 $\lambda>0$ alone does not supply a unique minimizer: for $A=(1\ 1)\in\R^{1\times2}$, $b=2$,
@@ -1101,7 +1101,7 @@ theorem norm_affine_convex {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Vec
   EuclideanResidual.norm_residual_convex (EuclideanResidual.matrixEuclideanCLM A)
     (euclideanVector b)
 
-/-- Item `A/local/prose/016` (`paper/sections/local.tex:137-141`), anchor "A locally $C^{1,1}$
+/-- Item `A/local/prose/016` (`paper/sections/local.tex:138-142`), anchor "A locally $C^{1,1}$
 convex loss plus finitely many Euclidean".
 
 For $F(x)=\ell(x)+\sum_j\|A_jx-b_j\|$ with $\ell$ convex and locally $C^{1,1}$ and finitely
@@ -1184,7 +1184,7 @@ theorem euclidean_residuals_local_form {n : ℕ} {J : Type*} [Fintype J] {m : J 
       ⟨hloss_s.1.mono (subset_univ _), hloss_s.2.mono (subset_univ _)⟩
       (ConvexCellRadial.contDiffOn_two_locallyC11 Metric.isOpen_ball hsm)
 
-/-- Item `A/local/prose/017` (`paper/sections/local.tex:141-142`), anchor "Under uniqueness,".
+/-- Item `A/local/prose/017` (`paper/sections/local.tex:142-143`), anchor "Under uniqueness,".
 
 If, in addition, $F=\ell+\sum_j\|A_jx-b_j\|$ has a unique minimizer $x_*$, Corollary
 `art:local-centered` applies (with the neighborhood and decomposition of
@@ -1216,10 +1216,10 @@ theorem euclidean_residuals_basin {n : ℕ} {J : Type*} [Fintype J] {m : J → �
   exact ⟨U, hU, hxU, ε, hε, hbasin⟩
 
 
-/-! ### Affine criticality in the plane (`local.tex:156-167`) -/
+/-! ### Affine criticality in the plane (`local.tex:157-168`) -/
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/disp/006` (`paper/sections/local.tex:157-160`): the definition
+/-- Item `A/local/disp/006` (`paper/sections/local.tex:158-161`): the definition
 \[ \mathcal C_{\rm aff}=\{p:0\in\aff\partial F(p)\} \]
 for $F:\R^2\to\R$. The library predicate `AffineCriticalObjective.IsAffineCritical F p` (stated
 with the Euclidean copy of $\partial F(p)$) unfolds to $0\in\aff\partial F(p)$, where
@@ -1277,7 +1277,7 @@ theorem least_norm_orthogonal {n : ℕ} (S : AffineSubspace ℝ (Vec n)) {a : Ve
   linarith
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/prose/021` (`paper/sections/local.tex:161-164`), anchor "At a point outside this
+/-- Item `A/local/prose/021` (`paper/sections/local.tex:162-165`), anchor "At a point outside this
 set, let $a$".
 
 Let $F:\R^2\to\R$ be finite and convex and $p\notin\mathcal C_{\rm aff}$. The affine hull
@@ -1351,7 +1351,7 @@ theorem least_norm_point (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (p : Vec
     field_simp
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/prose/022` (`paper/sections/local.tex:165-167`), anchor "Affine criticality
+/-- Item `A/local/prose/022` (`paper/sections/local.tex:166-168`), anchor "Affine criticality
 concerns failure of this common-rate direction", first part.
 
 Affine criticality is the failure of a common-rate direction:
@@ -1419,8 +1419,8 @@ theorem affineCritical_and_stationarity (F : Vec 2 → ℝ) (hF : ConvexOn ℝ u
       linarith
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/prose/022` (`paper/sections/local.tex:165-167`), second part: "They need not
-coincide." Item `A/local/prose/035` (`paper/sections/local.tex:287-288`), second part: equal-rate
+/-- Item `A/local/prose/022` (`paper/sections/local.tex:166-168`), second part: "They need not
+coincide." Item `A/local/prose/035` (`paper/sections/local.tex:289-290`), second part: equal-rate
 descent is "stronger than ordinary descent".
 
 For the finite convex $F(u,v)=\max\{u,2u\}$ on $\R^2$ and $p=0$: $p$ is affine critical
@@ -1471,7 +1471,7 @@ theorem affineCritical_not_stationary_example :
   · exact ((affineCritical_and_stationarity F hconv 0).1).mp hcrit
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/prose/035` (`paper/sections/local.tex:287-288`), anchor "This condition says that
+/-- Item `A/local/prose/035` (`paper/sections/local.tex:289-290`), anchor "This condition says that
 nonoptimal points retain equal-rate descent", first part.
 
 For finite convex $F:\R^2\to\R$ and any set $K$, the condition
@@ -1542,7 +1542,7 @@ theorem regular_of_paper {F : Vec 2 → ℝ} {p : Vec 2}
     · exact pairDet_ne_zero_of_linearIndependent hind
 
 open AffineCriticalObjective in
-/-- Item `A/local/theorem/art:planar-cluster` (`paper/sections/local.tex:212-227`), Theorem
+/-- Item `A/local/theorem/art:planar-cluster` (`paper/sections/local.tex:214-229`), Theorem
 `art:planar-cluster` ("An affine-critical cluster point in the plane").
 
 Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$ (`IsLeast (range F) Fstar`),
@@ -1576,7 +1576,7 @@ theorem planar_cluster (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : 
   exact ⟨p, hp, ha⟩
 
 open AffineCriticalObjective in
-/-- Item `A/local/disp/007` (`paper/sections/local.tex:238-242`), in the proof of Theorem
+/-- Item `A/local/disp/007` (`paper/sections/local.tex:240-244`), in the proof of Theorem
 `art:planar-cluster`.
 
 Under the assumptions of the theorem, for an admissible run starting in $K$, every $k$ and
@@ -1603,7 +1603,7 @@ theorem planar_cluster_segment_values (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ un
     R.convex.2 (mem_univ _) (mem_univ _) (sub_nonneg.mpr hθ1) hθ0 (by ring)⟩
 
 open AffineCriticalObjective ConvexSubdifferential TransportedCertificate in
-/-- Item `A/local/disp/008` (`paper/sections/local.tex:253-258`), in the proof of Theorem
+/-- Item `A/local/disp/008` (`paper/sections/local.tex:255-260`), in the proof of Theorem
 `art:planar-cluster`.
 
 Under the assumptions of the theorem, for an admissible run starting in $K$ with value limit
@@ -1688,7 +1688,7 @@ theorem planar_cluster_field (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
       simpa [pairDecrease, pairStep] using h
 
 open AffineCriticalObjective in
-/-- Item `A/local/disp/009` (`paper/sections/local.tex:262-267`), in the proof of Theorem
+/-- Item `A/local/disp/009` (`paper/sections/local.tex:264-269`), in the proof of Theorem
 `art:planar-cluster`.
 
 Under the assumptions of the theorem, for an admissible run starting in $K$, a field
@@ -1750,7 +1750,7 @@ theorem planar_cluster_energy (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (F
   linarith
 
 open AffineCriticalObjective in
-/-- Item `A/local/corollary/art:planar-convergence` (`paper/sections/local.tex:274-279`),
+/-- Item `A/local/corollary/art:planar-convergence` (`paper/sections/local.tex:276-281`),
 Corollary `art:planar-convergence` ("When affine criticality is correct").
 
 Under the hypotheses of Theorem `art:planar-cluster`, assume in addition that
@@ -1826,9 +1826,9 @@ theorem active_family_conversion {F : Vec 2 → ℝ} {m : ℕ} (f : Fin m → Ve
     rfl
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:301-320`), Corollary
+/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:303-322`), Corollary
 `art:planar-max` ("Nondegenerate planar smooth maxima"), including its displays
-`A/local/disp/010` (lines 308-311) and `A/local/disp/011` (lines 314-317).
+`A/local/disp/010` (lines 310-313) and `A/local/disp/011` (lines 316-319).
 
 Let $F:\R^2\to\R$ be finite and convex with a unique minimizer $x_*$. Near $x_*$ (on an open
 $U\ni x_*$) suppose $F=\max_{1\le i\le m}f_i$ (`IsGreatest`: $F(x)$ is the largest $f_i(x)$),
@@ -1865,7 +1865,7 @@ theorem planar_max (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (xstar : Vec 2
     hwz hb hstrict
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:301-320`), last sentence:
+/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:303-322`), last sentence:
 "A common positive lower Hessian bound on the locally relevant branches suffices for the contour
 hypothesis."
 
@@ -1984,7 +1984,7 @@ theorem augmented_continuousAt {m : ℕ} (f : Fin m → Vec 2 → ℝ) (U : Set 
   · exact continuousAt_const
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/disp/012` (`paper/sections/local.tex:326-328`), in the proof of Corollary
+/-- Item `A/local/disp/012` (`paper/sections/local.tex:328-330`), in the proof of Corollary
 `art:planar-max`.
 
 Under the assumptions of the corollary, let $A(x)$ be the $3\times|I_*|$ matrix with columns
@@ -2024,9 +2024,9 @@ theorem planar_max_barycentric (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (
 
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/prose/037` (`paper/sections/local.tex:294-297`), "affine independence makes that
+/-- Item `A/local/prose/037` (`paper/sections/local.tex:296-299`), "affine independence makes that
 balance unique and continuous": continuity. It is also the undisplayed claim of
-`paper/sections/local.tex:329` in the proof of Corollary `art:planar-max`: "This expression is
+`paper/sections/local.tex:331` in the proof of Corollary `art:planar-max`: "This expression is
 continuous and equals $\lambda^*$ at $x_*$."
 
 Under the assumptions of the corollary, with $A(x)$ as in display `disp/012`, the balance
@@ -2068,7 +2068,7 @@ theorem planar_max_balance_continuous (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ un
     exact (gram_solution (A xstar) hdet lam _ hsol).symm
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/prose/037` (`paper/sections/local.tex:294-297`), anchor "The extra
+/-- Item `A/local/prose/037` (`paper/sections/local.tex:296-299`), anchor "The extra
 affine-correctness condition can be verified from the active models".
 
 Under the assumptions of Corollary `art:planar-max` (the contour hypothesis is not used): near
@@ -2119,7 +2119,7 @@ theorem planar_max_affine_correct_near (F : Vec 2 → ℝ) (hF : ConvexOn ℝ un
   exact (mem_activeIndices (F := F) (f := fun j => f (a j))).mp hj
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/prose/038` (`paper/sections/local.tex:297-299`), anchor "same assumptions leave
+/-- Item `A/local/prose/038` (`paper/sections/local.tex:299-301`), anchor "same assumptions leave
 at most two active branches".
 
 Under the assumptions of Corollary `art:planar-max` (contour hypothesis not used), near $x_*$:
@@ -2205,9 +2205,9 @@ theorem planar_max_regular_near (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (
   · exact PlanarMaxRegular.regular_of_finite_max_independent hF hU hpU (fun i => hf (a i)) hrp
       hp.1 hn
 
-/-! ### The planar construction sketch (`local.tex:169-210`) -/
+/-! ### The planar construction sketch (`local.tex:170-212`) -/
 
-/-- Item `A/local/prose/023` (`paper/sections/local.tex:169-170`), anchor "prohibit long accepted
+/-- Item `A/local/prose/023` (`paper/sections/local.tex:170-171`), anchor "prohibit long accepted
 chords with vanishing value decrease".
 
 For an admissible run with compact initial sublevel whose values decrease to a level $\ell$ above
@@ -2224,10 +2224,10 @@ theorem strict_contours_short_chords {n : ℕ} {F : Vec n → ℝ} (R : Admissib
   have h := hℓ.sub (hℓ.comp (tendsto_add_atTop_nat 1))
   simpa using h
 
-/-- Item `A/local/prose/024` (`paper/sections/local.tex:171-172`), anchor "Regular two-branch
+/-- Item `A/local/prose/024` (`paper/sections/local.tex:172-173`), anchor "Regular two-branch
 switching makes each positive-level corner move"; and Item `A/local/prose/027`
-(`paper/sections/local.tex:177-183`), anchor "Here is the construction near a compact
-noncritical part".
+(`paper/sections/local.tex:178-184`), anchor "Here is the construction near a compact
+non-affine-critical part" ("noncritical" before 15 October 2026, M38).
 
 At a two-branch corner $p_0$ ($F=\max\{f_1,f_2\}$ near $p_0$ with $C^2$ branches, both active,
 linearly independent gradients) the corner moves smoothly with the level: there is a curve $p(t)$,
@@ -2281,7 +2281,7 @@ theorem corner_moves_with_level {F : Vec 2 → ℝ} {p₀ : Vec 2} (V : Set (Vec
   · rw [hneg, e2]
 
 open AffineCriticalObjective in
-/-- Item `A/local/prose/028` (`paper/sections/local.tex:183-186`), anchor "There are finitely many
+/-- Item `A/local/prose/028` (`paper/sections/local.tex:184-187`), anchor "There are finitely many
 such corners", first claim.
 
 On a compact set $C$ contained in one level $\{F=\ell\}$, at each point of which $F$ is $C^2$
@@ -2299,7 +2299,7 @@ theorem finitely_many_corners {F : Vec 2 → ℝ} (C : Set (Vec 2)) (ℓ : ℝ) 
   PlanarCornerCharts.finite_nonsmooth_on_compact_level hC hlevel
     (fun p hp => (regular_of_paper (hreg p hp)).imp id (fun h => h.to_regular))
 
-/-- Item `A/local/prose/028` (`paper/sections/local.tex:183-186`), second claim: "Their
+/-- Item `A/local/prose/028` (`paper/sections/local.tex:184-187`), second claim: "Their
 supporting-normal arcs are disjoint: a common normal at two corners would expose the whole
 segment between them, contrary to the strict-contour assumption."
 
@@ -2323,7 +2323,7 @@ theorem common_normal_exposes_segment {F : Vec 2 → ℝ} (hF : ConvexOn ℝ uni
       (PlanarNormalGeometry.segment_support_of_common_normal hKc hsp hsz w hw)
   exact ⟨hseg, fun hstrict => hstrict p z hseg⟩
 
-/-- Item `A/local/prose/031` (`paper/sections/local.tex:198-199`), anchor "The one-dimensional
+/-- Item `A/local/prose/031` (`paper/sections/local.tex:199-200`), anchor "The one-dimensional
 tangent is essential here".
 
 If a linear map $Dw$ maps the tangent vector $T$ into its own line ($Dw\,T=cT$), then for a
@@ -2339,7 +2339,7 @@ theorem tangent_step_det_zero (M : Mat 2) (T : Vec 2) (c : ℝ) (hT : M *ᵥ T =
   simp only [HomogeneousPlanar.pairDet, Pi.smul_apply, smul_eq_mul]
   ring
 
-/-- Item `A/local/prose/033` (`paper/sections/local.tex:206-207`), anchor "Since Armijo gives
+/-- Item `A/local/prose/033` (`paper/sections/local.tex:208-209`), anchor "Since Armijo gives
 $d\le(F(x)-F(z))/c_1$", first part: for an eligible pair (constants $c_1>0$, $c_2$),
 $d=-g^Ts\le(F(x)-F(z))/c_1$. -/
 theorem armijo_charges_transport {n : ℕ} (F : Vec n → ℝ) (c₁ c₂ : ℝ) (hc₁ : 0 < c₁)
@@ -2350,7 +2350,7 @@ theorem armijo_charges_transport {n : ℕ} (F : Vec n → ℝ) (c₁ c₂ : ℝ)
   simp only [TransportedCertificate.pairDecrease, TransportedCertificate.pairStep] at h
   linarith
 
-/-- Item `A/local/prose/033` (`paper/sections/local.tex:206-207`), second part: "transport is
+/-- Item `A/local/prose/033` (`paper/sections/local.tex:208-209`), second part: "transport is
 charged to summable objective decreases". For an admissible run whose values converge to $\ell$,
 the predicted decreases $d_k$ are summable with $\sum_kd_k\le(F(x_0)-\ell)/c_1$, so a transport
 budget $|\log\lambda_k|\le Cd_k$ has finite total. -/
@@ -2388,9 +2388,9 @@ theorem example_eq (f : Fin 3 → Vec 2 → ℝ)
   rw [hF x, hfe]
   rfl
 
-/-- Item `A/local/theorem/art:nonradial-example` (`paper/sections/local.tex:367-382`), Theorem
+/-- Item `A/local/theorem/art:nonradial-example` (`paper/sections/local.tex:369-384`), Theorem
 `art:nonradial-example` ("Convergence with curved, nonradial switching"), including its display
-`A/local/disp/013` (lines 369-375).
+`A/local/disp/013` (lines 371-377).
 
 For $f_0=u+u^2+\frac12v^2$, $f_1=v+\frac12u^2+\frac32v^2$, $f_2=-u-v+\frac32u^2+v^2$ and
 $F=\max_if_i$: every infinite admissible full-BFGS run with $F(x_0)<1/100$ converges in value and
@@ -2431,7 +2431,7 @@ theorem nonradial_example (f : Fin 3 → Vec 2 → ℝ)
       RadialCertificate.radialNumerator] using hexc
 
 /-- Proof of Theorem `art:nonradial-example`, undisplayed claims of
-`paper/sections/local.tex:384-387` (not a register item): "The branch Hessians lie between $I$
+`paper/sections/local.tex:386-389` (not a register item): "The branch Hessians lie between $I$
 and $3I$, and $(f_0+f_1+f_2)/3=u^2+v^2$. Thus $F\ge u^2+v^2$, zero is the unique minimizer, and
 all positive contours are strict. The active gradients at zero are $(1,0),(0,1),(-1,-1)$, with
 positive weights $1/3$." -/
@@ -2470,7 +2470,7 @@ theorem example_model_facts (f : Fin 3 → Vec 2 → ℝ)
     fin_cases j <;> norm_num
 
 /-- Proof of Theorem `art:nonradial-example`, undisplayed claims of
-`paper/sections/local.tex:388-404` (not a register item): $D=3(1+v-uv)$ is the determinant of
+`paper/sections/local.tex:390-406` (not a register item): $D=3(1+v-uv)$ is the determinant of
 the augmented gradient matrix (rows $\partial_u$, $\partial_v$, $1$); on $|u|,|v|\le1/10$,
 $D\ge267/100$ and the three numerators are at least $23/100$, $49/100$, $45/100$; the
 coefficients $\lambda_i=$ numerator$_i/D$ sum to one and their weighted gradient is zero;
@@ -2517,7 +2517,7 @@ theorem example_box_facts (f : Fin 3 → Vec 2 → ℝ)
     · simp only [hg]
       exact PlanarQuadraticExample.gradient_affineIndependent hD
 
-/-- Item `A/local/disp/014` (`paper/sections/local.tex:391-397`), in the proof of Theorem
+/-- Item `A/local/disp/014` (`paper/sections/local.tex:393-399`), in the proof of Theorem
 `art:nonradial-example`.
 
 With $D=3(1+v-uv)$ ($u=x_0$, $v=x_1$), direct solution of the augmented system
@@ -2549,7 +2549,7 @@ theorem example_coefficients (f : Fin 3 → Vec 2 → ℝ)
   · linear_combination (-1 - 2 * x 1) * e0 + (-(1 + x 0)) * e1 +
       (1 + 2 * x 0 + 3 * x 1 + 5 * x 0 * x 1) * hl1
 
-/-- Item `A/local/disp/015` (`paper/sections/local.tex:407-410`), in the proof of Theorem
+/-- Item `A/local/disp/015` (`paper/sections/local.tex:409-412`), in the proof of Theorem
 `art:nonradial-example`.
 
 For $v(u)=\bigl(-1+\sqrt{1+4u+2u^2}\bigr)/2$ (the object defined by the display, `hv`),
@@ -2564,7 +2564,7 @@ theorem example_tie_expansion (v : ℝ → ℝ)
   convert h using 2 with u
   ring
 
-/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:411`
+/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:413`
 (not a register item): "This is the positive active tie $f_0=f_1$, with $f_2$ inactive", for
 $0<u<1/10$. -/
 theorem example_tie (f : Fin 3 → Vec 2 → ℝ)
@@ -2582,7 +2582,7 @@ theorem example_tie (f : Fin 3 → Vec 2 → ℝ)
   subst hve
   exact ⟨PlanarQuadraticExample.tieHeight_pos hu, PlanarQuadraticExample.tie_active hu hu'⟩
 
-/-- Item `A/local/disp/016` (`paper/sections/local.tex:412-415`), in the proof of Theorem
+/-- Item `A/local/disp/016` (`paper/sections/local.tex:414-417`), in the proof of Theorem
 `art:nonradial-example`.
 
 At the tie point $(u,v)$, $v=v(u)$, for small $u$ ($0<u<1/10$):
@@ -2613,7 +2613,7 @@ theorem example_radial_jump (f : Fin 3 → Vec 2 → ℝ)
   simp [dot, Fin.sum_univ_two, PlanarQuadraticExample.base]
   ring
 
-/-- Item `A/local/disp/017` (`paper/sections/local.tex:419-424`), in the proof of Theorem
+/-- Item `A/local/disp/017` (`paper/sections/local.tex:421-426`), in the proof of Theorem
 `art:nonradial-example`.
 
 For fixed $0<u<1/10$ and $v=v(u)$, take $x=(u,v+e)$ and $z=(u,v-e)$ with $e>0$ tending to zero.
@@ -2690,7 +2690,7 @@ theorem convexOn_sq_of_nonneg {n : ℕ} {g : Vec n → ℝ} (hg : ConvexOn ℝ u
 theorem sqNorm_convex {n : ℕ} : ConvexOn ℝ univ (fun x : Vec n => sqNorm x) :=
   (sqNorm_affine_convex (1 : Matrix (Fin n) (Fin n) ℝ) 0).congr (fun x _ => by simp)
 
-/-- Item `A/local/prose/026` (`paper/sections/local.tex:174-175`), anchor "A common positive lower
+/-- Item `A/local/prose/026` (`paper/sections/local.tex:175-176`), anchor "A common positive lower
 Hessian bound is one sufficient way", first part (sufficiency).
 
 Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$, and let $b\in\R$. Suppose that on
@@ -2715,7 +2715,7 @@ theorem hessian_bound_strict_contours (F : Vec 2 → ℝ) (hF : ConvexOn ℝ uni
   exact PlanarMaxRegular.no_segment_frontier_of_local_strictConvex (convex_continuous hF) hs
     (fun p hp => hbV (le_trans hp htb)) x y hxy
 
-/-- Item `A/local/prose/026` (`paper/sections/local.tex:174-175`), anchor "A common positive lower
+/-- Item `A/local/prose/026` (`paper/sections/local.tex:175-176`), anchor "A common positive lower
 Hessian bound is one sufficient way", second part: "but is not required".
 
 $F(x)=\|x\|^4$ on $\R^2$ is convex and $C^2$ with minimizer $0$, all its positive contours are
@@ -2778,7 +2778,7 @@ theorem strict_contours_without_hessian_bound :
     rw [hdot, hee] at hq
     linarith
 
-/-- Item `A/local/prose/009` (`paper/sections/local.tex:95-96`), anchor "Different cells may have
+/-- Item `A/local/prose/009` (`paper/sections/local.tex:96-97`), anchor "Different cells may have
 different".
 
 The hypotheses of Corollary `art:plq` allow different quadratic Hessians on different cells: for
@@ -2857,7 +2857,7 @@ theorem plq_different_hessians :
     have := congrFun (congrFun h 0) 0
     norm_num at this
 
-/-- Item `A/local/prose/018` (`paper/sections/local.tex:142-143`), anchor "This example allows
+/-- Item `A/local/prose/018` (`paper/sections/local.tex:143-144`), anchor "This example allows
 nonpolyhedral penalties".
 
 The Euclidean residual norms of `euclidean_residuals_local_form` include nonpolyhedral penalties:
@@ -2922,7 +2922,7 @@ theorem euclidean_norm_not_polyhedral :
   have h'' : (m₁ : ℝ) + 1 = (m₂ : ℝ) + 1 := inv_inj.mp h'
   exact_mod_cast add_right_cancel h''
 
-/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:425`
+/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:427`
 (not a register item): "As $u,e\to0^+$, $\Delta/d\to1/2$ and $t/d\to1$", with
 $d=2e(1+3v+3e)$, $t=2e(1+2v+4e)$, $\Delta=e(1+4v)+e^2$ (display `disp/017`) and $v=v(u)$. -/
 theorem example_ratio_limits (v : ℝ → ℝ)

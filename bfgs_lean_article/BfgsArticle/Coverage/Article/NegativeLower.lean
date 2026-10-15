@@ -4,7 +4,7 @@ import BfgsArticle.LUniformLocal
 # Lean coverage: `paper/statements/negative_lower.tex`
 
 Theorem `art:local-failure-lower` ("Independent local failure with positive lower curvature"),
-included in Section `art:failure` (`paper/sections/failure.tex:457`). Register:
+included in Section `art:failure` (`paper/sections/failure.tex:465`). Register:
 `editorial/lean_coverage/register/A_negative_lower.json`.
 
 ## Reading of the statement
@@ -28,7 +28,7 @@ included in Section `art:failure` (`paper/sections/failure.tex:457`). Register:
   (`bfgsStep (H k) g 1`), for the attempted lengths `a`; the accepted one is the next iterate.
 * `‖·‖` is the Euclidean norm: `‖euclideanVector v‖`.
 * A point is twice differentiable when `F` is differentiable near it and its derivative map
-  is differentiable there (the convention of `paper/sections/failure.tex:485-487`); the Hessian
+  is differentiable there (the convention of `paper/sections/failure.tex:493-496`); the Hessian
   is `RadialHessian.matrix F x`, the matrix of `fderiv ℝ (fderiv ℝ F) x`, and
   `μ I ⪯ ∇²F(x) ⪯ L I` is stated with its quadratic form on a symmetric matrix.
 
@@ -147,8 +147,8 @@ theorem smooth_center_value (m : ℕ) :
 "There is a finite strongly convex function $F:\R^2\to\R$ with compact sublevels and a unique
 nonsmooth minimizer at zero, with fixed starting points $x_0^{(\ell)}\to0$, all with $H_0=I$,
 such that for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$ the deterministic unit-first
-bracketing implementation of Section~\ref{art:failure} produces the same infinite full-BFGS
-runs. They converge to nonstationary points $\bar x_\ell\ne0$, with $\bar x_\ell\to0$ and
+bracketing implementation of Section~\ref{art:failure} produces infinite full-BFGS runs, the
+same for every such pair. They converge to nonstationary points $\bar x_\ell\ne0$, with $\bar x_\ell\to0$ and
 $F(x_k^{(\ell)})\downarrow F(\bar x_\ell)>F(0)$. Every accepted and rejected query is
 differentiable, the accepted lengths repeat $1,1/4,1/16$, and the supremum of all query norms
 in the $\ell$th run tends to zero.

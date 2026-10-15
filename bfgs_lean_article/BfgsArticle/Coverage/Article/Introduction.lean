@@ -81,7 +81,7 @@ theorem l1_not_differentiable {n : ℕ} (i : Fin n) {x : Vec n} (hx : x i = 0) :
   rw [hf] at hc
   exact not_differentiableAt_abs_zero hc
 
-/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:92-94`): the norm
+/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:93-95`): the norm
 `‖x‖_1`, "whose nonsmooth set for $n\ge2$ contains coordinate hyperplanes, beyond
 the isolated nonsmooth point of the Euclidean-norm case above." For `n ≥ 2`:
 `∑_j |x_j|` is not differentiable at any `x` with `x_i = 0`; the Euclidean norm is
@@ -148,7 +148,7 @@ def SwitchingPoint (i j : Fin 3) (x : Vec 2) : Prop :=
     PlanarQuadraticExample.branch i x = PlanarQuadraticExample.branch j x ∧
     PlanarQuadraticExample.objective x = PlanarQuadraticExample.branch i x
 
-/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:99-101`): "The
+/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:100-102`): "The
 explicit three-quadratic example in Theorem~\ref{art:nonradial-example} has curved
 switching sets and fails the radial condition". For every pair of branches, the
 switching set (tie of the two branches, both active) inside `|u|,|v| ≤ 1/10`
@@ -216,7 +216,7 @@ theorem three_quadratic_curved_nonradial :
         abs_le, max_def, Matrix.cons_val_two, Matrix.tail_cons, Matrix.head_cons]⟩
   · exact absurd rfl hij
 
-/-- Item `A/introduction/prose/041` (`paper/sections/introduction.tex:106-107`): "The
+/-- Item `A/introduction/prose/041` (`paper/sections/introduction.tex:107-108`): "The
 uniform smooth secant bound used there need not hold when gradients jump." The
 bound `‖y‖^2 ≤ M y^T s` of the smooth analysis (`y` the gradient change, `s` the
 step) holds for no constant `M` over the pairs of differentiable points of

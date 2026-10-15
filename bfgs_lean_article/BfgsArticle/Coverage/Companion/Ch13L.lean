@@ -57,6 +57,9 @@ the register points identical items to the article items (`SAME_AS`).
   only its queries, in the neighbourhood of the local model, since copy $n$ starts at
   $p_n+a_n\bar x_0$ (`chosen_orbit`, `local_model_along_orbit`; `global_failure` states it for all
   iterates).
+* Line 413 (`C/13_L/prose/083`, recurrence of M30 found by the line-by-line reading of the
+  article): "The first three branches … fail to be twice differentiable at the accumulation
+  point" now reads "…at the minimizer" (`branch_regularity`).
 * Wording points applied the same day after the independent review: W45 (line 3, "$C^{2,1}$";
   before the plain text "C2,1"), W44 (line 61, "the literal classical-Hessian assumption"; before
   "the user's …"), W8 (line 76, "certified in Chapter~\ref{comp:D}"; before "…in the preceding
@@ -583,7 +586,8 @@ theorem strict_margins_same_decisions :
   · exact (LUniform.nonstrict_failure_search _ h m k).trans (LUniform.failure_search _ h m k).symm
 
 /-- Item `C/13_L/prose/083` (`companion/chapters/13_L.tex:413`): "The first three branches of the
-local finite-branch construction fail to be twice differentiable at the accumulation point." The
+local finite-branch construction fail to be twice differentiable at the minimizer." (Corrected
+on 15 October 2026, M30; before "at the accumulation point".) The
 four branches of the local construction, before (`LEmbedding.branch`) and after
 (`LUniform.smoothBranch`) the fixed whitening: all four have globally Lipschitz (Euclidean)
 gradients; the first three are not twice differentiable at zero, the point where the bad starts

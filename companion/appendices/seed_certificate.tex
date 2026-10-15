@@ -44,9 +44,11 @@ adjugate formula $A=\operatorname{adj}(D)/\det D$.
 The following finite rational certificate uses only the coefficients of
 \eqref{comp:seed_polynomials} and the two displayed rationals:
 \begin{equation}\label{comp:root_arithmetic}
+ \begin{gathered}
  \det D\ne0,\qquad
- \max_i |(AP(\bar r))_i|<10^{-50},\qquad
+ \max_i |(AP(\bar r))_i|<10^{-50},\\
  \max_i\sum_{2\le|\nu|\le5}|a_{i,\nu}|\,|\nu|\le7000,
+ \end{gathered}
 \end{equation}
 where, for $\nu=(\nu_1,\nu_2)$,
 \[
@@ -93,9 +95,9 @@ $60/1000<\rho<61/1000$. In particular all divisions used below are valid. The sa
 
 \section{The matrix identity}
 \begin{proof}[Proof of the algebraic part of the seed and query assertions in Chapter~\ref{comp:D}]
-The first update in \eqref{D:closure} is immediate from
+The first update of the cycle, $\mathcal B(I,g_0,g_1,1)=M_1$, is immediate from
 $s_0=(-1,0)^T$ and $g_1-g_0=(-2,-1/8)^T$.
-For arbitrary $(c,d)$ with the positive factors above, put
+For an arbitrary point $(c,d)$, not only the root, with the positive factors above, put
 \[
  \beta=\frac{66048RK}{UV(U+129)},\quad
  \gamma=\frac{VTK}{RUY},\quad
@@ -103,13 +105,16 @@ For arbitrary $(c,d)$ with the positive factors above, put
 \]
 The rational identities obtained from \eqref{D:bfgs} are
 \begin{equation}\label{comp:closure_identity}
+ \begin{gathered}
  \mathcal B(\mathcal B(M_1,g_1,g_2,\beta),g_2,g_0,\gamma)
-     =\widetilde\rho I,\qquad
+     =\widetilde\rho I,\\
  -\gamma\mathcal B(M_1,g_1,g_2,\beta)g_2
      =\widetilde\rho(g_0-g_2).
+ \end{gathered}
 \end{equation}
 Here is a way to check the identities without guessing matrix entries.
-The middle update is $C+\beta E$, because its two projection factors
+The middle update is $C+\beta E$, with projected term $C$ and rank-one term
+$\beta E$, because its two projection factors
 are independent of the step length and its rank-one term is linear in
 that length. Requiring $(C+\beta E)g_2$ to be parallel to $g_0-g_2$
 gives a linear equation for $\beta$; substitution of $M_1,g_1,g_2$
@@ -117,11 +122,12 @@ gives the displayed value. For a unit vector $w\perp(g_0-g_2)$,
 substitution gives $w^T(C+\beta E)w=\widetilde\rho$.
 With the displayed $\gamma$, the last step is
 $\widetilde\rho(g_0-g_2)$. Its projection factors are the orthogonal
-projector onto $(g_0-g_2)^\perp$, and its rank-one term is
-$\widetilde\rho$ times the complementary projector. Their sum is
+projector $\Pi=ww^T$ onto $(g_0-g_2)^\perp$, so its projected term is
+$\Pi(C+\beta E)\Pi=\widetilde\rho\,\Pi$, and its rank-one term is
+$\widetilde\rho(I-\Pi)$. Their sum is
 $\widetilde\rho I$, proving \eqref{comp:closure_identity}.
 Each substitution is a rational identity and can equivalently be
-checked by clearing their nonzero denominators and expanding.
+checked by clearing its nonzero denominators and expanding.
 
 Equations~\eqref{comp:seed_polynomials} give exactly
 $\beta=1/4$ and $\gamma=1/16$. Moreover,
@@ -129,7 +135,10 @@ $\beta=1/4$ and $\gamma=1/16$. Moreover,
  \widetilde\rho-\rho=
  \frac{2064R}{V(U+129)}\left(\gamma-\frac1{16}\right)=0.
 \]
-This gives the matrix and displacement closures. The formula for $z_0$
+This gives the matrix and displacement closures. The steps
+\eqref{D:steps} also satisfy $s_j=-\alpha_jM_jg_j$ with $\alpha_0=1$,
+$\alpha_1=1/4$ and $\alpha_2=1/16$: for $j=0,1$ by substitution, and for $j=2$
+by the second identity in \eqref{comp:closure_identity}. The formula for $z_0$
 gives $s_0+s_1+s_2=-(1-\rho)z_0$.
 The strict inequalities below imply
 $(g_{j+1}-g_j)^Ts_j>0$ at each phase. Positive definiteness follows
@@ -161,9 +170,11 @@ rounding is needed.
 
 For the query calculation it suffices to use the larger box
 \begin{equation}\label{comp:query_box}
+ \begin{gathered}
  c\in\frac{[318481,318482]}{10^6},\quad
- d\in\frac{[-1025233,-1025232]}{10^6},\quad
+ d\in\frac{[-1025233,-1025232]}{10^6},\\
  \rho\in\frac{[6019,6021]}{10^5}.
+ \end{gathered}
 \end{equation}
 The first two inclusions follow from the root box; substitution in
 \eqref{D:rho}, with positive denominator, gives the third.
@@ -189,7 +200,7 @@ positive rational lower bound, in the order of the table in Section~\ref{comp:tr
 \end{equation}
 For each trial value $G(z_j+\alpha p_j)$ in the table of Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width at most $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory.
 For the three base points, the designated active gaps are positive as
-well. Evaluating $3\pm g_i^Tq$ for every $i$, $2-q_2$, and the
+well. Evaluating $3\pm g_i^Tq$ for every $i$, $2-(q)_2$, and the
 designated active value $g_i^Tq$ gives positive lower bounds for all base
 points and all nine queries. This proves
 \eqref{D:trialbounds}. All inputs, expressions, interval rules

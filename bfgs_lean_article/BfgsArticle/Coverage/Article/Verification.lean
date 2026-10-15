@@ -37,7 +37,7 @@ open BfgsVerification
 
 /-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11-12`): "The homogeneous
 seed satisfies $G(t(-1,16))=-t$ for $t\ge0$" (the range was added on 15 October 2026, M9), as
-stated in `paper/sections/failure.tex:201`. -/
+stated in `paper/sections/failure.tex:206`. -/
 theorem seed_ray {t : ℝ} (ht : 0 ≤ t) :
     SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD (t • ![-1, 16]) = -t :=
   DEmbedding.seed_descent_ray ht
@@ -247,9 +247,9 @@ theorem degenerate_pattern {e : Vec 2} (he : e ≠ 0) :
     exact hne w (hw 3) hz
 
 /-- Item `A/verification/prose/011` (`paper/sections/verification.tex:22-24`);
-Item `A/verification/prose/014` (`paper/sections/verification.tex:28-29`);
-Item `A/verification/prose/015` (`paper/sections/verification.tex:29-31`);
-Item `A/verification/prose/016` (`paper/sections/verification.tex:31-32`):
+Item `A/verification/prose/014` (`paper/sections/verification.tex:30-31`);
+Item `A/verification/prose/015` (`paper/sections/verification.tex:31-33`);
+Item `A/verification/prose/016` (`paper/sections/verification.tex:33-34`):
 "In \eqref{art:upper_objective}, all four branches are active at zero, with indexed
 gradients $0,0,0,e_2$ ... the repeated zero gradients violate affine independence,
 and a combination with positive weight $\lambda_3$ on the fourth branch equals
@@ -293,10 +293,11 @@ theorem lower_branch_gradients_zero (i : Fin 4) :
   · exact LEmbedding.branchGradient_zero 2
   · simp [LEmbedding.branchGradient, LEmbedding.residualGradient]
 
-/-- Item `A/verification/prose/012` (`paper/sections/verification.tex:25-26`), with the
+/-- Item `A/verification/prose/012` (`paper/sections/verification.tex:25-27`), with the
 consequences of `A/verification/prose/014`–`016`: "Equation~\eqref{art:lower_objective}
-gives the same pattern before whitening: the common quadratic has zero gradient at
-zero, and $\psi_b'(0)=0$." All four branches
+gives the same pattern before the fixed change of coordinates of
+Appendix~\ref{art:lower_curvature}: the common quadratic has zero gradient at zero, and
+$\psi_b'(0)=0$." All four branches
 `f_i(x)=μ‖x‖^2/2+ψ_{b_i}(q_i^Tx)`, `f_3(x)=μ‖x‖^2/2+x_2` are active at zero with
 gradients `0,0,0,e_2`; the gradient pattern has the same consequences as in
 `upper_active_gradients`. -/
@@ -324,10 +325,10 @@ theorem lower_active_gradients :
   · rw [← hgrad i]
     exact LEmbedding.branch_hasGradient i 0
 
-/-- Item `A/verification/prose/013` (`paper/sections/verification.tex:27-28`), with the
-consequences of `A/verification/prose/014`–`016` (lines 27-31): "After the one fixed
-change $x=Az$, the gradients are $0,0,0,A^Te_2$, with $A^Te_2\ne0$ ... (or
-$\lambda_3A^Te_2\ne0$ after whitening)." For the whitened objective of Theorem
+/-- Item `A/verification/prose/013` (`paper/sections/verification.tex:28-30`), with the
+consequences of `A/verification/prose/014`–`016` (lines 30-34): "After that change,
+$x=Az$ with $A=(H_0^{\rm seed})^{1/2}$, the gradients are $0,0,0,A^Te_2$, with $A^Te_2\ne0$
+... (or $\lambda_3A^Te_2\ne0$ after that change)." Here $A$ is `LUniform.coordinateMatrix`. For the whitened objective of Theorem
 `art:local-failure-lower`, all four branches are active at zero with gradients
 `0,0,0,A^Te_2`, `A^Te_2 ≠ 0`, and the gradient pattern has the same consequences. -/
 theorem whitened_active_gradients :
@@ -362,7 +363,7 @@ theorem whitened_active_gradients :
   · rw [← hgrad i]
     exact (LUniform.smooth_branch_regular i).2.2.1 0
 
-/-- Item `A/verification/prose/017` (`paper/sections/verification.tex:33-34`): "Three of the four
+/-- Item `A/verification/prose/017` (`paper/sections/verification.tex:35-36`): "Three of the four
 lower-curvature branches also lose second differentiability at zero" (corrected on 15 October
 2026, M8, like the abstract's `A/master/prose/009`, `paper/master.tex` lines 53-55; both spoke of
 all branches). Of the four branches of the objective of Theorem
@@ -410,8 +411,8 @@ theorem gradient_of_active {μ : ℝ} {x : Vec 2} {i : Fin 3}
   rw [h]
   abel
 
-/-- Item `A/verification/disp/001` (`paper/sections/verification.tex:41-44`), equation
-`art:jump-secant`, with the hypotheses of lines 37-38: "For $Q_\mu(x)=\mu\|x\|^2/2+G(x)$, suppose
+/-- Item `A/verification/disp/001` (`paper/sections/verification.tex:43-46`), equation
+`art:jump-secant`, with the hypotheses of lines 39-40: "For $Q_\mu(x)=\mu\|x\|^2/2+G(x)$, suppose
 the differentiable endpoints $x$ and $x+s$ have active slopes $g_i$ and $g_j$. Then
 exactly $y=(\mu(x+s)+g_j)-(\mu x+g_i)=\mu s+(g_j-g_i)$." Here `y` is the difference
 of the actual gradients of `Q_μ` at the two endpoints. -/
@@ -497,9 +498,9 @@ theorem seed_slopes_distinct {i j : Fin 3} (hij : i ≠ j) :
   fin_cases i <;> fin_cases j <;> simp_all [SeedOrbit.gradient, SeedCycle.g0, SeedCycle.g1,
     SeedCycle.g2] <;> dsimp only [SeedOrbit.seedC, SeedOrbit.seedD] at * <;> linarith
 
-/-- Item `A/verification/prose/019` (`paper/sections/verification.tex:45-46`);
-Item `A/verification/prose/020` (`paper/sections/verification.tex:46-47`): "Along the certified perturbed orbit,
-$s\to0$ while the three distinct slopes continue to cycle. The positive-curvature
+/-- Item `A/verification/prose/019` (`paper/sections/verification.tex:47-48`);
+Item `A/verification/prose/020` (`paper/sections/verification.tex:48-49`): "Along the perturbed orbit of
+Proposition~\ref{art:quadratic_failure}, $s\to0$ while the three distinct slopes continue to cycle. The positive-curvature
 contribution therefore vanishes with the step, while the branch jumps persist."
 For every `μ>0` there is one orbit `x_k`, `H_k` (with `H_0 ≻ 0`) that is the actual
 run of the article's unit-first search on `Q_μ` for every pair `0<c₁≤1/3`,
@@ -718,7 +719,7 @@ def fourMaxRun : AdmissibleBFGSRun 2 fourMax where
     exact axisRun.armijo k
   weak_wolfe := axisRun.weak_wolfe
 
-/-- Item `A/verification/prose/022` (`paper/sections/verification.tex:49`): "a branch change
+/-- Item `A/verification/prose/022` (`paper/sections/verification.tex:51`): "a branch change
 alone does not imply failure." For every coercive finite maximum of linear functions
 `F(x)=max_{a∈A} a^Tx` (bounded zero sublevel), every infinite admissible run changes its
 active linear piece at every accepted step: at `x_k` the only active slope is the gradient
@@ -751,9 +752,12 @@ theorem branch_change_without_failure :
 
 /-! ## The open question -/
 
-/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:55-56`), OPEN
-(stated without proof): "The broader local question for finitely many uniformly
-strongly convex $C^2$ branches remains open here."
+/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:57-59`), OPEN
+(stated without proof): "The local question for finitely many uniformly strongly convex
+$C^2$ branches remains open here outside the nondegenerate planar case of
+Corollary~\ref{art:planar-max}." (Before 15 October 2026, M36: "The broader local question ...
+remains open here.") Corollary `art:planar-max` excludes such failures in its nondegenerate
+planar case, so the open question is the same.
 
 The proposition below is the local failure of Theorems `art:local-failure` and
 `art:local-failure-lower` with the branch class of the question: a finite maximum

@@ -4,6 +4,10 @@ from pathlib import Path
 import re
 ROOT=Path(__file__).resolve().parents[1]
 src=(ROOT/'paper/appendices/seed_certificate.tex').read_text()
+# The article's svjour3 proofs end with \qed (R-C-11, M39 in TODO_MANUSCRIPT_REVIEW.md);
+# the companion's amsthm proof environment sets its own end-of-proof mark.
+assert src.count('\\qed\n\\end{proof}')==2
+src=src.replace('\\qed\n\\end{proof}','\n\\end{proof}')
 # The companion's preserved construction uses c,d; the article separates
 # these fixed seed coordinates from its analytical constants with circle aliases.
 src=src.replace(r'c_\circ','c').replace(r'd_\circ','d')
@@ -22,6 +26,8 @@ companion_only=[
   'In particular all divisions used below are valid. The same interval rules on the root box give the thirty digits in \\eqref{art:seed_rho}.'),
  # M16 (b): comp:trial_table labels a section heading, not a table.
  ('Table~\\ref{art:trial_table}','the table in Section~\\ref{art:trial_table}'),
+ # R-E-9 (a), M38: the companion writes the second coordinate as (z)_2 (D:trialbounds).
+ ('$2-[q]_2$','$2-(q)_2$'),
  # M15: the companion's table lists decimals; the interval operations give rational
  # enclosures of width at most 4e-4 (Lean: Companion.SeedCertificate.table_enclosure_widths).
  ('The same interval operations give the value enclosures in that table.',
@@ -36,7 +42,7 @@ src=re.sub(r'^\\section\{[^\n]+\}\n\\label\{art:seed_certificate\}\n','',src)
 links={'art:seed_certificate':'comp:seed_certificate','art:seed_cycle':'D:root',
        'art:seed_rho':'D:rho','art:seed_matrices':'D:closure','art:failure_update':'D:bfgs',
        'art:seed_points':'D:x0','art:trial_table':'comp:trial_table',
-       'art:seed_query_bounds':'D:trialbounds'}
+       'art:seed_query_bounds':'D:trialbounds','art:seed_steps':'D:steps'}
 for a,b in links.items():src=src.replace('{'+a+'}','{'+b+'}')
 src=src.replace('Lemma~\\ref{D:root}','the seed and query assertions in Chapter~\\ref{comp:D}')
 src=src.replace('\\subsection{','\\section{')

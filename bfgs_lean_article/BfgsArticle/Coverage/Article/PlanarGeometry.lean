@@ -20,9 +20,9 @@ Every theorem below states the hypotheses of Lemma `art:planar-field`
 * `hstrict : ∀ x y, segment ℝ x y ⊆ frontier {u | F u ≤ ℓ} → x = y`: the boundary of
   $\{F\le\ell\}$ contains no nontrivial segment;
 * `hnoncrit : ∀ p ∈ C, ¬IsAffineCritical F p`: no point of $C$ is affine critical, where
-  `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:156-159`);
+  `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:157-160`);
 * `hregular`: every `p ∈ C` has the smooth or regular convex two-branch structure of
-  hypothesis 2 of Theorem `art:planar-cluster` (`local.tex:220-223`), written as in the TeX (and
+  hypothesis 2 of Theorem `art:planar-cluster` (`local.tex:222-225`), written as in the TeX (and
   as in the coverage of `local.tex`): either $F$ is $C^2$ on an open `V ∋ p`, or on an open
   `V ∋ p`, $F=\max\{f_1,f_2\}$ with $f_1,f_2$ convex and $C^2$ on `V` (so `V` is convex), both
   active at $p$, and $\nabla f_1(p),\nabla f_2(p)$ linearly independent. `regularity_of_literal`
@@ -45,7 +45,7 @@ variables with their defining equations or properties.
   `PlanarAmbientFrame.rotate u = ![-u 1, u 0]`, so `rotate (normal θ) = tangent θ`.
 * `normalized g = ‖euclideanVector g‖⁻¹ • g` is $g/\norm{g}$; `coordinateGradient F x` is
   $\nabla F(x)$; `subdifferential F x` is $\partial F(x)$.
-* For differentiable $x,z$ (energy.tex:239-244), `EligiblePair F c₁ c₂ x z g h` says that
+* For differentiable $x,z$ (energy.tex:240-245), `EligiblePair F c₁ c₂ x z g h` says that
   `g`, `h` are the gradients at `x`, `z` and that the pair is eligible:
   $d>0$, $c_1d\le\Delta\le d$, $t\ge(1-c_2)d$, with $s=z-x$, $y=h-g$, $d=-g^Ts$
   (`-dot g (z - x)`), $\Delta=F(x)-F(z)$ and $t=y^Ts$ (`dot (h - g) (z - x)`).
@@ -82,9 +82,9 @@ variables with their defining equations or properties.
 
 Undisplayed steps of the proof that are stated as well: `corner_curve` (lines 41-44),
 `exists_angle` and `fieldFormula_periodic` (line 89), `transversality_contradiction`
-(lines 140-141), `one_sided_comparison` (lines 168-173), `transport_constants` (lines 184-189),
-`same_branch_secant` (lines 206-208), `crossing_tie_point` (lines 210-212) and
-`crossing_secant` (lines 228-230). `planar_field` itself is proved from the library theorem
+(lines 140-141), `one_sided_comparison` (lines 170-175), `transport_constants` (lines 186-191),
+`same_branch_secant` (lines 208-210), `crossing_tie_point` (lines 212-214) and
+`crossing_secant` (lines 230-232). `planar_field` itself is proved from the library theorem
 `PlanarAllPairs.source_all_endpoint_estimates`, which follows the same construction.
 
 The `example`s at the end show that the hypotheses of every theorem above hold together for the
@@ -187,7 +187,7 @@ theorem contDiffAt_two_iff (F : Vec 2 → ℝ) (p : Vec 2) :
   ⟨fun h => h.contDiffOn le_rfl (by simp), fun ⟨_, hN, hC⟩ => hC.contDiffAt hN⟩
 
 /-- Notation (`hregular`): the smooth or regular convex two-branch structure of hypothesis 2 of
-Theorem `art:planar-cluster` (`local.tex:220-223`), written as in the TeX (the form of `hregular`
+Theorem `art:planar-cluster` (`local.tex:222-225`), written as in the TeX (the form of `hregular`
 in this file), implies the library's form `ContDiffAt ℝ 2 F p ∨ ConvexTwoBranchRegularAt F p`
 used by `PlanarAllPairs.source_all_endpoint_estimates`. -/
 theorem regularity_of_literal {F : Vec 2 → ℝ} {p : Vec 2}
@@ -228,7 +228,7 @@ theorem literal_of_regularity {F : Vec 2 → ℝ} {p : Vec 2}
       fun z hz => max_of_isGreatest f (hrep z hz), hact 0, hact 1,
       independent_of_pairDet_ne_zero hdet⟩
 
-/-- Notation (`hnoncrit`): `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:156-159`),
+/-- Notation (`hnoncrit`): `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:157-160`),
 the affine span taken in Euclidean space. -/
 theorem isAffineCritical_iff (F : Vec 2 → ℝ) (p : Vec 2) :
     IsAffineCritical F p ↔
@@ -407,7 +407,7 @@ theorem field_derivative_triangular {m : ℕ} {F : Vec 2 → ℝ} (hF : ConvexOn
     rw [← hrec, add_comm]
 
 /-- Proof of Lemma `art:planar-field`, the one-sided comparison of
-`paper/appendices/planar_geometry.tex:168-173` (not a register item): "If a continuous function
+`paper/appendices/planar_geometry.tex:170-175` (not a register item): "If a continuous function
 $u$ on $[0,1]$ has $u'_+\le0$ on $[0,1)$, then $u(1)\le u(0)$." The right derivative is a
 `HasDerivWithinAt` on `Ici θ`. (Proved with Mathlib's one-sided comparison
 `image_le_of_deriv_right_le_deriv_boundary`.) -/
@@ -1320,7 +1320,7 @@ theorem transversality_contradiction (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ uni
 
 /-! ### Transport charged to decrease -/
 
-/-- Item `A/planar_geometry/disp/011` (`paper/appendices/planar_geometry.tex:150-152`), equation
+/-- Item `A/planar_geometry/disp/011` (`paper/appendices/planar_geometry.tex:151-153`), equation
 `art:planar-determinant-derivative`, in the proof of Lemma `art:planar-field`:
 "At a smooth point the basis $(T,n)$ has determinant $-1$. Writing $s=s_TT+s_nn$, direct
 calculation yields
@@ -1372,7 +1372,7 @@ theorem determinant_derivative (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (F
       (hT ▸ hnT) s
     rw [hdet, ← hT, ← ha, ← hb, ← he, ← hsT, ← hsn]
 
-/-- Item `A/planar_geometry/disp/012` (`paper/appendices/planar_geometry.tex:160-164`), in the
+/-- Item `A/planar_geometry/disp/012` (`paper/appendices/planar_geometry.tex:162-166`), in the
 proof of Lemma `art:planar-field`: for $H(\theta)=\log|D(\theta)|$,
 \[ |H'_+(\theta)|\le A|\varphi'_+(\theta)|\le A\bigl(\varphi'_+(\theta)+2d\bigr),
    \qquad 0\le\theta<1. \]
@@ -1490,7 +1490,7 @@ theorem log_determinant_derivative_bound (F : Vec 2 → ℝ) (hF : ConvexOn ℝ 
     rw [abs_le]
     constructor <;> linarith
 
-/-- Item `A/planar_geometry/disp/013` (`paper/appendices/planar_geometry.tex:175-178`), in the
+/-- Item `A/planar_geometry/disp/013` (`paper/appendices/planar_geometry.tex:177-180`), in the
 proof of Lemma `art:planar-field`: "Apply this fact to both
 \[ \pm\bigl(H(\theta)-H(0)\bigr)-A\bigl(\varphi(\theta)-\varphi(0)+2d\theta\bigr). \]
 Both start at zero and have nonpositive right derivative."
@@ -1533,7 +1533,7 @@ theorem comparison_functions (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
     simpa only [Real.log_abs] using hDcont.log hD0
   exact comparison_core hF x s d φ H (by rw [hφ, hq]) hHcont A hbound σ hσ u hu
 
-/-- Item `A/planar_geometry/disp/014` (`paper/appendices/planar_geometry.tex:181-183`), in the
+/-- Item `A/planar_geometry/disp/014` (`paper/appendices/planar_geometry.tex:183-185`), in the
 proof of Lemma `art:planar-field`: "Since $\varphi(1)\le\varphi(0)$,
 \[ |H(1)-H(0)|\le2Ad." \]
 Under the assumptions of `comparison_functions` (without the sign and $u$). -/
@@ -1571,10 +1571,10 @@ theorem log_determinant_increment (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
   exact increment_core hF x s d φ H (by rw [hφ, hq]) hHcont hdesc A hA hbound
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:184-189` (not a register item): "Set
+`paper/appendices/planar_geometry.tex:186-191` (not a register item): "Set
 $\lambda=D(1)/D(0)>0$. Because $s,w(x)$ are linearly independent, solving in that basis gives
 $w(z)=\lambda w(x)+\beta s$; the preceding bound is $|\log\lambda|\le2Ad$. For $0<d\le1$,
-convexity of the exponential on $[0,1]$ gives $\lambda^2\le e^{4Ad}\le1+(e^{4A}-1)d$."
+convexity of the exponential on $[0,1]$ gives $\lambda^2\le\exp(4Ad)\le1+(\exp(4A)-1)d$."
 Under the assumptions of `log_determinant_increment`. -/
 theorem transport_constants (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ)
     (_hFstar : IsLeast (range F) Fstar) (C : Set (Vec 2)) (ℓ : ℝ) (_hCne : C.Nonempty)
@@ -1642,7 +1642,7 @@ theorem transport_constants (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fsta
 
 /-! ### The secant correction -/
 
-/-- Item `A/planar_geometry/disp/015` (`paper/appendices/planar_geometry.tex:196-199`), in the
+/-- Item `A/planar_geometry/disp/015` (`paper/appendices/planar_geometry.tex:198-201`), in the
 proof of Lemma `art:planar-field`: "First suppose the endpoints use the same smooth branch $f$.
 On a larger convex chart, with Lipschitz constant $M>0$, sufficiently close buffered endpoints
 satisfy
@@ -1676,7 +1676,7 @@ theorem branch_cocoercivity (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fst
   cocoercivity_core f V hVopen hfconv hfC M hM hLip B ρ hρ hBV x z hx hz hxz
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:206-208` (not a register item): "Since the branch values
+`paper/appendices/planar_geometry.tex:208-210` (not a register item): "Since the branch values
 and gradients at both endpoints agree with those of $F$, the bracket is at most $t$.
 Boundedness of $w$ then bounds $(y^Tw(z))^2/t$ uniformly." Under the assumptions of
 `branch_cocoercivity`, with $\nabla f(x)=g$, $\nabla f(z)=h$ and $\norm{w(z)}\le G$: the bracket
@@ -1734,7 +1734,7 @@ theorem same_branch_secant (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
     _ = 2 * M * G ^ 2 * dot (h - g) (z - x) := by ring
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:210-212` (not a register item): "For different endpoint
+`paper/appendices/planar_geometry.tex:212-214` (not a register item): "For different endpoint
 branches $i,j$ in a two-branch chart, the segment contains a tie point $p$. There
 $(\nabla f_j(p)-\nabla f_i(p))^Tw(p)=0$." Under the assumptions of the lemma: $F=\max(f_0,f_1)$
 on the open convex chart $V$ with convex $C^2$ branches, $w$ has the common pairing on $V$,
@@ -1763,7 +1763,7 @@ theorem crossing_tie_point (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
   tie_point_core hF f V hVconv hVopen hfC (fun u hu => isGreatest_of_max f (hmax u hu)) w hcommon
     x z hx hz i j hij hi hj
 
-/-- Item `A/planar_geometry/disp/016` (`paper/appendices/planar_geometry.tex:214-216`), in the
+/-- Item `A/planar_geometry/disp/016` (`paper/appendices/planar_geometry.tex:216-218`), in the
 proof of Lemma `art:planar-field`: "The branch gradients and $w$ are Lipschitz, so
 \[ |y^Tw(z)|\le A_1\norm{s}." \]
 Under the assumptions of the lemma: $F=\max(f_0,f_1)$ on the open convex chart $V$ with convex
@@ -1816,7 +1816,7 @@ theorem crossing_numerator (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
     intro x _ _ _ hx
     exact absurd ⟨x, hx⟩ hV
 
-/-- Item `A/planar_geometry/disp/017` (`paper/appendices/planar_geometry.tex:219-221`), in the
+/-- Item `A/planar_geometry/disp/017` (`paper/appendices/planar_geometry.tex:221-223`), in the
 proof of Lemma `art:planar-field`: "Put $r=\nabla f_j(z)-\nabla f_j(x)$, so
 $\norm{r}\le M\norm{s}$. Then
 \[ \nabla f_i(x)^Ts=-d,\qquad \nabla f_j(x)^Ts=t-d-r^Ts." \]
@@ -1851,7 +1851,7 @@ theorem crossing_pairings (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar 
     x z g h hx hz hp.gradient_x hp.gradient_z
     i j hi hj s y hs hy d t hd ht r hr
 
-/-- Item `A/planar_geometry/disp/018` (`paper/appendices/planar_geometry.tex:224-227`), in the
+/-- Item `A/planar_geometry/disp/018` (`paper/appendices/planar_geometry.tex:226-229`), in the
 proof of Lemma `art:planar-field`: "The two gradient rows are uniformly independent on the
 smaller chart. Their inverse bound and eligibility imply
 \[ \norm{s}\le A_2(2d+t+M\norm{s}^2)\le A_2\Bigl(1+\frac{2}{1-c_2}\Bigr)t+A_2M\norm{s}^2." \]
@@ -1928,7 +1928,7 @@ theorem crossing_step_bound (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fsta
     nlinarith [mul_le_mul_of_nonneg_left h2 hA₂]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:228-230` (not a register item): "For sufficiently small
+`paper/appendices/planar_geometry.tex:230-232` (not a register item): "For sufficiently small
 $\norm{s}$, absorb the last term to obtain $t\ge a_0\norm{s}$ with $a_0>0$. Consequently
 $(y^Tw(z))^2/t\le A_1^2\norm{s}/a_0$, uniformly bounded." Under the assumptions of the lemma,
 for an eligible pair with the bounds of displays `disp/016` and `disp/018`, $A_2>0$ and

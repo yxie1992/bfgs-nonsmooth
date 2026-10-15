@@ -147,8 +147,8 @@ theorem seed_objective_eq_max (x : Vec 2) :
     · exact LQuadraticSeed.seed_branch_le 1 x
     · exact LQuadraticSeed.seed_branch_le 2 x
 
-/-- Item `A/lower_curvature/disp/001` (`paper/appendices/lower_curvature.tex:26-28`): "Use the
-fixed slopes of Appendix~\ref{art:seed_certificate} and let
+/-- Item `A/lower_curvature/disp/001` (`paper/appendices/lower_curvature.tex:27-29`): "Use the
+slopes $g_0,g_1,g_2$ and the function $G$ of Section~\ref{art:failure} and let
 \[ Q_\mu(x)=\tfrac\mu2\|x\|^2+G(x),\qquad\mu>0." \]
 `LQuadraticSeed.objective μ` is $Q_\mu$, with $G(x)=\max\{g_0^Tx,g_1^Tx,g_2^Tx\}$. -/
 theorem quadratic_def (μ : ℝ) (x : Vec 2) :
@@ -157,7 +157,7 @@ theorem quadratic_def (μ : ℝ) (x : Vec 2) :
         max (max (dot g0 x) (dot g1 x)) (dot (g2 seedC seedD) x) :=
   ⟨rfl, seed_objective_eq_max x⟩
 
-/-- Item `A/lower_curvature/disp/002` (`paper/appendices/lower_curvature.tex:30-33`):
+/-- Item `A/lower_curvature/disp/002` (`paper/appendices/lower_curvature.tex:31-34`):
 \[ \bar g=\frac{(1,-16)^T}{257}=\frac{129}{257}g_0+\frac{128}{257}g_1. \] -/
 theorem gbar_def :
     LQuadraticSeed.gbar = (1 / 257 : ℝ) • ![1, -16] ∧
@@ -178,7 +178,7 @@ theorem slopes_eq : LQuadraticSeed.slopes = {g0, g1, g2 seedC seedD} := by
     · exact ⟨1, rfl⟩
     · exact ⟨2, rfl⟩
 
-/-- Item `A/lower_curvature/prose/003` (`paper/appendices/lower_curvature.tex:34-36`): "[$\bar g$]
+/-- Item `A/lower_curvature/prose/003` (`paper/appendices/lower_curvature.tex:35-37`): "[$\bar g$]
 is the least-norm point of $\operatorname{conv}\{g_0,g_1,g_2\}$:
 $g_0^T\bar g=g_1^T\bar g=\|\bar g\|^2=1/257$, whereas $g_2^T\bar g>1/257$." Least norm in the
 Euclidean norm, and the only point of least norm. -/
@@ -202,7 +202,7 @@ theorem gbar_least_norm :
   rw [← h1, ← h2, he]
 
 /-- Item `A/lower_curvature/disp/003`, equation `art:quadratic_minimizer`
-(`paper/appendices/lower_curvature.tex:37-39`): "Therefore the unique minimizer is
+(`paper/appendices/lower_curvature.tex:38-40`): "Therefore the unique minimizer is
 \[ x_*=-\bar g/\mu,\qquad \min Q_\mu=-1/(514\mu)." \] -/
 theorem quadratic_minimizer (μ : ℝ) (hμ : 0 < μ) (xs : Vec 2) (hxs : xs = -(μ⁻¹ • LQuadraticSeed.gbar)) :
     (∀ x, LQuadraticSeed.objective μ xs ≤ LQuadraticSeed.objective μ x) ∧
@@ -214,7 +214,7 @@ theorem quadratic_minimizer (μ : ℝ) (hμ : 0 < μ) (xs : Vec 2) (hxs : xs = -
   exact ⟨LQuadraticSeed.objective_minimum hμ, fun x hx => LQuadraticSeed.objective_unique_minimum hμ hx,
     LQuadraticSeed.minimizer_value hμ⟩
 
-/-- Item `A/lower_curvature/prose/004` (`paper/appendices/lower_curvature.tex:40-42`): "At $x_*$
+/-- Item `A/lower_curvature/prose/004` (`paper/appendices/lower_curvature.tex:41-43`): "At $x_*$
 the first two branches tie with distinct gradients, so the minimizer is nonsmooth. At zero the
 subdifferential is the nonstationary triangle of the original seed." The branches of $Q_\mu$ are
 $\mu\|x\|^2/2+g_i^Tx$ with gradients $\mu x+g_i$. -/
@@ -235,7 +235,7 @@ theorem minimizer_nonsmooth (μ : ℝ) (hμ : 0 < μ) (xs : Vec 2) (hxs : xs = -
   have h0 := congrFun h 0
   norm_num [LQuadraticSeed.branchGradient, SeedOrbit.gradient, g0, g1] at h0
 
-/-- Item `A/lower_curvature/prose/005` (`paper/appendices/lower_curvature.tex:18-19`): "A common
+/-- Item `A/lower_curvature/prose/005` (`paper/appendices/lower_curvature.tex:19-20`): "A common
 positive quadratic leaves the active-branch geometry unchanged and makes every sublevel
 compact." A branch of $Q_\mu$ is active exactly when the same branch of $G$ is active. -/
 theorem common_quadratic (μ : ℝ) (hμ : 0 < μ) :
@@ -257,7 +257,7 @@ theorem seed_point_second_neg : SeedOrbit.point seedC seedD seedRatio 0 1 < 0 :=
   · linarith [hr.2]
 
 /-- Item `A/lower_curvature/prose/006` (`paper/appendices/lower_curvature.tex:5-6`), with prose
-item `A/lower_curvature/prose/035` (lines 19-20): "Adding a positive quadratic changes the seed
+item `A/lower_curvature/prose/035` (lines 20-21): "Adding a positive quadratic changes the seed
 orbit, so exact homogeneity alone no longer supplies a trajectory." / "It perturbs the
 gradients, however, so the homogeneous seed is no longer an exact orbit." For $\mu>0$ no
 full-BFGS run on $Q_\mu$ from the seed state $(z_0,I)$ has $z_1$ as its next iterate. -/
@@ -289,7 +289,7 @@ theorem seed_not_orbit (μ : ℝ) (hμ : 0 < μ) (R : AdmissibleBFGSRun 2 (LQuad
   have h3 : R.α 0 * (μ * SeedOrbit.point seedC seedD seedRatio 0 1) = 0 := by linarith
   exact mul_ne_zero hα.ne' (mul_ne_zero hμ.ne' hz.ne) h3
 
-/-- Item `A/lower_curvature/prose/007` (`paper/appendices/lower_curvature.tex:20-21`): "Close to
+/-- Item `A/lower_curvature/prose/007` (`paper/appendices/lower_curvature.tex:21-22`): "Close to
 the corner, the quadratic gradient is small relative to the fixed slopes." Near zero
 $\|\mu x\|\le\varepsilon\|g_i\|$ for every slope, for any $\varepsilon>0$. -/
 theorem quadratic_gradient_small (μ : ℝ) (hμ : 0 < μ) (ε : ℝ) (hε : 0 < ε) :
@@ -328,7 +328,9 @@ theorem quadratic_gradient_small (μ : ℝ) (hμ : 0 < μ) (ε : ℝ) (hε : 0 <
 /-! ### Proposition `art:quadratic_failure` -/
 
 /-- Item `A/lower_curvature/proposition/art:quadratic_failure`, Proposition
-`art:quadratic_failure` (`paper/appendices/lower_curvature.tex:44-51`).
+`art:quadratic_failure` (`paper/appendices/lower_curvature.tex:45-52`), as printed before the
+correction of 15 October 2026 (M33, reader point R-F-1), which added the initial point to the
+last sentence; the corrected proposition is `quadratic_failure_initial_point`.
 
 "Let $\mu>0$. For every neighborhood $V$ of zero, some initial state $(x_0,H_0)$, $H_0\succ0$,
 produces for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$ the same deterministic full-BFGS run on
@@ -385,9 +387,70 @@ theorem quadratic_failure (μ : ℝ) (hμ : 0 < μ) (V : Set (Vec 2)) (hV : V �
       have : (3 * m + 2) % 3 = 2 := by omega
       simp [phase, SeedOrbit.length, this]
 
+/-- Item `A/lower_curvature/proposition/art:quadratic_failure`, Proposition
+`art:quadratic_failure` (`paper/appendices/lower_curvature.tex:45-52`), as corrected on
+15 October 2026 (M33, reader point R-F-1).
+
+"Let $\mu>0$. For every neighborhood $V$ of zero, some initial state $(x_0,H_0)$, $H_0\succ0$,
+produces for every fixed pair ${0<c_1\le1/3}$, $c_1<c_2<1$ the same deterministic full-BFGS run
+on $Q_\mu$, converging to zero with positive objective values decreasing to zero. Its accepted
+lengths repeat $1,1/4,1/16$, and its initial point and all accepted and rejected query points
+are differentiable and belong to $V$."
+
+As `quadratic_failure`, with the initial point: $Q_\mu$ is differentiable at $x_0$ and
+$x_0\in V$ (the start of copy $\ell$ in Section D.3 needs the local model there). -/
+theorem quadratic_failure_initial_point (μ : ℝ) (hμ : 0 < μ) (V : Set (Vec 2))
+    (hV : V ∈ 𝓝 (0 : Vec 2)) :
+    ∃ (x₀ : Vec 2) (H₀ : Mat 2), H₀.PosDef ∧
+      ∃ (x : ℕ → Vec 2) (H : ℕ → Mat 2), x 0 = x₀ ∧ H 0 = H₀ ∧
+        Tendsto x atTop (𝓝 0) ∧ (∀ k, 0 < LQuadraticSeed.objective μ (x k)) ∧
+        StrictAnti (fun k => LQuadraticSeed.objective μ (x k)) ∧
+        Tendsto (fun k => LQuadraticSeed.objective μ (x k)) atTop (𝓝 0) ∧
+        (DifferentiableAt ℝ (LQuadraticSeed.objective μ) x₀ ∧ x₀ ∈ V) ∧
+        (∀ k, ∀ a ∈ trialHistory (phase k),
+          DifferentiableAt ℝ (LQuadraticSeed.objective μ)
+            (x k + a • bfgsStep (H k) (coordinateGradient (LQuadraticSeed.objective μ) (x k)) 1) ∧
+          x k + a • bfgsStep (H k) (coordinateGradient (LQuadraticSeed.objective μ) (x k)) 1 ∈ V) ∧
+        ∀ c₁ c₂ : ℝ, 0 < c₁ → c₁ ≤ 1/3 → c₁ < c₂ → c₂ < 1 →
+          ∃ R : AdmissibleBFGSRun 2 (LQuadraticSeed.objective μ),
+            R.c₁ = c₁ ∧ R.c₂ = c₂ ∧ R.x = x ∧ R.H = H ∧
+            (∀ k N, 5 ≤ N → NonStrictLineSearch.fromMetric (LQuadraticSeed.objective μ) (R.x k) (R.H k)
+              c₁ c₂ N = (some (R.α k), trialHistory (phase k))) ∧
+            ∀ m, R.α (3 * m) = 1 ∧ R.α (3 * m + 1) = 1/4 ∧ R.α (3 * m + 2) = 1/16 := by
+  obtain ⟨x, H, hH0, hruns⟩ := LUniform.uniform_global_failure hμ V hV
+  obtain ⟨R₀, hx, hH, -, -, hxlim, -, hvlim, hpos, hdec, -, -, -, hxV, hq, -, -, -⟩ :=
+    hruns (1/10000) (1/2) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have hgrad (k : ℕ) : coordinateGradient (LQuadraticSeed.objective μ) (x k) = R₀.g k := by
+    rw [← hx]
+    exact DeterministicLineSearch.actual_coordinateGradient (R₀.hasGradient k)
+  refine ⟨x 0, H 0, hH0, x, H, rfl, rfl, ?_, ?_, ?_, ?_, ⟨?_, ?_⟩, ?_, ?_⟩
+  · rw [← hx]; exact hxlim
+  · intro k; rw [← hx]; exact hpos k
+  · rw [← hx]; exact strictAnti_nat_of_succ_lt hdec
+  · rw [← hx]; exact hvlim
+  · rw [← hx]; exact (R₀.hasGradient 0).differentiableAt
+  · rw [← hx]; exact hxV 0
+  · intro k a ha
+    obtain ⟨q, hqk, rfl⟩ := trial_history_witness (phase k) ha
+    obtain ⟨h1, -, h3⟩ := hq k q hqk
+    rw [hx, hH] at h1 h3
+    rw [hgrad k]
+    exact ⟨h1, h3⟩
+  · intro c₁ c₂ hc₁ hc₁' hc hc₂
+    obtain ⟨R, hRx, hRH, hRc₁, hRc₂, -, -, -, -, -, hα, hsearch, -⟩ := hruns c₁ c₂ hc₁ hc₁' hc hc₂
+    refine ⟨R, hRc₁, hRc₂, hRx, hRH, fun k N hN => fromMetric_fuel_mono (hsearch k) N hN,
+      fun m => ⟨?_, ?_, ?_⟩⟩
+    · rw [hα]; simp [phase, SeedOrbit.length, Nat.mul_mod_right]
+    · rw [hα]
+      have : (3 * m + 1) % 3 = 1 := by omega
+      simp [phase, SeedOrbit.length, this]
+    · rw [hα]
+      have : (3 * m + 2) % 3 = 2 := by omega
+      simp [phase, SeedOrbit.length, this]
+
 /-! ### The normalized three-step return map -/
 
-/-- Item `A/lower_curvature/disp/004` (`paper/appendices/lower_curvature.tex:60-63`): the
+/-- Item `A/lower_curvature/disp/004` (`paper/appendices/lower_curvature.tex:61-64`): the
 normalized coordinates
 \[ x=\tau z,\qquad H=\tau M(\zeta,\eta),\qquad
    M(\zeta,\eta)=\begin{pmatrix}1&\zeta\\\zeta&\eta\end{pmatrix},\qquad\tau>0. \]
@@ -401,7 +464,7 @@ theorem normalized_coordinates_def (μ : ℝ) (w : LNormalizedReturn.State) :
       LNormalizedOracle.physicalMetric μ w 0 = LNormalizedReturn.scale w • LNormalizedReturn.shape w :=
   ⟨rfl, rfl, rfl, rfl, rfl⟩
 
-/-- Item `A/lower_curvature/prose/008` (`paper/appendices/lower_curvature.tex:64`): "The boundary
+/-- Item `A/lower_curvature/prose/008` (`paper/appendices/lower_curvature.tex:65`): "The boundary
 seed is $P_*=(z_0,0,1,0)$ in coordinates $(z,\zeta,\eta,\tau)$." -/
 theorem boundary_seed_def :
     LNormalizedReturn.seed = ![SeedOrbit.point seedC seedD seedRatio 0 0,
@@ -411,7 +474,7 @@ theorem boundary_seed_def :
   ⟨rfl, LNormalizedReturn.seed_point, LNormalizedReturn.seed_shape, LNormalizedReturn.seed_scale⟩
 
 /-- Item `A/lower_curvature/disp/005`, equation `art:lower_return_substep`
-(`paper/appendices/lower_curvature.tex:67-73`), with lines 65-66 and 74: "Keep the input $\tau$
+(`paper/appendices/lower_curvature.tex:68-74`), with lines 66-67 and 75: "Keep the input $\tau$
 fixed during three substeps. Starting with $(Z,M)=(z,M(\zeta,\eta))$, for $j=0,1,2$ perform
 \[ \gamma_j=g_j+\mu\tau Z,\quad S=-\alpha_jM\gamma_j,\quad Z^+=Z+S,\quad
    Y=g_{j+1}-g_j+\mu\tau S, \]
@@ -437,7 +500,7 @@ theorem return_substep_def (μ τ : ℝ) (j : Fin 3) (Z : Vec 2) (M : Mat 2) (γ
   exact ⟨rfl, rfl, rfl, fun w => ⟨rfl, fun k => rfl⟩⟩
 
 /-- Item `A/lower_curvature/disp/006`, equation `art:lower_return`
-(`paper/appendices/lower_curvature.tex:76-79`), with line 75: "For the resulting $(Z_3,M_3)$, let
+(`paper/appendices/lower_curvature.tex:77-80`), with line 76: "For the resulting $(Z_3,M_3)$, let
 $\hat\rho=(M_3)_{11}$ and define
 \[ \mathcal T_\mu(z,\zeta,\eta,\tau)=\left(Z_3/\hat\rho,(M_3)_{12}/\hat\rho,(M_3)_{22}/\hat\rho,
    \tau\hat\rho\right)." \] -/
@@ -451,7 +514,7 @@ theorem return_map_def (μ : ℝ) (w : LNormalizedReturn.State) :
           LNormalizedReturn.scale w * LNormalizedReturn.returnFactor μ w] :=
   ⟨rfl, rfl⟩
 
-/-- Item `A/lower_curvature/prose/009` (`paper/appendices/lower_curvature.tex:80-83`): "The seed
+/-- Item `A/lower_curvature/prose/009` (`paper/appendices/lower_curvature.tex:81-84`): "The seed
 closure gives $\mathcal T_\mu(P_*)=P_*$ and $\hat\rho(P_*)=\rho$. All denominators are nonzero
 there. Hence the map is real analytic on an open neighborhood of $P_*$, using negative $\tau$ only
 to define this analytic extension." The denominators are the three curvatures $Y^TS$ and
@@ -493,14 +556,15 @@ def stableSubspace (L : Module.End ℝ LNormalizedReturn.State) : Submodule ℝ 
   ⨆ (t : ℝ) (_ : |t| < 1), L.maxGenEigenspace t
 
 /-- Item `A/lower_curvature/lemma/art:lower_hyperbolic`, Lemma `art:lower_hyperbolic`
-(`paper/appendices/lower_curvature.tex:85-96`), including its display
-`A/lower_curvature/disp/007` (lines 91-94).
+(`paper/appendices/lower_curvature.tex:86-97`), including its display
+`A/lower_curvature/disp/007` (lines 92-95).
 
 "On a sufficiently small neighborhood of $P_*$, positive-$\tau$ states follow exactly the three
 query lists of Table~\ref{art:trial_table} under the actual algorithm for every admissible pair
-$(c_1,c_2)$, and \eqref{art:lower_return} is their return map. Its derivative has eigenvalues
+$(c_1,c_2)$, and \eqref{art:lower_return} is their return map. Its derivative at $P_*$ has
+eigenvalues
 \[ \rho^{-1},\quad\rho^{-1},\quad\lambda_s,\quad\lambda_u,\quad\rho,\qquad
-   .038<\lambda_s<.039,\quad1.564<\lambda_u<1.565. \]
+   0.038<\lambda_s<0.039,\quad1.564<\lambda_u<1.565. \]
 The stable eigenspace contains a vector whose $\tau$ coordinate is one."
 
 Reading. From a state `w` with $\tau>0$ the actual algorithm starts at $x_0=\tau z$,
@@ -601,7 +665,7 @@ theorem lower_hyperbolic (μ : ℝ) (_hμ : 0 < μ) :
 /-- The normalized shape map at $\tau=0$: `LShapeDerivative.shapeMap c d` sends $(\zeta,\eta)$ to
 $((M_3)_{12}/(M_3)_{11},(M_3)_{22}/(M_3)_{11})$, $M_3$ after the three substeps at $\tau=0$
 from $M(\zeta,\eta)$; these are the matrix coordinates of $\mathcal T_\mu$ at every state with
-$\tau=0$, whatever $z$ (`paper/appendices/lower_curvature.tex:109`: "At $\tau=0$ the matrix
+$\tau=0$, whatever $z$ (`paper/appendices/lower_curvature.tex:110`: "At $\tau=0$ the matrix
 return is independent of $z$"). -/
 theorem shape_map_def (μ : ℝ) (w : LNormalizedReturn.State) (hw : LNormalizedReturn.scale w = 0) :
     LShapeDerivative.shapeMap seedC seedD ![w 2, w 3] =
@@ -635,8 +699,9 @@ theorem shape_jacobian_eq {J : Mat 2}
   simp [Matrix.mulVec, dotProduct, Pi.single_apply]
 
 /-- Item `A/lower_curvature/disp/008`, equation `art:shape_certificate`
-(`paper/appendices/lower_curvature.tex:112-118`), in the proof of Lemma `art:lower_hyperbolic`:
-"Let $J$ be the derivative at $(\zeta,\eta)=(0,1)$ of its normalized shape map. The following
+(`paper/appendices/lower_curvature.tex:114-120`), in the proof of Lemma `art:lower_hyperbolic`:
+"Let $J$ be the derivative at $(\zeta,\eta)=(0,1)$ of its normalized shape map
+$(\zeta,\eta)\mapsto((M_3)_{12},(M_3)_{22})/\hat\rho$. The following
 rational enclosures specify the spectral certificate:
 \[ 10^{10}J\in\begin{pmatrix}[11123986249,11123986253]&[6459701025,6459701029]\\
    [7515015701,7515015708]&[4905136882,4905136890]\end{pmatrix}." \]
@@ -651,8 +716,8 @@ theorem shape_certificate (J : Mat 2)
   obtain ⟨⟨h1, h2⟩, ⟨h3, h4⟩, ⟨h5, h6⟩, ⟨h7, h8⟩⟩ := LShapeSpectrum.source_jacobian_bounds
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> norm_num at * <;> linarith
 
-/-- Item `A/lower_curvature/disp/009` (`paper/appendices/lower_curvature.tex:122-125`), with lines
-119-126, in the proof of Lemma `art:lower_hyperbolic`: "They are obtained by differentiating the
+/-- Item `A/lower_curvature/disp/009` (`paper/appendices/lower_curvature.tex:124-127`), with lines
+121-128, in the proof of Lemma `art:lower_hyperbolic`: "They are obtained by differentiating the
 rational substeps \eqref{art:lower_return_substep} at $\tau=0$, then applying the interval rules
 of Appendix~\ref{art:seed_certificate} to
 \[ c_\circ\in[318481427627118,318481427627119]/10^{15},\quad
@@ -676,10 +741,10 @@ theorem shape_box :
   obtain ⟨⟨h1, h2⟩, ⟨h3, h4⟩, ⟨h5, h6⟩, ⟨h7, h8⟩⟩ := LShapeIntervalCertificate.jacobian_bounds hc hd
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> norm_num at * <;> linarith
 
-/-- Item `A/lower_curvature/disp/010` (`paper/appendices/lower_curvature.tex:132-135`), in the
+/-- Item `A/lower_curvature/disp/010` (`paper/appendices/lower_curvature.tex:134-137`), in the
 proof of Lemma `art:lower_hyperbolic`: "Substitution of \eqref{art:shape_certificate} in
 $p(\lambda)=\lambda^2-\operatorname{tr}(J)\lambda+\det J$ gives
-\[ p(.038)>0,\qquad p(.039)<0,\qquad p(1.564)<0,\qquad p(1.565)>0." \]
+\[ p(0.038)>0,\qquad p(0.039)<0,\qquad p(1.564)<0,\qquad p(1.565)>0." \]
 For every matrix $J$ in the enclosure of display 008. -/
 theorem characteristic_signs (J : Mat 2)
     (h00 : IntervalBounds.Bounds 11123986249 (10 ^ 10 * J 0 0) 11123986253)
@@ -708,8 +773,8 @@ theorem pointLift_single (k : Fin 2) :
   ext i
   fin_cases k <;> fin_cases i <;> simp [LNormalizedReturn.pointLift, Pi.single_apply, Matrix.cons_val]
 
-/-- Item `A/lower_curvature/disp/011` (`paper/appendices/lower_curvature.tex:142-147`), with lines
-139-141 and 148-149, in the proof of Lemma `art:lower_hyperbolic`: "Thus its full derivative has
+/-- Item `A/lower_curvature/disp/011` (`paper/appendices/lower_curvature.tex:144-149`), with lines
+141-143 and 150-151, in the proof of Lemma `art:lower_hyperbolic`: "Thus its full derivative has
 the block form
 \[ D\mathcal T_\mu(P_*)=\begin{pmatrix}\rho^{-1}I_2&*&*\\0&J&*\\0&0&\rho\end{pmatrix}." \]
 The matrix of $D\mathcal T_\mu(P_*)$ in the coordinates $(z_1,z_2,\zeta,\eta,\tau)$, with $J$ the
@@ -907,7 +972,7 @@ theorem stableSubspace_iff_diagonal (μ : ℝ) {ls lu : ℝ} (hs : 0 < ls ∧ ls
     exact (stableSubspace T.toLinearMap).add_mem ((stableSubspace T.toLinearMap).smul_mem _ h0)
       ((stableSubspace T.toLinearMap).smul_mem _ h1)
 
-/-- Item `A/lower_curvature/prose/036` (`paper/appendices/lower_curvature.tex:53-57`): "The right
+/-- Item `A/lower_curvature/prose/036` (`paper/appendices/lower_curvature.tex:54-58`): "The right
 object for persistence is the three-step return map after dividing out the shrinking scale. The
 homogeneous cycle becomes a fixed point on the boundary where that scale is zero. We will verify
 that it is hyperbolic and that its stable manifold enters the positive-scale region."
@@ -980,7 +1045,7 @@ theorem stable_manifold_positive_scale (μ : ℝ) (_hμ : 0 < μ) :
 
 /-! ### The accumulation embedding with four strongly convex branches -/
 
-/-- Item `A/lower_curvature/disp/012` (`paper/appendices/lower_curvature.tex:205-208`): "Fix
+/-- Item `A/lower_curvature/disp/012` (`paper/appendices/lower_curvature.tex:210-213`): "Fix
 \[ \mu=1/4096,\quad c_*=(2,-32)^T,\quad q_i=g_i-\mu c_*,\quad b_i=q_i^Tc_*,\quad r=1/128,\quad
    a_\ell=r^\ell." \] -/
 theorem embedding_constants_def :
@@ -991,7 +1056,7 @@ theorem embedding_constants_def :
       ∀ ℓ, LScalarGeometric.scale ℓ = LScalarGeometric.theta ^ ℓ :=
   ⟨rfl, rfl, fun _ => rfl, fun _ => rfl, rfl, rfl, fun _ => rfl⟩
 
-/-- Item `A/lower_curvature/prose/012` (`paper/appendices/lower_curvature.tex:209-210`): "Here
+/-- Item `A/lower_curvature/prose/012` (`paper/appendices/lower_curvature.tex:214-215`): "Here
 $b_0=b_1=1791/1024$ and $1.7<b_i<34$. For each of the two distinct values of $b_i$". -/
 theorem parameter_values :
     LEmbedding.parameter 0 = 1791 / 1024 ∧ LEmbedding.parameter 1 = 1791 / 1024 ∧
@@ -1007,7 +1072,7 @@ theorem parameter_values :
     rw [he] at h
     norm_num at h
 
-/-- Item `A/lower_curvature/disp/013` (`paper/appendices/lower_curvature.tex:211-213`):
+/-- Item `A/lower_curvature/disp/013` (`paper/appendices/lower_curvature.tex:216-218`):
 \[ t_b=\frac{1-(1+r)/b}{1-r},\qquad\varepsilon=1/1024. \] -/
 theorem ramp_constants_def (b : ℝ) :
     LScalarRamp.center b = (1 - (1 + LScalarRamp.theta) / b) / (1 - LScalarRamp.theta) ∧
@@ -1020,7 +1085,7 @@ theorem parameter_range {i : Fin 3} {b : ℝ} (hb : b = LEmbedding.parameter i) 
   subst hb
   exact ⟨(LEmbedding.parameter_bounds i).1.le, (LEmbedding.parameter_bounds i).2.le⟩
 
-/-- The cubic ramp $P_b$ of `paper/sections/failure.tex:278-285` with center `t` and width `ε`:
+/-- The cubic ramp $P_b$ of `paper/sections/failure.tex:284-291` with center `t` and width `ε`:
 $0$ for $\xi\le t-\varepsilon$, $3v^2-2v^3$ for $|\xi-t|<\varepsilon$, $1$ for
 $\xi\ge t+\varepsilon$, where $v=(\xi-t+\varepsilon)/(2\varepsilon)$. -/
 def cubicRamp (t ε ξ : ℝ) : ℝ :=
@@ -1051,9 +1116,9 @@ theorem ramp_def {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) :
   refine ⟨h1, funext fun ξ => ?_⟩
   rw [LScalarRamp.primitive_eq_integral hl hr, cubicPrimitive, h1]
 
-/-- Item `A/lower_curvature/prose/013` (`paper/appendices/lower_curvature.tex:214-215`): "Use the
-same cubic ramp $P_b$ and primitive $J_b$ as in \eqref{art:upper_scalar}, with this center and
-width." For each of the values $b=b_i$, the library's `LScalarRamp.ramp b` and
+/-- Item `A/lower_curvature/prose/013` (`paper/appendices/lower_curvature.tex:219-220`): "Use the
+same cubic ramp $P_b$ and primitive $J_b$ defined before \eqref{art:upper_scalar}, with this
+center and width." For each of the values $b=b_i$, the library's `LScalarRamp.ramp b` and
 `LScalarRamp.primitive b` are $P_b$ and $J_b$ with center $t_b$ and width $\varepsilon=1/1024$. -/
 theorem ramp_def_bi (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) :
     LScalarRamp.ramp b = cubicRamp (LScalarRamp.center b) LScalarRamp.epsilon ∧
@@ -1087,8 +1152,8 @@ theorem lower_scalar_def {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) (r : ℝ) 
   rfl
 
 /-- Item `A/lower_curvature/disp/014`, equation `art:lower_scalar`
-(`paper/appendices/lower_curvature.tex:217-221`), with prose item
-`A/lower_curvature/prose/014` (lines 222-223): "For $ba_{\ell+1}\le x\le ba_\ell$ put
+(`paper/appendices/lower_curvature.tex:222-226`), with prose item
+`A/lower_curvature/prose/014` (lines 227-228): "For $ba_{\ell+1}\le x\le ba_\ell$ put
 \[ \psi_b(x)=(ra_\ell)^2+ba_\ell^2(1-r)\{r\xi+(1-r)J_b(\xi)\},\qquad
    \xi=\frac{x/(ba_\ell)-r}{1-r}. \]
 Set $\psi_b(0)=0$, $\psi_b(x)=x^2/2$ for $x<0$, and $\psi_b(x)=1+x-b$ for $x\ge b$." For each
@@ -1164,7 +1229,7 @@ theorem lower_scalar_derivatives {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) (�
     convert h using 1
     ring
 
-/-- Item `A/lower_curvature/disp/015` (`paper/appendices/lower_curvature.tex:226-229`): "On each
+/-- Item `A/lower_curvature/disp/015` (`paper/appendices/lower_curvature.tex:231-234`): "On each
 positive interval,
 \[ \psi_b'=a_\ell\{r+(1-r)P_b(\xi)\},\qquad \psi_b''=P_b'(\xi)/b,\qquad0\le P_b'\le768." \]
 For each of the values $b=b_i$, on the closed interval $ba_{\ell+1}\le x\le ba_\ell$, with $\xi$
@@ -1190,7 +1255,7 @@ theorem lower_scalar_nodes {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) :
   ⟨LScalarRamp.matching_identity (by linarith),
     fun ℓ => ⟨LScalar.phi_node hl hr ℓ, LScalar.phi_node_hasDerivAt hl hr ℓ⟩⟩
 
-/-- Item `A/lower_curvature/prose/015` (`paper/appendices/lower_curvature.tex:230-231`): "The
+/-- Item `A/lower_curvature/prose/015` (`paper/appendices/lower_curvature.tex:235-236`): "The
 identity $r+(1-r)(1-t_b)=(1+r)/b$ matches node values and derivatives. Their values are
 $a_\ell^2$ and $a_\ell$, respectively." For each of the values $b=b_i$. -/
 theorem lower_scalar_nodes_bi (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) :
@@ -1217,7 +1282,7 @@ theorem lower_scalar_monotone_flat {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) 
     rw [add_sub_cancel] at h
     exact h.deriv
 
-/-- Item `A/lower_curvature/prose/016` (`paper/appendices/lower_curvature.tex:232`): "The positive
+/-- Item `A/lower_curvature/prose/016` (`paper/appendices/lower_curvature.tex:237`): "The positive
 derivative is monotone and constant near every node." For each of the values $b=b_i$. -/
 theorem lower_scalar_monotone_flat_bi (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) :
     MonotoneOn (deriv (LScalar.phi b)) (Set.Ioi 0) ∧
@@ -1238,7 +1303,7 @@ theorem lower_scalar_regularity {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) :
   · rintro rfl
     exact LScalar.phi_zero hl hr
 
-/-- Item `A/lower_curvature/prose/017` (`paper/appendices/lower_curvature.tex:233-235`): "Its
+/-- Item `A/lower_curvature/prose/017` (`paper/appendices/lower_curvature.tex:238-240`): "Its
 derivative slopes are uniformly bounded, so summing over intervals and taking a limit at zero
 proves that $\psi_b$ is globally $C^{1,1}$, convex and coercive, nonnegative with unique zero at
 the origin." For each of the values $b=b_i$. -/
@@ -1378,10 +1443,12 @@ theorem lower_plateau_lengths {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) (L₁
       push_neg at hc
       nlinarith [mul_lt_mul_of_pos_left hc hpos]
 
-/-- Item `A/lower_curvature/disp/016` (`paper/appendices/lower_curvature.tex:237-240`), with lines
-236 and 241: "The two constant-derivative lengths, divided by $a_\ell$, are
+/-- Item `A/lower_curvature/disp/016` (`paper/appendices/lower_curvature.tex:242-245`), with lines
+241 and 246-247: "The constant-derivative lengths below and above $ba_\ell$, divided by
+$a_\ell$, are
 \[ b(1-r)(1-t_b-\varepsilon),\qquad b(1-r)(t_b-\varepsilon)/r, \]
-both greater than $1/2$ for these values of $b$." For each of the values $b=b_i$: on the
+both greater than $1/2$ for these values of $b$; the affine outer extension covers the upper side
+when $\ell=0$." For each of the values $b=b_i$: on the
 interval $[ba_{\ell+1},ba_\ell]$ below the node $ba_\ell$ the derivative equals $a_\ell$ exactly
 from $ba_\ell-a_\ell L_1$ on; on the same interval, above the node $ba_{\ell+1}$, it equals
 $a_{\ell+1}$ exactly up to $ba_{\ell+1}+a_{\ell+1}L_2$. -/
@@ -1406,7 +1473,7 @@ theorem lower_plateau {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) (ℓ : ℕ) (
   LScalar.phi_plateau hl hr ℓ hh
 
 /-- Item `A/lower_curvature/disp/017`, equation `art:lower_plateau`
-(`paper/appendices/lower_curvature.tex:242-244`): "Consequently
+(`paper/appendices/lower_curvature.tex:248-250`): "Consequently
 \[ \psi_b(ba_\ell+h)=a_\ell^2+a_\ell h\qquad(|h|\le a_\ell/2)." \]
 For each of the values $b=b_i$ and every $\ell$. -/
 theorem lower_plateau_bi (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) (ℓ : ℕ) (h : ℝ)
@@ -1429,7 +1496,7 @@ theorem lower_scalar_not_twice {b : ℝ} (hl : 17/10 ≤ b) (hr : b ≤ 34) :
   rw [hz, sub_zero, sub_zero, sub_zero, sub_zero]
   exact ⟨LScalar.derivative_ratio_on_nodes hl hr ℓ, LScalar.derivative_ratio_on_shifted_nodes hl hr ℓ⟩
 
-/-- Item `A/lower_curvature/prose/018` (`paper/appendices/lower_curvature.tex:245-247`): "At zero,
+/-- Item `A/lower_curvature/prose/018` (`paper/appendices/lower_curvature.tex:251-253`): "At zero,
 the difference quotients of $\psi_b'$ along $ba_\ell$ and $(b+1/4)a_\ell$ equal $1/b$ and
 $1/(b+1/4)$, respectively. Thus its second derivative at zero does not exist." For each of the
 values $b=b_i$. -/
@@ -1443,7 +1510,7 @@ theorem lower_scalar_not_twice_bi (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.par
   lower_scalar_not_twice (parameter_range hb).1 (parameter_range hb).2
 
 /-- Item `A/lower_curvature/disp/018`, equation `art:lower_objective`
-(`paper/appendices/lower_curvature.tex:250-255`): "Define
+(`paper/appendices/lower_curvature.tex:256-261`): "Define
 \[ f_i(x)=\tfrac\mu2\|x\|^2+\psi_{b_i}(q_i^Tx)\ (i=0,1,2),\qquad f_3(x)=\tfrac\mu2\|x\|^2+x_2,
    \qquad F=\max_if_i." \] -/
 theorem lower_objective_def (x : Vec 2) :
@@ -1460,7 +1527,7 @@ theorem branch_gradient_eq (i : Fin 4) (x : Vec 2) :
     coordinateGradient (LEmbedding.branch i) x = LEmbedding.branchGradient i x :=
   DeterministicLineSearch.actual_coordinateGradient (LEmbedding.branch_hasGradient i x)
 
-/-- Item `A/lower_curvature/prose/019` (`paper/appendices/lower_curvature.tex:256`): "Each branch
+/-- Item `A/lower_curvature/prose/019` (`paper/appendices/lower_curvature.tex:262`): "Each branch
 is globally $\mu$-strongly convex and $C^{1,1}$." -/
 theorem branches_regular (i : Fin 4) :
     FixedNormal.EuclideanStrongConvexOn univ LEmbedding.mu (LEmbedding.branch i) ∧
@@ -1471,7 +1538,7 @@ theorem branches_regular (i : Fin 4) :
   rw [branch_gradient_eq, branch_gradient_eq]
   exact euclid_le_of_sqNorm_le (by norm_num) (LEmbedding.branch_gradient_bound i x y)
 
-/-- Item `A/lower_curvature/prose/020` (`paper/appendices/lower_curvature.tex:257-260`): "For
+/-- Item `A/lower_curvature/prose/020` (`paper/appendices/lower_curvature.tex:263-266`): "For
 $i<3$, choose a vector $v_i$ with $q_i^Tv_i=1$. Restricting $f_i$ to $tv_i$ and subtracting its
 smooth quadratic term recovers $\psi_{b_i}(t)$, so these three branches are not twice
 differentiable at zero. An invertible linear change preserves this obstruction." -/
@@ -1497,10 +1564,10 @@ theorem ridge_restriction :
     rw [Matrix.mulVec_zero] at h
     exact ArticleBranchRegularity.branch_not_twice_differentiable_zero i h
 
-/-- Item `A/lower_curvature/prose/010` (`paper/appendices/lower_curvature.tex:11-13`): "The price of
+/-- Item `A/lower_curvature/prose/010` (`paper/appendices/lower_curvature.tex:11-14`): "The price of
 retaining a positive lower curvature bound is the loss of second differentiability of three of the
-four branches at the accumulation point." (Corrected on 15 October 2026, M8; it said "of the
-branches".) The first three branches $f_0,f_1,f_2$ of `art:lower_objective` are not
+four branches at the minimizer." (Corrected on 15 October 2026, M8 and M30; it said "of the
+branches" and "at the accumulation point".) The first three branches $f_0,f_1,f_2$ of `art:lower_objective` are not
 twice differentiable at zero, the point where the bad starts accumulate, and neither are the
 whitened branches $f_i(Az)$ of Theorem `art:local-failure-lower` (`LUniform.smoothBranch`); the
 fourth branch $f_3(x)=\mu\|x\|^2/2+x_2$ is a quadratic, twice differentiable at every point, also
@@ -1517,7 +1584,7 @@ theorem branch_second_differentiability :
       LUniform.coordinateMatrix_invertible (LEmbedding.branch 3) z).mpr
       (LEmbedding.branch_last_second_hasFDerivAt _).differentiableAt⟩
 
-/-- Item `A/lower_curvature/prose/021` (`paper/appendices/lower_curvature.tex:261-264`): "For the
+/-- Item `A/lower_curvature/prose/021` (`paper/appendices/lower_curvature.tex:267-270`): "For the
 first three branches, the gradient-Lipschitz constants are at most
 $L_i=\mu+\max\{1,768/b_i\}\|q_i\|^2$. Direct substitution of the rational root bounds gives
 $L_0<439$, $L_1<446$ and $L_2<27$; hence $512$ is a common constant, also covering the fourth
@@ -1551,8 +1618,8 @@ theorem branch_gradient_constants :
   · rw [branch_gradient_eq, branch_gradient_eq]
     exact euclid_le_of_sqNorm_le (by norm_num) (LEmbedding.branch_gradient_bound i x y)
 
-/-- Item `A/lower_curvature/prose/022` (`paper/appendices/lower_curvature.tex:265-268`): "Since
-$F(x)\ge\mu\|x\|^2/2$ with equality zero at the origin, the sublevels are compact and the
+/-- Item `A/lower_curvature/prose/022` (`paper/appendices/lower_curvature.tex:271-274`): "Since
+$F(x)\ge\mu\|x\|^2/2$ and $F(0)=0$, the sublevels are compact and the
 minimizer is unique. The first three gradients at zero vanish, whereas the fourth is $(0,1)^T$,
 so the minimizer is nonsmooth." -/
 theorem lower_objective_minimizer :
@@ -1572,7 +1639,7 @@ theorem lower_objective_minimizer :
   ext i
   fin_cases i <;> simp [LEmbedding.branchGradient, LEmbedding.residualGradient]
 
-/-- Item `A/lower_curvature/prose/023` (`paper/appendices/lower_curvature.tex:270-273`): "At a
+/-- Item `A/lower_curvature/prose/023` (`paper/appendices/lower_curvature.tex:276-279`): "At a
 differentiable point of a finite maximum of $L$-smooth functions, all active gradients agree.
 Inactive branches stay inactive locally; taking the maximum of the active upper Taylor bounds
 therefore gives the local upper Taylor bound with constant $L$." For a maximum $F$ of branches
@@ -1602,7 +1669,7 @@ theorem finite_max_local_taylor {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → V
     filter_upwards [hc.eventually (eventually_gt_nhds (sub_pos.mpr hi))] with z hz
     linarith
 
-/-- Item `A/lower_curvature/disp/019` (`paper/appendices/lower_curvature.tex:275-278`): "Applying
+/-- Item `A/lower_curvature/disp/019` (`paper/appendices/lower_curvature.tex:281-284`): "Applying
 this with $L=512$ and combining it with strong convexity proves
 \[ \mu I\preceq\nabla^2F(x)\preceq512I\quad\text{whenever }F\text{ is twice differentiable}." \]
 -/
@@ -1616,7 +1683,7 @@ theorem lower_objective_hessian (x : Vec 2)
 
 /-! ### Copying one entire orbit and fixing the initial matrix -/
 
-/-- Item `A/lower_curvature/prose/025` (`paper/appendices/lower_curvature.tex:282`): "Let
+/-- Item `A/lower_curvature/prose/025` (`paper/appendices/lower_curvature.tex:288`): "Let
 $\bar x_\ell=a_\ell c_*$ and $C_*=1+\mu\|c_*\|^2/2$." -/
 theorem copy_constants_def (ℓ : ℕ) :
     LEmbedding.copyCenter ℓ = LScalarGeometric.scale ℓ • LEmbedding.center ∧
@@ -1624,7 +1691,7 @@ theorem copy_constants_def (ℓ : ℕ) :
   ⟨rfl, rfl⟩
 
 /-- Item `A/lower_curvature/disp/020`, equation `art:lower_local_model`
-(`paper/appendices/lower_curvature.tex:285-287`): "For $y$ in a fixed sufficiently small
+(`paper/appendices/lower_curvature.tex:291-293`): "For $y$ in a fixed sufficiently small
 neighborhood of zero, \eqref{art:lower_plateau} yields
 \[ F(\bar x_\ell+a_\ell y)=a_\ell^2\{C_*+Q_\mu(y)\}\qquad(\ell\ge1)." \]
 Here $Q_\mu$ is taken with the fixed $\mu=1/4096$; the neighborhood is
@@ -1635,7 +1702,7 @@ theorem lower_local_model :
         LScalarGeometric.scale ℓ ^ 2 * (LEmbedding.offset + LQuadraticSeed.objective LEmbedding.mu y) :=
   ⟨LEmbedding.localDomain, LEmbedding.localDomain_nhds, fun ℓ _ _ hy => LEmbedding.local_model ℓ hy⟩
 
-/-- Item `A/lower_curvature/prose/026` (`paper/appendices/lower_curvature.tex:288-291`):
+/-- Item `A/lower_curvature/prose/026` (`paper/appendices/lower_curvature.tex:294-297`):
 "Indeed, $|q_i^Ty|\le1/2$ puts each old branch in its affine scalar region, and expansion of the
 common quadratic uses $q_i+\mu c_*=g_i$. The fourth branch is inactive there: its residual
 $a_\ell(-32+y_2)$ is negative, while each old scalar residual is at least $a_\ell^2/2$." -/
@@ -1673,14 +1740,16 @@ theorem local_model_reasons (ℓ : ℕ) (y : Vec 2) (hy : y ∈ LEmbedding.local
 /-- The admissible pair `c₁ = 10⁻⁴`, `c₂ = 1/2`, used to name pair-independent objects. -/
 theorem fixedPair : LUniform.Admissible (1/10000) (1/2) := LUniform.sourcePair
 
-/-- Item `A/lower_curvature/disp/021` (`paper/appendices/lower_curvature.tex:298-300`), with prose
-item `A/lower_curvature/prose/027` (lines 293-297): "Choose, by
-Proposition~\ref{art:quadratic_failure}, one bad orbit $(x_k^{\rm seed},H_k^{\rm seed})$ all of
-whose queries lie in this neighborhood; it is the same for every admissible pair $(c_1,c_2)$.
-For every $\ell$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
-$H_0^{\rm seed}$. Induction on the actual query tree gives
+/-- Item `A/lower_curvature/disp/021` (`paper/appendices/lower_curvature.tex:304-306`), with prose
+item `A/lower_curvature/prose/027` (lines 299-303): "Choose, by
+Proposition~\ref{art:quadratic_failure}, one bad orbit $(x_k^{\rm seed},H_k^{\rm seed})$ whose
+initial point and queries all lie in this neighborhood; it is the same for every admissible pair
+$(c_1,c_2)$. For every $\ell\ge1$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same
+matrix $H_0^{\rm seed}$. Induction on the actual query tree gives
 \[ x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed},\qquad H_k^{(\ell)}=H_k^{\rm seed}." \]
-The chosen orbit is `LUniform.source` (iterates `source.x`, matrices `source.H`), an actual
+(Text as corrected on 15 October 2026, M33 and M41: before, "all of whose queries" and "For every
+$\ell$".) This theorem states the copies for every $\ell$, $\ell=0$ included; `copy_runs_from_one`
+restricts it to $\ell\ge1$ as printed. The chosen orbit is `LUniform.source` (iterates `source.x`, matrices `source.H`), an actual
 run of $Q_\mu$ ($\mu=1/4096$) for every admissible pair; the copies are actual runs of $F$ of
 the implementation for every admissible pair and every $\ell$. -/
 theorem copy_runs :
@@ -1717,16 +1786,52 @@ theorem copy_runs :
         (LUniform.copy_nonstrict_actual_search LActualCopies.smoothData h ℓ k) N hN, rfl, rfl,
       fun k => ⟨rfl, rfl⟩⟩
 
-/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:301-306`): "This is
+/-- Item `A/lower_curvature/disp/021` (`paper/appendices/lower_curvature.tex:304-306`), with prose
+item `A/lower_curvature/prose/027` (lines 299-303), as corrected on 15 October 2026 (M33 and
+M41, reader points R-F-1 and R-F-8): "Choose, by Proposition~\ref{art:quadratic_failure}, one
+bad orbit $(x_k^{\rm seed},H_k^{\rm seed})$ whose initial point and queries all lie in this
+neighborhood; it is the same for every admissible pair $(c_1,c_2)$. For every $\ell\ge1$, start
+at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix $H_0^{\rm seed}$. Induction on the
+actual query tree gives
+\[ x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed},\qquad H_k^{(\ell)}=H_k^{\rm seed}." \]
+`copy_runs` restricted to `ℓ ≥ 1`, the range of `art:lower_local_model`; its second conjunct
+places every iterate of the chosen orbit, the initial point included, and every query in the
+local domain. -/
+theorem copy_runs_from_one :
+    (LUniform.source.H 0).PosDef ∧
+      (∀ k, LUniform.source.x k ∈ LEmbedding.localDomain ∧ ∀ a ∈ trialHistory (phase k),
+        LUniform.source.x k + a • bfgsStep (LUniform.source.H k)
+          (coordinateGradient (LQuadraticSeed.objective LEmbedding.mu) (LUniform.source.x k)) 1 ∈
+          LEmbedding.localDomain) ∧
+      (∀ c₁ c₂ : ℝ, 0 < c₁ → c₁ ≤ 1/3 → c₁ < c₂ → c₂ < 1 →
+        ∃ R : AdmissibleBFGSRun 2 (LQuadraticSeed.objective LEmbedding.mu),
+          R.c₁ = c₁ ∧ R.c₂ = c₂ ∧ R.x = LUniform.source.x ∧ R.H = LUniform.source.H ∧
+          ∀ k N, 5 ≤ N → NonStrictLineSearch.fromMetric (LQuadraticSeed.objective LEmbedding.mu) (R.x k)
+            (R.H k) c₁ c₂ N = (some (R.α k), trialHistory (phase k))) ∧
+      ∀ c₁ c₂ : ℝ, 0 < c₁ → c₁ ≤ 1/3 → c₁ < c₂ → c₂ < 1 → ∀ ℓ : ℕ, 1 ≤ ℓ →
+        ∃ R : AdmissibleBFGSRun 2 LEmbedding.objective, R.c₁ = c₁ ∧ R.c₂ = c₂ ∧
+          (∀ k N, 5 ≤ N → NonStrictLineSearch.fromMetric LEmbedding.objective (R.x k) (R.H k) c₁ c₂ N =
+            (some (R.α k), trialHistory (phase k))) ∧
+          R.x 0 = LEmbedding.copyCenter ℓ + LScalarGeometric.scale ℓ • LUniform.source.x 0 ∧
+          R.H 0 = LUniform.source.H 0 ∧
+          ∀ k, R.x k = LEmbedding.copyCenter ℓ + LScalarGeometric.scale ℓ • LUniform.source.x k ∧
+            R.H k = LUniform.source.H k := by
+  obtain ⟨h1, h2, h3, h4⟩ := copy_runs
+  exact ⟨h1, h2, h3, fun c₁ c₂ hc₁ hc₁' hc hc₂ ℓ _ => h4 c₁ c₂ hc₁ hc₁' hc hc₂ ℓ⟩
+
+/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:307-312`): "This is
 \eqref{art:matched-local-model} with spatial factor $a_\ell$ and objective factor $a_\ell^2$. The
 covariance calculation \eqref{art:matched-scaling} preserves the matrix, while function
 differences and directional products acquire the same positive factor. Thus each rejection,
-acceptance and updated matrix is preserved. Equation~\eqref{art:lower_local_model} applies to
-every query because the whole chosen seed orbit lies in its domain." For the copy $\ell$ at step
+acceptance and updated matrix is preserved. Equation~\eqref{art:lower_local_model} applies at
+the initial point and to every query because the whole chosen seed orbit lies in its domain."
+(Corrected on 15 October 2026, M33: before "applies to every query".) For the copy $\ell$ at step
 $k$ and every attempted length $a$: the gradient and the direction scale by $a_\ell$ (so
 $\lambda^2/\sigma=a_\ell^2/a_\ell^2=1$ keeps the matrix), the query is the scaled seed query, which
 lies in the domain of the local model, and function differences and directional products are the
-seed ones times $a_\ell^2$. -/
+seed ones times $a_\ell^2$. This holds for every $k$, $k=0$ included, where the copy's point is its
+initial point $\bar x_\ell+a_\ell x_0^{\rm seed}$; that $x_0^{\rm seed}$ itself lies in the domain of
+the local model is the second conjunct of `copy_runs_from_one`. -/
 theorem copy_transfer (ℓ k : ℕ) (a : ℝ) (ha : a ∈ trialHistory (phase k)) :
     LScalarGeometric.scale ℓ ^ 2 / LScalarGeometric.scale ℓ ^ 2 = 1 ∧
       coordinateGradient LEmbedding.objective (LEmbedding.copyCenter ℓ + LScalarGeometric.scale ℓ • LUniform.source.x k) =
@@ -1844,7 +1949,7 @@ theorem euclid_le_two_of_mem_localDomain {y : Vec 2} (hy : y ∈ LEmbedding.loca
     nlinarith [abs_lt.mp h0, abs_lt.mp h1]
   exact (sq_le_sq₀ (norm_nonneg _) (by norm_num)).mp hsq
 
-/-- Item `A/lower_curvature/prose/029` (`paper/appendices/lower_curvature.tex:307-311`): "Thus
+/-- Item `A/lower_curvature/prose/029` (`paper/appendices/lower_curvature.tex:313-317`): "Thus
 $x_k^{(\ell)}\to\bar x_\ell$ and $F(x_k^{(\ell)})\downarrow a_\ell^2C_*>0$. The three active
 gradients at $\bar x_\ell$ are $a_\ell g_i$, whose convex hull excludes zero. All query norms
 are at most $a_\ell(\|c_*\|+\sup_{\rm seed\ queries}\|x^{\rm seed}\|)\to0$." The copies
@@ -1936,7 +2041,7 @@ theorem copy_limits (ℓ : ℕ) :
   · simpa only [zero_mul] using LScalar.scale_tendsto_zero.mul_const
       (‖euclideanVector LEmbedding.center‖ + sSup S)
 
-/-- Item `A/lower_curvature/prose/030` (`paper/appendices/lower_curvature.tex:313-317`): "The seed
+/-- Item `A/lower_curvature/prose/030` (`paper/appendices/lower_curvature.tex:319-323`): "The seed
 supplied by the stable manifold has a positive-definite initial matrix $H_0^{\rm seed}$, common to
 every copy. Identity initialization is obtained by changing coordinates once for the whole
 objective and the whole sequence of starts, rather than selecting a different objective for each
@@ -1952,8 +2057,8 @@ theorem whitening_setup :
   ⟨rfl, LUniform.initialMetric_posDef, LUniform.initialMetric_posDef.posSemidef.posSemidef_sqrt,
     LUniform.coordinateMatrix_square, LUniform.coordinateMatrix_invertible, fun _ => rfl⟩
 
-/-- Item `A/lower_curvature/disp/022` (`paper/appendices/lower_curvature.tex:319-322`), with prose
-item `A/lower_curvature/prose/031` (lines 323-324): "The coordinate identities
+/-- Item `A/lower_curvature/disp/022` (`paper/appendices/lower_curvature.tex:325-328`), with prose
+item `A/lower_curvature/prose/031` (lines 329-330): "The coordinate identities
 \[ \widetilde g=A^Tg,\qquad \widetilde H=A^{-1}HA^{-T},\qquad \widetilde s=A^{-1}s \]
 preserve both scalar line-search tests and \eqref{art:failure_update}". For an invertible $A$ and
 $\widetilde F(z)=F(Az)$: gradients transform by $A^T$ at $A^{-1}x$, steps by $A^{-1}$, the
@@ -1982,13 +2087,13 @@ theorem whitening_identities (A : Mat 2) (hA : A.det ≠ 0) (F : Vec 2 → ℝ) 
     fun H s y => AffineWhitening.update_equiv A hA H s y,
     fun x H c₁ c₂ fuel => AffineWhitening.nonstrict_fromMetric_equiv A hA F x H c₁ c₂ fuel⟩
 
-/-- Item `A/lower_curvature/prose/032` (`paper/appendices/lower_curvature.tex:325`): "They give
+/-- Item `A/lower_curvature/prose/032` (`paper/appendices/lower_curvature.tex:331`): "They give
 $\widetilde H_0=I$ for this one fixed transformation." -/
 theorem whitening_initial :
     LUniform.coordinateMatrix⁻¹ * LUniform.initialMetric * (LUniform.coordinateMatrix⁻¹)ᵀ = 1 :=
   AffineWhitening.squareRoot_initial_metric _ _
 
-/-- Item `A/lower_curvature/prose/033` (`paper/appendices/lower_curvature.tex:326-328`):
+/-- Item `A/lower_curvature/prose/033` (`paper/appendices/lower_curvature.tex:332-334`):
 "Strong-convexity and smoothness constants become $\underline\mu=\mu\lambda_{\min}(H_0^{\rm seed})$
 and $\overline L=512\lambda_{\max}(H_0^{\rm seed})$." The whitened objective and its branches are
 $\underline\mu$-strongly convex, the branch gradients are $\overline L$-Lipschitz, and

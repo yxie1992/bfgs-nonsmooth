@@ -64,7 +64,11 @@ the closing list (line 347) that no chapter states.
   $W(x)=(x-x_*)(x-x_*)^T$" now reads "RS implies the radial specialization …": RS gives the radial
   specialization of the transported condition (`Ch03T.rs_covered`) but is strictly stronger than
   it (`Ch03T.s_not_exactly_rs`).
-* Wording points W31-W38 and W40-W43 were applied on the same day (see the register notes).
+* Line 107 (`C/01_I/prose/028`, recurrence of M30 found by the line-by-line reading of the
+  article): "N2 has positive lower curvature and less differentiability at the accumulation point"
+  now reads "…at the minimizer" (`Ch13L.branch_regularity_at_minimizer`).
+* Wording points W31-W38 and W40-W43 were applied on the same day (see the register notes), and
+  W47 (line 69: the title's "$C^{2,1}$"; before the plain text "C2,1").
 
 ## Items
 
@@ -531,9 +535,10 @@ theorem n2_four_branch_version (F : Vec 2 → ℝ) (hF : F = LUniform.smoothObje
 /-- Items `C/01_I/prose/028` (`companion/chapters/01_I.tex:107`) and
 `C/01_I/prose/029` (`companion/chapters/01_I.tex:107-107`): "N1 has more branch differentiability
 and no uniform positive lower curvature. N2 has positive lower curvature and less
-differentiability at the accumulation point. Neither is constructed from finitely many uniformly
+differentiability at the minimizer. Neither is constructed from finitely many uniformly
 strongly convex $C^2$ branches through the optimizer, so neither proves local failure for that
-class." (Wording point W41 applied on 15 October 2026; before "Neither proves local failure for a
+class." (M30, recurrence: "at the minimizer", before "at the accumulation point". Wording
+point W41 applied on 15 October 2026; before "Neither proves local failure for a
 finite maximum of uniformly strongly convex $C^2$ branches through the optimizer.")
 
 N1 (the objective of `n1_local_failure`, the maximum of the branches `DEmbedding.branch`): all four

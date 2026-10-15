@@ -10,8 +10,9 @@ from a suitable matrix; the copying step makes bad starts approach the
 minimizer of one fixed objective; a final fixed change of coordinates
 makes their common initial matrix the identity. The price of retaining
 a positive lower curvature bound is the loss of second differentiability
-of three of the four branches at the accumulation point. The line-search constants are any
-fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, as in Theorem~\ref{art:local-failure};
+of three of the four branches at the minimizer. The line-search constants are any
+fixed pair $0<c_1\le1/3$, $c_1<c_2<1$ (an \emph{admissible pair}), as in
+Theorem~\ref{art:local-failure};
 the orbit, the objective and the starting points are chosen before the pair.
 
 \subsection{A strongly convex global example}
@@ -22,7 +23,7 @@ the quadratic gradient is small relative to the fixed slopes. The task
 is to turn this smallness into an exact infinite trajectory, with every
 rejection and acceptance retained.
 
-Use the fixed slopes of Appendix~\ref{art:seed_certificate} and let
+Use the slopes $g_0,g_1,g_2$ and the function $G$ of Section~\ref{art:failure} and let
 \[
  Q_\mu(x)=\tfrac\mu2\|x\|^2+G(x),\qquad\mu>0.
 \]
@@ -43,10 +44,10 @@ triangle of the original seed.
 
 \begin{proposition}[A perturbed bad orbit]\label{art:quadratic_failure}
 Let $\mu>0$. For every neighborhood $V$ of zero, some initial state
-$(x_0,H_0)$, $H_0\succ0$, produces for every fixed pair $0<c_1\le1/3$,
+$(x_0,H_0)$, $H_0\succ0$, produces for every fixed pair ${0<c_1\le1/3}$,
 $c_1<c_2<1$ the same deterministic full-BFGS run on $Q_\mu$, converging to
 zero with positive objective values decreasing to zero. Its accepted lengths
-repeat $1,1/4,1/16$, and all accepted and rejected query points are
+repeat $1,1/4,1/16$, and its initial point and all accepted and rejected query points are
 differentiable and belong to $V$.
 \end{proposition}
 
@@ -69,7 +70,7 @@ $(Z,M)=(z,M(\zeta,\eta))$, for $j=0,1,2$ perform
        \qquad Z^+=Z+S,\label{art:lower_return_substep}\\
  Y&=g_{j+1}-g_j+\mu\tau S,\notag\\
  M^+&=\left(I-\frac{SY^T}{Y^TS}\right)M
-          \left(I-\frac{YS^T}{Y^TS}\right)+\frac{SS^T}{Y^TS}.\notag
+          \left(I-\frac{YS^T}{Y^TS}\right)+\frac{SS^T}{Y^TS},\notag
 \end{align}
 with cyclic gradient indices and $\alpha=(1,1/4,1/16)$.
 For the resulting $(Z_3,M_3)$, let $\hat\rho=(M_3)_{11}$ and define
@@ -87,10 +88,10 @@ On a sufficiently small neighborhood of $P_*$, positive-$\tau$ states
 follow exactly the three query lists of Table~\ref{art:trial_table} under
 the actual algorithm for every admissible pair $(c_1,c_2)$, and
 \eqref{art:lower_return} is their return map.
-Its derivative has eigenvalues
+Its derivative at $P_*$ has eigenvalues
 \[
  \rho^{-1},\quad\rho^{-1},\quad\lambda_s,\quad\lambda_u,\quad\rho,
- \qquad .038<\lambda_s<.039,\quad1.564<\lambda_u<1.565.
+ \qquad 0.038<\lambda_s<0.039,\quad1.564<\lambda_u<1.565.
 \]
 The stable eigenspace contains a vector whose $\tau$ coordinate is one.
 \end{lemma}
@@ -100,17 +101,18 @@ $G(Z)+\mu\tau\|Z\|^2/2$ and the gradient is $g_i+\mu\tau Z$.
 The common quadratic does not affect which slope is active. All finite
 branch gaps and normalized search comparisons are continuous in the
 normalized state. The strict inequalities of Lemma~\ref{art:seed_cycle},
-\eqref{art:seed_margins} at each acceptance and a value increase at each
+namely \eqref{art:seed_margins} at each acceptance and a value increase at each
 rejection, decide every test for all admissible pairs $(c_1,c_2)$ at once;
 being finitely many, they persist on one neighborhood. The physical step and secant are exactly the ones in
 \eqref{art:lower_return_substep} after restoring the scale, proving
 agreement with the actual update and the entire search tree.
 
 At $\tau=0$ the matrix return is independent of $z$. Let $J$ be the
-derivative at $(\zeta,\eta)=(0,1)$ of its normalized shape map.
+derivative at $(\zeta,\eta)=(0,1)$ of its normalized shape map
+$(\zeta,\eta)\mapsto((M_3)_{12},(M_3)_{22})/\hat\rho$.
 The following rational enclosures specify the spectral certificate:
 \begin{equation}\label{art:shape_certificate}
- 10^{10}J\ \in
+ 10^{10}J\in
  \begin{pmatrix}
  [11123986249,11123986253]&[6459701025,6459701029]\\
  [7515015701,7515015708]&[4905136882,4905136890]
@@ -130,13 +132,13 @@ $D(a^{-1})=-a^{-2}Da$, with denominators bounded away from zero.
 Substitution of \eqref{art:shape_certificate} in
 $p(\lambda)=\lambda^2-\operatorname{tr}(J)\lambda+\det J$ gives
 \[
- p(.038)>0,\qquad p(.039)<0,\qquad
+ p(0.038)>0,\qquad p(0.039)<0,\qquad
  p(1.564)<0,\qquad p(1.565)>0.
 \]
 These rational sign comparisons locate two distinct real roots and exhaust
 the degree-two polynomial; no numerical eigenvector is used.
 
-At $\tau=0$, $Z_3=z+v(\zeta,\eta)$ and $\hat\rho$ is independent of $z$.
+At $\tau=0$, $Z_3=z+v(\zeta,\eta)$, with $v$ the sum of the three normalized steps, and $\hat\rho$ is independent of $z$.
 The last coordinate of the return is $\tau\hat\rho$. Thus its full derivative
 has the block form
 \[
@@ -150,7 +152,7 @@ map and do not affect its spectrum. None of the five eigenvalues is zero
 or has modulus one. Moreover $\rho$ is not an eigenvalue of the upper
 left four-dimensional block. Assigning last coordinate one and solving
 the remaining four linear equations gives a $\rho$-eigenvector. This
-proves the last assertion and the lemma.
+proves the last assertion and the lemma.\qed
 \end{proof}
 
 \begin{proof}[Proposition~\ref{art:quadratic_failure}]
@@ -159,7 +161,7 @@ The classical local stable-manifold theorem provides a two-dimensional
 smooth stable manifold through $P_*$, tangent to the stable eigenspace;
 Dyatlov's local-coordinate formulation and graph-transform proof apply
 after an adapted splitting and rescaling
-\preprintcite[Section~3.5, Theorem~3 and Remark~4; Section~3.1]{DY}.
+\preprintcite*[Section~3.5, Theorem~3 and Remark~4; Section~3.1]{DY}.
 By the last assertion of
 Lemma~\ref{art:lower_hyperbolic}, this manifold contains points with
 arbitrarily small positive $\tau$.
@@ -168,20 +170,23 @@ neighborhood and tends to $P_*$. Shrinking the neighborhood keeps $\hat\rho>0$
 and $M(\zeta,\eta)\succ0$, so $\tau^+=\tau\hat\rho$ preserves positivity. The actual
 intermediate matrices remain positive definite by positive curvature.
 
-The physical iterates are $x_{3m}=\tau_mz_m\to0$. Intermediate points
+Let $w_m=(\hat z_m,\zeta_m,\eta_m,\tau_m)$ be the $m$th return of the chosen
+point $w_0$. The physical iterates are $x_{3m}=\tau_m\hat z_m\to0$. Intermediate points
 and all queries are $\tau_m$ times bounded continuous functions of the
 normalized state, so they tend to zero too. Their normalized objective
 values stay positive by the seed's strict positivity. Armijo makes the
-values decrease to zero, which exceeds \eqref{art:quadratic_minimizer}.
-More explicitly, each of the finitely many physical candidate maps has
+values decrease to zero, which exceeds $\min Q_\mu$ in
+\eqref{art:quadratic_minimizer}.
+More explicitly, each of the finitely many physical candidate maps, and the
+initial-point map $w\mapsto\tau z$, has
 the form $\Phi_q(w)=\tau q(w)$ and satisfies $\Phi_q(P_*)=0$.
 Choose the normalized neighborhood inside
 $\bigcap_q\Phi_q^{-1}(V)$, then take a positive-scale local stable orbit
-that stays in this neighborhood. Every physical query lies in $V$.
+that stays in this neighborhood. The initial point and every physical query lie in $V$.
 Neither the neighborhood nor the chosen point depends on $(c_1,c_2)$, so
 the same run serves every admissible pair. This proves the proposition. The initial
 matrix is supplied by the stable-manifold point, not presumed to be
-identity or obtained by rounded forward shooting.
+identity or obtained by rounded forward shooting.\qed
 \end{proof}
 
 \subsection{An accumulation embedding with four strongly convex branches}
@@ -211,7 +216,7 @@ values of $b_i$, set
 \[
  t_b=\frac{1-(1+r)/b}{1-r},\qquad\varepsilon=1/1024.
 \]
-Use the same cubic ramp $P_b$ and primitive $J_b$ as in
+Use the same cubic ramp $P_b$ and primitive $J_b$ defined before
 \eqref{art:upper_scalar}, with this center and width. For
 $ba_{\ell+1}\le x\le ba_\ell$ put
 \begin{equation}\label{art:lower_scalar}
@@ -233,12 +238,13 @@ The positive derivative is monotone and constant near every node.
 Its derivative slopes are uniformly bounded, so summing over intervals
 and taking a limit at zero proves that $\psi_b$ is globally $C^{1,1}$,
 convex and coercive, nonnegative with unique zero at the origin.
-The two constant-derivative lengths, divided by $a_\ell$, are
+The constant-derivative lengths below and above $ba_\ell$, divided by $a_\ell$, are
 \[
  b(1-r)(1-t_b-\varepsilon),\qquad
  b(1-r)(t_b-\varepsilon)/r,
 \]
-both greater than $1/2$ for these values of $b$. Consequently
+both greater than $1/2$ for these values of $b$; the affine outer extension
+covers the upper side when $\ell=0$. Consequently
 \begin{equation}\label{art:lower_plateau}
  \psi_b(ba_\ell+h)=a_\ell^2+a_\ell h\qquad(|h|\le a_\ell/2).
 \end{equation}
@@ -262,7 +268,7 @@ For the first three branches, the gradient-Lipschitz constants are at most
 $L_i=\mu+\max\{1,768/b_i\}\|q_i\|^2$. Direct substitution of the
 rational root bounds gives $L_0<439$, $L_1<446$ and $L_2<27$; hence
 $512$ is a common constant, also covering the fourth branch.
-Since $F(x)\ge\mu\|x\|^2/2$ with equality zero at the origin, the
+Since $F(x)\ge\mu\|x\|^2/2$ and $F(0)=0$, the
 sublevels are compact and the minimizer is unique. The first three
 gradients at zero vanish, whereas the fourth is $(0,1)^T$, so the
 minimizer is nonsmooth.
@@ -291,9 +297,9 @@ The fourth branch is inactive there: its residual $a_\ell(-32+y_2)$ is
 negative, while each old scalar residual is at least $a_\ell^2/2$.
 
 Choose, by Proposition~\ref{art:quadratic_failure}, one bad orbit
-$(x_k^{\rm seed},H_k^{\rm seed})$ all of whose queries lie in this
+$(x_k^{\rm seed},H_k^{\rm seed})$ whose initial point and queries all lie in this
 neighborhood; it is the same for every admissible pair $(c_1,c_2)$.
-For every $\ell$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
+For every $\ell\ge1$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
 $H_0^{\rm seed}$. Induction on the actual query tree gives
 \[
  x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed},\qquad H_k^{(\ell)}=H_k^{\rm seed}.
@@ -302,10 +308,10 @@ This is \eqref{art:matched-local-model} with spatial factor $a_\ell$
 and objective factor $a_\ell^2$. The covariance calculation
 \eqref{art:matched-scaling} preserves the matrix, while function
 differences and directional products acquire the same positive factor.
-Thus each rejection, acceptance and updated matrix is preserved. Equation~\eqref{art:lower_local_model} applies to every
+Thus each rejection, acceptance and updated matrix is preserved. Equation~\eqref{art:lower_local_model} applies at the initial point and to every
 query because the whole chosen seed orbit lies in its domain.
 Thus $x_k^{(\ell)}\to \bar x_\ell$ and
-$F(x_k^{(\ell)})\downarrow a_\ell^2C_*>0$. The three active gradients at
+${F(x_k^{(\ell)})\downarrow a_\ell^2C_*>0}$. The three active gradients at
 $\bar x_\ell$ are $a_\ell g_i$, whose convex hull excludes zero.
 All query norms are at most
 $a_\ell(\|c_*\|+\sup_{\rm seed\ queries}\|x^{\rm seed}\|)\to0$.

@@ -3,7 +3,7 @@
 
 The positive theorems identify geometry that permits convergence. We now show
 why convexity and regularity of the branch formulas cannot supply an
-unrestricted deterministic replacement. The first tempting assertion is
+unrestricted deterministic guarantee. The first tempting assertion is
 global: compact sublevels might seem enough to prevent convergence to a wrong
 corner. The second is local: for one finite maximum of very smooth convex
 branches, perhaps every sufficiently close start succeeds. We construct an
@@ -33,6 +33,8 @@ If both tests hold, the length is accepted. This is the unit-first
 bracketing implementation of Lewis--Overton~\cite[Algorithm~4.6]{LO}.
 All comparisons in the construction are strict, so strict acceptance tests
 give the same decisions.
+Every queried point in the construction is differentiable, so the Wolfe test
+is always defined.
 
 Write the full inverse update as
 \begin{equation}\label{art:failure_update}
@@ -55,7 +57,7 @@ curvature requirement on these branches.
 
 \subsection{Designing a cycle around a wrong corner}
 We seek a corner with a strict descent direction that the cycle nevertheless
-fails to follow to the minimum. Three slopes in the plane provide the needed
+fails to follow. Three slopes in the plane provide the needed
 freedom. Begin with $H_0=I$ and fix the first two slopes so that the unit step
 has a simple exact update. The third slope has two free coordinates. We choose
 them to close the matrix cycle at a scalar multiple $\rho I$ and choose the
@@ -111,7 +113,7 @@ exceeds its current value. At every acceptance,
  G(z_j)+\tfrac13g_j^Ts_j-G(z_{j+1})>0,\qquad
  g_{j+1}^Ts_j>0>g_j^Ts_j,
 \end{equation}
-where $g_3=g_0$. All listed queries and the three starting points have a
+where $g_3=g_0$. All listed queries and the three base points $z_0,z_1,z_2$ have a
 unique active branch, and each such point $z$, with second coordinate
 $[z]_2$, satisfies
 \begin{equation}\label{art:seed_query_bounds}
@@ -174,7 +176,9 @@ in grayscale, and the accepted lengths are labeled explicitly.
 \caption{The accepted three-step cycle, every queried candidate, and an
 enlargement at the nonstationary origin. Solid, dashed and dash--dot rays
 mark phases $0,1,2$, whose accepted lengths are $1,1/4,1/16$.
-The panels use different horizontal and vertical scales, as indicated.
+The panels use different horizontal and vertical scales; the
+vertical-to-horizontal ratios are $22/4.6$, $2.5/4.2$ and $23/21$ in (a), (b)
+and (c).
 Coordinates are rendered from the rational center of the certified root
 box; exact cycle closure and trial decisions follow from
 Appendix~\ref{art:seed_certificate}. This drawing is not evidence of
@@ -185,7 +189,8 @@ stable-manifold membership for the perturbed construction.}
 The finite calculation becomes an infinite run through homogeneity. A smaller
 copy has the same active slopes, and its inverse matrix produces proportionally
 smaller steps. Both sides of every line-search comparison have the same scale.
-The two cycle closures therefore give the exact induction
+For every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the two cycle closures
+therefore give the exact induction
 \begin{equation}\label{art:cone_orbit}
  x_{3m+j}=\rho^mz_j,\qquad H_{3m+j}=\rho^mM_j,\qquad j=0,1,2.
 \end{equation}
@@ -201,7 +206,8 @@ $w=(-1,16)^T$ satisfies
 Hence $G(tw)=-t$ for $t\ge0$, so this limit is nonstationary.
 
 \begin{corollary}[Coercive polyhedral global failure]\label{art:failure_polyhedral}
-The same deterministic run, with $H_0=I$, fails for
+For every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the same deterministic run,
+with $H_0=I$, fails for
 \[
  \overline G(u,v)=\max\{u,-u-v/8,c_\circ u+d_\circ v,v-17\}.
 \]
@@ -216,7 +222,7 @@ Equality in this lower bound forces all three branches to equal $-1$,
 hence $(u,v)=(-1,16)$; the remaining branch is strictly smaller there.
 If $\overline G(u,v)\le t$, then
 $u\le t$, $v\le t+17$ and $-u-v/8\le t$, which also give lower bounds
-on both coordinates. Every sublevel is therefore compact.
+on both coordinates. Every sublevel is therefore compact.\qed
 \end{proof}
 This already excludes global convergence from every start for coercive finite
 polyhedral objectives under this routine. Its wrong corner is away from the
@@ -334,8 +340,10 @@ give $\varphi_b(x)=O(x^3)$, $\varphi_b'(x)=O(x^2)$ and
 $\varphi_b''(x)=O(x)$. These match the negative cubic at zero.
 The formulas also match through second order at $-1$ and $b$.
 The derivative is negative on the negative half-line and positive on the
-positive half-line; the outer formulas diverge to infinity. This proves
-convexity, coercivity and the minimum assertions.
+positive half-line; the outer formulas diverge to infinity. The second
+derivative is nonnegative on every piece: a positive multiple of $P_b'$ on the
+positive intervals, and $6$, $-6x$ and $0$ for $x<-1$, $-1\le x\le0$ and
+$x\ge b$. This proves convexity, coercivity and the minimum assertions.
 
 The constant-derivative lengths below and above $ba_\ell$, divided by $a_\ell$,
 are
@@ -351,7 +359,7 @@ once more gives $|\varphi_b'''|\le139264/(5b^2)$ there. The negative
 cubic has third derivative of magnitude six. Continuity of
 $\varphi_b''$ permits summing the Lipschitz estimates over finitely many
 joins away from zero; taking limits at zero covers the infinitely many
-accumulating joins and gives the global bound.
+accumulating joins and gives the global bound.\qed
 \end{proof}
 
 \subsection{One objective and a uniform induction over all queries}
@@ -422,7 +430,7 @@ Since the base query set is finite, the norm of every query is bounded by
  a_\ell\|(2,-32)\|+a_\ell^2\max_{\text{base points and queries}}\|z\|,
 \]
 which tends to zero. The starting points also tend to zero. All other
-claims were proved directly from \eqref{art:upper_objective}.
+claims were proved directly from \eqref{art:upper_objective}.\qed
 \end{proof}
 
 
@@ -453,17 +461,17 @@ quadratic to each branch restores that curvature, but changes the dynamics.
 The old exact cycle can no longer be copied without adjustment. The next result constructs
 a nearby trajectory by a stable-manifold argument.
 \par\medskip
-\noindent\begin{minipage}{\textwidth}
+\noindent\begin{minipage}{\textwidth}\setlength{\parindent}{15pt}
 \input{statements/negative_lower}
 \end{minipage}
-\par
+\par\medskip
 
 
 \begin{table}[t]
 \centering
-\begin{tabular}{p{.29\textwidth}p{.27\textwidth}p{.32\textwidth}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{.29\textwidth}>{\raggedright\arraybackslash}p{.27\textwidth}>{\raggedright\arraybackslash}p{.32\textwidth}}
 \toprule
-Branch regularity & Uniform curvature & At the accumulation point\\
+Branch regularity & Uniform curvature & At the minimizer\\
 \midrule
 Four convex $C^{2,1}$ branches
 & $0\preceq\nabla^2f_i\preceq64I$ globally
@@ -482,7 +490,8 @@ every fixed $0<c_1\le1/3$, $c_1<c_2<1$
 \label{art:regularity-map}
 \end{table}
 
-Here a classical Hessian is the derivative of the gradient map, with that
+In Theorem~\ref{art:local-failure-lower} and Table~\ref{art:regularity-map}, a
+Hessian is the classical one: the derivative of the gradient map, with that
 map defined in a neighborhood of the point. A pointwise second-order
 expansion alone is not the convention.
 
@@ -493,10 +502,12 @@ the wrong corner. A normalized three-step return map has the original seed
 as a hyperbolic boundary fixed point. Its stable manifold contains positive
 scale states, yielding an actual perturbed bad orbit. The seed's strict
 finite margins ensure that the same accepted and rejected trial lists
-persist along that orbit, for every admissible pair $(c_1,c_2)$. No rounded initial state is asserted to lie on
+persist along that orbit, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$. No rounded initial state is asserted to lie on
 the stable manifold.
 
-For the local embedding the scalar node values are now $a_\ell^2$ and the
+For the local embedding of Appendix~\ref{art:lower_curvature}, with its own
+$a_\ell=128^{-\ell}$, centers $\bar x_\ell=a_\ell(2,-32)^T$ and constant
+$C_*=1+\mu\|(2,-32)\|^2/2$, the scalar node values are now $a_\ell^2$ and the
 node slopes $a_\ell$. The resulting model is
 $F(\bar x_\ell+a_\ell z)=a_\ell^2(C_*+Q_\mu(z))$, so
 $\lambda=a_\ell$, $\sigma=a_\ell^2$ and again
@@ -504,12 +515,14 @@ $\lambda^2/\sigma=1$. We choose one entire perturbed orbit small enough
 for every query to fit the affine scalar regions. Its one initial SPD
 matrix is then used in every copy; one fixed affine change makes it $I$.
 The faster variation of the scalar derivative retains global $C^{1,1}$
-regularity but prevents second differentiability at the accumulation point.
+regularity but prevents second differentiability at the minimizer, where the
+copies accumulate.
 This is why the theorem does not supply a finite strongly convex $C^2$
 local counterexample.
 
-The two constructions separate upper branch regularity from positive lower
+The two constructions (Table~\ref{art:regularity-map}) separate upper branch
+regularity from positive lower
 curvature. Their common mechanism is a local copy of an actual bad query
 tree; the different scalar scales determine which regularity survives at
-the accumulation point. The remaining convergence questions are discussed
+the minimizer. The remaining convergence questions are discussed
 next.

@@ -21,11 +21,11 @@ Progress (`python3 editorial/lean_coverage/check_coverage.py`), 15 October 2026:
 
 | Document | Items | Status |
 |---|---|---|
-| Article (`paper/`, 15 files) | 616 (221 mechanical, 395 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
+| Article (`paper/`, 15 files) | 619 (221 mechanical, 398 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
 | Companion (`companion/`, 18 files) | 1856 (573 mechanical, 1283 prose) | complete (14 and 15 October, on the MacBook): every item classified; 18 coverage modules in twelve groups, each group reviewed by an independent agent, imported by `BfgsArticle.lean` |
 
-Article items by status: LEAN 286, SAME_AS 126, NON_CLAIM 89, DEFINITION 51,
-PART_OF 34, PROOF 29, OPEN 1. The nine `DISCREPANCY` items (manuscript items
+Article items by status: LEAN 286, SAME_AS 128, NON_CLAIM 89, DEFINITION 52,
+PART_OF 34, PROOF 29, OPEN 1 (three prose items added with the corrections M30–M41). The nine `DISCREPANCY` items (manuscript items
 M7–M11) were resolved by the corrections of 15 October 2026; their register entries
 are kept under `resolved_discrepancies`.
 

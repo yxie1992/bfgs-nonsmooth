@@ -6,10 +6,11 @@ the horizontal error $u^2$. Yet the vertical gradient jump does not remove
 the direction that can reduce this error. Along $v=0$ the limiting gradients are $(2u,1)$ and
 $(2u,-1)$. Their difference is vertical. At a point with $u\ne0$, the
 horizontal vector $(-u,0)$ has the same strictly negative pairing $-2u^2$
-with both gradients. The inward radial model also has a small error:
+with both gradients (Figure~\ref{art:gradient-geometry}, left). The inward
+radial model also has a small error: for $v\ne0$ and $0\le\tau\le1$,
 \begin{equation}\label{art:mixed-inward-remainder}
  F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)
-       =\tau^2u^2\qquad(v\ne0,\ 0\le\tau\le1).
+       =\tau^2u^2.
 \end{equation}
 Thus the nonsmooth part is exactly linear under inward scaling, while the
 smooth part contributes a quadratic remainder. Section~\ref{art:global}
@@ -25,11 +26,14 @@ jump and a common horizontal descent direction. Right: the particular
 three-gradient seed used in Section~\ref{art:failure}. Its convex hull
 excludes zero, but its affine hull is the plane. The vertices on the right
 are rendered from the certified root's rational center; the mathematical
-definition uses the isolated root. Arrows indicate gradients, not BFGS steps.}
+definition uses the isolated root.
+Zero lies just above the edge $[g_1,g_0]$, at distance $1/\sqrt{257}$ from the
+hull. Solid arrows indicate gradients and the dashed arrow a common descent
+direction; none is a BFGS step.}
 \label{art:gradient-geometry}
 \end{figure}
 
-The right panel asks a different question: can a genuine full-BFGS run
+The right panel of Figure~\ref{art:gradient-geometry} asks a different question: can a genuine full-BFGS run
 contract around a point where descent still exists? The bad corner is specific. Its slopes
 are $g_0=(1,0)$, $g_1=(-1,-1/8)$ and $g_2=(c_\circ,d_\circ)$, where $(c_\circ,d_\circ)$ is
 defined exactly in Appendix~\ref{art:seed_certificate}. They are affinely
@@ -56,34 +60,35 @@ The positive conclusions differ in their geometry and in the locality of the
 guarantee. Table~\ref{art:positive-outcomes} distinguishes them before the
 proofs. In every row the quantifier is over infinite admissible runs with
 arbitrary positive-definite initialization. An admissible run uses actual
-gradients and satisfies Armijo--weak-Wolfe at its accepted points; it does not
+gradients and satisfies Armijo--weak-Wolfe at its accepted points; the definition does not
 assert that an arbitrary line-search implementation always finds such points.
 
-\begin{table}[htbp]
+\begin{table}[tbp]
 \centering
-\begin{tabular}{@{}p{.40\textwidth}p{.22\textwidth}p{.29\textwidth}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.40\textwidth}>{\raggedright\arraybackslash}p{.22\textwidth}>{\raggedright\arraybackslash}p{.29\textwidth}@{}}
 \toprule
 Objective geometry & Starting scope & Conclusion\\
 \midrule
 Centered smooth--sublinear, Theorem~\ref{art:centered}
-& Compact initial sublevel in the structural region
-& Optimal values; unique minimizer gives whole-sequence convergence\\
+& Compact initial sublevel where the representation holds
+& Optimal values; unique minimizer gives whole-sequence convergence\\\addlinespace
 Coercive degree-one homogeneous, including $\ell_1$ and $\ell_\infty$ norms,
 Theorem~\ref{art:homogeneous}
 & Every starting point
-& Whole sequence converges to zero\\
+& Whole sequence converges to zero\\\addlinespace
 Finite polyhedral smooth-piece partition, including squared loss plus
-$\lambda\norm{x}_1$ ($\lambda>0$), Theorem~\ref{art:polyhedral}
+$\lambda\norm{x}_1$ ($\lambda>0$, unique minimizer), Theorem~\ref{art:polyhedral}
 & Common low sublevel near the unique minimizer
-& Whole sequence converges to the minimizer\\
+& Whole sequence converges to the minimizer\\\addlinespace
 Nondegenerate planar smooth maximum, Corollary~\ref{art:planar-max}
 & Local basin under the stated contour hypotheses
 & Whole sequence converges to the unique minimizer\\
 \bottomrule
 \end{tabular}
 \caption{What the positive theory guarantees. The benchmark $u^2+|v|$ has
-compact sublevels everywhere, so the first row gives global convergence.
-The results concern accepted runs, without a presumed matrix limit.}
+compact sublevels and a centered representation on all of $\R^2$, so the first
+row gives global convergence.
+The results concern admissible runs, without a presumed matrix limit.}
 \label{art:positive-outcomes}
 \end{table}
 
