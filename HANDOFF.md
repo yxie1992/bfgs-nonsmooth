@@ -12,14 +12,17 @@ the same day.
 | Work | State | Details |
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
-| Manuscript review | M1–M6 fixed on 13 October; M7–M11 fixed in the article on 15 October (step 2); the companion's recurrences of M8, its items M12–M29 and its wording points W1–W43, found by the Lean coverage, are open | `TODO_MANUSCRIPT_REVIEW.md` |
+| Manuscript review | M1–M6 fixed on 13 October; M7–M11 fixed in the article on 15 October (step 2); open: the companion's recurrences of M8, its items M12–M29 and its wording points W1–W43, found by the Lean coverage, and M30–M41 from the line-by-line reading of the article | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 
 The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Lean
-coverage" below) started on 15 October: the article's corrections M7–M11 are done,
-and reader agents read the article line by line; their findings are triaged into
-`TODO_MANUSCRIPT_REVIEW.md` (M30 onwards).
+coverage" below) started on 15 October: the article's corrections M7–M11 are done;
+six reader agents read the article line by line (reports and decisions in
+`editorial/line_by_line_reading_20261015/`), and their accepted findings are
+M30–M41 in `TODO_MANUSCRIPT_REVIEW.md`. An agent is applying the companion's
+corrections (M8's recurrences, M12–M29, W1–W43 except W12 and W13); the article's
+M30–M41 follow.
 
 Latest checks:
 

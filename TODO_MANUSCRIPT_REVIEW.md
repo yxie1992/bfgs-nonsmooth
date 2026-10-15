@@ -10,8 +10,8 @@ otherwise, no mathematical statement and no Lean declaration changed.
 **Status (15 October 2026):** M1 to M11 are resolved in the article (M7 to M11 on
 15 October, after the Lean coverage); the companion still repeats M8. M12 to M29
 and the wording points W1 to W43 were found by the Lean coverage work
-(`TODO_LEAN_COVERAGE.md`) and are open; they will be settled with the line-by-line
-reading of the proofs.
+(`TODO_LEAN_COVERAGE.md`); M30 to M41 by the line-by-line reading of the article
+(15 October). All are open and are being applied in step 2.
 
 ## Open (found by the Lean coverage, 14 October 2026)
 
@@ -389,6 +389,148 @@ under those items (M8, M12, M24). The chapters are generated: fix them through
   `LowerCurvature.quadratic_failure`; (b) `Ch04R.fourPiece_failure_run`,
   `reconstructedFourPieceFailure`, `Ch04R.fourPiece_objective_formula`.
   (`C/14_E/prose/013`, `C/14_E/prose/061`)
+
+## Open: line-by-line reading of the article (15 October 2026)
+
+Six reader agents read the article line by line on 15 October 2026 (step 2 of the
+plan in `AGENTS.md`), each one group of files, on the text of commit `c8db802`
+(before the corrections M7 to M11; the line numbers below are those of that
+commit). They checked every proof step, hypothesis, reference, symbol and number
+(recomputed exactly where possible), compared the statements with the Lean
+registers, and looked at the built PDF. Their reports, with the exact old and new
+strings of every finding, occurrence counts and register items, are in
+`editorial/line_by_line_reading_20261015/` (findings `R-A-1` …, `R-F-13`), with the
+coordinator's decisions (`TRIAGE.md`). No reader found a false theorem, lemma or
+proposition, or a wrong number: every number of Section 6 and Appendices C and D was
+recomputed and holds. The findings are hypotheses left out of summaries and tables,
+steps left out of proofs, a statement weaker than its later use (M33), references,
+notation, typesetting and language. The items below group the accepted findings.
+All are to be applied in step 2; the points marked "author" are left for step 3.
+
+- [ ] **M30: "At the accumulation point" where the minimizer is meant.** The
+  abstract (`master.tex`, the sentence of M8), the header of Table
+  `art:regularity-map` and two sentences of Section 6 (`failure.tex:465`, `506`,
+  `513`) and `lower_curvature.tex:13` place the loss of second differentiability "at
+  the accumulation point". In the abstract nothing has been said to accumulate, and a
+  reader takes the limit of a failing run, $\bar x_\ell\ne0$, where every branch is
+  smooth. The branches fail to be $C^2$ only at $0$, the minimizer, where the copies
+  accumulate (Theorem `art:local-failure-lower` says "at zero", the introduction "at
+  the minimizer"). Proposed: "at the minimizer" (in Section 6 once with "where the
+  copies accumulate"). The companion has the same phrase (`13_L.tex:3`,
+  `01_I.tex:103`, `research_story.tex:52-53`); it is fixed with M8's companion
+  recurrences. (R-A-1, R-E-2; `A/master/prose/009`, `A/failure/table/art:regularity-map`,
+  `A/lower_curvature/prose/010` and the Section 6 prose items.)
+- [ ] **M31: Table `art:positive-outcomes` omits two hypotheses.** (a) The caption
+  infers global convergence for $u^2+|v|$ from compact sublevels alone; the
+  centered representation on all of $\R^2$ is needed too (another place of M7).
+  (b) The $\lambda\norm{x}_1$ row promises whole-sequence convergence, which
+  Theorem `art:polyhedral` gives only with a unique minimizer: for
+  $\tfrac12(x_1+x_2-1)^2+\tfrac12\norm{x}_1$ the minimizers form a segment.
+  Proposed: "compact sublevels and a centered representation on all of $\R^2$", and
+  "($\lambda>0$, unique minimizer)". (R-A-2, R-A-3; `A/geometry/prose/031`,
+  `A/geometry/prose/029`.)
+- [ ] **M32: M10 and M11 at further places.** (a) The opening of Section 3
+  (`energy.tex:8-9`), "persistent missed progress cannot be paid for by a bounded
+  secant cost per iteration", needs bounded gradients, like M10: add "when the
+  gradients are bounded" (`A/energy/prose/005`). (b) The induction display after the seed lemma and
+  the corollary that follows it (`failure.tex:184-209`) state no line-search range; for
+  $c_1>r_2\approx0.3752$ they fail, as M11 shows: add "For every fixed pair
+  $0<c_1\le1/3$, $c_1<c_2<1$". (c) "Admissible pair" (`failure.tex:495`,
+  `lower_curvature.tex:88`, `104`, `182`, `295`) is never defined; read with
+  Definition `art:admissible` ($0<c_1<c_2<1$) Lemma `art:lower_hyperbolic` would be
+  false. Proposed: define the term where Appendix D fixes the range
+  (`lower_curvature.tex:14`) and write the range out at `failure.tex:495`. Check that
+  the Lean statements of these items carry the range. (R-B-6, R-E-1, R-F-2.)
+- [ ] **M33: Appendix D: the initial point of the seed orbit must lie in $V$.**
+  Proposition `art:quadratic_failure` (`lower_curvature.tex:49-50`) puts only the
+  accepted and rejected query points in the neighbourhood $V$. Section D.3
+  (`293-296`, `305-306`) starts copy $\ell$ at $\bar x_\ell+a_\ell x_0^{\rm seed}$ and
+  uses the local model there, so it needs $x_0\in V$, which neither the statement
+  nor its proof (`176-180`) gives. The repair is one more map of the same kind,
+  $w\mapsto\tau z$. The Lean library proves the stronger statement
+  (`LUniform.orbit_exists`, `LUniform.source_spec`: every iterate in $U$;
+  `LUniform.uniform_global_failure`; `copy_runs`); the register's reading
+  `LowerCurvature.quadratic_failure` has to gain `x 0 ∈ V`. Four replacements in
+  `lower_curvature.tex`; the companion repeats the slip at `13_L.tex:237`, `355`,
+  `363` (fixed with the companion corrections). (R-F-1;
+  `A/lower_curvature/proposition/art:quadratic_failure`, `proof/002`, `prose/027`,
+  `prose/028`, `disp/021`.)
+- [ ] **M34: Proof steps left out.** Each fix adds a clause or a sentence.
+  - Lemma `art:gram-compression` (`matrix_algebra.tex:56-61`): why adding
+    $\rho aa^T$ gives the compression $Z^TH_+Z$ ($Z^Tv=a$), and that the Schur
+    complement gives $u\le q$ (R-B-2).
+  - Theorem `art:reciprocal-growth` (`energy.tex:179`): $\beta_k$ is not defined,
+    and the contraction holds only for $k\ge J$ (R-B-5; the companion repeats it at
+    `02_M.tex:129`).
+  - Corollary `art:radial-convergence` (`global.tex:103-109`): stated under either
+    condition, proved for the radial one; cite Theorem `art:radial-equivalence`
+    (R-C-1).
+  - Theorem 4's case split (`global.tex`): the identity $T-N=(g-h)^Tr_x$ for the
+    reversed pair and the choice $\tau=\theta$ are not stated (R-C-4); the constant
+    $\theta=1/2$ is used but not named in Theorem 5's proof and at
+    `local.tex:65-75` (R-C-5).
+  - Theorem 8 (`local.tex:251-260`): $\lambda^2\le1+Ld$ is used for every close
+    eligible pair, while Lemma `art:planar-field` gives it for $d\le1$; add $d\le1$
+    and $s_k\to0$, $d_k\to0$ on the tail (R-D-1).
+  - Seed certificate (`seed_certificate.tex:112-123`): "Their sum is
+    $\widetilde\rho I$" skips the projected term $\Pi(C+\beta E)\Pi=\widetilde\rho\Pi$
+    (R-E-3; the companion's appendix is generated from this file).
+  - Lemma 5 (`failure.tex`): convexity follows from $\varphi_b''\ge0$, not from the
+    sign of $\varphi_b'$ (R-E-4).
+  - The weak-Wolfe test needs the gradient at the trial point; say that every point
+    queried in Section 6 is differentiable (R-E-10).
+- [ ] **M35: References.** `introduction.tex:36-38` "The following paragraph" means
+  the paragraph after the corollary (R-A-6); `global.tex:60` "proved in
+  Theorem~\ref{art:certificate}": the bound is in its proof (R-B-7, R-C-2);
+  `energy.tex:144`: Lemma `art:gram-compression` is in Appendix A (R-B-8);
+  `energy.tex:291`: the equation range starts one equation late (R-B-9);
+  `local.tex:3` "The global theorem" is Theorem `art:centered` (R-D-7);
+  `lower_curvature.tex:25` points to Appendix C for $G$, defined in Section 6
+  (R-F-5); Figure `art:gradient-geometry` and Table `art:regularity-map` are never
+  cited (R-A-10); "This condition" (R-C-8).
+- [ ] **M36: Section 7: the open question and the verification paragraph.** (a) "The
+  broader local question for finitely many uniformly strongly convex $C^2$ branches
+  remains open here" passes over the nondegenerate planar case settled by Corollary
+  `art:planar-max`, and the examples concern the weak-Wolfe implementation with
+  $0<c_1\le1/3$ (R-A-5; `A/verification/prose/025`, which stays `OPEN`, and
+  `prose/026`). (b) The verification paragraph (`verification.tex:59-63`, also
+  `introduction.tex:124-126`) describes the records of 13 September only; add the
+  axiom audit and the kernel replay (R-A-7; `A/verification/prose/027`,
+  `A/introduction/prose/049`). The release receipts are refreshed by the release run;
+  whether the article mentions the coverage registers: author.
+- [ ] **M37: The AI-use statement leaves out the October work.** The article's
+  statement points to `companion/master.tex:63` and
+  `editorial/AI_AND_AUTHOR_ACTIONS.md`, which name only OpenAI ChatGPT/Codex; the
+  Lean coverage, the reviews and the corrections of 13 to 15 October 2026 were done
+  with Anthropic Claude in OpenCode. Proposed: add this to both (a factual
+  addition); the author confirms the wording in step 3. (R-A-8;
+  `A/verification/prose/030`.)
+- [ ] **M38: Notation.** "Whitening" and $A$ used in Section 7 before Appendix D
+  defines them (R-A-4); $\operatorname{Gram}_H$ undefined (R-B-1); "$\det A(r-z)$"
+  (R-B-3; also `02_M.tex:87`, `91`); R-B-4; $\frac{m}{\overline P}$ (R-B-11); $T$ of
+  Section 4 is $t$ of Section 3, "radial numerator" undefined (R-C-7); "noncritical"
+  for "non-affine-critical" and "the compact level set" (R-D-2); symbols reused in one
+  argument (R-D-3); Section 6.6 uses Appendix D's $a_\ell$, $\bar x_\ell$ and an
+  undefined $C_*$ (R-E-5); R-E-9; eigenvalues "at $P_*$" (R-F-3); $z_m,\tau_m$ not
+  introduced (R-F-4); the shape map not written down (R-F-6).
+- [ ] **M39: Typesetting, figures and tables.** Figure 1(b): the zero marker touches
+  the hull, and the caption misdescribes an arrow (R-A-9); the number of equation (1)
+  on its own line (R-A-12); Table 1 layout and two undefined terms (R-A-13); the
+  invisible paragraph break in Theorem 11 (R-A-14, R-E-8); no end-of-proof marks
+  (`\smartqed` without `\qed`, R-C-11); line breaks inside short formulas (R-D-4,
+  R-F-13); Figure 2's caption "as indicated" (R-E-6); Table 3 columns, displays (44)
+  and (46), Figure 3 labels (R-E-8); a period inside display (49) (R-F-7); decimals
+  without a leading zero (R-F-12).
+- [ ] **M40: Bibliography, citations, metadata.** Citation order, a stray `\par`, a
+  publication date (R-A-15); preprint citations repeat the author's name, unused
+  preprint keys (R-A-16); the PDF keywords differ from the printed ones, and the
+  edition date (release run) (R-A-17); two citations run together (R-B-10). Author:
+  whether to sort the reference list alphabetically.
+- [ ] **M41: Language.** "At every scale", "certified perturbed orbit" (R-A-11);
+  R-A-18 (a)-(f); an unused Lipschitz clause (R-C-3); the Lebesgue-number sentence
+  (R-C-6); "In particular", "Equivalently" (R-C-9, R-C-10); a tautology at
+  `local.tex:39-40` (R-D-5); "the numerator" without antecedent (R-D-6); "classical
+  Hessian" (R-E-7); R-E-11; R-F-8 to R-F-11.
 
 ## Wording points in the companion (no discrepancy)
 
