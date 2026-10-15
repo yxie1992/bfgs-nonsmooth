@@ -129,6 +129,11 @@ the Mac names another scratch directory, use that one.
    Commit the reports, update `TODO_LEAN_COVERAGE.md`, `TODO_LEAN_REVIEW.md` and
    `bfgs_lean_article/README.md`, and push.
 
+   On macOS 26, build lean4checker with the system linker, as for the Mathlib
+   cache: `LIBRARY_PATH="$HOME/.elan/toolchains/leanprover--lean4---v4.19.0/lib"
+   LEAN_CC=/usr/bin/clang lake build`. Once linked, `test.sh` and the replay run
+   it without these variables (checked on 14 October 2026).
+
 ## Findings in the pause notes (tentative)
 
 - compD (`12_D.tex`, companion seed appendix): M11 does not recur in Chapter D,
