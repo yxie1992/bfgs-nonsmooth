@@ -276,6 +276,61 @@ under those items (M8). The chapters are generated: fix them through
   For M21–M23: no replacement adds a line, so the register's line numbers stay;
   after regenerating, update the three items' anchors and set them to `LEAN` with
   the names above, then build and inspect Chapter 5 (pages 33–39).
+- [ ] **M24: Chapter 3 says that (S) "is exactly" (RS) (imprecision).**
+  `03_T.tex:225`: "Condition (S) is exactly (RS), while
+  $\Pi_s(z-x_*)=\Pi_s(x-x_*)$ makes (T) an equality with $L=0$." With the radial
+  field $W(x)=(x-x_*)(x-x_*)^T$ of line 219 the two inequalities coincide
+  ($y^TW(z)y=N^2$, $t=T$), but they cover different pairs: (S) only eligible pairs
+  $x,z\in K_\eta$ with $d\le\delta_\eta$ (line 106), (RS) (`04_R.tex:53-59`) all
+  differentiable $x,z\in K$ with $F_*+\eta\le F(z)\le F(x)$ and $T>0$. So (RS) gives
+  (S) with the same constant (`Ch03T.rs_gives_s`, `radial_secant_exact`), and the
+  conclusion at line 229 holds (`Ch03T.rs_covered`), but not conversely: for
+  $F(x)=\max\{|x|,2x-1\}$, $K=\{F\le2\}$ and any $c_2<1/2$, (S) holds for the radial
+  field with $C_\eta=6$ on every band and the field is a band certificate, yet (RS)
+  fails at $\eta=1/2$: the pairs $x=1+\varepsilon$, $z=1-\varepsilon$ have
+  $N^2/T=(1-\varepsilon)^2/(2\varepsilon)\to\infty$ and are not eligible ($t=d/2$)
+  (`Ch03T.s_not_exactly_rs`). The companion itself separates the two (line 231,
+  "violates even the eligible-pair radial condition"; `10_Q.tex:300`). Proposed:
+  "With this $W$, (S) is the inequality of (RS) restricted to eligible pairs in
+  $K_\eta$ with $d\le\delta_\eta$, so (RS) gives (S) with the same constant, while".
+  Fix: a logged module-T replacement of `Condition (S) is exactly (RS), while`
+  (`master_report/latex/chapters/T.tex:199`, occurs once). (`C/03_T/prose/029`)
+- [ ] **M25: Chapter 3's proof cites (3.3)–(3.6) as (3)–(6) (typo).** `03_T.tex:148`
+  "Using (3)--(4), the Loewner inequality (T), and (S)," means (3.3)–(3.4); line 160
+  "Divide (6) by $P_{k+1}$ and sum" means (3.6); line 165 "This contradicts (5)."
+  means (3.5). The source tags these equations (T.3)–(T.6) but cites them without
+  the prefix (T.tex:134, 146, 151), and `generate_companion.py:69` renumbers only
+  prefixed references, so the PDF (page 23, printed 17) prints numbers that exist
+  nowhere in the companion; the same slip as M17 and M18. The mathematics holds with
+  the intended references (`Ch03T.hessian_form`, `annihilation_projection`,
+  `trace_recurrence`, `reciprocal_budget`, `reciprocal_mean_diverges`,
+  `one_sided_convergence`). Fix: logged module-T replacements, each occurring once
+  in T.tex: `Using (3)--(4),` → `Using (3.3)--(3.4),`, `Divide (6) by` →
+  `Divide (3.6) by`, `This contradicts (5).` → `This contradicts (3.5).`
+  (`C/03_T/prose/042`)
+- [ ] **M26: "The preceding moving-frame theorem" (Chapter 3, typo).**
+  `03_T.tex:196`: "Unlike the preceding moving-frame theorem, there is no requirement
+  that $\lambda$ be invertible or bounded away from zero." The only moving-frame
+  theorem before it is Theorem `M:residualtheorem` (`02_M.tex:220-237`), which
+  requires no invertible transport either (`02_M.tex:236`: "No full-rank frame or
+  invertible transport is required."; `Ch02M.residual_theorem`), so the contrast is
+  false for the literal referent. Meant: the moving-frame criterion stated in prose
+  in Section 2.4 (`02_M.tex:196-211`), which assumes bounded norms and bounded inverse
+  norms of the products $P_{k+1}=P_kT_k$ (`Ch02M.frame_criterion`). The claim about
+  Chapter 3 holds: its scalar condition allows $\lambda=0$
+  (`Ch03T.rank_one_degenerate`), even where $\lambda=0$ is forced
+  (`Ch03T.degenerate_multiplier`). Same kind as M21. Proposed: "Unlike the
+  moving-frame criterion of Section~\ref{M:energy}, …" (prints "Section 2.4"). Fix: a
+  logged module-T replacement of `Unlike the preceding moving-frame theorem,`
+  (T.tex:174, occurs once). (`C/03_T/prose/043`)
+
+  For M24–M26: one `if module=='T':` block in `generate_companion.py`, after the
+  `constant_range` loop and before `if module=='E':`. No replacement adds a line.
+  After regenerating, update the anchors of the three items and set them to `LEAN`
+  (first names `rs_gives_s`, `trace_recurrence`, `rank_one_degenerate`), update the
+  TeX quotations in the docstrings of `Ch03T.trace_recurrence`, `reciprocal_budget`,
+  `radial_secant_exact` and `rank_one_degenerate`, then build and inspect pages
+  23–24 (printed 17–18).
 
 ## Wording points in the companion (no discrepancy)
 
@@ -308,10 +363,18 @@ in the line-by-line reading. The chapters are generated: change them through
   $H\succ0$ and $\alpha>0$ implicit ($e_j$ is defined only for positive definite
   matrices, and $H_+\succ0$ exactly when $\alpha>0$). Optional: state both, as the
   article does. (`C/02_M/theorem/M:hierarchy`)
-- [ ] **W5: Chapter M cites itself.** `02_M.tex:9`: "from
+- [ ] **W5: Chapters cite themselves (M, A).** `02_M.tex:9`: "from
   sources~Chapters~\ref{comp:M}, \ref{comp:H}, …" lists Chapter M among its own
   sources, because the generator maps the frozen source's `\cite{SM,…}` to chapter
-  labels. Cosmetic. (`C/02_M/prose/002`)
+  labels. The same in Chapter 8: `08_A.tex:9` "…the geometric propositions of the
+  affine-criticality note~Chapter~\ref{comp:A}." (source `affine_geometry.tex:7`,
+  `\cite{SA}`; proposed "This chapter preserves the geometric propositions of the
+  original affine-criticality note.") and `08_A.tex:111` "the
+  references~\cite{BDLS}; Chapter~\ref{comp:A} supply" (source line 109,
+  `\cite{SA,BDLS}`; proposed "the references~\cite{BDLS} supply"). Dropping the
+  current chapter inside `cite()` alone would leave "note~." at `08_A.tex:9`, so use
+  logged replacements. Cosmetic. (`C/02_M/prose/002`, `C/08_A/prose/003`,
+  `prose/034`)
 - [ ] **W6: The proof of Lemma `comp:root_certificate` does not give the thirty
   digits of `D:rho` (proof gap).** `companion/appendices/seed_certificate.tex:37-40`:
   "\eqref{D:rho} holds" claims, through the label map `art:seed_rho` → `D:rho`, the
@@ -394,6 +457,16 @@ in the line-by-line reading. The chapters are generated: change them through
   G.tex:251, occurs once). Lean: `Ch05G.shifted_crossing_gradients`,
   `shifted_crossing_quantities`, `shifted_crossing_eligible_divergent` (all with
   $\epsilon>0$). (`C/05_G/disp/025`, `disp/026`, `prose/054`)
+- [ ] **W17: "Conditions (V)--(S)" (Chapter 3).** `03_T.tex:192`: "Conditions
+  (V)--(S) become" means "(V) and (S)" (tags (3.V), (3.S)): a range of condition
+  names, not a wrong number. Optional: "Conditions (V) and (S) become" (T.tex:170,
+  occurs once). (`C/03_T/disp/024`)
+- [ ] **W18: (RS) used before Chapter 4 defines it (Chapter 3).** The section title
+  at `03_T.tex:216`, "Given (RS), take" (line 217) and lines 225, 229 use "(RS)",
+  which Chapter 4 defines ((4.RS), `04_R.tex:53-59`, label `R:eq:RS`), with no
+  pointer. Optional: "Given the radial secant condition (RS) of
+  Chapter~\ref{comp:R}, take" (T.tex:191, occurs once). (`C/03_T/disp/026`,
+  `prose/029`)
 
 ## Resolved
 

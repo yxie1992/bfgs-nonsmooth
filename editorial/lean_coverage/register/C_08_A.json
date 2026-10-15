@@ -14,7 +14,16 @@
    "title": null,
    "container": null,
    "sha256": "eab63afa20395299",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.decomposition_notation",
+    "BfgsVerification.AccessibleJumpGeometry.jumpSpace",
+    "BfgsVerification.AccessibleJumpGeometry.tangentSpace",
+    "BfgsVerification.AffineCriticalObjective.canonicalVector",
+    "BfgsVerification.AffineCriticalObjective.subgradientFamily",
+    "BfgsVerification.AffineCriticalGeometry.closest_eq_affine_orthogonalProjection"
+   ],
+   "note": "Subgradients are taken in Euclidean space: subgradientFamily F p is g ↦ g on ∂F(p), with range euclideanVector '' ∂F(p). V(p) = jumpSpace (vectorSpan of the range) = span(S -ᵥ S), S the Euclidean copy of ∂F(p); U(p) = tangentSpace = V(p)ᗮ; a(p) = canonicalVector hF p = EuclideanGeometry.orthogonalProjection (aff ∂F(p)) 0 (decomposition_notation). ∂F(p) is the global supporting set ConvexSubdifferential.subdifferential (nonempty for finite convex F)."
   },
   {
    "id": "C/08_A/disp/002",
@@ -28,7 +37,13 @@
    "title": null,
    "container": null,
    "sha256": "2bf3eb6389b99120",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.subgradient_projection",
+    "BfgsVerification.AffineCriticalObjective.canonicalVector_eq",
+    "BfgsVerification.AffineCriticalObjective.canonicalVector_pairing"
+   ],
+   "note": "With line 16 (\"Hence every subgradient satisfies\"): for every g ∈ ∂F(p), the orthogonal projection of g onto U(p) is a(p), and ⟪g, a(p)⟫ = ‖a(p)‖² (Euclidean pairing of euclideanVector g)."
   },
   {
    "id": "C/08_A/disp/003",
@@ -44,7 +59,14 @@
    "title": null,
    "container": null,
    "sha256": "5a58fd43b39fede2",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AffineCriticalObjective.AffineCorrectAt",
+    "BfgsVerification.AffineCriticalObjective.IsAffineCritical",
+    "BfgsCoverage.Companion.Ch08A.ac_def",
+    "BfgsVerification.AffineCriticalObjective.isAffineCritical_iff_coordinate_affineSpan"
+   ],
+   "note": "(A:AC) at p is AffineCorrectAt F p := IsAffineCritical F p → 0 ∈ ∂F(p); IsAffineCritical F p is 0 ∈ aff ∂F(p) for the Euclidean copy, equivalently (ac_def) 0 ∈ affineSpan ℝ (∂F(p)) in ℝⁿ."
   },
   {
    "id": "C/08_A/disp/004",
@@ -58,7 +80,14 @@
    "title": null,
    "container": null,
    "sha256": "3de22a85a0316938",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.rank_loss_objective",
+    "BfgsVerification.AffineRankLoss.objective",
+    "BfgsVerification.AffineRankLoss.branch",
+    "BfgsVerification.AffineRankLoss.objective_eq_max"
+   ],
+   "note": "With line 36 (\"Consider\"): the library objective AffineRankLoss.objective x = x₀ + x₀² + x₁² + |x₀x₁| (u = x₀, v = x₁) equals max of its branches u+u²+v²+uv and u+u²+v²-uv."
   },
   {
    "id": "C/08_A/disp/005",
@@ -72,7 +101,8 @@
    "title": null,
    "container": null,
    "sha256": "41ee6ad5e54f0e94",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/08_A/prose/026"
   },
   {
    "id": "C/08_A/proof/001",
@@ -86,7 +116,18 @@
    "title": null,
    "container": null,
    "sha256": "7948d89d294c012e",
-   "status": null
+   "status": "PROOF",
+   "of": "C/08_A/prose/026",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.zero_extension_solves",
+    "BfgsCoverage.Companion.Ch08A.unique_solution_formula",
+    "BfgsCoverage.Companion.Ch08A.formula_positive_near",
+    "BfgsVerification.ConvexSubdifferential.local_affine_critical_correctness",
+    "BfgsVerification.AffineBarycentric.affine_critical_subfamily_eventually_full",
+    "BfgsVerification.AffineBarycentric.positive_solutions_eventually",
+    "BfgsVerification.ConvexSubdifferential.subdifferential_eq_active_convexHull"
+   ],
+   "note": "The proof of the local correctness statement (prose/026). Its displays are disp/006 and disp/007; formula_positive_near states the undisplayed step \"It remains positive nearby\"; the subdifferential of a finite smooth maximum is the convex hull of the active gradients (subdifferential_eq_active_convexHull)."
   },
   {
    "id": "C/08_A/disp/006",
@@ -100,7 +141,15 @@
    "title": null,
    "container": "C/08_A/proof/001",
    "sha256": "f2f1c93f8080bd17",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.zero_extension_solves",
+    "BfgsCoverage.Companion.Ch08A.augmentedLast",
+    "BfgsCoverage.Companion.Ch08A.lastTarget",
+    "BfgsCoverage.Companion.Ch08A.augmentedLast_equation_iff",
+    "BfgsVerification.AffineBarycentric.affine_zero_subset_coefficients"
+   ],
+   "note": "Standing assumptions: those of prose/026; A is a variable with A p = augmentedLast (active gradients at p), the matrix with columns (∇f_i(p), 1), i ∈ I_* (last row of ones), and lastTarget n = (0,…,0,1). Claims: A(p)λ = (0,…,0,1)ᵀ iff ∑λ_i = 1 and ∑λ_i∇f_i(p) = 0; and at every affine-critical p near x_* there is such λ vanishing on the indices of I_* inactive at p (the zero extension)."
   },
   {
    "id": "C/08_A/disp/007",
@@ -114,7 +163,14 @@
    "title": null,
    "container": "C/08_A/proof/001",
    "sha256": "178065801fde3c69",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.unique_solution_formula",
+    "BfgsCoverage.Companion.Ch08A.affineIndependent_iff_augmentedLast_injective",
+    "BfgsVerification.AffineBarycentric.eventually_full_column_rank",
+    "BfgsVerification.AffineBarycentric.solution_eq_coefficients"
+   ],
+   "note": "With \"Full column rank at x_* persists nearby\": near x_*, A(p) is injective, det(A(p)ᵀA(p)) ≠ 0, and every solution of A(p)λ = (0,…,0,1)ᵀ equals (A(p)ᵀA(p))⁻¹A(p)ᵀ(0,…,0,1)ᵀ."
   },
   {
    "id": "C/08_A/disp/008",
@@ -128,7 +184,15 @@
    "title": null,
    "container": null,
    "sha256": "21a4694db9b2e389",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.limit_along_constant_active_set",
+    "BfgsVerification.AffineDistance.subfamilyDistance",
+    "BfgsVerification.AffineDistance.subfamilyDistance_continuousAt",
+    "BfgsVerification.AffineDistance.subfamilyDistance_antitone",
+    "BfgsVerification.AffineDistance.objectiveDistance_eq_active"
+   ],
+   "note": "In the setting of prose/026 (restricted family I_*), for every p near x_*: if p_j → p and the active set at every p_j is a fixed nonempty J ⊆ I(p), then γ(p_j) → dist(0, aff{∇f_i(p) : i ∈ J}) (subfamilyDistance) and this limit is ≥ γ(p)."
   },
   {
    "id": "C/08_A/proposition/A:semialgebraic",
@@ -144,7 +208,15 @@
    "title": "A low-level affine-critical gap",
    "container": null,
    "sha256": "61347a379df8be5d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.low_level_gap",
+    "BfgsCoverage.Companion.Ch08A.semialgebraic_objective_def",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap",
+    "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraicObjective",
+    "BfgsVerification.RealAlgebraicGeometry.IsSemialgebraic"
+   ],
+   "note": "F finite convex (ConvexOn ℝ Set.univ F), semialgebraic (IsSemialgebraicObjective: the graph {(x, F(x))} is defined by a quantifier-free Boolean polynomial formula, semialgebraic_objective_def), attaining F_* (IsLeast (Set.range F) Fstar). Conclusion: ∃ ε > 0, ∀ p, F p < F_* + ε → 0 ∈ affineSpan ℝ (∂F(p)) → 0 ∈ ∂F(p)."
   },
   {
    "id": "C/08_A/disp/009",
@@ -158,7 +230,8 @@
    "title": null,
    "container": "C/08_A/proposition/A:semialgebraic",
    "sha256": "0f3cc4ceb38cbf37",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/08_A/proposition/A:semialgebraic"
   },
   {
    "id": "C/08_A/proof/002",
@@ -172,7 +245,22 @@
    "title": null,
    "container": null,
    "sha256": "d797db56da8f3a27",
-   "status": null
+   "status": "PROOF",
+   "of": "C/08_A/proposition/A:semialgebraic",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.lifted_graph",
+    "BfgsCoverage.Companion.Ch08A.support_local_min",
+    "BfgsCoverage.Companion.Ch08A.path_derivative_pairing",
+    "BfgsCoverage.Companion.Ch08A.finitely_many_values",
+    "BfgsVerification.RealAlgebraicGeometry.supportGraph_semialgebraic",
+    "BfgsVerification.AffineSupportPath.isAffineCritical_iff_bounded_supports",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_finite_path_cover",
+    "BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth",
+    "BfgsVerification.AffineSupportPath.derivative_zero_of_affineCritical",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_path_constant",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_values"
+   ],
+   "note": "The proof of Proposition A:semialgebraic. Displays: disp/010-012. Undisplayed steps proved in the library: the subgradient (support) graph is semialgebraic (supportGraph_semialgebraic), an affine representation of zero with at most n+1 subgradients (isAffineCritical_iff_bounded_supports), the finite cover by pieces connected by piecewise C^∞ paths (semialgebraic_finite_path_cover), regularity of F∘p (convex_semialgebraic_objective_curve_piecewise_smooth), (F∘p)' = 0 at affine-critical points (derivative_zero_of_affineCritical), constancy along paths and finitely many values (finitely_many_values)."
   },
   {
    "id": "C/08_A/disp/010",
@@ -186,7 +274,14 @@
    "title": null,
    "container": "C/08_A/proof/002",
    "sha256": "28cd614b1aa18a21",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.lifted_graph",
+    "BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph",
+    "BfgsVerification.RealAlgebraicGeometry.affineCritical_set_semialgebraic",
+    "BfgsVerification.RealAlgebraicGeometry.affineCriticalGraph_semialgebraic"
+   ],
+   "note": "Under the hypotheses of the proposition: Ĉ_aff = affineCriticalGraph F = {v | v none = F(v ∘ some) ∧ IsAffineCritical F (v ∘ some)} (coordinates Option (Fin n), none = value), and both C_aff and Ĉ_aff are semialgebraic."
   },
   {
    "id": "C/08_A/disp/011",
@@ -200,7 +295,11 @@
    "title": null,
    "container": "C/08_A/proof/002",
    "sha256": "92bc830c0186ae7e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.support_local_min"
+   ],
+   "note": "Standing assumptions: the proposition's, a path p inside C_aff on [0,1] (a piece of the cover), an interior t where p and F∘p are differentiable, g ∈ ∂F(p(t)). Claim: u ↦ F(p(u)) - gᵀp(u) has a local minimum at t (in fact a global one, by the supporting inequality)."
   },
   {
    "id": "C/08_A/disp/012",
@@ -214,7 +313,12 @@
    "title": null,
    "container": "C/08_A/proof/002",
    "sha256": "edf7114062345d2d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.path_derivative_pairing",
+    "BfgsVerification.AffineSupportPath.supporting_path_derivative_eq"
+   ],
+   "note": "Under the standing assumptions of disp/011 with p'(t) = v (HasDerivAt) and (F∘p)'(t) = a: a = gᵀv for every g ∈ ∂F(p(t))."
   },
   {
    "id": "C/08_A/disp/013",
@@ -228,7 +332,833 @@
    "title": null,
    "container": null,
    "sha256": "3e24849fff3b0baf",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/08_A/prose/042"
+  },
+  {
+   "id": "C/08_A/prose/001",
+   "kind": "prose",
+   "anchor": "Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.balances",
+    "BfgsVerification.AffineCriticalObjective.equal_rate_exists_iff_not_affineCritical",
+    "BfgsVerification.ConvexSubdifferential.zero_mem_iff_global_minimum"
+   ],
+   "note": "For finite convex F: 0 ∉ aff ∂F(p) iff some v has gᵀv = -1 for all g ∈ ∂F(p) (equal-rate descent); 0 ∈ ∂F(p) iff p minimizes F (stationarity)."
+  },
+  {
+   "id": "C/08_A/prose/002",
+   "kind": "prose",
+   "anchor": "This distinction gives useful local geometry but does not by itself force an algorithm to visit it.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: the geometric results of the chapter say nothing about the iterates of an algorithm (the dynamical theorems are in Chapters C and U)."
+  },
+  {
+   "id": "C/08_A/prose/003",
+   "kind": "prose",
+   "anchor": "This module preserves the geometric propositions of the affine-criticality note",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "NON_CLAIM",
+   "reason": "History of the source: the chapter keeps the geometric propositions of the original affine-criticality note.",
+   "note": "Wording point (self-citation, like W5 for Chapter M): the sentence prints \"This module preserves the geometric propositions of the affine-criticality note~Chapter~\\ref{comp:A}\", i.e. \"note Chapter 8\" inside Chapter 8, because cite() in editorial/generate_companion.py maps the internal key SA to Chapter A; \"This module\" is also a remnant. No claim becomes false. Proposed (logged module-A replacement): \"This chapter preserves the geometric propositions of the original affine-criticality note.\" (source bfgs_lean_stage1/master_report/latex/chapters/affine_geometry.tex:7: \"This module preserves the geometric propositions of the affine-criticality note~\\cite{SA}.\")."
+  },
+  {
+   "id": "C/08_A/prose/004",
+   "kind": "prose",
+   "anchor": "They do not depend on the BFGS principal-minor lemma.",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Statement about proof dependencies: the geometric results of the chapter (and their Lean proofs, e.g. local_affine_critical_correctness, semialgebraic_low_affine_critical_gap) use no principal-minor result."
+  },
+  {
+   "id": "C/08_A/prose/005",
+   "kind": "prose",
+   "anchor": "The originally proposed dynamical step is now proved only in the completed settings of Chapters",
+   "lines": [
+    9,
+    9
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/theorem/art:planar-cluster",
+    "C/09_C/theorem/C:thm:cluster",
+    "C/11_U/heading/002"
+   ],
+   "note": "The dynamical step, a theorem forcing an affine-critical cluster point (line 115), is proved in Chapter C (Theorem C:thm:cluster, word for word the article's Theorem art:planar-cluster) and in Chapter U (Theorem 11.2, section \"A forced affine-critical cluster-point theorem\"): the targets of prose/041. \"only\" and the clause \"no blanket theorem for all finite smooth maxima is asserted\" describe the scope and assert nothing (the general case is the OPEN conjecture prose/042)."
+  },
+  {
+   "id": "C/08_A/prose/006",
+   "kind": "prose",
+   "anchor": "The affine hull equals $a(p)+V(p)$ and $a(p)\\perp V(p)$.",
+   "lines": [
+    16,
+    16
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.affine_hull_decomposition",
+    "BfgsVerification.AffineCriticalGeometry.mem_affineSpan_iff_sub_closest_mem",
+    "BfgsVerification.AffineCriticalGeometry.closestAffinePoint_orthogonal"
+   ],
+   "note": "z ∈ aff ∂F(p) iff z - a(p) ∈ V(p), and a(p) ∈ V(p)ᗮ (Euclidean)."
+  },
+  {
+   "id": "C/08_A/prose/007",
+   "kind": "prose",
+   "anchor": "is therefore equivalent, at every nonoptimal point under consideration, to the existence of a direction $v$",
+   "lines": [
+    24,
+    24
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.ac_iff_equal_rate",
+    "BfgsVerification.AffineCriticalObjective.affineCorrectAt_iff_nonoptimal_equal_rate"
+   ],
+   "note": "At every p ∉ argmin F: AffineCorrectAt F p ↔ ∃ v, ∀ g ∈ ∂F(p), gᵀv = -1."
+  },
+  {
+   "id": "C/08_A/prose/008",
+   "kind": "prose",
+   "anchor": "One may take $v=-a(p)/\\|a(p)\\|^2$.",
+   "lines": [
+    24,
+    24
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.canonical_direction",
+    "BfgsVerification.AffineCriticalGeometry.canonical_equal_rate"
+   ],
+   "note": "At a nonoptimal point where (A:AC) holds, p is not affine critical; then a(p) ≠ 0 and ⟪g, -a(p)/‖a(p)‖²⟫ = -1 for every g ∈ ∂F(p)."
+  },
+  {
+   "id": "C/08_A/prose/009",
+   "kind": "prose",
+   "anchor": "Conversely such an equal-rate direction rules out zero in the affine hull.",
+   "lines": [
+    24,
+    24
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.equal_rate_excludes",
+    "BfgsVerification.AffineCriticalGeometry.affine_zero_excluded_of_equal_rate"
+   ],
+   "note": "(∃ v, ∀ g ∈ ∂F(p), gᵀv = -1) → ¬ IsAffineCritical F p."
+  },
+  {
+   "id": "C/08_A/prose/010",
+   "kind": "prose",
+   "anchor": "This is stronger than ordinary strict descent, which requires only negative, not equal, inner products.",
+   "lines": [
+    24,
+    24
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.equal_rate_stronger",
+    "BfgsCoverage.Companion.Ch08A.maxTwo",
+    "BfgsCoverage.Companion.Ch08A.maxTwo_convex"
+   ],
+   "note": "Every equal-rate direction has gᵀv < 0 for all g ∈ ∂F(p); conversely F(x) = max(x, 2x) at p = 0 has the strict descent direction v = -1 but no equal-rate direction (1, 2 ∈ ∂F(0))."
+  },
+  {
+   "id": "C/08_A/prose/011",
+   "kind": "prose",
+   "anchor": "On a compact admissible run, all cluster points share the limiting value $\\ell$.",
+   "lines": [
+    26,
+    26
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.cluster_values",
+    "BfgsVerification.AdmissibleBFGSRun.value_of_cluster"
+   ],
+   "note": "\"Compact admissible run\": all iterates in a compact K. Then F(x_k) → ℓ for some ℓ, and F(p) = ℓ for every cluster point p."
+  },
+  {
+   "id": "C/08_A/prose/012",
+   "kind": "prose",
+   "anchor": "If at least one cluster point is affine critical and \\eqref{A:AC} holds on the basin, that point is optimal",
+   "lines": [
+    26,
+    26
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.cluster_reduction",
+    "BfgsVerification.AdmissibleBFGSRun.convergence_of_affineCritical_cluster"
+   ],
+   "note": "With the next sentence (\"Compactness gives convergence to the solution set, and uniqueness gives convergence of the entire sequence\"): run in compact K (\"the basin\"), (A:AC) on K, an affine-critical cluster point p: p minimizes F, F(x_k) → F(p) = F_* (so ℓ = F_*), Euclidean dist(x_k, argmin F) → 0, and x_k → p if p is the unique minimizer."
+  },
+  {
+   "id": "C/08_A/prose/013",
+   "kind": "prose",
+   "anchor": "This reduction does not assume an iterate limit.",
+   "lines": [
+    26,
+    26
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/08_A/prose/012"
+   ],
+   "note": "cluster_reduction assumes only a cluster point (MapClusterPt), not convergence of (x_k)."
+  },
+  {
+   "id": "C/08_A/prose/014",
+   "kind": "prose",
+   "anchor": "It would be incorrect to replace affine criticality of a cluster point by vanishing gradients at differentiable iterates",
+   "lines": [
+    26,
+    26
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.abs_gradients_unit",
+    "BfgsCoverage.Article.Global.absRun",
+    "BfgsCoverage.Article.Energy.absF_grad"
+   ],
+   "note": "For F(x) = |x| on ℝ: every gradient at x ≠ 0 has norm 1; the admissible run x_k = (-1/2)^k (absRun) converges to the minimizer 0, its cluster point 0 is affine critical, yet ‖g_k‖ = 1 for all k: vanishing gradients is not available as a substitute hypothesis."
+  },
+  {
+   "id": "C/08_A/prose/015",
+   "kind": "prose",
+   "anchor": "Let $\\gamma(p)=\\operatorname{dist}(0,\\operatorname{aff}\\partial F(p))$.",
+   "lines": [
+    34,
+    34
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.AffineDistance.objectiveDistance",
+    "BfgsCoverage.Companion.Ch08A.gamma_def",
+    "BfgsVerification.AffineCriticalObjective.affine_distance_eq_norm"
+   ],
+   "note": "γ(p) = AffineDistance.objectiveDistance F p = Metric.infDist 0 (aff of the Euclidean copy of ∂F(p)); for convex F it equals ‖a(p)‖ and is positive iff p is not affine critical (gamma_def)."
+  },
+  {
+   "id": "C/08_A/prose/016",
+   "kind": "prose",
+   "anchor": "A useful quantitative condition is a positive minimum of $\\gamma$ on every compact positive objective band.",
+   "lines": [
+    34,
+    34
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.PositiveGapOnBands"
+   ],
+   "note": "PositiveGapOnBands F F_*: on every band {F_* + η ≤ F ≤ b} (η > 0) that is compact and nonempty, γ attains a strictly positive minimum. \"useful\" is not a claim; prose/032 shows what the condition gives (visibility)."
+  },
+  {
+   "id": "C/08_A/prose/017",
+   "kind": "prose",
+   "anchor": "Pointwise nonvanishing plus compactness does not establish it when ranks change.",
+   "lines": [
+    34,
+    34
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.rank_loss_no_positive_minimum",
+    "BfgsCoverage.Companion.Ch08A.rankLoss_gamma",
+    "BfgsVerification.AffineRankLoss.globally_affine_correct",
+    "BfgsVerification.AffineRankLoss.actual_vertical_distance"
+   ],
+   "note": "For the rank-loss example (F_* = -1/4): γ > 0 at every point with F > F_*, every band {F_* + η ≤ F ≤ b} is compact, yet PositiveGapOnBands fails (on {-1/8 ≤ F ≤ 1}, γ(0,t) = 2|t| → 0)."
+  },
+  {
+   "id": "C/08_A/prose/018",
+   "kind": "prose",
+   "anchor": "Both branch Hessians have eigenvalues $1$ and $3$, so $F$ is strongly convex, with unique minimizer $(-1/2,0)$ and value $-1/4$.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.rank_loss_curvature",
+    "BfgsVerification.AffineRankLoss.rankLossCurvature",
+    "BfgsVerification.AffineRankLoss.unique_minimum",
+    "BfgsVerification.RadialHessian.matrix",
+    "BfgsVerification.FixedNormal.EuclideanStrongConvexOn"
+   ],
+   "note": "Each branch is C^∞ with Hessian matrix (RadialHessian.matrix, the matrix of the second derivative) [[2, ±1], [±1, 2]], symmetric, eigenvalues exactly 1 and 3; each branch and F are strongly convex with modulus 1 (F - ½‖x‖² convex, Euclidean); F(-1/2, 0) = -1/4 is the minimum value, attained only there."
+  },
+  {
+   "id": "C/08_A/prose/019",
+   "kind": "prose",
+   "anchor": "At $(0,t)$, $t\\ne0$, the active gradients are $(1+t,2t)$ and $(1-t,2t)$, giving $\\gamma(0,t)=2|t|$.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.vertical_axis",
+    "BfgsVerification.AffineRankLoss.all_active_of_product_zero",
+    "BfgsVerification.AffineRankLoss.axis_subdifferential",
+    "BfgsVerification.AffineRankLoss.actual_vertical_distance"
+   ],
+   "note": "Both branches are active at (0,t), with gradients (1+t, 2t) and (1-t, 2t); ∂F(0,t) is their convex hull; γ(0,t) = 2|t| for t ≠ 0."
+  },
+  {
+   "id": "C/08_A/prose/020",
+   "kind": "prose",
+   "anchor": "At zero the gradient is $(1,0)$, so $\\gamma(0,0)=1$.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.origin_point",
+    "BfgsCoverage.Companion.Ch08A.rankLoss_hasGradient_origin",
+    "BfgsVerification.AffineRankLoss.actual_origin_distance"
+   ],
+   "note": "F is differentiable at 0 with gradient (1,0) (F(x) - F(0) - x₀ = x₀² + x₁² + |x₀x₁| = O(‖x‖²)), and γ(0) = 1."
+  },
+  {
+   "id": "C/08_A/prose/021",
+   "kind": "prose",
+   "anchor": "On the other switching axis $\\gamma(u,0)=|1+2u|$, vanishing only at the optimizer.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.horizontal_axis",
+    "BfgsVerification.AffineRankLoss.actual_horizontal_distance"
+   ],
+   "note": "γ(u,0) = |1 + 2u|, and γ(u,0) = 0 iff (u,0) = (-1/2, 0), the optimizer."
+  },
+  {
+   "id": "C/08_A/prose/022",
+   "kind": "prose",
+   "anchor": "Smooth points are affine critical only when stationary.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.smooth_points_affine_critical",
+    "BfgsCoverage.Companion.Ch08A.affineCritical_iff_gradient_zero",
+    "BfgsVerification.AffineCriticalObjective.affineCorrectAt_of_hasFDerivAt"
+   ],
+   "note": "At every point where the example F is differentiable with gradient g: affine critical iff g = 0 (a consequence of the general affineCritical_iff_gradient_zero for finite convex F)."
+  },
+  {
+   "id": "C/08_A/prose/023",
+   "kind": "prose",
+   "anchor": "Thus \\eqref{A:AC} holds globally, but $\\gamma(0,t)\\to0$ while the objective gap tends to $1/4$.",
+   "lines": [
+    41,
+    41
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.ac_global_and_gap",
+    "BfgsVerification.AffineRankLoss.globally_affine_correct",
+    "BfgsVerification.AffineRankLoss.vertical_distance_tendsto_zero",
+    "BfgsVerification.AffineRankLoss.vertical_positive_gap_limit"
+   ],
+   "note": "AffineCorrectAt F x for every x; γ(0,t) → 0 and F(0,t) - F(-1/2,0) → 1/4 as t → 0, t ≠ 0."
+  },
+  {
+   "id": "C/08_A/prose/024",
+   "kind": "prose",
+   "anchor": "This is a geometric rank-loss example, not a BFGS counterexample.",
+   "lines": [
+    43,
+    43
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Classification of the example (no BFGS run is constructed or claimed to fail); nothing to prove."
+  },
+  {
+   "id": "C/08_A/prose/025",
+   "kind": "prose",
+   "anchor": "A sufficiently small neighborhood of its actual optimizer excludes the rank-loss point.",
+   "lines": [
+    43,
+    43
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.rank_loss_point_excluded"
+   ],
+   "note": "The rank loss happens at the origin along the axis {u = 0} (γ(0,t) → 0 ≠ γ(0,0) = 1); the neighborhood {u < -1/4} of the optimizer (-1/2, 0) contains no point of that axis, in particular not the origin."
+  },
+  {
+   "id": "C/08_A/prose/026",
+   "kind": "prose",
+   "anchor": "Let $F=\\max_{i\\le m}f_i$ with convex $C^1$ branches and a minimizer $x_*$.",
+   "lines": [
+    51,
+    56
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.local_affine_correctness",
+    "BfgsCoverage.Companion.Ch08A.max_convex",
+    "BfgsVerification.AffineDistance.finite_C1_max_neighborhood_gap",
+    "BfgsVerification.ConvexSubdifferential.activeIndices_eventually_subset",
+    "BfgsVerification.ConvexSubdifferential.local_affine_critical_correctness_original_family",
+    "BfgsVerification.finiteC1MaxAffineGap"
+   ],
+   "note": "The unnumbered statement of lines 51-56 with display disp/005. F = max_i f_i (IsGreatest of the finite family at every x), convex C¹ branches (ContDiff ℝ 1), x_* a minimizer, I_* = activeIndices F f x_* enumerated by activeIndexMap, the active gradients (coordinateGradient) affinely independent, weights λ*_i > 0 on I_* with ∑λ* = 1 and ∑λ*_i∇f_i(x_*) = 0. Conclusions: inactive branches have f_i(x_*) < F(x_*) and near x_* every active index is in I_* (\"disappear in a sufficiently small neighborhood\"); (A:AC) holds at every point of a neighborhood of x_*."
+  },
+  {
+   "id": "C/08_A/prose/027",
+   "kind": "prose",
+   "anchor": "This is the source note's barycentric-stability argument",
+   "lines": [
+    69,
+    69
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Provenance and classification (relation to the source note and the cited nondegeneracy results; not a BFGS convergence theorem)."
+  },
+  {
+   "id": "C/08_A/prose/028",
+   "kind": "prose",
+   "anchor": "There is also local lower semicontinuity of $\\gamma$.",
+   "lines": [
+    71,
+    71
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.gamma_lsc",
+    "BfgsVerification.AffineDistance.objectiveDistance_lowerSemicontinuousAt",
+    "BfgsVerification.AffineDistance.finite_C1_max_neighborhood_gap"
+   ],
+   "note": "In the setting of prose/026, γ is lower semicontinuous at every point of a neighborhood of x_*."
+  },
+  {
+   "id": "C/08_A/prose/029",
+   "kind": "prose",
+   "anchor": "For each nonempty $J\\subset I_*$, the distance to the affine hull of the gradients in $J$ is continuous",
+   "lines": [
+    71,
+    71
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.subfamily_distance_continuous",
+    "BfgsCoverage.Companion.Ch08A.eventually_affineIndependent",
+    "BfgsVerification.AffineDistance.subfamilyDistance_continuousAt",
+    "BfgsVerification.AffineDistance.affine_distance_eq_formula"
+   ],
+   "note": "Near x_*, for every nonempty J ⊆ I_*, q ↦ dist(0, aff{∇f_i(q) : i ∈ J}) (subfamilyDistance) is continuous at p. The reason given (nonsingular Gram matrix) is the library proof (closest point by the Gram-inverse formula, affine_distance_eq_formula), with affine independence persisting near x_* (eventually_affineIndependent)."
+  },
+  {
+   "id": "C/08_A/prose/030",
+   "kind": "prose",
+   "anchor": "For $p_j\\to p$, pass to a subsequence of constant active set $J\\subset I(p)$.",
+   "lines": [
+    71,
+    71
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.constant_active_subsequence",
+    "BfgsVerification.ConvexSubdifferential.activeIndices_eventually_subset"
+   ],
+   "note": "Near x_*, for every p_j → p there are a strictly increasing φ and a nonempty J ⊆ I(p) (active indices of I_* at p) with active set J at every p_{φ(j)} (eventual inclusion of active sets plus pigeonhole)."
+  },
+  {
+   "id": "C/08_A/prose/031",
+   "kind": "prose",
+   "anchor": "On a compact positive band, local \\eqref{A:AC} therefore gives a strictly positive minimum.",
+   "lines": [
+    75,
+    75
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.positive_minimum_on_bands",
+    "BfgsVerification.AffineDistance.finite_C1_max_neighborhood_gap",
+    "BfgsVerification.AffineDistance.compact_positive_objectiveDistance_minimum"
+   ],
+   "note": "There is a neighborhood V of x_* such that on every nonempty compact K ⊆ V with F > F(x_*) on K, γ attains a strictly positive minimum."
+  },
+  {
+   "id": "C/08_A/prose/032",
+   "kind": "prose",
+   "anchor": "This establishes visibility, not the full transport needed in arbitrary dimension.",
+   "lines": [
+    75,
+    75
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.gap_gives_visibility"
+   ],
+   "note": "A bound γ ≥ γ₀ > 0 on a set S gives the visibility condition (V) of Chapter T on S for the PSD field W(x) = a(x)a(x)ᵀ: gᵀW(x)g = ‖a(x)‖⁴ ≥ γ₀⁴ at every differentiable x ∈ S. The clause \"not the full transport needed in arbitrary dimension\" is a caveat (no transport claim)."
+  },
+  {
+   "id": "C/08_A/prose/033",
+   "kind": "prose",
+   "anchor": "Here and below, a piecewise $C^1$ path is continuous on $[0,1]$ and $C^1$ at every interior parameter outside a finite set.",
+   "lines": [
+    111,
+    111
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.PiecewiseC1",
+    "BfgsCoverage.Companion.Ch08A.piecewiseC1_of_smooth",
+    "BfgsVerification.RealAlgebraicGeometry.PiecewiseSmoothPath"
+   ],
+   "note": "With the next sentence (\"No derivative at 0 or 1, or derivative extension across a junction, is required.\"): PiecewiseC1 p := ContinuousOn p [0,1] ∧ ∃ finite S, ∀ t ∈ (0,1) \\ S, ContDiffAt ℝ 1 p t. The library's paths (PiecewiseSmoothPath, C^∞ off a finite set) are piecewise C¹ (piecewiseC1_of_smooth)."
+  },
+  {
+   "id": "C/08_A/prose/034",
+   "kind": "prose",
+   "anchor": "The geometric facts used above are established by real-polynomial projection",
+   "lines": [
+    111,
+    111
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Description of how the facts used in the proof are established (proof methods) and of the role of the references; all those facts are proved in Lean (proof/002's list).",
+   "note": "Wording point (self-citation, with prose/003): \"the references~\\cite{BDLS}; Chapter~\\ref{comp:A} supply\" cites Chapter A inside Chapter A (cite() maps SA to Chapter A). Proposed (logged module-A replacement): \"the references~\\cite{BDLS} supply\" (source affine_geometry.tex:109: \"the references~\\cite{SA,BDLS} supply\")."
+  },
+  {
+   "id": "C/08_A/prose/035",
+   "kind": "prose",
+   "anchor": "The affine-critical set also has finitely many actual semialgebraic path classes",
+   "lines": [
+    113,
+    113
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.path_classes",
+    "BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components",
+    "BfgsVerification.RealAlgebraicGeometry.continuousSemialgebraicPathIn_equivalence",
+    "BfgsVerification.RealAlgebraicGeometry.ContinuousSemialgebraicPathIn"
+   ],
+   "note": "With the next sentence (\"Each class is semialgebraic and internally connected by such paths\"). The relation (a path continuous on [0,1] inside C_aff whose graph over [0,1] is semialgebraic) is an equivalence relation on C_aff; its classes are finitely many, semialgebraic, and connected by such paths."
+  },
+  {
+   "id": "C/08_A/prose/036",
+   "kind": "prose",
+   "anchor": "Every continuous semialgebraic path admits the finite-exception regularity just specified on the same curve",
+   "lines": [
+    113,
+    113
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.path_regularity",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_curve_smooth_except_finite",
+    "BfgsVerification.RealAlgebraicGeometry.convex_semialgebraic_objective_curve_piecewise_smooth"
+   ],
+   "note": "A path continuous on [0,1] with semialgebraic graph is itself piecewise C¹ (C^∞ off a finite set of interior parameters); for finite convex semialgebraic F, F∘p is continuous on [0,1] and C^∞ off finitely many interior parameters."
+  },
+  {
+   "id": "C/08_A/prose/037",
+   "kind": "prose",
+   "anchor": "The objective is constant on each class.",
+   "lines": [
+    113,
+    113
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.classes_constant",
+    "BfgsVerification.RealAlgebraicGeometry.affine_critical_continuous_semialgebraic_components"
+   ],
+   "note": "F p = F q for p, q in the same path class of C_aff."
+  },
+  {
+   "id": "C/08_A/prose/038",
+   "kind": "prose",
+   "anchor": "Ordinary topological connected components are separately finite and semialgebraic, with constant objective value",
+   "lines": [
+    113,
+    113
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.topological_components",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_components",
+    "BfgsVerification.RealAlgebraicGeometry.semialgebraic_affine_critical_component_constant"
+   ],
+   "note": "The connected components (connectedComponentIn) of C_aff are finitely many and semialgebraic, and F is constant on each. The clause \"their identification with path classes is not needed here\" makes no claim."
+  },
+  {
+   "id": "C/08_A/prose/039",
+   "kind": "prose",
+   "anchor": "This proposition concerns affine criticality rather than merely Clarke criticality.",
+   "lines": [
+    115,
+    115
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.clarke_implies_affine"
+   ],
+   "note": "Every Clarke-critical point (0 ∈ ∂F(p), for convex F exactly the minimizers) is affine critical, so the proposition controls the larger set of affine-critical points."
+  },
+  {
+   "id": "C/08_A/prose/040",
+   "kind": "prose",
+   "anchor": "It does not imply local BFGS convergence without a dynamical theorem forcing an affine-critical cluster point.",
+   "lines": [
+    115,
+    115
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark: the proposition is static; with an affine-critical cluster point, prose/012 (cluster_reduction) gives convergence. No claim to prove."
+  },
+  {
+   "id": "C/08_A/prose/041",
+   "kind": "prose",
+   "anchor": "provide such theorems under their respective additional hypotheses.",
+   "lines": [
+    115,
+    115
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/theorem/art:planar-cluster",
+    "C/09_C/theorem/C:thm:cluster",
+    "C/11_U/heading/002"
+   ],
+   "note": "Chapter C's affine-critical cluster-point theorem in the plane (Theorem C:thm:cluster, word for word the article's Theorem art:planar-cluster) and Chapter U's Theorem 11.2 (section \"A forced affine-critical cluster-point theorem\")."
+  },
+  {
+   "id": "C/08_A/prose/042",
+   "kind": "prose",
+   "anchor": "The recorded general-dimensional conjecture concerns finite convex $C^{2,1}$ maxima",
+   "lines": [
+    122,
+    126
+   ],
+   "status": "OPEN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.GeneralDimensionalConjecture",
+    "BfgsCoverage.Companion.Ch08A.activeTangentSpace"
+   ],
+   "note": "With display disp/013 (U_* = activeTangentSpace F f x_* i₁) and the sentence \"The proposed conclusion is local full-BFGS convergence for arbitrary SPD initialization.\" Reading: F = max of convex C² branches with Lipschitz Hessians, unique minimizer, a compact sublevel above F_*, affinely independent active gradients, weights > 0 on I_* summing to 1 with ∑λ_i∇f_i(x_*) = 0, vᵀ(∑λ_i∇²f_i(x_*))v > 0 for 0 ≠ v ∈ U_*; conclusion: for every 0 < c₁ < c₂ < 1 some ε > 0 such that every admissible run with these constants and F(x_0) < F_* + ε (any H_0 ≻ 0) has F(x_k) → F_* and x_k → x_*. The basin may depend on the line-search constants (the planar Corollary art:planar-max even gives one independent of them). The hypotheses can all hold together (the example at the end of Ch08A: n = m = 1, one branch x²/2, x_* = 0, i₁ = 0, λ = 1; U_* = R, weighted Hessian 1)."
+  },
+  {
+   "id": "C/08_A/prose/043",
+   "kind": "prose",
+   "anchor": "The planar theorem proves a strict-contour version; the fixed-normal theorem proves a different arbitrary-dimensional class.",
+   "lines": [
+    126,
+    126
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/local/corollary/art:planar-max",
+    "C/09_C/corollary/C:cor:max",
+    "C/11_U/heading/001",
+    "C/11_U/heading/002"
+   ],
+   "note": "The planar version with strict contours instead of the weighted-Hessian condition: Chapter C's Corollary C:cor:max (the article's Corollary art:planar-max); the fixed-normal theorems of Chapter U: Theorems 11.1 and 11.2."
+  },
+  {
+   "id": "C/08_A/prose/044",
+   "kind": "prose",
+   "anchor": "Neither establishes this full conjecture.",
+   "lines": [
+    126,
+    126
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Status of an open problem (prose/042 remains open); no claim to prove."
+  },
+  {
+   "id": "C/08_A/prose/045",
+   "kind": "prose",
+   "anchor": "Straightening an active manifold by a nonlinear coordinate change does not preserve ordinary BFGS",
+   "lines": [
+    126,
+    126
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.straightening_breaks_bfgs",
+    "BfgsCoverage.Companion.Ch08A.straighten",
+    "BfgsCoverage.Companion.Ch08A.unstraighten"
+   ],
+   "note": "Example: F(u,v) = max{18u² + v² + v, 2u² + v² - v} = 10u² + v² + |v + 8u²| (finite, convex), whose active manifold (both branches active) is the parabola v = -8u²; the polynomial diffeomorphism ψ(u,v) = (u, v + 8u²) straightens it into the axis {z₂ = 0} (the branches are equal iff ψ(x)₂ = 0). The accepted full BFGS step from (1,2) to (-1/5,11/6) (H_0 = I, α = 1/30; F differentiable at both points, gradients (36,5) and (-36/5,14/3); Armijo c₁ = 1/4, weak Wolfe c₂ = 1/2) is mapped by ψ to an ascent direction of F∘ψ⁻¹ (gradient (-44,5) at ψ(x_0) = (1,10), pairing 407/30 > 0), which is -αH∇(F∘ψ⁻¹) for no H ≻ 0, α > 0. The clause \"and cannot supply the missing implication\" is a remark on proof strategy."
+  },
+  {
+   "id": "C/08_A/prose/046",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.",
+   "lines": [
+    131,
+    131
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Editorial statement about the section \"Relation to earlier work\"."
+  },
+  {
+   "id": "C/08_A/prose/047",
+   "kind": "prose",
+   "anchor": "The common projected subgradient and affine-hull decomposition belong to established VU and partial-smoothness geometry",
+   "lines": [
+    133,
+    133
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution (VU and partial-smoothness geometry); the decomposition itself is proved (disp/001, prose/006, disp/002)."
+  },
+  {
+   "id": "C/08_A/prose/048",
+   "kind": "prose",
+   "anchor": "The equal-rate direction in this chapter is their elementary projection consequence",
+   "lines": [
+    133,
+    133
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/08_A/disp/002",
+    "C/08_A/prose/008"
+   ],
+   "note": "The equal-rate direction -a(p)/‖a(p)‖² (prose/008) follows from the projection identity gᵀa(p) = ‖a(p)‖² (disp/002); \"included to connect that geometry to the BFGS arguments\" is editorial."
+  },
+  {
+   "id": "C/08_A/prose/049",
+   "kind": "prose",
+   "anchor": "Discontinuity of subgradient affine hulls is established in",
+   "lines": [
+    135,
+    135
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution (Liu–Sagastizábal–Solodov, Section 3.1)."
+  },
+  {
+   "id": "C/08_A/prose/050",
+   "kind": "prose",
+   "anchor": "The example in this chapter supplies the stated finite, strongly convex realization",
+   "lines": [
+    135,
+    135
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/08_A/disp/004",
+    "C/08_A/prose/018",
+    "C/08_A/prose/023"
+   ],
+   "note": "The rank-loss example is a finite (two-branch) maximum, strongly convex, with γ discontinuous; the clause \"the general rank-loss mechanism is not claimed as new\" is a priority disclaimer."
+  },
+  {
+   "id": "C/08_A/prose/051",
+   "kind": "prose",
+   "anchor": "The argument uses standard stability of full-rank augmented gradient systems and positive multipliers.",
+   "lines": [
+    137,
+    137
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/08_A/disp/007",
+    "C/08_A/proof/001"
+   ],
+   "note": "Describes the proof of prose/026: full column rank of the augmented system persists (disp/007) and positive multipliers stay positive (formula_positive_near), both proved in Lean."
+  },
+  {
+   "id": "C/08_A/prose/052",
+   "kind": "prose",
+   "anchor": "Compare Lewis--Wylie, Propositions~5.5--5.6",
+   "lines": [
+    137,
+    137
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature comparison (Lewis–Wylie, Gebken)."
+  },
+  {
+   "id": "C/08_A/prose/053",
+   "kind": "prose",
+   "anchor": "This geometric deduction is included with its proof.",
+   "lines": [
+    137,
+    137
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Editorial statement (the proof is proof/001)."
+  },
+  {
+   "id": "C/08_A/prose/054",
+   "kind": "prose",
+   "anchor": "This is a corollary of established stratified projection and definable critical-value machinery",
+   "lines": [
+    139,
+    139
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature attribution (Bolte–Daniilidis–Lewis–Shiota) for Proposition A:semialgebraic, whose own proof is covered (proposition and proof/002)."
+  },
+  {
+   "id": "C/08_A/prose/055",
+   "kind": "prose",
+   "anchor": "All subgradients have the same tangential projection on a compatible smooth stratum.",
+   "lines": [
+    139,
+    139
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/08_A/disp/012"
+   ],
+   "note": "The projection formula of the cited literature; along curves it is disp/012: for every path p with (F∘p)'(t) defined, every g ∈ ∂F(p(t)) has the same pairing gᵀp'(t) = (F∘p)'(t) with the velocity, i.e. the same projection onto the span of such velocities. Strata are not defined in the companion; its own proof uses the curve version."
+  },
+  {
+   "id": "C/08_A/prose/056",
+   "kind": "prose",
+   "anchor": "Projecting an affine combination equal to zero, whose coefficients sum to one, makes that stratum gradient zero.",
+   "lines": [
+    139,
+    139
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch08A.affine_zero_projects"
+   ],
+   "note": "If a linear map P sends every g_i to the same r and ∑λ_ig_i = 0 with ∑λ_i = 1, then r = 0."
+  },
+  {
+   "id": "C/08_A/prose/057",
+   "kind": "prose",
+   "anchor": "This additional deduction justifies the affine-critical conclusion beyond the printed Clarke-critical corollary.",
+   "lines": [
+    139,
+    139
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Comparison with the literature (the printed corollary concerns Clarke-critical values)."
   }
  ],
  "discrepancies": []
