@@ -33,3 +33,4 @@ import BfgsArticle.Coverage.Companion.Ch13L
 import BfgsArticle.Coverage.Companion.Ch12D
 import BfgsArticle.Coverage.Companion.SeedCertificate
 import BfgsArticle.Coverage.Companion.Ch07H
+import BfgsArticle.Coverage.Companion.Ch11U

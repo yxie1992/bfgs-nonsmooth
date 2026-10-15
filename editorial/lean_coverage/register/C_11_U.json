@@ -14,7 +14,12 @@
    "title": null,
    "container": null,
    "sha256": "86e6a796115093a0",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.setup_notation",
+    "BfgsVerification.FixedNormal.tangentProjection"
+   ],
+   "note": "P = {x | dot a x = b}, S = {v | dot a v = 0}; P_S v is tangentProjection a v = v - (aᵀv)a. setup_notation unfolds it to (1 - outer a a) *ᵥ v (the matrix I - aaᵀ) and shows that it is the orthogonal projection onto S (values in S, identity on S, v - P_S v = (aᵀv)a), for a unit vector a."
   },
   {
    "id": "C/11_U/heading/001",
@@ -28,7 +33,13 @@
    "title": "Theorem 11.1 (One exceptional hyperplane).",
    "container": null,
    "sha256": "08216470e27c2562",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.one_exceptional_hyperplane",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_hyperplane_convergence",
+    "BfgsVerification.fixedNormalHyperplane"
+   ],
+   "note": "All hypotheses written out: F finite convex; unique minimizer x_* ∈ P (P = {aᵀx = b}, a unit); K = {F ≤ F(x_0)} compact; Ω open convex ⊇ K; F μ-strongly convex on Ω (EuclideanStrongConvexOn: F - (μ/2)‖x‖² convex on Ω, Euclidean); P_S g = A(x) for every g ∈ ∂F(x), x ∈ Ω; A Lipschitz on Ω (LipschitzOnWith in the sup norm; equivalent since no constant is specified); F locally C^{1,1} on Ω \\ P. Conclusion for every run R with R.x 0 = x_0: F(x_k) → F(x_*), x_k → x_*. The library theorem does not need Ω convex (EuclideanStrongConvexOn already includes convexity of Ω). Non-vacuity: first example at the end of the module (objective (11.20), run from spike_run_exists). Wording point W-c (line 32): the hypothesis \"Let K={F≤F(x_0)} be compact\" is implied by the unique minimizer of the finite convex F (all sublevels are compact, Localization.sublevel_compact); harmless redundancy, kept in the Lean statement as in the TeX."
   },
   {
    "id": "C/11_U/disp/002",
@@ -42,7 +53,8 @@
    "title": null,
    "container": null,
    "sha256": "216b869ee7f1feda",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/11_U/heading/001"
   },
   {
    "id": "C/11_U/disp/003",
@@ -56,7 +68,8 @@
    "title": null,
    "container": null,
    "sha256": "5dcca071cb3a397c",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/11_U/heading/001"
   },
   {
    "id": "C/11_U/disp/004",
@@ -70,7 +83,13 @@
    "title": null,
    "container": null,
    "sha256": "be9f1da3da1ee708",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.immediate_family",
+    "BfgsVerification.AdmissibleBFGSRun.strongly_convex_composite_convergence",
+    "BfgsVerification.strongCompositeConvergence"
+   ],
+   "note": "The display defines the family F(u,v) = ψ(u,v) + h(v), (u,v) = Fin.cons v u. The claim of the sentence (lines 74-81) is that Theorem 11.1 covers the family: with ψ convex with locally Lipschitz gradient (LocallyC11On univ ψ), h finite convex and locally C^{1,1} off 0, F μ-strongly convex on an open convex neighborhood Ω of the compact sublevel K = {F ≤ F(x_0)}, and the minimizer x_* with v_* = 0, every run from x_0 converges. Uniqueness of the minimizer is derived (unique_of_strong), not assumed. \"The relevant neighborhood\" is read as an open convex neighborhood of the compact initial sublevel, as in Theorem 11.1."
   },
   {
    "id": "C/11_U/disp/005",
@@ -84,7 +103,8 @@
    "title": null,
    "container": null,
    "sha256": "6f0ec9ad3bd906be",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/11_U/prose/013"
   },
   {
    "id": "C/11_U/heading/002",
@@ -98,7 +118,14 @@
    "title": "Theorem 11.2 (Parallel singular interfaces).",
    "container": null,
    "sha256": "586db1fc28ae4f92",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.parallel_singular_interfaces",
+    "BfgsVerification.AdmissibleBFGSRun.parallel_interfaces_affineCritical_cluster",
+    "BfgsVerification.AdmissibleBFGSRun.parallel_interfaces_affineCritical_cluster_on_sublevel",
+    "BfgsVerification.parallelInterfacesCluster"
+   ],
+   "note": "Hypotheses written out: F finite convex with attained minimum; compact sublevel K = {F ≤ c}; Ω open convex ⊇ K, F μ-strongly convex on Ω; a unit, E ⊂ ℝ closed; Σ = {x | aᵀx ∈ E} with every point of Ω ∩ Σ nondifferentiable and F locally C^{1,1} on Ω \\ Σ; P_S ∂F(x) = {A(x)} (literally: the image of ∂F(x) under P_S is {A x}) for x ∈ Ω with A Lipschitz on Ω. \"Every run in K\": ∀ k, x_k ∈ K. Conclusion: some cluster point p of (x_k) has 0 ∈ aff ∂F(p). The attained-minimum hypothesis is not needed by the proof. Non-vacuity: second example at the end of the module."
   },
   {
    "id": "C/11_U/disp/006",
@@ -112,7 +139,8 @@
    "title": null,
    "container": null,
    "sha256": "bbd1119726ef4b21",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/11_U/heading/002"
   },
   {
    "id": "C/11_U/disp/007",
@@ -126,7 +154,13 @@
    "title": null,
    "container": null,
    "sha256": "6072d5d00e737500",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.singular_point_affine_hull",
+    "BfgsVerification.FixedNormal.nonsmooth_subdifferential_parallel_segment",
+    "BfgsVerification.FixedNormal.affine_critical_iff_tangent_zero"
+   ],
+   "note": "Under the hypotheses of Theorem 11.2, at p ∈ Ω ∩ Σ: (affine hull of ∂F(p)) = range (t ↦ A(p) + t a), and 0 ∈ aff ∂F(p) ↔ A(p) = 0."
   },
   {
    "id": "C/11_U/disp/008",
@@ -140,7 +174,8 @@
    "title": null,
    "container": null,
    "sha256": "194ba14a59d30507",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/11_U/prose/023"
   },
   {
    "id": "C/11_U/disp/009",
@@ -154,7 +189,13 @@
    "title": null,
    "container": null,
    "sha256": "9f256cdb79a34165",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.strong_budget",
+    "BfgsVerification.AdmissibleBFGSRun.strong_displacement_budget",
+    "BfgsVerification.AdmissibleBFGSRun.strong_curvature_bound"
+   ],
+   "note": "Stated in the common setting of Section 11.5 (lines 171, 191-192: r(x) = aᵀx - b, exceptional scalar set E; b = 0 for Theorem 11.2, E = {0} for Theorem 11.1), for every k. d_k = R.d k, F_k = F(R.x k), s_k = R.displacement k, t_k = R.curvature k. Wording point W-d: this is the first numbered equation of the chapter, (11.10); there is no (11.1)-(11.9), and the section numbering jumps from 11.2 to 11.5 (the \\setcounter commands of the frozen spans keep the source numbering)."
   },
   {
    "id": "C/11_U/disp/010",
@@ -168,7 +209,13 @@
    "title": null,
    "container": null,
    "sha256": "3b0bf18e6445d488",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.tangent_secant",
+    "BfgsVerification.AdmissibleBFGSRun.tangent_gradientChange",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_tangent_secant"
+   ],
+   "note": "\"Its Lipschitz constant L_A\" is a Euclidean Lipschitz constant of A on Ω (√(sqNorm(Az - Ax)) ≤ L_A √(sqNorm(z - x))), introduced as a variable with this property. Stated after the reductio hypotheses of lines 187-189, which the display does not use; they are omitted (stronger statement). The library form uses the sup-norm constant L with n L²."
   },
   {
    "id": "C/11_U/disp/011",
@@ -182,7 +229,12 @@
    "title": null,
    "container": null,
    "sha256": "376ce7fef2f009d0",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.plane_monotonicity",
+    "BfgsVerification.FixedNormal.strong_support_monotonicity"
+   ],
+   "note": "Under the hypotheses of Theorem 11.1, for p ∈ Ω ∩ P (in the proof p is a cluster point, so p ∈ Ω) and g ∈ ∂F(p): A(p)ᵀ(p - x_*) = gᵀ(p - x_*) ≥ μ‖p - x_*‖². The reductio hypothesis ℓ > F_* is not used and is omitted."
   },
   {
    "id": "C/11_U/disp/012",
@@ -196,7 +248,16 @@
    "title": null,
    "container": null,
    "sha256": "7a6d2e843c2771a6",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.zero_set_parallel",
+    "BfgsCoverage.Companion.Ch11U.zero_set_hyperplane",
+    "BfgsCoverage.Companion.Ch11U.zero_set_parallel_general",
+    "BfgsCoverage.Companion.Ch11U.zero_set_hyperplane_general",
+    "BfgsCoverage.Companion.Ch11U.zero_set_compact",
+    "BfgsVerification.FixedNormal.exists_cutoff_for_compact_set"
+   ],
+   "note": "The display defines Z = {p ∈ Γ : A(p) = 0} (Γ the cluster set); the sentence asserts that Z is compact and r(Z) ∩ E = ∅. Stated literally for both theorems under the reductio hypotheses (zero_set_parallel: no affine-critical cluster point, r(x) = aᵀx; zero_set_hyperplane: F(x_k) → ℓ > F_*, r(x) = aᵀx - b, E = {0}); these hypotheses are jointly inconsistent (by the theorems), so the content is in the general forms, stated for an arbitrary compact Γ ⊂ Ω (satisfiable: last example of the module)."
   },
   {
    "id": "C/11_U/disp/013",
@@ -210,7 +271,15 @@
    "title": null,
    "container": null,
    "sha256": "182d80e1e776c699",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.frame",
+    "BfgsCoverage.Companion.Ch11U.frame_columns",
+    "BfgsCoverage.Companion.Ch11U.lastBasis",
+    "BfgsCoverage.Companion.Ch11U.frame_pairing_eq_cutoffFrame",
+    "BfgsVerification.FixedNormal.cutoffFrame"
+   ],
+   "note": "frame U a t = [U, t a] (the columns of U, then the normal column t a, last as in the TeX); V(x) = frame U a (τ(aᵀx - b)). frame_columns unfolds it for U with Uᵀ U = I, U Uᵀ = P_S (columns an orthonormal basis of S). The library cutoffFrame puts the normal column first; frame_pairing_eq_cutoffFrame shows the pairings agree."
   },
   {
    "id": "C/11_U/disp/014",
@@ -224,7 +293,13 @@
    "title": null,
    "container": null,
    "sha256": "4c9b636205b72797",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.frame_pairing",
+    "BfgsCoverage.Companion.Ch11U.frame_pairing_sq",
+    "BfgsVerification.FixedNormal.cutoffFrame_pairing_eq_visibility"
+   ],
+   "note": "Common setting with U and the cutoff τ; for x ∈ Ω where F has gradient g: ‖V(x)ᵀg‖² = ‖A(x)‖² + τ(r(x))²|aᵀg|²."
   },
   {
    "id": "C/11_U/disp/015",
@@ -238,7 +313,12 @@
    "title": null,
    "container": null,
    "sha256": "97a7cea4d08ec68d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.strip_cocoercivity",
+    "BfgsVerification.FixedNormal.exists_cutoff_strip_cocoercivity"
+   ],
+   "note": "Common setting with the cutoff τ (zero within δ/4 of E): there are L_δ > 0 and ρ > 0 with ‖∇F(z) - ∇F(x)‖² ≤ L_δ yᵀs for x, z ∈ K, τ(r(z)) ≠ 0, ‖z - x‖ < ρ (\"sufficiently close endpoints\"), y = ∇F(z) - ∇F(x), s = z - x."
   },
   {
    "id": "C/11_U/disp/016",
@@ -252,7 +332,12 @@
    "title": null,
    "container": null,
    "sha256": "b266acc0f7c7bced",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.frame_secant",
+    "BfgsVerification.AdmissibleBFGSRun.eventually_fixed_normal_frame_secant"
+   ],
+   "note": "Common setting with U and τ: ∃ C_0 ≥ 0, for all large k, ‖V(x_{k+1})ᵀ y_k‖² ≤ C_0 t_k."
   },
   {
    "id": "C/11_U/disp/017",
@@ -266,7 +351,15 @@
    "title": null,
    "container": null,
    "sha256": "0280b1fec0ccedd6",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.beta_bound",
+    "BfgsCoverage.Companion.Ch11U.cutoffBeta",
+    "BfgsCoverage.Companion.Ch11U.cutoffBeta_eq_cutoffSlope",
+    "BfgsVerification.FixedNormal.cutoffSlope",
+    "BfgsVerification.FixedNormal.abs_cutoffSlope_le"
+   ],
+   "note": "The display defines β (Lean: β with its defining equation, and the function cutoffBeta); the sentence \"Then |β| ≤ Lip(τ)\" (line 297) is proved for every Lipschitz constant Lτ of τ and every pair x, z."
   },
   {
    "id": "C/11_U/disp/018",
@@ -280,7 +373,13 @@
    "title": null,
    "container": null,
    "sha256": "b1cd177cd110bf0a",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.frame_transport",
+    "BfgsCoverage.Companion.Ch11U.frame_transport_identity",
+    "BfgsVerification.FixedNormal.cutoffFrame_transport"
+   ],
+   "note": "V(z) = V(x) + β vecMulVec s e_n - β vecMulVec (P_S s) e_n for every pair x, z, s = z - x; s e_nᵀ is vecMulVec s (lastBasis m), e_n the last frame coordinate vector."
   },
   {
    "id": "C/11_U/disp/019",
@@ -294,7 +393,13 @@
    "title": null,
    "container": null,
    "sha256": "fb839d3596d16303",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.residual_bounds",
+    "BfgsVerification.FixedNormal.cutoffResidual_frobSq",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_cutoff_residual_budget"
+   ],
+   "note": "For every accepted pair (x_k, x_{k+1}): every column of R_k = -β_k P_S s_k e_nᵀ lies in S, ‖R_k‖_F² = Σ R_ij² ≤ Lip(τ)²‖P_S s_k‖² ≤ (2 Lip(τ)²/μ) d_k. The sentence fragment \"Thus (6) holds with T=I\" on line 302 is item prose/027 (discrepancy, typo)."
   },
   {
    "id": "C/11_U/disp/020",
@@ -308,7 +413,13 @@
    "title": null,
    "container": null,
    "sha256": "5bc6ac43203d9808",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.projected_budget",
+    "BfgsVerification.FixedNormal.composite_projected_strong_convex",
+    "BfgsVerification.AdmissibleBFGSRun.projected_displacement_budget"
+   ],
+   "note": "Under the weaker hypotheses (tangential_family) for a run from x_0; S = ℝ^{n-1} × {0}, P_S = tangentProjection (vnormal m)."
   },
   {
    "id": "C/11_U/disp/021",
@@ -322,7 +433,12 @@
    "title": null,
    "container": null,
    "sha256": "135cb3e69ad11cd1",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.composite_secant_projection",
+    "BfgsVerification.FixedNormal.composite_support_projection"
+   ],
+   "note": "For the accepted pair x = x_k, z = x_{k+1}: P_S y_k = P_S(∇ψ(x_{k+1}) - ∇ψ(x_k))."
   },
   {
    "id": "C/11_U/disp/022",
@@ -336,7 +452,14 @@
    "title": null,
    "container": null,
    "sha256": "bf6ef1a9b3755e70",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.composite_secant_bound",
+    "BfgsVerification.CenteredSmoothSublinear.exists_cocoercivity_constant_on_compact",
+    "BfgsVerification.FixedNormal.composite_secant_curvature_dominates",
+    "BfgsVerification.FixedNormal.exists_composite_tangent_secant"
+   ],
+   "note": "One constant L > 0 for the run (compact initial sublevel): ‖P_S y_k‖² ≤ L(∇ψ(x_{k+1}) - ∇ψ(x_k))ᵀ s_k ≤ L t_k for all k."
   },
   {
    "id": "C/11_U/disp/023",
@@ -350,7 +473,15 @@
    "title": null,
    "container": null,
    "sha256": "846ec7d06ad3b18e",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_scale_bump",
+    "BfgsVerification.NormalSpike.scale",
+    "BfgsVerification.NormalSpike.bump",
+    "BfgsVerification.NormalSpike.scale_eq_source",
+    "BfgsVerification.NormalSpike.bump_eq_source"
+   ],
+   "note": "a_j = 2^{-j} (j ≥ 2) is scale (j - 2) (the library indexes by N = j - 2); η is bump."
   },
   {
    "id": "C/11_U/disp/024",
@@ -364,7 +495,13 @@
    "title": null,
    "container": null,
    "sha256": "776f48ccb58cd4a2",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_density_def",
+    "BfgsVerification.NormalSpike.density",
+    "BfgsVerification.NormalSpike.scaledDensity"
+   ],
+   "note": "k(v) = Σ_{j≥2} a_j^{-3} η((v - a_j)/a_j⁵) for v > 0 is density v (the sum reindexed by j + 2); density is also defined for v ≤ 0 (where every bump vanishes), which does not enter (11.18)."
   },
   {
    "id": "C/11_U/disp/025",
@@ -378,7 +515,12 @@
    "title": null,
    "container": null,
    "sha256": "ca4972c748972d22",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_def",
+    "BfgsVerification.NormalSpike.sourcePrimitive"
+   ],
+   "note": "sourcePrimitive is literally the display (11.18) with k = density (spike_def is rfl)."
   },
   {
    "id": "C/11_U/disp/026",
@@ -392,7 +534,12 @@
    "title": null,
    "container": null,
    "sha256": "aad1f851d4802a0b",
-   "status": null
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_small_bounds",
+    "BfgsCoverage.Companion.Ch11U.spike_cubic_bound_fails"
+   ],
+   "note": "True for v ≥ 0 (and the first bound for all v); false for v < 0; see the discrepancy entry."
   },
   {
    "id": "C/11_U/disp/027",
@@ -406,7 +553,13 @@
    "title": null,
    "container": null,
    "sha256": "c6628fba184bbc94",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_peak_curvature",
+    "BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_peak",
+    "BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_peaks_unbounded"
+   ],
+   "note": "r′ has derivative a_j^{-3} at a_j (HasDerivAt) and r″(a_j) = deriv (deriv r) a_j = a_j^{-3} → ∞."
   },
   {
    "id": "C/11_U/disp/028",
@@ -420,7 +573,14 @@
    "title": null,
    "container": null,
    "sha256": "d2556cb1dc24e24b",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_objective_eq",
+    "BfgsVerification.NormalSpike.objective",
+    "BfgsVerification.NormalSpike.normal",
+    "BfgsVerification.NormalSpike.printed_objective_split"
+   ],
+   "note": "For n = m + 2 ≥ 2 the objective is a variable F with hF_def : F(Fin.cons v u) = ½‖u‖² + ½v² + |v| + r(v); spike_objective_eq identifies it with objective (normal m)."
   },
   {
    "id": "C/11_U/disp/029",
@@ -434,7 +594,14 @@
    "title": null,
    "container": null,
    "sha256": "5ef280bf1de4ddd7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_sample_hessian",
+    "BfgsVerification.NormalSpike.objective_radial_hessian",
+    "BfgsVerification.NormalSpike.objective_contDiffAt_pos",
+    "BfgsVerification.NormalSpike.printed_radial_hessian_peak"
+   ],
+   "note": "For every u_0 ∈ ℝ^{n-1} (the library: u_0 = u e_1): F is C³ at x_j = (u_0, a_j), its Hessian matrix (RadialHessian.matrix: entries of the second Fréchet derivative) satisfies x_jᵀ∇²F(x_j)x_j = ‖u_0‖² + a_j² + a_j^{-1}, and this tends to ∞."
   },
   {
    "id": "C/11_U/disp/030",
@@ -448,7 +615,12 @@
    "title": null,
    "container": null,
    "sha256": "4d5c587317b02102",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.mass_moment_polys",
+    "BfgsVerification.NormalSpike.massPoly",
+    "BfgsVerification.NormalSpike.momentPoly"
+   ]
   },
   {
    "id": "C/11_U/disp/031",
@@ -462,7 +634,15 @@
    "title": null,
    "container": null,
    "sha256": "a6a4240de46c7b29",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.partial_bump",
+    "BfgsVerification.NormalSpike.scaledMass_partial",
+    "BfgsVerification.NormalSpike.scaledMoment_partial",
+    "BfgsVerification.NormalSpike.scaledMass_integral",
+    "BfgsVerification.NormalSpike.scaledMoment_integral"
+   ],
+   "note": "For a = a_j and v ∈ [a - a⁵, a + a⁵] (inside the bump), t = (v - a)/a⁵: ∫_0^v a^{-3}η((s-a)/a⁵) ds = a²[P(t) + 8/15] and ∫_0^v s a^{-3}η((s-a)/a⁵) ds = a³[P(t) + 8/15] + a⁷[Q(t) - 1/6]."
   },
   {
    "id": "C/11_U/disp/032",
@@ -476,7 +656,14 @@
    "title": null,
    "container": null,
    "sha256": "27a1b3b64039f271",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_peak_values",
+    "BfgsVerification.NormalSpike.sourcePrimitive_peak",
+    "BfgsVerification.NormalSpike.sourcePrimitive_derivative_peak",
+    "BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_peak"
+   ],
+   "note": "The display item also contains the sentences of line 447 (items prose/056-058)."
   },
   {
    "id": "C/11_U/disp/033",
@@ -490,7 +677,13 @@
    "title": null,
    "container": null,
    "sha256": "b88b1a359a391372",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_objective_eq",
+    "BfgsVerification.NormalSpike.printedVariableObjective",
+    "BfgsVerification.NormalSpike.printed_variable_formula"
+   ],
+   "note": "‖c‖ < 1 is Real.sqrt (sqNorm c) < 1 (Euclidean); the objective is a variable F with its defining equation."
   },
   {
    "id": "C/11_U/disp/034",
@@ -504,7 +697,13 @@
    "title": null,
    "container": null,
    "sha256": "7af8d2738c3b9515",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_hessians",
+    "BfgsVerification.NormalSpike.printed_variable_quadratic_hessian_blocks",
+    "BfgsVerification.NormalSpike.variableQuadraticBranch_hessian_lower"
+   ],
+   "note": "The two quadratic functions are q_σ(u,v) = ½(‖u‖²+v²) + σ(1 + cᵀu)v, σ = ±1 (F = max(q_+, q_-) + r). Their Hessian matrices are stated entrywise in the coordinate order (v,u): B_vv = 1, B_{v u_j} = B_{u_j v} = σ c_j, B_{u_i u_j} = δ_ij, i.e. [[I, σc],[σcᵀ, 1]] in the order (u,v). The theorem also gives the lower bound (1 - ‖c‖)I of prose/060."
   },
   {
    "id": "C/11_U/disp/035",
@@ -518,7 +717,13 @@
    "title": null,
    "container": null,
    "sha256": "e2c88f8c1546c755",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_region_geometry",
+    "BfgsVerification.NormalSpike.printed_variable_tangent_formula",
+    "BfgsVerification.NormalSpike.variableSpikeGeometry"
+   ],
+   "note": "A(u,v) = u + c|v| as the vector (0, u + |v|c) in the order (v,u); every subgradient at a point of the region has this tangential projection."
   },
   {
    "id": "C/11_U/disp/036",
@@ -532,8 +737,1222 @@
    "title": null,
    "container": null,
    "sha256": "d59d1c7d71dedd34",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_zero_split",
+    "BfgsVerification.OriginalClaimInterpretation.zero_coupling_split",
+    "BfgsVerification.OriginalClaimInterpretation.quadratic_smooth"
+   ],
+   "note": "S and h are variables with the displayed defining equations; for c = 0, F(u,v) = S(u,v) + h(v) for all (u,v) and S is C^∞ (ContDiff ℝ ⊤)."
+  },
+  {
+   "id": "C/11_U/prose/001",
+   "kind": "prose",
+   "anchor": "A fixed space of jump normals leaves controlled smooth directions in arbitrary dimension.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/heading/001",
+    "C/11_U/heading/002",
+    "C/11_U/disp/010"
+   ],
+   "note": "Summary: both theorems hold in every dimension n with a fixed normal a; the tangential (smooth) directions S = a^⊥ have controlled secants (11.11) and controlled growth of the tangential part of B_k (prose/010)."
+  },
+  {
+   "id": "C/11_U/prose/002",
+   "kind": "prose",
+   "anchor": "Residual transport can be paid for in those directions",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/disp/019"
+   ],
+   "note": "The transport residual R_k lies in S with ‖R_k‖_F² ≤ C d_k (11.15)."
+  },
+  {
+   "id": "C/11_U/prose/003",
+   "kind": "prose",
+   "anchor": "this is a different hypothesis from planar switching geometry",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/heading/001",
+    "C/11_U/heading/002",
+    "C/11_U/prose/040"
+   ],
+   "note": "Read as in C/08_A/prose/043 (\"the fixed-normal theorem proves a different arbitrary-dimensional class\"): the fixed-normal hypothesis gives theorems in every dimension n (Theorems 11.1, 11.2; for example (11.20) for every n ≥ 2, prose/040), while the planar switching geometry of Chapter 9 is two-dimensional. No implication between the two hypothesis classes is claimed."
+  },
+  {
+   "id": "C/11_U/prose/004",
+   "kind": "prose",
+   "anchor": "A concrete dimension-independent local",
+   "lines": [
+    20,
+    21
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/heading/001",
+    "C/11_U/prose/007"
+   ],
+   "note": "Section title: Theorem 11.1 holds for every n, with the local form prose/007."
+  },
+  {
+   "id": "C/11_U/prose/005",
+   "kind": "prose",
+   "anchor": "The normal direction is fixed; the dimension \\(n-1\\) of the tangent space is unrestricted.",
+   "lines": [
+    27,
+    28
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.tangent_space_finrank"
+   ],
+   "note": "S = {v : aᵀv = 0} is a subspace of dimension n - 1 for a unit vector a and every n."
+  },
+  {
+   "id": "C/11_U/prose/006",
+   "kind": "prose",
+   "anchor": "The hyperplane itself may include differentiable points",
+   "lines": [
+    51,
+    54
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.smooth_hyperplane_witness",
+    "BfgsCoverage.Companion.Ch11U.spike_hypotheses"
+   ],
+   "note": "Permissions of Theorem 11.1, shown by witnesses satisfying all its hypotheses: F(u,v) = ½(‖u‖²+v²) + r(v) is differentiable everywhere (differentiable points on P), its gradient is Lipschitz on no neighborhood of any point of P (failure of gradient-Lipschitz regularity), and its normal second derivative at (u,a_j) is 1 + a_j^{-3} → ∞ (no uniform bound on the gradient-Lipschitz constants as P is approached); the objective (11.20) has actual kinks at every point of P (spike_hypotheses, last conjunct)."
+  },
+  {
+   "id": "C/11_U/prose/007",
+   "kind": "prose",
+   "anchor": "If these hypotheses hold only in a neighborhood of a unique minimizer",
+   "lines": [
+    56,
+    58
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.hyperplane_local_basin",
+    "BfgsVerification.FixedNormal.local_hyperplane_convergence_basin",
+    "BfgsVerification.fixedNormalLocalBasin"
+   ],
+   "note": "Hypotheses of Theorem 11.1 on an open convex neighborhood Ω of the unique minimizer x_* ∈ P (no compact sublevel assumed); ε is chosen before the run."
+  },
+  {
+   "id": "C/11_U/prose/008",
+   "kind": "prose",
+   "anchor": "The same basin works for every SPD initialization and every fixed valid line-search pair.",
+   "lines": [
+    58,
+    59
+   ],
+   "status": "PART_OF",
+   "of": "C/11_U/prose/007",
+   "note": "In hyperplane_local_basin, ε is chosen before R, which carries H_0 ≻ 0 and 0 < c_1 < c_2 < 1."
+  },
+  {
+   "id": "C/11_U/prose/009",
+   "kind": "prose",
+   "anchor": "Compact sublevel trapping supplies this local statement",
+   "lines": [
+    59,
+    61
+   ],
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.Localization.neighborhood_basin",
+    "BfgsCoverage.Article.Local.localization"
+   ],
+   "of": "C/11_U/prose/007",
+   "note": "The proof of hyperplane_local_basin (library local_hyperplane_convergence_basin): a low sublevel lies in the structural neighborhood (Localization.neighborhood_basin, the article's Lemma art:localization), Armijo keeps the run in it, and Theorem 11.1 applies."
+  },
+  {
+   "id": "C/11_U/prose/010",
+   "kind": "prose",
+   "anchor": "The assumptions concern the objective. In particular, the claim that a",
+   "lines": [
+    63,
+    65
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.tangential_trace_derived",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_hessian_trace_budget"
+   ],
+   "note": "Under the hypotheses of Theorem 11.1 (objective assumptions only), tr(UᵀB_kU) ≤ tr(UᵀB_0U) + Ck with C = nL²/μ for every U with orthonormal columns spanning S: the growth of the tangential part of B_k is derived."
+  },
+  {
+   "id": "C/11_U/prose/011",
+   "kind": "prose",
+   "anchor": "Here \\(A=\\nabla_u\\psi\\), irrespective of the singular",
+   "lines": [
+    79,
+    80
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.immediate_family_tangent",
+    "BfgsVerification.FixedNormal.composite_support_projection"
+   ],
+   "note": "At every point (also where h is not differentiable at v) every subgradient g has P_S g = P_S ∇ψ(x), i.e. its u-components equal ∇_uψ(x)."
+  },
+  {
+   "id": "C/11_U/prose/012",
+   "kind": "prose",
+   "anchor": "The objective and the initial matrix may be",
+   "lines": [
+    80,
+    81
+   ],
+   "status": "PART_OF",
+   "of": "C/11_U/disp/004",
+   "note": "immediate_family quantifies over every run (every H_0 ≻ 0) and puts no structure on ψ beyond convexity and local C^{1,1}."
+  },
+  {
+   "id": "C/11_U/prose/013",
+   "kind": "prose",
+   "anchor": "Full strong convexity can be weakened for this composite family.",
+   "lines": [
+    83,
+    87
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.tangential_family",
+    "BfgsVerification.AdmissibleBFGSRun.tangential_composite_convergence",
+    "BfgsVerification.tangentialCompositeConvergence"
+   ],
+   "note": "ψ(u,v) - (μ/2)‖u‖² convex is read on the relevant open convex neighborhood Ω (the theorem then also covers the global reading); \"the relevant positive sublevels\" are {F ≤ ℓ}, F_* < ℓ ≤ F(x_0); the minimizer is unique with v_* = 0; K = {F ≤ F(x_0)} compact ⊂ Ω. The family hypotheses of lines 76-78 on ψ and h are kept."
+  },
+  {
+   "id": "C/11_U/prose/014",
+   "kind": "prose",
+   "anchor": "A compact initial sublevel is still required.",
+   "lines": [
+    87,
+    88
+   ],
+   "status": "PART_OF",
+   "of": "C/11_U/prose/013",
+   "note": "tangential_family assumes K = {F ≤ F(x_0)} compact. Wording point W-c (lines 87-88): with the unique minimizer of the finite convex F (also assumed, line 87) every sublevel is compact (Localization.sublevel_compact), so the requirement is automatic; harmless redundancy."
+  },
+  {
+   "id": "C/11_U/prose/015",
+   "kind": "prose",
+   "anchor": "The proof of this extension is given in",
+   "lines": [
+    88,
+    89
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Pointer to Section 11.6 (item prose/029 is that proof)."
+  },
+  {
+   "id": "C/11_U/prose/016",
+   "kind": "prose",
+   "anchor": "It needs positive curvature only in the smooth tangential",
+   "lines": [
+    89,
+    90
+   ],
+   "status": "PART_OF",
+   "of": "C/11_U/prose/013",
+   "note": "The hypotheses of tangential_family involve μ only through ψ - (μ/2)‖u‖²; no curvature condition in v."
+  },
+  {
+   "id": "C/11_U/prose/017",
+   "kind": "prose",
+   "anchor": "This is not a claim that all convex nonsmooth functions admit such a",
+   "lines": [
+    92,
+    94
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope disclaimer: states what is not claimed (no splitting of all convex nonsmooth functions; a common hyperplane does not describe arbitrary curved switching geometry)."
+  },
+  {
+   "id": "C/11_U/prose/018",
+   "kind": "prose",
+   "anchor": "A forced affine-critical cluster-point",
+   "lines": [
+    108,
+    109
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/heading/002"
+   ],
+   "note": "Section title."
+  },
+  {
+   "id": "C/11_U/prose/019",
+   "kind": "prose",
+   "anchor": "The method also fits the affine-criticality program directly.",
+   "lines": [
+    111,
+    111
+   ],
+   "status": "NON_CLAIM",
+   "note": "Wording point W-b (line 111): \"the affine-criticality program\" is Chapter 8 (present in the companion) and could be named: \"the affine-criticality program of Chapter~\\ref{comp:A}\".",
+   "reason": "Motivation relating the method to the affine-criticality program of Chapter 8; the mathematical content is Theorem 11.2."
+  },
+  {
+   "id": "C/11_U/prose/020",
+   "kind": "prose",
+   "anchor": "There may be several or countably many parallel interfaces",
+   "lines": [
+    133,
+    135
+   ],
+   "status": "PART_OF",
+   "of": "C/11_U/heading/002",
+   "note": "E is an arbitrary closed set (finite, countable or not); no finiteness of the affine-critical set is assumed."
+  },
+  {
+   "id": "C/11_U/prose/021",
+   "kind": "prose",
+   "anchor": "At a point of \\(\\Sigma\\), the subdifferential is a nontrivial compact",
+   "lines": [
+    137,
+    139
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.singular_point_segment",
+    "BfgsVerification.FixedNormal.nonsmooth_subdifferential_parallel_segment",
+    "BfgsVerification.ConvexSubdifferential.isCompact_subdifferential"
+   ],
+   "note": "Under the hypotheses of Theorem 11.2, at p ∈ Ω ∩ Σ: ∂F(p) is compact and equals the segment [A(p) + l a, A(p) + u a] with l < u and distinct endpoints."
+  },
+  {
+   "id": "C/11_U/prose/022",
+   "kind": "prose",
+   "anchor": "At a smooth point, affine criticality is ordinary stationarity.",
+   "lines": [
+    143,
+    143
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.smooth_point_affine_critical",
+    "BfgsCoverage.Companion.Ch11U.affine_critical_iff_of_hasFDerivAt",
+    "BfgsVerification.ConvexSubdifferential.subdifferential_eq_singleton_of_hasFDerivAt"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/023",
+   "kind": "prose",
+   "anchor": "Consequently, adding",
+   "lines": [
+    145,
+    149
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.parallel_interfaces_convergence",
+    "BfgsCoverage.Companion.Ch11U.parallel_interfaces_basin",
+    "BfgsVerification.AdmissibleBFGSRun.parallel_interfaces_convergence_of_affine_correctness",
+    "BfgsVerification.FixedNormal.local_parallel_interfaces_convergence_basin"
+   ],
+   "note": "On K: values converge to the minimum value F(x_*) and, if x_* is the unique minimizer, x_k → x_*. \"A sufficiently low trapped neighborhood\": taking for K a compact low sublevel inside the structural neighborhood is the same theorem; the basin form (hypotheses on a neighborhood of a unique minimizer, ε chosen before the run) is parallel_interfaces_basin."
+  },
+  {
+   "id": "C/11_U/prose/024",
+   "kind": "prose",
+   "anchor": "Theorem 11.1 is slightly different from a literal specialization of Theorem 11.2",
+   "lines": [
+    151,
+    152
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.smooth_hyperplane_witness"
+   ],
+   "note": "F(u,v) = ½(‖u‖²+v²) + r(v) satisfies all hypotheses of Theorem 11.1, is differentiable on P but not locally C^{1,1} near any point of P, and fails the hypotheses of Theorem 11.2 for every vector a', set E and open Ω ∋ x_* = 0."
+  },
+  {
+   "id": "C/11_U/prose/025",
+   "kind": "prose",
+   "anchor": "Having \\(x_*\\in P\\) makes every zero of",
+   "lines": [
+    152,
+    154
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.plane_zero_optimal",
+    "BfgsVerification.FixedNormal.tangent_zero_on_minimizer_plane"
+   ],
+   "note": "Under the hypotheses of Theorem 11.1, p ∈ Ω ∩ P with A(p) = 0 is x_*, hence optimal; Theorem 11.1 (one_exceptional_hyperplane) has no nondifferentiability hypothesis."
+  },
+  {
+   "id": "C/11_U/prose/026",
+   "kind": "prose",
+   "anchor": "We give a common argument that covers Theorems 1 and 2.",
+   "lines": [
+    171,
+    309
+   ],
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_cluster_geometry_incompatible",
+    "BfgsVerification.AdmissibleBFGSRun.summable_sq_displacement_of_strong_convexity",
+    "BfgsVerification.AdmissibleBFGSRun.displacement_tendsto_zero_of_strong_convexity",
+    "BfgsVerification.ClusterSetGeometry.isCompact_clusterSet",
+    "BfgsVerification.AdmissibleBFGSRun.positive_limit_of_no_affineCritical_cluster",
+    "BfgsVerification.FixedNormal.exists_separating_cutoff",
+    "BfgsCoverage.Companion.Ch11U.cutoff_exists",
+    "BfgsVerification.FixedNormal.exists_visibility_neighborhood",
+    "BfgsVerification.ClusterSetGeometry.eventually_mem_of_open_superset",
+    "BfgsVerification.ClusterSetGeometry.distance_tendsto_zero",
+    "BfgsVerification.AdmissibleBFGSRun.residual_frames_on_tail_incompatible"
+   ],
+   "of": "C/11_U/heading/002",
+   "note": "Section 11.5 (heading lines 168-169, text lines 171-309) is the common proof of Theorems 11.2 and 11.1. This item is the proof of Theorem 11.2; prose/081 (same span) is the proof of Theorem 11.1 (\"and proves ℓ = F_* for Theorem 11.1\", line 308; Lean one_exceptional_hyperplane, from the same contradiction theorem fixed_normal_cluster_geometry_incompatible). Two items because check_coverage.py accepts a single target for PROOF. Its displays are items disp/009-disp/019 (and prose/027 for line 302); undisplayed steps are stated by the listed theorems. Stale references (typo, see the discrepancy entry of prose/027): \"Theorems 1 and 2\" (line 171) means Theorems 11.1 and 11.2; \"(11)\" (line 269) means (11.11). Wording point W-d: the section is numbered 11.5 although no 11.3 or 11.4 exists (and the first equation tag is (11.10), disp/009)."
+  },
+  {
+   "id": "C/11_U/prose/027",
+   "kind": "prose",
+   "anchor": "Thus (6) holds with \\(T=I\\) and",
+   "lines": [
+    302,
+    302
+   ],
+   "status": "DISCREPANCY",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.transport_hypothesis"
+   ],
+   "note": "Dangling equation reference; the corrected claim (along accepted pairs, (11.14) is the transport hypothesis V_{k+1} = V_kT_k + (rank-one term) + R_k of Theorem M:residualtheorem with T_k = I, rank-one term s_k(β_ke_n)ᵀ, R_k = -β_kP_Ss_ke_nᵀ) holds; see the discrepancy entry, which lists all eight stale references of the chapter. Wording point W-e: the corrected wording must avoid the letter b (b_k = β_ke_n), since b is the hyperplane offset in this chapter (P = {aᵀx = b}, r(x) = aᵀx - b)."
+  },
+  {
+   "id": "C/11_U/prose/028",
+   "kind": "prose",
+   "anchor": "Only tangential strong convexity is needed for a composite",
+   "lines": [
+    323,
+    324
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/013"
+   ],
+   "note": "Section title."
+  },
+  {
+   "id": "C/11_U/prose/029",
+   "kind": "prose",
+   "anchor": "under the weaker hypotheses in",
+   "lines": [
+    326,
+    352
+   ],
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.tangential_cluster_geometry_incompatible",
+    "BfgsVerification.FixedNormal.tangent_zero_on_minimizer_plane_of_projected_strong",
+    "BfgsVerification.AdmissibleBFGSRun.tangential_cutoff_residual_budget",
+    "BfgsVerification.AdmissibleBFGSRun.eventually_tangential_frame_secant"
+   ],
+   "of": "C/11_U/prose/013",
+   "note": "Section 11.6 is the proof of the weaker-curvature version (tangential_family). Its displays are disp/020-disp/022; the strict-convexity argument for s_k → 0 and the plane argument are inside the library proof of tangential_composite_convergence. Stale references (typo, see the discrepancy entry of prose/027): \"(11)\" (line 340, \"This replaces (11).\") means (11.11); \"(16)--(17)\" (line 352) means (11.16)-(11.17)."
+  },
+  {
+   "id": "C/11_U/prose/030",
+   "kind": "prose",
+   "anchor": "A quadratic-plus-absolute-value objective is included",
+   "lines": [
+    352,
+    353
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.quadratic_abs_included"
+   ],
+   "note": "F(u,v) = ½(‖u‖²+v²) + |v| satisfies the hypotheses of both versions of Section 11.1.1 (including strictly convex compact sublevels), and every run converges."
+  },
+  {
+   "id": "C/11_U/prose/031",
+   "kind": "prose",
+   "anchor": "but those familiar cases were already proved in earlier notes",
+   "lines": [
+    353,
+    354
+   ],
+   "status": "NON_CLAIM",
+   "note": "Wording point W-b (line 354): \"earlier notes\" refers to material that is not in the companion (compare the article's wording point on \"in this note\").",
+   "reason": "History (earlier notes); the mathematical content, convergence for such objectives, is prose/030."
+  },
+  {
+   "id": "C/11_U/prose/032",
+   "kind": "prose",
+   "anchor": "The extension below illustrates the additional normal irregularity allowed here.",
+   "lines": [
+    354,
+    355
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/disp/027",
+    "C/11_U/prose/040"
+   ],
+   "note": "The example (11.20) is in the immediate family (ψ = ½‖x‖², h = |v| + r(v), whose second derivative is unbounded near 0) and Theorem 11.1 applies to it."
+  },
+  {
+   "id": "C/11_U/prose/033",
+   "kind": "prose",
+   "anchor": "An explicit all-dimensional example outside",
+   "lines": [
+    369,
+    370
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/040",
+    "C/11_U/prose/045"
+   ],
+   "note": "Section title: (11.20) is defined for every n ≥ 2, every run converges, and (RS) fails near the optimizer."
+  },
+  {
+   "id": "C/11_U/prose/034",
+   "kind": "prose",
+   "anchor": "This nonnegative bump is \\(C^1\\), has \\(\\eta(0)=1\\), and integral",
+   "lines": [
+    375,
+    376
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.bump_properties",
+    "BfgsVerification.NormalSpike.bump_contDiff",
+    "BfgsVerification.NormalSpike.bump_total_mass",
+    "BfgsVerification.NormalSpike.bump_supports_pairwise_disjoint"
+   ],
+   "note": "Integral over ℝ; the supports are those of v ↦ η((v - a_j)/a_j⁵), j ≥ 2."
+  },
+  {
+   "id": "C/11_U/prose/035",
+   "kind": "prose",
+   "anchor": "Each bump has mass \\((16/15)a_j^2\\). The total mass is finite.",
+   "lines": [
+    385,
+    385
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.bump_masses",
+    "BfgsVerification.NormalSpike.scaledDensity_total_mass",
+    "BfgsVerification.NormalSpike.density_total_mass"
+   ],
+   "note": "The total mass is 4/45."
+  },
+  {
+   "id": "C/11_U/prose/036",
+   "kind": "prose",
+   "anchor": "The sum is locally finite away from zero",
+   "lines": [
+    385,
+    388
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_regularity",
+    "BfgsVerification.NormalSpike.exists_tail_below_neighborhood",
+    "BfgsVerification.NormalSpike.sourcePrimitive_convex",
+    "BfgsVerification.NormalSpike.sourcePrimitive_contDiff",
+    "BfgsVerification.NormalSpike.sourcePrimitive_contDiffOn_off_zero",
+    "BfgsVerification.NormalSpike.sourcePrimitive_locallyC11_off_zero"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/037",
+   "kind": "prose",
+   "anchor": "The second derivative at zero itself exists and equals zero",
+   "lines": [
+    393,
+    394
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_second_derivative_zero",
+    "BfgsVerification.NormalSpike.sourcePrimitive_hasSecondDerivAt_zero",
+    "BfgsVerification.NormalSpike.sourcePrimitive_second_derivative_not_continuousAt_zero"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/038",
+   "kind": "prose",
+   "anchor": "It is 1-strongly convex and coercive, with unique minimizer zero.",
+   "lines": [
+    401,
+    401
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_objective_geometry",
+    "BfgsVerification.NormalSpike.objective_strongConvex",
+    "BfgsVerification.NormalSpike.objective_coercive"
+   ],
+   "note": "Coercive: F → ∞ along the cocompact filter."
+  },
+  {
+   "id": "C/11_U/prose/039",
+   "kind": "prose",
+   "anchor": "Its only nondifferentiable hyperplane is \\(v=0\\)",
+   "lines": [
+    401,
+    403
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_objective_interface",
+    "BfgsVerification.NormalSpike.objective_differentiable_iff",
+    "BfgsVerification.NormalSpike.objective_support_tangent",
+    "BfgsVerification.NormalSpike.normal_tangent_lipschitz"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/040",
+   "kind": "prose",
+   "anchor": "Theorem 11.1 therefore proves global",
+   "lines": [
+    403,
+    405
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_objective_convergence",
+    "BfgsCoverage.Companion.Ch11U.spike_hypotheses",
+    "BfgsVerification.NormalSpike.spikeObjectiveConvergence"
+   ],
+   "note": "Derived from one_exceptional_hyperplane with Ω = ℝ^n, for every run (every H_0 ≻ 0, any start), every n ≥ 2."
+  },
+  {
+   "id": "C/11_U/prose/041",
+   "kind": "prose",
+   "anchor": "RS fails in every neighborhood of zero",
+   "lines": [
+    407,
+    407
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/045"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/042",
+   "kind": "prose",
+   "anchor": "Fix any sufficiently small nonzero \\(u_0\\)",
+   "lines": [
+    407,
+    409
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_sample_values"
+   ],
+   "note": "For every u_0 ∈ ℝ^{n-1}: F(u_0, a_j) → ‖u_0‖²/2, positive when u_0 ≠ 0."
+  },
+  {
+   "id": "C/11_U/prose/043",
+   "kind": "prose",
+   "anchor": "A uniform inward Taylor estimate on that fixed positive band would",
+   "lines": [
+    413,
+    415
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_ir_fails",
+    "BfgsCoverage.Companion.Ch11U.spike_inward_bound_hessian",
+    "BfgsCoverage.Companion.Ch11U.second_derivative_le_of_model_bound"
+   ],
+   "note": "The second-order limit: an inward Taylor bound with constant M at x_j gives x_jᵀ∇²F(x_j)x_j ≤ M; with (11.21) no constants work on the band η = ‖u_0‖²/4 of K = {F ≤ b}, b > ‖u_0‖²/2, so (IR) fails on K. Stale reference (typo, see the discrepancy entry of prose/027): \"(21)\" (line 415) means (11.21)."
+  },
+  {
+   "id": "C/11_U/prose/044",
+   "kind": "prose",
+   "anchor": "The recorded equivalence between inward radial",
+   "lines": [
+    415,
+    416
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_rs_fails_band",
+    "BfgsVerification.NormalSpike.not_radial_secant_sublevel_of_tangent_height",
+    "BfgsVerification.NormalSpike.radial_curvature_le_of_pair_bound"
+   ],
+   "note": "(RS) fails on \"that band\": the band η = ‖u_0‖²/4 of K = {F ≤ b}, b > ‖u_0‖²/2, the same band as the (IR) failure of prose/043 (spike_ir_fails), for every u_0 ≠ 0: no constant C_η exists. Proved directly with the radial pairs (x_j, (1-t)x_j), 0 < t ≤ 1/4, not through the equivalence (RS) ⇔ (IR) of Chapter 4 (whose (RS) ⇒ (IR) direction with spike_ir_fails only gives that (RS) fails on K). Wording point W-b (line 416): \"the recorded equivalence between inward radial smoothness and RS\" is Theorem 4.2.1 (R:thm:equiv), present in the companion, and could be cited."
+  },
+  {
+   "id": "C/11_U/prose/045",
+   "kind": "prose",
+   "anchor": "Choosing \\(u_0\\) arbitrarily small gives failure in every neighborhood of the optimizer.",
+   "lines": [
+    416,
+    417
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_rs_fails_nhds",
+    "BfgsVerification.NormalSpike.not_radial_secant_neighborhood"
+   ],
+   "note": "(RS) fails on every neighborhood W of 0 (RS literally as (4.RS), defined in the module)."
+  },
+  {
+   "id": "C/11_U/prose/046",
+   "kind": "prose",
+   "anchor": "This is a \\textbf{function-class} gain beyond RS",
+   "lines": [
+    419,
+    420
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/040",
+    "C/11_U/prose/045"
+   ],
+   "note": "Every run converges for (11.20) although (RS) fails near the optimizer."
+  },
+  {
+   "id": "C/11_U/prose/047",
+   "kind": "prose",
+   "anchor": "but not a claim that the function lacks every prior transported certificate",
+   "lines": [
+    419,
+    420
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Disclaimer: nothing is claimed about other certificates."
+  },
+  {
+   "id": "C/11_U/prose/048",
+   "kind": "prose",
+   "anchor": "It also expands the allowed normal curvature",
+   "lines": [
+    420,
+    421
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/disp/027",
+    "C/11_U/prose/040"
+   ],
+   "note": "The normal curvature r″(a_j) is unbounded near the hyperplane while Theorem 11.1 applies."
+  },
+  {
+   "id": "C/11_U/prose/049",
+   "kind": "prose",
+   "anchor": "rather than settling the original arbitrary",
+   "lines": [
+    421,
+    422
+   ],
+   "status": "NON_CLAIM",
+   "note": "Wording point W-b (line 422): \"the original arbitrary curved finite-C²-max conjecture\" is the conjecture recorded in Chapter 8 (C/08_A/prose/042, OPEN), present in the companion, and could be cited.",
+   "reason": "States that an open conjecture (curved finite-C²-max objectives) is not settled; no claim."
+  },
+  {
+   "id": "C/11_U/prose/050",
+   "kind": "prose",
+   "anchor": "Where each piece has a \\(C^{1,1}\\) extension through the flat interface",
+   "lines": [
+    422,
+    424
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/04_R/theorem/R:thm:plq",
+    "A/positive_partition/theorem/art:polyhedral"
+   ],
+   "note": "The \"older finite-polyhedral-partition theorem\" is the companion's own Theorem 4.5.1 (R:thm:plq, LEAN in C_04_R.json, Ch04R.plq_theorem); the article's Theorem art:polyhedral is the corresponding article result. With the two closed half-spaces {v ≥ 0} and {v ≤ 0} as cells, C^{1,1} extensions of the pieces through the flat interface give, by either theorem, local convergence (a basin chosen before the run). For (11.20) the piece on {v ≥ 0} has no such extension (prose/006). Wording point W-b (line 424): the theorem could be cited as Theorem~\\ref{R:thm:plq}."
+  },
+  {
+   "id": "C/11_U/prose/051",
+   "kind": "prose",
+   "anchor": "The infinite series is evaluated exactly in the",
+   "lines": [
+    430,
+    431
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/052",
+    "C/11_U/prose/055"
+   ],
+   "note": "Section title; \"the verifier\" is the Lean oracle (rational_oracle)."
+  },
+  {
+   "id": "C/11_U/prose/052",
+   "kind": "prose",
+   "anchor": "There is no need to truncate (18).",
+   "lines": [
+    433,
+    434
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.series_exact",
+    "BfgsVerification.NormalSpike.at_most_one_partial_bump",
+    "BfgsVerification.NormalSpike.seriesPrimitive_tail_formula",
+    "BfgsVerification.NormalSpike.tailMass_eq",
+    "BfgsVerification.NormalSpike.tailMoment_eq"
+   ],
+   "note": "\"(18)\" is (11.18)."
+  },
+  {
+   "id": "C/11_U/prose/053",
+   "kind": "prose",
+   "anchor": "For a query inside the bump centered at",
+   "lines": [
+    438,
+    440
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.partial_bump"
+   ],
+   "note": "First conjunct of partial_bump (the partial mass); the first moment is disp/031."
+  },
+  {
+   "id": "C/11_U/prose/054",
+   "kind": "prose",
+   "anchor": "All smaller bumps have total mass",
+   "lines": [
+    442,
+    443
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.smaller_bumps",
+    "BfgsCoverage.Companion.Ch11U.bump_first_moment",
+    "BfgsVerification.NormalSpike.smaller_tail_mass",
+    "BfgsVerification.NormalSpike.smaller_tail_moment"
+   ],
+   "note": "For a = a_N, the bumps j > N have total mass Σ∫a_j^{-3}η = (16/45)a² and total first moment Σ∫ v a_j^{-3}η = (16/105)a³ (each bump: (16/15)a_j² and (16/15)a_j³)."
+  },
+  {
+   "id": "C/11_U/prose/055",
+   "kind": "prose",
+   "anchor": "This gives exact rational function and derivative values for rational queries.",
+   "lines": [
+    443,
+    444
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.rational_oracle",
+    "BfgsVerification.NormalSpike.rationalSpikeOracle",
+    "BfgsVerification.NormalSpike.rationalValueOracle_correct",
+    "BfgsVerification.NormalSpike.rationalDerivativeOracle_correct",
+    "BfgsVerification.NormalSpike.rationalSecondDerivativeOracle_correct"
+   ],
+   "note": "Computable functions ℚ → ℚ return r(v), r′(v), r″(v) exactly at every rational v."
+  },
+  {
+   "id": "C/11_U/prose/056",
+   "kind": "prose",
+   "anchor": "These are identities for the complete infinite series, not for a truncation.",
+   "lines": [
+    447,
+    447
+   ],
+   "status": "PART_OF",
+   "of": "C/11_U/disp/032",
+   "note": "r = sourcePrimitive is the full integral (11.18) of the full series."
+  },
+  {
+   "id": "C/11_U/prose/057",
+   "kind": "prose",
+   "anchor": "The exact rational-query formulas and their derivative values are proved for this oracle.",
+   "lines": [
+    447,
+    447
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/055"
+   ],
+   "note": "About the formalization; the mathematics is prose/055."
+  },
+  {
+   "id": "C/11_U/prose/058",
+   "kind": "prose",
+   "anchor": "For the objective (20), the convergence theorem applies in every stated dimension",
+   "lines": [
+    447,
+    447
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/040"
+   ],
+   "note": "spike_objective_convergence holds for every n = m + 2 ≥ 2 and every run, hence every H_0 ≻ 0 (full BFGS, no reduction). \"(20)\" is (11.20)."
+  },
+  {
+   "id": "C/11_U/prose/059",
+   "kind": "prose",
+   "anchor": "The objective need not split as a smooth function plus",
+   "lines": [
+    453,
+    455
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/066"
+   ],
+   "note": "Section title; realized for c ≠ 0 (prose/068-070)."
+  },
+  {
+   "id": "C/11_U/prose/060",
+   "kind": "prose",
+   "anchor": "both bounded below by \\((1-\\|c\\|)I\\)",
+   "lines": [
+    463,
+    463
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_hessians",
+    "BfgsVerification.NormalSpike.variableQuadraticBranch_hessian_lower"
+   ],
+   "note": "Last conjunct of variable_hessians: wᵀ∇²q_σ w ≥ (1 - ‖c‖)‖w‖² for σ = ±1."
+  },
+  {
+   "id": "C/11_U/prose/061",
+   "kind": "prose",
+   "anchor": "Their maximum plus convex \\(r(v)\\) is strongly convex.",
+   "lines": [
+    463,
+    464
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_strongly_convex",
+    "BfgsVerification.NormalSpike.printed_variable_strongConvex"
+   ],
+   "note": "F = max(q_+, q_-) + r(v) is (1 - ‖c‖)-strongly convex, 1 - ‖c‖ > 0."
+  },
+  {
+   "id": "C/11_U/prose/062",
+   "kind": "prose",
+   "anchor": "zero is the unique minimizer",
+   "lines": [
+    464,
+    465
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_unique_minimizer"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/063",
+   "kind": "prose",
+   "anchor": "On a neighborhood with \\(|c^Tu|<1/2\\), the only exceptional hyperplane",
+   "lines": [
+    467,
+    470
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_region_geometry",
+    "BfgsVerification.NormalSpike.variableTangent_lipschitz",
+    "BfgsVerification.NormalSpike.variableSpikeGeometry"
+   ],
+   "note": "W = {|cᵀu| < 1/2} is an open convex neighborhood of 0; on W, F is differentiable exactly where v ≠ 0 and every subgradient has tangential projection A(u,v) = (u + |v|c, 0); A is Lipschitz on ℝ^n."
+  },
+  {
+   "id": "C/11_U/prose/064",
+   "kind": "prose",
+   "anchor": "Theorem 11.1 gives an objective-dependent local full-BFGS convergence basin",
+   "lines": [
+    470,
+    470
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_local_basin",
+    "BfgsCoverage.Companion.Ch11U.variable_basin_nonvacuous",
+    "BfgsCoverage.Companion.Ch11U.variable_runs_exist",
+    "BfgsVerification.NormalSpike.printed_variable_local_fullBFGS",
+    "BfgsVerification.NormalSpike.variableSpikeConvergence"
+   ],
+   "note": "Derived from hyperplane_local_basin (local form of Theorem 11.1) for every ‖c‖ < 1. Non-vacuity for every ‖c‖ < 1: variable_runs_exist gives admissible runs with F(x_0) < ε for every ε > 0 (the general existence theorem does not apply to F directly when c ≠ 0, since F is differentiable at the points with v = 0, cᵀu = -1, through which lines lie in the kink set; it is applied to the convex modification cappedObjective = F + (|1 + cᵀu| - (1 + cᵀu)), whose runs from a low sublevel are runs of F)."
+  },
+  {
+   "id": "C/11_U/prose/065",
+   "kind": "prose",
+   "anchor": "If $c\\ne0$, the normal-gradient jump magnitude",
+   "lines": [
+    472,
+    472
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_jump"
+   ],
+   "note": "One-sided derivatives ±(1 + cᵀu) of v ↦ F(u,v) at 0 for |cᵀu| < 1/2, jump 2(1 + cᵀu); for c ≠ 0 two points of the neighborhood have different jumps."
+  },
+  {
+   "id": "C/11_U/prose/066",
+   "kind": "prose",
+   "anchor": "More precisely, on no open neighborhood of zero can this objective equal",
+   "lines": [
+    472,
+    472
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_nonsplitting",
+    "BfgsVerification.NormalSpike.printed_variable_no_local_smooth_scalar_split",
+    "BfgsVerification.NormalSpike.variableSpikeNonsplitting"
+   ],
+   "note": "For c ≠ 0, no open U ∋ 0, differentiable S on U and arbitrary h : ℝ → ℝ give F(u,v) = S(u,v) + h(v) on U."
+  },
+  {
+   "id": "C/11_U/prose/067",
+   "kind": "prose",
+   "anchor": "One way to see the obstruction is to subtract values",
+   "lines": [
+    472,
+    472
+   ],
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.NormalSpike.variable_central_difference",
+    "BfgsVerification.NormalSpike.variableObjective_no_local_smooth_scalar_split"
+   ],
+   "of": "C/11_U/prose/066",
+   "note": "The library proof: central differences along the normal at the tangential points δc and 0 leave 2cᵀx|t|."
+  },
+  {
+   "id": "C/11_U/prose/068",
+   "kind": "prose",
+   "anchor": "The nonzero condition is needed only for this nonsplitting conclusion.",
+   "lines": [
+    474,
+    474
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/069",
+    "C/11_U/prose/064",
+    "C/11_U/prose/071"
+   ],
+   "note": "For c = 0 the objective splits (prose/069), while the basin (prose/064) and the failure of (RS) (prose/071) hold for every ‖c‖ < 1."
+  },
+  {
+   "id": "C/11_U/prose/069",
+   "kind": "prose",
+   "anchor": "When $c=0$, the objective has the explicit global decomposition",
+   "lines": [
+    474,
+    477
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_zero_split",
+    "BfgsVerification.OriginalClaimInterpretation.printed_zero_coupling_has_split"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/070",
+   "kind": "prose",
+   "anchor": "Thus the subsection's existential claim is realized by nonzero $c$",
+   "lines": [
+    478,
+    478
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/066",
+    "C/11_U/prose/069"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/071",
+   "kind": "prose",
+   "anchor": "The spike argument still makes (RS) fail in every neighborhood of zero",
+   "lines": [
+    478,
+    478
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.variable_rs_fails",
+    "BfgsVerification.NormalSpike.printed_variable_no_radial_secant",
+    "BfgsVerification.NormalSpike.variableSpikeSeparation"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/072",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship",
+   "lines": [
+    486,
+    486
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Description of the following paragraph."
+  },
+  {
+   "id": "C/11_U/prose/073",
+   "kind": "prose",
+   "anchor": "The tangent/normal decomposition has established VU and partial-smoothness antecedents",
+   "lines": [
+    488,
+    488
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (VU decomposition, partial smoothness, quantitative tangential projection, proximal VU algorithms); no result is used."
+  },
+  {
+   "id": "C/11_U/prose/074",
+   "kind": "prose",
+   "anchor": "The full-BFGS conclusions in this chapter require the proved restricted matrix control",
+   "lines": [
+    488,
+    488
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Remark on the structure of the proofs (they use the derived tangential matrix control, prose/010) and on the literature (identification results); it asserts no mathematical statement of its own."
+  },
+  {
+   "id": "C/11_U/prose/075",
+   "kind": "prose",
+   "anchor": "The smooth-region estimates use classical cocoercivity",
+   "lines": [
+    490,
+    490
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.cocoercivity_on_smooth_compact",
+    "BfgsVerification.FixedNormal.exists_cocoercivity_constant_on_smooth_compact",
+    "BfgsVerification.FixedNormal.exists_cutoff_strip_cocoercivity"
+   ],
+   "note": "The literature result as used by the proof (disp/015): cocoercivity with some constant on compact subsets of the smooth region for the convex objective, proved in the library from the descent lemma. The open-domain Baillon-Haddad theorem of [WW] itself (optimal constant, functions convex only on an open convex set) is not formalized; the proof does not need it."
+  },
+  {
+   "id": "C/11_U/prose/076",
+   "kind": "prose",
+   "anchor": "The compact-buffer argument retains the local regularity assumptions",
+   "lines": [
+    490,
+    490
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/heading/001",
+    "C/11_U/heading/002",
+    "C/11_U/prose/006"
+   ],
+   "note": "Both theorems assume only local C^{1,1} off the exceptional set; prose/006 shows that no uniform bound near the interface is needed."
+  },
+  {
+   "id": "C/11_U/prose/077",
+   "kind": "prose",
+   "anchor": "The exact spike and coupling examples had no match in the audited sources.",
+   "lines": [
+    492,
+    492
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature search result (history), not a mathematical claim."
+  },
+  {
+   "id": "C/11_U/prose/078",
+   "kind": "prose",
+   "anchor": "Their separation concerns RS.",
+   "lines": [
+    492,
+    492
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/045",
+    "C/11_U/prose/071"
+   ]
+  },
+  {
+   "id": "C/11_U/prose/079",
+   "kind": "prose",
+   "anchor": "The later nonsplitting conclusion requires $c\\ne0$ and excludes only the stated differentiable-plus-scalar decomposition",
+   "lines": [
+    492,
+    492
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/11_U/prose/066",
+    "C/11_U/prose/069"
+   ],
+   "note": "Wording point W-a (line 492): \"The later nonsplitting conclusion\" is a relocation artifact: the attribution note stood at the start of Section 11.7 in the source and the generator moved it to the end of the chapter (it neutralizes \"below\" but not \"later\"). Proposed: \"The nonsplitting conclusion of Section 11.7.2\" (a U-specific replacement in editorial/generate_companion.py)."
+  },
+  {
+   "id": "C/11_U/prose/080",
+   "kind": "prose",
+   "anchor": "it does not exclude general partial-smoothness or nonlinear-composite descriptions",
+   "lines": [
+    492,
+    492
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope disclaimer referring to the literature."
+  },
+  {
+   "id": "C/11_U/prose/081",
+   "kind": "prose",
+   "anchor": "and proves \\(\\ell=F_*\\) for Theorem 11.1",
+   "lines": [
+    171,
+    309
+   ],
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_hyperplane_convergence",
+    "BfgsVerification.AdmissibleBFGSRun.fixed_normal_cluster_geometry_incompatible",
+    "BfgsVerification.FixedNormal.tangent_zero_on_minimizer_plane",
+    "BfgsVerification.AdmissibleBFGSRun.iterates_tendsto_unique_min_of_values"
+   ],
+   "of": "C/11_U/heading/001",
+   "note": "Section 11.5 (lines 171-309) as the proof of Theorem 11.1 (one_exceptional_hyperplane): the common contradiction with r(x) = aᵀx - b and E = {0}, under the hypothesis ℓ > F_* (line 189), proves ℓ = F_* (line 308); \"Compactness and uniqueness give whole-sequence convergence\" (lines 308-309). Same span as prose/026 (the proof of Theorem 11.2); two items because a PROOF item takes one target. The id is out of line order because it was added in the fix pass."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/11_U/disp/026",
+   "description": "companion/chapters/11_U.tex:389-391 (Section 11.7, display after \"Direct bounds give\"): \"0 ≤ r′(v) ≤ 6v², 0 ≤ r(v) ≤ 6v³ near zero\" omits the range v ≥ 0. The spike r of (11.18) vanishes for v ≤ 0, so for every v < 0 it has r(v) = 0 > 6v³: the second bound fails at every negative v, hence in every neighbourhood of zero (Lean counterexample spike_cubic_bound_fails). Both bounds hold for every v ≥ 0 and the first for every v (spike_small_bounds; the library's SourceSpikePropertiesTarget states them for v ≥ 0). Nothing in the chapter uses the cubic bound for v < 0. Parallel of the article's M9 (an identity printed without its range). Where the fix goes: the chapter is generated, so the fix is a logged if module=='U': transformation in editorial/generate_companion.py (assert that the old string occurs once, replace it, append a transform_log entry), applied to the frozen source bfgs_lean_stage1/master_report/latex/chapters/U.tex. Old string: \"\\] near zero. However,\" (U.tex:353, span U.span.12, occurs once in U.tex; companion line 391); new string: \"\\] for \\(v\\ge0\\). However,\". Then regenerate the companion.",
+   "severity": "typo",
+   "proposed": "Direct bounds give 0 ≤ r′(v) ≤ 6v², 0 ≤ r(v) ≤ 6v³ for v ≥ 0. Source replacement in U.tex:353 (U.span.12): \"\\] near zero. However,\" → \"\\] for \\(v\\ge0\\). However,\".",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.spike_small_bounds",
+    "BfgsCoverage.Companion.Ch11U.spike_cubic_bound_fails"
+   ]
+  },
+  {
+   "item": "C/11_U/prose/027",
+   "description": "companion/chapters/11_U.tex:302 (Section 11.5.5): \"Thus (6) holds with T=I and\" refers to an equation (6) that exists nowhere in the companion. In the built PDF (companion/build/master.pdf) this reference and the chapter's seven other bare equation and theorem references print literally and point to nothing: companion equations are numbered (c.n) (\\theequation is \\ModuleTag.\\arabic{equation}, companion/preamble.tex:31), theorems c.n (\\thetheorem, preamble.tex:37), and this chapter's equation tags are only (11.10)-(11.21) (there is no (11.6) either). The bare numbers come from the frozen source, where the generator rewrote only the tags (U.n → 11.n). The eight stale references (companion line: printed → intended): 171 \"Theorems 1 and 2\" → Theorems 11.1 and 11.2; 269 \"(11)\" → (11.11); 302 \"(6)\" → the transport hypothesis V_{k+1} = V_kT_k + s_kb_k^T + R_k of Theorem~\\ref{M:residualtheorem} (Theorem 2.4, an unnumbered display at 02_M.tex:230); 340 \"(11)\" → (11.11); 352 \"(16)--(17)\" → (11.16)-(11.17); 415 \"(21)\" → (11.21); 433 \"(18)\" → (11.18); 447 \"(20)\" → (11.20). The items containing the other seven (prose/026, prose/029, prose/043, prose/052, prose/058) point to this entry. The mathematics is correct: along accepted pairs, (11.14) is that transport hypothesis with T_k = I, rank-one term s_k(β_ke_n)^T and R_k = -β_kP_Ss_ke_n^T, the columns of R_k lie in S and ‖R_k‖_F² ≤ (2Lip(τ)²/μ)d_k (Lean transport_hypothesis). Where the fix goes: a logged if module=='U': transformation in editorial/generate_companion.py (assert each old string occurs once, replace it, append a transform_log entry), applied to the frozen source bfgs_lean_stage1/master_report/latex/chapters/U.tex, then regenerate. The old strings, each occurring exactly once in U.tex: (1) \"covers Theorems 1 and 2.\" (U.tex:153, U.span.5); (2) \"follows from (11).\" (U.tex:239, U.span.9); (3) \"Thus (6) holds with \\(T=I\\) and\" (U.tex:268, U.span.10); (4) \"This replaces (11).\" (U.tex:302, U.span.11); (5) \"Equations (16)--(17)\" (U.tex:314, U.span.11); (6) \"bound the left side of\" + newline + \"(21).\" (U.tex:376-377, U.span.12); (7) \"truncate (18).\" (U.tex:391, U.span.13); (8) \"For the objective (20),\" (U.tex:405, U.span.13). Do not replace \"(11)\" globally: Chapter 10 also prints a bare \"Equation (11)\" (10_Q.tex:115), meaning its (10.11) (10_Q.tex:107). The replacement for \"(6)\" must avoid the letter b (b_k = β_ke_n), since b is the hyperplane offset in this chapter (P = {a^Tx = b}, r(x) = a^Tx - b). If the section numbering is changed as well (wording point W-d: the sections jump from 11.2 to 11.5 and the first tag is (11.10)), the proposed equation numbers change with it; decide both together.",
+   "severity": "typo",
+   "proposed": "(1) \"covers Theorems 1 and 2.\" → \"covers Theorems 11.1 and 11.2.\"; (2) \"follows from (11).\" → \"follows from (11.11).\"; (3) \"Thus (6) holds with \\(T=I\\) and\" → \"Thus (11.14) is the transport hypothesis of Theorem~\\ref{M:residualtheorem}, with \\(T=I\\), rank-one term \\(s(\\beta e_n)^T\\) and\"; (4) \"This replaces (11).\" → \"This replaces (11.11).\"; (5) \"Equations (16)--(17)\" → \"Equations (11.16)--(11.17)\"; (6) \"bound the left side of\\n(21).\" → \"bound the left side of\\n(11.21).\"; (7) \"truncate (18).\" → \"truncate (11.18).\"; (8) \"For the objective (20),\" → \"For the objective (11.20),\".",
+   "lean": [
+    "BfgsCoverage.Companion.Ch11U.transport_hypothesis"
+   ]
+  }
+ ]
 }

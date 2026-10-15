@@ -175,6 +175,41 @@ under those items (M8). The chapters are generated: fix them through
   `endpoint_pairings`, `iterate_lift`, `zero_limit_formula`, `theorem_7A`).
   Related, not an error: the bold "Lemma 7.3" (line 405) is the source's Lemma H.3;
   the chapter has no Lemma 7.1 or 7.2. (`C/07_H/prose/028`)
+- [ ] **M18: Chapter 11's references keep its source note's numbering (typo).**
+  `companion/chapters/11_U.tex`: eight bare references print literally and point to
+  nothing (companion equations and theorems are numbered c.n, and this chapter's
+  equation tags are (11.10)–(11.21)). "Theorems 1 and 2" (line 171) means Theorems
+  11.1 and 11.2; "(11)" (lines 269 and 340) means (11.11); "Thus (6) holds with
+  $T=I$ and" (line 302) means the transport hypothesis
+  $V_{k+1}=V_kT_k+s_kb_k^T+R_k$ of Theorem `M:residualtheorem` (Theorem 2.4, an
+  unnumbered display at `02_M.tex:230`); "(16)--(17)" (line 352) means
+  (11.16)–(11.17); "(21)" (line 415) means (11.21); "(18)" (line 433) means (11.18);
+  "(20)" (line 447) means (11.20). The mathematics holds with the intended
+  references: along accepted pairs, (11.14) is that transport hypothesis with
+  $T_k=I$, rank-one term $s_k(\beta_ke_n)^T$ and $R_k=-\beta_kP_Ss_ke_n^T$
+  (`Ch11U.transport_hypothesis`). Fix: a logged `if module=='U':` transformation in
+  `generate_companion.py` on the frozen
+  `bfgs_lean_stage1/master_report/latex/chapters/U.tex`; each old string occurs once:
+  `covers Theorems 1 and 2.` (U.tex:153) → `covers Theorems 11.1 and 11.2.`;
+  `follows from (11).` (239) → `follows from (11.11).`;
+  `Thus (6) holds with \(T=I\) and` (268) → `Thus (11.14) is the transport
+  hypothesis of Theorem~\ref{M:residualtheorem}, with \(T=I\), rank-one term
+  \(s(\beta e_n)^T\) and` (this avoids the letter $b$, which is the hyperplane offset
+  in this chapter); `This replaces (11).` (302) → `This replaces (11.11).`;
+  `Equations (16)--(17)` (314) → `Equations (11.16)--(11.17)`; `bound the left side
+  of` + newline + `(21).` (376–377) → `… (11.21).`; `truncate (18).` (391) →
+  `truncate (11.18).`; `For the objective (20),` (405) → `For the objective (11.20),`.
+  Do not replace "(11)" globally: Chapter 10 prints a bare "(11)" that means (10.11).
+  If the section numbering changes as well (W13), these numbers change with it.
+  (`C/11_U/prose/027`; notes on `prose/026`, `prose/029`, `prose/043`)
+- [ ] **M19: Chapter 11: a cubic bound printed without its range (typo).**
+  `11_U.tex:389-391`: "$0\le r'(v)\le6v^2$, $0\le r(v)\le6v^3$ near zero" omits
+  $v\ge0$. The spike $r$ of (11.18) vanishes for $v\le0$, so $r(v)=0>6v^3$ for every
+  $v<0$ (`Ch11U.spike_cubic_bound_fails`). Both bounds hold for every $v\ge0$
+  (`Ch11U.spike_small_bounds`), and the chapter uses only $v\ge0$. A parallel of M9.
+  Proposed: "… for $v\ge0$." Fix: in the module-U transformation of M18,
+  `\] near zero. However,` (U.tex:353, occurs once) → `\] for \(v\ge0\). However,`.
+  (`C/11_U/disp/026`)
 
 ## Wording points in the companion (no discrepancy)
 
@@ -234,13 +269,39 @@ in the line-by-line reading. The chapters are generated: change them through
 - [ ] **W8: "In this note".** `12_D.tex:105` (Lemma `D:root`: "All denominators in
   this note are nonzero there"), and the same remnant of the source reports at
   `04_R.tex:83`, `07_H.tex:23` ("This note continues the investigation…") and
-  `09_C.tex:110`. Optional: "in this chapter". (`C/12_D/lemma/D:root`,
-  `C/07_H/prose/002`)
+  `09_C.tex:110`, and "earlier notes" at `11_U.tex:354`. Optional: "in this
+  chapter". (`C/12_D/lemma/D:root`, `C/07_H/prose/002`, `C/11_U/prose/031`)
 - [ ] **W9: "The third slope" (companion appendix).** `seed_certificate.tex:12`:
   "The two unknown coordinates of the third slope …": "slope" is the article's term;
   the companion calls the $g_i$ gradients (`12_D.tex:160`). Optional: "of the third
   gradient $g_2=(c,d)^T$", a companion-only replacement in
   `prepare_shared_appendix.py`. (`C/seed_certificate/prose/017`)
+- [ ] **W10: "The later nonsplitting conclusion" (Chapter 11).** `11_U.tex:492`, in
+  "Relation to earlier work": the conclusion comes earlier, in Section 11.7 (subsection
+  "The objective need not split as a smooth function plus …", line 453); the word is
+  a remnant of the source's order. Proposed: "The nonsplitting conclusion of
+  Section 11.7". (`C/11_U/prose/079`)
+- [ ] **W11: Unnamed references to results the companion states (Chapter 11).**
+  `11_U.tex:111` "the affine-criticality program" (Chapter 8); 416 "the recorded
+  equivalence between inward radial smoothness and RS" (Theorem `R:thm:equiv`); 422
+  "the original arbitrary curved finite-$C^2$-max conjecture" (the conjecture of
+  Chapter 8, `C/08_A/prose/042`, OPEN); 424 "the older finite-polyhedral-partition
+  theorem" (Theorem `R:thm:plq`). Optional: cite them with `\ref`. (`C/11_U/prose/019`,
+  `prose/044`, `prose/049`, `prose/050`)
+- [ ] **W12: Redundant compactness hypothesis (Chapter 11).** Theorem 11.1
+  (`11_U.tex:31-32`) assumes $F$ finite, convex, with a unique minimizer, and then
+  "Let $K=\{F\le F(x_0)\}$ be compact"; lines 87–88 repeat "A compact initial
+  sublevel is still required." A finite convex function with a unique minimizer has
+  compact sublevel sets, so the assumption is implied. Harmless; optional.
+  (`C/11_U/heading/001`, `prose/014`)
+- [ ] **W13: Section numbers with gaps.** The frozen sources keep their notes'
+  section numbers (`\setcounter{section}{…}`), so the printed companion skips
+  numbers: Chapter 3 starts at 3.2, Chapter 4 has no 4.4, Chapter 5 no 5.5 or 5.8,
+  Chapter 7 no 7.3 or 7.4, Chapter 10 has only 10.5 and 10.6, and Chapter 11 has no
+  11.3 or 11.4; equation tags start late in the same way (Chapter 11 at (11.10)).
+  Cosmetic. Renumbering would change the numbers proposed in M17, M18 and the other
+  reference fixes, so decide them together. (Notes on `C/11_U/prose/026`,
+  `C/11_U/disp/009`.)
 
 ## Resolved
 
