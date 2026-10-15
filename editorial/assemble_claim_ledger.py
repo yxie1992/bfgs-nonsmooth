@@ -8,9 +8,14 @@ import ledger_addenda
 import coverage_index
 ROOT=Path(__file__).resolve().parents[1]
 def read(p):return json.loads((ROOT/p).read_text())
+def october(row):
+ # Rows refreshed by the October correspondence revision (editorial/release_20261015/).
+ if 'october_revision_changes' not in row:return {}
+ return {'october_revision':{'changes':row['october_revision_changes'],'receipt':'editorial/release_20261015/mapping_refresh.json'}}
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 claims={r['id']:r for r in read('bfgs_lean_stage1/master_report/CLAIMS.json')['claims']}
 index=read('bfgs_lean_stage1/master_report/DECLARATION_INDEX.json')
+provenance=dict.fromkeys(index,'bfgs_lean_stage1/master_report/DECLARATION_INDEX.json')
 article_sources=active_sources(ROOT)
 supplement_register=read('editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json')
 branch_supplement=read('editorial/root_contract_review.json')['supplemental_branch_regularity_audit']
@@ -20,7 +25,7 @@ for supplement in supplement_register['supplements']+[branch_supplement]:
  assert set(audit['axioms'])<= {'propext','Classical.choice','Quot.sound'}
  for declaration in read(supplement['declarations']):
   assert not declaration['unsafe'] and not declaration['partial'] and declaration['ordinary_collector_agrees']
-  index[declaration['name']]=declaration
+  index[declaration['name']]=declaration;provenance[declaration['name']]=supplement['declarations']
 pos=read('editorial/positive_contract_review.json');neg=read('editorial/negative_contract_review.json')
 source=read('companion/SOURCE_CORRESPONDENCE.json')
 article=[]
@@ -36,11 +41,11 @@ def where(label):
  return found[0]
 for row in pos['statements']+pos['equation_mappings']:
  spans=row['source_span_ids'];label=row['label']
- article.append({'id':label,'kind':row.get('kind','equation'),'location':where(label),'proof_location':row.get('proof_location',row.get('article_location')),'source_spans':spans,'full_formal_exports':sorted(set(all_exports(spans))|set(row.get('primary_declarations',[]))),'principal_exports':row.get('primary_declarations',[]),'exact_contracts':['bfgs_lean_stage1/master_report/DECLARATION_INDEX.json','editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json'],'review':row.get('hypothesis_and_proof_correspondence',row.get('governing_statement')),'detailed_review':'editorial/positive_contract_review.json','status':'REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS'})
+ article.append({'id':label,'kind':row.get('kind','equation'),'location':where(label),'proof_location':row.get('proof_location',row.get('article_location')),'source_spans':spans,'full_formal_exports':sorted(set(all_exports(spans))|set(row.get('primary_declarations',[]))),'principal_exports':row.get('primary_declarations',[]),'exact_contracts':['bfgs_lean_stage1/master_report/DECLARATION_INDEX.json','editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json'],'review':row.get('hypothesis_and_proof_correspondence',row.get('governing_statement')),'detailed_review':'editorial/positive_contract_review.json','status':'REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS',**october(row)})
 for i,row in enumerate(pos['unnumbered_mathematical_deductions']):
  spans=row['source_span_ids'];article.append({'id':'positive.deduction.'+str(i+1),'kind':'unnumbered_mathematical_deduction','location':row['article_location'],'anchor':row['anchor'],'source_spans':spans,'full_formal_exports':all_exports(spans),'review':row,'detailed_review':'editorial/positive_contract_review.json','status':'REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS'})
 for row in neg['article_labels']:
- spans=row['corrected_spans'];article.append({'id':row['label'],'kind':row['kind'],'location':where(row['label']),'proof_locations':row['proof_locations'],'source_spans':spans,'full_formal_exports':sorted(set(all_exports(spans))|set(row['canonical_exports'])),'principal_exports':row['canonical_exports'],'exact_contracts':['bfgs_lean_stage1/master_report/DECLARATION_INDEX.json','editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json'],'review':row['review_status'],'detailed_review':'editorial/negative_contract_review.json','status':'ILLUSTRATION_ONLY' if 'illustration' in row['kind'] else 'REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS'})
+ spans=row['corrected_spans'];article.append({'id':row['label'],'kind':row['kind'],'location':where(row['label']),'proof_locations':row['proof_locations'],'source_spans':spans,'full_formal_exports':sorted(set(all_exports(spans))|set(row['canonical_exports'])),'principal_exports':row['canonical_exports'],'exact_contracts':['bfgs_lean_stage1/master_report/DECLARATION_INDEX.json','editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json'],'review':row['review_status'],'detailed_review':'editorial/negative_contract_review.json','status':'ILLUSTRATION_ONLY' if 'illustration' in row['kind'] else 'REVIEWED_CORRESPONDENCE_WITH_KERNEL_CHECKED_CONTRACTS',**october(row)})
 # Every generated theorem environment is matched to containing corrected source spans.
 companion=[]
 for p in sorted((ROOT/'companion/chapters').glob('*.tex')):
@@ -74,12 +79,12 @@ root_review=ROOT/'editorial/root_contract_review.json'
 if root_review.exists():
  root_data=json.loads(root_review.read_text())
  assert root_data['supplemental_audit']['status']=='PASS' and not root_data['remaining_math_obligations']
- for declaration in root_data['supplemental_declarations']:index[declaration['name']]=declaration
+ for declaration in root_data['supplemental_declarations']:index[declaration['name']]=declaration;provenance[declaration['name']]='editorial/root_contract_review.json'
  for row in root_data['records']:
   exports=sorted(set(row['all_source_span_exports'])|set(row['primary_declarations']))
   assert all(n in index for n in exports)
   target=frontmatter if row['kind'] in {'companion_frontmatter_deduction','companion_narrative_deduction'} else article
-  target.append({'id':row['id'],'kind':row['kind'],'location':row['article_location'],'anchor':row['anchor'],'source_spans':row['source_span_ids'],'full_formal_exports':exports,'principal_exports':row['primary_declarations'],'review':row['scope_review'],'status':row['status'],'detailed_review':'editorial/root_contract_review.json'})
+  target.append({'id':row['id'],'kind':row['kind'],'location':row['article_location'],'anchor':row['anchor'],'source_spans':row['source_span_ids'],'full_formal_exports':exports,'principal_exports':row['primary_declarations'],'review':row['scope_review'],'status':row['status'],'detailed_review':'editorial/root_contract_review.json',**october(row)})
 out={'schema_version':1,'scope':'Exact source-span export sets are conservative unions, not minimal proof bases. Principal exports and expanded contracts in the component reviews govern correspondence. Natural-language correspondence is reviewed separately from kernel checking.','baseline_commit':'00362c0249262d182866f14bac756a7c4edac95c','article_records':article,'companion_theorem_records':companion,'companion_inline_result_records':inline,'companion_unnamed_mathematical_records':unnamed,'companion_source_span_records':span_records,'companion_coverage_audit':companion_coverage,'companion_full_source_span_register':'companion/SOURCE_CORRESPONDENCE.json','companion_shared_appendix':{'canonical_source':'paper/appendices/seed_certificate.tex','transformation':'editorial/prepare_shared_appendix.py','source_spans':['D.span.3','D.span.4','D.span.5'],'review':'Same finite certificate proof is included in each document with local cross-references.'},'root_prose_deductions':{'path':'editorial/root_contract_review.json','status':'AVAILABLE' if root_review.exists() else 'PENDING_ARTICLE_ONLY_FORMAL_WRAPPERS'},'unmapped_named_article_statements':missing,'review_status':'CORE_STATEMENTS_MAPPED; ROOT_PROSE_WRAPPERS_PENDING' if not root_review.exists() else 'ALL_COMPONENT_REVIEWS_AVAILABLE'}
 out['companion_frontmatter_deductions']=frontmatter
 out['article_selection_dispositions']='editorial/narrative_rebuild/ARTICLE_DISPOSITIONS.json'
@@ -89,8 +94,9 @@ for row in article:
  if 'exact_contracts' in row and any(n.startswith('ArticleBranchRegularity.') for n in row['full_formal_exports']):
   row['exact_contracts'].append(branch_supplement['declarations'])
 ledger_addenda.apply(ROOT,index,article,companion)
+for name in index:provenance.setdefault(name,read(ledger_addenda.ADDITIONS)['package_audit'])
 # The Lean coverage of every item of both documents, from the coverage registers.
-coverage_summary,coverage_records,coverage_names,coverage_html=coverage_index.build(ROOT,index)
+coverage_summary,coverage_records,coverage_names,coverage_html=coverage_index.build(ROOT,index,provenance)
 out['lean_coverage']=coverage_summary;out['lean_coverage_records']=coverage_records;out['lean_coverage_declarations']=coverage_names
 (ROOT/'editorial/CLAIM_LEDGER.json').write_text(json.dumps(out,indent=2)+'\n')
 # Portable readable navigation: complete exports, exact signatures and source definitions are expandable.

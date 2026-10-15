@@ -71,9 +71,10 @@ def declarations(root):
     return found
 
 
-def build(root, index):
+def build(root, index, provenance=None):
     """Ledger entry and HTML section of the coverage registers."""
     root = Path(root)
+    provenance = provenance or {}
     sys.path.insert(0, str(root / 'editorial/lean_coverage'))
     import extract_items as ex
     known = declarations(root)
@@ -94,7 +95,7 @@ def build(root, index):
                         if name in names:
                             continue
                         if name in index and index[name].get('signature'):
-                            names[name] = {'source': 'bfgs_lean_stage1/master_report/DECLARATION_INDEX.json',
+                            names[name] = {'source': provenance.get(name, 'bfgs_lean_stage1/master_report/DECLARATION_INDEX.json'),
                                            'signature': str(index[name]['signature'])}
                         elif name in known:
                             path, line, statement = known[name]
