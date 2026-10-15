@@ -13,7 +13,7 @@ October, after the Lean coverage. The companion's wording points W1 to W11 and W
 W46 were applied on 15 October (W44 to W46 were found while applying the others or by
 their independent review); W12 and W13 are left for the author. Open: M30 to M41,
 found by the line-by-line reading of the article (15 October) and being applied in
-step 2, W31's claim/proof index, and W47.
+step 2, and W47.
 
 ## Open: line-by-line reading of the article (15 October 2026)
 
@@ -588,7 +588,7 @@ block of `editorial/generate_companion.py`, which runs after the renumbering and
 relocation of the attribution notes, so it sees the printed strings quoted here. No
 replacement adds a line; after regenerating, update the anchors of the items named.
 
-- [ ] **W31: The claim/proof index described as complete (Chapter 1).** `01_I.tex:14`:
+- [x] **W31: The claim/proof index described as complete (Chapter 1).** `01_I.tex:14`:
   "Every retained mathematical assertion is paired with its reviewed formal statement
   and Lean proof in the claim/proof index." The index paired many sentences only
   coarsely, which is why the literal Lean coverage was needed. Proposed, once the
@@ -596,9 +596,13 @@ replacement adds a line; after regenerating, update the anchors of the items nam
   `Every retained mathematical assertion is classified in the claim/proof index, and
   each asserted result is paired there with its formal statement and Lean proof.`
   (`C/01_I/prose/003`)
-  The sentence was applied on 15 October 2026, but the claim/proof index
-  (`editorial/assemble_claim_ledger.py`, `companion/PROOF_CORRESPONDENCE.html`) does
-  not yet list the coverage registers; open until it does.
+  The sentence was applied on 15 October 2026, and the same day the claim/proof index
+  gained the coverage registers: `editorial/assemble_claim_ledger.py` (through
+  `editorial/coverage_index.py`) now lists every item of both documents with its
+  status, its target or reason, and the statement of each Lean name it cites (keys
+  `lean_coverage`, `lean_coverage_records` and `lean_coverage_declarations` of
+  `editorial/CLAIM_LEDGER.json`, last section of `companion/PROOF_CORRESPONDENCE.html`),
+  and stops if a cited name is missing from the Lean sources.
 - [x] **W32: Bare subsection number (Chapter 1).** `01_I.tex:123`:
   "\textbf{Proofs: 12.3.1 and Chapter~\ref{comp:L}.}" prints the right subsection
   (12.3.1, "A simple coercive global failure", which has no label); the source reads
@@ -1415,4 +1419,5 @@ without errors or warnings. `editorial/CLAIM_LEDGER.json` and
 `companion/PROOF_CORRESPONDENCE.html` were regenerated (file hashes and the title
 "Theorem 7.A" only). The independent review found the work sound; its findings F1–F7,
 F9 and F10 and its observations O1–O3 were applied the same day (W44–W46 and further
-places of W8, W10, W17, W25, W37), and F8 (W31) is open.
+places of W8, W10, W17, W25, W37). F8 (W31) was settled the same day by adding the
+coverage registers to the claim/proof index.

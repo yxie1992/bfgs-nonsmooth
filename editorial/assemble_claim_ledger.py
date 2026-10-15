@@ -5,6 +5,7 @@ import hashlib,json,re,html
 from companion_statement_inventory import build as companion_inventory
 from active_tex_sources import sources as active_sources
 import ledger_addenda
+import coverage_index
 ROOT=Path(__file__).resolve().parents[1]
 def read(p):return json.loads((ROOT/p).read_text())
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -88,9 +89,12 @@ for row in article:
  if 'exact_contracts' in row and any(n.startswith('ArticleBranchRegularity.') for n in row['full_formal_exports']):
   row['exact_contracts'].append(branch_supplement['declarations'])
 ledger_addenda.apply(ROOT,index,article,companion)
+# The Lean coverage of every item of both documents, from the coverage registers.
+coverage_summary,coverage_records,coverage_names,coverage_html=coverage_index.build(ROOT,index)
+out['lean_coverage']=coverage_summary;out['lean_coverage_records']=coverage_records;out['lean_coverage_declarations']=coverage_names
 (ROOT/'editorial/CLAIM_LEDGER.json').write_text(json.dumps(out,indent=2)+'\n')
 # Portable readable navigation: complete exports, exact signatures and source definitions are expandable.
-parts=['<!doctype html><html lang="en"><meta charset="utf-8"><title>BFGS article and companion correspondence</title><style>body{font:16px system-ui;max-width:1050px;margin:3em auto;padding:0 1em;line-height:1.5}pre{white-space:pre-wrap;background:#f3f4f5;padding:1em}summary{cursor:pointer}details{margin:.6em 0}code{overflow-wrap:anywhere}</style><h1>Article and companion correspondence</h1><p>Full formal export lists and exact types. A reviewed correspondence is distinct from Lean checking natural-language text. Original definitions and complete dependency records remain in the sealed declaration index.</p>']
+parts=['<!doctype html><html lang="en"><meta charset="utf-8"><title>BFGS article and companion correspondence</title><style>body{font:16px system-ui;max-width:1050px;margin:3em auto;padding:0 1em;line-height:1.5}pre{white-space:pre-wrap;background:#f3f4f5;padding:1em}summary{cursor:pointer}details{margin:.6em 0}code{overflow-wrap:anywhere}</style><h1>Article and companion correspondence</h1><p>Full formal export lists and exact types. A reviewed correspondence is distinct from Lean checking natural-language text. Original definitions and complete dependency records remain in the sealed declaration index. The last section lists the Lean coverage of every item of both documents, from the coverage registers.</p>']
 for title,rows in [('Article',article),('Companion scientific narrative',frontmatter),('Companion named statements',companion),('Companion inline results and conditional criteria',inline),('Companion unnamed mathematical results and proof passages',unnamed),('Complete companion spans: mathematics, definitions, evidence and open boundaries',span_records)]:
  parts.append('<h2>'+title+'</h2>')
  for row in rows:
@@ -99,5 +103,5 @@ for title,rows in [('Article',article),('Companion scientific narrative',frontma
   for n in row['full_formal_exports']:
    parts.append('<details><summary><code>'+html.escape(n)+'</code></summary><pre>'+html.escape(str(index[n]['signature']))+'</pre></details>')
   parts.append('</details>')
-parts.append('</html>');(ROOT/'companion/PROOF_CORRESPONDENCE.html').write_text('\n'.join(parts))
-print('Mapped',len(article),'article records;',len(companion),'companion named results;',len(inline),'inline results;',len(unnamed),'unnamed mathematical spans;',len(span_records),'complete classified source spans.')
+parts.extend(coverage_html);parts.append('</html>');(ROOT/'companion/PROOF_CORRESPONDENCE.html').write_text('\n'.join(parts))
+print('Mapped',len(article),'article records;',len(companion),'companion named results;',len(inline),'inline results;',len(unnamed),'unnamed mathematical spans;',len(span_records),'complete classified source spans;',len(coverage_records),'coverage items with',len(coverage_names),'Lean names.')

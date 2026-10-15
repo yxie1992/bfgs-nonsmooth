@@ -76,7 +76,7 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       resolved, for example `A/seed_certificate/prose/012` is now `PROOF`).
       Companion: done on 15 October 2026 (M12–M29 and the recurrences corrected, the
       25 items resolved, independently reviewed; wording points W1–W11 and W14–W46
-      applied, W12 and W13 left for the author, W31 and W47 open). Since then
+      applied, W12 and W13 left for the author, W47 open). Since then
       `check_coverage.py --strict` passes on every file without
       `--allow-discrepancies`.
 - [x] Non-vacuity follow-up (done 14 October 2026): no admissible run had been

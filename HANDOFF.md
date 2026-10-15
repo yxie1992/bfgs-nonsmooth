@@ -12,7 +12,7 @@ the same day.
 | Work | State | Details |
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
-| Manuscript review | M1–M6 fixed on 13 October; on 15 October (step 2) M7–M11 fixed in the article, and in the companion the recurrences of M8, M12–M29 and the wording points W1–W11 and W14–W46 (W12 and W13 left for the author); open: M30–M41 from the line-by-line reading of the article, W31 (the claim/proof index) and W47 | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
+| Manuscript review | M1–M6 fixed on 13 October; on 15 October (step 2) M7–M11 fixed in the article, and in the companion the recurrences of M8, M12–M29 and the wording points W1–W11 and W14–W46 (W12 and W13 left for the author); open: M30–M41 from the line-by-line reading of the article and W47 | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 
@@ -22,10 +22,11 @@ six reader agents read the article line by line (reports and decisions in
 `editorial/line_by_line_reading_20261015/`), and their accepted findings are
 M30–M41 in `TODO_MANUSCRIPT_REVIEW.md`. The companion's corrections (M8's
 recurrences, M12–M29, W1–W46 except W12 and W13) were applied by an agent,
-reviewed by another and committed. Next: the claim/proof index gains the Lean
-coverage of every item (W31); an agent applies the article's M30–M41 and W47; then
-the release run (`editorial/release_plan_20261015/PLAN.md`; its tooling is being
-prepared by another agent).
+reviewed by another and committed, and the claim/proof index now lists the Lean
+coverage of every item (W31; `editorial/coverage_index.py`). Next: an agent applies
+the article's M30–M41 and W47; then the release run
+(`editorial/release_plan_20261015/PLAN.md`; its tooling is being prepared by another
+agent).
 
 Latest checks:
 

@@ -137,7 +137,13 @@ use `check_coverage.py --strict --allow-discrepancies`.
 
 `lake build` compiles every coverage module (they are imported by
 `BfgsArticle.lean`); the axiom audit includes every Lean name in the registers;
-the kernel replay re-checks the coverage modules with lean4checker.
+the kernel replay re-checks the coverage modules with lean4checker. The claim
+ledger copies the registers: `(cd editorial && python3 assemble_claim_ledger.py)`
+(through `editorial/coverage_index.py`) lists every item, its status, its target
+or reason and the statement of each Lean name it cites, under the keys
+`lean_coverage*` of `editorial/CLAIM_LEDGER.json` and in the last section of
+`companion/PROOF_CORRESPONDENCE.html`; it stops if a cited name is missing from the
+Lean sources. Rerun it after changing a register or a coverage module.
 
 ## After a correction
 
