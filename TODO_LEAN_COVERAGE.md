@@ -22,7 +22,7 @@ Progress (`python3 editorial/lean_coverage/check_coverage.py`), 14 October 2026:
 | Document | Items | Status |
 |---|---|---|
 | Article (`paper/`, 15 files) | 616 (221 mechanical, 395 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
-| Companion (`companion/`, 18 files) | 573 mechanical; prose items not yet added | waves 1 and 2 in progress on the MacBook (14 October; done: M, L, D, H, U, C); wave 3 not started |
+| Companion (`companion/`, 18 files) | 573 mechanical; prose items not yet added | waves 1 and 2 in progress on the MacBook (14 October; done: M, L, D, H, U, C, G); wave 3 not started |
 
 Article items by status: LEAN 280, SAME_AS 124, NON_CLAIM 89, DEFINITION 51,
 PART_OF 34, PROOF 28, DISCREPANCY 9 (manuscript items M7–M11), OPEN 1.
@@ -41,7 +41,7 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
 | compD | `chapters/12_D.tex`, `appendices/seed_certificate.tex` | `Ch12D`, `SeedCertificate` | done: `12_D.tex` 133 items (LEAN 77, DEFINITION 15, SAME_AS 23, PART_OF 4, PROOF 3, NON_CLAIM 10, DISCREPANCY 1: M14); `seed_certificate.tex` 43 items (SAME_AS 27, NON_CLAIM 8, LEAN 3, PROOF 2, DISCREPANCY 3: M15, M16); wording points W6–W9; M11 does not recur; reviewed, fix pass done |
 | compL | `chapters/13_L.tex` | `Ch13L` | done: 142 items (LEAN 48, DEFINITION 29, PART_OF 3, PROOF 3, SAME_AS 38, NON_CLAIM 17, OPEN 1, DISCREPANCY 3: M8 recurrence, M12, M13); OPEN: line 61, four $C^2$ branches (`FourC2BranchLocalFailure`); reviewed, fix pass done |
 | compTA | `chapters/03_T.tex`, `chapters/08_A.tex` | `Ch03T`, `Ch08A` | wave 2: in progress |
-| compG | `chapters/05_G.tex` | `Ch05G` | wave 2: in progress |
+| compG | `chapters/05_G.tex` | `Ch05G` | done: 127 items (LEAN 68, DEFINITION 16, SAME_AS 16, NON_CLAIM 13, PROOF 6, PART_OF 5, DISCREPANCY 3: M21–M23); wording points W11, W13, W16; reviewed, fix pass done |
 | compFQ | `chapters/06_F.tex`, `chapters/10_Q.tex` | `Ch06F`, `Ch10Q` | wave 2: in progress |
 | compU | `chapters/11_U.tex` | `Ch11U` | done: 119 items (LEAN 61, SAME_AS 21, PART_OF 11, NON_CLAIM 11, DEFINITION 8, PROOF 5, DISCREPANCY 2: M18, M19); wording points W8, W10–W13; reviewed, fix pass done |
 | compFront | `chapters/01_I.tex`, `chapters/14_E.tex`, `research_story.tex`, `current_verification.tex`, `correspondence.tex` | `Ch01I`, `Ch14E`, `ResearchStory`, `CurrentVerification`, `Correspondence` | wave 3, after all chapters |

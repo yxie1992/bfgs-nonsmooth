@@ -14,7 +14,12 @@
    "title": null,
    "container": null,
    "sha256": "559d2a2224423749",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.positiveBand_eq",
+    "BfgsVerification.TransportedCertificate.positiveBand"
+   ],
+   "note": "K_η is the library positiveBand F K Fstar η = {x | x ∈ K ∧ F x ≥ Fstar + η} (positiveBand_eq, rfl). The coverage theorems write the band out as {x | x ∈ K ∧ F x ≥ Fstar + η} and take η > 0 as a hypothesis."
   },
   {
    "id": "C/05_G/disp/002",
@@ -28,7 +33,14 @@
    "title": null,
    "container": null,
    "sha256": "ab630307f1bde7ff",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.pair_notation",
+    "BfgsVerification.coordinateGradient",
+    "BfgsVerification.TransportedCertificate.pairStep",
+    "BfgsVerification.gradientFunctional"
+   ],
+   "note": "\"x is differentiable with g = ∇F(x)\" is HasFDerivAt F (gradientFunctional g) x; then g = coordinateGradient F x (pair_notation). g_z is h in Lean; y = h - g and s = z - x are written out (pairStep x z = z - x)."
   },
   {
    "id": "C/05_G/disp/003",
@@ -42,7 +54,13 @@
    "title": null,
    "container": null,
    "sha256": "9d6e55926bef19e9",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.pair_notation",
+    "BfgsVerification.TransportedCertificate.pairDecrease",
+    "BfgsVerification.TransportedCertificate.pairCurvature"
+   ],
+   "note": "pairDecrease x z g = -gᵀ(z - x) = d and pairCurvature x z g h = (h - g)ᵀ(z - x) = t (pair_notation, rfl); Δ = F x - F z is written out."
   },
   {
    "id": "C/05_G/disp/004",
@@ -56,7 +74,13 @@
    "title": null,
    "container": null,
    "sha256": "7bb9e3ff733b69ca",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.eligible_iff",
+    "BfgsVerification.TransportedCertificate.EligiblePair",
+    "BfgsCoverage.Article.Energy.eligiblePair_iff"
+   ],
+   "note": "eligible_iff: EligiblePair F c₁ c₂ x z g h (both endpoints differentiable with gradients g, h) ⟺ d > 0 ∧ c₁d ≤ Δ ≤ d ∧ t ≥ (1 - c₂)d, with s, y, d, Δ, t as variables with their defining equations. Same display as the article's A/energy/disp/021 (ω = 1 - c₂)."
   },
   {
    "id": "C/05_G/disp/005",
@@ -70,7 +94,18 @@
    "title": null,
    "container": null,
    "sha256": "7c8f14d10b880cb2",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.condition_iff",
+    "BfgsCoverage.Companion.Ch05G.condition_iff_psd_everywhere",
+    "BfgsVerification.TransportedCertificate.BandCertificate",
+    "BfgsVerification.TransportedCertificate.HasBandCertificates",
+    "BfgsVerification.TransportedCertificate.stepProjector",
+    "BfgsCoverage.Article.Energy.stepProjector_eq",
+    "BfgsCoverage.Companion.Ch05G.visibilitySecant_iff",
+    "BfgsVerification.TransportedCertificate.VisibilitySecantCertificate"
+   ],
+   "note": "With lines 50 and 57 (\"The last two apply to all eligible pairs in the band with d ≤ δ\"): condition_iff shows that a library BandCertificate F K Fstar c₁ c₂ η is exactly a field W : Vec n → Mat n, PSD at the differentiable points of K_η, with constants m > 0, C (any real: \"C < ∞\"), L ≥ 0, δ > 0, (5.V) at every differentiable point of K_η and (5.S), (5.T) for every eligible pair in K_η with d ≤ δ; Π_s = stepProjector s = I - ssᵀ/(sᵀs) (stepProjector_eq). The field is a total function with no regularity; values off the differentiable band points are irrelevant: condition_iff_psd_everywhere gives the same equivalence with W(x) PSD at every point of K_η (\"a finite-valued PSD field\" on the band). Unlike the article (A/energy/definition/art:band-certificate) the constant C has no sign condition here, as in the library. visibilitySecant_iff: the (V)-(S) part is VisibilitySecantCertificate."
   },
   {
    "id": "C/05_G/proposition/001",
@@ -84,7 +119,15 @@
    "title": "Exact nonexpansion normalization",
    "container": null,
    "sha256": "247a1bdcce09adbf",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.exact_nonexpansion_normalization",
+    "BfgsVerification.TransportedCertificate.hasBandCertificates_iff_zero_budget",
+    "BfgsVerification.TransportedCertificate.BandCertificate.normalize",
+    "BfgsVerification.TransportedCertificate.BandCertificate.normalize_budget",
+    "BfgsVerification.certificateNormalization"
+   ],
+   "note": "Standing assumptions of Section 5.1 written out: F finite convex (ConvexOn ℝ univ F), F_* = min F attained (IsLeast (Set.range F) Fstar), K = {F ≤ b} compact, 0 < c₁ < c₂ < 1, η > 0, K_η = {x ∈ K | F x ≥ F_* + η}; unused ones are named with _. Per band: Nonempty (BandCertificate F K Fstar c₁ c₂ η) (the condition (5.V)-(5.T), condition_iff) ⟺ there are W, m > 0, C, δ > 0 with PSD, (5.V), (5.S) and (5.T0) Π_sW(x)Π_s - Π_sW(z)Π_s ⪰ 0 on the same band and the same eligible pairs; and every certificate has a normalized one with L = 0 and the same δ (\"no domain or eligible-pair hypothesis is added\"; m and C change)."
   },
   {
    "id": "C/05_G/disp/006",
@@ -98,7 +141,8 @@
    "title": null,
    "container": "C/05_G/proposition/001",
    "sha256": "e5db18a4ea6a0742",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/05_G/proposition/001"
   },
   {
    "id": "C/05_G/proof/001",
@@ -112,7 +156,16 @@
    "title": null,
    "container": null,
    "sha256": "f056dfbafe12e261",
-   "status": null
+   "status": "PROOF",
+   "of": "C/05_G/proposition/001",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.BandCertificate.normalize",
+    "BfgsVerification.TransportedCertificate.BandCertificate.rescale",
+    "BfgsVerification.TransportedCertificate.value_weight_transport",
+    "BfgsCoverage.Companion.Ch05G.normalized_field",
+    "BfgsCoverage.Companion.Ch05G.exp_budget_bound"
+   ],
+   "note": "The library normalization is the proof: rescale by w(x) = exp(κ(F(x) - F_*)), κ = L/c₁, which lies between exp(κη) and exp(κ(b - F_*)) on the band (BandCertificate.rescale), and value_weight_transport is the inequality e^{κ(F(z)-F_*)}(1 + Ld) ≤ e^{κ(F(x)-F_*)} (the proof's display disp/008 multiplied by e^{κ(F(x)-F_*)}). The converse is the case L = 0."
   },
   {
    "id": "C/05_G/disp/007",
@@ -126,7 +179,13 @@
    "title": null,
    "container": "C/05_G/proof/001",
    "sha256": "bb8b15661b325d06",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.normalized_field",
+    "BfgsVerification.TransportedCertificate.BandCertificate.normalize",
+    "BfgsVerification.TransportedCertificate.BandCertificate.normalize_field"
+   ],
+   "note": "The display defines Ŵ (Lean What, with κ and their defining equations as hypotheses); normalized_field shows that Ŵ is the field of the library certificate Cert.normalize, which has L = 0 and the same δ."
   },
   {
    "id": "C/05_G/disp/008",
@@ -140,7 +199,12 @@
    "title": null,
    "container": "C/05_G/proof/001",
    "sha256": "5526bc6873ff254e",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.exp_budget_bound",
+    "BfgsVerification.TransportedCertificate.value_weight_transport"
+   ],
+   "note": "Stated under the proof's standing assumptions (a certificate on K_η, κ = L/c₁, an eligible pair in the band with d ≤ δ); only L ≥ 0, c₁ > 0, d > 0 and Δ ≥ c₁d are used."
   },
   {
    "id": "C/05_G/disp/009",
@@ -154,7 +218,14 @@
    "title": null,
    "container": null,
    "sha256": "e448a9a6907cc7f5",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.ellipsoid_eq",
+    "BfgsVerification.CertificateGeometry.ellipsoid",
+    "BfgsVerification.CertificateGeometry.matrixBall",
+    "BfgsVerification.CertificateGeometry.euclideanUnitBall"
+   ],
+   "note": "ellipsoid hW = hW.sqrt *ᵥ {v : ‖v‖₂ ≤ 1} with hW.sqrt the PSD square root (hW.sqrt ⪰ 0, hW.sqrt² = W) and the Euclidean norm ‖euclideanVector v‖ (ellipsoid_eq)."
   },
   {
    "id": "C/05_G/disp/010",
@@ -170,7 +241,13 @@
    "title": null,
    "container": null,
    "sha256": "d46228ffd424dafc",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.range_inclusion",
+    "BfgsVerification.CertificateGeometry.range_le_sup_span_of_projected_order",
+    "BfgsVerification.CertificateGeometry.matrixRange"
+   ],
+   "note": "For a certificate with L = 0 (the normalized condition) and an eligible pair in the band with d ≤ δ: range W(z) ≤ range W(x) ⊔ span{z - x}, ranges as LinearMap.range (mulVecLin). The pointwise form (any PSD W(x), W(z) with (5.T0)) is the third conjunct of range_argument."
   },
   {
    "id": "C/05_G/disp/011",
@@ -184,7 +261,14 @@
    "title": null,
    "container": null,
    "sha256": "d24f5a887f5bca08",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.incoming_set_eq",
+    "BfgsVerification.PointwiseFeasibility.incomingPolar",
+    "BfgsVerification.PointwiseFeasibility.sourceJump",
+    "BfgsVerification.PointwiseFeasibility.sourceCurvature"
+   ],
+   "note": "D(z) = incomingPolar (sourceJump z) (sourceCurvature z) = {v | ∀ x ∈ I(z), |(∇F(z) - ∇F(x))ᵀv| ≤ √t(x,z)} (incoming_set_eq, rfl), for z a differentiable band point (BandPoint) and I(z) = IncomingPoint (prose/019); gradients are coordinateGradient."
   },
   {
    "id": "C/05_G/disp/012",
@@ -200,7 +284,13 @@
    "title": null,
    "container": null,
    "sha256": "e2d93fa6f92546de",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.nu_eq",
+    "BfgsVerification.PointwiseFeasibility.sourceCapacity",
+    "BfgsVerification.PointwiseFeasibility.descentCapacity"
+   ],
+   "note": "ν(z) = sourceCapacity F K Fstar c₁ c₂ η δ z : ℝ≥0∞ (values in [0,∞]) is the supremum of ENNReal.ofReal |∇F(z)ᵀv| over D(z) (nu_eq)."
   },
   {
    "id": "C/05_G/proposition/002",
@@ -214,7 +304,13 @@
    "title": "Exact characterization of (V) and (S), without transport",
    "container": null,
    "sha256": "bd277bdff8d6d160",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.pointwise_characterization",
+    "BfgsVerification.PointwiseFeasibility.visibility_secant_iff_source_capacity",
+    "BfgsVerification.pointwiseCertificateCapacity"
+   ],
+   "note": "Standing assumptions of Section 5.1 written out: F finite convex (ConvexOn ℝ univ F), F_* = min F attained (IsLeast (Set.range F) Fstar), K = {F ≤ b} compact, 0 < c₁ < c₂ < 1, η > 0, K_η = {x ∈ K | F x ≥ F_* + η}; unused ones are named with _. For the fixed threshold δ > 0 (line 124): (∃ W, m > 0, C with PSD at differentiable band points, (5.V), (5.S) for eligible pairs in K_η with d ≤ δ) ⟺ 0 < ⨅ z, ν(z), the infimum over the differentiable band points (an empty infimum is ∞ > 0). The last two sentences of the proposition (only (V) and (S); no assertion about (T)) describe the statement: transport does not occur in it."
   },
   {
    "id": "C/05_G/disp/013",
@@ -228,7 +324,8 @@
    "title": null,
    "container": "C/05_G/proposition/002",
    "sha256": "7c0007406ee1fb46",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/05_G/proposition/002"
   },
   {
    "id": "C/05_G/proof/002",
@@ -242,7 +339,16 @@
    "title": null,
    "container": null,
    "sha256": "c3e5a14f7dd089c4",
-   "status": null
+   "status": "PROOF",
+   "of": "C/05_G/proposition/002",
+   "lean": [
+    "BfgsVerification.PointwiseFeasibility.uniformDirections_of_uniformPSD",
+    "BfgsVerification.PointwiseFeasibility.rankOne_of_uniformDirections",
+    "BfgsVerification.PointwiseFeasibility.uniformDirections_iff_capacity",
+    "BfgsVerification.PointwiseFeasibility.source_uniformPSD_iff",
+    "BfgsCoverage.Companion.Ch05G.proof_direction"
+   ],
+   "note": "The library replaces C by max C 1, which covers the cases C > 0, C = 0 (and C < 0, where no incoming pair exists) of the proof; the converse chooses v_z ∈ D(z) with |∇F(z)ᵀv_z| ≥ r and W(z) = v_zv_zᵀ (C = 1, m = r²), with no continuity."
   },
   {
    "id": "C/05_G/disp/014",
@@ -256,7 +362,11 @@
    "title": null,
    "container": "C/05_G/proof/002",
    "sha256": "e961b6b8fcd1e630",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.proof_direction"
+   ],
+   "note": "The display defines v; proof_direction takes v with this defining equation (B a (V)-(S) field with constant C > 0, z a differentiable band point, h = ∇F(z)) and states the claims of the next sentence: |yᵀv| ≤ √t for every incoming pair x ∈ I(z) and |hᵀv| ≥ √(m/C) (PSD Cauchy-Schwarz, QuadraticGauge.metric_cauchy_schwarz)."
   },
   {
    "id": "C/05_G/proposition/G:prop:star",
@@ -272,7 +382,16 @@
    "title": "Incoming-jump obstruction",
    "container": null,
    "sha256": "168dc6ad3d73f0f8",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.incoming_jump_obstruction",
+    "BfgsCoverage.Companion.Ch05G.incoming_jump_obstruction_pos",
+    "BfgsCoverage.Companion.Ch05G.visibilitySecant_iff",
+    "BfgsVerification.TransportedCertificate.incoming_jump_no_visibility_secant",
+    "BfgsVerification.TransportedCertificate.incoming_jump_no_band_certificate",
+    "BfgsVerification.incomingJumpObstruction"
+   ],
+   "note": "Standing assumptions of Section 5.1 written out: F finite convex (ConvexOn ℝ univ F), F_* = min F attained (IsLeast (Set.range F) Fstar), K = {F ≤ b} compact, 0 < c₁ < c₂ < 1, η > 0, K_η = {x ∈ K | F x ≥ F_* + η}; unused ones are named with _. ε ranges over an index type ι with a nontrivial filter l (ε → 0 in any sense; incoming_jump_obstruction_pos is the case ε ↓ 0, families indexed by ε > 0). z_ε and x_{j,ε} (j < r) lie in K_η, z_ε is differentiable with gradient h_ε, every pair (x_{j,ε}, z_ε) is eligible (gradients g_{j,ε}, h_ε), d_{j,ε} → 0, y and t are written out, ∇F(z_ε) = Σ λ y for every ε and Σ|λ|√t → 0. Conclusion: no VisibilitySecantCertificate on the band (no field with (V) and (S), visibilitySecant_iff) and no BandCertificate. The hypotheses are satisfiable for an actual objective (example at the end of the module: f(x) = (x+2)²/2 + |x|, (1/4,1/2), r = 1)."
   },
   {
    "id": "C/05_G/disp/015",
@@ -286,7 +405,8 @@
    "title": null,
    "container": "C/05_G/proposition/G:prop:star",
    "sha256": "1e8124447d4062b1",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/05_G/proposition/G:prop:star"
   },
   {
    "id": "C/05_G/proof/003",
@@ -300,7 +420,14 @@
    "title": null,
    "container": null,
    "sha256": "d1427c38fa9887e3",
-   "status": null
+   "status": "PROOF",
+   "of": "C/05_G/proposition/G:prop:star",
+   "lean": [
+    "BfgsVerification.IncomingJump.no_visible_suppression",
+    "BfgsVerification.IncomingJump.weighted_jump_bound",
+    "BfgsCoverage.Companion.Ch05G.seminorm_display"
+   ],
+   "note": "\"Neither transport nor boundedness or continuity of W was used\": the library proof uses only the VisibilitySecantCertificate fields at the targets z_ε."
   },
   {
    "id": "C/05_G/disp/016",
@@ -314,7 +441,13 @@
    "title": null,
    "container": "C/05_G/proof/003",
    "sha256": "4dcc32b192af39a6",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.seminorm_display",
+    "BfgsVerification.IncomingJump.weighted_jump_bound",
+    "BfgsCoverage.Companion.Ch05G.sqrt_max_zero"
+   ],
+   "note": "Stated under the proposition's hypotheses and \"any PSD field satisfying (S)\" (W, C, δ > 0; (V) is not assumed, so the assumptions are consistent): for ε near the limit (once every d_{j,ε} ≤ δ) √(∇F(z_ε)ᵀW(z_ε)∇F(z_ε)) ≤ √C Σ_j|λ_{j,ε}|√t_{j,ε}, and the right side tends to 0. √ is Real.sqrt (√C = 0 for C ≤ 0, where the bound still holds)."
   },
   {
    "id": "C/05_G/disp/017",
@@ -328,7 +461,14 @@
    "title": null,
    "container": null,
    "sha256": "89fc09b68ba3ed97",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.realizing_metric",
+    "BfgsVerification.TransportedCertificate.realizingMetric",
+    "BfgsVerification.TransportedCertificate.realizingMetric_posDef",
+    "BfgsVerification.TransportedCertificate.realizingMetric_mul_gradient"
+   ],
+   "note": "H is a variable with defining equation H = d⁻¹·ssᵀ + I - (gᵀg)⁻¹·ggᵀ, d = -gᵀs > 0; it equals the library realizingMetric g s."
   },
   {
    "id": "C/05_G/disp/018",
@@ -342,7 +482,14 @@
    "title": null,
    "container": null,
    "sha256": "daa671557f8e474c",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.jumpSpace_eq",
+    "BfgsVerification.AccessibleJumpGeometry.jumpSpace",
+    "BfgsVerification.AccessibleJumpGeometry.tangentSpace",
+    "BfgsCoverage.Companion.Ch05G.IsLimitingGradient"
+   ],
+   "note": "For g : Fin r → EuclideanSpace ℝ (Fin n) (Euclidean inner product): jumpSpace g = vectorSpan of the g_i = span{g_i - g_j} and tangentSpace g = (jumpSpace g)ᗮ (jumpSpace_eq). The \"limiting active gradients\" of line 194 are the limits of gradients at differentiable points tending to p (IsLimitingGradient, used in prose/043 and prose/049); the algebraic statements hold for any family g_i."
   },
   {
    "id": "C/05_G/disp/019",
@@ -356,7 +503,15 @@
    "title": null,
    "container": null,
    "sha256": "601cd41e03965b33",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.accessible_jump_annihilated",
+    "BfgsCoverage.Companion.Ch05G.AccessibleJump",
+    "BfgsCoverage.Companion.Ch05G.field_limit",
+    "BfgsVerification.AccessibleJumpGeometry.accessible_jump_annihilated",
+    "BfgsVerification.AccessibleJumpGeometry.accessible_jump_annihilated_of_continuousAt"
+   ],
+   "note": "Standing assumptions of Section 5.1 written out: F finite convex (ConvexOn ℝ univ F), F_* = min F attained (IsLeast (Set.range F) Fstar), K = {F ≤ b} compact, 0 < c₁ < c₂ < 1, η > 0, K_η = {x ∈ K | F x ≥ F_* + η}; unused ones are named with _. With the lead-in of line 200 and line 204 (\"the second conclusion uses positive semidefiniteness\"): a certificate Cert on K_η with a finite continuous extension to p, i.e. a matrix W(p) (Lean Wp) with Cert.W(z) → Wp as z → p through the differentiable points of K_η (Tendsto on 𝓝[D] p), and an accessible limiting jump j (AccessibleJump: eligible pairs in K_η, both endpoints → p, d → 0, t → 0, h - g → j). Conclusion jᵀW(p)j = 0 ∧ W(p)j = 0. The library proves it for (V)-(S) fields; the certificate gives one (toVisibilitySecant). Non-vacuity: the example at the end of the module satisfies all these hypotheses with a nonzero accessible jump (F(u,v) = u² + |v|, the continuous radial certificate W(x) = xxᵀ (uvCert), p = (1,0), j = (0,-2))."
   },
   {
    "id": "C/05_G/disp/020",
@@ -370,7 +525,14 @@
    "title": null,
    "container": null,
    "sha256": "001001b6f16e8db7",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.range_in_accessible_tangent",
+    "BfgsCoverage.Companion.Ch05G.accessibleSpan",
+    "BfgsVerification.AccessibleJumpGeometry.range_orthogonal_to_accessible_jumps",
+    "BfgsVerification.AccessibleJumpGeometry.posSemidef_limit"
+   ],
+   "note": "Under the hypotheses of disp/019: every v ∈ range W(p) has euclideanVector v ∈ U_acc = (N_acc)ᗮ, N_acc = accessibleSpan (span of all accessible limiting jumps at p). If there is no accessible jump, U_acc is everything; otherwise W(p) is a limit of PSD matrices, hence symmetric. The hypotheses are satisfiable with a nonzero accessible jump (see disp/019)."
   },
   {
    "id": "C/05_G/disp/021",
@@ -384,7 +546,12 @@
    "title": null,
    "container": null,
    "sha256": "f0231c2919220abf",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.projection_zero_iff_affine",
+    "BfgsVerification.AccessibleJumpGeometry.tangent_projection_zero_iff_zero_mem_affineSpan"
+   ],
+   "note": "For any finite family g : Fin r → EuclideanSpace ℝ (Fin n) and any i."
   },
   {
    "id": "C/05_G/disp/022",
@@ -398,7 +565,13 @@
    "title": null,
    "container": null,
    "sha256": "83583b784e336b98",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.shiftedAbs_eq",
+    "BfgsVerification.ScalarCounterexamples.shiftedAbs",
+    "BfgsVerification.ScalarCounterexamples.shiftedObjective"
+   ],
+   "note": "f = shiftedAbs t = (t+2)²/2 + |t| on ℝ and shiftedObjective x = f(x₀) on ℝ¹; minimizer -1 with f(-1) = 3/2 (shiftedAbs_eq). (c₁,c₂) = (1/8,1/4) are the constants used in prose/039-prose/044."
   },
   {
    "id": "C/05_G/proposition/003",
@@ -414,7 +587,14 @@
    "title": "Exact scalar characterization",
    "container": null,
    "sha256": "26f44c69a5ed8a15",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.exact_scalar_characterization",
+    "BfgsVerification.TransportedCertificate.scalar_certificate_iff_quotient",
+    "BfgsVerification.TransportedCertificate.scalar_certificate_iff_eligible_lipschitz",
+    "BfgsVerification.scalarCertificateCharacterization"
+   ],
+   "note": "F : Vec 1 → ℝ finite convex, F_* = min F attained, K = {F ≤ b} compact, 0 < c₁ < c₂ < 1, η > 0. First conjunct: Nonempty BandCertificate on K_η ⟺ ∃ δ > 0, the set of quotients |F'(z) - F'(x)|/(|z - x||F'(z)|²) over eligible pairs in K_η with d ≤ δ is bounded above (\"sup < ∞\", G:eq:scalar; an empty set is bounded). Second: ⟺ ∃ δ > 0, ∃ A, |F'(z) - F'(x)| ≤ A|z - x| on these pairs (disp/024). F'(x) is the gradient coordinate g 0. \"This is not a Lipschitz assertion on all pairs or across the minimizer\" (line 245) describes the statement: only eligible small pairs in the band are quantified; e.g. f(x) = (x+2)²/2 + |x| has band certificates for (1/8,1/4) (prose/039) although f' jumps at 0."
   },
   {
    "id": "C/05_G/disp/023",
@@ -430,7 +610,8 @@
    "title": null,
    "container": "C/05_G/proposition/003",
    "sha256": "cb9765ad9c7d24e4",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/05_G/proposition/003"
   },
   {
    "id": "C/05_G/disp/024",
@@ -444,7 +625,8 @@
    "title": null,
    "container": "C/05_G/proposition/003",
    "sha256": "2558127a6f3bb22b",
-   "status": null
+   "status": "PART_OF",
+   "of": "C/05_G/proposition/003"
   },
   {
    "id": "C/05_G/proof/004",
@@ -458,7 +640,16 @@
    "title": null,
    "container": null,
    "sha256": "24b9ab5a4cc827bc",
-   "status": null
+   "status": "PROOF",
+   "of": "C/05_G/proposition/003",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.quotient_bound_of_visibility_secant",
+    "BfgsVerification.TransportedCertificate.certificateOfScalarQuotient",
+    "BfgsVerification.TransportedCertificate.scalar_gradient_band_bounds",
+    "BfgsVerification.TransportedCertificate.scalar_quotient_iff_lipschitz_of_bounds",
+    "BfgsVerification.TransportedCertificate.scalar_projector_zero"
+   ],
+   "note": "Π_s = 0 in dimension one (scalar_projector_zero); W(z) = 1/F'(z)² (certificateOfScalarQuotient); on a compact band η/R ≤ |F'| ≤ G (scalar_gradient_band_bounds)."
   },
   {
    "id": "C/05_G/proposition/G:prop:scalarconv",
@@ -474,7 +665,15 @@
    "title": "Scalar convergence, independently of BFGS updates",
    "container": null,
    "sha256": "aa6c872a5d191e18",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.scalar_convergence",
+    "BfgsCoverage.Companion.Ch05G.scalar_bfgs_convergence",
+    "BfgsVerification.ScalarMetricRun.convergence",
+    "BfgsVerification.AdmissibleBFGSRun.scalar_convergence",
+    "BfgsVerification.scalarMetricConvergence"
+   ],
+   "note": "The run is written out (x_k, g_k = f'(x_k) ≠ 0, metrics M_k > 0, steps α_k > 0, x_{k+1} = x_k - α_kM_kg_k, Armijo, weak Wolfe, 0 < c₁ < c₂ < 1; the library structure ScalarMetricRun); f convex with unique minimizer x_*, {f ≤ f(x₀)} compact. Conclusion: f(x_k) → f(x_*) and x_k → x_*. scalar_bfgs_convergence: the same for every admissible full-BFGS run in dimension one. The hypotheses are satisfiable (example at the end of the module)."
   },
   {
    "id": "C/05_G/proof/005",
@@ -488,7 +687,15 @@
    "title": null,
    "container": null,
    "sha256": "6e9689f00b11457e",
-   "status": null
+   "status": "PROOF",
+   "of": "C/05_G/proposition/G:prop:scalarconv",
+   "lean": [
+    "BfgsVerification.ScalarMetricRun.no_uniform_positive_gap",
+    "BfgsVerification.ScalarMetricRun.abs_gradient_lower_of_gap",
+    "BfgsVerification.ScalarMetricRun.summable_step_dist_of_gradient_lower",
+    "BfgsVerification.ScalarMetricRun.wolfe_gradient_product",
+    "BfgsVerification.ScalarMetricRun.d_eq_abs_gradient_mul_abs_step"
+   ]
   },
   {
    "id": "C/05_G/disp/025",
@@ -502,7 +709,14 @@
    "title": null,
    "container": null,
    "sha256": "18d9511371217656",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.shifted_crossing_gradients",
+    "BfgsVerification.ScalarCounterexamples.crossing_gradients",
+    "BfgsVerification.ShiftedAbsAccessibility.actual_gradient_pos",
+    "BfgsVerification.ShiftedAbsAccessibility.actual_gradient_neg"
+   ],
+   "note": "For ε > 0 (the formulas fail for ε < 0, where x = ε lies left of the kink; ε denotes a positive parameter as in line 307): every gradient g_x of f at x = ε and g_z at z = -ε/2 has g_x = 3 + ε, g_z = 1 - ε/2, and y = g_z - g_x = -2 - 3ε/2; the gradients exist (crossing_gradients). Wording point (not a discrepancy): the sign of ε is fixed only by context at lines 269-278 (ε is the chapter's small positive parameter, line 307 writes ε ↓ 0, and \"strictly eligible\" at line 278 needs d > 0, i.e. ε > 0); proposed wording \"For $x=\\epsilon$, $z=-\\epsilon/2$ with $\\epsilon>0$\"."
   },
   {
    "id": "C/05_G/disp/026",
@@ -516,7 +730,14 @@
    "title": null,
    "container": null,
    "sha256": "60e732d0dbf913b5",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.shifted_crossing_quantities",
+    "BfgsVerification.ScalarCounterexamples.crossing_decrease",
+    "BfgsVerification.ScalarCounterexamples.crossing_values",
+    "BfgsVerification.ScalarCounterexamples.crossing_curvature"
+   ],
+   "note": "For ε > 0, with s = z - x, d = -g_xᵀs, Δ = f(x) - f(z), t = yᵀs as variables with their defining equations. Wording point (not a discrepancy): the sign of ε is fixed only by context at lines 269-278 (ε is the chapter's small positive parameter, line 307 writes ε ↓ 0, and \"strictly eligible\" at line 278 needs d > 0, i.e. ε > 0); proposed wording \"For $x=\\epsilon$, $z=-\\epsilon/2$ with $\\epsilon>0$\"."
   },
   {
    "id": "C/05_G/disp/027",
@@ -532,7 +753,16 @@
    "title": null,
    "container": null,
    "sha256": "5c401d3f46b9fe76",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.h_def",
+    "BfgsVerification.AccumulatingKinks.objective",
+    "BfgsVerification.AccumulatingKinks.knot",
+    "BfgsVerification.AccumulatingKinks.term",
+    "BfgsVerification.AccumulatingKinks.kinkSum",
+    "BfgsVerification.AccumulatingKinks.coordinateObjective"
+   ],
+   "note": "The library sums over j ≥ 0 with knot j = (1/4)^{j+1} = a_{j+1} = 4^{-(j+1)} (h_def; knot_of_index: a_j = knot (j-1) for j ≥ 1); (u)_+ = max u 0; coordinateObjective x = h(x₀) on ℝ¹."
   },
   {
    "id": "C/05_G/disp/028",
@@ -546,7 +776,12 @@
    "title": null,
    "container": null,
    "sha256": "1465265de5450f7b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.formula_below",
+    "BfgsVerification.AccumulatingKinks.objective_formula_below"
+   ],
+   "note": "For every knot a = (1/4)^j, j ≥ 1, and a/4 < x < a."
   },
   {
    "id": "C/05_G/disp/029",
@@ -560,7 +795,13 @@
    "title": null,
    "container": null,
    "sha256": "df1f3fd6964884a4",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.formula_above",
+    "BfgsCoverage.Companion.Ch05G.formula_above_interval",
+    "BfgsVerification.AccumulatingKinks.objective_formula_above"
+   ],
+   "note": "\"Just above a\": for all x > a near a (eventually in 𝓝[>] a); formula_above_interval gives it on a ≤ x ≤ 4a."
   },
   {
    "id": "C/05_G/disp/030",
@@ -574,7 +815,12 @@
    "title": null,
    "container": null,
    "sha256": "3fc8917ca3409b32",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.knot_crossing_gradients",
+    "BfgsVerification.AccumulatingKinks.crossing_gradients"
+   ],
+   "note": "For a fixed knot a = (1/4)^j (j ≥ 1) and ε ↓ 0 (eventually in 𝓝[>] 0; the library proves it for 0 < ε ≤ a/8): h has gradients 5a + ε at a + ε and 2a - ε at a - ε, and y = -3a - 2ε. Gradients are unique, so these are g_x, g_z."
   },
   {
    "id": "C/05_G/disp/031",
@@ -588,7 +834,13 @@
    "title": null,
    "container": null,
    "sha256": "67ab22dd47b4e06b",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.knot_crossing_quantities",
+    "BfgsVerification.AccumulatingKinks.crossing_decrease",
+    "BfgsVerification.AccumulatingKinks.crossing_values",
+    "BfgsVerification.AccumulatingKinks.crossing_curvature"
+   ]
   },
   {
    "id": "C/05_G/disp/032",
@@ -602,7 +854,13 @@
    "title": null,
    "container": null,
    "sha256": "d57d515bf3981302",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.knot_quotient",
+    "BfgsVerification.AccumulatingKinks.crossing_quotient",
+    "BfgsVerification.AccumulatingKinks.crossing_quotient_tendsto"
+   ],
+   "note": "The equality for every ε > 0 (with g_z² = (2a - ε)²), and the divergence as ε ↓ 0."
   },
   {
    "id": "C/05_G/proposition/004",
@@ -616,7 +874,13 @@
    "title": "Every finite sample is feasible if constants are free",
    "container": null,
    "sha256": "07df3b01b45d438d",
-   "status": null
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.finite_sample_feasible",
+    "BfgsVerification.TransportedCertificate.finite_sample_identity_certificate",
+    "BfgsVerification.finiteSampleFeasibility"
+   ],
+   "note": "Endpoints x_i (i < r) with gradients g_i ≠ 0 (nonstationary), a finite pair set P ⊆ Fin r × Fin r of eligible pairs: ∃ m > 0, C ≥ 0 (finite) with g_iᵀIg_i ≥ m, yᵀIy ≤ Ct on P, and (T0) for W = I (Π_sIΠ_s - Π_sIΠ_s = 0 ⪰ 0) on P. Convexity of F is a standing assumption not needed."
   },
   {
    "id": "C/05_G/proof/006",
@@ -630,7 +894,13 @@
    "title": null,
    "container": null,
    "sha256": "a3ac990953f995e7",
-   "status": null
+   "status": "PROOF",
+   "of": "C/05_G/proposition/004",
+   "lean": [
+    "BfgsVerification.TransportedCertificate.finite_positive_lower_bound",
+    "BfgsCoverage.Companion.Ch05G.sample_constant"
+   ],
+   "note": "m is a common positive lower bound of the finitely many ‖g_i‖² (1 for an empty sample)."
   },
   {
    "id": "C/05_G/disp/033",
@@ -644,8 +914,1201 @@
    "title": null,
    "container": "C/05_G/proof/006",
    "sha256": "68ad2a5898b44986",
-   "status": null
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.sample_constant"
+   ],
+   "note": "The display defines C (Lean variable C with this defining equation; ‖·‖² = sqNorm, t = (g_z - g_x)ᵀ(z - x)); sample_constant states the claims of the next sentences: every t > 0, every summand ≥ 0, C = 0 for P = ∅, C ≥ 0 and every sampled quotient ≤ C."
+  },
+  {
+   "id": "C/05_G/prose/001",
+   "kind": "prose",
+   "anchor": "The certificate is a sufficient analytic condition.",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.sufficient_condition",
+    "BfgsCoverage.Companion.Ch05G.preceding_theorem",
+    "BfgsCoverage.Companion.Ch05G.local_theorem"
+   ],
+   "note": "Sufficient for convergence: sufficient_condition (= preceding_theorem: under the condition on every nonempty band of the compact sublevel K, every admissible run starting in K converges in value, and in iterates under uniqueness; Chapter T's theorem, register item C/03_T/theorem/001) and local_theorem (local version)."
+  },
+  {
+   "id": "C/05_G/prose/002",
+   "kind": "prose",
+   "anchor": "scalar examples separate failure of the condition from failure of BFGS",
+   "lines": [
+    3,
+    3
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.scalar_examples_separate",
+    "BfgsCoverage.Companion.Ch05G.shifted_global_nonnecessity",
+    "BfgsCoverage.Companion.Ch05G.local_nonnecessity"
+   ],
+   "note": "The sentence does not repeat the defective claim of prose/053 (it asserts only that the condition can fail while BFGS converges): f(x) = (x+2)²/2 + |x| has no band certificates on {f ≤ 3} for (1/4,1/2) and h has none on any neighborhood of its minimizer, yet every admissible run converges on both (runs exist: shiftedRun, kinkRun). \"Its normalization and pointwise geometry help interpret it\" announces Sections 5.2-5.4 (no claim)."
+  },
+  {
+   "id": "C/05_G/prose/003",
+   "kind": "prose",
+   "anchor": "These are the necessary endpoint inequalities of the Armijo--weak-Wolfe formulation",
+   "lines": [
+    48,
+    48
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.armijo_wolfe_eligible",
+    "BfgsVerification.AdmissibleBFGSRun.accepted_pair_eligible"
+   ],
+   "note": "For convex F, an Armijo-weak-Wolfe step along a descent direction (gᵀs < 0) gives an eligible pair (Δ ≤ d is convexity), in particular every accepted pair of an admissible run. The attribution to Xie-Wächter is literature."
+  },
+  {
+   "id": "C/05_G/prose/004",
+   "kind": "prose",
+   "anchor": "In particular $t>0$ and $s\\ne0$.",
+   "lines": [
+    48,
+    48
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.eligible_t_pos_s_ne",
+    "BfgsVerification.TransportedCertificate.eligible_curvature_pos"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/005",
+   "kind": "prose",
+   "anchor": "The field may be singular, discontinuous, and unbounded as a function on the band",
+   "lines": [
+    57,
+    57
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/disp/005",
+   "note": "Remark on the definition: condition_iff constrains the field only by PSD at differentiable band points and the three inequalities; the field is a total function W : Vec n → Mat n (finite values) with no continuity, boundedness or definiteness."
+  },
+  {
+   "id": "C/05_G/prose/006",
+   "kind": "prose",
+   "anchor": "All constants may depend on the band and the fixed line-search parameters.",
+   "lines": [
+    57,
+    57
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/disp/005",
+   "note": "Quantifier order of the definition: one field and one set of constants per band, for fixed c₁, c₂ (BandCertificate F K Fstar c₁ c₂ η)."
+  },
+  {
+   "id": "C/05_G/prose/007",
+   "kind": "prose",
+   "anchor": "No claim below silently imposes continuity or local boundedness on $W$.",
+   "lines": [
+    57,
+    57
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Statement about the chapter's own hypotheses. In the Lean statements of this module the field carries no regularity except where the text states it explicitly (the finite continuous extension of Section 5.4, disp/019-disp/020, prose/034-prose/036, prose/050)."
+  },
+  {
+   "id": "C/05_G/prose/008",
+   "kind": "prose",
+   "anchor": "The preceding theorem says that this condition implies objective convergence",
+   "lines": [
+    59,
+    59
+   ],
+   "status": "DISCREPANCY"
+  },
+  {
+   "id": "C/05_G/prose/009",
+   "kind": "prose",
+   "anchor": "A local theorem requires the condition only near the minimizer, then uses a sufficiently low trapped sublevel.",
+   "lines": [
+    59,
+    59
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.local_theorem",
+    "BfgsVerification.TransportedCertificate.local_transported_certificate_basin"
+   ],
+   "note": "Summary of the local statement of Chapter T (03_T.tex:173-178), with its hypotheses written out: unique minimizer x_*, compact {F ≤ b}, b > F(x_*), a neighborhood U of x_*, the condition on the bands of {F ≤ b} ∩ U; then some δ > 0 traps every admissible run with F(x₀) ≤ F(x_*) + δ in U and it converges. Non-vacuity: example at the end of the module (runs starting below F_* + δ for every δ)."
+  },
+  {
+   "id": "C/05_G/prose/010",
+   "kind": "prose",
+   "anchor": "Failure on a large sublevel and failure in every neighborhood of a minimizer are different statements.",
+   "lines": [
+    59,
+    59
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.failures_differ",
+    "BfgsCoverage.Companion.Ch05G.leftCert"
+   ],
+   "note": "For f(x) = (x+2)²/2 + |x| and (1/4,1/2): the condition fails on {f ≤ 3} (which contains the minimizer -1) but holds on {f ≤ 3} ∩ U for the neighborhood U = {x < 0} of -1 (leftCert: W = I, m = 2η, C = 1, L = 0, δ = 1); for h it fails on every neighborhood of 0."
+  },
+  {
+   "id": "C/05_G/prose/011",
+   "kind": "prose",
+   "anchor": "This is an equivalence, not a further relaxation.",
+   "lines": [
+    89,
+    89
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/proposition/001"
+  },
+  {
+   "id": "C/05_G/prose/012",
+   "kind": "prose",
+   "anchor": "The accumulated-expansion budget was useful in the proof, but is not essential to the existential definition",
+   "lines": [
+    89,
+    89
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/proposition/001",
+   "note": "\"Useful in the proof\" refers to the proof of Chapter T's theorem (history of the argument; a vague reference, wording at most); the mathematical content, that rescaling by the objective value absorbs L, is the proposition."
+  },
+  {
+   "id": "C/05_G/prose/013",
+   "kind": "prose",
+   "anchor": "Its support function is $h_{\\mathcal E_x}(a)=\\sqrt{a^TW(x)a}$.",
+   "lines": [
+    100,
+    100
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.support_function",
+    "BfgsVerification.CertificateGeometry.ellipsoid_support"
+   ],
+   "note": "sSup of aᵀv over the ellipsoid equals √(aᵀWa); the supremum is attained (ellipsoid_support_attained)."
+  },
+  {
+   "id": "C/05_G/prose/014",
+   "kind": "prose",
+   "anchor": "Thus the normalized condition means:",
+   "lines": [
+    100,
+    105
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.ellipsoid_meaning",
+    "BfgsVerification.CertificateGeometry.ellipsoid_visibility_iff",
+    "BfgsVerification.CertificateGeometry.ellipsoid_suppression_iff",
+    "BfgsVerification.CertificateGeometry.step_projected_ellipsoid_subset_iff"
+   ],
+   "note": "Pointwise: (V) gᵀW(x)g ≥ m ⟺ (i) ∃ v ∈ E_x, -gᵀv ≥ √m; (S) yᵀW(z)y ≤ Ct ⟺ (ii) Ct ≥ 0 and |yᵀv| ≤ √(Ct) for all v ∈ E_z; (T0) ⟺ (iii) Π_sE_z ⊆ Π_sE_x (sets of images under Π_s)."
+  },
+  {
+   "id": "C/05_G/prose/015",
+   "kind": "prose",
+   "anchor": "Equivalently, after quotienting out the executed step direction, the comparison ellipsoid can only shrink.",
+   "lines": [
+    106,
+    106
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/prose/014",
+   "note": "Rephrases (iii): Π_sE_z ⊆ Π_sE_x."
+  },
+  {
+   "id": "C/05_G/prose/016",
+   "kind": "prose",
+   "anchor": "The ellipsoids are analytical comparison directions, not BFGS steps or approximations of $H_k$.",
+   "lines": [
+    106,
+    106
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Interpretation: the ellipsoids are built from the objective-level field W only (no run occurs in ellipsoid_eq or ellipsoid_meaning)."
+  },
+  {
+   "id": "C/05_G/prose/017",
+   "kind": "prose",
+   "anchor": "Indeed, Loewner ordering implies inclusion of the ranges of the projected PSD matrices.",
+   "lines": [
+    112,
+    112
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.range_argument",
+    "BfgsCoverage.Companion.Ch05G.loewner_range",
+    "BfgsVerification.CertificateGeometry.projected_matrixRange",
+    "BfgsVerification.CertificateGeometry.matrixRange_mul_transpose"
+   ],
+   "note": "The three sentences \"Indeed ... Lifting the projected inclusion proves (G:eq:range)\": range(Π_sW(z)Π_s) ⊆ range(Π_sW(x)Π_s) (loewner_range: 0 ⪯ A ⪯ B ⇒ range A ⊆ range B); for every PSD W, Π_sWΠ_s = (Π_sW^{1/2})(Π_sW^{1/2})ᵀ and range(Π_sWΠ_s) = Π_s range W; and range W(z) ⊆ range W(x) + span{s}."
+  },
+  {
+   "id": "C/05_G/prose/018",
+   "kind": "prose",
+   "anchor": "For a rank-one field, a new comparison direction must therefore lie in the plane spanned by the old comparison direction and the step.",
+   "lines": [
+    112,
+    112
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.rank_one_plane",
+    "BfgsVerification.CertificateGeometry.rankOne_direction_mem_plane"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/019",
+   "kind": "prose",
+   "anchor": "For each differentiable endpoint $z$, let $\\mathcal I(z)$ be all differentiable predecessors $x$",
+   "lines": [
+    124,
+    124
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.incoming_iff",
+    "BfgsVerification.PointwiseFeasibility.BandPoint",
+    "BfgsVerification.PointwiseFeasibility.IncomingPoint"
+   ],
+   "note": "With \"Fix a band and a predicted-decrease threshold δ\": BandPoint F K Fstar η = differentiable points of K_η; IncomingPoint ... δ z = I(z): differentiable band points x with (x,z) eligible (coordinate gradients) and d ≤ δ (incoming_iff)."
+  },
+  {
+   "id": "C/05_G/prose/020",
+   "kind": "prose",
+   "anchor": "An empty predecessor set gives $\\mathcal D(z)=\\R^n$.",
+   "lines": [
+    132,
+    132
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.empty_predecessors",
+    "BfgsVerification.PointwiseFeasibility.incomingPolar_empty"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/021",
+   "kind": "prose",
+   "anchor": "The set $\\mathcal D(z)$ is the polar of the closed absolutely convex hull of the normalized incoming jumps $y/\\sqrt t$.",
+   "lines": [
+    132,
+    132
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.polar_description",
+    "BfgsVerification.PointwiseFeasibility.sourceIncomingPolar_eq_closedHull_polar",
+    "BfgsVerification.PointwiseFeasibility.dotPolar_closedAbsConvexHull"
+   ],
+   "note": "The (absolute) polar {v | |wᵀv| ≤ 1 for all w} of closedAbsConvexHull ℝ {y/√t : x ∈ I(z)}; needs c₂ < 1 (t > 0)."
+  },
+  {
+   "id": "C/05_G/prose/022",
+   "kind": "prose",
+   "anchor": "Thus higher rank adds no pointwise power to (V)--(S)",
+   "lines": [
+    151,
+    151
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.rank_one_suffices",
+    "BfgsVerification.PointwiseFeasibility.rankOne_of_uniformDirections",
+    "BfgsVerification.PointwiseFeasibility.uniformDirections_of_uniformPSD"
+   ],
+   "note": "If any PSD field satisfies (V)-(S) (threshold δ), a rank-one field v vᵀ satisfies (V) with some m' > 0 and (S) with C = 1. \"Its potential advantage is compatibility of comparison geometries across endpoints through (T)\" is interpretation (transport is the only condition that can need higher rank)."
+  },
+  {
+   "id": "C/05_G/prose/023",
+   "kind": "prose",
+   "anchor": "The scalar $\\nu(z)$ has a direct interpretation",
+   "lines": [
+    151,
+    151
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Interpretation of ν(z) (disp/012) as the visible descent after suppressing low-curvature incoming jumps; no claim beyond the definition."
+  },
+  {
+   "id": "C/05_G/prose/024",
+   "kind": "prose",
+   "anchor": "In particular, the obstruction holds if $n$ incoming jumps converge to a basis of $\\R^n$",
+   "lines": [
+    176,
+    176
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.basis_obstruction",
+    "BfgsVerification.TransportedCertificate.basis_limit_no_visibility_secant",
+    "BfgsVerification.TransportedCertificate.basis_limit_no_band_certificate"
+   ],
+   "note": "In the setting of G:prop:star with r = n (eligible pairs in K_η, d → 0): y_{j,ε} → b_j for a basis b, t_{j,ε} → 0 and ‖∇F(z_ε)‖ ≤ B for all ε (sup norm; boundedness does not depend on the norm). The hypothesis d → 0 is kept (hd, which the proof passes to the library theorems) though it follows from t → 0."
+  },
+  {
+   "id": "C/05_G/prose/025",
+   "kind": "prose",
+   "anchor": "The coefficients expressing the gradient in that basis then remain bounded.",
+   "lines": [
+    176,
+    176
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.basis_coefficients_bounded",
+    "BfgsVerification.IncomingJump.basis_limit_coefficients"
+   ],
+   "note": "There is D such that for ε near the limit a representation ∇F(z_ε) = Σ_j λ_j y_{j,ε} exists and every such representation has |λ_j| ≤ D."
+  },
+  {
+   "id": "C/05_G/prose/026",
+   "kind": "prose",
+   "anchor": "The predecessors need not belong to one BFGS history. This is not a loophole: the condition quantifies over all such pairs.",
+   "lines": [
+    178,
+    178
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/05_G/proposition/G:prop:star",
+    "C/05_G/disp/005"
+   ],
+   "note": "G:prop:star (incoming_jump_obstruction) has no common-history hypothesis, and the condition (disp/005, condition_iff) quantifies over all eligible pairs in the band."
+  },
+  {
+   "id": "C/05_G/prose/027",
+   "kind": "prose",
+   "anchor": "Moreover, every eligible pair is individually realizable as a first BFGS step.",
+   "lines": [
+    178,
+    178
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.eligible_pair_first_step",
+    "BfgsVerification.TransportedCertificate.eligible_pair_realizable",
+    "BfgsVerification.eligiblePairRealizability"
+   ],
+   "note": "For c₂ < 1: some H₀ ≻ 0 (the matrix of disp/017) gives x + (-1·H₀g) = z, the Armijo and weak Wolfe conditions hold for this step, and yᵀs > 0 (the BFGS update is defined)."
+  },
+  {
+   "id": "C/05_G/prose/028",
+   "kind": "prose",
+   "anchor": "Hence $\\alpha=1$ realizes it.",
+   "lines": [
+    182,
+    182
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/prose/027"
+  },
+  {
+   "id": "C/05_G/prose/029",
+   "kind": "prose",
+   "anchor": "Positive definiteness follows because a vector in both nullspaces would be parallel to $g$ and orthogonal to $s$, and therefore zero.",
+   "lines": [
+    182,
+    182
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.nullspaces_meet_trivially"
+   ],
+   "note": "A vector in the null spaces of ssᵀ/d and of I - ggᵀ/(gᵀg) is a multiple of g, orthogonal to s, hence 0 (gᵀs = -d ≠ 0). That both summands are PSD, so that H ≻ 0 follows, is in the proof of disp/017 (library realizingMetric_posDef)."
+  },
+  {
+   "id": "C/05_G/prose/030",
+   "kind": "prose",
+   "anchor": "The projected gradients $P_Ug_i$ agree.",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.projections_agree",
+    "BfgsVerification.AccessibleJumpGeometry.common_tangential_projection"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/031",
+   "kind": "prose",
+   "anchor": "They are the common part of the first-order models that is not affected by gradient jumps.",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/prose/030",
+   "note": "Interpretation of prose/030: P_U kills every jump g_i - g_j ∈ N."
+  },
+  {
+   "id": "C/05_G/prose/032",
+   "kind": "prose",
+   "anchor": "In suitable partly smooth settings $N$ is the normal space and $U$ the tangent space",
+   "lines": [
+    198,
+    198
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature only mentioned (partial smoothness, LL); not used by the chapter's statements."
+  },
+  {
+   "id": "C/05_G/prose/033",
+   "kind": "prose",
+   "anchor": "Let $N_{\\rm acc}$ be the span of all such accessible limiting jumps",
+   "lines": [
+    204,
+    204
+   ],
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.accessibleSpan",
+    "BfgsCoverage.Companion.Ch05G.AccessibleJump"
+   ],
+   "note": "accessibleSpan = span of the Euclidean images of all accessible limiting jumps; AccessibleJump F K Fstar c₁ c₂ η p j: eligible pairs (x_k, z_k) in K_η with x_k, z_k → p, d → 0, t → 0 and gradient jumps → j (line 200); U_acc = (accessibleSpan)ᗮ."
+  },
+  {
+   "id": "C/05_G/prose/034",
+   "kind": "prose",
+   "anchor": "For a limiting gradient $g$ at which visibility persists",
+   "lines": [
+    208,
+    208
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.visible_accessible_projection",
+    "BfgsCoverage.Companion.Ch05G.visibility_persists",
+    "BfgsVerification.AccessibleJumpGeometry.visible_accessible_projection_ne_zero",
+    "BfgsVerification.AccessibleJumpGeometry.visibility_limit"
+   ],
+   "note": "Under the hypotheses of disp/019: gᵀW(p)g > 0 ⇒ P_{U_acc}g ≠ 0 (for every g). visibility_persists: at a limit g of gradients of band points z_k → p, gᵀW(p)g ≥ m > 0."
+  },
+  {
+   "id": "C/05_G/prose/035",
+   "kind": "prose",
+   "anchor": "It does not identify $N_{\\rm acc}$ with the earlier space $N$ generated by all active-gradient differences.",
+   "lines": [
+    210,
+    210
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.accessible_span_differs"
+   ],
+   "note": "With \"This conclusion concerns the accessible span\": for f(x) = (x+2)²/2 + |x| and (1/8,1/4) at the kink 0 (any band): N_acc = {0} while N = ℝ."
+  },
+  {
+   "id": "C/05_G/prose/036",
+   "kind": "prose",
+   "anchor": "A nonzero common projection onto $U=N^\\perp$ follows if the accessible jumps span $N$",
+   "lines": [
+    210,
+    210
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.full_projection_ne_zero",
+    "BfgsCoverage.Companion.Ch05G.accessibleSpan_le_ker",
+    "BfgsVerification.AccessibleJumpGeometry.visible_tangent_projection_ne_zero"
+   ],
+   "note": "With \"Under that additional hypothesis, the common projection is nonzero by visibility\": for active gradients g_1..g_r and a visible g_i (g_iᵀW(p)g_i > 0), if every difference g_a - g_b lies in N_acc, or W(p)(g_a - g_b) = 0 for all a, b, then P_Ug_i ≠ 0 (hypotheses of disp/019)."
+  },
+  {
+   "id": "C/05_G/prose/037",
+   "kind": "prose",
+   "anchor": "The affine-hull condition is weaker than $0\\in\\conv\\{g_1,\\dots,g_r\\}$ and need not imply stationarity for the convex objective.",
+   "lines": [
+    214,
+    214
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.affine_weaker_than_convex"
+   ],
+   "note": "0 ∈ conv ⇒ 0 ∈ aff (any finite family); for the limiting active gradients 1, 3 of f(x) = (x+2)²/2 + |x| at 0: 0 ∈ aff{1,3}, 0 ∉ conv{1,3}, and 0 is not a minimizer."
+  },
+  {
+   "id": "C/05_G/prose/038",
+   "kind": "prose",
+   "anchor": "The distinction is realized by the finite strongly convex objective",
+   "lines": [
+    216,
+    216
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.shifted_strongly_convex",
+    "BfgsVerification.ScalarCounterexamples.shiftedAbs_strongConvex"
+   ],
+   "note": "f is real-valued and 1-strongly convex (StrongConvexOn univ 1)."
+  },
+  {
+   "id": "C/05_G/prose/039",
+   "kind": "prose",
+   "anchor": "On every compact positive band, $W\\equiv1$ is a transported certificate.",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.identity_certificate",
+    "BfgsVerification.ShiftedAbsAccessibility.identityCertificate",
+    "BfgsVerification.ShiftedAbsAccessibility.shifted_all_compact_band_certificates"
+   ],
+   "note": "(c₁,c₂) = (1/8,1/4), every compact K and η > 0 (F_* = f(-1))."
+  },
+  {
+   "id": "C/05_G/prose/040",
+   "kind": "prose",
+   "anchor": "Indeed, every eligible pair with $d\\le1/4$ stays on one smooth side of zero",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.small_pairs_same_side",
+    "BfgsVerification.ShiftedAbsAccessibility.small_eligible_same_side",
+    "BfgsVerification.ShiftedAbsAccessibility.no_small_right_left_crossing",
+    "BfgsVerification.ShiftedAbsAccessibility.no_small_left_right_crossing"
+   ],
+   "note": "For (1/8,1/4): same side; a right-to-left crossing (x > 0 > z) is excluded by weak Wolfe with d ≤ 1/4, a left-to-right crossing by Armijo and d ≤ 1/4."
+  },
+  {
+   "id": "C/05_G/prose/041",
+   "kind": "prose",
+   "anchor": "Hence $f'(z)-f'(x)=z-x$, proving (S) with $C=1$",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.identity_certificate_reasons",
+    "BfgsVerification.ShiftedAbsAccessibility.small_eligible_gradient_change",
+    "BfgsVerification.TransportedCertificate.scalar_gradient_band_bounds"
+   ],
+   "note": "y = s (so yᵀIy = 1·t), Π_sIΠ_s - Π_sIΠ_s = 0 (transport is equality), and on a compact band the gradients are bounded away from 0 (visibility)."
+  },
+  {
+   "id": "C/05_G/prose/042",
+   "kind": "prose",
+   "anchor": "Weak Wolfe gives $d\\le4t/3$",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.accessible_jumps_vanish",
+    "BfgsVerification.ShiftedAbsAccessibility.accessible_jump_zero",
+    "BfgsVerification.AccessibleJumpGeometry.eligible_decrease_tendsto_zero_of_curvature"
+   ],
+   "note": "For (1/8,1/4): d ≤ 4t/3 for every eligible pair, and every accessible limiting jump (AccessibleJump, any band, any p) is 0."
+  },
+  {
+   "id": "C/05_G/prose/043",
+   "kind": "prose",
+   "anchor": "Nevertheless the actual limiting active gradients at zero are $1$ and $3$",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.limiting_gradients_at_kink",
+    "BfgsVerification.ShiftedAbsAccessibility.full_active_tangent_space_eq_bot",
+    "BfgsVerification.ShiftedAbsAccessibility.active_gradient_approach_tendsto"
+   ],
+   "note": "{g | IsLimitingGradient f 0 g} = {1, 3} (limits of gradients at differentiable points → 0), N = ⊤ = ℝ and U = ⊥ = {0}."
+  },
+  {
+   "id": "C/05_G/prose/044",
+   "kind": "prose",
+   "anchor": "The full-active tangential conclusion would be false here.",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.full_active_conclusion_fails",
+    "BfgsVerification.ShiftedAbsAccessibility.objective_level_accessibility_counterexample",
+    "BfgsVerification.accessibleActiveSeparation"
+   ],
+   "note": "The continuous certificate W ≡ 1 on the compact band {f ≤ 3}_{1/4} (which contains the kink) is visible at the limiting active gradients 1, 3 (gᵀW(0)g > 0), yet P_Ug = 0: \"gᵀW(p)g > 0 ⇒ P_Ug ≠ 0\" fails for the full active span N."
+  },
+  {
+   "id": "C/05_G/prose/045",
+   "kind": "prose",
+   "anchor": "The later no-certificate example uses the different constants $(1/4,1/2)$ and is consistent with this distinction.",
+   "lines": [
+    221,
+    221
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.constants_consistency"
+   ],
+   "note": "On {f ≤ 3}: band certificates exist for (1/8,1/4) and fail for (1/4,1/2)."
+  },
+  {
+   "id": "C/05_G/prose/046",
+   "kind": "prose",
+   "anchor": "This limiting argument uses the stated finite-extension and accessibility hypotheses only in this interpretation.",
+   "lines": [
+    223,
+    223
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope remark (with \"It is not a proof for arbitrary discontinuous or unbounded certificate fields\"): disp/019-disp/020 assume the finite continuous extension explicitly."
+  },
+  {
+   "id": "C/05_G/prose/047",
+   "kind": "prose",
+   "anchor": "Proposition~\\ref{G:prop:star} supplies an obstruction without either regularity hypothesis.",
+   "lines": [
+    223,
+    223
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/proposition/G:prop:star",
+   "note": "incoming_jump_obstruction has no continuity or boundedness hypothesis on the field."
+  },
+  {
+   "id": "C/05_G/prose/048",
+   "kind": "prose",
+   "anchor": "Eligibility matters: arbitrary active-gradient jumps need not be accessible under a fixed weak-Wolfe condition.",
+   "lines": [
+    223,
+    223
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.active_jump_not_accessible"
+   ],
+   "note": "For f(x) = (x+2)²/2 + |x| and (1/8,1/4): the active jump 3 - 1 = 2 at the kink is not an accessible limiting jump."
+  },
+  {
+   "id": "C/05_G/prose/049",
+   "kind": "prose",
+   "anchor": "For $u^2+|v|$ at $(u,0)$ with $u\\ne0$, the jump space is vertical and a nonzero horizontal derivative remains.",
+   "lines": [
+    225,
+    225
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.uv_geometry",
+    "BfgsCoverage.Companion.Ch05G.uv_limiting_gradients",
+    "BfgsCoverage.Companion.Ch05G.uv_gradient_eq",
+    "BfgsCoverage.Companion.Ch05G.uv_hasGradient"
+   ],
+   "note": "F(u,v) = u² + |v|, u₀ ≠ 0: the limiting active gradients at (u₀,0) are exactly (2u₀, ±1), N = span{e₂} (vertical), and P_U of each is (2u₀, 0) ≠ 0."
+  },
+  {
+   "id": "C/05_G/prose/050",
+   "kind": "prose",
+   "anchor": "At a generic two-dimensional vertex with independent accessible jumps in both coordinates, there may be no remaining comparison direction.",
+   "lines": [
+    225,
+    225
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.vertex_obstruction",
+    "BfgsCoverage.Companion.Ch05G.spanning_jumps_obstruction",
+    "BfgsCoverage.Companion.Ch05G.no_vanishing_limit",
+    "BfgsCoverage.Companion.Ch05G.vertex_no_direction",
+    "BfgsCoverage.Companion.Ch05G.spanning_jumps_no_direction"
+   ],
+   "note": "Read as an obstruction, as the next sentence does (\"The common-target obstruction above makes that interpretation rigorous without continuity of a certificate\"): at a point p of the plane with two linearly independent accessible limiting jumps, no band certificate has a finite continuous extension to p (vertex_obstruction; any dimension with accessible jumps spanning the space: spanning_jumps_obstruction). The literal implications \"W(p) = 0, so gᵀW(p)g = 0 for every g\" (vertex_no_direction, spanning_jumps_no_direction) are true but vacuous: their hypotheses can never all hold (for spanning_jumps_no_direction when n ≥ 1), since W(z_k) → W(p) = 0 along an accessible sequence contradicts visibility with gradients bounded near p (no_vanishing_limit; found by the independent review). Non-vacuity of the obstruction's hypotheses: example at the end of the module, F(u,v) = |u| + |v| + (u-1)² (F_* = 3/4), K = {F ≤ 2}, (1/4,1/2), η = 1/8, p = (0,0) with F(p) = 1, accessible jumps (0,-2) and (2,0)."
+  },
+  {
+   "id": "C/05_G/prose/051",
+   "kind": "prose",
+   "anchor": "The common-target obstruction above makes that interpretation rigorous without continuity of a certificate.",
+   "lines": [
+    225,
+    225
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/05_G/proposition/G:prop:star",
+    "C/05_G/prose/024"
+   ],
+   "note": "Jumps converging to a basis at a common target exclude every (V)-(S) field, without continuity (basis_obstruction)."
+  },
+  {
+   "id": "C/05_G/prose/052",
+   "kind": "prose",
+   "anchor": "an eligible arbitrarily small crossing of a nonoptimal derivative jump rules out every certificate",
+   "lines": [
+    255,
+    255
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.small_crossing_no_certificate"
+   ],
+   "note": "With \"This reveals a genuine restriction\": in the setting of the scalar proposition, one-sided derivatives l < r at a nonoptimal point a and, for every ε > 0, an eligible pair in K_η with d ≤ ε and |z - x| ≤ ε crossing a ⇒ no certificate on K_η (|F'(z) - F'(x)| ≥ r - l contradicts the eligible-pair Lipschitz bound)."
+  },
+  {
+   "id": "C/05_G/prose/053",
+   "kind": "prose",
+   "anchor": "gives a finite strongly convex example with global convergence but no global certificate on a sublevel containing zero",
+   "lines": [
+    269,
+    269
+   ],
+   "status": "DISCREPANCY",
+   "note": "True content kept in Lean: shifted_global_nonnecessity (b = 3; every admissible run converges, runs exist: shiftedRun) and the corrected statement shifted_global_nonnecessity_interior; see the discrepancy entry."
+  },
+  {
+   "id": "C/05_G/prose/054",
+   "kind": "prose",
+   "anchor": "These pairs are strictly eligible for $(1/4,1/2)$ for small $\\epsilon$, and their scalar quotient",
+   "lines": [
+    278,
+    278
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.shifted_crossing_eligible_divergent",
+    "BfgsVerification.ScalarCounterexamples.crossing_strict",
+    "BfgsVerification.ScalarCounterexamples.crossing_eligible",
+    "BfgsVerification.ScalarCounterexamples.crossing_quotient_tendsto"
+   ],
+   "note": "For ε > 0 near 0 (in fact every ε > 0): eligible with all three inequalities strict; the quotient |g_z - g_x|/(|z - x||g_z|²) → ∞ as ε ↓ 0. Wording point (not a discrepancy): the sign of ε is fixed only by context at lines 269-278 (ε is the chapter's small positive parameter, line 307 writes ε ↓ 0, and \"strictly eligible\" at line 278 needs d > 0, i.e. ε > 0); proposed wording \"For $x=\\epsilon$, $z=-\\epsilon/2$ with $\\epsilon>0$\"."
+  },
+  {
+   "id": "C/05_G/prose/055",
+   "kind": "prose",
+   "anchor": "The difference between a local certificate and actual convergence remains even after shrinking every neighborhood of the optimizer.",
+   "lines": [
+    289,
+    289
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/prose/068"
+  },
+  {
+   "id": "C/05_G/prose/056",
+   "kind": "prose",
+   "anchor": "The series converges uniformly on compact sets",
+   "lines": [
+    295,
+    295
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.series_uniform",
+    "BfgsVerification.AccumulatingKinks.series_uniform_on_compact",
+    "BfgsVerification.AccumulatingKinks.term_bound"
+   ],
+   "note": "Uniform convergence of the partial sums on every compact set, and |Σ a_j(x - a_j)_+| ≤ R Σ a_j on it (\"its absolute value is bounded by a constant times Σa_j\")."
+  },
+  {
+   "id": "C/05_G/prose/057",
+   "kind": "prose",
+   "anchor": "Every summand is convex, and $h(x)\\ge x^2/2$ with $h(0)=0$.",
+   "lines": [
+    295,
+    295
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.h_basic",
+    "BfgsVerification.AccumulatingKinks.term_convex",
+    "BfgsVerification.AccumulatingKinks.objective_lower",
+    "BfgsVerification.AccumulatingKinks.objective_zero"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/058",
+   "kind": "prose",
+   "anchor": "Thus $h$ is finite, $1$-strongly convex, coercive, and uniquely minimized at zero.",
+   "lines": [
+    295,
+    295
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.h_properties",
+    "BfgsVerification.AccumulatingKinks.objective_strongConvex",
+    "BfgsVerification.AccumulatingKinks.objective_coercive",
+    "BfgsVerification.AccumulatingKinks.objective_unique"
+   ],
+   "note": "Finite: the series is summable at every x."
+  },
+  {
+   "id": "C/05_G/prose/059",
+   "kind": "prose",
+   "anchor": "At a knot $a=a_j$, the one-sided derivatives are $2a$ and $5a$.",
+   "lines": [
+    297,
+    297
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.knot_one_sided",
+    "BfgsVerification.AccumulatingKinks.hasDerivWithinAt_knot_left",
+    "BfgsVerification.AccumulatingKinks.hasDerivWithinAt_knot_right"
+   ],
+   "note": "Left derivative 2a (within (-∞,a]) and right derivative 5a (within [a,∞)), for a = (1/4)^j, j ≥ 1."
+  },
+  {
+   "id": "C/05_G/prose/060",
+   "kind": "prose",
+   "anchor": "These formulas come from exact geometric sums, not a truncation.",
+   "lines": [
+    297,
+    297
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/05_G/disp/028",
+    "C/05_G/disp/029",
+    "C/05_G/prose/059"
+   ],
+   "note": "The one-sided derivatives and the local formulas are exact identities, proved from the exact geometric tails (library tail_knots, tail_squares in objective_formula_above/below), not truncations."
+  },
+  {
+   "id": "C/05_G/prose/061",
+   "kind": "prose",
+   "anchor": "Also $h(a)=13a^2/10$.",
+   "lines": [
+    305,
+    305
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.h_at_knot",
+    "BfgsVerification.AccumulatingKinks.objective_knot"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/062",
+   "kind": "prose",
+   "anchor": "The pairs are strictly eligible for $(c_1,c_2)=(1/4,1/2)$ for small $\\epsilon$.",
+   "lines": [
+    316,
+    316
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.knot_crossing_eligible",
+    "BfgsVerification.AccumulatingKinks.crossing_strict",
+    "BfgsVerification.AccumulatingKinks.crossing_eligible"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/063",
+   "kind": "prose",
+   "anchor": "No certificate exists on a positive band containing this knot.",
+   "lines": [
+    321,
+    321
+   ],
+   "status": "DISCREPANCY"
+  },
+  {
+   "id": "C/05_G/prose/064",
+   "kind": "prose",
+   "anchor": "Every neighborhood of zero contains such a knot.",
+   "lines": [
+    321,
+    321
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.every_neighborhood_knot",
+    "BfgsVerification.AccumulatingKinks.knot_tendsto",
+    "BfgsVerification.AccumulatingKinks.exists_knot_interior"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/065",
+   "kind": "prose",
+   "anchor": "deterioration of band constants as $\\eta\\downarrow0$ cannot repair the divergence on the fixed knot's band",
+   "lines": [
+    321,
+    321
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.no_certificate_knot_band",
+    "BfgsVerification.AccumulatingKinks.no_band_certificate_near_knot"
+   ],
+   "note": "\"Fixing a knot first, then taking ε → 0, is essential\": for a fixed knot a, the band K_η with b > h(a) > η > 0 (the knot in its interior: the fixed knot's band) has no certificate whatever its constants; failure on this single band already defeats the condition, which asks for a certificate on every band. no_certificate_knot_band is also the corrected statement of prose/063."
+  },
+  {
+   "id": "C/05_G/prose/066",
+   "kind": "prose",
+   "anchor": "Nevertheless Proposition~\\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$.",
+   "lines": [
+    323,
+    323
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.h_runs_converge",
+    "BfgsVerification.AccumulatingKinks.actual_bfgs_converges",
+    "BfgsVerification.AccumulatingKinks.scalar_run_converges",
+    "BfgsCoverage.Companion.Ch05G.kinkRun"
+   ],
+   "note": "Every admissible full-BFGS run on h (and every positive-metric scalar run) converges to 0 in value and iterates; admissible runs exist (kinkRun, constants (1/4,1/2))."
+  },
+  {
+   "id": "C/05_G/prose/067",
+   "kind": "prose",
+   "anchor": "The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it.",
+   "lines": [
+    323,
+    323
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.h_smoothness",
+    "BfgsVerification.AccumulatingKinks.hasDerivAt_zero",
+    "BfgsVerification.AccumulatingKinks.nonsmooth_in_every_neighborhood"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/068",
+   "kind": "prose",
+   "anchor": "Thus the transported condition is not necessary even for local convergence.",
+   "lines": [
+    323,
+    323
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.local_nonnecessity",
+    "BfgsVerification.AccumulatingKinks.every_neighborhood_no_certificates",
+    "BfgsVerification.scalarLocalCertificateNonnecessity"
+   ],
+   "note": "For h and (1/4,1/2): no neighborhood K of 0 carries the band certificates, yet every admissible run converges to 0 (runs exist: kinkRun)."
+  },
+  {
+   "id": "C/05_G/prose/069",
+   "kind": "prose",
+   "anchor": "This conclusion uses the explicitly defined infinite-series objective above; no unspecified archived auxiliary is needed.",
+   "lines": [
+    323,
+    323
+   ],
+   "status": "NON_CLAIM",
+   "reason": "History of the source (an archived example is replaced by the explicit objective h); the mathematics is prose/066-prose/068."
+  },
+  {
+   "id": "C/05_G/prose/070",
+   "kind": "prose",
+   "anchor": "Consequently a finite-sample feasibility problem with unrestricted constants cannot prove nonexistence.",
+   "lines": [
+    345,
+    345
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/proposition/004",
+   "note": "Every finite sample is feasible (proposition/004), so no finite sample can certify nonexistence; prose/073 shows a case where the certificate indeed does not exist."
+  },
+  {
+   "id": "C/05_G/prose/071",
+   "kind": "prose",
+   "anchor": "One needs a known bound on the constants, extra restrictions on the field, or an analytic limiting family that forces the required constants to infinity.",
+   "lines": [
+    345,
+    345
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Methodological advice on how nonexistence can be proved; no mathematical claim."
+  },
+  {
+   "id": "C/05_G/prose/072",
+   "kind": "prose",
+   "anchor": "The examples above supply the latter.",
+   "lines": [
+    345,
+    345
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/05_G/prose/054",
+    "C/05_G/disp/032"
+   ],
+   "note": "The crossing families of Sections 5.5.1 and 5.6 have diverging scalar quotients, forcing the constants to infinity."
+  },
+  {
+   "id": "C/05_G/prose/073",
+   "kind": "prose",
+   "anchor": "Conversely, passing many finite tests is not an existence theorem for a uniform field on the continuum.",
+   "lines": [
+    345,
+    345
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.finite_tests_not_existence",
+    "BfgsVerification.ScalarCounterexamples.shifted_no_band_certificate"
+   ],
+   "note": "For f(x) = (x+2)²/2 + |x|, (1/4,1/2) and the band {f ≤ 3}_{1/4}: every finite sample passes (W = I, sample-dependent constants), yet no band certificate exists."
+  },
+  {
+   "id": "C/05_G/prose/074",
+   "kind": "prose",
+   "anchor": "The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.",
+   "lines": [
+    353,
+    353
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Announces the bibliographic section."
+  },
+  {
+   "id": "C/05_G/prose/075",
+   "kind": "prose",
+   "anchor": "Absorbing multiplicative errors by rescaling is an established technique",
+   "lines": [
+    355,
+    355
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature comparison (FND_CV13, Lemmas 2.2-2.3), only mentioned."
+  },
+  {
+   "id": "C/05_G/prose/076",
+   "kind": "prose",
+   "anchor": "The elementary objective-value rescaling in this chapter applies to this specific, potentially singular and unbounded comparison field.",
+   "lines": [
+    355,
+    355
+   ],
+   "status": "SAME_AS",
+   "of": "C/05_G/proposition/001",
+   "note": "The normalization imposes no regularity on W (exact_nonexpansion_normalization)."
+  },
+  {
+   "id": "C/05_G/prose/077",
+   "kind": "prose",
+   "anchor": "The ellipsoid interpretation and the reduction in this chapter use standard support-function duality, polar sets and PSD Cauchy--Schwarz.",
+   "lines": [
+    357,
+    357
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Describes the methods (with \"They are elementary deductions for the stated certificate, with no assertion that the pointwise choices satisfy transport\"); the standard facts used are proved in the library: support function and inclusion via separation (CertificateGeometry.ellipsoid_support, matrixBall_subset_iff), polars (PointwiseFeasibility.dotPolar_closedAbsConvexHull), PSD Cauchy-Schwarz (QuadraticGauge.metric_cauchy_schwarz); the results are prose/013-prose/014, proposition/002."
+  },
+  {
+   "id": "C/05_G/prose/078",
+   "kind": "prose",
+   "anchor": "The proof uses the standard triangle inequality for a PSD seminorm.",
+   "lines": [
+    359,
+    359
+   ],
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.psd_seminorm_triangle",
+    "BfgsVerification.IncomingJump.sqrt_metricEnergy_sum_le"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/079",
+   "kind": "prose",
+   "anchor": "The conclusion concerns this certificate's all-eligible-pairs requirement; it is neither a BFGS failure theorem nor a necessity condition for convergence.",
+   "lines": [
+    359,
+    359
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Scope statement: incoming_jump_obstruction concludes only the nonexistence of fields; the scalar examples (prose/002, prose/068) show certificate failure together with convergence."
+  },
+  {
+   "id": "C/05_G/prose/080",
+   "kind": "prose",
+   "anchor": "VU and partial-smoothness theory supply the common projected-subgradient geometry",
+   "lines": [
+    361,
+    361
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature (geom_Lewis2002, LL) and a description of the chapter's argument (\"additionally tracks jumps accessible under the fixed line search\")."
+  },
+  {
+   "id": "C/05_G/prose/081",
+   "kind": "prose",
+   "anchor": "The span of all active-gradient differences cannot replace that accessible span without a separate justification.",
+   "lines": [
+    361,
+    361
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "C/05_G/prose/035",
+    "C/05_G/prose/044"
+   ]
+  },
+  {
+   "id": "C/05_G/prose/082",
+   "kind": "prose",
+   "anchor": "Lewis--Overton analyzes convergence on the scalar absolute value",
+   "lines": [
+    363,
+    363
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Literature comparison (LO, Sections 4.2 and 5.1), only mentioned; \"These precedents do not assert ...\" is a statement about the literature."
   }
  ],
- "discrepancies": []
+ "discrepancies": [
+  {
+   "item": "C/05_G/prose/008",
+   "description": "\"The preceding theorem says that this condition implies objective convergence for every admissible infinite full-BFGS run in K, and iterate convergence under uniqueness\" (05_G.tex:59). In the companion the theorem preceding Chapter G is Theorem R:thm:plq (Finite polyhedral partitions, 04_R.tex:292), which does not state this; the theorem meant is the one-sided transported-certificate theorem of Chapter T (03_T.tex:90-111, register item C/03_T/theorem/001, Lean BfgsCoverage.Companion.Ch03T.one_sided_convergence), whose hypothesis is this condition. The mathematical content is true as intended: preceding_theorem and sufficient_condition (from AdmissibleBFGSRun.transported_certificate_convergence_on_sublevel). The stale reference is already in the frozen source (bfgs_lean_stage1/master_report/latex/chapters/G.tex:49).",
+   "severity": "typo",
+   "proposed": "\"The one-sided transported-certificate convergence theorem of Chapter~\\ref{comp:T} says that this condition implies objective convergence for every admissible infinite full-BFGS run in $K$, and iterate convergence under uniqueness.\" (Only the reference changes; a run in $K$ is a run starting in $K$, since Armijo keeps the iterates in the sublevel.)",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.preceding_theorem",
+    "BfgsCoverage.Companion.Ch05G.sufficient_condition"
+   ]
+  },
+  {
+   "item": "C/05_G/prose/053",
+   "description": "\"Already $f(x)=\\frac12(x+2)^2+|x|$ gives a finite strongly convex example with global convergence but no global certificate on a sublevel containing zero\" (05_G.tex:269). Read for every sublevel containing zero (the property that makes certificates fail), the claim is false at the boundary: the sublevel {f ≤ 2} = [-2, 0] is compact and contains 0 (on its boundary, f(0) = 2), yet every positive band of it carries a band certificate for (c₁,c₂) = (1/4,1/2): W ≡ 1, m = 2η, C = 1, L = 0, δ = 1, since every differentiable point of {f ≤ 2} is negative, where f(x) = (x+1)²/2 + 3/2 (Lean: two_sublevel_counterexample, twoCert; found by the independent review). This is the boundary defect of prose/063 (a set containing a point only on its boundary), so the two items get the same verdict. The sentence also leaves the line-search constants implicit: with the constants (1/8,1/4) used for f at line 219, every compact band has a certificate (prose/039); the claim needs (1/4,1/2), stated only at lines 221 and 278. The corrected claim holds: for (1/4,1/2), no sublevel {f ≤ b} with 0 in its interior (equivalently b > 2, zero_mem_interior_iff) carries the band certificates (shifted_global_nonnecessity_interior, interior_sublevel_no_certificate); the existential reading (b = 3) is shifted_global_nonnecessity.",
+   "severity": "imprecision",
+   "proposed": "\"Already $f(x)=\\frac12(x+2)^2+|x|$ gives a finite strongly convex example with global convergence but, for $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel containing zero in its interior.\"",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.shifted_global_nonnecessity_interior",
+    "BfgsCoverage.Companion.Ch05G.interior_sublevel_no_certificate",
+    "BfgsCoverage.Companion.Ch05G.zero_mem_interior_iff",
+    "BfgsCoverage.Companion.Ch05G.two_sublevel_counterexample",
+    "BfgsCoverage.Companion.Ch05G.twoCert",
+    "BfgsCoverage.Companion.Ch05G.shifted_global_nonnecessity",
+    "BfgsCoverage.Companion.Ch05G.shiftedRun"
+   ]
+  },
+  {
+   "item": "C/05_G/prose/063",
+   "description": "\"No certificate exists on a positive band containing this knot\" (05_G.tex:321) is false if \"containing\" means only that the knot a belongs to K_η: the argument needs the crossing pairs a ± ε in the band, i.e. the knot in its interior (b > h(a) and η < h(a)). Counterexample to the literal reading: K = {h ≤ h(a)} and η = h(a/4); then a ∈ K_η = [a/4, a] ∪ [-√(2h(a)), -√(2h(a/4))], every differentiable point x of K_η has h'(x) = x + a (a/4 < x < a) or h'(x) = x (x < 0), an eligible pair with an endpoint on each piece has d = |h'(x)||z - x| ≥ √(13/80)a·(a/4 + √(13/80)a) > a²/4 > a²/8, so W ≡ 1, m = 2h(a/4) = 13a²/80, C = 1, L = 0, δ = a²/8 is a band certificate on K_η (Lean: knot_band_literal_counterexample, edgeCert, for every knot and (c₁,c₂) = (1/4,1/2)). (Likewise η = h(a) with h(a) < b < h(4a), not formalized.) The corrected statement, with the knot in the interior of the band, is proved (no_certificate_knot_band).",
+   "severity": "imprecision",
+   "proposed": "\"No certificate exists on a positive band whose interior contains this knot ($b>h(a)>\\eta$).\"",
+   "lean": [
+    "BfgsCoverage.Companion.Ch05G.no_certificate_knot_band",
+    "BfgsCoverage.Companion.Ch05G.knot_band_literal_counterexample",
+    "BfgsCoverage.Companion.Ch05G.edgeCert"
+   ]
+  }
+ ]
 }

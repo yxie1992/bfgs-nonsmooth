@@ -226,6 +226,56 @@ under those items (M8). The chapters are generated: fix them through
   once). The corrected claim is `Ch09C.semialgebraic_low_basin` (with
   `RealAlgebraicGeometry.semialgebraic_low_affine_critical_gap`, the Lean form of
   Proposition 8.1, and `semialgebraic_planar_low_basin`). (`C/09_C/prose/117`)
+- [ ] **M21: Chapter 5 cites "the preceding theorem" for Chapter 3's theorem (typo).**
+  `companion/chapters/05_G.tex:59` (Section 5.1): "The preceding theorem says that this
+  condition implies objective convergence for every admissible infinite full-BFGS run
+  in $K$, and iterate convergence under uniqueness." In the companion the theorem
+  before this sentence is Theorem `R:thm:plq` (finite polyhedral partitions,
+  `04_R.tex:292`), which says nothing of the kind. Meant: Chapter 3's "One-sided
+  transported-certificate convergence" (`03_T.tex:90-111`, no label; item
+  `C/03_T/theorem/001`, `Ch03T.one_sided_convergence`), whose hypothesis is this
+  condition. The stale reference is already in the frozen source. A parallel of M10.
+  Proposed: "The one-sided transported-certificate convergence theorem of
+  Chapter~\ref{comp:T} says that this condition implies …". Fix: a new logged
+  `if module=='G':` block of `generate_companion.py` (with M22 and M23), old string
+  `The preceding theorem says that this condition implies` (G.tex:49, occurs once).
+  The content holds as intended (`Ch05G.preceding_theorem`,
+  `Ch05G.sufficient_condition`). (`C/05_G/prose/008`)
+- [ ] **M22: Chapter 5: no certificate "on a sublevel containing zero" (imprecision).**
+  `05_G.tex:269` (Section 5.6): "Already $f(x)=\frac12(x+2)^2+|x|$ gives a finite
+  strongly convex example with global convergence but no global certificate on a
+  sublevel containing zero." Read for every sublevel containing zero, this is false
+  at the boundary: $\{f\le2\}=[-2,0]$ is compact and contains $0$ ($f(0)=2$), yet each
+  of its positive bands carries a certificate for $(c_1,c_2)=(1/4,1/2)$ ($W\equiv1$,
+  $m=2\eta$, $C=1$, $L=0$, $\delta=1$: every differentiable point of $\{f\le2\}$ is
+  negative, where $f(x)=\frac12(x+1)^2+\frac32$; `Ch05G.two_sublevel_counterexample`,
+  `twoCert`, found by the independent review). The sentence also leaves the
+  line-search constants implicit: with the constants $(1/8,1/4)$ that Section 5.4 uses
+  for the same $f$ (line 219), every compact positive band carries $W\equiv1$; the
+  claim needs $(1/4,1/2)$, stated at line 278. Proposed: "… but, for
+  $(c_1,c_2)=(1/4,1/2)$, no global certificate on any sublevel containing zero in its
+  interior." Fix: in the module-G block, `but no global certificate on a sublevel
+  containing zero.` (G.tex:251, occurs once). The corrected claim:
+  `Ch05G.shifted_global_nonnecessity_interior` (with `interior_sublevel_no_certificate`
+  and `zero_mem_interior_iff`: $0$ is interior to $\{f\le b\}$ iff $b>2$); runs exist
+  (`Ch05G.shiftedRun`). (`C/05_G/prose/053`)
+- [ ] **M23: Chapter 5: no certificate "on a positive band containing this knot"
+  (imprecision).** `05_G.tex:321` (Section 5.7): "No certificate exists on a positive
+  band containing this knot." False when the knot lies on the boundary of the band:
+  for every knot $a=(1/4)^j$, $K=\{h\le h(a)\}$ and $\eta=h(a/4)$, the band $K_\eta$
+  contains $a$ and carries the certificate $W\equiv1$, $m=2h(a/4)=13a^2/80$, $C=1$,
+  $L=0$, $\delta=a^2/8$ for $(c_1,c_2)=(1/4,1/2)$
+  (`Ch05G.knot_band_literal_counterexample`, `edgeCert`). The argument of lines
+  307–320 needs the pairs $a\pm\epsilon$ in the band, that is, the knot in its
+  interior. Proposed: "No certificate exists on a positive band whose interior
+  contains this knot ($b>h(a)>\eta$)." Fix: in the module-G block, `No certificate
+  exists on a positive band containing this knot.` (G.tex:299, occurs once). The
+  corrected claim: `Ch05G.no_certificate_knot_band` (every knot, every
+  $b>h(a)>\eta>0$, via `Ch05G.small_crossing_no_certificate`). (`C/05_G/prose/063`)
+
+  For M21–M23: no replacement adds a line, so the register's line numbers stay;
+  after regenerating, update the three items' anchors and set them to `LEAN` with
+  the names above, then build and inspect Chapter 5 (pages 33–39).
 
 ## Wording points in the companion (no discrepancy)
 
@@ -299,13 +349,15 @@ in the line-by-line reading. The chapters are generated: change them through
   "The objective need not split as a smooth function plus …", line 453); the word is
   a remnant of the source's order. Proposed: "The nonsplitting conclusion of
   Section 11.7". (`C/11_U/prose/079`)
-- [ ] **W11: Unnamed references to results the companion states (Chapter 11).**
+- [ ] **W11: Unnamed references to results the companion states (Chapters 5 and 11).**
   `11_U.tex:111` "the affine-criticality program" (Chapter 8); 416 "the recorded
   equivalence between inward radial smoothness and RS" (Theorem `R:thm:equiv`); 422
   "the original arbitrary curved finite-$C^2$-max conjecture" (the conjecture of
   Chapter 8, `C/08_A/prose/042`, OPEN); 424 "the older finite-polyhedral-partition
-  theorem" (Theorem `R:thm:plq`). Optional: cite them with `\ref`. (`C/11_U/prose/019`,
-  `prose/044`, `prose/049`, `prose/050`)
+  theorem" (Theorem `R:thm:plq`); `05_G.tex:89` "The accumulated-expansion budget was
+  useful in the proof" (the proof of Chapter 3's theorem; source G.tex:79). Optional:
+  cite them with `\ref`. (`C/11_U/prose/019`, `prose/044`, `prose/049`, `prose/050`,
+  `C/05_G/prose/012`)
 - [ ] **W12: Redundant compactness hypothesis (Chapter 11).** Theorem 11.1
   (`11_U.tex:31-32`) assumes $F$ finite, convex, with a unique minimizer, and then
   "Let $K=\{F\le F(x_0)\}$ be compact"; lines 87–88 repeat "A compact initial
@@ -317,7 +369,9 @@ in the line-by-line reading. The chapters are generated: change them through
   numbers: Chapter 3 starts at 3.2, Chapter 4 has no 4.4, Chapter 5 no 5.5 or 5.8,
   Chapter 7 no 7.3 or 7.4, Chapter 10 has only 10.5 and 10.6, and Chapter 11 has no
   11.3 or 11.4; equation tags start late in the same way (Chapter 11 at (11.10)).
-  Cosmetic. Renumbering would change the numbers proposed in M17, M18 and the other
+  Chapter 5 also leaves (5.1), (5.3), (5.5) unused, numbers subsections 5.2.1, 5.3.1,
+  5.6.1 like its propositions, and refers to its tags (5.V), (5.S), (5.T), (5.T0) as
+  "(V)", "(S)", "(T)", "(T0)". Cosmetic. Renumbering would change the numbers proposed in M17, M18 and the other
   reference fixes, so decide them together. (Notes on `C/11_U/prose/026`,
   `C/11_U/disp/009`.)
 - [ ] **W14: "We will argue by contradiction that Γ contains no affine-critical
@@ -332,6 +386,14 @@ in the line-by-line reading. The chapters are generated: change them through
   neighborhoods of the entire moving normal arcs"; the later estimates (line 202
   and the display at lines 218–220) also need $0\le\chi_j\le1$. Standard cutoffs
   have it; optional: say so. (`C/09_C/prose/041`; used by `prose/042`, `disp/020`)
+- [ ] **W16: Sign of $\epsilon$ left to the context (Chapter 5).** `05_G.tex:269-278`:
+  "For $x=\epsilon$, $z=-\epsilon/2$," and the formulas that follow need $\epsilon>0$
+  (for $\epsilon<0$, $g_x=1+\epsilon$); only line 278's "strictly eligible" and line
+  307's $\epsilon\downarrow0$ fix the sign. Proposed: "For $x=\epsilon$,
+  $z=-\epsilon/2$ with $\epsilon>0$," (source `For $x=\epsilon$, $z=-\epsilon/2$,`,
+  G.tex:251, occurs once). Lean: `Ch05G.shifted_crossing_gradients`,
+  `shifted_crossing_quantities`, `shifted_crossing_eligible_divergent` (all with
+  $\epsilon>0$). (`C/05_G/disp/025`, `disp/026`, `prose/054`)
 
 ## Resolved
 
