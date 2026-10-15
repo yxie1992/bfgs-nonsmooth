@@ -12,12 +12,14 @@ the same day.
 | Work | State | Details |
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
-| Manuscript review | M1–M6 fixed on 13 October; M7–M29 (from M12 on in the companion) and the companion's wording points W1–W43, found by the Lean coverage, stay open until step 2 | `TODO_MANUSCRIPT_REVIEW.md` |
+| Manuscript review | M1–M6 fixed on 13 October; M7–M11 fixed in the article on 15 October (step 2); the companion's recurrences of M8, its items M12–M29 and its wording points W1–W43, found by the Lean coverage, are open | `TODO_MANUSCRIPT_REVIEW.md` |
 | Lean coverage, article | complete: all 616 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 
-The Lean work (step 1 of the plan in `AGENTS.md`) is done. Next: step 2, under
-"After the Lean coverage" below.
+The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Lean
+coverage" below) started on 15 October: the article's corrections M7–M11 are done,
+and reader agents read the article line by line; their findings are triaged into
+`TODO_MANUSCRIPT_REVIEW.md` (M30 onwards).
 
 Latest checks:
 
@@ -28,9 +30,10 @@ Latest checks:
 - Kernel replay of `9f03d7c` with lean4checker v4.19.0: PASS, 783 modules
   (`bfgs_lean_article/KERNEL_REPLAY.json`); 27 minutes on the MacBook with 8 jobs.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
-  modules (last run on 15 October with every companion module: 104 s);
-  `check_coverage.py` exits 0 (also with `--strict --allow-discrepancies` on every
-  article and companion file); `generate_companion.py --check` passes.
+  modules (last run on 15 October after the corrections M7–M11: 184 s);
+  `check_coverage.py` exits 0 (also with `--strict` on every article file and with
+  `--strict --allow-discrepancies` on every companion file);
+  `generate_companion.py --check` passes.
 
 ## Setting up the Mac
 
@@ -161,13 +164,13 @@ all settled by the chapter groups.
 
 - **Step 2:** the line-by-line reading of the article's proofs, and the manuscript
   corrections (M7 onwards, and the wording points W1 onwards). After each TeX edit,
-  build the PDF and inspect the changed pages. Then run `check_coverage.py`, which
-  reports every item whose source changed ("source changed since
-  classification"): re-check those Lean statements, then update the items'
-  `sha256` and `lines` (from `extract_items.py --json`) and the docstring line
-  references. Give each corrected `DISCREPANCY` item its final status (for example
-  `A/seed_certificate/prose/012` becomes `PROOF` once M11 is fixed). Refresh the
-  stale numbers in `companion/current_verification.tex` ("2026 Lean names").
+  build the PDF and inspect the changed pages. Then carry the coverage registers
+  across the edit (`editorial/lean_coverage/README.md`, "After a correction":
+  `resync_register.py` moves lines and line references and reports the items to
+  re-check; statuses, anchors and docstrings are changed by hand), and give each
+  corrected `DISCREPANCY` item its final status. Refresh the stale numbers in
+  `companion/current_verification.tex` ("2026 Lean names", W30). Done so far: the
+  article's M7–M11 (15 October).
 - Then a new release run (`editorial/build.sh` and the release scripts; needs TeX,
   Node.js and Poppler) to refresh `release/` and the receipts.
 - Step 3 is the author's expert check.

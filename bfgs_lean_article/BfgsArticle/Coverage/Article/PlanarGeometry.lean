@@ -45,7 +45,7 @@ variables with their defining equations or properties.
   `PlanarAmbientFrame.rotate u = ![-u 1, u 0]`, so `rotate (normal θ) = tangent θ`.
 * `normalized g = ‖euclideanVector g‖⁻¹ • g` is $g/\norm{g}$; `coordinateGradient F x` is
   $\nabla F(x)$; `subdifferential F x` is $\partial F(x)$.
-* For differentiable $x,z$ (energy.tex:238-243), `EligiblePair F c₁ c₂ x z g h` says that
+* For differentiable $x,z$ (energy.tex:239-244), `EligiblePair F c₁ c₂ x z g h` says that
   `g`, `h` are the gradients at `x`, `z` and that the pair is eligible:
   $d>0$, $c_1d\le\Delta\le d$, $t\ge(1-c_2)d$, with $s=z-x$, $y=h-g$, $d=-g^Ts$
   (`-dot g (z - x)`), $\Delta=F(x)-F(z)$ and $t=y^Ts$ (`dot (h - g) (z - x)`).

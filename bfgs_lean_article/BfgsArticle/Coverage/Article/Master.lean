@@ -7,10 +7,10 @@ import BfgsVerification.UnexcitedMetric
 
 The claims of the abstract restate results proved in the sections; they are
 classified in `editorial/lean_coverage/register/A_master.json`. This module holds
-the Lean witness for the discrepancy recorded for `A/master/prose/003` (the centered
-theorem needs the compact initial sublevel inside the representation region), and a
-supporting example for the note of `A/master/prose/005` (the local results assume a unique
-minimizer).
+the Lean witness for the correction M7 of `A/master/prose/003` (15 October 2026: the centered
+theorem needs the compact initial sublevel inside the representation region, which the abstract
+now says), and a supporting example for the note of `A/master/prose/005` (the local results
+assume a unique minimizer).
 -/
 
 noncomputable section
@@ -63,8 +63,9 @@ theorem capGauge_nonneg (r : Vec 2) : 0 ≤ capGauge r := by
   simp only [capGauge]
   linarith
 
-/-- Item `A/master/prose/003` (`paper/master.tex:42-44`), witness for its discrepancy ("applies in
-arbitrary dimension on compact initial sublevels"): Theorem
+/-- Item `A/master/prose/003` (`paper/master.tex:42-45`), witness for its correction M7 (until
+15 October 2026 the abstract said only "applies in arbitrary dimension on compact initial
+sublevels"): Theorem
 `art:centered` needs the compact initial sublevel to lie in the region `U` of the
 centered representation. The coercive cap `Ḡ` of Corollary `art:failure_polyhedral`
 is finite and convex with minimizer `x_*=(-1,16)`; on the open convex set
@@ -263,7 +264,7 @@ def absVRun (u₀ v₀ : ℝ) (hv : 0 < v₀) : AdmissibleBFGSRun 2 absV where
     exact (axisRun v₀ hv).armijo k
   weak_wolfe := (axisRun v₀ hv).weak_wolfe
 
-/-- Item `A/master/prose/005` (`paper/master.tex:46-47`), supporting example for its note (also
+/-- Item `A/master/prose/005` (`paper/master.tex:47-48`), supporting example for its note (also
 cited by the note of the introduction's `A/introduction/prose/036`): the local results assume
 a unique minimizer, and their conclusion `x_k → x_*` needs it. `F(u,v)=|v|` is a finite convex
 maximum of the linear (hence smooth and convex) branches `v`, `-v`; it equals `v` on the closed

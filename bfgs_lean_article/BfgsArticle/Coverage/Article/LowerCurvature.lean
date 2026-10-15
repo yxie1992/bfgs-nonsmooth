@@ -51,7 +51,7 @@ The register lists every item and the Lean names that cover it.
 |---|---|---|
 | `disp/001`, `disp/002`, `disp/003` (`art:quadratic_minimizer`) | 26-39 | `quadratic_def`, `gbar_def`, `quadratic_minimizer` |
 | prose `003`-`007`, `035` | 5-42 | `gbar_least_norm`, `minimizer_nonsmooth`, `common_quadratic`, `seed_not_orbit`, `quadratic_gradient_small` |
-| prose `010` (a discrepancy: only three of the four branches) | 11-13 | `branch_second_differentiability` |
+| prose `010` (corrected, M8: three of the four branches) | 11-13 | `branch_second_differentiability` |
 | `proposition/art:quadratic_failure` | 44-51 | `quadratic_failure` |
 | prose `036` | 53-57 | `stable_manifold_positive_scale` |
 | `disp/004`-`disp/006`, prose `008`, `009`, `041`, `042` | 60-83 | `normalized_coordinates_def`, `boundary_seed_def`, `return_substep_def`, `return_map_def`, `seed_return` |
@@ -1020,7 +1020,7 @@ theorem parameter_range {i : Fin 3} {b : ℝ} (hb : b = LEmbedding.parameter i) 
   subst hb
   exact ⟨(LEmbedding.parameter_bounds i).1.le, (LEmbedding.parameter_bounds i).2.le⟩
 
-/-- The cubic ramp $P_b$ of `paper/sections/failure.tex:277-284` with center `t` and width `ε`:
+/-- The cubic ramp $P_b$ of `paper/sections/failure.tex:278-285` with center `t` and width `ε`:
 $0$ for $\xi\le t-\varepsilon$, $3v^2-2v^3$ for $|\xi-t|<\varepsilon$, $1$ for
 $\xi\ge t+\varepsilon$, where $v=(\xi-t+\varepsilon)/(2\varepsilon)$. -/
 def cubicRamp (t ε ξ : ℝ) : ℝ :=
@@ -1498,9 +1498,9 @@ theorem ridge_restriction :
     exact ArticleBranchRegularity.branch_not_twice_differentiable_zero i h
 
 /-- Item `A/lower_curvature/prose/010` (`paper/appendices/lower_curvature.tex:11-13`): "The price of
-retaining a positive lower curvature bound is the loss of second differentiability of the
-branches at the accumulation point." Recorded as a discrepancy (imprecision): only three of the
-four branches lose it. The first three branches $f_0,f_1,f_2$ of `art:lower_objective` are not
+retaining a positive lower curvature bound is the loss of second differentiability of three of the
+four branches at the accumulation point." (Corrected on 15 October 2026, M8; it said "of the
+branches".) The first three branches $f_0,f_1,f_2$ of `art:lower_objective` are not
 twice differentiable at zero, the point where the bad starts accumulate, and neither are the
 whitened branches $f_i(Az)$ of Theorem `art:local-failure-lower` (`LUniform.smoothBranch`); the
 fourth branch $f_3(x)=\mu\|x\|^2/2+x_2$ is a quadratic, twice differentiable at every point, also

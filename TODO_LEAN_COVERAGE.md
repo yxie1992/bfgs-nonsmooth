@@ -24,8 +24,10 @@ Progress (`python3 editorial/lean_coverage/check_coverage.py`), 15 October 2026:
 | Article (`paper/`, 15 files) | 616 (221 mechanical, 395 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
 | Companion (`companion/`, 18 files) | 1856 (573 mechanical, 1283 prose) | complete (14 and 15 October, on the MacBook): every item classified; 18 coverage modules in twelve groups, each group reviewed by an independent agent, imported by `BfgsArticle.lean` |
 
-Article items by status: LEAN 280, SAME_AS 124, NON_CLAIM 89, DEFINITION 51,
-PART_OF 34, PROOF 28, DISCREPANCY 9 (manuscript items M7–M11), OPEN 1.
+Article items by status: LEAN 286, SAME_AS 126, NON_CLAIM 89, DEFINITION 51,
+PART_OF 34, PROOF 29, OPEN 1. The nine `DISCREPANCY` items (manuscript items
+M7–M11) were resolved by the corrections of 15 October 2026; their register entries
+are kept under `resolved_discrepancies`.
 
 Companion items by status: LEAN 816, SAME_AS 366, NON_CLAIM 358, DEFINITION 138,
 PART_OF 86, PROOF 56, DISCREPANCY 25 (manuscript items M12–M29, and the
@@ -67,9 +69,11 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       `bfgs_lean_article/AXIOM_AUDIT.json`, `KERNEL_REPLAY.json`).
 - [ ] Discrepancies go to `TODO_MANUSCRIPT_REVIEW.md` (article: M7–M11; companion:
       M12–M29 and the recurrences under M8, M12 and M24; wording points W1–W43). When the
-      manuscript is corrected, give each `DISCREPANCY` item its final status (for
-      example `A/seed_certificate/prose/012` becomes `PROOF` once M11 is fixed)
-      and refresh the items whose source changed.
+      manuscript is corrected, give each `DISCREPANCY` item its final status and carry
+      the registers across the edit (`editorial/lean_coverage/README.md`, "After a
+      correction"). Article: done on 15 October 2026 (M7–M11 corrected; the nine items
+      resolved, for example `A/seed_certificate/prose/012` is now `PROOF`).
+      Companion: open.
 - [x] Non-vacuity follow-up (done 14 October 2026): no admissible run had been
       exhibited on the three-branch objective of Theorem `art:nonradial-example`.
       `bfgs_lean_article/BfgsArticle/AdmissibleRunExistence.lean` now proves a general

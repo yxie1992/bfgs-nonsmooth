@@ -7,7 +7,7 @@ import BfgsVerification.DEuclideanLocality
 Theorem `art:local-failure` ("Local failure with globally smooth convex branches"),
 included in Section `art:failure` (`paper/sections/failure.tex:49`). Register:
 `editorial/lean_coverage/register/A_negative_upper.json`. Its proof
-(`failure.tex:385-425`) and the construction it uses are covered in
+(`failure.tex:386-426`) and the construction it uses are covered in
 `BfgsArticle.Coverage.Article.Failure`.
 
 ## The specified implementation
@@ -37,7 +37,7 @@ by `(x 0, H 0)`: the implementation is deterministic.
 `Vec 2 = Fin 2 → ℝ` carries the sup norm; the theorem's norms are Euclidean,
 `‖euclideanVector z‖`. `RadialHessian.matrix f x` is the matrix of `fderiv ℝ (fderiv ℝ f) x`;
 for the $C^2$ branches $f_i$ (differentiable everywhere, with a differentiable derivative map)
-it is the classical Hessian of `failure.tex:484-486`, the derivative of the gradient map
+it is the classical Hessian of `failure.tex:485-487`, the derivative of the gradient map
 (`BfgsCoverage.Article.Failure.classical_hessian`). $A\succeq0$ is `A.PosSemidef`.
 `FrameNorms.euclideanOpNorm` is the Euclidean operator norm.
 `ConvexSubdifferential.subdifferential F x` is

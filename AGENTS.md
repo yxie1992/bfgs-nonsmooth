@@ -28,7 +28,9 @@ to resume.
   Agents may edit the repository, commit and push.
 - After editing the article or the companion, build the PDF and inspect the
   changed pages visually (render them to images and look at them); also compare
-  the LaTeX warnings with those of the previous build.
+  the LaTeX warnings with those of the previous build. Then carry the coverage
+  registers across the edit (`editorial/lean_coverage/README.md`, "After a
+  correction").
 - Context pruning (DCP): at the agent's own discretion, when the context window is
   getting large, when everything needed is safely stored in files, or when it is
   clear what can be pruned without loss.
@@ -72,6 +74,7 @@ audit and kernel replay: `bfgs_lean_article/README.md`.
 Coverage, ledger, companion:
 
     python3 editorial/lean_coverage/check_coverage.py [--strict [--allow-discrepancies]] [TEX_FILE ...]
+    python3 editorial/lean_coverage/resync_register.py [--write] [--accept ID ...] TEX_FILE ...   # after a correction
     python3 editorial/lean_coverage/extract_items.py [--json | --init]
     python3 editorial/lean_coverage/companion_hints.py   # git-ignored hints/ for companion agents
     (cd editorial && python3 assemble_claim_ledger.py)   # CLAIM_LEDGER.json, companion/PROOF_CORRESPONDENCE.html

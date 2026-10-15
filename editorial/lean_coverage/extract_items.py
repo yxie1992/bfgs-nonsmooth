@@ -73,8 +73,9 @@ def lean_module(path):
     return f"BfgsArticle.Coverage.{'Article' if path.startswith('paper/') else 'Companion'}.{name}"
 
 
-def items_of(path):
-    text = strip_comments((ROOT / path).read_text())
+def items_of(path, text=None):
+    """Items of a TeX file (of `text` instead of the working tree's file if given)."""
+    text = strip_comments((ROOT / path).read_text() if text is None else text)
     prefix = f"{'A' if path.startswith('paper/') else 'C'}/{Path(path).stem}"
     line = lambda pos: text.count('\n', 0, pos) + 1
     found, stack = [], []

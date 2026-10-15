@@ -653,14 +653,15 @@
    "labels": [],
    "title": null,
    "container": null,
-   "status": "DISCREPANCY",
+   "status": "PROOF",
    "lean": [
     "BfgsCoverage.Article.Failure.seed_cycle",
     "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample",
     "BfgsCoverage.Article.SeedCertificate.positive_slope_wolfe",
     "BfgsCoverage.Article.SeedCertificate.increase_rejects_armijo"
    ],
-   "note": "Same issue as Lemma art:seed_cycle (M11): the calculations prove the corrected lemma, for every 0 < c₁ ≤ 1/3 and c₂ > 0, not the printed range-free one. See the discrepancy entry."
+   "note": "Corrected on 15 October 2026 with M11: the lemma now states the range 0 < c₁ ≤ 1/3, c₂ > 0, and these calculations prove it (Lean: Failure.seed_cycle): the acceptance quantity of line 181 is the Armijo test with c₁ = 1/3, so it holds for every c₁ ≤ 1/3; the positive slope gives weak Wolfe for every c₂ > 0 (positive_slope_wolfe); a rejected query fails Armijo for every c₁ > 0 (increase_rejects_armijo). seed_cycle_range_counterexample shows that the range is needed.",
+   "of": "A/failure/lemma/art:seed_cycle"
   },
   {
    "id": "A/seed_certificate/prose/013",
@@ -845,7 +846,8 @@
    "note": "z_j of art:seed_points as functions of (c, d, ρ): SeedOrbit.point c d ρ j (z₀ = initialPoint, z₁ = z₀ + s₀, z₂ = z₁ + s₁); Failure.seed_points states the literal art:seed_points and identifies its z₀, z₁, z₂ with SeedOrbit.point seedC seedD seedRatio j."
   }
  ],
- "discrepancies": [
+ "discrepancies": [],
+ "resolved_discrepancies": [
   {
    "item": "A/seed_certificate/prose/012",
    "description": "\"Together with the matrix identities, these calculations complete the proof of Lemma art:seed_cycle\" (seed_certificate.tex:199-200) asserts the lemma as printed. The printed lemma fixes no line-search constants, and its query-list claim is false for every c₁ > r₂, 0.37520 < r₂ < 0.37521 (discrepancy of A/failure/lemma/art:seed_cycle, M11; Lean: Failure.seed_cycle_range_counterexample, c₁ = 0.38, c₂ = 1/2). The calculations of this appendix prove the corrected lemma, for every 0 < c₁ ≤ 1/3 and c₂ > 0 (Lean: Failure.seed_cycle): the acceptance quantity g_jᵀz_j + αg_jᵀp_j/3 - g_iᵀq > 0 of line 181 is the Armijo test with c₁ = 1/3, hence holds for every c₁ ≤ 1/3; the positive quantity αg_iᵀp_j gives weak Wolfe for every c₂ > 0 (positive_slope_wolfe); a rejected query fails Armijo for every c₁ > 0 (increase_rejects_armijo). Same issue as the lemma; no separate correction is needed once the lemma states the range.",
@@ -856,7 +858,8 @@
     "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample",
     "BfgsCoverage.Article.SeedCertificate.positive_slope_wolfe",
     "BfgsCoverage.Article.SeedCertificate.increase_rejects_armijo"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M11 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   }
  ]
 }

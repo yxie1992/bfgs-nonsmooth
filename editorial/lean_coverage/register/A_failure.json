@@ -158,8 +158,8 @@
    ],
    "title": "Exact cycle and strict trial decisions",
    "container": null,
-   "sha256": "6a80ab8aca77f5e2",
-   "status": "DISCREPANCY",
+   "sha256": "79fa6b08ae5b6df1",
+   "status": "LEAN",
    "lean": [
     "BfgsCoverage.Article.Failure.seed_cycle",
     "BfgsCoverage.Article.Failure.seed_search",
@@ -178,7 +178,7 @@
     "BfgsVerification.DNonStrictObjectives.seed_fromMetric",
     "BfgsVerification.DDisplayPrecision.actual_bounds"
    ],
-   "note": "The lemma fixes no line-search constants, and 'the entire line-search query list is Table art:trial_table' (lines 107-108) is false for c₁ > 0.37521 (see the discrepancy entry). Lean statement of the corrected claim: seed_cycle, the lemma with 'for every 0<c₁≤1/3 and c₂>0' in that sentence: M₀,M₁,M₂ ≻ 0; 𝓑(I,g₀,g₁,1) = M₁, 𝓑(M₂,g₂,g₀,1/16) = ρI, z₃ = ρz₀; g_j is the unique (strict) active gradient at z_j; for every 0<c₁≤1/3, c₂>0 the specified search from (z_j,M_j) on G returns (1,[1]), (1/4,[1,1/2,1/4]), (1/16,[1,1/2,1/4,1/8,1/16]) (seed_search); every rejected query has a larger value than G(z_j); the margins art:seed_margins with g₃ = g₀ (seedSlope); and the bounds art:seed_query_bounds with unique active branch at z₀,z₁,z₂ and at the nine queries z_j+αp_j, p_j = -M_jg_j (seedDir), [z]₂ = z 1. Everything except the query-list sentence holds as printed, for all parameters (the displays are LEAN items disp/007-009). The corrected range contains the range 0<c₁≤1/3, c₁<c₂<1 of Theorems art:local-failure and art:local-failure-lower, which the paragraph after the table (lines 159-161) names (prose/022), so no later result is affected. Counterexample to the printed lemma: seed_cycle_range_counterexample (c₁ = 0.38, c₂ = 1/2); the exact Armijo thresholds: accepted_armijo_iff, accepted_armijo_ratios. The proof is in Appendix art:seed_certificate (register A_seed_certificate)."
+   "note": "Corrected on 15 October 2026 (M11): the query-list sentence now fixes the range 'for every 0<c₁≤1/3 and c₂>0'; without it the sentence was false for c₁ > 0.37521. Lean: seed_cycle, the lemma as printed: M₀,M₁,M₂ ≻ 0; 𝓑(I,g₀,g₁,1) = M₁, 𝓑(M₂,g₂,g₀,1/16) = ρI, z₃ = ρz₀; g_j is the unique (strict) active gradient at z_j; for every 0<c₁≤1/3, c₂>0 the specified search from (z_j,M_j) on G returns (1,[1]), (1/4,[1,1/2,1/4]), (1/16,[1,1/2,1/4,1/8,1/16]) (seed_search); every rejected query has a larger value than G(z_j); the margins art:seed_margins with g₃ = g₀ (seedSlope); and the bounds art:seed_query_bounds with unique active branch at z₀,z₁,z₂ and at the nine queries z_j+αp_j, p_j = -M_jg_j (seedDir), [z]₂ = z 1. Everything except the query-list sentence holds as printed, for all parameters (the displays are LEAN items disp/007-009). The corrected range contains the range 0<c₁≤1/3, c₁<c₂<1 of Theorems art:local-failure and art:local-failure-lower, which the paragraph after the table (lines 159-161) names (prose/022), so no later result is affected. The range is needed: seed_cycle_range_counterexample (c₁ = 0.38, c₂ = 1/2); the exact Armijo thresholds: accepted_armijo_iff, accepted_armijo_ratios. The proof is in Appendix art:seed_certificate (register A_seed_certificate)."
   },
   {
    "id": "A/failure/disp/007",
@@ -252,15 +252,15 @@
    "environment": "table",
    "lines": [
     122,
-    150
+    151
    ],
    "labels": [
     "art:trial_table"
    ],
    "title": null,
    "container": null,
-   "sha256": "0ac38c82ec4d7bef",
-   "status": "DISCREPANCY",
+   "sha256": "aa9b134a94502b1b",
+   "status": "LEAN",
    "lean": [
     "BfgsCoverage.Article.Failure.trial_table",
     "BfgsCoverage.Article.Failure.table_current",
@@ -276,15 +276,15 @@
     "BfgsVerification.SeedOrbit.trialActive",
     "BfgsVerification.SeedOrbit.trialAccept"
    ],
-   "note": "Same omission as Lemma art:seed_cycle (see the discrepancy entries): the Decision column, 'the deterministic trial tree', depends on (c₁,c₂), which neither the table nor its caption fixes, and the 'accept' of the row (2, 1/16) is false for c₁ = 0.38 (seed_cycle_range_counterexample). Lean statement of the corrected table: trial_table. Rows are q : Fin 9; the columns Phase, Trial α, Active branch, Decision are trialPhase, trialLength, trialActive, trialAccept (literally the table, first four conjuncts). The 12 open intervals (currentLower/currentUpper, trialLower/trialUpper) enclose 10⁴G(z_j) and 10⁴G(z_j+αp_j); they are proved from the library's certified rational enclosures (DDisplayPrecision.actual_bounds, about 45 digits). These cells hold as printed. The decisions are those of the specified search for every 0<c₁≤1/3 and c₂>0 (the proposed caption sentence), and the phase-j rows are exactly the trial list of the search from (z_j,M_j). Caption claims: prose items A/failure/prose/016 to 018 ('Current' and 'trial' are defined by the statement), which hold as printed."
+   "note": "Corrected on 15 October 2026 (M11): the caption now says that the decisions are those of the specified search for every 0<c₁≤1/3 and c₂>0; the Decision column depends on (c₁,c₂), and the 'accept' of the row (2, 1/16) is false for c₁ = 0.38 (seed_cycle_range_counterexample). Lean: trial_table. Rows are q : Fin 9; the columns Phase, Trial α, Active branch, Decision are trialPhase, trialLength, trialActive, trialAccept (literally the table, first four conjuncts). The 12 open intervals (currentLower/currentUpper, trialLower/trialUpper) enclose 10⁴G(z_j) and 10⁴G(z_j+αp_j); they are proved from the library's certified rational enclosures (DDisplayPrecision.actual_bounds, about 45 digits). These cells hold as printed. The decisions are those of the specified search for every 0<c₁≤1/3 and c₂>0 (the caption's sentence), and the phase-j rows are exactly the trial list of the search from (z_j,M_j). Caption claims: prose items A/failure/prose/016 to 018 ('Current' and 'trial' are defined by the statement), which hold as printed."
   },
   {
    "id": "A/failure/figure/art:cycle-figure",
    "kind": "figure",
    "environment": "figure",
    "lines": [
-    170,
-    182
+    171,
+    183
    ],
    "labels": [
     "art:cycle-figure"
@@ -300,8 +300,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    188,
-    190
+    189,
+    191
    ],
    "labels": [
     "art:cone_orbit"
@@ -325,8 +325,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    197,
-    199
+    198,
+    200
    ],
    "labels": [],
    "title": null,
@@ -343,8 +343,8 @@
    "kind": "corollary",
    "environment": "corollary",
    "lines": [
-    202,
-    209
+    203,
+    210
    ],
    "labels": [
     "art:failure_polyhedral"
@@ -368,8 +368,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    204,
-    206
+    205,
+    207
    ],
    "labels": [],
    "title": null,
@@ -383,8 +383,8 @@
    "kind": "proof",
    "environment": "proof",
    "lines": [
-    210,
-    219
+    211,
+    220
    ],
    "labels": [],
    "title": null,
@@ -408,8 +408,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    230,
-    232
+    231,
+    233
    ],
    "labels": [
     "art:matched-local-model"
@@ -426,8 +426,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    235,
-    238
+    236,
+    239
    ],
    "labels": [
     "art:matched-scaling"
@@ -447,8 +447,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    273,
-    276
+    274,
+    277
    ],
    "labels": [],
    "title": null,
@@ -467,8 +467,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    277,
-    285
+    278,
+    286
    ],
    "labels": [],
    "title": null,
@@ -488,8 +488,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    289,
-    294
+    290,
+    295
    ],
    "labels": [
     "art:upper_scalar"
@@ -511,8 +511,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    296,
-    303
+    297,
+    304
    ],
    "labels": [],
    "title": null,
@@ -531,8 +531,8 @@
    "kind": "lemma",
    "environment": "lemma",
    "lines": [
-    305,
-    317
+    306,
+    318
    ],
    "labels": [
     "art:upper_scalar_lemma",
@@ -556,8 +556,8 @@
    "kind": "display",
    "environment": "align",
    "lines": [
-    308,
-    312
+    309,
+    313
    ],
    "labels": [
     "art:scalar_curvature",
@@ -574,8 +574,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    314,
-    316
+    315,
+    317
    ],
    "labels": [],
    "title": null,
@@ -589,8 +589,8 @@
    "kind": "proof",
    "environment": "proof",
    "lines": [
-    318,
-    354
+    319,
+    355
    ],
    "labels": [],
    "title": null,
@@ -618,8 +618,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    321,
-    324
+    322,
+    325
    ],
    "labels": [],
    "title": null,
@@ -638,8 +638,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    341,
-    344
+    342,
+    345
    ],
    "labels": [],
    "title": null,
@@ -660,8 +660,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    358,
-    361
+    359,
+    362
    ],
    "labels": [
     "art:upper_objective"
@@ -683,8 +683,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    375,
-    378
+    376,
+    379
    ],
    "labels": [
     "art:upper_local_model"
@@ -704,8 +704,8 @@
    "kind": "proof",
    "environment": "proof",
    "lines": [
-    385,
-    425
+    386,
+    426
    ],
    "labels": [
     "art:upper_orbit"
@@ -733,8 +733,8 @@
    "kind": "display",
    "environment": "equation",
    "lines": [
-    387,
-    390
+    388,
+    391
    ],
    "labels": [
     "art:upper_orbit"
@@ -756,8 +756,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    395,
-    398
+    396,
+    399
    ],
    "labels": [],
    "title": null,
@@ -775,8 +775,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    401,
-    405
+    402,
+    406
    ],
    "labels": [],
    "title": null,
@@ -794,8 +794,8 @@
    "kind": "display",
    "environment": "display",
    "lines": [
-    420,
-    422
+    421,
+    423
    ],
    "labels": [],
    "title": null,
@@ -814,8 +814,8 @@
    "kind": "figure",
    "environment": "figure",
    "lines": [
-    433,
-    446
+    434,
+    447
    ],
    "labels": [
     "art:shrinking-scales"
@@ -831,8 +831,8 @@
    "kind": "table",
    "environment": "table",
    "lines": [
-    461,
-    482
+    462,
+    483
    ],
    "labels": [
     "art:regularity-map"
@@ -1096,7 +1096,7 @@
    "kind": "prose",
    "lines": [
     146,
-    147
+    148
    ],
    "anchor": "The accepted rows also satisfy the strict",
    "status": "SAME_AS",
@@ -1107,8 +1107,8 @@
    "id": "A/failure/prose/018",
    "kind": "prose",
    "lines": [
-    148,
-    148
+    149,
+    149
    ],
    "anchor": "All displayed intervals are rational enclosures, not rounded values.",
    "status": "LEAN",
@@ -1123,8 +1123,8 @@
    "id": "A/failure/prose/019",
    "kind": "prose",
    "lines": [
-    152,
-    153
+    153,
+    154
    ],
    "anchor": "The proof of the lemma, including the root isolation, matrix closure and",
    "status": "NON_CLAIM",
@@ -1134,8 +1134,8 @@
    "id": "A/failure/prose/020",
    "kind": "prose",
    "lines": [
-    154,
-    156
+    155,
+    157
    ],
    "anchor": "Every rejected candidate",
    "status": "LEAN",
@@ -1149,8 +1149,8 @@
    "id": "A/failure/prose/021",
    "kind": "prose",
    "lines": [
-    156,
-    159
+    157,
+    160
    ],
    "anchor": "At each accepted candidate the decrease exceeds one third of the",
    "status": "LEAN",
@@ -1164,8 +1164,8 @@
    "id": "A/failure/prose/022",
    "kind": "prose",
    "lines": [
-    159,
-    161
+    160,
+    162
    ],
    "anchor": "Thus the displayed lengths are outputs of the",
    "status": "LEAN",
@@ -1179,8 +1179,8 @@
    "id": "A/failure/prose/023",
    "kind": "prose",
    "lines": [
-    162,
-    162
+    163,
+    163
    ],
    "anchor": "The routine never needs a Wolfe rejection on this example.",
    "status": "LEAN",
@@ -1193,8 +1193,8 @@
    "id": "A/failure/prose/024",
    "kind": "prose",
    "lines": [
-    164,
-    166
+    165,
+    167
    ],
    "anchor": "accepts its first query, while the next two phases bisect past the rejected",
    "status": "SAME_AS",
@@ -1207,8 +1207,8 @@
    "id": "A/failure/prose/025",
    "kind": "prose",
    "lines": [
-    173,
-    175
+    174,
+    176
    ],
    "anchor": "whose accepted lengths are $1,1/4,1/16$",
    "status": "SAME_AS",
@@ -1223,8 +1223,8 @@
    "id": "A/failure/prose/026",
    "kind": "prose",
    "lines": [
-    184,
-    186
+    185,
+    187
    ],
    "anchor": "copy has the same active slopes, and its inverse matrix produces proportionally",
    "status": "LEAN",
@@ -1238,8 +1238,8 @@
    "id": "A/failure/prose/027",
    "kind": "prose",
    "lines": [
-    191,
-    195
+    192,
+    196
    ],
    "anchor": "Each query in phase $j$ is $\\rho^m$ times its base query.",
    "status": "LEAN",
@@ -1253,8 +1253,8 @@
    "id": "A/failure/prose/028",
    "kind": "prose",
    "lines": [
-    195,
-    200
+    196,
+    201
    ],
    "anchor": "The iterates converge to zero, but the direction",
    "status": "LEAN",
@@ -1269,8 +1269,8 @@
    "id": "A/failure/prose/029",
    "kind": "prose",
    "lines": [
-    220,
-    221
+    221,
+    222
    ],
    "anchor": "This already excludes global convergence from every start for coercive finite",
    "status": "SAME_AS",
@@ -1280,8 +1280,8 @@
    "id": "A/failure/prose/030",
    "kind": "prose",
    "lines": [
-    221,
-    223
+    222,
+    224
    ],
    "anchor": "Its wrong corner is away from the",
    "status": "SAME_AS",
@@ -1292,8 +1292,8 @@
    "id": "A/failure/prose/031",
    "kind": "prose",
    "lines": [
-    227,
-    228
+    228,
+    229
    ],
    "anchor": "A change of scale also changes which inverse matrix represents the same",
    "status": "SAME_AS",
@@ -1304,8 +1304,8 @@
    "id": "A/failure/prose/032",
    "kind": "prose",
    "lines": [
-    233,
-    233
+    234,
+    234
    ],
    "anchor": "Differentiation gives $g_F=(\\sigma/\\lambda)g_{\\mathcal G}$.",
    "status": "LEAN",
@@ -1318,8 +1318,8 @@
    "id": "A/failure/prose/033",
    "kind": "prose",
    "lines": [
-    239,
-    243
+    240,
+    244
    ],
    "anchor": "At an accepted pair $y_F=(\\sigma/\\lambda)y_{\\mathcal G}$.",
    "status": "LEAN",
@@ -1332,8 +1332,8 @@
    "id": "A/failure/prose/034",
    "kind": "prose",
    "lines": [
-    243,
-    245
+    244,
+    246
    ],
    "anchor": "Function differences",
    "status": "LEAN",
@@ -1346,8 +1346,8 @@
    "id": "A/failure/prose/035",
    "kind": "prose",
    "lines": [
-    247,
-    248
+    248,
+    249
    ],
    "anchor": "This is a covariance calculation, not an existence theorem for a local",
    "status": "NON_CLAIM",
@@ -1357,8 +1357,8 @@
    "id": "A/failure/prose/036",
    "kind": "prose",
    "lines": [
-    248,
-    251
+    249,
+    252
    ],
    "anchor": "To transfer a particular run, the local model must cover the",
    "status": "LEAN",
@@ -1372,8 +1372,8 @@
    "id": "A/failure/prose/037",
    "kind": "prose",
    "lines": [
-    254,
-    255
+    255,
+    256
    ],
    "anchor": "The choice $\\sigma=\\lambda^2$ is decisive: it leaves the initial matrix",
    "status": "LEAN",
@@ -1385,8 +1385,8 @@
    "id": "A/failure/prose/038",
    "kind": "prose",
    "lines": [
-    255,
-    260
+    256,
+    261
    ],
    "anchor": "In the first embedding, the corner's objective height is $a_\\ell^3$",
    "status": "LEAN",
@@ -1399,8 +1399,8 @@
    "id": "A/failure/prose/039",
    "kind": "prose",
    "lines": [
-    263,
-    265
+    264,
+    266
    ],
    "anchor": "values are $a_\\ell^3$ and their node slopes are $a_\\ell^2$.",
    "status": "LEAN",
@@ -1413,8 +1413,8 @@
    "id": "A/failure/prose/040",
    "kind": "prose",
    "lines": [
-    266,
-    268
+    267,
+    269
    ],
    "anchor": "The constant regions create the local affine corner; the cubic transition",
    "status": "SAME_AS",
@@ -1428,8 +1428,8 @@
    "id": "A/failure/prose/041",
    "kind": "prose",
    "lines": [
-    268,
-    269
+    269,
+    270
    ],
    "anchor": "The following formulas fix the construction",
    "status": "LEAN",
@@ -1442,8 +1442,8 @@
    "id": "A/failure/prose/042",
    "kind": "prose",
    "lines": [
-    271,
-    272
+    272,
+    273
    ],
    "anchor": "Let $\\theta=1/16$, $a_\\ell=\\theta^\\ell$, $\\varepsilon=1/128$, and",
    "status": "LEAN",
@@ -1457,8 +1457,8 @@
    "id": "A/failure/prose/043",
    "kind": "prose",
    "lines": [
-    286,
-    287
+    287,
+    288
    ],
    "anchor": "The middle formula for $J_b$ is $2\\varepsilon(v^3-v^4/2)$; its outer",
    "status": "LEAN",
@@ -1474,8 +1474,8 @@
    "id": "A/failure/prose/044",
    "kind": "prose",
    "lines": [
-    362,
-    367
+    363,
+    368
    ],
    "anchor": "The Hessian of each of the first three branches is a nonnegative scalar",
    "status": "LEAN",
@@ -1490,8 +1490,8 @@
    "id": "A/failure/prose/045",
    "kind": "prose",
    "lines": [
-    367,
-    371
+    368,
+    372
    ],
    "anchor": "The first two scalar arguments are independent, so their",
    "status": "LEAN",
@@ -1506,8 +1506,8 @@
    "id": "A/failure/prose/046",
    "kind": "prose",
    "lines": [
-    373,
-    374
+    374,
+    375
    ],
    "anchor": "The first two scalar arguments at $\\bar x_\\ell$ equal",
    "status": "LEAN",
@@ -1521,8 +1521,8 @@
    "id": "A/failure/prose/047",
    "kind": "prose",
    "lines": [
-    379,
-    381
+    380,
+    382
    ],
    "anchor": "Indeed, the first three branches are on their affine regions and each",
    "status": "LEAN",
@@ -1535,8 +1535,8 @@
    "id": "A/failure/prose/048",
    "kind": "prose",
    "lines": [
-    382,
-    383
+    383,
+    384
    ],
    "anchor": "In particular $F(\\bar x_\\ell)=a_\\ell^3$ and",
    "status": "LEAN",
@@ -1550,8 +1550,8 @@
    "id": "A/failure/prose/049",
    "kind": "prose",
    "lines": [
-    428,
-    431
+    429,
+    432
    ],
    "anchor": "one function contains every shrinking copy.",
    "status": "SAME_AS",
@@ -1562,8 +1562,8 @@
    "id": "A/failure/prose/050",
    "kind": "prose",
    "lines": [
-    436,
-    439
+    437,
+    440
    ],
    "anchor": "bad centers $\\bar x_\\ell\\to x_*$ have affine-model",
    "status": "LEAN",
@@ -1576,8 +1576,8 @@
    "id": "A/failure/prose/051",
    "kind": "prose",
    "lines": [
-    443,
-    444
+    444,
+    445
    ],
    "anchor": "The lower-curvature construction uses the different spatial factor",
    "status": "SAME_AS",
@@ -1588,8 +1588,8 @@
    "id": "A/failure/prose/052",
    "kind": "prose",
    "lines": [
-    449,
-    450
+    450,
+    451
    ],
    "anchor": "The flat affine regions in the first construction explain why its convex",
    "status": "LEAN",
@@ -1603,8 +1603,8 @@
    "id": "A/failure/prose/053",
    "kind": "prose",
    "lines": [
-    450,
-    451
+    451,
+    452
    ],
    "anchor": "Adding the same positive",
    "status": "LEAN",
@@ -1617,8 +1617,8 @@
    "id": "A/failure/prose/054",
    "kind": "prose",
    "lines": [
-    451,
-    452
+    452,
+    453
    ],
    "anchor": "but changes the dynamics.",
    "status": "LEAN",
@@ -1632,8 +1632,8 @@
    "id": "A/failure/prose/055",
    "kind": "prose",
    "lines": [
-    452,
-    453
+    453,
+    454
    ],
    "anchor": "The next result constructs",
    "status": "SAME_AS",
@@ -1647,8 +1647,8 @@
    "id": "A/failure/prose/056",
    "kind": "prose",
    "lines": [
-    467,
-    469
+    468,
+    470
    ],
    "anchor": "Four convex $C^{2,1}$ branches",
    "status": "LEAN",
@@ -1662,8 +1662,8 @@
    "id": "A/failure/prose/057",
    "kind": "prose",
    "lines": [
-    470,
-    472
+    471,
+    473
    ],
    "anchor": "Four uniformly strongly convex $C^{1,1}$ branches",
    "status": "SAME_AS",
@@ -1674,8 +1674,8 @@
    "id": "A/failure/prose/058",
    "kind": "prose",
    "lines": [
-    475,
-    480
+    476,
+    481
    ],
    "anchor": "The two independent local failure regimes.",
    "status": "SAME_AS",
@@ -1689,8 +1689,8 @@
    "id": "A/failure/prose/059",
    "kind": "prose",
    "lines": [
-    484,
-    486
+    485,
+    487
    ],
    "anchor": "Here a classical Hessian is the derivative of the gradient map, with that",
    "status": "DEFINITION",
@@ -1705,8 +1705,8 @@
    "id": "A/failure/prose/060",
    "kind": "prose",
    "lines": [
-    489,
-    491
+    490,
+    492
    ],
    "anchor": "It starts from the explicit strongly convex",
    "status": "SAME_AS",
@@ -1720,8 +1720,8 @@
    "id": "A/failure/prose/061",
    "kind": "prose",
    "lines": [
-    491,
-    492
+    492,
+    493
    ],
    "anchor": "A normalized three-step return map has the original seed",
    "status": "SAME_AS",
@@ -1735,8 +1735,8 @@
    "id": "A/failure/prose/062",
    "kind": "prose",
    "lines": [
-    492,
-    493
+    493,
+    494
    ],
    "anchor": "Its stable manifold contains positive",
    "status": "SAME_AS",
@@ -1750,8 +1750,8 @@
    "id": "A/failure/prose/063",
    "kind": "prose",
    "lines": [
-    493,
-    495
+    494,
+    496
    ],
    "anchor": "The seed's strict",
    "status": "SAME_AS",
@@ -1761,8 +1761,8 @@
    "id": "A/failure/prose/064",
    "kind": "prose",
    "lines": [
-    495,
-    496
+    496,
+    497
    ],
    "anchor": "No rounded initial state is asserted to lie on",
    "status": "NON_CLAIM",
@@ -1772,8 +1772,8 @@
    "id": "A/failure/prose/065",
    "kind": "prose",
    "lines": [
-    498,
-    499
+    499,
+    500
    ],
    "anchor": "For the local embedding the scalar node values are now $a_\\ell^2$ and the",
    "status": "SAME_AS",
@@ -1784,8 +1784,8 @@
    "id": "A/failure/prose/066",
    "kind": "prose",
    "lines": [
-    499,
-    502
+    500,
+    503
    ],
    "anchor": "The resulting model is",
    "status": "SAME_AS",
@@ -1796,8 +1796,8 @@
    "id": "A/failure/prose/067",
    "kind": "prose",
    "lines": [
-    502,
-    504
+    503,
+    505
    ],
    "anchor": "We choose one entire perturbed orbit small enough",
    "status": "SAME_AS",
@@ -1811,8 +1811,8 @@
    "id": "A/failure/prose/068",
    "kind": "prose",
    "lines": [
-    505,
-    506
+    506,
+    507
    ],
    "anchor": "The faster variation of the scalar derivative retains global $C^{1,1}$",
    "status": "SAME_AS",
@@ -1822,8 +1822,8 @@
    "id": "A/failure/prose/069",
    "kind": "prose",
    "lines": [
-    507,
-    508
+    508,
+    509
    ],
    "anchor": "This is why the theorem does not supply a finite strongly convex $C^2$",
    "status": "NON_CLAIM",
@@ -1833,8 +1833,8 @@
    "id": "A/failure/prose/070",
    "kind": "prose",
    "lines": [
-    510,
-    513
+    511,
+    514
    ],
    "anchor": "The two constructions separate upper branch regularity from positive lower",
    "status": "SAME_AS",
@@ -1845,7 +1845,8 @@
    "note": "Summary of the two theorems; 'the different scalar scales determine which regularity survives' is explanatory."
   }
  ],
- "discrepancies": [
+ "discrepancies": [],
+ "resolved_discrepancies": [
   {
    "item": "A/failure/lemma/art:seed_cycle",
    "description": "Lemma art:seed_cycle states 'With p_j=-M_jg_j, the entire line-search query list is Table art:trial_table' (failure.tex:107-108) without fixing the line-search constants (c₁,c₂), and the query list depends on them. The rejected rows fail Armijo for every c₁ > 0 and the accepted rows pass weak Wolfe for every c₂ > 0, but the accepted row of phase j passes Armijo only for c₁ ≤ r_j = (G(z_j)-G(z_{j+1}))/(-g_jᵀs_j) (Lean: accepted_armijo_iff), and the exact ratios are r₀ ≈ 0.76658, r₁ ≈ 0.39319, r₂ ≈ 0.37521 (Lean: accepted_armijo_ratios, 0.37520 < r₂ < 0.37521). So the claim is false for every c₁ > r₂: the phase-2 trial 1/16 fails Armijo. For example, for c₁ = 0.38, c₂ = 1/2 (0 < c₁ < c₂ < 1) the specified search from (z₂,M₂) does not return (1/16,[1,1/2,1/4,1/8,1/16]) for any trial budget (Lean: seed_cycle_range_counterexample). The range appears only after Table art:trial_table (lines 154-161), as a consequence of the margins ('Hence Armijo holds for c₁ ≤ 1/3 and weak Wolfe holds for every c₂ > 0'), not as a hypothesis of the lemma. With 'for every 0 < c₁ ≤ 1/3 and c₂ > 0' the claim holds (Lean: seed_cycle, seed_search); this range contains the range 0 < c₁ ≤ 1/3, c₁ < c₂ < 1 of Theorems art:local-failure and art:local-failure-lower, so no later result is affected. The rest of the lemma (positive definiteness, the closures, the unique active gradients, the value increase at every rejection, art:seed_margins and art:seed_query_bounds) holds as printed, for all parameters.",
@@ -1857,7 +1858,8 @@
     "BfgsCoverage.Article.Failure.accepted_armijo_iff",
     "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
     "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M11 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   },
   {
    "item": "A/failure/table/art:trial_table",
@@ -1869,7 +1871,8 @@
     "BfgsCoverage.Article.Failure.table_decision",
     "BfgsCoverage.Article.Failure.accepted_armijo_ratios",
     "BfgsCoverage.Article.Failure.seed_cycle_range_counterexample"
-   ]
+   ],
+   "resolved": "Corrected on 15 October 2026 (M11 in TODO_MANUSCRIPT_REVIEW.md); the description quotes the text before the correction, its line numbers are those after it."
   }
  ]
 }

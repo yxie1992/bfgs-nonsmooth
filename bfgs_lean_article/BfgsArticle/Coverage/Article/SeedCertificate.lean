@@ -12,12 +12,13 @@ the proof of Lemma `art:seed_cycle` (`paper/sections/failure.tex:100-120`), and 
 interval certificate of the nine queries. Register:
 `editorial/lean_coverage/register/A_seed_certificate.json`.
 
-Lemma `art:seed_cycle` is a discrepancy item of the failure register: its statement omits the
-range of $(c_1,c_2)$, and its query-list claim fails for every $c_1>0.37521$. The calculations of this
-appendix prove the corrected lemma (`BfgsCoverage.Article.Failure.seed_cycle`), for every
-$0<c_1\le1/3$ and $c_2>0$: the acceptance quantity of display 015 is the Armijo test with
-$c_1=1/3$, an accepted query passes weak Wolfe for every $c_2>0$ (`positive_slope_wolfe`), and a
-rejected query fails Armijo for every $c_1>0$ (`increase_rejects_armijo`).
+Lemma `art:seed_cycle` states the range $0<c_1\le1/3$, $c_2>0$ since the correction M11 of
+15 October 2026; before, its statement omitted the range, and its query-list claim fails for every
+$c_1>0.37521$. The calculations of this appendix prove the lemma
+(`BfgsCoverage.Article.Failure.seed_cycle`) for this range: the acceptance quantity of display 015
+is the Armijo test with $c_1=1/3$, an accepted query passes weak Wolfe for every $c_2>0$
+(`positive_slope_wolfe`), and a rejected query fails Armijo for every $c_1>0$
+(`increase_rejects_armijo`).
 
 ## Notation
 

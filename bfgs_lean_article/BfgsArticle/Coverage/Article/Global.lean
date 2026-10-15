@@ -181,7 +181,7 @@ theorem sublevel_convex {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
 /-- Item `A/global/prose/003` (`paper/sections/global.tex:11-12`): "A gradient jump can make
 the positive correction in \eqref{art:energy-identity} large." The correction of an accepted
 pair $(x,z)=(x_k,x_{k+1})$ is $R_k=N^2/T$ (energy.tex:78), and accepted pairs are eligible
-(energy.tex:244). For the strongly convex $F(t)=(t+2)^2/2+|t|$ on $\R$, whose derivative jumps
+(energy.tex:245). For the strongly convex $F(t)=(t+2)^2/2+|t|$ on $\R$, whose derivative jumps
 from $1$ to $3$ at $t=0$ and whose minimizer is $x_*=-1$, there is a positive band on which
 $N^2/T$ exceeds every constant $C$, over differentiable pairs $z<0<x$ across the jump with
 $F_*+\eta\le F(z)\le F(x)\le3$ and $T>0$ that are eligible for $c_1=1/4$, $c_2=1/2$ (the

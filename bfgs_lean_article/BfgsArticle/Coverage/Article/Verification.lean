@@ -35,15 +35,15 @@ open BfgsVerification
 
 /-! ## The homogeneous seed and its coercive cap -/
 
-/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11`), corrected
-form (the item is a discrepancy): "The homogeneous seed satisfies $G(t(-1,16))=-t$"
-holds for `t ≥ 0`, as stated in `paper/sections/failure.tex:200`. -/
+/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11-12`): "The homogeneous
+seed satisfies $G(t(-1,16))=-t$ for $t\ge0$" (the range was added on 15 October 2026, M9), as
+stated in `paper/sections/failure.tex:201`. -/
 theorem seed_ray {t : ℝ} (ht : 0 ≤ t) :
     SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD (t • ![-1, 16]) = -t :=
   DEmbedding.seed_descent_ray ht
 
-/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11`),
-counterexample to the identity read for every real `t`: at `t=-1`,
+/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11-12`),
+the range is needed (the reading of the text before M9, for every real `t`): at `t=-1`,
 `G(t(-1,16)) = G(1,-16) ≥ c_∘-16d_∘ > 1 = -t`. -/
 theorem seed_ray_fails_at_minus_one :
     SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD ((-1 : ℝ) • ![-1, 16]) ≠ -(-1 : ℝ) := by
@@ -59,7 +59,7 @@ theorem seed_ray_fails_at_minus_one :
   dsimp only [SeedOrbit.seedC, SeedOrbit.seedD] at hb
   linarith
 
-/-- Item `A/verification/prose/005` (`paper/sections/verification.tex:11`): "... so it is
+/-- Item `A/verification/prose/005` (`paper/sections/verification.tex:11-12`): "... so it is
 unbounded below". -/
 theorem seed_unbounded_below (M : ℝ) :
     ∃ x : Vec 2, SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD x < M := by
@@ -98,7 +98,7 @@ theorem cap_formula (x : Vec 2) :
       Matrix.tail_cons, Matrix.cons_val_three] at h0 h1 h2 h3
     exact max_le (max_le h0 h1) (max_le h2 h3)
 
-/-- Item `A/verification/prose/006` (`paper/sections/verification.tex:12`): "its coercive
+/-- Item `A/verification/prose/006` (`paper/sections/verification.tex:13`): "its coercive
 cap contains the affine term $v-17$ and is not homogeneous." -/
 theorem cap_not_homogeneous :
     (∀ x : Vec 2, SeedOrbit.coerciveObjective x =
@@ -120,7 +120,7 @@ theorem cap_not_homogeneous :
   rw [h2] at hlow
   linarith
 
-/-- Item `A/verification/prose/007` (`paper/sections/verification.tex:13-14`): "Neither
+/-- Item `A/verification/prose/007` (`paper/sections/verification.tex:14-15`): "Neither
 belongs to the coercive homogeneous class of
 Theorem~\ref{art:homogeneous}." Neither `G` nor `Ḡ` is both positively homogeneous
 of degree one and coercive (`F → ∞` along the cocompact filter), the hypotheses of
@@ -180,7 +180,7 @@ theorem no_partition_of_failing_runs {n : ℕ} {F : Vec n → ℝ} (hF : ConvexO
   obtain ⟨ℓ, hℓ⟩ := (hv.eventually (eventually_le_nhds (lt_add_of_pos_right (F star) hδ))).exists
   exact hfail ℓ (hbasin (R ℓ) hℓ).2.2
 
-/-- Item `A/verification/prose/009` (`paper/sections/verification.tex:16-18`): "In the
+/-- Item `A/verification/prose/009` (`paper/sections/verification.tex:17-19`): "In the
 local embeddings, ... the resulting switching geometry is not resolved by a finite
 local polyhedral-cell partition as in Theorem~\ref{art:polyhedral}." Neither the
 objective `art:upper_objective` of Theorem `art:local-failure` nor the objective of
@@ -246,10 +246,10 @@ theorem degenerate_pattern {e : Vec 2} (he : e ≠ 0) :
     rw [hsum] at hz
     exact hne w (hw 3) hz
 
-/-- Item `A/verification/prose/011` (`paper/sections/verification.tex:21-23`);
-Item `A/verification/prose/014` (`paper/sections/verification.tex:27-28`);
-Item `A/verification/prose/015` (`paper/sections/verification.tex:28-30`);
-Item `A/verification/prose/016` (`paper/sections/verification.tex:30-31`):
+/-- Item `A/verification/prose/011` (`paper/sections/verification.tex:22-24`);
+Item `A/verification/prose/014` (`paper/sections/verification.tex:28-29`);
+Item `A/verification/prose/015` (`paper/sections/verification.tex:29-31`);
+Item `A/verification/prose/016` (`paper/sections/verification.tex:31-32`):
 "In \eqref{art:upper_objective}, all four branches are active at zero, with indexed
 gradients $0,0,0,e_2$ ... the repeated zero gradients violate affine independence,
 and a combination with positive weight $\lambda_3$ on the fourth branch equals
@@ -293,7 +293,7 @@ theorem lower_branch_gradients_zero (i : Fin 4) :
   · exact LEmbedding.branchGradient_zero 2
   · simp [LEmbedding.branchGradient, LEmbedding.residualGradient]
 
-/-- Item `A/verification/prose/012` (`paper/sections/verification.tex:24-25`), with the
+/-- Item `A/verification/prose/012` (`paper/sections/verification.tex:25-26`), with the
 consequences of `A/verification/prose/014`–`016`: "Equation~\eqref{art:lower_objective}
 gives the same pattern before whitening: the common quadratic has zero gradient at
 zero, and $\psi_b'(0)=0$." All four branches
@@ -324,7 +324,7 @@ theorem lower_active_gradients :
   · rw [← hgrad i]
     exact LEmbedding.branch_hasGradient i 0
 
-/-- Item `A/verification/prose/013` (`paper/sections/verification.tex:26-27`), with the
+/-- Item `A/verification/prose/013` (`paper/sections/verification.tex:27-28`), with the
 consequences of `A/verification/prose/014`–`016` (lines 27-31): "After the one fixed
 change $x=Az$, the gradients are $0,0,0,A^Te_2$, with $A^Te_2\ne0$ ... (or
 $\lambda_3A^Te_2\ne0$ after whitening)." For the whitened objective of Theorem
@@ -362,10 +362,10 @@ theorem whitened_active_gradients :
   · rw [← hgrad i]
     exact (LUniform.smooth_branch_regular i).2.2.1 0
 
-/-- Item `A/verification/prose/017` (`paper/sections/verification.tex:32`), witness for
-its discrepancy: "The lower-curvature branches also lose second differentiability at
-zero" (and the abstract's `A/master/prose/009`, `paper/master.tex` lines 52-54), read as
-statements about all branches. Of the four branches of the objective of Theorem
+/-- Item `A/verification/prose/017` (`paper/sections/verification.tex:33-34`): "Three of the four
+lower-curvature branches also lose second differentiability at zero" (corrected on 15 October
+2026, M8, like the abstract's `A/master/prose/009`, `paper/master.tex` lines 53-55; both spoke of
+all branches). Of the four branches of the objective of Theorem
 `art:local-failure-lower`, the first three are not twice differentiable at the
 minimizer `0`, while the fourth is. -/
 theorem lower_branch_second_differentiability :
@@ -410,7 +410,7 @@ theorem gradient_of_active {μ : ℝ} {x : Vec 2} {i : Fin 3}
   rw [h]
   abel
 
-/-- Item `A/verification/disp/001` (`paper/sections/verification.tex:39-42`), equation
+/-- Item `A/verification/disp/001` (`paper/sections/verification.tex:41-44`), equation
 `art:jump-secant`, with the hypotheses of lines 37-38: "For $Q_\mu(x)=\mu\|x\|^2/2+G(x)$, suppose
 the differentiable endpoints $x$ and $x+s$ have active slopes $g_i$ and $g_j$. Then
 exactly $y=(\mu(x+s)+g_j)-(\mu x+g_i)=\mu s+(g_j-g_i)$." Here `y` is the difference
@@ -497,8 +497,8 @@ theorem seed_slopes_distinct {i j : Fin 3} (hij : i ≠ j) :
   fin_cases i <;> fin_cases j <;> simp_all [SeedOrbit.gradient, SeedCycle.g0, SeedCycle.g1,
     SeedCycle.g2] <;> dsimp only [SeedOrbit.seedC, SeedOrbit.seedD] at * <;> linarith
 
-/-- Item `A/verification/prose/019` (`paper/sections/verification.tex:43-44`);
-Item `A/verification/prose/020` (`paper/sections/verification.tex:44-45`): "Along the certified perturbed orbit,
+/-- Item `A/verification/prose/019` (`paper/sections/verification.tex:45-46`);
+Item `A/verification/prose/020` (`paper/sections/verification.tex:46-47`): "Along the certified perturbed orbit,
 $s\to0$ while the three distinct slopes continue to cycle. The positive-curvature
 contribution therefore vanishes with the step, while the branch jumps persist."
 For every `μ>0` there is one orbit `x_k`, `H_k` (with `H_0 ≻ 0`) that is the actual
@@ -718,7 +718,7 @@ def fourMaxRun : AdmissibleBFGSRun 2 fourMax where
     exact axisRun.armijo k
   weak_wolfe := axisRun.weak_wolfe
 
-/-- Item `A/verification/prose/022` (`paper/sections/verification.tex:47`): "a branch change
+/-- Item `A/verification/prose/022` (`paper/sections/verification.tex:49`): "a branch change
 alone does not imply failure." For every coercive finite maximum of linear functions
 `F(x)=max_{a∈A} a^Tx` (bounded zero sublevel), every infinite admissible run changes its
 active linear piece at every accepted step: at `x_k` the only active slope is the gradient
@@ -751,7 +751,7 @@ theorem branch_change_without_failure :
 
 /-! ## The open question -/
 
-/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:53-54`), OPEN
+/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:55-56`), OPEN
 (stated without proof): "The broader local question for finitely many uniformly
 strongly convex $C^2$ branches remains open here."
 

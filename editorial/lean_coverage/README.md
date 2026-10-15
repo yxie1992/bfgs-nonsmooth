@@ -138,3 +138,33 @@ use `check_coverage.py --strict --allow-discrepancies`.
 `lake build` compiles every coverage module (they are imported by
 `BfgsArticle.lean`); the axiom audit includes every Lean name in the registers;
 the kernel replay re-checks the coverage modules with lean4checker.
+
+## After a correction
+
+Editing a TeX file moves the line numbers of the items after the edit, and every
+changed theorem-like environment, display or table gets a new hash. Resynchronize
+the registers and the Lean references in one go, on a tree whose registers and
+Lean files are still those of the base commit:
+
+1. Edit the TeX files (for the companion's chapters: the generator, then
+   regenerate).
+2. Dry run: `python3 editorial/lean_coverage/resync_register.py TEX_FILE ...`
+   compares each file with its version at `HEAD` (`--base REV` for another
+   commit). It reports the mechanical items whose text changed (`CHANGED`), the
+   items that overlap an edit (`EDITED`), anchors no longer found (`ANCHOR`),
+   lines that were deleted (`LOST`) and renumbered mechanical items
+   (`GONE`, `NEW`).
+3. Read every reported item against the new text. Then run it once with
+   `--write`, adding `--accept ID` for each changed mechanical item whose
+   classification still holds. This rewrites the items' `lines` (and the new
+   hashes of the accepted items), the `file.tex:a-b` references in the Lean
+   modules and in the notes of the same document's registers, and the docstring
+   item references checked by `check_coverage.py`. It refuses a second run on a
+   tree with changed registers or Lean files (`--force` overrides).
+4. By hand: the statuses, anchors and notes of the edited items, and the Lean
+   docstrings that quote the old text. A resolved discrepancy gets a final status,
+   a note "Corrected on <date> (M<n>)", and its entry moves from `discrepancies`
+   to `resolved_discrepancies`, with a `resolved` field saying when and where
+   (`TODO_MANUSCRIPT_REVIEW.md`). Its description keeps the old text.
+5. Compile the changed coverage modules, run `check_coverage.py --strict` on the
+   edited files, and `lake build` once no agent runs Lean.

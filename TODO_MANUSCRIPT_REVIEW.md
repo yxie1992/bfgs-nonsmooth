@@ -7,93 +7,46 @@ M12 on and in the W items, in the companion (`companion/`). The seed
 numerics were re-checked in the first reading and all matched. Unless an item says
 otherwise, no mathematical statement and no Lean declaration changed.
 
-**Status (15 October 2026):** M1 to M6 are resolved. M7 to M29 and the wording
-points W1 to W43 were found by the Lean coverage work (`TODO_LEAN_COVERAGE.md`) and
-are open; they will be settled with the line-by-line reading of the proofs.
+**Status (15 October 2026):** M1 to M11 are resolved in the article (M7 to M11 on
+15 October, after the Lean coverage); the companion still repeats M8. M12 to M29
+and the wording points W1 to W43 were found by the Lean coverage work
+(`TODO_LEAN_COVERAGE.md`) and are open; they will be settled with the line-by-line
+reading of the proofs.
 
 ## Open (found by the Lean coverage, 14 October 2026)
 
-Each item is a `DISCREPANCY` in `editorial/lean_coverage/register/` with a Lean
-witness in `bfgs_lean_article/BfgsArticle/Coverage/Article/`. Independent review
-confirmed each one.
+The article's items M7 to M11 were corrected on 15 October 2026 (see "Resolved").
+The companion recurrences of M8 stay open here.
 
-- [ ] **M7: Abstract, centered theorem.** `paper/master.tex:42-44`: Theorem
-  `art:centered` "applies in arbitrary dimension on compact initial sublevels"
-  omits that the sublevel must lie in the region where the centered
-  representation holds. With only a local representation this is false: the
-  coercive cap of Corollary `art:failure_polyhedral` has a centered
-  representation on a ball around its minimizer and compact sublevels, but its run
-  fails (`Master.centered_representation_needs_containment`). The introduction
-  and Table `art:positive-outcomes` state the containment correctly. Proposed:
-  "…applies in arbitrary dimension on compact initial sublevels contained in the
-  region of the centered representation." (`A/master/prose/003`)
-- [ ] **M8: "Branches that lose second differentiability".** `paper/master.tex:52-54`,
-  `paper/sections/verification.tex` (item `A/verification/prose/017`) and
-  `paper/appendices/lower_curvature.tex:11-13` speak of the lower-curvature branches
-  losing second differentiability; only three of the four do, as Theorem
-  `art:local-failure-lower` says. The fourth is a quadratic
-  (`Verification.lower_branch_second_differentiability`,
-  `LowerCurvature.branch_second_differentiability`). Proposed: "…with
-  $C^{1,1}$ branches, three of which lose second differentiability at the
-  accumulation point", "Three of the four lower-curvature branches also lose
-  second differentiability at zero." and "…the loss of second differentiability of
-  three of the four branches at the accumulation point."
-  (`A/master/prose/009`, `A/verification/prose/017`, `A/lower_curvature/prose/010`)
-  Companion: `companion/chapters/13_L.tex:3`, "The local finite-branch functions
-  have Lipschitz gradients but lose second differentiability at the accumulation
-  point", says the same (`Ch13L.branch_regularity`; line 413 of that chapter has it
-  right). It is the hand-written introduction `introductions['L']` in
-  `editorial/generate_companion.py`. Proposed: "…have Lipschitz gradients; three of
-  the four lose second differentiability at the accumulation point."
-  (`C/13_L/prose/002`)
-  Chapter 1 repeats it at `companion/chapters/01_I.tex:103` (N2): "The individual
-  branches \textbf{are not twice differentiable at the accumulation point}." follows
-  "One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex,
-  gradient-Lipschitz branches", so it speaks of all four (`Ch13L.branch_regularity`,
-  `Ch01I.n1_n2_comparison`). Proposed: "Three of the four branches \textbf{are not
-  twice differentiable at the accumulation point}." Fix: a logged replacement in the
-  `if module=='I':` block of `editorial/generate_companion.py`, with its own kind and
-  reason (not `constant_range['I']`, whose reason concerns the line-search range), of
-  `The individual branches \textbf{are not twice differentiable at the accumulation point}.`
-  (frozen `bfgs_lean_stage1/master_report/latex/chapters/inventory.tex:81`, span
-  `I.span.6`, occurs once). The item then becomes `LEAN`. (`C/01_I/prose/023`)
-  The research story paraphrases the abstract's sentence at
-  `companion/research_story.tex:51-53`: "A different embedding preserves uniform
-  strong convexity with $C^{1,1}$ branches that lose second differentiability at the
-  accumulation point" (`Ch13L.branch_regularity`, `Ch01I.n2_four_branch_version`).
-  Proposed, a direct edit (the file is written by hand): `branches that lose second
-  differentiability at` (occurs once) → `branches, three of which lose second
-  differentiability at`. (`C/research_story/prose/029`)
-- [ ] **M9: Ray identity without its range (typo).** `paper/sections/verification.tex`
-  (item `A/verification/prose/004`): "$G(t(-1,16))=-t$" holds only for $t\ge0$, as
-  `failure.tex:200` says (`Verification.seed_ray`, counterexample
-  `seed_ray_fails_at_minus_one`). Proposed: add "for $t\ge0$".
-- [ ] **M10: "The next theorem" points to the wrong theorem.** `paper/sections/energy.tex:108-109`:
-  "The next theorem proves that the full update requires faster growth" — the next
-  theorem is `art:minor-hierarchy`, a one-step inequality; the faster growth is
-  Theorem `art:reciprocal-growth`, which also needs bounded gradients, a hypothesis
-  the paragraph does not state (the paragraph's contradiction relies on it too).
-  With it the corrected claim holds (`Energy.reciprocal_sum_superlinear_of_minimizer`).
-  Proposed: "Theorem~\ref{art:reciprocal-growth} proves that, along runs with
-  bounded gradients, the full update requires faster growth." (`A/energy/prose/012`)
-- [ ] **M11: Lemma `art:seed_cycle` and Table `art:trial_table` omit the range of
-  $(c_1,c_2)$.** `paper/sections/failure.tex:107-108`: "the entire line-search query
-  list is Table~\ref{art:trial_table}" fixes no constants; the range appears only
-  after the table (lines 154–161), as a consequence of the margins. Armijo holds at
-  the accepted trial of phase $j$ exactly when $c_1\le r_j$, with $r_0\approx0.76658$,
-  $r_1\approx0.39319$, $r_2\approx0.37521$, so for $c_1=0.38$ the phase-2 trial $1/16$
-  is rejected (`Failure.accepted_armijo_ratios`, `seed_cycle_range_counterexample`).
-  Both theorems use $0<c_1\le1/3$, so no later result is affected. Proposed: "With
-  $p_j=-M_jg_j$, for every $0<c_1\le1/3$ and $c_2>0$ the entire line-search query list
-  is Table~\ref{art:trial_table}." and add to the table caption "The decisions are
-  those of the specified search for every $0<c_1\le1/3$ and $c_2>0$."
-  (`A/failure/lemma/art:seed_cycle`, `A/failure/table/art:trial_table`; corrected
-  statements `Failure.seed_cycle`, `trial_table`). The closing sentence of the
-  seed appendix, "these calculations complete the proof of
-  Lemma~\ref{art:seed_cycle}" (`paper/appendices/seed_certificate.tex:199-200`,
-  `A/seed_certificate/prose/012`), needs no separate change: it is correct once
-  the lemma states the range. Flip that item to `PROOF` when fixing M11.
-
+- [ ] **M8 in the companion: "branches that lose second differentiability".**
+  The article's three sentences now say that three of the four branches lose
+  second differentiability (M8 under "Resolved"). The companion still says it of
+  all branches:
+  - Chapter 13: `companion/chapters/13_L.tex:3`, "The local finite-branch functions
+    have Lipschitz gradients but lose second differentiability at the accumulation
+    point", says the same (`Ch13L.branch_regularity`; line 413 of that chapter has it
+    right). It is the hand-written introduction `introductions['L']` in
+    `editorial/generate_companion.py`. Proposed: "…have Lipschitz gradients; three of
+    the four lose second differentiability at the accumulation point."
+    (`C/13_L/prose/002`)
+  - Chapter 1 repeats it at `companion/chapters/01_I.tex:103` (N2): "The individual
+    branches \textbf{are not twice differentiable at the accumulation point}." follows
+    "One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex,
+    gradient-Lipschitz branches", so it speaks of all four (`Ch13L.branch_regularity`,
+    `Ch01I.n1_n2_comparison`). Proposed: "Three of the four branches \textbf{are not
+    twice differentiable at the accumulation point}." Fix: a logged replacement in the
+    `if module=='I':` block of `editorial/generate_companion.py`, with its own kind and
+    reason (not `constant_range['I']`, whose reason concerns the line-search range), of
+    `The individual branches \textbf{are not twice differentiable at the accumulation point}.`
+    (frozen `bfgs_lean_stage1/master_report/latex/chapters/inventory.tex:81`, span
+    `I.span.6`, occurs once). The item then becomes `LEAN`. (`C/01_I/prose/023`)
+  - The research story paraphrases the abstract's sentence at
+    `companion/research_story.tex:51-53`: "A different embedding preserves uniform
+    strong convexity with $C^{1,1}$ branches that lose second differentiability at the
+    accumulation point" (`Ch13L.branch_regularity`, `Ch01I.n2_four_branch_version`).
+    Proposed, a direct edit (the file is written by hand): `branches that lose second
+    differentiability at` (occurs once) → `branches, three of which lose second
+    differentiability at`. (`C/research_story/prose/029`)
 ## Open: companion discrepancies (found by the Lean coverage, 14 October 2026)
 
 Each item is a `DISCREPANCY` in `editorial/lean_coverage/register/C_*.json`; the
@@ -998,3 +951,66 @@ PDFs under `release/` predate these edits.
     `art:lower_objective` and `art:regularity-map`, and (new `companion_additions`,
     merged by `editorial/ledger_addenda.py`) to the companion records
     `L:thm:global`, `L:thm:local` and `L:lem:agreement`.
+
+- [x] **M7: Abstract, centered theorem** (corrected 15 October 2026). The abstract
+  said that Theorem `art:centered` "applies in arbitrary dimension on compact
+  initial sublevels", omitting that the sublevel must lie in the region of the
+  centered representation; with only a local representation this is false (the
+  coercive cap of Corollary `art:failure_polyhedral`,
+  `Master.centered_representation_needs_containment`). It now reads "…on compact
+  initial sublevels contained in the region of the centered representation."
+  (`paper/master.tex:42-45`; `A/master/prose/003`, now `SAME_AS` the corollary
+  `art:mixed-benchmark` and Theorem `art:centered`).
+
+- [x] **M8 (article): "Branches that lose second differentiability"** (corrected 15
+  October 2026). Three sentences said this of all four lower-curvature branches;
+  only three of them lose it, as Theorem `art:local-failure-lower` says, and the
+  fourth is a quadratic (`Verification.lower_branch_second_differentiability`,
+  `LowerCurvature.branch_second_differentiability`). They now read "…with
+  $C^{1,1}$ branches, three of which lose second differentiability at the
+  accumulation point" (abstract, `paper/master.tex:53-55`, `A/master/prose/009`),
+  "Three of the four lower-curvature branches also lose second differentiability at
+  zero." (`paper/sections/verification.tex:33-34`, `A/verification/prose/017`) and
+  "…the loss of second differentiability of three of the four branches at the
+  accumulation point." (`paper/appendices/lower_curvature.tex:11-13`,
+  `A/lower_curvature/prose/010`). The companion's recurrences are still open (M8
+  in the companion, above).
+
+- [x] **M9: Ray identity without its range** (corrected 15 October 2026).
+  Section 7 now says "$G(t(-1,16))=-t$ for $t\ge0$", as `failure.tex` does
+  (`paper/sections/verification.tex:11-12`; `Verification.seed_ray`, counterexample
+  for $t<0$ `seed_ray_fails_at_minus_one`; `A/verification/prose/004`).
+
+- [x] **M10: "The next theorem" pointed to the wrong theorem** (corrected 15
+  October 2026). `paper/sections/energy.tex:108-110` now reads
+  "Theorem~\ref{art:reciprocal-growth} proves that, along runs with bounded
+  gradients, the full update requires faster growth." The next theorem was the
+  one-step hierarchy `art:minor-hierarchy`, and the paragraph did not state the
+  bounded gradients that Theorem `art:reciprocal-growth` needs
+  (`Energy.reciprocal_sum_superlinear_of_minimizer`; `A/energy/prose/012`).
+
+- [x] **M11: Lemma `art:seed_cycle` and Table `art:trial_table` omitted the range
+  of $(c_1,c_2)$** (corrected 15 October 2026). The lemma now says "With
+  $p_j=-M_jg_j$, for every $0<c_1\le1/3$ and $c_2>0$ the entire line-search query
+  list is Table~\ref{art:trial_table}." (`paper/sections/failure.tex:106-108`) and
+  the caption adds "The decisions are those of the specified search for every
+  $0<c_1\le1/3$ and $c_2>0$." (lines 147–148). Without the range the lemma is false:
+  for $c_1=0.38$ the phase-2 trial $1/16$ fails Armijo
+  (`Failure.seed_cycle_range_counterexample`); the corrected statements are
+  `Failure.seed_cycle` and `trial_table`. The appendix's closing sentence
+  (`A/seed_certificate/prose/012`) is now the `PROOF` item of the lemma. The
+  companion's chapter D fixes its constants and does not repeat the omission.
+
+**Verification of M7 to M11.** The article was rebuilt: still 49 pages, LaTeX
+warnings unchanged (one, as before; no overfull boxes, the same eight underfull
+ones). The pages whose text changed (1, 2, 7, 26, 33, 34, 43; pages 2 and 34 only
+reflow) were rendered and inspected. The coverage registers were carried across
+the edit with the new `editorial/lean_coverage/resync_register.py` (line numbers of
+the items and of the Lean references; the hashes of the abstract, the lemma and the
+table); the nine `DISCREPANCY` items are resolved (their register entries moved to
+`resolved_discrepancies`), so `check_coverage.py --strict` passes on every article
+file without `--allow-discrepancies`. Only docstrings of the coverage modules
+changed, and `lake build` passes. `editorial/CLAIM_LEDGER.json` and
+`companion/PROOF_CORRESPONDENCE.html` were regenerated (file hashes and line
+positions only); `generate_companion.py --check` passes. The companion's text does
+not depend on the edited files.

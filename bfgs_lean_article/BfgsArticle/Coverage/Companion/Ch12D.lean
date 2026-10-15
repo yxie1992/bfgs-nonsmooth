@@ -31,8 +31,9 @@ is an `AdmissibleBFGSRun` (full step and full update `D:bfgs` at every step, `no
 
 ## Constants (M11)
 
-The article's discrepancy M11 (Lemma `art:seed_cycle` without a range of $(c_1,c_2)$) does not
-recur: the chapter fixes $c_1=10^{-4}$, $c_2=1/2$ for Theorem `D:main` (line 52) and for the table
+The article's discrepancy M11 (Lemma `art:seed_cycle` without a range of $(c_1,c_2)$; corrected in
+the article on 15 October 2026) does not recur: the chapter fixes $c_1=10^{-4}$, $c_2=1/2$ for
+Theorem `D:main` (line 52) and for the table
 (line 204), and states the extension to every $0<c_1\le1/3$, $c_1<c_2<1$ (lines 57-60, 233), which
 holds (`main`, `trial_table`, `trial_tree_all`). Strict Armijo holds at the accepted trial of phase
 $j$ exactly when $c_1<r_j$, $r_j>1/3$ (`ratio_signs`), and weak Wolfe for every $c_2>0$.
