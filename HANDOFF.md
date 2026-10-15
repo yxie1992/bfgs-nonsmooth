@@ -33,7 +33,8 @@ Latest checks:
    - Command line tools: `xcode-select --install` (git, clang).
    - Homebrew, then `brew install python@3.12 gh`. The scripts need Python 3.11 or
      newer, and macOS's own `python3` is older: call `python3.12`, or put
-     Homebrew's Python first in `PATH`.
+     Homebrew's Python first in `PATH`. (On the MacBook, Homebrew's `python3` is
+     3.14 and is first in `PATH`, so plain `python3` works.)
    - elan:
      `curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none`.
      The `lean-toolchain` files select Lean 4.19.0.
@@ -58,6 +59,18 @@ Latest checks:
    On the Linux machine (24 cores, 15 GB RAM) the main library took 12 minutes
    with `LEAN_NUM_THREADS=10` and peaked near 10 GB of memory; with less memory,
    set `LEAN_NUM_THREADS` lower. Never run `lake update`.
+
+   On macOS 26 the `cache` executable fails with `dyld: __DATA_CONST segment
+   missing SG_READ_ONLY flag` (exit 134): the old `ld64.lld` bundled with Lean
+   4.19.0 links it, and the new dyld rejects the result. Link it with the system
+   linker instead (remove a binary left by a failed attempt first):
+
+       rm -f .lake/packages/mathlib/.lake/build/bin/cache
+       LIBRARY_PATH="$HOME/.elan/toolchains/leanprover--lean4---v4.19.0/lib" LEAN_CC=/usr/bin/clang lake exe cache get
+
+   Library builds link no executable and need nothing special. On the MacBook
+   (Apple M5, 10 cores, 32 GB) the whole `lake build` took 12.5 minutes, with the
+   default thread count, and ended with the main library's 1244 style warnings.
 4. Check the setup, from the repository root:
 
        python3.12 editorial/lean_coverage/check_coverage.py   # exit 0; companion items unclassified
