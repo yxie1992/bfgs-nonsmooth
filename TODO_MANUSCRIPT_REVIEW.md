@@ -29,10 +29,12 @@ Decisions the agents left to the author. Everything else found so far is correct
   (`editorial/lean_coverage/`)?
 - [ ] **Q3: Order of the article's reference list (M40).** Keep it, or sort it
   alphabetically.
-- [ ] **Q4: Edition date.** Both documents still print "Author-review edition, 13
-  September 2026" (`paper/master.tex`, `companion/master.tex`, the companion's footers
-  in `companion/preamble.tex`). The release plan proposes the freeze date of the new
-  release (decision D1 of `editorial/release_plan_20261015/PLAN.md`).
+- [ ] **Q4: Edition date.** Set on 15 October 2026 (step 2 of the release run) to the
+  planned freeze date: both documents now print "Author-review edition, 15 October
+  2026" (`paper/master.tex`, `companion/master.tex`, the companion's footers in
+  `companion/preamble.tex`), as decision D1 of `editorial/release_plan_20261015/PLAN.md`
+  proposed. The author may choose another date; if the freeze moves to another day,
+  the date is changed again before the `--write` of `editorial/release_20261015/`.
 - [ ] **Q5: W12 and W13.** The redundant compactness hypothesis of Theorem 11.1 and
   the gaps in the companion's section numbers were left as they are (see "Wording
   points in the companion").
