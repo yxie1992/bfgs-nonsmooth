@@ -297,7 +297,11 @@ that may not exist.
 
 ### New items from the second pass
 
-- [ ] **Release receipts are now stale (expected).**
+- [x] **Release receipts are now stale (expected).** Closed by the release run of
+  15 October 2026: the edition was frozen at `992d477`, validated from its source
+  archive (`release/validation/runs/coverage_20261015_01/`: PASS, 41 commands) and
+  recorded at `67a4c40` and in the commit that closes this item
+  (`release/RELEASE.json`, `editorial/release_20261015/`). C1–C18 below are settled.
   - The frozen editorial checks pin file hashes. After this pass:
     - `editorial/scientific_exposition_20260913/refresh_correspondence.py --check`
       reports a stale `mapping_refresh.json`, because it pins the hash of
@@ -325,7 +329,9 @@ that may not exist.
     the coverage registers and the counts printed in
     `companion/current_verification.tex`, since the release-input check binds it
     to them. The checks to settle in the release run (numbers of the plan):
-    - [ ] C1: the 13 September check `refresh_correspondence.py --check` fails at
+    - [x] C1 (settled: in the archive validation it passed unchanged at `3e8b5c6`,
+      and its expected failure at the freeze was recorded): the 13 September check
+      `refresh_correspondence.py --check` fails at
       HEAD; it rejects every statement change, and passes at its release commit
       `3e8b5c6`. Retire it as historical (replay it unchanged in a worktree at
       `3e8b5c6`) and give its current role to C2's revision. Tooling ready:
@@ -345,11 +351,17 @@ that may not exist.
     - [x] C3: the ledger's copied `proof_locations` (for example those of
       `lower_curvature.tex`, below) are refreshed by C2's revision (T4's
       `--write`). Done on 15 October 2026 with C2.
-    - [ ] C4: `verify_historical_baseline.py` fails on the files added under
+    - [x] C4 (settled: the historical gate passed in the archive validation, with
+      the September editorial Lean files unchanged since `3e8b5c6`):
+      `verify_historical_baseline.py` fails on the files added under
       `bfgs_lean_article/`. Fix: allow added paths there too, with a recorded
       reason (T1; tested by the study). Tooling ready (T1); the September
       editorial Lean files are now also required unchanged since `3e8b5c6`.
-    - [ ] C5: `validate_archive.py` cannot use this repository as its Lean host
+    - [x] C5 (settled: the release host
+      `/Users/yxie/Projects/release_host_20261015/bfgs_lean_stage1` passed
+      `cache_binding.py --check` before and after the archive validation, 8853
+      objects and 32470 files; the September checkout was never linked and is
+      unchanged): `validate_archive.py` cannot use this repository as its Lean host
       (no `bfgs_lean_stage1/.toolchain`; the rebuilt `.lake` fails the seal,
       although its `.olean` files are byte-identical). Use the sealed September
       host. Settled: an APFS clone (`cp -cR`) of its `bfgs_lean_stage1/.lake`
@@ -358,14 +370,18 @@ that may not exist.
       with `cache_binding.py --check`; the workspace links to the copy, never to
       the September checkout itself (`editorial/release_20261015/README.md`,
       "Release host").
-    - [ ] C6: the cache check of `verify_release_inputs.py` fails here ("only
+    - [x] C6 (settled: 23/23 in the release workspace with the cache bytes
+      verified, and 23/23 inside the extraction): the cache check of
+      `verify_release_inputs.py` fails here ("only
       partially available"). Run it where `.lake` and `.toolchain` both point at
       the September host, or where both are absent; keep the rule. With the
       APFS copy of C5 both point at the copy.
     - C7–C9 pass: `editorial/BASELINE.json` and the frozen inputs (do not
       re-baseline), `generate_companion.py --check`, `check_documents.py`.
-    - [ ] C10: regenerate the render manifest (`render_review.py`) and review
-      every page.
+    - [x] C10: regenerate the render manifest (`render_review.py`) and review
+      every page. Done: three reviewer agents viewed every page
+      (`editorial/release_20261015/VISUAL_ARTICLE.json`, `VISUAL_COMPANION.json`);
+      28 cosmetic points, none blocking, are Q7 of `TODO_MANUSCRIPT_REVIEW.md`.
     - [x] C11 (done on 15 October 2026, step 6 of the release run, on commit
       `2cfa27a`: axiom audit PASS, 5420 names; kernel replay PASS, 783 modules):
       no release script checks the October Lean evidence. Rerun the axiom
@@ -379,28 +395,38 @@ that may not exist.
       `companion/current_verification.tex`, and requires that no Lean file, Lake
       configuration, script of `bfgs_lean_article/scripts`, ledger or register
       changed after them.
-    - [ ] C12: freeze only when `check_coverage.py --strict` exits 0 (decision D7,
+    - [x] C12 (settled: exit 0 at the freeze and inside the extraction): freeze
+      only when `check_coverage.py --strict` exits 0 (decision D7,
       with the author). Tooling ready: the second new check of
       `verify_release_inputs.py` runs `check_coverage.py --strict`.
-    - [ ] C13: rewrite `release/README.md`; several of its statements are false
+    - [x] C13: rewrite `release/README.md`; several of its statements are false
       now ("The revision adds no Lean theorem", 107 companion pages, the
-      reproduction command of C1).
-    - [ ] C14: `release/RELEASE.json`, `release/SOURCE_MANIFEST.json` and
-      `editorial/logs/*` are regenerated by the run.
-    - [ ] C15: the printed edition date "Author-review edition, 13 September 2026"
+      reproduction command of C1). Done; every changed sentence and its reason:
+      `editorial/release_20261015/README_CHANGES.md`.
+    - [x] C14: `release/RELEASE.json`, `release/SOURCE_MANIFEST.json` and
+      `editorial/logs/*` are regenerated by the run. Done.
+    - [x] C15 (settled: both documents print "Author-review edition, 15 October
+      2026", the freeze date; Q4 for the author): the printed edition date
+      "Author-review edition, 13 September 2026"
       (`paper/master.tex:29`, `companion/master.tex:16`, the companion's page
       footers in `companion/preamble.tex:62,65`) becomes the freeze date
       (decision D1, with the author).
-    - [ ] C16: the archive's `AUTHOR_REVIEW_README.md` (template in
+    - [x] C16 (settled: in the archive of `992d477`): the archive's
+      `AUTHOR_REVIEW_README.md` (template in
       `editorial/package_release.py`) should give the commands for the October
       package `bfgs_lean_article` (T5). Tooling ready (T5).
-    - [ ] C17: update the 13 September records `editorial/STATUS.json`,
+    - [x] C17 (settled at the freeze and in the receipts; the AI statement keeps
+      the wording of M37, Q1 for the author): update the 13 September records
+      `editorial/STATUS.json`,
       `NEXT_STATE.json`, `COMPLETION_GATES.json` and `AI_AND_AUTHOR_ACTIONS.md`
       (the AI statement is M37 of `TODO_MANUSCRIPT_REVIEW.md`).
-    - [ ] C18: after the release, close this item and the "Known stale" entries
-      of `HANDOFF.md` and `AGENTS.md`.
+    - [x] C18: after the release, close this item and the "Known stale" entries
+      of `HANDOFF.md` and `AGENTS.md`. Done in the commit that records the
+      completed release.
     - Preserve the 13 September edition under
-      `release/history/20260913_exposition/` (plan, section 4).
+      `release/history/20260913_exposition/` (plan, section 4). Done at the
+      freeze (`PRESERVATION.json`; the git-ignored archive, `b76bd245…`, copied
+      there in the release workspace).
     - Linking the September checkout itself into a scratch clone lets elan and
       git write into it outside its seal: the phase-A dry runs of 15 October
       added three scratch paths to its `bfgs_lean_stage1/.toolchain/elan/known-projects`

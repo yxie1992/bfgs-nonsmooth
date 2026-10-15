@@ -15,6 +15,7 @@ the same day.
 | Manuscript review | M1–M6 fixed on 13 October; on 15 October (step 2) M7–M11 fixed in the article, and in the companion the recurrences of M8, M12–M29 and the wording points W1–W11 and W14–W46 (W12 and W13 left for the author), then M30–M41 from the line-by-line reading of the article and W47; open: the questions for the author (step 3) at the top of `TODO_MANUSCRIPT_REVIEW.md` | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
 | Lean coverage, article | complete: all 619 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
+| Release of 15 October 2026 | done: source freeze `992d477`, validated from its source archive (`coverage_20261015_01`: PASS, 41 commands), receipts at `67a4c40`, all pushed | `release/`, `editorial/release_20261015/` |
 
 The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Lean
 coverage" below) started on 15 October: the article's corrections M7–M11 are done;
@@ -24,10 +25,14 @@ M30–M41 in `TODO_MANUSCRIPT_REVIEW.md`. The companion's corrections (M8's
 recurrences, M12–M29, W1–W46 except W12 and W13) and the article's M30–M41 with
 their companion recurrences and W47 were each applied by an agent, reviewed by
 another and committed, and the claim/proof index lists the Lean coverage of every
-item (W31; `editorial/coverage_index.py`). The release tooling is committed and
-reviewed (`editorial/release_20261015/`). Next: the release run, in the order of
-`editorial/release_20261015/README.md` ("Run order"); the questions left to the
-author are at the top of `TODO_MANUSCRIPT_REVIEW.md`.
+item (W31; `editorial/coverage_index.py`). The release run followed (15 October,
+in the order of `editorial/release_20261015/README.md`, "Run order"): the October
+correspondence revision (77 rows, independently reviewed), the printed Lean counts,
+the Lean evidence of `2cfa27a`, an all-page visual review by three agents (its
+typesetting points are Q7, left for a later edition), the source freeze `992d477`,
+the archive validation and the receipts (`editorial/release_20261015/WORKLOG.md`).
+Next: the author's expert check (step 3 of the plan in `AGENTS.md`) and the
+questions Q1–Q7 for the author at the top of `TODO_MANUSCRIPT_REVIEW.md`.
 
 Latest checks:
 
@@ -43,10 +48,16 @@ Latest checks:
   no-op on `2cfa27a`); `check_coverage.py --strict` exits 0 on every article and
   companion file, without `--allow-discrepancies`; `generate_companion.py --check`
   passes.
-- From here until the release, no Lean file, Lake configuration, script in
-  `bfgs_lean_article/scripts/`, claim ledger, coverage register or input of
-  `editorial/release_20261015/` may change: `editorial/verify_release_inputs.py`
-  binds the audit and the replay to them.
+- Release validation of the source freeze `992d477` (15 October): PASS, 41 commands
+  in 2.4 minutes (`release/validation/runs/coverage_20261015_01/SUMMARY.json`): both
+  PDFs rebuilt byte for byte, all 157 pages pixel-identical to the visually reviewed
+  ones, the four September supplements freshly compiled and audited against the APFS
+  copy of the sealed September host cache, and the release-input gate 23/23 inside
+  the extraction.
+- The release-input gate (`editorial/verify_release_inputs.py`) binds the audit and
+  the replay of `2cfa27a` to the sources: after a change of a Lean file, a Lake
+  configuration, a script in `bfgs_lean_article/scripts/`, the claim ledger or a
+  coverage register, both are rerun before the next release.
 
 ## Setting up the Mac
 
@@ -182,10 +193,12 @@ all settled by the chapter groups.
   `resync_register.py` moves lines and line references and reports the items to
   re-check; statuses, anchors and docstrings are changed by hand), and give each
   corrected `DISCREPANCY` item its final status. Refresh the stale numbers in
-  `companion/current_verification.tex` ("2026 Lean names", W30). Done so far: the
-  article's M7–M11 (15 October).
-- Then a new release run (`editorial/build.sh` and the release scripts; needs TeX,
-  Node.js and Poppler) to refresh `release/` and the receipts.
+  `companion/current_verification.tex` ("2026 Lean names", W30). Done on 15
+  October 2026: M7–M41 and the wording points W1–W11 and W14–W47 (W12 and W13 are
+  left to the author).
+- The release run of 15 October 2026 refreshed `release/` and the receipts
+  (`editorial/release_20261015/`). A later correction needs a new release run
+  (`AGENTS.md`, "Known stale or frozen items").
 - Step 3 is the author's expert check.
 
 ## Left on the Linux machine (nothing needed)

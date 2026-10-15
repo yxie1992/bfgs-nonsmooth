@@ -18,7 +18,9 @@ to resume.
 2. **Only after the Lean work is completely done:** a line-by-line reading of the
    article's proofs, and the manuscript corrections listed in
    `TODO_MANUSCRIPT_REVIEW.md` (M7 onwards, and the companion's wording points
-   W1 onwards).
+   W1 onwards). Done on 15 October 2026 and released as the 15 October 2026
+   edition (`release/`); the questions left to the author head
+   `TODO_MANUSCRIPT_REVIEW.md`.
 3. The author's own expert check.
 
 ## Standing preferences
@@ -54,7 +56,7 @@ to resume.
 | `bfgs_lean_article/` | article package: supplements, new modules, coverage modules (`BfgsArticle/Coverage/`), axiom audit, kernel replay (see its `README.md`) | never `lake update` |
 | `editorial/` | claim ledger, generators, reviews, release tooling | `CLAIM_LEDGER.json` is generated |
 | `editorial/lean_coverage/` | coverage method, registers, checker, agent briefs, pause notes | |
-| `release/` | the release of 13 September 2026 | frozen |
+| `release/` | the release of 15 October 2026 (earlier editions in `release/history/`) | frozen; a release run refreshes it |
 | `TODO_*.md` | review findings and work lists | keep them current |
 
 ## Commands
@@ -102,13 +104,19 @@ or get a long timeout. To wait for a detached run, poll its log for an end marke
 
 ## Known stale or frozen items
 
-- `release/` and its receipts date from 13 September 2026. A new release run
-  (`editorial/build.sh` and the release scripts, which need TeX, Node.js and
-  Poppler) refreshes them once the manuscript is final.
-- `editorial/scientific_exposition_20260913/refresh_correspondence.py --check`
-  reports a stale mapping, and the ledger's `proof_locations` for
-  `paper/appendices/lower_curvature.tex` are off by a few lines (see
-  `TODO_LEAN_REVIEW.md`).
+- `release/` describes the 15 October 2026 edition (`release/RELEASE.json`; source
+  freeze `992d477`, validated by `release/validation/runs/coverage_20261015_01/`,
+  receipts committed at `67a4c40`); the earlier editions are in
+  `release/history/`. After further corrections a new release run refreshes it: the
+  order of `editorial/release_20261015/README.md` ("Run order") and Phases 3–4 of
+  `editorial/release_plan_20261015/PLAN.md`, with a release workspace whose Lean
+  cache links point at an APFS copy of the sealed September host cache.
+- `editorial/scientific_exposition_20260913/refresh_correspondence.py --check`, the
+  13 September correspondence check, fails at every later commit by design: it is
+  replayed unchanged at its release commit `3e8b5c6` by
+  `editorial/verify_historical_correspondence.py`, and the October revision
+  (`editorial/release_20261015/refresh_correspondence.py --check`) holds its current
+  role. The ledger's proof locations are current.
 - `editorial/LITERATURE_LEDGER.json` (12 September), `MASTER_RESULTS.md` and
   `editorial/WORKLOG.md` are historical records.
 - The main library's 1244 style warnings stay: cleaning them breaks the hash pins.
