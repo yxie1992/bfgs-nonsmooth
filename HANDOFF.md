@@ -4,7 +4,7 @@ Written by the coordinating agent (Claude in OpenCode) on the author's Linux
 machine, at the author's request, to continue on the author's MacBook with
 OpenCode and the same model. Standing instructions: `AGENTS.md`.
 
-## State (updated 15 October 2026, on the MacBook)
+## State (updated 16 October 2026, on the MacBook)
 
 The work moved from the Linux machine to the MacBook on 14 October and resumed there
 the same day.
@@ -16,6 +16,7 @@ the same day.
 | Lean coverage, article | complete: all 619 items classified; 15 coverage modules, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | complete (14 and 15 October): all 1856 items classified; 18 coverage modules in twelve groups, each reviewed by an independent agent, imported and audited | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 | Release of 15 October 2026 | done: source freeze `992d477`, validated from its source archive (`coverage_20261015_01`: PASS, 41 commands), receipts at `67a4c40`, all pushed | `release/`, `editorial/release_20261015/` |
+| Main-result satisfiability and scope | follow-up requested by the author on 16 October: reviewed objective hypotheses, actual-run witnesses, initialization quantifiers and local/global scope; presentation proposal M42 | `editorial/main_results_scope_20261016/REVIEW.md`, `TODO_MANUSCRIPT_REVIEW.md` |
 
 The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Lean
 coverage" below) started on 15 October: the article's corrections M7–M11 are done;
@@ -33,6 +34,17 @@ typesetting points are Q7, left for a later edition), the source freeze `992d477
 the archive validation and the receipts (`editorial/release_20261015/WORKLOG.md`).
 Next: the author's expert check (step 3 of the plan in `AGENTS.md`) and the
 questions Q1–Q7 for the author at the top of `TODO_MANUSCRIPT_REVIEW.md`.
+
+On 16 October the author asked whether the complicated main-result hypotheses
+can hold together and how general the results are. The follow-up report in
+`editorial/main_results_scope_20261016/` collects the existing formal examples
+and adds worked analytic examples, with independent checks of the formal
+evidence and of the calculations. No new main-result non-vacuity gap was found.
+M42 proposes making the hypothesis checks and run-existence evidence visible
+in the manuscripts. The existing Chapter 7 common-tilt question remains open;
+convergence of every infinite admissible run is distinguished from existence
+from every prescribed initial state. The 15 October release remains the
+reference edition for this review.
 
 Latest checks:
 

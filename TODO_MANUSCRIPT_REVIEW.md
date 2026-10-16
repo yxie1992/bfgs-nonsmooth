@@ -14,10 +14,38 @@ article, also on 15 October. The companion's wording points W1 to W11 and W14 to
 were applied on 15 October; W12 and W13 are left for the author. Open: the questions
 for the author below (step 3 of the plan in `AGENTS.md`).
 
+## Follow-up: satisfiability and generality (16 October 2026)
+
+- [ ] **M42: Make the main results' satisfying examples and scope explicit.**
+  The author asked whether the complicated hypotheses can hold together, whether
+  examples are presented, and how general the results are. The review is in
+  `editorial/main_results_scope_20261016/REVIEW.md`. The principal article
+  mechanisms have concrete objective and actual-run witnesses, but the main
+  scope table (`paper/sections/geometry.tex:59-109`) does not collect the
+  hypothesis checks and run-existence evidence. In particular, the general
+  existence theorem and its application to the printed three-quadratic example
+  are in `BfgsArticle/AdmissibleRunExistence.lean`, not explained in the article.
+  Proposed: an adjoining hypothesis/example table; one completely specified
+  band certificate and nonsmooth BFGS history, with a higher-rank quadratic
+  calibration; simple sufficient tests for
+  centering, coercivity, uniqueness and planar nondegeneracy; and a paragraph
+  separating the existence of a run from convergence of every admissible run.
+  The review includes a simpler parameterized two-quadratic family and a
+  coercive max-linear example with no acceptable differentiable first step
+  from particular initial data. These are analytic examples in the review;
+  add their Lean coverage if they are promoted into either manuscript.
+  Also make the already-recorded Chapter 7 common-tilt non-vacuity question
+  visible where that companion result is stated (`TODO_LEAN_REVIEW.md`).
+  The independent formal review also recommends citing the existing 2D PLQ
+  low-basin runs and the five-piece differentiable-step obstruction. Keep the
+  remaining uniformly strongly convex C² question explicitly local: global
+  failure for quadratic maxima is already proved in `art:quadratic_failure`.
+  This is an expository follow-up, not a finding that a main theorem is false.
+
 ## Questions for the author (step 3)
 
-Decisions the agents left to the author. Everything else found so far is corrected
-(see "Resolved").
+Decisions the agents left to the author for the 15 October edition. Its other
+findings are corrected (see "Resolved"); M42 above is the subsequent follow-up.
 
 - [ ] **Q1: The AI-use statement (M37).** `companion/master.tex:63-64` and
   `editorial/AI_AND_AUTHOR_ACTIONS.md` now say that, from October 2026, Anthropic

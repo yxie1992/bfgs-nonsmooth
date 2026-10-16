@@ -17,6 +17,12 @@ the companion is complete (fourth pass below). Three items are open: the stale
 release receipts (expected), the optional linter warnings, and the Chapter 7 runs
 that may not exist.
 
+**Follow-up (16 October 2026):** the 15 October release and its receipts are
+complete (C1–C18 below). The author requested a review of joint satisfiability,
+examples and the scope of the main results:
+`editorial/main_results_scope_20261016/REVIEW.md`. The existing Chapter 7
+non-vacuity question remains open; the optional linter warnings remain cosmetic.
+
 ## Summary
 
 - No Lean misuse found. A static scan of `bfgs_lean_stage1/BfgsVerification/`
@@ -510,6 +516,12 @@ that may not exist.
   For the author: settle existence, or say that these statements may be vacuous.
   `AdmissibleRunExistence.exists_admissible_run` does not apply: these objectives
   are unbounded below.
+
+  Follow-up requested 16 October: the distinction between an objective example
+  and an actual infinite-run example is reviewed in
+  `editorial/main_results_scope_20261016/REVIEW.md`, Section 6.4. M42 of
+  `TODO_MANUSCRIPT_REVIEW.md` asks for this caveat alongside the companion result,
+  as well as a clearer account of the non-vacuous principal article examples.
 
 ## Checked and matching (no action needed)
 

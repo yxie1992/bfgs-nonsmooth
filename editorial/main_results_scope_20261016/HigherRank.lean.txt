@@ -1,0 +1,237 @@
+import BfgsArticle.Coverage.Article.Energy
+import BfgsVerification.QuadraticGaugeConvex
+import BfgsVerification.CertificateGeometry
+import BfgsVerification.TransportedCertificateVariants
+
+/-! Scratch analytic calibration, 16 October 2026.
+The objective is half the squared Euclidean norm, not half the squared Pi norm.
+This file is new scratch evidence and is not part of the released package. -/
+
+noncomputable section
+open Set Filter Matrix BfgsVerification
+open scoped BigOperators Topology
+
+namespace HigherRankCalibration
+
+variable {n : ℕ}
+
+def objective (x : Vec n) : ℝ := sqNorm x / 2
+
+theorem dot_self (x : Vec n) : dot x x = sqNorm x := by
+  simp only [dot, sqNorm, pow_two]
+
+theorem identity_energy (x : Vec n) : metricEnergy (1 : Mat n) x = sqNorm x := by
+  simp only [metricEnergy, Matrix.one_mulVec, dot_self]
+
+theorem objective_euclidean (x : Vec n) :
+    objective x = ‖euclideanVector x‖ ^ 2 / 2 := by
+  rw [BfgsCoverage.Article.Energy.norm_sq_eq_sqNorm]
+  rfl
+
+theorem objective_convex : ConvexOn ℝ univ (@objective n) := by
+  simpa only [objective, identity_energy] using
+    QuadraticGauge.quadratic_convex (1 : Mat n) Matrix.PosSemidef.one
+
+theorem objective_hasGradient (x : Vec n) :
+    HasFDerivAt objective (gradientFunctional x) x := by
+  simpa only [objective, identity_energy, Matrix.one_mulVec] using
+    QuadraticGauge.quadratic_hasGradient (1 : Mat n)
+      (by simp [Matrix.IsSymm]) x
+
+theorem gradient_eq {x g : Vec n}
+    (hg : HasFDerivAt objective (gradientFunctional g) x) : g = x :=
+  AffineProjection.gradientFunctional_injective (hg.unique (objective_hasGradient x))
+
+theorem objective_zero : objective (0 : Vec n) = 0 := by simp [objective, sqNorm]
+
+theorem objective_nonneg (x : Vec n) : 0 ≤ objective x :=
+  div_nonneg (sqNorm_nonneg x) (by norm_num)
+
+theorem objective_eq_zero_iff (x : Vec n) : objective x = 0 ↔ x = 0 := by
+  simp only [objective, div_eq_zero_iff, OfNat.ofNat_ne_zero, or_false]
+  exact CertificateGeometry.sqNorm_eq_zero_iff x
+
+theorem objective_pos {x : Vec n} (hx : x ≠ 0) : 0 < objective x :=
+  lt_of_le_of_ne (objective_nonneg x) (fun h => hx ((objective_eq_zero_iff x).mp h.symm))
+
+theorem objective_minimum : IsLeast (Set.range (@objective n)) 0 :=
+  ⟨⟨0, objective_zero⟩, by rintro _ ⟨x, rfl⟩; exact objective_nonneg x⟩
+
+theorem sublevel_compact (b : ℝ) : IsCompact {x : Vec n | objective x ≤ b} :=
+  Localization.sublevel_compact objective_convex 0
+    (fun x => by rw [objective_zero]; exact objective_nonneg x)
+    (fun x hx => (objective_eq_zero_iff x).mp (hx.trans objective_zero)) b
+
+/-- Constant identity certificate on every positive band, for arbitrary real pair constants. -/
+def certificate (K : Set (Vec n)) (c₁ c₂ η : ℝ) (hη : 0 < η) :
+    TransportedCertificate.BandCertificate objective K 0 c₁ c₂ η where
+  W := fun _ => 1
+  m := 2 * η
+  C := 1
+  L := 0
+  δ := 1
+  m_pos := by positivity
+  L_nonneg := le_rfl
+  delta_pos := one_pos
+  positive_semidefinite := fun _ _ _ => Matrix.PosSemidef.one
+  visibility := fun x hx g hg => by
+    rw [gradient_eq hg, identity_energy]
+    have hb := hx.2
+    change 0 + η ≤ sqNorm x / 2 at hb
+    linarith
+  secant := fun x z g h _ _ hp _ => by
+    rw [gradient_eq hp.gradient_x, gradient_eq hp.gradient_z, identity_energy]
+    simp only [TransportedCertificate.pairCurvature, TransportedCertificate.pairStep,
+      one_mul, dot_self, le_refl]
+  transport := fun _ _ _ _ _ _ _ _ => by
+    simpa using (Matrix.PosSemidef.zero : (0 : Mat n).PosSemidef)
+
+theorem certificate_parameters (K : Set (Vec n)) (c₁ c₂ η : ℝ) (hη : 0 < η) :
+    let B := certificate K c₁ c₂ η hη
+    B.W = (fun _ => 1) ∧ B.m = 2 * η ∧ B.C = 1 ∧ B.L = 0 ∧ B.δ = 1 ∧
+      ∀ x, (B.W x).PosDef ∧ (B.W x).rank = n := by
+  refine ⟨rfl, rfl, rfl, rfl, rfl, fun _ => ⟨Matrix.PosDef.one, ?_⟩⟩
+  simp [certificate]
+
+/-- The secant and transport equalities hold for every pair, without eligibility or size bounds. -/
+theorem exact_field_equalities (x z : Vec n) :
+    metricEnergy (1 : Mat n) (z - x) =
+        TransportedCertificate.pairCurvature x z x z ∧
+      TransportedCertificate.stepProjector (z - x) * (1 : Mat n) *
+          TransportedCertificate.stepProjector (z - x) =
+        (1 + 0 * TransportedCertificate.pairDecrease x z x) •
+          (TransportedCertificate.stepProjector (z - x) * (1 : Mat n) *
+            TransportedCertificate.stepProjector (z - x)) := by
+  constructor
+  · simp [identity_energy, TransportedCertificate.pairCurvature,
+      TransportedCertificate.pairStep, dot_self]
+  · simp
+
+/-- For a matching identity secant, the full inverse-BFGS update fixes I in every dimension. -/
+theorem inverseBFGS_identity (s : Vec n) : inverseBFGS (1 : Mat n) s s = 1 := by
+  unfold inverseBFGS
+  dsimp only
+  rw [dot_self, Matrix.mul_one]
+  change TransportedCertificate.stepProjector s * TransportedCertificate.stepProjector s +
+    (sqNorm s)⁻¹ • outer s s = 1
+  rw [TransportedCertificate.mul_stepProjector _ s
+    (TransportedCertificate.stepProjector_mulVec_self s)]
+  simp [TransportedCertificate.stepProjector]
+
+def point (x₀ : Vec n) (k : ℕ) : Vec n := ((1 / 2 : ℝ) ^ k) • x₀
+
+theorem point_succ (x₀ : Vec n) (k : ℕ) : point x₀ (k + 1) = (1 / 2 : ℝ) • point x₀ k := by
+  simp only [point, pow_succ, smul_smul]
+  congr 1
+  ring
+
+theorem point_ne_zero {x₀ : Vec n} (hx₀ : x₀ ≠ 0) (k : ℕ) : point x₀ k ≠ 0 :=
+  smul_ne_zero (pow_ne_zero k (by norm_num)) hx₀
+
+theorem step_eq (x₀ : Vec n) (k : ℕ) :
+    bfgsStep (1 : Mat n) (point x₀ k) (1 / 2) = point x₀ (k + 1) - point x₀ k := by
+  rw [point_succ]
+  ext i
+  simp [bfgsStep]
+  ring
+
+theorem objective_smul (a : ℝ) (x : Vec n) : objective (a • x) = a ^ 2 * objective x := by
+  rw [objective, CertificateGeometry.sqNorm_smul]
+  unfold objective
+  ring
+
+theorem objective_half (x : Vec n) : objective ((1 / 2 : ℝ) • x) = (1 / 4) * objective x := by
+  rw [objective_smul]
+  norm_num
+
+theorem old_pairing (x : Vec n) :
+    dot x (bfgsStep (1 : Mat n) x (1 / 2)) = -(1 / 2) * sqNorm x := by
+  rw [bfgsStep, Matrix.one_mulVec, dot_smul_right, dot_self]
+
+theorem dot_smul_first (a : ℝ) (x y : Vec n) : dot (a • x) y = a * dot x y := by
+  simp only [dot, Pi.smul_apply, smul_eq_mul, mul_assoc, Finset.mul_sum]
+
+/-- Infinite actual-gradient full-BFGS run for every nonzero initial vector. -/
+def run (x₀ : Vec n) (hx₀ : x₀ ≠ 0) : AdmissibleBFGSRun n objective where
+  convex := objective_convex
+  x := point x₀
+  H := fun _ => 1
+  g := point x₀
+  α := fun _ => 1 / 2
+  c₁ := 1 / 4
+  c₂ := 1 / 2
+  c₁_pos := by norm_num
+  c₁_lt_c₂ := by norm_num
+  c₂_lt_one := by norm_num
+  initial_posDef := Matrix.PosDef.one
+  alpha_pos := fun _ => by norm_num
+  gradient_nonzero := point_ne_zero hx₀
+  hasGradient := fun k => objective_hasGradient (point x₀ k)
+  step := fun k => by rw [step_eq]; abel
+  update := fun k => by rw [step_eq, inverseBFGS_identity]
+  armijo := fun k => by
+    rw [point_succ, objective_half, old_pairing]
+    unfold objective
+    nlinarith [sqNorm_nonneg (point x₀ k)]
+  weak_wolfe := fun k => by rw [point_succ, dot_smul_first]
+
+theorem run_values (x₀ : Vec n) (hx₀ : x₀ ≠ 0) (k : ℕ) :
+    objective ((run x₀ hx₀).x k) = ((1 / 2 : ℝ) ^ k) ^ 2 * objective x₀ :=
+  objective_smul _ _
+
+/-- The certificate theorem's hypotheses, field rank, and the actual run hold jointly. -/
+theorem joint_witness (x₀ : Vec n) (hx₀ : x₀ ≠ 0) :
+    ∃ (R : AdmissibleBFGSRun n objective) (b : ℝ),
+      R.x 0 = x₀ ∧ R.H = (fun _ => 1) ∧ R.c₁ = 1 / 4 ∧ R.c₂ = 1 / 2 ∧
+      (∀ k, R.x k = ((1 / 2 : ℝ) ^ k) • x₀ ∧ R.g k = R.x k ∧ R.α k = 1 / 2) ∧
+      0 < b ∧ IsCompact {x : Vec n | objective x ≤ b} ∧
+      IsLeast (Set.range (@objective n)) 0 ∧ objective (R.x 0) ≤ b ∧
+      (∀ η : ℝ, 0 < η →
+        ∃ B : TransportedCertificate.BandCertificate (@objective n) {x | objective x ≤ b}
+            0 R.c₁ R.c₂ η,
+          B.W = (fun _ => 1) ∧ B.m = 2 * η ∧ B.C = 1 ∧ B.L = 0 ∧ B.δ = 1 ∧
+            0 ≤ B.C ∧ ∀ x, (B.W x).PosDef ∧ (B.W x).rank = n) ∧
+      Tendsto (fun k => objective (R.x k)) atTop (𝓝 0) ∧ Tendsto R.x atTop (𝓝 0) := by
+  let R := run x₀ hx₀
+  have hstart : R.x 0 = x₀ := by simp [R, run, point]
+  have hcert : ∀ η : ℝ, 0 < η →
+      {x : Vec n | x ∈ {x | objective x ≤ objective x₀} ∧ objective x ≥ 0 + η}.Nonempty →
+      ∃ B : TransportedCertificate.BandCertificate (@objective n) {x | objective x ≤ objective x₀}
+          0 R.c₁ R.c₂ η, 0 ≤ B.C :=
+    fun η hη _ => ⟨certificate _ _ _ η hη, zero_le_one⟩
+  obtain ⟨hv, _, hi⟩ := BfgsCoverage.Article.Energy.certificate (objective x₀)
+    {x : Vec n | objective x ≤ objective x₀} rfl (sublevel_compact _) 0 objective_minimum
+    (objective_pos hx₀) R hcert (by
+      change objective (R.x 0) ≤ objective x₀
+      rw [hstart])
+  refine ⟨R, objective x₀, hstart, rfl, rfl, rfl, fun k => ⟨rfl, rfl, rfl⟩,
+    objective_pos hx₀, sublevel_compact _, objective_minimum, by rw [hstart],
+    fun η hη => ?_, hv, hi 0 (fun x => by rw [objective_zero]; exact objective_nonneg x) ?_⟩
+  · refine ⟨certificate _ _ _ η hη, rfl, rfl, rfl, rfl, rfl, zero_le_one, fun x => ?_⟩
+    exact (certificate_parameters _ _ _ η hη).2.2.2.2.2 x
+  · intro x hx
+    apply (objective_eq_zero_iff x).mp
+    exact le_antisymm (by simpa only [objective_zero] using hx 0) (objective_nonneg x)
+
+/-- A nonzero projected identity field in the plane: transport is not the scalar zero-projector case. -/
+theorem planar_projection :
+    TransportedCertificate.stepProjector (![1, 0] : Vec 2) * (1 : Mat 2) *
+        TransportedCertificate.stepProjector ![1, 0] = Matrix.diagonal ![0, 1] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [TransportedCertificate.stepProjector, sqNorm, outer, Fin.sum_univ_two,
+      Matrix.mul_apply, Matrix.one_apply, Matrix.diagonal_apply]
+
+#check certificate
+#check certificate_parameters
+#check inverseBFGS_identity
+#check run
+#check joint_witness
+#print axioms certificate
+#print axioms certificate_parameters
+#print axioms inverseBFGS_identity
+#print axioms run
+#print axioms joint_witness
+#print axioms planar_projection
+
+end HigherRankCalibration

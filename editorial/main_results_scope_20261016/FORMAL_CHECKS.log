@@ -1,0 +1,442 @@
+BfgsCoverage.Article.Energy.minor_hierarchy {n : ℕ} (H Hplus : BfgsVerification.Mat n) (g y s : BfgsVerification.Vec n)
+  (α q β : ℝ) (hH : Matrix.PosDef H) (hs : s = -α • Matrix.mulVec H g) (hα : 0 < α)
+  (hq_def : q = BfgsVerification.dot g (Matrix.mulVec H g)) (hq : 0 < q)
+  (hβ_def : β = -BfgsVerification.dot y (Matrix.mulVec H g) / q) (hβ : 0 < β)
+  (hHplus : Hplus = BfgsVerification.inverseBFGS H s y) :
+  (∀ (j : ℕ),
+      1 ≤ j →
+        j ≤ n →
+          BfgsVerification.principalSum Hplus j ≤
+            BfgsVerification.sqNorm y / (β ^ 2 * q) * BfgsVerification.principalSum H (j + 1) +
+              α / β * BfgsVerification.principalSum H j) ∧
+    Matrix.det Hplus = α / β * Matrix.det H
+BfgsCoverage.Article.Energy.reciprocal_growth {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) (hbdd : ∃ Λ, ∀ (k : ℕ), ‖BfgsVerification.euclideanVector (R.g k)‖ ≤ Λ)
+  (hd : Filter.Tendsto R.d Filter.atTop (nhds 0)) :
+  Filter.Tendsto (fun N => (∏ k ∈ Finset.range N, (R.q k)⁻¹) ^ (1 / ↑N)) Filter.atTop Filter.atTop ∧
+    Filter.Tendsto (fun N => 1 / ↑N * ∑ k ∈ Finset.range N, (R.q k)⁻¹) Filter.atTop Filter.atTop
+BfgsCoverage.Article.Energy.certificate {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (b : ℝ)
+  (K : Set (BfgsVerification.Vec n)) (hK_def : K = {x | F x ≤ b}) (hK : IsCompact K) (Fstar : ℝ)
+  (hFstar : IsLeast (Set.range F) Fstar) (_hb : b > Fstar) (R : BfgsVerification.AdmissibleBFGSRun n F)
+  (hcert : ∀ (η : ℝ), 0 < η → {x | x ∈ K ∧ F x ≥ Fstar + η}.Nonempty → ∃ Cert, 0 ≤ Cert.C) (hx0 : R.x 0 ∈ K) :
+  Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds Fstar) ∧
+    Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k)) Filter.atTop (nhds 0) ∧
+      ∀ (xstar : BfgsVerification.Vec n),
+        (∀ (x : BfgsVerification.Vec n), F xstar ≤ F x) →
+          (∀ (x : BfgsVerification.Vec n), (∀ (z : BfgsVerification.Vec n), F x ≤ F z) → x = xstar) →
+            Filter.Tendsto R.x Filter.atTop (nhds xstar)
+BfgsCoverage.Article.Energy.Example.run : BfgsVerification.AdmissibleBFGSRun 1 BfgsCoverage.Article.Energy.Example.quad
+BfgsCoverage.Article.Energy.Example.quadCert (K : Set (BfgsVerification.Vec 1)) (c₁ c₂ η : ℝ) (hη : 0 < η) :
+  BfgsVerification.TransportedCertificate.BandCertificate BfgsCoverage.Article.Energy.Example.quad K 0 c₁ c₂ η
+BfgsVerification.UnexcitedMetric.run (A v₀ ρ c₁ c₂ : ℝ) (hA : 0 < A) (hv : 0 < v₀) (hρ : 0 < ρ) (hc₁ : 0 < c₁)
+  (hc : c₁ < c₂) (hc₂ : c₂ < 1) (hr : ρ < (1 - c₁) / (1 + c₁)) :
+  BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.UnexcitedMetric.objective
+BfgsCoverage.Article.Global.centered {n : ℕ} {F : BfgsVerification.Vec n → ℝ} (hF : ConvexOn ℝ Set.univ F)
+  (xstar : BfgsVerification.Vec n) (hmin : ∀ (x : BfgsVerification.Vec n), F xstar ≤ F x)
+  (U : Set (BfgsVerification.Vec n)) (hU : IsOpen U) (hUc : Convex ℝ U) (ψ : BfgsVerification.Vec n → ℝ)
+  (hψ : ConvexOn ℝ U ψ) (hψ11 : BfgsVerification.CenteredSmoothSublinear.LocallyC11On U ψ)
+  (γ : BfgsVerification.Vec n → ℝ) (hγ : ConvexOn ℝ Set.univ γ) (hγh : BfgsVerification.Homogeneous.PositiveDegreeOne γ)
+  (hrep : ∀ x ∈ U, F x = ψ x + γ (x - xstar)) (R : BfgsVerification.AdmissibleBFGSRun n F)
+  (hKc : IsCompact {x | F x ≤ F (R.x 0)}) (hKU : {x | F x ≤ F (R.x 0)} ⊆ U) :
+  Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar)) ∧
+    Filter.Tendsto (fun k => BfgsVerification.euclideanSolutionDistance F (R.x k)) Filter.atTop (nhds 0) ∧
+      ((∀ (y : BfgsVerification.Vec n), (∀ (x : BfgsVerification.Vec n), F y ≤ F x) → y = xstar) →
+        Filter.Tendsto R.x Filter.atTop (nhds xstar))
+BfgsCoverage.Article.Global.homogeneous {n : ℕ} (hn : 1 ≤ n) {F : BfgsVerification.Vec n → ℝ}
+  (hF : ConvexOn ℝ Set.univ F) (hhom : BfgsVerification.Homogeneous.PositiveDegreeOne F)
+  (hcoer : Filter.Tendsto F (Filter.cocompact (BfgsVerification.Vec n)) Filter.atTop) :
+  ((∀ (x : BfgsVerification.Vec n), F 0 ≤ F x) ∧
+      ∀ (y : BfgsVerification.Vec n), (∀ (x : BfgsVerification.Vec n), F y ≤ F x) → y = 0) ∧
+    ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+      Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds 0) ∧ Filter.Tendsto R.x Filter.atTop (nhds 0)
+BfgsCoverage.Article.PositivePartition.polyhedral.{u_1} {n : ℕ} (_hn : 1 ≤ n) (F : BfgsVerification.Vec n → ℝ)
+  (hF : ConvexOn ℝ Set.univ F) (xstar : BfgsVerification.Vec n) (hmin : ∀ (x : BfgsVerification.Vec n), F xstar ≤ F x)
+  (huniq : ∀ (x : BfgsVerification.Vec n), F x = F xstar → x = xstar) (U : Set (BfgsVerification.Vec n)) (hU : IsOpen U)
+  (hxU : xstar ∈ U) {ι : Type u_1} [Fintype ι] (m : ι → ℕ) (a : (i : ι) → Fin (m i) → BfgsVerification.Vec n)
+  (b : (i : ι) → Fin (m i) → ℝ) (P : ι → Set (BfgsVerification.Vec n))
+  (hP : ∀ (i : ι), P i = {x | ∀ (j : Fin (m i)), BfgsVerification.dot (a i j) x ≤ b i j})
+  (_hfull : ∀ (i : ι), (interior (P i)).Nonempty) (hcover : U ⊆ ⋃ i, P i) (V : ι → Set (BfgsVerification.Vec n))
+  (hV : ∀ (i : ι), IsOpen (V i)) (hUV : ∀ (i : ι), U ∩ P i ⊆ V i) (f : ι → BfgsVerification.Vec n → ℝ)
+  (hf : ∀ (i : ι), BfgsVerification.CenteredSmoothSublinear.LocallyC11On (V i) (f i))
+  (hrep : ∀ (i : ι), ∀ x ∈ U ∩ P i, F x = f i x) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun n F),
+        F (R.x 0) ≤ F xstar + ε →
+          (∀ (k : ℕ), R.x k ∈ U) ∧
+            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar)) ∧
+              Filter.Tendsto R.x Filter.atTop (nhds xstar)
+BfgsCoverage.Article.Local.planar_max (F : BfgsVerification.Vec 2 → ℝ) (hF : ConvexOn ℝ Set.univ F)
+  (xstar : BfgsVerification.Vec 2) (hmin : ∀ (x : BfgsVerification.Vec 2), F xstar ≤ F x)
+  (huniq : ∀ (x : BfgsVerification.Vec 2), F x = F xstar → x = xstar) {m : ℕ} (f : Fin m → BfgsVerification.Vec 2 → ℝ)
+  (U : Set (BfgsVerification.Vec 2)) (hU : IsOpen U) (hxU : xstar ∈ U)
+  (hf : ∀ (i : Fin m), ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U)
+  (hmax : ∀ x ∈ U, IsGreatest (Set.range fun i => f i x) (F x))
+  (hcontour :
+    ∃ b,
+      F xstar < b ∧
+        ∀ (t : ℝ),
+          F xstar < t → t ≤ b → ∀ (x y : BfgsVerification.Vec 2), segment ℝ x y ⊆ frontier {z | F z ≤ t} → x = y)
+  (I : Finset (Fin m)) (hI : I = {i | f i xstar = F xstar})
+  (hind : AffineIndependent ℝ fun i => BfgsVerification.coordinateGradient (f ↑i) xstar) (lam : { x // x ∈ I } → ℝ)
+  (hpos : ∀ (i : { x // x ∈ I }), 0 < lam i) (hsum : ∑ i, lam i = 1)
+  (hzero : ∑ i, lam i • BfgsVerification.coordinateGradient (f ↑i) xstar = 0) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+        F (R.x 0) < F xstar + ε →
+          Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds (F xstar)) ∧
+            Filter.Tendsto R.x Filter.atTop (nhds xstar)
+BfgsCoverage.Article.Local.nonradial_example (f : Fin 3 → BfgsVerification.Vec 2 → ℝ)
+  (hf :
+    ∀ (x : BfgsVerification.Vec 2),
+      f 0 x = x 0 + x 0 ^ 2 + x 1 ^ 2 / 2 ∧
+        f 1 x = x 1 + x 0 ^ 2 / 2 + 3 * x 1 ^ 2 / 2 ∧ f 2 x = -x 0 - x 1 + 3 * x 0 ^ 2 / 2 + x 1 ^ 2)
+  (F : BfgsVerification.Vec 2 → ℝ) (hF : ∀ (x : BfgsVerification.Vec 2), F x = max (f 0 x) (max (f 1 x) (f 2 x))) :
+  (∀ (R : BfgsVerification.AdmissibleBFGSRun 2 F),
+      F (R.x 0) < 1 / 100 →
+        Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds 0) ∧ Filter.Tendsto R.x Filter.atTop (nhds 0)) ∧
+    ∀ N₀ ∈ nhds 0,
+      ∃ η,
+        0 < η ∧
+          ∀ (C : ℝ),
+            ∃ x z g h,
+              x ∈ N₀ ∧
+                z ∈ N₀ ∧
+                  F 0 + η ≤ F z ∧
+                    F z ≤ F x ∧
+                      HasFDerivAt F (BfgsVerification.gradientFunctional g) x ∧
+                        HasFDerivAt F (BfgsVerification.gradientFunctional h) z ∧
+                          0 < BfgsVerification.dot (h - g) (z - x) ∧
+                            C * BfgsVerification.dot (h - g) (z - x) < BfgsVerification.dot (h - g) z ^ 2 ∧
+                              BfgsVerification.TransportedCertificate.EligiblePair F (1 / 4) (1 / 2) x z g h
+BfgsVerification.AdmissibleRunExistence.exists_admissible_run {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (hconv : ConvexOn ℝ Set.univ F) (hbdd : BddBelow (Set.range F))
+  (hline :
+    ∀ (x p : BfgsVerification.Vec n),
+      DifferentiableAt ℝ F x → p ≠ 0 → {t | ¬DifferentiableAt ℝ F (x + t • p)}.Countable)
+  (hstat : ∀ (y g : BfgsVerification.Vec n), HasFDerivAt F (BfgsVerification.gradientFunctional g) y → g ≠ 0)
+  {x₀ g₀ : BfgsVerification.Vec n} (hg₀ : HasFDerivAt F (BfgsVerification.gradientFunctional g₀) x₀)
+  {H₀ : BfgsVerification.Mat n} (hH₀ : Matrix.PosDef H₀) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁₂ : c₁ < c₂) (hc₂ : c₂ < 1) :
+  ∃ R, R.x 0 = x₀ ∧ R.g 0 = g₀ ∧ R.H 0 = H₀ ∧ R.c₁ = c₁ ∧ R.c₂ = c₂
+BfgsVerification.PlanarQuadraticExample.objective_exists_admissible_run {x₀ : BfgsVerification.Vec 2}
+  (hx₀ : DifferentiableAt ℝ BfgsVerification.PlanarQuadraticExample.objective x₀) (H₀ : BfgsVerification.Mat 2)
+  (hH₀ : Matrix.PosDef H₀) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁₂ : c₁ < c₂) (hc₂ : c₂ < 1) :
+  ∃ R, R.x 0 = x₀ ∧ R.H 0 = H₀ ∧ R.c₁ = c₁ ∧ R.c₂ = c₂
+BfgsVerification.PlanarQuadraticExample.nonradial_example_nonvacuous (f : Fin 3 → BfgsVerification.Vec 2 → ℝ)
+  (hf :
+    ∀ (x : BfgsVerification.Vec 2),
+      f 0 x = x 0 + x 0 ^ 2 + x 1 ^ 2 / 2 ∧
+        f 1 x = x 1 + x 0 ^ 2 / 2 + 3 * x 1 ^ 2 / 2 ∧ f 2 x = -x 0 - x 1 + 3 * x 0 ^ 2 / 2 + x 1 ^ 2)
+  (F : BfgsVerification.Vec 2 → ℝ) (hF : ∀ (x : BfgsVerification.Vec 2), F x = max (f 0 x) (max (f 1 x) (f 2 x)))
+  (H₀ : BfgsVerification.Mat 2) (hH₀ : Matrix.PosDef H₀) (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁₂ : c₁ < c₂) (hc₂ : c₂ < 1) :
+  ∃ R,
+    R.H 0 = H₀ ∧
+      R.c₁ = c₁ ∧
+        R.c₂ = c₂ ∧
+          F (R.x 0) < 1 / 100 ∧
+            Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds 0) ∧ Filter.Tendsto R.x Filter.atTop (nhds 0)
+BfgsCoverage.Companion.Ch04R.plq2d_low_runs (F : BfgsVerification.Vec 2 → ℝ)
+  (hF_def : ∀ (x : BfgsVerification.Vec 2), F x = x 0 ^ 2 + x 1 ^ 2 + (2 + |x 0|) * |x 1|) (ε : ℝ) (hε : 0 < ε) :
+  ∃ run, F (run.x 0) ≤ F 0 + ε
+BfgsCoverage.Companion.Ch04R.nuclear_run_exists :
+  Nonempty (BfgsVerification.AdmissibleBFGSRun 3 BfgsVerification.NuclearSymmetric2.nuclearCoords)
+BfgsCoverage.Companion.Ch04R.exists_low_run {n : ℕ} {F : BfgsVerification.Vec n → ℝ}
+  (R : BfgsVerification.AdmissibleBFGSRun n F) {Fstar : ℝ}
+  (hR : Filter.Tendsto (fun k => F (R.x k)) Filter.atTop (nhds Fstar)) (ε : ℝ) (hε : 0 < ε) :
+  ∃ R', F (R'.x 0) ≤ Fstar + ε
+BfgsCoverage.Companion.Ch06F.basinRun (δ : ℝ) (hδ : 0 < δ) :
+  BfgsVerification.AdmissibleBFGSRun 2 BfgsVerification.UnexcitedMetric.objective
+BfgsCoverage.Companion.Ch07H.bw_run_exists :
+  ∃ R,
+    R.x 0 = ![1, 3] ∧
+      R.x 1 = ![1, -1] ∧
+        R.x 2 = ![-1 / 20, 11 / 10] ∧
+          R.x 3 = ![1 / 400, 199 / 200] ∧
+            R.g 0 = ![1, 1] ∧ R.g 1 = ![1, -1] ∧ R.g 2 = ![-1, 1] ∧ R.g 3 = ![1, 1] ∧ R.c₁ = 1 / 4 ∧ R.c₂ = 1 / 2
+BfgsCoverage.Companion.Ch10Q.example_run_exists {x₀ g₀ : BfgsVerification.Vec 2}
+  (hg₀ : HasFDerivAt BfgsVerification.Parabolic.Example.objective (BfgsVerification.gradientFunctional g₀) x₀)
+  {H₀ : BfgsVerification.Mat 2} (hH₀ : Matrix.PosDef H₀) {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁₂ : c₁ < c₂) (hc₂ : c₂ < 1) :
+  ∃ R, R.x 0 = x₀ ∧ R.g 0 = g₀ ∧ R.H 0 = H₀ ∧ R.c₁ = c₁ ∧ R.c₂ = c₂
+BfgsVerification.Parabolic.Family.exists_bandCertificate {m : ℕ} (P : BfgsVerification.Parabolic.Family m)
+  {K : Set (BfgsVerification.Vec 2)} (hK : IsCompact K) {η c₁ c₂ : ℝ} (hη : 0 < η) (hc₁ : 0 ≤ c₁) (hc₂ : c₂ < 1) :
+  ∃ B, ∀ (x : BfgsVerification.Vec 2), B.W x = BfgsVerification.outer (P.calibratedVector x) (P.calibratedVector x)
+BfgsCoverage.Article.Verification.fourMaxRun :
+  BfgsVerification.AdmissibleBFGSRun 2 BfgsCoverage.Article.Verification.fourMax
+BfgsCoverage.Article.NegativeUpper.local_failure :
+  ∃ f,
+    (∀ (i : Fin 4),
+        ConvexOn ℝ Set.univ (f i) ∧
+          ContDiff ℝ 2 (f i) ∧
+            ∃ L,
+              ∀ (x y : BfgsVerification.Vec 2),
+                BfgsVerification.FrameNorms.euclideanOpNorm
+                    (BfgsVerification.RadialHessian.matrix (f i) x - BfgsVerification.RadialHessian.matrix (f i) y) ≤
+                  L * ‖BfgsVerification.euclideanVector (x - y)‖) ∧
+      (∀ (i : Fin 4) (x : BfgsVerification.Vec 2),
+          Matrix.PosSemidef (BfgsVerification.RadialHessian.matrix (f i) x) ∧
+            Matrix.PosSemidef (64 • 1 - BfgsVerification.RadialHessian.matrix (f i) x)) ∧
+        ∀ (F : BfgsVerification.Vec 2 → ℝ),
+          (∀ (x : BfgsVerification.Vec 2), F x = Finset.univ.sup' ⋯ fun i => f i x) →
+            (∀ (a : ℝ), IsCompact {x | F x ≤ a}) ∧
+              (∀ (x : BfgsVerification.Vec 2), F 0 ≤ F x) ∧
+                (∀ (x : BfgsVerification.Vec 2), F x = F 0 → x = 0) ∧
+                  ¬DifferentiableAt ℝ F 0 ∧
+                    ∃ x H g α hist xbar,
+                      Filter.Tendsto (fun ℓ => x ℓ 0) Filter.atTop (nhds 0) ∧
+                        (∀ (ℓ : ℕ), H ℓ 0 = 1) ∧
+                          (∀ (c₁ c₂ : ℝ),
+                              0 < c₁ →
+                                c₁ ≤ 1 / 3 →
+                                  c₁ < c₂ →
+                                    c₂ < 1 →
+                                      ∀ (ℓ : ℕ),
+                                        1 ≤ ℓ →
+                                          ∃ R,
+                                            R.c₁ = c₁ ∧
+                                              R.c₂ = c₂ ∧
+                                                R.x = x ℓ ∧
+                                                  R.H = H ℓ ∧
+                                                    R.g = g ℓ ∧
+                                                      R.α = α ℓ ∧
+                                                        ∀ (k N : ℕ),
+                                                          5 ≤ N →
+                                                            BfgsVerification.NonStrictLineSearch.fromMetric F (x ℓ k)
+                                                                (H ℓ k) c₁ c₂ N =
+                                                              (some (α ℓ k), hist ℓ k)) ∧
+                            (∀ (ℓ : ℕ),
+                                1 ≤ ℓ →
+                                  Filter.Tendsto (x ℓ) Filter.atTop (nhds (xbar ℓ)) ∧
+                                    xbar ℓ ≠ 0 ∧
+                                      (∀ (k : ℕ), F (x ℓ (k + 1)) < F (x ℓ k)) ∧
+                                        Filter.Tendsto (fun k => F (x ℓ k)) Filter.atTop (nhds (F (xbar ℓ))) ∧
+                                          F 0 < F (xbar ℓ) ∧
+                                            F 0 = 0 ∧
+                                              0 ∉ BfgsVerification.ConvexSubdifferential.subdifferential F (xbar ℓ) ∧
+                                                (∀ (k : ℕ),
+                                                    ∀ a ∈ hist ℓ k,
+                                                      DifferentiableAt ℝ F
+                                                        (x ℓ k + a • BfgsVerification.bfgsStep (H ℓ k) (g ℓ k) 1)) ∧
+                                                  (∀ (k : ℕ), (hist ℓ k).length ≤ 5) ∧
+                                                    ∀ (m : ℕ),
+                                                      α ℓ (3 * m) = 1 ∧
+                                                        α ℓ (3 * m + 1) = 1 / 4 ∧ α ℓ (3 * m + 2) = 1 / 16) ∧
+                              (∀ (ℓ : ℕ),
+                                  BddAbove
+                                    {r |
+                                      ∃ k,
+                                        ∃ a ∈ hist ℓ k,
+                                          r =
+                                            ‖BfgsVerification.euclideanVector
+                                                (x ℓ k + a • BfgsVerification.bfgsStep (H ℓ k) (g ℓ k) 1)‖}) ∧
+                                Filter.Tendsto
+                                  (fun ℓ =>
+                                    sSup
+                                      {r |
+                                        ∃ k,
+                                          ∃ a ∈ hist ℓ k,
+                                            r =
+                                              ‖BfgsVerification.euclideanVector
+                                                  (x ℓ k + a • BfgsVerification.bfgsStep (H ℓ k) (g ℓ k) 1)‖})
+                                  Filter.atTop (nhds 0)
+BfgsCoverage.Article.NegativeLower.local_failure_lower :
+  ∃ F,
+    (∃ κ, 0 < κ ∧ BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ κ F) ∧
+      (∀ (a : ℝ), IsCompact {x | F x ≤ a}) ∧
+        (∀ (x : BfgsVerification.Vec 2), F 0 ≤ F x) ∧
+          (∀ (x : BfgsVerification.Vec 2), F x = F 0 → x = 0) ∧
+            ¬DifferentiableAt ℝ F 0 ∧
+              (∃ x₀ x H xbar,
+                  Filter.Tendsto x₀ Filter.atTop (nhds 0) ∧
+                    (∀ (ℓ : ℕ), x ℓ 0 = x₀ ℓ ∧ H ℓ 0 = 1) ∧
+                      (∀ (ℓ : ℕ), Filter.Tendsto (x ℓ) Filter.atTop (nhds (xbar ℓ))) ∧
+                        (∀ (ℓ : ℕ), xbar ℓ ≠ 0) ∧
+                          (∀ (ℓ : ℕ), 0 ∉ BfgsVerification.ConvexSubdifferential.subdifferential F (xbar ℓ)) ∧
+                            Filter.Tendsto xbar Filter.atTop (nhds 0) ∧
+                              (∀ (ℓ : ℕ),
+                                  (StrictAnti fun k => F (x ℓ k)) ∧
+                                    Filter.Tendsto (fun k => F (x ℓ k)) Filter.atTop (nhds (F (xbar ℓ))) ∧
+                                      F 0 < F (xbar ℓ)) ∧
+                                (∀ (ℓ k : ℕ),
+                                    ∀ a ∈ BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k),
+                                      DifferentiableAt ℝ F
+                                        (x ℓ k +
+                                          a •
+                                            BfgsVerification.bfgsStep (H ℓ k)
+                                              (BfgsVerification.coordinateGradient F (x ℓ k)) 1)) ∧
+                                  (∀ (ℓ : ℕ),
+                                      BddAbove
+                                        {r |
+                                          ∃ k,
+                                            ∃
+                                              a ∈
+                                                BfgsVerification.SeedOrbit.trialHistory
+                                                  (BfgsVerification.SeedOrbit.phase k),
+                                              r =
+                                                ‖BfgsVerification.euclideanVector
+                                                    (x ℓ k +
+                                                      a •
+                                                        BfgsVerification.bfgsStep (H ℓ k)
+                                                          (BfgsVerification.coordinateGradient F (x ℓ k)) 1)‖}) ∧
+                                    Filter.Tendsto
+                                        (fun ℓ =>
+                                          sSup
+                                            {r |
+                                              ∃ k,
+                                                ∃
+                                                  a ∈
+                                                    BfgsVerification.SeedOrbit.trialHistory
+                                                      (BfgsVerification.SeedOrbit.phase k),
+                                                  r =
+                                                    ‖BfgsVerification.euclideanVector
+                                                        (x ℓ k +
+                                                          a •
+                                                            BfgsVerification.bfgsStep (H ℓ k)
+                                                              (BfgsVerification.coordinateGradient F (x ℓ k)) 1)‖})
+                                        Filter.atTop (nhds 0) ∧
+                                      ∀ (c₁ c₂ : ℝ),
+                                        0 < c₁ →
+                                          c₁ ≤ 1 / 3 →
+                                            c₁ < c₂ →
+                                              c₂ < 1 →
+                                                ∃ R,
+                                                  ∀ (ℓ : ℕ),
+                                                    (R ℓ).c₁ = c₁ ∧
+                                                      (R ℓ).c₂ = c₂ ∧
+                                                        (R ℓ).x = x ℓ ∧
+                                                          (R ℓ).H = H ℓ ∧
+                                                            (∀ (k N : ℕ),
+                                                                5 ≤ N →
+                                                                  BfgsVerification.NonStrictLineSearch.fromMetric F
+                                                                      ((R ℓ).x k) ((R ℓ).H k) c₁ c₂ N =
+                                                                    (some ((R ℓ).α k),
+                                                                      BfgsVerification.SeedOrbit.trialHistory
+                                                                        (BfgsVerification.SeedOrbit.phase k))) ∧
+                                                              ∀ (m : ℕ),
+                                                                (R ℓ).α (3 * m) = 1 ∧
+                                                                  (R ℓ).α (3 * m + 1) = 1 / 4 ∧
+                                                                    (R ℓ).α (3 * m + 2) = 1 / 16) ∧
+                (∃ f,
+                    (∀ (x : BfgsVerification.Vec 2), F x = Finset.univ.sup' ⋯ fun i => f i x) ∧
+                      (∀ (i : Fin 4), ContDiff ℝ 1 (f i)) ∧
+                        (∃ L,
+                            ∀ (i : Fin 4) (y z : BfgsVerification.Vec 2),
+                              ‖BfgsVerification.euclideanVector
+                                    (BfgsVerification.coordinateGradient (f i) y -
+                                      BfgsVerification.coordinateGradient (f i) z)‖ ≤
+                                L * ‖BfgsVerification.euclideanVector (y - z)‖) ∧
+                          (∃ κ,
+                              0 < κ ∧
+                                ∀ (i : Fin 4), BfgsVerification.FixedNormal.EuclideanStrongConvexOn Set.univ κ (f i)) ∧
+                            ∀ (i : Fin 3), ¬DifferentiableAt ℝ (fderiv ℝ (f i.castSucc)) 0) ∧
+                  ∃ μl Lu,
+                    0 < μl ∧
+                      μl ≤ Lu ∧
+                        ∀ (x : BfgsVerification.Vec 2),
+                          (∀ᶠ (z : BfgsVerification.Vec 2) in nhds x, DifferentiableAt ℝ F z) →
+                            DifferentiableAt ℝ (fderiv ℝ F) x →
+                              Matrix.IsSymm (BfgsVerification.RadialHessian.matrix F x) ∧
+                                ∀ (v : BfgsVerification.Vec 2),
+                                  μl * BfgsVerification.sqNorm v ≤
+                                      BfgsVerification.dot v
+                                        (Matrix.mulVec (BfgsVerification.RadialHessian.matrix F x) v) ∧
+                                    BfgsVerification.dot v
+                                        (Matrix.mulVec (BfgsVerification.RadialHessian.matrix F x) v) ≤
+                                      Lu * BfgsVerification.sqNorm v
+BfgsCoverage.Article.LowerCurvature.quadratic_failure_initial_point (μ : ℝ) (hμ : 0 < μ)
+  (V : Set (BfgsVerification.Vec 2)) (hV : V ∈ nhds 0) :
+  ∃ x₀ H₀,
+    Matrix.PosDef H₀ ∧
+      ∃ x H,
+        x 0 = x₀ ∧
+          H 0 = H₀ ∧
+            Filter.Tendsto x Filter.atTop (nhds 0) ∧
+              (∀ (k : ℕ), 0 < BfgsVerification.LQuadraticSeed.objective μ (x k)) ∧
+                (StrictAnti fun k => BfgsVerification.LQuadraticSeed.objective μ (x k)) ∧
+                  Filter.Tendsto (fun k => BfgsVerification.LQuadraticSeed.objective μ (x k)) Filter.atTop (nhds 0) ∧
+                    (DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ) x₀ ∧ x₀ ∈ V) ∧
+                      (∀ (k : ℕ),
+                          ∀ a ∈ BfgsVerification.SeedOrbit.trialHistory (BfgsVerification.SeedOrbit.phase k),
+                            DifferentiableAt ℝ (BfgsVerification.LQuadraticSeed.objective μ)
+                                (x k +
+                                  a •
+                                    BfgsVerification.bfgsStep (H k)
+                                      (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+                                        (x k))
+                                      1) ∧
+                              x k +
+                                  a •
+                                    BfgsVerification.bfgsStep (H k)
+                                      (BfgsVerification.coordinateGradient (BfgsVerification.LQuadraticSeed.objective μ)
+                                        (x k))
+                                      1 ∈
+                                V) ∧
+                        ∀ (c₁ c₂ : ℝ),
+                          0 < c₁ →
+                            c₁ ≤ 1 / 3 →
+                              c₁ < c₂ →
+                                c₂ < 1 →
+                                  ∃ R,
+                                    R.c₁ = c₁ ∧
+                                      R.c₂ = c₂ ∧
+                                        R.x = x ∧
+                                          R.H = H ∧
+                                            (∀ (k N : ℕ),
+                                                5 ≤ N →
+                                                  BfgsVerification.NonStrictLineSearch.fromMetric
+                                                      (BfgsVerification.LQuadraticSeed.objective μ) (R.x k) (R.H k) c₁
+                                                      c₂ N =
+                                                    (some (R.α k),
+                                                      BfgsVerification.SeedOrbit.trialHistory
+                                                        (BfgsVerification.SeedOrbit.phase k))) ∧
+                                              ∀ (m : ℕ),
+                                                R.α (3 * m) = 1 ∧ R.α (3 * m + 1) = 1 / 4 ∧ R.α (3 * m + 2) = 1 / 16
+BfgsVerification.FivePieceObstruction.no_differentiable_armijo_wolfe {τ α : ℝ} (hτ : 0 < τ) (hα : 0 < α)
+  (g : BfgsVerification.Vec 3)
+  (hg :
+    HasFDerivAt BfgsVerification.FivePieceObstruction.objective (BfgsVerification.gradientFunctional g)
+      (BfgsVerification.FivePieceObstruction.ray τ α))
+  (ha :
+    BfgsVerification.FivePieceObstruction.objective (BfgsVerification.FivePieceObstruction.ray τ α) ≤
+      BfgsVerification.FivePieceObstruction.objective (BfgsVerification.FivePieceObstruction.ray τ 0) +
+        1 / 4 *
+          BfgsVerification.dot BfgsVerification.FivePieceObstruction.initialGradient
+            (BfgsVerification.bfgsStep (BfgsVerification.FivePieceObstruction.initialMetric τ)
+              BfgsVerification.FivePieceObstruction.initialGradient α))
+  (hw :
+    1 / 2 *
+        BfgsVerification.dot BfgsVerification.FivePieceObstruction.initialGradient
+          (BfgsVerification.bfgsStep (BfgsVerification.FivePieceObstruction.initialMetric τ)
+            BfgsVerification.FivePieceObstruction.initialGradient α) ≤
+      BfgsVerification.dot g
+        (BfgsVerification.bfgsStep (BfgsVerification.FivePieceObstruction.initialMetric τ)
+          BfgsVerification.FivePieceObstruction.initialGradient α)) :
+  False
+BfgsCoverage.Companion.Ch07H.maxLinear_line_no_run {n m : ℕ} (a : Fin m → BfgsVerification.Vec n)
+  (F : BfgsVerification.Vec n → ℝ)
+  (hF_def : ∀ (x : BfgsVerification.Vec n), IsGreatest (Set.range fun i => BfgsVerification.dot (a i) x) (F x))
+  (c d : BfgsVerification.Vec n) (β : Fin m → ℝ) (ha : ∀ (i : Fin m), a i = c + β i • d)
+  (hcd : LinearIndependent ℝ ![c, d]) : IsEmpty (BfgsVerification.AdmissibleBFGSRun n F)
+BfgsCoverage.Companion.Ch07H.maxLinear_affine_free_no_run {n m : ℕ} (hn : n ≤ 2) (a : Fin m → BfgsVerification.Vec n)
+  (F : BfgsVerification.Vec n → ℝ)
+  (hF_def : ∀ (x : BfgsVerification.Vec n), IsGreatest (Set.range fun i => BfgsVerification.dot (a i) x) (F x))
+  (h0 : 0 ∉ affineSpan ℝ (Set.range a)) : IsEmpty (BfgsVerification.AdmissibleBFGSRun n F)
+BfgsCoverage.Companion.Ch07H.TiltNoInfiniteRunQuestion : Prop
+'BfgsCoverage.Article.Energy.minor_hierarchy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Article.Energy.reciprocal_growth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Article.Energy.certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Article.Energy.Example.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.UnexcitedMetric.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.PlanarQuadraticExample.nonradial_example_nonvacuous' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'BfgsCoverage.Companion.Ch04R.plq2d_low_runs' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Companion.Ch04R.nuclear_run_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Companion.Ch07H.bw_run_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Companion.Ch10Q.example_run_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsVerification.Parabolic.Family.exists_bandCertificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Article.NegativeUpper.local_failure' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Article.NegativeLower.local_failure_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'BfgsCoverage.Article.LowerCurvature.quadratic_failure_initial_point' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

@@ -1,0 +1,32 @@
+HigherRankCalibration.certificate {n : ℕ} (K : Set (Vec n)) (c₁ c₂ η : ℝ) (hη : 0 < η) :
+  TransportedCertificate.BandCertificate objective K 0 c₁ c₂ η
+HigherRankCalibration.certificate_parameters {n : ℕ} (K : Set (Vec n)) (c₁ c₂ η : ℝ) (hη : 0 < η) :
+  let B := certificate K c₁ c₂ η hη;
+  (B.W = fun x => 1) ∧ B.m = 2 * η ∧ B.C = 1 ∧ B.L = 0 ∧ B.δ = 1 ∧ ∀ (x : Vec n), PosDef (B.W x) ∧ rank (B.W x) = n
+HigherRankCalibration.inverseBFGS_identity {n : ℕ} (s : Vec n) : inverseBFGS 1 s s = 1
+HigherRankCalibration.run {n : ℕ} (x₀ : Vec n) (hx₀ : x₀ ≠ 0) : AdmissibleBFGSRun n objective
+HigherRankCalibration.joint_witness {n : ℕ} (x₀ : Vec n) (hx₀ : x₀ ≠ 0) :
+  ∃ R b,
+    R.x 0 = x₀ ∧
+      (R.H = fun x => 1) ∧
+        R.c₁ = 1 / 4 ∧
+          R.c₂ = 1 / 2 ∧
+            (∀ (k : ℕ), R.x k = (1 / 2) ^ k • x₀ ∧ R.g k = R.x k ∧ R.α k = 1 / 2) ∧
+              0 < b ∧
+                IsCompact {x | objective x ≤ b} ∧
+                  IsLeast (range objective) 0 ∧
+                    objective (R.x 0) ≤ b ∧
+                      (∀ (η : ℝ),
+                          0 < η →
+                            ∃ B,
+                              (B.W = fun x => 1) ∧
+                                B.m = 2 * η ∧
+                                  B.C = 1 ∧
+                                    B.L = 0 ∧ B.δ = 1 ∧ 0 ≤ B.C ∧ ∀ (x : Vec n), PosDef (B.W x) ∧ rank (B.W x) = n) ∧
+                        Tendsto (fun k => objective (R.x k)) atTop (𝓝 0) ∧ Tendsto R.x atTop (𝓝 0)
+'HigherRankCalibration.certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HigherRankCalibration.certificate_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HigherRankCalibration.inverseBFGS_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HigherRankCalibration.run' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HigherRankCalibration.joint_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HigherRankCalibration.planar_projection' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -79,7 +79,8 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       resolved, for example `A/seed_certificate/prose/012` is now `PROOF`).
       Companion: done on 15 October 2026 (M12–M29 and the recurrences corrected, the
       25 items resolved, independently reviewed; wording points W1–W11 and W14–W46
-      applied, W12 and W13 left for the author, W47 open). Since then
+      applied, W12 and W13 left for the author; W47 was subsequently applied
+      with M30–M41 on the same day). Since then
       `check_coverage.py --strict` passes on every file without
       `--allow-discrepancies`.
 - [x] Non-vacuity follow-up (done 14 October 2026): no admissible run had been
@@ -97,6 +98,22 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       `A/global/prose/019`). The theorem does not apply when a kink set contains a
       segment of such a line (for example max(|v|, u − 10)); those objectives keep
       explicit runs.
+- [x] Main-result satisfiability and generality review (16 October 2026,
+      requested by the author):
+      `editorial/main_results_scope_20261016/REVIEW.md`. Independent source
+      inspection and signature/axiom checks found joint objective/run witnesses
+      for each principal article convergence class, including genuinely
+      multidimensional examples and runs in arbitrarily small local basins.
+      Distinguish arbitrary-initialization convergence from existence for
+      arbitrary initial data; the latter is false for the full class.
+      The already-recorded Chapter 7 common-tilt question stays open in
+      `TODO_LEAN_REVIEW.md`. M42 in `TODO_MANUSCRIPT_REVIEW.md` tracks presenting
+      the evidence more clearly, with formal coverage for additional analytic
+      examples if they are promoted into the manuscripts. A new scratch proof
+      also supplies the higher-rank quadratic calibration in every finite
+      dimension, with an actual run and all certificate hypotheses jointly
+      (`editorial/main_results_scope_20261016/HIGHER_RANK.md` and its archived
+      Lean input/output; six standard-axiom checks, clean compilation).
 - [x] Run `lake build` once no agent runs Lean (done 15 October 2026, before wave 3).
       `BfgsArticle.lean` imports `BfgsArticle.AdmissibleRunExistence` and each
       companion coverage module as it is committed; while agents ran Lean these were
