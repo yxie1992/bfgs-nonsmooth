@@ -13,6 +13,8 @@ import BfgsArticle.HomogeneousModels
 import BfgsArticle.LUniformGlobal
 import BfgsArticle.LUniformLocal
 import BfgsArticle.AdmissibleRunExistence
+import BfgsArticle.HypothesisExamples
+import BfgsArticle.TwoQuadraticExample
 import BfgsArticle.Coverage.Article.Master
 import BfgsArticle.Coverage.Article.Introduction
 import BfgsArticle.Coverage.Article.Geometry

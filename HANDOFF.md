@@ -49,9 +49,12 @@ reference edition for this review.
 The author then approved the article additions, requiring Lean verification that
 the examples really satisfy the hypotheses. M42 is now in implementation:
 `BfgsArticle/HypothesisExamples.lean` and `BfgsArticle/TwoQuadraticExample.lean`
-will supply joint hypothesis/run witnesses for the new exposition. The new
-appendix, its coverage register and the scope summaries will be reviewed
-independently before the follow-up is marked complete.
+now supply joint hypothesis/run witnesses for the new exposition; both modules
+have passed independent review and the original agents' fix-pass dispositions.
+Records are in `editorial/main_results_scope_20261016/verification/`. The new
+appendix, its literal coverage and the additions-aware correspondence tooling
+are being integrated. The full-package build, axiom audit and kernel replay
+follow that integration, before the follow-up is marked complete.
 
 Latest checks:
 

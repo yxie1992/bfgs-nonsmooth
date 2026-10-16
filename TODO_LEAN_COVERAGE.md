@@ -125,6 +125,13 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       rebuild and inspect the PDFs, then build and refresh the formal evidence.
       Extend the correspondence checks explicitly for the new statements and
       input file; the released 15 October archive remains a historical edition.
+      Mathematical modules are complete and independently reviewed (16 October):
+      90 calibration declarations and 107 two-quadratic axiom checks use only
+      the standard axioms; both modules compile without warnings. Review and
+      fix-pass records are in
+      `editorial/main_results_scope_20261016/verification/`. Literal article
+      coverage, including the mixed run's least-eigenvalue statement, the
+      reviewed additions manifest, and the full-package evidence remain pending.
 - [x] Run `lake build` once no agent runs Lean (done 15 October 2026, before wave 3).
       `BfgsArticle.lean` imports `BfgsArticle.AdmissibleRunExistence` and each
       companion coverage module as it is committed; while agents ran Lean these were
