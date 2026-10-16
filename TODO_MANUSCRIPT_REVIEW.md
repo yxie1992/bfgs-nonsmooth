@@ -42,6 +42,13 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   failure for quadratic maxima is already proved in `art:quadratic_failure`.
   This is an expository follow-up, not a finding that a main theorem is false.
 
+  Approved for implementation on 16 October 2026. The author added: "When you
+  add these in the article, we'd want to add lean that verifies these indeed
+  satisfy the assumptions." Add the worked examples with named Lean theorems
+  proving the hypotheses jointly, including the advertised actual-run existence
+  and initialization quantifiers. The manuscript additions and their coverage
+  are to be independently reviewed before this item is closed.
+
 ## Questions for the author (step 3)
 
 Decisions the agents left to the author for the 15 October edition. Its other

@@ -114,6 +114,17 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       dimension, with an actual run and all certificate hypotheses jointly
       (`editorial/main_results_scope_20261016/HIGHER_RANK.md` and its archived
       Lean input/output; six standard-axiom checks, clean compilation).
+- [ ] M42 implementation (approved 16 October 2026): promote the hypothesis
+      examples into the article with complete Lean verification of their joint
+      assumptions, not only conditional convergence statements. Mathematical
+      modules: `BfgsArticle/HypothesisExamples.lean` (mixed-ridge certificate and
+      run, full-rank quadratic calibration, differentiable-step obstruction)
+      and `BfgsArticle/TwoQuadraticExample.lean` (parameterized curved switching,
+      planar hypotheses and actual-run existence). Add literal coverage of the
+      new article appendix and summaries, independently review each group,
+      rebuild and inspect the PDFs, then build and refresh the formal evidence.
+      Extend the correspondence checks explicitly for the new statements and
+      input file; the released 15 October archive remains a historical edition.
 - [x] Run `lake build` once no agent runs Lean (done 15 October 2026, before wave 3).
       `BfgsArticle.lean` imports `BfgsArticle.AdmissibleRunExistence` and each
       companion coverage module as it is committed; while agents ran Lean these were
