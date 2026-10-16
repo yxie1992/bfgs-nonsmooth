@@ -130,8 +130,26 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       the standard axioms; both modules compile without warnings. Review and
       fix-pass records are in
       `editorial/main_results_scope_20261016/verification/`. Literal article
-      coverage, including the mixed run's least-eigenvalue statement, the
-      reviewed additions manifest, and the full-package evidence remain pending.
+      coverage is implemented, including the mixed run's least-eigenvalue
+      statement (27 new coverage theorems, clean compilation and standard-axiom
+      checks). The article additions and the Chapter 7 non-vacuity caveat are
+      under independent review. Both PDFs build; the changed pages have been
+      inspected, with no new LaTeX warnings or overfull boxes. The additions
+      manifest, real correspondence rows and full-package evidence are pending.
+      The independent infrastructure review found these issues to fix and
+      verify before accepting the new-input correspondence:
+      - [ ] I1: alternative valid TeX input spellings can escape the input-graph
+        authorization; enforce one supported spelling or parse them consistently.
+      - [ ] I2: validate canonical module ownership throughout transitive
+        coverage targets, not only for the directly cited item.
+      - [ ] I3: the declaration reader must reject commented-out names, track
+        namespace/section scope correctly and preserve complete headers with
+        default-valued binders; test the actual production modules too.
+      - [ ] S1: bind a new complete input by its raw bytes in the listed change,
+        so changes to comment/newline boundaries cannot hide in normalization.
+      - [ ] S2: give the new geometry/local explanations and Chapter 7 caveat
+        explicit bounded-passage rows, with current coverage and M42 attribution.
+      - [ ] O1: expose proposal validation failures in a machine-readable status.
 - [x] Run `lake build` once no agent runs Lean (done 15 October 2026, before wave 3).
       `BfgsArticle.lean` imports `BfgsArticle.AdmissibleRunExistence` and each
       companion coverage module as it is committed; while agents ran Lean these were
