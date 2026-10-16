@@ -138,8 +138,8 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       statement (29 new coverage theorems, clean compilation and standard-axiom
       checks). The article additions and the Chapter 7 non-vacuity caveat passed
       independent review and the fix pass. Both PDFs build; all 57 changed pages
-      were inspected, with no new LaTeX warnings or overfull boxes. The additions
-      manifest, real correspondence rows and full-package evidence are pending.
+      were inspected, with no new LaTeX warnings or overfull boxes. Installing the
+      reviewed additions manifest/rows and refreshing full-package evidence remain.
       The package root now imports the new coverage module, and `lake build`
       passes (105 seconds, no warnings outside the pinned library's existing
       1244). The fresh axiom audit and kernel replay follow correspondence.
@@ -157,6 +157,18 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       - [ ] S2: give the new geometry/local explanations and Chapter 7 caveat
         explicit bounded-passage rows, with current coverage and M42 attribution.
       - [ ] O1: expose proposal validation failures in a machine-readable status.
+      The infrastructure fix pass implements all six points and reports 188
+      passing source-tooling checks, including a production-source integration
+      rehearsal. Independent infrastructure rechecking is in progress. The actual
+      manifest, three bounded passages and all 26 new correspondence rows passed
+      a separate content review, with the correction below. Proposal output does
+      not itself certify coverage; installation awaits the infrastructure verdict.
+      - [x] Metadata-review META-R1: add the governing coverage citations to
+        proof rows C094 (`quadratic_certificates`), C095 (`mixed_certificates`),
+        C096 (`gauge_no_step`) and C098 (`strict_wolfe_step`). The independently
+        tested corrected table is adopted for installation; its 77 historical
+        row objects and all review sentences are unchanged. See
+        `verification/METADATA_REVIEW.md` under the M42 review directory.
       The independent literal article review passed all mathematics and joint
       witnesses, with 27 article and seven Chapter 7/core declarations checked
       and all 57 changed PDF pages inspected. Its documentation fixes are done:
