@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-16T21:37:29.762762+00:00",
+  "source_script": "editorial/verify_release_inputs.py",
+  "source_script_sha256": "62ef9c2062fbe3178298697fdc4811f7f0ce1231cc0b208a16a8e1469da7ebd8",
+  "scope": "Only the existing T3 evidence-binding and strict-coverage checks; no release build, packaging, archive validation, or receipt refresh.",
+  "checks": [
+    {
+      "check": "October Lean evidence bound to the frozen sources",
+      "status": "PASS",
+      "details": {
+        "head": "74900ef0a87a17a0715ba5c3ef53e9a36a372621",
+        "reports": {
+          "AXIOM_AUDIT.json": {
+            "sha256": "0411efc45647c571f19e6526d4301bf44f3afa17ee73d88186a14dd1a3f81149",
+            "audited_commit": "74900ef0a87a17a0715ba5c3ef53e9a36a372621",
+            "lean_version": "Lean (version 4.19.0, arm64-apple-darwin23.6.0, commit 6caaee842e94, Release)",
+            "bound_paths": [
+              "*.lean",
+              "*lean-toolchain",
+              "*lakefile.toml",
+              "*lake-manifest.json",
+              "bfgs_lean_article/scripts",
+              "editorial/CLAIM_LEDGER.json",
+              "editorial/lean_coverage/register"
+            ],
+            "unchanged_since_audited_commit": true,
+            "recomputed_from_sources": {
+              "declarations_checked": 5506,
+              "ledger_principal_exports": 178,
+              "ledger_cited_exports": 2109,
+              "ledger_companion_exports": 3097,
+              "coverage_register_names": 3311
+            },
+            "declarations_checked": 5506
+          },
+          "KERNEL_REPLAY.json": {
+            "sha256": "15a06b2efbdb28a761d5e7681410a56c11c869c83269359f082acd7f7053dc5f",
+            "audited_commit": "74900ef0a87a17a0715ba5c3ef53e9a36a372621",
+            "lean_version": "Lean (version 4.19.0, arm64-apple-darwin23.6.0, commit 6caaee842e94, Release)",
+            "bound_paths": [
+              "*.lean",
+              "*lean-toolchain",
+              "*lakefile.toml",
+              "*lake-manifest.json",
+              "bfgs_lean_article/scripts"
+            ],
+            "unchanged_since_audited_commit": true,
+            "recomputed_from_sources": {
+              "modules_in_closure": 788,
+              "modules_replayed": 786
+            },
+            "modules_replayed": 786,
+            "checker": {
+              "tool": "lean4checker",
+              "tag": "v4.19.0",
+              "commit": "e11f65c651edd58d68ba260015d2bfde5102cd7f",
+              "binary_sha256": "e04539c18f29bd09e57207809f4ed4b72f464553672ac63293758a91c9589ba4",
+              "self_test": "PASS"
+            }
+          }
+        },
+        "companion_states": [
+          "checked 5506 Lean names",
+          "(786 modules;"
+        ],
+        "scope": "Recorded October axiom audit and kernel replay, bound by git history; not re-run here."
+      }
+    },
+    {
+      "check": "Lean coverage register strict check",
+      "status": "PASS",
+      "details": {
+        "command": [
+          "python3",
+          "editorial/lean_coverage/check_coverage.py",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "total": "TOTAL: DEFINITION 192, LEAN 1134, NON_CLAIM 449, OPEN 13, PART_OF 124, PROOF 92, SAME_AS 525",
+        "open_discrepancies": 0,
+        "problems": [],
+        "stderr": ""
+      }
+    }
+  ]
+}

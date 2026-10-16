@@ -118,7 +118,7 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       dimension, with an actual run and all certificate hypotheses jointly
       (`editorial/main_results_scope_20261016/HIGHER_RANK.md` and its archived
       Lean input/output; six standard-axiom checks, clean compilation).
-- [ ] M42 implementation (approved 16 October 2026): promote the hypothesis
+- [x] M42 implementation (approved and completed 16 October 2026): promote the hypothesis
       examples into the article with complete Lean verification of their joint
       assumptions, not only conditional convergence statements. Mathematical
       modules: `BfgsArticle/HypothesisExamples.lean` (mixed-ridge certificate and
@@ -139,11 +139,17 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       checks). The article additions and the Chapter 7 non-vacuity caveat passed
       independent review and the fix pass. Both PDFs build; all 57 changed pages
       were inspected, with no new LaTeX warnings or overfull boxes. The reviewed
-      additions manifest and 103 correspondence rows are installed; refreshing
-      full-package evidence remains.
+      additions manifest and 103 correspondence rows are installed. Fresh
+      full-package evidence on clean commit `74900ef` passes: 5506 audited names
+      (3311 register names), standard axioms only; 786 modules replayed with
+      lean4checker v4.19.0 and its self-test passed. Reports are committed in
+      `bfgs_lean_article/`; the ledger and HTML regenerate byte-identically after
+      copying them. See
+      `editorial/main_results_scope_20261016/verification/EVIDENCE.md`.
       The package root now imports the new coverage module, and `lake build`
       passes (105 seconds, no warnings outside the pinned library's existing
-      1244). The fresh axiom audit and kernel replay follow correspondence.
+      1244). The final evidence run's build was a successful 2.9-second no-op;
+      its audit and replay took 7.9 and 26.8 minutes respectively.
       The independent infrastructure review found these issues to fix and
       verify before accepting the new-input correspondence:
       - [x] I1: alternative valid TeX input spellings can escape the input-graph

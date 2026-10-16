@@ -20,8 +20,13 @@ that may not exist.
 **Follow-up (16 October 2026):** the 15 October release and its receipts are
 complete (C1–C18 below). The author requested a review of joint satisfiability,
 examples and the scope of the main results:
-`editorial/main_results_scope_20261016/REVIEW.md`. The existing Chapter 7
-non-vacuity question remains open; the optional linter warnings remain cosmetic.
+`editorial/main_results_scope_20261016/REVIEW.md`. The approved M42 article
+additions and their joint Lean witnesses are complete, independently reviewed
+and covered by fresh evidence on clean commit `74900ef`: axiom audit PASS
+(5506 names, standard axioms only), kernel replay PASS (786 modules, checker
+self-test passed). See `verification/EVIDENCE.md` under that review directory.
+The existing Chapter 7 non-vacuity question remains open; its caveat is now
+printed explicitly. The optional linter warnings remain cosmetic.
 
 ## Summary
 
@@ -88,24 +93,24 @@ non-vacuity question remains open; the optional linter warnings remain cosmetic.
     every Lean name that `editorial/CLAIM_LEDGER.json` cites, for the article and
     (since 14 October) the companion, every Lean name of the coverage register
     (`editorial/lean_coverage/register/`), and the new package's principal
-    declarations: 5420 declarations at commit `2cfa27a` (15 October, step 6 of
-    the release run, after all corrections; 5403 at `9f03d7c`, with every coverage
+    declarations: 5506 declarations at commit `74900ef` (16 October, including
+    M42; 5420 at `2cfa27a`, the 15 October release evidence; 5403 at `9f03d7c`, with every coverage
     module, 3862 at `a2028c9`, 2026 before the companion was added, 3177 before
     the coverage register).
     - Every cited name exists.
     - Every declaration depends only on `propext`, `Classical.choice` and
-      `Quot.sound` (5413 use all three; five use only `propext`; two use only
+      `Quot.sound` (5499 use all three; five use only `propext`; two use only
       `propext` and `Quot.sound`).
     - The result is recorded in `bfgs_lean_article/AXIOM_AUDIT.json`.
     - The 182 principal exports are pinned with `#guard_msgs` in
       `bfgs_lean_article/BfgsArticleAxioms.lean`, so `lake build` fails if one
       of them gains an axiom.
-  - Kernel replay (15 October, commit `2cfa27a`, step 6 of the release run, after
-    all corrections): lean4checker v4.19.0 replayed every declaration of all 783
+  - Kernel replay (16 October, commit `74900ef`, including M42): lean4checker
+    v4.19.0 replayed every declaration of all 786
     project modules through the kernel; no failures
     (`bfgs_lean_article/KERNEL_REPLAY.json`). Its own self-test, which must reject
-    deliberately forged declarations, passed first. The replays of 15 October
-    before the corrections (commit `9f03d7c`, 783 modules) and of 14 October
+    deliberately forged declarations, passed first. The earlier replays of
+    15 October (`2cfa27a` and `9f03d7c`, 783 modules each) and of 14 October
     (commit `023f555`, the 749 modules that existed before the coverage modules)
     also passed.
   - Found along the way: 14 ledger-cited names
@@ -520,8 +525,10 @@ non-vacuity question remains open; the optional linter warnings remain cosmetic.
   Follow-up requested 16 October: the distinction between an objective example
   and an actual infinite-run example is reviewed in
   `editorial/main_results_scope_20261016/REVIEW.md`, Section 6.4. M42 of
-  `TODO_MANUSCRIPT_REVIEW.md` asks for this caveat alongside the companion result,
-  as well as a clearer account of the non-vacuous principal article examples.
+  `TODO_MANUSCRIPT_REVIEW.md` adds this caveat alongside the companion result
+  (`07_H.tex:102-111`, `C/07_H/prose/076-080`), as well as a clearer account of
+  the non-vacuous principal article examples. That exposition is complete;
+  the higher-dimensional existence question itself remains open.
 
 ## Checked and matching (no action needed)
 

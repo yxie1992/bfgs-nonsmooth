@@ -50,7 +50,8 @@ axiom other than `propext`, `Classical.choice` and `Quot.sound` appears. The aud
 imports `BfgsArticle`, so the names of a coverage module resolve only once
 `BfgsArticle.lean` imports it. The names are split across `--jobs` concurrent Lean
 processes (with 6: about 5 minutes for 3862 names on 24 cores, 6.5 minutes for
-the 5420 names of 15 October 2026 on a 10-core MacBook). Private helper
+the 5420 names of 15 October 2026 and 7.9 minutes for the 5506 names of
+16 October on a 10-core MacBook). Private helper
 names (`_private.…`) in the supplements' declaration lists cannot be named outside
 their module; they are listed in the report, and their axioms are part of those of
 the public declarations that use them. `AXIOM_AUDIT.json` records the result, the
@@ -79,7 +80,7 @@ are listed instead of replayed. Mathlib and Lean core are not replayed. With
 deliberately forged test declarations. `KERNEL_REPLAY.json` records the result
 and the checker's tag, commit and binary hash. With the default 8 jobs, the
 replay of the 783 modules of 15 October 2026 took 25 to 27 minutes on a 10-core
-MacBook.
+MacBook; the 786-module M42 replay of 16 October took 26.8 minutes.
 
 ## New modules
 
@@ -104,8 +105,13 @@ about the mixed run's least spectral value. The article additions and the
 Chapter 7 caveat have 54 new classified items. Clean module compilations and
 standard-axiom checks passed. The full package build with the new coverage import
 also passes (105 seconds on the MacBook, no new warnings). The reviewed
-correspondence integration is complete (103 rows); the fresh axiom audit and
-kernel replay are next. The 15 October reports above describe that earlier edition.
+correspondence integration is complete (103 rows). Fresh package-wide evidence
+on clean commit `74900ef` passed on 16 October: 5506 audited declarations,
+standard axioms only, and 786 modules replayed through the kernel with the
+checker self-test passed. `BfgsArticleAxioms.lean` remains the same 182-name guard.
+The current reports include these additions; the 15 October release archive
+records the earlier edition. See
+`editorial/main_results_scope_20261016/verification/EVIDENCE.md` in the repository.
 
 The library's local construction starts from `LSeedCopies.run`, an orbit chosen for
 `c₁=10⁻⁴`, `c₂=1/2` only. `LUniformLocal.lean` therefore selects a new source orbit

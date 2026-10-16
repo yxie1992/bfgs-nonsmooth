@@ -13,6 +13,13 @@ the new analytic examples. This is not the author's expert check. The detailed
 records are [FORMAL_EVIDENCE.md](FORMAL_EVIDENCE.md) and
 [MATHEMATICAL_REVIEW.md](MATHEMATICAL_REVIEW.md).
 
+**Subsequent implementation (16 October 2026):** M42 is complete. The article
+now includes the hypothesis-check guide and Appendix E, with joint Lean
+witnesses and independently reviewed literal coverage; the companion states
+the Chapter 7 caveat. Fresh package evidence passes for 5506 audited names and
+786 replayed modules. See [verification/EVIDENCE.md](verification/EVIDENCE.md).
+The review below preserves the findings that motivated those additions.
+
 ## 1. Answer in brief
 
 **The main convergence mechanisms have concrete jointly satisfying examples,

@@ -13,10 +13,10 @@ the same day.
 |---|---|---|
 | Lean review, passes 1–4 | done | `TODO_LEAN_REVIEW.md`, `bfgs_lean_article/README.md` |
 | Manuscript review | M1–M6 fixed on 13 October; on 15 October (step 2) M7–M11 fixed in the article, and in the companion the recurrences of M8, M12–M29 and the wording points W1–W11 and W14–W46 (W12 and W13 left for the author), then M30–M41 from the line-by-line reading of the article and W47; open: the questions for the author (step 3) at the top of `TODO_MANUSCRIPT_REVIEW.md` | `TODO_MANUSCRIPT_REVIEW.md`, `editorial/line_by_line_reading_20261015/` |
-| Lean coverage, article | all 668 items classified; 16 coverage modules, independently reviewed and imported; M42 correspondence is integrated, fresh package-wide audit/replay pending | `TODO_LEAN_COVERAGE.md` |
+| Lean coverage, article | all 668 items classified; 16 coverage modules, independently reviewed, imported and audited; M42 complete on 16 October | `TODO_LEAN_COVERAGE.md` |
 | Lean coverage, companion | all 1861 items classified; 18 coverage modules, independently reviewed and imported; M42's five new Chapter 7 caveat items passed independent review | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 | Release of 15 October 2026 | done: source freeze `992d477`, validated from its source archive (`coverage_20261015_01`: PASS, 41 commands), receipts at `67a4c40`, all pushed | `release/`, `editorial/release_20261015/` |
-| Main-result satisfiability and scope | follow-up requested by the author on 16 October: reviewed objective hypotheses, actual-run witnesses, initialization quantifiers and local/global scope; presentation proposal M42 | `editorial/main_results_scope_20261016/REVIEW.md`, `TODO_MANUSCRIPT_REVIEW.md` |
+| Main-result satisfiability and scope | M42 complete on 16 October: article examples, joint Lean witnesses, independent review, correspondence integration and fresh package-wide evidence | `editorial/main_results_scope_20261016/verification/EVIDENCE.md`, `TODO_MANUSCRIPT_REVIEW.md` |
 
 The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Lean
 coverage" below) started on 15 October: the article's corrections M7–M11 are done;
@@ -40,14 +40,14 @@ can hold together and how general the results are. The follow-up report in
 `editorial/main_results_scope_20261016/` collects the existing formal examples
 and adds worked analytic examples, with independent checks of the formal
 evidence and of the calculations. No new main-result non-vacuity gap was found.
-M42 proposes making the hypothesis checks and run-existence evidence visible
+M42 makes the hypothesis checks and run-existence evidence visible
 in the manuscripts. The existing Chapter 7 common-tilt question remains open;
 convergence of every infinite admissible run is distinguished from existence
 from every prescribed initial state. The 15 October release remains the
 reference edition for this review.
 
 The author then approved the article additions, requiring Lean verification that
-the examples really satisfy the hypotheses. M42 is now in implementation:
+the examples really satisfy the hypotheses. M42 is complete on 16 October:
 `BfgsArticle/HypothesisExamples.lean` and `BfgsArticle/TwoQuadraticExample.lean`
 now supply joint hypothesis/run witnesses for the new exposition; both modules
 have passed independent review and the original agents' fix-pass dispositions.
@@ -61,8 +61,12 @@ correspondence tooling passed independent review and the targeted fix acceptance
 Its reviewed manifest and 26 new rows are installed (103 rows in all), producing
 six new article records while preserving all 77 historical rows and the 182-name
 principal guard. Current correspondence, strict coverage and regeneration pass.
-The full package build passed in 105 seconds with no new warnings; the refreshed
-axiom audit/kernel replay remain before the follow-up is marked complete.
+The full package build passed in 105 seconds with no new warnings. Fresh evidence
+on clean commit `74900ef` passed: 5506 audited names with standard axioms only,
+and 786 project modules independently replayed through the kernel. The principal
+guard stayed unchanged, and copying the reports and regenerating the ledger
+changed neither the ledger nor its HTML index. Details and reproduction commands:
+`editorial/main_results_scope_20261016/verification/EVIDENCE.md`.
 
 Latest checks:
 
@@ -70,18 +74,17 @@ Latest checks:
   the package root, in 105 seconds. No warnings outside the pinned library's
   existing 1244. Strict coverage passes for all 2529 items, and companion
   regeneration matches. The additions-aware correspondence check passes with
-  103 listed changes and the principal guard remains at 182 declarations. The
-  audit/replay reports below precede M42; their refresh is the next step.
-- Axiom audit of commit `2cfa27a` (15 October, step 6 of the release run, after all
-  corrections) on a clean tree: PASS. 5420 declarations (every ledger,
+  103 listed changes and the principal guard remains at 182 declarations.
+- Axiom audit of commit `74900ef` (16 October, including M42) on a clean
+  tree: PASS. 5506 declarations (every ledger,
   coverage-register and package name) use only `propext`, `Classical.choice` and
-  `Quot.sound` (`bfgs_lean_article/AXIOM_AUDIT.json`); 6.5 minutes on the MacBook.
-- Kernel replay of `2cfa27a` with lean4checker v4.19.0: PASS, 783 modules (every
+  `Quot.sound` (`bfgs_lean_article/AXIOM_AUDIT.json`); 7.9 minutes on the MacBook.
+- Kernel replay of `74900ef` with lean4checker v4.19.0: PASS, 786 modules (every
   project module except the two root modules, which only import), self-test passed
-  (`bfgs_lean_article/KERNEL_REPLAY.json`); 25 minutes on the MacBook with 8 jobs.
+  (`bfgs_lean_article/KERNEL_REPLAY.json`); 26.8 minutes on the MacBook with 8 jobs.
 - `lake build` in `bfgs_lean_article` succeeds with no warnings from the coverage
-  modules (last full run on 15 October after the corrections M30–M41: 192 s; a
-  no-op on `2cfa27a`); `check_coverage.py --strict` exits 0 on every article and
+  modules (last full run after M42: 105 s; a 2.9-second no-op on `74900ef`);
+  `check_coverage.py --strict` exits 0 on every article and
   companion file, without `--allow-discrepancies`; `generate_companion.py --check`
   passes.
 - Release validation of the source freeze `992d477` (15 October): PASS, 41 commands
@@ -91,7 +94,7 @@ Latest checks:
   copy of the sealed September host cache, and the release-input gate 23/23 inside
   the extraction.
 - The release-input gate (`editorial/verify_release_inputs.py`) binds the audit and
-  the replay of `2cfa27a` to the sources: after a change of a Lean file, a Lake
+  the replay of `74900ef` to the sources: after a change of a Lean file, a Lake
   configuration, a script in `bfgs_lean_article/scripts/`, the claim ledger or a
   coverage register, both are rerun before the next release.
 

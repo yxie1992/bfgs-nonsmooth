@@ -16,7 +16,7 @@ for the author below (step 3 of the plan in `AGENTS.md`).
 
 ## Follow-up: satisfiability and generality (16 October 2026)
 
-- [ ] **M42: Make the main results' satisfying examples and scope explicit.**
+- [x] **M42: Make the main results' satisfying examples and scope explicit.**
   The author asked whether the complicated hypotheses can hold together, whether
   examples are presented, and how general the results are. The review is in
   `editorial/main_results_scope_20261016/REVIEW.md`. The principal article
@@ -64,13 +64,18 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   compilations and standard-axiom checks pass, and the full package build passes
   with no new warnings. Records:
   `editorial/main_results_scope_20261016/verification/`. The independently reviewed
-  additions-aware correspondence and its 26 new rows are installed; fresh
-  package-wide evidence remains before closing M42.
+  additions-aware correspondence and its 26 new rows are installed. Completed
+  on 16 October with fresh package-wide evidence from clean commit `74900ef`:
+  axiom audit PASS (5506 names, standard axioms only), kernel replay PASS
+  (786 project modules, checker self-test passed), and the 182-name principal
+  guard unchanged. The copied reports leave the regenerated ledger and HTML
+  byte-identical. See `verification/EVIDENCE.md` under the review directory.
 
 ## Questions for the author (step 3)
 
 Decisions the agents left to the author for the 15 October edition. Its other
-findings are corrected (see "Resolved"); M42 above is the subsequent follow-up.
+findings are corrected (see "Resolved"); M42 above is the completed subsequent
+follow-up.
 
 - [ ] **Q1: The AI-use statement (M37).** `companion/master.tex:63-64` and
   `editorial/AI_AND_AUTHOR_ACTIONS.md` now say that, from October 2026, Anthropic

@@ -17,6 +17,8 @@ hypotheses and have the stated actual-run witnesses.
 | `INTEGRATION_FIX_REVIEW.md` | Independent recheck identifying the final bare-CR and trailing-literal fixes, with preserved review and dispositions. |
 | `INTEGRATION_FINAL_ACCEPTANCE.md` | Focused independent acceptance of the applied fixes: 29 checks passed, current runtime hashes recorded, no remaining blocker. |
 | `METADATA_REVIEW.md` | Independent review of the real additions manifest, three bounded passages and 26 new correspondence rows; four governing citations added in the approved table, with successful source-only integration and negative tests. |
+| `EVIDENCE.md` | Completion record: fresh full-package build, axiom audit and independent kernel replay on clean commit `74900ef`, current-source checks and reproduction commands. |
+| `SOURCE_BINDING.json` | Successful execution of the existing T3 source-evidence binding and strict-coverage checks, without rewriting historical release receipts. |
 
 The implementation and review agents were distinct. Both mathematical modules
 compiled without errors or warnings and their checked axiom dependencies were
@@ -54,6 +56,9 @@ article records, strict coverage and companion regeneration passing, and
 deterministic ledger/HTML regeneration. The source-tooling checks do not replace
 the independently reviewed Lean proofs or the package-wide evidence.
 
-These are module-level, article-level and correspondence verification records.
-Refreshed package audit/replay remains the final completion step tracked in
-`TODO_LEAN_COVERAGE.md` and `TODO_MANUSCRIPT_REVIEW.md`.
+The fresh package audit and replay passed on clean commit `74900ef`: 5506
+declarations with standard axioms only and 786 replayed project modules, with
+the checker self-test passed. Copying the reports and regenerating the ledger
+left the ledger and HTML unchanged. M42 is complete on 16 October 2026; see
+`EVIDENCE.md` and the corresponding closed items in `TODO_LEAN_COVERAGE.md` and
+`TODO_MANUSCRIPT_REVIEW.md`.

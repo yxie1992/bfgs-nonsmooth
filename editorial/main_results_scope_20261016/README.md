@@ -9,6 +9,14 @@ infinite BFGS runs, and existence from prescribed initial data. It collects the
 existing examples and provides additional worked calculations. Manuscript
 presentation proposals are tracked as M42 in `TODO_MANUSCRIPT_REVIEW.md`.
 
+**Implementation completed, 16 October 2026.** The approved additions are now
+in the article's hypothesis-check guide and Appendix E, with joint Lean
+hypothesis/run witnesses and literal coverage. The companion explicitly states
+the Chapter 7 existence caveat. Independent implementation, mathematical,
+literal-coverage and correspondence reviews are in [verification/](verification/README.md).
+Fresh package-wide evidence passes for 5506 audited names and 786 replayed
+modules; see [the completion record](verification/EVIDENCE.md).
+
 ## Records
 
 | File | Purpose |
