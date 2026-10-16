@@ -23,6 +23,20 @@ order, by AI agents, Claude in OpenCode):
 | `TOOLING_REVIEW.md` | The independent review of the release tooling and its fix pass |
 | `README.md` | This file |
 
+Post-release M42 integration uses
+[`../main_results_scope_20261016/ADDITIONS.json`](../main_results_scope_20261016/ADDITIONS.json)
+and the shared `editorial/coverage_additions.py` gate. The manifest starts empty;
+it authorizes no addition until the final sources and coverage have been reviewed.
+The exact integration commands and design limits are in
+[`../main_results_scope_20261016/INTEGRATION.md`](../main_results_scope_20261016/INTEGRATION.md).
+The 15 October edition and its archived receipts remain historical at their
+commits and in `release/`; a later `--write` updates the **current** mapping receipt
+and bounded component-review fields. It does not refresh a release archive.
+The independent infrastructure review and fix dispositions are preserved in
+[`../main_results_scope_20261016/verification/INTEGRATION_REVIEW.md`](../main_results_scope_20261016/verification/INTEGRATION_REVIEW.md).
+The production-fix review and final F1/F2/D1 dispositions are preserved in
+[`../main_results_scope_20261016/verification/INTEGRATION_FIX_REVIEW.md`](../main_results_scope_20261016/verification/INTEGRATION_FIX_REVIEW.md).
+
 Written by the run (after step 4): the release records, as in
 `editorial/scientific_exposition_20260913/`: `REVIEW_LOG.md`, `WORKLOG.md`, the
 visual review records, `release_integrity.log`, `package.log`,
@@ -32,19 +46,20 @@ visual review records, `release_integrity.log`, `package.log`,
 ## The October correspondence revision
 
 The three component reviews (`editorial/positive_contract_review.json`,
-`negative_contract_review.json`, `root_contract_review.json`) map every named
-statement, labeled display, proof passage and prose deduction of the article to
+`negative_contract_review.json`, `root_contract_review.json`) map the original
+article's named statements, labeled displays, proof passages and prose deductions to
 its source spans and Lean contracts; `editorial/assemble_claim_ledger.py` builds
-the claim ledger from them. Their file hashes, locations and proof passages date
-from the 13 September release. That release's check,
+the claim ledger from them and the current coverage additions described below.
+Their baseline file hashes, locations and proof passages date from the 13 September
+release. That release's check,
 `editorial/scientific_exposition_20260913/refresh_correspondence.py --check`,
 rejects every statement change, so it cannot follow the October corrections; it
 stays unchanged and is replayed at its own release commit `3e8b5c6`
 (`editorial/verify_historical_correspondence.py`, T2). This revision takes over
 its current role. Every difference in a checked unit (list below), including the
 complete text of the two appendices that the 13 September revision preserved,
-must be listed; text outside the units (prose outside root and deduction
-passages, unmapped tables and figures and the files they `\input`, headings) is
+must be listed; text outside the units in the original inputs (prose outside root
+and deduction passages, unmapped tables and figures and the files they `\input`, headings) is
 bound only by the receipt's file hashes, so it needs `--write` but no row.
 
 **Baseline.** Commit `3e8b5c6` (13 September release freeze). `prior_mapping/`
@@ -59,11 +74,12 @@ recomputes the reviews from the baseline TeX and requires the result to equal
 the baseline reviews byte for byte: the extraction is the one the 13 September
 revision reviewed.
 
-**Units.** Each is compared with the baseline after removing whitespace, except
+**Units.** Historical units are compared with the baseline after removing whitespace, except
 where whitespace separates TeX tokens: one space that ends a control word before
 a letter (`\le q` is not `\leq`) and a control space (`a\ b` is not `a\b`) are
 kept. There are no notation aliases. A unit found in another file than at the
-baseline is a change (`moved`).
+baseline is a change (`moved`). New M42 complete-input and explicit passage rows
+instead bind raw bytes, preserving comments, line endings and whitespace.
 
 | Key | Unit |
 |---|---|
@@ -77,12 +93,35 @@ baseline is a change (`moved`).
 | `deduction:<n>` | the passage at the anchor of the n-th positive unnumbered deduction |
 | `appendix:<path>` | the complete text of `paper/appendices/lower_curvature.tex` and `seed_certificate.tex` (the 13 September receipt's `complete_appendix_notation_preservation`) |
 | `macro:<name>` | a macro definition (`\newcommand`, `\renewcommand`, `\providecommand`, `\DeclareMathOperator`, `\def`) in an active input |
+| `input:<path>` | complete text of an explicitly declared M42 input, including prose and headings |
+| `passage:m42-<name>` | explicitly authorized raw-byte passage in an existing active indexed article/companion input |
 
-A passage at an anchor runs to the end of its paragraph: the first blank line, the
+M42 adds current-coverage units without extending the historical component
+reviews: every new named statement and its following proof, and every display
+in the new input or result/proof. Unnumbered displays use
+`display:<coverage-item-id>`; labeled displays keep `display:<label>`.
+New or changed unnumbered displays in an original input are also detected against
+the M42 baseline `6145363` and get their own current-coverage units. Each such
+unit needs a row citing **M42**, with current coverage; a statement/proof row must
+name the governing coverage declaration. The whole new input needs a row too.
+Its `after_sha256` is the raw file hash. This keeps edits to otherwise unregistered
+prose, including comment/newline and whitespace changes, from passing with
+`--write` alone after only a manifest-hash update.
+
+Schema-v2 `ADDITIONS.json` also authorizes the requested geometry/local tails and
+the Chapter 7 existence caveat as explicit `passages`. The proposed boundaries
+are unique literal start/end anchors (null end = EOF); their hashes are raw UTF-8
+byte-slice hashes. Paths must be existing, active, indexed document sources.
+Each passage's exact contained registered prose-item set and its reference
+closure are validated; its M42 row must cite all and only those prose items.
+The schema, boundaries and coordinator commands are in `INTEGRATION.md`.
+
+A historical passage at an anchor runs to the end of its paragraph: the first blank line, the
 end of the enclosing environment or the next anchor of another record in the same
 file. A `\label{…}` anchor stands for its environment; a labeled display, table or
-figure with a unit of its own stands for that unit. An edit inside an appendix is
-listed twice, as its own unit and as the `appendix:` unit.
+figure with a unit of its own stands for that unit. An edit inside either of the
+two historical complete-text appendices is listed twice, as its own unit and as
+the `appendix:` unit. A new input uses its `input:` unit instead.
 
 **`CHANGES.json`** is `{"schema_version": 1, "revision": "release_20261015",
 "baseline_commit": "3e8b5c6…", "changes": [...]}`, one row per changed unit:
@@ -96,12 +135,14 @@ listed twice, as its own unit and as the `appendix:` unit.
      "principal_lean": ["BfgsCoverage.Article.LowerCurvature.quadratic_failure"],
      "review": "One reviewed sentence."}
 
-- `change` is `changed`, `added`, `removed` (displays), `moved` (same text in
+- `change` is `changed`, `added`, `moved` (same text in
   another file; the row gives the earlier file in `before_file`), or `anchor` (an
   anchor rewritten around unchanged text). A changed anchor is given as
   `"anchor": {"old": …, "new": …}` (`"end_anchor"` for the end of a passage); the
   new anchor must occur exactly once. A root row may also give a new
   `scope_review`, which replaces the record's (the old one stays in the baseline).
+  The historical schema's `removed` value is refused. The M42 gate also refuses
+  moving or removing an old label or removing an old active input.
 - `correction_items`: `M<n>` or `W<n>` of `TODO_MANUSCRIPT_REVIEW.md`, or
   `"TODO_LEAN_REVIEW.md: <item title>"` for a change made by the Lean review.
 - `coverage`: register items with a final status (not `DISCREPANCY`, not `TODO`) and
@@ -115,8 +156,8 @@ listed twice, as its own unit and as the `appendix:` unit.
   they reach through `of`; the axiom audit checks every such name.
 
 **Assertions** (`--write` and `--check`): the snapshot and baseline checks above;
-the active TeX inputs are those of the baseline; the statement and display label
-sets are unchanged except for listed additions and removals; every unit equals the
+the active TeX inputs and label sets are those of the baseline plus only the exact
+M42 additions declared in `ADDITIONS.json`; every unit equals the
 baseline, in the same file, except for the listed changes; every row matches
 exactly one current change, hashes and earlier file included (a further edit
 makes the row stale); every anchor resolves exactly once; the retained evidence
@@ -130,25 +171,44 @@ review and an `october_revision_changes` list (row ids) to each touched row. The
 receipt `mapping_refresh.json` records the inputs, every preserved and every
 listed unit with raw before/after hashes, the verified coverage items, the
 retained evidence, the output hashes, and the hashes of `verify_release_inputs.py`,
-`assemble_claim_ledger.py`, `active_tex_sources.py` and `extract_items.py`.
+`assemble_claim_ledger.py`, `active_tex_sources.py`, `extract_items.py`,
+`coverage_additions.py`, `lean_source.py`, `coverage_index.py` and `check_coverage.py`. Its
+`coverage_additions` block binds the manifest, the checked current register items,
+register files and Lean declaration sources. New claims enter the ledger through
+current coverage, with empty historical `source_spans`, current statements and
+proof locations, and no new `principal_exports`; the 182-name principal guard is
+unchanged. Coverage-register names remain included in the full axiom audit.
 `--check` recomputes everything and compares bytes. It builds nothing and runs no
 Lean; it needs git history.
 
 **Limits, by design** (the independent row review covers them):
 
-- Text outside every unit (above) needs no row. Examples: the caption and the
+- Text outside every unit in the original inputs (above) needs no row. Examples: the caption and
   drawing (`paper/figures/gradient_geometry.tex`) of Figure `art:gradient-geometry`,
   section headings, prose between root passages. Review such edits in `git diff
-  3e8b5c6` together with the rows.
+  3e8b5c6` together with the rows. The three explicitly proposed M42 prose passages
+  are now units and do require rows.
 - Correction items are checked for existence only, not for relevance;
   `--propose` prints the TODO text of every cited item (`correction_item_texts`).
 - `TODO_LEAN_REVIEW.md: <title>` is matched against the bold item titles of that
   file: keep a cited title unchanged (closing the item with `[x]` is fine;
   rewording its title makes `--check` fail).
-- Refused with an explicit message, and needing an extension of this revision: a
-  named statement added or removed, an active TeX input added or removed, a
-  proof passage of the negative review moved to another file, a numbered display
-  without `\label` (as in September).
+- Refused: an undeclared new named statement, input or label; removal or movement
+  of an old label, removal of an old input or checked unit; a new result without
+  complete current coverage and its own following proof in the same file; a new
+  proof not associated with an added named result; a proof passage of the negative
+  review moved to another file; a numbered display without `\label` (as in September).
+  The new gates check source correspondence textually. Independent mathematical
+  review, Lean build, axiom audit and kernel replay retain their separate roles.
+- The frozen input resolver is unchanged; a shared syntax guard refuses spellings
+  its literal scanners cannot see. LF/CRLF pass the newline check; bare CR is
+  refused before comment masking. Current Lean citations use lexical names and
+  complete statements, with canonical register/module ownership throughout the
+  reference closure. Definition-body trimming preserves trailing literals while
+  removing trailing comments. Header term-token restrictions apply at delimiter
+  depth zero; balanced subterms are retained lexically without semantic validation.
+  The supported grammar and explicit rejections are documented
+  in `INTEGRATION.md`; this does not evaluate TeX macros or elaborate Lean.
 
 **Use, once the sources are final** (see "Run order", step 4):
 
@@ -160,13 +220,14 @@ Lean; it needs git history.
     python3 editorial/release_20261015/refresh_correspondence.py --check
 
 `--propose` prints JSON: `uncovered` holds row skeletons (with suggested register
-items and Lean names, and empty `correction_items` and `review`), `hints` the old
+items and Lean names, empty `review`, and correction items as described below), `hints` the old
 and new text, a word diff, the changed lines and the candidate register items,
 and `correction_item_texts` the TODO text of every cited correction item;
 `stale_rows`, `rows_without_a_current_change` and `unresolved_anchors` report rows
 to fix. For a lost anchor it proposes a row with `"anchor": {"old": …, "new": ""}`:
 fill in the new anchor and run `--propose` again for the hashes. A whitespace-only
-edit needs no row, only `--write`. A stale row (its text changed again after the
+edit of a historical normalized unit needs no row, only `--write`; new raw M42
+input/passage units require a renewed row. A stale row (its text changed again after the
 review) is proposed again under its own id, with its correction items and its
 previous review in `hints`, for a new review. The receipt pins the hashes of the TeX
 inputs, of `CHANGES.json`, of `verify_release_inputs.py` and
@@ -174,6 +235,19 @@ inputs, of `CHANGES.json`, of `verify_release_inputs.py` and
 `extract_items.py`, so run `--write` after every change to them. An independent
 reviewer agent then checks every row (plan, T4), including a negative test with an
 unlisted edit in a scratch copy.
+
+For M42, `coverage_additions.proposed_manifest` lists the exact observed new input
+paths and raw SHA-256 hashes, and **all** new labels with their files (section
+anchors included), and explicit passage boundaries/raw hashes/prose-item lists.
+`coverage_additions.problems` reports missing authorizations
+and unsupported removals; proposal mode does not authorize them or certify
+coverage. New unit skeletons suggest `correction_items: ["M42"]`; for a stale old
+row, retain its earlier correction items and add M42 after reviewing the new edit.
+The complete original 77-row table stays valid wherever its old text is unchanged.
+Run `--write` after changes to the additions manifest or its bound sources too.
+Proposal JSON explicitly carries `status: "PROPOSAL"` and
+`verification_performed: false`; a successful proposal command performs no strict
+coverage verification and is not a successful correspondence receipt.
 
 In the scratch test of the fix pass (HEAD `d066071`), `--propose` found 27 changes
 since `3e8b5c6`: statements `art:local-failure-lower`, `art:lower_hyperbolic`,

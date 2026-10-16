@@ -63,8 +63,9 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   54 new classified items and 29 new article coverage theorems; individual
   compilations and standard-axiom checks pass, and the full package build passes
   with no new warnings. Records:
-  `editorial/main_results_scope_20261016/verification/`. Current correspondence
-  integration and fresh package-wide evidence remain before closing M42.
+  `editorial/main_results_scope_20261016/verification/`. The independently reviewed
+  additions-aware correspondence and its 26 new rows are installed; fresh
+  package-wide evidence remains before closing M42.
 
 ## Questions for the author (step 3)
 

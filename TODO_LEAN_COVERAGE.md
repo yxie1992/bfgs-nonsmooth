@@ -138,31 +138,50 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       statement (29 new coverage theorems, clean compilation and standard-axiom
       checks). The article additions and the Chapter 7 non-vacuity caveat passed
       independent review and the fix pass. Both PDFs build; all 57 changed pages
-      were inspected, with no new LaTeX warnings or overfull boxes. Installing the
-      reviewed additions manifest/rows and refreshing full-package evidence remain.
+      were inspected, with no new LaTeX warnings or overfull boxes. The reviewed
+      additions manifest and 103 correspondence rows are installed; refreshing
+      full-package evidence remains.
       The package root now imports the new coverage module, and `lake build`
       passes (105 seconds, no warnings outside the pinned library's existing
       1244). The fresh axiom audit and kernel replay follow correspondence.
       The independent infrastructure review found these issues to fix and
       verify before accepting the new-input correspondence:
-      - [ ] I1: alternative valid TeX input spellings can escape the input-graph
+      - [x] I1: alternative valid TeX input spellings can escape the input-graph
         authorization; enforce one supported spelling or parse them consistently.
-      - [ ] I2: validate canonical module ownership throughout transitive
+      - [x] I2: validate canonical module ownership throughout transitive
         coverage targets, not only for the directly cited item.
-      - [ ] I3: the declaration reader must reject commented-out names, track
+      - [x] I3: the declaration reader must reject commented-out names, track
         namespace/section scope correctly and preserve complete headers with
         default-valued binders; test the actual production modules too.
-      - [ ] S1: bind a new complete input by its raw bytes in the listed change,
+      - [x] S1: bind a new complete input by its raw bytes in the listed change,
         so changes to comment/newline boundaries cannot hide in normalization.
-      - [ ] S2: give the new geometry/local explanations and Chapter 7 caveat
+      - [x] S2: give the new geometry/local explanations and Chapter 7 caveat
         explicit bounded-passage rows, with current coverage and M42 attribution.
-      - [ ] O1: expose proposal validation failures in a machine-readable status.
+      - [x] O1: expose proposal validation failures in a machine-readable status.
       The infrastructure fix pass implements all six points and reports 188
       passing source-tooling checks, including a production-source integration
-      rehearsal. Independent infrastructure rechecking is in progress. The actual
-      manifest, three bounded passages and all 26 new correspondence rows passed
-      a separate content review, with the correction below. Proposal output does
-      not itself certify coverage; installation awaits the infrastructure verdict.
+      rehearsal. Independent rechecking closed I2, S1, S2 and O1 and requested
+      these final source-tooling corrections for I1 and I3, now applied:
+      - [x] Fix-review F1: reject bare-CR TeX line endings before comment masking;
+        otherwise a live input can be hidden from the literal input inventory.
+        Retain the documented LF/CRLF profile and the frozen source resolver.
+      - [x] Fix-review F2: preserve trailing string/character/raw-string literals
+        when extracting definition and structure bodies. Use a comment-only mask
+        for trimming while keeping literals masked for declaration discovery.
+      - [x] Fix-review D1: describe the type-level term restrictions as applying
+        at delimiter depth zero; balanced subterms are retained lexically, not
+        classified or elaborated. This is a documentation clarification.
+      The independent reviewer tested minimal fixes with 31 matched checks.
+      Implementation passed 43 focused checks; final independent acceptance passed
+      29 checks and closed I1/I3/F1/F2/D1. Real mathematical outputs are unchanged;
+      receipt differences were only the two helper hashes. See
+      `verification/INTEGRATION_FINAL_ACCEPTANCE.md` under the M42 review directory.
+      The actual manifest, three bounded passages and all 26 new correspondence
+      rows passed a separate content review, with the correction below. They are
+      installed: current correspondence, strict coverage and regeneration pass;
+      the ledger has exactly six new article records and remains deterministic.
+      All 77 historical row objects and the 182-name principal guard are preserved.
+      Proposal output alone is not coverage certification.
       - [x] Metadata-review META-R1: add the governing coverage citations to
         proof rows C094 (`quadratic_certificates`), C095 (`mixed_certificates`),
         C096 (`gauge_no_step`) and C098 (`strict_wolfe_step`). The independently

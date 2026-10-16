@@ -6,6 +6,7 @@ from companion_statement_inventory import build as companion_inventory
 from active_tex_sources import sources as active_sources
 import ledger_addenda
 import coverage_index
+import coverage_additions
 ROOT=Path(__file__).resolve().parents[1]
 def read(p):return json.loads((ROOT/p).read_text())
 def october(row):
@@ -17,6 +18,8 @@ claims={r['id']:r for r in read('bfgs_lean_stage1/master_report/CLAIMS.json')['c
 index=read('bfgs_lean_stage1/master_report/DECLARATION_INDEX.json')
 provenance=dict.fromkeys(index,'bfgs_lean_stage1/master_report/DECLARATION_INDEX.json')
 article_sources=active_sources(ROOT)
+additions=coverage_additions.Additions(ROOT)
+addition_coverage=additions.validate()
 supplement_register=read('editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json')
 branch_supplement=read('editorial/root_contract_review.json')['supplemental_branch_regularity_audit']
 for supplement in supplement_register['supplements']+[branch_supplement]:
@@ -74,7 +77,7 @@ for p in article_sources:
  for m in re.finditer(r'\\begin\{(theorem|lemma|proposition|corollary|definition)\}(.*?)\\end\{\1\}',p.read_text(),re.S):
   label=re.search(r'\\label\{([^}]+)\}',m[2]);assert label,(p,m[0][:80])
   if label[1] not in labels:missing.append(label[1])
-assert not missing,missing
+# Explicit, current-coverage additions are appended after the coverage index is built.
 root_review=ROOT/'editorial/root_contract_review.json'
 if root_review.exists():
  root_data=json.loads(root_review.read_text())
@@ -96,7 +99,12 @@ for row in article:
 ledger_addenda.apply(ROOT,index,article,companion)
 for name in index:provenance.setdefault(name,read(ledger_addenda.ADDITIONS)['package_audit'])
 # The Lean coverage of every item of both documents, from the coverage registers.
-coverage_summary,coverage_records,coverage_names,coverage_html=coverage_index.build(ROOT,index,provenance)
+coverage_input,coverage_provenance=addition_coverage.index_inputs(index,provenance)
+coverage_summary,coverage_records,coverage_names,coverage_html=coverage_index.build(ROOT,coverage_input,coverage_provenance)
+addition_coverage.mark_source_statements(coverage_names)
+article.extend(addition_coverage.ledger_records(coverage_names))
+missing[:]=[label for label in missing if label not in additions.named]
+assert not missing,missing
 out['lean_coverage']=coverage_summary;out['lean_coverage_records']=coverage_records;out['lean_coverage_declarations']=coverage_names
 (ROOT/'editorial/CLAIM_LEDGER.json').write_text(json.dumps(out,indent=2)+'\n')
 # Portable readable navigation: complete exports, exact signatures and source definitions are expandable.
@@ -107,7 +115,13 @@ for title,rows in [('Article',article),('Companion scientific narrative',frontma
   loc=row['location'];parts.append('<details><summary>'+html.escape(row['id'])+' — '+html.escape(row.get('title') or row['kind'])+'</summary><p>'+html.escape(str(loc))+'</p><p>Source spans: '+html.escape(', '.join(row['source_spans']))+'</p>')
   parts.append('<p>Status: '+html.escape(row.get('status',''))+'</p><p>'+html.escape(row.get('hypothesis_status',''))+'</p><p>'+html.escape(row.get('definition_status',''))+'</p><p>'+html.escape(row.get('open_question_status',''))+'</p>')
   for n in row['full_formal_exports']:
-   parts.append('<details><summary><code>'+html.escape(n)+'</code></summary><pre>'+html.escape(str(index[n]['signature']))+'</pre></details>')
+   if 'coverage_statements' in row:
+    entry=row['coverage_statements'][n]
+    parts.append('<details><summary><code>'+html.escape(n)+'</code> ('+html.escape(entry['source'])+')</summary><pre>'+html.escape(entry.get('statement') or entry['signature'])+'</pre></details>')
+   else:
+    parts.append('<details><summary><code>'+html.escape(n)+'</code></summary><pre>'+html.escape(str(index[n]['signature']))+'</pre></details>')
+  if 'coverage_addition' in row:
+   parts.append('<p>Current coverage provenance: '+html.escape(str(row['coverage_addition']))+'</p><p>Proof: '+html.escape(str(row['proof_location']))+'</p><p>'+html.escape(row['review'])+'</p>')
   parts.append('</details>')
 parts.extend(coverage_html);parts.append('</html>');(ROOT/'companion/PROOF_CORRESPONDENCE.html').write_text('\n'.join(parts))
 print('Mapped',len(article),'article records;',len(companion),'companion named results;',len(inline),'inline results;',len(unnamed),'unnamed mathematical spans;',len(span_records),'complete classified source spans;',len(coverage_records),'coverage items with',len(coverage_names),'Lean names.')

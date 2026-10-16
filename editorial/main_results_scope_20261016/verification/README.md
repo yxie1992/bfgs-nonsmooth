@@ -12,6 +12,10 @@ hypotheses and have the stated actual-run witnesses.
 | `TWO_QUADRATIC_REVIEW.md` | Independent review of the parameterized family's joint geometry, arbitrary-data existence, universal convergence and optional radial obstruction; 107 standard-axiom checks. |
 | `LITERAL_COVERAGE_IMPLEMENTATION.md` | Literal coverage and completed fix pass: 29 article theorems, 54 new classified items, exact least-spectrum/limit statements, and the Chapter 7 documentation corrections. |
 | `LITERAL_COVERAGE_REVIEW.md` | Independent sentence-by-sentence and joint-witness review of the appendix, article summaries and Chapter 7 caveat; compilation/axiom checks and inspection of all 57 changed PDF pages. |
+| `INTEGRATION_IMPLEMENTATION.md` | Addition-aware correspondence implementation and fix passes, with source-tooling regression and production-integration evidence. |
+| `INTEGRATION_REVIEW.md` | Independent initial infrastructure review: input grammar, transitive ownership, declaration extraction and raw passage binding. |
+| `INTEGRATION_FIX_REVIEW.md` | Independent recheck identifying the final bare-CR and trailing-literal fixes, with preserved review and dispositions. |
+| `INTEGRATION_FINAL_ACCEPTANCE.md` | Focused independent acceptance of the applied fixes: 29 checks passed, current runtime hashes recorded, no remaining blocker. |
 | `METADATA_REVIEW.md` | Independent review of the real additions manifest, three bounded passages and 26 new correspondence rows; four governing citations added in the approved table, with successful source-only integration and negative tests. |
 
 The implementation and review agents were distinct. Both mathematical modules
@@ -44,9 +48,12 @@ The independent metadata review accepted the mathematical scope and every
 review sentence of the 26 new rows. Four proof rows needed their governing
 coverage declaration explicitly cited; the corrected table was independently
 rehearsed through write, assembly and checking. It preserves all 77 historical
-row objects and the 182-name principal guard. Runtime-tooling sign-off and
-installation in the working repository remain separate steps.
+row objects and the 182-name principal guard. Following final runtime acceptance,
+the exact approved manifest and table were installed: 103 matching rows, six new
+article records, strict coverage and companion regeneration passing, and
+deterministic ledger/HTML regeneration. The source-tooling checks do not replace
+the independently reviewed Lean proofs or the package-wide evidence.
 
-These are module-level and article-level verification records. Correspondence
-integration and refreshed package audit/replay are separate completion steps
-tracked in `TODO_LEAN_COVERAGE.md` and `TODO_MANUSCRIPT_REVIEW.md`.
+These are module-level, article-level and correspondence verification records.
+Refreshed package audit/replay remains the final completion step tracked in
+`TODO_LEAN_COVERAGE.md` and `TODO_MANUSCRIPT_REVIEW.md`.

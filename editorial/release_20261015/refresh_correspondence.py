@@ -26,7 +26,15 @@ in `CHANGES.json` (next to this script):
                          the 13 September revision preserved (lower_curvature.tex,
                          seed_certificate.tex);
   macro:<name>           a macro definition (\\newcommand, \\renewcommand,
-                         \\providecommand, \\DeclareMathOperator, \\def) in an active input.
+                          \\providecommand, \\DeclareMathOperator, \\def) in an active input.
+  input:<path>           the complete text of an explicitly declared M42 input.
+
+M42 additions are authorized by main_results_scope_20261016/ADDITIONS.json.
+They use current coverage, not new rows in the historical component reviews.
+Every new statement, its proof, every display within them or a new input
+(including unnumbered displays, keyed by coverage item id), and the complete
+new input require current change rows citing M42. Old inputs and labels cannot
+be removed or moved. --propose also prints a candidate additions manifest.
 
 A passage at an anchor runs from the anchor to the end of its paragraph: the
 first blank line, the end of the enclosing environment, or the next anchor of
@@ -56,9 +64,8 @@ The revision asserts: the baseline snapshot in `prior_mapping/` matches its
 MANIFEST and the blobs of the baseline commit, and the 13 September receipt
 names exactly the snapshot's reviews and the two complete appendices;
 recomputing the reviews on the baseline snapshot reproduces them (so the
-extraction below is the reviewed one); the active TeX inputs are those of the
-baseline; statement and display label sets are unchanged except for listed
-additions and removals (a named statement may not be added or removed); every
+extraction below is the reviewed one); the active TeX inputs and label sets are
+those of the baseline plus the exact declared additions; every
 unit equals the baseline, in the same file, except for the listed changes, and
 every row matches one current change (hashes included); every anchor resolves
 exactly once; the retained evidence subtrees, every unrefreshed field and every
@@ -105,7 +112,9 @@ REVIEWS = {name: f'editorial/{name}_contract_review.json' for name in NAMES}
 SEPT_RECEIPT = 'editorial/scientific_exposition_20260913/mapping_refresh.json'
 COMPANION_INPUTS = ['companion/research_story.tex', 'companion/chapters/13_L.tex']
 CHECKERS = ['editorial/verify_release_inputs.py', 'editorial/assemble_claim_ledger.py']
-HELPERS = ['editorial/active_tex_sources.py', 'editorial/lean_coverage/extract_items.py']
+HELPERS = ['editorial/active_tex_sources.py', 'editorial/lean_coverage/extract_items.py',
+           'editorial/coverage_additions.py', 'editorial/lean_source.py',
+           'editorial/coverage_index.py', 'editorial/lean_coverage/check_coverage.py']
 MANUSCRIPT_TODO = 'TODO_MANUSCRIPT_REVIEW.md'
 LEAN_TODO = 'TODO_LEAN_REVIEW.md'
 FAILURE = 'paper/sections/failure.tex'
@@ -120,6 +129,7 @@ sys.path.insert(0, str(ROOT / 'editorial'))
 sys.path.insert(0, str(ROOT / 'editorial/lean_coverage'))
 from active_tex_sources import sources  # noqa: E402
 import extract_items  # noqa: E402
+import coverage_additions  # noqa: E402
 
 STATEMENT = re.compile(r'\\begin\{(theorem|lemma|proposition|corollary|definition)\}.*?\\end\{\1\}', re.S)
 MATH = re.compile(r'\\begin\{(equation|align|gather)\}.*?\\end\{\1\}', re.S)
@@ -130,7 +140,7 @@ BLANK = re.compile(r'\n[ \t]*\n')
 SHA = re.compile(r'[0-9a-f]{64}')
 # A control word followed by whitespace and a letter, a control word, a control space, a control symbol.
 CONTROL = re.compile(r'\\(?:([A-Za-z]+)\s+(?=[A-Za-z])|[A-Za-z]+|\s|.)', re.S)
-KINDS = ['statement', 'display', 'float', 'algorithm', 'proof', 'passage', 'root', 'deduction', 'appendix', 'macro']
+KINDS = ['statement', 'display', 'float', 'algorithm', 'proof', 'passage', 'root', 'deduction', 'appendix', 'macro', 'input']
 # Macro definitions in the active inputs: a changed definition changes every statement that uses it.
 MACRO = re.compile(r'\\(?:(?:re)?newcommand|providecommand|DeclareMathOperator|def)\*?\s*\{?\s*(\\[A-Za-z@]+)')
 FLOATS = {'table', 'table*', 'figure', 'figure*'}
@@ -214,6 +224,11 @@ def norm(text):
 
 def nhash(text):
     return digest(norm(text).encode())
+
+
+def unit_hash(unit):
+    """New complete inputs/passages bind raw bytes; historical units stay normalized."""
+    return unit.get('raw_source_sha256') or nhash(unit['text'])
 
 
 def readable(text):
@@ -574,7 +589,7 @@ def detect(base_units, cur_units, specs, cur_specs, problems):
         if old and new:
             if old.get('delegated') or new.get('delegated'):
                 require(old.get('delegated') == new.get('delegated'), ('Anchor changed between a label and prose', key))
-            before, after = nhash(old['text']), nhash(new['text'])
+            before, after = unit_hash(old), unit_hash(new)
             moved_anchor = key in specs and (specs[key].get('anchor') != cur_specs[key].get('anchor')
                                              or specs[key].get('end_anchor') != cur_specs[key].get('end_anchor'))
             if before != after:
@@ -586,9 +601,9 @@ def detect(base_units, cur_units, specs, cur_specs, problems):
             else:
                 continue
         elif old:
-            before, after, change = nhash(old['text']), None, 'removed'
+            before, after, change = unit_hash(old), None, 'removed'
         else:
-            before, after, change = None, nhash(new['text']), 'added'
+            before, after, change = None, unit_hash(new), 'added'
         found[key] = {'kind': kind, 'key': name, 'file': (new or old)['file'], 'change': change,
                       'before_sha256': before, 'after_sha256': after}
         if old and new and old['file'] != new['file']:
@@ -747,16 +762,20 @@ def load_changes():
     return table
 
 
-def verify_row(row, found, base_units, cur_units, registers, manuscript_ids, lean_todo):
+def verify_row(row, found, base_units, cur_units, registers, manuscript_ids, lean_todo, additions=None):
     """Check one listed row against the detected change, the registers and the correction records."""
     key = row['kind'] + ':' + row['key']
     detected = found[key]
     for field in ['file', 'change', 'before_sha256', 'after_sha256', 'before_file']:
         require(row.get(field) == detected.get(field), ('Listed change is stale; review it again', row['id'], key, field,
                                                 row.get(field), detected.get(field)))
-    if row['kind'] == 'statement' and row['change'] in {'added', 'removed'}:
-        raise RevisionError(('A named statement was added or removed; the component reviews need a reviewed row '
-                             'for it, which this revision does not create: extend it explicitly', row['id'], key))
+    require(row['change'] != 'removed', ('Removing a checked unit is not supported', row['id'], key))
+    if row['kind'] == 'statement' and row['change'] == 'added':
+        require(additions and row['key'] in additions.named, ('New statement needs an explicit addition', row['id'], key))
+    addition_unit = additions and (key in additions.units or
+                                   (row['kind'] == 'display' and row['key'] in additions.new_labels))
+    if addition_unit:
+        require(coverage_additions.CORRECTION in row['correction_items'], ('Addition row must cite M42', row['id'], key))
     if row['change'] == 'anchor':
         require('anchor' in row or 'end_anchor' in row, ('An anchor change lists its anchor', row['id']))
     for item in row['correction_items']:
@@ -799,10 +818,21 @@ def verify_row(row, found, base_units, cur_units, registers, manuscript_ids, lea
     missing = [name for name in row['principal_lean'] if name not in reachable]
     require(not missing, ('Principal Lean names not in the cited register items', row['id'], missing))
     require(row['principal_lean'] or not reachable, ('Principal Lean names needed', row['id']))
+    if addition_unit:
+        own = cur_units[key].get('coverage_item')
+        require(not own or any(c['item'] == own for c in coverage),
+                ('Addition row must cite its own current coverage item', row['id'], own))
+        if row['kind'] == 'passage':
+            require({c['item'] for c in coverage} == set(cur_units[key]['coverage_items']),
+                    ('M42 passage row must cite all and only its authorized current prose items', row['id']))
+        if row['kind'] in {'statement', 'proof'}:
+            item_id = additions.statement_items[row['key']]
+            primary = registers.items[item_id][1]['lean'][0]
+            require(primary in row['principal_lean'], ('Addition row must cite the governing coverage declaration', row['id'], primary))
     return coverage
 
 
-def match_rows(found, table, base_units, cur_units, registers, strict):
+def match_rows(found, table, base_units, cur_units, registers, strict, additions=None):
     """Pair rows with detected changes. In strict mode every mismatch is an error."""
     manuscript_ids, lean_todo = correction_ids()
     listed, stale, unmatched, verified = {}, [], [], {}
@@ -813,7 +843,7 @@ def match_rows(found, table, base_units, cur_units, registers, strict):
             unmatched.append(row['id'])
             continue
         try:
-            verified[key] = verify_row(row, found, base_units, cur_units, registers, manuscript_ids, lean_todo)
+            verified[key] = verify_row(row, found, base_units, cur_units, registers, manuscript_ids, lean_todo, additions)
             listed[key] = row
         except RevisionError as error:
             if strict:
@@ -1033,17 +1063,18 @@ def build(mode):
     base_tree, cur_tree = Tree(PRIOR, 'baseline snapshot'), Tree(ROOT, 'current tree')
     paths = [p.relative_to(ROOT).as_posix() for p in sources(ROOT)]
     base_paths = baseline_paths()
-    require(sorted(paths) == sorted(base_paths), ('Active article inputs differ from the baseline (a new or removed '
-                                                  'input needs an extension of this revision)',
-                                                  sorted(set(paths) ^ set(base_paths))))
-    require(all(base_tree.exists(p) for p in paths + COMPANION_INPUTS), 'Snapshot lacks an active input')
+    additions = coverage_additions.Additions(ROOT)
+    if mode != 'propose':
+        additions.validate()
+    require(set(base_paths) == set(additions.base_text), 'M42 baseline has different historical active inputs')
+    require(all(base_tree.exists(p) for p in base_paths + COMPANION_INPUTS), 'Snapshot lacks a baseline input')
     sept = json.loads((PRIOR / SEPT_RECEIPT).read_text())
     require(sorted(a['path'] for a in sept['complete_appendix_notation_preservation']) == sorted(COMPLETE_FILES),
             'COMPLETE_FILES differs from the 13 September receipt')
     specs = unit_specs(old)
-    base_units, base_problems, base_named = compute_units(base_tree, paths, specs)
+    base_units, base_problems, base_named = compute_units(base_tree, base_paths, specs)
     require(not base_problems, ('Baseline anchors do not resolve', base_problems))
-    base_places = label_places(base_tree, paths)
+    base_places = label_places(base_tree, base_paths)
     # The extraction below must reproduce the reviewed 13 September values exactly.
     reproduced = refresh(old, base_tree, base_units, specs, base_named, base_places, {}, {})
     for name in NAMES:
@@ -1053,16 +1084,24 @@ def build(mode):
     table = load_changes()
     cur_specs = apply_overrides(specs, table['changes'])
     cur_units, cur_problems, cur_named = compute_units(cur_tree, paths, cur_specs)
+    for key, unit in additions.units.items():
+        if key in cur_units:
+            require(not key.startswith('passage:'), ('M42 passage cannot replace a historical unit', key))
+            require(cur_units[key]['file'] == unit['file'] and cur_units[key]['lines'] == unit['lines'],
+                    ('Addition extraction disagrees with the existing unit', key))
+            cur_units[key]['coverage_item'] = unit['coverage_item']
+        else:
+            cur_units[key] = unit
     found = detect(base_units, cur_units, specs, cur_specs, cur_problems)
     registers = Registers()
     if mode == 'propose':
-        return propose(found, table, base_units, cur_units, cur_problems, registers)
+        return propose(found, table, base_units, cur_units, cur_problems, registers, additions)
     require(not cur_problems, ('Current anchors do not resolve; list the new anchors', cur_problems))
-    listed, verified, _, _, _ = match_rows(found, table, base_units, cur_units, registers, strict=True)
+    listed, verified, _, _, _ = match_rows(found, table, base_units, cur_units, registers, strict=True, additions=additions)
 
     statement_labels = {k for k in base_units if k.startswith('statement:')} | {k for k in cur_units if k.startswith('statement:')}
     for key in statement_labels:
-        require(key in base_units and key in cur_units, ('Named statement added or removed', key))
+        require(key in cur_units and (key in base_units or key in additions.units), ('Unlisted named statement or removal', key))
     places = label_places(cur_tree, paths)
     annotations = {}
     for key, row in listed.items():
@@ -1098,7 +1137,7 @@ def build(mode):
                         'before': None if a is None else {'path': a['file'], 'lines': a['lines'],
                                                           'raw_sha256': digest(a['text'].encode())},
                         'after': None if b is None else {'path': b['file'], 'lines': b['lines'],
-                                                         'raw_sha256': digest(b['text'].encode())},
+                                                          'raw_sha256': b.get('raw_source_sha256') or digest(b['text'].encode())},
                         'coverage_verified': verified[key]})
     outputs = {REVIEWS[name]: encoded(out[name]) for name in NAMES}
     receipt = {
@@ -1111,7 +1150,8 @@ def build(mode):
         'changes_table': {'path': CHANGES.relative_to(ROOT).as_posix(), 'sha256': sha(CHANGES), 'rows': len(table['changes'])},
         'active_article_inputs': {p: sha(ROOT / p) for p in paths},
         'companion_inputs': {p: sha(ROOT / p) for p in COMPANION_INPUTS},
-        'normalization': 'Whitespace removed, except where it separates TeX tokens: whitespace after a control word '
+        'normalization': 'M42 complete-input and explicitly authorized passage rows use raw-byte SHA-256. Other units: '
+                         'whitespace removed, except where it separates TeX tokens: whitespace after a control word '
                          'and before a letter is kept as one space, and a control space (the control symbol formed by '
                          'a backslash and a space or a line end) is kept as a backslash and one space; no notation '
                          'aliases.',
@@ -1130,6 +1170,7 @@ def build(mode):
         'component_output_sha256': {path: digest(data) for path, data in outputs.items()},
         'existing_checker_sha256': {p: sha(ROOT / p) for p in CHECKERS},
         'helper_sha256': {p: sha(ROOT / p) for p in HELPERS},
+        'coverage_additions': additions.coverage.receipt(),
         'execution': 'Component correspondence refresh and read-only source, register and contract checks only; '
                      'no document or Lean build.',
     }
@@ -1148,8 +1189,9 @@ def build(mode):
     return 0
 
 
-def propose(found, table, base_units, cur_units, problems, registers):
-    listed, verified, stale, unmatched, uncovered = match_rows(found, table, base_units, cur_units, registers, strict=False)
+def propose(found, table, base_units, cur_units, problems, registers, additions=None):
+    listed, verified, stale, unmatched, uncovered = match_rows(found, table, base_units, cur_units, registers, strict=False,
+                                                            additions=additions)
     numbers = [int(row['id'][1:]) for row in table['changes']]
     next_id = max(numbers, default=0) + 1
     rows, hints = [], []
@@ -1166,6 +1208,10 @@ def propose(found, table, base_units, cur_units, problems, registers):
         candidates = registers.candidates(new) if new else []
         changed = changed_lines(old, new) if old and new else set(range(new['lines'][0], new['lines'][1] + 1)) if new else set()
         chosen = registers.suggest(new, changed) if new else []
+        if new and new.get('coverage_item') in registers.items:
+            chosen = [registers.items[new['coverage_item']][1]]
+        if new and 'coverage_items' in new:
+            chosen = [registers.items[i][1] for i in new['coverage_items'] if i in registers.items]
         coverage, names = [], []
         for item in chosen:
             try:
@@ -1174,7 +1220,10 @@ def propose(found, table, base_units, cur_units, problems, registers):
                 coverage.append({'item': item['id'], 'status': item.get('status'), 'sha256': None, 'problem': str(error.args[0])})
             names += [n for n in registers.ordered_names(item['id']) if n not in names]
         earlier = previous.get(key) if stale_row else None
-        row = {'id': row_id, **detected, 'correction_items': list(earlier['correction_items']) if earlier else [],
+        m42 = additions and (key in additions.units or
+                             (detected['kind'] == 'display' and detected['key'] in additions.new_labels))
+        row = {'id': row_id, **detected,
+               'correction_items': list(earlier['correction_items']) if earlier else [coverage_additions.CORRECTION] if m42 else [],
                'coverage': coverage, 'principal_lean': names, 'review': ''}
         for field in ['anchor', 'end_anchor']:
             if earlier and field in earlier:
@@ -1201,10 +1250,13 @@ def propose(found, table, base_units, cur_units, problems, registers):
                       'next_step': 'Give the new anchor (it must occur exactly once), then run --propose again for the hashes.'})
         next_id += 1
     cited = sorted({item for row in table['changes'] + rows for item in row.get('correction_items', [])})
-    report = {'baseline_commit': BASE, 'listed_rows_matching': len(listed), 'stale_rows': stale,
+    report = {'status': 'PROPOSAL', 'verification_performed': False,
+              'baseline_commit': BASE, 'listed_rows_matching': len(listed), 'stale_rows': stale,
               'correction_item_texts': {item: correction_text(item) for item in cited},
               'rows_without_a_current_change': unmatched, 'unresolved_anchors': problems,
               'uncovered': rows, 'hints': hints}
+    if additions:
+        report['coverage_additions'] = additions.proposal()
     print(json.dumps(report, indent=1, ensure_ascii=False))
     return 0
 
@@ -1220,7 +1272,7 @@ def main():
             snapshot()
             return 0
         return build('propose' if args.propose else 'write' if args.write else 'check')
-    except RevisionError as error:
+    except (RevisionError, coverage_additions.AdditionError, coverage_additions.lean_source.SourceError) as error:
         print('FAIL:', json.dumps(error.args[0], ensure_ascii=False), file=sys.stderr)
         return 1
 

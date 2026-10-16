@@ -103,9 +103,9 @@ root). The new coverage module has 29 named theorems, including direct statement
 about the mixed run's least spectral value. The article additions and the
 Chapter 7 caveat have 54 new classified items. Clean module compilations and
 standard-axiom checks passed. The full package build with the new coverage import
-also passes (105 seconds on the MacBook, no new warnings); the fresh axiom audit
-and kernel replay follow final correspondence integration. The 15 October reports
-above describe that earlier edition.
+also passes (105 seconds on the MacBook, no new warnings). The reviewed
+correspondence integration is complete (103 rows); the fresh axiom audit and
+kernel replay are next. The 15 October reports above describe that earlier edition.
 
 The library's local construction starts from `LSeedCopies.run`, an orbit chosen for
 `c₁=10⁻⁴`, `c₂=1/2` only. `LUniformLocal.lean` therefore selects a new source orbit
