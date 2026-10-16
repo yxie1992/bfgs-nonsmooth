@@ -49,6 +49,23 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   and initialization quantifiers. The manuscript additions and their coverage
   are to be independently reviewed before this item is closed.
 
+  Manuscript and Lean implementation (16 October): the existing scope table is
+  followed by a hypothesis-check guide, and Appendix E
+  (`paper/appendices/hypothesis_examples.tex`) gives six named results: the mixed
+  certificate/run, full-rank quadratic calibration, general step/run-existence
+  criterion, two-quadratic family, actual runs for the printed nonradial example,
+  and the max-linear first-step obstruction. The local section points explicitly
+  to the actual-run witnesses. A logged transformation adds the Chapter 7
+  existence caveat with its known nonexistence cases and remaining open case.
+  Independent review checked every new assertion, its literal Lean hypotheses
+  and quantifiers, and all 57 changed PDF pages. The two documentation findings
+  were fixed, and a direct least-spectrum/limit corollary was added. There are
+  54 new classified items and 29 new article coverage theorems; individual
+  compilations and standard-axiom checks pass, and the full package build passes
+  with no new warnings. Records:
+  `editorial/main_results_scope_20261016/verification/`. Current correspondence
+  integration and fresh package-wide evidence remain before closing M42.
+
 ## Questions for the author (step 3)
 
 Decisions the agents left to the author for the 15 October edition. Its other

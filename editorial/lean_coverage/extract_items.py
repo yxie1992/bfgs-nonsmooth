@@ -29,7 +29,8 @@ REGISTER = HERE / 'register'
 ARTICLE = ['paper/master.tex'] + [f'paper/sections/{s}.tex' for s in
            ['introduction', 'geometry', 'energy', 'global', 'local', 'failure', 'verification']] + \
           [f'paper/statements/{s}.tex' for s in ['positive_partition', 'negative_upper', 'negative_lower']] + \
-          [f'paper/appendices/{s}.tex' for s in ['matrix_algebra', 'planar_geometry', 'seed_certificate', 'lower_curvature']]
+          [f'paper/appendices/{s}.tex' for s in
+           ['matrix_algebra', 'planar_geometry', 'seed_certificate', 'lower_curvature', 'hypothesis_examples']]
 COMPANION = ['companion/research_story.tex'] + \
             [f'companion/chapters/{c}.tex' for c in ['01_I', '02_M', '03_T', '04_R', '05_G', '06_F', '07_H', '08_A',
                                                        '09_C', '10_Q', '11_U', '12_D', '13_L', '14_E']] + \

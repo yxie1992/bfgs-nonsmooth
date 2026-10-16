@@ -96,11 +96,16 @@ MacBook.
 | `BfgsArticle/HypothesisExamples.lean` | M42 joint objective/certificate/run witnesses: `HypothesisExamples.Mixed.joint_witness` for `u²+|v|`, `HypothesisExamples.Quadratic.joint_witness` for a full-rank Euclidean quadratic calibration in arbitrary dimension, and `HypothesisExamples.Gauge.joint_obstruction` for a coercive max-linear objective with no differentiable weak-Wolfe first step from the stated identity-initialized data. |
 | `BfgsArticle/TwoQuadraticExample.lean` | M42's positive-parameter two-quadratic family. `TwoQuadraticExample.paper_planar_hypotheses`, `finite_max_hypotheses` and `joint_witness` prove the literal planar assumptions, the indexed active-gradient conditions, universal convergence, and an actual infinite run for every differentiable start, SPD matrix and valid constant pair. The `Radial` namespace also proves a fixed-band radial obstruction for the specialization `(1,1,2)`. |
 
-The two M42 mathematical modules were independently reviewed on 16 October 2026
+The two M42 mathematical modules and the literal article coverage were
+independently reviewed on 16 October 2026
 (`editorial/main_results_scope_20261016/verification/`, relative to the repository
-root). Their clean module compilations and standard-axiom checks precede the
-pending M42 coverage integration and full-package build/audit/replay; the
-15 October reports above describe that earlier edition.
+root). The new coverage module has 29 named theorems, including direct statements
+about the mixed run's least spectral value. The article additions and the
+Chapter 7 caveat have 54 new classified items. Clean module compilations and
+standard-axiom checks passed. The full package build with the new coverage import
+also passes (105 seconds on the MacBook, no new warnings); the fresh axiom audit
+and kernel replay follow final correspondence integration. The 15 October reports
+above describe that earlier edition.
 
 The library's local construction starts from `LSeedCopies.run`, an orbit chosen for
 `c₁=10⁻⁴`, `c₂=1/2` only. `LUniformLocal.lean` therefore selects a new source orbit
@@ -120,7 +125,7 @@ originals. Their files are all in this package.
 
 ## Coverage modules
 
-`BfgsArticle/Coverage/Article/` (15 modules) and
+`BfgsArticle/Coverage/Article/` (16 modules) and
 `BfgsArticle/Coverage/Companion/` (18 modules) are the Lean coverage of the
 article and the companion, both complete: one module per TeX file, namespaces
 `BfgsCoverage.Article.<Name>` and `BfgsCoverage.Companion.<Name>`. Each

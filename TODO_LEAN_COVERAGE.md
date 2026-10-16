@@ -17,24 +17,28 @@ Agreed scope:
   descriptions of software or runs, and literature only mentioned are
   classified as non-claims with a reason.
 
-Progress (`python3 editorial/lean_coverage/check_coverage.py`), 15 October 2026:
+Progress (`python3 editorial/lean_coverage/check_coverage.py`), 16 October 2026:
 
 | Document | Items | Status |
 |---|---|---|
-| Article (`paper/`, 15 files) | 619 (221 mechanical, 398 prose) | complete: every item classified; 15 coverage modules, each reviewed by an independent agent, imported by `BfgsArticle.lean` |
-| Companion (`companion/`, 18 files) | 1856 (573 mechanical, 1283 prose) | complete (14 and 15 October, on the MacBook): every item classified; 18 coverage modules in twelve groups, each group reviewed by an independent agent, imported by `BfgsArticle.lean` |
+| Article (`paper/`, 16 files) | 668 (243 mechanical, 425 prose) | every item classified; 16 coverage modules, independently reviewed and imported by `BfgsArticle.lean`, including M42's appendix and summaries |
+| Companion (`companion/`, 18 files) | 1861 (573 mechanical, 1288 prose) | every item classified; 18 coverage modules, independently reviewed and imported; M42 adds five Chapter 7 caveat items |
 
-Article items by status: LEAN 286, SAME_AS 128, NON_CLAIM 89, DEFINITION 52,
-PART_OF 34, PROOF 29, OPEN 1 (three prose items added with the corrections M30–M41). The nine `DISCREPANCY` items (manuscript items
+Article items by status: LEAN 298, SAME_AS 153, NON_CLAIM 90, DEFINITION 53,
+PART_OF 38, PROOF 35, OPEN 1. M42 adds 49 items to the 619 of the 15 October
+edition. The nine `DISCREPANCY` items (manuscript items
 M7–M11) were resolved by the corrections of 15 October 2026; their register entries
 are kept under `resolved_discrepancies`.
 
-Companion items by status: LEAN 834, SAME_AS 372, NON_CLAIM 358, DEFINITION 139,
-PART_OF 86, PROOF 56, OPEN 11. The 25 `DISCREPANCY` items (manuscript items M12–M29,
+Companion items by status: LEAN 836, SAME_AS 372, NON_CLAIM 359, DEFINITION 139,
+PART_OF 86, PROOF 57, OPEN 12. M42 adds five items; its additional `OPEN` entry
+restates the existing common-tilt question rather than introducing a new question.
+The 25 `DISCREPANCY` items (manuscript items M12–M29,
 and the recurrences listed under M8, M12 and M24) were resolved by the corrections
 of 15 October 2026; their register entries are kept under `resolved_discrepancies`.
 
-Companion groups (prompts and hints: `editorial/lean_coverage/AGENT_BRIEFS.md`;
+Companion groups at their initial classification (historical counts; current
+totals above; prompts and hints: `editorial/lean_coverage/AGENT_BRIEFS.md`;
 how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
 `bfgs_lean_article/BfgsArticle/Coverage/Companion/`, pause notes in
 `editorial/lean_coverage/pause_notes/<group>.md`.
@@ -131,11 +135,14 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       fix-pass records are in
       `editorial/main_results_scope_20261016/verification/`. Literal article
       coverage is implemented, including the mixed run's least-eigenvalue
-      statement (27 new coverage theorems, clean compilation and standard-axiom
-      checks). The article additions and the Chapter 7 non-vacuity caveat are
-      under independent review. Both PDFs build; the changed pages have been
-      inspected, with no new LaTeX warnings or overfull boxes. The additions
+      statement (29 new coverage theorems, clean compilation and standard-axiom
+      checks). The article additions and the Chapter 7 non-vacuity caveat passed
+      independent review and the fix pass. Both PDFs build; all 57 changed pages
+      were inspected, with no new LaTeX warnings or overfull boxes. The additions
       manifest, real correspondence rows and full-package evidence are pending.
+      The package root now imports the new coverage module, and `lake build`
+      passes (105 seconds, no warnings outside the pinned library's existing
+      1244). The fresh axiom audit and kernel replay follow correspondence.
       The independent infrastructure review found these issues to fix and
       verify before accepting the new-input correspondence:
       - [ ] I1: alternative valid TeX input spellings can escape the input-graph
@@ -150,6 +157,16 @@ how to resume: `HANDOFF.md`). Files are in `companion/`, modules in
       - [ ] S2: give the new geometry/local explanations and Chapter 7 caveat
         explicit bounded-passage rows, with current coverage and M42 attribution.
       - [ ] O1: expose proposal validation failures in a machine-readable status.
+      The independent literal article review passed all mathematics and joint
+      witnesses, with 27 article and seven Chapter 7/core declarations checked
+      and all 57 changed PDF pages inspected. Its documentation fixes are done:
+      - [x] Literal-review R1: the eighteen Chapter 7 introductory-table line
+        ranges and eight shorthand references in prose/031 and prose/058 are
+        corrected; mathematical code and already-resynchronized ranges preserved.
+      - [x] Literal-review R2: the four new Chapter 7 item citations now begin
+        their coverage docstrings. The optional `mixed_least_spectrum` and
+        `mixed_spectral_limit` were also added to the article coverage module,
+        compiled and checked for standard axioms.
 - [x] Run `lake build` once no agent runs Lean (done 15 October 2026, before wave 3).
       `BfgsArticle.lean` imports `BfgsArticle.AdmissibleRunExistence` and each
       companion coverage module as it is committed; while agents ran Lean these were

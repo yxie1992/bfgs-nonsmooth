@@ -195,7 +195,9 @@ for module,title in order:
  # state the corrected text. Further companion recurrences of the article's
  # M30, M34 and M38 found by the line-by-line reading of the article (reader points
  # R-A-1, R-E-2, R-B-5, R-B-3), and the wording point W47.
+ # M42 (16 October) makes the known common-tilt nonexistence cases and open case explicit.
  why={
+  'M42':'M42 in TODO_MANUSCRIPT_REVIEW.md: distinguish conditional homogeneous convergence from existence of an infinite admissible run. The affine-free case in dimension at most two and the collinear common-tilt case in any dimension have no such run; the noncollinear higher-dimensional case remains open. Lean: Ch07H.maxLinear_affine_free_no_run, Ch07H.tilt_collinear_no_run, Ch07H.tilt_two_values_no_run, Ch07H.maxLinear_line_no_run, Ch07H.linear_objective_no_run; open proposition Ch07H.TiltNoInfiniteRunQuestion.',
   'M30':'M30 in TODO_MANUSCRIPT_REVIEW.md (reader points R-A-1, R-E-2 of the line-by-line reading of the article, 15 October 2026): the first three branches fail to be twice differentiable at the minimizer 0 of the local objective, where the bad starts accumulate; at the limit of a failing run every branch is smooth. Lean: Ch13L.branch_regularity, Article.LowerCurvature.branch_second_differentiability.',
   'M34':'M34 in TODO_MANUSCRIPT_REVIEW.md (reader point R-B-5, as in the article\'s proof of Theorem art:reciprocal-growth): beta_k, used but not defined, is the beta of Theorem M:hierarchy for the k-th update, -y_k^TH_kg_k/q_k = t_k/d_k >= c. Lean: Article.Energy.run_bounds.',
   'M38':'M38 in TODO_MANUSCRIPT_REVIEW.md (reader point R-B-3, as in the article\'s Appendix A): with the scalar factor first, det A(r-z) cannot be read as det(A(r-z)); the identities are unchanged. Lean: Article.MatrixAlgebra.gram_schur.',
@@ -409,7 +411,20 @@ for module,title in order:
        ('earlier_source_note','W8H','This potential inequality was established in the earlier note.',
         'This potential inequality was established in an earlier source note.'),
        ('name_chapter_of_stagnation_example','W10H','The earlier three-gradient, rank-two stagnation example attains this',
-        'The three-gradient, rank-two stagnation example of Chapter~\\ref{comp:D} attains this')],
+        'The three-gradient, rank-two stagnation example of Chapter~\\ref{comp:D} attains this'),
+       ('state_common_tilt_run_existence_boundary','M42',
+        'not a proof of finite termination for every many-piece objective.',
+        'not a proof of finite termination for every many-piece objective.\n\n'
+        'Existence of an infinite admissible run is a separate issue. Under\n'
+        '\\(0\\notin\\operatorname{aff}\\{a_1,\\ldots,a_m\\}\\), no such run exists\n'
+        'in ambient dimension at most two. For the displayed common-tilt family,\n'
+        'no such run exists in any dimension when the tangential slopes are collinear:\n'
+        '\\(b_i=c+\\beta_i d\\) for fixed \\(c,d\\), including at most two distinct \\(b_i\\).\n'
+        'These cases reduce to a linear objective or the maximum of two independent\n'
+        'linear forms, whose infinite admissible runs are excluded by the two-piece\n'
+        'analysis discussed in Section~\\ref{H:connection-to-the-two-piece-paper}.\n'
+        'For noncollinear families in higher dimension, existence of such a run\n'
+        'remains open here.')],
   'A':[('drop_self_citation','W5',
         'This module preserves the geometric propositions of the affine-criticality note~Chapter~\\ref{comp:A}.',
         'This chapter preserves the geometric propositions of the original affine-criticality note.'),

@@ -30,6 +30,7 @@ import BfgsArticle.Coverage.Article.MatrixAlgebra
 import BfgsArticle.Coverage.Article.PlanarGeometry
 import BfgsArticle.Coverage.Article.SeedCertificate
 import BfgsArticle.Coverage.Article.LowerCurvature
+import BfgsArticle.Coverage.Article.HypothesisExamples
 import BfgsArticle.Coverage.Companion.Ch02M
 import BfgsArticle.Coverage.Companion.Ch13L
 import BfgsArticle.Coverage.Companion.Ch12D
