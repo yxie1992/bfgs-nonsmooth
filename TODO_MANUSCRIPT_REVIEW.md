@@ -71,6 +71,24 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   guard unchanged. The copied reports leave the regenerated ledger and HTML
   byte-identical. See `verification/EVIDENCE.md` under the review directory.
 
+## Follow-up: narrative and readability (16 October 2026)
+
+- [ ] **M43: Make the article's story easier to follow.** The author: "narratively,
+  or writing-wise, we have a long way to go. Read the paper, how can we make the
+  overall story easier to follow for human?" Review:
+  `editorial/narrative_review_20261016/README.md` (14 findings, a proposed
+  outline, three stages). Main points: the headline results (u²+|v|, Corollary 2;
+  the four-piece coercive polyhedral failure, Corollary 8, absent from abstract
+  and introduction) are buried; no informal main-results statement; abstract,
+  introduction and sections follow three different orders; Section 2 explains
+  results before they are defined; the PSD-field certificate proves only the
+  rank-one radial case while the planar proof repeats its summation; the
+  u²+|v| proof and the nonradial example should come first in their sections;
+  terminology drift; scope caveats repeated rather than stated once. Stages:
+  A (prose only), B (reordering within sections), C (structural, with one new
+  Lean coverage theorem for a tail energy lemma). Awaiting the author's choice
+  of stage. Expository only; no mathematical finding.
+
 ## Questions for the author (step 3)
 
 Decisions the agents left to the author for the 15 October edition. Its other
