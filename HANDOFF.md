@@ -17,6 +17,7 @@ the same day.
 | Lean coverage, companion | all 1861 items classified; 18 coverage modules, independently reviewed and imported; M42's five new Chapter 7 caveat items passed independent review | `TODO_LEAN_COVERAGE.md`, `editorial/lean_coverage/` |
 | Release of 15 October 2026 | done: source freeze `992d477`, validated from its source archive (`coverage_20261015_01`: PASS, 41 commands), receipts at `67a4c40`, all pushed | `release/`, `editorial/release_20261015/` |
 | Main-result satisfiability and scope | M42 complete on 16 October: article examples, joint Lean witnesses, independent review, correspondence integration and fresh package-wide evidence | `editorial/main_results_scope_20261016/verification/EVIDENCE.md`, `TODO_MANUSCRIPT_REVIEW.md` |
+| Novelty check (16 October) | done: nothing published or posted renders the work stale; optional citations are Q8 | `editorial/novelty_check_20261016/README.md` |
 
 The Lean work (step 1 of the plan in `AGENTS.md`) is done. Step 2 ("After the Lean
 coverage" below) started on 15 October: the article's corrections M7–M11 are done;
@@ -33,7 +34,14 @@ the Lean evidence of `2cfa27a`, an all-page visual review by three agents (its
 typesetting points are Q7, left for a later edition), the source freeze `992d477`,
 the archive validation and the receipts (`editorial/release_20261015/WORKLOG.md`).
 Next: the author's expert check (step 3 of the plan in `AGENTS.md`) and the
-questions Q1–Q7 for the author at the top of `TODO_MANUSCRIPT_REVIEW.md`.
+questions Q1–Q8 for the author at the top of `TODO_MANUSCRIPT_REVIEW.md`.
+
+Also on 16 October, at the author's request, three agents checked the literature
+(papers citing the article's main sources, a topic search of 2020–2026, and the
+recent work of the cited authors and the current versions of the cited preprints).
+Nothing found settles the article's questions or proves its results, so nothing
+renders the work stale; the related new preprints are optional citations (Q8). The
+report is `editorial/novelty_check_20261016/README.md`.
 
 On 16 October the author asked whether the complicated main-result hypotheses
 can hold together and how general the results are. The follow-up report in

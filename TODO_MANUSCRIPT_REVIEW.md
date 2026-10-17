@@ -251,6 +251,30 @@ follow-up.
       on 13 September). Fix: remove that `\par` in `\bibitem{FND_P76}` of
       `companion/bibliography.tex`, so that the entry runs on ("… exact line
       searches. In R. W. Cottle …").
+- [ ] **Q8: Citations suggested by the novelty check (16 October 2026).** The check
+  (`editorial/novelty_check_20261016/README.md`) found nothing that renders the work
+  stale: no published or posted work proves whole-sequence convergence on
+  $u^2+|v|$, the homogeneous, polyhedral or planar-max convergence theorems, or a
+  convex counterexample with a Wolfe search. Optional additions:
+  - Q. Chen, arXiv:2609.09872 (9 September 2026): for the one-dimensional tilted
+    absolute value, the trial-normalized rate of BFGS with the Lewis–Overton search
+    depends on the initial data, refuting that part of the Lewis–Overton 2008
+    conjecture (rational certificates, Lean). Possible place: next to the citation
+    of Lewis–Overton 2008 or the open question on sharp rates.
+  - A. Asl and M. L. Overton, arXiv:2006.11336 (Springer proceedings 2021,
+    doi 10.1007/978-3-030-72040-7_2; not the cited IMA JNA paper): also calls the
+    case $|x_1|+x_2^2$ open; a third source, with Guo–Lewis and Gebken, for the
+    open status of the benchmark.
+  - Liu, Wang, Wen, Zhang and Yuan, arXiv:2608.21708 (22 August 2026): DFP (not
+    BFGS) fails on a smooth uniformly convex function in the plane with chosen
+    strong-Wolfe steps (Lean). Possible place: the related negative results.
+  - The issue number of Gebken's article: JOTA 209(2), article 57.
+  - Bookkeeping only: the historical `editorial/LITERATURE_LEDGER.json` and the
+    hash-pinned `bfgs_lean_stage1/literature_audit` name Lewis–Zhang's coauthor
+    "Shubao Zhang"; she is Shanshan Zhang. The article prints "S. Zhang", which is
+    right; the two records stay unchanged (historical and frozen).
+  Any article edit needs a PDF build and visual check, the registers carried across
+  it, a new correspondence row, fresh Lean evidence and a release run.
 
 ## Wording points in the companion (no discrepancy)
 
