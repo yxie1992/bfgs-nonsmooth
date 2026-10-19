@@ -37,7 +37,7 @@ open BfgsVerification
 
 /-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11-12`): "The homogeneous
 seed satisfies $G(t(-1,16))=-t$ for $t\ge0$" (the range was added on 15 October 2026, M9), as
-stated in `paper/sections/failure.tex:206`. -/
+stated in `paper/sections/failure.tex:200`. -/
 theorem seed_ray {t : ℝ} (ht : 0 ≤ t) :
     SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD (t • ![-1, 16]) = -t :=
   DEmbedding.seed_descent_ray ht
@@ -752,7 +752,7 @@ theorem branch_change_without_failure :
 
 /-! ## The open question -/
 
-/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:57-59`), OPEN
+/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:54-56`), OPEN
 (stated without proof): "The local question for finitely many uniformly strongly convex
 $C^2$ branches remains open here outside the nondegenerate planar case of
 Corollary~\ref{art:planar-max}." (Before 15 October 2026, M36: "The broader local question ...

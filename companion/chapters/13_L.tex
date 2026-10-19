@@ -1,6 +1,6 @@
 \chapter{Failure with positive lower curvature}\label{comp:L}\label{L:chapter}
 \renewcommand{\ModuleTag}{13}
-Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer; no claim combines uniform strong convexity with the preceding local $C^{2,1}$ branch regularity.
+Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer.
 
 
 % SOURCE_BEGIN L.span.1
@@ -46,7 +46,7 @@ There are three fixed slopes $g_0,g_1,g_2\in\R^2$ such that, for every $\mu>0$,
 \]
 is $\mu$-strongly convex, coercive, and has a unique nonsmooth minimizer $x_*\ne0$, yet admits initial states $(x_0,H_0)$ that produce, for every such pair $(c_1,c_2)$, the same deterministic full-BFGS iterates converging to the nonstationary origin. Initial states and every future trial may be chosen arbitrarily close to the origin in the sense made precise in Section~\ref{L:sec:blowup}. Every branch has Hessian exactly $\mu I$ globally. The accepted lengths repeat $1,1/4,1/16$.
 \end{theorem}
-\noindent This is \emph{global} failure: approaching the wrong vertex is not the same as approaching the actual minimizer. It does not contradict our local PLQ theorem.
+\noindent This is \emph{global} failure: the runs converge to the wrong vertex, away from the true minimizer. It is consistent with our local PLQ theorem.
 
 \begin{theorem}[Local failure under the pointwise Hessian bounds]\label{L:thm:local}
 There is a finite strongly convex objective $F:\R^2\to\R$ with compact sublevels and a unique nonsmooth minimizer at zero, and constants $0<\underline\mu\le\overline L<\infty$, such that
@@ -58,7 +58,7 @@ yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initia
 
 The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly strongly convex, globally gradient-Lipschitz branches. Alternatively, it can be chosen so that its Hessian is one fixed positive-definite matrix wherever it is twice differentiable; the latter version has a countable polyhedral nonsmooth part.
 \end{theorem}
-\noindent The local theorem satisfies the literal classical-Hessian assumption, and even actual strong convexity. It is \emph{not} a local counterexample with four globally $C^2$ branches having uniform lower curvature. That stronger combination remains unproved here.
+\noindent The local theorem satisfies the classical-Hessian assumption, and even strong convexity. In its four-branch version, the first three branches are not twice differentiable at the minimizer. Whether a local counterexample with four globally $C^2$ branches having uniform lower curvature exists is open.
 
 
 \setcounter{section}{1}
@@ -134,7 +134,7 @@ At $x_*$ precisely the first two branches are active; their gradients differ, so
 
 % SOURCE_BEGIN L.span.4
 \section{Blowing up the shrinking cycle}\label{L:sec:blowup}
-Adding a quadratic changes the BFGS iterates. We do not claim the old exact orbit survives unchanged. Instead we prove existence of nearby perturbed orbits.
+Adding a quadratic changes the BFGS iterates. We therefore prove existence of nearby perturbed orbits.
 
 Use the five normalized state coordinates
 \[
@@ -202,7 +202,7 @@ $P_J(\lambda)=\lambda^2-\operatorname{tr}(J)\lambda+\det J$, it proves
 \begin{equation}\label{L:eq:eigshape}
  0.038<\lambda_s<0.039,\qquad 1.564<\lambda_u<1.565.
 \end{equation}
-Specifically $P_J(0.038)>0$, $P_J(0.039)<0$, $P_J(1.564)<0$, and $P_J(1.565)>0$ throughout the algebraic root box. The two disjoint sign-change intervals contain the two distinct real roots. No floating-point eigensolver is used for this assertion.
+Specifically $P_J(0.038)>0$, $P_J(0.039)<0$, $P_J(1.564)<0$, and $P_J(1.565)>0$ throughout the algebraic root box. The two disjoint sign-change intervals contain the two distinct real roots.
 
 The full derivative has the analytically determined block-triangular form
 \begin{equation}\label{L:eq:jacobian}
@@ -228,15 +228,14 @@ Apply the local stable-manifold theorem for a hyperbolic fixed point of a smooth
 
 Choose such a point sufficiently close that its entire forward return-map orbit remains in the neighborhood of Lemma~\ref{L:lem:agreement} and converges to $P_*$. The positive half-space is preserved because $\tau^+=\tau r$ and $r>0$ in this neighborhood. At every return, $M(b,e)$ is positive definite and close to $I$; all actual substep matrices are positive definite as well.
 
-The return-map orbit represents the actual deterministic full-BFGS orbit, with accepted lengths $1,1/4,1/16$. Its physical states satisfy
+The return-map orbit represents the deterministic full-BFGS orbit, with accepted lengths $1,1/4,1/16$. Its physical states satisfy
 \[
  x_{3m}=\tau_m z_m\to0,\qquad H_{3m}=\tau_mM(b_m,e_m)\to0.
 \]
-The intermediate accepted states and all rejected queries are $\tau_m$ times bounded continuous functions of the normalized state, so they tend to zero too. They retain strict branch gaps and strict decisions. Their objective values are positive near the seed and decrease to zero. Equation~\eqref{L:eq:minimizer} and $0\notin\partial Q_\mu(0)$ prove actual nonstationary convergence.
+The intermediate accepted states and all rejected queries are $\tau_m$ times bounded continuous functions of the normalized state, so they tend to zero too. They retain strict branch gaps and strict decisions. Their objective values are positive near the seed and decrease to zero. Equation~\eqref{L:eq:minimizer} and $0\notin\partial Q_\mu(0)$ prove nonstationary convergence.
 
-The same argument shows more: given any neighborhood of physical zero, the initial stable-manifold point can be chosen so that \emph{the initial point and all queries of the orbit} lie inside it. This small-orbit property will be used for the embedding. The initial matrix is supplied by the stable manifold, not assumed to be $I$ in these particular coordinates.
+The same argument shows more: given any neighborhood of physical zero, the initial stable-manifold point can be chosen so that \emph{the initial point and all queries of the orbit} lie inside it. This small-orbit property will be used for the embedding.
 \end{proof}
-\noindent This is an existence proof of an actual trajectory, not a claim that a numerically truncated stable eigenvector produces it forever. Expanding eigenvalues make ordinary floating-point forward shooting an inappropriate certificate of membership in the stable manifold.
 
 
 \setcounter{section}{4}
@@ -251,7 +250,7 @@ The same argument shows more: given any neighborhood of physical zero, the initi
 
 % SOURCE_BEGIN L.span.6
 \section{A local accumulation embedding with positive lower curvature}
-We now construct a single objective satisfying the literal Hessian bounds and having no guaranteed local basin. Fix
+We now construct a single objective satisfying the Hessian bounds and having no guaranteed local basin. Fix
 \[
  \mu=1/4096,\quad c_*=(2,-32)\T,\quad
  q_i=g_i-\mu c_*,\quad b_i=q_i\T c_*,\quad r=1/128,\quad a_n=r^n.
@@ -313,7 +312,7 @@ Define four functions and their maximum:
  f_i(x)=\tfrac\mu2\norm x^2+\varphi_{b_i}(q_i\T x)\quad (i=0,1,2),\qquad
  f_3(x)=\tfrac\mu2\norm x^2+x_2,\qquad F=\max_i f_i.
 \end{equation}
-Each branch is globally $\mu$-strongly convex and has a globally Lipschitz gradient. The Lean formalization proves the common gradient-Lipschitz constant $512$ from the actual scalar series and exact rational bounds: the first three Hessian upper bounds are less than $439,446,27$, respectively, wherever those Hessians exist, and the fourth has Hessian $\mu I$. The global gradient bounds are proved directly across the scalar nonsmooth-second-derivative points. Thus the maximum is $\mu$-strongly convex.
+Each branch is globally $\mu$-strongly convex and has a globally Lipschitz gradient. The Lean formalization proves the common gradient-Lipschitz constant $512$ from the scalar series and exact rational bounds: the first three Hessian upper bounds are less than $439,446,27$, respectively, wherever those Hessians exist, and the fourth has Hessian $\mu I$. The global gradient bounds are proved directly across the scalar nonsmooth-second-derivative points. Thus the maximum is $\mu$-strongly convex.
 
 Since the first three scalar terms are nonnegative,
 \[
@@ -360,7 +359,7 @@ Every query in the $n$th run is exactly $p_n+a_n$ times the corresponding seed q
 \[
  x_k^{(n)}=p_n+a_n\bar x_k,\qquad H_k^{(n)}=\bar H_k.
 \]
-Indeed, function differences and directional-derivative products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS formula both scale factors cancel. The line search therefore makes the same decisions, including all rejections. Equation~\eqref{L:eq:local-model} applies at the initial point and to every query by the choice of the whole seed orbit. Induction proves the claim without numerical approximation.
+Indeed, function differences and directional-derivative products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS formula both scale factors cancel. The line search therefore makes the same decisions, including all rejections. Equation~\eqref{L:eq:local-model} applies at the initial point and to every query by the choice of the whole seed orbit. Induction proves the claim.
 
 Since $\bar x_k\to0$,
 \[
@@ -378,7 +377,7 @@ Let $A=\bar H_0^{1/2}$ and define $\widetilde F(z)=F(Az)$. Full-BFGS affine inva
  \underline\mu=\mu\lambda_{\min}(\bar H_0)>0,\qquad
  \overline L=512\lambda_{\max}(\bar H_0)<\infty.
 \]
-These constants are fixed for the one transformed objective, not changed between starts. Its bad initial and limit points approach zero, and all queries remain arbitrarily close. This proves the four-$C^{1,1}$-branch part of Theorem~\ref{L:thm:local}.
+These constants are fixed for the one transformed objective and are the same for all starts. Its bad initial and limit points approach zero, and all queries remain arbitrarily close. This proves the four-$C^{1,1}$-branch part of Theorem~\ref{L:thm:local}.
 
 
 \setcounter{section}{6}
@@ -392,7 +391,7 @@ These constants are fixed for the one transformed objective, not changed between
 
 
 % SOURCE_BEGIN L.span.8
-\section{The literal Hessian condition permits an even simpler variant}
+\section{The Hessian condition permits an even simpler variant}
 Replace the smooth ramp by the step $P_b(\xi)=\mathbf1_{\{\xi>\vartheta_b\}}$ and its primitive by $J_b(\xi)=(\xi-\vartheta_b)_+$. Use~\eqref{L:eq:scalar} on the positive intervals, the negative extension $\varphi_b(x)=-x$ for $x<0$, and the same affine positive outer extension. This scalar function is convex and piecewise affine with countably many pieces; it has the same node values, node slopes, and affine neighborhoods~\eqref{L:eq:plateau}. Thus the entire local-copy construction and the same fixed initial matrix work unchanged.
 
 For this variant $F=\mu\norm{x}^2/2+p(x)$, with convex countably piecewise-affine $p$. At a nonzero point, any branch with $q_i\T x=0$ is strictly below the maximum: its scalar value is zero, whereas at least one of $q_0\T x,q_1\T x$ is nonzero and has positive scalar value. Here $q_0,q_1$ are independent. All potentially active scalar arguments are therefore nonzero and encounter only finitely many breakpoints in a small neighborhood. Hence $p$ is locally finite-polyhedral near every nonzero point. At any differentiable such point it is locally affine. The origin is nonsmooth. Consequently
@@ -400,7 +399,7 @@ For this variant $F=\mu\norm{x}^2/2+p(x)$, with convex countably piecewise-affin
  \nabla^2F(x)=\mu I
  \quad\text{at every twice-differentiable point}.
 \]
-After the fixed affine transformation making $H_0=I$, that Hessian is the one fixed SPD matrix $\mu\bar H_0$. This establishes the remaining version of Theorem~\ref{L:thm:local}. No claim of four smooth branches is made for this alternative.
+After the fixed affine transformation making $H_0=I$, that Hessian is the one fixed SPD matrix $\mu\bar H_0$. This establishes the remaining version of Theorem~\ref{L:thm:local}.
 
 
 \endgroup
@@ -408,10 +407,8 @@ After the fixed affine transformation making $H_0=I$, that Hessian is the one fi
 
 
 \section*{Relation to earlier work}
-The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+The negative-results comparisons in Chapter~\ref{comp:D} apply here with the stated stronger convexity and different branch regularity. Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$, $c_1<c_2<1$. The first three branches of the local finite-branch construction fail to be twice differentiable at the minimizer. The simpler quadratic-plus-maximum example is a global failure. These distinctions are essential when comparing the theorem with smooth nonconvex counterexamples \cite{NEG_M07,NEG_M14,NEG_DIAO26}.
 
-The negative-results comparisons in Chapter~\ref{comp:D} apply here with the stated stronger convexity and different branch regularity. Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$, $c_1<c_2<1$. The first three branches of the local finite-branch construction fail to be twice differentiable at the minimizer. The simpler global quadratic-plus-maximum example does not establish failure arbitrarily near its true minimizer. These distinctions are essential when comparing the theorem with smooth nonconvex counterexamples \cite{NEG_M07,NEG_M14,NEG_DIAO26}.
+The stable-manifold principle and graph-transform method are classical; this chapter already uses Dyatlov's exposition \cite[Sections 3--4]{DY}. The report-specific work identifies the derivative of the BFGS return map, certifies its spectral bounds, and applies the principle to that map. Its exact formal orbit construction is recorded with the proof correspondence.
 
-The stable-manifold principle and graph-transform method are classical; this chapter already uses Dyatlov's exposition \cite[Sections 3--4]{DY}. The report-specific work identifies the derivative of the actual BFGS return map, certifies its spectral bounds, and applies the principle to that map. Its exact formal orbit construction is recorded with the proof correspondence.
-
-The final change of coordinates fixing the common SPD initialization to identity uses the established affine invariance of full BFGS; see Lewis--Overton \cite[Section 2]{LO} and Xie--W\"achter \cite[Theorem II.1]{XW}. It is a single fixed transformation for the constructed family, not a per-iteration algorithm change.
+The final change of coordinates fixing the common SPD initialization to identity uses the established affine invariance of full BFGS; see Lewis--Overton \cite[Section 2]{LO} and Xie--W\"achter \cite[Theorem II.1]{XW}. It is a single fixed transformation for the whole constructed family.

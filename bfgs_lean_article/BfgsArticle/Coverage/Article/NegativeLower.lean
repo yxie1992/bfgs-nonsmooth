@@ -4,7 +4,7 @@ import BfgsArticle.LUniformLocal
 # Lean coverage: `paper/statements/negative_lower.tex`
 
 Theorem `art:local-failure-lower` ("Independent local failure with positive lower curvature"),
-included in Section `art:failure` (`paper/sections/failure.tex:465`). Register:
+included in Section `art:failure` (`paper/sections/failure.tex:457`). Register:
 `editorial/lean_coverage/register/A_negative_lower.json`.
 
 ## Reading of the statement
@@ -13,7 +13,7 @@ included in Section `art:failure` (`paper/sections/failure.tex:465`). Register:
   `FixedNormal.EuclideanStrongConvexOn univ κ F` with `κ > 0`, i.e. `F - (κ/2)‖·‖²` is
   convex for the Euclidean norm (`sqNorm`).
 * "The deterministic unit-first bracketing implementation of Section `art:failure`" is the
-  search of `paper/sections/failure.tex:22-35` (non-strict Armijo `≤` first, weak Wolfe `≥`
+  search of `paper/sections/failure.tex:20-33` (non-strict Armijo `≤` first, weak Wolfe `≥`
   second, lower bracket `0`, upper bracket `+∞`, first trial `1`, bisection after a
   rejection), which is `NonStrictLineSearch.fromMetric F x H c₁ c₂ N`; its value is the
   accepted length and the list of all attempted lengths, `N` bounds the number of trials. A
@@ -28,7 +28,7 @@ included in Section `art:failure` (`paper/sections/failure.tex:465`). Register:
   (`bfgsStep (H k) g 1`), for the attempted lengths `a`; the accepted one is the next iterate.
 * `‖·‖` is the Euclidean norm: `‖euclideanVector v‖`.
 * A point is twice differentiable when `F` is differentiable near it and its derivative map
-  is differentiable there (the convention of `paper/sections/failure.tex:493-496`); the Hessian
+  is differentiable there (the convention of `paper/sections/failure.tex:485-487`); the Hessian
   is `RadialHessian.matrix F x`, the matrix of `fderiv ℝ (fderiv ℝ F) x`, and
   `μ I ⪯ ∇²F(x) ⪯ L I` is stated with its quadratic form on a symmetric matrix.
 

@@ -6,8 +6,7 @@ why convexity and regularity of the branch formulas cannot supply an
 unrestricted deterministic guarantee. The first tempting assertion is
 global: compact sublevels might seem enough to prevent convergence to a wrong
 corner. The second is local: for one finite maximum of very smooth convex
-branches, perhaps every sufficiently close start succeeds. We construct an
-actual failure of each assertion, and then examine what changes when positive
+branches, perhaps every sufficiently close start succeeds. We construct a counterexample to each assertion, and then examine what changes when positive
 lower curvature is imposed.
 
 The mechanism has three parts. A three-step BFGS cycle returns the inverse
@@ -15,8 +14,7 @@ matrix to a smaller multiple of itself while approaching a nonstationary
 corner. Strict function and gradient inequalities force the specified line
 search to produce that cycle. Finally, local copies of the corner accumulate
 at the true minimizer of one objective. Matching spatial and objective scales
-keeps the initial matrix fixed across the copies. The distinction between a
-formal cycle and an implemented run matters at every part of this argument.
+keeps the initial matrix fixed across the copies.
 
 \subsection{The specified implementation and the local guarantee at issue}
 At a differentiable point $x$, let $g=\nabla F(x)$ and $p=-Hg$.
@@ -51,9 +49,8 @@ assumptions.
 \input{statements/negative_upper}
 
 The objective and all starts are chosen before the displayed line-search
-parameters. The failure set supplied by the theorem is a sequence of starts;
-it is not a positive-measure basin. There is no uniform positive lower
-curvature requirement on these branches.
+parameters. Theorem~\ref{art:local-failure-lower} below gives a version with
+uniform positive lower curvature.
 
 \subsection{Designing a cycle around a wrong corner}
 We seek a corner with a strict descent direction that the cycle nevertheless
@@ -66,10 +63,9 @@ of linear functions, those two identities allow the same geometry to repeat
 at each smaller scale.
 
 The target lengths $1,1/4,1/16$ fit the bisections of the unit-first search.
-Choosing them in the algebra does not prove that the algorithm accepts them:
-we must also exclude every earlier candidate and verify both tests at the
-intended endpoint. The strict trial certificate below supplies exactly this
-missing dynamical condition.
+The strict trial certificate below proves that the algorithm accepts them:
+it excludes every earlier candidate and verifies both tests at the intended
+endpoint.
 
 Let $(c_\circ,d_\circ)$ be the algebraic pair specified in
 Appendix~\ref{art:seed_certificate}. Define
@@ -148,7 +144,7 @@ $G(z_j+\alpha p_j)$. Every rejected trial raises the objective and
 therefore fails Armijo. The accepted rows also satisfy the strict
 Armijo and weak-Wolfe margins in \eqref{art:seed_margins}. The decisions
 are those of the specified search for every $0<c_1\le1/3$ and $c_2>0$.
-All displayed intervals are rational enclosures, not rounded values.}
+All displayed intervals are rational enclosures.}
 \label{art:trial_table}
 \end{table}
 
@@ -161,7 +157,7 @@ predicted decrease, while the new directional derivative is positive and
 the old one is negative. Hence Armijo holds for $c_1\le1/3$ and weak Wolfe
 holds for every $c_2>0$. Thus the displayed lengths are outputs of the
 specified search for the entire parameter range in
-Theorem~\ref{art:local-failure}; no accepted-length sequence is assumed.
+Theorem~\ref{art:local-failure}.
 The routine never needs a Wolfe rejection on this example.
 
 Figure~\ref{art:cycle-figure} displays this unit-first geometry: phase zero
@@ -179,10 +175,8 @@ mark phases $0,1,2$, whose accepted lengths are $1,1/4,1/16$.
 The panels use different horizontal and vertical scales; the
 vertical-to-horizontal ratios are $22/4.6$, $2.5/4.2$ and $23/21$ in (a), (b)
 and (c).
-Coordinates are rendered from the rational center of the certified root
-box; exact cycle closure and trial decisions follow from
-Appendix~\ref{art:seed_certificate}. This drawing is not evidence of
-stable-manifold membership for the perturbed construction.}
+Exact cycle closure and trial decisions are proved in
+Appendix~\ref{art:seed_certificate}.}
 \label{art:cycle-figure}
 \end{figure}
 
@@ -251,8 +245,7 @@ multiplied by $\lambda^2/\sigma$. This proves the matrix relation in
 and all gradient--step products are multiplied by $\sigma>0$, so the
 Armijo and weak-Wolfe comparisons, including their strict signs, agree.
 
-This is a covariance calculation, not an existence theorem for a local
-trajectory. To transfer a particular run, the local model must cover the
+To transfer a particular run with this calculation, the local model must cover the
 current point and every candidate the search actually visits. Under that
 containment, induction on the bracket decisions transfers the full trial
 tree, and induction on accepted steps transfers the matrices. We verify
@@ -447,8 +440,7 @@ objective, bad centers $\bar x_\ell\to x_*$ have affine-model
 neighborhoods of width $O(a_\ell)$. Each complete copied query orbit fits
 inside a region of size $O(a_\ell^2)$ and converges to $\bar x_\ell$.
 The inset shows the seed and two contraction copies as a finite illustration
-of the infinite induction. Locations, neighborhood shapes and relative
-scales are schematic, not a plot of the infinitely defined objective.
+of the infinite induction.
 The lower-curvature construction uses the different spatial factor
 $a_\ell$, as explained below.}
 \label{art:shrinking-scales}
@@ -483,7 +475,7 @@ Four uniformly strongly convex $C^{1,1}$ branches
 \end{tabular}
 \caption{The two independent local failure regimes. Each uses one fixed
 objective and $H_0=I$, with bad starts arbitrarily close to its unique
-minimizer; all actual accepted and rejected queries are differentiable
+minimizer; all accepted and rejected queries are differentiable
 and remain in neighborhoods shrinking to that minimizer. Both hold for
 every fixed $0<c_1\le1/3$, $c_1<c_2<1$
 (Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}).}
@@ -492,18 +484,16 @@ every fixed $0<c_1\le1/3$, $c_1<c_2<1$
 
 In Theorem~\ref{art:local-failure-lower} and Table~\ref{art:regularity-map}, a
 Hessian is the classical one: the derivative of the gradient map, with that
-map defined in a neighborhood of the point. A pointwise second-order
-expansion alone is not the convention.
+map defined in a neighborhood of the point.
 
 The proof in Appendix~\ref{art:lower_curvature} has the same sequence of
 tasks as the first construction. It starts from the explicit strongly convex
 objective $Q_\mu(z)=\mu\|z\|^2/2+G(z)$, whose true minimizer is away from
 the wrong corner. A normalized three-step return map has the original seed
 as a hyperbolic boundary fixed point. Its stable manifold contains positive
-scale states, yielding an actual perturbed bad orbit. The seed's strict
+scale states, yielding a perturbed bad orbit. The seed's strict
 finite margins ensure that the same accepted and rejected trial lists
-persist along that orbit, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$. No rounded initial state is asserted to lie on
-the stable manifold.
+persist along that orbit, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$.
 
 For the local embedding of Appendix~\ref{art:lower_curvature}, with its own
 $a_\ell=128^{-\ell}$, centers $\bar x_\ell=a_\ell(2,-32)^T$ and constant
@@ -517,12 +507,10 @@ matrix is then used in every copy; one fixed affine change makes it $I$.
 The faster variation of the scalar derivative retains global $C^{1,1}$
 regularity but prevents second differentiability at the minimizer, where the
 copies accumulate.
-This is why the theorem does not supply a finite strongly convex $C^2$
-local counterexample.
 
 The two constructions (Table~\ref{art:regularity-map}) separate upper branch
 regularity from positive lower
-curvature. Their common mechanism is a local copy of an actual bad query
+curvature. Their common mechanism is a local copy of a bad query
 tree; the different scalar scales determine which regularity survives at
 the minimizer. The remaining convergence questions are discussed
 next.

@@ -1,6 +1,6 @@
 \chapter{Transported comparison energies}\label{comp:T}\label{T:chapter}
 \renewcommand{\ModuleTag}{3}
-The reciprocal budget becomes an objective theorem only when geometry controls a comparison energy. Visibility, secant control and transport are imposed on objective-level pairs, not inferred from a presumed limit of the BFGS matrices.
+The reciprocal budget becomes a convergence theorem when geometry controls a comparison energy. Visibility, secant control and transport are conditions on the objective, with no assumption on the BFGS matrices.
 
 
 % SOURCE_BEGIN T.span.1
@@ -65,13 +65,13 @@ Call the pair \emph{eligible} if
 \begin{equation}
  d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge(1-c_2)d. \tag{3.2}
 \end{equation}
-Every accepted step is eligible. The upper bound $\Delta\le d$ follows from convexity. Eligibility does not assert compatibility of an arbitrary chain with BFGS; imposing a condition on all such pairs is an objective-only sufficient assumption.
+Every accepted step is eligible. The upper bound $\Delta\le d$ follows from convexity. Imposing a condition on all eligible pairs is an assumption on the objective alone.
 
 For $s\ne0$, define the Euclidean orthogonal projector
 \[
  \Pi_s=I-\frac{ss\T}{s\T s}.
 \]
-All matrices in the next assumption are objective-pair data, not $H_k$.
+All matrices in the next assumption are objective-pair data.
 
 
 \setcounter{section}{2}
@@ -164,7 +164,7 @@ Divide (3.6) by $P_{k+1}$ and sum:
 \]
 This contradicts (3.5). The gap therefore tends to zero. Compactness gives convergence to the solution set, and uniqueness gives whole-sequence convergence. \qed
 
-The formal principal theorem uses the same derived trace recurrence with a harmless larger additive bound $C_+(k+1)$, where $C_+=\max\{C,0\}$. The normalized energy estimate then gives an $O(N^2)$ reciprocal-sum bound and contradicts Chapter~\ref{comp:M}'s superquadratic theorem. Its additional summability requirement is already a consequence of Armijo and the finite limiting value. Thus no extra hypothesis is added. The sharper linear telescoping estimate above follows from the separately proved scalar transport budget; it is not necessary to the formal principal theorem's contradiction.
+The formal principal theorem uses the same derived trace recurrence with a harmless larger additive bound $C_+(k+1)$, where $C_+=\max\{C,0\}$. The normalized energy estimate then gives an $O(N^2)$ reciprocal-sum bound and contradicts Chapter~\ref{comp:M}'s superquadratic theorem. Its additional summability requirement is already a consequence of Armijo and the finite limiting value. Thus no extra hypothesis is added. The sharper linear telescoping estimate above follows from the separately proved scalar transport budget.
 
 % SOURCE_END T.span.4
 
@@ -213,7 +213,7 @@ where $\Psi$ is bounded on the band, replace $W$ by $e^{\Psi}W$. This gives mult
 
 
 % SOURCE_BEGIN T.span.7
-\section{Why this is genuinely weaker than RS}
+\section{Why this is strictly weaker than RS}
 Given the radial secant condition (RS) of Chapter~\ref{comp:R}, take
 \[
  W(x)=(x-x_*)(x-x_*)\T.
@@ -228,7 +228,7 @@ With this $W$, (S) is the inequality of (RS) restricted to eligible pairs in $K_
 \]
 makes (T) an equality with $L=0$. Thus every objective covered by RS is covered by the new condition.
 
-The reverse implication fails. Chapter~\ref{comp:Q} constructs fields satisfying the new condition for a multi-branch curved objective that violates even the eligible-pair radial condition on every positive neighborhood of its minimizer. This is strict inclusion of sufficient conditions, not merely a new notation for the old inequality.
+The reverse implication fails. Chapter~\ref{comp:Q} constructs fields satisfying the new condition for a multi-branch curved objective that violates even the eligible-pair radial condition on every positive neighborhood of its minimizer. The inclusion of RS in the new condition is therefore strict.
 
 Although $\Pi_s$ is written as a Euclidean projector, (T) equivalently requires
 \[
@@ -236,7 +236,7 @@ Although $\Pi_s$ is written as a Euclidean projector, (T) equivalently requires
 \]
 Under an invertible affine change of variables with linear part $A$, gradients transform by $A^{-\mathsf T}$ and the certificate transforms by $W\mapsto AWA\T$. The three conditions are therefore affine-covariant; no preferred coordinate system is essential.
 
-The extra transport clause cannot simply be omitted: changing a comparison vector creates terms involving $B_k$, which may be unbounded. A small Euclidean change is not by itself a small change in the $B_k$ energy. Projection and the multiplicative budget are precisely what make the new hypothesis sufficient without assumptions on $B_k$.
+The extra transport clause cannot simply be omitted: changing a comparison vector creates terms involving $B_k$, which may be unbounded. A small Euclidean change is not by itself a small change in the $B_k$ energy. Projection and the multiplicative budget make the new hypothesis sufficient without assumptions on $B_k$.
 
 
 \endgroup
@@ -244,6 +244,4 @@ The extra transport clause cannot simply be omitted: changing a comparison vecto
 
 
 \section*{Relation to earlier work}
-The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
-
 This is a sufficient condition for ordinary full BFGS. Multiplicative-error normalization is an established technique~\cite[Lemmas 2.2--2.3]{FND_CV13}, also used in the rescaling discussion in this chapter and Chapter~\ref{comp:G}. The comparison field here may be singular and unbounded, and transport is projected away from the step. Consequently a uniformly coercive, bounded variable-metric convergence theorem does not supply this result or its objective-pair quantifiers.

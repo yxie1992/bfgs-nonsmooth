@@ -171,7 +171,7 @@ Also Item `C/13_L/prose/006` (`companion/chapters/13_L.tex:33`): "The orbits, ob
 initial points below are chosen before this pair." Here the initial state and the iterates `x`,
 matrices `H` are chosen before the pair (likewise in `local_failure` and `agreement`).
 
-Also Item `C/13_L/prose/082` (`companion/chapters/13_L.tex:413`), corrected on 15 October 2026
+Also Item `C/13_L/prose/082` (`companion/chapters/13_L.tex:412`), corrected on 15 October 2026
 (M13; before: "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
 parameter family is not imported."): "Like Chapter~\ref{comp:D}, the chapter covers every pair
 $0<c_1\le1/3$, $c_1<c_2<1$." This theorem and `local_failure` hold for every such pair, the
@@ -441,12 +441,12 @@ Also the following items, stated by conjuncts of this theorem:
   literal classical-Hessian assumption, and even actual strong convexity." (since 15 October 2026,
   wording point W44; before "the user's literal …"; the strong-convexity and Hessian-bound
   conjuncts, for both objectives);
-* Item `C/13_L/prose/046` (`companion/chapters/13_L.tex:254`): "We now construct a single objective
+* Item `C/13_L/prose/046` (`companion/chapters/13_L.tex:253`): "We now construct a single objective
   satisfying the literal Hessian bounds and having no guaranteed local basin." (`F₁`);
-* Item `C/13_L/prose/070` (`companion/chapters/13_L.tex:381`): "These constants are fixed for the
+* Item `C/13_L/prose/070` (`companion/chapters/13_L.tex:380`): "These constants are fixed for the
   one transformed objective, not changed between starts. [...] This proves the four-$C^{1,1}$-branch
   part of Theorem~\ref{L:thm:local}." (`F₁`, with the constants of `whitened_constants`);
-* Item `C/13_L/prose/078` (`companion/chapters/13_L.tex:403`): "This establishes the remaining
+* Item `C/13_L/prose/078` (`companion/chapters/13_L.tex:402`): "This establishes the remaining
   version of Theorem~\ref{L:thm:local}." (`F₂`). -/
 theorem local_failure :
     ∃ F₁ F₂ : Vec 2 → ℝ,
@@ -585,7 +585,7 @@ theorem strict_margins_same_decisions :
   · exact (LUniform.nonstrict_failure_search _ h m k).trans (LUniform.failure_search _ h m k).symm
   · exact (LUniform.nonstrict_failure_search _ h m k).trans (LUniform.failure_search _ h m k).symm
 
-/-- Item `C/13_L/prose/083` (`companion/chapters/13_L.tex:413`): "The first three branches of the
+/-- Item `C/13_L/prose/083` (`companion/chapters/13_L.tex:412`): "The first three branches of the
 local finite-branch construction fail to be twice differentiable at the minimizer." (Corrected
 on 15 October 2026, M30; before "at the accumulation point".) The
 four branches of the local construction, before (`LEmbedding.branch`) and after
@@ -1472,7 +1472,7 @@ $\varphi_b$ = `LScalar.phi b` (the article's $\psi_b$), $f_i$ = `LEmbedding.bran
 `LEmbedding.objective`. The statements about $P_b$, $J_b$, $\varphi_b$ are made for the two values
 $b=b_i$ (`b = LEmbedding.parameter i`). -/
 
-/-- Item `C/13_L/prose/048` (`companion/chapters/13_L.tex:267`): "Define a monotone $C^1$ ramp
+/-- Item `C/13_L/prose/048` (`companion/chapters/13_L.tex:266`): "Define a monotone $C^1$ ramp
 $P_b$ on $[0,1]$: it is zero for $\xi\le\vartheta_b-\epsilon$, one for
 $\xi\ge\vartheta_b+\epsilon$, and on the intervening interval equals [display
 `C/13_L/disp/028`]." For each of the values $b=b_i$. -/
@@ -1488,7 +1488,7 @@ theorem monotone_ramp (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) :
     fun ξ h => LScalarRamp.ramp_eq_one h, fun ξ t h1 h2 ht => ?_⟩
   rw [hr, BfgsCoverage.Article.LowerCurvature.cubicRamp, if_neg (not_le.mpr h1), if_neg (not_le.mpr h2), ht]
 
-/-- Item `C/13_L/disp/029` (`companion/chapters/13_L.tex:272-274`), with line 271: "Let
+/-- Item `C/13_L/disp/029` (`companion/chapters/13_L.tex:271-273`), with line 271: "Let
 $J_b(\xi)=\int_0^\xi P_b(v)\,dv$. The elementary formulas give
 \[ \int_0^1P_b=1-\vartheta_b,\qquad 0\le P_b'\le768." \]
 For each of the values $b=b_i$; $P_b'$ is the derivative of $P_b$. -/
@@ -1500,7 +1500,7 @@ theorem ramp_integral_bounds (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.paramete
   exact ⟨LScalarRamp.primitive_eq_integral hl hr, LScalarRamp.integral_ramp hl hr,
     LScalarRamp.deriv_ramp_bounds b⟩
 
-/-- Item `C/13_L/lemma/L:lem:scalar`, Lemma `L:lem:scalar` (`companion/chapters/13_L.tex:283-293`),
+/-- Item `C/13_L/lemma/L:lem:scalar`, Lemma `L:lem:scalar` (`companion/chapters/13_L.tex:282-292`),
 "Scalar regularity and exact affine neighborhoods", including its displays `C/13_L/disp/031`
 (lines 285-287) and `C/13_L/disp/032` (equation `L:eq:plateau`, lines 289-291).
 
@@ -1535,7 +1535,7 @@ theorem scalar_lemma (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) :
     fun n => ⟨LScalar.phi_node hl hr n, LScalar.phi_node_hasDerivAt hl hr n⟩,
     fun n h hh => LScalar.phi_plateau hl hr n hh, hsec⟩
 
-/-- Item `C/13_L/prose/053` (`companion/chapters/13_L.tex:316`): "the first three Hessian upper
+/-- Item `C/13_L/prose/053` (`companion/chapters/13_L.tex:315`): "the first three Hessian upper
 bounds are less than $439,446,27$, respectively, wherever those Hessians exist, and the fourth
 has Hessian $\mu I$." For $i<3$, wherever $f_i$ is twice differentiable, $\nabla^2f_i\preceq L_iI$
 with $L_i=\mu+(768/b_i)\|q_i\|^2$ (`LEmbedding.gradientBound i`, the gradient-Lipschitz constants
@@ -1553,13 +1553,13 @@ theorem branch_hessian_bounds :
     fun i x hx v => ((LEmbedding.branch_old_actual_hessian_bounds i hx).2 v).2,
     fun x => ⟨(LEmbedding.branch_last_second_hasFDerivAt x).differentiableAt, LEmbedding.branch_last_hessian x⟩⟩
 
-/-- Item `C/13_L/prose/055` (`companion/chapters/13_L.tex:316`): "Thus the maximum is
+/-- Item `C/13_L/prose/055` (`companion/chapters/13_L.tex:315`): "Thus the maximum is
 $\mu$-strongly convex." -/
 theorem objective_strongly_convex :
     FixedNormal.EuclideanStrongConvexOn univ LEmbedding.mu LEmbedding.objective :=
   LEmbedding.objective_strongConvex
 
-/-- Item `C/13_L/prose/057` (`companion/chapters/13_L.tex:322`): "consequently
+/-- Item `C/13_L/prose/057` (`companion/chapters/13_L.tex:321`): "consequently
 $F'(0;h)=\max\{0,h_2\}$ and the minimizer is nonsmooth." The one-sided directional derivative at
 zero ($h_2$ is `h 1`). -/
 theorem directional_derivative :
@@ -1569,7 +1569,7 @@ theorem directional_derivative :
 
 /-! ### Copying one perturbed bad orbit at every scale (lines 343-381) -/
 
-/-- Item `C/13_L/disp/038` (`companion/chapters/13_L.tex:346-350`), with line 345: "Set
+/-- Item `C/13_L/disp/038` (`companion/chapters/13_L.tex:345-349`), with line 345: "Set
 $p_n=a_nc_*$ and $C_*=1+\mu\norm{c_*}^2/2$. For any $y$ with $|q_i\T y|\le1/2$,
 \[ f_i(p_n+a_ny)=a_n^2\left\{\tfrac\mu2\norm{c_*+y}^2+1+q_i\T y\right\}
    =a_n^2\{C_*+g_i\T y+\tfrac\mu2\norm y^2\}." \]
@@ -1595,7 +1595,7 @@ theorem branch_copy_formula (n : ℕ) (i : Fin 3) (y : Vec 2) (hy : |dot (LEmbed
     simp only [sqNorm, dot, Fin.sum_univ_two, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
     ring
 
-/-- Item `C/13_L/prose/061` (`companion/chapters/13_L.tex:351`): "The fourth branch is negative
+/-- Item `C/13_L/prose/061` (`companion/chapters/13_L.tex:350`): "The fourth branch is negative
 relative to its quadratic part there if $y$ is sufficiently small and $n\ge1$." For $y$ near zero
 (in the fixed neighbourhood `LEmbedding.localDomain`) and $n\ge1$,
 $f_3(p_n+a_ny)-\tfrac\mu2\|p_n+a_ny\|^2=(p_n+a_ny)_2<0$ (it holds for every $n$). -/
@@ -1610,7 +1610,7 @@ theorem fourth_branch_negative :
   rw [LQuadraticSeed.quadratic]
   linarith
 
-/-- Item `C/13_L/prose/062` (`companion/chapters/13_L.tex:355`), corrected on 15 October 2026
+/-- Item `C/13_L/prose/062` (`companion/chapters/13_L.tex:354`), corrected on 15 October 2026
 (M33, reader point R-F-1; before: "…whose accepted and rejected queries are all in that
 neighborhood"): "Use Theorem~\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to
 choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose initial point and accepted
@@ -1637,7 +1637,7 @@ theorem chosen_orbit :
     BfgsCoverage.Article.LowerCurvature.copy_runs.2.1,
     BfgsCoverage.Article.LowerCurvature.copy_runs.2.2.1⟩
 
-/-- Item `C/13_L/prose/065` (`companion/chapters/13_L.tex:363`), corrected on 15 October 2026
+/-- Item `C/13_L/prose/065` (`companion/chapters/13_L.tex:362`), corrected on 15 October 2026
 (M33, reader point R-F-1; before: "Equation~\eqref{L:eq:local-model} applies to every query by the
 choice of the whole seed orbit."): "Indeed, function differences and directional-derivative
 products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS
@@ -1673,7 +1673,7 @@ theorem local_model_along_orbit (n : ℕ) (_hn : 1 ≤ n) :
   exact ⟨LEmbedding.local_model n h0, fun k => ⟨LEmbedding.local_model n (hdom k).1,
     fun a ha => LEmbedding.local_model n ((hdom k).2 a ha)⟩⟩
 
-/-- Item `C/13_L/prose/066` (`companion/chapters/13_L.tex:369`): "At $p_n$ the three active
+/-- Item `C/13_L/prose/066` (`companion/chapters/13_L.tex:368`): "At $p_n$ the three active
 gradients are $a_ng_i$, so $0\notin\partial F(p_n)$. Meanwhile $x_0^{(n)}\to0$". At $p_n$ the
 branches $f_0,f_1,f_2$ are active with gradients $a_ng_i$ and $f_3$ is inactive; the starts
 $x_0^{(n)}=p_n+a_n\bar x_0$ (display `C/13_L/disp/040`, $\bar x_0$ = `LUniform.source.x 0`) tend
@@ -1690,7 +1690,7 @@ theorem center_active_nonstationary :
     (BfgsCoverage.Article.LowerCurvature.copy_limits n).2.2.2.2.2.2.1, LEmbedding.center_nonstationary n⟩,
     LEmbedding.copyPoint_tendsto (LUniform.source.x 0)⟩
 
-/-- Item `C/13_L/disp/044` (`companion/chapters/13_L.tex:377-380`), with line 376: "The branch
+/-- Item `C/13_L/disp/044` (`companion/chapters/13_L.tex:376-379`), with line 376: "The branch
 strong-convexity and gradient-Lipschitz constants become, for example,
 \[ \underline\mu=\mu\lambda_{\min}(\bar H_0)>0,\qquad \overline L=512\lambda_{\max}(\bar H_0)<\infty." \]
 $\bar H_0$ = `LUniform.initialMetric`; the whitened branches $f_i(Az)$ (`LUniform.smoothBranch`) are
@@ -1714,7 +1714,7 @@ The step scalar function is `LScalarStep.phi b` (step `LScalarStep.ramp b`, prim
 `LScalarStep.primitive b`), the step embedding `LStepEmbedding.objective` with branches
 `LStepEmbedding.branch i` and nonsmooth part `LStepEmbedding.residual`. -/
 
-/-- Item `C/13_L/prose/071` (`companion/chapters/13_L.tex:396`): "Replace the smooth ramp by the
+/-- Item `C/13_L/prose/071` (`companion/chapters/13_L.tex:395`): "Replace the smooth ramp by the
 step $P_b(\xi)=\mathbf1_{\{\xi>\vartheta_b\}}$ and its primitive by $J_b(\xi)=(\xi-\vartheta_b)_+$.
 Use~\eqref{L:eq:scalar} on the positive intervals, the negative extension $\varphi_b(x)=-x$ for
 $x<0$, and the same affine positive outer extension." For each of the values $b=b_i$ the library's
@@ -1739,7 +1739,7 @@ theorem step_scalar_def (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i) 
   rw [hint n x hlo' hhi, hξ]
   rfl
 
-/-- Item `C/13_L/prose/072` (`companion/chapters/13_L.tex:396`): "This scalar function is convex
+/-- Item `C/13_L/prose/072` (`companion/chapters/13_L.tex:395`): "This scalar function is convex
 and piecewise affine with countably many pieces; it has the same node values, node slopes, and
 affine neighborhoods~\eqref{L:eq:plateau}." For each of the values $b=b_i$: convex; the maximum,
 attained, of the countably many affine functions `LScalarStep.affineFamily b j`
@@ -1764,7 +1764,7 @@ theorem step_scalar_props (i : Fin 3) {b : ℝ} (hb : b = LEmbedding.parameter i
   | some n => exact ⟨LScalarGeometric.scale n, (1 - b) * LScalarGeometric.scale n ^ 2,
       fun x => rfl⟩
 
-/-- Item `C/13_L/prose/073` (`companion/chapters/13_L.tex:396`): "Thus the entire local-copy
+/-- Item `C/13_L/prose/073` (`companion/chapters/13_L.tex:395`): "Thus the entire local-copy
 construction and the same fixed initial matrix work unchanged." For every admissible pair and
 every $n$: the local model $F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}$ holds for the step embedding on a
 fixed neighbourhood of zero (`LStepEmbedding.copyNeighborhood`, with
@@ -1788,7 +1788,7 @@ theorem step_copies (c₁ c₂ : ℝ) (h : LUniform.Admissible c₁ c₂) (n : �
     fun k N hN => BfgsCoverage.Article.LowerCurvature.fromMetric_fuel_mono
       (LUniform.copy_nonstrict_actual_search LActualCopies.stepData h n k) N hN⟩
 
-/-- Item `C/13_L/prose/074` (`companion/chapters/13_L.tex:398`): "For this variant
+/-- Item `C/13_L/prose/074` (`companion/chapters/13_L.tex:397`): "For this variant
 $F=\mu\norm{x}^2/2+p(x)$, with convex countably piecewise-affine $p$." $p$ =
 `LStepEmbedding.residual`: convex, the maximum, attained, of the countable family of affine
 functions `LStepEmbedding.countableLinear j x + LStepEmbedding.countableOffset j`. -/
@@ -1800,7 +1800,7 @@ theorem step_objective_structure :
   ⟨fun _ => rfl, LStepEmbedding.residual_convex, LStepEmbedding.countable_index,
     LStepEmbedding.residual_countable_max⟩
 
-/-- Item `C/13_L/prose/075` (`companion/chapters/13_L.tex:398`): "At a nonzero point, any branch
+/-- Item `C/13_L/prose/075` (`companion/chapters/13_L.tex:397`): "At a nonzero point, any branch
 with $q_i\T x=0$ is strictly below the maximum: its scalar value is zero, whereas at least one of
 $q_0\T x,q_1\T x$ is nonzero and has positive scalar value. Here $q_0,q_1$ are independent." -/
 theorem step_zero_argument_inactive :
@@ -1828,7 +1828,7 @@ theorem step_zero_argument_inactive :
     simp at e0 e1
     constructor <;> linarith
 
-/-- Item `C/13_L/prose/076` (`companion/chapters/13_L.tex:398`): "All potentially active scalar
+/-- Item `C/13_L/prose/076` (`companion/chapters/13_L.tex:397`): "All potentially active scalar
 arguments are therefore nonzero and encounter only finitely many breakpoints in a small
 neighborhood. Hence $p$ is locally finite-polyhedral near every nonzero point. At any
 differentiable such point it is locally affine. The origin is nonsmooth." At $x\ne0$ every active
@@ -1852,7 +1852,7 @@ theorem step_local_polyhedral :
     fun _ hd => LStepEmbedding.residual_affine_at_differentiable hd,
     LStepEmbedding.objective_not_differentiable_zero⟩
 
-/-- Item `C/13_L/disp/045` (`companion/chapters/13_L.tex:399-402`), with line 398 ("Consequently"):
+/-- Item `C/13_L/disp/045` (`companion/chapters/13_L.tex:398-401`), with line 398 ("Consequently"):
 \[ \nabla^2F(x)=\mu I\quad\text{at every twice-differentiable point}. \]
 For the step embedding $F$ (`LStepEmbedding.objective`). -/
 theorem step_hessian_identity (x : Vec 2)
@@ -1861,7 +1861,7 @@ theorem step_hessian_identity (x : Vec 2)
     RadialHessian.matrix LStepEmbedding.objective x = LEmbedding.mu • (1 : Mat 2) :=
   (LStepEmbedding.objective_actual_hessian hfirst.self_of_nhds).2
 
-/-- Item `C/13_L/prose/077` (`companion/chapters/13_L.tex:403`): "After the fixed affine
+/-- Item `C/13_L/prose/077` (`companion/chapters/13_L.tex:402`): "After the fixed affine
 transformation making $H_0=I$, that Hessian is the one fixed SPD matrix $\mu\bar H_0$." The
 whitened step objective $\widetilde F(z)=F(Az)$ (`stepObjective`, $A$ = `LUniform.coordinateMatrix`,
 $AA=\bar H_0$), whose runs start with $H_0=I$, has Hessian $\mu\bar H_0$ (positive definite) at

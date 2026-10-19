@@ -4,6 +4,43 @@ Written by the coordinating agent (Claude in OpenCode) on the author's Linux
 machine, at the author's request, to continue on the author's MacBook with
 OpenCode and the same model. Standing instructions: `AGENTS.md`.
 
+## Active checkpoint — 18 October 2026, Linux
+
+**Read this before the older completed-work status below.** The repository was
+pulled fast-forward to `66de81d` (45 MacBook commits since `4350777`). The author
+then prioritized M44: remove defensive/over-qualifying wording from the article
+and companion while keeping mathematical scope and useful explanations intact.
+The author has now requested: “wrap up the current work, update todo. Assume
+all context will be lost, only thing will exist is local files”.
+
+**M44 is paused and incomplete**, not a new release. Self-contained restart:
+`editorial/defensive_wording_20261018/RESUME.md`. That directory contains all
+decisions, proposal JSON, scripts, logs, baseline PDFs and the post-resync TeX
+snapshot; do not depend on the old conversation or `/tmp/opencode`.
+
+- Applied: article and companion wording edits, production generator data,
+  regeneration/shared appendix, and the first register line/hash resync.
+- **Do not rerun the original `resync_register.py --write`. It already ran once.**
+- Next: review and run the portable
+  `editorial/defensive_wording_20261018/checkpoint/reg/apply_actions.py --write`
+  **once**. Only its dry run has run (zero missing new anchors/`of` targets).
+  Then repair the six retiring-item docstrings and the listed stale notes/quotes.
+- Pending: final literal coverage, Lean build, correspondence and ledger/M42
+  bindings, both post-edit PDFs and visual/warning checks, independent review,
+  fresh axiom/kernel evidence, completion records and final commit/push.
+- Actual checkpoint checks: generator PASS; strict coverage exit 0 on the old
+  2529 items (it does not check anchors against text); all 28 changed Lean files
+  differ only inside comments. No new compiler/audit/PDF run is claimed.
+- `TODO_MANUSCRIPT_REVIEW.md` M44 and `TODO_LEAN_COVERAGE.md` track the unfinished
+  work. M43 remains pending the author's narrative-stage decision. Q1's AI-use
+  wording remains the author's choice.
+- The requested overview of the pulled changes is saved in
+  `editorial/defensive_wording_20261018/UPDATE_4350777_66de81d.md` for the eventual
+  task report.
+
+The older 16 October checks below and the audit reports in the package remain
+valid for their named earlier sources, not for the incomplete M44 migration.
+
 ## State (updated 16 October 2026, on the MacBook)
 
 The work moved from the Linux machine to the MacBook on 14 October and resumed there

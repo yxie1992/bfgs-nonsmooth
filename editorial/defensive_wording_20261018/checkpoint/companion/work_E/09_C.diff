@@ -1,0 +1,127 @@
+--- companion/chapters/09_C.tex	2026-10-18 14:24:39.386266354 -0700
++++ /tmp/opencode/m44/companion/render_E/09_C.tex	2026-10-18 17:56:03.090481489 -0700
+@@ -67,7 +67,7 @@
+  \left(I-\frac{y_ks_k^T}{t_k}\right)+\frac{s_ks_k^T}{t_k},\quad
+  y_k=g_{k+1}-g_k,\quad t_k=y_k^Ts_k>0.
+ \end{equation}
+-The positivity $t_k>0$ in the update is derived, not an additional assumption on later matrices: $H_k\succ0$ and $g_k\ne0$ give $q_k=g_k^TH_kg_k>0$, and weak Wolfe gives $t_k\ge(1-c_2)\alpha_kq_k>0$. The full update then preserves positive definiteness, starting from $H_0\succ0$. Existence of differentiable acceptable lengths on every exceptional search ray is not part of the theorem.
++The positivity $t_k>0$ in the update is derived: $H_k\succ0$ and $g_k\ne0$ give $q_k=g_k^TH_kg_k>0$, and weak Wolfe gives $t_k\ge(1-c_2)\alpha_kq_k>0$. The full update then preserves positive definiteness, starting from $H_0\succ0$.
+ 
+ \begin{corollary}[No false affine criticality gives convergence]\label{C:cor:AC}
+ If, in addition, $\Ca\cap K\subseteq\arg\min F$, then every such run satisfies $F(x_k)\to F_*$ and $\dist(x_k,\arg\min F)\to0$. A unique minimizer gives convergence of the entire iterate sequence. A local version holds when the hypotheses hold only on a sufficiently low compact sublevel inside a structural neighborhood of a unique minimizer.
+@@ -90,7 +90,7 @@
+ for every infinite admissible full-BFGS run, with arbitrary $H_0\succ0$ and any fixed valid line-search constants. The basin can be chosen independently of these algorithmic choices. A simple sufficient replacement for the strictly convex-sublevel hypothesis is a common positive lower Hessian bound on the finitely many locally relevant branches.
+ \end{corollary}
+ 
+-This proves a planar, strictly-convex-contour version of the smooth-max conjecture recorded in Chapter~\ref{comp:A}. It does not prove its general-dimensional or merely weighted-tangential-curvature version.
++This proves a planar, strictly-convex-contour version of the smooth-max conjecture recorded in Chapter~\ref{comp:A}.
+ 
+ 
+ \setcounter{section}{1}
+@@ -199,7 +199,7 @@
+ \begin{equation}\label{C:eq:h}
+  h(t,\theta)=1+\sum_j\chi_j(\theta)\,[n(\theta)^Tv_j(t)-1].
+ \end{equation}
+-The supports are disjoint, so this is a convex combination of positive numbers at each angle. Hence $h$ is bounded above and bounded away from zero. It is $C^1$ in $t$ and smooth in $\theta$, with the mixed derivatives used below bounded. No convex-support-function property of $h$ is asserted or needed.
++The supports are disjoint, so this is a convex combination of positive numbers at each angle. Hence $h$ is bounded above and bounded away from zero. It is $C^1$ in $t$ and smooth in $\theta$, with the mixed derivatives used below bounded. No convex-support-function property of $h$ is needed.
+ 
+ At a smooth point near $C$, write $n(\theta(x))=\nabla F(x)/\norm{\nabla F(x)}$ and define
+ \begin{equation}\label{C:eq:w}
+@@ -277,7 +277,7 @@
+ \[
+  \det(s,Dw\,s)=s_n[(a-e)s_T+b s_n].
+ \]
+-Its absolute value, the uniform derivative bound, transversality and the positive lower bound on $\norm{\nabla F}$ give the required determinant-derivative estimate. In a corner neighborhood, $w\circ q=v_j\circ\varphi$. The convex function $\varphi$ has an actual right derivative at every $\theta<1$; the ordinary one-sided chain rule therefore handles corner points as well as smooth points. We obtain, for one $C\ge0$,
++Its absolute value, the uniform derivative bound, transversality and the positive lower bound on $\norm{\nabla F}$ give the required determinant-derivative estimate. In a corner neighborhood, $w\circ q=v_j\circ\varphi$. The convex function $\varphi$ has a right derivative at every $\theta<1$; the ordinary one-sided chain rule therefore handles corner points as well as smooth points. We obtain, for one $C\ge0$,
+ \[
+  \left|\frac{D'_+(\theta)}{D(\theta)}\right|
+  \le C|\varphi'_+(\theta)|,\qquad 0\le\theta<1.
+@@ -319,7 +319,7 @@
+  \norm{s}\le A(2d+t+L\norm{s}^2)
+  \le A\left(1+\frac{2}{1-c_2}\right)t+AL\norm{s}^2.
+ \]
+-For small $s$, absorb the final term to obtain $t\ge c_0\norm{s}$. Combining with \eqref{C:eq:numerator} bounds the correction by a constant times $\norm{s}$, hence uniformly. This is a crossing-specific linear curvature estimate, not a uniform positive Hessian assumption.
++For small $s$, absorb the final term to obtain $t\ge c_0\norm{s}$. Combining with \eqref{C:eq:numerator} bounds the correction by a constant times $\norm{s}$, hence uniformly. This is a crossing-specific linear curvature estimate.
+ \end{proof}
+ 
+ 
+@@ -357,7 +357,7 @@
+ This contradicts Chapter~\ref{comp:M}, which forces the average of $1/q_k$ to diverge. Thus $\Gamma\cap\Ca\ne\varnothing$.
+ \end{proof}
+ 
+-The argument constructs a field near the \emph{whole hypothetical cluster set}. It does not first select one cluster point and assume all later iterates stay near it. Nor is the field an extra algorithmic input: it is an analytical object derived from the objective, independent of every $H_k$.
++The argument constructs a field near the \emph{whole hypothetical cluster set}.
+ 
+ 
+ \setcounter{section}{6}
+@@ -391,11 +391,11 @@
+ % SOURCE_BEGIN C.span.12
+ \subsection{A tame-geometric alternative}
+ 
+-Chapter~\ref{comp:A} proves that a finite convex semialgebraic function has finitely many affine-critical values. Its proof uses a finite piecewise-smooth cover of the lifted critical graph, so the point path and its actual objective composition have simultaneous derivatives off a finite exceptional set. The two-sided supporting inequality and an affine combination of supporting vectors equal to zero then force the composition derivative to vanish. Continuity joins the resulting constants. No finite-value, path-cover, or composition-differentiability premise is assumed in the final result.
++Chapter~\ref{comp:A} proves that a finite convex semialgebraic function has finitely many affine-critical values. Its proof uses a finite piecewise-smooth cover of the lifted critical graph, so the point path and its objective composition have simultaneous derivatives off a finite exceptional set. The two-sided supporting inequality and an affine combination of supporting vectors equal to zero then force the composition derivative to vanish. Continuity joins the resulting constants. No finite-value, path-cover, or composition-differentiability premise is assumed in the final result.
+ 
+-The actual affine-critical set also has finitely many piecewise-smooth path classes, each semialgebraic and internally piecewise-smoothly connected. Once finite critical values are known, continuity makes the value image of each such class a singleton, so $F$ is constant along every piecewise-smooth path in the critical set. This avoids presuming that an arbitrary smooth point path has a semialgebraic graph or that its composition with a nonsmooth $F$ is differentiable in advance. These path classes are distinguished from ordinary topological connected components, whose finiteness, semialgebraicity and value constancy are proved separately.
++The affine-critical set also has finitely many piecewise-smooth path classes, each semialgebraic and internally piecewise-smoothly connected. Once finite critical values are known, continuity makes the value image of each such class a singleton, so $F$ is constant along every piecewise-smooth path in the critical set. These path classes are distinguished from ordinary topological connected components, whose finiteness, semialgebraicity and value constancy are proved separately.
+ 
+-Combining the low affine-critical gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster} gives the following restricted planar basin conclusion. On a compact structural sublevel above an attained minimum, retain strictly convex positive sublevels and the regular smooth/two-branch hypotheses away from affine criticality. Then a sufficiently low objective basin gives convergence in value and distance to the full minimizer set; uniqueness gives convergence of the whole sequence. Alternatively, with a unique minimizer and the structural hypotheses on a neighborhood, localization supplies a sufficiently low trapped compact sublevel. In both versions the basin is chosen before the admissible run, its initial SPD matrix and its fixed valid line-search constants. No positive-multiplier condition is needed. Semialgebraicity alone does not give the dynamical conclusion: degenerate noncritical ties and flat contours remain outside this theorem.
++Combining the low affine-critical gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster} gives the following planar basin conclusion. On a compact structural sublevel above an attained minimum, retain strictly convex positive sublevels and the regular smooth/two-branch hypotheses away from affine criticality. Then a sufficiently low objective basin gives convergence in value and distance to the full minimizer set; uniqueness gives convergence of the whole sequence. Alternatively, with a unique minimizer and the structural hypotheses on a neighborhood, localization supplies a sufficiently low trapped compact sublevel. In both versions the basin is chosen before the admissible run, its initial SPD matrix and its fixed valid line-search constants. No positive-multiplier condition is needed.
+ 
+ 
+ \setcounter{section}{7}
+@@ -448,7 +448,7 @@
+  t=2\epsilon(1+2v+4\epsilon),\quad
+  \Delta=\epsilon(1+4v)+\epsilon^2.
+ \]
+-For each sufficiently small fixed $u>0$ and $\epsilon\downarrow0$, these are eligible for $c_1=1/4,c_2=1/2$. The radial numerator tends to the nonzero quantity $\tfrac12u^2-v^2$ while $t\to0$. Thus RS fails on a positive band in every neighborhood of zero, even though \eqref{C:eq:explicitbasin} holds. Curved interfaces between arbitrary quadratic branches are not being replaced by finite polyhedral cells or by a nonlinear change of BFGS coordinates.
++For each sufficiently small fixed $u>0$ and $\epsilon\downarrow0$, these are eligible for $c_1=1/4,c_2=1/2$. The radial numerator tends to the nonzero quantity $\tfrac12u^2-v^2$ while $t\to0$. Thus RS fails on a positive band in every neighborhood of zero, even though \eqref{C:eq:explicitbasin} holds. This example lies beyond Theorem~\ref{R:thm:plq}: its objective has no polyhedral-cell representation near the minimizer. The convergence proof treats the curved interfaces directly, in the original coordinates and with the unmodified BFGS update.
+ 
+ 
+ \setcounter{section}{8}
+@@ -467,7 +467,7 @@
+  v_J(x)=a_J(x)/\norm{a_J(x)}^2,
+  \qquad \nabla f_i(x)^Tv_J(x)=1\quad(i\in J).
+ \]
+-A finite $C^\infty$ partition of unity on buffered charts yields one $C^1$ field $v$, bounded on a compact buffer of $K$, with $g^Tv=1$ for every actual subgradient at every point of that buffer. The cutoff regularity does not increase the regularity of the local fields. For sufficiently close endpoints, each chart contributing at $z$ also contains $x$. If $i$ is active at $x$, both $\nabla F(z)^Tv(z)$ and $\nabla f_i(z)^Tv(z)$ equal one. Therefore
++A finite $C^\infty$ partition of unity on buffered charts yields one $C^1$ field $v$, bounded on a compact buffer of $K$, with $g^Tv=1$ for every subgradient at every point of that buffer. The cutoff regularity does not increase the regularity of the local fields. For sufficiently close endpoints, each chart contributing at $z$ also contains $x$. If $i$ is active at $x$, both $\nabla F(z)^Tv(z)$ and $\nabla f_i(z)^Tv(z)$ equal one. Therefore
+ \[
+  y^Tv(z)=[\nabla f_i(z)-\nabla f_i(x)]^Tv(z).
+ \]
+@@ -478,7 +478,7 @@
+ \]
+ To justify the local one-sided estimate, subtract the tangent plane at $x$ and apply the descent lemma at $z$ to the step $-(\nabla f_i(z)-\nabla f_i(x))/L$; for sufficiently close buffered endpoints this step stays in the larger convex chart. Thus visibility and the secant correction can be constructed without a BFGS matrix assumption.
+ 
+-\textbf{What does not follow:} $C^1$ regularity of this field does not provide the projected transport needed by the BFGS energy. The planar proof succeeds by making its derivative along the level tangent parallel to that tangent. In dimension three and higher, mapping a tangent space into itself is not enough: it may rotate or shear the executed step within the tangent space, while $M_ks_k=0$ removes only the component parallel to that one step.
++The $C^1$ regularity of this field does not provide the projected transport needed by the BFGS energy. The planar proof succeeds by making its derivative along the level tangent parallel to that tangent. In dimension three and higher, mapping a tangent space into itself is not enough: it may rotate or shear the executed step within the tangent space, while $M_ks_k=0$ removes only the component parallel to that one step.
+ 
+ A concrete warning uses the entirely smooth quadratic $F(x)=x^TQx/2$, $Q=\operatorname{diag}(1,2,3)$, $x=(1,1,1)$, and the canonical common-rate field $v=\nabla F/\norm{\nabla F}^2$. Take
+ \[
+@@ -489,7 +489,7 @@
+  d=\epsilon^2,\quad t=\frac{\epsilon^2(\epsilon^2+2\epsilon+4)}3,\quad
+  \det[g,s,y]=\frac43\epsilon^2(1+\epsilon)\ne0.
+ \]
+-For small positive $\epsilon$ the pair is Armijo--weak-Wolfe eligible with $c_1=1/4,c_2=1/2$, but $v(x+s)\notin\operatorname{span}\{v(x),s\}$. Its rank-one projected transport therefore fails for any finite multiplier. Another field, the radial field, works for this quadratic. This is not nonexistence of all certificates or a BFGS counterexample; it demonstrates the gap in an argument based only on a smoothly chosen equal-rate direction.
++For small positive $\epsilon$ the pair is Armijo--weak-Wolfe eligible with $c_1=1/4,c_2=1/2$, but $v(x+s)\notin\operatorname{span}\{v(x),s\}$. Its rank-one projected transport therefore fails for any finite multiplier. Another field, the radial field, works for this quadratic. Every admissible run on it converges; the example demonstrates the gap in an argument based only on a smoothly chosen equal-rate direction.
+ 
+ 
+ \endgroup
+@@ -499,14 +499,14 @@
+ \section*{Relation to earlier work}
+ The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+ 
+-Gebken's published Theorem~3.1 assumes an iterate limit and the matrix behavior (B1), including spectral bounds and annihilation of gradient differences~\cite{BG}. The assertions in this chapter derive their cluster conclusions. Lewis--Wylie's local Newton theory instead concerns a bundle algorithm~\cite{LW}. These are related results with different hypotheses or algorithms; the literature audit does not establish publication priority for the full statements in this chapter.
++Gebken's published Theorem~3.1 assumes an iterate limit and the matrix behavior (B1), including spectral bounds and annihilation of gradient differences~\cite{BG}. The assertions in this chapter derive their cluster conclusions. Lewis--Wylie's local Newton theory instead concerns a bundle algorithm~\cite{LW}. These are related results with different hypotheses or algorithms.
+ 
+-The normal-angle expression $h n+h_\theta T$ and its derivative cancellation are classical; see Bogosel, Section~2, equation~(4)~\cite{geom_Bogosel2023}. Here $h$ is a glued comparison function, without an asserted convex-support-function property.
++The normal-angle expression $h n+h_\theta T$ and its derivative cancellation are classical; see Bogosel, Section~2, equation~(4)~\cite{geom_Bogosel2023}. Here $h$ is a glued comparison function, with no convex-support-function requirement.
+ 
+ The multiplier argument in this chapter uses the established nondegeneracy geometry discussed in Chapter~\ref{comp:A}; compare~\cite{LW,BG}. Its full-BFGS application additionally requires the preceding dynamical theorem.
+ 
+-Chapter~\ref{comp:A}'s finite-value result is a reproof of a consequence of stratified projection and definable critical-value theory~\cite{BDLS}. The planar dynamical hypotheses in this chapter are retained in this application.
++Chapter~\ref{comp:A}'s finite-value result also follows from stratified projection and definable critical-value theory~\cite{BDLS}. The planar dynamical hypotheses in this chapter are retained in this application.
+ 
+-The audit found no exact match for these coefficients and the certified basin. The subsequent radial obstruction excludes the stated RS condition, rather than every convergence criterion.
++The audit found no exact match for these coefficients and the certified basin. The subsequent radial obstruction excludes the stated RS condition.
+ 
+-Rank-stable projections and partitions of unity are standard tools. The buffered smooth secant estimate uses Baillon--Haddad cocoercivity; the open-domain formulation is Theorem~2.5 of~\cite{WW}. Neither this antecedent nor the partial statement supplies the missing transport estimate in arbitrary dimension.
++Rank-stable projections and partitions of unity are standard tools. The buffered smooth secant estimate uses Baillon--Haddad cocoercivity; the open-domain formulation is Theorem~2.5 of~\cite{WW}.

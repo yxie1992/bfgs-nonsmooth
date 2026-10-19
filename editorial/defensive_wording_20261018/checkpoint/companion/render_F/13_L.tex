@@ -1,0 +1,416 @@
+\chapter{Failure with positive lower curvature}\label{comp:L}\label{L:chapter}
+\renewcommand{\ModuleTag}{13}
+Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer; no claim combines uniform strong convexity with the preceding local $C^{2,1}$ branch regularity.
+
+
+% SOURCE_BEGIN L.span.1
+\begingroup
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb R}
+\providecommand{\T}{}
+\renewcommand{\T}{^{\mathsf T}}
+\providecommand{\norm}{}
+\renewcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\ip}{}
+\renewcommand{\ip}[2]{\langle #1,#2\rangle}
+\setcounter{section}{0}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END L.span.1
+
+
+% SOURCE_BEGIN L.span.2
+\section{Statements and retained implementation}
+
+All runs use ordinary full BFGS, $H_0\succ0$, differentiable oracle queries, and a fixed unit-first Armijo--weak-Wolfe search. The search starts with $\alpha=1$, lower bracket zero and upper bracket infinity; an Armijo failure updates the upper bracket, a Wolfe failure the lower bracket; use the midpoint after bracketing and doubling otherwise. Fix
+\[
+ 0<c_1\le\tfrac13,\qquad c_1<c_2<1.
+\]
+The orbits, objectives and initial points below are chosen before this pair.
+The update is unmodified:
+\[
+ s=-\alpha Hg,\qquad y=g^+-g,\qquad
+ H^+=\left(I-\frac{sy\T}{y\T s}\right)H
+ \left(I-\frac{ys\T}{y\T s}\right)+\frac{ss\T}{y\T s}.
+\]
+The seed inequalities have strict margins, so there are no equality-convention issues.
+
+\begin{theorem}[Global failure with constant positive branch Hessians]\label{L:thm:global}
+There are three fixed slopes $g_0,g_1,g_2\in\R^2$ such that, for every $\mu>0$,
+\[
+ Q_\mu(x)=\tfrac\mu2\norm{x}^2+\max_{i=0,1,2}g_i\T x
+\]
+is $\mu$-strongly convex, coercive, and has a unique nonsmooth minimizer $x_*\ne0$, yet admits initial states $(x_0,H_0)$ that produce, for every such pair $(c_1,c_2)$, the same deterministic full-BFGS iterates converging to the nonstationary origin. Initial states and every future trial may be chosen arbitrarily close to the origin in the sense made precise in Section~\ref{L:sec:blowup}. Every branch has Hessian exactly $\mu I$ globally. The accepted lengths repeat $1,1/4,1/16$.
+\end{theorem}
+\noindent This is \emph{global} failure: the runs converge to the wrong vertex, away from the true minimizer. It is consistent with our local PLQ theorem.
+
+\begin{theorem}[Local failure under the pointwise Hessian bounds]\label{L:thm:local}
+There is a finite strongly convex objective $F:\R^2\to\R$ with compact sublevels and a unique nonsmooth minimizer at zero, and constants $0<\underline\mu\le\overline L<\infty$, such that
+\[
+ \underline\mu I\preceq \nabla^2F(x)\preceq\overline L I
+ \quad\text{at every twice-differentiable point},
+\]
+yet the fixed deterministic full-BFGS implementation with $H_0=I$ has bad initial points $x_0^{(n)}\to0$ whose runs, the same for every such pair $(c_1,c_2)$, converge to nonstationary points $p_n\to0$. All trial points of the $n$th run remain uniformly near zero as $n\to\infty$.
+
+The function can be chosen as a maximum of four globally $C^{1,1}$, uniformly strongly convex, globally gradient-Lipschitz branches. Alternatively, it can be chosen so that its Hessian is one fixed positive-definite matrix wherever it is twice differentiable; the latter version has a countable polyhedral nonsmooth part.
+\end{theorem}
+\noindent The local theorem satisfies the classical-Hessian assumption, and even strong convexity. In its four-branch version, the first three branches are not twice differentiable at the minimizer. Whether a local counterexample with four globally $C^2$ branches having uniform lower curvature exists is open.
+
+
+\setcounter{section}{1}
+\setcounter{theorem}{2}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END L.span.2
+
+
+% SOURCE_BEGIN L.span.3
+\section{The inherited algebraic seed}
+The seed is reproduced sufficiently to specify the new calculations. Its exact symbolic closure and nine strict query decisions were certified in Chapter~\ref{comp:D}.
+\[
+ g_0=(1,0)\T,\qquad g_1=(-1,-1/8)\T,\qquad g_2=(c,d)\T.
+\]
+Put
+\begin{align*}
+ U&=127c+16d,&V&=16c-127d-16,&R&=c-8d,\\
+ K&=8c^2+8d^2+d-8,&T&=c^2-c+d^2,&Y&=(c-1)^2+d^2.
+\end{align*}
+The algebraic constants solve
+\[
+ 264192RK-UV(U+129)=0,\qquad 16VTK-RUY=0
+\]
+in the rational $\ell_\infty$ box of radius $10^{-30}$ about
+\begin{align*}
+ c_0&=0.31848142762711863064645131250290703717912205023605,\\
+ d_0&=-1.02523211967574872548135087001300414284511909318444.
+\end{align*}
+The Lean formalization proves existence and uniqueness of this root by a contracting self-map with exact rational bounds checked in Lean. Define
+\[
+ \rho=\frac{129R}{V(U+129)}\in(0.060,0.061),\qquad
+ z_0=\frac1{1-\rho}
+ \begin{pmatrix}897/1024-\rho(1-c)\\ \rho d-1/64\end{pmatrix}.
+\]
+Let $M_0=I$ and use consecutive gradients $g_0,g_1,g_2,g_0$ with lengths $1,1/4,1/16$. Exact full-BFGS algebra gives
+\[
+ M_1=\begin{pmatrix}129/256&-1/16\\-1/16&1\end{pmatrix},
+ \qquad M_3=\rho I,\qquad z_3=\rho z_0.
+\]
+Here $z_{j+1}=z_j-\alpha_jM_jg_j$. Every displayed accepted gradient is uniquely active for $G(z)=\max_i g_i\T z$.
+
+The finite line-search query lists are
+\[
+ [1],\qquad[1,1/2,1/4],\qquad[1,1/2,1/4,1/8,1/16].
+\]
+Every rejected trial has a value larger than the current value. The accepted decrease ratios exceed $1/3$, and the accepted new-to-old directional-derivative ratios are negative. All query points have a unique active branch. Thus the query decisions and branch itinerary persist in a sufficiently small open neighborhood of the normalized seed state. This strictness is essential below.
+
+The vector $(-1,16)\T$ has negative inner product with every $g_i$, so $0\notin\operatorname{conv}\{g_i\}$. On the other hand,
+\[
+ \bar g=(1,-16)\T/257
+ =\frac{129}{257}g_0+\frac{128}{257}g_1
+\]
+is the least-norm point of this convex hull. Indeed $g_0\T\bar g=g_1\T\bar g=1/257=\norm{\bar g}^2$ and $g_2\T\bar g>1/257$. Consequently
+\begin{equation}\label{L:eq:minimizer}
+ x_*=-\bar g/\mu,\qquad \min Q_\mu=-\frac1{514\mu}.
+\end{equation}
+At $x_*$ precisely the first two branches are active; their gradients differ, so the unique minimizer is nonsmooth. At the origin $Q_\mu(0)=0$ and the subdifferential is the same nonstationary triangle as for $G$.
+
+
+\setcounter{section}{2}
+\setcounter{theorem}{2}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{1}
+% SOURCE_END L.span.3
+
+
+% SOURCE_BEGIN L.span.4
+\section{Blowing up the shrinking cycle}\label{L:sec:blowup}
+Adding a quadratic changes the BFGS iterates. We therefore prove existence of nearby perturbed orbits.
+
+Use the five normalized state coordinates
+\[
+ x=\tau z,\qquad H=\tau M(b,e),\qquad
+ M(b,e)=\begin{pmatrix}1&b\\b&e\end{pmatrix},\qquad \tau>0.
+\]
+The limiting seed state is
+\[
+ P_*=(z_0,0,1,0),
+\]
+where the last three entries denote $(b,e,\tau)$. To define a three-iteration return map near this boundary state, keep the input scale $\tau$ fixed during the three substeps. Start with $(Z,M)=(z,M(b,e))$ and, for $j=0,1,2$, set
+\begin{align}
+ \gamma_j&=g_j+\mu\tau Z,\qquad
+ S=-\alpha_jM\gamma_j,\qquad Z^+=Z+S,\label{L:eq:formal1}\\
+ Y_j&=g_{j+1}-g_j+\mu\tau S,\label{L:eq:formal2}\\
+ M^+&=\left(I-\frac{SY_j\T}{Y_j\T S}\right)M
+ \left(I-\frac{Y_jS\T}{Y_j\T S}\right)
+ +\frac{SS\T}{Y_j\T S}.
+\end{align}
+Gradient indices are cyclic and $\alpha=(1,1/4,1/16)$. Let the final quantities be $(Z_3,M_3)$ and let $r=(M_3)_{11}$. The normalized return map is
+\begin{equation}\label{L:eq:return}
+ \mathcal T_\mu(z,b,e,\tau)=
+ \left(Z_3/r,\ (M_3)_{12}/r,\ (M_3)_{22}/r,\ \tau r\right).
+\end{equation}
+All denominators are nonzero at $P_*$, and $r=\rho>0$ there. This is a real-analytic map on an open neighborhood of $P_*$, allowing an artificial negative $\tau$ in that analytic extension. Only its positive-$\tau$ part represents actual BFGS.
+
+\begin{lemma}[Agreement with the actual implementation]\label{L:lem:agreement}
+There is an open neighborhood $\mathcal N$ of $P_*$ such that for every state in $\mathcal N$ with $\tau>0$ and every such pair $(c_1,c_2)$, the actual three consecutive full-BFGS iterations on $Q_\mu$ have exactly the certified trial lists and return map~\eqref{L:eq:return}.
+\end{lemma}
+\begin{proof}
+At a query $\tau Z$, the common quadratic does not affect which slope is active. Its function value divided by $\tau$ is
+\[
+ G(Z)+\tfrac{\mu\tau}{2}\norm Z^2,
+\]
+and its gradient is $g_i+\mu\tau Z$. All Armijo and weak-Wolfe comparisons, divided by their common positive scale when needed, are continuous in the normalized state. The seed has strict branch gaps and strict decisions at its finite list of nine queries: accepted queries pass Armijo with $c_1=1/3$ and have positive new directional derivatives, and rejected queries raise the value, so the same finitely many strict inequalities decide every such pair $(c_1,c_2)$. Intersecting the corresponding open neighborhoods preserves the entire decision tree. The normalized secant and update formulas are exactly~\eqref{L:eq:formal1}--\eqref{L:eq:formal2}; no reset of the actual matrix is made.
+\end{proof}
+
+
+\setcounter{section}{3}
+\setcounter{theorem}{2}
+\setcounter{lemma}{1}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{5}
+% SOURCE_END L.span.4
+
+
+% SOURCE_BEGIN L.span.5
+\section{A certified hyperbolic fixed point}
+
+At $\tau=0$ the matrix return depends only on $(b,e)$, not on $z$. Its normalized shape map is
+\[
+ (b,e)\longmapsto ((M_3)_{12}/(M_3)_{11},(M_3)_{22}/(M_3)_{11}).
+\]
+Let $J$ be its derivative at $(0,1)$. The supplied rational-interval automatic-differentiation program computes rigorous enclosures of all entries; their decimal displays are
+\[
+ J\simeq\begin{pmatrix}
+ 1.112398625073290&0.645970102731598\\
+ 0.751501570427498&0.490513688583175
+ \end{pmatrix}.
+\]
+More importantly, using exact rational interval signs of
+$P_J(\lambda)=\lambda^2-\operatorname{tr}(J)\lambda+\det J$, it proves
+\begin{equation}\label{L:eq:eigshape}
+ 0.038<\lambda_s<0.039,\qquad 1.564<\lambda_u<1.565.
+\end{equation}
+Specifically $P_J(0.038)>0$, $P_J(0.039)<0$, $P_J(1.564)<0$, and $P_J(1.565)>0$ throughout the algebraic root box. The two disjoint sign-change intervals contain the two distinct real roots.
+
+The full derivative has the analytically determined block-triangular form
+\begin{equation}\label{L:eq:jacobian}
+ D\mathcal T_\mu(P_*)=
+ \begin{pmatrix}
+ \rho^{-1}I_2&C&\mu a\\
+ 0&J&\mu b\\
+ 0&0&\rho
+ \end{pmatrix}.
+\end{equation}
+The unneeded blocks $C,a,b$ are finite. The upper left block follows because, at $\tau=0$, $Z_3=z+v(b,e)$ and $r$ is independent of $z$. The last row follows from $\tau^+=\tau r$.
+
+The eigenvalues are therefore
+\[
+ \rho^{-1},\ \rho^{-1},\ \lambda_s,\ \lambda_u,\ \rho.
+\]
+None lies on the unit circle and none is zero. There are exactly two stable eigenvalues. The derivative is invertible, so the inverse function theorem makes $\mathcal T_\mu$ a local diffeomorphism.
+
+Crucially $\rho$ is different from every eigenvalue of the upper left $4\times4$ block. Thus its eigenvector can be chosen with last coordinate one: solve the top four linear equations after assigning $v_\tau=1$. The stable subspace is not contained in the artificial boundary $\{\tau=0\}$.
+
+\begin{proof}[Proof of Theorem~\ref{L:thm:global}]
+Apply the local stable-manifold theorem for a hyperbolic fixed point of a smooth local diffeomorphism; see~\cite[Sections 3--4]{DY}. It gives a smooth two-dimensional local stable manifold tangent to the stable eigenspace at $P_*$. Since this tangent space has a vector with nonzero $\tau$ component, the stable manifold contains points with arbitrarily small positive $\tau$.
+
+Choose such a point sufficiently close that its entire forward return-map orbit remains in the neighborhood of Lemma~\ref{L:lem:agreement} and converges to $P_*$. The positive half-space is preserved because $\tau^+=\tau r$ and $r>0$ in this neighborhood. At every return, $M(b,e)$ is positive definite and close to $I$; all actual substep matrices are positive definite as well.
+
+The return-map orbit represents the deterministic full-BFGS orbit, with accepted lengths $1,1/4,1/16$. Its physical states satisfy
+\[
+ x_{3m}=\tau_m z_m\to0,\qquad H_{3m}=\tau_mM(b_m,e_m)\to0.
+\]
+The intermediate accepted states and all rejected queries are $\tau_m$ times bounded continuous functions of the normalized state, so they tend to zero too. They retain strict branch gaps and strict decisions. Their objective values are positive near the seed and decrease to zero. Equation~\eqref{L:eq:minimizer} and $0\notin\partial Q_\mu(0)$ prove nonstationary convergence.
+
+The same argument shows more: given any neighborhood of physical zero, the initial stable-manifold point can be chosen so that \emph{the initial point and all queries of the orbit} lie inside it. This small-orbit property will be used for the embedding.
+\end{proof}
+
+
+\setcounter{section}{4}
+\setcounter{theorem}{2}
+\setcounter{lemma}{1}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{7}
+% SOURCE_END L.span.5
+
+
+% SOURCE_BEGIN L.span.6
+\section{A local accumulation embedding with positive lower curvature}
+We now construct a single objective satisfying the Hessian bounds and having no guaranteed local basin. Fix
+\[
+ \mu=1/4096,\quad c_*=(2,-32)\T,\quad
+ q_i=g_i-\mu c_*,\quad b_i=q_i\T c_*,\quad r=1/128,\quad a_n=r^n.
+\]
+The seed interval certificate proves
+\[
+ b_0=b_1=1791/1024,\qquad 1.7<b_i<34.
+\]
+Only two distinct values of $b_i$ occur. For either value write
+\[
+ \vartheta_b=\frac{1-(1+r)/b}{1-r},\qquad \epsilon=1/1024.
+\]
+Define a monotone $C^1$ ramp $P_b$ on $[0,1]$: it is zero for $\xi\le\vartheta_b-\epsilon$, one for $\xi\ge\vartheta_b+\epsilon$, and on the intervening interval equals
+\[
+ P_b(\xi)=3t^2-2t^3,\qquad t=\frac{\xi-\vartheta_b+\epsilon}{2\epsilon}.
+\]
+Let $J_b(\xi)=\int_0^\xi P_b(v)\,dv$. The elementary formulas give
+\[
+ \int_0^1P_b=1-\vartheta_b,\qquad 0\le P_b'\le768.
+\]
+On $[ba_{n+1},ba_n]$ put
+\begin{align}
+ \xi&=\frac{x/(ba_n)-r}{1-r},\\
+ \varphi_b(x)&=(ra_n)^2+ba_n^2(1-r)
+ \{r\xi+(1-r)J_b(\xi)\}.\label{L:eq:scalar}
+\end{align}
+Complete the definition by $\varphi_b(0)=0$, $\varphi_b(x)=x^2/2$ for $x<0$, and $\varphi_b(x)=1+x-b$ for $x\ge b$.
+
+\begin{lemma}[Scalar regularity and exact affine neighborhoods]\label{L:lem:scalar}
+Each $\varphi_b$ is convex, nonnegative, coercive, uniquely minimized at zero, and globally $C^{1,1}$. It is $C^2$ on $(0,\infty)$ and on $(-\infty,0)$, but is not twice differentiable at zero. At every node,
+\[
+ \varphi_b(ba_n)=a_n^2,\quad \varphi_b'(ba_n)=a_n,
+\]
+and
+\begin{equation}\label{L:eq:plateau}
+ \varphi_b(ba_n+h)=a_n^2+a_nh\qquad (|h|\le a_n/2).
+\end{equation}
+Where its second derivative exists, $0\le\varphi_b''\le\max\{1,768/b\}$.
+\end{lemma}
+\begin{proof}
+On the positive intervals,
+\[
+ \varphi_b'=a_n\{r+(1-r)P_b(\xi)\},\qquad
+ \varphi_b''=P_b'(\xi)/b.
+\]
+The defining value of $\vartheta_b$ gives
+$r+(1-r)(1-\vartheta_b)=(1+r)/b$, which proves value matching. The derivative rises monotonically from $ra_n$ to $a_n$ and is constant near the endpoints. Thus values and derivatives match at every node. At zero $\varphi_b'=O(x)$ and $\varphi_b=O(x^2)$, giving differentiability with derivative zero. Uniform bounded derivative slopes on all intervals imply a global Lipschitz bound, including across the accumulation point by taking limits. The negative and outer extensions match in value and first derivative.
+
+The constant-derivative lengths on the two sides of $ba_n$, divided by $a_n$, are
+\[
+ b(1-r)(1-\vartheta_b-\epsilon),\qquad
+ b(1-r)(\vartheta_b-\epsilon)/r.
+\]
+Both exceed $1/2$ for the certified values of $b$. This proves~\eqref{L:eq:plateau}. At zero, along $x=ba_n$ the ratio $\varphi_b'(x)/x$ equals $1/b$, whereas along $x=(b+1/4)a_n$ it equals $1/(b+1/4)$. Both sequences tend to zero, so $\varphi_b''(0)$ does not exist. This is the deliberate regularity distinction from the previous $C^{2,1}$ embedding.
+\end{proof}
+
+Define four functions and their maximum:
+\begin{equation}\label{L:eq:embedding}
+ f_i(x)=\tfrac\mu2\norm x^2+\varphi_{b_i}(q_i\T x)\quad (i=0,1,2),\qquad
+ f_3(x)=\tfrac\mu2\norm x^2+x_2,\qquad F=\max_i f_i.
+\end{equation}
+Each branch is globally $\mu$-strongly convex and has a globally Lipschitz gradient. The Lean formalization proves the common gradient-Lipschitz constant $512$ from the scalar series and exact rational bounds: the first three Hessian upper bounds are less than $439,446,27$, respectively, wherever those Hessians exist, and the fourth has Hessian $\mu I$. The global gradient bounds are proved directly across the scalar nonsmooth-second-derivative points. Thus the maximum is $\mu$-strongly convex.
+
+Since the first three scalar terms are nonnegative,
+\[
+ F(x)\ge\tfrac\mu2\norm x^2,\qquad F(0)=0.
+\]
+This proves compact sublevels and the unique minimum at zero. The first three gradients vanish there and the fourth is $(0,1)\T$; consequently $F'(0;h)=\max\{0,h_2\}$ and the minimizer is nonsmooth.
+
+At any differentiable point of a finite maximum of $L$-smooth functions, all active gradients agree. Inactive pieces remain inactive locally, and the upper smooth Taylor bounds for the active pieces therefore give a local upper Taylor bound $L\norm h^2/2$ for the maximum. Together with strong convexity, this proves
+\begin{equation}\label{L:eq:Hbounds}
+ \mu I\preceq\nabla^2F(x)\preceq512I
+ \quad\text{whenever }F\text{ is twice differentiable}.
+\end{equation}
+This conclusion does not assume the maximum has a globally Lipschitz gradient.
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{2}
+\setcounter{lemma}{2}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{12}
+% SOURCE_END L.span.6
+
+
+% SOURCE_BEGIN L.span.7
+\section{Copying one perturbed bad orbit at every scale}
+
+Set $p_n=a_nc_*$ and $C_*=1+\mu\norm{c_*}^2/2$. For any $y$ with $|q_i\T y|\le1/2$,
+\begin{align*}
+ f_i(p_n+a_ny)
+ &=a_n^2\left\{\tfrac\mu2\norm{c_*+y}^2+1+q_i\T y\right\}\\
+ &=a_n^2\{C_*+g_i\T y+\tfrac\mu2\norm y^2\}.
+\end{align*}
+The fourth branch is negative relative to its quadratic part there if $y$ is sufficiently small and $n\ge1$. Hence, on a fixed small neighborhood of $y=0$,
+\begin{equation}\label{L:eq:local-model}
+ F(p_n+a_ny)=a_n^2\{C_*+Q_\mu(y)\}.
+\end{equation}
+Use Theorem~\ref{L:thm:global}, whose orbit does not depend on $(c_1,c_2)$, to choose one entire bad orbit $\{\bar x_k,\bar H_k\}$ of $Q_\mu$ whose initial point and accepted and rejected queries are all in that neighborhood. The same orbit can be made as small as needed, by the last part of its proof. Set
+\[
+ x_0^{(n)}=p_n+a_n\bar x_0,\qquad H_0^{(n)}=\bar H_0.
+\]
+Every query in the $n$th run is exactly $p_n+a_n$ times the corresponding seed query, and
+\[
+ x_k^{(n)}=p_n+a_n\bar x_k,\qquad H_k^{(n)}=\bar H_k.
+\]
+Indeed, function differences and directional-derivative products scale by $a_n^2$, while both gradients and steps scale by $a_n$. In the inverse-BFGS formula both scale factors cancel. The line search therefore makes the same decisions, including all rejections. Equation~\eqref{L:eq:local-model} applies at the initial point and to every query by the choice of the whole seed orbit. Induction proves the claim.
+
+Since $\bar x_k\to0$,
+\[
+ x_k^{(n)}\to p_n,\qquad F(x_k^{(n)})\downarrow a_n^2C_*>0.
+\]
+At $p_n$ the three active gradients are $a_ng_i$, so $0\notin\partial F(p_n)$. Meanwhile $x_0^{(n)}\to0$ and the supremum of the norms of all queries is at most
+\[
+ a_n\left(\norm{c_*}+\sup_{\text{seed queries}}\norm{\bar x}\right)\to0.
+\]
+The initial matrix is one fixed SPD matrix for every $n$.
+
+\paragraph{Fixing identity initialization.}
+Let $A=\bar H_0^{1/2}$ and define $\widetilde F(z)=F(Az)$. Full-BFGS affine invariance preserves the complete line-search decisions and gives initial matrix $I$ in the $z$ coordinates. The branch strong-convexity and gradient-Lipschitz constants become, for example,
+\[
+ \underline\mu=\mu\lambda_{\min}(\bar H_0)>0,\qquad
+ \overline L=512\lambda_{\max}(\bar H_0)<\infty.
+\]
+These constants are fixed for the one transformed objective and are the same for all starts. Its bad initial and limit points approach zero, and all queries remain arbitrarily close. This proves the four-$C^{1,1}$-branch part of Theorem~\ref{L:thm:local}.
+
+
+\setcounter{section}{6}
+\setcounter{theorem}{2}
+\setcounter{lemma}{2}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{13}
+% SOURCE_END L.span.7
+
+
+% SOURCE_BEGIN L.span.8
+\section{The Hessian condition permits an even simpler variant}
+Replace the smooth ramp by the step $P_b(\xi)=\mathbf1_{\{\xi>\vartheta_b\}}$ and its primitive by $J_b(\xi)=(\xi-\vartheta_b)_+$. Use~\eqref{L:eq:scalar} on the positive intervals, the negative extension $\varphi_b(x)=-x$ for $x<0$, and the same affine positive outer extension. This scalar function is convex and piecewise affine with countably many pieces; it has the same node values, node slopes, and affine neighborhoods~\eqref{L:eq:plateau}. Thus the entire local-copy construction and the same fixed initial matrix work unchanged.
+
+For this variant $F=\mu\norm{x}^2/2+p(x)$, with convex countably piecewise-affine $p$. At a nonzero point, any branch with $q_i\T x=0$ is strictly below the maximum: its scalar value is zero, whereas at least one of $q_0\T x,q_1\T x$ is nonzero and has positive scalar value. Here $q_0,q_1$ are independent. All potentially active scalar arguments are therefore nonzero and encounter only finitely many breakpoints in a small neighborhood. Hence $p$ is locally finite-polyhedral near every nonzero point. At any differentiable such point it is locally affine. The origin is nonsmooth. Consequently
+\[
+ \nabla^2F(x)=\mu I
+ \quad\text{at every twice-differentiable point}.
+\]
+After the fixed affine transformation making $H_0=I$, that Hessian is the one fixed SPD matrix $\mu\bar H_0$. This establishes the remaining version of Theorem~\ref{L:thm:local}.
+
+
+\endgroup
+% SOURCE_END L.span.8
+
+
+\section*{Relation to earlier work}
+The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+
+The negative-results comparisons in Chapter~\ref{comp:D} apply here with the stated stronger convexity and different branch regularity. Like Chapter~\ref{comp:D}, the chapter covers every pair $0<c_1\le1/3$, $c_1<c_2<1$. The first three branches of the local finite-branch construction fail to be twice differentiable at the minimizer. The simpler quadratic-plus-maximum example is a global failure. These distinctions are essential when comparing the theorem with smooth nonconvex counterexamples \cite{NEG_M07,NEG_M14,NEG_DIAO26}.
+
+The stable-manifold principle and graph-transform method are classical; this chapter already uses Dyatlov's exposition \cite[Sections 3--4]{DY}. The report-specific work identifies the derivative of the BFGS return map, certifies its spectral bounds, and applies the principle to that map. Its exact formal orbit construction is recorded with the proof correspondence.
+
+The final change of coordinates fixing the common SPD initialization to identity uses the established affine invariance of full BFGS; see Lewis--Overton \cite[Section 2]{LO} and Xie--W\"achter \cite[Theorem II.1]{XW}. It is a single fixed transformation for the whole constructed family.

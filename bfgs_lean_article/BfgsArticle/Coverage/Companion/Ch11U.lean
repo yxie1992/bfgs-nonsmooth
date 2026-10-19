@@ -259,7 +259,7 @@ theorem tangential_trace_derived {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn �
   exact R.fixed_normal_hessian_trace_budget hμ hstrong hx (fun x hx g hg => hA x hx g hg) hLip
     U hU hUS k
 
-/-- Item `C/11_U/prose/025` (`companion/chapters/11_U.tex:152-154`): "Having $x_*\in P$ makes
+/-- Item `C/11_U/prose/025` (`companion/chapters/11_U.tex:148-150`): "Having $x_*\in P$ makes
 every zero of $A$ on $P$ optimal, so genuine nondifferentiability at every exceptional point is
 unnecessary there." Under the hypotheses of Theorem 11.1, a point $p\in\Omega\cap P$ with
 $A(p)=0$ is the minimizer $x_*$, hence optimal. (Theorem 11.1 has no nondifferentiability
@@ -318,7 +318,7 @@ theorem initialSublevel_sub {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun
     isClosed_le (convex_continuous R.convex) continuous_const
   exact ⟨hsub, hK.of_isClosed_subset hc hsub⟩
 
-/-- Item `C/11_U/heading/002` (`companion/chapters/11_U.tex:113`), Theorem 11.2 (Parallel
+/-- Item `C/11_U/heading/002` (`companion/chapters/11_U.tex:109`), Theorem 11.2 (Parallel
 singular interfaces), with its display `disp/006` (lines 113-133).
 
 Let $F$ be finite convex with attained minimum and compact sublevel $K=\{F\le c\}$. Assume $F$
@@ -356,7 +356,7 @@ theorem parallel_singular_interfaces {n : ℕ} (F : Vec n → ℝ) (_hF : Convex
     (tangent_of_image_eq hA) hLip hE hsmooth
     (fun p hp he => hsingular p hp (by simpa only [normalCoordinate, sub_zero] using he))
 
-/-- Item `C/11_U/prose/021` (`companion/chapters/11_U.tex:137-139`): "At a point of $\Sigma$,
+/-- Item `C/11_U/prose/021` (`companion/chapters/11_U.tex:133-135`): "At a point of $\Sigma$,
 the subdifferential is a nontrivial compact segment parallel to $a$, because every subgradient
 has the same $S$ projection." Under the hypotheses of Theorem 11.2, at $p\in\Omega\cap\Sigma$:
 $\partial F(p)$ is compact and equals the segment $[A(p)+la,\,A(p)+ua]$ with $l<u$ and distinct
@@ -381,7 +381,7 @@ theorem singular_point_segment {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ 
     (nonsmooth_subdifferential_parallel_segment hF ha (tangent_of_image_eq hA p hpΩ)
       (hsingular p hpΩ hpS)).1⟩
 
-/-- Item `C/11_U/disp/007` (`companion/chapters/11_U.tex:139-143`): under the hypotheses of
+/-- Item `C/11_U/disp/007` (`companion/chapters/11_U.tex:135-139`): under the hypotheses of
 Theorem 11.2, at $p\in\Omega\cap\Sigma$,
 \[ \operatorname{aff}\partial F(p)=A(p)+\mathbb Ra,\qquad
    0\in\operatorname{aff}\partial F(p)\iff A(p)=0. \]
@@ -414,7 +414,7 @@ theorem affine_critical_iff_of_hasFDerivAt {n : ℕ} {F : Vec n → ℝ} (hF : C
   rw [ConvexSubdifferential.subdifferential_eq_singleton_of_hasFDerivAt hF hg,
     AffineSubspace.mem_affineSpan_singleton, eq_comm]
 
-/-- Item `C/11_U/prose/022` (`companion/chapters/11_U.tex:143`): "At a smooth point, affine
+/-- Item `C/11_U/prose/022` (`companion/chapters/11_U.tex:139`): "At a smooth point, affine
 criticality is ordinary stationarity." Under the hypotheses of Theorem 11.2, at a point
 $p\in\Omega$ where $F$ is differentiable with gradient $g$,
 $0\in\operatorname{aff}\partial F(p)\iff g=0$. -/
@@ -434,7 +434,7 @@ theorem smooth_point_affine_critical {n : ℕ} (F : Vec n → ℝ) (hF : ConvexO
     (0 : Vec n) ∈ affineSpan ℝ (ConvexSubdifferential.subdifferential F p) ↔ g = 0 :=
   affine_critical_iff_of_hasFDerivAt hF hg
 
-/-- Item `C/11_U/prose/023` (`companion/chapters/11_U.tex:145-149`), with display `disp/008`:
+/-- Item `C/11_U/prose/023` (`companion/chapters/11_U.tex:141-145`), with display `disp/008`:
 "adding $0\in\operatorname{aff}\partial F(p)\implies0\in\partial F(p)$ on $K$ [\dots] gives
 convergence to the minimum value and, under uniqueness, convergence of the whole sequence."
 Under the hypotheses of Theorem 11.2, with $x_*$ a minimizer (the attained minimum), if the
@@ -471,7 +471,7 @@ theorem parallel_interfaces_convergence {n : ℕ} (F : Vec n → ℝ) (_hF : Con
     (fun p hp hz => hcorrect p (hsub hp) hz) xstar hmin
   exact ⟨h.1, h.2.2⟩
 
-/-- Item `C/11_U/prose/023` (`companion/chapters/11_U.tex:145-149`), local form: "or on a
+/-- Item `C/11_U/prose/023` (`companion/chapters/11_U.tex:141-145`), local form: "or on a
 sufficiently low trapped neighborhood". If the hypotheses of Theorem 11.2 hold on an open convex
 neighborhood $\Omega$ of a unique minimizer $x_*$ and
 $0\in\operatorname{aff}\partial F(p)\implies0\in\partial F(p)$ holds on $\Omega$, some
@@ -677,7 +677,7 @@ The standing assumptions are those of `tangential_family` ("the weaker hypothese
 11.1.1", line 327) and an infinite admissible run `R` starting at $x_0$; $S=\mathbb R^{n-1}\times
 \{0\}$, so $P_S$ is `tangentProjection (vnormal m)`. -/
 
-/-- Item `C/11_U/disp/020`, equation (11.16) (`companion/chapters/11_U.tex:328-330`): "Since
+/-- Item `C/11_U/disp/020`, equation (11.16) (`companion/chapters/11_U.tex:320-322`): "Since
 $\psi-\mu\|u\|^2/2$ and $h$ are convex,"
 \[ d_k-(F_k-F_{k+1})\ge\frac\mu2\|P_Ss_k\|^2. \]
 Library: `composite_projected_strong_convex`, `AdmissibleBFGSRun.projected_displacement_budget`. -/
@@ -707,7 +707,7 @@ theorem projected_budget {m : ℕ} (F ψ : Vec (m + 1) → ℝ) (h : ℝ → ℝ
     (fun x _ => rep_of_cons hrep x)
   exact R.projected_displacement_budget (tangentMap (vnormal m)) hF hx k
 
-/-- Item `C/11_U/disp/021` (`companion/chapters/11_U.tex:333-335`): "At differentiable accepted
+/-- Item `C/11_U/disp/021` (`companion/chapters/11_U.tex:325-327`): "At differentiable accepted
 points,"
 \[ P_Sy=P_S[\nabla\psi(z)-\nabla\psi(x)], \]
 for the accepted pair $x=x_k$, $z=x_{k+1}$, $y=y_k=g_{k+1}-g_k$ ($\nabla\psi$ is
@@ -740,7 +740,7 @@ theorem composite_secant_projection {m : ℕ} (F ψ : Vec (m + 1) → ℝ) (h : 
   rw [map_sub, map_sub]
   exact congrArg₂ (fun v w : Vec (m + 1) => v - w) h1 h0
 
-/-- Item `C/11_U/disp/022`, equation (11.17) (`companion/chapters/11_U.tex:336-340`): "Convex
+/-- Item `C/11_U/disp/022`, equation (11.17) (`companion/chapters/11_U.tex:328-332`): "Convex
 $L$-smoothness of $\psi$ on the compact neighborhood, and monotonicity of the scalar subgradient
 of $h$, give"
 \[ \|P_Sy\|^2\le L[\nabla\psi(z)-\nabla\psi(x)]^Ts\le Lt \]
@@ -824,7 +824,7 @@ theorem strictConvex_sublevel_of_strong {n : ℕ} {F : Vec n → ℝ} (hcont : C
   have h4 : a * ℓ + b * ℓ = ℓ := by rw [← add_mul, hab, one_mul]
   nlinarith
 
-/-- Item `C/11_U/prose/030` (`companion/chapters/11_U.tex:352-353`): "A quadratic-plus-absolute-value
+/-- Item `C/11_U/prose/030` (`companion/chapters/11_U.tex:344-345`): "A quadratic-plus-absolute-value
 objective is included". For $F(u,v)=\frac12(\|u\|^2+v^2)+|v|$ in any dimension $n=m+1$, with
 $\psi=\frac12\|x\|^2$ (`NormalSpike.quadratic`) and $h=|\cdot|$: $\psi$ is convex with locally
 Lipschitz gradient, $h$ is convex and locally $C^{1,1}$ off $0$, $F$ is $1$-strongly convex,
@@ -937,7 +937,7 @@ theorem regularRegion_eq {n : ℕ} (Ω : Set (Vec n)) (a : Vec n) (b : ℝ) (E :
 theorem run_mem {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) {K Ω : Set (Vec n)}
     (hrun : ∀ k, R.x k ∈ K) (hKΩ : K ⊆ Ω) : ∀ k, R.x k ∈ Ω := fun k => hKΩ (hrun k)
 
-/-- Item `C/11_U/disp/009`, equation (11.10) (`companion/chapters/11_U.tex:180-183`): "Strong
+/-- Item `C/11_U/disp/009`, equation (11.10) (`companion/chapters/11_U.tex:176-179`): "Strong
 convexity and convexity give"
 \[ d_k-(F_k-F_{k+1})\ge\frac\mu2\|s_k\|^2,\qquad t_k\ge\mu\|s_k\|^2. \]
 Library: `AdmissibleBFGSRun.strong_displacement_budget`, `strong_curvature_bound`. -/
@@ -958,7 +958,7 @@ theorem strong_budget {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn ℝ univ F)
   ⟨R.strong_displacement_budget hstrong (run_mem R hrun hKΩ) k,
     R.strong_curvature_bound hstrong (run_mem R hrun hKΩ) k⟩
 
-/-- Item `C/11_U/disp/010`, equation (11.11) (`companion/chapters/11_U.tex:195-198`): "The
+/-- Item `C/11_U/disp/010`, equation (11.11) (`companion/chapters/11_U.tex:191-194`): "The
 common tangential projection and its Lipschitz constant $L_A$ imply"
 \[ \|P_Sy_k\|^2=\|A(x_{k+1})-A(x_k)\|^2\le L_A^2\|s_k\|^2\le\frac{L_A^2}{\mu}t_k. \]
 $L_A\ge0$ is a Euclidean Lipschitz constant of $A$ on $\Omega$
@@ -997,7 +997,7 @@ theorem tangent_secant {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn ℝ univ F)
           mul_le_mul_of_nonneg_left hs' (sq_nonneg _)
       _ = LA ^ 2 / μ * R.curvature k := by ring
 
-/-- Item `C/11_U/disp/011` (`companion/chapters/11_U.tex:213-215`): "For Theorem 11.1, if
+/-- Item `C/11_U/disp/011` (`companion/chapters/11_U.tex:209-211`): "For Theorem 11.1, if
 $p\in P$ and $g\in\partial F(p)$, strong monotonicity with $0\in\partial F(x_*)$ gives"
 \[ A(p)^T(p-x_*)=g^T(p-x_*)\ge\mu\|p-x_*\|^2. \]
 Under the hypotheses of Theorem 11.1, for $p\in\Omega\cap P$ (in the proof $p$ lies in the
@@ -1095,7 +1095,7 @@ theorem zero_set_hyperplane_general {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn
   rw [he] at hv
   linarith
 
-/-- Item `C/11_U/disp/012` (`companion/chapters/11_U.tex:218-220`), case of Theorem 11.2:
+/-- Item `C/11_U/disp/012` (`companion/chapters/11_U.tex:214-216`), case of Theorem 11.2:
 "In either case the compact set $Z=\{p\in\Gamma:A(p)=0\}$ has scalar image $r(Z)$ disjoint from
 the closed set $E$." Under the hypotheses of Theorem 11.2 ($r(x)=a^Tx$), for a run in $K$ whose
 cluster set $\Gamma$ is assumed (for contradiction, line 187) to contain no affine-critical point.
@@ -1130,7 +1130,7 @@ theorem zero_set_parallel {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ univ 
     Γ hΓ (hΓK.trans hKΩ) hno Z hZ
   simpa only [sub_zero] using h
 
-/-- Item `C/11_U/disp/012` (`companion/chapters/11_U.tex:218-220`), case of Theorem 11.1
+/-- Item `C/11_U/disp/012` (`companion/chapters/11_U.tex:214-216`), case of Theorem 11.1
 ($r(x)=a^Tx-b$, $E=\{0\}$): under the hypotheses of Theorem 11.1, for a run starting at $x_0$
 whose values converge to $\ell$ with $\ell>F_*$ (assumed for contradiction, line 189),
 $Z=\{p\in\Gamma:A(p)=0\}$ is compact and $r(Z)\cap\{0\}=\emptyset$. These hypotheses cannot all
@@ -1210,7 +1210,7 @@ theorem frame_last {n m : ℕ} (U : Matrix (Fin n) (Fin m) ℝ) (a : Vec n) (t :
     frame U a t i (Fin.last m) = t * a i := by
   simp [frame]
 
-/-- Item `C/11_U/disp/013`, equation (11.12) (`companion/chapters/11_U.tex:241-243`): "Let the
+/-- Item `C/11_U/disp/013`, equation (11.12) (`companion/chapters/11_U.tex:235-237`): "Let the
 columns of $U$ be an orthonormal basis of $S$, and set $V(x)=[\,U,\ \tau(r(x))a\,]$." For
 $U$ with $U^TU=I$, $UU^T=P_S$ and $V(x)=$ `frame U a (τ (dot a x - b))`, the first $m$ columns of
 $V(x)$ are the columns of $U$ and the last column is $\tau(r(x))a$. -/
@@ -1250,7 +1250,7 @@ theorem frame_pairing_eq_cutoffFrame {n m : ℕ} (U : Matrix (Fin n) (Fin m) ℝ
     sqNorm ((frame U a t)ᵀ *ᵥ y) = sqNorm ((cutoffFrame U a t)ᵀ.mulVec y) := by
   rw [frame_pairing_sq, cutoffFrame_pairing]
 
-/-- Item `C/11_U/disp/014` (`companion/chapters/11_U.tex:246-249`): "At differentiable points,"
+/-- Item `C/11_U/disp/014` (`companion/chapters/11_U.tex:240-243`): "At differentiable points,"
 \[ \|V(x)^T\nabla F(x)\|^2=\|A(x)\|^2+\tau(r(x))^2|a^T\nabla F(x)|^2. \]
 In the common setting, with $U$ and the cutoff $\tau$, for $x\in\Omega$ where $F$ is
 differentiable with gradient $g$. Library: `cutoffFrame_pairing_eq_visibility`. -/
@@ -1283,7 +1283,7 @@ theorem coordinateGradient_eq {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ u
   supporting_vector_eq_gradient
     (convex_supporting_inequality hF (hasFDerivAt_coordinateGradient hg.differentiableAt)) hg
 
-/-- Item `C/11_U/disp/015` (`companion/chapters/11_U.tex:277-279`): "Convex cocoercivity on each
+/-- Item `C/11_U/disp/015` (`companion/chapters/11_U.tex:269-271`): "Convex cocoercivity on each
 sufficiently small convex chart yields"
 \[ \|\nabla F(z)-\nabla F(x)\|^2\le L_\delta\,y^Ts, \]
 with $y=\nabla F(z)-\nabla F(x)$, $s=z-x$, for endpoints $x,z\in K$ with $\tau(r(z))\neq0$ that
@@ -1316,7 +1316,7 @@ theorem strip_cocoercivity {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ univ
   have hb' := hb x hx z hz hτz hxz
   rwa [coordinateGradient_eq hF hg, coordinateGradient_eq hF hh] at hb'
 
-/-- Item `C/11_U/disp/016`, equation (11.13) (`companion/chapters/11_U.tex:279-281`):
+/-- Item `C/11_U/disp/016`, equation (11.13) (`companion/chapters/11_U.tex:271-273`):
 "Therefore $\|V(z)^Ty\|^2\le C_0t$ for every sufficiently late accepted pair": there is
 $C_0\ge0$ with $\|V(x_{k+1})^Ty_k\|^2\le C_0t_k$ for all large $k$. In the common setting with
 $U$ and the cutoff $\tau$. Library: `AdmissibleBFGSRun.eventually_fixed_normal_frame_secant`. -/
@@ -1374,7 +1374,7 @@ theorem cutoffBeta_mul {n : ℕ} (τ : ℝ → ℝ) (a : Vec n) (b : ℝ) (x z :
     cutoffBeta τ a b x z * dot a (z - x) = τ (dot a z - b) - τ (dot a x - b) := by
   rw [cutoffBeta_eq_cutoffSlope, dot_sub_eq a x z b, cutoffSlope_mul]
 
-/-- Item `C/11_U/disp/017` (`companion/chapters/11_U.tex:292-297`): "For an endpoint pair put
+/-- Item `C/11_U/disp/017` (`companion/chapters/11_U.tex:284-289`): "For an endpoint pair put
 $\beta=[\tau(r(z))-\tau(r(x))]/(a^Ts)$ if $a^Ts\ne0$, $\beta=0$ if $a^Ts=0$. Then
 $|\beta|\le\operatorname{Lip}(\tau)$." In the common setting with the cutoff $\tau$, for every
 pair $x,z$, $s=z-x$, and every Lipschitz constant `Lτ` of $\tau$. Library: `abs_cutoffSlope_le`. -/
@@ -1420,7 +1420,7 @@ theorem frame_transport_identity {n m : ℕ} (U : Matrix (Fin n) (Fin m) ℝ) (a
     rw [Pi.single_eq_of_ne (Fin.castSucc_lt_last j').ne]
     ring
 
-/-- Item `C/11_U/disp/018`, equation (11.14) (`companion/chapters/11_U.tex:298-302`): "With
+/-- Item `C/11_U/disp/018`, equation (11.14) (`companion/chapters/11_U.tex:290-294`): "With
 $e_n$ the last frame-coordinate vector,"
 \[ V(z)=V(x)+s\,\beta e_n^T-\beta P_Ss\,e_n^T \]
 for an endpoint pair $x,z$, $s=z-x$, $\beta$ of display `disp/017` (`cutoffBeta`), $V$ the frame (11.12),
@@ -1449,7 +1449,7 @@ theorem frame_transport {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn ℝ univ F
   rw [hV, hV, hs, hβ]
   exact frame_transport_identity U a b τ x z
 
-/-- Item `C/11_U/disp/019`, equation (11.15) (`companion/chapters/11_U.tex:302-307`): for every
+/-- Item `C/11_U/disp/019`, equation (11.15) (`companion/chapters/11_U.tex:294-299`): for every
 accepted pair ($x=x_k$, $z=x_{k+1}$, $s=s_k$, $d=d_k$, $\beta=\beta_k$),
 \[ R=-\beta P_Ss\,e_n^T\in S,\qquad
    \|R\|_F^2\le\operatorname{Lip}(\tau)^2\|P_Ss\|^2\le\frac{2\operatorname{Lip}(\tau)^2}{\mu}d. \]
@@ -1517,7 +1517,7 @@ theorem residual_bounds {n : ℕ} (F : Vec n → ℝ) (_hF : ConvexOn ℝ univ F
           mul_le_mul_of_nonneg_left (hpd.trans hd) (sq_nonneg _)
       _ = 2 * (Lτ : ℝ) ^ 2 / μ * R.d k := by ring
 
-/-- Item `C/11_U/prose/027` (`companion/chapters/11_U.tex:302`), corrected on 15 October 2026 (M18;
+/-- Item `C/11_U/prose/027` (`companion/chapters/11_U.tex:294`), corrected on 15 October 2026 (M18;
 before "Thus (6) holds with $T=I$ and", where (6) was no equation of the companion): "Thus (11.14)
 is the transport hypothesis of Theorem~\ref{M:residualtheorem}, with $T=I$, rank-one term
 $s(\beta e_n)^T$ and $R=\dots$". Along accepted pairs, (11.14) is the transport hypothesis of
@@ -1607,7 +1607,7 @@ theorem RS_iff_library {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set (V
 /-! ### Section 11.7: the spike $r$ -/
 
 open NormalSpike in
-/-- Item `C/11_U/disp/023` (`companion/chapters/11_U.tex:373-375`): "Let $a_j=2^{-j}$ for
+/-- Item `C/11_U/disp/023` (`companion/chapters/11_U.tex:365-367`): "Let $a_j=2^{-j}$ for
 $j\ge2$, and let $\eta(t)=(1-t^2)^2$ for $|t|\le1$, $\eta(t)=0$ for $|t|>1$." The library's
 `scale N` is $a_{N+2}$ and `bump` is $\eta$. -/
 theorem spike_scale_bump :
@@ -1641,7 +1641,7 @@ theorem bump_support_eq (a : ℝ) (ha : 0 < a) :
     exact right_ne_zero_of_mul h
 
 open NormalSpike in
-/-- Item `C/11_U/prose/034` (`companion/chapters/11_U.tex:375-376`): "This nonnegative bump is
+/-- Item `C/11_U/prose/034` (`companion/chapters/11_U.tex:367-368`): "This nonnegative bump is
 $C^1$, has $\eta(0)=1$, and integral $16/15$. Its supports at the following scales are pairwise
 disjoint": the supports of $v\mapsto\eta((v-a_j)/a_j^5)$, $j\ge2$, are pairwise disjoint.
 Library: `bump_nonneg`, `bump_contDiff`, `bump_total_mass`, `bump_supports_pairwise_disjoint`. -/
@@ -1657,7 +1657,7 @@ theorem bump_properties :
     exact bump_supports_pairwise_disjoint hjN
 
 open NormalSpike in
-/-- Item `C/11_U/disp/024` (`companion/chapters/11_U.tex:377-380`): the density
+/-- Item `C/11_U/disp/024` (`companion/chapters/11_U.tex:369-372`): the density
 \[ k(v)=\sum_{j=2}^\infty a_j^{-3}\eta\Bigl(\frac{v-a_j}{a_j^5}\Bigr),\qquad v>0, \]
 is the library's `density` (indexed by $j+2$), for $a_j=2^{-j}$ and $\eta$ of display `disp/023`. -/
 theorem spike_density_def (a : ℕ → ℝ) (ha : ∀ j, a j = (2 : ℝ) ^ (-(j : ℤ))) (η : ℝ → ℝ)
@@ -1670,14 +1670,14 @@ theorem spike_density_def (a : ℕ → ℝ) (ha : ∀ j, a j = (2 : ℝ) ^ (-(j 
   rw [hs, hη, ← bump_eq_source, scaledDensity, inv_pow]
 
 open NormalSpike in
-/-- Item `C/11_U/disp/025`, equation (11.18) (`companion/chapters/11_U.tex:380-385`):
+/-- Item `C/11_U/disp/025`, equation (11.18) (`companion/chapters/11_U.tex:372-377`):
 \[ r(v)=\int_0^v(v-t)k(t)\,dt\ (v>0),\qquad r(v)=0\ (v\le0). \]
 This is literally the library's `sourcePrimitive` (with $k$ = `density`, display `disp/024`). -/
 theorem spike_def (v : ℝ) :
     sourcePrimitive v = if 0 < v then ∫ t in (0 : ℝ)..v, (v - t) * density t else 0 := rfl
 
 open NormalSpike in
-/-- Item `C/11_U/prose/035` (`companion/chapters/11_U.tex:385`): "Each bump has mass
+/-- Item `C/11_U/prose/035` (`companion/chapters/11_U.tex:377`): "Each bump has mass
 $(16/15)a_j^2$. The total mass is finite." ($\int a_j^{-3}\eta((v-a_j)/a_j^5)\,dv=
 \frac{16}{15}a_j^2$, and $\int k=\frac4{45}<\infty$, $k$ integrable.) Library:
 `scaledDensity_total_mass`, `density_total_mass`, `density_integrable`. -/
@@ -1688,7 +1688,7 @@ theorem bump_masses :
     density_total_mass⟩
 
 open NormalSpike in
-/-- Item `C/11_U/prose/036` (`companion/chapters/11_U.tex:385-388`): "The sum is locally finite
+/-- Item `C/11_U/prose/036` (`companion/chapters/11_U.tex:377-380`): "The sum is locally finite
 away from zero, so $r$ is convex, $C^1$ globally, and $C^3$ on $(0,\infty)$ and $(-\infty,0)$. In
 particular it is locally $C^{1,1}$ away from zero." Locally finite: near every $v\neq0$ all
 bumps from some index on vanish. Library: `exists_tail_below_neighborhood`,
@@ -1716,7 +1716,7 @@ theorem spike_regularity :
     exact scaledDensity_above (scale_pos j) (hu j hj)
 
 open NormalSpike in
-/-- Item `C/11_U/disp/026` (`companion/chapters/11_U.tex:389-391`), corrected on 15 October 2026
+/-- Item `C/11_U/disp/026` (`companion/chapters/11_U.tex:381-383`), corrected on 15 October 2026
 (M19; before "near zero", false for $v<0$): "$0\le r'(v)\le6v^2$, $0\le r(v)\le6v^3$ for
 $v\ge0$." Both bounds hold for every $v\ge0$, and the first also for $v<0$. Library:
 `SourceSpikePropertiesTarget`, `seriesMass_abs_quadratic_bound`. -/
@@ -1746,7 +1746,7 @@ theorem spike_cubic_bound_fails :
   linarith
 
 open NormalSpike in
-/-- Item `C/11_U/disp/027`, equation (11.19) (`companion/chapters/11_U.tex:391-393`): "However,
+/-- Item `C/11_U/disp/027`, equation (11.19) (`companion/chapters/11_U.tex:383-385`): "However,
 $r''(a_j)=a_j^{-3}\to\infty$." For $a_j$ = `scale N` ($j=N+2$): $r'$ is differentiable at $a_j$
 with derivative $a_j^{-3}$, and $r''(a_j)\to\infty$. Library: `sourcePrimitive_second_derivative_peak`,
 `sourcePrimitive_second_derivative_peaks_unbounded`. -/
@@ -1762,7 +1762,7 @@ theorem spike_peak_curvature :
   exact seriesMass_hasDerivAt_pos (scale_pos N)
 
 open NormalSpike in
-/-- Item `C/11_U/prose/037` (`companion/chapters/11_U.tex:393-394`): "(The second derivative at
+/-- Item `C/11_U/prose/037` (`companion/chapters/11_U.tex:385-386`): "(The second derivative at
 zero itself exists and equals zero, but is not continuous there.)" Library:
 `sourcePrimitive_hasSecondDerivAt_zero`, `sourcePrimitive_second_derivative_not_continuousAt_zero`. -/
 theorem spike_second_derivative_zero :
@@ -1780,7 +1780,7 @@ $(u,v)$ is `Fin.cons v u`. It is the library's `NormalSpike.objective (NormalSpi
 
 theorem normal_eq_vnormal (m : ℕ) : NormalSpike.normal m = vnormal (m + 1) := rfl
 
-/-- Item `C/11_U/disp/028`, equation (11.20) (`companion/chapters/11_U.tex:396-401`): "For any
+/-- Item `C/11_U/disp/028`, equation (11.20) (`companion/chapters/11_U.tex:388-393`): "For any
 $n\ge2$, consider $F(u,v)=\frac12\|u\|^2+\frac12v^2+|v|+r(v)$, $u\in\mathbb R^{n-1}$." The
 function so defined is `NormalSpike.objective (NormalSpike.normal m)`. -/
 theorem spike_objective_eq (m : ℕ) (F : Vec (m + 2) → ℝ)
@@ -1832,7 +1832,7 @@ theorem spike_hypotheses (m : ℕ) (F : Vec (m + 2) → ℝ)
     obtain ⟨g, hg⟩ := ConvexSubdifferential.subdifferential_nonempty (objective_convex (normal m)) x
     exact ⟨g, hg, objective_support_tangent _ (normal_unit m) x g hg⟩
 
-/-- Item `C/11_U/prose/038` (`companion/chapters/11_U.tex:401`): "It is 1-strongly convex and
+/-- Item `C/11_U/prose/038` (`companion/chapters/11_U.tex:393`): "It is 1-strongly convex and
 coercive, with unique minimizer zero." Library: `objective_strongConvex`, `objective_coercive`,
 `objective_minimum`, `objective_unique_minimum`. -/
 theorem spike_objective_geometry (m : ℕ) (F : Vec (m + 2) → ℝ)
@@ -1845,7 +1845,7 @@ theorem spike_objective_geometry (m : ℕ) (F : Vec (m + 2) → ℝ)
   exact ⟨NormalSpike.objective_strongConvex _, NormalSpike.objective_coercive _,
     NormalSpike.objective_minimum _, NormalSpike.objective_unique_minimum _⟩
 
-/-- Item `C/11_U/prose/039` (`companion/chapters/11_U.tex:401-403`): "Its only nondifferentiable
+/-- Item `C/11_U/prose/039` (`companion/chapters/11_U.tex:393-395`): "Its only nondifferentiable
 hyperplane is $v=0$; its tangential gradient is $u$, which is globally Lipschitz." $F$ is
 differentiable exactly off $\{v=0\}$; every subgradient at $(u,v)$ has tangential projection
 $P_S(u,v)=(u,0)$; and $P_S$ is Lipschitz (constant $1$). Library: `objective_differentiable_iff`,
@@ -1865,7 +1865,7 @@ theorem spike_objective_interface (m : ℕ) (F : Vec (m + 2) → ℝ)
   · rw [NormalSpike.objective_support_tangent _ (NormalSpike.normal_unit m) _ g hg,
       normal_eq_vnormal, tangent_vnormal, Fin.tail_cons]
 
-/-- Item `C/11_U/prose/040` (`companion/chapters/11_U.tex:403-405`): "Theorem 11.1 therefore
+/-- Item `C/11_U/prose/040` (`companion/chapters/11_U.tex:395-397`): "Theorem 11.1 therefore
 proves global convergence of every admissible full-BFGS run, for arbitrary coupled SPD
 initialization." Proved from `one_exceptional_hyperplane` with the hypotheses
 `spike_hypotheses` ($\Omega=\mathbb R^n$, any start). Library: `spikeObjectiveConvergence`. -/
@@ -1900,7 +1900,7 @@ theorem sample_sqNorm (m : ℕ) (u0 : Vec (m + 1)) (v : ℝ) :
     sqNorm (Fin.cons v u0 : Vec (m + 2)) = v ^ 2 + sqNorm u0 := by
   simp only [sqNorm, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ]
 
-/-- Item `C/11_U/prose/042` (`companion/chapters/11_U.tex:407-409`): "Fix any sufficiently small
+/-- Item `C/11_U/prose/042` (`companion/chapters/11_U.tex:399-401`): "Fix any sufficiently small
 nonzero $u_0$, and take $x_j=(u_0,a_j)$. Their objective values approach the positive level
 $\|u_0\|^2/2$." For every $u_0\in\mathbb R^{n-1}$, $F(u_0,a_j)\to\|u_0\|^2/2$, which is positive
 when $u_0\neq0$ ($a_j$ = `scale N`). -/
@@ -1923,7 +1923,7 @@ theorem spike_sample_values (m : ℕ) (F : Vec (m + 2) → ℝ)
       (fun h => hu0 ((CertificateGeometry.sqNorm_eq_zero_iff u0).mp h.symm))
     positivity
 
-/-- Item `C/11_U/disp/029`, equation (11.21) (`companion/chapters/11_U.tex:410-413`): "At these
+/-- Item `C/11_U/disp/029`, equation (11.21) (`companion/chapters/11_U.tex:402-405`): "At these
 smooth points,"
 \[ x_j^T\nabla^2F(x_j)x_j=\|u_0\|^2+a_j^2+a_j^{-1}\longrightarrow\infty. \]
 For every $u_0$ and $x_j=(u_0,a_j)$: $F$ is $C^3$ near $x_j$, its Hessian matrix
@@ -2065,7 +2065,7 @@ theorem spike_inward_bound_hessian (m : ℕ) (F : Vec (m + 2) → ℝ)
   simp only [hφ]
   linarith
 
-/-- Item `C/11_U/prose/043` (`companion/chapters/11_U.tex:413-415`): "A uniform inward Taylor
+/-- Item `C/11_U/prose/043` (`companion/chapters/11_U.tex:405-407`): "A uniform inward Taylor
 estimate on that fixed positive band would, by taking its second-order limit at each $x_j$,
 bound the left side of (11.21). This is impossible." For $u_0\neq0$, $K=\{F\le b\}$ with
 $b>\|u_0\|^2/2$ and the band $\eta=\|u_0\|^2/4$ (eventually containing every $x_j$), no constants
@@ -2116,7 +2116,7 @@ theorem spike_ir_fails (m : ℕ) (F : Vec (m + 2) → ℝ)
   exact ⟨M, θ, hθ, hθ', hM⟩
 
 open NormalSpike RadialCertificate in
-/-- Item `C/11_U/prose/044` (`companion/chapters/11_U.tex:415-416`): "The equivalence of
+/-- Item `C/11_U/prose/044` (`companion/chapters/11_U.tex:407-408`): "The equivalence of
 Theorem~\ref{R:thm:equiv} between inward radial smoothness and RS therefore rules out RS on that
 band." (Wording point W11 applied on 15 October 2026; before "The recorded equivalence".) For
 $u_0\neq0$, $K=\{F\le b\}$ with $b>\|u_0\|^2/2$ and the band $\eta=\|u_0\|^2/4$ (the band of
@@ -2187,7 +2187,7 @@ theorem spike_rs_fails_band (m : ℕ) (F : Vec (m + 2) → ℝ)
   obtain ⟨C, hC⟩ := hRS (sqNorm u0 / 4) (by positivity)
   exact ⟨C, hC⟩
 
-/-- Item `C/11_U/prose/045` (`companion/chapters/11_U.tex:416-417`): "Choosing $u_0$ arbitrarily
+/-- Item `C/11_U/prose/045` (`companion/chapters/11_U.tex:408-409`): "Choosing $u_0$ arbitrarily
 small gives failure in every neighborhood of the optimizer." (RS) fails on every neighborhood $W$
 of $0$ (item `prose/041`, line 407: "RS fails in every neighborhood of zero"). Library:
 `NormalSpike.not_radial_secant_neighborhood`. -/
@@ -2202,7 +2202,7 @@ theorem spike_rs_fails_nhds (m : ℕ) (F : Vec (m + 2) → ℝ)
 /-! ### Section 11.7.1: exact evaluation of the series -/
 
 open NormalSpike in
-/-- Item `C/11_U/prose/052` (`companion/chapters/11_U.tex:433-434`): "There is no need to
+/-- Item `C/11_U/prose/052` (`companion/chapters/11_U.tex:423-424`): "There is no need to
 truncate (11.18). All bumps below a query can be summed using geometric series, with at most one
 partially included bump." Every query $v$ meets the support of at most one bump; for $v>0$ there is
 an index $N$ such that every bump $j\ge N$ lies below $v$, and then
@@ -2225,7 +2225,7 @@ theorem series_exact :
   rw [scaledPrimitive_kernel_integral (scale_pos j) (scale_le_one j)]
 
 open NormalSpike in
-/-- Item `C/11_U/disp/030` (`companion/chapters/11_U.tex:435-438`): the polynomials
+/-- Item `C/11_U/disp/030` (`companion/chapters/11_U.tex:425-428`): the polynomials
 $P(t)=t-\frac23t^3+\frac15t^5$ and $Q(t)=\frac12t^2-\frac12t^4+\frac16t^6$ are the library's
 `massPoly` and `momentPoly`. -/
 theorem mass_moment_polys (t : ℝ) :
@@ -2233,7 +2233,7 @@ theorem mass_moment_polys (t : ℝ) :
       momentPoly t = (1 / 2) * t ^ 2 - (1 / 2) * t ^ 4 + (1 / 6) * t ^ 6 := ⟨rfl, rfl⟩
 
 open NormalSpike in
-/-- Item `C/11_U/disp/031` (`companion/chapters/11_U.tex:440-442`), with item `prose/053`
+/-- Item `C/11_U/disp/031` (`companion/chapters/11_U.tex:430-432`), with item `prose/053`
 (lines 438-440): "For a query inside the bump centered at $a=a_j$, with $t=(v-a)/a^5$, the
 partial mass is $a^2[P(t)+8/15]$, and its first moment is
 $a^3[P(t)+8/15]+a^7[Q(t)-1/6]$." For $a$ = `scale N` and $v\in[a-a^5,a+a^5]$:
@@ -2267,7 +2267,7 @@ theorem bump_first_moment (a : ℝ) (ha : 0 < a) (ha1 : a ≤ 1) :
   ring
 
 open NormalSpike in
-/-- Item `C/11_U/prose/054` (`companion/chapters/11_U.tex:442-443`): "All smaller bumps have
+/-- Item `C/11_U/prose/054` (`companion/chapters/11_U.tex:432-433`): "All smaller bumps have
 total mass $(16/45)a^2$ and first moment $(16/105)a^3$." For $a=a_N$ (`scale N`), the bumps
 $j>N$ have total mass $\sum_{j>N}\int a_j^{-3}\eta=\frac{16}{45}a^2$ and total first moment
 $\frac{16}{105}a^3$. Library: `smaller_tail_mass`, `smaller_tail_moment`,
@@ -2282,7 +2282,7 @@ theorem smaller_bumps (N : ℕ) :
     rw [← smaller_tail_moment, tailMoment]
 
 open NormalSpike in
-/-- Item `C/11_U/prose/055` (`companion/chapters/11_U.tex:443-444`): "This gives exact rational
+/-- Item `C/11_U/prose/055` (`companion/chapters/11_U.tex:433-434`): "This gives exact rational
 function and derivative values for rational queries." The computable rational functions
 `rationalValueOracle`, `rationalDerivativeOracle`, `rationalSecondDerivativeOracle`
 ($\mathbb Q\to\mathbb Q$) return exactly $r(v)$, $r'(v)$ and $r''(v)$ at every rational $v$.
@@ -2294,7 +2294,7 @@ theorem rational_oracle (v : ℚ) :
   rationalSpikeOracle v
 
 open NormalSpike in
-/-- Item `C/11_U/disp/032` (`companion/chapters/11_U.tex:444-447`): "At a peak,"
+/-- Item `C/11_U/disp/032` (`companion/chapters/11_U.tex:434-437`): "At a peak,"
 \[ r(a)=\frac{64}{315}a^3+\frac16a^7,\qquad r'(a)=\frac89a^2,\qquad r''(a)=a^{-3}, \]
 for $a=a_j$ (`scale N`), identities of the full series (item `prose/056`). Library:
 `sourcePrimitive_peak`, `sourcePrimitive_derivative_peak`, `sourcePrimitive_second_derivative_peak`. -/
@@ -2496,7 +2496,7 @@ theorem dot_cons_zero {m : ℕ} (c : Vec (m + 1)) (x : Vec (m + 2)) :
     dot (Fin.cons 0 c : Vec (m + 2)) x = dot c (Fin.tail x) := by
   simp only [dot, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ, zero_mul, zero_add, Fin.tail]
 
-/-- Item `C/11_U/disp/033` (`companion/chapters/11_U.tex:458-460`): "For a fixed vector
+/-- Item `C/11_U/disp/033` (`companion/chapters/11_U.tex:448-450`): "For a fixed vector
 $c\in\mathbb R^{n-1}$ with $\|c\|<1$, another example is
 $F(u,v)=\frac12(\|u\|^2+v^2)+|(1+c^Tu)v|+r(v)$." The function so defined is the library's
 `printedVariableObjective m c` ($n=m+2$). -/
@@ -2508,7 +2508,7 @@ theorem variable_objective_eq (m : ℕ) (c : Vec (m + 1)) (F : Vec (m + 2) → �
   funext x
   rw [← Fin.cons_self_tail x, hF_def, NormalSpike.printed_variable_formula]
 
-/-- Item `C/11_U/disp/034` (`companion/chapters/11_U.tex:460-463`), with item `prose/060`
+/-- Item `C/11_U/disp/034` (`companion/chapters/11_U.tex:450-453`), with item `prose/060`
 (line 463): "The two quadratic functions before adding $r$ have Hessians
 $\begin{pmatrix}I&c\\c^T&1\end{pmatrix}$, $\begin{pmatrix}I&-c\\-c^T&1\end{pmatrix}$, both bounded
 below by $(1-\|c\|)I$." For $\sigma=\pm1$ and $q_\sigma(u,v)=\frac12(\|u\|^2+v^2)+\sigma(1+c^Tu)v$
@@ -2538,7 +2538,7 @@ theorem variable_hessians (m : ℕ) (c : Vec (m + 1)) (_hc : Real.sqrt (sqNorm c
     (NormalSpike.extended_coupling_tangent m c) σ hσ1 x w
   rwa [NormalSpike.extended_coupling_sqNorm] at h
 
-/-- Item `C/11_U/prose/061` (`companion/chapters/11_U.tex:463-464`): "Their maximum plus convex
+/-- Item `C/11_U/prose/061` (`companion/chapters/11_U.tex:453-454`): "Their maximum plus convex
 $r(v)$ is strongly convex": $F=\max(q_+,q_-)+r(v)$ and $F$ is $(1-\|c\|)$-strongly convex, with
 $1-\|c\|>0$. Library: `printed_variable_strongConvex`. -/
 theorem variable_strongly_convex (m : ℕ) (c : Vec (m + 1)) (hc : Real.sqrt (sqNorm c) < 1)
@@ -2555,7 +2555,7 @@ theorem variable_strongly_convex (m : ℕ) (c : Vec (m + 1)) (hc : Real.sqrt (sq
   · rw [variable_objective_eq m c F hF_def]
     exact NormalSpike.printed_variable_strongConvex m c
 
-/-- Item `C/11_U/prose/062` (`companion/chapters/11_U.tex:464-465`): "Since the absolute-value
+/-- Item `C/11_U/prose/062` (`companion/chapters/11_U.tex:454-455`): "Since the absolute-value
 term and $r$ are nonnegative, zero is the unique minimizer." Library: `variableObjective_minimum`,
 `variableObjective_unique_minimum`. -/
 theorem variable_unique_minimizer (m : ℕ) (c : Vec (m + 1)) (_hc : Real.sqrt (sqNorm c) < 1)
@@ -2568,7 +2568,7 @@ theorem variable_unique_minimizer (m : ℕ) (c : Vec (m + 1)) (_hc : Real.sqrt (
   exact ⟨NormalSpike.variableObjective_zero _ _, NormalSpike.variableObjective_minimum _ _,
     NormalSpike.variableObjective_unique_minimum _ _⟩
 
-/-- Item `C/11_U/prose/063` (`companion/chapters/11_U.tex:467-470`), with display `disp/035`
+/-- Item `C/11_U/prose/063` (`companion/chapters/11_U.tex:457-460`), with display `disp/035`
 (lines 468-470): "On a neighborhood with $|c^Tu|<1/2$, the only exceptional hyperplane is $v=0$,
 and the tangential gradient is $A(u,v)=u+c|v|$, which is Lipschitz across that hyperplane." On the
 open neighborhood $W=\{(u,v):|c^Tu|<1/2\}$ of $0$: $F$ is differentiable exactly where $v\neq0$,
@@ -2601,7 +2601,7 @@ theorem variable_region_geometry (m : ℕ) (c : Vec (m + 1)) (hc : Real.sqrt (sq
     NormalSpike.variableRegion_convex _, hdiff, fun x hx g hg => htan x hx g hg,
     NormalSpike.variableTangent_lipschitz _ _⟩
 
-/-- Item `C/11_U/prose/064` (`companion/chapters/11_U.tex:470`): "Theorem 11.1 gives an
+/-- Item `C/11_U/prose/064` (`companion/chapters/11_U.tex:460`): "Theorem 11.1 gives an
 objective-dependent local full-BFGS convergence basin for every $\|c\|<1$, including $c=0$."
 Proved from the local form of Theorem 11.1 (`hyperplane_local_basin`) on the neighborhood $W$ of
 `variable_region_geometry`: some $\varepsilon>0$, depending only on the objective, gives
@@ -2648,7 +2648,7 @@ theorem variable_local_basin (m : ℕ) (c : Vec (m + 1)) (hc : Real.sqrt (sqNorm
   rw [h0] at hc
   exact hc
 
-/-- Item `C/11_U/prose/065` (`companion/chapters/11_U.tex:472`), first sentence: "If $c\ne0$, the
+/-- Item `C/11_U/prose/065` (`companion/chapters/11_U.tex:462`), first sentence: "If $c\ne0$, the
 normal-gradient jump magnitude $2(1+c^Tu)$ varies with $u$ on this neighborhood." At $(u,0)$ with
 $|c^Tu|<1/2$ the one-sided derivatives of $v\mapsto F(u,v)$ at $0$ are $\pm(1+c^Tu)$, so the jump
 is $2(1+c^Tu)$; for $c\neq0$ two points of the neighborhood have different jumps. -/
@@ -2702,7 +2702,7 @@ theorem variable_jump (m : ℕ) (c : Vec (m + 1)) (_hc : Real.sqrt (sqNorm c) < 
       rw [show 1 / (4 * sqNorm c) * sqNorm c = 1 / 4 by field_simp; ring]
       simp [dot]
 
-/-- Item `C/11_U/prose/066` (`companion/chapters/11_U.tex:472`), second sentence: "More
+/-- Item `C/11_U/prose/066` (`companion/chapters/11_U.tex:462`), second sentence: "More
 precisely, on no open neighborhood of zero can this objective equal $S(u,v)+h(v)$ with $S$
 differentiable and $h$ an arbitrary scalar function" (for $c\neq0$). Library:
 `printed_variable_no_local_smooth_scalar_split`, proved by the central difference of the next
@@ -2723,7 +2723,7 @@ theorem variable_nonsplitting (m : ℕ) (c : Vec (m + 1)) (_hc : Real.sqrt (sqNo
   have hx' := hrep (Fin.tail x) (x 0) (by rwa [Fin.cons_self_tail])
   rwa [Fin.cons_self_tail] at hx'
 
-/-- Item `C/11_U/prose/069` (`companion/chapters/11_U.tex:474-477`), with display `disp/036`:
+/-- Item `C/11_U/prose/069` (`companion/chapters/11_U.tex:464-467`), with display `disp/036`:
 "When $c=0$, the objective has the explicit global decomposition
 $S(u,v)=\frac12(\|u\|^2+v^2)$, $h(v)=|v|+r(v)$, with $S$ smooth." Library:
 `OriginalClaimInterpretation.zero_coupling_split`, `quadratic_smooth`. -/
@@ -2743,7 +2743,7 @@ theorem variable_zero_split (m : ℕ) (F : Vec (m + 2) → ℝ)
   simp [dot]
   ring
 
-/-- Item `C/11_U/prose/071` (`companion/chapters/11_U.tex:478`): "The spike argument still makes
+/-- Item `C/11_U/prose/071` (`companion/chapters/11_U.tex:468`): "The spike argument still makes
 (RS) fail in every neighborhood of zero for all $\|c\|<1$, including the zero case." Library:
 `printed_variable_no_radial_secant`. -/
 theorem variable_rs_fails (m : ℕ) (c : Vec (m + 1)) (hc : Real.sqrt (sqNorm c) < 1)
@@ -2758,7 +2758,7 @@ theorem variable_rs_fails (m : ℕ) (c : Vec (m + 1)) (hc : Real.sqrt (sqNorm c)
 
 /-! ### Relation to earlier work -/
 
-/-- Item `C/11_U/prose/075` (`companion/chapters/11_U.tex:490`): "The smooth-region estimates use
+/-- Item `C/11_U/prose/075` (`companion/chapters/11_U.tex:478`): "The smooth-region estimates use
 classical cocoercivity; see the open-domain Baillon--Haddad theorem~\cite{WW}, Theorem~2.5." The
 cocoercivity that the proof of display (11.13) uses (display `disp/015`): for a convex
 $\psi:\mathbb R^n\to\mathbb R$ that is locally $C^{1,1}$ on an open set $U$ and a compact

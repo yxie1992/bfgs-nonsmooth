@@ -281,7 +281,7 @@ theorem example_flat_contour :
   rw [he] at hmid
   exact hfm.2 hmid
 
-/-! ### Compactness and the normalized upper envelope (`10_Q.tex:55-89`)
+/-! ### Compactness and the normalized upper envelope (`10_Q.tex:55-88`)
 
 Standing assumptions: `P : Parabolic.Family m` (coefficients `P.a i > 0`, slopes `P.b i` of
 both signs) and $F=$ `P.objective` (`objective_isGreatest`). -/
@@ -566,7 +566,7 @@ theorem scale_bounds {m : ℕ} (P : Parabolic.Family m) :
     refine ⟨θlo, max θlo θhi, hlo, le_max_left _ _, fun x hx => ⟨(hb x hx).1, ?_⟩⟩
     exact (hb x hx).2.trans (le_max_right _ _)
 
-/-! ### Visibility and secant correction (`10_Q.tex:94-116`)
+/-! ### Visibility and secant correction (`10_Q.tex:93-115`)
 
 Standing assumptions (line 95): a compact positive band $\eta\le F\le B$ ($\eta>0$), points
 $x=(u,v)$ and $z=(u',v')$ of the band with gradients $g=\nabla F(x)$, $g'=\nabla F(z)$
@@ -582,7 +582,7 @@ theorem band_compact {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) :
       (isClosed_le P.objective_continuous continuous_const)
   · intro x hx; exact hx.2
 
-/-- Item `C/10_Q/disp/010` (`companion/chapters/10_Q.tex:96-98`): the notation
+/-- Item `C/10_Q/disp/010` (`companion/chapters/10_Q.tex:95-97`): the notation
 \[ h=u'-u,\quad \ell=v'-v,\quad s=(h,\ell), \]
 the library's `horizontalStep x z`, `normalStep x z` and `pairStep x z` $=z-x$. -/
 theorem step_notation (x z : Vec 2) :
@@ -591,7 +591,7 @@ theorem step_notation (x z : Vec 2) :
   refine ⟨rfl, rfl, ?_⟩
   ext k; fin_cases k <;> rfl
 
-/-- Item `C/10_Q/disp/011` (`companion/chapters/10_Q.tex:99-102`):
+/-- Item `C/10_Q/disp/011` (`companion/chapters/10_Q.tex:98-101`):
 \[ e=F(z)-(a_iu'^2+b_iv')\ge0,\qquad \bar e=F(x)-(a_ju^2+b_jv)\ge0. \]
 $e$, $\bar e$ are variables with their defining equations (the library's `deficit i z`,
 `deficit j x`); nonnegativity holds for all branches and points. -/
@@ -605,7 +605,7 @@ theorem deficits_nonneg {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (_hη : 
   have h2 : ebar = P.deficit j x := by rw [hebar]; rfl
   exact ⟨h1 ▸ P.deficit_nonneg i z, h2 ▸ P.deficit_nonneg j x, h1, h2⟩
 
-/-- Item `C/10_Q/disp/012`, equations (10.9)-(10.12) (`companion/chapters/10_Q.tex:104-109`):
+/-- Item `C/10_Q/disp/012`, equations (10.9)-(10.12) (`companion/chapters/10_Q.tex:103-108`):
 "Exact identities are
 \[ d-\Delta=a_ih^2+e,\quad t=(a_i+a_j)h^2+e+\bar e,\quad g^Tr(x)=2F(x),\quad
    y^Tr(z)=2a_ihu'+2e." \]
@@ -633,7 +633,7 @@ theorem pair_identities {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (_hη : 
   exact ⟨P.decrease_gap_identity hi, P.curvature_identity hi hj, P.visibility_identity hi,
     P.secant_radial_identity hj⟩
 
-/-- Item `C/10_Q/prose/013` (`companion/chapters/10_Q.tex:110`): "For eligible pairs,
+/-- Item `C/10_Q/prose/013` (`companion/chapters/10_Q.tex:109`): "For eligible pairs,
 $h^2\le d/a_{\min}$ and $e\le d$." Under the standing assumptions, for an eligible pair
 (`EligiblePair P.objective c₁ c₂ x z g g'`, with $0\le c_1$). -/
 theorem eligible_step_bounds {m : ℕ} (P : Parabolic.Family m) (x z : Vec 2) (g g' : Vec 2)
@@ -643,7 +643,7 @@ theorem eligible_step_bounds {m : ℕ} (P : Parabolic.Family m) (x z : Vec 2) (g
       P.objective z - (P.a i * (z 0) ^ 2 + P.b i * z 1) ≤ pairDecrease x z g :=
   ⟨P.eligible_horizontal_sq_le hc₁ hi hp, P.eligible_deficit_le hc₁ hi hp⟩
 
-/-- Item `C/10_Q/disp/013` (`companion/chapters/10_Q.tex:111-114`): "Weighted Cauchy--Schwarz
+/-- Item `C/10_Q/disp/013` (`companion/chapters/10_Q.tex:110-113`): "Weighted Cauchy--Schwarz
 gives
 \[ \frac{(y^Tr(z))^2}{t}\le\frac{4a_i^2}{a_i+a_j}u'^2+4e." \]
 Under the standing assumptions, for $t>0$ (eligible pairs have $t\ge(1-c_2)d>0$); $e$ as in
@@ -669,7 +669,7 @@ theorem rankOne_energy (w y : Vec 2) : dot y (outer w w *ᵥ y) = (dot y w) ^ 2 
   simp [dot, outer, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   ring
 
-/-- Item `C/10_Q/prose/014` (`companion/chapters/10_Q.tex:115`): "The right side is uniformly
+/-- Item `C/10_Q/prose/014` (`companion/chapters/10_Q.tex:114`): "The right side is uniformly
 bounded on the compact band for small $d$. Multiplication by $\theta(z)^2$ proves (S) of
 Chapter~\ref{comp:T}. Equation (10.11) proves (V) with $m=4\theta_{\min}^2\eta^2$." Corrected on
 15 October 2026 (M28: "Equation (11)" printed a number that no companion equation has; W26: "(S)
@@ -736,9 +736,9 @@ theorem secant_visibility {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (hη :
     have := mul_le_mul hsq hvis (by positivity) (sq_nonneg _)
     linarith
 
-/-! ### The step quotient on small-decrease pairs (`10_Q.tex:121-154`) -/
+/-! ### The step quotient on small-decrease pairs (`10_Q.tex:120-153`) -/
 
-/-- Item `C/10_Q/disp/014` (`companion/chapters/10_Q.tex:123-125`): "Define
+/-- Item `C/10_Q/disp/014` (`companion/chapters/10_Q.tex:122-124`): "Define
 \[ D=\det(s,r(x))=2vh-u\ell." \]
 The library's `stepDeterminant x z` is $2vh-u\ell$, and it equals the determinant of the columns
 $s$, $r(x)$ (`determinant v w` $=v_0w_1-v_1w_0$). -/
@@ -750,7 +750,7 @@ theorem step_determinant (x z : Vec 2) :
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, Pi.sub_apply]
   ring
 
-/-- Item `C/10_Q/disp/015`, equation (10.13) (`companion/chapters/10_Q.tex:127-129`): "We next
+/-- Item `C/10_Q/disp/015`, equation (10.13) (`companion/chapters/10_Q.tex:126-128`): "We next
 prove, uniformly on the positive band and for sufficiently small eligible $d$,
 \[ d\le C|D|,\qquad |h|\le C|D|." \]
 On the band $K=\{\eta\le F\le B\}$ ($\eta>0$, $0\le c_1$, $c_2<1$): some $C>0$ and $\delta>0$ give,
@@ -766,7 +766,7 @@ theorem denominator_bounds {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (hη 
   obtain ⟨C, δ, hC, hδ, hb⟩ := P.exists_small_denominator_bounds (band_compact P η B) hη hc₁ hc₂
   exact ⟨C, δ, hC, hδ, fun x z g g' hx hz hp hd => hb x hx z hz g g' hp hx.1 hd⟩
 
-/-- Item `C/10_Q/prose/016` (`companion/chapters/10_Q.tex:132`): "Let $N=y^Tr(z)$. Since
+/-- Item `C/10_Q/prose/016` (`companion/chapters/10_Q.tex:131`): "Let $N=y^Tr(z)$. Since
 $r(z)-r(x)=\operatorname{diag}(1,2)s$". ($N$ only names $y^Tr(z)$.) -/
 theorem radial_difference (x z : Vec 2) :
     radialDirection z - radialDirection x = !![1, 0; 0, 2] *ᵥ pairStep x z := by
@@ -775,7 +775,7 @@ theorem radial_difference (x z : Vec 2) :
   all_goals simp [radialDirection, pairStep, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   all_goals ring
 
-/-- Item `C/10_Q/disp/016` (`companion/chapters/10_Q.tex:133-135`):
+/-- Item `C/10_Q/disp/016` (`companion/chapters/10_Q.tex:132-134`):
 \[ y^Tr(x)=-2t+N+y_uh, \]
 with $N=y^Tr(z)$ and $y_u$ the first component of $y$; for all points and vectors. -/
 theorem old_radial (x z y : Vec 2) (N : ℝ) (hN : N = dot y (radialDirection z)) :
@@ -796,7 +796,7 @@ theorem band_bounds {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) :
   · exact abs_coordinate_of_sqNorm_le hG.le
       (hgrad x hx g (convex_supporting_inequality P.objective_convex hg)) k
 
-/-- Item `C/10_Q/disp/017` (`companion/chapters/10_Q.tex:137-139`), with the claim of line 136:
+/-- Item `C/10_Q/disp/017` (`companion/chapters/10_Q.tex:136-138`), with the claim of line 136:
 "By (10.12), bounded endpoints and gradients, and $e\le d$,
 \[ y^Tr(x)=-2t+\varepsilon,\qquad |\varepsilon|\le C(|h|+d)." \]
 On the band $K$ ($0\le c_1$): some $C\ge0$ gives $|y^Tr(x)+2t|\le C(|h|+d)$ for every eligible
@@ -828,7 +828,7 @@ theorem radial_error {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (c₁ c₂ 
   rw [this]
   exact herr
 
-/-- Item `C/10_Q/disp/018` (`companion/chapters/10_Q.tex:141-144`): "The two-dimensional
+/-- Item `C/10_Q/disp/018` (`companion/chapters/10_Q.tex:140-143`): "The two-dimensional
 determinant identity yields
 \[ \det(g,y)D=(g^Ts)(y^Tr(x))-(g^Tr(x))(y^Ts)=-d\,y^Tr(x)-2F(x)t." \]
 For a differentiable $x$ with gradient $g$, any $z$ and $y$ (here $y=g'-g$ for a gradient $g'$ at
@@ -851,7 +851,7 @@ theorem determinant_identity' {m : ℕ} (P : Parabolic.Family m) (x z g g' : Vec
   rw [hv]
   simp only [pairDecrease, pairCurvature, neg_neg]
 
-/-- Item `C/10_Q/disp/019` (`companion/chapters/10_Q.tex:146-148`): "Consequently
+/-- Item `C/10_Q/disp/019` (`companion/chapters/10_Q.tex:145-147`): "Consequently
 \[ (2F(x)-2d)t\le C|D|+Cd(|h|+d)." \]
 On the band $K$ ($0\le c_1$): some $C$ works for every eligible pair in $K$. -/
 theorem absorption_inequality {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (c₁ c₂ : ℝ)
@@ -896,7 +896,7 @@ theorem absorption_inequality {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (c
           nlinarith [mul_le_mul_of_nonneg_right this (mul_nonneg hd.le hs)]
   linarith
 
-/-- Item `C/10_Q/disp/020`, equation (10.14) (`companion/chapters/10_Q.tex:150-152`): "The exact
+/-- Item `C/10_Q/disp/020`, equation (10.14) (`companion/chapters/10_Q.tex:149-151`): "The exact
 identity
 \[ b_iD=2F(x)h+ud." \]
 For an active branch $i$ at $x$ with gradient $g$ there, for every $z$ (library
@@ -909,9 +909,9 @@ theorem slope_determinant {m : ℕ} (P : Parabolic.Family m) (x z g : Vec 2) (i 
   subst hgi
   exact P.slope_determinant_identity hi
 
-/-! ### The rescaling cancels first-order transport (`10_Q.tex:159-217`) -/
+/-! ### The rescaling cancels first-order transport (`10_Q.tex:158-216`) -/
 
-/-- Item `C/10_Q/disp/021` (`companion/chapters/10_Q.tex:161-163`): "Since $D\ne0$, define
+/-- Item `C/10_Q/disp/021` (`companion/chapters/10_Q.tex:160-162`): "Since $D\ne0$, define
 \[ \lambda=1+\frac{h\ell}{D}. \]
 Then $r(z)-\lambda r(x)$ is parallel to $s$." $\lambda$ is a variable with its defining equation
 (the library's `quotientMultiplier x z`). -/
@@ -924,7 +924,7 @@ theorem quotient_multiplier (x z : Vec 2) (hD : stepDeterminant x z ≠ 0) (lam 
   simp only [quotientMultiplier]
   abel
 
-/-- Item `C/10_Q/disp/022`, equation (10.15) (`companion/chapters/10_Q.tex:165-168`): "A direct
+/-- Item `C/10_Q/disp/022`, equation (10.15) (`companion/chapters/10_Q.tex:164-167`): "A direct
 identity using $d=-2a_iuh-b_i\ell$ is
 \[ \lambda-1+\frac{a_iu}{F(x)}h=-\frac{vhd}{F(x)D}." \]
 For an active branch $i$ at $x$ with gradient $g$ there, $F(x)\ne0$, $D\ne0$. -/
@@ -952,7 +952,7 @@ theorem band_radius {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) :
   exact ⟨R, hR, fun x hx k =>
     abs_coordinate_of_sqNorm_le hR.le (by simpa only [sub_zero] using hrad x hx) k⟩
 
-/-- Item `C/10_Q/disp/023` (`companion/chapters/10_Q.tex:170-173`), with the claims of line 169:
+/-- Item `C/10_Q/disp/023` (`companion/chapters/10_Q.tex:169-172`), with the claims of line 169:
 "By (10.13), the right side is $O(d)$ uniformly on the band. Since $h^2=O(d)$,
 \[ \lambda=1+O(\sqrt d)>0,\qquad \log\lambda=-\frac{a_iu}{F(x)}h+O(d)." \]
 On the band $\{\eta\le F\le B\}$ ($\eta>0$, $0\le c_1$, $c_2<1$): constants $C$ and $\delta>0$
@@ -1032,7 +1032,7 @@ theorem multiplier_estimates {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (h�
     exact hs.trans (mul_le_mul_of_nonneg_right hCs (Real.sqrt_nonneg _))
   · exact hlog.trans (mul_le_mul_of_nonneg_right hCl hdpos)
 
-/-- Item `C/10_Q/disp/024` (`companion/chapters/10_Q.tex:175-178`), with the claim of line 174 and
+/-- Item `C/10_Q/disp/024` (`companion/chapters/10_Q.tex:174-177`), with the claim of line 174 and
 the conclusion of line 179: "For the old branch's exponent $L_i(x)=a_iu^2/(2F(x))+k_i$,
 smoothness in the two scalar arguments $(u,F)$ on the positive band gives
 \[ L_i(z)-L_i(x)=\frac{a_iu}{F(x)}h+O(h^2+\Delta)=\frac{a_iu}{F(x)}h+O(d). \]
@@ -1128,7 +1128,7 @@ theorem exponent_estimates {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (hη 
         U * pairDecrease x z g := hsum
     _ ≤ (U + V + C1) * pairDecrease x z g := by nlinarith
 
-/-- Item `C/10_Q/disp/025`, equation (10.16) (`companion/chapters/10_Q.tex:182-184`), with the
+/-- Item `C/10_Q/disp/025`, equation (10.16) (`companion/chapters/10_Q.tex:181-183`), with the
 claim of line 181: "We still need to account for a change from branch $i$ to branch $j$. The
 finite-envelope geometry implies
 \[ |L_j(z)-L_i(z)|\le C\frac{e}{F(z)}\le C_\eta d." \]
@@ -1158,7 +1158,7 @@ theorem branch_change {m : ℕ} (P : Parabolic.Family m) (L : Fin m → Vec 2 �
     rw [div_mul_eq_mul_div]
     exact ratio_bound (mul_nonneg hC.le he0) (mul_le_mul_of_nonneg_left he hC.le) hη hz.1
 
-/-- Item `C/10_Q/disp/027` (`companion/chapters/10_Q.tex:190-192`), with its normalization display
+/-- Item `C/10_Q/disp/027` (`companion/chapters/10_Q.tex:189-191`), with its normalization display
 `C/10_Q/disp/026` (lines 186-188) and the claims of lines 189 and 193: "Normalize a point by
 $t_0=u'^2/F(z)$, $v_0=v'/F(z)$. It lies on the compact polygonal arc
 \[ S=\{(t_0,v_0):t_0\ge0,\ \max_i(a_it_0+b_iv_0)=1\}. \]
@@ -1262,7 +1262,7 @@ theorem arc_range_iff {m : ℕ} (P : Parabolic.Family m) (v : ℝ) :
       rw [inv_eq_one_div, le_div_iff₀ hbmax_pos]
       linarith
 
-/-- Item `C/10_Q/prose/022` (`companion/chapters/10_Q.tex:189`): "It lies on the compact polygonal
+/-- Item `C/10_Q/prose/022` (`companion/chapters/10_Q.tex:188`): "It lies on the compact polygonal
 arc" $S$ of display `disp/027` (membership and compactness: `normalized_arc`). With
 $\tau(v_0)=\min_i(1-b_iv_0)/a_i$ (a variable with this defining equation, the minimum written with
 `Finset.inf'`), a minimum of finitely many affine functions: $S$ is the graph $t_0=\tau(v_0)$ over
@@ -1366,7 +1366,7 @@ theorem arc_graph {m : ℕ} (P : Parabolic.Family m) (S : Set (ℝ × ℝ))
   intro i _
   fun_prop
 
-/-- Item `C/10_Q/disp/028` (`companion/chapters/10_Q.tex:194-197`): "On the segment where $j$ is
+/-- Item `C/10_Q/disp/028` (`companion/chapters/10_Q.tex:193-196`): "On the segment where $j$ is
 active, both
 \[ e/F(z)=1-a_it_0-b_iv_0,\qquad L_j-L_i=(a_j-a_i)t_0/2+k_j-k_i \]
 are affine functions." For $F(z)>0$ and $j$ active at $z$, with $t_0$, $v_0$ the normalized
@@ -1395,7 +1395,7 @@ theorem segment_affine {m : ℕ} (P : Parabolic.Family m) (L : Fin m → Vec 2 �
   · rw [ht0']; field_simp; ring
   · rw [ht0']; field_simp; ring
 
-/-- Item `C/10_Q/prose/024` (`companion/chapters/10_Q.tex:198`): "The first is nonnegative.
+/-- Item `C/10_Q/prose/024` (`companion/chapters/10_Q.tex:197`): "The first is nonnegative.
 Whenever it vanishes, the second vanishes by (10.7)." On each cell (segment) of the envelope,
 parametrized by $v_0$ (`envelopeCell j`), for every branch $i$: the first function
 (`envelopeDeficit i j`) is nonnegative and where it vanishes so does the second
@@ -1420,7 +1420,7 @@ theorem segment_bound_facts {m : ℕ} (P : Parabolic.Family m) :
     P.exists_uniform_cell_deficit_bound, P.prunedFamily_objective,
     fun _ _ hg => P.prunedFamily_gradient hg⟩
 
-/-- Item `C/10_Q/prose/025` (`companion/chapters/10_Q.tex:198`): "On an adjacent segment the two
+/-- Item `C/10_Q/prose/025` (`companion/chapters/10_Q.tex:197`): "On an adjacent segment the two
 functions are proportional; on a nonadjacent segment the first has a positive minimum." With $S$
 the arc of display `disp/027` and the segment of branch $k$ in the coordinate $v_0$,
 $S_k=\{v_0:\exists t_0,\ (t_0,v_0)\in S,\ a_kt_0+b_kv_0=1\}$ (variables with their defining
@@ -1554,7 +1554,7 @@ theorem segment_cases {m : ℕ} (P : Parabolic.Family m) (S : Set (ℝ × ℝ))
         exact hmem.elim
     exact ⟨_, hpos, fun v hv => hmin hv⟩
 
-/-- Item `C/10_Q/prose/027` (`companion/chapters/10_Q.tex:198`): "Removal of zero-length envelope
+/-- Item `C/10_Q/prose/027` (`companion/chapters/10_Q.tex:197`): "Removal of zero-length envelope
 pieces avoids spurious triple junctions; it does not change the objective or its differentiable
 gradients." After the removal (only essential pieces remain), no three distinct pieces are maximal
 at a common normalized coordinate $\xi$; the pruned family has the same objective and, at every
@@ -1599,7 +1599,7 @@ theorem no_triple_junction {m : ℕ} (P : Parabolic.Family m) :
     | exact key ξ j i k hj.1 hi hk.1 hij.symm hik.symm (by assumption) (by assumption) haj hai hak
     | exact key ξ k i j hk.1 hi hj.1 hik.symm hij.symm (by assumption) (by assumption) hak hai haj
 
-/-- Item `C/10_Q/disp/029` (`companion/chapters/10_Q.tex:201-203`): "It follows that the
+/-- Item `C/10_Q/disp/029` (`companion/chapters/10_Q.tex:200-202`): "It follows that the
 compensated transport multiplier
 \[ \widetilde\lambda=\theta(z)\lambda/\theta(x)" \]
 is the library's `compensatedMultiplier x z` (a variable with this defining equation). -/
@@ -1607,7 +1607,7 @@ theorem compensated_def {m : ℕ} (P : Parabolic.Family m) (x z : Vec 2) (lt : �
     (hlt : lt = P.calibratedScale z * quotientMultiplier x z / P.calibratedScale x) :
     lt = P.compensatedMultiplier x z := hlt
 
-/-- Item `C/10_Q/disp/030`, equation (10.17) (`companion/chapters/10_Q.tex:205-207`):
+/-- Item `C/10_Q/disp/030`, equation (10.17) (`companion/chapters/10_Q.tex:204-206`):
 "[$\widetilde\lambda$] satisfies
 \[ |\log\widetilde\lambda|\le C_\eta d." \]
 On the band $\{\eta\le F\le B\}$ ($0\le c_1$, $c_2<1$): $C_\eta$ and $\delta$ chosen before the
@@ -1623,7 +1623,7 @@ theorem compensated_log {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (hη : 0
   obtain ⟨C, δ, hC, hδ, -, hb⟩ := P.exists_uniform_log_transport (band_compact P η B) hη hc₁ hc₂
   exact ⟨C, δ, hC, hδ, fun x z g g' hx hz hp hd => hb x hx z hz g g' hp hx.1 hz.1 hd⟩
 
-/-- Item `C/10_Q/disp/031` (`companion/chapters/10_Q.tex:209-211`): "Because
+/-- Item `C/10_Q/disp/031` (`companion/chapters/10_Q.tex:208-210`): "Because
 \[ \Pi_s(\theta(z)r(z))=\widetilde\lambda\Pi_s(\theta(x)r(x)), \]"
 with $\Pi_s$ the projector perpendicular to $s$ (`stepProjector`), whenever $D\ne0$. -/
 theorem projected_transport {m : ℕ} (P : Parabolic.Family m) (x z : Vec 2)
@@ -1633,7 +1633,7 @@ theorem projected_transport {m : ℕ} (P : Parabolic.Family m) (x z : Vec 2)
   rw [P.calibrated_vector_transport hD, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul,
     stepProjector_mulVec_self, smul_zero, add_zero]
 
-/-- Item `C/10_Q/disp/032` (`companion/chapters/10_Q.tex:213-216`): "we obtain
+/-- Item `C/10_Q/disp/032` (`companion/chapters/10_Q.tex:212-215`): "we obtain
 \[ \Pi_sW(z)\Pi_s\preceq e^{2C_\eta d}\Pi_sW(x)\Pi_s\preceq(1+L_\eta d)\Pi_sW(x)\Pi_s \]
 on a sufficiently small-decrease tail." With $W=(\theta r)(\theta r)^T$, on the band: $C_\eta$,
 $L_\eta$ and $\delta$ chosen before the pairs such that, for every eligible pair in the band with
@@ -1687,7 +1687,7 @@ theorem transport_loewner {m : ℕ} (P : Parabolic.Family m) (η B : ℝ) (hη :
   refine ⟨DEmbedding.rankOne_posSemidef (by linarith) v,
     DEmbedding.rankOne_posSemidef (by linarith) v⟩
 
-/-- Item `C/10_Q/prose/028` (`companion/chapters/10_Q.tex:217`): "This is (T). The
+/-- Item `C/10_Q/prose/028` (`companion/chapters/10_Q.tex:216`): "This is (T). The
 transported-certificate theorem of Chapter~\ref{comp:T} proves convergence from every admissible
 initialization." (Wording point W26 applied on 15 October 2026; before "The general
 theorem".) (V), (S) and (T) together: for every compact $K$, $\eta>0$, $0\le c_1$, $c_2<1$, the
@@ -1703,7 +1703,7 @@ theorem band_certificate {m : ℕ} (P : Parabolic.Family m) {K : Set (Vec 2)} (h
         Tendsto (fun k => P.objective (R.x k)) atTop (𝓝 0) ∧ Tendsto R.x atTop (𝓝 0) :=
   ⟨P.exists_bandCertificate hK hη hc₁ hc₂, fun R => R.parabolic_convergence P⟩
 
-/-! ### The explicit three-branch example (`10_Q.tex:231-314`)
+/-! ### The explicit three-branch example (`10_Q.tex:230-313`)
 
 `Example.family` has $a=(1,3,2)$, $b=(1,0,-1)$ and `Example.objective` is its maximum (10.18).
 `Example.oldPoint u ε` $=x_\epsilon=(u,2u^2+\epsilon)$, `Example.newPoint u ρ ε`
@@ -1712,7 +1712,7 @@ $=z_{\epsilon,\rho}=(u,2u^2-\rho\epsilon)$ (the printed $z_\epsilon$ is $\rho=1/
 `Example.oldGradient u` $=g=(2u,1)$ and `Example.newGradient u` $=g'=(6u,0)$; the printed scale
 $\theta$ is `Example.sourceScale` and $\theta r$ is `Example.sourceVector`. -/
 
-/-- Item `C/10_Q/disp/033`, equation (10.18) (`companion/chapters/10_Q.tex:233-235`): "Consider
+/-- Item `C/10_Q/disp/033`, equation (10.18) (`companion/chapters/10_Q.tex:232-234`): "Consider
 \[ F(u,v)=\max\{u^2+v,\ 3u^2,\ 2u^2-v\}." \]
 With $F$ a variable with this defining equation: $F$ is the library's `Example.objective`, the
 maximum of the family `Example.family` with $a=(1,3,2)$ and $b=(1,0,-1)$. -/
@@ -1722,7 +1722,7 @@ theorem example_objective (F : Vec 2 → ℝ)
       Example.family.a = ![1, 3, 2] ∧ Example.family.b = ![1, 0, -1] :=
   ⟨funext fun x => by rw [hF, Example.objective_eq_max], rfl, rfl, rfl⟩
 
-/-- Item `C/10_Q/prose/029` (`companion/chapters/10_Q.tex:236`): "The switching parabolas are
+/-- Item `C/10_Q/prose/029` (`companion/chapters/10_Q.tex:235`): "The switching parabolas are
 $v=-u^2$ and $v=2u^2$." The branch $u^2+v$ is active exactly on $v\ge2u^2$, the branch $3u^2$
 exactly on $-u^2\le v\le2u^2$, the branch $2u^2-v$ exactly on $v\le-u^2$; two different branches
 are active at $(u,v)$ exactly when $v=2u^2$ or $v=-u^2$. -/
@@ -1807,7 +1807,7 @@ theorem example_switching :
     · exact ⟨0, 1, by decide, (h0 x).mpr h.ge, (h1 x).mpr ⟨by linarith [sq_nonneg (x 0)], h.le⟩⟩
     · exact ⟨1, 2, by decide, (h1 x).mpr ⟨h.ge, by linarith [sq_nonneg (x 0)]⟩, (h2 x).mpr h.le⟩
 
-/-- Item `C/10_Q/prose/030` (`companion/chapters/10_Q.tex:236`): "Between them the objective is
+/-- Item `C/10_Q/prose/030` (`companion/chapters/10_Q.tex:235`): "Between them the objective is
 flat in $v$, but the origin is its unique minimizer." On $-u^2\le v\le2u^2$ the objective is
 $3u^2$, independent of $v$ (with $v$-derivative $0$ on the open region); $F(0)=0<F(x)$ for
 $x\ne0$. -/
@@ -1823,7 +1823,7 @@ theorem example_flat_unique :
   exact lt_of_le_of_ne (Example.family.objective_nonneg x)
     (fun h => hx (Example.family.unique_zero x h.symm))
 
-/-- Item `C/10_Q/prose/031` (`companion/chapters/10_Q.tex:236`): "The theorem applies globally."
+/-- Item `C/10_Q/prose/031` (`companion/chapters/10_Q.tex:235`): "The theorem applies globally."
 The coefficients $a=(1,3,2)$, $b=(1,0,-1)$ satisfy the hypotheses of Theorem `theorem/001`, and
 `parabolic_convergence`, applied to them, gives convergence of every admissible run, from every
 initial point and every $H_0\succ0$. -/
@@ -1838,7 +1838,7 @@ theorem example_applies :
   exact ⟨ha, hneg, hpos, fun R => parabolic_convergence _ _ ha hneg hpos Example.objective
     (objective_isGreatest Example.family) R⟩
 
-/-- Item `C/10_Q/disp/034` (`companion/chapters/10_Q.tex:239-246`), with the lead-in of line 238:
+/-- Item `C/10_Q/disp/034` (`companion/chapters/10_Q.tex:238-245`), with the lead-in of line 238:
 "An especially simple scaling for (10.8) is
 \[ \theta(u,v)=\begin{cases}\exp\{u^2/F-1/3\},&v<-u^2,\\ 1,&-u^2<v<2u^2,\\
    \exp\{u^2/(2F)-1/6\},&v>2u^2.\end{cases} \]"
@@ -1952,7 +1952,7 @@ theorem example_scale (θ : Vec 2 → ℝ)
     · rw [hk2, hc2]
       ring
 
-/-- Item `C/10_Q/prose/033` (`companion/chapters/10_Q.tex:247`): "It is continuous across both
+/-- Item `C/10_Q/prose/033` (`companion/chapters/10_Q.tex:246`): "It is continuous across both
 interfaces, and $e^{-1/3}\le\theta\le1$." The scale extended across the interfaces
 (`Example.sourceScale`, equal to $\theta$ off the interfaces by `example_scale`) is continuous on
 $F>0$; on each interface ($u\ne0$) the formula of the outer region takes the middle value $1$; and
@@ -1984,7 +1984,7 @@ theorem example_scale_continuous :
     · rw [Example.sourceScale, if_neg (by rw [h]; nlinarith [sq_nonneg (x 0)]),
         if_neg (by rw [h]; exact lt_irrefl _)]
 
-/-- Item `C/10_Q/prose/034` (`companion/chapters/10_Q.tex:247`): "Take
+/-- Item `C/10_Q/prose/034` (`companion/chapters/10_Q.tex:246`): "Take
 $W=\theta^2(u,2v)(u,2v)^T$." With $W$ a variable with this defining equation ($\theta$ the scale
 extended across the interfaces): $W=(\theta r)(\theta r)^T$ and, as in the general case, it is a
 band certificate on every compact set and positive band (library
@@ -2005,7 +2005,7 @@ theorem example_field (W : Vec 2 → Mat 2)
   obtain ⟨Bc, hBc⟩ := Example.exists_source_bandCertificate hK hη hc₁ hc₂
   exact ⟨Bc, fun x => by rw [hBc, hW']⟩
 
-/-- Item `C/10_Q/disp/035` (`companion/chapters/10_Q.tex:250-253`), with the standing assumptions
+/-- Item `C/10_Q/disp/035` (`companion/chapters/10_Q.tex:249-252`), with the standing assumptions
 of line 249: "Fix $u\ne0$, $A>0$, and $0<\epsilon<6u^2$. Let
 \[ x_\epsilon=(u,2u^2+\epsilon),\qquad z_\epsilon=(u,2u^2-\epsilon/2), \]"
 variables with these defining equations: they are `Example.oldPoint u ε` and
@@ -2022,7 +2022,7 @@ theorem printed_points (u A ε : ℝ) (_hu : u ≠ 0) (_hA : 0 < A) (_hε : 0 < 
   · show 2 * u ^ 2 - ε / 2 = 2 * u ^ 2 - 1 / 2 * ε
     ring
 
-/-- Item `C/10_Q/disp/036` (`companion/chapters/10_Q.tex:254-259`):
+/-- Item `C/10_Q/disp/036` (`companion/chapters/10_Q.tex:253-258`):
 \[ H_\epsilon=\begin{pmatrix}A&-2uA\\-2uA&4u^2A+3\epsilon/2\end{pmatrix}\succ0. \]
 $H_\epsilon$ is a variable with this defining equation; it is `Example.initialMetric u A (1/2) ε`
 and it is positive definite ($A>0$, $\epsilon>0$). -/
@@ -2041,7 +2041,7 @@ theorem printed_metric (u A ε : ℝ) (_hu : u ≠ 0) (hA : 0 < A) (hε : 0 < ε
       ring
   exact ⟨he, he ▸ Example.initialMetric_posDef hA (by norm_num) hε⟩
 
-/-- Item `C/10_Q/disp/041` (`companion/chapters/10_Q.tex:290-293`), with the claim of line 289 "The
+/-- Item `C/10_Q/disp/041` (`companion/chapters/10_Q.tex:289-292`), with the claim of line 289 "The
 active gradients remain $(2u,1)^T$ and $(6u,0)^T$, and direct calculation gives
 \[ -H_{\epsilon,\rho}g=z_{\epsilon,\rho}-x_\epsilon,\qquad d=t=(1+\rho)\epsilon,
    \qquad\Delta=\epsilon." \]
@@ -2063,7 +2063,7 @@ theorem family_identities (u A ρ ε : ℝ) (hρ : 0 < ρ) (hε : 0 < ε) (hs : 
   exact ⟨hg, hg', hstep, Example.pair_decrease u ρ ε, Example.pair_curvature u ρ ε,
     by rw [hx, hz]; ring⟩
 
-/-- Item `C/10_Q/disp/037` (`companion/chapters/10_Q.tex:261-264`), with the claim of line 260 "The
+/-- Item `C/10_Q/disp/037` (`companion/chapters/10_Q.tex:260-263`), with the claim of line 260 "The
 gradients are $g=(2u,1)^T$ and $g'=(6u,0)^T$. Directly,
 \[ -H_\epsilon g=z_\epsilon-x_\epsilon,\quad d=t=3\epsilon/2,\quad \Delta=\epsilon." \]
 Under the standing assumptions of line 249 ($A$ is not used). -/
@@ -2083,7 +2083,7 @@ theorem printed_identities (u A ε : ℝ) (_hu : u ≠ 0) (_hA : 0 < A) (hε : 0
     family_identities u A (1 / 2) ε (by norm_num) hε (by linarith)
   exact ⟨hg, hg', hstep, by rw [hd]; ring, by rw [ht]; ring, hΔ⟩
 
-/-- Item `C/10_Q/prose/036` (`companion/chapters/10_Q.tex:265`): "Under the fixed ordinary
+/-- Item `C/10_Q/prose/036` (`companion/chapters/10_Q.tex:264`): "Under the fixed ordinary
 line-search parameters, $\alpha=1$ is an actual first full-BFGS step exactly when the Armijo
 condition $c_1\le2/3$ holds." For $0<c_1<c_2<1$ and the standing assumptions of line 249:
 $H_\epsilon$ is positive definite, the unit step from $x_\epsilon$ along $-H_\epsilon g$ lands at
@@ -2126,7 +2126,7 @@ theorem printed_acceptance (u A ε c₁ c₂ : ℝ) (_hu : u ≠ 0) (hA : 0 < A)
   · intro h
     exact ⟨by linarith [harm.mpr h], hwolfe⟩
 
-/-- Item `C/10_Q/prose/037` (`companion/chapters/10_Q.tex:265`): "Armijo is strict for $c_1<2/3$,
+/-- Item `C/10_Q/prose/037` (`companion/chapters/10_Q.tex:264`): "Armijo is strict for $c_1<2/3$,
 and weak Wolfe is strict for every allowed $c_2>0$." For the unit step
 $s=-H_\epsilon g=z_\epsilon-x_\epsilon$ under the standing assumptions of line 249. -/
 theorem printed_strict (u A ε c₁ c₂ : ℝ) (_hu : u ≠ 0) (_hA : 0 < A) (hε : 0 < ε)
@@ -2148,7 +2148,7 @@ theorem printed_strict (u A ε c₁ c₂ : ℝ) (_hu : u ≠ 0) (_hA : 0 < A) (h
   rw [hdec] at h
   linarith
 
-/-- Item `C/10_Q/disp/042` (`companion/chapters/10_Q.tex:295-299`): "Their radial quotient is
+/-- Item `C/10_Q/disp/042` (`companion/chapters/10_Q.tex:294-298`): "Their radial quotient is
 \[ \frac{(y^Tz_{\epsilon,\rho})^2}{t}
    =\frac{(2u^2+\rho\epsilon)^2}{(1+\rho)\epsilon}\longrightarrow\infty." \]
 $y=g'-g$; $y^Tz_{\epsilon,\rho}=y^T(z_{\epsilon,\rho}-0)$ is the radial numerator of (RS) at
@@ -2169,7 +2169,7 @@ theorem family_radial (u ρ : ℝ) (hu : u ≠ 0) (hρ : 0 < ρ) :
   simpa only [RadialCertificate.radialNumerator, sub_zero] using
     Example.radial_quotient_tendsto hu hρ
 
-/-- Item `C/10_Q/disp/038` (`companion/chapters/10_Q.tex:268-271`), with the claim of line 267:
+/-- Item `C/10_Q/disp/038` (`companion/chapters/10_Q.tex:267-270`), with the claim of line 267:
 "Here $y=(4u,-1)^T$, so
 \[ \frac{(y^Tz_\epsilon)^2}{t}=\frac{(2u^2+\epsilon/2)^2}{3\epsilon/2}\longrightarrow\infty." \]
 $y=g'-g$; the limit is $\epsilon\downarrow0$ with $u\ne0$ fixed. -/
@@ -2192,7 +2192,7 @@ theorem printed_radial (u : ℝ) (hu : u ≠ 0) :
   · show (0 : ℝ) - 1 = -1
     ring
 
-/-- Item `C/10_Q/prose/040` (`companion/chapters/10_Q.tex:272`): "The values tend to the positive
+/-- Item `C/10_Q/prose/040` (`companion/chapters/10_Q.tex:271`): "The values tend to the positive
 level $3u^2$ while $d\to0$." As $\epsilon\downarrow0$, with $u\ne0$ fixed. -/
 theorem printed_limits (u : ℝ) (hu : u ≠ 0) :
     0 < 3 * u ^ 2 ∧
@@ -2204,7 +2204,7 @@ theorem printed_limits (u : ℝ) (hu : u ≠ 0) :
   ⟨mul_pos (by norm_num) (sq_pos_of_ne_zero hu), (Example.pair_values_tendsto u (1 / 2)).1,
     (Example.pair_values_tendsto u (1 / 2)).2, Example.pair_decrease_tendsto u (1 / 2)⟩
 
-/-- Item `C/10_Q/prose/041` (`companion/chapters/10_Q.tex:272`): "Such pairs exist in every
+/-- Item `C/10_Q/prose/041` (`companion/chapters/10_Q.tex:271`): "Such pairs exist in every
 neighborhood of zero, with $u\ne0$ fixed before taking $\epsilon\downarrow0$." For every
 neighborhood $K$ of $0$ there is $u\ne0$ such that, for all sufficiently small $\epsilon>0$,
 $\epsilon<6u^2$ and both points of the pair lie in $K$. -/
@@ -2221,7 +2221,7 @@ theorem printed_every_neighborhood {K : Set (Vec 2)} (hK : K ∈ 𝓝 (0 : Vec 2
     (Example.pair_points_tendsto u (1 / 2)).2.eventually hKu] with ε h0 h1 h2 h3
   exact ⟨h0, h1, h2, h3⟩
 
-/-- Item `C/10_Q/disp/039` (`companion/chapters/10_Q.tex:275-278`), for a fixed ordinary pair
+/-- Item `C/10_Q/disp/039` (`companion/chapters/10_Q.tex:274-277`), for a fixed ordinary pair
 $0<c_1<c_2<1$: "Choose
 \[ \rho=\frac{1-c_1}{2c_1}>0,\qquad c_1(1+\rho)=\frac{1+c_1}{2}<1," \]
 $\rho$ a variable with its defining equation. -/
@@ -2233,7 +2233,7 @@ theorem rho_choice (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁₂ : c₁ < c₂)
   field_simp
   ring
 
-/-- Item `C/10_Q/disp/040` (`companion/chapters/10_Q.tex:280-287`): "replace the new point and
+/-- Item `C/10_Q/disp/040` (`companion/chapters/10_Q.tex:279-286`): "replace the new point and
 metric by
 \[ z_{\epsilon,\rho}=(u,2u^2-\rho\epsilon),\qquad
    H_{\epsilon,\rho}=\begin{pmatrix}A&-2uA\\-2uA&4u^2A+(1+\rho)\epsilon
@@ -2246,7 +2246,7 @@ theorem family_pair_def (u A ρ ε : ℝ) (_hρε : 0 < ρ * ε) (_hρε' : ρ *
     z = Example.newPoint u ρ ε ∧ H = Example.initialMetric u A ρ ε :=
   ⟨hz, hH⟩
 
-/-- Item `C/10_Q/prose/043` (`companion/chapters/10_Q.tex:288-289`): "For any $A>0$, the quadratic
+/-- Item `C/10_Q/prose/043` (`companion/chapters/10_Q.tex:287-288`): "For any $A>0$, the quadratic
 form is $A(w_1-2uw_2)^2+(1+\rho)\epsilon w_2^2$, so the metric is SPD." ($w_1,w_2$ are `w 0`, `w 1`;
 $\rho>0$, $\epsilon>0$.) -/
 theorem family_metric (u A ρ ε : ℝ) (hA : 0 < A) (hρ : 0 < ρ) (hε : 0 < ε) :
@@ -2257,7 +2257,7 @@ theorem family_metric (u A ρ ε : ℝ) (hA : 0 < A) (hρ : 0 < ρ) (hε : 0 < �
   simp [dot, Example.initialMetric, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   ring
 
-/-- Item `C/10_Q/prose/045` (`companion/chapters/10_Q.tex:294`): "Thus these are strictly
+/-- Item `C/10_Q/prose/045` (`companion/chapters/10_Q.tex:293`): "Thus these are strictly
 Armijo--weak-Wolfe eligible unit steps." For $0<c_1<c_2<1$, $\rho$ as in display `disp/039`,
 $\epsilon>0$, $\rho\epsilon<3u^2$ and $A>0$: $H_{\epsilon,\rho}$ is positive definite, the unit step
 lands at $z_{\epsilon,\rho}$, Armijo and weak Wolfe hold strictly, and the pair is eligible. -/
@@ -2287,7 +2287,7 @@ theorem family_eligible (u A ε c₁ c₂ ρ : ℝ) (hA : 0 < A) (hc₁ : 0 < c�
     Example.strict_weak_wolfe hρpos hε (by linarith),
     Example.pair_eligible hρpos hε hs hcρ'.le (by linarith)⟩
 
-/-- Item `C/10_Q/prose/046` (`companion/chapters/10_Q.tex:300`): "In each neighborhood first fix a
+/-- Item `C/10_Q/prose/046` (`companion/chapters/10_Q.tex:299`): "In each neighborhood first fix a
 sufficiently small nonzero $u$ and the resulting positive band; then the quotient exceeds any
 proposed bound with arbitrarily small $d$." For every neighborhood $K$ of $0$, $0<c_1<c_2<1$, $\rho$
 of display `disp/039` and $A>0$: some $u\ne0$ (fixed first; the pairs lie in the band $F\ge3u^2$)
@@ -2317,7 +2317,7 @@ theorem separation {K : Set (Vec 2)} (hK : K ∈ 𝓝 (0 : Vec 2)) {c₁ c₂ : 
       (by rw [hcρ]; exact hlt.le) (by linarith) hA hKu hδ C
   exact ⟨ε, hε, hs, hx, hz, (Example.pair_values hρpos hε hs).2, hp, hd, he, hH, hstep⟩
 
-/-- Item `C/10_Q/prose/047` (`companion/chapters/10_Q.tex:300`): "Hence the original (RS) condition
+/-- Item `C/10_Q/prose/047` (`companion/chapters/10_Q.tex:299`): "Hence the original (RS) condition
 fails even on eligible near-stalling pairs for every fixed allowed line-search pair." For every
 neighborhood $K$ of the minimizer and every $0<c_1<c_2<1$: (RS) on $K$
 (`RadialCertificate.HasRadialSecantBounds`) fails, and on some positive band no constant $C$ and
@@ -2336,7 +2336,7 @@ theorem rs_fails {K : Set (Vec 2)} (hK : K ∈ 𝓝 (0 : Vec 2)) {c₁ c₂ : �
   obtain ⟨x, z, g, g', H, hx, hz, hηz, -, hp, hd, -, -, hC⟩ := h δ hδ C
   exact absurd (hb x z g g' hx hz hηz hp hd) (not_le.mpr hC)
 
-/-- Item `C/10_Q/prose/049` (`companion/chapters/10_Q.tex:300`): "Every actual infinite admissible
+/-- Item `C/10_Q/prose/049` (`companion/chapters/10_Q.tex:299`): "Every actual infinite admissible
 run still converges by the main parabolic theorem." Every admissible run on the example converges,
 although (RS) fails on every neighborhood of the minimizer (library
 `converges_without_radial_secant`). -/
@@ -2346,7 +2346,7 @@ theorem converges_without_rs {K : Set (Vec 2)} (hK : K ∈ 𝓝 (0 : Vec 2)) :
       ¬ RadialCertificate.HasRadialSecantBounds Example.objective K 0 :=
   Example.converges_without_radial_secant hK
 
-/-- Item `C/10_Q/disp/043` (`companion/chapters/10_Q.tex:305-308`), with the claim of line 304: "In
+/-- Item `C/10_Q/disp/043` (`companion/chapters/10_Q.tex:304-307`), with the claim of line 304: "In
 contrast, $\theta(z_\epsilon)=1$ and
 \[ y^Tr(z_\epsilon)=\epsilon,\qquad \frac{y^TW(z_\epsilon)y}{t}=\frac{2\epsilon}{3}\to0." \]
 $W=(\theta r)(\theta r)^T$ with the printed scale (`example_field`), $y=g'-g$; for
@@ -2396,7 +2396,7 @@ theorem printed_transported (u : ℝ) (hu : u ≠ 0) :
   filter_upwards [self_mem_nhdsWithin, hs] with ε hε hε'
   exact (hval ε hε hε').symm
 
-/-- Item `C/10_Q/disp/044` (`companion/chapters/10_Q.tex:310-313`), with the claims of lines 309
+/-- Item `C/10_Q/disp/044` (`companion/chapters/10_Q.tex:309-312`), with the claims of lines 309
 and 314: "The unscaled quotient multiplier is $\lambda=1$, and the compensated multiplier satisfies
 exactly
 \[ \log\widetilde\lambda=\frac{\epsilon}{6(3u^2+\epsilon)}=O(d) \]

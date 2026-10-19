@@ -213,7 +213,7 @@ theorem inward_split (u v τ : ℝ) (hτ : τ ≤ 1) :
 
 /-! ## The seed corner -/
 
-/-- Item `A/geometry/prose/014` (`paper/sections/geometry.tex:39-40`), with the slopes of
+/-- Item `A/geometry/prose/014` (`paper/sections/geometry.tex:36-37`), with the slopes of
 lines 37-39: the slopes are "$g_0=(1,0)$, $g_1=(-1,-1/8)$ and $g_2=(c_\circ,d_\circ)$ ... They are affinely
 independent, so no nonzero direction pairs equally with all three." -/
 theorem seed_affinely_independent :
@@ -227,7 +227,7 @@ theorem seed_affinely_independent :
   ext i j
   fin_cases i <;> fin_cases j <;> rfl
 
-/-- Item `A/geometry/prose/015` (`paper/sections/geometry.tex:40-42`):
+/-- Item `A/geometry/prose/015` (`paper/sections/geometry.tex:37-39`):
 "Yet $(-1,16)$ has negative pairing with each, and zero is outside their convex
 hull." -/
 theorem seed_common_descent :
@@ -235,7 +235,7 @@ theorem seed_common_descent :
       (0 : Vec 2) ∉ convexHull ℝ (range (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD)) :=
   ⟨ArticleGeometry.seed_strict_common_descent, ArticleGeometry.seed_convex_hull_excludes_zero⟩
 
-/-- Item `A/geometry/prose/016` (`paper/sections/geometry.tex:42`):
+/-- Item `A/geometry/prose/016` (`paper/sections/geometry.tex:39`):
 "The corner is therefore nonstationary." Zero is not a subgradient of the seed
 objective `G(z)=max_i g_i^T z` at the corner `z=0`; indeed `G` decreases at unit
 rate along `(-1,16)`. -/
@@ -253,7 +253,7 @@ theorem seed_corner_nonstationary :
   simp [dot] at h1
   linarith
 
-/-- Item `A/geometry/prose/010` (`paper/sections/geometry.tex:25-27`), caption of Figure
+/-- Item `A/geometry/prose/010` (`paper/sections/geometry.tex:24-26`), caption of Figure
 `art:gradient-geometry`: "the particular three-gradient seed used in
 Section~\ref{art:failure}. Its convex hull excludes zero, but its affine hull is
 the plane." -/
@@ -266,7 +266,7 @@ theorem seed_hulls :
 
 section Balance
 
-/-- Item `A/geometry/prose/019` (`paper/sections/geometry.tex:48-50`): for a nonempty
+/-- Item `A/geometry/prose/019` (`paper/sections/geometry.tex:45-47`): for a nonempty
 finite family of slopes `a_i`, "equality $a_i^Tv=\kappa<0$ for every $i$ asks for a
 common rate of descent ... The former fails when zero belongs to their affine
 hull". -/
@@ -276,7 +276,7 @@ theorem common_rate_fails_of_mem_affineSpan {ι : Type*} [Fintype ι] [Nonempty 
     ¬ ∃ (v : EuclideanSpace ℝ (Fin n)) (κ : ℝ), κ < 0 ∧ ∀ i, ⟪a i, v⟫_ℝ = κ := fun h =>
   (ArticleGeometry.affine_negative_common_rate_iff a (Classical.arbitrary ι)).mp h h0
 
-/-- Item `A/geometry/prose/020` (`paper/sections/geometry.tex:49-51`): "$a_i^Tv<0$ asks
+/-- Item `A/geometry/prose/020` (`paper/sections/geometry.tex:46-48`): "$a_i^Tv<0$ asks
 only for descent ... the latter fails when zero belongs to their convex hull." -/
 theorem descent_fails_of_mem_convexHull {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
     (a : ι → EuclideanSpace ℝ (Fin n))
@@ -284,7 +284,7 @@ theorem descent_fails_of_mem_convexHull {ι : Type*} [Fintype ι] [Nonempty ι] 
     ¬ ∃ v : EuclideanSpace ℝ (Fin n), ∀ i, ⟪a i, v⟫_ℝ < 0 := fun h =>
   (ArticleGeometry.finite_slopes_common_descent_iff a).mp h h0
 
-/-- Item `A/geometry/prose/021` (`paper/sections/geometry.tex:51-52`): "Indeed, a linear
+/-- Item `A/geometry/prose/021` (`paper/sections/geometry.tex:48-49`): "Indeed, a linear
 functional constant on the slopes is constant on their affine hull." -/
 theorem constant_on_affineSpan {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
     (a : ι → EuclideanSpace ℝ (Fin n))
@@ -292,7 +292,7 @@ theorem constant_on_affineSpan {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
     ∀ z ∈ affineSpan ℝ (range a), ⟪z, v⟫_ℝ = c :=
   AffineCriticalGeometry.affine_pairing_of_constant a v c h
 
-/-- Item `A/geometry/prose/022` (`paper/sections/geometry.tex:52-54`): "Conversely, if zero
+/-- Item `A/geometry/prose/022` (`paper/sections/geometry.tex:49-51`): "Conversely, if zero
 is outside that affine hull, its nearest point gives a separating functional
 constant on the hull; changing its sign gives the negative common value." The
 nearest point `p` of the affine hull to zero satisfies `z^T p = ‖p‖^2 > 0` on the
@@ -331,7 +331,7 @@ theorem nearest_point_common_rate {ι : Type*} [Fintype ι] [Nonempty ι] {n : �
     exact (pow_le_pow_iff_left₀ (norm_nonneg _) (norm_nonneg _) two_ne_zero).mp this
   · rw [inner_neg_right, hconst _ (subset_affineSpan ℝ _ (mem_range_self i))]
 
-/-- Item `A/geometry/prose/023` (`paper/sections/geometry.tex:55-56`): "The convex version
+/-- Item `A/geometry/prose/023` (`paper/sections/geometry.tex:52-53`): "The convex version
 follows from the same closest-point argument for the convex hull." If zero is
 outside the convex hull, its nearest point `p` in the hull satisfies
 `z^T p ≥ ‖p‖^2 > 0` on the hull, so `v=-p` is a common strict descent direction. -/
@@ -393,7 +393,7 @@ theorem benchmark_compact_sublevels_global :
   exact ⟨Localization.sublevel_compact UnexcitedMetric.objective_convex 0 hmin hu,
     ArticlePositive.mixed_benchmark_global⟩
 
-/-- Item `A/geometry/prose/031` (`paper/sections/geometry.tex:88-90`), caption of Table
+/-- Item `A/geometry/prose/031` (`paper/sections/geometry.tex:82-84`), caption of Table
 `art:positive-outcomes`, as corrected on 15 October 2026 (M31, reader point R-A-2): "The
 benchmark $u^2+|v|$ has compact sublevels and a centered representation on all of $\R^2$, so
 the first row gives global convergence." Every sublevel of `F(u,v)=u^2+|v|` is compact; on

@@ -10,7 +10,7 @@ Appendix `art:matrix-algebra` ("The BFGS compression calculation"): Lemma
 ## Standing assumptions
 
 Every theorem below states the assumptions of Theorem `art:minor-hierarchy`
-(`paper/sections/energy.tex:132-143`) explicitly, with these names:
+(`paper/sections/energy.tex:130-141`) explicitly, with these names:
 
 * `hH : H.PosDef` is $H\succ0$ (real symmetric positive definite, `H : Mat n`);
 * `hs : s = -α • (H *ᵥ g)` is $s=-\alpha Hg$, and `hα : 0 < α` is $\alpha>0$;
@@ -34,7 +34,7 @@ one of these assumptions that the Lean proof does not need.
 * `metricGram H X` is $X^THX$; `fromCols X Y` is the block matrix $[X\ Y]$;
   `replicateCol Unit y` is the single column $y$; `(Matrix.of ![a, b])ᵀ` is $[a\ b]$, the
   matrix with columns $a,b$, so `Matrix.of ![a, b]` is $[a\ b]^T$;
-* $\operatorname{Gram}_H(y,Z)=[y\ Z]^TH[y\ Z]$ (`energy.tex:152`) is
+* $\operatorname{Gram}_H(y,Z)=[y\ Z]^TH[y\ Z]$ (`energy.tex:150`) is
   `metricGram H (fromCols (replicateCol Unit y) Z)`. The proof also uses
   $\operatorname{Gram}_H(g,y,Z)=[g\ y\ Z]^TH[g\ y\ Z]$, which is
   `metricGram H (fromCols (Matrix.of ![g, y])ᵀ Z)`, and
@@ -474,7 +474,7 @@ theorem full_dimension_case {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q 
 
 /-- The identity $\det H_+=(\alpha/\beta)\det H$ of Lemma `art:gram-compression`
 (`paper/appendices/matrix_algebra.tex:11`) and Theorem `art:minor-hierarchy`
-(`paper/sections/energy.tex:142`), under the assumptions of Theorem `art:minor-hierarchy`,
+(`paper/sections/energy.tex:140`), under the assumptions of Theorem `art:minor-hierarchy`,
 derived from the library theorem `inverseBFGS_step_det_beta` (a second proof, independent
 of `full_dimension_case`). -/
 theorem det_update {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)

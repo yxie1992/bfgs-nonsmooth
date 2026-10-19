@@ -1,0 +1,208 @@
+\section{Checking the hypotheses on actual runs}\label{art:hypothesis-examples}
+
+The examples below check the objective assumptions, comparison fields and
+full-BFGS histories together. They distinguish a function satisfying a
+convergence theorem from an infinite admissible run on that function, and
+from existence for every prescribed initial state. All norms in this appendix
+are Euclidean, and an admissible run has the meaning of
+Definition~\ref{art:admissible}.
+
+\subsection{A nonsmooth certificate and a full-rank calibration}
+
+\begin{proposition}[The mixed ridge, with an explicit history]\label{art:examples-mixed}
+Let $F(u,v)=u^2+|v|$ and $K_b=\{F\le b\}$, where $b>0$.
+The function is finite and convex, its unique minimizer is zero, and $K_b$
+is compact. For every $0<\eta\le b$, the following data satisfy all the
+conditions of Definition~\ref{art:band-certificate} on $K_b$:
+\[
+ W_\eta(x)=xx^T,\qquad m_\eta=\eta^2,\quad C_\eta=2b,
+ \quad L_\eta=0,\quad\delta_\eta=1.
+\]
+For $b=2/3$ an actual infinite admissible run in $K_b$, with
+$(c_1,c_2)=(1/4,1/2)$, is
+\[
+ x_k=\bigl(0,\tfrac23(-\tfrac12)^k\bigr),\qquad
+ g_k=(0,(-1)^k),\qquad
+ H_k=\begin{pmatrix}1&0\\0&2^{-k}\end{pmatrix},\qquad \alpha_k=1.
+\]
+It has $H_0=I$ and converges to zero, although the smallest eigenvalue of
+$H_k$ tends to zero.
+\end{proposition}
+\begin{proof}
+The objective assertions follow directly from $F(u,v)=u^2+|v|$.
+At a differentiable band point, $g=(2u,\operatorname{sign}v)$ and
+$g^Tx=2u^2+|v|\ge F(x)\ge\eta$, which gives visibility.
+Write $x=(u,v)$, $z=(r,w)$ and $y=\nabla F(z)-\nabla F(x)$.
+If $v,w$ have the same sign, then
+\[
+ t=2(r-u)^2,\qquad y^Tz=2(r-u)r,\qquad
+ (y^Tz)^2\le 2F(z)t.
+\]
+If their signs differ, put $S=|v|+|w|>0$. Then
+\[
+ t=2(r-u)^2+2S,\qquad y^Tz=2(r-u)r+2|w|.
+\]
+Cauchy--Schwarz gives
+\[
+ (y^Tz)^2\le t\left(2r^2+\frac{2|w|^2}{S}\right)
+             \le 2F(z)t\le2bt.
+\]
+Thus secant control holds for all differentiable endpoint pairs in $K_b$,
+in particular for the eligible ones. For an eligible pair, $s\ne0$ and $z=x+s$
+give $\Pi_s z=\Pi_s x$, so projected transport holds with equality.
+The displayed history has $s_k=-H_kg_k$, $y_k=-2g_k$, and
+\[
+ d_k=2^{-k},\qquad F(x_k)-F(x_{k+1})=\tfrac13d_k,
+ \qquad t_k=2d_k.
+\]
+Consequently both line-search inequalities hold. The BFGS update leaves
+the first diagonal entry unchanged and replaces the second by $2^{-k-1}$;
+all iterates are differentiable and nonstationary. This verifies the
+complete admissible history and the asserted limit.\qed
+\end{proof}
+
+\begin{proposition}[A full-rank certificate in every dimension]\label{art:examples-full-rank}
+For $F(x)=\tfrac12\norm{x}^2$ on $\R^n$, $n\ge1$, every positive sublevel
+$K_b$ is compact and zero is the unique minimizer. For $0<\eta\le b$,
+Definition~\ref{art:band-certificate} holds with
+\[
+ W_\eta(x)=I,\qquad m_\eta=2\eta,\quad C_\eta=1,
+ \quad L_\eta=0,\quad\delta_\eta=1.
+\]
+The field is positive definite of rank $n$. For any $x_0\ne0$, the history
+$x_k=2^{-k}x_0$, $g_k=x_k$, $H_k=I$, $\alpha_k=1/2$ is an infinite
+admissible run with $(c_1,c_2)=(1/4,1/2)$, contained in $K_{F(x_0)}$ and
+converging to zero.
+\end{proposition}
+\begin{proof}
+Visibility is $g^TIg=\norm{x}^2=2F(x)\ge2\eta$. For any two endpoints,
+$y=s$, so $y^TIy=t$. For eligible pairs the constant field gives equality in projected transport.
+In the stated history the BFGS update fixes $I$ because $y_k=s_k$.
+The actual decrease is $3d_k/4$, and the weak-Wolfe inequality holds with
+equality since $g_{k+1}=g_k/2$. Nonzero initial data give nonzero gradients
+at every finite index; the other assertions follow from the displayed
+geometric decay.\qed
+\end{proof}
+
+\subsection{Existence of differentiable weak-Wolfe steps}
+
+\begin{lemma}[An existence criterion for admissible runs]\label{art:examples-run-existence}
+Let $F:\R^n\to\R$ be finite, convex and bounded below. Suppose that, for
+every differentiability point $x$ and every $p\ne0$, the set
+\[
+ \{t\in\R:F\text{ is not differentiable at }x+tp\}
+\]
+is countable. At any differentiable $x$ with $g=\nabla F(x)\ne0$, any
+$H\succ0$ and any $0<c_1<c_2<1$, the direction $p=-Hg$ admits a positive
+step whose endpoint is differentiable and which satisfies strict Armijo
+and strict weak Wolfe. If, in addition, every differentiability point has
+nonzero gradient, an infinite admissible run exists for every differentiable
+$x_0$, every $H_0\succ0$ and every such pair $(c_1,c_2)$.
+\end{lemma}
+\begin{proof}
+Put $\phi(t)=F(x+tp)$, $D=g^Tp<0$, and
+$\sigma(t)=(\phi(t)-\phi(0))/t$ for $t>0$.
+Continuity and differentiability at zero give $\sigma(t)\to D$ as
+$t\downarrow0$. Boundedness below gives $\sigma(t)>c_1D$ for all
+sufficiently large $t$. Since $D<c_2D<c_1D$, continuity supplies a
+nonempty open interval on which $c_2D<\sigma(t)<c_1D$.
+Choose $\alpha$ there outside the countable exceptional set. The upper
+bound is strict Armijo. The supporting inequality at $x+\alpha p$ gives
+$\nabla F(x+\alpha p)^Tp\ge\sigma(\alpha)>c_2D$, hence strict weak Wolfe.
+Its positive secant curvature preserves positive definiteness under BFGS.
+Under the additional nonstationarity hypothesis these facts allow the step
+construction to be repeated indefinitely.\qed
+\end{proof}
+
+The exceptional set concerns differentiability in the full ambient space,
+not just differentiability of $t\mapsto F(x+tp)$. The lemma proves existence
+of a sequence of acceptable steps; it does not assert that a prescribed
+line-search implementation finds them.
+
+\subsection{A simple family with curved switching}
+
+\begin{proposition}[A two-quadratic family]\label{art:examples-two-quadratics}
+For $a,b,c>0$, define
+\[
+ F_{a,b,c}(u,v)=\max\{a u^2+b v^2+v,\ c u^2+b v^2-v\}.
+\]
+The function has unique minimizer zero and compact sublevels. It satisfies
+the hypotheses of Corollary~\ref{art:planar-convergence} on every positive
+sublevel, and its two active branches at zero satisfy the affine-independence
+and positive-balance assumptions of Corollary~\ref{art:planar-max}.
+For every differentiable initial point, every $H_0\succ0$ and every fixed
+$0<c_1<c_2<1$, an infinite admissible run exists. Every infinite admissible
+run converges in value and iterates to zero. The switching curve is the
+parabola $v=(c-a)u^2/2$, a line when $a=c$.
+\end{proposition}
+\begin{proof}
+Both branches have Hessian at least $2\min\{a,b,c\}I$, and their average
+is $(a+c)u^2/2+bv^2$. Thus zero is the unique minimizer, sublevels are compact,
+and positive contours have no line segment. The two gradients differ on
+the tie curve: their second components differ by two. On that curve their
+determinant is
+\[
+ -2u\bigl(a+c+b(c-a)^2u^2\bigr).
+\]
+It is nonzero unless $u=0$, when the tie point is zero. At a smooth point
+affine criticality means stationarity, hence optimality by convexity.
+At a nonzero tie point the two linearly independent gradients have affine
+hull excluding zero. Therefore $\mathcal C_{\rm aff}=\{0\}$; away from
+that set the switching is regular, and Corollary~\ref{art:planar-convergence}
+applies on any positive sublevel. At zero the gradients $(0,1)$ and $(0,-1)$
+are affinely independent and balance with weights $1/2$.
+
+Along any line through a differentiability point, the difference between
+the two branches is a polynomial of degree at most two, nonzero at the
+initial point. Hence there are at most two nondifferentiability points on
+that line. A differentiable stationary point would be the unique minimizer,
+but zero is not differentiable. Lemma~\ref{art:examples-run-existence}
+therefore gives the claimed run existence for every prescribed initial
+state and valid constant pair.\qed
+\end{proof}
+
+\begin{corollary}[Runs on the printed nonradial example]\label{art:examples-nonradial-runs}
+For the objective of Theorem~\ref{art:nonradial-example}, every differentiable
+$x_0$ with $F(x_0)<1/100$, every $H_0\succ0$ and every $0<c_1<c_2<1$
+admit an infinite admissible run, and every such run converges to zero.
+In particular one may take $x_0=(1/1000,0)$, for which
+$F(x_0)=1001/10^6<1/100$.
+\end{corollary}
+\begin{proof}
+The objective is bounded below by $u^2+v^2$ and has unique minimizer zero.
+At zero the distinct active gradients make it nondifferentiable, so every
+differentiable point has nonzero gradient. The restriction of each pairwise
+branch difference to a nonconstant line is a nonzero polynomial of degree
+at most two. Every line therefore meets the equality sets in finitely many
+points. Apply
+Lemma~\ref{art:examples-run-existence} and then
+Theorem~\ref{art:nonradial-example}. The value at the stated initial point
+follows by direct substitution.\qed
+\end{proof}
+
+\subsection{Why the run-existence qualification matters}
+
+\begin{proposition}[A covered objective with no differentiable first step]\label{art:examples-no-step}
+The function $G(u,v)=\max\{u,-u+v,-u-v\}$ is finite, convex, coercive and
+positively homogeneous, with unique minimizer zero. For every $\varepsilon>0$,
+the point $x_0=(\varepsilon,0)$ is differentiable. With $H_0=I$, its search
+ray has no differentiable positive-step endpoint satisfying weak Wolfe for
+any $c_2<1$. Thus no infinite admissible run has these initial data, although
+$G$ belongs to the class of Theorem~\ref{art:homogeneous}.
+\end{proposition}
+\begin{proof}
+The function is a maximum of linear forms, and
+$G(u,v)\ge|u|$, $2G(u,v)\ge|v|$. These inequalities give coercivity and
+the unique minimizer. At $x_0$ the gradient is $(1,0)$, so the ray is
+$(\varepsilon-\alpha,0)$. For $0<\alpha<\varepsilon$ its gradient remains
+$(1,0)$, and weak Wolfe would require $-1\ge-c_2$, which is false.
+For $\alpha\ge\varepsilon$ the endpoint is nondifferentiable: the last
+two branches tie with distinct gradients (at equality all three tie).
+These cases exhaust the positive ray.\qed
+\end{proof}
+
+This is an obstruction to a differentiable infinite history from prescribed
+data, not an example of nonoptimal stagnation: the ray itself passes through
+the minimizer. The explicit histories above and the existence criterion
+specify which stronger non-vacuity conclusions accompany the convergence
+examples.

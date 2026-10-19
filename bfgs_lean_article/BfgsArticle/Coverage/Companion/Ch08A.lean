@@ -1429,7 +1429,7 @@ theorem straightening_breaks_bfgs :
     rw [he, add_sub_cancel_left] at hpair
     linarith
 
-/-- Item `C/08_A/prose/056` (`companion/chapters/08_A.tex:139`): "Projecting an affine
+/-- Item `C/08_A/prose/056` (`companion/chapters/08_A.tex:137`): "Projecting an affine
 combination equal to zero, whose coefficients sum to one, makes that stratum gradient zero." If a
 linear map $P$ (the tangential projection) sends every $g_i$ to the same vector $r$ (the stratum
 gradient) and $\sum_i\lambda_ig_i=0$ with $\sum_i\lambda_i=1$, then $r=0$. -/

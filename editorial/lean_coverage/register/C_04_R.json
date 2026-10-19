@@ -95,7 +95,7 @@
     "BfgsVerification.RadialCertificate.secantCurvature_eq_errors",
     "BfgsVerification.RadialCertificate.secantCurvature_le_four_mul"
    ],
-   "note": "For differentiable x, z ∈ K with gradients g, h: T = D_F(z,x) + D_F(x,z), 0 ≤ T ≤ T_max = 4GR (T, Tmax variables with their defining equations). Setting of lines 30-36 written out: hF : ConvexOn ℝ univ F (F finite convex), hmin : ∀ x, F xstar ≤ F x (x_* a minimizer, F_* = F xstar), hb : F xstar < b, hK_def : K = {x | F x ≤ b}, hK : IsCompact K; the bounds R, G of disp/002 as hR, hG, hRK : ∀ x ∈ K, ‖euclideanVector (x - xstar)‖ ≤ R, hGK : every subgradient v at x ∈ K has ‖euclideanVector v‖ ≤ G (Euclidean norms). Line 40 said \"For differentiable $x,z$\" without \"∈ K\" until 15 October 2026 (wording point W20 applied: \"For differentiable $x,z\\in K$, put\", as the article, paper/sections/global.tex:20); the Lean statement assumes x, z ∈ K, which line 51's 0 ≤ T ≤ T_max := 4GR needs: off K it fails, e.g. F(x) = |x| on ℝ, x_* = 0, b = 1 (K = [-1, 1]), R = G = 1 (valid bounds on K), x = -10, z = 10 (gradients -1, 1): T = (h - g)(z - x) = 2·20 = 40 > 4 = 4GR."
+   "note": "For differentiable x, z ∈ K with gradients g, h: T = D_F(z,x) + D_F(x,z), 0 ≤ T ≤ T_max = 4GR (T, Tmax variables with their defining equations). Setting of lines 30-36 written out: hF : ConvexOn ℝ univ F (F finite convex), hmin : ∀ x, F xstar ≤ F x (x_* a minimizer, F_* = F xstar), hb : F xstar < b, hK_def : K = {x | F x ≤ b}, hK : IsCompact K; the bounds R, G of disp/002 as hR, hG, hRK : ∀ x ∈ K, ‖euclideanVector (x - xstar)‖ ≤ R, hGK : every subgradient v at x ∈ K has ‖euclideanVector v‖ ≤ G (Euclidean norms). Line 40 said \"For differentiable $x,z$\" without \"∈ K\" until 15 October 2026 (wording point W20 applied: \"For differentiable $x,z\\in K$, put\", as the article, paper/sections/global.tex:18); the Lean statement assumes x, z ∈ K, which line 51's 0 ≤ T ≤ T_max := 4GR needs: off K it fails, e.g. F(x) = |x| on ℝ, x_* = 0, b = 1 (K = [-1, 1]), R = G = 1 (valid bounds on K), x = -10, z = 10 (gradients -1, 1): T = (h - g)(z - x) = 2·20 = 40 > 4 = 4GR."
   },
   {
    "id": "C/04_R/disp/006",
@@ -121,7 +121,7 @@
     "BfgsVerification.RadialCertificate.HasRadialSecantBounds",
     "BfgsCoverage.Article.Global.RadialSecantCondition"
    ],
-   "note": "RSNonneg F xstar K: ∀ η > 0 ∃ C ≥ 0, for all differentiable x, z ∈ K (gradients g, h) with F_* + η ≤ F(z) ≤ F(x) and T > 0, N² ≤ C T: the display as printed since 15 October 2026 (wording point W19 applied: \"∃ C_η ≥ 0\", before \"∃ C_η < ∞\", as in the article, paper/sections/global.tex:33). RSNonneg_iff: it is equivalent to RS (real constants; a constant can be replaced by max(C, 0)), the form the coverage theorems of the chapter assume; RS_iff_article: the article's condition art:radial-condition; RS_iff_library: the library's HasRadialSecantBounds. The proofs use C_η ≥ 0 (line 149 with a = 0, disp/023, line 177), now part of the definition; rs_constant_nonneg shows that it holds anyway for a real (RS) constant."
+   "note": "RSNonneg F xstar K: ∀ η > 0 ∃ C ≥ 0, for all differentiable x, z ∈ K (gradients g, h) with F_* + η ≤ F(z) ≤ F(x) and T > 0, N² ≤ C T: the display as printed since 15 October 2026 (wording point W19 applied: \"∃ C_η ≥ 0\", before \"∃ C_η < ∞\", as in the article, paper/sections/global.tex:31). RSNonneg_iff: it is equivalent to RS (real constants; a constant can be replaced by max(C, 0)), the form the coverage theorems of the chapter assume; RS_iff_article: the article's condition art:radial-condition; RS_iff_library: the library's HasRadialSecantBounds. The proofs use C_η ≥ 0 (line 149 with a = 0, disp/023, line 177), now part of the definition; rs_constant_nonneg shows that it holds anyway for a real (RS) constant."
   },
   {
    "id": "C/04_R/theorem/R:thm:equiv",
@@ -172,7 +172,7 @@
     "BfgsVerification.RadialCertificate.HasInwardTaylorBounds",
     "BfgsCoverage.Article.Global.InwardModelCondition"
    ],
-   "note": "IRNonneg F xstar K: ∀ η > 0 ∃ M ≥ 0, θ with 0 < θ ≤ 1/2, at every differentiable x ∈ K (gradient g) with F(x) ≥ F_* + η and 0 ≤ t ≤ θ: 0 ≤ F(x - t r_x) - F(x) + t g^T r_x ≤ (M/2) t², the condition as printed since 15 October 2026 (wording point W19 applied: \"there exist $M_\\eta\\ge0$ and …\", before \"$M_\\eta<\\infty$\", as in the article, paper/sections/global.tex:42). IRNonneg_iff: equivalent to IR (real constants), IR_iff_article: the article's art:inward-condition."
+   "note": "IRNonneg F xstar K: ∀ η > 0 ∃ M ≥ 0, θ with 0 < θ ≤ 1/2, at every differentiable x ∈ K (gradient g) with F(x) ≥ F_* + η and 0 ≤ t ≤ θ: 0 ≤ F(x - t r_x) - F(x) + t g^T r_x ≤ (M/2) t², the condition as printed since 15 October 2026 (wording point W19 applied: \"there exist $M_\\eta\\ge0$ and …\", before \"$M_\\eta<\\infty$\", as in the article, paper/sections/global.tex:40). IRNonneg_iff: equivalent to IR (real constants), IR_iff_article: the article's art:inward-condition."
   },
   {
    "id": "C/04_R/disp/008",
@@ -1162,7 +1162,7 @@
     "BfgsCoverage.Companion.Ch04R.RS_iff_article",
     "BfgsCoverage.Article.Global.RadialSecantCondition"
    ],
-   "note": "Names the condition of disp/006 (4.RS) \"the radial secant condition\", the name used at 03_T.tex:217 (wording point W18) and in the article (art:radial-condition, paper/sections/global.tex:30). RSNonneg is the condition as displayed; RSNonneg_iff and RS_iff_article show that it is the article's RadialSecantCondition. Wording point W8 (further place) applied on 15 October 2026: before \"The preceding report assumes the following positive-band condition:\" (NON_CLAIM: history of the source report, which the companion does not contain)."
+   "note": "Names the condition of disp/006 (4.RS) \"the radial secant condition\", the name used at 03_T.tex:217 (wording point W18) and in the article (art:radial-condition, paper/sections/global.tex:28). RSNonneg is the condition as displayed; RSNonneg_iff and RS_iff_article show that it is the article's RadialSecantCondition. Wording point W8 (further place) applied on 15 October 2026: before \"The preceding report assumes the following positive-band condition:\" (NON_CLAIM: history of the source report, which the companion does not contain)."
   },
   {
    "id": "C/04_R/prose/007",

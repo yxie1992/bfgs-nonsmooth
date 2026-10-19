@@ -78,7 +78,7 @@ theorem exp_run_contraction (R : AdmissibleBFGSRun 1 expObjective) (k : ℕ) :
   rw [hg0, hg1] at hw
   nlinarith
 
-/-- Illustration for Item `C/research_story/prose/017` (`companion/research_story.tex:30-31`), a
+/-- Illustration for Item `C/research_story/prose/017` (`companion/research_story.tex:28-30`), a
 scope remark (`NON_CLAIM` in the register, not a claim covered by this theorem): "The full
 noncompact homogeneous value alternatives are retained separately: they conclude objective-value
 convergence without any conclusion about the iterates" (since 15 October 2026, wording point W39;

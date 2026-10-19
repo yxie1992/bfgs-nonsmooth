@@ -1216,7 +1216,7 @@ theorem nullspaces_meet_trivially {n : ℕ} (g s : Vec n) (d : ℝ) (hd_def : d 
     · exact absurd h (by linarith)
   rw [hpar, hc, zero_smul]
 
-/-- Item `C/05_G/prose/078` (`companion/chapters/05_G.tex:359`): "The proof uses the
+/-- Item `C/05_G/prose/078` (`companion/chapters/05_G.tex:357`): "The proof uses the
 standard triangle inequality for a PSD seminorm." For PSD $W$,
 $\sqrt{(\sum_j\lambda_jy_j)^TW(\sum_j\lambda_jy_j)}\le\sum_j|\lambda_j|\sqrt{y_j^TWy_j}$. -/
 theorem psd_seminorm_triangle {n r : ℕ} {W : Mat n} (hW : W.PosSemidef) (coeff : Fin r → ℝ)

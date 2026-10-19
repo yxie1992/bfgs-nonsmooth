@@ -1,0 +1,128 @@
+\section{What the results say about nonsmooth BFGS}\label{art:geometry}
+
+The mixed ridge $F(u,v)=u^2+|v|$ isolates the difficulty left by a
+subsequence approaching the nonsmooth line. Reaching $v=0$ does not eliminate
+the horizontal error $u^2$. Yet the vertical gradient jump does not remove
+the direction that can reduce this error. Along $v=0$ the limiting gradients are $(2u,1)$ and
+$(2u,-1)$. Their difference is vertical. At a point with $u\ne0$, the
+horizontal vector $(-u,0)$ has the same strictly negative pairing $-2u^2$
+with both gradients (Figure~\ref{art:gradient-geometry}, left). The inward
+radial model also has a small error: for $v\ne0$ and $0\le\tau\le1$,
+\begin{equation}\label{art:mixed-inward-remainder}
+ F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)
+       =\tau^2u^2.
+\end{equation}
+Thus the nonsmooth part is exactly linear under inward scaling, while the
+smooth part contributes a quadratic remainder. Section~\ref{art:global}
+uses this property to prove convergence of the whole sequence, without any
+description of the eventual eigenvalues or eigenvectors of the matrices.
+
+\begin{figure}[htbp]
+\centering
+\input{figures/gradient_geometry}
+\caption{Gradient space. Left: the mixed ridge at $u=1/2$ has a vertical
+jump and a common horizontal descent direction. Right: the particular
+three-gradient seed used in Section~\ref{art:failure}. Its convex hull
+excludes zero, but its affine hull is the plane.
+Zero lies just above the edge $[g_1,g_0]$, at distance $1/\sqrt{257}$ from the
+hull. Solid arrows indicate gradients and the dashed arrow a common descent
+direction.}
+\label{art:gradient-geometry}
+\end{figure}
+
+The right panel of Figure~\ref{art:gradient-geometry} asks a different question: can a full-BFGS run
+contract around a point where descent still exists? The slopes of the bad corner
+are $g_0=(1,0)$, $g_1=(-1,-1/8)$ and $g_2=(c_\circ,d_\circ)$, where $(c_\circ,d_\circ)$ is
+defined exactly in Appendix~\ref{art:seed_certificate}. They are affinely
+independent, so no nonzero direction pairs equally with all three. Yet
+$(-1,16)$ has negative pairing with each, and zero is outside their convex
+hull. The corner is therefore nonstationary. Section~\ref{art:failure}
+constructs a three-step cycle and verifies that the stated line search
+produces it, including all rejected trials. This additional dynamical proof
+is what makes the corner a counterexample.
+
+This distinction between affine and convex balance helps interpret the
+examples. For a nonempty finite family of slopes $a_i$, equality $a_i^Tv=\kappa<0$ for every $i$ asks
+for a common rate of descent, whereas $a_i^Tv<0$ asks only for descent.
+The former fails when zero belongs to their affine hull; the latter fails
+when zero belongs to their convex hull. Indeed, a linear functional constant
+on the slopes is constant on their affine hull. Conversely, if zero is
+outside that affine hull, its nearest point gives a separating functional
+constant on the hull; changing its sign gives the negative common value.
+The convex version follows from the same closest-point argument for the
+convex hull.
+
+The positive conclusions differ in their geometry and in the locality of the
+guarantee. Table~\ref{art:positive-outcomes} distinguishes them before the
+proofs. In every row the guarantee covers every infinite admissible run, with
+arbitrary positive-definite initialization.
+
+\begin{table}[tbp]
+\centering
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.40\textwidth}>{\raggedright\arraybackslash}p{.22\textwidth}>{\raggedright\arraybackslash}p{.29\textwidth}@{}}
+\toprule
+Objective geometry & Starting scope & Conclusion\\
+\midrule
+Centered smooth--sublinear, Theorem~\ref{art:centered}
+& Compact initial sublevel where the representation holds
+& Optimal values; unique minimizer gives whole-sequence convergence\\\addlinespace
+Coercive degree-one homogeneous, including $\ell_1$ and $\ell_\infty$ norms,
+Theorem~\ref{art:homogeneous}
+& Every starting point
+& Whole sequence converges to zero\\\addlinespace
+Finite polyhedral smooth-piece partition, including squared loss plus
+$\lambda\norm{x}_1$ ($\lambda>0$, unique minimizer), Theorem~\ref{art:polyhedral}
+& Common low sublevel near the unique minimizer
+& Whole sequence converges to the minimizer\\\addlinespace
+Nondegenerate planar smooth maximum, Corollary~\ref{art:planar-max}
+& Local basin under the stated contour hypotheses
+& Whole sequence converges to the unique minimizer\\
+\bottomrule
+\end{tabular}
+\caption{What the positive theory guarantees. The benchmark $u^2+|v|$ has
+compact sublevels and a centered representation on all of $\R^2$, so the first
+row gives global convergence.}
+\label{art:positive-outcomes}
+\end{table}
+
+Homogeneity cannot be dropped from the second row: the coercive polyhedral
+realization of the wrong corner in Corollary~\ref{art:failure_polyhedral},
+a maximum of four affine functions, has a positive limiting objective gap. General affine offsets can place the
+bad corner away from the true optimizer, whereas homogeneity centers all
+linear pieces at the origin.
+
+Local behavior raises a further distinction. Finitely many smooth formulas
+can reproduce bad configurations at infinitely many shrinking scales.
+A finite polyhedral partition near the optimizer controls the inward model
+because each remaining cell contains the optimizer after localization.
+Curved interfaces require a different argument: the planar example in
+Section~\ref{art:local} has a radial obstruction, yet a moving contour field
+proves convergence.
+
+\paragraph{Checking the hypotheses.}
+Several analytical conditions are automatic once the objective geometry and
+the admissible-run convention hold. Weak Wolfe preserves positive-definite
+matrices and gives positive secant curvature. On a compact sublevel, finite
+convexity bounds the gradients; Armijo makes the predicted decreases summable.
+The substantive checks in Table~\ref{art:positive-outcomes} are therefore the
+centered representation, the finite local cells, or the planar switching
+geometry. For the centered route one must locate a minimizer and
+verify the decomposition on a region containing the initial sublevel.
+For the polyhedral route one checks the smooth cell extensions and uniqueness;
+the squared-loss plus $\ell_1$ example in Section~\ref{art:local} makes that
+local decomposition explicit. For a planar maximum one checks the active
+gradient linear system at the minimizer: affine independence and strictly
+positive balancing weights. A common positive branch-Hessian lower bound
+supplies the strict-contour condition in Corollary~\ref{art:planar-max}.
+
+Appendix~\ref{art:hypothesis-examples} verifies these conditions jointly with
+explicit full-BFGS histories. Proposition~\ref{art:examples-mixed} specifies all
+three certificate inequalities for the mixed ridge and an infinite nonsmooth
+run; Proposition~\ref{art:examples-full-rank} gives a full-rank calibration in
+every dimension. Proposition~\ref{art:examples-two-quadratics} supplies a simple
+parameterized family with curved switching. The printed nonradial example
+also has infinite runs for every initial positive-definite matrix and valid
+constant pair (Corollary~\ref{art:examples-nonradial-runs}).
+Proposition~\ref{art:examples-no-step} shows why the theorems quantify over
+runs: it gives a coercive homogeneous objective and initial data for which no
+differentiable weak-Wolfe first step exists.

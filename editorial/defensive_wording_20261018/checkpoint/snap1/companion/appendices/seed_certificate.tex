@@ -1,0 +1,207 @@
+% Generated from the canonical article appendix; do not edit.
+
+This appendix gives the objects and finite inequalities needed for
+the seed and query assertions in Chapter~\ref{comp:D}. There are two logically separate tasks.
+The algebraic equations close the three-step matrix and displacement cycle;
+the strict inequalities force the specified search to choose that cycle.
+All decimals defining a box are terminating rationals.
+
+\section{Existence and uniqueness of the defining root}
+The two unknown coordinates of the third gradient $g_2=(c,d)^T$ are used to enforce the
+two prescribed dyadic lengths. The matrix calculation in the next
+section first expresses the lengths needed for closure as rational
+functions $\beta(c,d)$ and $\gamma(c,d)$. Clearing their positive
+denominators in $\beta=1/4$ and $\gamma=1/16$ gives the following
+two equations. A contraction certificate then selects one exact solution
+near a rational center.
+
+Put
+\begin{align*}
+ U&=127c+16d,&V&=16c-127d-16,&R&=c-8d,\\
+ K&=8c^2+8d^2+d-8,&T&=c^2-c+d^2,&Y&=(c-1)^2+d^2,
+\end{align*}
+and let
+\begin{equation}\label{comp:seed_polynomials}
+ P(c,d)=
+ \begin{pmatrix}264192RK-UV(U+129)\\16VTK-RUY\end{pmatrix}.
+\end{equation}
+The root is specified by $P(c,d)=0$ and
+$\|(c,d)-\bar r\|_\infty\le10^{-30}$, where
+\begin{align*}
+ \bar r_1&=0.31848142762711863064645131250290703717912205023605,\\
+ \bar r_2&=-1.02523211967574872548135087001300414284511909318444.
+\end{align*}
+
+\begin{lemma}[Rational root certificate]\label{comp:root_certificate}
+This closed box contains exactly one root. On the box all of
+$U,V,R,K,T,Y,U+129$ are positive, and \eqref{D:rho} holds.
+\end{lemma}
+\begin{proof}
+Let $D=DP(\bar r)$ and define its inverse by the ordinary two-by-two
+adjugate formula $A=\operatorname{adj}(D)/\det D$.
+The following finite rational certificate uses only the coefficients of
+\eqref{comp:seed_polynomials} and the two displayed rationals:
+\begin{equation}\label{comp:root_arithmetic}
+ \begin{gathered}
+ \det D\ne0,\qquad
+ \max_i |(AP(\bar r))_i|<10^{-50},\\
+ \max_i\sum_{2\le|\nu|\le5}|a_{i,\nu}|\,|\nu|\le7000,
+ \end{gathered}
+\end{equation}
+where, for $\nu=(\nu_1,\nu_2)$,
+\[
+ a_{i,\nu}=-\frac{1}{\nu_1!\nu_2!}
+     \sum_{j=1}^2 A_{ij}\,\partial^\nu P_j(\bar r).
+\]
+These formulas specify every rational in the certificate: the index set
+contains the eighteen monomials of degrees two through five. The bounds
+in \eqref{comp:root_arithmetic} follow by substituting the rational center,
+differentiating the displayed polynomials, and clearing positive
+denominators in the three comparisons. Thus they are finite integer
+inequalities.
+
+For completeness, their analytic consequence follows directly.
+The centered residual map $N(h)=h-AP(\bar r+h)$ has the exact expansion
+\[
+ N_i(h)=-(AP(\bar r))_i+
+           \sum_{2\le|\nu|\le5}a_{i,\nu}h^\nu;
+\]
+its linear part vanishes because $AD=I$.
+On $\|h\|_\infty,\|k\|_\infty\le r=10^{-30}$, telescoping the
+factors of each monomial gives
+$|h^\nu-k^\nu|\le|\nu|r\|h-k\|_\infty$, since $r\le1$ and
+$|\nu|\ge2$. Hence $N$ has Lipschitz constant at most $7000r$ and
+\[
+ \|N(h)\|_\infty\le10^{-50}+7000r^2<r.
+\]
+The closed box is complete, so contraction gives a unique fixed point.
+Since $A$ is invertible, this is exactly a root of $P$.
+This is the standard preconditioned-residual principle; compare
+Rump~\cite[Theorem~13.3]{NEG_RUMP10}.
+
+The root box lies in
+$318/1000<c<319/1000$ and $-1026/1000<d<-1025/1000$.
+Substitution gives positivity of the stated factors. For example,
+\[
+ \frac{2397}{100}\le U\le\frac{24113}{1000},\quad
+ \frac{119263}{1000}\le V\le\frac{59703}{500},\quad
+ \frac{4259}{500}\le R\le\frac{8527}{1000}.
+\]
+Multiplying positive endpoints in $129R/[V(U+129)]$ gives
+$60/1000<\rho<61/1000$. In particular all divisions used below are valid. The same interval rules on the root box give the thirty digits in \eqref{D:rho}.
+\end{proof}
+
+\section{The matrix identity}
+\begin{proof}[Proof of the algebraic part of the seed and query assertions in Chapter~\ref{comp:D}]
+The first update of the cycle, $\mathcal B(I,g_0,g_1,1)=M_1$, is immediate from
+$s_0=(-1,0)^T$ and $g_1-g_0=(-2,-1/8)^T$.
+For an arbitrary point $(c,d)$, not only the root, with the positive factors above, put
+\[
+ \beta=\frac{66048RK}{UV(U+129)},\quad
+ \gamma=\frac{VTK}{RUY},\quad
+ \widetilde\rho=\frac{2064TK}{U(U+129)Y}.
+\]
+The rational identities obtained from \eqref{D:bfgs} are
+\begin{equation}\label{comp:closure_identity}
+ \begin{gathered}
+ \mathcal B(\mathcal B(M_1,g_1,g_2,\beta),g_2,g_0,\gamma)
+     =\widetilde\rho I,\\
+ -\gamma\mathcal B(M_1,g_1,g_2,\beta)g_2
+     =\widetilde\rho(g_0-g_2).
+ \end{gathered}
+\end{equation}
+Here is a way to check the identities without guessing matrix entries.
+The middle update is $C+\beta E$, with projected term $C$ and rank-one term
+$\beta E$, because its two projection factors
+are independent of the step length and its rank-one term is linear in
+that length. Requiring $(C+\beta E)g_2$ to be parallel to $g_0-g_2$
+gives a linear equation for $\beta$; substitution of $M_1,g_1,g_2$
+gives the displayed value. For a unit vector $w\perp(g_0-g_2)$,
+substitution gives $w^T(C+\beta E)w=\widetilde\rho$.
+With the displayed $\gamma$, the last step is
+$\widetilde\rho(g_0-g_2)$. Its projection factors are the orthogonal
+projector $\Pi=ww^T$ onto $(g_0-g_2)^\perp$, so its projected term is
+$\Pi(C+\beta E)\Pi=\widetilde\rho\,\Pi$, and its rank-one term is
+$\widetilde\rho(I-\Pi)$. Their sum is
+$\widetilde\rho I$, proving \eqref{comp:closure_identity}.
+Each substitution is a rational identity and can equivalently be
+checked by clearing its nonzero denominators and expanding.
+
+Equations~\eqref{comp:seed_polynomials} give exactly
+$\beta=1/4$ and $\gamma=1/16$. Moreover,
+\[
+ \widetilde\rho-\rho=
+ \frac{2064R}{V(U+129)}\left(\gamma-\frac1{16}\right)=0.
+\]
+This gives the matrix and displacement closures. The steps
+\eqref{D:steps} also satisfy $s_j=-\alpha_jM_jg_j$ with $\alpha_0=1$,
+$\alpha_1=1/4$ and $\alpha_2=1/16$: for $j=0,1$ by substitution, and for $j=2$
+by the second identity in \eqref{comp:closure_identity}. The formula for $z_0$
+gives $s_0+s_1+s_2=-(1-\rho)z_0$.
+The strict inequalities below imply
+$(g_{j+1}-g_j)^Ts_j>0$ at each phase. Positive definiteness follows
+inductively from the full update: its two nonnegative quadratic terms
+cannot both vanish on a nonzero vector when $y^Ts>0$.
+\end{proof}
+
+\section{Sound enclosure of every query}
+The remaining task is finite because one cycle has only nine queries.
+For each query we must certify its unique active branch, the descent
+direction at the current iterate, and the comparison that accepts or
+rejects it. A positive derivative at each accepted query supplies weak
+Wolfe for every permitted curvature constant. Strict value increase at
+each rejected query makes Armijo fail, so the routine reaches exactly
+the next displayed bisection. This explains why the certificate below
+contains more than values at the three accepted points.
+
+An interval $[a,b]$ encloses the corresponding real quantity. Addition,
+negation, multiplication and reciprocal are evaluated by
+\begin{align*}
+ [a,b]+[c,d]&=[a+c,b+d],\qquad -[a,b]=[-b,-a],\\
+ [a,b][c,d]&=[\min(ac,ad,bc,bd),\max(ac,ad,bc,bd)],
+\end{align*}
+and $[a,b]^{-1}=[1/b,1/a]$ when $0\notin[a,b]$.
+These inclusion rules follow from order on the reals; induction on a
+rational expression proves the soundness of every resulting bound.
+All endpoints used here are rational, so no directed floating-point
+rounding is needed.
+
+For the query calculation it suffices to use the larger box
+\begin{equation}\label{comp:query_box}
+ \begin{gathered}
+ c\in\frac{[318481,318482]}{10^6},\quad
+ d\in\frac{[-1025233,-1025232]}{10^6},\\
+ \rho\in\frac{[6019,6021]}{10^5}.
+ \end{gathered}
+\end{equation}
+The first two inclusions follow from the root box; substitution in
+\eqref{D:rho}, with positive denominator, gives the third.
+Evaluate $z_j$ from \eqref{D:x0} and use
+\[
+ p_0=(-1,0)^T,\quad p_1=(127/256,1/16)^T,\quad
+ p_2=16\rho(1-c,-d)^T.
+\]
+For a row with active index $i$, set $q=z_j+\alpha p_j$ and evaluate
+the following rational expressions by the inclusion rules:
+\[
+ (g_i-g_k)^Tq\quad(k\ne i),\quad -\alpha g_j^Tp_j,\quad
+ \begin{cases}
+ g_j^Tz_j+\alpha g_j^Tp_j/3-g_i^Tq,&\text{acceptance},\\
+ g_i^Tq-g_j^Tz_j,&\text{rejection}.
+ \end{cases}
+\]
+For an acceptance also evaluate $\alpha g_i^Tp_j$.
+Every expression in its row is strictly greater than the following
+positive rational lower bound, in the order of the table in Section~\ref{comp:trial_table}:
+\begin{equation}\label{comp:query_lower_bounds}
+ \frac1{10^4}(729, 2417, 145, 75, 5964, 2682, 1041, 221, 20).
+\end{equation}
+For each trial value $G(z_j+\alpha p_j)$ in the table of Section~\ref{comp:trial_table} and each current value $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width at most $4\cdot10^{-4}$; the twelve-digit decimals there are explanatory.
+For the three base points, the designated active gaps are positive as
+well. Evaluating $3\pm g_i^Tq$ for every $i$, $2-(q)_2$, and the
+designated active value $g_i^Tq$ gives positive lower bounds for all base
+points and all nine queries. This proves
+\eqref{D:trialbounds}. The
+strict active gaps also give differentiability on a neighborhood of
+each query. Together with the matrix identities, these calculations
+complete the proof of the seed and query assertions in Chapter~\ref{comp:D}.

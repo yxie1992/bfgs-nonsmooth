@@ -1,0 +1,76 @@
+\section*{The October 2026 Lean review}
+An independent review rebuilt the main library from an empty build directory
+with Lean 4.19.0 and the pinned mathlib cache: all 736 modules compiled, with
+no errors and no \texttt{sorry}. The new package \path{bfgs_lean_article/}
+also compiles the article supplements and the lower-curvature failure theorems
+for the non-strict tests (Armijo $\le$, weak Wolfe $\ge$). Both failures hold
+for every $0<c_1\le1/3$ and $c_1<c_2<1$, with one orbit, objective and set of
+starts for all such pairs. The axiom audit of 16 October 2026 checked 5506 Lean names, namely every name then cited by the claim ledger or by the Lean coverage registers of both documents
+(\path{editorial/lean_coverage/register/}) and the principal declarations of the package; they depend only on \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}
+(\path{bfgs_lean_article/AXIOM_AUDIT.json}). A kernel replay with lean4checker re-checked every project module except the two root modules, which contain only imports (786 modules; \path{bfgs_lean_article/KERNEL_REPLAY.json}).
+
+\section*{The 12 September 2026 narrative-revision replay}
+The recorded 12 September replay used Lean 4.19.0 and mathlib commit
+\path{c44e0c8ee63ca166450922a373c7409c5d26b00b}.
+The command \texttt{lake build BfgsVerification} completed successfully in
+the existing pinned build environment. Fresh main and supplemental
+declaration audits also passed. This was an incremental build and a fresh
+audit, not a claim of recompiling every dependency from an empty cache.
+All nine dependency Git revisions and clean states agreed before and after
+the run; no audited source input changed.
+
+The main project contributed 9,672 safe declarations; the union with the
+supplemental correction modules had 9,781, including 7,954 theorems.
+The only transitive axiom dependencies were \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}. The checks reject
+\texttt{sorryAx}, custom mathematical axioms, and reachable unsafe or partial
+implementation artifacts, examining types, proof values and structural
+dependencies. This restriction identifies the foundations actually used;
+it does not establish their consistency or replace trust in the kernel.
+
+The unmodified audit runner and its source provenance are under
+\path{editorial/formal_audit/}. Actual per-command output, input/output hashes,
+elapsed times, package states and the overall PASS are in
+\path{editorial/formal_audit/runs/20260912_narrative/SUMMARY.json} and its
+\path{logs/} directory. The preceding sealed master-report validation also
+passed, with output retained in \path{editorial/logs/baseline_release_gate.json}.
+Reproduction from the repository root is:
+\begin{Verbatim}[fontsize=\small]
+python3 editorial/formal_audit/run.py --run 
+  --run-dir editorial/formal_audit/runs/local_replay
+\end{Verbatim}
+The command is one shell line; the displayed break is typographic.
+
+The narrative revision also adds two separately compiled article supplements.
+The literal mixed-benchmark theorem quantifies over every actual admissible
+run for $u^2+|v|$ and proves both value and whole-iterate convergence. Its
+three module-owned theorems have 31,960 checked transitive dependencies.
+The matched-scaling supplement proves eleven declarations for the update,
+pairings and Armijo--weak-Wolfe comparisons, with 10,697 checked transitive
+dependencies. It establishes covariance; the existing construction contracts
+supply orbit existence and all-query containment. Both audits passed with
+only the three permitted axioms, agreement between kernel and collected
+type/value dependencies, and agreement with the ordinary axiom collector.
+The runs, exact types and hashed compiler outputs are registered in
+\path{editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json}. These totals
+overlap the main library and are not additive. A further skeptical review
+freshly compiled the unchanged fourteen article-geometry declarations and
+checked their types, proof values and complete structural dependencies,
+including mutual inductives and recursor rules. The 26,496-declaration
+closure agrees with the earlier audit, uses only the three permitted
+axioms, and agrees independently with Lean's ordinary axiom collector.
+Exact theorem types are unchanged. The runner and actual compiler/audit
+evidence are under \path{editorial/satisfaction_review/formal/}; the earlier
+evidence remains under \path{editorial/article_formal/}.
+
+The same review also formalized the restriction and fixed-coordinate-change
+argument for the first three lower-counterexample branches: each actual
+whitened branch fails differentiability of its Fr\'echet derivative at zero.
+The combined export includes this clause together with the original full
+local-failure target. Its three declarations and 37,525 transitive
+dependencies passed the same structural, kernel and axiom checks; see
+\path{editorial/satisfaction_review/branch_formal/}.
+
+The following inherited verification material describes the earlier corrected
+release and its limits. Its dates identify those earlier executions.

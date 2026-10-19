@@ -598,7 +598,7 @@ theorem max_affine_semialgebraic {n m : ℕ} (a : Fin m → Vec n) (c : Fin m �
 
 /-- Item `C/01_I/prose/032` (`companion/chapters/01_I.tex:115`): "This retains global failure
 in the finite polyhedral and semialgebraic class." Also Item `C/01_I/prose/143`
-(`companion/chapters/01_I.tex:349`): "The blanket question is not answered by calling all
+(`companion/chapters/01_I.tex:347`): "The blanket question is not answered by calling all
 semialgebraic functions safe: global failure already occurs for affine maxima."
 
 The coercive function $\overline G(u,v)=\max\{u,-u-v/8,cu+dv,v-17\}$ of Section 12.3.1 (a variable
@@ -897,7 +897,7 @@ theorem smooth_subspace_trace_linear {n : ℕ} {F : Vec n → ℝ} (R : Admissib
 
 /-! ## Section 1.6: shared algebra and quantitative record -/
 
-/-- Item `C/01_I/disp/019` (`companion/chapters/01_I.tex:301-304`), with line 299 ("The
+/-- Item `C/01_I/disp/019` (`companion/chapters/01_I.tex:299-302`), with line 299 ("The
 principal-minor inequality is proved once in Chapter M"):
 \[ e_j(H_{k+1})\le\frac{\|y_k\|^2}{\beta_k^2q_k}e_{j+1}(H_k)+\frac{\alpha_k}{\beta_k}e_j(H_k),\quad
    q_k=g_k^TH_kg_k,\quad\beta_k=\frac{y_k^Ts_k}{d_k}. \]
@@ -931,7 +931,7 @@ theorem principal_minor_run {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun
   exact Ch02M.hierarchy (R.H k) (R.H (k + 1)) (R.g k) (R.gradientChange k) (R.displacement k)
     (R.α k) q β (R.positive_definite k) rfl hα hq hqpos hβ' hβpos (R.update k)
 
-/-- Item `C/01_I/prose/116` (`companion/chapters/01_I.tex:310`): "The former $\liminf q_k=0$
+/-- Item `C/01_I/prose/116` (`companion/chapters/01_I.tex:308`): "The former $\liminf q_k=0$
 and $\Omega(N^2)$ headlines are retired as main results. They remain consequences used by older
 proofs."
 
@@ -1052,8 +1052,8 @@ theorem p5_cluster (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ)
     (lt_of_lt_of_le hb (le_max_left _ _)) hK' (fun t ht _ => hstrict t ht)
     (fun p _ hp => hreg p hp) R (show F (R.x 0) ≤ max b (F (R.x 0)) from le_max_right _ _)
 
-/-- Item `C/01_I/prose/082` (`companion/chapters/01_I.tex:230-234`), anchor "The older theorem
-for", with its display Item `C/01_I/disp/016` (`companion/chapters/01_I.tex:232`): "The older
+/-- Item `C/01_I/prose/082` (`companion/chapters/01_I.tex:228-232`), anchor "The older theorem
+for", with its display Item `C/01_I/disp/016` (`companion/chapters/01_I.tex:230`): "The older
 theorem for
 \[ F(u,v)=\max\{a(u)+pv,b(u)-qv\},\qquad p,q>0, \]
 with convex $C^2$ profiles, coercive $\phi=(qa+pb)/(p+q)$ having unique minimizer $u_*$, and
@@ -1098,7 +1098,7 @@ theorem ridge_supersession (a b : ℝ → ℝ) (p q : ℝ) (hp : 0 < p) (hq : 0 
     exact RidgeSupersession.localized_fullBFGS_convergence ha hb hca hcb hp hq hmin huniq ha'' hb''
       U hU
 
-/-- Item `C/01_I/prose/083` (`companion/chapters/01_I.tex:236`), the proof of the explicit
+/-- Item `C/01_I/prose/083` (`companion/chapters/01_I.tex:234`), the proof of the explicit
 supersession ("Here is the implication."), its determinant step: with $\phi=(qa+pb)/(p+q)$, at every $u$ the determinant of the
 gradients $(a'(u),p)$ and $(b'(u),-q)$ of the two branches is
 $-qa'(u)-pb'(u)=-(p+q)\phi'(u)$; under the hypotheses of `ridge_supersession` it vanishes only at
@@ -1132,7 +1132,7 @@ theorem ridge_tie_determinant (a b : ℝ → ℝ) (p q : ℝ) (hp : 0 < p) (hq :
 
 /-! ## Section 1.5: the noncompact homogeneous theory -/
 
-/-- Item `C/01_I/prose/110` (`companion/chapters/01_I.tex:289`): "A compact-level certificate
+/-- Item `C/01_I/prose/110` (`companion/chapters/01_I.tex:287`): "A compact-level certificate
 theorem cannot replace these noncompact statements."
 
 For the finite convex degree-one homogeneous $F(u,v)=|v|$ (bounded below, minimum $0$), no
@@ -1169,7 +1169,7 @@ theorem compact_theorem_cannot_replace :
 /-! ## Section 1.7: geometric findings -/
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `C/01_I/prose/127` (`companion/chapters/01_I.tex:333`): "Thus only finitely many
+/-- Item `C/01_I/prose/127` (`companion/chapters/01_I.tex:331`): "Thus only finitely many
 affine-critical values occur, giving no false affine criticality below a sufficiently low
 threshold."
 
@@ -1198,7 +1198,7 @@ The precise gaps are stated below without proof (status `OPEN`); the first and t
 open questions of Chapters 8 and 7 (`Ch08A.GeneralDimensionalConjecture`,
 `Ch07H.ZeroValueIterateQuestion`). -/
 
-/-- Item `C/01_I/prose/137` (`companion/chapters/01_I.tex:347`), OPEN (stated without proof):
+/-- Item `C/01_I/prose/137` (`companion/chapters/01_I.tex:345`), OPEN (stated without proof):
 "the general local theorem for finite uniformly strongly convex $C^2$ branches without the
 recorded nondegeneracy/geometric assumptions."
 
@@ -1243,7 +1243,7 @@ def failingStarts {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (c₁ c₂ : ℝ
     (∀ k, ∃ N : ℕ, (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ N).1 = some (R.α k)) ∧
     ¬ Tendsto (fun k => F (R.x k)) atTop (𝓝 (F xstar))}
 
-/-- Item `C/01_I/prose/138` (`companion/chapters/01_I.tex:347`), OPEN (stated without proof):
+/-- Item `C/01_I/prose/138` (`companion/chapters/01_I.tex:345`), OPEN (stated without proof):
 "generic or positive-measure failure."
 
 Some finite convex objective with an attained minimum and some pair $0<c_1<c_2<1$ have a large set
@@ -1261,7 +1261,7 @@ def GenericOrPositiveMeasureFailure : Prop :=
     ((∃ U : Set (Vec n), IsOpen U ∧ U.Nonempty ∧ IsMeagre (U \ failingStarts F xstar c₁ c₂)) ∨
       0 < MeasureTheory.volume (failingStarts F xstar c₁ c₂))
 
-/-- Item `C/01_I/prose/140` (`companion/chapters/01_I.tex:347`), OPEN (stated without proof):
+/-- Item `C/01_I/prose/140` (`companion/chapters/01_I.tex:345`), OPEN (stated without proof):
 "arbitrary nonunique solution-set iterate convergence."
 
 For every finite convex objective and every admissible run with a compact initial sublevel whose

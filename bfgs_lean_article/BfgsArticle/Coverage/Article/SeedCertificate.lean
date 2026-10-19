@@ -8,7 +8,7 @@ import BfgsVerification.NonStrictLineSearch
 
 Appendix `art:seed_certificate` ("The algebraic seed and its finite rational certificate"):
 the defining polynomials, Lemma `art:root_certificate` and its proof, the algebraic part of
-the proof of Lemma `art:seed_cycle` (`paper/sections/failure.tex:102-122`), and the
+the proof of Lemma `art:seed_cycle` (`paper/sections/failure.tex:98-118`), and the
 interval certificate of the nine queries. Register:
 `editorial/lean_coverage/register/A_seed_certificate.json`.
 
@@ -93,7 +93,7 @@ open AlgebraicSeed SeedCycle SeedOrbit PolynomialBounds IntervalBounds
 
 /-! ### The defining polynomials and the root -/
 
-/-- Item `A/seed_certificate/disp/001` (`paper/appendices/seed_certificate.tex:22-25`).
+/-- Item `A/seed_certificate/disp/001` (`paper/appendices/seed_certificate.tex:20-23`).
 \[ U=127c_\circ+16d_\circ,\quad V=16c_\circ-127d_\circ-16,\quad R=c_\circ-8d_\circ,\quad
    K=8c_\circ^2+8d_\circ^2+d_\circ-8,\quad T=c_\circ^2-c_\circ+d_\circ^2,\quad
    Y=(c_\circ-1)^2+d_\circ^2. \]
@@ -105,7 +105,7 @@ theorem factors_def (c d : ℝ) :
   ⟨rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 /-- Item `A/seed_certificate/disp/002`, equation `art:seed_polynomials`
-(`paper/appendices/seed_certificate.tex:27-30`).
+(`paper/appendices/seed_certificate.tex:25-28`).
 \[ P(c_\circ,d_\circ)=\begin{pmatrix}264192RK-UV(U+129)\\16VTK-RUY\end{pmatrix}. \] -/
 theorem seed_polynomials_def (c d : ℝ) :
     P ![c, d] = ![264192 * R c d * K c d - U c d * V c d * (U c d + 129),
@@ -113,7 +113,7 @@ theorem seed_polynomials_def (c d : ℝ) :
   ext i
   fin_cases i <;> rfl
 
-/-- Item `A/seed_certificate/disp/003` (`paper/appendices/seed_certificate.tex:33-36`).
+/-- Item `A/seed_certificate/disp/003` (`paper/appendices/seed_certificate.tex:31-34`).
 The rational center $\bar r$ is the displayed pair of terminating decimals:
 \[ \bar r_1=0.31848142762711863064645131250290703717912205023605,\quad
    \bar r_2=-1.02523211967574872548135087001300414284511909318444. \] -/
@@ -123,7 +123,7 @@ theorem center_def :
   ext i
   fin_cases i <;> norm_num [AlgebraicSeed.center]
 
-/-- Item `A/seed_certificate/prose/001` (`paper/appendices/seed_certificate.tex:31-32`):
+/-- Item `A/seed_certificate/prose/001` (`paper/appendices/seed_certificate.tex:29-30`):
 "The root is specified by $P(c_\circ,d_\circ)=0$ and
 $\|(c_\circ,d_\circ)-\bar r\|_\infty\le10^{-30}$". The Lean root `AlgebraicSeed.root`, whose
 coordinates are `SeedOrbit.seedC` and `SeedOrbit.seedD`, satisfies both conditions and is
@@ -135,19 +135,19 @@ theorem root_def :
   ⟨root_spec.2, root_spec.1, fun x hx hb => root_unique x ⟨hb, hx⟩, rfl, rfl⟩
 
 /-- On the closed box the coordinates satisfy the coarse bounds of
-`paper/appendices/seed_certificate.tex:85-86` (proof of the lemma). -/
+`paper/appendices/seed_certificate.tex:83-84` (proof of the lemma). -/
 theorem root_box_coarse {x : Vec 2} (hx : ‖x - AlgebraicSeed.center‖ ≤ 1 / 10 ^ 30) :
     (318 / 1000 : ℝ) < x 0 ∧ x 0 < 319 / 1000 ∧ (-1026 / 1000 : ℝ) < x 1 ∧ x 1 < -1025 / 1000 :=
   box_coarse hx
 
 /-- Item `A/seed_certificate/lemma/art:root_certificate`, Lemma `art:root_certificate`
-(`paper/appendices/seed_certificate.tex:38-41`).
+(`paper/appendices/seed_certificate.tex:36-39`).
 
 "This closed box contains exactly one root. On the box all of $U,V,R,K,T,Y,U+129$ are
 positive, and \eqref{art:seed_rho} holds."
 
 The closed box is $\{x:\|x-\bar r\|_\infty\le10^{-30}\}$ and a root is a zero of $P$.
-Equation `art:seed_rho` (`paper/sections/failure.tex:82-85`) defines
+Equation `art:seed_rho` (`paper/sections/failure.tex:78-81`) defines
 $\rho=129(c_\circ-8d_\circ)/((16c_\circ-127d_\circ-16)(127c_\circ+16d_\circ+129))$ and
 asserts $0.060<\rho<0.061$; "holds on the box" is read as: this $\rho$ satisfies these
 bounds at every point of the box. -/
@@ -301,7 +301,7 @@ theorem certIndex_eq : certIndex = Finset.univ.image wordExp := by
     fin_cases w <;> decide
 
 /-- "the index set contains the eighteen monomials of degrees two through five"
-(`paper/appendices/seed_certificate.tex:59-60`). -/
+(`paper/appendices/seed_certificate.tex:57-58`). -/
 theorem certIndex_card : certIndex.card = 18 := by
   rw [certIndex_eq, Finset.card_image_of_injective _ wordExp_injective]
   rfl
@@ -389,7 +389,7 @@ theorem partialIter_P_word (j : Fin 2) (w₀ : Fin 18) :
   rw [Finset.sum_ite_eq' Finset.univ w₀]
   simp
 
-/-- Item `A/seed_certificate/disp/005` (`paper/appendices/seed_certificate.tex:55-58`):
+/-- Item `A/seed_certificate/disp/005` (`paper/appendices/seed_certificate.tex:53-56`):
 for $\nu=(\nu_1,\nu_2)$ and a matrix $A$,
 \[ a_{i,\nu}=-\frac{1}{\nu_1!\nu_2!}\sum_{j=1}^2 A_{ij}\,\partial^\nu P_j(\bar r). \] -/
 def certCoeff (A : Mat 2) (i : Fin 2) (ν : ℕ × ℕ) : ℝ :=
@@ -441,7 +441,7 @@ theorem certCoeff_word {D A : Mat 2}
 
 
 /-- Item `A/seed_certificate/disp/004`, equation `art:root_arithmetic`
-(`paper/appendices/seed_certificate.tex:47-53`), in the proof of Lemma `art:root_certificate`.
+(`paper/appendices/seed_certificate.tex:45-51`), in the proof of Lemma `art:root_certificate`.
 
 "Let $D=DP(\bar r)$ and define its inverse by the ordinary two-by-two adjugate formula
 $A=\operatorname{adj}(D)/\det D$." With $a_{i,\nu}$ of display 005,
@@ -474,7 +474,7 @@ theorem root_arithmetic (D : Mat 2)
     · exact coeff0_bound
     · exact coeff1_bound
 
-/-- Item `A/seed_certificate/disp/006` (`paper/appendices/seed_certificate.tex:68-71`), in the
+/-- Item `A/seed_certificate/disp/006` (`paper/appendices/seed_certificate.tex:66-69`), in the
 proof of Lemma `art:root_certificate`.
 
 "The centered residual map $N(h)=h-AP(\bar r+h)$ has the exact expansion
@@ -515,7 +515,7 @@ theorem residual_expansion (D : Mat 2)
   rw [he, certCoeff_word hD hA]
   ring
 
-/-- Item `A/seed_certificate/disp/007` (`paper/appendices/seed_certificate.tex:77-79`), in the
+/-- Item `A/seed_certificate/disp/007` (`paper/appendices/seed_certificate.tex:75-77`), in the
 proof of Lemma `art:root_certificate`.
 
 "On $\|h\|_\infty,\|k\|_\infty\le r=10^{-30}$, telescoping the factors of each monomial gives
@@ -545,7 +545,7 @@ theorem residual_bound (D : Mat 2)
   have hmul := mul_le_mul_of_nonneg_left hh hr0
   nlinarith
 
-/-- Item `A/seed_certificate/disp/008` (`paper/appendices/seed_certificate.tex:88-92`), in the
+/-- Item `A/seed_certificate/disp/008` (`paper/appendices/seed_certificate.tex:86-90`), in the
 proof of Lemma `art:root_certificate`: "The root box lies in $318/1000<c_\circ<319/1000$ and
 $-1026/1000<d_\circ<-1025/1000$. Substitution gives positivity of the stated factors. For
 example,
@@ -567,7 +567,7 @@ theorem factor_bounds {x : Vec 2} (hx : ‖x - AlgebraicSeed.center‖ ≤ 1 / 1
 theorem update_def (H : Mat 2) (g gp : Vec 2) (α : ℝ) :
     SeedCycle.update H g gp α = inverseBFGS H (-α • (H *ᵥ g)) (gp - g) := rfl
 
-/-- Item `A/seed_certificate/disp/009` (`paper/appendices/seed_certificate.tex:102-106`), in
+/-- Item `A/seed_certificate/disp/009` (`paper/appendices/seed_certificate.tex:100-104`), in
 the proof of the algebraic part of Lemma `art:seed_cycle`: the definitions
 \[ \beta=\frac{66048RK}{UV(U+129)},\quad\gamma=\frac{VTK}{RUY},\quad
    \widetilde\rho=\frac{2064TK}{U(U+129)Y}. \] -/
@@ -578,7 +578,7 @@ theorem closure_parameters_def (c d : ℝ) :
   ⟨rfl, rfl, rfl⟩
 
 /-- Item `A/seed_certificate/disp/010`, equation `art:closure_identity`
-(`paper/appendices/seed_certificate.tex:108-115`), in the proof of the algebraic part of
+(`paper/appendices/seed_certificate.tex:106-113`), in the proof of the algebraic part of
 Lemma `art:seed_cycle`.
 
 "For an arbitrary point $(c_\circ,d_\circ)$, not only the root, with the positive factors
@@ -603,7 +603,7 @@ theorem closure_identity (c d : ℝ) (hU : 0 < U c d) (hV : 0 < V c d) (hR : 0 <
   exact last_step_generic hU.ne' hV.ne' hU'.ne' hR.ne' hY.ne'
 
 /-- Proof of the algebraic part of Lemma `art:seed_cycle`, undisplayed claim of
-`paper/appendices/seed_certificate.tex:133-134` (not a register item): "Equations
+`paper/appendices/seed_certificate.tex:131-132` (not a register item): "Equations
 \eqref{art:seed_polynomials} give exactly $\beta=1/4$ and $\gamma=1/16$." -/
 theorem beta_gamma_root (c d : ℝ) (hU : 0 < U c d) (hV : 0 < V c d) (hR : 0 < R c d)
     (hY : 0 < Y c d) (hU' : 0 < U c d + 129) (hP : P ![c, d] = 0) :
@@ -614,7 +614,7 @@ theorem beta_gamma_root (c d : ℝ) (hU : 0 < U c d) (hV : 0 < V c d) (hR : 0 < 
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, Pi.zero_apply] at h0 h1
   exact ⟨beta_quarter hU.ne' hV.ne' hU'.ne' h0, gamma_sixteenth hU.ne' hR.ne' hY.ne' h1⟩
 
-/-- Item `A/seed_certificate/disp/011` (`paper/appendices/seed_certificate.tex:135-138`), in
+/-- Item `A/seed_certificate/disp/011` (`paper/appendices/seed_certificate.tex:133-136`), in
 the proof of the algebraic part of Lemma `art:seed_cycle`.
 
 "Equations \eqref{art:seed_polynomials} give exactly $\beta=1/4$ and $\gamma=1/16$. Moreover,
@@ -633,7 +633,7 @@ theorem rho_closure (c d : ℝ) (hU : 0 < U c d) (hV : 0 < V c d) (hR : 0 < R c 
   rw [(beta_gamma_root c d hU hV hR hY hU' hP).2, sub_self, mul_zero]
 
 /-- Proof of the algebraic part of Lemma `art:seed_cycle`, undisplayed claim of
-`paper/appendices/seed_certificate.tex:142-143` (not a register item): "The formula for $z_0$
+`paper/appendices/seed_certificate.tex:140-141` (not a register item): "The formula for $z_0$
 gives $s_0+s_1+s_2=-(1-\rho)z_0$", with $s_0=(-1,0)^T$, $s_1=(127/1024,1/64)^T$,
 $s_2=\rho(1-c_\circ,-d_\circ)^T$ of `art:seed_steps` and $z_0$ of `art:seed_points`. -/
 theorem displacement_closure (c d ρ : ℝ) (hρ : ρ ≠ 1) :
@@ -643,7 +643,7 @@ theorem displacement_closure (c d ρ : ℝ) (hρ : ρ ≠ 1) :
   ext i
   fin_cases i <;> simp [SeedOrbit.initialPoint] <;> field_simp <;> ring
 
-/-- Item `A/seed_certificate/prose/002` (`paper/appendices/seed_certificate.tex:14-18`): "The
+/-- Item `A/seed_certificate/prose/002` (`paper/appendices/seed_certificate.tex:12-16`): "The
 matrix calculation in the next subsection first expresses the lengths needed for closure as
 rational functions $\beta(c_\circ,d_\circ)$ and $\gamma(c_\circ,d_\circ)$. Clearing their
 positive denominators in $\beta=1/4$ and $\gamma=1/16$ gives the following two equations"
@@ -701,7 +701,7 @@ theorem inv_rule {a b x : ℝ} (hx : Bounds a x b) (h0 : (0 : ℝ) ∉ Set.Icc a
     have hx0 : x < 0 := hx2.trans_lt hb
     exact ⟨one_div_le_one_div_of_neg_of_le hb hx2, one_div_le_one_div_of_neg_of_le hx0 hx1⟩
 
-/-- Item `A/seed_certificate/disp/012` (`paper/appendices/seed_certificate.tex:162-165`), with
+/-- Item `A/seed_certificate/disp/012` (`paper/appendices/seed_certificate.tex:160-163`), with
 the reciprocal rule of line 166: "Addition, negation, multiplication and reciprocal are
 evaluated by
 \[ [a,b]+[c,d]=[a+c,b+d],\quad -[a,b]=[-b,-a],\quad
@@ -763,7 +763,7 @@ def enclose (box : ι → ℝ × ℝ) : RatExpr ι → Option (ℝ × ℝ)
 
 end RatExpr
 
-/-- Item `A/seed_certificate/prose/004` (`paper/appendices/seed_certificate.tex:167-168`):
+/-- Item `A/seed_certificate/prose/004` (`paper/appendices/seed_certificate.tex:165-166`):
 "These inclusion rules follow from order on the reals; induction on a rational expression
 proves the soundness of every resulting bound." Soundness of the interval evaluation, by
 induction on the expression: if every variable lies in its box interval and the evaluation
@@ -815,7 +815,7 @@ theorem enclose_sound {ι : Type} (box : ι → ℝ × ℝ) (v : ι → ℝ)
     exact inv_rule (iha p q ha) h0
 
 /-- Item `A/seed_certificate/disp/013`, equation `art:query_box`
-(`paper/appendices/seed_certificate.tex:173-179`), with prose item
+(`paper/appendices/seed_certificate.tex:171-177`), with prose item
 `A/seed_certificate/prose/005` (lines 180-181).
 
 "For the query calculation it suffices to use the larger box
@@ -872,7 +872,7 @@ theorem query_box :
   have h := (hratio seedC seedD hc hd).2
   convert h using 1
 
-/-- Item `A/seed_certificate/disp/014` (`paper/appendices/seed_certificate.tex:183-186`): the
+/-- Item `A/seed_certificate/disp/014` (`paper/appendices/seed_certificate.tex:181-184`): the
 directions $p_j=-M_jg_j$ of Lemma `art:seed_cycle` at the root are
 \[ p_0=(-1,0)^T,\quad p_1=(127/256,1/16)^T,\quad p_2=16\rho(1-c_\circ,-d_\circ)^T, \]
 with $M_0=I$, $M_1$ and $M_2=\mathcal B(M_1,g_1,g_2,1/4)$ of `art:seed_matrices`
@@ -895,7 +895,7 @@ theorem query_directions (j : Fin 3) :
   · ext i
     fin_cases i <;> simp [SeedOrbit.direction]
 
-/-- Item `A/seed_certificate/disp/015` (`paper/appendices/seed_certificate.tex:189-195`), with
+/-- Item `A/seed_certificate/disp/015` (`paper/appendices/seed_certificate.tex:187-193`), with
 lines 187-188 and 196: the query of row `q` of Table `art:trial_table`,
 $q=z_j+\alpha p_j$ with $j$ the phase and $\alpha$ the trial length. -/
 def queryPoint (c d r : ℝ) (q : Fin 9) : Vec 2 :=
@@ -2082,7 +2082,7 @@ theorem query_lower_bounds_box {c d r : ℝ}
   · exact rowBounds8 hc hd hr
 
 /-- Item `A/seed_certificate/disp/016`, equation `art:query_lower_bounds`
-(`paper/appendices/seed_certificate.tex:199-201`), with lines 187-198.
+(`paper/appendices/seed_certificate.tex:197-199`), with lines 187-198.
 
 "For a row with active index $i$, set $q=z_j+\alpha p_j$ and evaluate the following rational
 expressions by the inclusion rules: $(g_i-g_k)^Tq$ ($k\ne i$), $-\alpha g_j^Tp_j$, and
@@ -2904,7 +2904,7 @@ theorem valueBounds8 {c d r : ℝ}
     linarith
 
 
-/-- Item `A/seed_certificate/prose/006` (`paper/appendices/seed_certificate.tex:202`): "The same
+/-- Item `A/seed_certificate/prose/006` (`paper/appendices/seed_certificate.tex:200`): "The same
 interval operations give the value enclosures in that table." On the query box the interval
 rules enclose the designated active values $g_j^Tz_j$ and $g_i^Tq$ of every row in the open
 intervals of Table `art:trial_table` (scaled by $10^4$); at the root these values are
@@ -2963,7 +2963,7 @@ theorem query_gradient (q : Fin 9) :
       SeedOrbit.gradient seedC seedD (trialActive q) :=
   DeterministicLineSearch.actual_coordinateGradient (source_trial_hasGradient q)
 
-/-- Item `A/seed_certificate/prose/008` (`paper/appendices/seed_certificate.tex:154-155`): "A
+/-- Item `A/seed_certificate/prose/008` (`paper/appendices/seed_certificate.tex:152-153`): "A
 positive derivative at each accepted query supplies weak Wolfe for every permitted curvature
 constant." At each accepted row the derivative of $G$ at the query along $p_j$ is positive,
 and the weak Wolfe test of `art:failure_tests` holds for every $c_2>0$. -/
@@ -2996,7 +2996,7 @@ theorem positive_slope_wolfe (q : Fin 9) (hq : trialAccept q = true) :
     query_gradient]
   nlinarith
 
-/-- Item `A/seed_certificate/prose/009` (`paper/appendices/seed_certificate.tex:155-157`):
+/-- Item `A/seed_certificate/prose/009` (`paper/appendices/seed_certificate.tex:153-155`):
 "Strict value increase at each rejected query makes Armijo fail, so the routine reaches exactly
 the next displayed bisection." At each rejected row, $G$ at the query exceeds $G(z_j)$, the
 Armijo test of `art:failure_tests` fails for every $c_1>0$, and the search therefore records
@@ -3080,7 +3080,7 @@ theorem certifiedPoint_of_certificate {x : Vec 2} {i : Fin 3}
   · have := abs_lt.mp (h.branch_bounds k)
     exact ⟨by linarith, by linarith⟩
 
-/-- Item `A/seed_certificate/prose/010` (`paper/appendices/seed_certificate.tex:203-207`): "For
+/-- Item `A/seed_certificate/prose/010` (`paper/appendices/seed_certificate.tex:201-205`): "For
 the three base points, the designated active gaps are positive as well. Evaluating $3\pm g_i^Tq$
 for every $i$, $2-[q]_2$, and the designated active value $g_i^Tq$ gives positive lower bounds for
 all base points and all nine queries. This proves \eqref{art:seed_query_bounds}." The
@@ -3105,7 +3105,7 @@ theorem seed_query_bounds_certificate :
         objective_of_active h.active]
       exact h.value_pos⟩
 
-/-- Item `A/seed_certificate/prose/011` (`paper/appendices/seed_certificate.tex:208-210`): "The
+/-- Item `A/seed_certificate/prose/011` (`paper/appendices/seed_certificate.tex:205-207`): "The
 strict active gaps also give differentiability on a neighborhood of each query." Near each
 query $G$ is differentiable with gradient $g_i$, `i` the active index. -/
 theorem query_differentiable_near (q : Fin 9) :

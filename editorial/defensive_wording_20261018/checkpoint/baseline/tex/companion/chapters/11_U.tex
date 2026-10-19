@@ -1,0 +1,492 @@
+\chapter{Fixed normal geometry in arbitrary dimension}\label{comp:U}\label{U:chapter}
+\renewcommand{\ModuleTag}{11}
+A fixed space of jump normals leaves controlled smooth directions in arbitrary dimension. Residual transport can be paid for in those directions; this is a different hypothesis from planar switching geometry.
+
+
+% SOURCE_BEGIN U.span.1
+\begingroup
+
+\setcounter{section}{0}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END U.span.1
+
+
+% SOURCE_BEGIN U.span.2
+\section{A concrete dimension-independent local
+theorem}\label{U:a-concrete-dimension-independent-local-theorem}
+
+
+Let \(a\in\mathbb R^n\) be a unit vector, \(b\in\mathbb R\), and write
+\[
+ P=\{x:a^Tx=b\},\qquad S=a^\perp,\qquad P_S=I-aa^T.
+\] The normal direction is fixed; the dimension \(n-1\) of the tangent
+space is unrestricted.
+
+\phantomsection\label{U:one}\textbf{Theorem 11.1 (One exceptional hyperplane).} Let
+\(F:\mathbb R^n\to\mathbb R\) be finite and convex, with unique
+minimizer \(x_*\in P\). Let \(K=\{F\le F(x_0)\}\) be compact. On an open
+convex neighborhood of \(K\), assume:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(F\) is \(\mu\)-strongly convex for some \(\mu>0\).
+\item
+  All subgradients have the same tangential projection,
+  \[P_Sg=A(x)\qquad(g\in\partial F(x)),\] where \(A\) is Lipschitz
+  continuous on that neighborhood.
+\item
+  \(F\) is locally \(C^{1,1}\) away from \(P\).
+\end{enumerate}
+
+Then every infinite admissible full-BFGS run starting at \(x_0\)
+satisfies \[
+ \boxed{F(x_k)\to F_*,\qquad x_k\to x_*.}
+\] The hyperplane itself may include differentiable points; it is
+allowed to contain failures of gradient-Lipschitz regularity as well as
+actual kinks. No uniform bound on the full gradient-Lipschitz constants
+as the hyperplane is approached is required.
+
+If these hypotheses hold only in a neighborhood of a unique minimizer,
+some \(\varepsilon>0\) gives the same conclusion for every start with
+\(F(x_0)<F_*+\varepsilon\). The same basin works for every SPD
+initialization and every fixed valid line-search pair. Compact sublevel
+trapping supplies this local statement: choose a low sublevel contained
+in the structural neighborhood, then use Armijo monotonicity.
+
+The assumptions concern the objective. In particular, the claim that a
+part of \(B_k=H_k^{-1}\) has a controlled growth rate will be
+\textbf{derived}, not assumed.
+
+% SOURCE_END U.span.2
+
+
+% SOURCE_BEGIN U.span.3
+\subsection{A simple family and a weaker-curvature
+version}\label{U:a-simple-family-and-a-weaker-curvature-version}
+
+An immediate family is \[
+ \boxed{F(u,v)=\psi(u,v)+h(v),\qquad u\in\mathbb R^{n-1},\quad v\in\mathbb R,}
+\] where \(\psi\) is convex with locally Lipschitz gradient, \(h\) is
+finite convex and locally \(C^{1,1}\) on \(\mathbb R\setminus\{0\}\),
+\(F\) is strongly convex on the relevant neighborhood, and the minimizer
+has \(v_*=0\). Here \(A=\nabla_u\psi\), irrespective of the singular
+normal derivative of \(h\). The objective and the initial matrix may be
+fully coupled.
+
+Full strong convexity can be weakened for this composite family. It is
+enough that \[
+ \psi(u,v)-\frac{\mu}{2}\|u\|^2\quad\hbox{is convex},\qquad \mu>0,
+\] that the relevant positive sublevels of \(F\) are strictly convex,
+and that the minimizer is unique with \(v_*=0\). A compact initial
+sublevel is still required. The proof of this extension is given in
+Section 11.6. It needs positive curvature only in the smooth tangential
+directions, not a positive lower bound in the normal direction.
+
+This is not a claim that all convex nonsmooth functions admit such a
+splitting. Nor does a common hyperplane through the optimizer describe
+arbitrary curved switching geometry.
+
+
+\setcounter{section}{1}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END U.span.3
+
+
+% SOURCE_BEGIN U.span.4
+\section{A forced affine-critical cluster-point
+theorem}\label{U:a-forced-affine-critical-cluster-point-theorem}
+
+The method also fits the affine-criticality program of Chapter~\ref{comp:A} directly.
+
+\phantomsection\label{U:parallel}\textbf{Theorem 11.2 (Parallel singular interfaces).} Let \(F\) be finite
+convex with attained minimum and compact sublevel \(K\). Assume \(F\) is
+\(\mu\)-strongly convex on an open convex neighborhood of \(K\). Let
+\(a\) be a unit vector and \(E\subset\mathbb R\) closed. On that
+neighborhood suppose:
+
+\begin{itemize}
+\tightlist
+\item
+  the singular set is \(\Sigma=\{x:a^Tx\in E\}\), every point of
+  \(\Sigma\) is genuinely nondifferentiable, and \(F\) is locally
+  \(C^{1,1}\) off \(\Sigma\);
+\item
+  \(P_S\partial F(x)=\{A(x)\}\) for a Lipschitz field \(A\), where
+  \(S=a^\perp\).
+\end{itemize}
+
+Then the cluster set of every infinite admissible full-BFGS run in \(K\)
+contains a point \(p\) with \[
+ \boxed{0\in\operatorname{aff}\partial F(p).}
+\] There may be several or countably many parallel interfaces, subject
+to the closed-set and regularity assumptions above. No finite
+affine-critical set is assumed.
+
+At a point of \(\Sigma\), the subdifferential is a nontrivial compact
+segment parallel to \(a\), because every subgradient has the same \(S\)
+projection. Hence \[
+ \operatorname{aff}\partial F(p)=A(p)+\mathbb R a,
+ \qquad
+ 0\in\operatorname{aff}\partial F(p)\iff A(p)=0.
+\] At a smooth point, affine criticality is ordinary stationarity.
+
+Consequently, adding \[
+ 0\in\operatorname{aff}\partial F(p)\implies0\in\partial F(p)
+\] on \(K\), or on a sufficiently low trapped neighborhood, gives
+convergence to the minimum value and, under uniqueness, convergence of
+the whole sequence.
+
+Theorem 11.1 is slightly different from a literal specialization of Theorem 11.2: it allows the exceptional hyperplane to contain smooth but not
+locally \(C^{1,1}\) points. Having \(x_*\in P\) makes every zero of
+\(A\) on \(P\) optimal, so genuine nondifferentiability at every
+exceptional point is unnecessary there.
+
+
+\setcounter{section}{4}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END U.span.4
+
+
+% SOURCE_BEGIN U.span.5
+\section{Proof of the parallel-interface and single-interface
+results}\label{U:proof-of-the-parallel-interface-and-single-interface-results}
+
+We give a common argument that covers Theorems 11.1 and 11.2.
+
+% SOURCE_END U.span.5
+
+
+% SOURCE_BEGIN U.span.6
+\subsection{Preliminary bounds and a contradiction
+set}\label{U:preliminary-bounds-and-a-contradiction-set}
+
+Strong convexity and convexity give \[
+ d_k-(F_k-F_{k+1})\ge\frac\mu2\|s_k\|^2,
+ \qquad t_k\ge\mu\|s_k\|^2.\tag{11.10}
+\] Thus \(\sum\|s_k\|^2<\infty\) and \(s_k\to0\). Let \(\Gamma\) be the
+compact cluster set. Every point of \(\Gamma\) has the common limit
+value \(\ell\).
+
+For Theorem 11.2, assume \(\Gamma\) has no affine-critical point. Then
+\(\ell>F_*\), so it contains no stationary point. For Theorem 11.1, assume
+directly \(\ell>F_*\).
+
+Write \(r(x)=a^Tx\) in Theorem 11.2, and \(r(x)=a^Tx-b\) in Theorem 11.1. Let
+\(E\) be the exceptional scalar set; in Theorem 11.1 use \(E=\{0\}\).
+
+The common tangential projection and its Lipschitz constant \(L_A\)
+imply \[
+ \|P_S y_k\|^2=\|A(x_{k+1})-A(x_k)\|^2
+ \le L_A^2\|s_k\|^2\le\frac{L_A^2}{\mu}t_k.\tag{11.11}
+\] Hence Theorem~\ref{M:residualtheorem}'s smooth-subspace estimate holds.
+
+% SOURCE_END U.span.6
+
+
+% SOURCE_BEGIN U.span.7
+\subsection{Why tangential descent cannot disappear on the
+exceptional
+set}\label{U:why-tangential-descent-cannot-disappear-on-the-exceptional-set}
+
+For Theorem 11.2, at an exceptional point the nontrivial subgradient
+segment has affine hull \(A(p)+\mathbb R a\). Thus \(A(p)=0\) would make
+it affine critical, contrary to the assumption on \(\Gamma\).
+
+For Theorem 11.1, if \(p\in P\) and \(g\in\partial F(p)\), strong
+monotonicity with \(0\in\partial F(x_*)\) gives \[
+ A(p)^T(p-x_*)=g^T(p-x_*)\ge\mu\|p-x_*\|^2.
+\] Thus \(A(p)=0\) on \(P\) is possible only at \(x_*\). Such a point
+cannot belong to a positive limiting level.
+
+In either case the compact set \[
+ Z=\{p\in\Gamma:A(p)=0\}
+\] has scalar image \(r(Z)\) disjoint from the closed set \(E\). If
+\(Z\) is nonempty, these sets have positive separation
+\(\delta=\operatorname{dist}(r(Z),E)>0\). If \(E\) is empty there is no
+singular region and we may take the cutoff below identically one; if
+\(Z\) is empty it may be identically zero.
+
+Choose a scalar Lipschitz function \(\tau:\mathbb R\to[0,1]\) which is
+zero where \(\operatorname{dist}(r,E)\le\delta/4\), and one where
+\(\operatorname{dist}(r,E)\ge\delta/2\). Such a cutoff is obtained by
+composing a piecewise-linear cutoff with the distance function. In
+particular \(\tau=1\) on \(r(Z)\). The cutoff is an analytical object
+chosen from \(F\) and the hypothetical cluster set, not an algorithmic
+input.
+
+% SOURCE_END U.span.7
+
+
+% SOURCE_BEGIN U.span.8
+\subsection{A frame on the entire cluster
+set}\label{U:a-frame-on-the-entire-cluster-set}
+
+Let the columns of \(U\) be an orthonormal basis of \(S\), and set \[
+ \boxed{V(x)=[\,U,\ \tau(r(x))a\,].}\tag{11.12}
+\] Its tangential columns are always present. Its normal column is
+switched off near singular interfaces and restored away from them.
+
+At differentiable points, \[
+ \|V(x)^T\nabla F(x)\|^2
+ =\|A(x)\|^2+\tau(r(x))^2|a^T\nabla F(x)|^2.
+\] On \(\Gamma\setminus Z\) the first term is positive. On \(Z\), the
+cutoff equals one and the full gradient is nonzero. The displayed
+expression extends continuously across singular interfaces because the
+cutoff vanishes on a whole strip around them; gradients are bounded and
+\(A\) is continuous. Compactness therefore provides \(m>0\) and a
+buffered neighborhood of all of \(\Gamma\) in which visibility holds.
+
+The entire late trajectory lies in this neighborhood because its
+distance to its compact cluster set tends to zero. There is no selection
+of one cluster point followed by an assumption that the sequence
+converges to it.
+
+% SOURCE_END U.span.8
+
+
+% SOURCE_BEGIN U.span.9
+\subsection{The new secant term is
+bounded}\label{U:the-new-secant-term-is-bounded}
+
+
+The tangential part follows from (11.11). If \(\tau(r(z))=0\), there is no
+normal contribution.
+
+If \(\tau(r(z))>0\), the endpoint is a fixed positive distance from the
+exceptional scalar set. For sufficiently close endpoints, the entire
+segment lies in a slightly smaller smooth strip. On a compact buffered
+subset of that strip, a finite convex-chart cover gives a common local
+gradient-Lipschitz constant. Convex cocoercivity on each sufficiently
+small convex chart yields \[
+ \|\nabla F(z)-\nabla F(x)\|^2\le L_\delta\,y^Ts.
+\] Therefore \[
+ \|V(z)^Ty\|^2\le C_0t\tag{11.13}
+\] for every sufficiently late accepted pair. This uses local smoothness
+away from the exceptional set; \(L_\delta\) need not stay bounded as
+\(\delta\downarrow0\).
+
+% SOURCE_END U.span.9
+
+
+% SOURCE_BEGIN U.span.10
+\subsection{The only transport error is tangential and
+inexpensive}\label{U:the-only-transport-error-is-tangential-and-inexpensive}
+
+For an endpoint pair put \[
+ \beta=\begin{cases}
+ [\tau(r(z))-\tau(r(x))]/(a^Ts),&a^Ts\ne0,\\
+ 0,&a^Ts=0.
+ \end{cases}
+\] Then \(|\beta|\le\operatorname{Lip}(\tau)\). With \(e_n\) the last
+frame-coordinate vector, \[
+ \boxed{
+ V(z)=V(x)+s\,\beta e_n^T-\beta P_Ss\,e_n^T.
+ }\tag{11.14}
+\] Thus (11.14) is the transport hypothesis of Theorem~\ref{M:residualtheorem}, with \(T=I\), rank-one term \(s(\beta e_n)^T\) and \[
+ R=-\beta P_Ss\,e_n^T\in S,
+ \qquad
+ \|R\|_F^2\le\operatorname{Lip}(\tau)^2\|P_Ss\|^2
+ \le\frac{2\operatorname{Lip}(\tau)^2}{\mu}d.\tag{11.15}
+\] All conditions of Theorem~\ref{M:residualtheorem} hold. The contradiction proves Theorem 11.2,
+and proves \(\ell=F_*\) for Theorem 11.1. Compactness and uniqueness give
+whole-sequence convergence. \(\square\)
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END U.span.10
+
+
+% SOURCE_BEGIN U.span.11
+\section{Only tangential strong convexity is needed for a composite
+subclass}\label{U:only-tangential-strong-convexity-is-needed-for-a-composite-subclass}
+
+Consider \(F(u,v)=\psi(u,v)+h(v)\) under the weaker hypotheses in
+Section 11.1.1. Set \(S=\mathbb R^{n-1}\times\{0\}\). Since
+\(\psi-\mu\|u\|^2/2\) and \(h\) are convex, \[
+ d_k-(F_k-F_{k+1})\ge\frac\mu2\|P_Ss_k\|^2.\tag{11.16}
+\] This is the bound needed for the transport residual, even without a
+positive normal curvature bound.
+
+At differentiable accepted points, \[
+ P_Sy=P_S[\nabla\psi(z)-\nabla\psi(x)].
+\] Convex \(L\)-smoothness of \(\psi\) on the compact neighborhood, and
+monotonicity of the scalar subgradient of \(h\), give \[
+ \|P_Sy\|^2
+ \le L[\nabla\psi(z)-\nabla\psi(x)]^Ts
+ \le Lt.\tag{11.17}
+\] This replaces (11.11). On the exceptional plane \(v=0\), the restriction
+of \(F\) is a differentiable strongly convex function of \(u\), uniquely
+minimized at \(u_*\). Thus the needed nonvanishing of \(A=\nabla_u\psi\)
+on a nonoptimal cluster set still holds.
+
+Finally, strict convexity of the positive sublevels supplies \(s_k\to0\)
+in place of full strong convexity. The proof is dimension independent:
+if a subsequence had \(x_k\to x\), \(x_{k+1}\to z\ne x\), \(g_k\to g\),
+and \(F_k\to\ell>F_*\), then \(d_k\to0\) gives \(g^T(z-x)=0\). Convexity
+and the supporting inequality make \(F\) constant at \(\ell\) on
+\([x,z]\), contrary to the strictly convex boundary of \(\{F\le\ell\}\).
+
+Equations (11.16)--(11.17) and the same cutoff frame complete the proof. A
+quadratic-plus-absolute-value objective is included, but those familiar
+cases were already proved in the source notes. The extension below
+illustrates the additional normal irregularity allowed here.
+
+
+\setcounter{section}{6}
+\setcounter{theorem}{0}
+\setcounter{lemma}{0}
+\setcounter{corollary}{0}
+\setcounter{proposition}{0}
+\setcounter{remark}{0}
+\setcounter{equation}{0}
+% SOURCE_END U.span.11
+
+
+% SOURCE_BEGIN U.span.12
+\section{An explicit all-dimensional example outside
+RS}\label{U:an-explicit-all-dimensional-example-outside-rs}
+
+
+Let \(a_j=2^{-j}\) for \(j\ge2\), and let \[
+ \eta(t)=\begin{cases}(1-t^2)^2,&|t|\le1,\\0,&|t|>1.\end{cases}
+\] This nonnegative bump is \(C^1\), has \(\eta(0)=1\), and integral
+\(16/15\). Its supports at the following scales are pairwise disjoint.
+Define \[
+ k(v)=\sum_{j=2}^{\infty}a_j^{-3}
+ \eta\!\left(\frac{v-a_j}{a_j^5}\right),\qquad v>0,
+\] \[
+ r(v)=\begin{cases}
+ \displaystyle\int_0^v(v-t)k(t)\,dt,&v>0,\\
+ 0,&v\le0.
+ \end{cases}\tag{11.18}
+\] Each bump has mass \((16/15)a_j^2\). The total mass is finite. The
+sum is locally finite away from zero, so \(r\) is convex, \(C^1\)
+globally, and \(C^3\) on \((0,\infty)\) and \((-\infty,0)\). In
+particular it is locally \(C^{1,1}\) away from zero. Direct bounds give
+\[
+ 0\le r'(v)\le6v^2,\qquad 0\le r(v)\le6v^3
+\] for \(v\ge0\). However, \[
+ r''(a_j)=a_j^{-3}\to\infty.\tag{11.19}
+\] (The second derivative at zero itself exists and equals zero, but is
+not continuous there.)
+
+For any \(n\ge2\), consider \[
+ \boxed{
+ F(u,v)=\frac12\|u\|^2+\frac12v^2+|v|+r(v),
+ \qquad u\in\mathbb R^{n-1}.
+ }\tag{11.20}
+\] It is 1-strongly convex and coercive, with unique minimizer zero. Its
+only nondifferentiable hyperplane is \(v=0\); its tangential gradient is
+\(u\), which is globally Lipschitz. Theorem 11.1 therefore proves global
+convergence of every admissible full-BFGS run, for arbitrary coupled SPD
+initialization.
+
+Yet \textbf{RS fails in every neighborhood of zero}. Fix any
+sufficiently small nonzero \(u_0\), and take \(x_j=(u_0,a_j)\). Their
+objective values approach the positive level \(\|u_0\|^2/2\). At these
+smooth points, \[
+ x_j^T\nabla^2F(x_j)x_j
+ =\|u_0\|^2+a_j^2+a_j^{-1}\longrightarrow\infty.\tag{11.21}
+\] A uniform inward Taylor estimate on that fixed positive band would,
+by taking its second-order limit at each \(x_j\), bound the left side of
+(11.21). This is impossible. The equivalence of Theorem~\ref{R:thm:equiv} between inward radial
+smoothness and RS therefore rules out RS on that band. Choosing \(u_0\)
+arbitrarily small gives failure in every neighborhood of the optimizer.
+
+This is a \textbf{function-class} gain beyond RS, but not a claim that
+the function lacks every prior transported certificate. It also expands
+the allowed normal curvature rather than settling the original arbitrary
+curved finite-\(C^2\)-max conjecture of Chapter~\ref{comp:A}. Where each piece has a \(C^{1,1}\)
+extension through the flat interface, the
+finite-polyhedral-partition Theorem~\ref{R:thm:plq} already gives local convergence.
+
+% SOURCE_END U.span.12
+
+
+% SOURCE_BEGIN U.span.13
+\subsection{The infinite series is evaluated exactly in the
+verifier}\label{U:the-infinite-series-is-evaluated-exactly-in-the-verifier}
+
+There is no need to truncate (11.18). All bumps below a query can be summed
+using geometric series, with at most one partially included bump. Define
+\[
+ P(t)=t-\frac23t^3+\frac15t^5,\qquad
+ Q(t)=\frac12t^2-\frac12t^4+\frac16t^6.
+\] For a query inside the bump centered at \(a=a_j\), with
+\(t=(v-a)/a^5\), the partial mass is \(a^2[P(t)+8/15]\), and its first
+moment is \[
+ a^3[P(t)+8/15]+a^7[Q(t)-1/6].
+\] All smaller bumps have total mass \((16/45)a^2\) and first moment
+\((16/105)a^3\). This gives exact rational function and derivative
+values for rational queries. At a peak, \[
+ r(a)=\frac{64}{315}a^3+\frac16a^7,\qquad
+ r'(a)=\frac89a^2,\qquad r''(a)=a^{-3}.
+\] These are identities for the complete infinite series, not for a truncation. The exact rational-query formulas and their derivative values are proved for this oracle. For the objective (11.20), the convergence theorem applies in every stated dimension with an arbitrary coupled SPD initial inverse matrix; it does not replace full BFGS by a reduced two-dimensional or block-diagonal algorithm.
+
+% SOURCE_END U.span.13
+
+
+% SOURCE_BEGIN U.span.14
+\subsection{The objective need not split as a smooth function plus
+one scalar
+penalty}\label{U:the-objective-need-not-split-as-a-smooth-function-plus-one-scalar-penalty}
+
+For a fixed vector \(c\in\mathbb R^{n-1}\) with \(\|c\|<1\), another
+example is \[
+ F(u,v)=\frac12(\|u\|^2+v^2)+|(1+c^Tu)v|+r(v).
+\] The two quadratic functions before adding \(r\) have Hessians \[
+ \begin{pmatrix}I&c\\c^T&1\end{pmatrix},\qquad
+ \begin{pmatrix}I&-c\\-c^T&1\end{pmatrix},
+\] both bounded below by \((1-\|c\|)I\). Their maximum plus convex
+\(r(v)\) is strongly convex. Since the absolute-value term and \(r\) are
+nonnegative, zero is the unique minimizer.
+
+On a neighborhood with \(|c^Tu|<1/2\), the only exceptional hyperplane
+is \(v=0\), and the tangential gradient is \[
+ A(u,v)=u+c|v|,
+\] which is Lipschitz across that hyperplane. Theorem 11.1 gives an objective-dependent local full-BFGS convergence basin for every $\|c\|<1$, including $c=0$.
+
+If $c\ne0$, the normal-gradient jump magnitude $2(1+c^Tu)$ varies with $u$ on this neighborhood. More precisely, on no open neighborhood of zero can this objective equal $S(u,v)+h(v)$ with $S$ differentiable and $h$ an arbitrary scalar function. One way to see the obstruction is to subtract values at two nearby tangential points: the scalar term cancels, while the varying jump leaves a nonzero multiple of $|v|$, contradicting differentiability at $v=0$.
+
+The nonzero condition is needed only for this nonsplitting conclusion. When $c=0$, the objective has the explicit global decomposition
+\[
+ S(u,v)=\tfrac12(\|u\|^2+v^2),\qquad h(v)=|v|+r(v),
+\]
+with $S$ smooth. Thus the subsection's existential claim is realized by nonzero $c$, not by every allowed parameter. The spike argument still makes (RS) fail in every neighborhood of zero for all $\|c\|<1$, including the zero case.
+
+
+\endgroup
+% SOURCE_END U.span.14
+
+
+\section*{Relation to earlier work}
+The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+
+The tangent/normal decomposition has established VU and partial-smoothness antecedents~\cite{geom_Lewis2002,LL}. Quantitative tangential projection also appears in~\cite{geom_DDJ2026}. Its stochastic/proximal applications and the proximal-gradient VU algorithm of~\cite{geom_LSS2025} concern different iterations. The full-BFGS conclusions in this chapter require the proved restricted matrix control; identification results alone do not supply it.
+
+The smooth-region estimates use classical cocoercivity; see the open-domain Baillon--Haddad theorem~\cite{WW}, Theorem~2.5. The compact-buffer argument retains the local regularity assumptions and does not require a uniform bound on normal curvature near the interface.
+
+The exact spike and coupling examples had no match in the audited sources. Their separation concerns RS. The nonsplitting conclusion of Section~\ref{U:the-objective-need-not-split-as-a-smooth-function-plus-one-scalar-penalty} requires $c\ne0$ and excludes only the stated differentiable-plus-scalar decomposition; it does not exclude general partial-smoothness or nonlinear-composite descriptions~\cite{geom_Lewis2002,LL}.

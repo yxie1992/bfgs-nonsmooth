@@ -41,7 +41,7 @@ open Filter BfgsVerification
 namespace BfgsCoverage.Companion.CurrentVerification
 
 /-- Non-vacuity for Item `C/current_verification/prose/020`
-(`companion/current_verification.tex:46-47`): "The literal mixed-benchmark theorem quantifies over
+(`companion/current_verification.tex:45-46`): "The literal mixed-benchmark theorem quantifies over
 every actual admissible run for $u^2+|v|$ and proves both value and whole-iterate convergence."
 Admissible runs on $u^2+|v|$ exist (`UnexcitedMetric.run`, from $x_0=(0,1)$ with $c_1=1/4$,
 $c_2=1/2$), and along such a run the values and the iterates converge to $0$ (the article's

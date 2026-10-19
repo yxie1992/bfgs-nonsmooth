@@ -1,0 +1,393 @@
+\chapter{Scope, quantifiers and the result map}\label{comp:I}\label{I:chapter}
+\renewcommand{\ModuleTag}{1}
+The scope map separates objective convergence, convergence to the solution set and convergence of the full sequence. It also separates universal admissible-run statements from the particular deterministic executions used in the counterexamples.
+
+
+% SOURCE_BEGIN I.span.1
+
+% SOURCE_BEGIN I.span.2
+\textbf{Corrected Lean verification edition.} This inventory states the operative mathematical scope. The original source record is preserved separately; unsupported historical execution and archive assertions are not repeated as facts.
+
+\section*{Status and reading convention}\label{status-and-reading-convention}
+
+
+Every retained mathematical assertion is classified in the claim/proof index, and each asserted result is paired there with its formal statement and Lean proof. Named results, intermediate identities, substantive unnamed deductions and actual objective applications are included. Definitions, assumptions, explicit open questions and process evidence are separately classified. Some informal proof routes have been replaced by different formal proofs; these changes are disclosed rather than described as literal translations.
+
+The chapters use ordinary chapter numbering and shared algebra in Chapter~\ref{comp:M}. The original chapter sources remain at \path{BFGS_MASTER_REPORT_LaTeX/report/chapters/}; the corrected sources, edit ledger and complete correspondence index are delivered together. No unavailable provenance archive is required to reproduce the formal proofs.
+
+Lean checks proofs under its standard foundational axioms. The audit records transitive dependencies and excludes custom mathematical axioms and unchecked proof mechanisms. This is not a proof of Lean's consistency, a human-referee certification or a publication-priority claim. Background bibliographic pointers are separate from formal proof dependencies.
+% SOURCE_END I.span.2
+
+% SOURCE_END I.span.1
+
+
+% SOURCE_BEGIN I.span.3
+\section{Algorithm, quantifiers, and notions of convergence}\label{algorithm-quantifiers-and-notions-of-convergence}
+
+The algorithm is \textbf{ordinary full BFGS} in finite-dimensional Euclidean space:
+
+\[
+ g_k=\nabla F(x_k),\qquad s_k=-\alpha_kH_kg_k,\qquad
+ y_k=g_{k+1}-g_k,\qquad H_0\succ0,
+\]
+
+\[
+ H_{k+1}=\left(I-\frac{s_ky_k^T}{y_k^Ts_k}\right)H_k
+ \left(I-\frac{y_ks_k^T}{y_k^Ts_k}\right)
+ +\frac{s_ks_k^T}{y_k^Ts_k}.
+\]
+
+An \emph{infinite admissible run} has nonzero gradients at differentiable accepted iterates, positive lengths, and fixed Armijo--weak-Wolfe constants \(0<c_1<c_2<1\):
+
+\[
+ F(x_{k+1})\le F(x_k)+c_1g_k^Ts_k,\qquad
+ g_{k+1}^Ts_k\ge c_2g_k^Ts_k.
+\]
+
+No damping, restart, skipped update, memory truncation, proximal operation, imposed spectral limit, or assumed iterate convergence is introduced. Positive theorems quantify over all such infinite runs unless a more specific implementation is stated.
+
+Three conclusions must remain distinct:
+
+\[
+ F(x_k)\to F_*;\qquad \operatorname{dist}(x_k,X_*)\to0;\qquad x_k\to x_*.
+\]
+
+On a compact sublevel, objective convergence implies distance to the solution set tends to zero. Uniqueness then gives whole-sequence convergence. Affine-fiber nonuniqueness has a separate lifting theorem; arbitrary nonunique solution sets do not inherit that conclusion.
+
+A zero gradient at a differentiable point is successful termination. A ray with no differentiable acceptable point is not an infinite admissible run. The positive statements must not silently be strengthened into universal all-ray existence or finite oracle complexity.
+
+% SOURCE_END I.span.3
+
+
+% SOURCE_BEGIN I.span.4
+\section{The negative results that must both be retained}\label{the-negative-results-that-must-both-be-retained}
+
+% SOURCE_END I.span.4
+
+
+% SOURCE_BEGIN I.span.5
+\subsection{N1. Deterministic local failure with globally \texorpdfstring{$C^{2,1}$}{C2,1} convex branches}\label{n1.-deterministic-local-failure-with-globally-c21-convex-branches}
+
+There is one fixed coercive \(F:\mathbb R^2\to\mathbb R\), with a unique nonsmooth minimizer at zero, of the form
+
+\[
+ F=\max_{0\le i\le3}f_i,\qquad f_i\in C^{2,1}(\mathbb R^2),\qquad
+ 0\preceq\nabla^2f_i\preceq64I.
+\]
+
+Every branch Hessian is globally Lipschitz. With the fixed initialization \(H_0=I\), a sequence of bad starts approaches the minimizer. The \textbf{actual deterministic unit-first weak-Wolfe doubling/bisection search} produces nonstationary converged limits:
+
+\[
+ x_0^{(j)}\to0,\qquad x_k^{(j)}\to p_j\ne0,\qquad
+ F(x_k^{(j)})\downarrow F(p_j)>0,\qquad0\notin\partial F(p_j).
+\]
+
+The same objective, starts, and trial decisions work for every fixed \(0<c_1\le1/3\), \(c_1<c_2<1\). Every accepted and rejected query is differentiable. Accepted lengths repeat \(1,1/4,1/16\), with at most five trials per iteration. The entire query trajectory can remain in an arbitrarily small neighborhood of the true minimizer. Initial objective gaps also tend to zero.
+
+This is a failure of a deterministic neighborhood guarantee, not a claim that every close start fails. It is proved by an exactly isolated algebraic cycle, exact matrix closure, a scalar convex interpolation, all-trial containment, and scaling induction. \textbf{Proof: Chapter~\ref{comp:D}.}
+
+% SOURCE_END I.span.5
+
+
+% SOURCE_BEGIN I.span.6
+\subsection{N2. Deterministic local failure with positive lower curvature}\label{n2.-deterministic-local-failure-with-positive-lower-curvature}
+
+There is also a strongly convex finite objective, with a unique nonsmooth minimizer and compact sublevels, such that
+
+\[
+ 0<\mu I\preceq\nabla^2F(x)\preceq LI
+\]
+
+wherever its classical Hessian exists, yet the same specified deterministic implementation admits bad starts arbitrarily close to the minimizer. A single fixed affine change of coordinates makes the common initial matrix \(I\).
+
+One version is a maximum of four globally \(C^{1,1}\), uniformly strongly convex, gradient-Lipschitz branches. Three of the four branches \textbf{are not twice differentiable at the minimizer}. Another version has one constant SPD classical Hessian wherever it exists; it is constructed from a countably piecewise-affine nonsmooth component rather than from four smooth branches.
+
+The source fixed \(c_1=10^{-4}\), \(c_2=1/2\); the same objective and bad starts serve every \(0<c_1\le1/3\), \(c_1<c_2<1\). Its bad seed is an existence object on a certified hyperbolic stable manifold, not a displayed rounded point claimed to lie exactly on that manifold. \textbf{Proof: Chapter~\ref{comp:L}.}
+
+\textbf{N1 and N2 are not merged into a fictitious stronger theorem.} N1 has more branch differentiability and no uniform positive lower curvature. N2 has positive lower curvature and less differentiability at the minimizer. Neither is constructed from finitely many uniformly strongly convex \(C^2\) branches through the optimizer, so neither proves local failure for that class.
+
+% SOURCE_END I.span.6
+
+
+% SOURCE_BEGIN I.span.7
+\subsection{N3. Simple global counterexamples retained as corollaries}\label{n3.-simple-global-counterexamples-retained-as-corollaries}
+
+The deterministic seed gives failure on a coercive finite maximum of four affine functions, with a unique minimizer. This retains global failure in the finite polyhedral and semialgebraic class. It is not superseded by an accumulation-based local example.
+
+Adding a common positive quadratic to the three-piece seed yields
+
+\[
+ Q_\mu(x)=\frac\mu2\|x\|^2+\max_{i=0,1,2}g_i^Tx.
+\]
+
+For every \(\mu>0\), suitable initial states produce, for every fixed \(0<c_1\le1/3\), \(c_1<c_2<1\), the same deterministic nonstationary convergence to zero. Each branch is quadratic, analytic, and has Hessian exactly \(\mu I\). The true minimizer lies elsewhere. This is \textbf{global failure}, and is consistent with local convergence near the true minimizer. The stable-manifold argument is required; the unperturbed orbit cannot simply be reused. \textbf{Proofs: Section~12.3.1 and Chapter~\ref{comp:L}.}
+
+% SOURCE_END I.span.7
+
+
+% SOURCE_BEGIN I.span.8
+\section{General positive mechanisms: retain distinct hypotheses}\label{general-positive-mechanisms-retain-distinct-hypotheses}
+
+% SOURCE_END I.span.8
+
+
+% SOURCE_BEGIN I.span.9
+\subsection{P1. Objective-level transported certificates}\label{p1.-objective-level-transported-certificates}
+
+For differentiable endpoints define \(g=\nabla F(x)\), \(y=\nabla F(z)-g\), \(s=z-x\), \(d=-g^Ts\), \(\Delta=F(x)-F(z)\), and \(t=y^Ts\). An eligible pair satisfies
+
+\[d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge(1-c_2)d.\]
+
+On each compact positive objective band, it suffices that a finite-valued PSD field \(W\) satisfy
+
+\[g^TW(x)g\ge m>0,\qquad y^TW(z)y\le Ct,\]
+
+\[\Pi_sW(z)\Pi_s\preceq\Pi_sW(x)\Pi_s,\]
+
+for every eligible pair with sufficiently small \(d\). The latter two constants and the field may depend on the band and on the fixed line-search parameters. No continuity, uniform boundedness, or positive definiteness of \(W\) is required.
+
+Then every admissible run on the compact sublevel has value and solution-set convergence; uniqueness gives iterate convergence. A local structural neighborhood gives a trapped low-sublevel basin. A condition on one-sided shells around possible positive limiting levels suffices as well.
+
+The normalization with exact projected nonexpansion is equivalent to allowing \((1+Ld)\): multiply \(W\) by \(\exp((L/c_1)(F-F_*))\). \textbf{Proof: Chapter~\ref{comp:T}; normalization and geometry: Chapter~\ref{comp:G}.}
+
+RS implies the radial specialization \(W(x)=(x-x_*)(x-x_*)^T\). Its equivalent inward Taylor condition is useful for checking functions, but is not a separate strongest certificate theorem. The inclusion of RS is strict. The transported condition itself is not necessary for actual convergence.
+
+% SOURCE_END I.span.9
+
+
+% SOURCE_BEGIN I.span.10
+\subsection{P2. Moving frames with controlled cumulative transport}\label{p2.-moving-frames-with-controlled-cumulative-transport}
+
+A frame satisfying \(V_{k+1}=V_kT_k+s_kb_k^T\) has an exact BFGS comparison-energy identity. Uniform visibility, bounded secant correction, and bounded cumulative transport products and inverses exclude positive-level stagnation along runs with bounded gradients. This trajectory mechanism need not produce a single position-only certificate. \textbf{Proof: Chapter~\ref{comp:M}.}
+
+% SOURCE_END I.span.10
+
+
+% SOURCE_BEGIN I.span.11
+\subsection{P3. Imperfect transport in fixed smooth directions}\label{p3.-imperfect-transport-in-fixed-smooth-directions}
+
+If a fixed subspace \(S\) satisfies \(\|P_Sy_k\|^2\le L_Sy_k^Ts_k\), the actual update gives \(\operatorname{tr}(P_SB_k)=O(k)\) for \(B_k=H_k^{-1}\). Frame residuals are then permitted:
+
+\[V_{k+1}=V_kT_k+s_kb_k^T+R_k,\]
+
+\[\|T_k\|^2\le1+Cd_k,\qquad \operatorname{range}R_k\subset S,
+\qquad\|R_k\|_F^2\le Cd_k.\]
+
+Together with uniform visibility and bounded secant correction, along runs with bounded gradients and \(\sum d_k<\infty\), the resulting \(O(N^2)\) error budget is defeated by the superquadratic reciprocal theorem below. This extends the proof mechanism; \textbf{a strict inclusion between the existential function classes of P1 and P3 has not been proved}. \textbf{Proof: Chapter~\ref{comp:M}; objective applications: Chapter~\ref{comp:U}.}
+
+% SOURCE_END I.span.11
+
+
+% SOURCE_BEGIN I.span.12
+\section{Strongest concrete local and global positive families}\label{strongest-concrete-local-and-global-positive-families}
+
+
+% SOURCE_END I.span.12
+
+
+% SOURCE_BEGIN I.span.13
+\subsection{P4. Radially regular and finite-partition geometry}\label{p4.-radially-regular-and-finite-partition-geometry}
+
+On a compact positive band, RS is equivalent to uniformly quadratic inward first-order modeling error:
+
+\[
+ 0\le F(x-\theta r)-F(x)+\theta\nabla F(x)^Tr
+ \le(M_\eta/2)\theta^2,\qquad r=x-x_*.
+\]
+
+The constants may deteriorate as the band approaches the minimum. This yields local convergence for a finite convex function whose neighborhood of a unique minimizer has a \textbf{finite polyhedral partition with \(C^{1,1}\) extensions on each cell}. Individual cell extensions need not be convex outside their cells; the full objective is convex.
+
+Consequences include finite convex PLQ objectives on polyhedral cells; smooth convex plus finite polyhedral terms; appropriate absolute-value, hinge, quantile, fused and generalized \(\ell_1\) terms; and local mixtures of Euclidean group residuals. A finite maximum of arbitrary quadratics is not automatically PLQ.
+
+Centered local representations
+
+\[F(x_*+z)=\psi(z)+\gamma(z)\]
+
+are covered when \(\psi\) is convex \(C^{1,1}_{\rm loc}\) and \(\gamma\) is finite convex degree-one homogeneous. A global representation on a compact initial sublevel gives global value convergence; uniqueness gives iterate convergence. Neither original summand must separately be minimized at the center.
+
+Also retained are finite sums of powered nonnegative gauges, and increasing convex smooth transforms of coercive gauges. Different powers, including \(1<p<2\), and coupled linear maps are permitted under the stated source hypotheses. General spectral regularization at a nonzero rank-deficient solution is not automatic. \textbf{Proofs: Chapters~\ref{comp:R} and~\ref{comp:F}.}
+
+For smooth-plus-polyhedral objectives, retain the explicit sufficient basin threshold obtained by minimizing the objective over the active regions of pieces inactive at the optimizer. For nonunique affine fibers, retain the exact linear-image lifting formula. These are not replaced by a generic uniqueness statement.
+
+% SOURCE_END I.span.13
+
+
+% SOURCE_BEGIN I.span.14
+\subsection{P5. Planar affine-critical cluster points}\label{p5.-planar-affine-critical-cluster-points}
+
+Let \(F:\mathbb R^2\to\mathbb R\) be finite convex, have an attained minimum and a compact sublevel above the minimum, and have strictly convex positive sublevels. Away from affine-critical points, assume either local convex \(C^2\) smoothness or a local maximum of two convex \(C^2\) branches whose active gradients are linearly independent.
+
+Then every infinite admissible run has an affine-critical cluster point. Adding no false affine criticality on the local basin gives convergence. For finite smooth maxima, affine independence and strictly positive optimal barycentric weights at a unique optimizer make the required local geometry automatic in the plane. Strictly convex low contours then suffice; uniformly strongly convex branches are a stronger convenient assumption. \textbf{Complete proof: Chapter~\ref{comp:C}.}
+
+This does not cover every planar finite maximum: rank-degenerate ties and flat positive contours are outside the stated theorem. Nor does it prove the arbitrary-dimensional rotating-normal conjecture.
+
+% SOURCE_END I.span.14
+
+
+% SOURCE_BEGIN I.span.15
+\subsection{An explicit supersession established in this consolidation}\label{an-explicit-supersession-established-in-this-consolidation}
+
+The older theorem for
+
+\[F(u,v)=\max\{a(u)+pv,b(u)-qv\},\qquad p,q>0,\]
+
+with convex \(C^2\) profiles, coercive \(\phi=(qa+pb)/(p+q)\) having unique minimizer \(u_*\), and \(a'',b''>0\) off \(u_*\), is a \textbf{corollary of P5}, not an independent strongest theorem.
+
+Here is the implication. The profiles are strictly convex. If two different points of a positive sublevel have different horizontal coordinates, strict profile convexity puts the interior of their segment strictly below the level. If their horizontal coordinates agree, their vertical coordinates differ; the two nonzero normal slopes again make every strict convex combination satisfy both inequalities strictly. Thus every positive sublevel is strictly convex. At a tie, the determinant of the active gradients is \(-qa'(u)-pb'(u)=-(p+q)\phi'(u)\). It is nonzero except at \(u_*\), where the tied point is precisely the optimizer. Smooth points are already regular. Hence P5 applies globally, and its localization argument gives the old local result.
+
+This is a disclosed deduction between the stated theorems. The operative implication and its formal proof are included here and in the Lean index; no unavailable independent archive is needed.
+
+% SOURCE_END I.span.15
+
+
+% SOURCE_BEGIN I.span.16
+\subsection{P6. Arbitrarily many parabolic branches, including flat contours}\label{p6.-arbitrarily-many-parabolic-branches-including-flat-contours}
+
+For
+
+\[F(u,v)=\max_{i\le m}\{a_i u^2+b_iv\},\qquad a_i>0,
+\quad\min_i b_i<0<\max_i b_i,\]
+
+all admissible full-BFGS runs converge globally to zero. Branches with \(b_i=0\) are allowed. Such branches can create flat contour segments, so P5 does \textbf{not} subsume the whole family. Its explicit certificate also proves strict inclusion beyond eligible-pair RS. \textbf{Full proof: Chapter~\ref{comp:Q}.}
+
+% SOURCE_END I.span.16
+
+
+% SOURCE_BEGIN I.span.17
+\subsection{P7. Arbitrary-dimensional fixed-normal geometry}\label{p7.-arbitrary-dimensional-fixed-normal-geometry}
+
+Let \(P=\{x:a^Tx=b\}\) be an exceptional hyperplane through a unique minimizer, with \(S=a^\perp\). On a neighborhood of a compact initial sublevel, assume strong convexity, a single-valued Lipschitz tangential subgradient projection \(P_S\partial F(x)=\{A(x)\}\), and local \(C^{1,1}\) regularity off \(P\). Every admissible run converges.
+
+The full normal gradient need not have a uniform Lipschitz constant near the hyperplane. A local version uses a low trapped sublevel. For \(F(u,v)=\psi(u,v)+h(v)\), full strong convexity can be weakened to tangential strong convexity of \(\psi\), strict positive contours, compactness, and a unique optimizer with \(v_*=0\).
+
+A separate cluster theorem permits a closed collection of \textbf{parallel genuinely nonsmooth interfaces}. It forces one affine-critical cluster point under strong convexity and a Lipschitz tangential projection. Add no false affine criticality to conclude optimality. The single-hyperplane theorem is not a literal specialization: it allows differentiable but non-\(C^{1,1}\) exceptional points.
+
+The arbitrary-dimensional result is not a planar reduction or a block-diagonal algorithm. Its real restriction is the fixed normal direction. The explicit normal-curvature-spike examples lie outside RS. \textbf{Complete proofs and infinite-series oracle: Chapter~\ref{comp:U}.}
+
+% SOURCE_END I.span.17
+
+
+% SOURCE_BEGIN I.span.18
+\subsection{P8. Scalar convergence}\label{p8.-scalar-convergence}
+
+In one dimension, finite convex objectives with a unique minimizer and compact initial sublevel have convergence of every infinite admissible positive-metric Armijo--weak-Wolfe run, independently of the BFGS update. This remains nonredundant because it covers functions lacking every local transported certificate. \textbf{Proof and nonnecessity example: Chapter~\ref{comp:G}.}
+
+% SOURCE_END I.span.18
+
+
+% SOURCE_BEGIN I.span.19
+\section{Noncompact homogeneous theory remains independent}\label{noncompact-homogeneous-theory-remains-independent}
+
+For every finite convex degree-one homogeneous objective, every infinite admissible run satisfies
+
+\[F(x_k)\to0\quad\text{or}\quad F(x_k)\to-\infty.\]
+
+No iterate, step, matrix, or length bound is assumed, and the supporting gradient set may be infinite. Bounded-below objectives therefore have optimal value convergence; coercive ones have \(x_k\to0\).
+
+For finite max-linear objectives, retain three refinements: a finite-value-limit run has zero in the affine hull of its recurrent gradients; recurrent gradient span of dimension at most two gives whole-iterate convergence on the finite-value branch; and purely flat-direction noncompactness admits an explicit metric-projection limit. General affine-fiber lifting gives the same type of result for reduced nonhomogeneous objectives.
+
+The noncompact zero-value iterate branch in recurrent dimension at least three is \textbf{not completely classified}. A compact-level certificate theorem cannot replace these noncompact statements. \textbf{Full proofs: Chapter~\ref{comp:H}.}
+
+The two-piece finite-escape theorem from Xie--Wächter is pre-existing background and remains stronger in its finite-termination conclusion than the new many-piece infinite-run escape statement. That paper~\cite{XW} is prior work, not a new result of this report.
+
+% SOURCE_END I.span.19
+
+
+% SOURCE_BEGIN I.span.20
+\section{Shared algebra and quantitative record}\label{shared-algebra-and-quantitative-record}
+
+The principal-minor inequality is proved once in Chapter~\ref{comp:M}:
+
+\[e_j(H_{k+1})\le
+\frac{\|y_k\|^2}{\beta_k^2q_k}e_{j+1}(H_k)
++\frac{\alpha_k}{\beta_k}e_j(H_k),\quad
+q_k=g_k^TH_kg_k,\quad\beta_k=\frac{y_k^Ts_k}{d_k}.\]
+
+With bounded gradients, fixed weak Wolfe and \(d_k\to0\), both the geometric and arithmetic means of \(q_k^{-1}\) diverge. Under the stronger assumption \(\sum d_k<\infty\), the final recorded strengthening is
+
+\[\boxed{\frac1{N^2}\sum_{k<N}q_k^{-1}\to\infty.}\]
+
+Retain the explicit finite-horizon bound as well; an asymptotic statement does not replace its finite constants. The former \(\liminf q_k=0\) and \(\Omega(N^2)\) headlines are retired as main results. They remain consequences used by older proofs.
+
+For a fixed reference point \(x_*\) and \(E_k=(x_k-x_*)^TB_k(x_k-x_*)\), the fixed-reference identity is
+
+\[E_{k+1}=E_k-\frac{[g_k^T(x_k-x_*)]^2}{q_k}
++\frac{[y_k^T(x_{k+1}-x_*)]^2}{y_k^Ts_k}.\]
+
+Along runs with bounded gradients, a cumulative correction \(o(\sum q_k^{-1})\) excludes a positive gap. In particular, by the final reciprocal result, an \(O(N^2)\) cumulative correction suffices. This last sentence is an explicit consolidation consequence of the two displayed inequalities, not a claim of an additional source theorem.
+
+Big-\(O\) versions of the following rates appeared in the source notes. Theorem~\ref{M:superquadratic} strengthens them to \(o(N^{-1/2})\) for uniformly bounded radial correction along runs with bounded gradients, \(o(N^{-1})\) for bounded-below degree-one homogeneous objectives, and \(o(\log N/N)\) for positive-definite quadratic plus coercive gauge. These are disclosed consolidation deductions, proved in Chapter~\ref{comp:F} while preserving the stronger explicit finite-horizon inequalities. They are not uniform rates over arbitrary certificates, sharpness statements, or line-search evaluation bounds.
+
+% SOURCE_END I.span.20
+
+
+% SOURCE_BEGIN I.span.21
+\section{Geometric findings retained independently of convergence}\label{geometric-findings-retained-independently-of-convergence}
+
+The condition
+
+\[0\in\operatorname{aff}\partial F(p)\Longrightarrow0\in\partial F(p)\]
+
+means that every nonoptimal nearby point admits a direction along which all subgradients predict the same strictly negative rate. Affine independence and strictly positive optimal coefficients make this true locally for finite smooth maxima, with uniform positive-band affine separation. Pointwise separation alone need not be uniform when ranks change.
+
+For finite convex semialgebraic objectives, the affine-critical set has finitely many connected components, and the objective is constant on each. Thus only finitely many affine-critical values occur, giving no false affine criticality below a sufficiently low threshold. This is a geometric proposition, not a blanket BFGS theorem. \textbf{Proofs: Chapter~\ref{comp:A}.}
+
+The incoming-jump obstruction rules out all PSD certificates when the target gradient is a vanishing-cost linear combination of several eligible jumps arriving at the same target. It neither assumes regularity of the certificate nor constructs one common BFGS history. Scalar accumulating-kink examples show certificate failure despite convergence. These distinctions are retained in Chapter~\ref{comp:G}.
+
+% SOURCE_END I.span.21
+
+
+% SOURCE_BEGIN I.span.22
+\section{Verification and unresolved boundaries}\label{verification-and-unresolved-boundaries}
+
+The delivered verification records contain actual pinned Lean builds, exact theorem contracts, module-wide declaration inventories and transitive axiom checks. Chapter~\ref{comp:E} identifies the process logs and reproduction commands. Earlier claims about unprovided scripts, old execution counts, precisions and timings remain unsupported historical text in the original snapshot.
+
+The exact deterministic cycle, its smooth embedding, the actual return-map derivative and stable manifold, principal determinants, frame identities, geometric joining and infinite tail arguments have Lean proofs. Their logical roles are distinct. A rounded initial point is not asserted to belong to the stable manifold, and a finite numerical experiment is not used as a proof of an infinite trajectory.
+
+The remaining central gaps are: arbitrary-dimensional rotating-normal smooth-max geometry; the general local theorem for finite uniformly strongly convex \(C^2\) branches without the recorded nondegeneracy/geometric assumptions; generic or positive-measure failure; other fixed line-search implementations; arbitrary nonunique solution-set iterate convergence; noncompact high-rank homogeneous zero-value iterates; and sharp rates or universal matrix asymptotics.
+
+The blanket question is not answered by calling all semialgebraic functions safe: global failure already occurs for affine maxima. The planar and fixed-normal positive theorems have precise additional assumptions. The latest lower-curvature counterexamples likewise do not establish local failure in a finite analytic or semialgebraic description.
+
+% SOURCE_END I.span.22
+
+
+% SOURCE_BEGIN I.span.23
+\clearpage
+\section{Supersession policy}\label{supersession-policy}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Earlier item
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Operative treatment
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Prescribed acceptable-length counterexamples & Replaced by the final deterministic-bracketing seed and all-trial embeddings. \\
+Alternative deterministic seeds & Do not mix constants. Only the final \((1,0),(-1,-1/8),(c,d)\) seed is canonical. \\
+Upper-regularity local failure versus lower-curvature local failure & Retain both: differentiability and lower-curvature assumptions are incomparable. \\
+Original scalar-ridge convergence headline & Corollary of the later planar theorem; the implication and its Lean proof are operative. \\
+All parabolic multi-branch convergence & Retain: zero-normal-slope pieces can violate the planar strict-contour hypothesis. \\
+Separate \(\ell_1\) and \(u^2+|v|\) headlines & Examples of broad radial/partition families; retain special rate and matrix-limit facts as corollaries. \\
+RS as the broadest sufficient condition & Replaced by the transported criterion; retain its natural equivalent and verifiable subclasses. \\
+Exact versus smooth-subspace-imperfect frame transport & Retain the distinct hypotheses; no unproved strict inclusion of function classes is asserted. \\
+Earlier reciprocal lower bounds & Use the superquadratic conclusion under summability, but retain the weaker-assumption theorem and finite-horizon constants. \\
+Noncompact homogeneous theorems & Retain independently of compact-level results. \\
+Certificate counterexamples & Keep the general obstruction and strongest nonnecessity example; do not label these as bad BFGS trajectories. \\
+\end{longtable}
+
+The scope of the positive and negative programs is now substantially clearer, but neither gives a necessary-and-sufficient classification of nonsmooth full-BFGS convergence.
+% SOURCE_END I.span.23
+
+
+\section*{Relation to earlier work}
+The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+
+The bibliographic notes distinguish established results and proof ingredients from the particular full-BFGS statements in this chapter. They record the primary-literature comparison through 11 September 2026, rather than certify publication priority. Such historical and comparative notes are separate from the mathematical assertions paired with Lean proofs. The detailed source/version register is delivered in \path{bfgs_lean_stage1/literature_audit/}; internal topic labels are not independently published sources.
+
+The positive families of Section~\ref{strongest-concrete-local-and-global-positive-families} include established special cases: Guo--Lewis proves Euclidean-norm convergence in arbitrary finite dimension \cite[Corollary 4.2]{GL18}. The broader applications retain their own hypotheses and proofs. The existence of a known special case does not identify the complete family theorem with that earlier result.

@@ -25,13 +25,13 @@ open Set Filter
 namespace BfgsCoverage.Article.Introduction
 open BfgsVerification
 
-/-- Item `A/introduction/disp/001` (`paper/sections/introduction.tex:33-35`): the mixed
+/-- Item `A/introduction/disp/001` (`paper/sections/introduction.tex:32-34`): the mixed
 model $F(u,v)=u^2+|v|$. The library objective `UnexcitedMetric.objective` is this
 formula. -/
 theorem mixed_model_formula (u v : ℝ) : UnexcitedMetric.objective ![u, v] = u ^ 2 + |v| := by
   simp [UnexcitedMetric.objective]
 
-/-- Item `A/introduction/prose/010` (`paper/sections/introduction.tex:39-40`):
+/-- Item `A/introduction/prose/010` (`paper/sections/introduction.tex:38-39`):
 "Approaching the nonsmooth line does not force the smooth coordinate $u$ to
 vanish." For `u ≠ 0` the points `(u,1/(k+1))`, at which `F(u,v)=u^2+|v|` is
 differentiable, approach the point `(u,0)` of the nonsmooth line `v=0`; their
@@ -81,7 +81,7 @@ theorem l1_not_differentiable {n : ℕ} (i : Fin n) {x : Vec n} (hx : x i = 0) :
   rw [hf] at hc
   exact not_differentiableAt_abs_zero hc
 
-/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:93-95`): the norm
+/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:87-89`): the norm
 `‖x‖_1`, "whose nonsmooth set for $n\ge2$ contains coordinate hyperplanes, beyond
 the isolated nonsmooth point of the Euclidean-norm case above." For `n ≥ 2`:
 `∑_j |x_j|` is not differentiable at any `x` with `x_i = 0`; the Euclidean norm is
@@ -148,7 +148,7 @@ def SwitchingPoint (i j : Fin 3) (x : Vec 2) : Prop :=
     PlanarQuadraticExample.branch i x = PlanarQuadraticExample.branch j x ∧
     PlanarQuadraticExample.objective x = PlanarQuadraticExample.branch i x
 
-/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:100-102`): "The
+/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:94-96`): "The
 explicit three-quadratic example in Theorem~\ref{art:nonradial-example} has curved
 switching sets and fails the radial condition". For every pair of branches, the
 switching set (tie of the two branches, both active) inside `|u|,|v| ≤ 1/10`
@@ -216,7 +216,7 @@ theorem three_quadratic_curved_nonradial :
         abs_le, max_def, Matrix.cons_val_two, Matrix.tail_cons, Matrix.head_cons]⟩
   · exact absurd rfl hij
 
-/-- Item `A/introduction/prose/041` (`paper/sections/introduction.tex:107-108`): "The
+/-- Item `A/introduction/prose/041` (`paper/sections/introduction.tex:101-102`): "The
 uniform smooth secant bound used there need not hold when gradients jump." The
 bound `‖y‖^2 ≤ M y^T s` of the smooth analysis (`y` the gradient change, `s` the
 step) holds for no constant `M` over the pairs of differentiable points of

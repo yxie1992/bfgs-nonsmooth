@@ -1,0 +1,321 @@
+#!/usr/bin/env python3
+"""Build proposals_D.json (group D: 07_H, 11_U). Writes only under /tmp/opencode/m44/companion/."""
+import json
+from pathlib import Path
+
+REPO = Path('/home/yxie/MyProjects/BFGS-nonsmooth/bfgs-nonsmooth')
+H = 'companion/chapters/07_H.tex'
+U = 'companion/chapters/11_U.tex'
+texts = {H: (REPO / H).read_text(), U: (REPO / U).read_text()}
+
+P = []
+
+
+def add(pid, path, kind, old, new, reason, register):
+    assert texts[path].count(old) == 1, (pid, texts[path].count(old))
+    P.append({'id': pid, 'file': path, 'kind': kind, 'old': old, 'new': new,
+              'reason': reason, 'register': register})
+
+
+# ---------------------------------------------------------------- 07_H
+add('D-07H-01', H, 'repeat',
+    r' Finite numerical tests and publication-priority assertions are not premises of those proofs.',
+    '',
+    'Says only what the proofs do not rest on (scope point (e), stated in Chapter 1); the rest of the '
+    'Proof-status paragraph, including the retained conditional-lifting sentence, is unchanged.',
+    [{'item': 'C/07_H/prose/005', 'status': 'NON_CLAIM', 'action': 'keep',
+      'note': 'Anchor "Proof status." survives; one hedge sentence of the paragraph removed.'}])
+
+add('D-07H-02', H, 'caveat',
+    ' This is an infinite-run result,\nnot a proof of finite termination for every many-piece objective.',
+    '',
+    'Says only what the many-piece result does not prove; the run-existence question follows immediately '
+    '(coordinator passage) and finite termination is stated as an open question in Section 7.6.1 '
+    '(D-07H-11). NB: generator correction M42 uses "not a proof of finite termination for every many-piece '
+    'objective." as its anchor, so this replacement must be applied after M42.',
+    [{'item': 'C/07_H/prose/012', 'status': 'SAME_AS', 'action': 'retire',
+      'note': 'SAME_AS prose/045 (the open question, kept and rephrased by D-07H-11). No other register or '
+              'Lean reference to prose/012 (grep of editorial/lean_coverage/register and '
+              'bfgs_lean_article/BfgsArticle).'},
+     {'item': 'C/07_H/prose/011', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Preceding sentence ("All its gradients have last component one, ...") untouched.'}])
+
+add('D-07H-03', H, 'caveat',
+    ' In the\nsecond, convergence of the \\emph{directions} \\(x_k/\\|x_k\\|\\) is not\nasserted.',
+    '',
+    '"X is not asserted": states only a non-claim about the second alternative of Theorem 7.C.',
+    [{'item': 'C/07_H/prose/015', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Scope remark only. No register or Lean reference to prose/015.'},
+     {'item': 'C/07_H/prose/014', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Preceding sentence untouched.'}])
+
+add('D-07H-04', H, 'positive',
+    '\\subsection{What this does not yet\nestablish}',
+    '\\subsection{What remains open}',
+    'Section title framed as a denial; the subsection states the settled value classification and the '
+    'one open iterate question. The label H:what-this-does-not-yet-establish is kept unchanged (it is '
+    'recorded in SOURCE_CORRESPONDENCE.json and audit files); the section comment in Ch07H.lean:441 quotes '
+    'the old title.',
+    [])
+
+add('D-07H-05', H, 'positive',
+    'We have\nneither proved that all such iterate sequences converge nor constructed\n'
+    'a nonconvergent zero-value-limit trajectory.',
+    'Whether all\nsuch iterate sequences converge is open.',
+    'Open question kept, in plain phrasing instead of "we have neither proved ... nor constructed" (brief: '
+    '"Whether ... is open."); both directions of the question remain open.',
+    [{'item': 'C/07_H/prose/018', 'status': 'OPEN', 'action': 'keep',
+      'note': 'Anchor "The remaining unresolved iterate question in this" survives; the question '
+              '(ZeroValueIterateQuestion: do all such iterate sequences converge?) is unchanged. The docstring '
+              'of Ch07H.ZeroValueIterateQuestion (Ch07H.lean:443) quotes the old sentence; C/14_E/prose/087 '
+              'refers to the questions "explicitly marked open" in Chapter 7, still true.'}])
+
+add('D-07H-06', H, 'caveat',
+    '\n\nThis distinction is essential: the results close the previous\n'
+    'unbounded-displacement gap for \\textbf{function values}, but are not\n'
+    'being presented as a full all-dimensional classification of the\n\\textbf{iterates}.',
+    '',
+    'Defensive "are not being presented as" paragraph; the iterate question is the open question just '
+    'stated, and the removal of the bounded-displacement hypothesis is stated in Theorems 7.A and 7.B '
+    '("There is no assumption that the iterates, displacements ...", "This no longer needs a '
+    'bounded-displacement hypothesis.").',
+    [{'item': 'C/07_H/prose/019', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Scope remark. Referenced only in the reason of C/research_story/prose/017 ("parallel of '
+              'C/07_H/prose/019 and C/01_I/prose/011"); no Lean reference.'},
+     {'item': 'C/07_H/prose/018', 'status': 'OPEN', 'action': 'keep',
+      'note': 'The open question in the preceding paragraph is kept (see D-07H-05).'}])
+
+add('D-07H-07', H, 'guard',
+    'The actual homogeneous corrections are nonnegative',
+    'The homogeneous corrections are nonnegative',
+    'Guard word "actual".',
+    [{'item': 'C/07_H/prose/032', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Anchor "If \\(L\\ne0\\), shift to a tail ..." survives; claim unchanged. The docstring of '
+              'Ch07H.alternative_arrangement (Ch07H.lean:1054) quotes "The actual homogeneous corrections".'}])
+
+add('D-07H-08', H, 'caveat',
+    'are also separately proved; their presence does not assert that the implementation of the principal '
+    'theorem follows both arguments verbatim.',
+    'are also separately proved.',
+    'The clause only says what the separately proved budgets do not assert about the formal proof.',
+    [{'item': 'C/07_H/prose/033', 'status': 'NON_CLAIM', 'action': 'keep',
+      'note': 'Anchor (first sentence of the paragraph) survives; the item describes the Lean proof route, '
+              'its reason mentions "what their presence does not assert", which is now gone.'},
+     {'item': 'C/07_H/prose/032', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Mathematical sentences of the paragraph untouched (apart from D-07H-07).'}])
+
+add('D-07H-09', H, 'repeat',
+    ' No rate or finite-path-length\nestimate is asserted.',
+    '',
+    'Scope point (f) (no rates beyond those stated), stated in Chapter 1; rates for bounded-below '
+    'homogeneous objectives are in fact given elsewhere (Theorem M:superquadratic consequences).',
+    [{'item': 'C/07_H/prose/037', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Scope remark only. No register or Lean reference to prose/037.'},
+     {'item': 'C/07_H/prose/036', 'status': 'SAME_AS', 'action': 'keep',
+      'note': 'Preceding sentence ("These consequences now hold for all finite convex sublinear objectives, '
+              'not only finite polyhedral maxima.") untouched.'}])
+
+add('D-07H-10', H, 'guard',
+    'has precisely the same common-component property.',
+    'has the same common-component property.',
+    '"precisely" used only for emphasis.',
+    [{'item': 'C/07_H/disp/027', 'status': 'LEAN', 'action': 'keep',
+      'note': 'The display is untouched; its register note and the docstring of Ch07H.tilt_model_gradients '
+              '(Ch07H.lean:1352) quote "has precisely the same common-component property".'}])
+
+add('D-07H-11', H, 'positive',
+    'proves the stronger finite-termination conclusion\nfor its two-piece model:',
+    'proves finite termination\nfor its two-piece model:',
+    'Positive attribution of the two-piece finite-escape result (group note; article edit I3), without '
+    'ranking it against the companion result.',
+    [{'item': 'C/07_H/prose/044', 'status': 'LEAN', 'action': 'reanchor',
+      'anchor': 'proves finite termination for its two-piece model',
+      'note': 'Mathematical content (TwoPieceTerminationTarget: finite termination for |u|+t) unchanged; only '
+              '"the stronger" dropped. SAME_AS items C/01_I/prose/112 and C/research_story/prose/018 point here '
+              'and their notes mention the "stronger" comparison; the docstring of '
+              'Ch07H.two_piece_finite_termination (Ch07H.lean:1360) quotes the old sentence.'}])
+
+add('D-07H-12', H, 'positive',
+    'The argument here does\n\\textbf{not} establish finite termination for the general many-piece\n'
+    'family. It does show that any infinite admissible continuation must\ndecrease the values without bound.',
+    'For the general many-piece\nfamily, any infinite admissible continuation must decrease the values\n'
+    'without bound. Whether finite termination holds for this family is open.',
+    'Replaces the bold denial and the "It does show" contrast by the result and the open question in plain '
+    'form (one proposal because the two sentences are reordered).',
+    [{'item': 'C/07_H/prose/045', 'status': 'OPEN', 'action': 'reanchor',
+      'anchor': 'Whether finite termination holds for this family is open.',
+      'note': 'Same open question (TiltNoInfiniteRunQuestion part of finite termination for the general '
+              'many-piece family), now phrased as a question. The docstring of TiltNoInfiniteRunQuestion '
+              '(Ch07H.lean:1674) quotes the old sentence; C/14_E/prose/087 note and C/07_H/prose/012 '
+              '(retired by D-07H-02) refer to it.'},
+     {'item': 'C/07_H/prose/046', 'status': 'SAME_AS', 'action': 'reanchor',
+      'anchor': 'any infinite admissible continuation must decrease the values without bound',
+      'note': 'Same claim (SAME_AS prose/011: every infinite admissible run on the family has F(x_k) -> -inf).'},
+     {'item': 'C/07_H/prose/044', 'status': 'LEAN', 'action': 'reanchor',
+      'anchor': 'proves finite termination for its two-piece model',
+      'note': 'Preceding sentence of the same paragraph; reanchored by D-07H-11.'}])
+
+add('D-07H-13', H, 'guard',
+    'Thus the zero limit is genuinely\nnonstationary.',
+    'Thus the zero limit is\nnonstationary.',
+    'Guard word "genuinely".',
+    [{'item': 'C/07_H/prose/075', 'status': 'PROOF', 'action': 'keep',
+      'note': 'Anchor survives; argument unchanged. The docstring of Ch07H.no_stationary_point '
+              '(Ch07H.lean:2205) quotes "genuinely nonstationary".'}])
+
+add('D-07H-14', H, 'positive',
+    'The Euclidean-norm consequence is already Guo--Lewis~\\cite[Corollary~4.2]{GL18}, while',
+    'The Euclidean-norm consequence is due to Guo--Lewis~\\cite[Corollary~4.2]{GL18}, while',
+    'Positive attribution ("is due to") instead of "is already". This sentence continues with the '
+    'coordinator-handled Lewis--Overton clause; the edit stops before it and does not overlap it.',
+    [{'item': 'C/07_H/prose/070', 'status': 'NON_CLAIM', 'action': 'reanchor',
+      'anchor': 'The Euclidean-norm consequence is due to Guo--Lewis',
+      'note': 'Literature mention only; no reference elsewhere.'}])
+
+add('D-07H-15', H, 'positive',
+    'The precise prior result is Xie--W\\"achter\'s 2017 preprint~\\cite[Theorem~IV.1]{XW}. Its finite '
+    'detection of unbounded descent in the two-piece model is stronger there than the infinite-run value '
+    'conclusion proved here for the many-piece family.',
+    'Finite detection of unbounded descent in the two-piece model is due to Xie--W\\"achter\'s 2017 '
+    'preprint~\\cite[Theorem~IV.1]{XW}. The infinite-run value conclusion proved here holds for the whole '
+    'many-piece family.',
+    'Positive attribution plus a plain statement of how the two results differ (group note), instead of '
+    '"the precise prior result ... is stronger there than".',
+    [{'item': 'C/07_H/prose/072', 'status': 'NON_CLAIM', 'action': 'reanchor',
+      'anchor': 'Finite detection of unbounded descent in the two-piece model is due to',
+      'note': 'Literature attribution; its reason ("Xie-Wachter Theorem IV.1 is stronger in its finite '
+              'detection") should drop the comparison. No reference elsewhere.'}])
+
+add('D-07H-16', H, 'caveat',
+    ' Exact prior publication of the resulting $H_0^{-1}$-metric selector for this noncompact homogeneous '
+    'class remains unresolved, as for Chapter~\\ref{comp:F}\'s rectangular lifting formula.',
+    '',
+    'Priority hedge on the selector; the paragraph keeps the positive attribution "The invariant-subspace '
+    'argument extends the affine-invariance background". Coordinate with 06_F line 212 ("Exact publication '
+    'priority for this formula remains unresolved; no originality claim is made."), which this sentence '
+    'cites; if 06_F keeps its sentence, this one may stay too. Requires D-07H-17.',
+    [{'item': 'C/07_H/prose/073', 'status': 'NON_CLAIM', 'action': 'keep',
+      'note': 'Anchor "The invariant-subspace argument extends the affine-invariance background" survives; '
+              'its reason mentions the "unresolved attribution question", now removed.'}])
+
+add('D-07H-17', H, 'caveat',
+    ' This uncertainty concerns attribution, not an additional hypothesis of the theorem.',
+    '',
+    '"X, not Y" caveat that only says the attribution remark adds no hypothesis.',
+    [{'item': 'C/07_H/prose/073', 'status': 'NON_CLAIM', 'action': 'keep',
+      'note': 'Anchor survives (see D-07H-16).'}])
+
+# ---------------------------------------------------------------- 11_U
+add('D-11U-01', U, 'guard',
+    'as well as\nactual kinks.',
+    'as well as\nkinks.',
+    'Guard word "actual".',
+    [{'item': 'C/11_U/prose/006', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Anchor "The hyperplane itself may include differentiable points" survives; claim unchanged '
+              '(the docstring of Ch11U.smooth_hyperplane_witness, Ch11U.lean:2331, says "The actual kinks are '
+              'spike_hypotheses").'}])
+
+add('D-11U-02', U, 'caveat',
+    '\n\nThis is not a claim that all convex nonsmooth functions admit such a\nsplitting. Nor does a common '
+    'hyperplane through the optimizer describe\narbitrary curved switching geometry.',
+    '',
+    '"This is not a claim that ..." paragraph; the fixed normal direction is stated positively at the start of '
+    'the chapter ("The normal direction is fixed; the dimension n-1 of the tangent space is unrestricted.").',
+    [{'item': 'C/11_U/prose/017', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Scope disclaimer only. No register or Lean reference to prose/017.'},
+     {'item': 'C/11_U/prose/016', 'status': 'PART_OF', 'action': 'keep',
+      'note': 'Preceding paragraph untouched.'}])
+
+add('D-11U-03', U, 'repeat',
+    ' The cutoff is an analytical object\nchosen from \\(F\\) and the hypothetical cluster set, not an '
+    'algorithmic\ninput.',
+    '',
+    'Scope point (c) (comparison objects are used only in the proofs), stated in Chapter 1; the construction '
+    'just given shows how the cutoff is chosen. Inside the prose proof of Section 11.5; no step removed.',
+    [{'item': 'C/11_U/prose/026', 'status': 'PROOF', 'action': 'keep',
+      'note': 'Proof item spanning Section 11.5; anchor at its start survives; argument unchanged.'},
+     {'item': 'C/11_U/prose/081', 'status': 'PROOF', 'action': 'keep',
+      'note': 'Same span as prose/026 (proof of Theorem 11.1); argument unchanged.'}])
+
+add('D-11U-04', U, 'caveat',
+    ' There is no selection\nof one cluster point followed by an assumption that the sequence\nconverges to it.',
+    '',
+    'Says only what the proof does not do; the preceding sentence states the argument (the late trajectory '
+    'lies in the neighborhood of the whole cluster set). Same as article edit P1.',
+    [{'item': 'C/11_U/prose/026', 'status': 'PROOF', 'action': 'keep',
+      'note': 'Inside the Section 11.5 proof; argument unchanged.'},
+     {'item': 'C/11_U/prose/081', 'status': 'PROOF', 'action': 'keep',
+      'note': 'Same span as prose/026; argument unchanged.'}])
+
+add('D-11U-05', U, 'positive',
+    ', but those familiar\ncases were already proved in the source notes.',
+    '; this recovers the\nfamiliar cases proved in the source notes.',
+    'Keeps the supersession fact (the theorem includes the cases of the source notes) without the '
+    'minimizing "but ... already".',
+    [{'item': 'C/11_U/prose/030', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Anchor "A quadratic-plus-absolute-value objective is included" untouched.'},
+     {'item': 'C/11_U/prose/031', 'status': 'NON_CLAIM', 'action': 'reanchor',
+      'anchor': 'this recovers the familiar cases proved in the source notes',
+      'note': 'History (source notes), unchanged in substance. No reference elsewhere.'}])
+
+add('D-11U-06', U, 'caveat',
+    ', but not a claim that\nthe function lacks every prior transported certificate.',
+    '.',
+    '"not a claim that" clause; the function-class gain beyond RS is the stated result.',
+    [{'item': 'C/11_U/prose/046', 'status': 'SAME_AS', 'action': 'keep',
+      'note': 'Anchor "This is a \\textbf{function-class} gain beyond RS" survives.'},
+     {'item': 'C/11_U/prose/047', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Disclaimer only. No register or Lean reference to prose/047.'}])
+
+add('D-11U-07', U, 'positive',
+    ' rather than settling the original arbitrary\ncurved finite-\\(C^2\\)-max conjecture of Chapter~\\ref{comp:A}.',
+    '.',
+    '"X rather than Y": keeps X (the example expands the allowed normal curvature). The conjecture itself '
+    'stays stated, as open, in Chapter 8 (C/08_A/prose/042).',
+    [{'item': 'C/11_U/prose/048', 'status': 'SAME_AS', 'action': 'keep',
+      'note': 'Anchor "It also expands the allowed normal curvature" survives.'},
+     {'item': 'C/11_U/prose/049', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Said only that the Chapter 8 conjecture is not settled; the conjecture remains in 08_A '
+              '(C/08_A/prose/042, OPEN). No register or Lean reference to prose/049.'}])
+
+add('D-11U-08', U, 'positive',
+    'These are identities for the complete infinite series, not for a truncation.',
+    'These are identities for the complete infinite series.',
+    '"X, not Y": the section already opens with "There is no need to truncate (11.18)."',
+    [{'item': 'C/11_U/prose/056', 'status': 'PART_OF', 'action': 'reanchor',
+      'anchor': 'These are identities for the complete infinite series.',
+      'note': 'Same claim (identities for the full series r = sourcePrimitive).'},
+     {'item': 'C/11_U/prose/055', 'status': 'LEAN', 'action': 'keep',
+      'note': 'Untouched (earlier sentence of the paragraph).'}])
+
+add('D-11U-09', U, 'caveat',
+    'inverse matrix; it does not replace full BFGS by a reduced two-dimensional or block-diagonal algorithm.',
+    'inverse matrix.',
+    'Group note: the "not a reduced or block-diagonal algorithm" framing goes; the sentence keeps the positive '
+    'statement (every stated dimension, arbitrary coupled SPD initial inverse matrix).',
+    [{'item': 'C/11_U/prose/058', 'status': 'SAME_AS', 'action': 'keep',
+      'note': 'Anchor "For the objective (11.20), the convergence theorem applies in every stated dimension" '
+              'survives; claim unchanged.'}])
+
+add('D-11U-10', U, 'positive',
+    'realized by nonzero $c$, not by every allowed parameter.',
+    'realized by nonzero $c$.',
+    '"X, not Y": the preceding sentences (correction-round facts, kept) already show that c=0 splits.',
+    [{'item': 'C/11_U/prose/070', 'status': 'SAME_AS', 'action': 'keep',
+      'note': 'Anchor "Thus the subsection\'s existential claim is realized by nonzero $c$" survives.'}])
+
+add('D-11U-11', U, 'caveat',
+    'requires $c\\ne0$ and excludes only the stated differentiable-plus-scalar decomposition; it does not '
+    'exclude general partial-smoothness or nonlinear-composite descriptions~\\cite{geom_Lewis2002,LL}.',
+    'requires $c\\ne0$ and concerns the stated differentiable-plus-scalar decomposition.',
+    'Keeps the needed condition c != 0 and the plain scope of the nonsplitting conclusion; drops "excludes '
+    'only ... does not exclude". The citations remain in the first paragraph of this section.',
+    [{'item': 'C/11_U/prose/079', 'status': 'SAME_AS', 'action': 'reanchor',
+      'anchor': 'requires $c\\ne0$ and concerns the stated differentiable-plus-scalar decomposition',
+      'note': 'Same reference to the nonsplitting conclusion (prose/066, prose/069).'},
+     {'item': 'C/11_U/prose/080', 'status': 'NON_CLAIM', 'action': 'retire',
+      'note': 'Scope disclaimer only. No register or Lean reference to prose/080.'}])
+
+Path('/tmp/opencode/m44/companion/proposals_D.json').write_text(
+    json.dumps({'group': 'D', 'proposals': P}, indent=1, ensure_ascii=False) + '\n')
+print(len(P), 'proposals written')

@@ -24,24 +24,27 @@ index=json.loads((SOURCE/'DECLARATION_INDEX.json').read_text())
 for source in {SOURCE/c['corrected_source'] for c in claims}:
  guard_source(source)
 outputs={}
-order=[('I','Scope, quantifiers and the result map'),('M','BFGS algebra and reciprocal budgets'),('T','Transported comparison energies'),('R','Radial modeling and finite partitions'),('G','What comparison certificates express'),('F','Concrete objectives, lifting and rates'),('H','Homogeneous objectives without compactness'),('A','Affine criticality and stratified geometry'),('C','Planar switching and affine-critical cluster points'),('Q','Flat contours and parabolic branches'),('U','Fixed normal geometry in arbitrary dimension'),('D','The exact deterministic seed and local smooth embedding'),('L','Failure with positive lower curvature'),('E','Formal correspondence and the evidence boundary')]
+order=[('I','Scope, quantifiers and the result map'),('M','BFGS algebra and reciprocal budgets'),('T','Transported comparison energies'),('R','Radial modeling and finite partitions'),('G','What comparison certificates express'),('F','Concrete objectives, lifting and rates'),('H','Homogeneous objectives without compactness'),('A','Affine criticality and stratified geometry'),('C','Planar switching and affine-critical cluster points'),('Q','Flat contours and parabolic branches'),('U','Fixed normal geometry in arbitrary dimension'),('D','The exact deterministic seed and local smooth embedding'),('L','Failure with positive lower curvature'),('E','Formal correspondence and verification')]
 number={m:str(i+1) for i,(m,_) in enumerate(order)}
 internal={'SM':'M','SH':'H','ST':'T','SG':'G','SR':'R','SL':'R','SP':'F','SQ':'F','SE':'F','SV':'M','SA':'A','SC':'C','SU':'U','SD':'D','SLC':'L'}
 introductions={
 'I':'The scope map separates objective convergence, convergence to the solution set and convergence of the full sequence. It also separates universal admissible-run statements from the particular deterministic executions used in the counterexamples.',
-'M':'The same matrix calculation supports every positive result in this volume. We establish it once for actual full BFGS matrices, then retain the distinct qualitative, finite-horizon and summable-budget consequences.',
-'T':'The reciprocal budget becomes an objective theorem only when geometry controls a comparison energy. Visibility, secant control and transport are imposed on objective-level pairs, not inferred from a presumed limit of the BFGS matrices.',
+'M':'The same matrix calculation supports every positive result in this volume. We establish it once for the full BFGS matrices, then derive its qualitative, finite-horizon and summable-budget consequences.',
+'T':'The reciprocal budget becomes a convergence theorem when geometry controls a comparison energy. Visibility, secant control and transport are conditions on the objective, with no assumption on the BFGS matrices.',
 'R':'The global mixed-benchmark question is answered through inward model accuracy: a centered sublinear term contributes no inward remainder, and a smooth term contributes a quadratic one. The same condition localizes to finite polyhedral partitions without requiring cell identification.',
-'G':'The certificate is a sufficient analytic condition. Its normalization and pointwise geometry help interpret it, while scalar examples separate failure of the condition from failure of BFGS.',
-'F':'These applications turn the common analytic mechanism into verifiable objective classes. The affine-fiber selection formula and quantitative conclusions retain their own initialization and budget hypotheses.',
-'H':'Coercive homogeneous objectives provide a broad global convergence family. This chapter goes beyond that compact case: a different potential gives noncompact value alternatives, recurrent-gradient obstructions and conditional iterate conclusions, which remain distinct from finite line-search escape and from whole-iterate convergence.',
-'A':'Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity. This distinction gives useful local geometry but does not by itself force an algorithm to visit it.',
+'G':'The certificate is a sufficient condition for convergence. Its normalization and pointwise geometry help interpret it, and scalar examples show that BFGS converges where the condition fails.',
+'F':'These applications turn the common analytic mechanism into verifiable objective classes. The chapter also derives an affine-fiber selection formula and quantitative rates.',
+'H':'Coercive homogeneous objectives provide a broad global convergence family. This chapter goes beyond that compact case: a different potential gives noncompact value alternatives, recurrent-gradient obstructions and conditional iterate conclusions.',
+'A':'Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity. Chapters~\\ref{comp:C} and~\\ref{comp:U} turn this geometry into convergence theorems.',
 'C':'Curved switching interfaces can defeat inward radial accuracy even in a convergent problem. The planar contour construction supplies moving comparison geometry; the explicit three-quadratic basin demonstrates its added scope. The signed determinant and one-sided transport proof make the resulting convergence theorem independent of assumed matrix behavior.',
-'Q':'Flat contour segments are allowed in this finite parabolic family. Its explicit field supplies a convergence theorem that is not contained in the strict-contour planar result.',
+'Q':'Flat contour segments are allowed in this finite parabolic family. Its explicit field gives a convergence theorem that reaches flat-contour objectives outside the strict-contour planar theorem.',
 'U':'A fixed space of jump normals leaves controlled smooth directions in arbitrary dimension. Residual transport can be paid for in those directions; this is a different hypothesis from planar switching geometry.',
 'D':'A finite algebraic cycle first determines every query of a specified line search. Scaled copies then produce one fixed convex objective with failing initial points approaching its optimizer.',
-'L':'Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer; no claim combines uniform strong convexity with the preceding local $C^{2,1}$ branch regularity.',
-'E':'Mathematical proof, formal statement correspondence, computation and historical execution are different kinds of evidence. The dated authoring audit is stated first; the preserved release record that follows is historical evidence, not a new run count.'}
+'L':'Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer.',
+'E':'This chapter records the formal verification: the dated authoring audit comes first, followed by the preserved release record.'}
+# M44 in TODO_MANUSCRIPT_REVIEW.md (18 October 2026): wording edits that remove
+# defensive or over-qualifying sentences, applied to the finished chapter bodies.
+m44_edits=json.loads((ROOT/'editorial/defensive_wording_20261018/companion_edits.json').read_text())['edits']
 rows=[];transform_log=[];chapter_inputs=[]
 for module,title in order:
  group=[c for c in claims if c['module']==module];path=SOURCE/group[0]['corrected_source'];text=path.read_text();original=text
@@ -57,7 +60,7 @@ for module,title in order:
  if notes:
   # Relocated notes use neutral direction words; their mathematical content is unchanged.
   notes=[re.sub(r'\bbelow\b','in this chapter',n) for n in notes]
-  text+='\n\\section*{Relation to earlier work}\nThe following comparisons are bibliographic scholarship, separate from the formal theorem assertions.\n\n'+'\n\n'.join(notes)+'\n'
+  text+='\n\\section*{Relation to earlier work}\n'+'\n\n'.join(notes)+'\n'
  def cite(m):
   keys=[k.strip() for k in m[2].split(',')];ext=[k for k in keys if k not in internal];refs=list(dict.fromkeys(internal[k] for k in keys if k in internal));parts=[]
   if ext:parts.append('\\cite'+(m[1] or '')+'{'+','.join(ext)+'}')
@@ -521,6 +524,10 @@ for module,title in order:
   assert text.count(heading)==1
   text=text.replace(heading,'\\needspace{6\\baselineskip}\n'+heading)
   transform_log.append({'module':module,'kind':'keep_rebuild_heading_with_commands','reason':'Visual review after the 13 October 2026 verification paragraph found this heading and its first line separated from the command block. needspace changes layout only.'})
+ for edit in (e for e in m44_edits if e['module']==module):
+  assert text.count(edit['old'])==1,(module,edit['id'])
+  text=text.replace(edit['old'],edit['new'])
+  transform_log.append({'module':module,'kind':'m44_'+edit['kind'],'id':edit['id'],'reason':'M44 in TODO_MANUSCRIPT_REVIEW.md: '+edit['reason']})
  intro='\\chapter{'+title+'}\\label{comp:'+module+'}\\label{'+module+':chapter}\n\\renewcommand{\\ModuleTag}{'+number[module]+'}\n'+introductions[module]+'\n\n'
  if module=='E':intro+='\\input{current_verification}\n'
  content=intro+text

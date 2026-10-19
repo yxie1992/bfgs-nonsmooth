@@ -1,0 +1,72 @@
+\section{The BFGS compression calculation}\label{art:matrix-algebra}
+
+\begin{lemma}\label{art:gram-compression}
+Under the assumptions of Theorem~\ref{art:minor-hierarchy}, let $Z$ have
+$j$ orthonormal columns, $1\le j\le n$. Then
+\[
+ \det(Z^TH_+Z)\le
+ \frac{\det\operatorname{Gram}_H(y,Z)}{\beta^2q}
+       +\frac\alpha\beta\det(Z^THZ).
+\]
+For $j=n$, $\det H_+=(\alpha/\beta)\det H$.
+\end{lemma}
+\begin{proof}
+Put $v=Hg$, $\kappa=g^THy=-\beta q$ and
+$P=I-vy^T/\kappa$. Since $y^Ts=\alpha\beta q$, the update becomes
+\[
+ H_+=\mathcal F+\frac{\alpha}{\beta q}vv^T,
+ \qquad \mathcal F=PHP^T.
+\]
+Write
+\[
+ \begin{gathered}
+ A=Z^THZ\succ0,\quad a=Z^THg,\quad b=Z^THy,\quad r=y^THy,\\
+ u=a^TA^{-1}a,\quad w=a^TA^{-1}b,\quad z=b^TA^{-1}b.
+ \end{gathered}
+\]
+Then
+\[
+ Z^T\mathcal FZ
+ =A-[a\ b]
+ \begin{pmatrix}-r/\kappa^2&1/\kappa\\1/\kappa&0\end{pmatrix}
+ [a\ b]^T.
+\]
+The identity $\det(I+UV)=\det(I+VU)$ reduces its determinant to a
+$2\times2$ determinant. Expanding gives
+\begin{equation}\label{art:compression-determinant}
+ \det(Z^T\mathcal FZ)
+ =\frac{\det A}{\kappa^2}
+       \bigl((\kappa-w)^2+u(r-z)\bigr).
+\end{equation}
+With $\operatorname{Gram}_H(g,Z)=[g\ Z]^TH[g\ Z]$ and
+$\operatorname{Gram}_H(g,y,Z)=[g\ y\ Z]^TH[g\ y\ Z]$, Schur complements give,
+independently,
+\begin{align*}
+ \det\operatorname{Gram}_H(y,Z)&=(r-z)\det A,\\
+ \det\operatorname{Gram}_H(g,y,Z)
+ &=\bigl((q-u)(r-z)-(\kappa-w)^2\bigr)\det A.
+\end{align*}
+Both are Gram determinants and hence nonnegative, including when their
+column families are dependent. Combining these identities yields
+\[
+ \det(Z^T\mathcal FZ)
+ =\frac{q\det\operatorname{Gram}_H(y,Z)
+             -\det\operatorname{Gram}_H(g,y,Z)}{\beta^2q^2}
+ \le\frac{\det\operatorname{Gram}_H(y,Z)}{\beta^2q}.
+\]
+
+Adding $\rho aa^T$ to the compression changes the coefficient $r/\kappa^2$
+by $\rho$. The same $2\times2$ expansion therefore changes its determinant
+by exactly $\rho\det A\,u$. No invertibility of
+$Z^T\mathcal FZ$ is used. Since $Z^Tv=a$, the value $\rho=\alpha/(\beta q)$
+gives the compression $Z^TH_+Z$. The Schur complement of $A$ in
+$\operatorname{Gram}_H(g,Z)$ gives $u\le q$ (and $u\ge0$ since $A\succ0$),
+so the increase is at most $(\alpha/\beta)\det A$.
+This proves the inequality.
+
+When $j=n$, $Z$ is an orthogonal matrix, $A^{-1}=Z^TH^{-1}Z$, and $u=q$,
+$w=\kappa$, $z=r$. The right side of \eqref{art:compression-determinant}
+then vanishes, while the
+rank-one increase is exactly $(\alpha/\beta)\det A$.
+Orthogonal invariance gives the stated determinant identity.\qed
+\end{proof}

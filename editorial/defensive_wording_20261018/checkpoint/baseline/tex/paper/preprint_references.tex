@@ -1,0 +1,35 @@
+% Mathematical Programming restricts the reference list to published/accepted
+% work. These identifiers mention unpublished work directly in the text.
+% Optional argument gives a locator in the explicitly identified version.
+% The starred form omits the authors, for a citation right after their names.
+\makeatletter
+\newcommand{\preprintcite}{%
+  \@ifstar{\bfgs@preprintcite\@gobble}{\bfgs@preprintcite\@firstofone}}
+\newcommand{\bfgs@preprintcite}[1]{%
+  \@ifnextchar[{\bfgs@@preprintcite#1}{\bfgs@@preprintcite#1[]}}
+\def\bfgs@@preprintcite#1[#2]#3{%
+  \@ifundefined{bfgspreprint@#3}%
+    {\PackageError{bfgs-paper}{Unknown preprint key #3}{Define the verified source in preprint_references.tex.}}%
+    {(#1{\csname bfgspreprintauthors@#3\endcsname, }%
+      \csname bfgspreprint@#3\endcsname\if\relax\detokenize{#2}\relax\else, #2\fi)}%
+}
+% \bfgsdefinepreprint{key}{authors}{source}
+\newcommand{\bfgsdefinepreprint}[3]{%
+  \@namedef{bfgspreprintauthors@#1}{#2}\@namedef{bfgspreprint@#1}{#3}}
+\bfgsdefinepreprint{XW}{Xie and W\"achter}{2017 preprint,
+  \href{https://arxiv.org/abs/1712.08571v1}{arXiv:1712.08571v1}}
+\bfgsdefinepreprint{DY}{Dyatlov}{\emph{Notes on hyperbolic dynamics},
+  2018 preprint, \href{https://arxiv.org/abs/1805.11660v1}{arXiv:1805.11660v1}}
+\bfgsdefinepreprint{LW}{Lewis and Wylie}{2019 preprint,
+  \href{https://arxiv.org/abs/1907.11742v1}{arXiv:1907.11742v1}}
+\bfgsdefinepreprint{NEG_LO08}{Lewis and Overton}{%
+  \href{https://cs.nyu.edu/overton/papers/pdffiles/bfgs_exactLS.pdf}{\emph{Behavior of BFGS with an Exact Line Search on Nonsmooth Examples}},
+  2008 manuscript}
+\bfgsdefinepreprint{NEG_DIAO26}{Diao}{2026 preprint,
+  \href{https://arxiv.org/abs/2609.09686v1}{arXiv:2609.09686v1}}
+% Version pointers for works whose published identities remain in the bibliography.
+\bfgsdefinepreprint{WW22}{D. Wachsmuth and G. Wachsmuth}{2022 preprint,
+  \href{https://arxiv.org/abs/2204.00282v1}{arXiv:2204.00282v1}}
+\bfgsdefinepreprint{Bog22}{Bogosel}{2022 preprint,
+  \href{https://arxiv.org/abs/2203.06981v1}{arXiv:2203.06981v1}}
+\makeatother

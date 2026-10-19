@@ -1,0 +1,236 @@
+\section{Constructing the planar comparison field}\label{art:planar-appendix}
+
+This appendix supplies the geometric ingredient used in
+Theorem~\ref{art:planar-cluster}. The construction applies near a compact
+regular part of one positive level. It does not assume that the BFGS iterates
+converge to one point of that level.
+
+\begin{lemma}[One field with all endpoint estimates]\label{art:planar-field}
+Let $F:\R^2\to\R$ be finite and convex with minimum $F_*$, and let
+$C\subset\{F=\ell\}$ be a nonempty compact set, where $\ell>F_*$.
+Suppose the boundary of $\{F\le\ell\}$ contains no nontrivial segment and
+every point of $C$ is non-affine-critical and has the smooth or regular
+convex two-branch structure in Theorem~\ref{art:planar-cluster}.
+Fix valid Armijo--weak-Wolfe constants. There exist an open neighborhood
+$U\supset C$, a compact buffer $Q\supset\overline U$, a field $w$ defined
+on a neighborhood of $Q$, and constants
+$\eta,\kappa,\delta>0$, $C_0,C_1,L\ge0$ such that:
+
+\begin{enumerate}
+\item The field is locally Lipschitz, bounded on $Q$, and every
+$g\in\partial F(p)$, $p\in Q$, satisfies $g^Tw(p)\ge\eta$.
+All subgradients at a fixed point have the same pairing with $w(p)$.
+\item For every eligible pair $x,z\in U$ with $\norm{s}<\delta$, its entire
+segment lies in $Q$ and
+\[
+ |\det(s,w(x+\theta s))|\ge\kappa\norm{s}
+ \quad(0\le\theta\le1),\qquad (y^Tw(z))^2/t\le C_0.
+\]
+\item For every such pair there are $\lambda>0$ and $\beta\in\R$ with
+\[
+ w(z)=\lambda w(x)+\beta s,\qquad
+ |\log\lambda|\le C_1d,
+ \qquad d\le1\ \Longrightarrow\ \lambda^2\le1+Ld.
+\]
+\end{enumerate}
+All neighborhoods, constants and the field are chosen before the endpoint
+pair or any BFGS matrix.
+\end{lemma}
+\begin{proof}
+\emph{Corner motion.}
+At a nonsmooth point of $C$, the local branch-value map
+$x\mapsto(f_1(x),f_2(x))$ has nonsingular derivative. The inverse function
+theorem gives a $C^2$ curve $p_j(t)$ characterized by
+$f_1(p_j(t))=f_2(p_j(t))=t$ for $t$ near $\ell$. Its $C^1$ velocity
+$v_j(t)=p_j'(t)$ satisfies
+\begin{equation}\label{art:corner-velocity}
+ \nabla f_1(p_j(t))^Tv_j(t)=
+ \nabla f_2(p_j(t))^Tv_j(t)=1.
+\end{equation}
+In particular, this chart has only one nonsmooth point at level $\ell$.
+A smooth point has a neighborhood with no nonsmooth points. A finite cover
+of $C$ by smaller buffered charts therefore contains only finitely many
+level-$\ell$ corners. After shrinking their charts, the neighborhood of
+$C$, and the interval of levels, every nearby nonsmooth point lies on one
+of these finitely many curves. This is a compactness consequence of the
+charts, rather than an assumed finite bound on future branch changes.
+
+\emph{Joining their directions.}
+At a corner, the two active gradients generate its cone of supporting
+normals. Its unit directions form a compact arc of width less than $\pi$;
+by \eqref{art:corner-velocity}, every such unit normal $n$ has
+$n^Tv_j(t)>0$. Normal arcs at distinct level-$\ell$ corners are disjoint:
+a shared supporting normal would expose both points and their full segment
+in the boundary of $\{F\le\ell\}$. The strict-contour hypothesis excludes
+this. The finitely many arcs have positive angular separation.
+
+Choose fixed smooth angular cutoffs $0\le\chi_j\le1$ with disjoint supports,
+equal to one on slightly enlarged normal arcs. Shrink the level interval so
+that these plateaus contain the whole moving arcs and each support still
+satisfies $n^Tv_j(t)>0$ uniformly. With
+$n(\theta)=(\cos\theta,\sin\theta)$ and
+$T(\theta)=(-\sin\theta,\cos\theta)$, define
+\begin{equation}\label{art:planar-height}
+ h(t,\theta)=1+\sum_j\chi_j(\theta)
+                   \bigl(n(\theta)^Tv_j(t)-1\bigr).
+\end{equation}
+Because at most one cutoff is nonzero, this is a convex combination of
+positive quantities. Thus $h$ is bounded and bounded away from zero on the
+chosen compact level interval. It is $C^1$ in $t$, smooth in $\theta$, and
+its derivatives used below are bounded. No convex-support-function property
+of $h$ is needed.
+
+At a smooth point, put
+$n(\theta(x))=\nabla F(x)/\norm{\nabla F(x)}$ and define
+\begin{equation}\label{art:planar-field-formula}
+ w(x)=h(F(x),\theta(x))n(\theta(x))
+       +h_\theta(F(x),\theta(x))T(\theta(x)).
+\end{equation}
+All expressions are periodic, so no global choice of angle is required.
+Near the $j$th switching curve the relevant cutoff equals one and all others
+vanish. Consequently $h=n^Tv_j$, $h_\theta=T^Tv_j$, and
+\begin{equation}\label{art:planar-corner-field}
+ w(x)=v_j(F(x)).
+\end{equation}
+This holds on both smooth sides in a whole neighborhood of the curve.
+Use the same formula on the curve itself. It provides a continuous, locally
+Lipschitz extension across the gradient jump, while the field is $C^1$
+elsewhere. Smaller compact buffers give uniform field and derivative bounds.
+At a smooth point,
+\[
+ \nabla F(x)^Tw(x)=\norm{\nabla F(x)}h(F(x),\theta(x))>0;
+\]
+at a corner every subgradient pairs to one by
+\eqref{art:corner-velocity}. On sufficiently small buffers of $C$, these
+pairings have a uniform positive lower bound. One way to see the needed
+uniform gradient bound away from zero is the supporting inequality
+$\norm{g}\norm{x-x_*}\ge F(x)-F_*$ on the compact buffer, where $x_*$ is
+any minimizer and the value gap stays positive. This proves the visibility
+and common-pairing assertions.
+
+The specific angular formula has a crucial derivative cancellation:
+\begin{equation}\label{art:planar-tangent-cancellation}
+ \partial_\theta(hn+h_\theta T)=(h+h_{\theta\theta})T.
+\end{equation}
+Thus at a smooth point the derivative of $w$ maps the tangent line of a
+level curve into that same line. In the orthonormal basis $(T,n)$,
+\[
+ Dw=\begin{pmatrix}a&b\\0&e\end{pmatrix}
+\]
+with bounded coefficients. The formula $hn+h_\theta T$ is classical in
+normal-angle geometry \cite{geom_Bogosel2023}; Bogosel gives its explicit
+form \preprintcite*[Section~2, equation~(4)]{Bog22}. Here its derivative cancellation
+is used for a comparison field, without a convexity requirement on $h$.
+
+\emph{Transversality of eligible steps.}
+Choose nested neighborhoods so that $\overline U$ lies in the interior of
+$Q$, with all preceding bounds valid on a larger buffer. Sufficiently close
+pairs in $U$ have their segments in $Q$.
+If the claimed determinant lower bound failed at arbitrarily short lengths,
+compactness would give coalescing endpoints tending to $p\in Q$, normalized
+steps $s/\norm{s}\to\hat s$, and segment points at which the normalized
+determinant tends to zero. Bounded subgradients and their closed graph give
+endpoint gradient limits $\bar g,\bar h\in\partial F(p)$. Continuity of $w$ makes
+$\hat s$ parallel to $w(p)$. Positivity of the common pairing and $d>0$ force
+$\hat s=-w(p)/\norm{w(p)}$. Hence
+\[
+ d/\norm{s}\longrightarrow-\bar g^T\hat s>0,
+ \qquad t/\norm{s}\longrightarrow(\bar h-\bar g)^T\hat s=0,
+\]
+contradicting $t\ge(1-c_2)d$. This proves uniform transversality, including
+every point of the segment, after reducing $\delta$.
+
+\emph{Transport charged to decrease.}
+Write $q(\theta)=x+\theta s$ ($\theta\in[0,1]$ is now a segment parameter, not a
+normal angle),
+$\varphi(\theta)=F(q(\theta))$ and
+$D(\theta)=\det(s,w(q(\theta)))$.
+Transversality makes $D$ nonzero with constant sign on $[0,1]$.
+At a smooth point the basis $(T,n)$ has determinant $-1$. Writing
+$s=s_TT+s_n n$, direct calculation yields
+\begin{equation}\label{art:planar-determinant-derivative}
+ \det(s,Dw\,s)=s_n\bigl[(a-e)s_T+b s_n\bigr].
+\end{equation}
+Since $D'(\theta)=\det(s,Dw\,s)$ there, the numerator of $D'/D$ has magnitude
+at most a constant times $|s_n|\norm{s}$.
+Since $|D|\ge\kappa\norm{s}$ and
+$\varphi'=\norm{\nabla F}\,s_n$, the quotient is bounded by a constant
+times $|\varphi'|$. At a corner, \eqref{art:planar-corner-field} gives
+$w\circ q=v_j\circ\varphi$. The convex function $\varphi$ has a right
+derivative at every $\theta<1$, and the one-sided chain rule gives the same
+bound there. Therefore, for $H(\theta)=\log|D(\theta)|$,
+\[
+ |H'_+(\theta)|\le A|\varphi'_+(\theta)|
+ \le A\bigl(\varphi'_+(\theta)+2d\bigr),
+ \qquad 0\le\theta<1.
+\]
+The last inequality uses monotonicity of the convex right derivative and
+${\varphi'(0)=-d}$.
+
+For clarity, the one-sided comparison needed here requires no finite count
+of switching intersections. If a continuous function $u$ on $[0,1]$ has
+$u'_+\le0$ on $[0,1)$, then $u(1)\le u(0)$. Otherwise choose $\epsilon>0$
+so that $u(1)-\epsilon>u(0)$. The continuous function
+$u(\theta)-\epsilon\theta$ has a minimum at some point before $1$, where its right
+derivative must be nonnegative, contradicting the strictly negative bound.
+Apply this fact to both
+\[
+ \pm\bigl(H(\theta)-H(0)\bigr)
+       -A\bigl(\varphi(\theta)-\varphi(0)+2d\theta\bigr).
+\]
+Both start at zero and have nonpositive right derivative. Since
+$\varphi(1)\le\varphi(0)$,
+\[
+ |H(1)-H(0)|\le2Ad.
+\]
+Set $\lambda=D(1)/D(0)>0$. Because $s,w(x)$ are linearly independent,
+solving in that basis gives $w(z)=\lambda w(x)+\beta s$; the preceding
+bound is $|\log\lambda|\le2Ad$. For $0<d\le1$, convexity of the exponential
+on $[0,1]$ gives
+$\lambda^2\le\exp(4Ad)\le1+(\exp(4A)-1)d$.
+This establishes the transport constants.
+
+\emph{The secant correction.}
+A finite buffered chart cover supplies a common Lipschitz constant for the
+branch gradients. First suppose the endpoints use the same smooth branch
+$f$. On a larger convex chart, with Lipschitz constant $M>0$, sufficiently
+close buffered endpoints satisfy
+\[
+ \norm{\nabla f(z)-\nabla f(x)}^2
+ \le2M\bigl[f(z)-f(x)-\nabla f(x)^T(z-x)\bigr].
+\]
+Indeed, subtract the tangent plane at $x$, then use the descent estimate at
+$z$ for the step $-(\nabla f(z)-\nabla f(x))/M$. This step stays in the
+larger chart for close endpoints, and convexity makes the resulting
+function value no smaller than its value at $x$. This proves the displayed
+inequality. It is the local convex-gradient estimate underlying
+cocoercivity \cite{WW}; compare \preprintcite[Theorem~2.5]{WW22}.
+Since the branch values and gradients
+at both endpoints agree with those of $F$, the bracket is at most $t$.
+Boundedness of $w$ then bounds $(y^Tw(z))^2/t$ uniformly.
+
+For different endpoint branches $i,j$ in a two-branch chart, the segment
+contains a tie point $p$. There
+$(\nabla f_j(p)-\nabla f_i(p))^Tw(p)=0$.
+The branch gradients and $w$ are Lipschitz, so
+\[
+ |y^Tw(z)|\le A_1\norm{s}.
+\]
+Put $r=\nabla f_j(z)-\nabla f_j(x)$,
+so $\norm{r}\le M\norm{s}$. Then
+\[
+ \nabla f_i(x)^Ts=-d,\qquad \nabla f_j(x)^Ts=t-d-r^Ts.
+\]
+The two gradient rows are uniformly independent on the smaller chart.
+Their inverse bound and eligibility imply
+\[
+ \norm{s}\le A_2(2d+t+M\norm{s}^2)
+ \le A_2\left(1+\frac{2}{1-c_2}\right)t+A_2M\norm{s}^2.
+\]
+For sufficiently small $\norm{s}$, absorb the last term to obtain
+$t\ge a_0\norm{s}$ with $a_0>0$.
+Consequently $(y^Tw(z))^2/t\le A_1^2\norm{s}/a_0$, uniformly bounded.
+A finite buffered cover ensures every sufficiently close pair lies in one
+of the preceding charts. Taking the common smaller distance threshold
+finishes all three assertions for the same field.\qed
+\end{proof}

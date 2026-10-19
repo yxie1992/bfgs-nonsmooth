@@ -17,6 +17,27 @@ Agreed scope:
   descriptions of software or runs, and literature only mentioned are
   classified as non-claims with a reason.
 
+## Active checkpoint: M44 wording migration (18 October 2026)
+
+- [ ] Complete the coverage migration for the article/companion wording pass.
+  The author requested a pause. All decisions and inputs are saved in
+  `editorial/defensive_wording_20261018/RESUME.md` and its `checkpoint/` directory.
+  One resync write for 30 edited TeX files has already moved lines/references and
+  accepted 20 reviewed mechanical hashes. **Do not repeat it.**
+- [ ] Apply the prepared one-shot `checkpoint/reg/apply_actions.py --write`
+  (not yet run), then fix the six retiring-item docstrings, other stale quotations
+  and notes, and check literal anchors against their final ranges. The dry run
+  has zero missing new anchors or `of` targets: 132 planned retirements and four
+  additions; the projected 2401 items are not yet the installed register count.
+- [ ] Compile/build, run strict coverage and generator checks, refresh reviewed
+  correspondence/ledger and M42 bindings, then obtain fresh axiom/kernel evidence.
+  The old reports do not describe the M44 edits. Current `--strict` exits 0 on
+  2529 old items but does not detect the stale prose anchors; do not close this
+  item on that check alone. No Lean proof/declaration has changed so far.
+
+The progress tables and completed checks below describe **16 October**, before
+M44, and remain historical until this migration is completed.
+
 Progress (`python3 editorial/lean_coverage/check_coverage.py`), 16 October 2026:
 
 | Document | Items | Status |

@@ -330,7 +330,7 @@ theorem tilt_family_escape {n m : ℕ} (b : Fin m → Vec n) (F : Vec (n + 1) �
 
 /-! ### Theorem 7.C (lines 117-143) -/
 
-/-- Item `C/07_H/heading/003` (`companion/chapters/07_H.tex:117`), Theorem 7.C ("complete
+/-- Item `C/07_H/heading/003` (`companion/chapters/07_H.tex:116`), Theorem 7.C ("complete
 iterate dichotomy in the planar unbounded-below case", lines 117-133), with its displays
 `C/07_H/disp/006` (lines 125-127) and `C/07_H/disp/007` (lines 131-133): "For a finite
 max-linear objective on $\mathbb R^2$ with $\inf f=-\infty$, every infinite admissible run
@@ -357,7 +357,7 @@ theorem theorem_7C {m : ℕ} (a : Fin m → Vec 2) (F : Vec 2 → ℝ)
   · right
     exact ⟨h, fun h' => not_tendsto_nhds_of_tendsto_atBot h.1 0 h'.2.1⟩
 
-/-- Item `C/07_H/prose/013` (`companion/chapters/07_H.tex:135`): "In the first alternative
+/-- Item `C/07_H/prose/013` (`companion/chapters/07_H.tex:134`): "In the first alternative
 the limit is nonstationary." Under the hypotheses of Theorem 7.C, the limit $0$ of the first
 alternative is not a stationary point: $0\notin\partial f(0)$ (the convex subdifferential,
 `ConvexSubdifferential.subdifferential`). In fact no point is stationary (`no_stationary_point`,
@@ -392,7 +392,7 @@ theorem seed_unbounded :
   rw [SeedOrbit.objective_downhill_ray (by positivity)] at h
   linarith [neg_abs_le L]
 
-/-- Item `C/07_H/prose/014` (`companion/chapters/07_H.tex:135-136`): "The previously
+/-- Item `C/07_H/prose/014` (`companion/chapters/07_H.tex:134-135`): "The previously
 constructed exact three-piece example attains that alternative." The seed objective
 $G(z)=\max_{i<3}g_i^Tz$ (`SeedOrbit.objective seedC seedD`, three distinct slopes) is a finite
 max-linear objective on $\R^2$ with $\inf G=-\infty$, and for every pair
@@ -415,7 +415,7 @@ theorem seed_attains_first_alternative :
   obtain ⟨-, hx, hv, -⟩ := SeedOrbit.actual_run_failure hc₁ hc₁' hc hc₂
   exact ⟨hx, hv, (SeedOrbit.run c₁ c₂ hc₁ hc₁' hc hc₂).objective_antitone⟩
 
-/-- Item `C/07_H/prose/016` (`companion/chapters/07_H.tex:140-143`): "More generally, for any
+/-- Item `C/07_H/prose/016` (`companion/chapters/07_H.tex:137-140`): "More generally, for any
 finite max-linear objective, if the span of the recurrent gradients has dimension at most two,
 every finite-value-limit run has convergent iterates. Section 7.7 proves this broader
 statement, including the noncoercive bounded-below case." For $F=\max_ia_i^Tx$ on $\R^n$ and
@@ -440,7 +440,7 @@ theorem recurrent_rank_le_two_convergence {n m : ℕ} (a : Fin m → Vec n) (F :
 
 /-! ### What this does not yet establish (lines 149-162) -/
 
-/-- Item `C/07_H/prose/018` (`companion/chapters/07_H.tex:153-157`), an open question: "The
+/-- Item `C/07_H/prose/018` (`companion/chapters/07_H.tex:149-151`), an open question: "The
 remaining unresolved iterate question in this investigation is the zero-value branch for
 noncompact objectives when the recurrent gradient span has dimension at least three. We have
 neither proved that all such iterate sequences converge nor constructed a nonconvergent
@@ -477,7 +477,7 @@ theorem run_setting {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) :
   ⟨⟨R.c₁_pos, R.c₁_lt_c₂, R.c₂_lt_one⟩, fun k => ⟨R.armijo k, R.weak_wolfe k⟩,
     fun k => (R.hasGradient k).differentiableAt, R.positive_definite, R.update⟩
 
-/-- Item `C/07_H/disp/008` (`companion/chapters/07_H.tex:181-188`): the notation
+/-- Item `C/07_H/disp/008` (`companion/chapters/07_H.tex:171-178`): the notation
 \[ g_k=\nabla f(x_k),\ p_k=-H_kg_k,\ s_k=\alpha_kp_k,\ x_{k+1}=x_k+s_k,\ y_k=g_{k+1}-g_k,\
    B_k=H_k^{-1},\ q_k=g_k^\top H_kg_k>0,\ d_k=-g_k^\top s_k=\alpha_kq_k>0,\ t_k=y_k^\top s_k,\
    \Delta_k=f(x_k)-f(x_{k+1}). \]
@@ -500,7 +500,7 @@ theorem notation_display {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n 
   rw [hp, smul_neg]
   exact neg_smul _ _
 
-/-- Item `C/07_H/disp/009` (`companion/chapters/07_H.tex:192-197`): the line-search
+/-- Item `C/07_H/disp/009` (`companion/chapters/07_H.tex:182-187`): the line-search
 conditions
 \[ f(x_{k+1})\le f(x_k)+c_1g_k^\top s_k,\qquad g_{k+1}^\top s_k\ge c_2g_k^\top s_k,\qquad
    0<c_1<c_2<1, \]
@@ -511,7 +511,7 @@ theorem line_search_conditions {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGS
       0 < R.c₁ ∧ R.c₁ < R.c₂ ∧ R.c₂ < 1 :=
   ⟨fun k => ⟨R.armijo k, R.weak_wolfe k⟩, R.c₁_pos, R.c₁_lt_c₂, R.c₂_lt_one⟩
 
-/-- Item `C/07_H/disp/010` (`companion/chapters/07_H.tex:201-206`): "In particular, with
+/-- Item `C/07_H/disp/010` (`companion/chapters/07_H.tex:191-196`): "In particular, with
 $c=1-c_2>0$,
 \[ t_k\ge c\,d_k>0,\qquad \beta_k:=\frac{t_k}{d_k}=-\frac{y_k^\top H_kg_k}{q_k}\ge c." \]
 $c$ and $\beta_k$ are variables with their defining equations; the second equality says that
@@ -530,7 +530,7 @@ theorem curvature_and_beta {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
   · rw [hβeq, hc]
     exact R.beta_lower_bound k
 
-/-- Item `C/07_H/disp/011` (`companion/chapters/07_H.tex:210-216`): the full inverse-BFGS
+/-- Item `C/07_H/disp/011` (`companion/chapters/07_H.tex:200-206`): the full inverse-BFGS
 update
 \[ H_{k+1}=\Bigl(I-\frac{s_ky_k^\top}{t_k}\Bigr)H_k\Bigl(I-\frac{y_ks_k^\top}{t_k}\Bigr)
    +\frac{s_ks_k^\top}{t_k}. \]
@@ -541,7 +541,7 @@ theorem inverse_update {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
       (R.curvature k)⁻¹ • outer (R.displacement k) (R.displacement k) :=
   R.update k
 
-/-- Item `C/07_H/disp/012` (`companion/chapters/07_H.tex:220-224`), equation (7.2.1): "Its
+/-- Item `C/07_H/disp/012` (`companion/chapters/07_H.tex:210-214`), equation (7.2.1): "Its
 Hessian form, after substituting $s_k=-\alpha_kH_kg_k$, is
 \[ B_{k+1}=B_k-\frac{g_kg_k^\top}{q_k}+\frac{y_ky_k^\top}{t_k}." \] -/
 theorem hessian_form {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ) :
@@ -549,7 +549,7 @@ theorem hessian_form {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (
       (R.curvature k)⁻¹ • outer (R.gradientChange k) (R.gradientChange k) :=
   R.hessian_update k
 
-/-- Item `C/07_H/prose/020` (`companion/chapters/07_H.tex:226-227`): "A zero gradient
+/-- Item `C/07_H/prose/020` (`companion/chapters/07_H.tex:216-217`): "A zero gradient
 corresponds to a stationary termination rather than an infinite strict-descent run." For
 finite convex $F$, a point with zero gradient is a global minimizer (stationary: no point has a
 smaller value), and the BFGS step from it is zero for every matrix and length, so the
@@ -562,7 +562,7 @@ theorem zero_gradient_stationary {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn �
   simp only [dot, Pi.zero_apply, zero_mul, Finset.sum_const_zero] at h
   linarith
 
-/-- Item `C/07_H/prose/021` (`companion/chapters/07_H.tex:227-229`): "Throughout, ``infinite
+/-- Item `C/07_H/prose/021` (`companion/chapters/07_H.tex:217-219`): "Throughout, ``infinite
 admissible'' therefore includes nonzero accepted gradients and well-defined positive-curvature
 updates." Every admissible run has $g_k\ne0$ and $t_k>0$ for all $k$. -/
 theorem admissible_convention {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) :
@@ -571,7 +571,7 @@ theorem admissible_convention {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
 
 /-! ### Section 7.5.1: bounded subgradients and Euler's identity (lines 252-272) -/
 
-/-- Item `C/07_H/disp/013` (`companion/chapters/07_H.tex:258-260`): "For finite convex
+/-- Item `C/07_H/disp/013` (`companion/chapters/07_H.tex:248-250`): "For finite convex
 positively homogeneous $f$, every subgradient $g\in\partial f(x)$ satisfies
 \[ g^\top x=f(x),\qquad g^\top z\le f(z)\quad\text{for every }z." \]
 A subgradient at $x$ is a $g$ with $F(z)\ge F(x)+g^T(z-x)$ for all $z$. Library:
@@ -583,7 +583,7 @@ theorem euler_identity {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
   have hs : Homogeneous.Supports F x g := fun z => by linarith [hg z]
   exact ⟨Homogeneous.supporting_euler hhom hs, Homogeneous.supporting_linear_le hhom hs⟩
 
-/-- Item `C/07_H/prose/023` (`companion/chapters/07_H.tex:264-265`): "In particular, all
+/-- Item `C/07_H/prose/023` (`companion/chapters/07_H.tex:254-255`): "In particular, all
 subgradients belong to $\partial f(0)$." For finite convex positively homogeneous $F$, every
 subgradient at any point $x$ is a subgradient at $0$. -/
 theorem subgradients_at_zero {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
@@ -594,7 +594,7 @@ theorem subgradients_at_zero {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ u
   have h := Homogeneous.supports_at_zero hhom hs z
   linarith
 
-/-- Item `C/07_H/disp/014` (`companion/chapters/07_H.tex:266-268`), with the claims of line
+/-- Item `C/07_H/disp/014` (`companion/chapters/07_H.tex:256-258`), with the claims of line
 265: "In positive dimension, the unit sphere is nonempty and $f$ is finite and continuous
 there, so
 \[ \|g\|\le\max_{\|z\|=1}f(z)<\infty." \]
@@ -625,7 +625,7 @@ theorem subgradient_sphere_bound {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ}
       dsimp only at h
       exact h.2.trans (hmax h.1)
 
-/-- Item `C/07_H/prose/025` (`companion/chapters/07_H.tex:269`): "In dimension zero the
+/-- Item `C/07_H/prose/025` (`companion/chapters/07_H.tex:259`): "In dimension zero the
 space is a singleton and every gradient is zero; boundedness and the later bounded-sublevel or
 coercive convergence conclusions hold directly. [...] an infinite admissible run with nonzero
 gradients cannot occur in dimension zero." In $\R^0$ every vector is $0$ (so every gradient is
@@ -644,7 +644,7 @@ theorem dimension_zero (F : Vec 0 → ℝ) :
     exact tendsto_const_nhds
   · exact absurd R.dimension_pos (lt_irrefl 0)
 
-/-- Item `C/07_H/prose/026` (`companion/chapters/07_H.tex:271-272`): "Thus the bounded-gradient
+/-- Item `C/07_H/prose/026` (`companion/chapters/07_H.tex:261-262`): "Thus the bounded-gradient
 assumption in Theorem M:average is automatic, even for an infinite-piece sublinear
 function." For every finite convex positively homogeneous $F$ (no finite-piece assumption;
 for instance the Euclidean norm, which is not a finite maximum of linear forms,
@@ -669,7 +669,7 @@ Standing assumptions: `F` finite, convex and positively homogeneous of degree on
 admissible run; $f_k$ is written `F (R.x k)`. The pairings $h_k,\ell_k$, the constant
 $\gamma$ and the potential $\Phi_k$ are variables with their defining equations. -/
 
-/-- Item `C/07_H/disp/015` (`companion/chapters/07_H.tex:283-286`): "Set $f_k=f(x_k)$ and
+/-- Item `C/07_H/disp/015` (`companion/chapters/07_H.tex:273-276`): "Set $f_k=f(x_k)$ and
 \[ h_k=y_k^\top x_{k+1}=d_k-\Delta_k,\qquad \ell_k=-y_k^\top x_k." \]
 The display defines $h_k,\ell_k$ and asserts $y_k^Tx_{k+1}=d_k-\Delta_k$ (library
 `AdmissibleBFGSRun.homogeneous_new_pairing`); $\ell_k$ enters `pairings_nonneg`. -/
@@ -680,7 +680,7 @@ theorem new_pairing {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
   rw [hh]
   exact R.homogeneous_new_pairing hhom k
 
-/-- Item `C/07_H/prose/027` (`companion/chapters/07_H.tex:288-289`): "Convexity and homogeneity
+/-- Item `C/07_H/prose/027` (`companion/chapters/07_H.tex:278-279`): "Convexity and homogeneity
 give $h_k,\ell_k\ge0$ and $t_k=h_k+\ell_k$." -/
 theorem pairings_nonneg {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
     (hhom : Homogeneous.PositiveDegreeOne F) (R : AdmissibleBFGSRun n F)
@@ -691,19 +691,19 @@ theorem pairings_nonneg {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F
   exact ⟨R.homogeneous_new_pairing_nonneg hhom k,
     by linarith [R.homogeneous_old_pairing_nonpos hhom k], R.homogeneous_curvature_pairings k⟩
 
-/-- Item `C/07_H/disp/016` (`companion/chapters/07_H.tex:291-293`): "Armijo and convexity give
+/-- Item `C/07_H/disp/016` (`companion/chapters/07_H.tex:281-283`): "Armijo and convexity give
 \[ c_1d_k\le\Delta_k\le d_k." \] -/
 theorem decrease_sandwich {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
     (_hhom : Homogeneous.PositiveDegreeOne F) (R : AdmissibleBFGSRun n F) (k : ℕ) :
     R.c₁ * R.d k ≤ F (R.x k) - F (R.x (k + 1)) ∧ F (R.x k) - F (R.x (k + 1)) ≤ R.d k :=
   R.homogeneous_decrease_sandwich k
 
-/-- Item `C/07_H/disp/017` (`companion/chapters/07_H.tex:297-303`), equation (7.5.1):
+/-- Item `C/07_H/disp/017` (`companion/chapters/07_H.tex:287-293`), equation (7.5.1):
 "Expanding (7.2.1) at $x_{k+1}=x_k-\alpha_kH_kg_k$ yields
 \[ x_{k+1}^\top B_{k+1}x_{k+1}=x_k^\top B_kx_k-\frac{f_k^2}{q_k}+\frac{h_k^2}{t_k}." \]
 (7.2.1) is the Hessian form, `hessian_form`.
 
-Also Item `C/07_H/prose/028` (`companion/chapters/07_H.tex:295`), the lead-in, corrected on 15
+Also Item `C/07_H/prose/028` (`companion/chapters/07_H.tex:285`), the lead-in, corrected on 15
 October 2026 (M17; before "Expanding (2.1) at", with (2.1) an unrelated equation of Chapter 2):
 "Expanding (7.2.1) at $x_{k+1}=x_k-\alpha_kH_kg_k$ yields". Library:
 `AdmissibleBFGSRun.homogeneous_energy_identity`. -/
@@ -718,7 +718,7 @@ theorem energy_identity {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F
   rw [hh]
   exact he
 
-/-- Item `C/07_H/disp/018` (`companion/chapters/07_H.tex:308-312`), with the claim of lines
+/-- Item `C/07_H/disp/018` (`companion/chapters/07_H.tex:298-302`), with the claim of lines
 305-306: "The explicit terms involving $\alpha_k$ cancel because $g_k^\top x_k=f_k$:
 \[ -2\alpha_k f_k+\alpha_k^2q_k-\frac{(f_k-\alpha_kq_k)^2}{q_k}=-\frac{f_k^2}{q_k}." \]
 Stated with the explicit terms: Euler's identity $g_k^Tx_k=f_k$; the expansion
@@ -770,7 +770,7 @@ theorem alpha_terms_cancel {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ uni
   · rw [R.homogeneous_old_endpoint_pairing hhom k]
     rfl
 
-/-- Item `C/07_H/disp/019` (`companion/chapters/07_H.tex:316-319`): "Also,
+/-- Item `C/07_H/disp/019` (`companion/chapters/07_H.tex:306-309`): "Also,
 \[ \frac{h_k^2}{t_k}\le h_k=d_k-\Delta_k\le\frac{1-c_1}{c_1}\Delta_k." \] -/
 theorem correction_bounds {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
     (hhom : Homogeneous.PositiveDegreeOne F) (R : AdmissibleBFGSRun n F)
@@ -790,7 +790,7 @@ theorem correction_bounds {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ
   · rw [div_mul_eq_mul_div, le_div_iff₀ hc]
     nlinarith
 
-/-- Item `C/07_H/disp/020` (`companion/chapters/07_H.tex:323-328`), equation (7.5.2):
+/-- Item `C/07_H/disp/020` (`companion/chapters/07_H.tex:313-318`), equation (7.5.2):
 "Consequently, with $\gamma=(1-c_1)/c_1$,
 \[ \Phi_k=x_k^\top B_kx_k+\gamma f_k,\qquad \Phi_{k+1}\le\Phi_k-\frac{f_k^2}{q_k}." \]
 $\gamma$ and $\Phi$ are variables with their defining equations; $\Phi$ is the library's
@@ -835,7 +835,7 @@ theorem values_dichotomy {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n 
         ∃ L : ℝ, Tendsto (fun k => F (R.x k)) atTop (𝓝 L)) :=
   ⟨strictAnti_nat_of_succ_lt R.objective_strict_decrease, tendsto_of_antitone R.objective_antitone⟩
 
-/-- Item `C/07_H/disp/021` (`companion/chapters/07_H.tex:346-348`), in the proof of Theorem
+/-- Item `C/07_H/disp/021` (`companion/chapters/07_H.tex:336-338`), in the proof of Theorem
 7.A: "In the latter case,
 \[ \sum_kd_k\le\frac{f_0-L}{c_1}<\infty." \] -/
 theorem predicted_decrease_budget {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
@@ -899,7 +899,7 @@ theorem potential_lower_bound {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ 
   rw [hΦ]
   nlinarith [mul_le_mul_of_nonneg_left (hlow k) hγ0]
 
-/-- Item `C/07_H/disp/022` (`companion/chapters/07_H.tex:353-355`), in the proof of Theorem
+/-- Item `C/07_H/disp/022` (`companion/chapters/07_H.tex:343-345`), in the proof of Theorem
 7.A: "On the other hand, $\Phi_k\ge\gamma L$, and telescoping (7.5.2) gives
 \[ \sum_k\frac{f_k^2}{q_k}<\infty." \]
 Stated as summability, with the telescoped bound $\sum_kf_k^2/q_k\le\Phi_0-\gamma L$. (The
@@ -945,7 +945,7 @@ theorem reciprocal_summable_of_weighted (f q : ℕ → ℝ) (hq : ∀ k, 0 < q k
   refine h0.inv_tendsto_nhdsGT_zero.congr (fun k => ?_)
   simp only [Pi.inv_apply, inv_inv]
 
-/-- Item `C/07_H/disp/023` (`companion/chapters/07_H.tex:362-364`), in the proof of Theorem
+/-- Item `C/07_H/disp/023` (`companion/chapters/07_H.tex:352-354`), in the proof of Theorem
 7.A: "There is also a direct pointwise argument. The potential bounds
 \[ x_k^\top B_kx_k\le\Phi_0-\gamma L=:M<\infty." \]
 $M$ is the variable with its defining equation (it is a real number, so $M<\infty$). -/
@@ -963,7 +963,7 @@ theorem energy_bound {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn ℝ univ F)
   rw [hM, potential_eq R γ hγ Φ hΦ 0, hγ]
   exact h
 
-/-- Item `C/07_H/disp/024` (`companion/chapters/07_H.tex:368-372`), in the proof of Theorem
+/-- Item `C/07_H/disp/024` (`companion/chapters/07_H.tex:358-362`), in the proof of Theorem
 7.A: "Metric Cauchy--Schwarz and Euler's identity imply
 \[ f_k^2=(g_k^\top x_k)^2\le(g_k^\top H_kg_k)(x_k^\top B_kx_k)\le Mq_k." \] -/
 theorem value_sq_bound {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
@@ -1049,7 +1049,7 @@ theorem tail_energy_bound {n : ℕ} {F : Vec n → ℝ} (hhom : Homogeneous.Posi
     metricEnergy] at h hE
   linarith
 
-/-- Item `C/07_H/prose/032` (`companion/chapters/07_H.tex:378`), the mathematics of the
+/-- Item `C/07_H/prose/032` (`companion/chapters/07_H.tex:368`), the mathematics of the
 paragraph on the formal finite-value theorem: "If $L\ne0$, shift to a tail with
 $|f_k|\ge|L|/2$. The actual homogeneous corrections are nonnegative and bounded by $d_k$, so
 they are summable. Chapter~\ref{comp:M} gives divergent reciprocal sums, and the energy identity
@@ -1093,7 +1093,7 @@ theorem alternative_arrangement {n : ℕ} {F : Vec n → ℝ} (_hF : ConvexOn �
 
 /-! ### Section 7.5.4: bounded-below and coercive consequences (lines 384-399) -/
 
-/-- Item `C/07_H/prose/034` (`companion/chapters/07_H.tex:388-391`): "A positively homogeneous
+/-- Item `C/07_H/prose/034` (`companion/chapters/07_H.tex:378-381`): "A positively homogeneous
 function bounded below cannot take a negative value: otherwise $f(tx)=tf(x)\to-\infty$. Thus its
 minimum value is zero, attained at the origin, and Theorem 7.A gives unconditional objective
 convergence." For positively homogeneous $F$ (no convexity needed for the first claims): a
@@ -1116,7 +1116,7 @@ theorem bounded_below_nonneg {n : ℕ} {F : Vec n → ℝ} (hhom : Homogeneous.P
   · rintro _ ⟨x, rfl⟩
     exact hnn x
 
-/-- Item `C/07_H/prose/035` (`companion/chapters/07_H.tex:393-395`): "If its sublevels are
+/-- Item `C/07_H/prose/035` (`companion/chapters/07_H.tex:383-385`): "If its sublevels are
 bounded, then $f(x)>0$ for $x\ne0$. Compactness of the unit sphere gives $f(x)\ge\mu\|x\|$ for
 some $\mu>0$, so $f_k\to0$ forces $x_k\to0$." For finite convex positively homogeneous $F$
 with bounded sublevels: $F>0$ off zero; $F(x)\ge\mu\|x\|$ (Euclidean norm) for some $\mu>0$;
@@ -1159,7 +1159,7 @@ def lemmaRun {n : ℕ} (H : ℕ → Mat n) (g : ℕ → Vec n) (α : ℕ → ℝ
   curvature_pos k := (fullBFGS_positive_invariants H g α c₂ hH0 hg hα hc₂ hwolfe hupd k).2.2
   update := hupd
 
-/-- Item `C/07_H/heading/004` (`companion/chapters/07_H.tex:416`), Lemma 7.3 (lines 416-419):
+/-- Item `C/07_H/heading/004` (`companion/chapters/07_H.tex:405`), Lemma 7.3 (lines 416-419):
 "Suppose a full-BFGS run satisfies Armijo--weak-Wolfe, has a finite gradient alphabet, and has
 objective values bounded below along the run. Let $G$ be the recurrent gradients. Then
 $0\in\operatorname{aff}G$."
@@ -1202,7 +1202,7 @@ theorem common_vector_general {n : ℕ} (G : Set (Vec n)) (hne : G.Nonempty)
     (h0 : (0 : Vec n) ∉ affineSpan ℝ G) : ∃ v : Vec n, ∀ g ∈ G, dot v g = 1 :=
   Homogeneous.common_component_of_zero_not_mem_affineSpan hne h0
 
-/-- Item `C/07_H/disp/025` (`companion/chapters/07_H.tex:428-430`), in the proof of Lemma 7.3:
+/-- Item `C/07_H/disp/025` (`companion/chapters/07_H.tex:417-419`), in the proof of Lemma 7.3:
 "Discard a finite prefix so that all remaining gradients belong to $G$. If
 $0\notin\operatorname{aff}G$, a vector $v$ exists with
 \[ v^\top g=1\quad(g\in G)." \]
@@ -1253,7 +1253,7 @@ theorem common_vector_energy_step_general {n : ℕ} (H : Mat n) (hH : H.PosDef) 
     EnergyIdentities.energy_outer, hvg, hyv]
   ring
 
-/-- Item `C/07_H/disp/026` (`companion/chapters/07_H.tex:434-436`), in the proof of Lemma 7.3:
+/-- Item `C/07_H/disp/026` (`companion/chapters/07_H.tex:423-425`), in the proof of Lemma 7.3:
 "In particular $v^\top y_k=0$. Equation (7.2.1) then implies
 \[ v^\top B_{k+1}v=v^\top B_kv-\frac1{q_k}." \]
 Under the standing assumptions of `common_vector` and the vector $v$ of display
@@ -1282,7 +1282,7 @@ theorem common_vector_energy_step {n : ℕ} (F : Vec n → ℝ) (x : ℕ → Vec
   exact common_vector_energy_step_general (H k) hinv.1 (g k) (g (k + 1)) (hg k) (α k) (hα k)
     hinv.2.2 v (hv _ (hJ k hk)) (hv _ (hJ (k + 1) (by omega)))
 
-/-- Item `C/07_H/prose/040` (`companion/chapters/07_H.tex:442-444`): "It is a necessary
+/-- Item `C/07_H/prose/040` (`companion/chapters/07_H.tex:431-433`): "It is a necessary
 condition for any finite-gradient, finite-value-limit trajectory under these BFGS and
 line-search assumptions." Under the assumptions of Lemma 7.3 with a finite limit of the
 values $F(x_k)$ in place of the lower bound: $0\in\operatorname{aff}G$. -/
@@ -1317,7 +1317,7 @@ theorem no_recurrent_subset {n m : ℕ} (a : Fin m → Vec n)
 
 /-! ### Section 7.6.1: connection to the two-piece paper (lines 455-482) -/
 
-/-- Item `C/07_H/prose/042` (`companion/chapters/07_H.tex:459-460`): "The model $|u|+t$ has
+/-- Item `C/07_H/prose/042` (`companion/chapters/07_H.tex:448-449`): "The model $|u|+t$ has
 gradients $(1,1)$ and $(-1,1)$, both with last component one." For $F(u,t)=|u|+t$ on $\R^2$:
 the gradient is $(1,1)$ where $u>0$ and $(-1,1)$ where $u<0$, every gradient is one of these
 two, and both have last component one. -/
@@ -1346,7 +1346,7 @@ theorem two_piece_gradients (F : Vec 2 → ℝ) (hF_def : ∀ x, F x = |x 0| + x
       rw [hgeq, h1]
       rfl
 
-/-- Item `C/07_H/disp/027` (`companion/chapters/07_H.tex:462-464`): "The arbitrary-many-piece
+/-- Item `C/07_H/disp/027` (`companion/chapters/07_H.tex:451-453`): "The arbitrary-many-piece
 model
 \[ f(u,t)=t+\max_ib_i^\top u \]
 has precisely the same common-component property": every gradient of
@@ -1357,7 +1357,7 @@ theorem tilt_model_gradients {n m : ℕ} (b : Fin m → Vec n) (F : Vec (n + 1) 
     ∀ x g : Vec (n + 1), HasFDerivAt F (gradientFunctional g) x → g (Fin.last n) = 1 :=
   (tilt_family_escape b F hF_def).1
 
-/-- Item `C/07_H/prose/044` (`companion/chapters/07_H.tex:470-472`): "Xie--W\"achter proves
+/-- Item `C/07_H/prose/044` (`companion/chapters/07_H.tex:459-461`): "Xie--W\"achter proves
 the stronger finite-termination conclusion for its two-piece model: a search direction exposing
 unboundedness is reached after finitely many iterations." For the two-piece model
 $F(u,t)=|u|+t$ (`TwoPieceBudget.objective`) and every $0<c_1<c_2<1$: a state is a point $x$, a
@@ -1427,7 +1427,7 @@ theorem linear_objective_no_run {n : ℕ} (w : Vec n) (F : Vec n → ℝ) (hF : 
     AffineProjection.gradientFunctional_injective ((R.hasGradient k).unique (hlin (R.x k)))
   exact R.gradient_transition_ne 0 (by rw [hg, hg])
 
-/-- Item `C/07_H/prose/079` (`companion/chapters/07_H.tex:107-109`) explains this reduction (M42).
+/-- Item `C/07_H/prose/079` (`companion/chapters/07_H.tex:106-108`) explains this reduction (M42).
 
 A finite max-linear objective whose slopes lie on one line $\{c+\beta d\}$ with $c,d$
 linearly independent (an affine line missing $0$) has no admissible run. It is the maximum of the
@@ -1491,7 +1491,7 @@ theorem maxLinear_line_no_run {n m : ℕ} (a : Fin m → Vec n) (F : Vec n → �
     exact ⟨fun R =>
       TwoPieceBudget.no_infinite_independent_two_piece p q hind (R.congrObjective hFeq)⟩
 
-/-- Item `C/07_H/prose/078` (`companion/chapters/07_H.tex:104-106`) now states this case (M42).
+/-- Item `C/07_H/prose/078` (`companion/chapters/07_H.tex:103-105`) now states this case (M42).
 
 The common-tilt objective $f(u,t)=t+\max_ib_i^Tu$ ($t$ last) has no admissible run, in every
 dimension, when its slopes $b_i$ lie on one line $\{c+\beta d\}$: the slopes $(b_i,1)$ of
@@ -1543,7 +1543,7 @@ theorem tilt_two_pieces_no_run {n : ℕ} (b : Fin 2 → Vec n) (F : Vec (n + 1) 
     IsEmpty (AdmissibleBFGSRun (n + 1) F) :=
   tilt_collinear_no_run b F hF_def (b 0) (b 1 - b 0) ![0, 1] (fun i => by fin_cases i <;> simp)
 
-/-- Item `C/07_H/prose/078` (`companion/chapters/07_H.tex:104-106`), the two-value subcase (M42).
+/-- Item `C/07_H/prose/078` (`companion/chapters/07_H.tex:103-105`), the two-value subcase (M42).
 
 The common-tilt objective whose slopes $b_i$ take at most two values (any number of pieces,
 any dimension) has no admissible run. -/
@@ -1597,7 +1597,7 @@ theorem perp_eq_smul (v w : Vec 2) (hv : v ≠ 0) (hw : dot v w = 0) :
     rw [div_mul_eq_mul_div, eq_div_iff hD.ne']
     linear_combination (v 1) * hw'
 
-/-- Item `C/07_H/prose/077` (`companion/chapters/07_H.tex:102-104`) now states this case (M42).
+/-- Item `C/07_H/prose/077` (`companion/chapters/07_H.tex:101-103`) now states this case (M42).
 
 In dimension at most two, a finite max-linear objective with
 $0\notin\operatorname{aff}\{a_1,\dots,a_m\}$ (the hypothesis of Theorem 7.B (ii)) has no
@@ -1671,7 +1671,7 @@ theorem maxLinear_affine_free_no_run {n m : ℕ} (hn : n ≤ 2) (a : Fin m → V
           simpa [hd] using this
       exact (smul_eq_zero.mp hsr).resolve_right hd0
 
-/-- Item `C/07_H/prose/045` (`companion/chapters/07_H.tex:472-474`), an open question: "The
+/-- Item `C/07_H/prose/045` (`companion/chapters/07_H.tex:461-463`), an open question: "The
 argument here does \textbf{not} establish finite termination for the general many-piece family."
 Finite termination of every run on every member of the family $f(u,t)=t+\max_ib_i^Tu$ ($t$ last)
 implies that no infinite admissible run exists on it; the Prop states this part. Stated without
@@ -1680,7 +1680,7 @@ particular with at most two distinct pieces in every dimension, `tilt_two_values
 every member in $\R^2$, `tilt_plane_no_run`); for $b_i$ not on one line (at least three pieces,
 ambient dimension at least three) it is not known. Where it holds, the run statements about the
 family (`tilt_family_escape`, and Theorem 7.B (ii) on these objectives) are vacuous.
-Item `C/07_H/prose/080` (`companion/chapters/07_H.tex:110-111`) repeats the open case (M42). -/
+Item `C/07_H/prose/080` (`companion/chapters/07_H.tex:109-110`) repeats the open case (M42). -/
 def TiltNoInfiniteRunQuestion : Prop :=
   ∀ (n m : ℕ) (b : Fin m → Vec n) (F : Vec (n + 1) → ℝ),
     (∀ (u : Vec n) (t : ℝ),
@@ -1694,7 +1694,7 @@ theorem vectorSpan_le_span {n : ℕ} (G : Set (Vec n)) : vectorSpan ℝ G ≤ Su
   rintro _ ⟨u, hu, w, hw, rfl⟩
   exact Submodule.sub_mem _ (Submodule.subset_span hu) (Submodule.subset_span hw)
 
-/-- Item `C/07_H/prose/047` (`companion/chapters/07_H.tex:477-480`): "If
+/-- Item `C/07_H/prose/047` (`companion/chapters/07_H.tex:465-468`): "If
 $r=\dim\operatorname{span}G$, a finite-value-limit run needs at least $r+1$ distinct recurrent
 gradients. Indeed, $0\in\operatorname{aff}G$ implies that the gradient differences span the same
 $r$-dimensional space; $|G|-1$ differences must span it." Under the assumptions of Lemma 7.3
@@ -1725,7 +1725,7 @@ theorem recurrent_cardinality {n : ℕ} (F : Vec n → ℝ) (x : ℕ → Vec n) 
   exact ⟨Homogeneous.finrank_span_add_one_le_ncard hfin hne h0,
     le_antisymm (vectorSpan_le_span G) (Homogeneous.span_le_vectorSpan_of_affine_zero h0)⟩
 
-/-- Item `C/07_H/prose/048` (`companion/chapters/07_H.tex:481-482`): "The three-gradient,
+/-- Item `C/07_H/prose/048` (`companion/chapters/07_H.tex:469-470`): "The three-gradient,
 rank-two stagnation example of Chapter~\ref{comp:D} attains this lower bound." (since 15 October
 2026, wording point W10; before "The earlier three-gradient, …": the example is the seed run of
 Chapter 12, which comes later). For every pair
@@ -1760,7 +1760,7 @@ theorem grad_lift {n r : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (hk : K ≤ k) : U *ᵥ (Uᵀ *ᵥ R.g k) = R.g k :=
   Homogeneous.orthonormal_projection_on_range U hU _ ((hS _).mp (hK k hk))
 
-/-- Item `C/07_H/disp/028` (`companion/chapters/07_H.tex:509-513`): the definitions
+/-- Item `C/07_H/disp/028` (`companion/chapters/07_H.tex:497-501`): the definitions
 \[ \widehat x_k=U^\top x_k,\qquad\widehat H_k=U^\top H_kU,\qquad\widehat g_k=U^\top g_k. \]
 They enter the theorems below as variables with these defining equations. This theorem unfolds
 the library's objects for them: `AffineProjection.compress Uᵀ H` is $U^THU$ (so
@@ -1779,7 +1779,7 @@ theorem hat_definitions {n r : ℕ} (U : Matrix (Fin n) (Fin r) ℝ) (H : Mat n)
   simp only [AffineProjection.fiberPoint, hl, zero_sub, Matrix.mulVec_neg, ← sub_eq_add_neg,
     Matrix.mulVec_mulVec]
 
-/-- Item `C/07_H/prose/049` (`companion/chapters/07_H.tex:515-517`): "Projection of the
+/-- Item `C/07_H/prose/049` (`companion/chapters/07_H.tex:503-505`): "Projection of the
 inverse-BFGS formula gives exactly the same inverse-BFGS update for the hatted variables and
 projected steps. The scalars $q_k,d_k,t_k$ and the line-search inequalities are unchanged."
 For $k\ge K$: $\widehat H_k\succ0$; the projected step is
@@ -1837,7 +1837,7 @@ theorem projected_run {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
   · rw [hdot, hdot, hgk, hgk1]
     exact R.weak_wolfe k
 
-/-- Item `C/07_H/prose/050` (`companion/chapters/07_H.tex:519-523`): "Moreover, all subsequent
+/-- Item `C/07_H/prose/050` (`companion/chapters/07_H.tex:507-511`): "Moreover, all subsequent
 steps belong to the fixed subspace $H_KS$. [...] Induction proves the claim." For $k\ge K$:
 $H_kS\subseteq H_KS$ and $s_k\in H_KS$ (elements of $H_KS$ are $H_KUz$). Library:
 `AffineProjection.matrix_lift_invariant` (on the tail run from $K$). -/
@@ -1872,7 +1872,7 @@ theorem steps_in_fixed_subspace {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n �
   change -R.α (K + j) • (R.H (K + j) *ᵥ R.g (K + j)) = _
   rw [Matrix.mulVec_smul, Matrix.mulVec_smul, grad_lift R U hU S hS K hK (K + j) hk]
 
-/-- Item `C/07_H/prose/051` (`companion/chapters/07_H.tex:525-526`): "The restriction of $U^\top$
+/-- Item `C/07_H/prose/051` (`companion/chapters/07_H.tex:513-514`): "The restriction of $U^\top$
 to $H_KS$ is invertible because $U^\top H_KU\succ0$." $U^TH_KU\succ0$, and for every
 $z\in\R^r$ exactly one $w\in H_KS$ (an element $H_KUz'$) has $U^Tw=z$. -/
 theorem restriction_invertible {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
@@ -1897,7 +1897,7 @@ theorem restriction_invertible {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n �
       rw [← hw, Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hdet, Matrix.one_mulVec]
     rw [hz']
 
-/-- Item `C/07_H/disp/029` (`companion/chapters/07_H.tex:528-534`), equation (7.7.1):
+/-- Item `C/07_H/disp/029` (`companion/chapters/07_H.tex:516-522`), equation (7.7.1):
 "Therefore
 \[ x_k=x_K+L_K(\widehat x_k-\widehat x_K),\qquad L_K=H_KU(U^\top H_KU)^{-1}." \]
 For every $k\ge K$; $L_K$ is the variable `L` with its defining equation. Library:
@@ -1920,7 +1920,7 @@ theorem iterate_lift {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
   rw [hxh, hxh]
   exact h
 
-/-- Item `C/07_H/prose/052` (`companion/chapters/07_H.tex:536-537`): "In particular, convergence
+/-- Item `C/07_H/prose/052` (`companion/chapters/07_H.tex:524-525`): "In particular, convergence
 of the projected iterates implies convergence of the original iterates." If
 $\widehat x_k\to z_*$, then $x_k\to x_K+L_K(z_*-\widehat x_K)$. Library:
 `AdmissibleBFGSRun.affine_limit_lift_tail`. -/
@@ -1945,7 +1945,7 @@ theorem limit_lift {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
   rw [(hat_definitions U (R.H K) 0).2.1, ← hL, ← hxh] at h
   exact h
 
-/-- Item `C/07_H/disp/030` (`companion/chapters/07_H.tex:539-542`), equation (7.7.2): "If
+/-- Item `C/07_H/disp/030` (`companion/chapters/07_H.tex:527-530`), equation (7.7.2): "If
 $\widehat x_k\to0$, the limit is
 \[ x_*=x_K-H_KU(U^\top H_KU)^{-1}U^\top x_K." \] -/
 theorem zero_limit_formula {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
@@ -1959,7 +1959,7 @@ theorem zero_limit_formula {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → �
   rw [hxh, zero_sub, Matrix.mulVec_neg, ← sub_eq_add_neg, Matrix.mulVec_mulVec] at h
   exact h
 
-/-- Item `C/07_H/prose/053` (`companion/chapters/07_H.tex:544-545`): "The projected Hessian is
+/-- Item `C/07_H/prose/053` (`companion/chapters/07_H.tex:532-533`): "The projected Hessian is
 $(U^\top H_kU)^{-1}$, not $U^\top B_kU$. This distinction is necessary for a valid reduction."
 (i) For $k\ge K$ the inverses $\widehat B_k=(U^TH_kU)^{-1}$ satisfy the Hessian form (7.2.1) of
 the projected run, $\widehat B_{k+1}=\widehat B_k-\widehat g_k\widehat g_k^T/q_k
@@ -2066,7 +2066,7 @@ theorem linearIndependent_pair_iff (u v : Vec 2) :
   rw [Matrix.isUnit_iff_isUnit_det, isUnit_iff_ne_zero, Matrix.det_fin_two] at h
   simpa [HomogeneousPlanar.pairDet, Matrix.row] using h
 
-/-- Item `C/07_H/disp/031` (`companion/chapters/07_H.tex:556-561`), equation (7.7.3): "Assume
+/-- Item `C/07_H/disp/031` (`companion/chapters/07_H.tex:544-549`), equation (7.7.3): "Assume
 $f_k\to0$. Then $d_k\to0$, and every endpoint satisfies
 \[ g_{k+1}^\top x_{k+1}=f_{k+1}\longrightarrow0,\qquad
    g_k^\top x_{k+1}=f_k-d_k\longrightarrow0." \]
@@ -2085,7 +2085,7 @@ theorem endpoint_pairings {n m : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
   exact ⟨(R.summable_predicted_decreases_of_value_limit 0 hv).tendsto_atTop_zero,
     fun k => ⟨R.homogeneous_euler hhom (k + 1), R.homogeneous_old_endpoint_pairing hhom k⟩, h2, h1⟩
 
-/-- Item `C/07_H/prose/054` (`companion/chapters/07_H.tex:563-567`): "In two dimensions, if
+/-- Item `C/07_H/prose/054` (`companion/chapters/07_H.tex:551-555`): "In two dimensions, if
 $g_k$ and $g_{k+1}$ are linearly independent, these two equations determine $x_{k+1}$. There
 are only finitely many distinct pairs, so their inverse norms are uniformly bounded. Thus the
 endpoints of all independent-gradient transitions converge to zero, even if the full sequence
@@ -2126,7 +2126,7 @@ theorem independent_endpoints {m : ℕ} (a : Fin m → Vec 2) (F : Vec 2 → ℝ
   · obtain ⟨J, hJ⟩ := R.maxLinear_planar_anchor_small _ hA hv ε hε
     exact ⟨J, fun j hj hind => hJ j hj ((linearIndependent_pair_iff _ _).mp hind)⟩
 
-/-- Item `C/07_H/prose/055` (`companion/chapters/07_H.tex:569`): "An unchanged nonzero
+/-- Item `C/07_H/prose/055` (`companion/chapters/07_H.tex:557`): "An unchanged nonzero
 gradient cannot satisfy weak Wolfe on a strict descent step." If $g^Ts<0$ and $c_2<1$, then
 $g^Ts\ge c_2g^Ts$ fails; hence consecutive gradients of an admissible run always differ. -/
 theorem unchanged_gradient_fails_wolfe {n : ℕ} :
@@ -2135,7 +2135,7 @@ theorem unchanged_gradient_fails_wolfe {n : ℕ} :
   refine ⟨fun g s c₂ hc₂ hneg h => ?_, fun R k => (R.gradient_transition_ne k).symm⟩
   nlinarith
 
-/-- Item `C/07_H/prose/056` (`companion/chapters/07_H.tex:570-573`): "Distinct gradients that
+/-- Item `C/07_H/prose/056` (`companion/chapters/07_H.tex:558-561`): "Distinct gradients that
 are positive multiples of one another also cannot both be active at positive-value iterates:
 among positive multiples of a slope, only the largest multiple can attain a positive maximum."
 For $F=\max_ia_i^Tx$: if $g_k=cg_j$ with $c>0$ at iterates of positive value, then $g_k=g_j$;
@@ -2155,7 +2155,7 @@ theorem positive_multiples_active {n m : ℕ} (a : Fin m → Vec n) (F : Vec n �
     rw [he, HomogeneousBlock.dot_smul_first, ← hact] at hle
     nlinarith
 
-/-- Item `C/07_H/prose/057` (`companion/chapters/07_H.tex:573-574`): "Consequently, any
+/-- Item `C/07_H/prose/057` (`companion/chapters/07_H.tex:561-562`): "Consequently, any
 dependent transition on the positive-value branch is between opposite slopes." For a finite
 max-linear objective and an admissible run with $f(x_k)>0$ for all $k$: if $g_k,g_{k+1}$ are
 linearly dependent, then $g_{k+1}=-\kappa g_k$ with $\kappa>0$. (Any dimension; the library's
@@ -2233,7 +2233,7 @@ intermediate iterate ($a+2\le b$), the initial gradient $g=g_a$ of the block and
 $g_{a+1}=-\kappa g$. The anchor hypotheses are not used; `block_general` proves all the
 displays without them, from assumptions that `absVRun` satisfies (see the examples). -/
 
-/-- Item `C/07_H/prose/059` (`companion/chapters/07_H.tex:605-607`): "For completeness,
+/-- Item `C/07_H/prose/059` (`companion/chapters/07_H.tex:593-595`): "For completeness,
 opposing-gradient transitions can also be handled, giving convergence for all planar finite
 max-linear objectives, including noncompact bounded-below ones." For every finite max-linear
 objective on $\R^2$: every admissible run whose values have a finite limit has convergent
@@ -2313,7 +2313,7 @@ theorem block_general {m : ℕ} (slopes : Fin m → Vec 2) (F : Vec 2 → ℝ)
   exact HomogeneousBlock.interpolation_parameter_bound g (R.x a) (R.x b) (R.x k) (F (R.x a)) κ
     R.c₁ θ (hpos a) hκ hc₁ heul hgb (hwin k hak hkb).1 (hwin k hak hkb).2 hx
 
-/-- Item `C/07_H/disp/032` (`companion/chapters/07_H.tex:623-625`), in the proof of the planar
+/-- Item `C/07_H/disp/032` (`companion/chapters/07_H.tex:611-613`), in the proof of the planar
 finite-value branch: "Write its initial gradient as $g$, and the next opposite gradient as
 $-\kappa g$, with $\kappa>0$. The first dependent transition has
 \[ d_a=f_a+f_{a+1}/\kappa." \]
@@ -2330,7 +2330,7 @@ theorem block_decrease {m : ℕ} (slopes : Fin m → Vec 2) (F : Vec 2 → ℝ)
     R.d a = F (R.x a) + F (R.x (a + 1)) / κ :=
   (block_general slopes F hF_def R hv a b hab g hg κ hκ hopp).1
 
-/-- Item `C/07_H/disp/033` (`companion/chapters/07_H.tex:629-632`), in the proof of the planar
+/-- Item `C/07_H/disp/033` (`companion/chapters/07_H.tex:617-620`), in the proof of the planar
 finite-value branch: "Armijo implies
 \[ f_{a+1}\le\frac{1-c_1}{1+c_1/\kappa}f_a\le(1-c_1)f_a." \]
 Under the standing assumptions of the block; general form `block_general`. -/
@@ -2346,7 +2346,7 @@ theorem block_contraction {m : ℕ} (slopes : Fin m → Vec 2) (F : Vec 2 → �
       (1 - R.c₁) / (1 + R.c₁ / κ) * F (R.x a) ≤ (1 - R.c₁) * F (R.x a) :=
   (block_general slopes F hF_def R hv a b hab g hg κ hκ hopp).2.1
 
-/-- Item `C/07_H/disp/034` (`companion/chapters/07_H.tex:637-639`), in the proof of the planar
+/-- Item `C/07_H/disp/034` (`companion/chapters/07_H.tex:625-627`), in the proof of the planar
 finite-value branch: "Every accepted point in the block obeys
 \[ -f_a/\kappa\le g^\top x\le f_a, \]
 because $g$ and $-\kappa g$ are both slopes of the objective and $f(x)\le f_a$." For every
@@ -2363,7 +2363,7 @@ theorem block_window {m : ℕ} (slopes : Fin m → Vec 2) (F : Vec 2 → ℝ)
     ∀ k, a ≤ k → k ≤ b → -F (R.x a) / κ ≤ dot g (R.x k) ∧ dot g (R.x k) ≤ F (R.x a) :=
   (block_general slopes F hF_def R hv a b hab g hg κ hκ hopp).2.2.2.1
 
-/-- Item `C/07_H/disp/035` (`companion/chapters/07_H.tex:644-646`), in the proof of the planar
+/-- Item `C/07_H/disp/035` (`companion/chapters/07_H.tex:632-634`), in the proof of the planar
 finite-value branch: "The endpoint difference satisfies
 \[ g^\top(x_b-x_a)\le-c_1f_a." \]
 Under the standing assumptions of the block; general form `block_general`. -/
@@ -2378,7 +2378,7 @@ theorem block_endpoint_difference {m : ℕ} (slopes : Fin m → Vec 2) (F : Vec 
     dot g (R.x b - R.x a) ≤ -R.c₁ * F (R.x a) :=
   (block_general slopes F hF_def R hv a b hab g hg κ hκ hopp).2.2.2.2.1
 
-/-- Item `C/07_H/disp/036` (`companion/chapters/07_H.tex:650-652`), in the proof of the planar
+/-- Item `C/07_H/disp/036` (`companion/chapters/07_H.tex:638-640`), in the proof of the planar
 finite-value branch: "Writing $x=x_a+\theta(x_b-x_a)$ consequently gives
 \[ 0\le\theta\le\frac{1+1/\kappa}{c_1}." \]
 For every point $x=x_k$ of the block ($a\le k\le b$) written in this form. Under the standing
@@ -2421,7 +2421,7 @@ theorem absVRun_tendsto :
   rw [zero_add] at hlim
   exact hlim
 
-/-- Item `C/07_H/prose/061` (`companion/chapters/07_H.tex:666-668`): "Reducing to the span of
+/-- Item `C/07_H/prose/061` (`companion/chapters/07_H.tex:654-656`): "Reducing to the span of
 the recurrent gradients and using (7.7.1) proves the same conclusion whenever that span has
 dimension at most two in any ambient dimension. The limit may be nonzero in the original
 coordinates." (i) For every finite max-linear objective in every dimension and every admissible
@@ -2459,7 +2459,7 @@ of display `C/07_H/disp/037` as variables with their defining equations, the rel
 condition $0\in\operatorname{relint}P$ (relative to $S$, with the subspace topology), and $U$
 with orthonormal columns spanning $S$. -/
 
-/-- Item `C/07_H/prose/062` (`companion/chapters/07_H.tex:686-688`): "One source of
+/-- Item `C/07_H/prose/062` (`companion/chapters/07_H.tex:674-676`): "One source of
 noncompactness is a subspace of directions on which the function is constant. When this is the
 only source of noncompactness, the case is fully tractable in all dimensions." (i) If $F$ is
 constant along a nonzero subspace $V$ ($F(x+v)=F(x)$ for $v\in V$), every nonempty sublevel of
@@ -2502,7 +2502,7 @@ theorem flat_directions_noncompact :
     unfold Homogeneous.finiteMaxLinear
     exact Finset.sup'_congr hA rfl hall
 
-/-- Item `C/07_H/disp/037` (`companion/chapters/07_H.tex:692-695`): the definitions
+/-- Item `C/07_H/disp/037` (`companion/chapters/07_H.tex:680-683`): the definitions
 \[ S=\operatorname{span}\{a_1,\ldots,a_m\},\qquad P=\operatorname{conv}\{a_1,\ldots,a_m\}, \]
 together with the condition "$0\in\operatorname{relint}P$, with relative interior taken in
 $S$" of lines 697-698. $S$ and $P$ are `Submodule.span ℝ (Set.range a)` and
@@ -2538,7 +2538,7 @@ theorem perp_iff {n r : ℕ} (U : Matrix (Fin n) (Fin r) ℝ) (S : Submodule ℝ
     rw [hT, h]
     simp [dot]
 
-/-- Item `C/07_H/disp/038` (`companion/chapters/07_H.tex:701-703`), with the claims of lines
+/-- Item `C/07_H/disp/038` (`companion/chapters/07_H.tex:689-691`), with the claims of lines
 697-699: "suppose $0\in\operatorname{relint}P$, with relative interior taken in $S$. Then $f$
 depends only on the projection to $S$ and is coercive there:
 \[ f(x)\ge\mu\|U^\top x\|\quad\text{for some }\mu>0." \]
@@ -2563,7 +2563,7 @@ theorem relint_coercive {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
   exact ⟨fun x => (Homogeneous.finiteMaxLinear_projection_eq _ hA U hU hAsub x).symm,
     Homogeneous.relativeInterior_euclidean_projection_bound _ hA hri' U hU hspan⟩
 
-/-- Item `C/07_H/disp/039` (`companion/chapters/07_H.tex:708-714`), equation (7.8.1), with the
+/-- Item `C/07_H/disp/039` (`companion/chapters/07_H.tex:696-702`), equation (7.8.1), with the
 claim of line 705: "Theorem 7.A implies $U^\top x_k\to0$. The invariant subspace formula with
 $K=0$ gives
 \[ x_k\longrightarrow x_0-H_0U(U^\top H_0U)^{-1}U^\top x_0." \]
@@ -2588,7 +2588,7 @@ theorem relint_limit {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
   rw [(hat_definitions U (R.H 0) (R.x 0)).2.2] at h
   exact h
 
-/-- Item `C/07_H/prose/065` (`companion/chapters/07_H.tex:716-718`): "The limit is a minimizer,
+/-- Item `C/07_H/prose/065` (`companion/chapters/07_H.tex:704-706`): "The limit is a minimizer,
 and in fact the projection of $x_0$ onto $S^\perp$ in the $H_0^{-1}$ metric. It is independent
 of the choices of admissible accepted lengths." With $x_*$ the limit (7.8.1) (a variable with its
 defining equation): $x_*$ minimizes $F$; $x_*\in S^\perp$ and $x_*$ is the unique minimizer of
@@ -2627,7 +2627,7 @@ theorem relint_limit_projection {n m r : ℕ} (a : Fin m → Vec n) (F : Vec n �
     rw [(hat_definitions U (R'.H 0) (R'.x 0)).2.2, hx0, hH0, ← hxstar] at h
     exact h
 
-/-- Item `C/07_H/prose/066` (`companion/chapters/07_H.tex:718-720`): "This includes all finite
+/-- Item `C/07_H/prose/066` (`companion/chapters/07_H.tex:706-708`): "This includes all finite
 polyhedral seminorms and noncoercive gauges whose minimizer set is a linear subspace." For a
 finite max-linear objective: if it is a seminorm, or if it is nonnegative (a gauge) and its set
 of minimizers is a linear subspace, then $0\in\operatorname{relint}P$, so the theorem of
@@ -2657,7 +2657,7 @@ theorem relint_includes_seminorms {n m : ℕ} (a : Fin m → Vec n) (F : Vec n �
   · intro hx
     exact le_antisymm (h0 ▸ hx 0) (hn x)
 
-/-- Item `C/07_H/prose/067` (`companion/chapters/07_H.tex:722-726`): "The same argument applies
+/-- Item `C/07_H/prose/067` (`companion/chapters/07_H.tex:710-714`): "The same argument applies
 after a finite prefix if $0\in\operatorname{relint}\operatorname{conv}G$ for the recurrent
 gradients. The projected tail objective is then coercive even if some original, nonrecurrent
 slopes have disappeared. Formula (7.7.2) supplies the limit." With $G$ the recurrent gradients,
@@ -2719,7 +2719,7 @@ theorem recurrent_relint_convergence {n m r : ℕ} (a : Fin m → Vec n) (F : Ve
     rw [(hat_definitions U (R.H K) (R.x K)).2.2] at hK
     exact ⟨K, hK⟩
 
-/-- Item `C/07_H/prose/068` (`companion/chapters/07_H.tex:728-730`): "For $f\equiv0$, the
+/-- Item `C/07_H/prose/068` (`companion/chapters/07_H.tex:716-718`): "For $f\equiv0$, the
 algorithm is already stationary; there is no nonzero-gradient infinite run. The projection
 formula above concerns a nontrivial slope span." If $F\equiv0$, its gradient is zero at every
 point (every point is stationary) and no admissible run exists. (The last sentence is a remark

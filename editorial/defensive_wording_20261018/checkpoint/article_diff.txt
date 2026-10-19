@@ -1,0 +1,792 @@
+diff --git a/paper/appendices/hypothesis_examples.tex b/paper/appendices/hypothesis_examples.tex
+index b5c970b..eca81f2 100644
+--- a/paper/appendices/hypothesis_examples.tex
++++ b/paper/appendices/hypothesis_examples.tex
+@@ -1,9 +1,9 @@
+-\section{Checking the hypotheses on actual runs}\label{art:hypothesis-examples}
++\section{Checking the hypotheses on explicit runs}\label{art:hypothesis-examples}
+ 
+ The examples below check the objective assumptions, comparison fields and
+-full-BFGS histories together. They distinguish a function satisfying a
+-convergence theorem from an infinite admissible run on that function, and
+-from existence for every prescribed initial state. All norms in this appendix
++full-BFGS histories together. They exhibit functions satisfying the
++convergence theorems, explicit infinite admissible runs on them, and a
++criterion for runs from every initial state. All norms in this appendix
+ are Euclidean, and an admissible run has the meaning of
+ Definition~\ref{art:admissible}.
+ 
+@@ -18,7 +18,7 @@ conditions of Definition~\ref{art:band-certificate} on $K_b$:
+  W_\eta(x)=xx^T,\qquad m_\eta=\eta^2,\quad C_\eta=2b,
+  \quad L_\eta=0,\quad\delta_\eta=1.
+ \]
+-For $b=2/3$ an actual infinite admissible run in $K_b$, with
++For $b=2/3$ an explicit infinite admissible run in $K_b$, with
+ $(c_1,c_2)=(1/4,1/2)$, is
+ \[
+  x_k=\bigl(0,\tfrac23(-\tfrac12)^k\bigr),\qquad
+@@ -115,9 +115,7 @@ construction to be repeated indefinitely.\qed
+ \end{proof}
+ 
+ The exceptional set concerns differentiability in the full ambient space,
+-not just differentiability of $t\mapsto F(x+tp)$. The lemma proves existence
+-of a sequence of acceptable steps; it does not assert that a prescribed
+-line-search implementation finds them.
++not just differentiability of $t\mapsto F(x+tp)$.
+ 
+ \subsection{A simple family with curved switching}
+ 
+@@ -180,7 +178,7 @@ Theorem~\ref{art:nonradial-example}. The value at the stated initial point
+ follows by direct substitution.\qed
+ \end{proof}
+ 
+-\subsection{Why the run-existence qualification matters}
++\subsection{Initial data without an admissible run}
+ 
+ \begin{proposition}[A covered objective with no differentiable first step]\label{art:examples-no-step}
+ The function $G(u,v)=\max\{u,-u+v,-u-v\}$ is finite, convex, coercive and
+@@ -200,9 +198,3 @@ For $\alpha\ge\varepsilon$ the endpoint is nondifferentiable: the last
+ two branches tie with distinct gradients (at equality all three tie).
+ These cases exhaust the positive ray.\qed
+ \end{proof}
+-
+-This is an obstruction to a differentiable infinite history from prescribed
+-data, not an example of nonoptimal stagnation: the ray itself passes through
+-the minimizer. The explicit histories above and the existence criterion
+-specify which stronger non-vacuity conclusions accompany the convergence
+-examples.
+diff --git a/paper/appendices/lower_curvature.tex b/paper/appendices/lower_curvature.tex
+index b84027d..0b5e12a 100644
+--- a/paper/appendices/lower_curvature.tex
++++ b/paper/appendices/lower_curvature.tex
+@@ -55,8 +55,7 @@ The right object for persistence is the three-step return map after
+ dividing out the shrinking scale. The homogeneous cycle becomes a fixed
+ point on the boundary where that scale is zero. We will verify that it
+ is hyperbolic and that its stable manifold enters the positive-scale
+-region. This gives exact perturbed orbits; closeness of a finite
+-floating-point trajectory would not. To prove the proposition, use
++region. This gives exact perturbed orbits. To prove the proposition, use
+ normalized coordinates
+ \[
+  x=\tau z,\qquad H=\tau M(\zeta,\eta),\qquad
+@@ -136,7 +135,7 @@ $p(\lambda)=\lambda^2-\operatorname{tr}(J)\lambda+\det J$ gives
+  p(1.564)<0,\qquad p(1.565)>0.
+ \]
+ These rational sign comparisons locate two distinct real roots and exhaust
+-the degree-two polynomial; no numerical eigenvector is used.
++the degree-two polynomial.
+ 
+ At $\tau=0$, $Z_3=z+v(\zeta,\eta)$, with $v$ the sum of the three normalized steps, and $\hat\rho$ is independent of $z$.
+ The last coordinate of the return is $\tau\hat\rho$. Thus its full derivative
+@@ -184,9 +183,7 @@ Choose the normalized neighborhood inside
+ $\bigcap_q\Phi_q^{-1}(V)$, then take a positive-scale local stable orbit
+ that stays in this neighborhood. The initial point and every physical query lie in $V$.
+ Neither the neighborhood nor the chosen point depends on $(c_1,c_2)$, so
+-the same run serves every admissible pair. This proves the proposition. The initial
+-matrix is supplied by the stable-manifold point, not presumed to be
+-identity or obtained by rounded forward shooting.\qed
++the same run serves every admissible pair. This proves the proposition.\qed
+ \end{proof}
+ 
+ \subsection{An accumulation embedding with four strongly convex branches}
+@@ -204,7 +201,7 @@ at its $\ell$th node, with an affine neighborhood wide enough to contain
+ all seed queries after scaling. A monotone cubic ramp between these
+ plateaux gives a convex function with Lipschitz derivative. The node
+ slopes divided by the node positions stay of order one, so this
+-construction need not, and will not, have a second derivative at zero.
++construction has no second derivative at zero.
+ 
+ Fix
+ \begin{gather*}
+@@ -300,7 +297,7 @@ Choose, by Proposition~\ref{art:quadratic_failure}, one bad orbit
+ $(x_k^{\rm seed},H_k^{\rm seed})$ whose initial point and queries all lie in this
+ neighborhood; it is the same for every admissible pair $(c_1,c_2)$.
+ For every $\ell\ge1$, start at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with the same matrix
+-$H_0^{\rm seed}$. Induction on the actual query tree gives
++$H_0^{\rm seed}$. Induction on the query tree gives
+ \[
+  x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed},\qquad H_k^{(\ell)}=H_k^{\rm seed}.
+ \]
+diff --git a/paper/appendices/planar_geometry.tex b/paper/appendices/planar_geometry.tex
+index 568cebb..620d24f 100644
+--- a/paper/appendices/planar_geometry.tex
++++ b/paper/appendices/planar_geometry.tex
+@@ -2,8 +2,7 @@
+ 
+ This appendix supplies the geometric ingredient used in
+ Theorem~\ref{art:planar-cluster}. The construction applies near a compact
+-regular part of one positive level. It does not assume that the BFGS iterates
+-converge to one point of that level.
++regular part of one positive level.
+ 
+ \begin{lemma}[One field with all endpoint estimates]\label{art:planar-field}
+ Let $F:\R^2\to\R$ be finite and convex with minimum $F_*$, and let
+@@ -52,8 +51,7 @@ A smooth point has a neighborhood with no nonsmooth points. A finite cover
+ of $C$ by smaller buffered charts therefore contains only finitely many
+ level-$\ell$ corners. After shrinking their charts, the neighborhood of
+ $C$, and the interval of levels, every nearby nonsmooth point lies on one
+-of these finitely many curves. This is a compactness consequence of the
+-charts, rather than an assumed finite bound on future branch changes.
++of these finitely many curves, by compactness of the charts.
+ 
+ \emph{Joining their directions.}
+ At a corner, the two active gradients generate its cone of supporting
+diff --git a/paper/appendices/seed_certificate.tex b/paper/appendices/seed_certificate.tex
+index 12a995e..7506910 100644
+--- a/paper/appendices/seed_certificate.tex
++++ b/paper/appendices/seed_certificate.tex
+@@ -5,9 +5,7 @@ This appendix gives the objects and finite inequalities needed for
+ Lemma~\ref{art:seed_cycle}. There are two logically separate tasks.
+ The algebraic equations close the three-step matrix and displacement cycle;
+ the strict inequalities force the specified search to choose that cycle.
+-Solving the equations alone would leave the algorithmic claim unproved.
+-All decimals defining a box are terminating rationals. No rounded point
+-is substituted for a root or an infinite orbit.
++All decimals defining a box are terminating rationals.
+ 
+ \subsection{Existence and uniqueness of the defining root}
+ The two unknown coordinates of the third slope are used to enforce the
+@@ -61,7 +59,7 @@ contains the eighteen monomials of degrees two through five. The bounds
+ in \eqref{art:root_arithmetic} follow by substituting the rational center,
+ differentiating the displayed polynomials, and clearing positive
+ denominators in the three comparisons. Thus they are finite integer
+-inequalities, rather than tolerances for a numerically computed root.
++inequalities.
+ 
+ For completeness, their analytic consequence follows directly.
+ The centered residual map $N(h)=h-AP(\bar r+h)$ has the exact expansion
+@@ -204,8 +202,7 @@ For the three base points, the designated active gaps are positive as
+ well. Evaluating $3\pm g_i^Tq$ for every $i$, $2-[q]_2$, and the
+ designated active value $g_i^Tq$ gives positive lower bounds for all base
+ points and all nine queries. This proves
+-\eqref{art:seed_query_bounds}. All inputs, expressions, interval rules
+-and output bounds of this finite certificate are now specified. The
++\eqref{art:seed_query_bounds}. The
+ strict active gaps also give differentiability on a neighborhood of
+ each query. Together with the matrix identities, these calculations
+ complete the proof of Lemma~\ref{art:seed_cycle}.
+diff --git a/paper/master.tex b/paper/master.tex
+index 97a03d4..3df3b93 100644
+--- a/paper/master.tex
++++ b/paper/master.tex
+@@ -38,8 +38,8 @@
+ Ordinary full BFGS often succeeds on nonsmooth objectives, but its convergence
+ theory must accommodate gradient jumps and possible degeneration of the
+ quasi-Newton matrices. We give complementary positive and negative results
+-for finite convex objectives with Armijo--weak-Wolfe steps and actual gradients
+-at differentiable accepted iterates. A centered smooth--sublinear theorem
++for finite convex objectives with Armijo--weak-Wolfe steps and gradients at
++differentiable accepted iterates. A centered smooth--sublinear theorem
+ proves global whole-sequence convergence for $u^2+|v|$ and applies in arbitrary
+ dimension on compact initial sublevels contained in the region of the centered
+ representation. Coercive degree-one homogeneous
+@@ -53,7 +53,7 @@ starts arbitrarily close to the unique minimizer of one fixed objective. One
+ construction is a maximum of four globally convex $C^{2,1}$ branches; another
+ retains uniform strong convexity with $C^{1,1}$ branches, three of which lose
+ second differentiability at the minimizer. The positive proofs derive an
+-adjacent-degree hierarchy for actual principal minors of full-BFGS matrices,
++adjacent-degree hierarchy for the principal minors of full-BFGS matrices,
+ then combine reciprocal growth with comparison energies. The resulting
+ objective-level conditions require neither iterate convergence nor prescribed
+ spectral behavior. The negative proofs certify the complete trial trees and
+diff --git a/paper/sections/energy.tex b/paper/sections/energy.tex
+index c538d2a..6b963f3 100644
+--- a/paper/sections/energy.tex
++++ b/paper/sections/energy.tex
+@@ -27,11 +27,9 @@ where $H_0\succ0$, $\alpha_k>0$, and fixed constants $0<c_1<c_2<1$ satisfy
+  \qquad g_{k+1}^Ts_k\ge c_2g_k^Ts_k.
+ \end{equation}
+ \end{definition}
+-These are the usual actual-gradient, full-BFGS conventions
++These are the usual full-BFGS conventions
+ \cite{LO}; see also \preprintcite{XW}.
+-A zero gradient is successful termination. Statements about
+-admissible runs do not assert that a differentiable acceptable point exists on
+-every ray, or that every implementation finds one.
++A zero gradient is successful termination.
+ 
+ Write
+ \[
+@@ -176,7 +174,7 @@ If an admissible run has bounded gradients and $d_k\to0$, then
+ \end{theorem}
+ \begin{proof}
+ Choose $\Lambda>0$ with $\norm{g_k}\le\Lambda$, and put $K_0=4\Lambda^2/\omega^2$.
+-For the actual run,
++Along the run,
+ \[
+  \beta_k=-\frac{y_k^TH_kg_k}{q_k}=\frac{t_k}{d_k}\ge \omega,\qquad
+  \norm{y_k}\le2\Lambda,\qquad \alpha_k=\frac{d_k}{q_k}.
+@@ -186,7 +184,6 @@ Theorem~\ref{art:minor-hierarchy} therefore yields the normalized hierarchy
+  q_ke_j(H_{k+1})\le
+  K_0e_{j+1}(H_k)+\frac{d_k}{\omega}e_j(H_k).
+ \end{equation}
+-This recurrence is derived for the run's principal determinants.
+ 
+ Fix $\eta>0$ and choose $J$ so that $d_k/\omega\le\eta$ for $k\ge J$.
+ For $H\succ0$ define
+@@ -213,10 +210,8 @@ The argument extends the product-estimate tradition in BFGS analysis
+ bounded-gradient, vanishing-decrease regime through the normalized
+ adjacent-degree hierarchy. The assumption $d_k\to0$ is weaker than the
+ summability supplied by Armijo on a compact sublevel. Finite-horizon bounds
+-and the stronger reciprocal-sum consequence under summability are retained
+-in the companion's Chapter~2; the qualitative conclusion above is sufficient
+-for the article. Neither limit in \eqref{art:reciprocal-limits} asserts that
+-$q_k\to0$ pointwise or that $H_k$ converges.
++and the stronger reciprocal-sum consequence under summability are developed
++in the companion's Chapter~2.
+ 
+ \subsection{Moving comparison directions}
+ 
+@@ -231,9 +226,8 @@ movement parallel to the executed step carries no cost in the part of the
+ update left after its negative rank-one term. Only the perpendicular
+ projection needs control.
+ 
+-A positive-semidefinite field packages one or several comparison directions.
+-It is constructed from the objective for the analysis; BFGS neither evaluates
+-it nor changes its step in response to it. The rank-one radial field in
++A positive-semidefinite field, built from the objective, packages one or
++several comparison directions. The rank-one radial field in
+ Section~\ref{art:global} and the contour field in
+ Section~\ref{art:local} illustrate the two designs.
+ 
+@@ -244,8 +238,7 @@ Call the pair eligible when
+  d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge\omega d.
+ \]
+ All accepted pairs are eligible. Requiring a property of every eligible pair
+-is an objective assumption; it does not assert that an arbitrary sequence of
+-eligible pairs can be realized by BFGS. Put
++is an assumption on the objective alone. Put
+ $\Pi_s=I-ss^T/(s^Ts)$.
+ 
+ \begin{definition}[Band certificate]\label{art:band-certificate}
+@@ -315,7 +308,5 @@ would have a nonoptimal limit with value $F_*$. With a unique minimizer the
+ same argument gives convergence of the entire sequence.\qed
+ \end{proof}
+ 
+-The companion's scalar convergence and certificate-nonexistence results
+-show that the certificate is not necessary for successful BFGS behavior.
+-The planar application below shows a different point: moving geometry can
+-prove convergence where the fixed radial field fails.
++The planar application below shows that moving geometry can prove
++convergence where the fixed radial field fails.
+diff --git a/paper/sections/failure.tex b/paper/sections/failure.tex
+index c08b862..f750cf2 100644
+--- a/paper/sections/failure.tex
++++ b/paper/sections/failure.tex
+@@ -6,8 +6,7 @@ why convexity and regularity of the branch formulas cannot supply an
+ unrestricted deterministic guarantee. The first tempting assertion is
+ global: compact sublevels might seem enough to prevent convergence to a wrong
+ corner. The second is local: for one finite maximum of very smooth convex
+-branches, perhaps every sufficiently close start succeeds. We construct an
+-actual failure of each assertion, and then examine what changes when positive
++branches, perhaps every sufficiently close start succeeds. We construct a counterexample to each assertion, and then examine what changes when positive
+ lower curvature is imposed.
+ 
+ The mechanism has three parts. A three-step BFGS cycle returns the inverse
+@@ -15,8 +14,7 @@ matrix to a smaller multiple of itself while approaching a nonstationary
+ corner. Strict function and gradient inequalities force the specified line
+ search to produce that cycle. Finally, local copies of the corner accumulate
+ at the true minimizer of one objective. Matching spatial and objective scales
+-keeps the initial matrix fixed across the copies. The distinction between a
+-formal cycle and an implemented run matters at every part of this argument.
++keeps the initial matrix fixed across the copies.
+ 
+ \subsection{The specified implementation and the local guarantee at issue}
+ At a differentiable point $x$, let $g=\nabla F(x)$ and $p=-Hg$.
+@@ -51,9 +49,8 @@ assumptions.
+ \input{statements/negative_upper}
+ 
+ The objective and all starts are chosen before the displayed line-search
+-parameters. The failure set supplied by the theorem is a sequence of starts;
+-it is not a positive-measure basin. There is no uniform positive lower
+-curvature requirement on these branches.
++parameters. Theorem~\ref{art:local-failure-lower} below gives a version with
++uniform positive lower curvature.
+ 
+ \subsection{Designing a cycle around a wrong corner}
+ We seek a corner with a strict descent direction that the cycle nevertheless
+@@ -66,10 +63,9 @@ of linear functions, those two identities allow the same geometry to repeat
+ at each smaller scale.
+ 
+ The target lengths $1,1/4,1/16$ fit the bisections of the unit-first search.
+-Choosing them in the algebra does not prove that the algorithm accepts them:
+-we must also exclude every earlier candidate and verify both tests at the
+-intended endpoint. The strict trial certificate below supplies exactly this
+-missing dynamical condition.
++The strict trial certificate below proves that the algorithm accepts them:
++it excludes every earlier candidate and verifies both tests at the intended
++endpoint.
+ 
+ Let $(c_\circ,d_\circ)$ be the algebraic pair specified in
+ Appendix~\ref{art:seed_certificate}. Define
+@@ -148,7 +144,7 @@ $G(z_j+\alpha p_j)$. Every rejected trial raises the objective and
+ therefore fails Armijo. The accepted rows also satisfy the strict
+ Armijo and weak-Wolfe margins in \eqref{art:seed_margins}. The decisions
+ are those of the specified search for every $0<c_1\le1/3$ and $c_2>0$.
+-All displayed intervals are rational enclosures, not rounded values.}
++All displayed intervals are rational enclosures.}
+ \label{art:trial_table}
+ \end{table}
+ 
+@@ -161,7 +157,7 @@ predicted decrease, while the new directional derivative is positive and
+ the old one is negative. Hence Armijo holds for $c_1\le1/3$ and weak Wolfe
+ holds for every $c_2>0$. Thus the displayed lengths are outputs of the
+ specified search for the entire parameter range in
+-Theorem~\ref{art:local-failure}; no accepted-length sequence is assumed.
++Theorem~\ref{art:local-failure}.
+ The routine never needs a Wolfe rejection on this example.
+ 
+ Figure~\ref{art:cycle-figure} displays this unit-first geometry: phase zero
+@@ -179,10 +175,8 @@ mark phases $0,1,2$, whose accepted lengths are $1,1/4,1/16$.
+ The panels use different horizontal and vertical scales; the
+ vertical-to-horizontal ratios are $22/4.6$, $2.5/4.2$ and $23/21$ in (a), (b)
+ and (c).
+-Coordinates are rendered from the rational center of the certified root
+-box; exact cycle closure and trial decisions follow from
+-Appendix~\ref{art:seed_certificate}. This drawing is not evidence of
+-stable-manifold membership for the perturbed construction.}
++Exact cycle closure and trial decisions are proved in
++Appendix~\ref{art:seed_certificate}.}
+ \label{art:cycle-figure}
+ \end{figure}
+ 
+@@ -251,8 +245,7 @@ multiplied by $\lambda^2/\sigma$. This proves the matrix relation in
+ and all gradient--step products are multiplied by $\sigma>0$, so the
+ Armijo and weak-Wolfe comparisons, including their strict signs, agree.
+ 
+-This is a covariance calculation, not an existence theorem for a local
+-trajectory. To transfer a particular run, the local model must cover the
++To transfer a particular run with this calculation, the local model must cover the
+ current point and every candidate the search actually visits. Under that
+ containment, induction on the bracket decisions transfers the full trial
+ tree, and induction on accepted steps transfers the matrices. We verify
+@@ -447,8 +440,7 @@ objective, bad centers $\bar x_\ell\to x_*$ have affine-model
+ neighborhoods of width $O(a_\ell)$. Each complete copied query orbit fits
+ inside a region of size $O(a_\ell^2)$ and converges to $\bar x_\ell$.
+ The inset shows the seed and two contraction copies as a finite illustration
+-of the infinite induction. Locations, neighborhood shapes and relative
+-scales are schematic, not a plot of the infinitely defined objective.
++of the infinite induction.
+ The lower-curvature construction uses the different spatial factor
+ $a_\ell$, as explained below.}
+ \label{art:shrinking-scales}
+@@ -483,7 +475,7 @@ Four uniformly strongly convex $C^{1,1}$ branches
+ \end{tabular}
+ \caption{The two independent local failure regimes. Each uses one fixed
+ objective and $H_0=I$, with bad starts arbitrarily close to its unique
+-minimizer; all actual accepted and rejected queries are differentiable
++minimizer; all accepted and rejected queries are differentiable
+ and remain in neighborhoods shrinking to that minimizer. Both hold for
+ every fixed $0<c_1\le1/3$, $c_1<c_2<1$
+ (Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}).}
+@@ -492,18 +484,16 @@ every fixed $0<c_1\le1/3$, $c_1<c_2<1$
+ 
+ In Theorem~\ref{art:local-failure-lower} and Table~\ref{art:regularity-map}, a
+ Hessian is the classical one: the derivative of the gradient map, with that
+-map defined in a neighborhood of the point. A pointwise second-order
+-expansion alone is not the convention.
++map defined in a neighborhood of the point.
+ 
+ The proof in Appendix~\ref{art:lower_curvature} has the same sequence of
+ tasks as the first construction. It starts from the explicit strongly convex
+ objective $Q_\mu(z)=\mu\|z\|^2/2+G(z)$, whose true minimizer is away from
+ the wrong corner. A normalized three-step return map has the original seed
+ as a hyperbolic boundary fixed point. Its stable manifold contains positive
+-scale states, yielding an actual perturbed bad orbit. The seed's strict
++scale states, yielding a perturbed bad orbit. The seed's strict
+ finite margins ensure that the same accepted and rejected trial lists
+-persist along that orbit, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$. No rounded initial state is asserted to lie on
+-the stable manifold.
++persist along that orbit, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$.
+ 
+ For the local embedding of Appendix~\ref{art:lower_curvature}, with its own
+ $a_\ell=128^{-\ell}$, centers $\bar x_\ell=a_\ell(2,-32)^T$ and constant
+@@ -517,12 +507,10 @@ matrix is then used in every copy; one fixed affine change makes it $I$.
+ The faster variation of the scalar derivative retains global $C^{1,1}$
+ regularity but prevents second differentiability at the minimizer, where the
+ copies accumulate.
+-This is why the theorem does not supply a finite strongly convex $C^2$
+-local counterexample.
+ 
+ The two constructions (Table~\ref{art:regularity-map}) separate upper branch
+ regularity from positive lower
+-curvature. Their common mechanism is a local copy of an actual bad query
++curvature. Their common mechanism is a local copy of a bad query
+ tree; the different scalar scales determine which regularity survives at
+ the minimizer. The remaining convergence questions are discussed
+ next.
+diff --git a/paper/sections/geometry.tex b/paper/sections/geometry.tex
+index 84273fc..0aaf3fe 100644
+--- a/paper/sections/geometry.tex
++++ b/paper/sections/geometry.tex
+@@ -14,9 +14,8 @@ radial model also has a small error: for $v\ne0$ and $0\le\tau\le1$,
+ \end{equation}
+ Thus the nonsmooth part is exactly linear under inward scaling, while the
+ smooth part contributes a quadratic remainder. Section~\ref{art:global}
+-uses this property to prove convergence of the whole sequence. The inward
+-segment is a comparison used in the proof; it is not a direction BFGS is
+-assumed to take. No eventual eigenvector or eigenvalue description is needed.
++uses this property to prove convergence of the whole sequence, without any
++description of the eventual eigenvalues or eigenvectors of the matrices.
+ 
+ \begin{figure}[htbp]
+ \centering
+@@ -24,17 +23,15 @@ assumed to take. No eventual eigenvector or eigenvalue description is needed.
+ \caption{Gradient space. Left: the mixed ridge at $u=1/2$ has a vertical
+ jump and a common horizontal descent direction. Right: the particular
+ three-gradient seed used in Section~\ref{art:failure}. Its convex hull
+-excludes zero, but its affine hull is the plane. The vertices on the right
+-are rendered from the certified root's rational center; the mathematical
+-definition uses the isolated root.
++excludes zero, but its affine hull is the plane.
+ Zero lies just above the edge $[g_1,g_0]$, at distance $1/\sqrt{257}$ from the
+ hull. Solid arrows indicate gradients and the dashed arrow a common descent
+-direction; none is a BFGS step.}
++direction.}
+ \label{art:gradient-geometry}
+ \end{figure}
+ 
+-The right panel of Figure~\ref{art:gradient-geometry} asks a different question: can a genuine full-BFGS run
+-contract around a point where descent still exists? The bad corner is specific. Its slopes
++The right panel of Figure~\ref{art:gradient-geometry} asks a different question: can a full-BFGS run
++contract around a point where descent still exists? The slopes of the bad corner
+ are $g_0=(1,0)$, $g_1=(-1,-1/8)$ and $g_2=(c_\circ,d_\circ)$, where $(c_\circ,d_\circ)$ is
+ defined exactly in Appendix~\ref{art:seed_certificate}. They are affinely
+ independent, so no nonzero direction pairs equally with all three. Yet
+@@ -53,15 +50,12 @@ on the slopes is constant on their affine hull. Conversely, if zero is
+ outside that affine hull, its nearest point gives a separating functional
+ constant on the hull; changing its sign gives the negative common value.
+ The convex version follows from the same closest-point argument for the
+-convex hull. These are elementary separation facts, not a classification
+-of BFGS behavior.
++convex hull.
+ 
+ The positive conclusions differ in their geometry and in the locality of the
+ guarantee. Table~\ref{art:positive-outcomes} distinguishes them before the
+-proofs. In every row the quantifier is over infinite admissible runs with
+-arbitrary positive-definite initialization. An admissible run uses actual
+-gradients and satisfies Armijo--weak-Wolfe at its accepted points; the definition does not
+-assert that an arbitrary line-search implementation always finds such points.
++proofs. In every row the guarantee covers every infinite admissible run, with
++arbitrary positive-definite initialization.
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -87,15 +81,13 @@ Nondegenerate planar smooth maximum, Corollary~\ref{art:planar-max}
+ \end{tabular}
+ \caption{What the positive theory guarantees. The benchmark $u^2+|v|$ has
+ compact sublevels and a centered representation on all of $\R^2$, so the first
+-row gives global convergence.
+-The results concern admissible runs, without a presumed matrix limit.}
++row gives global convergence.}
+ \label{art:positive-outcomes}
+ \end{table}
+ 
+-The first two rows make precise global assertions; they do not claim global
+-convergence for every affine maximum. Indeed, the coercive polyhedral
+-realization of the wrong corner in Corollary~\ref{art:failure_polyhedral}
+-has a positive limiting objective gap. General affine offsets can place the
++Homogeneity cannot be dropped from the second row: the coercive polyhedral
++realization of the wrong corner in Corollary~\ref{art:failure_polyhedral},
++a maximum of four affine functions, has a positive limiting objective gap. General affine offsets can place the
+ bad corner away from the true optimizer, whereas homogeneity centers all
+ linear pieces at the origin.
+ 
+@@ -105,8 +97,7 @@ A finite polyhedral partition near the optimizer controls the inward model
+ because each remaining cell contains the optimizer after localization.
+ Curved interfaces require a different argument: the planar example in
+ Section~\ref{art:local} has a radial obstruction, yet a moving contour field
+-proves convergence. These are complementary sufficient mechanisms and
+-specific realized failures, rather than a classification by jump span.
++proves convergence.
+ 
+ \paragraph{Checking the hypotheses.}
+ Several analytical conditions are automatic once the objective geometry and
+@@ -115,7 +106,7 @@ matrices and gives positive secant curvature. On a compact sublevel, finite
+ convexity bounds the gradients; Armijo makes the predicted decreases summable.
+ The substantive checks in Table~\ref{art:positive-outcomes} are therefore the
+ centered representation, the finite local cells, or the planar switching
+-geometry. For the centered route one must locate an actual minimizer and
++geometry. For the centered route one must locate a minimizer and
+ verify the decomposition on a region containing the initial sublevel.
+ For the polyhedral route one checks the smooth cell extensions and uniqueness;
+ the squared-loss plus $\ell_1$ example in Section~\ref{art:local} makes that
+@@ -125,14 +116,13 @@ positive balancing weights. A common positive branch-Hessian lower bound
+ supplies the strict-contour condition in Corollary~\ref{art:planar-max}.
+ 
+ Appendix~\ref{art:hypothesis-examples} verifies these conditions jointly with
+-actual full-BFGS histories. Proposition~\ref{art:examples-mixed} specifies all
++explicit full-BFGS histories. Proposition~\ref{art:examples-mixed} specifies all
+ three certificate inequalities for the mixed ridge and an infinite nonsmooth
+ run; Proposition~\ref{art:examples-full-rank} gives a full-rank calibration in
+ every dimension. Proposition~\ref{art:examples-two-quadratics} supplies a simple
+ parameterized family with curved switching. The printed nonradial example
+ also has infinite runs for every initial positive-definite matrix and valid
+-constant pair (Corollary~\ref{art:examples-nonradial-runs}). The qualification
+-on run existence is essential: Proposition~\ref{art:examples-no-step} gives
+-a coercive homogeneous objective and initial data for which no differentiable
+-weak-Wolfe first step exists. These are sufficient classes with explicit
+-witnesses, not a genericity or necessity claim for nonsmooth BFGS.
++constant pair (Corollary~\ref{art:examples-nonradial-runs}).
++Proposition~\ref{art:examples-no-step} shows why the theorems quantify over
++runs: it gives a coercive homogeneous objective and initial data for which no
++differentiable weak-Wolfe first step exists.
+diff --git a/paper/sections/global.tex b/paper/sections/global.tex
+index af28073..7f114bb 100644
+--- a/paper/sections/global.tex
++++ b/paper/sections/global.tex
+@@ -12,9 +12,7 @@ A gradient jump can make the positive correction in
+ \eqref{art:energy-identity} large. We control its pairing with the direction
+ to a minimizer by asking that first-order prediction remain quadratically
+ accurate on short inward segments. This asks nothing about transverse
+-smoothness, and it does not require BFGS to take radial steps. The comparison
+-segments are an analytical device; the actual steps remain those in
+-\eqref{art:update}.
++smoothness.
+ 
+ Fix a minimizer $x_*$, write $F_*=F(x_*)$, and let
+ $K=\{x:F(x)\le b\}$ be compact, with $b>F_*$. For differentiable $x,z\in K$,
+@@ -116,8 +114,8 @@ Condition~\eqref{art:inward-condition} controls only inward first-order modeling
+ region its infinitesimal expression is $r_x^T\nabla^2F(x)r_x$, rather than the
+ largest Hessian eigenvalue. A bound almost everywhere on that expression alone
+ would miss a jump of the derivative along a ray; the function-value condition
+-\eqref{art:inward-condition} includes such jumps. The condition is sufficient;
+-Theorem~\ref{art:nonradial-example} will exhibit convergence where
++\eqref{art:inward-condition} includes such jumps. Convergence extends beyond this
++condition: Theorem~\ref{art:nonradial-example} exhibits convergence where
+ \eqref{art:radial-condition}, and hence by Theorem~\ref{art:radial-equivalence} also
+ \eqref{art:inward-condition}, fails on positive bands arbitrarily near the minimizer.
+ 
+@@ -127,10 +125,8 @@ A finite convex positively homogeneous function is sublinear: its value on
+ $(1-\tau)r$ is exactly $(1-\tau)$ times its value on $r$. Its angular
+ nonsmoothness consequently disappears from the inward remainder. The next
+ theorem permits an arbitrary locally $C^{1,1}$ convex perturbation, provided
+-the homogeneous part is centered at a minimizer of the sum. Centering is a
+-geometric hypothesis on the objective, not knowledge required by the
+-algorithm. Moreover, the two summands need not separately be minimized
+-at that center.
++the homogeneous part is centered at a minimizer of the sum. The two summands
++need not separately be minimized at that center.
+ 
+ \begin{theorem}[Centered smooth-plus-sublinear objectives]\label{art:centered}
+ Let $F:\R^n\to\R$ be finite and convex, and suppose $x_*$ minimizes $F$.
+@@ -175,9 +171,7 @@ iterates. When the representation is global and all sublevels are compact,
+ the theorem applies from every differentiable nonstationary starting point,
+ for every initial SPD matrix and every fixed valid Armijo--weak-Wolfe pair.
+ Neither a lower Hessian bound for the smooth term nor differentiability of
+-the full objective away from the minimizer is required. Without uniqueness,
+-the stated conclusion is value and solution-set distance convergence;
+-convergence to one particular minimizer is not asserted.
++the full objective away from the minimizer is required.
+ 
+ \begin{corollary}[The quadratic--absolute-value benchmark]\label{art:mixed-benchmark}
+ For $F(u,v)=u^2+|v|$, every infinite admissible full-BFGS run, with arbitrary
+@@ -195,7 +189,7 @@ shows the exact inward error. Theorem~\ref{art:centered} applies.\qed
+ 
+ This strengthens Guo--Lewis's subsequence approach to the line $v=0$
+ \cite[Corollary~4.4]{GL18} to the whole-sequence convergence to the origin
+-they left open, under the admissible full-BFGS convention of this paper.
++they left open.
+ 
+ \subsection{Coercive homogeneous objectives, linear maxima, and gauges}
+ 
+@@ -252,13 +246,10 @@ $\norm{x}_\infty=\max_i|x_i|$. In dimension at least two their nonsmoothness
+ is nonisolated: the first has gradient jumps across coordinate hyperplanes;
+ the second has them where two nonzero coordinate magnitudes tie for the
+ maximum. For example, along $(t,t,0,\ldots,0)$ with $t>0$, the two active
+-coordinate forms of $\norm{\cdot}_\infty$ have distinct gradients. These
+-are concrete specializations of the norm corollary, with no separate
+-priority claim. The familiar
+-Euclidean norm is an already established consequence of Guo--Lewis's
++coordinate forms of $\norm{\cdot}_\infty$ have distinct gradients. The
++Euclidean norm case follows from Guo--Lewis's
+ smooth-extension analysis \cite[Corollary~4.2]{GL18}; the scalar absolute-value
+-model was analyzed by Lewis--Overton under their stated search conventions
+-\cite[Section~5.1]{LO}. No symmetry is needed for the gauge or max-linear
++model was analyzed by Lewis--Overton \cite[Section~5.1]{LO}. No symmetry is needed for the gauge or max-linear
+ cases. Coercivity supplies this compact, whole-iterate route. The complete companion,
+ Chapter~7, separately proves the noncompact homogeneous value dichotomy
+ $F(x_k)\to0$ or $F(x_k)\to-\infty$, together with its bounded-below and
+diff --git a/paper/sections/introduction.tex b/paper/sections/introduction.tex
+index 6f0da54..ddeb3c9 100644
+--- a/paper/sections/introduction.tex
++++ b/paper/sections/introduction.tex
+@@ -22,8 +22,7 @@ bounded sublevels and absolutely continuously distributed initial data, it
+ asks about nonbreakdown, stationary cluster points, R-linear convergence of
+ all function trial values, and identification of spectral subspaces under
+ partly smooth convergence. We study deterministic guarantees for convex
+-objectives. Successful termination is allowed; infinite runs are analyzed
+-under the differentiable-iterate convention made precise below.
++objectives.
+ 
+ Substantial positive theory precedes this work. Guo--Lewis extends Powell's
+ argument through smooth convex replacements on regions relevant to a BFGS
+@@ -39,26 +38,22 @@ to $(0,0)$ open~\cite[Corollary~4.4 and following discussion]{GL18}.
+ Approaching the nonsmooth line does not force the smooth coordinate $u$ to
+ vanish. Corollary~\ref{art:mixed-benchmark} answers this whole-sequence question
+ for every admissible full-BFGS run, as a consequence of an arbitrary-dimensional
+-family theorem rather than a special planar recurrence.
++family theorem.
+ 
+ Two other advances clarify the remaining task. Xie--W\"achter's two-piece
+ unbounded affine model leads to an unbounded descent direction after finitely
+-many iterations~\preprintcite*[Theorem IV.1]{XW}; the value-convergence theorem for a broader
+-homogeneous family in Chapter~7 of the complete companion (introduced at the end of this section)
+-does not replace that finite escape result.
++many iterations~\preprintcite*[Theorem IV.1]{XW}.
+ Gebken's published 2026 introduction still identifies $u^2+|v|$ as unresolved.
+ His local criticality theorem for continuous smooth selections assumes an
+ iterate limit, repeated activity, and specified spectral and gradient-jump
+ behavior~\cite[Theorem~3.1 and (B1)]{BG}. Our positive results instead derive
+-convergence from objective hypotheses within the convex families stated here;
+-they do not subsume his potentially nonconvex selection setting.
++convergence from hypotheses on the objective.
+ 
+ Throughout the paper, an \emph{admissible run} uses the unmodified full BFGS
+ update, an arbitrary $H_0\succ0$, fixed $0<c_1<c_2<1$, Armijo--weak-Wolfe
+ steps, and differentiable accepted points with nonzero gradients
+ (Definition~\ref{art:admissible}). The positive theorems concern every infinite
+-such run. They do not assert that every search ray contains an acceptable
+-differentiable point.
++such run.
+ 
+ \paragraph{Deterministic limits.}
+ Prescribed-orbit constructions give smooth nonconvex failures
+@@ -79,8 +74,7 @@ $C^{2,1}$ branches with bounded Hessians; another is a maximum of four
+ uniformly strongly convex $C^{1,1}$ branches, three of which are not twice
+ differentiable at the minimizer (Theorems~\ref{art:local-failure}
+ and~\ref{art:local-failure-lower}). These refute every-start neighborhood
+-guarantees under either regularity regime. They establish no positive-measure
+-failure set and do not refute the almost-sure semialgebraic challenge.
++guarantees under either regularity regime.
+ 
+ \paragraph{Global and local convergence.}
+ We prove global value convergence for centered smooth-plus-sublinear
+@@ -106,22 +100,21 @@ modeling.
+ The classical smooth analysis combines trace and determinant identities in
+ a matrix potential~\cite[Section~5]{FND_N92}. The uniform smooth secant bound
+ used there need not hold when gradients jump. We prove an inequality linking
+-each principal-minor degree to the next for the actual full-BFGS update.
++each principal-minor degree to the next for the unmodified full-BFGS update.
+ This adjacent-degree control forces the arithmetic mean of the reciprocals
+ $1/(g_k^TH_kg_k)$ to diverge when gradients are bounded and predicted
+ decreases tend to zero. Comparison energies turn this restriction into convergence:
+ a field must retain information about the objective gap, control the gradient
+-changes it sees, and move with a controlled energy cost. The field is an
+-analytical device, not part of the algorithm. Neither a bounded condition
++changes it sees, and move with a controlled energy cost. The field, like every
++comparison object in the paper, is used only in the proofs. Neither a bounded condition
+ number nor a prescribed spectral limit is needed
+ (Theorems~\ref{art:minor-hierarchy}--\ref{art:certificate}).
+ 
+-Our conditions are sufficient; they do not classify every successful run.
+ Sections~\ref{art:geometry}
+ and~\ref{art:energy} explain and establish the mechanism;
+ Sections~\ref{art:global} and~\ref{art:local} prove its global and local
+ consequences, Section~\ref{art:failure} gives the deterministic
+-counterexamples, and Section~\ref{art:verification} lists the remaining questions. The article includes the essential proofs of these claims.
++counterexamples, and Section~\ref{art:verification} lists the remaining questions. The article contains complete proofs of these results.
+ An independent complete companion preserves the wider noncompact and
+ quantitative theory, with Lean proofs, exact correspondence and reproducible
+ audit evidence.
+diff --git a/paper/sections/local.tex b/paper/sections/local.tex
+index 0158576..ccd5954 100644
+--- a/paper/sections/local.tex
++++ b/paper/sections/local.tex
+@@ -94,10 +94,8 @@ absolute-value or hinge terms, is piecewise affine on a finite polyhedral
+ partition. It therefore falls under this corollary when added to a locally
+ $C^{1,1}$ convex loss,
+ under the stated uniqueness assumption. Different cells may have different
+-quadratic Hessians. A finite maximum of arbitrary quadratic formulas need not
+-admit such a polyhedral partition and is not automatically covered.
+-There is also no claim that iterates identify a cell or that rejected trials
+-remain in the neighborhood $U$ of Theorem~\ref{art:polyhedral}.
++quadratic Hessians. Maxima of quadratic formulas, whose switching sets are
++generally curved, are treated in the plane below.
+ 
+ \begin{corollary}[A local centered-composite basin]\label{art:local-centered}
+ If the representation and smoothness assumptions of
+@@ -133,7 +131,6 @@ convex function $\psi$; the zero coordinates give the centered sublinear
+ function $\gamma$. Corollary~\ref{art:local-centered} therefore gives a
+ positive sublevel basin, chosen independently of the initial SPD matrix,
+ in which every admissible run converges in value and iterates to $x_*$.
+-Uniqueness is a hypothesis here; $\lambda>0$ alone does not supply it.
+ 
+ A locally $C^{1,1}$ convex loss plus finitely many Euclidean
+ residual norms $\norm{A_jx-b_j}$ has this local form. A residual nonzero at
+@@ -151,8 +148,7 @@ then blows up as endpoints approach opposite sides of the interface.
+ The transported framework allows the comparison direction to follow the
+ interface instead. It must first remain visible to every local supporting
+ model, then cancel the leading jump, and finally move at a cost controlled
+-by the actual objective decrease. The field is constructed from the
+-objective; BFGS never evaluates it.
++by the objective decrease.
+ 
+ For $F:\R^2\to\R$, write
+ \[
+@@ -287,9 +283,7 @@ uniqueness conclusions as in Theorem~\ref{art:certificate}.\qed
+ \end{proof}
+ 
+ This condition says that nonoptimal points retain equal-rate descent, which
+-is stronger than ordinary descent. The strict-contour and regular-switching
+-assumptions remain essential to this sufficient planar route; it does not
+-give a criterion for every convergent run.
++is stronger than ordinary descent.
+ 
+ \subsection{Nondegenerate smooth maxima and an explicit nonradial basin}
+ 
+@@ -437,9 +431,10 @@ given neighborhood of zero.\qed
+ The example identifies the extra freedom supplied by moving geometry.
+ Curvature of the interface produces a radial jump, while the contour-based
+ field cancels it and charges its own motion to the accepted decrease.
+-The proof uses the original coordinates and the unmodified BFGS update;
+-a nonlinear change of variables or a replacement by polyhedral cells would
+-not establish this conclusion.
++This example lies beyond Theorem~\ref{art:polyhedral}: its objective has no
++polyhedral-cell representation near the minimizer. The proof treats the
++curved interfaces directly, in the original coordinates and with the
++unmodified BFGS update.
+ 
+ The infinite-run quantifier here has actual witnesses for every initial
+ positive-definite matrix and every valid line-search pair. In particular,
+diff --git a/paper/sections/verification.tex b/paper/sections/verification.tex
+index 47f038a..3f1a195 100644
+--- a/paper/sections/verification.tex
++++ b/paper/sections/verification.tex
+@@ -47,28 +47,23 @@ endpoints $x$ and $x+s$ have active slopes $g_i$ and $g_j$. Then exactly
+ Along the perturbed orbit of Proposition~\ref{art:quadratic_failure}, $s\to0$ while the three distinct
+ slopes continue to cycle. The positive-curvature contribution therefore
+ vanishes with the step, while the branch jumps persist. The stable-manifold
+-and strict-query arguments establish that this decomposition is realized
+-by the specified algorithm; a branch change alone does not imply failure.
++and strict-query arguments show that the specified algorithm realizes this
++decomposition.
+ 
+-These comparisons explain sufficient hypotheses separating the proved
+-positive classes from the examples. They do not make affine independence,
+-positive multipliers or a comparison certificate necessary for convergence,
+-and they do not turn every nonoptimal affine-critical point or accumulating
+-singularity into a counterexample. The local question for finitely
++These comparisons identify the hypotheses that separate the proved
++positive classes from the examples. The local question for finitely
+ many uniformly strongly convex $C^2$ branches remains open here outside the
+ nondegenerate planar case of Corollary~\ref{art:planar-max}.
+-The examples concern the specified weak-Wolfe implementation with
+-$0<c_1\le1/3$ and exceptional
+-deterministic starts; they do not settle Lewis--Overton's almost-sure
+-challenge under its additional hypotheses~\cite[Challenge~7.1]{LO}.
++The failing starts constructed here form a sequence of points.
++Lewis--Overton's Challenge~7.1~\cite{LO} concerns absolutely continuously
++distributed initial data; whether a convex objective can have a set of
++failing starts of positive measure is a natural next question.
+ 
+ \paragraph{Formal verification and reproducibility.}
+ The complete companion supplies pinned Lean sources, exact theorem contracts
+ and their correspondence to the manuscripts, compiler, axiom and kernel-replay audits,
+ and versioned source/build records. The proofs and rational certificates
+ needed for the article's main results are also contained here.
+-Formal checking and author-side correspondence review have distinct roles;
+-neither certifies publication priority or floating-point robustness.
+ 
+ \paragraph{AI assistance.}
+ Large language models assisted theorem development, proof reconstruction,

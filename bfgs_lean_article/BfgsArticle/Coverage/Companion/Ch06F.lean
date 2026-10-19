@@ -2691,7 +2691,7 @@ theorem five_piece_every_neighborhood (K : Set (Vec 3)) (hK : K ∈ 𝓝 0) :
               FivePieceObstruction.initialGradient α)) :=
   FivePieceObstruction.obstruction_in_every_neighborhood K hK
 
-/-- Item `C/06_F/prose/066` (`companion/chapters/06_F.tex:216`): "Differentiability of the
+/-- Item `C/06_F/prose/066` (`companion/chapters/06_F.tex:214`): "Differentiability of the
 restriction to a ray does not imply full-space differentiability at acceptance." On the ray of the
 five-piece obstruction, $\varphi(\alpha)=h((-2,0,1)+\alpha(1,0,0))$ has $\varphi'(0)=-1$ and is
 differentiable at $\alpha=3$ with $\varphi'(3)=0$; $\alpha=3$ satisfies the scalar Armijo and
@@ -2720,9 +2720,9 @@ theorem ray_differentiability_not_full :
   · have h := (five_piece_obstruction).2.1 3 (by norm_num) (by norm_num)
     rwa [(five_piece_data 3).2.2.1] at h
 
-/-! ### Relation to earlier work (`06_F.tex:207-216`) -/
+/-! ### Relation to earlier work (`06_F.tex:207-214`) -/
 
-/-- Item `C/06_F/prose/058` (`companion/chapters/06_F.tex:210`): "The theorem in this chapter
+/-- Item `C/06_F/prose/058` (`companion/chapters/06_F.tex:208`): "The theorem in this chapter
 gives full convergence for that example within its centered family." Theorem `F:centered` with
 $\psi(u,v)=u^2$, $\gamma(u,v)=|v|$, $x_*=0$, $U=\R^2$ gives, for $F(u,v)=u^2+|v|$ and every
 infinite admissible run, $F(x_k)\to0$ and $x_k\to0$ (full sequence convergence). -/
@@ -2737,7 +2737,7 @@ theorem mixed_full_convergence (F : Vec 2 → ℝ) (hF : ∀ x, F x = (x 0) ^ 2 
     (subset_univ _)
   exact ⟨by rwa [hF0] at hv, hi hunique⟩
 
-/-- Item `C/06_F/prose/059` (`companion/chapters/06_F.tex:210`): "Its smooth secant estimate uses
+/-- Item `C/06_F/prose/059` (`companion/chapters/06_F.tex:208`): "Its smooth secant estimate uses
 established cocoercivity~\cite[Theorem~2.5]{WW}: local regularity is used on an open convex
 neighborhood, with compact buffers and, where needed, an enlarged constant." The cocoercivity
 estimate used in the proof of Theorem `F:centered`: for $\psi$ convex and locally $C^{1,1}$ on an
@@ -2760,7 +2760,7 @@ theorem coordinateGradient_of_hasFDerivAt {n : ℕ} {f : Vec n → ℝ} {x g : V
     (hg : HasFDerivAt f (gradientFunctional g) x) : coordinateGradient f x = g :=
   gradient_unique (hasFDerivAt_coordinateGradient hg.differentiableAt) hg
 
-/-- Item `C/06_F/prose/060` (`companion/chapters/06_F.tex:210`): "It does not require a globally
+/-- Item `C/06_F/prose/060` (`companion/chapters/06_F.tex:208`): "It does not require a globally
 Lipschitz gradient or minimization of each original summand at the center." For
 $F(x)=x^4+|x|$ on $\R$ with $\psi(x)=x^4$, $\gamma(r)=|r|$, $x_*=0$, $U=\R$: every hypothesis of
 Theorem `F:centered` holds (all sublevels compact), so every admissible run converges, while

@@ -386,7 +386,7 @@ theorem admissible_run_exists {n : ℕ} (_hn : 1 ≤ n) {F : Vec n → ℝ}
     (hasFDerivAt_coordinateGradient hx₀) hH₀ hc₁ hc₁₂ hc₂
 
 /-- Item `A/hypothesis_examples/disp/009`
-(`paper/appendices/hypothesis_examples.tex:126-128`): the definition of the
+(`paper/appendices/hypothesis_examples.tex:124-126`): the definition of the
 two-quadratic objective, with its coefficients in the original coordinates. -/
 theorem two_quadratic_formula (a b c : ℝ) (x : Vec 2) :
     TwoQuadraticExample.objective a b c x =
@@ -394,7 +394,7 @@ theorem two_quadratic_formula (a b c : ℝ) (x : Vec 2) :
         (c * (x 0) ^ 2 + b * (x 1) ^ 2 - x 1) := rfl
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): unfold the new
+(`paper/appendices/hypothesis_examples.tex:122-135`): unfold the new
 `PaperRegularAt` predicate. It is the literal smooth-neighborhood or convex
 two-active-`C²`-branch alternative, with independent actual branch gradients. -/
 theorem paperRegularAt_iff (F : Vec 2 → ℝ) (p : Vec 2) :
@@ -406,7 +406,7 @@ theorem paperRegularAt_iff (F : Vec 2 → ℝ) (p : Vec 2) :
         LinearIndependent ℝ ![coordinateGradient f₀ p, coordinateGradient f₁ p]) := Iff.rfl
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): unfold every field of the
+(`paper/appendices/hypothesis_examples.tex:122-135`): unfold every field of the
 new native `PlanarHypotheses` record used by the joint witness. Affine criticality
 uses the affine hull of the actual convex subdifferential; correctness means
 that an affine-critical point has zero in that subdifferential. The native
@@ -428,7 +428,7 @@ theorem planarHypotheses_iff (F : Vec 2 → ℝ) (B : ℝ) :
     exact ⟨hconv, hmin, hB, hcompact, hstrict, hregular, hcorrect⟩
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): unfold every field of the
+(`paper/appendices/hypothesis_examples.tex:122-135`): unfold every field of the
 new `FiniteMaxHypotheses` record. The branch domain is the open neighborhood
 `univ` of zero. The active type is `{i | f_i(0)=F(0)}` with the original indices;
 the positive weights, sum-one and zero-gradient balance use that same type.
@@ -453,7 +453,7 @@ theorem finiteMaxHypotheses_iff {m : ℕ} (F : Vec 2 → ℝ) (f : Fin m → Vec
     exact ⟨hconv, hmin, huniq, hbranches, hrep, hcont, hind, hpos, hsum, hbal⟩
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): for every `a,b,c>0`, zero
+(`paper/appendices/hypothesis_examples.tex:122-135`): for every `a,b,c>0`, zero
 is the unique minimizer, all sublevels are compact, and the switching locus is
 `v=(c-a)u²/2`, reducing to the line `v=0` when `a=c`.
 The differentiability equivalence identifies this tie locus with the full-space
@@ -481,7 +481,7 @@ theorem two_quadratic_objective_geometry (a b c : ℝ)
     simpa only [sub_self, zero_mul, zero_div] using TwoQuadraticExample.tie_equation a b a x
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): all hypotheses of
+(`paper/appendices/hypothesis_examples.tex:122-135`): all hypotheses of
 Corollary `art:planar-convergence` on each prescribed positive sublevel, written
 literally rather than assuming a geometry package. This includes the full
 neighborhood regularity alternative and `C_aff ∩ K_B ⊆ argmin F`. -/
@@ -508,7 +508,7 @@ theorem two_quadratic_planar_hypotheses (a b c : ℝ)
   TwoQuadraticExample.paper_planar_hypotheses a b c ha hb hc B hB
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): the two original branches
+(`paper/appendices/hypothesis_examples.tex:122-135`): the two original branches
 are both active at zero, their actual gradients are `(0,1)` and `(0,-1)`, and
 the complete finite-max hypotheses hold with strictly positive half weights.
 `finiteMaxHypotheses_iff` spells out all fields, including indexed affine
@@ -528,7 +528,7 @@ theorem two_quadratic_finite_max_hypotheses (a b c : ℝ)
     TwoQuadraticExample.finite_max_hypotheses a b c ha hb hc⟩
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:124-137`): the same family satisfies
+(`paper/appendices/hypothesis_examples.tex:122-135`): the same family satisfies
 all planar and finite-max hypotheses jointly with convergence of every admissible
 run and an actual convergent run from every prescribed differentiable point,
 SPD initial matrix and valid constant pair. No hypotheses about the objective
@@ -559,7 +559,7 @@ theorem two_quadratic_joint (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   exact (TwoQuadraticExample.joint_witness a b c ha hb hc hx₀ H₀ hH₀ hc₁ hc₁₂ hc₂).2.2.2
 
 /-- Item `A/hypothesis_examples/disp/010`
-(`paper/appendices/hypothesis_examples.tex:144-146`): on the tie curve,
+(`paper/appendices/hypothesis_examples.tex:142-144`): on the tie curve,
 the determinant of the two actual gradients is
 `-2u(a+c+b(c-a)²u²)`. The branch definitions and tie equation precede this display. -/
 theorem two_quadratic_tie_determinant (a b c : ℝ)
@@ -572,7 +572,7 @@ theorem two_quadratic_tie_determinant (a b c : ℝ)
   exact TwoQuadraticExample.tie_determinant a b c ht
 
 /-- Item `A/hypothesis_examples/corollary/art:examples-nonradial-runs`
-(`paper/appendices/hypothesis_examples.tex:164-170`): for every differentiable
+(`paper/appendices/hypothesis_examples.tex:162-168`): for every differentiable
 `x₀` with `F(x₀)<1/100`, every SPD `H₀` and every valid fixed pair, there is an
 actual infinite full-BFGS run with exactly those data, converging to zero.
 Every admissible run starting in the stated low sublevel converges in value
@@ -596,7 +596,7 @@ theorem nonradial_runs {x₀ : Vec 2}
     PlanarQuadraticExample.fullBFGS_explicit_basin R (by simpa only [hx] using hlow)⟩
 
 /-- Item `A/hypothesis_examples/corollary/art:examples-nonradial-runs`
-(`paper/appendices/hypothesis_examples.tex:164-170`): the particular start
+(`paper/appendices/hypothesis_examples.tex:162-168`): the particular start
 `(1/1000,0)` is full-space differentiable and has exactly the printed value
 `1001/10^6 < 1/100`. Together with `nonradial_runs` it gives a run for every
 initial SPD matrix and every valid constant pair at this same start. -/
@@ -612,14 +612,14 @@ theorem nonradial_initial_value :
   norm_num [PlanarQuadraticExample.branch]
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-no-step`
-(`paper/appendices/hypothesis_examples.tex:185-192`): the literal three-linear
+(`paper/appendices/hypothesis_examples.tex:183-190`): the literal three-linear
 objective `G(u,v)=max{u,-u+v,-u-v}`. -/
 theorem gauge_formula (x : Vec 2) :
     Gauge.objective x = max (x 0) (max (-x 0 + x 1) (-x 0 - x 1)) :=
   Gauge.objective_formula x
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-no-step`
-(`paper/appendices/hypothesis_examples.tex:185-192`): the same finite convex
+(`paper/appendices/hypothesis_examples.tex:183-190`): the same finite convex
 coercive homogeneous objective has unique minimizer zero and, for every `ε>0`,
 a differentiable start `(ε,0)` with `H₀=I` whose whole positive search ray has
 no differentiable weak-Wolfe endpoint for any `c₂<1`. Both the constant-gradient
@@ -646,7 +646,7 @@ theorem gauge_no_step {ε : ℝ} (hε : 0 < ε) :
   Gauge.joint_obstruction hε
 
 /-- Item `A/hypothesis_examples/proposition/art:examples-no-step`
-(`paper/appendices/hypothesis_examples.tex:185-192`): the gauge satisfies the
+(`paper/appendices/hypothesis_examples.tex:183-190`): the gauge satisfies the
 hypotheses of Theorem `art:homogeneous`; hence every infinite admissible run on it
 converges to zero, while `gauge_no_step` excludes the specified initial data. -/
 theorem gauge_covered_convergence (R : AdmissibleBFGSRun 2 Gauge.objective) :

@@ -27,11 +27,9 @@ where $H_0\succ0$, $\alpha_k>0$, and fixed constants $0<c_1<c_2<1$ satisfy
  \qquad g_{k+1}^Ts_k\ge c_2g_k^Ts_k.
 \end{equation}
 \end{definition}
-These are the usual actual-gradient, full-BFGS conventions
+These are the usual full-BFGS conventions
 \cite{LO}; see also \preprintcite{XW}.
-A zero gradient is successful termination. Statements about
-admissible runs do not assert that a differentiable acceptable point exists on
-every ray, or that every implementation finds one.
+A zero gradient is successful termination.
 
 Write
 \[
@@ -176,7 +174,7 @@ If an admissible run has bounded gradients and $d_k\to0$, then
 \end{theorem}
 \begin{proof}
 Choose $\Lambda>0$ with $\norm{g_k}\le\Lambda$, and put $K_0=4\Lambda^2/\omega^2$.
-For the actual run,
+Along the run,
 \[
  \beta_k=-\frac{y_k^TH_kg_k}{q_k}=\frac{t_k}{d_k}\ge \omega,\qquad
  \norm{y_k}\le2\Lambda,\qquad \alpha_k=\frac{d_k}{q_k}.
@@ -186,7 +184,6 @@ Theorem~\ref{art:minor-hierarchy} therefore yields the normalized hierarchy
  q_ke_j(H_{k+1})\le
  K_0e_{j+1}(H_k)+\frac{d_k}{\omega}e_j(H_k).
 \end{equation}
-This recurrence is derived for the run's principal determinants.
 
 Fix $\eta>0$ and choose $J$ so that $d_k/\omega\le\eta$ for $k\ge J$.
 For $H\succ0$ define
@@ -213,10 +210,8 @@ The argument extends the product-estimate tradition in BFGS analysis
 bounded-gradient, vanishing-decrease regime through the normalized
 adjacent-degree hierarchy. The assumption $d_k\to0$ is weaker than the
 summability supplied by Armijo on a compact sublevel. Finite-horizon bounds
-and the stronger reciprocal-sum consequence under summability are retained
-in the companion's Chapter~2; the qualitative conclusion above is sufficient
-for the article. Neither limit in \eqref{art:reciprocal-limits} asserts that
-$q_k\to0$ pointwise or that $H_k$ converges.
+and the stronger reciprocal-sum consequence under summability are developed
+in the companion's Chapter~2.
 
 \subsection{Moving comparison directions}
 
@@ -231,9 +226,8 @@ movement parallel to the executed step carries no cost in the part of the
 update left after its negative rank-one term. Only the perpendicular
 projection needs control.
 
-A positive-semidefinite field packages one or several comparison directions.
-It is constructed from the objective for the analysis; BFGS neither evaluates
-it nor changes its step in response to it. The rank-one radial field in
+A positive-semidefinite field, built from the objective, packages one or
+several comparison directions. The rank-one radial field in
 Section~\ref{art:global} and the contour field in
 Section~\ref{art:local} illustrate the two designs.
 
@@ -244,8 +238,7 @@ Call the pair eligible when
  d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge\omega d.
 \]
 All accepted pairs are eligible. Requiring a property of every eligible pair
-is an objective assumption; it does not assert that an arbitrary sequence of
-eligible pairs can be realized by BFGS. Put
+is an assumption on the objective alone. Put
 $\Pi_s=I-ss^T/(s^Ts)$.
 
 \begin{definition}[Band certificate]\label{art:band-certificate}
@@ -315,7 +308,5 @@ would have a nonoptimal limit with value $F_*$. With a unique minimizer the
 same argument gives convergence of the entire sequence.\qed
 \end{proof}
 
-The companion's scalar convergence and certificate-nonexistence results
-show that the certificate is not necessary for successful BFGS behavior.
-The planar application below shows a different point: moving geometry can
-prove convergence where the fixed radial field fails.
+The planar application below shows that moving geometry can prove
+convergence where the fixed radial field fails.

@@ -35,8 +35,8 @@ open BfgsVerification
 
 namespace BfgsCoverage.Companion.Correspondence
 
-/-- Non-vacuity for Items `C/correspondence/prose/007` (`companion/correspondence.tex:15-17`) and
-`C/correspondence/prose/008` (`companion/correspondence.tex:17-20`): the coercive homogeneous
+/-- Non-vacuity for Items `C/correspondence/prose/007` (`companion/correspondence.tex:14-16`) and
+`C/correspondence/prose/008` (`companion/correspondence.tex:16-18`): the coercive homogeneous
 convergence theorem and the scalar convergence proposition quantify over infinite admissible runs,
 and such runs exist, for example on the coercive homogeneous scalar objective $|x|$ (the article's
 explicit run `Global.absRun`, $x_k=(-1/2)^k$). -/

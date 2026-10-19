@@ -5,15 +5,15 @@ import BfgsVerification.DEuclideanLocality
 # Lean coverage: `paper/statements/negative_upper.tex`
 
 Theorem `art:local-failure` ("Local failure with globally smooth convex branches"),
-included in Section `art:failure` (`paper/sections/failure.tex:51`). Register:
+included in Section `art:failure` (`paper/sections/failure.tex:49`). Register:
 `editorial/lean_coverage/register/A_negative_upper.json`. Its proof
-(`failure.tex:394-434`) and the construction it uses are covered in
+(`failure.tex:387-427`) and the construction it uses are covered in
 `BfgsArticle.Coverage.Article.Failure`.
 
 ## The specified implementation
 
 The theorem is about "the deterministic unit-first bracketing implementation of
-Section `art:failure`" (`failure.tex:22-46`). In Lean it is
+Section `art:failure`" (`failure.tex:20-44`). In Lean it is
 `NonStrictLineSearch.fromMetric F x H c₁ c₂ N`: at a differentiable point `x` it uses
 `g = coordinateGradient F x` ($=\nabla F(x)$) and $p=-Hg$ (`bfgsStep H g 1`), starts with
 $\alpha_{\rm lo}=0$, $\alpha_{\rm hi}=+\infty$ (`none`) and trial length $\alpha=1$, tests
@@ -37,7 +37,7 @@ by `(x 0, H 0)`: the implementation is deterministic.
 `Vec 2 = Fin 2 → ℝ` carries the sup norm; the theorem's norms are Euclidean,
 `‖euclideanVector z‖`. `RadialHessian.matrix f x` is the matrix of `fderiv ℝ (fderiv ℝ f) x`;
 for the $C^2$ branches $f_i$ (differentiable everywhere, with a differentiable derivative map)
-it is the classical Hessian of `failure.tex:493-496`, the derivative of the gradient map
+it is the classical Hessian of `failure.tex:485-487`, the derivative of the gradient map
 (`BfgsCoverage.Article.Failure.classical_hessian`). $A\succeq0$ is `A.PosSemidef`.
 `FrameNorms.euclideanOpNorm` is the Euclidean operator norm.
 `ConvexSubdifferential.subdifferential F x` is

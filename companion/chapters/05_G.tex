@@ -1,6 +1,6 @@
 \chapter{What comparison certificates express}\label{comp:G}\label{G:chapter}
 \renewcommand{\ModuleTag}{5}
-The certificate is a sufficient analytic condition. Its normalization and pointwise geometry help interpret it, while scalar examples separate failure of the condition from failure of BFGS.
+The certificate is a sufficient condition for convergence. Its normalization and pointwise geometry help interpret it, and scalar examples show that BFGS converges where the condition fails.
 
 
 % SOURCE_BEGIN G.span.1
@@ -54,7 +54,7 @@ On each positive band, the condition asks for a finite-valued PSD field $W(x)$ a
  \Pi_sW(z)\Pi_s&\preceq(1+Ld)\Pi_sW(x)\Pi_s,
  \qquad \Pi_s=I-ss^T/(s^Ts). \tag{5.T}
 \end{align}
-The last two apply to all eligible pairs in the band with $d\le\delta$. The field may be singular, discontinuous, and unbounded as a function on the band; only its value at each point is finite. All constants may depend on the band and the fixed line-search parameters. No claim below silently imposes continuity or local boundedness on $W$.
+The last two apply to all eligible pairs in the band with $d\le\delta$. The field may be singular, discontinuous, and unbounded as a function on the band; only its value at each point is finite. All constants may depend on the band and the fixed line-search parameters.
 
 The one-sided transported-certificate convergence theorem of Chapter~\ref{comp:T} says that this condition implies objective convergence for every admissible infinite full-BFGS run in $K$, and iterate convergence under uniqueness. A local theorem requires the condition only near the minimizer, then uses a sufficiently low trapped sublevel. Failure on a large sublevel and failure in every neighborhood of a minimizer are different statements.
 
@@ -86,7 +86,7 @@ On the compact value band this multiplier is bounded above and away from zero, p
 \]
 Multiplying (T) by $e^{\kappa(F(z)-F_*)}$ gives (T0). The converse is the case $L=0$.
 \end{proof}
-This is an equivalence, not a further relaxation. The accumulated-expansion budget was useful in the proof of the convergence theorem of Chapter~\ref{comp:T}, but is not essential to the existential definition: an objective-value rescaling absorbs it.
+The accumulated-expansion budget was useful in the proof of the convergence theorem of Chapter~\ref{comp:T}, but is not essential to the existential definition: an objective-value rescaling absorbs it.
 
 % SOURCE_END G.span.3
 
@@ -103,7 +103,7 @@ Its support function is $h_{\mathcal E_x}(a)=\sqrt{a^TW(x)a}$. Thus the normaliz
 \item every incoming gradient change has magnitude at most $\sqrt{Ct}$ when tested on $\mathcal E_z$;
 \item $\Pi_s\mathcal E_z\subseteq\Pi_s\mathcal E_x$ for every eligible small-decrease pair.
 \end{enumerate}
-Equivalently, after quotienting out the executed step direction, the comparison ellipsoid can only shrink. The ellipsoids are analytical comparison directions, not BFGS steps or approximations of $H_k$.
+Equivalently, after quotienting out the executed step direction, the comparison ellipsoid can only shrink.
 
 A necessary rank consequence is
 \begin{equation}
@@ -175,7 +175,7 @@ contradicting (V). Neither transport nor boundedness or continuity of $W$ was us
 \end{proof}
 In particular, the obstruction holds if $n$ incoming jumps converge to a basis of $\R^n$, their curvature products tend to zero, and endpoint gradients remain bounded. The coefficients expressing the gradient in that basis then remain bounded.
 
-The predecessors need not belong to one BFGS history. This is not a loophole: the condition quantifies over all such pairs. Moreover, every eligible pair is individually realizable as a first BFGS step. If $d=-g^Ts>0$, then
+The predecessors need not belong to one BFGS history, since the condition quantifies over all such pairs. Moreover, every eligible pair is individually realizable as a first BFGS step. If $d=-g^Ts>0$, then
 \[
  H=\frac{ss^T}{d}+I-\frac{gg^T}{g^Tg}\succ0,\qquad Hg=-s.
 \]
@@ -197,7 +197,7 @@ At a nonsmooth point $p$, let $g_1,\dots,g_r$ be limiting active gradients. Defi
 \]
 The projected gradients $P_Ug_i$ agree. They are the common part of the first-order models that is not affected by gradient jumps. In suitable partly smooth settings $N$ is the normal space and $U$ the tangent space; this interpretation and its relation to the affine span of the subdifferential are standard in partial smoothness~\cite{LL}.
 
-For a certificate with a finite continuous extension to $p$, consider actual eligible incoming pairs on the fixed positive band, with both endpoints tending to $p$, $d\to0$, $t\to0$, and limiting gradient jump $j$. The secant inequality and continuity give
+For a certificate with a finite continuous extension to $p$, consider eligible incoming pairs on the fixed positive band, with both endpoints tending to $p$, $d\to0$, $t\to0$, and limiting gradient jump $j$. The secant inequality and continuity give
 \[
  j^TW(p)j=0,\qquad W(p)j=0,
 \]
@@ -207,7 +207,7 @@ where the second conclusion uses positive semidefiniteness. Let $N_{\rm acc}$ be
 \]
 For a limiting gradient $g$ at which visibility persists, $g^TW(p)g>0$ implies $P_{U_{\rm acc}}g\ne0$.
 
-This conclusion concerns the accessible span. It does not identify $N_{\rm acc}$ with the earlier space $N$ generated by all active-gradient differences. A nonzero common projection onto $U=N^\perp$ follows if the accessible jumps span $N$, or if $W(p)$ is otherwise known to annihilate all active differences. Under that additional hypothesis, the common projection is nonzero by visibility. Independently of accessibility, the following algebraic identity is exact:
+This conclusion concerns the accessible span $N_{\rm acc}$, which can differ from the space $N$ generated by all active-gradient differences. A nonzero common projection onto $U=N^\perp$ follows if the accessible jumps span $N$, or if $W(p)$ is otherwise known to annihilate all active differences. Under that additional hypothesis, the common projection is nonzero by visibility. Independently of accessibility, the following algebraic identity is exact:
 \[
  P_Ug_i=0\quad\Longleftrightarrow\quad0\in\aff\{g_1,\dots,g_r\}.
 \]
@@ -218,9 +218,9 @@ The distinction is realized by the finite strongly convex objective
  f(x)=\tfrac12(x+2)^2+|x|,
  \qquad (c_1,c_2)=(1/8,1/4).
 \]
-On every compact positive band, $W\equiv1$ is a transported certificate. Indeed, every eligible pair with $d\le1/4$ stays on one smooth side of zero: a right-to-left crossing contradicts weak Wolfe, and a left-to-right crossing contradicts Armijo and the small-decrease bound. Hence $f'(z)-f'(x)=z-x$, proving (S) with $C=1$; transport is equality, and the positive-band gradient bound proves visibility. Weak Wolfe gives $d\le4t/3$, so $t\to0$ eventually makes $d\le1/4$; as both endpoints tend to the same point, every accessible limiting jump is therefore zero. Nevertheless the actual limiting active gradients at zero are $1$ and $3$, so $N=\mathbb R$ and $U=\{0\}$. The full-active tangential conclusion would be false here. The later no-certificate example uses the different constants $(1/4,1/2)$ and is consistent with this distinction.
+On every compact positive band, $W\equiv1$ is a transported certificate. Indeed, every eligible pair with $d\le1/4$ stays on one smooth side of zero: a right-to-left crossing contradicts weak Wolfe, and a left-to-right crossing contradicts Armijo and the small-decrease bound. Hence $f'(z)-f'(x)=z-x$, proving (S) with $C=1$; transport is equality, and the positive-band gradient bound proves visibility. Weak Wolfe gives $d\le4t/3$, so $t\to0$ eventually makes $d\le1/4$; as both endpoints tend to the same point, every accessible limiting jump is therefore zero. Nevertheless the limiting active gradients at zero are $1$ and $3$, so $N=\mathbb R$ and $U=\{0\}$. The full-active tangential conclusion would be false here. The later no-certificate example uses the different constants $(1/4,1/2)$ and is consistent with this distinction.
 
-This limiting argument uses the stated finite-extension and accessibility hypotheses only in this interpretation. It is not a proof for arbitrary discontinuous or unbounded certificate fields. Proposition~\ref{G:prop:star} supplies an obstruction without either regularity hypothesis. Eligibility matters: arbitrary active-gradient jumps need not be accessible under a fixed weak-Wolfe condition.
+This limiting argument uses the stated finite-extension and accessibility hypotheses. Proposition~\ref{G:prop:star} gives an obstruction that needs neither continuity nor boundedness of the certificate field. Eligibility matters: arbitrary active-gradient jumps need not be accessible under a fixed weak-Wolfe condition.
 
 For $u^2+|v|$ at $(u,0)$ with $u\ne0$, the jump space is vertical and a nonzero horizontal derivative remains. At a generic two-dimensional vertex with independent accessible jumps in both coordinates, there may be no remaining comparison direction. The common-target obstruction above makes that interpretation rigorous without continuity of a certificate.
 
@@ -252,7 +252,7 @@ $W(z)=1/|F'(z)|^2$; visibility equals one and \eqref{G:eq:scalar} gives (S).
 
 On a compact positive band, convexity gives $|F'(z)|\ge\eta/R$, where $R$ bounds distance to a fixed minimizer, and local boundedness gives $|F'(z)|\le G$. These bounds make \eqref{G:eq:scalar} equivalent to the displayed Lipschitz inequality.
 \end{proof}
-This reveals a genuine restriction: an eligible arbitrarily small crossing of a nonoptimal derivative jump rules out every certificate.
+In particular, an eligible arbitrarily small crossing of a nonoptimal derivative jump rules out every certificate.
 
 % SOURCE_END G.span.8
 
@@ -286,7 +286,7 @@ These pairs are strictly eligible for $(1/4,1/2)$ for small $\epsilon$, and thei
 
 % SOURCE_BEGIN G.span.10
 \section{Local nonexistence despite global convergence}
-The difference between a local certificate and actual convergence remains even after shrinking every neighborhood of the optimizer.
+The difference between a local certificate and convergence remains even after shrinking every neighborhood of the optimizer.
 
 Define $a_j=4^{-j}$ and
 \begin{equation}
@@ -294,7 +294,7 @@ Define $a_j=4^{-j}$ and
 \end{equation}
 The series converges uniformly on compact sets: its absolute value is bounded by a constant times $\sum a_j$. Every summand is convex, and $h(x)\ge x^2/2$ with $h(0)=0$. Thus $h$ is finite, $1$-strongly convex, coercive, and uniquely minimized at zero.
 
-At a knot $a=a_j$, the one-sided derivatives are $2a$ and $5a$. These formulas come from exact geometric sums, not a truncation. For example, when $a/4<x<a$,
+At a knot $a=a_j$, the one-sided derivatives are $2a$ and $5a$. These formulas come from exact geometric sums. For example, when $a/4<x<a$,
 \[
  h(x)=\frac12x^2+ax-\frac15a^2,
 \]
@@ -320,7 +320,7 @@ The pairs are strictly eligible for $(c_1,c_2)=(1/4,1/2)$ for small $\epsilon$. 
 \]
 No certificate exists on a positive band whose interior contains this knot ($b>h(a)>\eta$). Every neighborhood of zero contains such a knot. Fixing a knot first, then taking $\epsilon\to0$, is essential: deterioration of band constants as $\eta\downarrow0$ cannot repair the divergence on the fixed knot's band.
 
-Nevertheless Proposition~\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$. The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it. Thus the transported condition is not necessary even for local convergence. This conclusion uses the explicitly defined infinite-series objective above; no unspecified archived auxiliary is needed.
+Nevertheless Proposition~\ref{G:prop:scalarconv} proves convergence of every admissible run on $h$. The minimizer is differentiable for this scalar example, but the objective is nonsmooth in every neighborhood of it. Thus the transported condition is not necessary even for local convergence.
 
 
 \setcounter{section}{8}
@@ -350,14 +350,12 @@ Consequently a finite-sample feasibility problem with unrestricted constants can
 
 
 \section*{Relation to earlier work}
-The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
-
 Absorbing multiplicative errors by rescaling is an established technique; compare~\cite{FND_CV13}, Lemmas~2.2--2.3. The elementary objective-value rescaling in this chapter applies to this specific, potentially singular and unbounded comparison field.
 
-The ellipsoid interpretation and the reduction in this chapter use standard support-function duality, polar sets and PSD Cauchy--Schwarz. They are elementary deductions for the stated certificate, with no assertion that the pointwise choices satisfy transport.
+The ellipsoid interpretation and the reduction in this chapter use standard support-function duality, polar sets and PSD Cauchy--Schwarz.
 
-The proof uses the standard triangle inequality for a PSD seminorm. The conclusion concerns this certificate's all-eligible-pairs requirement; it is neither a BFGS failure theorem nor a necessity condition for convergence.
+The proof of Proposition~\ref{G:prop:star} uses the standard triangle inequality for a PSD seminorm.
 
-VU and partial-smoothness theory supply the common projected-subgradient geometry~\cite{geom_Lewis2002,LL}. The argument in this chapter additionally tracks jumps accessible under the fixed line search. The span of all active-gradient differences cannot replace that accessible span without a separate justification.
+VU and partial-smoothness theory supply the common projected-subgradient geometry~\cite{geom_Lewis2002,LL}. The argument in this chapter additionally tracks jumps accessible under the fixed line search. The accessible span can differ from the span of all active-gradient differences.
 
-Lewis--Overton analyzes convergence on the scalar absolute value for its specified bracketing/secant algorithm (Section~5.1)~\cite{LO}. Their Section~4.2 also discusses accumulating corners in line-search analysis. These precedents do not assert the exact all-field certificate obstruction or the particular infinite-series example in this chapter.
+Lewis--Overton analyzes convergence on the scalar absolute value for its specified bracketing/secant algorithm (Section~5.1)~\cite{LO}. Their Section~4.2 also discusses accumulating corners in line-search analysis. The all-field certificate obstruction and the infinite-series example of this chapter go beyond these precedents.

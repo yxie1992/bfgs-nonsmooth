@@ -89,6 +89,51 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   Lean coverage theorem for a tail energy lemma). Awaiting the author's choice
   of stage. Expository only; no mathematical finding.
 
+## Higher-priority follow-up: confident authorial wording (18 October 2026)
+
+- [ ] **M44: Remove defensive and over-qualifying writing from both documents.**
+  The author asked to keep a qualification only when it answers a common
+  misunderstanding and makes the paper easier to follow; otherwise state the
+  contribution directly, as authors rather than critics. This takes priority
+  over M43's proposed narrative stages and supersedes its blanket recommendation
+  to retain each scope caveat once. The verbatim request and proposal rules are
+  saved in `editorial/defensive_wording_20261018/checkpoint/companion/BRIEF.md`.
+
+  **Paused at the author's request on 18 October; not complete.** The complete
+  local restart instructions are
+  `editorial/defensive_wording_20261018/RESUME.md`; no conversation or temporary
+  files are needed. State:
+  - [x] Article wording applied in 12 TeX files (71 initial edits plus recorded
+    follow-ups), without changing mathematical hypotheses, conclusions or Lean
+    proofs.
+  - [x] Companion generator updated and regenerated (299 logged replacements,
+    introduction/title changes and the repetitive relation-preface deletion);
+    hand-written front matter, verification, correspondence and bibliography
+    revised; shared seed appendix regenerated. AI-use paragraph unchanged (Q1).
+  - [x] First coverage resync written **once** for 30 TeX files, with 20 reviewed
+    mechanical hashes accepted. Do not repeat that write. Snapshot and full
+    reports are saved under `editorial/defensive_wording_20261018/checkpoint/`.
+  - [x] Remaining register actions encoded and dry-run: zero missing new anchors
+    or `of` targets; six explicit docstring repairs identified.
+  - [ ] Run the prepared `checkpoint/reg/apply_actions.py --write` once, then
+    repair stale notes/docstrings/references. It has **not** been applied:
+    132 retirements, 205 re-anchors, 140 keeps and four additions remain a plan.
+  - [ ] Finish strict coverage **and** literal anchor/range review; compile/build
+    the affected Lean package; refresh and independently review correspondence,
+    M42 source bindings, claim ledger and HTML index.
+  - [ ] Build both revised PDFs; visually inspect changed pages and compare
+    warnings with the saved pre-edit builds. Not yet run after these edits.
+  - [ ] Obtain fresh source-bound axiom/kernel evidence, update final records,
+    commit/push the completed work, and report M44 plus the pulled-change overview.
+
+  Checkpoint checks: generator `--check` PASS; strict coverage exits 0 on the
+  **old** 2529-item register (it does not check literal prose anchors); all 28
+  changed Lean files have identical code outside comments against `66de81d`.
+  These are not a new build, PDF review, correspondence check or audit.
+  Historical release/evidence files remain unchanged. The owed overview of the
+  45 pulled MacBook commits is saved in
+  `editorial/defensive_wording_20261018/UPDATE_4350777_66de81d.md`.
+
 ## Questions for the author (step 3)
 
 Decisions the agents left to the author for the 15 October edition. Its other
@@ -98,7 +143,9 @@ follow-up.
 - [ ] **Q1: The AI-use statement (M37).** `companion/master.tex:63-64` and
   `editorial/AI_AND_AUTHOR_ACTIONS.md` now say that, from October 2026, Anthropic
   Claude (in OpenCode) assisted the work (the Lean review, the Lean coverage, the
-  reviews and the corrections). Confirm or change the wording.
+  reviews and the corrections). Confirm or change the wording. M44 leaves the
+  AI-use paragraph and its disclosure sentences unchanged; their final wording
+  is the author's choice, not part of the automatic defensive-wording pass.
 - [ ] **Q2: The coverage registers in the article (M36).** Section 7 now names the
   compiler, axiom and kernel-replay audits. Should it also say that every claim of the
   article is classified, with its Lean statement, in the coverage registers

@@ -1,0 +1,137 @@
+\chapter{Affine criticality and stratified geometry}\label{comp:A}\label{A:chapter}
+\renewcommand{\ModuleTag}{8}
+Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity. Chapters~\ref{comp:C} and~\ref{comp:U} turn this geometry into convergence theorems.
+
+
+% SOURCE_BEGIN A.span.1
+\section{Equal-rate descent and affine criticality}
+
+This chapter preserves the geometric propositions of the original affine-criticality note. They do not depend on the BFGS principal-minor lemma. The originally proposed dynamical step is now proved in the settings of Chapters~\ref{comp:C} and~\ref{comp:U}.
+
+For a finite convex $F$, put
+\[
+ V(p)=\operatorname{span}(\partial F(p)-\partial F(p)),\quad U(p)=V(p)^\perp,
+ \quad a(p)=\operatorname{proj}_{\operatorname{aff}\partial F(p)}0.
+\]
+The affine hull equals $a(p)+V(p)$ and $a(p)\perp V(p)$. Hence every subgradient satisfies
+\[
+ P_{U(p)}g=a(p),\qquad g^Ta(p)=\|a(p)\|^2.
+\]
+The condition
+\begin{equation}\label{A:AC}
+ 0\in\operatorname{aff}\partial F(p)\Longrightarrow0\in\partial F(p)
+\end{equation}
+is therefore equivalent, at every nonoptimal point under consideration, to the existence of a direction $v$ with $g^Tv=-1$ for every $g\in\partial F(p)$. One may take $v=-a(p)/\|a(p)\|^2$. Conversely such an equal-rate direction rules out zero in the affine hull. This is stronger than ordinary strict descent, which requires only negative, not equal, inner products.
+
+On a compact admissible run, all cluster points share the limiting value $\ell$. If at least one cluster point is affine critical and \eqref{A:AC} holds on the basin, that point is optimal, so $\ell=F_*$. Compactness gives convergence to the solution set, and uniqueness gives convergence of the entire sequence. This reduction does not assume an iterate limit. It would be incorrect to replace affine criticality of a cluster point by vanishing gradients at differentiable iterates: for example, the gradients of $|x|$ have unit magnitude away from its minimizer.
+
+% SOURCE_END A.span.1
+
+
+% SOURCE_BEGIN A.span.2
+\section{Why pointwise affine separation need not be uniform}
+
+Let $\gamma(p)=\operatorname{dist}(0,\operatorname{aff}\partial F(p))$. A useful quantitative condition is a positive minimum of $\gamma$ on every compact positive objective band. Pointwise nonvanishing plus compactness does not establish it when ranks change.
+
+Consider
+\[
+ F(u,v)=u+u^2+v^2+|uv|
+ =\max\{u+u^2+v^2+uv,\ u+u^2+v^2-uv\}.
+\]
+Both branch Hessians have eigenvalues $1$ and $3$, so $F$ is strongly convex, with unique minimizer $(-1/2,0)$ and value $-1/4$. At $(0,t)$, $t\ne0$, the active gradients are $(1+t,2t)$ and $(1-t,2t)$, giving $\gamma(0,t)=2|t|$. At zero the gradient is $(1,0)$, so $\gamma(0,0)=1$. On the other switching axis $\gamma(u,0)=|1+2u|$, vanishing only at the optimizer. Smooth points are affine critical only when stationary. Thus \eqref{A:AC} holds globally, but $\gamma(0,t)\to0$ while the objective gap tends to $1/4$.
+
+This is a geometric rank-loss example. A sufficiently small neighborhood of its optimizer excludes the rank-loss point.
+
+% SOURCE_END A.span.2
+
+
+% SOURCE_BEGIN A.span.3
+\section{Nondegenerate smooth maxima give local affine-critical correctness}
+
+Let $F=\max_{i\le m}f_i$ with convex $C^1$ branches and a minimizer $x_*$. Restrict to $I_*$, the active branches there; inactive branches have positive gaps and disappear in a sufficiently small neighborhood. Suppose the active gradients are affinely independent and admit strictly positive coefficients
+\[
+ \lambda_i^*>0,\quad\sum_{i\in I_*}\lambda_i^*=1,
+ \quad\sum_{i\in I_*}\lambda_i^*\nabla f_i(x_*)=0.
+\]
+Then \eqref{A:AC} holds near $x_*$.
+
+\begin{proof}
+Let $A(x)$ have columns $(\nabla f_i(x),1)$ for $i\in I_*$. Full column rank at $x_*$ persists nearby. At an affine-critical point $p$, extend the affine coefficients of its active gradients by zero on missing indices. They solve
+\[
+ A(p)\lambda=(0,\ldots,0,1)^T.
+\]
+Whenever this system is solvable, its unique solution equals
+\[
+ \lambda(p)=(A(p)^TA(p))^{-1}A(p)^T(0,\ldots,0,1)^T.
+\]
+This continuous expression equals the strictly positive vector $\lambda^*$ at $x_*$. It remains positive nearby. No missing index can therefore have zero coefficient, and the affine combination is a convex combination. Thus $0\in\partial F(p)$.
+\end{proof}
+This is the source note's barycentric-stability argument, closely related to the geometric nondegeneracy results it cites.
+
+There is also local lower semicontinuity of $\gamma$. For each nonempty $J\subset I_*$, the distance to the affine hull of the gradients in $J$ is continuous, because the relevant difference Gram matrix remains nonsingular. For $p_j\to p$, pass to a subsequence of constant active set $J\subset I(p)$. Then
+\[
+ \lim\gamma(p_j)=\operatorname{dist}(0,\operatorname{aff}\{\nabla f_i(p):i\in J\})\ge\gamma(p).
+\]
+On a compact positive band, local \eqref{A:AC} therefore gives a strictly positive minimum. This establishes the visibility condition of Chapter~\ref{comp:T}.
+
+% SOURCE_END A.span.3
+
+
+% SOURCE_BEGIN A.span.4
+\section{Semialgebraic objectives have finitely many affine-critical values}
+
+\begin{proposition}[A low-level affine-critical gap]\label{A:semialgebraic}
+If $F:\mathbb R^n\to\mathbb R$ is finite convex and semialgebraic and attains $F_*$, then some $\epsilon>0$ satisfies
+\[
+ F(p)<F_*+\epsilon,\quad0\in\operatorname{aff}\partial F(p)
+ \quad\Longrightarrow\quad0\in\partial F(p).
+\]
+\end{proposition}
+\begin{proof}
+The subgradient graph is semialgebraic: its global supporting-plane condition is a quantified polynomial condition involving the graph of $F$, and real projection and Boolean closure eliminate the quantifiers. An affine representation of zero can be chosen with at most $n+1$ subgradients, with real coefficients summing to one; these coefficients need not be nonnegative. It follows that both the affine-critical set $C_{\rm aff}$ and its lifted graph
+\[
+ \widehat C_{\rm aff}=\{(p,F(p)):p\in C_{\rm aff}\}
+\]
+are semialgebraic.
+
+Use a finite semialgebraic cover of $\widehat C_{\rm aff}$ whose pieces are internally connected by continuous paths that are $C^\infty$ outside finitely many interior parameters. For a path $(p(t),q(t))$ inside one piece, $q(t)=F(p(t))$. Coordinate projection therefore gives derivatives of both $p$ and the composition $F\circ p$ at every interior time outside one finite exceptional set. No differentiability of $F$ at $p(t)$ is assumed.
+
+At such a time, for every $g\in\partial F(p(t))$, the supporting inequality makes
+\[
+ u\longmapsto F(p(u))-g^Tp(u)
+\]
+have a local minimum at $t$. Differentiation gives
+\[
+ (F\circ p)'(t)=g^Tp'(t)\qquad\text{for every }g\in\partial F(p(t)).
+\]
+An affine combination of these subgradients equal to zero forces $(F\circ p)'(t)=0$. The mean-value theorem makes the value constant between consecutive exceptional parameters, and continuity joins those constants at the junctions and endpoints. Thus each piece of the finite lifted cover has only one objective value, proving that there are finitely many affine-critical values.
+
+Since $F_*$ is one of these values, choose $\epsilon>0$ no larger than the least strictly positive difference between an affine-critical value and $F_*$, or choose any positive $\epsilon$ if there is no larger value. The strict inequality in the proposition then forces $F(p)=F_*$. Convexity turns this equality into $0\in\partial F(p)$.
+\end{proof}
+Here and below, a piecewise $C^1$ path is continuous on $[0,1]$ and $C^1$ at every interior parameter outside a finite set. No derivative at $0$ or $1$, or derivative extension across a junction, is required. The geometric facts used above are established by real-polynomial projection, finite root and sign refinements, and graph-and-band path constructions; the references~\cite{BDLS} supply mathematical context.
+
+The affine-critical set also has finitely many semialgebraic path classes, where two points are related when a continuous path with semialgebraic restricted graph joins them inside the set. Each class is semialgebraic and internally connected by such paths. Every continuous semialgebraic path admits the finite-exception regularity just specified on the same curve; for finite convex semialgebraic $F$, its composition with $F$ is likewise continuous and smooth off finitely many interior parameters. The objective is constant on each class. Ordinary topological connected components are separately finite and semialgebraic, with constant objective value.
+
+This proposition concerns affine criticality rather than merely Clarke criticality. Chapters~\ref{comp:C} and~\ref{comp:U} provide dynamical theorems forcing an affine-critical cluster point under their respective additional hypotheses.
+
+% SOURCE_END A.span.4
+
+
+% SOURCE_BEGIN A.span.5
+\section{What remains a conjecture}
+The recorded general-dimensional conjecture concerns finite convex $C^{2,1}$ maxima with unique minimizer, compact low sublevels, affinely independent active gradients, positive optimal weights, and positive weighted Hessian on
+\[
+ U_* =\{v:(\nabla f_i(x_*)-\nabla f_1(x_*))^Tv=0\ \forall i\in I_*\}.
+\]
+The proposed conclusion is local full-BFGS convergence for arbitrary SPD initialization. The planar theorem proves a strict-contour version; the fixed-normal theorem proves a different arbitrary-dimensional class. The full conjecture remains open. Straightening an active manifold by a nonlinear coordinate change does not preserve ordinary BFGS, and cannot supply the missing implication.
+% SOURCE_END A.span.5
+
+
+\section*{Relation to earlier work}
+The common projected subgradient and affine-hull decomposition belong to established VU and partial-smoothness geometry~\cite{geom_Lewis2002,LL}. The equal-rate direction in this chapter is their elementary projection consequence, included to connect that geometry to the BFGS arguments.
+
+Discontinuity of subgradient affine hulls is established in Liu--Sagastiz\'abal--Solodov, Section~3.1~\cite{geom_LSS2019}. The example in this chapter supplies the stated finite, strongly convex realization.
+
+The argument uses standard stability of full-rank augmented gradient systems and positive multipliers. Compare Lewis--Wylie, Propositions~5.5--5.6 of the 2019 preprint~\cite{LW}, and Gebken's published Lemma~3.5~\cite{BG}. This geometric deduction is included with its proof.
+
+This is a corollary of established stratified projection and definable critical-value machinery~\cite{BDLS}; see Proposition~4, Lemma~8 and the proof of Corollary~9 in the arXiv version. All subgradients have the same tangential projection on a compatible smooth stratum. Projecting an affine combination equal to zero, whose coefficients sum to one, makes that stratum gradient zero. This additional deduction justifies the affine-critical conclusion beyond the printed Clarke-critical corollary.

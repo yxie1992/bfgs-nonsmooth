@@ -1,0 +1,67 @@
+The question is what convergence ordinary full BFGS can guarantee when a
+convex objective has gradient jumps. Its practical success invites a
+theory, but the smooth argument cannot simply treat every secant as a
+bounded Hessian acting on a short step. Lewis--Overton's experiments and
+Challenge~7.1 place this problem in a broader almost-sure semialgebraic
+setting~\cite{LO}. The present work gives deterministic positive and negative
+answers for specified convex classes. It does not claim to settle every
+part of that challenge.
+
+The mixed objective $F(u,v)=u^2+|v|$ gives a concrete measure of progress.
+Guo--Lewis developed extensions of Powell's smooth-convex argument and
+proved convergence on the Euclidean norm~\cite[Theorems~3.2, 4.1, 4.3 and
+Corollary~4.2]{GL18}. Their Corollary~4.4 proves only that a subsequence for
+the mixed objective approaches a point on $v=0$, leaving whole-sequence
+convergence to zero open. The horizontal error $u^2$ can remain positive on
+that line. Gebken's published 2026 introduction still identifies this
+benchmark as unresolved, while its criticality theorem assumes iterate
+and matrix behavior~\cite[Theorem~3.1 and (B1)]{BG}.
+
+The centered smooth--sublinear result here proves that every infinite
+admissible full-BFGS run on $u^2+|v|$ converges to zero, for arbitrary
+positive-definite initialization and fixed valid Armijo--weak-Wolfe
+parameters. It is a consequence of a family argument in arbitrary dimension.
+The sublinear part is modeled exactly toward its center; adding a locally
+$C^{1,1}$ convex term leaves only a quadratic inward remainder. Compact
+initial sublevels inside the structural region give value convergence,
+and uniqueness gives convergence of the whole sequence. The same route
+covers coercive degree-one homogeneous functions, including coercive finite
+maxima of linear functions. The Euclidean norm is an attributed known case.
+The full noncompact homogeneous value alternatives are retained separately:
+they conclude objective-value convergence without any conclusion about the iterates, and they do not subsume
+Xie--W\"achter's finite detection of unbounded descent in the two-piece
+affine model~\cite[Theorem~IV.1]{XW}.
+
+Local convergence extends this positive picture. Finitely many polyhedral
+cells with smooth extensions supply a uniform inward model after a low
+sublevel traps the iterates near the minimizer. The algorithm need not
+identify a cell. Curved switching sets can defeat that radial condition;
+the planar theorem constructs a comparison field along positive contours
+instead. Its nondegenerate smooth-max corollary and explicit three-quadratic
+example show a convergence conclusion beyond the radial class. The
+fixed-normal theorem in arbitrary dimension and the flat-contour parabolic
+family use different hypotheses and remain independent parts of the theory.
+
+The negative results establish a complementary limitation. A fixed unit-first
+implementation can generate a shrinking cycle around a nonstationary corner.
+The construction certifies every rejected and accepted query, and then embeds
+copies so that one fixed objective has failing starts arbitrarily close to
+its unique minimizer, all with identity initialization. One embedding has
+four globally convex $C^{2,1}$ branches with bounded Hessians and no uniform
+positive lower-curvature assumption. A different embedding preserves uniform
+strong convexity with $C^{1,1}$ branches, three of which lose second differentiability at
+the minimizer. These are two distinct exclusions of deterministic
+neighborhood guarantees. They neither establish positive-probability failure
+nor produce a finite uniformly strongly convex $C^2$ local counterexample.
+
+The common analytical tool is an adjacent-degree hierarchy for actual
+principal determinants of full-BFGS matrices. Building on the classical
+trace/determinant approach~\cite{FND_P76,FND_BN89,FND_N92}, it forces the
+arithmetic mean of reciprocal metric-gradient values to diverge under the
+stated bounded-gradient and vanishing-decrease hypotheses. A comparison
+energy turns this matrix restriction into convergence when objective
+geometry preserves visibility of nonoptimality, controls the secant
+correction and permits transport at a summable cost. Matrix degeneration
+is allowed throughout. The radial and moving-field arguments demonstrate
+ways this mechanism succeeds; the scalar nonnecessity results prevent it
+from being read as a complete characterization.

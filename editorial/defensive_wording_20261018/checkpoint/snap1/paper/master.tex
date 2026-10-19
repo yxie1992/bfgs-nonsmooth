@@ -1,0 +1,80 @@
+\documentclass[smallextended]{svjour3}
+\smartqed
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,mathtools,microtype}
+\usepackage{graphicx,booktabs,array,longtable,xurl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,patterns}
+\usepackage[colorlinks=true,allcolors=black,bookmarksnumbered=true]{hyperref}
+\input{preprint_references}
+\newcommand{\R}{\mathbb R}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\argmin}{argmin}
+\setlength{\emergencystretch}{1.5em}
+\allowdisplaybreaks[1]
+\title{BFGS on Convex Nonsmooth Functions:\\Convergence and Failure}
+\titlerunning{BFGS: convergence and failure}
+\author{}
+\institute{}
+\journalname{}
+% Author-review layout: omit the editor's manuscript-number placeholder and
+% the reserved empty author block. The class and body typography are unchanged.
+\renewcommand{\makeheadbox}{}
+\setlength{\headerboxheight}{0pt}
+\date{Author-review edition, 15 October 2026}
+\hypersetup{pdftitle={BFGS on Convex Nonsmooth Functions: Convergence and Failure},pdfsubject={Unmodified full BFGS; global and local convergence; deterministic failure},pdfkeywords={BFGS, convex nonsmooth optimization, global convergence, local convergence, counterexample}}
+\begin{document}
+\begingroup
+% No author-address footnote exists in this review edition.
+\renewcommand{\footnotetext}[2][]{}
+\maketitle
+\endgroup
+\begin{abstract}
+Ordinary full BFGS often succeeds on nonsmooth objectives, but its convergence
+theory must accommodate gradient jumps and possible degeneration of the
+quasi-Newton matrices. We give complementary positive and negative results
+for finite convex objectives with Armijo--weak-Wolfe steps and gradients at
+differentiable accepted iterates. A centered smooth--sublinear theorem
+proves global whole-sequence convergence for $u^2+|v|$ and applies in arbitrary
+dimension on compact initial sublevels contained in the region of the centered
+representation. Coercive degree-one homogeneous
+objectives, including coercive max-linear functions, norms and gauges, admit global
+convergence. Local results cover finite polyhedral smooth-piece partitions
+and nondegenerate planar smooth maxima; in an explicit curved-interface
+example, moving comparison geometry proves convergence although the radial
+criterion fails. In contrast,
+a fixed unit-first implementation can converge to nonstationary points from
+starts arbitrarily close to the unique minimizer of one fixed objective. One
+construction is a maximum of four globally convex $C^{2,1}$ branches; another
+retains uniform strong convexity with $C^{1,1}$ branches, three of which lose
+second differentiability at the minimizer. The positive proofs derive an
+adjacent-degree hierarchy for the principal minors of full-BFGS matrices,
+then combine reciprocal growth with comparison energies. The resulting
+objective-level conditions require neither iterate convergence nor prescribed
+spectral behavior. The negative proofs certify the complete trial trees and
+infinite local embeddings. These results expand the convergence theory while
+ruling out unrestricted deterministic guarantees for the specified classes.
+\keywords{BFGS \and convex nonsmooth optimization \and global convergence \and local convergence \and counterexample}
+\subclass{90C30 \and 90C53 \and 49J52}
+\end{abstract}
+\input{sections/introduction}
+\input{sections/geometry}
+\input{sections/energy}
+\input{sections/global}
+\input{sections/local}
+\input{sections/failure}
+\input{sections/verification}
+\appendix
+\normalsize
+\input{appendices/matrix_algebra}
+\input{appendices/planar_geometry}
+\input{appendices/seed_certificate}
+\input{appendices/lower_curvature}
+\input{appendices/hypothesis_examples}
+\input{bibliography}
+\end{document}

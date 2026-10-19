@@ -2040,7 +2040,7 @@ theorem euclidean_smallness_insufficient {n : ℕ} (hn : 1 ≤ n) :
   rw [hfrob, htr, mul_one] at h
   linarith [le_abs_self c]
 
-/-- Item `C/02_M/prose/043` (`companion/chapters/02_M.tex:288`): "Its additive errors need
+/-- Item `C/02_M/prose/043` (`companion/chapters/02_M.tex:286`): "Its additive errors need
 not be summable, so the earlier lemmas alone do not prove this residual theorem." The additive
 errors $C_2(k+1)$ of display `C/02_M/disp/039` are not summable unless $C_2=0$: for $C_2>0$,
 $\sum_kC_2(k+1)=\infty$. (The comparison with the cited lemmas is bibliographic.) -/

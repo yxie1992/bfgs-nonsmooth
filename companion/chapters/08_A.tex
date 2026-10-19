@@ -1,12 +1,12 @@
 \chapter{Affine criticality and stratified geometry}\label{comp:A}\label{A:chapter}
 \renewcommand{\ModuleTag}{8}
-Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity. This distinction gives useful local geometry but does not by itself force an algorithm to visit it.
+Affine balance concerns equal-rate descent, whereas convex balance concerns stationarity. Chapters~\ref{comp:C} and~\ref{comp:U} turn this geometry into convergence theorems.
 
 
 % SOURCE_BEGIN A.span.1
 \section{Equal-rate descent and affine criticality}
 
-This chapter preserves the geometric propositions of the original affine-criticality note. They do not depend on the BFGS principal-minor lemma. The originally proposed dynamical step is now proved only in the completed settings of Chapters~\ref{comp:C} and~\ref{comp:U}; no blanket theorem for all finite smooth maxima is asserted.
+This chapter preserves the geometric propositions of the original affine-criticality note. They do not depend on the BFGS principal-minor lemma. The originally proposed dynamical step is now proved in the settings of Chapters~\ref{comp:C} and~\ref{comp:U}.
 
 For a finite convex $F$, put
 \[
@@ -40,7 +40,7 @@ Consider
 \]
 Both branch Hessians have eigenvalues $1$ and $3$, so $F$ is strongly convex, with unique minimizer $(-1/2,0)$ and value $-1/4$. At $(0,t)$, $t\ne0$, the active gradients are $(1+t,2t)$ and $(1-t,2t)$, giving $\gamma(0,t)=2|t|$. At zero the gradient is $(1,0)$, so $\gamma(0,0)=1$. On the other switching axis $\gamma(u,0)=|1+2u|$, vanishing only at the optimizer. Smooth points are affine critical only when stationary. Thus \eqref{A:AC} holds globally, but $\gamma(0,t)\to0$ while the objective gap tends to $1/4$.
 
-This is a geometric rank-loss example, not a BFGS counterexample. A sufficiently small neighborhood of its actual optimizer excludes the rank-loss point.
+This is a geometric rank-loss example. A sufficiently small neighborhood of its optimizer excludes the rank-loss point.
 
 % SOURCE_END A.span.2
 
@@ -66,13 +66,13 @@ Whenever this system is solvable, its unique solution equals
 \]
 This continuous expression equals the strictly positive vector $\lambda^*$ at $x_*$. It remains positive nearby. No missing index can therefore have zero coefficient, and the affine combination is a convex combination. Thus $0\in\partial F(p)$.
 \end{proof}
-This is the source note's barycentric-stability argument, closely related to the geometric nondegeneracy results it cites. It is not itself a BFGS convergence theorem.
+This is the source note's barycentric-stability argument, closely related to the geometric nondegeneracy results it cites.
 
 There is also local lower semicontinuity of $\gamma$. For each nonempty $J\subset I_*$, the distance to the affine hull of the gradients in $J$ is continuous, because the relevant difference Gram matrix remains nonsingular. For $p_j\to p$, pass to a subsequence of constant active set $J\subset I(p)$. Then
 \[
  \lim\gamma(p_j)=\operatorname{dist}(0,\operatorname{aff}\{\nabla f_i(p):i\in J\})\ge\gamma(p).
 \]
-On a compact positive band, local \eqref{A:AC} therefore gives a strictly positive minimum. This establishes visibility, not the full transport needed in arbitrary dimension.
+On a compact positive band, local \eqref{A:AC} therefore gives a strictly positive minimum. This establishes the visibility condition of Chapter~\ref{comp:T}.
 
 % SOURCE_END A.span.3
 
@@ -94,7 +94,7 @@ The subgradient graph is semialgebraic: its global supporting-plane condition is
 \]
 are semialgebraic.
 
-Use a finite semialgebraic cover of $\widehat C_{\rm aff}$ whose pieces are internally connected by continuous paths that are $C^\infty$ outside finitely many interior parameters. For a path $(p(t),q(t))$ inside one piece, $q(t)=F(p(t))$. Coordinate projection therefore gives derivatives of both $p$ and the actual composition $F\circ p$ at every interior time outside one finite exceptional set. No differentiability of $F$ at $p(t)$ is assumed.
+Use a finite semialgebraic cover of $\widehat C_{\rm aff}$ whose pieces are internally connected by continuous paths that are $C^\infty$ outside finitely many interior parameters. For a path $(p(t),q(t))$ inside one piece, $q(t)=F(p(t))$. Coordinate projection therefore gives derivatives of both $p$ and the composition $F\circ p$ at every interior time outside one finite exceptional set. No differentiability of $F$ at $p(t)$ is assumed.
 
 At such a time, for every $g\in\partial F(p(t))$, the supporting inequality makes
 \[
@@ -108,11 +108,11 @@ An affine combination of these subgradients equal to zero forces $(F\circ p)'(t)
 
 Since $F_*$ is one of these values, choose $\epsilon>0$ no larger than the least strictly positive difference between an affine-critical value and $F_*$, or choose any positive $\epsilon$ if there is no larger value. The strict inequality in the proposition then forces $F(p)=F_*$. Convexity turns this equality into $0\in\partial F(p)$.
 \end{proof}
-Here and below, a piecewise $C^1$ path is continuous on $[0,1]$ and $C^1$ at every interior parameter outside a finite set. No derivative at $0$ or $1$, or derivative extension across a junction, is required. The geometric facts used above are established by real-polynomial projection, finite root and sign refinements, and graph-and-band path constructions; the references~\cite{BDLS} supply mathematical context rather than unproved premises.
+Here and below, a piecewise $C^1$ path is continuous on $[0,1]$ and $C^1$ at every interior parameter outside a finite set. No derivative at $0$ or $1$, or derivative extension across a junction, is required. The geometric facts used above are established by real-polynomial projection, finite root and sign refinements, and graph-and-band path constructions; the references~\cite{BDLS} supply mathematical context.
 
-The affine-critical set also has finitely many actual semialgebraic path classes, where two points are related when a continuous path with semialgebraic restricted graph joins them inside the set. Each class is semialgebraic and internally connected by such paths. Every continuous semialgebraic path admits the finite-exception regularity just specified on the same curve; for finite convex semialgebraic $F$, its actual composition with $F$ is likewise continuous and smooth off finitely many interior parameters. The objective is constant on each class. Ordinary topological connected components are separately finite and semialgebraic, with constant objective value; their identification with path classes is not needed here.
+The affine-critical set also has finitely many semialgebraic path classes, where two points are related when a continuous path with semialgebraic restricted graph joins them inside the set. Each class is semialgebraic and internally connected by such paths. Every continuous semialgebraic path admits the finite-exception regularity just specified on the same curve; for finite convex semialgebraic $F$, its composition with $F$ is likewise continuous and smooth off finitely many interior parameters. The objective is constant on each class. Ordinary topological connected components are separately finite and semialgebraic, with constant objective value.
 
-This proposition concerns affine criticality rather than merely Clarke criticality. It does not imply local BFGS convergence without a dynamical theorem forcing an affine-critical cluster point. Chapters~\ref{comp:C} and~\ref{comp:U} provide such theorems under their respective additional hypotheses.
+This proposition concerns affine criticality rather than merely Clarke criticality. Chapters~\ref{comp:C} and~\ref{comp:U} provide dynamical theorems forcing an affine-critical cluster point under their respective additional hypotheses.
 
 % SOURCE_END A.span.4
 
@@ -123,16 +123,14 @@ The recorded general-dimensional conjecture concerns finite convex $C^{2,1}$ max
 \[
  U_* =\{v:(\nabla f_i(x_*)-\nabla f_1(x_*))^Tv=0\ \forall i\in I_*\}.
 \]
-The proposed conclusion is local full-BFGS convergence for arbitrary SPD initialization. The planar theorem proves a strict-contour version; the fixed-normal theorem proves a different arbitrary-dimensional class. Neither establishes this full conjecture. Straightening an active manifold by a nonlinear coordinate change does not preserve ordinary BFGS, and cannot supply the missing implication.
+The proposed conclusion is local full-BFGS convergence for arbitrary SPD initialization. The planar theorem proves a strict-contour version; the fixed-normal theorem proves a different arbitrary-dimensional class. The full conjecture remains open. Straightening an active manifold by a nonlinear coordinate change does not preserve ordinary BFGS, and cannot supply the missing implication.
 % SOURCE_END A.span.5
 
 
 \section*{Relation to earlier work}
-The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
-
 The common projected subgradient and affine-hull decomposition belong to established VU and partial-smoothness geometry~\cite{geom_Lewis2002,LL}. The equal-rate direction in this chapter is their elementary projection consequence, included to connect that geometry to the BFGS arguments.
 
-Discontinuity of subgradient affine hulls is established in Liu--Sagastiz\'abal--Solodov, Section~3.1~\cite{geom_LSS2019}. The example in this chapter supplies the stated finite, strongly convex realization; the general rank-loss mechanism is not claimed as new.
+Discontinuity of subgradient affine hulls is established in Liu--Sagastiz\'abal--Solodov, Section~3.1~\cite{geom_LSS2019}. The example in this chapter supplies the stated finite, strongly convex realization.
 
 The argument uses standard stability of full-rank augmented gradient systems and positive multipliers. Compare Lewis--Wylie, Propositions~5.5--5.6 of the 2019 preprint~\cite{LW}, and Gebken's published Lemma~3.5~\cite{BG}. This geometric deduction is included with its proof.
 

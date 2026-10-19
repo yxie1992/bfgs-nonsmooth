@@ -12,7 +12,7 @@ The structure `AdmissibleBFGSRun n F` (`BfgsVerification.ObjectiveDefinitions`) 
 infinite admissible full-BFGS run (Definition `art:admissible`) but does not assert that one
 exists: a statement quantified over all such runs of an objective could be vacuous. This module
 proves a general existence theorem and applies it to the three-branch objective of Theorem
-`art:nonradial-example` (`paper/sections/local.tex:369-384`), for which no admissible run had
+`art:nonradial-example` (`paper/sections/local.tex:363-378`), for which no admissible run had
 been exhibited. So the first conclusion of that theorem (Lean:
 `BfgsCoverage.Article.Local.nonradial_example`) is not vacuous: for every $H_0\succ0$ and all
 $0<c_1<c_2<1$ there is an infinite admissible run with $F(x_0)<1/100$.

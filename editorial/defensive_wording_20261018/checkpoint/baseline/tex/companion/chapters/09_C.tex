@@ -1,0 +1,512 @@
+\chapter{Planar switching and affine-critical cluster points}\label{comp:C}\label{C:chapter}
+\renewcommand{\ModuleTag}{9}
+Curved switching interfaces can defeat inward radial accuracy even in a convergent problem. The planar contour construction supplies moving comparison geometry; the explicit three-quadratic basin demonstrates its added scope. The signed determinant and one-sided transport proof make the resulting convergence theorem independent of assumed matrix behavior.
+
+
+% SOURCE_BEGIN C.span.1
+\begingroup
+\providecommand{\R}{}
+\renewcommand{\R}{\mathbb R}
+\providecommand{\aff}{}
+\renewcommand{\aff}{\operatorname{aff}}
+\providecommand{\conv}{}
+\renewcommand{\conv}{\operatorname{conv}}
+\providecommand{\tr}{}
+\renewcommand{\tr}{\operatorname{tr}}
+\providecommand{\dist}{}
+\renewcommand{\dist}{\operatorname{dist}}
+\providecommand{\Ca}{}
+\renewcommand{\Ca}{\mathcal C_{\rm aff}}
+\providecommand{\ip}{}
+\renewcommand{\ip}[2]{\langle #1,#2\rangle}
+\providecommand{\norm}{}
+\renewcommand{\norm}[1]{\lVert #1\rVert}
+\makeatletter\let\c@lemma\c@theorem\let\c@corollary\c@theorem\let\c@proposition\c@theorem\let\c@remark\c@theorem\makeatother
+\renewcommand{\thelemma}{\thetheorem}\renewcommand{\thecorollary}{\thetheorem}\renewcommand{\theproposition}{\thetheorem}\renewcommand{\theremark}{\thetheorem}
+\setcounter{section}{0}
+\setcounter{theorem}{0}
+\setcounter{equation}{0}
+% SOURCE_END C.span.1
+
+
+% SOURCE_BEGIN C.span.2
+\section{Statements and assumptions}
+
+Let $F:\R^2\to\R$ be finite and convex, attain $F_*$, and have a compact sublevel
+\[
+K=\{x:F(x)\le b\},\qquad b>F_*.
+\]
+A point is \emph{affine critical} when
+\[
+ p\in\Ca:=\{p:0\in\aff\partial F(p)\}.
+\]
+Ordinary stationarity, $0\in\partial F(p)$, implies affine criticality, but not conversely.
+
+We use two objective-level hypotheses.
+
+\textbf{Strictly convex positive sublevels.} For every $F_*<t\le b$, the convex body $K_t=\{F\le t\}$ is strictly convex: its boundary contains no nontrivial line segment. This is a condition on the contours, not a uniform lower Hessian bound. Strong convexity of $F$ suffices.
+
+\textbf{Regular switching away from affine criticality.} At every $p\in K\setminus\Ca$, either $F$ is convex $C^2$ on a neighborhood of $p$, or on such a neighborhood
+\[
+ F=\max\{f_1,f_2\},
+\]
+where $f_1,f_2$ are convex $C^2$, both are active at $p$, and $\nabla f_1(p),\nabla f_2(p)$ are linearly independent. In particular, two different smooth branches meet transversally both to each other and to the positive level. No assumptions are made on the local structure at an affine-critical point.
+
+\begin{theorem}[Forced affine-critical cluster point]\label{C:thm:cluster}
+Under these hypotheses, every infinite admissible full-BFGS run starting in $K$ has at least one affine-critical cluster point. No iterate limit, bounded condition number, limiting eigenspace, matrix accuracy at initialization, or finite path length is assumed.
+\end{theorem}
+
+Here admissibility means $H_0\succ0$, differentiable accepted iterates with nonzero gradients, $s_k=-\alpha_kH_kg_k$, $\alpha_k>0$, and fixed Armijo--weak-Wolfe conditions
+\begin{equation}\label{C:eq:AW}
+ F(x_{k+1})\le F(x_k)+c_1g_k^Ts_k,\qquad
+ g_{k+1}^Ts_k\ge c_2g_k^Ts_k,\qquad 0<c_1<c_2<1.
+\end{equation}
+The usual full inverse update is
+\begin{equation}\label{C:eq:bfgs}
+ H_{k+1}=\left(I-\frac{s_ky_k^T}{t_k}\right)H_k
+ \left(I-\frac{y_ks_k^T}{t_k}\right)+\frac{s_ks_k^T}{t_k},\quad
+ y_k=g_{k+1}-g_k,\quad t_k=y_k^Ts_k>0.
+\end{equation}
+The positivity $t_k>0$ in the update is derived, not an additional assumption on later matrices: $H_k\succ0$ and $g_k\ne0$ give $q_k=g_k^TH_kg_k>0$, and weak Wolfe gives $t_k\ge(1-c_2)\alpha_kq_k>0$. The full update then preserves positive definiteness, starting from $H_0\succ0$. Existence of differentiable acceptable lengths on every exceptional search ray is not part of the theorem.
+
+\begin{corollary}[No false affine criticality gives convergence]\label{C:cor:AC}
+If, in addition, $\Ca\cap K\subseteq\arg\min F$, then every such run satisfies $F(x_k)\to F_*$ and $\dist(x_k,\arg\min F)\to0$. A unique minimizer gives convergence of the entire iterate sequence. A local version holds when the hypotheses hold only on a sufficiently low compact sublevel inside a structural neighborhood of a unique minimizer.
+\end{corollary}
+
+\begin{corollary}[Nondegenerate planar smooth maxima]\label{C:cor:max}
+Suppose a finite convex $F:\R^2\to\R$ has a unique minimizer $x_*$ and, near $x_*$,
+\[
+ F=\max_{i\le m}f_i,
+\]
+with convex $C^2$ branches. Suppose sufficiently low positive sublevels are strictly convex. Let $I_*$ be the active set at $x_*$, and assume its gradients are affinely independent and admit strictly positive optimal weights:
+\begin{equation}\label{C:eq:nondeg}
+ \lambda_i^*>0,\quad \sum_{i\in I_*}\lambda_i^*=1,\quad
+ \sum_{i\in I_*}\lambda_i^*\nabla f_i(x_*)=0.
+\end{equation}
+Then some $\varepsilon>0$ satisfies
+\[
+ F(x_0)<F_*+\varepsilon\quad\Longrightarrow\quad x_k\to x_*
+\]
+for every infinite admissible full-BFGS run, with arbitrary $H_0\succ0$ and any fixed valid line-search constants. The basin can be chosen independently of these algorithmic choices. A simple sufficient replacement for the strictly convex-sublevel hypothesis is a common positive lower Hessian bound on the finitely many locally relevant branches.
+\end{corollary}
+
+This proves a planar, strictly-convex-contour version of the smooth-max conjecture recorded in Chapter~\ref{comp:A}. It does not prove its general-dimensional or merely weighted-tangential-curvature version.
+
+
+\setcounter{section}{1}
+\setcounter{theorem}{3}
+\setcounter{equation}{3}
+% SOURCE_END C.span.2
+
+
+% SOURCE_BEGIN C.span.3
+\section{Why one affine-critical cluster point is enough}
+Armijo makes the objective values decrease to a limit $\ell\ge F_*$. Every cluster point has value $\ell$. If any cluster point is stationary, then $\ell=F_*$. Compactness gives distance to the solution set tending to zero; uniqueness gives whole-sequence convergence.
+
+The geometric condition
+\begin{equation}\label{C:eq:AC}
+ 0\in\aff\partial F(p)\ \Longrightarrow\ 0\in\partial F(p)
+\end{equation}
+therefore reduces the problem to Theorem~\ref{C:thm:cluster}. This reduction was proved in~Chapter~\ref{comp:A}; the missing algorithmic assertion is the subject of this chapter.
+
+For completeness, if $a(p)$ is the minimum-norm point of $\aff\partial F(p)$, then
+\[
+ g^Ta(p)=\norm{a(p)}^2\qquad(g\in\partial F(p)).
+\]
+At a non-affine-critical point, $-a(p)/\norm{a(p)}^2$ decreases every supporting model at rate one. Thus \eqref{C:eq:AC} says that every nonoptimal point retains equal-rate descent across its active models. It does not say that the gradients at differentiable accepted points tend to zero.
+
+
+\setcounter{section}{2}
+\setcounter{theorem}{3}
+\setcounter{equation}{4}
+% SOURCE_END C.span.3
+
+
+% SOURCE_BEGIN C.span.4
+\section{Vanishing steps without an assumed iterate limit}
+Put
+\[
+ q_k=g_k^TH_kg_k,\quad d_k=-g_k^Ts_k=\alpha_kq_k,\quad
+ \Delta_k=F(x_k)-F(x_{k+1}),\quad c=1-c_2>0.
+\]
+Convexity and \eqref{C:eq:AW} give
+\begin{equation}\label{C:eq:eligible}
+ d_k>0,\qquad c_1d_k\le\Delta_k\le d_k,\qquad t_k\ge c d_k.
+\end{equation}
+In particular $\sum_k d_k<\infty$. A finite convex function has bounded subgradients on a compact set: compare supporting planes at $x\in K$ with values on a fixed enlarged compact neighborhood. Hence the accepted gradients are bounded, and Chapter~\ref{comp:M} applies.
+
+\begin{lemma}[Strict contours force vanishing steps]\label{C:lem:steps}
+If $F(x_k)\downarrow\ell>F_*$ and $K_\ell$ is strictly convex, then $s_k\to0$.
+\end{lemma}
+\begin{proof}
+Otherwise compactness gives a subsequence with $x_k\to x$ and $x_{k+1}\to z\ne x$. For every $0\le\theta\le1$, the supporting inequality at the accepted point $x_k$ and convexity give
+\[
+ F(x_k)-\theta d_k
+ \le F((1-\theta)x_k+\theta x_{k+1})
+ \le(1-\theta)F(x_k)+\theta F(x_{k+1}).
+\]
+Since $d_k\to0$ and both endpoint values tend to $\ell$, continuity shows that $F=\ell$ on $[x,z]$. A level point of a continuous convex function lies on the boundary of its sublevel whenever some point has strictly smaller value; here a minimizer has value $F_*<\ell$. Thus $[x,z]$ is a nontrivial boundary segment of $K_\ell$, contradicting strict convexity. This argument does not require a convergent subsequence of gradients.
+\end{proof}
+
+We suppose, for a contradiction, that the compact cluster set $\Gamma$ contains no affine-critical point. Then $\ell>F_*$, every point of $\Gamma$ satisfies the regular-switching hypothesis, and Lemma~\ref{C:lem:steps} applies. This does not assume that $\Gamma$ is a singleton, or even use its connectedness.
+
+
+\setcounter{section}{3}
+\setcounter{theorem}{4}
+\setcounter{equation}{5}
+% SOURCE_END C.span.4
+
+
+% SOURCE_BEGIN C.span.5
+\section{Joining comparison directions around a regular positive level}
+The geometric construction is as follows. Fix a compact subset $C\subset\{F=\ell\}$ containing no affine-critical point and satisfying the regularity hypothesis. Eventually we use $C=\Gamma$.
+
+% SOURCE_END C.span.5
+
+
+% SOURCE_BEGIN C.span.6
+\subsection{Finitely many relevant corners and their level velocities}
+Near a nonsmooth point of $C$, $F=\max\{f_1,f_2\}$ and the matrix with rows $\nabla f_1^T,\nabla f_2^T$ is nonsingular. The equations
+\[
+ f_1(p)=f_2(p)=t
+\]
+therefore define a $C^2$ point curve $p_j(t)$ near $t=\ell$. On the level $\ell$, the switching point is isolated. Smooth points of $C$ have smooth neighborhoods. A compactness argument gives finitely many relevant curves $p_j(t)$ and a neighborhood of $C$ whose nonsmooth points on nearby levels lie on these curves. Explicitly, an infinite sequence of distinct level-$\ell$ corners in a compact regular neighborhood would accumulate at a smooth chart, or at a chart with only one solution of $f_1=f_2=\ell$; either is impossible. Shrinking the neighborhood and the level interval removes all other switching curves.
+
+Define
+\begin{equation}\label{C:eq:vel}
+ v_j(t)=p_j'(t),\qquad
+ \nabla f_{j,1}(p_j(t))^Tv_j(t)
+ =\nabla f_{j,2}(p_j(t))^Tv_j(t)=1.
+\end{equation}
+This vector is tangent to the switching curve and detects a fixed nonzero increase in the objective. It is $C^1$ in $t$.
+
+% SOURCE_END C.span.6
+
+
+% SOURCE_BEGIN C.span.7
+\subsection{Why strictly convex contours permit global joining}
+
+At $p_j(t)$, the nonnegative combinations of its two active gradients generate a closed arc of unit supporting normals of $K_t$. This arc has width less than $\pi$, and every unit normal $n$ in it satisfies $n^Tv_j(t)>0$.
+
+The normal arcs of distinct corners at $t=\ell$ are disjoint. Indeed, a shared normal would support $K_\ell$ at two different points, making their connecting segment lie on its boundary. Strict convexity prohibits this. The finitely many compact arcs consequently have positive angular separation. After slightly enlarging them and shrinking the interval of $t$, choose \emph{fixed} smooth angular cutoffs $0\le\chi_j\le1$ with disjoint supports, equal to one on neighborhoods of the entire moving normal arcs. The supports can be chosen where $n^Tv_j(t)>0$ uniformly.
+
+Let
+\[
+ n(\theta)=(\cos\theta,\sin\theta),\qquad
+ T(\theta)=(-\sin\theta,\cos\theta),
+\]
+and put
+\begin{equation}\label{C:eq:h}
+ h(t,\theta)=1+\sum_j\chi_j(\theta)\,[n(\theta)^Tv_j(t)-1].
+\end{equation}
+The supports are disjoint, so this is a convex combination of positive numbers at each angle. Hence $h$ is bounded above and bounded away from zero. It is $C^1$ in $t$ and smooth in $\theta$, with the mixed derivatives used below bounded. No convex-support-function property of $h$ is asserted or needed.
+
+At a smooth point near $C$, write $n(\theta(x))=\nabla F(x)/\norm{\nabla F(x)}$ and define
+\begin{equation}\label{C:eq:w}
+ w(x)=h(F(x),\theta(x))n(\theta(x))
+       +h_\theta(F(x),\theta(x))T(\theta(x)).
+\end{equation}
+These expressions are periodic in $\theta$, so no choice of a global angle coordinate is needed.
+
+Where $\chi_j=1$, $h=n^Tv_j$ and $h_\theta=T^Tv_j$, so
+\begin{equation}\label{C:eq:nearcorner}
+ w(x)=v_j(F(x)).
+\end{equation}
+This holds on a whole neighborhood of the corresponding switching curve, on both sides. Define $w$ by \eqref{C:eq:nearcorner} on the curve itself. The field thus extends continuously and locally Lipschitzly across the gradient jump. Away from the curves it is $C^1$. On a smaller compact neighborhood of $C$, all close-pair Lipschitz and piecewise derivative bounds are uniform.
+
+At smooth points,
+\begin{equation}\label{C:eq:visibility}
+ \nabla F(x)^Tw(x)=\norm{\nabla F(x)}h(F(x),\theta(x))>0.
+\end{equation}
+At a switching point, every subgradient has inner product one with $w$. Compactness on a positive level neighborhood gives a uniform positive lower bound in \eqref{C:eq:visibility} and uniform bounds on $w$.
+
+% SOURCE_END C.span.7
+
+
+% SOURCE_BEGIN C.span.8
+\subsection{The planar property that makes transport inexpensive}
+At fixed $t$, differentiation gives the exact identity
+\begin{equation}\label{C:eq:angleidentity}
+ \partial_\theta(hn+h_\theta T)=(h+h_{\theta\theta})T.
+\end{equation}
+Therefore, at a smooth point, $Dw(x)$ maps the one-dimensional tangent line of the level curve into itself. It may vary arbitrarily in the normal direction. In the orthonormal basis $(T,n)$, it has the form
+\begin{equation}\label{C:eq:triangular}
+ Dw=\begin{pmatrix} a&b\\0&e\end{pmatrix}.
+\end{equation}
+The coefficients are bounded in the compact neighborhood. The sign of $h+h_{\theta\theta}$ is immaterial.
+
+
+\setcounter{section}{4}
+\setcounter{theorem}{4}
+\setcounter{equation}{12}
+% SOURCE_END C.span.8
+
+
+% SOURCE_BEGIN C.span.9
+\section{Three endpoint estimates}
+An eligible pair means differentiable $x,z$ satisfying \eqref{C:eq:eligible}, with $s=z-x$, $g=\nabla F(x)$, $y=\nabla F(z)-g$, and $t=y^Ts$. For each fixed valid pair $(c_1,c_2)$, the following three estimates hold for the same objective-constructed field $w$. There are an open set $U\supset C$, a compact buffer $Q\supset\overline U$, and positive uniform distance and visibility constants such that every sufficiently close eligible pair $x,z\in U$ is covered, with its entire segment in $Q$. On $Q$, every subgradient at a given point has the same strictly positive pairing with $w$, bounded uniformly away from zero. All constants and neighborhoods are chosen before the endpoint pair; none depends on a BFGS matrix or on an assumed trajectory limit.
+
+\begin{lemma}[Uniform transversality]\label{C:lem:trans}
+There is $\kappa>0$ such that
+\[
+ |\det(s,w(x+\theta s))|\ge\kappa\norm{s}
+ \quad(0\le\theta\le1)
+\]
+for all sufficiently close eligible pairs.
+\end{lemma}
+\begin{proof}
+Otherwise take pairs coalescing to $p$ in the compact neighborhood, unit steps $s/\norm{s}\to e$, and segment points where the normalized determinant tends to zero. Continuity of $w$ implies $e$ is parallel to $w(p)$. Subgradient limits $a,b\in\partial F(p)$ have the same strictly positive inner product with $w(p)$: this is automatic at a smooth point and follows from \eqref{C:eq:vel} at a corner. Descent selects $e=-w(p)/\norm{w(p)}$, so $d/\norm{s}\to-a^Te>0$. But
+\[
+ t/\norm{s}\to(b-a)^Te=0,
+\]
+contradicting $t\ge(1-c_2)d$. Compactness makes the bound uniform, including all segment points.
+\end{proof}
+
+\begin{lemma}[Transport is charged to objective decrease]\label{C:lem:transport}
+For the same pairs, there are scalars $\lambda>0,\beta$ satisfying
+\begin{equation}\label{C:eq:transport}
+ w(z)=\lambda w(x)+\beta s,\qquad
+ |\log\lambda|\le C d.
+\end{equation}
+In particular $\lambda^2\le1+C'd$ for sufficiently small $d$.
+\end{lemma}
+\begin{proof}
+Let $q(\theta)=x+\theta s$, $\varphi(\theta)=F(q(\theta))$, and $D(\theta)=\det(s,w(q(\theta)))$. Transversality makes the continuous function $D$ nonzero throughout $[0,1]$, hence of constant sign.
+
+On a smooth part of the segment, use \eqref{C:eq:triangular}. The ordered orthonormal basis $(T,n)$ has determinant $-1$. Consequently, with $s=s_TT+s_n n$, the correctly oriented identity is
+\[
+ \det(s,Dw\,s)=s_n[(a-e)s_T+b s_n].
+\]
+Its absolute value, the uniform derivative bound, transversality and the positive lower bound on $\norm{\nabla F}$ give the required determinant-derivative estimate. In a corner neighborhood, $w\circ q=v_j\circ\varphi$. The convex function $\varphi$ has an actual right derivative at every $\theta<1$; the ordinary one-sided chain rule therefore handles corner points as well as smooth points. We obtain, for one $C\ge0$,
+\[
+ \left|\frac{D'_+(\theta)}{D(\theta)}\right|
+ \le C|\varphi'_+(\theta)|,\qquad 0\le\theta<1.
+\]
+No finite bound on intersections with a switching curve is used.
+
+Set $h(\theta)=\log|D(\theta)|$. Convexity and $\varphi'(0)=-d$ imply $\varphi'_+(\theta)\ge-d$, and hence
+\begin{equation}\label{C:eq:variation}
+ |h'_+(\theta)|\le C|\varphi'_+(\theta)|
+ \le C(\varphi'_+(\theta)+2d).
+\end{equation}
+Apply the one-sided derivative comparison theorem to the continuous observable $h-h(0)$ and the barrier
+\[
+ B(\theta)=C[\varphi(\theta)-\varphi(0)+2d\theta].
+\]
+The initial value is zero and the right-derivative norm is bounded by $B'_+$. Thus $|h(1)-h(0)|\le B(1)\le2Cd$, since $\varphi(1)\le\varphi(0)$. Because $D(1)/D(0)>0$, this is $|\log(D(1)/D(0))|\le2Cd$. Finally $s,w(x)$ form a basis, and solving in that basis gives $w(z)=\lambda w(x)+\beta s$ with $\lambda=D(1)/D(0)>0$. Absorb the factor two into the stated constant. This proves the claim.
+\end{proof}
+
+\begin{lemma}[Bounded secant correction]\label{C:lem:secant}
+There is a uniform $C_0<\infty$ such that
+\[
+ \frac{(y^Tw(z))^2}{t}\le C_0
+\]
+for all sufficiently close eligible pairs in the same neighborhood.
+\end{lemma}
+\begin{proof}
+Use a finite buffered chart cover. For close pairs in a common smooth chart, or with the same active branch in a two-branch chart, the local convex gradient-increment estimate gives $\norm{y}^2\le L t$ for a uniform constant $L$. One proof subtracts a tangent plane, applies the descent estimate to a short step opposite the gradient difference within the larger convex chart, and combines the resulting one-sided inequalities. Compact buffering supplies a single constant; no positive lower Hessian bound is required. Bounded $w$ proves the claim.
+
+For different active branches $i,j$ in a two-branch chart, the segment has a tie point $p$. At that point the jump is orthogonal to $w(p)$. The branch gradients and $w$ are Lipschitz, so
+\begin{equation}\label{C:eq:numerator}
+ |y^Tw(z)|\le C_1\norm{s}.
+\end{equation}
+For the denominator put $a=\nabla f_i(x)$, $b=\nabla f_j(x)$, and $r=\nabla f_j(z)-\nabla f_j(x)$, with $\norm{r}\le L\norm{s}$. Then
+\[
+ a^Ts=-d,\qquad b^Ts=t-d-r^Ts.
+\]
+The two gradient rows are uniformly independent on the chart. Thus
+\[
+ \norm{s}\le A(2d+t+L\norm{s}^2)
+ \le A\left(1+\frac{2}{1-c_2}\right)t+AL\norm{s}^2.
+\]
+For small $s$, absorb the final term to obtain $t\ge c_0\norm{s}$. Combining with \eqref{C:eq:numerator} bounds the correction by a constant times $\norm{s}$, hence uniformly. This is a crossing-specific linear curvature estimate, not a uniform positive Hessian assumption.
+\end{proof}
+
+
+\setcounter{section}{5}
+\setcounter{theorem}{7}
+\setcounter{equation}{15}
+% SOURCE_END C.span.9
+
+
+% SOURCE_BEGIN C.span.10
+\section{The BFGS contradiction}
+\begin{proof}[Proof of Theorem~\ref{C:thm:cluster}]
+Suppose the compact cluster set $\Gamma$ misses $\Ca$. Then the limiting value $\ell$ is strictly above $F_*$; otherwise all cluster points are minimizers. Lemma~\ref{C:lem:steps} gives $s_k\to0$. The distance of $x_k$ to $\Gamma$ tends to zero, so the entire tail lies in the buffered regular neighborhood constructed above with $C=\Gamma$.
+
+Let $B_k=H_k^{-1}$ and
+\[
+ E_k=w(x_k)^TB_kw(x_k),\qquad
+ M_k=B_k-\frac{g_kg_k^T}{q_k}\succeq0,\qquad M_ks_k=0.
+\]
+The Hessian form of \eqref{C:eq:bfgs}, the representation in Lemma~\ref{C:lem:transport}, and $M_ks_k=0$ give the exact identity
+\begin{equation}\label{C:eq:energy}
+ E_{k+1}=\lambda_k^2\left(E_k-\frac{(g_k^Tw(x_k))^2}{q_k}\right)
+       +\frac{(y_k^Tw(x_{k+1}))^2}{t_k}.
+\end{equation}
+The parenthesized expression is nonnegative. Uniform visibility and the last two lemmas imply, on a tail,
+\[
+ E_{k+1}\le (1+C d_k)(E_k-m/q_k)+C_0,
+ \qquad m>0.
+\]
+Set $P_K=1$ and $P_{k+1}=P_k(1+Cd_k)$. Since $\sum d_k<\infty$, $1\le P_k\le\bar P<\infty$. Divide by $P_{k+1}$ and telescope. Positivity gives
+\[
+ \frac{m}{\bar P}\sum_{k=K}^{N-1}\frac1{q_k}
+ \le E_K+C_0(N-K).
+\]
+This contradicts Chapter~\ref{comp:M}, which forces the average of $1/q_k$ to diverge. Thus $\Gamma\cap\Ca\ne\varnothing$.
+\end{proof}
+
+The argument constructs a field near the \emph{whole hypothetical cluster set}. It does not first select one cluster point and assume all later iterates stay near it. Nor is the field an extra algorithmic input: it is an analytical object derived from the objective, independent of every $H_k$.
+
+
+\setcounter{section}{6}
+\setcounter{theorem}{7}
+\setcounter{equation}{16}
+% SOURCE_END C.span.10
+
+
+% SOURCE_BEGIN C.span.11
+\section{Local consequences and natural assumptions}
+
+\begin{proof}[Proof of Corollary~\ref{C:cor:AC}]
+All cluster points have the limiting objective value. An affine-critical cluster point is optimal by the extra hypothesis; hence that value is $F_*$. Compactness gives distance to the solution set tending to zero. Under uniqueness every convergent subsequence has the same limit, proving whole-sequence convergence. For the local statement, compactness and uniqueness put a sufficiently low sublevel inside any given neighborhood of $x_*$; Armijo then traps the accepted iterates there.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{C:cor:max}]
+Remove branches inactive at $x_*$ by shrinking the neighborhood. Form the augmented matrix $A(x)$ whose columns are $(\nabla f_i(x),1)$ for $i\in I_*$. Affine independence makes $A(x_*)$ full column rank; that rank persists. Whenever $A(p)\lambda=(0,0,1)^T$ has a solution, it is unique and equals
+\[
+ (A(p)^TA(p))^{-1}A(p)^T(0,0,1)^T.
+\]
+This is continuous and agrees with the positive vector $\lambda^*$ at $x_*$. Shrink the neighborhood so every component remains positive. An affine representation of zero using the gradients active at $p$, extended by zero coefficients on inactive indices, must equal this vector. It therefore has no inactive indices and is a convex representation of zero. This proves local \eqref{C:eq:AC}. This geometric argument is the one recorded in~Chapter~\ref{comp:A}, with related nondegeneracy arguments in~\cite{BG}.
+
+In the plane at most three gradients are affinely independent. At a non-affine-critical nearby point, three cannot all be active, since their affine hull is $\R^2$. A singleton gives a smooth chart. For two active gradients, the difference is nonzero; if the gradients were linearly dependent, their affine line would contain zero, again contradicting non-affine-criticality. The other branches have strict gaps at that point, so the required local two-branch representation follows.
+
+Choose a low sublevel contained in this neighborhood. Its strictly convex positive sublevels and the regular-switching property allow Theorem~\ref{C:thm:cluster}, then Corollary~\ref{C:cor:AC}. The localization uses only the objective, not the line-search constants or the initial matrix. Uniformly strongly convex branches on a convex local neighborhood make their maximum strongly convex there, supplying the sufficient strict-contour condition.
+\end{proof}
+
+% SOURCE_END C.span.11
+
+
+% SOURCE_BEGIN C.span.12
+\subsection{A tame-geometric alternative}
+
+Chapter~\ref{comp:A} proves that a finite convex semialgebraic function has finitely many affine-critical values. Its proof uses a finite piecewise-smooth cover of the lifted critical graph, so the point path and its actual objective composition have simultaneous derivatives off a finite exceptional set. The two-sided supporting inequality and an affine combination of supporting vectors equal to zero then force the composition derivative to vanish. Continuity joins the resulting constants. No finite-value, path-cover, or composition-differentiability premise is assumed in the final result.
+
+The actual affine-critical set also has finitely many piecewise-smooth path classes, each semialgebraic and internally piecewise-smoothly connected. Once finite critical values are known, continuity makes the value image of each such class a singleton, so $F$ is constant along every piecewise-smooth path in the critical set. This avoids presuming that an arbitrary smooth point path has a semialgebraic graph or that its composition with a nonsmooth $F$ is differentiable in advance. These path classes are distinguished from ordinary topological connected components, whose finiteness, semialgebraicity and value constancy are proved separately.
+
+Combining the low affine-critical gap of Proposition~\ref{A:semialgebraic} with Theorem~\ref{C:thm:cluster} gives the following restricted planar basin conclusion. On a compact structural sublevel above an attained minimum, retain strictly convex positive sublevels and the regular smooth/two-branch hypotheses away from affine criticality. Then a sufficiently low objective basin gives convergence in value and distance to the full minimizer set; uniqueness gives convergence of the whole sequence. Alternatively, with a unique minimizer and the structural hypotheses on a neighborhood, localization supplies a sufficiently low trapped compact sublevel. In both versions the basin is chosen before the admissible run, its initial SPD matrix and its fixed valid line-search constants. No positive-multiplier condition is needed. Semialgebraicity alone does not give the dynamical conclusion: degenerate noncritical ties and flat contours remain outside this theorem.
+
+
+\setcounter{section}{7}
+\setcounter{theorem}{7}
+\setcounter{equation}{16}
+% SOURCE_END C.span.12
+
+
+% SOURCE_BEGIN C.span.13
+\section{An explicit quadratic example and basin}
+
+Consider
+\[\begin{aligned}
+ f_0(u,v)&=u+u^2+\tfrac12v^2,\\
+ f_1(u,v)&=v+\tfrac12u^2+\tfrac32v^2,\\
+ f_2(u,v)&=-u-v+\tfrac32u^2+v^2,\qquad F=\max_i f_i.
+\end{aligned}\]
+All branch Hessians lie between $I$ and $3I$. Also $(f_0+f_1+f_2)/3=u^2+v^2$, so $F\ge u^2+v^2$ and zero is its unique minimizer. At zero the active gradients are $(1,0),(0,1),(-1,-1)$, with positive weights $1/3$.
+
+The affine coefficient calculation is exact. With $D=3(1+v-uv)$, the solution of $\sum\lambda_i\nabla f_i=0$, $\sum\lambda_i=1$ is
+\[
+ \lambda_0=\frac{1-4u+3v-7uv}{D},\quad
+ \lambda_1=\frac{1+2u-3v-uv}{D},\quad
+ \lambda_2=\frac{1+2u+3v+5uv}{D}.
+\]
+On $|u|,|v|\le1/10$, $D\ge267/100$ and the numerators are at least $23/100$, $49/100$, and $45/100$. Hence affine independence and local \eqref{C:eq:AC} hold on this box. Since $F\ge\norm{x}^2$,
+\begin{equation}\label{C:eq:explicitbasin}
+ \boxed{F(x_0)<1/100\quad\Longrightarrow\quad x_k\to0}
+\end{equation}
+for every infinite admissible full-BFGS run with arbitrary SPD initialization.
+
+% SOURCE_END C.span.13
+
+
+% SOURCE_BEGIN C.span.14
+\subsection{This is outside the earlier radial criterion}
+For small $u>0$, the active tie $f_0=f_1$ has
+\[
+ v=v(u)=\frac{-1+\sqrt{1+4u+2u^2}}2
+ =u-\tfrac12u^2+O(u^3),
+\]
+with $f_2$ inactive. The gradient jump at the tie is
+\[
+ \nabla f_0-\nabla f_1=(1+u,-1-2v),\qquad
+ (\nabla f_0-\nabla f_1)^T(u,v)=\tfrac12u^2-v^2\ne0.
+\]
+Take $x=(u,v+\epsilon)$ on branch 1 and $z=(u,v-\epsilon)$ on branch 0. Then $s=(0,-2\epsilon)$ and
+\[
+ d=2\epsilon(1+3v+3\epsilon),\quad
+ t=2\epsilon(1+2v+4\epsilon),\quad
+ \Delta=\epsilon(1+4v)+\epsilon^2.
+\]
+For each sufficiently small fixed $u>0$ and $\epsilon\downarrow0$, these are eligible for $c_1=1/4,c_2=1/2$. The radial numerator tends to the nonzero quantity $\tfrac12u^2-v^2$ while $t\to0$. Thus RS fails on a positive band in every neighborhood of zero, even though \eqref{C:eq:explicitbasin} holds. Curved interfaces between arbitrary quadratic branches are not being replaced by finite polyhedral cells or by a nonlinear change of BFGS coordinates.
+
+
+\setcounter{section}{8}
+\setcounter{theorem}{7}
+\setcounter{equation}{17}
+% SOURCE_END C.span.14
+
+
+% SOURCE_BEGIN C.span.15
+\section{What can already be proved in any dimension}
+
+There is a useful partial statement before transport. Let $K$ be a compact set containing no affine-critical point. Suppose that a finite convex $F$ has an exact finite maximum representation by convex $C^2$ branches on a neighborhood of every point of $K$. For each $p\in K$, let $J=I(p)$ be the fixed family active at $p$, and assume its gradient-difference matrix has constant rank on a neighborhood of $p$. Nearby inactive branches can be removed by their strict gaps. Affine independence of the family at $p$ is a sufficient condition for this local rank hypothesis. The noncritical restriction on $K$ is essential: unit pairing with all subgradients is impossible at an affine-critical point.
+
+The minimum-norm point $a_J(x)$ of the affine hull of these gradients is $C^1$ in a smaller chart and remains nonzero. To see the regularity, choose an affinely independent subfamily at $p$ that spans this affine hull. Independence persists nearby, and constant rank makes the same subfamily span the full fixed-family hull nearby. The inverse-Gram formula for its minimum-norm point is therefore $C^1$, because the branch gradients are $C^1$. No $C^\infty$ conclusion follows from $C^2$ branch data alone. Hence
+\[
+ v_J(x)=a_J(x)/\norm{a_J(x)}^2,
+ \qquad \nabla f_i(x)^Tv_J(x)=1\quad(i\in J).
+\]
+A finite $C^\infty$ partition of unity on buffered charts yields one $C^1$ field $v$, bounded on a compact buffer of $K$, with $g^Tv=1$ for every actual subgradient at every point of that buffer. The cutoff regularity does not increase the regularity of the local fields. For sufficiently close endpoints, each chart contributing at $z$ also contains $x$. If $i$ is active at $x$, both $\nabla F(z)^Tv(z)$ and $\nabla f_i(z)^Tv(z)$ equal one. Therefore
+\[
+ y^Tv(z)=[\nabla f_i(z)-\nabla f_i(x)]^Tv(z).
+\]
+The local one-sided convex smooth estimate and the finite-max supporting gap give
+\[
+ \norm{\nabla f_i(z)-\nabla f_i(x)}^2
+ \le2L D_{f_i}(z,x)\le2L y^Ts.
+\]
+To justify the local one-sided estimate, subtract the tangent plane at $x$ and apply the descent lemma at $z$ to the step $-(\nabla f_i(z)-\nabla f_i(x))/L$; for sufficiently close buffered endpoints this step stays in the larger convex chart. Thus visibility and the secant correction can be constructed without a BFGS matrix assumption.
+
+\textbf{What does not follow:} $C^1$ regularity of this field does not provide the projected transport needed by the BFGS energy. The planar proof succeeds by making its derivative along the level tangent parallel to that tangent. In dimension three and higher, mapping a tangent space into itself is not enough: it may rotate or shear the executed step within the tangent space, while $M_ks_k=0$ removes only the component parallel to that one step.
+
+A concrete warning uses the entirely smooth quadratic $F(x)=x^TQx/2$, $Q=\operatorname{diag}(1,2,3)$, $x=(1,1,1)$, and the canonical common-rate field $v=\nabla F/\norm{\nabla F}^2$. Take
+\[
+ s=(\epsilon,0,-(\epsilon+\epsilon^2)/3),\quad y=Qs.
+\]
+Then
+\[
+ d=\epsilon^2,\quad t=\frac{\epsilon^2(\epsilon^2+2\epsilon+4)}3,\quad
+ \det[g,s,y]=\frac43\epsilon^2(1+\epsilon)\ne0.
+\]
+For small positive $\epsilon$ the pair is Armijo--weak-Wolfe eligible with $c_1=1/4,c_2=1/2$, but $v(x+s)\notin\operatorname{span}\{v(x),s\}$. Its rank-one projected transport therefore fails for any finite multiplier. Another field, the radial field, works for this quadratic. This is not nonexistence of all certificates or a BFGS counterexample; it demonstrates the gap in an argument based only on a smoothly chosen equal-rate direction.
+
+
+\endgroup
+% SOURCE_END C.span.15
+
+
+\section*{Relation to earlier work}
+The following comparisons are bibliographic scholarship, separate from the formal theorem assertions.
+
+Gebken's published Theorem~3.1 assumes an iterate limit and the matrix behavior (B1), including spectral bounds and annihilation of gradient differences~\cite{BG}. The assertions in this chapter derive their cluster conclusions. Lewis--Wylie's local Newton theory instead concerns a bundle algorithm~\cite{LW}. These are related results with different hypotheses or algorithms; the literature audit does not establish publication priority for the full statements in this chapter.
+
+The normal-angle expression $h n+h_\theta T$ and its derivative cancellation are classical; see Bogosel, Section~2, equation~(4)~\cite{geom_Bogosel2023}. Here $h$ is a glued comparison function, without an asserted convex-support-function property.
+
+The multiplier argument in this chapter uses the established nondegeneracy geometry discussed in Chapter~\ref{comp:A}; compare~\cite{LW,BG}. Its full-BFGS application additionally requires the preceding dynamical theorem.
+
+Chapter~\ref{comp:A}'s finite-value result is a reproof of a consequence of stratified projection and definable critical-value theory~\cite{BDLS}. The planar dynamical hypotheses in this chapter are retained in this application.
+
+The audit found no exact match for these coefficients and the certified basin. The subsequent radial obstruction excludes the stated RS condition, rather than every convergence criterion.
+
+Rank-stable projections and partitions of unity are standard tools. The buffered smooth secant estimate uses Baillon--Haddad cocoercivity; the open-domain formulation is Theorem~2.5 of~\cite{WW}. Neither this antecedent nor the partial statement supplies the missing transport estimate in arbitrary dimension.
