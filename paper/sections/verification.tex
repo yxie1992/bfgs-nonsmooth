@@ -1,72 +1,123 @@
-\section{Synthesis, verification and the remaining questions}\label{art:verification}
+\section{Synthesis: the boundary between convergence and failure, and open problems}\label{art:verification}
 
-The mixed benchmark $u^2+|v|$ has a whole-sequence convergence answer within
-an arbitrary-dimensional centered-family theorem. Finite polyhedral geometry
-supplies a local inward model, while a moving field handles the
-three-quadratic example's curved switches. In each case comparison energies
-use the principal-minor hierarchy to detect a remaining objective gap.
+Taken together, the positive theorems of Sections~\ref{art:global}--\ref{art:local}
+and the counterexamples of Section~\ref{art:failure} show that deterministic
+convergence of unmodified full BFGS on convex nonsmooth functions is governed
+neither by conditioning of the inverse-Hessian matrices nor by smoothness or
+strong convexity of the constituent branch formulas alone. Rather, it is
+governed by whether the subdifferential geometry admits a comparison field that
+remains visible to the optimality gap while filtering out leading gradient jumps.
 
-\paragraph{Why the counterexamples evade these hypotheses.}
-The distinctions can be read from the constructed objectives.
-The homogeneous seed satisfies $G(t(-1,16))=-t$ for $t\ge0$, so it is
-unbounded below;
-its coercive cap contains the affine term $v-17$ and is not homogeneous.
-Neither belongs to the coercive homogeneous class of
-Theorem~\ref{art:homogeneous}. In the local embeddings, wrong vertices recur
-at infinitely many shrinking scales around the same minimizer. They cannot be removed by taking
-a smaller neighborhood, and the resulting switching geometry is not resolved
-by a finite local polyhedral-cell partition as in
-Theorem~\ref{art:polyhedral}. Finitely many smooth formulas do not by themselves
-supply that partition.
+\subsection{Why the counterexamples escape the positive theory}
 
-There is also a direct test of the planar hypotheses. In
-\eqref{art:upper_objective}, all four branches are active at zero, with
-indexed gradients $0,0,0,e_2$, where $e_2=(0,1)^T$.
-Equation~\eqref{art:lower_objective} gives the same pattern before the fixed
-change of coordinates of Appendix~\ref{art:lower_curvature}:
-the common quadratic has zero gradient at zero, and $\psi_b'(0)=0$.
-After that change, $x=Az$ with $A=(H_0^{\rm seed})^{1/2}$, the gradients are
-$0,0,0,A^Te_2$,
-with $A^Te_2\ne0$. Thus the repeated zero gradients violate affine
-independence, and a combination with positive weight $\lambda_3$ on the
-fourth branch equals $\lambda_3e_2\ne0$ (or
-$\lambda_3A^Te_2\ne0$ after that change). The strictly positive optimal
-weights in Corollary~\ref{art:planar-max} therefore fail as well.
-Three of the four lower-curvature branches also lose second differentiability
-at zero.
-Positive strong convexity alone supplies neither the missing regularity nor
-this nondegeneracy.
+Checking our counterexamples directly against each positive theorem confirms how
+tightly the two sides meet:
+\begin{enumerate}
+\item \emph{Global homogeneity vs.\ affine offsets.} The three-slope cone
+$G(z)=\max_{0\le i\le2}g_i^Tz$ is positively homogeneous of degree one, but
+satisfies $G(t(-1,16)^T)=-t$ for $t\ge0$ and so fails coercivity; its four-piece
+coercive cap $\overline G$ in Theorem~\ref{art:failure_polyhedral} includes the
+affine offset $v-17$, breaking homogeneity around the minimizer $(-1,16)$ and
+leaving $(0,0)$ as a nonstationary corner with $0\in\aff\partial\overline G(0)\setminus\conv\partial\overline G(0)$.
+\item \emph{Finite local polyhedral partitions vs.\ accumulating smooth kinks.}
+Near $(-1,16)$, $\overline G$ is locally a three-piece polyhedral cone centered
+at $(-1,16)$ and therefore converges locally by Theorem~\ref{art:polyhedral}.
+By contrast, in Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower},
+nonlinear scalar splines cause nonstationary three-slope corners $\bar x_\ell\to0$
+to accumulate at the minimizer $0$: no neighborhood of $0$ admits a finite
+polyhedral partition with smooth extensions, demonstrating that finitely many
+smooth formulas in $\max_if_i$ do not imply a finite local polyhedral cell
+structure.
+\item \emph{Active-gradient multiplier nondegeneracy.} Both local smooth-branch
+counterexamples are planar four-branch maxima, so we can test the multiplier
+hypotheses of Corollary~\ref{art:planar-max} directly at $x_*=0$. In
+\eqref{art:upper_objective}, all four branches are active at $0$ with gradients
+$0,0,0,e_2$, where $e_2=(0,1)^T$; in~\eqref{art:lower_objective}, the active
+gradients at $0$ are again $0,0,0,e_2$ before whitening and $0,0,0,A^Te_2\ne0$
+after $x=Az$ with $A=(H_0^{\rm seed})^{1/2}$. In both cases, the repeated zero
+gradients violate affine independence, and any convex combination placing
+positive weight $\lambda_3>0$ on the fourth branch equals $\lambda_3e_2\ne0$ (or
+$\lambda_3A^Te_2\ne0$), violating strict complementarity $\lambda_i^*>0$ as
+well; in~\eqref{art:lower_objective}, three branches also lose $C^2$ regularity
+at $0$.
+\end{enumerate}
 
-The secant calculation explains how curvature and the failure mechanism
-coexist. For $Q_\mu(x)=\mu\|x\|^2/2+G(x)$, suppose the differentiable
-endpoints $x$ and $x+s$ have active slopes $g_i$ and $g_j$. Then exactly
+A one-line secant identity also clarifies why uniform strong convexity cannot by
+itself rescue BFGS from nonsmooth stalling. On $Q_\mu(x)=\tfrac\mu2\norm{x}^2+G(x)$,
+if consecutive differentiable iterates $x$ and $x+s$ activate slopes $g_i$ and
+$g_j$, then the secant vector is
 \begin{equation}\label{art:jump-secant}
  y=\bigl(\mu(x+s)+g_j\bigr)-\bigl(\mu x+g_i\bigr)
-   =\mu s+(g_j-g_i).
+  =\mu s+(g_j-g_i).
 \end{equation}
-Along the perturbed orbit of Proposition~\ref{art:quadratic_failure}, $s\to0$ while the three distinct
-slopes continue to cycle. The positive-curvature contribution therefore
-vanishes with the step, while the branch jumps persist. The stable-manifold
-and strict-query arguments show that the specified algorithm realizes this
-decomposition.
+Along the perturbed trajectory of Proposition~\ref{art:quadratic_failure},
+$\norm{s_k}\to0$ while $g_0,g_1,g_2$ continue to cycle: the strongly convex
+contribution $\mu s_k$ vanishes with the step length, leaving the $O(1)$ jump
+$g_j-g_i$ to dominate the rank-two BFGS update.
 
-These comparisons identify the hypotheses that separate the proved
-positive classes from the examples. The local question for finitely
-many uniformly strongly convex $C^2$ branches remains open here outside the
-nondegenerate planar case of Corollary~\ref{art:planar-max}.
-The failing starts constructed here form a sequence of points.
-Lewis--Overton's Challenge~7.1~\cite{LO} concerns absolutely continuously
-distributed initial data; whether a convex objective can have a set of
-failing starts of positive measure is a natural next question.
+\subsection{Open problems}
 
-\paragraph{Formal verification and reproducibility.}
-The complete companion supplies pinned Lean sources, exact theorem contracts
-and their correspondence to the manuscripts, compiler, axiom and kernel-replay audits,
-and versioned source/build records. The proofs and rational certificates
-needed for the article's main results are also contained here.
+Our results point directly to four open problems in the theory of quasi-Newton
+methods for nonsmooth optimization:
+\begin{enumerate}
+\item \emph{Uniformly strongly convex $C^2$ branch maxima.} Globally,
+$Q_\mu(x)=\tfrac\mu2\norm{x}^2+G(x)$ is already a maximum of three $\mu$-strongly
+convex $C^\infty$ quadratic functions on which full BFGS can converge to the
+nonstationary origin (Proposition~\ref{art:quadratic_failure}). Locally near the
+minimizer, however, Table~\ref{art:regularity-map} leaves a sharp regularity
+gap: Theorem~\ref{art:local-failure} achieves $C^{2,1}$ branches without a
+positive lower Hessian bound, Theorem~\ref{art:local-failure-lower} achieves
+uniformly strongly convex $C^{1,1}$ branches that lose $C^2$ regularity at $0$,
+and Corollary~\ref{art:planar-max} proves local convergence in $\R^2$ when the
+active gradients at $x_*$ are nondegenerate. Does unmodified full BFGS converge
+locally from every differentiable start near the minimizer of a maximum of
+finitely many uniformly strongly convex $C^2$ functions when active-gradient
+nondegeneracy is dropped?
+\item \emph{Moving comparison fields in dimension $n\ge3$.} The radial theorems
+(Theorems~\ref{art:centered}, \ref{art:homogeneous}, and~\ref{art:polyhedral})
+hold in arbitrary dimension $\R^n$, whereas our curved-interface analysis
+(Theorem~\ref{art:planar-cluster} and Corollary~\ref{art:planar-max}) uses the
+one-dimensionality of level-set tangents in $\R^2$ to cancel normal components
+of $\partial_\theta(hn+h_\theta T)$ and charge field rotation to functional
+decrease. Extending moving comparison fields---or higher-rank comparison tensors
+$W_\eta(x)$ in Theorem~\ref{art:certificate}---to nondegenerate smooth maxima
+with curved switching manifolds in $\R^n$ ($n\ge3$) is a natural next step.
+\item \emph{Positive-measure vs.\ zero-measure failure (Lewis--Overton
+Challenge~7.1).} The failing initial points $x_0^{(\ell)}$ in
+Theorems~\ref{art:failure_polyhedral}, \ref{art:local-failure},
+and~\ref{art:local-failure-lower} form discrete sequences (or lie on a
+two-dimensional stable manifold in the five-dimensional normalized state space
+of Appendix~\ref{art:lower_curvature}). Under absolutely continuous random
+initialization as in Challenge~7.1~\cite{LO}, can a convex nonsmooth function
+admit a \emph{positive-measure} set of initial states $(x_0,H_0)$ on which full
+BFGS converges to nonstationary points, or are all nonstationary basins of
+measure zero?
+\item \emph{Convergence rates via principal minors and comparison energies.}
+Theorem~\ref{art:reciprocal-growth} and our comparison-energy inequalities give
+asymptotic convergence without conditioning assumptions (finite-horizon
+estimates are recorded in the companion). Determining sharp non-asymptotic or
+R-linear convergence rates for structured nonsmooth families such as
+$F(u,v)=u^2+|v|$ or coercive polyhedral norms remains largely open.
+\end{enumerate}
 
-\paragraph{AI assistance.}
-Large language models assisted theorem development, proof reconstruction,
-formalization, literature searches, software and writing. The companion
-documents this substantive research assistance and the automated author-side
-reviews.
+\subsection{Formal verification and reproducibility}
+
+Every definition, lemma, proposition, theorem, corollary, and rational interval
+certificate in this article---together with the extended noncompact and
+quantitative theory in the accompanying companion monograph---has been
+formalized and verified in the Lean~4 theorem prover on top of \textsf{Mathlib}.
+An automated axiom audit confirms that all verified declarations depend only on
+the three standard foundational axioms of Lean's classical logic
+(\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}), and an
+independent replay through \texttt{lean4checker} re-verifies every compiled
+module directly in the Lean kernel. The companion provides the pinned formal
+sources, exact claim-to-Lean correspondence tables, and reproducible audit
+scripts, while Appendices~\ref{art:matrix-algebra}--\ref{art:hypothesis-examples}
+keep the mathematical proofs of this article completely self-contained.
+
+\paragraph{Acknowledgements.}
+Large language models assisted theorem development, proof reconstruction, Lean~4
+formalization, literature searches, software tooling, and manuscript preparation;
+the companion report documents this workflow and the formal verification audits
+in detail.
+

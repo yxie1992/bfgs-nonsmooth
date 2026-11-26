@@ -4,7 +4,52 @@ Written by the coordinating agent (Claude in OpenCode) on the author's Linux
 machine, at the author's request, to continue on the author's MacBook with
 OpenCode and the same model. Standing instructions: `AGENTS.md`.
 
-## Active checkpoint — 18 October 2026, Linux
+## Active state — 25 November 2026: Full article rewrite (M45)
+
+**Read this before the older checkpoints below.** At the author's direction, a
+full structural and prose rewrite of the main article (`paper/`) has been
+completed in *SIAM Journal on Optimization* / *Mathematical Programming* style
+(**M45** in `TODO_MANUSCRIPT_REVIEW.md`, superseding M43 and the article side of
+M44):
+
+- **Completed in `paper/`:**
+  - Concise, jargon-free one-paragraph abstract; reorganized 6-section main body
+    plus Appendices A--E (52 pages, zero LaTeX/package warnings, zero overfull
+    boxes, visually inspected).
+  - Old premature Section 2 (`paper/sections/geometry.tex`) dissolved into
+    Section 1.1--1.2 (core analytical tools, Figure 1, affine-vs-convex balance,
+    and Table 1) and Section 4.4 (practical hypothesis verification guide).
+  - Section 2 (`energy.tex`) foregrounds the general BFGS analytical engine
+    (primal--dual nullspace identity, principal-minor hierarchy, universal
+    reciprocal growth, band certificates, and the extracted Tail Vector
+    Comparison Lemma `art:tail-comparison`).
+  - Section 3 (`global.tex`) opens with a half-page direct proof settling the
+    Guo--Lewis $u^2+|v|$ benchmark before general inward Bregman duality,
+    smooth-plus-homogeneous sums, and coercive homogeneous models.
+  - Section 4 (`local.tex`) unifies composite regularizers, motivates curved
+    kinks before introducing the normal-angle contour-velocity field, and closes
+    with a practical verification and run-existence guide.
+  - Section 5 (`failure.tex`) leads with the intuitive self-similar three-step
+    cycle and promotes the coercive four-piece polyhedral global counterexample
+    (`art:failure_polyhedral`) to a Theorem, followed by the $\sigma=\lambda^2$
+    scale-covariance law (`art:local-failure`, with the 1D spline verification
+    moved cleanly to Appendix D.1) and hyperbolic return-map persistence under
+    strong convexity (`art:local-failure-lower`).
+  - Section 6 (`verification.tex`) synthesizes the structural boundary between
+    convergence and failure and poses four numbered open problems; Appendices
+    A--E rewritten in matching voice; Figure 1(b), Figure 3, matrix spacing, and
+    alphabetical bibliography polished.
+  - Every mathematical statement, hypothesis, quantifier, proof argument, and all
+    110 historical `\label{art:...}` tags are preserved.
+- **Intentionally deferred until the author reviews `paper/build/master.pdf`:**
+  - Re-binding the article's Lean coverage registers/modules (including one new
+    coverage theorem for `Lemma art:tail-comparison` and dissolving
+    `A_geometry.json`), updating `refresh_correspondence.py` / `CHANGES.json` /
+    `ADDITIONS.json` for the structural reorganization, syncing the shared seed
+    appendix and finishing the companion side of M44 (`RESUME.md`), and running
+    fresh clean-tree `axiom_audit.py` and `kernel_replay.py`.
+
+## Earlier checkpoint — 18 October 2026, Linux
 
 **Read this before the older completed-work status below.** The repository was
 pulled fast-forward to `66de81d` (45 MacBook commits since `4350777`). The author

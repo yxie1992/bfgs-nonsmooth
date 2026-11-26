@@ -124,7 +124,7 @@ tex += [r'\draw[->] (4.45,.42)--(1.10,.42) node[midway,below] {bad starts arbitr
         r'\draw[densely dotted,gray] (5.06,.94)--(6.4,.1);',
         r'\draw[fill=black!3] (6.4,.1) rectangle (11.85,3.15);',
         r'\draw[<->] (6.4,2.96)--(11.85,2.96) node[midway,below,inner sep=1pt] {model width $O(a_\ell)$};',
-        r'\draw[fill=white,densely dotted] (8.05,.70) rectangle (10.1,2.53);',
+        r'\draw[fill=white,densely dotted] (7.85,.64) rectangle (10.45,2.53);',
         r'\begin{scope}[shift={(8.40cm,1.03cm)},x=1.52cm,y=1.40cm]']
 for m in range(3):
     scale = rho**m
@@ -142,9 +142,9 @@ tex += [r'\fill (0,0) circle[radius=1.6pt];',
         r'\node[below left] at (0,0) {$\bar x_\ell$};',
         r'\draw[fill=white] ' + xy(z0) + r' circle[radius=1.2pt] node[above right] {$x_0^{(\ell)}$};',
         r'\end{scope}',
-        r'\draw[<->] (8.05,.54)--(10.1,.54) node[midway,below] {$O(a_\ell^2)$};',
-        r'\node[anchor=north west,align=left,text width=5.3cm,font=\footnotesize] at (6.5,-.25) {All accepted and rejected queries fit inside. Their contraction copies accumulate at $\bar x_\ell$, not at $x_*$.};',
-        r'\node[anchor=north west,font=\footnotesize,align=left,text width=5.3cm] at (0,-.25) {Schematic: locations and relative scales exaggerated. This panel concerns the $C^{2,1}$ embedding only.};'] + END
+        r'\draw[<->] (7.85,.50)--(10.45,.50) node[midway,below] {$O(a_\ell^2)$};',
+        r'\node[anchor=north west,align=left,text width=5.3cm,font=\footnotesize] at (6.5,-.25) {All nine trial queries and contracted cycles fit inside the $O(a_\ell^2)$ box and converge to $\bar x_\ell$.};',
+        r'\node[anchor=north west,font=\footnotesize,align=left,text width=5.3cm] at (0,-.25) {Schematic scale layout ($a_\ell=16^{-\ell}$; relative widths exaggerated for visibility).};'] + END
 (ROOT/'shrinking_scales.tex').write_text('\n'.join(tex)+'\n')
 
 build = ROOT/'build'

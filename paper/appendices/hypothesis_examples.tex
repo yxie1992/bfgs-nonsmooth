@@ -1,200 +1,161 @@
-\section{Checking the hypotheses on explicit runs}\label{art:hypothesis-examples}
+\section{Worked certificates and existence of admissible runs}\label{art:hypothesis-examples}
 
-The examples below check the objective assumptions, comparison fields and
-full-BFGS histories together. They exhibit functions satisfying the
-convergence theorems, explicit infinite admissible runs on them, and a
-criterion for runs from every initial state. All norms in this appendix
-are Euclidean, and an admissible run has the meaning of
-Definition~\ref{art:admissible}.
+This appendix exhibits explicit band certificates and full-BFGS trajectories for
+Definition~\ref{art:band-certificate} and establishes general sufficient
+conditions---together with a sharp counterexample---for the existence of
+infinite admissible runs from prescribed initial data. Throughout, norms are
+Euclidean.
 
-\subsection{A nonsmooth certificate and a full-rank calibration}
+\subsection{Explicit band certificates and BFGS trajectories}
 
-\begin{proposition}[The mixed ridge, with an explicit history]\label{art:examples-mixed}
-Let $F(u,v)=u^2+|v|$ and $K_b=\{F\le b\}$, where $b>0$.
-The function is finite and convex, its unique minimizer is zero, and $K_b$
-is compact. For every $0<\eta\le b$, the following data satisfy all the
-conditions of Definition~\ref{art:band-certificate} on $K_b$:
+\begin{proposition}[Degenerating trajectory and band certificate on $u^2+|v|$]\label{art:examples-mixed}
+Let $F(u,v)=u^2+|v|$ and $K_b=\{x\in\R^2:F(x)\le b\}$ ($b>0$). Then $F$ is
+finite and convex with unique minimizer $0$ and compact sublevel $K_b$, and for
+every $0<\eta\le b$, Definition~\ref{art:band-certificate} holds on $K_b$ with
 \[
  W_\eta(x)=xx^T,\qquad m_\eta=\eta^2,\quad C_\eta=2b,
  \quad L_\eta=0,\quad\delta_\eta=1.
 \]
-For $b=2/3$ an explicit infinite admissible run in $K_b$, with
-$(c_1,c_2)=(1/4,1/2)$, is
+Moreover, for $b=2/3$ and $(c_1,c_2)=(1/4,1/2)$, the sequence
 \[
- x_k=\bigl(0,\tfrac23(-\tfrac12)^k\bigr),\qquad
- g_k=(0,(-1)^k),\qquad
- H_k=\begin{pmatrix}1&0\\0&2^{-k}\end{pmatrix},\qquad \alpha_k=1.
+ x_k=\bigl(0,\tfrac23(-\tfrac12)^k\bigr)^T,\qquad
+ g_k=\bigl(0,(-1)^k\bigr)^T,\qquad
+ H_k=\begin{pmatrix}1&0\\0&2^{-k}\end{pmatrix},\qquad \alpha_k=1
 \]
-It has $H_0=I$ and converges to zero, although the smallest eigenvalue of
-$H_k$ tends to zero.
+is an infinite admissible run in $K_{2/3}$ starting from $H_0=I$ and converging
+to $(0,0)$, along which $\lambda_{\min}(H_k)=2^{-k}\to0$.
 \end{proposition}
 \begin{proof}
-The objective assertions follow directly from $F(u,v)=u^2+|v|$.
-At a differentiable band point, $g=(2u,\operatorname{sign}v)$ and
-$g^Tx=2u^2+|v|\ge F(x)\ge\eta$, which gives visibility.
-Write $x=(u,v)$, $z=(r,w)$ and $y=\nabla F(z)-\nabla F(x)$.
-If $v,w$ have the same sign, then
-\[
- t=2(r-u)^2,\qquad y^Tz=2(r-u)r,\qquad
- (y^Tz)^2\le 2F(z)t.
-\]
-If their signs differ, put $S=|v|+|w|>0$. Then
-\[
- t=2(r-u)^2+2S,\qquad y^Tz=2(r-u)r+2|w|.
-\]
-Cauchy--Schwarz gives
-\[
- (y^Tz)^2\le t\left(2r^2+\frac{2|w|^2}{S}\right)
-             \le 2F(z)t\le2bt.
-\]
-Thus secant control holds for all differentiable endpoint pairs in $K_b$,
-in particular for the eligible ones. For an eligible pair, $s\ne0$ and $z=x+s$
-give $\Pi_s z=\Pi_s x$, so projected transport holds with equality.
-The displayed history has $s_k=-H_kg_k$, $y_k=-2g_k$, and
-\[
- d_k=2^{-k},\qquad F(x_k)-F(x_{k+1})=\tfrac13d_k,
- \qquad t_k=2d_k.
-\]
-Consequently both line-search inequalities hold. The BFGS update leaves
-the first diagonal entry unchanged and replaces the second by $2^{-k-1}$;
-all iterates are differentiable and nonstationary. This verifies the
-complete admissible history and the asserted limit.\qed
+At any differentiable point $x=(u,v)^T\in K_b$ with $F(x)\ge\eta$,
+$g=(2u,\operatorname{sign}v)^T$ gives $g^TW_\eta(x)g=(2u^2+|v|)^2\ge F(x)^2\ge\eta^2$.
+For any differentiable $x=(u,v)^T$ and $z=(r,w)^T$ in $K_b$ with $t=y^T(z-x)>0$,
+the two-case Cauchy--Schwarz calculation in the proof of
+Corollary~\ref{art:mixed-benchmark} gives $(y^Tz)^2\le2F(z)t\le2bt$, and
+$z=x+s$ gives $\Pi_sz=\Pi_sx$, verifying~\eqref{art:visibility}--\eqref{art:transport}.
+Along the displayed sequence, $x_k$ is differentiable with $g_k\ne0$,
+$s_k=-H_kg_k=(0,-(-1/2)^k)^T$, $y_k=-2g_k$, $d_k=2^{-k}$,
+$F(x_k)-F(x_{k+1})=\tfrac13d_k\ge\tfrac14d_k$, $t_k=2d_k$, and~\eqref{art:update}
+maps $\operatorname{diag}(1,2^{-k})$ to $\operatorname{diag}(1,2^{-k-1})$.\qed
 \end{proof}
 
-\begin{proposition}[A full-rank certificate in every dimension]\label{art:examples-full-rank}
-For $F(x)=\tfrac12\norm{x}^2$ on $\R^n$, $n\ge1$, every positive sublevel
-$K_b$ is compact and zero is the unique minimizer. For $0<\eta\le b$,
-Definition~\ref{art:band-certificate} holds with
+\begin{proposition}[Full-rank band certificate in $\R^n$]\label{art:examples-full-rank}
+For $F(x)=\tfrac12\norm{x}^2$ on $\R^n$ ($n\ge1$) and $b>0$, $K_b=\{F\le b\}$ is
+compact with unique minimizer $0$, and for every $0<\eta\le b$,
+Definition~\ref{art:band-certificate} holds with the rank-$n$ constant field
 \[
  W_\eta(x)=I,\qquad m_\eta=2\eta,\quad C_\eta=1,
  \quad L_\eta=0,\quad\delta_\eta=1.
 \]
-The field is positive definite of rank $n$. For any $x_0\ne0$, the history
-$x_k=2^{-k}x_0$, $g_k=x_k$, $H_k=I$, $\alpha_k=1/2$ is an infinite
-admissible run with $(c_1,c_2)=(1/4,1/2)$, contained in $K_{F(x_0)}$ and
-converging to zero.
+For every $x_0\ne0$, $x_k=2^{-k}x_0$, $g_k=x_k$, $H_k=I$, $\alpha_k=1/2$ is an
+infinite admissible run in $K_{F(x_0)}$ for $(c_1,c_2)=(1/4,1/2)$ converging to
+$0$.
 \end{proposition}
 \begin{proof}
-Visibility is $g^TIg=\norm{x}^2=2F(x)\ge2\eta$. For any two endpoints,
-$y=s$, so $y^TIy=t$. For eligible pairs the constant field gives equality in projected transport.
-In the stated history the BFGS update fixes $I$ because $y_k=s_k$.
-The actual decrease is $3d_k/4$, and the weak-Wolfe inequality holds with
-equality since $g_{k+1}=g_k/2$. Nonzero initial data give nonzero gradients
-at every finite index; the other assertions follow from the displayed
-geometric decay.\qed
+Here $g^TIg=\norm{x}^2=2F(x)\ge2\eta$, $y=s$ gives $y^TIy=t$, and constant
+$W_\eta=I$ satisfies~\eqref{art:transport} with $L_\eta=0$. Along the stated
+history, $y_k=s_k=-\tfrac12x_k$ leaves $H_k=I$ invariant under~\eqref{art:update},
+$F(x_k)-F(x_{k+1})=\tfrac34d_k\ge\tfrac14d_k$, and $g_{k+1}^Ts_k=\tfrac12g_k^Ts_k$.\qed
 \end{proof}
 
-\subsection{Existence of differentiable weak-Wolfe steps}
+\subsection{A general existence criterion and curved-interface examples}
 
-\begin{lemma}[An existence criterion for admissible runs]\label{art:examples-run-existence}
-Let $F:\R^n\to\R$ be finite, convex and bounded below. Suppose that, for
-every differentiability point $x$ and every $p\ne0$, the set
+\begin{lemma}[Existence of differentiable Armijo--weak-Wolfe steps and runs]\label{art:examples-run-existence}
+Let $F:\R^n\to\R$ be finite, convex, and bounded below, and suppose that for
+every differentiability point $x$ of $F$ and every direction $p\ne0$, the set
 \[
  \{t\in\R:F\text{ is not differentiable at }x+tp\}
 \]
-is countable. At any differentiable $x$ with $g=\nabla F(x)\ne0$, any
-$H\succ0$ and any $0<c_1<c_2<1$, the direction $p=-Hg$ admits a positive
-step whose endpoint is differentiable and which satisfies strict Armijo
-and strict weak Wolfe. If, in addition, every differentiability point has
-nonzero gradient, an infinite admissible run exists for every differentiable
-$x_0$, every $H_0\succ0$ and every such pair $(c_1,c_2)$.
+is countable (where differentiability refers to $F$ on $\R^n$). Then at any
+differentiable $x$ with $g=\nabla F(x)\ne0$, any $H\succ0$, and any
+$0<c_1<c_2<1$, the search ray $x+tp$ ($p=-Hg$, $t>0$) contains a differentiable
+point $x+\alpha p$ satisfying both~\eqref{art:aw} with strict inequalities. If,
+in addition, $\nabla F(x)\ne0$ at every differentiability point of $F$, then an
+infinite admissible run exists from every differentiable $x_0$, every
+$H_0\succ0$, and every $0<c_1<c_2<1$.
 \end{lemma}
 \begin{proof}
-Put $\phi(t)=F(x+tp)$, $D=g^Tp<0$, and
-$\sigma(t)=(\phi(t)-\phi(0))/t$ for $t>0$.
-Continuity and differentiability at zero give $\sigma(t)\to D$ as
-$t\downarrow0$. Boundedness below gives $\sigma(t)>c_1D$ for all
-sufficiently large $t$. Since $D<c_2D<c_1D$, continuity supplies a
-nonempty open interval on which $c_2D<\sigma(t)<c_1D$.
-Choose $\alpha$ there outside the countable exceptional set. The upper
-bound is strict Armijo. The supporting inequality at $x+\alpha p$ gives
-$\nabla F(x+\alpha p)^Tp\ge\sigma(\alpha)>c_2D$, hence strict weak Wolfe.
-Its positive secant curvature preserves positive definiteness under BFGS.
-Under the additional nonstationarity hypothesis these facts allow the step
-construction to be repeated indefinitely.\qed
+Set $\phi(t)=F(x+tp)$, $D=g^Tp<0$, and $\sigma(t)=(\phi(t)-\phi(0))/t$ for
+$t>0$. Differentiability at $x$ gives $\lim_{t\downarrow0}\sigma(t)=D$, while
+boundedness below gives $\liminf_{t\to\infty}\sigma(t)\ge0>c_1D$. Since
+$D<c_2D<c_1D<0$, continuity of $\sigma$ yields a nonempty open interval of
+$t>0$ on which $c_2D<\sigma(t)<c_1D$. Picking $\alpha$ in that interval outside
+the countable nondifferentiable set gives strict Armijo $\phi(\alpha)<\phi(0)+c_1\alpha D$,
+and convexity of $\phi$ gives $\nabla F(x+\alpha p)^Tp=\phi'(\alpha)\ge\sigma(\alpha)>c_2D$,
+hence strict weak Wolfe. By Lemma~\ref{art:run-invariants}, $H_+\succ0$; if no
+differentiable point is stationary, repeating this choice inductively yields an
+infinite admissible run.\qed
 \end{proof}
 
-The exceptional set concerns differentiability in the full ambient space,
-not just differentiability of $t\mapsto F(x+tp)$.
-
-\subsection{A simple family with curved switching}
-
-\begin{proposition}[A two-quadratic family]\label{art:examples-two-quadratics}
-For $a,b,c>0$, define
+\begin{proposition}[Curved two-quadratic family with global convergence and run existence]\label{art:examples-two-quadratics}
+For any $a,b,c>0$, define on $\R^2$
 \[
- F_{a,b,c}(u,v)=\max\{a u^2+b v^2+v,\ c u^2+b v^2-v\}.
+ F_{a,b,c}(u,v)=\max\{au^2+bv^2+v,\;cu^2+bv^2-v\},
 \]
-The function has unique minimizer zero and compact sublevels. It satisfies
-the hypotheses of Corollary~\ref{art:planar-convergence} on every positive
-sublevel, and its two active branches at zero satisfy the affine-independence
-and positive-balance assumptions of Corollary~\ref{art:planar-max}.
-For every differentiable initial point, every $H_0\succ0$ and every fixed
-$0<c_1<c_2<1$, an infinite admissible run exists. Every infinite admissible
-run converges in value and iterates to zero. The switching curve is the
-parabola $v=(c-a)u^2/2$, a line when $a=c$.
+whose switching locus is the parabola $v=\tfrac12(c-a)u^2$ (a line only when
+$a=c$). Then $F_{a,b,c}$ has unique minimizer $(0,0)$, compact sublevels,
+satisfies Corollary~\ref{art:planar-convergence} on every positive sublevel and
+Corollary~\ref{art:planar-max} at $(0,0)$, admits an infinite admissible run
+from every differentiable $x_0$, every $H_0\succ0$, and every $0<c_1<c_2<1$, and
+every such run converges in value and iterates to $(0,0)$.
 \end{proposition}
 \begin{proof}
-Both branches have Hessian at least $2\min\{a,b,c\}I$, and their average
-is $(a+c)u^2/2+bv^2$. Thus zero is the unique minimizer, sublevels are compact,
-and positive contours have no line segment. The two gradients differ on
-the tie curve: their second components differ by two. On that curve their
-determinant is
-\[
- -2u\bigl(a+c+b(c-a)^2u^2\bigr).
-\]
-It is nonzero unless $u=0$, when the tie point is zero. At a smooth point
-affine criticality means stationarity, hence optimality by convexity.
-At a nonzero tie point the two linearly independent gradients have affine
-hull excluding zero. Therefore $\mathcal C_{\rm aff}=\{0\}$; away from
-that set the switching is regular, and Corollary~\ref{art:planar-convergence}
-applies on any positive sublevel. At zero the gradients $(0,1)$ and $(0,-1)$
-are affinely independent and balance with weights $1/2$.
-
-Along any line through a differentiability point, the difference between
-the two branches is a polynomial of degree at most two, nonzero at the
-initial point. Hence there are at most two nondifferentiability points on
-that line. A differentiable stationary point would be the unique minimizer,
-but zero is not differentiable. Lemma~\ref{art:examples-run-existence}
-therefore gives the claimed run existence for every prescribed initial
-state and valid constant pair.\qed
+Both branches have Hessian at least $2\min\{a,b,c\}I\succ0$ and average to
+$\tfrac12(a+c)u^2+bv^2$, giving unique minimizer $(0,0)$, compact sublevels, and
+strictly convex positive contours. Along the tie curve $v=\tfrac12(c-a)u^2$, the
+two branch gradients $(2au,2bv+1)^T$ and $(2cu,2bv-1)^T$ have determinant
+$-2u(a+c+b(c-a)^2u^2)$, which vanishes only at $(0,0)$; for $u\ne0$ they are
+linearly independent and their affine hull misses $0$. Thus
+$\mathcal C_{\rm aff}=\{(0,0)\}$ and Corollary~\ref{art:planar-convergence}
+applies on every positive sublevel, while at $(0,0)$ the active gradients
+$(0,1)^T$ and $(0,-1)^T$ are affinely independent with weights $1/2$. Finally,
+$(0,0)$ is nondifferentiable (so every differentiable point is nonstationary),
+and along any line through a differentiable point the branch difference
+$(a-c)u^2+2v$ is a nonzero polynomial of degree at most two with at most two
+roots, so Lemma~\ref{art:examples-run-existence} guarantees run existence from
+every differentiable start.\qed
 \end{proof}
 
-\begin{corollary}[Runs on the printed nonradial example]\label{art:examples-nonradial-runs}
-For the objective of Theorem~\ref{art:nonradial-example}, every differentiable
-$x_0$ with $F(x_0)<1/100$, every $H_0\succ0$ and every $0<c_1<c_2<1$
-admit an infinite admissible run, and every such run converges to zero.
-In particular one may take $x_0=(1/1000,0)$, for which
-$F(x_0)=1001/10^6<1/100$.
+\begin{corollary}[Run existence on the three-quadratic nonradial example]\label{art:examples-nonradial-runs}
+For the objective $F$ of Theorem~\ref{art:nonradial-example}, every
+differentiable $x_0$ with $F(x_0)<1/100$ (for instance $x_0=(1/1000,0)^T$, where
+$F(x_0)=1001/10^6<1/100$), every $H_0\succ0$, and every $0<c_1<c_2<1$ admit an
+infinite admissible run, and every such run converges to $(0,0)$.
 \end{corollary}
 \begin{proof}
-The objective is bounded below by $u^2+v^2$ and has unique minimizer zero.
-At zero the distinct active gradients make it nondifferentiable, so every
-differentiable point has nonzero gradient. The restriction of each pairwise
-branch difference to a nonconstant line is a nonzero polynomial of degree
-at most two. Every line therefore meets the equality sets in finitely many
-points. Apply
-Lemma~\ref{art:examples-run-existence} and then
-Theorem~\ref{art:nonradial-example}. The value at the stated initial point
-follows by direct substitution.\qed
+Here $F(u,v)\ge u^2+v^2$ has unique minimizer $(0,0)$, where $F$ is
+nondifferentiable, so every differentiable point has $\nabla F(x)\ne0$. For each
+pair $i<j$, the quadratic difference $f_i-f_j$ has positive-definite or
+indefinite nonzero quadratic and linear parts such that its restriction to any
+nonconstant line is a nonzero polynomial of degree at most two: indeed,
+$f_0-f_1=u-v+\tfrac12u^2-v^2$, $f_0-f_2=2u+v-\tfrac12u^2-\tfrac12v^2$, and
+$f_1-f_2=u+2v-u^2+\tfrac12v^2$, none of which can vanish identically along a
+line (for $f_0-f_2$, the quadratic part $-\tfrac12(u^2+v^2)$ never vanishes on a
+nonzero direction; for $f_0-f_1$ and $f_1-f_2$, any null direction $d_1=\pm\sqrt2\,d_2$
+or $d_2=\pm\sqrt2\,d_1$ of the quadratic part has irrational slope ratio and
+therefore nonzero pairing with the integer linear part). Every line therefore
+meets the pairwise tie sets in finitely many points, and
+Lemma~\ref{art:examples-run-existence} together with
+Theorem~\ref{art:nonradial-example} completes the proof.\qed
 \end{proof}
 
-\subsection{Initial data without an admissible run}
+\subsection{Why theorems quantify over admissible runs: an obstructed initial ray}
 
-\begin{proposition}[A covered objective with no differentiable first step]\label{art:examples-no-step}
-The function $G(u,v)=\max\{u,-u+v,-u-v\}$ is finite, convex, coercive and
-positively homogeneous, with unique minimizer zero. For every $\varepsilon>0$,
-the point $x_0=(\varepsilon,0)$ is differentiable. With $H_0=I$, its search
-ray has no differentiable positive-step endpoint satisfying weak Wolfe for
-any $c_2<1$. Thus no infinite admissible run has these initial data, although
-$G$ belongs to the class of Theorem~\ref{art:homogeneous}.
+\begin{proposition}[A coercive homogeneous objective with no differentiable first step]\label{art:examples-no-step}
+The function $G(u,v)=\max\{u,-u+v,-u-v\}$ is finite, convex, coercive, and
+positively homogeneous of degree one with unique minimizer $(0,0)$ (hence covered
+by Theorem~\ref{art:homogeneous}). Nevertheless, at any $x_0=(\varepsilon,0)^T$
+($\varepsilon>0$), $G$ is differentiable, yet with $H_0=I$ the search ray
+$x_0-\alpha H_0\nabla G(x_0)$ ($\alpha>0$) contains \emph{no} differentiable
+point satisfying weak Wolfe for any $c_2<1$.
 \end{proposition}
 \begin{proof}
-The function is a maximum of linear forms, and
-$G(u,v)\ge|u|$, $2G(u,v)\ge|v|$. These inequalities give coercivity and
-the unique minimizer. At $x_0$ the gradient is $(1,0)$, so the ray is
-$(\varepsilon-\alpha,0)$. For $0<\alpha<\varepsilon$ its gradient remains
-$(1,0)$, and weak Wolfe would require $-1\ge-c_2$, which is false.
-For $\alpha\ge\varepsilon$ the endpoint is nondifferentiable: the last
-two branches tie with distinct gradients (at equality all three tie).
-These cases exhaust the positive ray.\qed
+Since $G(u,v)\ge\max\{u,-u\}=|u|$ and $2G(u,v)\ge u+(-u\pm v)=\pm v$ gives
+$2G(u,v)\ge|v|$, $G$ is coercive with unique minimizer $(0,0)$. At
+$x_0=(\varepsilon,0)^T$, $\nabla G(x_0)=(1,0)^T$, so the search ray is
+$(\varepsilon-\alpha,0)^T$ ($\alpha>0$). For $0<\alpha<\varepsilon$,
+$\nabla G(\varepsilon-\alpha,0)=(1,0)^T$, so weak Wolfe would require
+$-1\ge-c_2$, impossible for $c_2<1$; for $\alpha\ge\varepsilon$, the two branches $-u+v$ and $-u-v$ both evaluate to
+$\alpha-\varepsilon\ge\varepsilon-\alpha$ with distinct gradients $(-1,1)^T$ and
+$(-1,-1)^T$, so $(\varepsilon-\alpha,0)^T$ is nondifferentiable.\qed
 \end{proof}
+

@@ -89,6 +89,28 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   Lean coverage theorem for a tail energy lemma). Awaiting the author's choice
   of stage. Expository only; no mathematical finding.
 
+## Full narrative and prose rewrite of the article (25 November 2026)
+
+- [ ] **M45: Full structural and prose rewrite of `paper/` in *Mathematical Programming* / *SIOPT* style.**
+  Requested by the author on 25 November 2026 to replace stiff AI-like cadence
+  and defensive hedging with natural, confident mathematical exposition that
+  foregrounds the general BFGS analytical tools and their implications
+  (superseding M43 and the article side of M44).
+  - [x] Reorganize and rewrite the entire article (`paper/master.tex`, Sections
+    1--6, Statements, Appendices A--E, alphabetically sorted bibliography, and
+    Figures 1 and 3), preserving all mathematical statements, proofs, and all
+    110 `\label{art:...}` identifiers while adding the standalone Tail Vector
+    Comparison Lemma (`art:tail-comparison`) and moving the 1D $C^{2,1}$ spline
+    calculus proof to Appendix D.1 alongside the $C^{1,1}$ spline.
+  - [x] Build `paper/build/master.pdf` (52 pages, 0 LaTeX/package warnings, 0
+    overfull `\hbox`/`\vbox`) and visually inspect rendered pages.
+  - [ ] Author review and any further prose/structural iteration on `paper/`.
+  - [ ] Once `paper/` text is approved by the author: migrate article Lean
+    coverage registers and modules (`BfgsArticle/Coverage/Article/`), update
+    correspondence tooling and ledger, sync `companion/appendices/seed_certificate.tex`
+    and finish the companion side of M44, and run fresh clean-tree axiom audit
+    and kernel replay.
+
 ## Higher-priority follow-up: confident authorial wording (18 October 2026)
 
 - [ ] **M44: Remove defensive and over-qualifying writing from both documents.**

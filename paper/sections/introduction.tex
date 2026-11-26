@@ -1,120 +1,346 @@
 \section{Introduction}\label{art:introduction}
 
-BFGS builds its search directions from changes in gradients, yet it often
-works well when those gradients jump. Classical convex convergence theory
-uses smoothness together with the evolving quasi-Newton matrices
-\cite{FND_N92,FND_BN89,FND_P76}. Lewis--Overton's experiments and analyses
-\cite{LO} exposed the difficulty of extending that theory: nonsmooth BFGS can
-approach a minimizer while its inverse-Hessian approximations become highly
-singular. What global or local convergence can ordinary full BFGS guarantee
-on convex nonsmooth functions, and how can one prove it without assuming
-the asymptotic behavior of its iterates or matrices?
+The Broyden--Fletcher--Goldfarb--Shanno (BFGS) method builds curvature models
+from gradient differences, yet in computational practice an unmodified BFGS
+implementation with an inexact Armijo--weak-Wolfe line search is remarkably
+effective on nonsmooth convex problems~\cite{LO}. Explaining why---and
+determining when this behavior must eventually break down---poses a fundamental
+analytical challenge. Classical global convergence proofs for smooth convex
+optimization, from Powell~\cite{FND_P76} and Byrd and Nocedal~\cite{FND_BN89}
+to Nocedal's survey~\cite{FND_N92}, track the matrix potential
+$\psi(B_k)=\tr(B_k)-\ln\det(B_k)$ of the Hessian approximations $B_k=H_k^{-1}$.
+That argument depends critically on a smooth secant bound
+$\norm{y_k}^2/(y_k^Ts_k)\le M$ to keep $\tr(B_k)$ from growing faster than the
+determinant term can compensate. On a nonsmooth objective, however, gradients
+jump by $O(1)$ across kinks as the step $s_k=x_{k+1}-x_k$ shrinks: the ratio
+$\norm{y_k}^2/(y_k^Ts_k)$ blows up, $\tr(B_k)$ diverges, and the inverse-Hessian
+approximation $H_k$ becomes arbitrarily ill-conditioned as it crushes directions
+normal to the nonsmooth set~\cite{LO}.
 
-We give three answers: deterministic counterexamples to every-start local
-convergence; global and local convergence theorems for structured convex
-families, including the mixed benchmark below; and a principal-minor and
-comparison-energy argument that remains effective as the BFGS matrices
+Existing theory leaves a wide gap between empirical success and rigorous
+guarantees. In one dimension, Lewis and Overton~\cite[Section~5.1]{LO} analyzed
+$|x|$ directly, and on an unbounded two-piece affine model in $\R^n$, Xie and
+W\"achter~\preprintcite*[Theorem~IV.1]{XW} showed that BFGS finds an unbounded
+descent ray in finitely many steps. In general dimension, Guo and
+Lewis~\cite[Theorems~3.2, 4.1, and~4.3]{GL18} extended Powell's method of proof
+by replacing the nonsmooth objective with smooth convex surrogates on regions
+visited by the iterates. That technique proves convergence on the Euclidean
+norm $\norm{x}_2$ in $\R^n$~\cite[Corollary~4.2]{GL18}, where the kink is an
+isolated point, but on the canonical mixed smooth--nonsmooth benchmark
+\[
+ F(u,v)=u^2+|v|
+\]
+it yields only $\liminf_{k\to\infty}|v_k|=0$---a subsequence approaching the
+nonsmooth axis $v=0$, where $u$ need not be small~\cite[Corollary~4.4]{GL18}.
+Whether every full-BFGS sequence on $u^2+|v|$ converges to the minimizer
+$(0,0)$ was left explicitly open by Guo and Lewis~\cite[p.~1309]{GL18} and
+highlighted again as unresolved by Gebken~\cite{BG}, whose local criticality
+results for piecewise smooth selections instead assume \emph{a priori} iterate
+convergence together with prescribed active-set and spectral
+asymptotics~\cite[Theorem~3.1 and~(B1)]{BG}.
+
+Even less was settled on the negative side. Known divergence or
+nonstationarity examples for BFGS rely on nonconvex objectives---as in
+Mascarenhas~\cite{NEG_M04,NEG_M07}, Lewis and Zhang~\cite{NEG_LZ15}, and
+Diao~\preprintcite*{NEG_DIAO26}---or alter the algorithm itself, either by
+imposing exact line searches and specialized subgradient choices as in Lewis
+and Overton~\preprintcite*{NEG_LO08} or by replacing full BFGS with a scaled
+memoryless update as in Asl and Overton~\cite{NEG_AO21}. Whether unmodified
+full BFGS with a standard inexact Armijo--weak-Wolfe line search can converge
+to a nonstationary point on a coercive convex function---globally, or from
+starting points arbitrarily close to the unique minimizer of a smooth-branch
+maximum---remained open. Lewis and Overton's Challenge~7.1~\cite{LO} framed the
+broader behavior of nonsmooth BFGS probabilistically, asking whether randomly
+initialized runs converge almost surely on semialgebraic functions; here we
+resolve the deterministic landscape on convex functions.
+
+This paper develops two complementary analytical toolkits for unmodified full
+BFGS and uses them to establish both general convergence theorems---settling
+$u^2+|v|$ and broad global and local nonsmooth classes in arbitrary
+dimension---and sharp global and local counterexamples. Beyond the specific
+function classes resolved here, the matrix inequalities, directional comparison
+energies, and scale-matched cycle embeddings introduced below provide general
+tools for analyzing quasi-Newton dynamics whenever Hessian approximations
 degenerate.
 
-Lewis--Overton's Challenge~7.1~\cite{LO} gives this question a broader,
-probabilistic setting. For locally Lipschitz semialgebraic objectives with
-bounded sublevels and absolutely continuously distributed initial data, it
-asks about nonbreakdown, stationary cluster points, R-linear convergence of
-all function trial values, and identification of spectral subspaces under
-partly smooth convergence. We study deterministic guarantees for convex
-objectives.
+\subsection{Core analytical ideas: why BFGS progresses and how it can stall}\label{art:geometry}
 
-Substantial positive theory precedes this work. Guo--Lewis extends Powell's
-argument through smooth convex replacements on regions relevant to a BFGS
-sequence~\cite[Theorems~3.2, 4.1 and~4.3]{GL18}. The resulting theory proves
-Euclidean-norm convergence in arbitrary finite dimension
-\cite[Corollary~4.2]{GL18}; for the mixed model
+Why does full BFGS continue to make progress on $F(u,v)=u^2+|v|$ even as its
+matrices degenerate, and what geometric change allows a run to stall at a
+nonstationary corner? Both phenomena are governed by a single tension between
+the full-BFGS matrix update and the directional geometry of gradient jumps.
+
+\paragraph{1. A universal principal-minor hierarchy and reciprocal growth.}
+Rather than coupling $\tr(B_k)$ directly to $\det(B_k)$---which fails as soon
+as a single eigenvalue of $B_k$ explodes across a kink---we track the entire
+tower of elementary symmetric polynomials $e_1(H_k),\ldots,e_n(H_k)$ (the sums
+of $j\times j$ principal minors) of the \emph{inverse} matrices $H_k$. We prove
+that every full-BFGS step satisfies an adjacent-degree inequality bounding
+$e_j(H_{k+1})$ by a multiple of $\norm{y_k}^2/(g_k^TH_kg_k)\,e_{j+1}(H_k)$ plus
+a vanishing multiple $O(d_k)e_j(H_k)$, where $d_k=-g_k^Ts_k$ is the predicted
+decrease (Theorem~\ref{art:minor-hierarchy}). Crucially, the gradient jump
+$y_k=g_{k+1}-g_k$ enters only through $\norm{y_k}^2$, which stays bounded on
+any compact sublevel of a finite convex function regardless of nonsmoothness.
+As $d_k\to0$, a geometrically weighted Lyapunov combination of
+$e_1(H_k),\ldots,e_n(H_k)$ forces both the geometric and arithmetic means of
+$q_k^{-1}=(g_k^TH_kg_k)^{-1}$ to diverge to $+\infty$
+(Theorem~\ref{art:reciprocal-growth}):
 \[
-                    F(u,v)=u^2+|v|,
+ \frac1N\sum_{k<N}\frac{1}{g_k^TH_kg_k}\longrightarrow+\infty.
 \]
-Corollary~4.4 gives only a subsequence approaching a point of $v=0$.
-The paragraph after that corollary explicitly leaves convergence of every BFGS sequence
-to $(0,0)$ open~\cite[Corollary~4.4 and following discussion]{GL18}.
-Approaching the nonsmooth line does not force the smooth coordinate $u$ to
-vanish. Corollary~\ref{art:mixed-benchmark} answers this whole-sequence question
-for every admissible full-BFGS run, as a consequence of an arbitrary-dimensional
-family theorem.
+This law holds along \emph{every} bounded-gradient BFGS run with $d_k\to0$---no
+smoothness, strong convexity, or condition-number bound is needed, and in fact
+it continues to hold even along our nonstationary counterexamples, where
+$H_k\to0$ drives $q_k\to0$ exponentially.
 
-Two other advances clarify the remaining task. Xie--W\"achter's two-piece
-unbounded affine model leads to an unbounded descent direction after finitely
-many iterations~\preprintcite*[Theorem IV.1]{XW}.
-Gebken's published 2026 introduction still identifies $u^2+|v|$ as unresolved.
-His local criticality theorem for continuous smooth selections assumes an
-iterate limit, repeated activity, and specified spectral and gradient-jump
-behavior~\cite[Theorem~3.1 and (B1)]{BG}. Our positive results instead derive
-convergence from hypotheses on the objective.
+\paragraph{2. Directional and transported comparison energies.}
+Because $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$ universally, an optimality gap
+$F(x_k)-F_*\ge\eta>0$ can persist only if $H_k$ collapses along every direction
+capable of witnessing that gap. To prevent this collapse without bounding
+$\tr(B_k)$, we test $B_k=H_k^{-1}$ solely along a comparison vector $w_k$ (or a
+positive-semidefinite comparison tensor $W(x_k)$) chosen purely for the proof.
+In the primal update $B_{k+1}=\widehat B_k+y_ky_k^T/t_k$ with $t_k=y_k^Ts_k$,
+the rank-one downdate $\widehat B_k=B_k-g_kg_k^T/q_k\succeq0$ annihilates the
+step direction: $\widehat B_ks_k=0$. Evaluating $E_k=r_k^TB_kr_k$ along the
+radial vector $r_k=x_k-x_*$ therefore makes the shift $r_{k+1}=r_k+s_k$
+algebraically free and gives the exact one-step identity
+(Lemma~\ref{art:reference-energy})
+\[
+ E_{k+1}=E_k-\frac{(g_k^Tr_k)^2}{q_k}+\frac{(y_k^Tr_{k+1})^2}{t_k}.
+\]
+Every step at value gap $\eta>0$ drains at least $\eta^2/q_k$ from $E_k$, while
+gradient jumps enter \emph{only} through their radial projection $y_k^Tr_{k+1}$,
+not through $\norm{y_k}$. If $(y_k^Tr_{k+1})^2/t_k\le C$, summing over $k<N$
+and using $E_N\ge0$ forces $\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$---linear growth
+that directly contradicts $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$. Notice that
+$B_k$ may blow up arbitrarily in directions orthogonal to $r_k$; only the
+nonnegativity $E_N\ge0$ is used.
 
-Throughout the paper, an \emph{admissible run} uses the unmodified full BFGS
-update, an arbitrary $H_0\succ0$, fixed $0<c_1<c_2<1$, Armijo--weak-Wolfe
-steps, and differentiable accepted points with nonzero gradients
-(Definition~\ref{art:admissible}). The positive theorems concern every infinite
-such run.
+\begin{figure}[tbp]
+\centering
+\input{figures/gradient_geometry}
+\caption{Subdifferential geometry in gradient space. (a)~On $F(u,v)=u^2+|v|$ at
+$u=1/2$, the limiting gradients $(1,1)$ and $(1,-1)$ across $v=0$ jump
+vertically, so the horizontal vector $(-u,0)$ pairs identically ($-2u^2<0$)
+with both. (b)~The nonstationary three-slope corner of Section~\ref{art:failure}:
+$0$ lies outside $\conv\{g_0,g_1,g_2\}$ (at distance $1/\sqrt{257}$ above the
+edge $[g_1,g_0]$, so $(-1,16)$ is a strict common descent direction), yet
+$\aff\{g_0,g_1,g_2\}=\R^2$, destroying any jump-canceling comparison direction.}
+\label{art:gradient-geometry}
+\end{figure}
 
-\paragraph{Deterministic limits.}
-Prescribed-orbit constructions give smooth nonconvex failures
-\cite{NEG_M04,NEG_M07}; nonconvexity also separates the examples of
-Lewis--Zhang~\cite{NEG_LZ15} and Diao~\preprintcite*{NEG_DIAO26} from the
-question here. Lewis--Overton's nonsmooth examples use exact search or
-subgradient choices~\preprintcite*{NEG_LO08}, while Asl--Overton's failure
-theorem concerns a scaled memoryless update~\cite{NEG_AO21}. These cited
-examples do not supply convex local failure with the full update and the
-specified search.
-We construct convex objectives for which a fixed unit-first
-Armijo--weak-Wolfe doubling/bisection search generates full-BFGS iterates
-converging to a nonstationary point. For each local construction, one fixed
-objective has failing starts arbitrarily close to its unique minimizer, all
-with $H_0=I$, and every accepted or rejected query approaches that minimizer
-across the family of runs. One construction is a maximum of four convex
-$C^{2,1}$ branches with bounded Hessians; another is a maximum of four
-uniformly strongly convex $C^{1,1}$ branches, three of which are not twice
-differentiable at the minimizer (Theorems~\ref{art:local-failure}
-and~\ref{art:local-failure-lower}). These refute every-start neighborhood
-guarantees under either regularity regime.
+Figure~\ref{art:gradient-geometry}(a) illustrates why this directional filtering
+succeeds on $F(u,v)=u^2+|v|$. Approaching the nonsmooth line $v=0$ need not
+make $u^2$ small, because the gradient jumps vertically between $(2u,1)$ and
+$(2u,-1)$. Yet both gradients have the same negative pairing $-2u^2$ with the
+horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$ the
+nonsmooth term $|v|$ scales linearly with zero Taylor remainder: for $v\ne0$
+and $0\le\tau\le1$,
+\begin{equation}\label{art:mixed-inward-remainder}
+ F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2.
+\end{equation}
+Only the smooth component $u^2$ contributes a quadratic remainder. A general
+Bregman-duality estimate (Theorem~\ref{art:radial-equivalence}) converts any
+such one-point inward quadratic bound into the two-point secant bound
+$(y_k^Tr_{k+1})^2\le C_\eta t_k$ across arbitrary kinks. Moreover, when kinks
+lie along \emph{curved} switching interfaces---where radial rays cross kinks
+transversely and radial secant bounds fail---the identity $\widehat B_ks_k=0$
+implies that rotating a comparison field $w(x)$ along level-set contours costs
+zero energy in the step direction $s_k$, while transverse multiplicative drift
+$1+Ld_k$ is absorbed by the summability $\sum_kd_k<\infty$ guaranteed by Armijo
+descent (Theorem~\ref{art:certificate}).
 
-\paragraph{Global and local convergence.}
-We prove global value convergence for centered smooth-plus-sublinear
-objectives with compact initial sublevels contained in the region where the
-representation holds, and whole-iterate convergence when
-the minimizer is unique (Theorem~\ref{art:centered}). This settles the mixed
-benchmark above. For coercive finite convex degree-one homogeneous functions,
-including coercive maxima of finitely many linear functions, every admissible
-run converges to zero (Theorem~\ref{art:homogeneous}). This includes every
-norm, for example $\norm{x}_1$, whose nonsmooth set for $n\ge2$ contains
-coordinate hyperplanes, beyond the isolated nonsmooth point of the
-Euclidean-norm case above. Local results
-cover smooth convex plus finite polyhedral terms and finite polyhedral
-partitions with smooth extensions (Theorem~\ref{art:polyhedral}). Moving
-comparison geometry also yields local convergence for planar smooth maxima
-under strict-contour and active-gradient nondegeneracy assumptions
-(Corollary~\ref{art:planar-max}). The explicit three-quadratic example in
-Theorem~\ref{art:nonradial-example} has curved switching sets and fails the radial
-condition, so this extension has a concrete payoff beyond inward radial
-modeling.
+\paragraph{3. Affine vs.\ convex subdifferential balance and self-similar stalling.}
+Figure~\ref{art:gradient-geometry}(b) reveals the exact geometric obstruction
+where comparison energies break down. For a nonempty finite set of active
+slopes $\{a_i\}$, ordinary nonstationarity means the existence of a common
+descent direction ($a_i^Tw<0$ for all $i$), which by closest-point separation
+holds if and only if $0\notin\conv\{a_i\}$. By contrast, screening out all
+leading gradient jumps $(a_i-a_j)^Tw=0$ while maintaining strict visibility
+requires an \emph{equal-rate} descent direction ($a_i^Tw=\kappa<0$ for all $i$),
+which exists if and only if $0\notin\aff\{a_i\}$. In $\R^2$, three affinely
+independent slopes $g_0=(1,0)^T$, $g_1=(-1,-1/8)^T$, and $g_2=(c_\circ,d_\circ)^T$
+have $\aff\{g_0,g_1,g_2\}=\R^2$ while $0\notin\conv\{g_0,g_1,g_2\}$: the vector
+$(-1,16)^T$ decreases all three linear pieces, yet \emph{every} nonzero vector
+$w\in\R^2$ sees an $O(1)$ jump across at least one switching step. We show that
+$(c_\circ,d_\circ)$ can be chosen algebraically so that three steps of unmodified
+BFGS from $H_0=I$ under Lewis--Overton's standard bracketing line search return
+both the matrix and the iterate to an exact scalar multiple $\rho\approx0.0602$
+of their initial state: $(z_3,H_3)=(\rho z_0,\rho I)$. Homogeneity then locks
+BFGS into an infinite geometric contraction whose summable steps stall at the
+nonstationary origin.
 
-\paragraph{Analysis with degenerating matrices.}
-The classical smooth analysis combines trace and determinant identities in
-a matrix potential~\cite[Section~5]{FND_N92}. The uniform smooth secant bound
-used there need not hold when gradients jump. We prove an inequality linking
-each principal-minor degree to the next for the unmodified full-BFGS update.
-This adjacent-degree control forces the arithmetic mean of the reciprocals
-$1/(g_k^TH_kg_k)$ to diverge when gradients are bounded and predicted
-decreases tend to zero. Comparison energies turn this restriction into convergence:
-a field must retain information about the objective gap, control the gradient
-changes it sees, and move with a controlled energy cost. The field, like every
-comparison object in the paper, is used only in the proofs. Neither a bounded condition
-number nor a prescribed spectral limit is needed
-(Theorems~\ref{art:minor-hierarchy}--\ref{art:certificate}).
+\subsection{Summary of main results and implications}
 
-Sections~\ref{art:geometry}
-and~\ref{art:energy} explain and establish the mechanism;
-Sections~\ref{art:global} and~\ref{art:local} prove its global and local
-consequences, Section~\ref{art:failure} gives the deterministic
-counterexamples, and Section~\ref{art:verification} lists the remaining questions. The article contains complete proofs of these results.
-An independent complete companion preserves the wider noncompact and
-quantitative theory, with Lean proofs, exact correspondence and reproducible
-audit evidence.
+Our contributions fall into three interconnected parts: general analytical tools
+for unmodified BFGS, positive global and local convergence theorems, and
+constructive global and local counterexamples.
+
+\paragraph{Analytical framework for degenerating BFGS matrices (Section~\ref{art:energy}).}
+Theorem~\ref{art:minor-hierarchy} establishes the adjacent-degree principal-minor
+hierarchy for a single inverse-BFGS update, and Theorem~\ref{art:reciprocal-growth}
+derives the universal divergence of the geometric and arithmetic means of
+$(g_k^TH_kg_k)^{-1}$ whenever gradients are bounded and $d_k\to0$. Notably,
+neither theorem uses convexity of the objective: they are structural properties
+of the unmodified BFGS update under weak-Wolfe curvature $y_k^Ts_k\ge(1-c_2)d_k$
+alone. Theorem~\ref{art:certificate} and Lemma~\ref{art:tail-comparison} couple
+this growth law with transported comparison fields $W_\eta(x)$ and local vector
+fields $w(x)$, establishing convergence without bounding condition numbers,
+requiring smooth surrogates, or assuming prior iterate or spectral limits.
+
+\begin{table}[tbp]
+\centering
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.41\textwidth}>{\raggedright\arraybackslash}p{.23\textwidth}>{\raggedright\arraybackslash}p{.28\textwidth}@{}}
+\toprule
+Objective class & Basin of attraction & Guarantee\\
+\midrule
+Centered smooth-plus-homogeneous $F(x)=\psi(x)+\gamma(x-x_*)$, Theorem~\ref{art:centered}
+& Any compact sublevel inside domain of representation
+& $F(x_k)\to F_*$, $\dist(x_k,\argmin F)\to0$; $x_k\to x_*$ if unique\\\addlinespace
+Coercive degree-one homogeneous (all norms, gauges, coercive $\max_ia_i^Tx$), Theorem~\ref{art:homogeneous}
+& Global (every admissible $x_0$)
+& $F(x_k)\to0$ and $x_k\to0$\\\addlinespace
+Finite polyhedral $C^{1,1}$ partition, including smooth loss $+\;\lambda\norm{x}_1$, Theorem~\ref{art:polyhedral}
+& Sublevel $\{F\le F_*+\varepsilon\}$ independent of $H_0$
+& $F(x_k)\to F_*$ and $x_k\to x_*$\\\addlinespace
+Nondegenerate planar smooth maximum $\max_if_i$, Corollary~\ref{art:planar-max}
+& Sublevel $\{F<F_*+\varepsilon\}$ independent of $H_0$
+& $F(x_k)\to F_*$ and $x_k\to x_*$\\
+\bottomrule
+\end{tabular}
+\caption{Summary of main positive convergence guarantees in $\R^n$ (first three
+rows) and $\R^2$ (fourth row). Every guarantee holds for all infinite
+admissible full-BFGS runs with arbitrary $H_0\succ0$ and any fixed
+$0<c_1<c_2<1$. For $F(u,v)=u^2+|v|$ the first row applies on all of $\R^2$.}
+\label{art:positive-outcomes}
+\end{table}
+
+\paragraph{Global and local convergence guarantees (Sections~\ref{art:global} and~\ref{art:local}).}
+Table~\ref{art:positive-outcomes} summarizes the positive classes proved here:
+\begin{enumerate}
+\item \emph{Smooth-plus-homogeneous decompositions and the $u^2+|v|$ benchmark.}
+Through the Bregman inward-to-secant theorem (Theorem~\ref{art:radial-equivalence}),
+Theorem~\ref{art:centered} proves convergence in arbitrary dimension $\R^n$ for
+any convex objective locally representable as $F(x)=\psi(x)+\gamma(x-x_*)$ with
+$\psi\in C^{1,1}_{\rm loc}$ convex and $\gamma$ convex and positively
+homogeneous of degree one (neither $\psi$ nor $\gamma$ need attain a minimum at
+$x_*$ separately). Specializing to $\psi(u,v)=u^2$ and $\gamma(u,v)=|v|$ settles
+whole-sequence convergence $(u_k,v_k)\to(0,0)$ on $F(u,v)=u^2+|v|$ from every
+starting point and every $H_0\succ0$ (Corollary~\ref{art:mixed-benchmark}).
+\item \emph{All coercive positively homogeneous convex functions in $\R^n$.}
+Theorem~\ref{art:homogeneous} and Corollary~\ref{art:homogeneous-examples} prove
+global whole-sequence convergence $x_k\to0$ from every admissible starting point
+for every norm on $\R^n$---including $\norm{x}_1$ and $\norm{x}_\infty$, whose
+nonsmooth loci contain full hyperplanes rather than an isolated point---every
+gauge with bounded unit ball, and every coercive linear maximum
+$\max_{1\le i\le m}a_i^Tx$.
+\item \emph{Polyhedral partitions and composite regularizers in $\R^n$.}
+Near a unique minimizer $x_*$, only polyhedral cells containing $x_*$ intersect a
+small ball, so inward rays stay inside single cells. Combining convex sublevel
+localization (Lemma~\ref{art:localization}) with smooth cell extensions yields a
+matrix-independent sublevel basin $\{F\le F_*+\varepsilon\}$ for finite
+polyhedral $C^{1,1}$ partitions, piecewise linear-quadratic (PLQ) penalties,
+$\ell_1$-regularized smooth losses such as the Lasso, and Euclidean group-norm
+penalties (Theorem~\ref{art:polyhedral}, Corollaries~\ref{art:plq}
+and~\ref{art:local-centered}).
+\item \emph{Curved planar switching interfaces via moving contour fields.}
+When switching loci bend, inward rays cross interfaces and radial secant bounds
+can fail on every neighborhood of the minimizer, as we demonstrate explicitly on
+a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a
+normal-angle contour-velocity field whose angular derivative cancels normal
+components, Theorem~\ref{art:planar-cluster} proves that every run on a planar
+objective with strict contours and regular two-branch kinks accumulates at the
+affine-critical set $\{p:0\in\aff\partial F(p)\}$. Under active-gradient affine
+independence and strict complementarity at $x_*$---the classical multiplier
+nondegeneracy condition of nonsmooth Newton and bundle theory~\preprintcite{LW},
+here requiring no prior iterate or spectral assumptions---every affine-critical
+point near $x_*$ is optimal, yielding local whole-sequence convergence
+(Corollaries~\ref{art:planar-convergence} and~\ref{art:planar-max}) and an
+explicit convergence basin $\{F<1/100\}$ on the nonradial three-quadratic
+example.
+\end{enumerate}
+
+\paragraph{Global polyhedral and local smooth-branch failures (Section~\ref{art:failure}).}
+The positive hypotheses above are sharp in key structural respects:
+\begin{enumerate}
+\item \emph{Global failure on a four-piece coercive polyhedral function.}
+Capping the three-slope cone with one fourth affine piece $v-17$ yields a
+coercive polyhedral function $\overline G(u,v)=\max\{u,-u-v/8,c_\circ u+d_\circ v,v-17\}$
+with unique minimizer $(-1,16)$ and minimum $-1$, on which unmodified BFGS from
+$z_0$ with $H_0=I$ and Lewis--Overton's unit-first bracketing line search
+converges to the nonstationary origin with value $0$ for every
+$0<c_1\le1/3$, $c_1<c_2<1$ (Theorem~\ref{art:failure_polyhedral}). Thus
+centering at the origin in Theorem~\ref{art:homogeneous} cannot be dropped:
+nonzero affine offsets can separate a nonstationary corner from the global
+minimizer.
+\item \emph{Local failure arbitrarily close to the minimizer of smooth-branch
+and strongly convex maxima.}
+While Theorem~\ref{art:polyhedral} guarantees local convergence on any finite
+polyhedral objective, finitely many nonlinear smooth branches can replicate the
+three-slope trap at infinitely many shrinking scales $\bar x_\ell\to0$ around
+the unique minimizer of \emph{one} fixed function. Using a general
+scale-covariance law ($F(\bar x+\lambda z)=C+\sigma\mathcal G(z)$ preserves
+$H_0=I$ precisely when $\sigma=\lambda^2$), Theorem~\ref{art:local-failure}
+constructs a coercive maximum of four globally convex $C^{2,1}(\R^2)$ branches
+with $0\preceq\nabla^2f_i\preceq64I$ having failing starts $x_0^{(\ell)}\to0$,
+all with $H_0=I$ and query trajectories shrinking to $0$, uniformly across all
+$0<c_1\le1/3$, $c_1<c_2<1$. Imposing uniform strong convexity breaks exact
+homogeneity, so Theorem~\ref{art:local-failure-lower} analyzes a
+scale-normalized three-step BFGS return map, extracts perturbed failing orbits
+from the local stable manifold of the boundary cycle, and embeds them into a
+maximum of four uniformly strongly convex $C^{1,1}(\R^2)$ branches satisfying
+$\underline\mu I\preceq\nabla^2F\preceq\overline L I$ wherever twice
+differentiable.
+\end{enumerate}
+
+\subsection{Algorithmic conventions, formal verification, and outline}
+
+Throughout the paper, an \emph{admissible run} (Definition~\ref{art:admissible})
+is an infinite sequence of differentiable iterates with nonzero gradients
+generated by the unmodified full-BFGS update from an arbitrary $H_0\succ0$ under
+the standard Armijo and weak-Wolfe conditions~\eqref{art:aw} with fixed
+$0<c_1<c_2<1$ (encountering $\nabla F(x_k)=0$ terminates finitely at a global
+minimizer). Quantifying over infinite admissible runs cleanly separates two
+questions: whether every run generated by the line search converges, and whether
+a differentiable Armijo--weak-Wolfe step exists along a given search ray.
+Appendix~\ref{art:hypothesis-examples} addresses step and run existence
+explicitly: Lemma~\ref{art:examples-run-existence} proves that infinite
+admissible runs exist from \emph{every} differentiable starting point and
+\emph{every} $H_0\succ0$ whenever the nondifferentiable locus meets lines in at
+most countably many points (as in our curved quadratic maxima), while
+Proposition~\ref{art:examples-no-step} exhibits a three-piece coercive cone and
+a differentiable start whose search ray contains no differentiable weak-Wolfe
+point. Conversely, our negative theorems leave no ambiguity in step selection:
+they execute the concrete deterministic unit-first doubling/bisection algorithm
+of Lewis and Overton~\cite[Algorithm~4.6]{LO}, and every accepted and rejected
+trial point along every run is certified to lie in the smooth interior of a
+single active piece.
+
+Because our counterexamples rely on algebraic root isolation, nine-query
+interval enclosures, and hyperbolic return-map spectral bounds alongside subtle
+multiscale arguments, every definition, lemma, theorem, corollary, and rational
+certificate in this paper---as well as every claim in the accompanying companion
+monograph---has been formalized and machine-checked from first principles in the
+Lean~4 theorem prover on top of \textsf{Mathlib}, using only the standard axioms
+of classical mathematics and verified by an independent kernel replay
+(Section~\ref{art:verification}). Nevertheless, the paper is completely
+self-contained and written to be read independently as an ordinary mathematical
+article.
+
+The rest of the paper is organized as follows. Section~\ref{art:energy}
+establishes the BFGS invariants, reference energy identity, principal-minor
+hierarchy, universal reciprocal growth, and transported comparison certificates.
+Section~\ref{art:global} proves the global convergence theorems, opening with a
+direct half-page proof for $F(u,v)=u^2+|v|$ before developing inward Bregman
+duality, smooth-plus-homogeneous decompositions, and coercive homogeneous
+models. Section~\ref{art:local} develops local sublevel trapping, polyhedral and
+composite regularizer basins, and moving contour-velocity fields for curved
+planar interfaces, concluding with a practical guide to verifying the
+hypotheses. Section~\ref{art:failure} constructs the self-similar three-step
+cycle, the coercive polyhedral global counterexample, and the $C^{2,1}$ and
+strongly convex $C^{1,1}$ local embeddings. Section~\ref{art:verification}
+synthesizes the structural boundary between convergence and failure and poses
+four open problems. Technical linear-algebraic, geometric, rational-enclosure,
+perturbed-orbit, and worked-example proofs are collected in
+Appendices~\ref{art:matrix-algebra}--\ref{art:hypothesis-examples}.
+

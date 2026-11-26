@@ -1,123 +1,138 @@
-\section{Failure: a contracting mechanism and local realizations}
+\section{Deterministic failure: self-similar cycles and local embeddings}
 \label{art:failure}
 
-The positive theorems identify geometry that permits convergence. We now show
-why convexity and regularity of the branch formulas cannot supply an
-unrestricted deterministic guarantee. The first tempting assertion is
-global: compact sublevels might seem enough to prevent convergence to a wrong
-corner. The second is local: for one finite maximum of very smooth convex
-branches, perhaps every sufficiently close start succeeds. We construct a counterexample to each assertion, and then examine what changes when positive
-lower curvature is imposed.
+Sections~\ref{art:global} and~\ref{art:local} identified the geometric
+structures under which comparison energies force full BFGS to converge. We now
+show that outside those structures, convexity, coercivity, and smooth or
+strongly convex branch formulas do not prevent unmodified full BFGS from
+converging to nonstationary points.
 
-The mechanism has three parts. A three-step BFGS cycle returns the inverse
-matrix to a smaller multiple of itself while approaching a nonstationary
-corner. Strict function and gradient inequalities force the specified line
-search to produce that cycle. Finally, local copies of the corner accumulate
-at the true minimizer of one objective. Matching spatial and objective scales
-keeps the initial matrix fixed across the copies.
+Our construction develops three general mechanisms for analyzing quasi-Newton
+failure:
+\begin{enumerate}
+\item an \emph{exact self-similar three-step BFGS cycle} around a nonstationary
+three-slope corner in $\R^2$ where $0\in\aff\{g_0,g_1,g_2\}\setminus\conv\{g_0,g_1,g_2\}$,
+which immediately yields global failure on a coercive four-piece polyhedral
+objective from $H_0=I$ (Theorem~\ref{art:failure_polyhedral});
+\item a \emph{metric-preserving scale-covariance law} ($\sigma=\lambda^2$) that
+embeds infinitely many shrinking copies of that cycle near the unique minimizer
+of one four-branch $C^{2,1}$ convex objective while keeping $H_0=I$ fixed
+across every scale (Theorem~\ref{art:local-failure}); and
+\item a \emph{scale-normalized return-map and stable-manifold perturbation}
+that preserves the failing query tree when uniform strong convexity breaks exact
+homogeneity, yielding local failure on a four-branch uniformly strongly convex
+$C^{1,1}$ objective (Theorem~\ref{art:local-failure-lower}).
+\end{enumerate}
 
-\subsection{The specified implementation and the local guarantee at issue}
-At a differentiable point $x$, let $g=\nabla F(x)$ and $p=-Hg$.
-The line search starts with lower bracket $\alpha_{\rm lo}=0$, upper bracket
-$\alpha_{\rm hi}=+\infty$, and trial length $\alpha=1$. It tests Armijo first and weak
-Wolfe second:
+\subsection{The line-search implementation}
+
+To establish genuine algorithmic counterexamples rather than adversarially
+chosen valid steps, we fix the standard deterministic unit-first bracketing line
+search of Lewis and Overton~\cite[Algorithm~4.6]{LO}. At a differentiable
+iterate $x$ with $g=\nabla F(x)$ and search direction $p=-Hg$, the search
+initializes $\alpha_{\rm lo}=0$, $\alpha_{\rm hi}=+\infty$, and initial trial
+step $\alpha=1$, testing Armijo first and weak Wolfe second:
 \begin{equation}\label{art:failure_tests}
  F(x+\alpha p)\le F(x)+c_1\alpha g^Tp,
  \qquad \nabla F(x+\alpha p)^Tp\ge c_2g^Tp.
 \end{equation}
-An Armijo rejection sets $\alpha_{\rm hi}=\alpha$; a Wolfe rejection sets $\alpha_{\rm lo}=\alpha$.
-The next length is $(\alpha_{\rm lo}+\alpha_{\rm hi})/2$ when $\alpha_{\rm hi}<\infty$, and $2\alpha_{\rm lo}$ otherwise.
-If both tests hold, the length is accepted. This is the unit-first
-bracketing implementation of Lewis--Overton~\cite[Algorithm~4.6]{LO}.
-All comparisons in the construction are strict, so strict acceptance tests
-give the same decisions.
-Every queried point in the construction is differentiable, so the Wolfe test
-is always defined.
+If Armijo fails, the routine sets $\alpha_{\rm hi}=\alpha$; if Armijo holds and
+weak Wolfe fails, it sets $\alpha_{\rm lo}=\alpha$; the next trial is
+$(\alpha_{\rm lo}+\alpha_{\rm hi})/2$ when $\alpha_{\rm hi}<\infty$ and
+$2\alpha_{\rm lo}$ otherwise, accepting as soon as both inequalities
+in~\eqref{art:failure_tests} hold. Along every run constructed below, every
+accepted and rejected trial point $x+\alpha p$ lies in the open smooth interior
+of a single active piece, and every inequality in~\eqref{art:failure_tests}
+holds or fails strictly, so strict and non-strict implementations execute the
+identical decision tree.
 
-Write the full inverse update as
+We write one unmodified inverse-BFGS update cleanly as the operator
 \begin{equation}\label{art:failure_update}
  \mathcal B(H,g,g^+,\alpha)
  =\left(I-\frac{sy^T}{y^Ts}\right)H
   \left(I-\frac{ys^T}{y^Ts}\right)+\frac{ss^T}{y^Ts},
- \quad s=-\alpha Hg,\quad y=g^+-g.
 \end{equation}
-No resetting or rescaling of the stored matrix is performed.
+where $s=-\alpha Hg$ and $y=g^+-g$, with no resetting or rescaling of $H$.
 
-For this routine, even identity initialization does not give a neighborhood
-in which every differentiable start succeeds under the following regularity
-assumptions.
-\input{statements/negative_upper}
+\subsection{A self-similar three-step cycle and global polyhedral failure}
 
-The objective and all starts are chosen before the displayed line-search
-parameters. Theorem~\ref{art:local-failure-lower} below gives a version with
-uniform positive lower curvature.
-
-\subsection{Designing a cycle around a wrong corner}
-We seek a corner with a strict descent direction that the cycle nevertheless
-fails to follow. Three slopes in the plane provide the needed
-freedom. Begin with $H_0=I$ and fix the first two slopes so that the unit step
-has a simple exact update. The third slope has two free coordinates. We choose
-them to close the matrix cycle at a scalar multiple $\rho I$ and choose the
-starting point to close the displacement cycle at $\rho z_0$. For the maximum
-of linear functions, those two identities allow the same geometry to repeat
-at each smaller scale.
-
-The target lengths $1,1/4,1/16$ fit the bisections of the unit-first search.
-The strict trial certificate below proves that the algorithm accepts them:
-it excludes every earlier candidate and verifies both tests at the intended
-endpoint.
-
-Let $(c_\circ,d_\circ)$ be the algebraic pair specified in
-Appendix~\ref{art:seed_certificate}. Define
+How can unmodified BFGS from $H_0=I$ stall at a corner where strict descent
+exists? Consider a three-piece positively homogeneous cone
+$G(z)=\max_{0\le i\le2}g_i^Tz$ on $\R^2$. If three consecutive BFGS steps visit
+smooth regions of branches $0,1,2,0$ in turn and return \emph{both} the inverse
+Hessian and the iterate to the same scalar multiple $\rho\in(0,1)$ of their
+starting values,
 \[
- g_0=(1,0)^T,\qquad g_1=(-1,-1/8)^T,\qquad g_2=(c_\circ,d_\circ)^T,
- \quad G(z)=\max_{0\le i\le2}g_i^Tz.
+ H_3=\rho I,\qquad z_3=\rho z_0,
 \]
-The useful coarse bounds are $0.318<c_\circ<0.319$ and
-$-1.026<d_\circ<-1.025$. Put
+then scale invariance of $G$ locks the algorithm into an infinite geometric
+contraction $(x_{3m+j},H_{3m+j})=(\rho^mz_j,\rho^mM_j)$. Because $\rho<1$, the
+steps $\norm{s_k}=O(\rho^{k/3})$ are summable and the iterates converge to the
+origin---even when $0\notin\conv\{g_0,g_1,g_2\}$, so that the origin is
+nonstationary.
+
+Counting degrees of freedom shows why three slopes in $\R^2$ just suffice. Fix
+$H_0=I$ and set $g_0=(1,0)^T$ and $g_1=(-1,-1/8)^T$, so a unit step $\alpha_0=1$
+produces the rational matrix $M_1=\mathcal B(I,g_0,g_1,1)$. The third slope
+$g_2=(c_\circ,d_\circ)^T$ supplies two real parameters, which we tune so that
+the dyadic bisection step lengths $\alpha_1=1/4$ and $\alpha_2=1/16$ close the
+matrix cycle at a scalar multiple $M_3=\rho I$ (two equations for the symmetric
+$2\times2$ matrix $M_3$ to be proportional to $I$). Once $g_2$ and $\rho$ are
+fixed, the displacement closure $z_0+s_0+s_1+s_2=\rho z_0$ uniquely determines
+the starting point $z_0$.
+
+Specifically, let $(c_\circ,d_\circ)$ be the algebraic root isolated to within
+$10^{-30}$ by the rational contraction certificate in
+Appendix~\ref{art:seed_certificate}, which satisfies $0.318<c_\circ<0.319$ and
+$-1.026<d_\circ<-1.025$. Define
+\[
+ g_0=(1,0)^T,\quad g_1=(-1,-1/8)^T,\quad g_2=(c_\circ,d_\circ)^T,
+ \quad G(z)=\max_{0\le i\le2}g_i^Tz,
+\]
+and set the contraction factor
 \begin{equation}\label{art:seed_rho}
  \rho=\frac{129(c_\circ-8d_\circ)}{(16c_\circ-127d_\circ-16)(127c_\circ+16d_\circ+129)},
  \qquad 0.060<\rho<0.061.
 \end{equation}
-Set
+Define the cycle matrices, steps, and base iterates by
 \begin{align}
  M_0&=I,\quad
  M_1=\begin{pmatrix}129/256&-1/16\\-1/16&1\end{pmatrix},
  &M_2&=\mathcal B(M_1,g_1,g_2,1/4),\label{art:seed_matrices}\\
  s_0&=(-1,0)^T,\quad s_1=(127/1024,1/64)^T,
- &s_2&=\rho(1-c_\circ,-d_\circ)^T.\label{art:seed_steps}
+ &s_2&=\rho(1-c_\circ,-d_\circ)^T,\label{art:seed_steps}
 \end{align}
-The point is then determined by the displacement closure
-$s_0+s_1+s_2=-(1-\rho)z_0$; explicitly, let
+and
 \begin{equation}\label{art:seed_points}
  z_0=\frac1{1-\rho}
  \begin{pmatrix}897/1024-\rho(1-c_\circ)\\ \rho d_\circ-1/64\end{pmatrix},
  \qquad z_{j+1}=z_j+s_j\quad(j=0,1,2).
 \end{equation}
 
-\begin{lemma}[Exact cycle and strict trial decisions]\label{art:seed_cycle}
-The matrices in \eqref{art:seed_matrices} are positive definite, and
+\begin{lemma}[Exact cycle closure and strict trial margins]\label{art:seed_cycle}
+The matrices $M_0,M_1,M_2$ in~\eqref{art:seed_matrices} are positive definite,
+and
 \[
  \mathcal B(I,g_0,g_1,1)=M_1,\qquad
  \mathcal B(M_2,g_2,g_0,1/16)=\rho I,\qquad z_3=\rho z_0.
 \]
-At $z_j$, $j=0,1,2$, the unique active gradient is $g_j$.
-With $p_j=-M_jg_j$, for every $0<c_1\le1/3$ and $c_2>0$ the entire
-line-search query list is Table~\ref{art:trial_table}. At every rejection the objective strictly
-exceeds its current value. At every acceptance,
+At $z_j$ ($j=0,1,2$), the unique active gradient of $G$ is $g_j$. With
+$p_j=-M_jg_j$, for every $0<c_1\le1/3$ and $c_2>0$ the complete line-search
+query sequence is given by Table~\ref{art:trial_table}: every rejected trial
+strictly exceeds the current objective value $G(z_j)$, and every accepted step
+satisfies the strict margins
 \begin{equation}\label{art:seed_margins}
  G(z_j)+\tfrac13g_j^Ts_j-G(z_{j+1})>0,\qquad
  g_{j+1}^Ts_j>0>g_j^Ts_j,
 \end{equation}
-where $g_3=g_0$. All listed queries and the three base points $z_0,z_1,z_2$ have a
-unique active branch, and each such point $z$, with second coordinate
-$[z]_2$, satisfies
+where $g_3=g_0$. Moreover, all nine trial points and $z_0,z_1,z_2$ have a unique
+active branch and satisfy, with $[z]_2$ denoting the second coordinate,
 \begin{equation}\label{art:seed_query_bounds}
  |g_i^Tz|<3\quad(i=0,1,2),\qquad [z]_2<2,\qquad G(z)>0.
 \end{equation}
 \end{lemma}
 
-\begin{table}[t]
+\begin{table}[tbp]
 \centering
 \setlength{\tabcolsep}{5.8pt}
 \begin{tabular}{cccccl}
@@ -138,379 +153,280 @@ Phase $j$ & \shortstack{$10^4G$\\current} & Trial $\alpha$
   &             & $1/16$ & $(534,536)$ & 0 & accept\\
 \bottomrule
 \end{tabular}
-\caption{The deterministic trial tree, read against each phase's current
-value. ``Current'' means $G(z_j)$ and ``trial'' means
-$G(z_j+\alpha p_j)$. Every rejected trial raises the objective and
-therefore fails Armijo. The accepted rows also satisfy the strict
-Armijo and weak-Wolfe margins in \eqref{art:seed_margins}. The decisions
-are those of the specified search for every $0<c_1\le1/3$ and $c_2>0$.
-All displayed intervals are rational enclosures.}
+\caption{Complete line-search query tree across one three-step cycle, with
+rigorous rational enclosures for $10^4G(z_j)$ (``current'') and
+$10^4G(z_j+\alpha p_j)$ (``trial''). Every rejected trial strictly raises $G$
+and therefore fails Armijo for every $c_1>0$; every accepted trial satisfies the
+strict Armijo and weak-Wolfe margins~\eqref{art:seed_margins}, making the
+decisions identical for all $0<c_1\le1/3$ and $c_2>0$.}
 \label{art:trial_table}
 \end{table}
 
-The proof of the lemma, including the root isolation, matrix closure and
-rational certificate, is in Appendix~\ref{art:seed_certificate}. The logic
-of the search can already be read from its margins. Every rejected candidate
-has a value larger than the current value, so it fails Armijo for every
-$c_1>0$. At each accepted candidate the decrease exceeds one third of the
-predicted decrease, while the new directional derivative is positive and
-the old one is negative. Hence Armijo holds for $c_1\le1/3$ and weak Wolfe
-holds for every $c_2>0$. Thus the displayed lengths are outputs of the
-specified search for the entire parameter range in
-Theorem~\ref{art:local-failure}.
-The routine never needs a Wolfe rejection on this example.
-
-Figure~\ref{art:cycle-figure} displays this unit-first geometry: phase zero
-accepts its first query, while the next two phases bisect past the rejected
-candidates before reaching their accepted points. Panel (b) includes all nine
-queries; panel (c) separates the accepted points near the wrong corner. Line styles distinguish the three phases
-in grayscale, and the accepted lengths are labeled explicitly.
-
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/cycle_trials.pdf}
-\caption{The accepted three-step cycle, every queried candidate, and an
-enlargement at the nonstationary origin. Solid, dashed and dash--dot rays
-mark phases $0,1,2$, whose accepted lengths are $1,1/4,1/16$.
-The panels use different horizontal and vertical scales; the
-vertical-to-horizontal ratios are $22/4.6$, $2.5/4.2$ and $23/21$ in (a), (b)
-and (c).
-Exact cycle closure and trial decisions are proved in
+\caption{Geometry of the self-similar three-step cycle. Solid, dashed, and
+dash--dot rays show phases $0,1,2$ with accepted step lengths $1,1/4,1/16$:
+(a)~the accepted cycle $z_0\to z_1\to z_2\to z_3=\rho z_0$; (b)~all nine unit
+and bisected trial queries; (c)~enlargement near the nonstationary origin.
+Vertical-to-horizontal aspect ratios are $22/4.6$, $2.5/4.2$, and $23/21$ in
+(a), (b), and (c); exact rational proofs are in
 Appendix~\ref{art:seed_certificate}.}
 \label{art:cycle-figure}
 \end{figure}
 
-The finite calculation becomes an infinite run through homogeneity. A smaller
-copy has the same active slopes, and its inverse matrix produces proportionally
-smaller steps. Both sides of every line-search comparison have the same scale.
-For every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the two cycle closures
-therefore give the exact induction
+The rational root proof, symbolic closure identity, and interval enclosures for
+Lemma~\ref{art:seed_cycle} are given in Appendix~\ref{art:seed_certificate},
+while Table~\ref{art:trial_table} and Figure~\ref{art:cycle-figure} make the
+line-search dynamics immediately readable: phase~$0$ accepts $\alpha=1$ on its
+first try, phase~$1$ overshoots onto branch~$0$ at $\alpha=1,1/2$ (strictly
+raising $G$) before bisecting to $\alpha=1/4$ on branch~$2$, and phase~$2$
+bisects four times from $\alpha=1$ down to $\alpha=1/16$ on branch~$0$. At each
+acceptance, $G(z_{j+1})<G(z_j)+\tfrac13g_j^Ts_j$ and $g_{j+1}^Ts_j>0>g_j^Ts_j$,
+so Armijo holds strictly for all $c_1\le1/3$ and weak Wolfe holds strictly for
+all $c_2>0$ without a single Wolfe rejection.
+
+By positive homogeneity of $G$, Lemma~\ref{art:seed_cycle} propagates across all
+cycles $m\ge0$ for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$:
 \begin{equation}\label{art:cone_orbit}
- x_{3m+j}=\rho^mz_j,\qquad H_{3m+j}=\rho^mM_j,\qquad j=0,1,2.
+ x_{3m+j}=\rho^mz_j,\qquad H_{3m+j}=\rho^mM_j\qquad(m\ge0,\;j=0,1,2).
 \end{equation}
-Each query in phase $j$ is $\rho^m$ times its base query. Gradients are
-unchanged, function differences and gradient--step products scale by
-$\rho^m$, and \eqref{art:failure_update} scales the updated matrix by
-$\rho^m$. Thus every branch choice and every rejection is preserved, as
-well as acceptance. The iterates converge to zero, but the direction
-$w=(-1,16)^T$ satisfies
+Indeed, scaling $(z_j,M_j)$ by $\rho^m$ scales every trial point $z_j+\alpha p_j$
+by $\rho^m$, leaves active branches and gradients unchanged, scales objective
+differences and directional derivatives by $\rho^m>0$, and multiplies the
+updated matrix~\eqref{art:failure_update} by $\rho^m$. Thus $x_k\to0$ with
+$G(x_k)\downarrow0$, even though along $w=(-1,16)^T$ we have
 \[
- g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1.
+ g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1,
 \]
-Hence $G(tw)=-t$ for $t\ge0$, so this limit is nonstationary.
+so $G(tw)=-t$ for all $t\ge0$ and the limit $0$ is nonstationary. Capping $G$
+far below the trajectory by a fourth affine function makes the objective
+coercive without disturbing a single query, yielding our global polyhedral
+counterexample.
 
-\begin{corollary}[Coercive polyhedral global failure]\label{art:failure_polyhedral}
-For every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the same deterministic run,
-with $H_0=I$, fails for
+\begin{theorem}[Global failure on a coercive polyhedral function]\label{art:failure_polyhedral}
+Define the four-piece polyhedral convex function on $\R^2$ by
 \[
- \overline G(u,v)=\max\{u,-u-v/8,c_\circ u+d_\circ v,v-17\}.
+ \overline G(u,v)=\max\{u,\;-u-v/8,\;c_\circ u+d_\circ v,\;v-17\}.
 \]
-This function is coercive and has unique minimizer $(-1,16)$, with value
-$-1$, while the run converges to the nonstationary origin with value zero.
-\end{corollary}
+Then $\overline G$ is coercive with unique global minimizer $(-1,16)$ and
+minimum value $\overline G(-1,16)=-1$. Nevertheless, starting from $x_0=z_0$ and
+$H_0=I$, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the unit-first
+bracketing full-BFGS algorithm generates the trajectory~\eqref{art:cone_orbit},
+which converges to the nonstationary point $(0,0)$ with limiting value
+$\overline G(0,0)=0>-1$.
+\end{theorem}
 \begin{proof}
-At every query, \eqref{art:seed_query_bounds} and $0<\rho<1$ give
-$v-17<0<G(u,v)$, so the fourth branch is inactive. The convex combination
-of branches $0,1,3$ with weights $8/17,8/17,1/17$ is identically $-1$.
-Equality in this lower bound forces all three branches to equal $-1$,
-hence $(u,v)=(-1,16)$; the remaining branch is strictly smaller there.
-If $\overline G(u,v)\le t$, then
-$u\le t$, $v\le t+17$ and $-u-v/8\le t$, which also give lower bounds
-on both coordinates. Every sublevel is therefore compact.\qed
+At every base point and trial query of the cone trajectory~\eqref{art:cone_orbit},
+the bounds~\eqref{art:seed_query_bounds} and $0<\rho<1$ give
+$v-17<2\rho^m-17<0<G(u,v)$, so the fourth affine piece $v-17$ is strictly
+inactive throughout every line search and $\overline G$ generates the identical
+trajectory~\eqref{art:cone_orbit}. Meanwhile, the convex combination of pieces
+$0,1,3$ with weights $8/17,8/17,1/17$ vanishes in $(u,v)$ and equals $-1$
+identically, with equality if and only if $u=-u-v/8=v-17=-1$, i.e.,
+$(u,v)=(-1,16)$, where $c_\circ(-1)+16d_\circ<-16<-1$. Finally, $\overline G(u,v)\le t$
+implies $u\le t$, $v\le t+17$, and $-u-v/8\le t$ (hence $u\ge-9t/8-17/8$ and
+$v\ge-8t-8u\ge-16t$), so every sublevel of $\overline G$ is compact.\qed
 \end{proof}
-This already excludes global convergence from every start for coercive finite
-polyhedral objectives under this routine. Its wrong corner is away from the
-optimizer, so it is consistent with the local finite-partition convergence
-theorem. To rule out a local neighborhood guarantee, we need bad corners
-arbitrarily near the optimizer of the \emph{same} function.
 
-\subsection{Matching the spatial scale, objective scale and initial matrix}
-A change of scale also changes which inverse matrix represents the same
-search direction. This simple covariance explains both local constructions.
-Suppose, near the current and queried points under consideration, that
+Theorem~\ref{art:failure_polyhedral} shows that homogeneity in
+Theorem~\ref{art:homogeneous} is sharp: shifting one affine piece by $-17$
+separates the nonstationary corner $(0,0)$ from the true minimizer $(-1,16)$ and
+defeats global convergence from $H_0=I$.
+
+\subsection{Scale covariance ($\sigma=\lambda^2$) and smooth $C^{2,1}$ local failure}
+
+Near $(-1,16)$, the polyhedral function $\overline G$ still converges locally by
+Theorem~\ref{art:polyhedral}. To refute \emph{local} every-start convergence
+near the unique minimizer of a single smooth-branch objective, we must embed
+infinitely many shrinking copies of the bad corner at centers $\bar x_\ell\to0$
+inside one fixed function $F$---all initialized with the \emph{same} matrix
+$H_0=I$.
+
+A simple scale-covariance calculation governs when rescaled copies share an
+initial inverse-Hessian approximation. Suppose that on a region containing a
+current iterate and all trial queries of a line search, $F$ models a template
+function $\mathcal G$ via
 \begin{equation}\label{art:matched-local-model}
- F(\bar x+\lambda z)=C+\sigma\mathcal G(z),\qquad \lambda,\sigma>0.
+ F(\bar x+\lambda z)=C+\sigma\mathcal G(z)\qquad(\lambda,\sigma>0).
 \end{equation}
-Differentiation gives $g_F=(\sigma/\lambda)g_{\mathcal G}$. Consequently,
-for the same candidate length, the corresponding inverse matrix and step are
+Then $g_F=(\sigma/\lambda)g_{\mathcal G}$, so for any trial length $\alpha$,
+matching physical steps $s_F=\lambda s_{\mathcal G}$ requires scaling the
+inverse-Hessian matrix by $\lambda^2/\sigma$:
 \begin{equation}\label{art:matched-scaling}
  H_F=\frac{\lambda^2}{\sigma}H_{\mathcal G},\qquad
  p_F=\lambda p_{\mathcal G},\qquad s_F=\lambda s_{\mathcal G}.
 \end{equation}
-At an accepted pair $y_F=(\sigma/\lambda)y_{\mathcal G}$. Thus
-$y_F^Ts_F=\sigma y_{\mathcal G}^Ts_{\mathcal G}$; the two projection
-factors in the inverse update are identical, and its rank-one term is
-multiplied by $\lambda^2/\sigma$. This proves the matrix relation in
-\eqref{art:matched-scaling} again after the update. Function differences
-and all gradient--step products are multiplied by $\sigma>0$, so the
-Armijo and weak-Wolfe comparisons, including their strict signs, agree.
+At an accepted step, $y_F=(\sigma/\lambda)y_{\mathcal G}$ and
+$y_F^Ts_F=\sigma y_{\mathcal G}^Ts_{\mathcal G}$, so in~\eqref{art:failure_update}
+the projection matrices $I-s_Fy_F^T/(y_F^Ts_F)$ are invariant while the rank-one
+term $s_Fs_F^T/(y_F^Ts_F)$ scales by $\lambda^2/\sigma$, preserving
+$H_F=(\lambda^2/\sigma)H_{\mathcal G}$ across all subsequent updates. Likewise,
+both sides of the Armijo and weak-Wolfe tests~\eqref{art:failure_tests} multiply
+by $\sigma>0$, preserving every strict trial decision whenever all queried
+points remain inside the domain of~\eqref{art:matched-local-model}.
 
-To transfer a particular run with this calculation, the local model must cover the
-current point and every candidate the search actually visits. Under that
-containment, induction on the bracket decisions transfers the full trial
-tree, and induction on accepted steps transfers the matrices. We verify
-that containment separately in each construction below.
-
-The choice $\sigma=\lambda^2$ is decisive: it leaves the initial matrix
-unchanged. In the first embedding, the corner's objective height is $a_\ell^3$
-and its affine slopes are $a_\ell^2g_i$. Taking spatial scale
-$\lambda=a_\ell^2$ gives $\sigma=a_\ell^4=\lambda^2$, so every copy starts
-with $I$. Its affine neighborhood has width proportional to $a_\ell$, much
-larger than the entire copied trial tree, whose width is proportional to
-$a_\ell^2$. This separation of scales makes all-query containment possible.
-
-\subsection{Convex interpolation that leaves room for every query}
-We now construct the scalar functions that implement this design. Their node
-values are $a_\ell^3$ and their node slopes are $a_\ell^2$. A monotone derivative
-connects neighboring nodes and is constant on a neighborhood of each node.
-The constant regions create the local affine corner; the cubic transition
-makes the second derivative continuous and globally Lipschitz even as the
-nodes accumulate at zero. The following formulas fix the construction
-completely.
-
-Let $\theta=1/16$, $a_\ell=\theta^\ell$, $\varepsilon=1/128$, and
-$b_*=2c_\circ-32d_\circ\in(33,34)$. For $b\in\{2,b_*\}$ define
+Equation~\eqref{art:matched-scaling} reveals the decisive scaling law
 \[
- t_b=\frac{1-(1+\theta+\theta^2)/b}{1-\theta^2},\qquad
- v=\frac{\xi-t_b+\varepsilon}{2\varepsilon}.
+ \sigma=\lambda^2\quad\Longrightarrow\quad H_F=H_{\mathcal G},
 \]
-\[
- P_b(\xi)=
- \begin{cases}
- 0&\xi\le t_b-\varepsilon,\\
- 3v^2-2v^3&|\xi-t_b|<\varepsilon,\\
- 1&\xi\ge t_b+\varepsilon,
- \end{cases}
- \quad J_b(\xi)=\int_0^\xi P_b(t)\,dt.
-\]
-The middle formula for $J_b$ is $2\varepsilon(v^3-v^4/2)$; its outer
-formulas are zero and $\xi-t_b$. For
-$b\theta a_\ell\le x\le ba_\ell$, set
-\begin{equation}\label{art:upper_scalar}
- \varphi_b(x)=(\theta a_\ell)^3+
- ba_\ell^3(1-\theta)
- \{\theta^2\xi+(1-\theta^2)J_b(\xi)\},\qquad
- \xi=\frac{x/(ba_\ell)-\theta}{1-\theta}.
-\end{equation}
-Complete the definition by
-\[
- \varphi_b(x)=
- \begin{cases}
- 1-3(x+1)+3(x+1)^2&x<-1,\\
- -x^3&-1\le x\le0,\\
- 1+x-b&x\ge b.
- \end{cases}
-\]
+which leaves $H_0=I$ unchanged across every scale. To achieve $\sigma=\lambda^2$
+together with global $C^{2,1}$ smoothness at the accumulation point $0$, let
+$\theta=1/16$ and $a_\ell=\theta^\ell$. Placing scalar affine plateaus of value
+$a_\ell^3$ and slope $a_\ell^2$ at nodes $ba_\ell$ gives local slope factor
+$a_\ell^2=\sigma/\lambda$; setting spatial scale $\lambda=a_\ell^2$ then yields
+$\sigma=a_\ell^4=\lambda^2$. Better still, each affine plateau has width
+$\Theta(a_\ell)$, whereas the entire copied BFGS trial tree has diameter
+$\Theta(a_\ell^2)\ll a_\ell$, creating asymptotic room to contain every accepted
+and rejected query inside the flat region (Figure~\ref{art:shrinking-scales}).
 
-\begin{lemma}[Scalar interpolation]\label{art:upper_scalar_lemma}
-The functions $\varphi_b$ are convex, coercive and globally $C^{2,1}$,
-are nonnegative, and vanish only at zero. They satisfy
+\begin{lemma}[$C^{2,1}$ scalar plateau spline]\label{art:upper_scalar_lemma}
+Let $\theta=1/16$, $a_\ell=\theta^\ell$, and $b_*=2c_\circ-32d_\circ\in(33,34)$.
+For each $b\in\{2,b_*\}$ there exists a convex, coercive, nonnegative function
+$\varphi_b\in C^{2,1}(\R)$ vanishing only at $0$ such that
 \begin{align}
- 0&\le\varphi_b''\le\max\{6,102/b\},\label{art:scalar_curvature}\\
+ 0&\le\varphi_b''(x)\le\max\{6,102/b\}\qquad(x\in\R),\label{art:scalar_curvature}\\
  \varphi_b(ba_\ell+h)&=a_\ell^3+a_\ell^2h
-       \qquad(|h|\le a_\ell/2).\label{art:scalar_plateau}
+       \qquad(\ell\ge0,\;|h|\le a_\ell/2),\label{art:scalar_plateau}
 \end{align}
-Their second derivatives are globally Lipschitz with constant
-\[
- L_b=\max\{6,139264/(5b^2)\}.
-\]
+and $\varphi_b''$ is globally Lipschitz on $\R$ with constant
+$L_b=\max\{6,139264/(5b^2)\}$.
 \end{lemma}
-\begin{proof}
-The ramp is monotone, $C^1$, and satisfies
-$0\le P_b'\le96$ and $\int_0^1P_b=1-t_b$. On a positive interval,
-\[
- \varphi_b'=a_\ell^2\{\theta^2+(1-\theta^2)P_b(\xi)\},\qquad
- \varphi_b''=\frac{a_\ell(1+\theta)}bP_b'(\xi).
-\]
-The identity
-$\theta^2+(1-\theta^2)(1-t_b)=(1+\theta+\theta^2)/b$
-gives matching values $\varphi_b(ba_\ell)=a_\ell^3$. The derivative is
-constant near both ends of each interval, so the first two derivatives
-also match, with values $a_\ell^2$ and zero at $ba_\ell$.
 
-As $x\downarrow0$, the bounds $a_\ell\le x/(b\theta)$ on its interval
-give $\varphi_b(x)=O(x^3)$, $\varphi_b'(x)=O(x^2)$ and
-$\varphi_b''(x)=O(x)$. These match the negative cubic at zero.
-The formulas also match through second order at $-1$ and $b$.
-The derivative is negative on the negative half-line and positive on the
-positive half-line; the outer formulas diverge to infinity. The second
-derivative is nonnegative on every piece: a positive multiple of $P_b'$ on the
-positive intervals, and $6$, $-6x$ and $0$ for $x<-1$, $-1\le x\le0$ and
-$x\ge b$. This proves convexity, coercivity and the minimum assertions.
+The explicit piecewise-quintic formula for $\varphi_b$ and the elementary
+calculus verification of Lemma~\ref{art:upper_scalar_lemma} are given in
+Appendix~\ref{art:lower_curvature} (equation~\eqref{art:upper_scalar}), side by
+side with the companion $C^{1,1}$ spline used for strong convexity. With
+$\varphi_b$ in hand, the proof of our first local failure theorem is immediate.
 
-The constant-derivative lengths below and above $ba_\ell$, divided by $a_\ell$,
-are
-\[
- b(1-\theta)(1-t_b-\varepsilon),\qquad
- \frac{b(1-\theta)(t_b-\varepsilon)}\theta.
-\]
-Both exceed $1/2$ for $2\le b\le34$, by substitution in the displayed
-rational formulas; the affine outer extension covers the upper side when
-$\ell=0$. This proves \eqref{art:scalar_plateau}.
-Finally $|P_b''|\le3/(2\varepsilon^2)$ in each ramp, so differentiation
-once more gives $|\varphi_b'''|\le139264/(5b^2)$ there. The negative
-cubic has third derivative of magnitude six. Continuity of
-$\varphi_b''$ permits summing the Lipschitz estimates over finitely many
-joins away from zero; taking limits at zero covers the infinitely many
-accumulating joins and gives the global bound.\qed
-\end{proof}
+\input{statements/negative_upper}
 
-\subsection{One objective and a uniform induction over all queries}
-Define
-\begin{equation}\label{art:upper_objective}
- F(u,v)=\max\{\varphi_2(u),\varphi_2(-u-v/8),
-                    \varphi_{b_*}(c_\circ u+d_\circ v),v\}.
-\end{equation}
-The Hessian of each of the first three branches is a nonnegative scalar
-multiple of $g_ig_i^T$. Equation~\eqref{art:scalar_curvature} gives the
-upper bounds $51$, $51(65/64)<52$, and $12$, respectively, on their
-operator norms; the last branch has zero Hessian. Their Hessians are
-globally Lipschitz because $\varphi_b''$ is Lipschitz and the arguments
-are linear. The first two scalar arguments are independent, so their
-coercivity makes every sublevel of $F$ compact. Nonnegativity and their
-unique scalar zeros show $F(x)=0$ exactly at $x=0$. At zero the first
-three gradients vanish and the last is $(0,1)^T$, giving
-$F'(0;h)=\max\{0,h_2\}$; thus the minimizer is nonsmooth.
-
-Let $\bar x_\ell=a_\ell(2,-32)^T$. The first two scalar arguments at $\bar x_\ell$ equal
-$2a_\ell$, and the third equals $b_*a_\ell$. Consequently
-\begin{equation}\label{art:upper_local_model}
- F(\bar x_\ell+h)=a_\ell^3+a_\ell^2G(h)
- \quad\hbox{if } |g_i^Th|\le a_\ell/2\quad(i=0,1,2).
-\end{equation}
-Indeed, the first three branches are on their affine regions and each
-has value at least $a_\ell^3/2$. The first two slab inequalities imply
-$|h_1|\le a_\ell/2$ and $|h_2|\le8a_\ell$, so the fourth branch is negative.
-In particular $F(\bar x_\ell)=a_\ell^3$ and
-$F'(\bar x_\ell;(-1,16)^T)=-a_\ell^2<0$.
-
-\begin{proof}[Theorem~\ref{art:local-failure}]
-For $\ell\ge1$ take $x_0^{(\ell)}=\bar x_\ell+a_\ell^2z_0$ and $H_0=I$. We claim that
-\begin{equation}\label{art:upper_orbit}
- x_{3m+j}^{(\ell)}=\bar x_\ell+a_\ell^2\rho^mz_j,\qquad
- H_{3m+j}^{(\ell)}=\rho^mM_j,\qquad j=0,1,2.
-\end{equation}
-At a current point of this form its gradient is $a_\ell^2g_j$. Every trial
-on the finite candidate list therefore has the form
-$\bar x_\ell+a_\ell^2\rho^mz_{\rm trial}$. Equation~\eqref{art:seed_query_bounds}
-gives
-\[
- |g_i^T(a_\ell^2\rho^mz_{\rm trial})|<3a_\ell^2
- \le3a_\ell/16<a_\ell/2.
-\]
-Thus \eqref{art:upper_local_model} is valid at every candidate query,
-not only the final accepted one. Unique activity is preserved, and
-\[
- F(\bar x_\ell+a_\ell^2\rho^mz_{\rm trial})
-   =a_\ell^3+a_\ell^4\rho^mG(z_{\rm trial}),\qquad
- \nabla F=a_\ell^2g_{\rm active}.
-\]
-These identities instantiate \eqref{art:matched-local-model} with
-$\lambda=a_\ell^2$, $\sigma=a_\ell^4$ and $C=a_\ell^3$. The containment just
-proved applies before each candidate is tested, so the scaling argument
-transfers every bracket decision. Equivalently, the additive constant
-cancels in Armijo and every function difference and gradient--step product
-is the seed quantity times $a_\ell^4\rho^m>0$. The actual search traverses
-exactly the candidate list and makes the same strict decisions.
-In \eqref{art:failure_update}, the projection factors are unchanged and
-the rank-one term has factor $\rho^m$. The cycle closures prove the next
-point and matrix identities, completing the induction.
-
-The finite matrices are positive definite. Equation~\eqref{art:upper_orbit}
-gives convergence to $\bar x_\ell$ and strict descent to $a_\ell^3>0$.
-Since the base query set is finite, the norm of every query is bounded by
-\[
- a_\ell\|(2,-32)\|+a_\ell^2\max_{\text{base points and queries}}\|z\|,
-\]
-which tends to zero. The starting points also tend to zero. All other
-claims were proved directly from \eqref{art:upper_objective}.\qed
-\end{proof}
-
-
-Figure~\ref{art:shrinking-scales} makes the local quantifier explicit:
-one function contains every shrinking copy. For each fixed copy the run
-converges to its own wrong center, while the starting points and all their
-queries can be made arbitrarily close to the same true minimizer.
-
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/shrinking_scales.pdf}
-\caption{The $C^{2,1}$ local embedding, schematically. In one fixed
-objective, bad centers $\bar x_\ell\to x_*$ have affine-model
-neighborhoods of width $O(a_\ell)$. Each complete copied query orbit fits
-inside a region of size $O(a_\ell^2)$ and converges to $\bar x_\ell$.
-The inset shows the seed and two contraction copies as a finite illustration
-of the infinite induction.
-The lower-curvature construction uses the different spatial factor
-$a_\ell$, as explained below.}
+\caption{Scale separation in the $C^{2,1}$ local counterexample
+(Theorem~\ref{art:local-failure}). Inside one fixed objective $F$, nonstationary
+corners $\bar x_\ell\to x_*=0$ carry affine-model neighborhoods of width
+$O(a_\ell)$, while each copied BFGS trajectory and all of its rejected line-search
+trials sit inside a much smaller box of width $O(a_\ell^2)$ and converge to
+$\bar x_\ell$.}
 \label{art:shrinking-scales}
 \end{figure}
 
-\subsection{What changes when positive lower curvature is required}
-The flat affine regions in the first construction explain why its convex
-branches have no uniform positive lower curvature. Adding the same positive
-quadratic to each branch restores that curvature, but changes the dynamics.
-The old exact cycle can no longer be copied without adjustment. The next result constructs
-a nearby trajectory by a stable-manifold argument.
-\par\medskip
-\noindent\begin{minipage}{\textwidth}\setlength{\parindent}{15pt}
+\begin{proof}[Theorem~\ref{art:local-failure}]
+Define the four-branch objective on $\R^2$ by
+\begin{equation}\label{art:upper_objective}
+ F(u,v)=\max\{\varphi_2(u),\;\varphi_2(-u-v/8),\;
+                    \varphi_{b_*}(c_\circ u+d_\circ v),\;v\}.
+\end{equation}
+For $i=0,1,2$, $\nabla^2f_i(x)=\varphi_{b_i}''(g_i^Tx)g_ig_i^T\succeq0$; by
+\eqref{art:scalar_curvature}, their operator norms are bounded by $51$,
+$51(65/64)<52$, and $(102/b_*)\norm{g_2}^2<12$, respectively, while $f_3(u,v)=v$
+has zero Hessian, so $0\preceq\nabla^2f_i\preceq64I$ and each $\nabla^2f_i$ is
+globally Lipschitz. Because $u$ and $-u-v/8$ are linearly independent and
+$\varphi_2$ is coercive and nonnegative with unique zero at $0$, every sublevel
+of $F$ is compact and $F(x)=0$ if and only if $x=0$. At $0$, $\nabla f_i(0)=0$
+for $i=0,1,2$ while $\nabla f_3(0)=(0,1)^T$, so $F'(0;h)=\max\{0,h_2\}$ and $0$
+is a nonsmooth minimizer.
+
+For each $\ell\ge1$, set $\bar x_\ell=a_\ell(2,-32)^T$, where $g_0^T\bar x_\ell=g_1^T\bar x_\ell=2a_\ell$
+and $g_2^T\bar x_\ell=b_*a_\ell$. Whenever $|g_i^Th|\le a_\ell/2$ for $i=0,1,2$,
+the plateau identity~\eqref{art:scalar_plateau} puts the first three branches on
+their affine segments with values at least $a_\ell^3/2>0$, while $|h_1|\le a_\ell/2$
+and $|h_2|\le8(|h_1|+a_\ell/2)\le8a_\ell$ force $f_3(\bar x_\ell+h)=-32a_\ell+h_2<0$.
+Hence
+\begin{equation}\label{art:upper_local_model}
+ F(\bar x_\ell+h)=a_\ell^3+a_\ell^2G(h)
+ \qquad\text{whenever }|g_i^Th|\le a_\ell/2\quad(i=0,1,2),
+\end{equation}
+and in particular $F(\bar x_\ell)=a_\ell^3>0$ with $F'(\bar x_\ell;(-1,16)^T)=-a_\ell^2<0$,
+so $0\notin\partial F(\bar x_\ell)$.
+
+Start at $x_0^{(\ell)}=\bar x_\ell+a_\ell^2z_0$ with $H_0=I$. We claim by
+induction that for every $m\ge0$ and $j\in\{0,1,2\}$,
+\begin{equation}\label{art:upper_orbit}
+ x_{3m+j}^{(\ell)}=\bar x_\ell+a_\ell^2\rho^mz_j,\qquad
+ H_{3m+j}^{(\ell)}=\rho^mM_j.
+\end{equation}
+Indeed, at~\eqref{art:upper_orbit} every candidate query on the trial list of
+Table~\ref{art:trial_table} has displacement $h=a_\ell^2\rho^mz_{\rm trial}$
+from $\bar x_\ell$, which by~\eqref{art:seed_query_bounds} and $a_\ell\le1/16$
+satisfies $|g_i^Th|<3a_\ell^2\le(3/16)a_\ell<a_\ell/2$. Thus~\eqref{art:upper_local_model}
+holds at the current iterate and at every queried trial point with
+$\lambda=a_\ell^2$, $\sigma=a_\ell^4=\lambda^2$, and $C=a_\ell^3$. By the
+scale-covariance relations~\eqref{art:matched-scaling} and Lemma~\ref{art:seed_cycle},
+the line search visits the exact nine-query tree of Table~\ref{art:trial_table},
+makes the identical strict rejections and acceptances for every
+$0<c_1\le1/3$, $c_1<c_2<1$, and closes at~\eqref{art:upper_orbit}. Consequently
+$x_k^{(\ell)}\to\bar x_\ell$, $F(x_k^{(\ell)})\downarrow a_\ell^3>0$, and every
+query norm is bounded by
+$a_\ell\norm{(2,-32)^T}+a_\ell^2\max_{\text{seed queries}}\norm{z}\to0$ as
+$\ell\to\infty$.\qed
+\end{proof}
+
+\subsection{Hyperbolic return-map persistence under strong convexity}
+
+In Theorem~\ref{art:local-failure}, the flat affine plateaus where $\varphi_b''=0$
+prevent the branches from being strongly convex. Adding a positive quadratic
+$\tfrac\mu2\norm{z}^2$ restores uniform strong convexity, but perturbs the
+branch gradients by $\mu z$ and breaks exact scale invariance: the homogeneous
+seed orbit is no longer an exact trajectory. Remarkably, the failing cycle is
+\emph{dynamically stable} in a codimension-three sense, yielding an independent
+local counterexample under uniform strong convexity.
+
 \input{statements/negative_lower}
-\end{minipage}
-\par\medskip
 
-
-\begin{table}[t]
+\begin{table}[tbp]
 \centering
-\begin{tabular}{>{\raggedright\arraybackslash}p{.29\textwidth}>{\raggedright\arraybackslash}p{.27\textwidth}>{\raggedright\arraybackslash}p{.32\textwidth}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.29\textwidth}>{\raggedright\arraybackslash}p{.31\textwidth}>{\raggedright\arraybackslash}p{.32\textwidth}@{}}
 \toprule
-Branch regularity & Uniform curvature & At the minimizer\\
+Branch class & Global curvature bounds & Regularity at $x_*=0$\\
 \midrule
-Four convex $C^{2,1}$ branches
-& $0\preceq\nabla^2f_i\preceq64I$ globally
-& All branch Hessians exist and are Lipschitz; no uniform positive lower bound\\[3pt]
-Four uniformly strongly convex $C^{1,1}$ branches
-& Positive lower bound and globally Lipschitz branch gradients
-& The first three branches are not twice differentiable\\
+Four convex $C^{2,1}$ branches (Theorem~\ref{art:local-failure})
+& $0\preceq\nabla^2f_i(x)\preceq64I$ on $\R^2$
+& Smooth $C^{2,1}$ branches everywhere; curvature vanishes on plateaus\\[3pt]
+Four strongly convex $C^{1,1}$ branches (Theorem~\ref{art:local-failure-lower})
+& $\underline\mu I\preceq\nabla^2F(x)\preceq\overline L I$ at every twice-differentiable point
+& Uniformly strongly convex $C^{1,1}$ branches; $f_0,f_1,f_2$ not $C^2$ at $0$\\
 \bottomrule
 \end{tabular}
-\caption{The two independent local failure regimes. Each uses one fixed
-objective and $H_0=I$, with bad starts arbitrarily close to its unique
-minimizer; all accepted and rejected queries are differentiable
-and remain in neighborhoods shrinking to that minimizer. Both hold for
-every fixed $0<c_1\le1/3$, $c_1<c_2<1$
-(Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}).}
+\caption{Comparison of the two local smooth-branch counterexamples. Here
+$\nabla^2F(x)$ denotes the classical Fr\'echet derivative of $\nabla F$ defined
+on a neighborhood of $x$. Both theorems hold for one fixed objective, $H_0=I$,
+and all $0<c_1\le1/3$, $c_1<c_2<1$ simultaneously, with all accepted and
+rejected queries shrinking to $x_*=0$.}
 \label{art:regularity-map}
 \end{table}
 
-In Theorem~\ref{art:local-failure-lower} and Table~\ref{art:regularity-map}, a
-Hessian is the classical one: the derivative of the gradient map, with that
-map defined in a neighborhood of the point.
+The complete proof in Appendix~\ref{art:lower_curvature} introduces two further
+analytical ideas summarized in Table~\ref{art:regularity-map}:
+\begin{enumerate}
+\item \emph{Scale-normalized return map and stable manifold.} On the strongly
+convex prototype $Q_\mu(z)=\tfrac\mu2\norm{z}^2+G(z)$ (whose unique minimizer
+ lies away from $0$), we factor out the shrinking scale $\tau>0$ via $x=\tau z$
+and $H=\tau M(\zeta,\eta)$ with $M_{11}=1$. Three BFGS steps define a real-analytic
+five-dimensional return map $\mathcal T_\mu(z,\zeta,\eta,\tau)$ for which the
+homogeneous seed $P_*=(z_0,0,1,0)$ is a fixed point on the boundary $\tau=0$.
+Rational interval differentiation shows that $D\mathcal T_\mu(P_*)$ is
+hyperbolic---with two unstable eigenvalues $\rho^{-1}$, one saddle pair
+$\lambda_s\in(0.038,0.039)$ and $\lambda_u\in(1.564,1.565)$, and scale
+eigenvalue $\rho$---whose two-dimensional local stable manifold penetrates
+$\tau>0$. Any positive-$\tau$ point on that stable manifold generates a genuine
+perturbed BFGS run converging to the nonstationary origin with identical trial
+lists across all $0<c_1\le1/3$, $c_1<c_2<1$ (Proposition~\ref{art:quadratic_failure}).
+\item \emph{Orbit-copying spline and global whitening.} Because $Q_\mu$ itself
+is not scale-homogeneous, we select \emph{one} sufficiently small perturbed
+orbit $(x_k^{\rm seed},H_k^{\rm seed})$ and replicate it at centers
+$\bar x_\ell=a_\ell(2,-32)^T$ ($a_\ell=128^{-\ell}$) via scalar splines $\psi_b$
+with node values $a_\ell^2$ and slopes $a_\ell$. This yields the exact local
+model $F(\bar x_\ell+a_\ell y)=a_\ell^2(C_*+Q_\mu(y))$, so $\lambda=a_\ell$ and
+$\sigma=a_\ell^2$ once again satisfy $\lambda^2/\sigma=1$, giving the same
+initial matrix $H_0^{\rm seed}\succ0$ on every copy. A single global linear
+change of coordinates $z\mapsto(H_0^{\rm seed})^{1/2}z$ transforms that common
+initial matrix into $H_0=I$ simultaneously for all $\ell\ge1$. Because the ratio
+of node slope $a_\ell$ to node position $ba_\ell$ stays $\Theta(1)$ as
+$\ell\to\infty$, $\psi_b$ remains globally $C^{1,1}$ while losing second
+differentiability at $0$, pinpointing the exact regularity trade-off between
+Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}.
+\end{enumerate}
 
-The proof in Appendix~\ref{art:lower_curvature} has the same sequence of
-tasks as the first construction. It starts from the explicit strongly convex
-objective $Q_\mu(z)=\mu\|z\|^2/2+G(z)$, whose true minimizer is away from
-the wrong corner. A normalized three-step return map has the original seed
-as a hyperbolic boundary fixed point. Its stable manifold contains positive
-scale states, yielding a perturbed bad orbit. The seed's strict
-finite margins ensure that the same accepted and rejected trial lists
-persist along that orbit, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$.
-
-For the local embedding of Appendix~\ref{art:lower_curvature}, with its own
-$a_\ell=128^{-\ell}$, centers $\bar x_\ell=a_\ell(2,-32)^T$ and constant
-$C_*=1+\mu\|(2,-32)\|^2/2$, the scalar node values are now $a_\ell^2$ and the
-node slopes $a_\ell$. The resulting model is
-$F(\bar x_\ell+a_\ell z)=a_\ell^2(C_*+Q_\mu(z))$, so
-$\lambda=a_\ell$, $\sigma=a_\ell^2$ and again
-$\lambda^2/\sigma=1$. We choose one entire perturbed orbit small enough
-for every query to fit the affine scalar regions. Its one initial SPD
-matrix is then used in every copy; one fixed affine change makes it $I$.
-The faster variation of the scalar derivative retains global $C^{1,1}$
-regularity but prevents second differentiability at the minimizer, where the
-copies accumulate.
-
-The two constructions (Table~\ref{art:regularity-map}) separate upper branch
-regularity from positive lower
-curvature. Their common mechanism is a local copy of a bad query
-tree; the different scalar scales determine which regularity survives at
-the minimizer. The remaining convergence questions are discussed
-next.

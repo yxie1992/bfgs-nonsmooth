@@ -15,6 +15,7 @@
 \DeclareMathOperator{\conv}{conv}
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\argmin}{argmin}
+\setlength{\arraycolsep}{4.5pt}
 \setlength{\emergencystretch}{1.5em}
 \allowdisplaybreaks[1]
 \title{BFGS on Convex Nonsmooth Functions:\\Convergence and Failure}
@@ -35,35 +36,36 @@
 \maketitle
 \endgroup
 \begin{abstract}
-Ordinary full BFGS often succeeds on nonsmooth objectives, but its convergence
-theory must accommodate gradient jumps and possible degeneration of the
-quasi-Newton matrices. We give complementary positive and negative results
-for finite convex objectives with Armijo--weak-Wolfe steps and gradients at
-differentiable accepted iterates. A centered smooth--sublinear theorem
-proves global whole-sequence convergence for $u^2+|v|$ and applies in arbitrary
-dimension on compact initial sublevels contained in the region of the centered
-representation. Coercive degree-one homogeneous
-objectives, including coercive max-linear functions, norms and gauges, admit global
-convergence. Local results cover finite polyhedral smooth-piece partitions
-and nondegenerate planar smooth maxima; in an explicit curved-interface
-example, moving comparison geometry proves convergence although the radial
-criterion fails. In contrast,
-a fixed unit-first implementation can converge to nonstationary points from
-starts arbitrarily close to the unique minimizer of one fixed objective. One
-construction is a maximum of four globally convex $C^{2,1}$ branches; another
-retains uniform strong convexity with $C^{1,1}$ branches, three of which lose
-second differentiability at the minimizer. The positive proofs derive an
-adjacent-degree hierarchy for the principal minors of full-BFGS matrices,
-then combine reciprocal growth with comparison energies. The resulting
-objective-level conditions require neither iterate convergence nor prescribed
-spectral behavior. The negative proofs certify the complete trial trees and
-infinite local embeddings. These results expand the convergence theory while
-ruling out unrestricted deterministic guarantees for the specified classes.
+Unmodified full BFGS with an Armijo--weak-Wolfe line search routinely succeeds
+on nonsmooth convex functions even as gradient jumps drive its inverse-Hessian
+approximations toward singularity, where classical trace--determinant potentials
+fail. We develop an analytical framework for unmodified BFGS that operates
+directly with degenerating matrices and pair it with a constructive cycle theory
+to delineate where deterministic BFGS converges and where it stalls. Along any
+bounded-gradient run with vanishing predicted decreases, an adjacent-degree
+hierarchy for the principal minors of $H_k$ forces the geometric and arithmetic
+means of $(g_k^TH_kg_k)^{-1}$ to diverge without smoothness or conditioning
+bounds. Coupling this growth law with directional and transported comparison
+energies $w_k^TB_kw_k$---filtering out orthogonal gradient jumps while charging
+field rotation to summable functional decrease---proves convergence from
+objective geometry alone, with no prior iterate or spectral assumptions.
+Globally, this settles whole-sequence convergence on the open benchmark
+$F(u,v)=u^2+|v|$ of Guo and Lewis (2018) within an $n$-dimensional theorem for
+smooth-plus-homogeneous sums, and proves global convergence for all coercive
+positively homogeneous convex functions, including all norms and coercive linear
+maxima. Locally, it yields matrix-independent sublevel basins for finite
+polyhedral $C^{1,1}$ partitions (such as $\ell_1$-regularized losses) and
+nondegenerate planar smooth maxima with curved switching curves where radial
+secants fail. Conversely, when zero lies in the affine hull of active gradients
+outside their convex hull, we construct under the unit-first bracketing search
+with $H_0=I$ a self-similar three-step BFGS cycle that stalls on a coercive
+four-piece polyhedral function in $\R^2$, and embed failing runs arbitrarily
+near the minimizer of one maximum of four convex $C^{2,1}$ branches, or four
+uniformly strongly convex $C^{1,1}$ branches.
 \keywords{BFGS \and convex nonsmooth optimization \and global convergence \and local convergence \and counterexample}
 \subclass{90C30 \and 90C53 \and 49J52}
 \end{abstract}
 \input{sections/introduction}
-\input{sections/geometry}
 \input{sections/energy}
 \input{sections/global}
 \input{sections/local}
