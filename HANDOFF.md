@@ -14,8 +14,8 @@ M44):
 
 - **Completed in `paper/`:**
   - Concise, jargon-free one-paragraph abstract; reorganized 6-section main body
-    plus Appendices A--E (52 pages, zero LaTeX/package warnings, zero overfull
-    boxes, visually inspected).
+    plus Appendices A--E (52 pages, zero em-dashes, zero LaTeX/package warnings,
+    zero overfull boxes).
   - Old premature Section 2 (`paper/sections/geometry.tex`) dissolved into
     Section 1.1--1.2 (core analytical tools, Figure 1, affine-vs-convex balance,
     and Table 1) and Section 4.4 (practical hypothesis verification guide).

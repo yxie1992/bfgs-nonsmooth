@@ -104,6 +104,9 @@ for the author below (step 3 of the plan in `AGENTS.md`).
     calculus proof to Appendix D.1 alongside the $C^{1,1}$ spline.
   - [x] Build `paper/build/master.pdf` (52 pages, 0 LaTeX/package warnings, 0
     overfull `\hbox`/`\vbox`) and visually inspect rendered pages.
+  - [x] Eliminate all em-dashes (`---`) across `paper/`, rephrasing parenthetical
+    and compound sentences naturally and re-verifying `paper/build/master.pdf`
+    (52 pages, 0 em-dashes, 0 warnings, 0 overfull boxes).
   - [ ] Author review and any further prose/structural iteration on `paper/`.
   - [ ] Once `paper/` text is approved by the author: migrate article Lean
     coverage registers and modules (`BfgsArticle/Coverage/Article/`), update
