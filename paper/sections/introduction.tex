@@ -11,11 +11,12 @@ to Nocedal's survey~\cite{FND_N92}, track the matrix potential
 $\psi(B_k)=\tr(B_k)-\ln\det(B_k)$ of the Hessian approximations $B_k=H_k^{-1}$.
 That argument depends critically on a smooth secant bound
 $\norm{y_k}^2/(y_k^Ts_k)\le M$ to keep $\tr(B_k)$ from growing faster than the
-determinant term can compensate. On a nonsmooth objective, however, gradients
-jump by $O(1)$ across kinks as the step $s_k=x_{k+1}-x_k$ shrinks: the ratio
-$\norm{y_k}^2/(y_k^Ts_k)$ blows up, $\tr(B_k)$ diverges, and the inverse-Hessian
-approximation $H_k$ becomes arbitrarily ill-conditioned as it crushes directions
-normal to the nonsmooth set~\cite{LO}.
+determinant term can compensate. On a nonsmooth objective, however, gradients can jump by $O(1)$ across kinks as
+the step $s_k=x_{k+1}-x_k$ shrinks: the ratio $\norm{y_k}^2/(y_k^Ts_k)$ becomes
+unbounded, $\tr(B_k)$ can diverge, and the inverse-Hessian approximation $H_k$
+degenerates toward singularity, whether through unbounded ill-conditioning as
+it crushes directions normal to a kink~\cite{LO} or through uniform contraction
+$H_k\to0$.
 
 Existing theory leaves a wide gap between empirical success and rigorous
 guarantees. In one dimension, Lewis and Overton~\cite[Section~5.1]{LO} analyzed
@@ -40,20 +41,21 @@ results for piecewise smooth selections instead assume \emph{a priori} iterate
 convergence together with prescribed active-set and spectral
 asymptotics~\cite[Theorem~3.1 and~(B1)]{BG}.
 
-Even less was settled on the negative side. Known divergence or
-nonstationarity examples for BFGS either rely on nonconvex objectives, as in
-Mascarenhas~\cite{NEG_M04,NEG_M07}, Lewis and Zhang~\cite{NEG_LZ15}, and
-Diao~\preprintcite*{NEG_DIAO26}, or alter the algorithm itself, whether by
-imposing exact line searches and specialized subgradient choices as in Lewis
-and Overton~\preprintcite*{NEG_LO08} or by replacing full BFGS with a scaled
-memoryless update as in Asl and Overton~\cite{NEG_AO21}. It remained open
-whether unmodified full BFGS with a standard inexact Armijo--weak-Wolfe line
-search can converge to a nonstationary point on a coercive convex function,
-either globally or from starting points arbitrarily close to the unique
-minimizer of a smooth-branch maximum. Lewis and Overton's Challenge~7.1~\cite{LO} framed the
-broader behavior of nonsmooth BFGS probabilistically, asking whether randomly
-initialized runs converge almost surely on semialgebraic functions; here we
-resolve the deterministic landscape on convex functions.
+Even less was settled on the negative side for convex problems. Known divergence
+or nonstationarity examples for BFGS either rely on nonconvex objectives, as in
+Mascarenhas~\cite{NEG_M04,NEG_M07}, Lewis and Zhang~\cite{NEG_LZ15},
+Diao~\preprintcite*{NEG_DIAO26}, and Lai~\preprintcite*{NEG_LAI26}, or alter the
+algorithm itself, whether by imposing exact line searches and specialized
+subgradient choices as in Lewis and Overton~\preprintcite*{NEG_LO08} or by
+replacing full BFGS with a scaled memoryless update as in Asl and
+Overton~\cite{NEG_AO21}. While Lai~\preprintcite*{NEG_LAI26} recently disproved
+the nonconvex semialgebraic stationarity conjecture of Lewis and Overton's
+Challenge~7.1~\cite{LO} using a nonconvex homogeneous cycle with negative
+transverse curvature, it remained open whether unmodified full BFGS with a
+standard inexact Armijo--weak-Wolfe line search can converge to a nonstationary
+point on a coercive \emph{convex} function, either globally or from starting
+points arbitrarily close to the unique minimizer of a smooth-branch maximum;
+here we resolve this deterministic landscape on convex functions.
 
 This paper develops two complementary analytical toolkits for unmodified full
 BFGS. Using them, we establish general convergence theorems that settle
@@ -76,11 +78,11 @@ the full-BFGS matrix update and the directional geometry of gradient jumps.
 Coupling $\tr(B_k)$ directly to $\det(B_k)$ fails as soon as a single
 eigenvalue of $B_k$ explodes across a kink. Instead, we track the entire tower
 of elementary symmetric polynomials $e_1(H_k),\ldots,e_n(H_k)$, namely the sums
-of $j\times j$ principal minors of the \emph{inverse} matrices $H_k$. We prove
-that every full-BFGS step satisfies an adjacent-degree inequality bounding
-$e_j(H_{k+1})$ by a multiple of $\norm{y_k}^2/(g_k^TH_kg_k)\,e_{j+1}(H_k)$ plus
-a vanishing multiple $O(d_k)e_j(H_k)$, where $d_k=-g_k^Ts_k$ is the predicted
-decrease (Theorem~\ref{art:minor-hierarchy}). Crucially, the gradient jump
+of $j\times j$ principal minors of the \emph{inverse} matrices $H_k$. We prove that every full-BFGS step satisfies an adjacent-degree inequality
+(Theorem~\ref{art:minor-hierarchy}) which, after multiplying by
+$q_k=g_k^TH_kg_k$ under weak Wolfe, bounds $q_ke_j(H_{k+1})$ by a multiple of
+$\norm{y_k}^2e_{j+1}(H_k)$ plus a vanishing multiple $O(d_k)e_j(H_k)$, where
+$d_k=-g_k^Ts_k$ is the predicted decrease. Crucially, the gradient jump
 $y_k=g_{k+1}-g_k$ enters only through $\norm{y_k}^2$, which stays bounded on
 any compact sublevel of a finite convex function regardless of nonsmoothness.
 As $d_k\to0$, a geometrically weighted Lyapunov combination of
@@ -304,10 +306,12 @@ minimizer). Quantifying over infinite admissible runs cleanly separates two
 questions: whether every run generated by the line search converges, and whether
 a differentiable Armijo--weak-Wolfe step exists along a given search ray.
 Appendix~\ref{art:hypothesis-examples} addresses step and run existence
-explicitly: Lemma~\ref{art:examples-run-existence} proves that infinite
-admissible runs exist from \emph{every} differentiable starting point and
-\emph{every} $H_0\succ0$ whenever the nondifferentiable locus meets lines in at
-most countably many points (as in our curved quadratic maxima), while
+explicitly: Lemma~\ref{art:examples-run-existence} proves that on any
+bounded-below finite convex objective with no differentiable stationary point
+whose nondifferentiable locus meets lines in at most countably many points (as
+in our curved quadratic maxima), infinite admissible runs exist from
+\emph{every} differentiable starting point, \emph{every} $H_0\succ0$, and
+\emph{every} $0<c_1<c_2<1$, while
 Proposition~\ref{art:examples-no-step} exhibits a three-piece coercive cone and
 a differentiable start whose search ray contains no differentiable weak-Wolfe
 point. Conversely, our negative theorems leave no ambiguity in step selection:
@@ -318,14 +322,14 @@ single active piece.
 
 Because our counterexamples combine subtle multiscale arguments with algebraic
 root isolation, nine-query interval enclosures, and hyperbolic return-map
-spectral bounds, every definition, lemma, theorem, corollary, and rational
-certificate in this paper, together with every claim in the accompanying
-companion monograph, has been formalized and machine-checked from first
-principles in the Lean~4 theorem prover on top of \textsf{Mathlib}, using only
-the standard axioms of classical mathematics and verified by an independent
-kernel replay (Section~\ref{art:verification}). Nevertheless, the paper is completely
-self-contained and written to be read independently as an ordinary mathematical
-article.
+spectral bounds, every named mathematical definition, lemma, proposition,
+theorem, corollary, and rational interval certificate in this paper, together
+with the extended theory in the accompanying companion monograph, has been
+formalized and machine-checked from first principles in the Lean~4 theorem
+prover on top of \textsf{Mathlib}, using only the standard axioms of classical
+mathematics and verified in the Lean kernel (Section~\ref{art:verification}).
+Nevertheless, the paper is completely self-contained and written to be read
+independently as an ordinary mathematical article.
 
 The rest of the paper is organized as follows. Section~\ref{art:energy}
 establishes the BFGS invariants, reference energy identity, principal-minor

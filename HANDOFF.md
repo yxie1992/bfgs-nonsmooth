@@ -14,8 +14,14 @@ M44):
 
 - **Completed in `paper/`:**
   - Concise, jargon-free one-paragraph abstract; reorganized 6-section main body
-    plus Appendices A--E (52 pages, zero em-dashes, zero LaTeX/package warnings,
-    zero overfull boxes).
+    plus Appendices A--E with author/email (`Yuchen Xie`, `yxie@u.northwestern.edu`),
+    public repository link, and November 2026 literature update (`arXiv:2610.34087v2`)
+    (53 pages, zero em-dashes, zero LaTeX/package warnings, zero overfull boxes).
+  - Independent `gpt-6-astra` mathematical & Lean-fidelity audit completed across
+    all 16 TeX files and 16 Lean coverage modules; all 7 localized proof/prose
+    findings and 8 minor precision alignments resolved, and
+    `BfgsCoverage.Article.Energy.tail_vector_comparison` added and verified
+    against Lean's three standard classical axioms.
   - Old premature Section 2 (`paper/sections/geometry.tex`) dissolved into
     Section 1.1--1.2 (core analytical tools, Figure 1, affine-vs-convex balance,
     and Table 1) and Section 4.4 (practical hypothesis verification guide).

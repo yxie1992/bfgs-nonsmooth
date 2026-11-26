@@ -107,6 +107,13 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   - [x] Eliminate all em-dashes (`---`) across `paper/`, rephrasing parenthetical
     and compound sentences naturally and re-verifying `paper/build/master.pdf`
     (52 pages, 0 em-dashes, 0 warnings, 0 overfull boxes).
+  - [x] Run independent `gpt-6-astra` mathematical & Lean-coverage audit across
+    all 16 article TeX files and 16 Lean coverage modules; fix all 7 localized
+    proof/prose findings and 8 precision alignments, add the Lean theorem
+    `BfgsCoverage.Article.Energy.tail_vector_comparison` for `Lemma art:tail-comparison`,
+    add author/email metadata (`Yuchen Xie`, `yxie@u.northwestern.edu`), public
+    repository link, and citation to Lai (`arXiv:2610.34087v2`), and rebuild
+    `paper/build/master.pdf` (53 pages, 0 warnings, 0 overfull boxes, 0 em-dashes).
   - [ ] Author review and any further prose/structural iteration on `paper/`.
   - [ ] Once `paper/` text is approved by the author: migrate article Lean
     coverage registers and modules (`BfgsArticle/Coverage/Article/`), update

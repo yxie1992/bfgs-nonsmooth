@@ -4,9 +4,16 @@ Taken together, the positive theorems of Sections~\ref{art:global}--\ref{art:loc
 and the counterexamples of Section~\ref{art:failure} show that deterministic
 convergence of unmodified full BFGS on convex nonsmooth functions is governed
 neither by conditioning of the inverse-Hessian matrices nor by smoothness or
-strong convexity of the constituent branch formulas alone. Rather, it is
-governed by whether the subdifferential geometry admits a comparison field that
-remains visible to the optimality gap while filtering out leading gradient jumps.
+strong convexity of the constituent branch formulas alone. Instead, across the
+structured nonsmooth classes resolved here, the divide lies in subdifferential
+jump geometry: whenever objective geometry supplies a comparison field (or
+positive-semidefinite tensor) that stays visible to the optimality gap while
+filtering out leading gradient jumps, every admissible run converges, whereas
+when $0\in\aff\partial F\setminus\conv\partial F$ destroys all jump-canceling
+comparison directions, self-similar BFGS cycles can stall (note that uniform
+sublevel-band certificates themselves are sufficient rather than necessary for
+convergence, as shown by a convergent one-dimensional accumulating-kink example
+in Chapter~7 of the companion).
 
 \subsection{Why the counterexamples escape the positive theory}
 
@@ -83,16 +90,21 @@ decrease. Extending moving comparison fields, or the higher-rank comparison tens
 $W_\eta(x)$ already permitted by Theorem~\ref{art:certificate}, to nondegenerate
 smooth maxima with curved switching manifolds in $\R^n$ ($n\ge3$) is a natural
 next step.
-\item \emph{Positive-measure vs.\ zero-measure failure (Lewis--Overton
-Challenge~7.1).} The failing initial points $x_0^{(\ell)}$ in
-Theorems~\ref{art:failure_polyhedral}, \ref{art:local-failure},
-and~\ref{art:local-failure-lower} form discrete sequences (or lie on a
-two-dimensional stable manifold in the five-dimensional normalized state space
-of Appendix~\ref{art:lower_curvature}). Under absolutely continuous random
-initialization as in Challenge~7.1~\cite{LO}, can a convex nonsmooth function
-admit a \emph{positive-measure} set of initial states $(x_0,H_0)$ on which full
-BFGS converges to nonstationary points, or are all nonstationary basins of
-measure zero?
+\item \emph{Positive-measure vs.\ zero-measure failure on convex functions
+(Lewis--Overton Challenge~7.1).} On \emph{nonconvex} coercive semialgebraic
+objectives, Lai~\preprintcite*{NEG_LAI26} recently constructed a nonempty open
+set of initial states $(x_0,H_0)$ converging to a non-Clarke-stationary point by
+using negative transverse curvature to contract perturbations onto a homogeneous
+cycle. Under convexity, however, Theorem~\ref{art:homogeneous} rules out global
+failure on every coercive positively homogeneous objective, and the failing
+initial points $x_0^{(\ell)}$ in Theorems~\ref{art:failure_polyhedral},
+\ref{art:local-failure}, and~\ref{art:local-failure-lower} form discrete
+sequences (or lie on a two-dimensional stable manifold in the five-dimensional
+normalized state space of Appendix~\ref{art:lower_curvature}). Under absolutely
+continuous random initialization as in Challenge~7.1~\cite{LO}, can a
+\emph{convex} nonsmooth function admit a positive-measure set of initial states
+$(x_0,H_0)$ on which full BFGS converges to nonstationary points, or are all
+convex nonstationary basins of measure zero?
 \item \emph{Convergence rates via principal minors and comparison energies.}
 Theorem~\ref{art:reciprocal-growth} and our comparison-energy inequalities give
 asymptotic convergence without conditioning assumptions (finite-horizon
@@ -103,18 +115,19 @@ $F(u,v)=u^2+|v|$ or coercive polyhedral norms remains largely open.
 
 \subsection{Formal verification and reproducibility}
 
-Every definition, lemma, proposition, theorem, corollary, and rational interval
-certificate in this article, together with the extended noncompact and
-quantitative theory in the accompanying companion monograph, has been formalized
-and verified in the Lean~4 theorem prover on top of \textsf{Mathlib}.
-An automated axiom audit confirms that all verified declarations depend only on
-the three standard foundational axioms of Lean's classical logic
-(\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}), and an
-independent replay through \texttt{lean4checker} re-verifies every compiled
-module directly in the Lean kernel. The companion provides the pinned formal
-sources, exact claim-to-Lean correspondence tables, and reproducible audit
-scripts, while Appendices~\ref{art:matrix-algebra}--\ref{art:hypothesis-examples}
-keep the mathematical proofs of this article completely self-contained.
+Every named mathematical definition, lemma, proposition, theorem, corollary,
+and rational interval certificate in this article, together with the extended
+noncompact and quantitative theory in the accompanying companion monograph, has
+been formalized and verified in the Lean~4 theorem prover on top of
+\textsf{Mathlib}. An automated axiom audit confirms that all verified
+declarations depend only on the three standard foundational axioms of Lean's
+classical logic (\texttt{propext}, \texttt{Classical.choice}, and
+\texttt{Quot.sound}), and an independent replay through \texttt{lean4checker}
+re-verifies every compiled module directly in the Lean kernel. The pinned formal
+sources, companion monograph, and reproducible audit scripts are publicly
+available at \url{https://github.com/yxie1992/bfgs-nonsmooth}, while
+Appendices~\ref{art:matrix-algebra}--\ref{art:hypothesis-examples} keep the
+mathematical proofs of this article completely self-contained.
 
 \paragraph{Acknowledgements.}
 Large language models assisted theorem development, proof reconstruction, Lean~4

@@ -1694,6 +1694,26 @@ theorem certificate_not_necessary :
     exact AccumulatingKinks.every_neighborhood_no_certificates hnhds
       ((hasBandCertificates_iff _ _ _ _ _ (by norm_num)).mp hcert)
 
+/-- Lemma `art:tail-comparison` (`paper/sections/energy.tex`, Tail vector comparison): along an
+admissible run with bounded gradients and $\sum_k d_k < \infty$, there cannot exist an index $J$,
+vectors $w_k$, scalars $\lambda_k,\beta_k$, and constants $m>0$, $C,L\ge0$ satisfying
+$(g_k^T w_k)^2 \ge m$, $(y_k^T w_{k+1})^2 / t_k \le C$, $w_{k+1} = \lambda_k w_k + \beta_k s_k$,
+and $\lambda_k^2 \le 1 + L d_k$ for all $k \ge J$. -/
+theorem tail_vector_comparison {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
+    (G : ℝ) (hG : 0 < G) (hg : ∀ k, sqNorm (R.g k) ≤ G ^ 2) (hs : Summable R.d) :
+    ¬ ∃ (J : ℕ) (w : ℕ → Vec n) (lam β : ℕ → ℝ) (m C L : ℝ),
+      0 < m ∧ 0 ≤ C ∧ 0 ≤ L ∧
+      (∀ k, J ≤ k →
+        m ≤ (dot (R.g k) (w k)) ^ 2 ∧
+        (dot (R.gradientChange k) (w (k + 1))) ^ 2 / R.curvature k ≤ C ∧
+        w (k + 1) = lam k • w k + β k • R.displacement k ∧
+        (lam k) ^ 2 ≤ 1 + L * R.d k) := by
+  rintro ⟨J, w, lam, β, m, C, L, hm, hC, hL, h⟩
+  exact R.scalar_frame_tail_incompatible J w lam β
+    (fun k hk => (h k hk).2.2.1) m L C hm hL hC
+    (fun k hk => (h k hk).1) (fun k hk => (h k hk).2.2.2) (fun k hk => (h k hk).2.1)
+    hs G hG hg
+
 /-! ### Non-vacuity -/
 
 /-- The assumptions of Theorem `art:minor-hierarchy` and of its proof can all hold at once:

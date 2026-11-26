@@ -161,19 +161,6 @@ decisions identical for all $0<c_1\le1/3$ and $c_2>0$.}
 \label{art:trial_table}
 \end{table}
 
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\textwidth]{figures/cycle_trials.pdf}
-\caption{Geometry of the self-similar three-step cycle. Solid, dashed, and
-dash--dot rays show phases $0,1,2$ with accepted step lengths $1,1/4,1/16$:
-(a)~the accepted cycle $z_0\to z_1\to z_2\to z_3=\rho z_0$; (b)~all nine unit
-and bisected trial queries; (c)~enlargement near the nonstationary origin.
-Vertical-to-horizontal aspect ratios are $22/4.6$, $2.5/4.2$, and $23/21$ in
-(a), (b), and (c); exact rational proofs are in
-Appendix~\ref{art:seed_certificate}.}
-\label{art:cycle-figure}
-\end{figure}
-
 The rational root proof, symbolic closure identity, and interval enclosures for
 Lemma~\ref{art:seed_cycle} are given in Appendix~\ref{art:seed_certificate},
 while Table~\ref{art:trial_table} and Figure~\ref{art:cycle-figure} make the
@@ -228,6 +215,19 @@ implies $u\le t$, $v\le t+17$, and $-u-v/8\le t$ (hence $u\ge-9t/8-17/8$ and
 $v\ge-8t-8u\ge-16t$), so every sublevel of $\overline G$ is compact.\qed
 \end{proof}
 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/cycle_trials.pdf}
+\caption{Geometry of the self-similar three-step cycle. Solid, dashed, and
+dash--dot rays show phases $0,1,2$ with accepted step lengths $1,1/4,1/16$:
+(a)~the accepted cycle $z_0\to z_1\to z_2\to z_3=\rho z_0$; (b)~all nine unit
+and bisected trial queries; (c)~enlargement near the nonstationary origin.
+Vertical-to-horizontal aspect ratios are $22/4.6$, $2.5/4.2$, and $23/21$ in
+(a), (b), and (c); exact rational proofs are in
+Appendix~\ref{art:seed_certificate}.}
+\label{art:cycle-figure}
+\end{figure}
+
 Theorem~\ref{art:failure_polyhedral} shows that homogeneity in
 Theorem~\ref{art:homogeneous} is sharp: shifting one affine piece by $-17$
 separates the nonstationary corner $(0,0)$ from the true minimizer $(-1,16)$ and
@@ -242,9 +242,9 @@ of the bad corner at centers $\bar x_\ell\to0$ inside one fixed function $F$,
 with every failing run initialized from the \emph{same} matrix $H_0=I$.
 
 A simple scale-covariance calculation governs when rescaled copies share an
-initial inverse-Hessian approximation. Suppose that on a region containing a
-current iterate and all trial queries of a line search, $F$ models a template
-function $\mathcal G$ via
+initial inverse-Hessian approximation. Suppose that on an open region $U$
+containing a current iterate and all trial queries of a line search, $F$ models
+a template function $\mathcal G$ via
 \begin{equation}\label{art:matched-local-model}
  F(\bar x+\lambda z)=C+\sigma\mathcal G(z)\qquad(\lambda,\sigma>0).
 \end{equation}
@@ -262,7 +262,7 @@ term $s_Fs_F^T/(y_F^Ts_F)$ scales by $\lambda^2/\sigma$, preserving
 $H_F=(\lambda^2/\sigma)H_{\mathcal G}$ across all subsequent updates. Likewise,
 both sides of the Armijo and weak-Wolfe tests~\eqref{art:failure_tests} multiply
 by $\sigma>0$, preserving every strict trial decision whenever all queried
-points remain inside the domain of~\eqref{art:matched-local-model}.
+points remain inside $U$.
 
 Equation~\eqref{art:matched-scaling} reveals the decisive scaling law
 \[
@@ -291,7 +291,7 @@ and $\varphi_b''$ is globally Lipschitz on $\R$ with constant
 $L_b=\max\{6,139264/(5b^2)\}$.
 \end{lemma}
 
-The explicit piecewise-quintic formula for $\varphi_b$ and the elementary
+The explicit piecewise-quartic formula for $\varphi_b$ and the elementary
 calculus verification of Lemma~\ref{art:upper_scalar_lemma} are given in
 Appendix~\ref{art:lower_curvature} (equation~\eqref{art:upper_scalar}), side by
 side with the companion $C^{1,1}$ spline used for strong convexity. With
@@ -319,7 +319,8 @@ Define the four-branch objective on $\R^2$ by
 \end{equation}
 For $i=0,1,2$, $\nabla^2f_i(x)=\varphi_{b_i}''(g_i^Tx)g_ig_i^T\succeq0$; by
 \eqref{art:scalar_curvature}, their operator norms are bounded by $51$,
-$51(65/64)<52$, and $(102/b_*)\norm{g_2}^2<12$, respectively, while $f_3(u,v)=v$
+$51(65/64)<52$, and $\max\{6,102/b_*\}\norm{g_2}^2=6\norm{g_2}^2<12$,
+respectively, while $f_3(u,v)=v$
 has zero Hessian, so $0\preceq\nabla^2f_i\preceq64I$ and each $\nabla^2f_i$ is
 globally Lipschitz. Because $u$ and $-u-v/8$ are linearly independent and
 $\varphi_2$ is coercive and nonnegative with unique zero at $0$, every sublevel
