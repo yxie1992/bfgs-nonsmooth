@@ -7,6 +7,9 @@ import BfgsVerification.AlgebraicSeedCoercive
 import BfgsVerification.ConvexCellRadial
 import BfgsVerification.LEmbeddingSourceDetails
 import BfgsVerification.PointwiseCertificateFeasibility
+import BfgsVerification.AccumulatingKinks
+import BfgsVerification.RadialHessian
+import ArticleGeometry
 
 /-!
 # Lean coverage of `paper/sections/verification.tex`
@@ -16,7 +19,7 @@ Coverage theorems for the claims made only in Section `art:verification`
 stated there. Register: `editorial/lean_coverage/register/A_verification.json`.
 
 Objects. `G(z)=max_i g_i^T z` is `SeedOrbit.objective seedC seedD` and its coercive
-cap `Ḡ` of Corollary `art:failure_polyhedral` is `SeedOrbit.coerciveObjective`.
+cap `Ḡ` of Theorem `art:failure_polyhedral` is `SeedOrbit.coerciveObjective`.
 The objective `art:upper_objective` of Theorem `art:local-failure` is
 `DEmbedding.objective` with branches `DEmbedding.branch`; the objective
 `art:lower_objective` before whitening is `LEmbedding.objective` with branches
@@ -35,15 +38,13 @@ open BfgsVerification
 
 /-! ## The homogeneous seed and its coercive cap -/
 
-/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11-12`): "The homogeneous
-seed satisfies $G(t(-1,16))=-t$ for $t\ge0$" (the range was added on 15 October 2026, M9), as
-stated in `paper/sections/failure.tex:200`. -/
+/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:23-25`): "\item \emph{Global homogeneity vs.\ affine offsets.} The three-slope cone $G(z)=\max_{0\le i\le2}g_i^Tz$ is positively homogeneous of degree one, but satisfies $G(t(-1,16)^T)=-t$ for $t\ge0$ and so fails coercivity; its four-piece" (the range was added on 15 October 2026, M9), as
+stated in `paper/sections/failure.tex:183-188`. -/
 theorem seed_ray {t : ℝ} (ht : 0 ≤ t) :
     SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD (t • ![-1, 16]) = -t :=
   DEmbedding.seed_descent_ray ht
 
-/-- Item `A/verification/prose/004` (`paper/sections/verification.tex:11-12`),
-the range is needed (the reading of the text before M9, for every real `t`): at `t=-1`,
+/-- Retained statement (not cited by a current register item since M45): the range is needed (the reading of the text before M9, for every real `t`): at `t=-1`,
 `G(t(-1,16)) = G(1,-16) ≥ c_∘-16d_∘ > 1 = -t`. -/
 theorem seed_ray_fails_at_minus_one :
     SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD ((-1 : ℝ) • ![-1, 16]) ≠ -(-1 : ℝ) := by
@@ -59,7 +60,7 @@ theorem seed_ray_fails_at_minus_one :
   dsimp only [SeedOrbit.seedC, SeedOrbit.seedD] at hb
   linarith
 
-/-- Item `A/verification/prose/005` (`paper/sections/verification.tex:11-12`): "... so it is
+/-- "... so it is
 unbounded below". -/
 theorem seed_unbounded_below (M : ℝ) :
     ∃ x : Vec 2, SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD x < M := by
@@ -98,8 +99,7 @@ theorem cap_formula (x : Vec 2) :
       Matrix.tail_cons, Matrix.cons_val_three] at h0 h1 h2 h3
     exact max_le (max_le h0 h1) (max_le h2 h3)
 
-/-- Item `A/verification/prose/006` (`paper/sections/verification.tex:13`): "its coercive
-cap contains the affine term $v-17$ and is not homogeneous." -/
+/-- Item `A/verification/prose/006` (`paper/sections/verification.tex:25-28`): "satisfies $G(t(-1,16)^T)=-t$ for $t\ge0$ and so fails coercivity; its four-piece coercive cap $\overline G$ in Theorem~\ref{art:failure_polyhedral} includes the affine offset $v-17$, breaking homogeneity around the minimizer $(-1,16)$ and leaving $(0,0)$ as a nonstationary corner with $0\in\aff\partial\overline G(0)\setminus\conv\partial\overline G(0)$." -/
 theorem cap_not_homogeneous :
     (∀ x : Vec 2, SeedOrbit.coerciveObjective x =
       max (max (x 0) (-x 0 - x 1 / 8)) (max (SeedOrbit.seedC * x 0 + SeedOrbit.seedD * x 1) (x 1 - 17))) ∧
@@ -120,7 +120,7 @@ theorem cap_not_homogeneous :
   rw [h2] at hlow
   linarith
 
-/-- Item `A/verification/prose/007` (`paper/sections/verification.tex:14-15`): "Neither
+/-- "Neither
 belongs to the coercive homogeneous class of
 Theorem~\ref{art:homogeneous}." Neither `G` nor `Ḡ` is both positively homogeneous
 of degree one and coercive (`F → ∞` along the cocompact filter), the hypotheses of
@@ -180,9 +180,7 @@ theorem no_partition_of_failing_runs {n : ℕ} {F : Vec n → ℝ} (hF : ConvexO
   obtain ⟨ℓ, hℓ⟩ := (hv.eventually (eventually_le_nhds (lt_add_of_pos_right (F star) hδ))).exists
   exact hfail ℓ (hbasin (R ℓ) hℓ).2.2
 
-/-- Item `A/verification/prose/009` (`paper/sections/verification.tex:17-19`): "In the
-local embeddings, ... the resulting switching geometry is not resolved by a finite
-local polyhedral-cell partition as in Theorem~\ref{art:polyhedral}." Neither the
+/-- Item `A/verification/prose/009` (`paper/sections/verification.tex:32-35`): "By contrast, in Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}, nonlinear scalar splines cause nonstationary three-slope corners $\bar x_\ell\to0$ to accumulate at the minimizer $0$: no neighborhood of $0$ admits a finite polyhedral partition with smooth extensions, demonstrating that finitely many" Neither the
 objective `art:upper_objective` of Theorem `art:local-failure` nor the objective of
 Theorem `art:local-failure-lower` has such a partition around its minimizer `0`. -/
 theorem local_embeddings_no_polyhedral_partition :
@@ -246,15 +244,11 @@ theorem degenerate_pattern {e : Vec 2} (he : e ≠ 0) :
     rw [hsum] at hz
     exact hne w (hw 3) hz
 
-/-- Item `A/verification/prose/011` (`paper/sections/verification.tex:22-24`);
-Item `A/verification/prose/014` (`paper/sections/verification.tex:30-31`);
-Item `A/verification/prose/015` (`paper/sections/verification.tex:31-33`);
-Item `A/verification/prose/016` (`paper/sections/verification.tex:33-34`):
-"In \eqref{art:upper_objective}, all four branches are active at zero, with indexed
-gradients $0,0,0,e_2$ ... the repeated zero gradients violate affine independence,
-and a combination with positive weight $\lambda_3$ on the fourth branch equals
-$\lambda_3e_2\ne0$ ... The strictly positive optimal weights in
-Corollary~\ref{art:planar-max} therefore fail as well." -/
+/-- Item `A/verification/prose/011` (`paper/sections/verification.tex:40-42`);
+Item `A/verification/prose/014` (`paper/sections/verification.tex:44-45`);
+Item `A/verification/prose/015` (`paper/sections/verification.tex:45-48`);
+:
+"hypotheses of Corollary~\ref{art:planar-max} directly at $x_*=0$. In \eqref{art:upper_objective}, all four branches are active at $0$ with gradients $0,0,0,e_2$, where $e_2=(0,1)^T$; in~\eqref{art:lower_objective}, the active" -/
 theorem upper_active_gradients :
     (∀ i, DEmbedding.branch i 0 = DEmbedding.objective 0) ∧
       (∀ i, HasFDerivAt (DEmbedding.branch i)
@@ -293,11 +287,8 @@ theorem lower_branch_gradients_zero (i : Fin 4) :
   · exact LEmbedding.branchGradient_zero 2
   · simp [LEmbedding.branchGradient, LEmbedding.residualGradient]
 
-/-- Item `A/verification/prose/012` (`paper/sections/verification.tex:25-27`), with the
-consequences of `A/verification/prose/014`–`016`: "Equation~\eqref{art:lower_objective}
-gives the same pattern before the fixed change of coordinates of
-Appendix~\ref{art:lower_curvature}: the common quadratic has zero gradient at zero, and
-$\psi_b'(0)=0$." All four branches
+/-- Item `A/verification/prose/012` (`paper/sections/verification.tex:42-43`), with the
+consequences of `A/verification/prose/014`–`016`: "$0,0,0,e_2$, where $e_2=(0,1)^T$; in~\eqref{art:lower_objective}, the active gradients at $0$ are again $0,0,0,e_2$ before whitening and $0,0,0,A^Te_2\ne0$" All four branches
 `f_i(x)=μ‖x‖^2/2+ψ_{b_i}(q_i^Tx)`, `f_3(x)=μ‖x‖^2/2+x_2` are active at zero with
 gradients `0,0,0,e_2`; the gradient pattern has the same consequences as in
 `upper_active_gradients`. -/
@@ -325,10 +316,8 @@ theorem lower_active_gradients :
   · rw [← hgrad i]
     exact LEmbedding.branch_hasGradient i 0
 
-/-- Item `A/verification/prose/013` (`paper/sections/verification.tex:28-30`), with the
-consequences of `A/verification/prose/014`–`016` (lines 30-34): "After that change,
-$x=Az$ with $A=(H_0^{\rm seed})^{1/2}$, the gradients are $0,0,0,A^Te_2$, with $A^Te_2\ne0$
-... (or $\lambda_3A^Te_2\ne0$ after that change)." Here $A$ is `LUniform.coordinateMatrix`. For the whitened objective of Theorem
+/-- Item `A/verification/prose/013` (`paper/sections/verification.tex:43-44`), with the
+consequences of `A/verification/prose/014`–`016`: "gradients at $0$ are again $0,0,0,e_2$ before whitening and $0,0,0,A^Te_2\ne0$ after $x=Az$ with $A=(H_0^{\rm seed})^{1/2}$. In both cases, the repeated zero" Here $A$ is `LUniform.coordinateMatrix`. For the whitened objective of Theorem
 `art:local-failure-lower`, all four branches are active at zero with gradients
 `0,0,0,A^Te_2`, `A^Te_2 ≠ 0`, and the gradient pattern has the same consequences. -/
 theorem whitened_active_gradients :
@@ -363,9 +352,8 @@ theorem whitened_active_gradients :
   · rw [← hgrad i]
     exact (LUniform.smooth_branch_regular i).2.2.1 0
 
-/-- Item `A/verification/prose/017` (`paper/sections/verification.tex:35-36`): "Three of the four
-lower-curvature branches also lose second differentiability at zero" (corrected on 15 October
-2026, M8, like the abstract's `A/master/prose/009`, `paper/master.tex` lines 53-55; both spoke of
+/-- Item `A/verification/prose/017` (`paper/sections/verification.tex:48-49`): "well; in~\eqref{art:lower_objective}, three branches also lose $C^2$ regularity at $0$." (corrected on 15 October
+2026, M8, like the abstract's `A/master/prose/009`, `paper/master.tex`; both spoke of
 all branches). Of the four branches of the objective of Theorem
 `art:local-failure-lower`, the first three are not twice differentiable at the
 minimizer `0`, while the fourth is. -/
@@ -411,10 +399,8 @@ theorem gradient_of_active {μ : ℝ} {x : Vec 2} {i : Fin 3}
   rw [h]
   abel
 
-/-- Item `A/verification/disp/001` (`paper/sections/verification.tex:43-46`), equation
-`art:jump-secant`, with the hypotheses of lines 39-40: "For $Q_\mu(x)=\mu\|x\|^2/2+G(x)$, suppose
-the differentiable endpoints $x$ and $x+s$ have active slopes $g_i$ and $g_j$. Then
-exactly $y=(\mu(x+s)+g_j)-(\mu x+g_i)=\mu s+(g_j-g_i)$." Here `y` is the difference
+/-- Item `A/verification/disp/001` (`paper/sections/verification.tex:56-59`), equation
+`art:jump-secant`, with the hypotheses of the text: "\begin{equation} y=\bigl(\mu(x+s)+g_j\bigr)-\bigl(\mu x+g_i\bigr) =\mu s+(g_j-g_i). \end{equation}" Here `y` is the difference
 of the actual gradients of `Q_μ` at the two endpoints. -/
 theorem jump_secant {μ : ℝ} {x s : Vec 2} {i j : Fin 3}
     (hx : DifferentiableAt ℝ (LQuadraticSeed.objective μ) x)
@@ -498,10 +484,8 @@ theorem seed_slopes_distinct {i j : Fin 3} (hij : i ≠ j) :
   fin_cases i <;> fin_cases j <;> simp_all [SeedOrbit.gradient, SeedCycle.g0, SeedCycle.g1,
     SeedCycle.g2] <;> dsimp only [SeedOrbit.seedC, SeedOrbit.seedD] at * <;> linarith
 
-/-- Item `A/verification/prose/019` (`paper/sections/verification.tex:47-48`);
-Item `A/verification/prose/020` (`paper/sections/verification.tex:48-49`): "Along the perturbed orbit of
-Proposition~\ref{art:quadratic_failure}, $s\to0$ while the three distinct slopes continue to cycle. The positive-curvature
-contribution therefore vanishes with the step, while the branch jumps persist."
+/-- Item `A/verification/prose/019` (`paper/sections/verification.tex:60-63`);
+: "Along the perturbed trajectory of Proposition~\ref{art:quadratic_failure}, $\norm{s_k}\to0$ while $g_0,g_1,g_2$ continue to cycle: the strongly convex contribution $\mu s_k$ vanishes with the step length, leaving the $O(1)$ jump $g_j-g_i$ to dominate the rank-two BFGS update."
 For every `μ>0` there is one orbit `x_k`, `H_k` (with `H_0 ≻ 0`) that is the actual
 run of the article's unit-first search on `Q_μ` for every pair `0<c₁≤1/3`,
 `c₁<c₂<1`, with complete query trace; along it the active slope at `x_k` is
@@ -719,7 +703,7 @@ def fourMaxRun : AdmissibleBFGSRun 2 fourMax where
     exact axisRun.armijo k
   weak_wolfe := axisRun.weak_wolfe
 
-/-- Item `A/verification/prose/022` (`paper/sections/verification.tex:51`): "a branch change
+/-- "a branch change
 alone does not imply failure." For every coercive finite maximum of linear functions
 `F(x)=max_{a∈A} a^Tx` (bounded zero sublevel), every infinite admissible run changes its
 active linear piece at every accepted step: at `x_k` the only active slope is the gradient
@@ -752,10 +736,8 @@ theorem branch_change_without_failure :
 
 /-! ## The open question -/
 
-/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:54-56`), OPEN
-(stated without proof): "The local question for finitely many uniformly strongly convex
-$C^2$ branches remains open here outside the nondegenerate planar case of
-Corollary~\ref{art:planar-max}." (Before 15 October 2026, M36: "The broader local question ...
+/-- Item `A/verification/prose/025` (`paper/sections/verification.tex:79-82`), OPEN
+(stated without proof): "active gradients at $x_*$ are nondegenerate. Does unmodified full BFGS converge locally from every differentiable start near the minimizer of a maximum of finitely many uniformly strongly convex $C^2$ functions when active-gradient nondegeneracy is dropped?" (Before 15 October 2026, M36: "The broader local question ...
 remains open here.") Corollary `art:planar-max` excludes such failures in its nondegenerate
 planar case, so the open question is the same.
 
@@ -782,5 +764,207 @@ def C2StronglyConvexLocalFailure : Prop :=
           ∀ a ∈ (NonStrictLineSearch.fromMetric F ((R ℓ).x k) ((R ℓ).H k) c₁ c₂ fuel).2,
             DifferentiableAt ℝ F ((R ℓ).x k + a • bfgsStep ((R ℓ).H k) ((R ℓ).g k) 1)) ∧
         ¬ Tendsto (R ℓ).x atTop (𝓝 xstar)
+
+/-! ## Statements of the rewritten Section 6 (M45) -/
+
+/-- Item `A/verification/prose/031` (`paper/sections/verification.tex:13-16`): "uniform
+sublevel-band certificates themselves are sufficient rather than necessary for convergence, as
+shown by a convergent one-dimensional accumulating-kink example". The accumulating-kink objective
+$h$ of the companion (`AccumulatingKinks.coordinateObjective`) is finite and convex with unique
+minimizer $0$, $\min h=0$ and compact sublevels; every admissible run on it converges in value
+and iterates; yet for $(c_1,c_2)=(1/4,1/2)$ no sublevel $K=\{h\le b\}$, $b>0$, admits the band
+certificates of Definition `art:band-certificate` (`TransportedCertificate.HasBandCertificates`,
+unfolded by `BfgsCoverage.Article.Energy.hasBandCertificates_iff`, Chapter 5 (`comp:G`) of the
+companion). -/
+theorem certificates_not_necessary :
+    ∃ F : Vec 1 → ℝ, ConvexOn ℝ Set.univ F ∧ IsLeast (Set.range F) 0 ∧ F 0 = 0 ∧
+      (∀ x, F x = 0 → x = 0) ∧ (∀ b : ℝ, IsCompact {x | F x ≤ b}) ∧
+      (∀ R : AdmissibleBFGSRun 1 F,
+        Tendsto (fun k => F (R.x k)) atTop (𝓝 0) ∧ Tendsto R.x atTop (𝓝 0)) ∧
+      ∀ b : ℝ, 0 < b → ¬ TransportedCertificate.HasBandCertificates F {x | F x ≤ b} 0 (1 / 4) (1 / 2) := by
+  have h0 := AccumulatingKinks.coordinateObjective_zero
+  refine ⟨AccumulatingKinks.coordinateObjective, AccumulatingKinks.coordinateObjective_convex,
+    ⟨⟨0, h0⟩, ?_⟩, h0,
+    fun x hx => AccumulatingKinks.coordinateObjective_unique x (hx.trans h0.symm),
+    AccumulatingKinks.coordinateObjective_sublevel_compact, AccumulatingKinks.actual_bfgs_converges,
+    fun b hb => ?_⟩
+  · rintro _ ⟨x, rfl⟩
+    exact h0 ▸ AccumulatingKinks.coordinateObjective_minimum x
+  · have hcont := convex_continuous AccumulatingKinks.coordinateObjective_convex
+    have hopen : IsOpen {x : Vec 1 | AccumulatingKinks.coordinateObjective x < b} :=
+      isOpen_lt hcont continuous_const
+    have hmem : (0 : Vec 1) ∈ {x : Vec 1 | AccumulatingKinks.coordinateObjective x < b} := by
+      show AccumulatingKinks.coordinateObjective 0 < b
+      rw [h0]
+      exact hb
+    have hnhds : {x | AccumulatingKinks.coordinateObjective x ≤ b} ∈ 𝓝 (0 : Vec 1) :=
+      Filter.mem_of_superset (hopen.mem_nhds hmem) fun x (hx : _ < b) =>
+        show AccumulatingKinks.coordinateObjective x ≤ b from hx.le
+    exact AccumulatingKinks.every_neighborhood_no_certificates hnhds
+
+/-- Item `A/verification/prose/006` (`paper/sections/verification.tex:25-28`): the coercive cap
+$\overline G$ of Theorem `art:failure_polyhedral` leaves "$(0,0)$ as a nonstationary corner with
+$0\in\aff\partial\overline G(0)\setminus\conv\partial\overline G(0)$". The three seed slopes
+$g_0,g_1,g_2$ are subgradients of $\overline G$ at $0$, so the affine hull of $\partial\overline
+G(0)$ is the plane and contains $0$, while $0$ is not in the (convex) subdifferential. -/
+theorem cap_corner_affine_not_convex :
+    (∀ i : Fin 3, SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD i ∈
+        ConvexSubdifferential.subdifferential SeedOrbit.coerciveObjective 0) ∧
+      (0 : Vec 2) ∈ affineSpan ℝ (ConvexSubdifferential.subdifferential SeedOrbit.coerciveObjective 0) ∧
+      (0 : Vec 2) ∉ convexHull ℝ (ConvexSubdifferential.subdifferential SeedOrbit.coerciveObjective 0) := by
+  obtain ⟨⟨hc0, hc1⟩, ⟨hd0, hd1⟩⟩ := SeedOrbit.root_tight_box
+  have h0 : SeedOrbit.coerciveObjective 0 = 0 := by
+    rw [cap_formula]
+    norm_num
+  have hgrad : SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD =
+      ![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> rfl
+  have hmem : ∀ i : Fin 3, SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD i ∈
+      ConvexSubdifferential.subdifferential SeedOrbit.coerciveObjective 0 := by
+    intro i
+    rw [ConvexSubdifferential.mem_subdifferential]
+    intro z
+    rw [h0, sub_zero, sub_zero, cap_formula, hgrad]
+    fin_cases i
+    · have e : dot (![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] 0 : Vec 2) z = z 0 := by
+        simp [dot, Fin.sum_univ_two]
+      show dot (![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] 0 : Vec 2) z ≤ _
+      rw [e]
+      exact (le_max_left _ _).trans (le_max_left _ _)
+    · have e : dot (![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] 1 : Vec 2) z =
+          -z 0 - z 1 / 8 := by
+        simp [dot, Fin.sum_univ_two]
+        ring
+      show dot (![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] 1 : Vec 2) z ≤ _
+      rw [e]
+      exact (le_max_right _ _).trans (le_max_left _ _)
+    · have e : dot (![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] 2 : Vec 2) z =
+          SeedOrbit.seedC * z 0 + SeedOrbit.seedD * z 1 := by
+        simp [dot, Fin.sum_univ_two]
+      show dot (![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] 2 : Vec 2) z ≤ _
+      rw [e]
+      exact (le_max_left _ _).trans (le_max_right _ _)
+  refine ⟨hmem, ?_, ?_⟩
+  · have htop : affineSpan ℝ (Set.range (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD)) ≤
+        affineSpan ℝ (ConvexSubdifferential.subdifferential SeedOrbit.coerciveObjective 0) :=
+      affineSpan_mono ℝ (Set.range_subset_iff.mpr hmem)
+    rw [ArticleGeometry.seed_affine_span_top, top_le_iff] at htop
+    rw [htop]
+    exact AffineSubspace.mem_top ℝ (Vec 2) 0
+  · rw [(ConvexSubdifferential.convex_subdifferential _ _).convexHull_eq]
+    intro h
+    have h1 := (ConvexSubdifferential.mem_subdifferential.mp h) ![-1, 16]
+    rw [h0, sub_zero, sub_zero, cap_formula] at h1
+    have hd : dot (0 : Vec 2) ![-1, 16] = 0 := by simp [dot]
+    rw [hd] at h1
+    have hc : SeedOrbit.seedC * (![-1, 16] : Vec 2) 0 + SeedOrbit.seedD * (![-1, 16] : Vec 2) 1 < 0 := by
+      simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+      have e1 : SeedOrbit.seedC = AlgebraicSeed.root 0 := rfl
+      have e2 : SeedOrbit.seedD = AlgebraicSeed.root 1 := rfl
+      rw [e1, e2]
+      linarith
+    have hneg : max (max ((![-1, 16] : Vec 2) 0) (-(![-1, 16] : Vec 2) 0 - (![-1, 16] : Vec 2) 1 / 8))
+        (max (SeedOrbit.seedC * (![-1, 16] : Vec 2) 0 + SeedOrbit.seedD * (![-1, 16] : Vec 2) 1)
+          ((![-1, 16] : Vec 2) 1 - 17)) < 0 :=
+      max_lt (max_lt (by norm_num) (by norm_num)) (max_lt hc (by norm_num))
+    linarith
+
+/-- Item `A/verification/prose/032` (`paper/sections/verification.tex:70-73`): "\item \emph{Uniformly strongly convex $C^2$ branch maxima.} Globally, $Q_\mu(x)=\tfrac\mu2\norm{x}^2+G(x)$ is already a maximum of three $\mu$-strongly convex $C^\infty$ quadratic functions on which full BFGS can converge to the nonstationary origin (Proposition~\ref{art:quadratic_failure}). Locally near the": $Q_\mu=\max_i(\tfrac\mu2\|x\|^2+g_i^Tx)$, each branch is $C^k$ for every
+$k$ and $\mu$-strongly convex (Euclidean); full BFGS can converge to the nonstationary origin on
+it by Proposition `art:quadratic_failure`. -/
+theorem quadratic_three_branches (μ : ℝ) :
+    (∀ x, LQuadraticSeed.objective μ x =
+      max (max (LQuadraticSeed.branch μ 0 x) (LQuadraticSeed.branch μ 1 x)) (LQuadraticSeed.branch μ 2 x)) ∧
+    ∀ i : Fin 3, (∀ k : ℕ, ContDiff ℝ k (LQuadraticSeed.branch μ i)) ∧
+      FixedNormal.EuclideanStrongConvexOn univ μ (LQuadraticSeed.branch μ i) := by
+  refine ⟨fun x => ?_, fun i => ⟨fun k => ?_, ?_⟩⟩
+  · have hG : SeedOrbit.objective SeedOrbit.seedC SeedOrbit.seedD x =
+        max (max (dot (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD 0) x)
+          (dot (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD 1) x))
+          (dot (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD 2) x) := by
+      apply le_antisymm
+      · apply LQuadraticSeed.seed_objective_le
+        intro i
+        fin_cases i
+        · exact (le_max_left _ _).trans (le_max_left _ _)
+        · exact (le_max_right _ _).trans (le_max_left _ _)
+        · exact le_max_right _ _
+      · exact max_le (max_le (LQuadraticSeed.seed_branch_le 0 x) (LQuadraticSeed.seed_branch_le 1 x))
+          (LQuadraticSeed.seed_branch_le 2 x)
+    simp only [LQuadraticSeed.branch]
+    rw [max_add_add_left, max_add_add_left, ← hG]
+    rfl
+  · show ContDiff ℝ k (fun x : Vec 2 => μ / 2 * sqNorm x +
+        dot (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD i) x)
+    simp only [sqNorm, dot]
+    apply ContDiff.add
+    · exact contDiff_const.mul (ContDiff.sum fun j _ => (contDiff_apply ℝ ℝ j).pow 2)
+    · exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℝ j)
+  · unfold FixedNormal.EuclideanStrongConvexOn
+    have he : (fun x => LQuadraticSeed.branch μ i x - μ / 2 * sqNorm x) =
+        fun x => dot (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD i) x := by
+      funext x
+      simp only [LQuadraticSeed.branch, LQuadraticSeed.quadratic]
+      ring
+    rw [he]
+    refine ⟨convex_univ, fun x _ y _ a b _ _ _ => le_of_eq ?_⟩
+    simp only [dot, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    ring
+
+/-! ## The open problems of Section 6.2 (M45) -/
+
+/-- Item `A/verification/prose/037` (`paper/sections/verification.tex:83-92`), open problem 2,
+"Moving comparison fields in dimension $n\ge3$", in the precise form of its natural target: the
+statement of Corollary `art:planar-max` (with its Hessian-lower-bound route to strict contours) in
+every dimension $n\ge3$. For finite convex $F$ on $\R^n$ with unique minimizer $x_*$ that equals a
+finite maximum of convex $C^2$ branches on an open $U\ni x_*$, whose active gradients at $x_*$ are
+affinely independent with strictly positive convex weights summing their gradients to zero, and
+whose active branches share a positive lower Hessian bound on $U$: there is $\varepsilon>0$ such
+that every admissible run with $F(x_0)<F(x_*)+\varepsilon$ converges in value and iterates. Not
+proved; stated without proof. -/
+def NondegenerateSmoothMaxLocalConvergenceHigherDim : Prop :=
+  ∀ n : ℕ, 3 ≤ n → ∀ F : Vec n → ℝ, ConvexOn ℝ univ F → ∀ xstar : Vec n,
+    (∀ x, F xstar ≤ F x) → (∀ x, F x = F xstar → x = xstar) →
+    ∀ (m : ℕ) (f : Fin m → Vec n → ℝ) (U : Set (Vec n)), IsOpen U → xstar ∈ U →
+    (∀ i, ConvexOn ℝ U (f i) ∧ ContDiffOn ℝ 2 (f i) U) →
+    (∀ x ∈ U, IsGreatest (Set.range fun i => f i x) (F x)) →
+    ∀ I : Finset (Fin m), I = Finset.univ.filter (fun i => f i xstar = F xstar) →
+    AffineIndependent ℝ (fun i : I => coordinateGradient (f i) xstar) →
+    ∀ lam : I → ℝ, (∀ i, 0 < lam i) → ∑ i, lam i = 1 →
+    ∑ i, lam i • coordinateGradient (f i) xstar = 0 →
+    ∀ μ : ℝ, 0 < μ → (∀ i ∈ I, ∀ x ∈ U, (RadialHessian.matrix (f i) x - μ • (1 : Mat n)).PosSemidef) →
+    ∃ ε : ℝ, 0 < ε ∧ ∀ R : AdmissibleBFGSRun n F, F (R.x 0) < F xstar + ε →
+      Tendsto (fun k => F (R.x k)) atTop (𝓝 (F xstar)) ∧ Tendsto R.x atTop (𝓝 xstar)
+
+/-- Item `A/verification/prose/040` (`paper/sections/verification.tex:103-107`), open problem 3:
+"can a \emph{convex} nonsmooth function admit a positive-measure set of initial states
+$(x_0,H_0)$ on which full BFGS converges to nonstationary points". The proposition asserts such a
+function and set: a finite convex $F$ on $\R^n$, a pair $0<c_1<c_2<1$, and a set $S$ of
+parameters $(x_0,A)$ of positive Lebesgue measure (the initial matrix is the symmetric part
+$H_0=\frac12(A+A^T)$, so positive measure in $A$ is positive measure of symmetric matrices), such
+that from every $(x_0,H_0)$ of $S$ the unit-first bracketing search
+(`NonStrictLineSearch.fromMetric`) generates an infinite admissible run converging to a point
+$\bar x$ with $0\notin\partial F(\bar x)$. Its negation is "normalized state space of Appendix~\ref{art:lower_curvature}). Under absolutely continuous random initialization as in Challenge~7.1~\cite{LO}, can a \emph{convex} nonsmooth function admit a positive-measure set of initial states $(x_0,H_0)$ on which full BFGS converges to nonstationary points, or are all convex nonstationary basins of measure zero?". Neither is proved. -/
+def ConvexPositiveMeasureFailure : Prop :=
+  ∃ (n : ℕ) (F : Vec n → ℝ) (c₁ c₂ : ℝ), ConvexOn ℝ univ F ∧ 0 < c₁ ∧ c₁ < c₂ ∧ c₂ < 1 ∧
+    ∃ S : Set (Vec n × (Fin n → Fin n → ℝ)), MeasureTheory.volume S ≠ 0 ∧
+      ∀ p ∈ S, ∃ R : AdmissibleBFGSRun n F,
+        R.x 0 = p.1 ∧ R.H 0 = (1 / 2 : ℝ) • (Matrix.of p.2 + (Matrix.of p.2)ᵀ) ∧
+        R.c₁ = c₁ ∧ R.c₂ = c₂ ∧
+        (∀ k, ∃ fuel : ℕ, (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ fuel).1 = some (R.α k)) ∧
+        ∃ xbar : Vec n, Tendsto R.x atTop (𝓝 xbar) ∧
+          (0 : Vec n) ∉ ConvexSubdifferential.subdifferential F xbar
+
+/-- Item `A/verification/prose/042` (`paper/sections/verification.tex:111-113`), open problem 4,
+"Determining sharp non-asymptotic or R-linear convergence rates for structured nonsmooth families
+such as $F(u,v)=u^2+|v|$ ... remains largely open", in one precise instance: R-linear convergence
+of the objective values along every admissible run on $F(u,v)=u^2+|v|$ (constants depending on the
+run). Not proved; stated without proof. -/
+def MixedBenchmarkRLinear : Prop :=
+  ∀ R : AdmissibleBFGSRun 2 UnexcitedMetric.objective, ∃ C q : ℝ, 0 ≤ C ∧ 0 ≤ q ∧ q < 1 ∧
+    ∀ k, UnexcitedMetric.objective (R.x k) ≤ C * q ^ k
+
 
 end BfgsCoverage.Article.Verification

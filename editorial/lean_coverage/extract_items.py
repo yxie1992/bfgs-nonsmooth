@@ -26,8 +26,11 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 REGISTER = HERE / 'register'
 
+# The TeX files that paper/master.tex inputs (directly or through a section). Since the rewrite of
+# November 2026 (M45) paper/sections/geometry.tex is no longer input: its content is in
+# sections/introduction.tex (Sections 1.1-1.2) and sections/local.tex (Section 4.4).
 ARTICLE = ['paper/master.tex'] + [f'paper/sections/{s}.tex' for s in
-           ['introduction', 'geometry', 'energy', 'global', 'local', 'failure', 'verification']] + \
+           ['introduction', 'energy', 'global', 'local', 'failure', 'verification']] + \
           [f'paper/statements/{s}.tex' for s in ['positive_partition', 'negative_upper', 'negative_lower']] + \
           [f'paper/appendices/{s}.tex' for s in
            ['matrix_algebra', 'planar_geometry', 'seed_certificate', 'lower_curvature', 'hypothesis_examples']]

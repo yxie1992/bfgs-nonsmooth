@@ -43,6 +43,7 @@ Classical BFGS convergence proofs track $\mathrm{tr}(B_k) - \ln\det(B_k)$ and br
 | [`companion/`](./companion/) | Extended companion monograph covering the complete theory, quantitative finite-horizon estimates, noncompact homogeneous extensions, and correspondence tables |
 | [`bfgs_lean_stage1/`](./bfgs_lean_stage1/) | Core Lean 4 formalization library `BfgsVerification` (736 modules, pinned Mathlib dependency) |
 | [`bfgs_lean_article/`](./bfgs_lean_article/) | Article-level Lean 4 package, supplements, claim-coverage modules, axiom audit, and `lean4checker` kernel replay scripts (see [`bfgs_lean_article/README.md`](./bfgs_lean_article/README.md)) |
+| [`ARTICLE_LEAN_MAP.md`](./ARTICLE_LEAN_MAP.md) | Article-to-Lean map: how the article's core definitions are represented in Lean 4, and an index of all 38 numbered statements (Definitions, Lemmas, Propositions, Theorems, Corollaries) with their TeX source, coverage theorem and core library theorems |
 | [`release/`](./release/) | Frozen release snapshots, manifests, and validation receipts (see [`release/README.md`](./release/README.md)) |
 | [`editorial/`](./editorial/) | Claim ledger, coverage verification scripts, companion generators, and editorial audit records |
 

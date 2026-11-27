@@ -20,7 +20,7 @@ Every theorem below states the hypotheses of Lemma `art:planar-field`
 * `hstrict : ∀ x y, segment ℝ x y ⊆ frontier {u | F u ≤ ℓ} → x = y`: the boundary of
   $\{F\le\ell\}$ contains no nontrivial segment;
 * `hnoncrit : ∀ p ∈ C, ¬IsAffineCritical F p`: no point of $C$ is affine critical, where
-  `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:153-156`);
+  `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:157-159`);
 * `hregular`: every `p ∈ C` has the smooth or regular convex two-branch structure of
   hypothesis 2 of Theorem `art:planar-cluster` (`local.tex:218-221`), written as in the TeX (and
   as in the coverage of `local.tex`): either $F$ is $C^2$ on an open `V ∋ p`, or on an open
@@ -62,29 +62,25 @@ variables with their defining equations or properties.
 
 | Item | Lines | Lean |
 |---|---|---|
-| `lemma/art:planar-field` (with `disp/001`, `disp/002`) | 8-38 | `planar_field` |
-| `disp/003` (`art:corner-velocity`) | 46-49 | `corner_velocity` |
-| `disp/004` (`art:planar-height`) | 73-76 | `height`, `height_eq_library` |
-| `disp/005` (`art:planar-field-formula`) | 85-88 | `fieldFormula`, `field_eq_fieldFormula` |
-| `disp/006` (`art:planar-corner-field`) | 92-94 | `corner_field_formula`, `corner_field` |
-| `disp/007` | 100-102 | `smooth_pairing` |
-| `disp/008` (`art:planar-tangent-cancellation`) | 112-114 | `tangent_cancellation` |
-| `disp/009` | 117-119 | `derivative_triangular`, `derivative_coefficients_bounded` |
-| `disp/010` | 136-139 | `transversality_limits` |
-| `disp/011` (`art:planar-determinant-derivative`) | 150-152 | `determinant_derivative` |
-| `disp/012` | 160-164 | `log_determinant_derivative_bound` |
-| `disp/013` | 175-178 | `comparison_functions` |
-| `disp/014` | 181-183 | `log_determinant_increment` |
-| `disp/015` | 196-199 | `branch_cocoercivity` |
-| `disp/016` | 214-216 | `crossing_numerator` |
-| `disp/017` | 219-221 | `crossing_pairings` |
-| `disp/018` | 224-227 | `crossing_step_bound` |
+| `lemma/art:planar-field` | 7-33 | `planar_field`, `regularity_of_literal`, `literal_of_regularity`, `isAffineCritical_iff` |
+| `proof/001` | 34-171 | `corner_curve`, `exists_angle`, `fieldFormula_periodic`, `transversality_contradiction`, `one_sided_comparison`, `transport_constants`, `same_branch_secant`, `crossing_tie_point`, `crossing_secant`, `smooth_pairing`, `log_determinant_derivative_bound`, `comparison_functions`, `log_determinant_increment`, `crossing_numerator`, `crossing_pairings` |
+| `disp/003` (`art:corner-velocity`) | 41-43 | `corner_velocity`, `corner_curve` |
+| `disp/004` (`art:planar-height`) | 64-66 | `height`, `height_eq_library` |
+| `disp/005` (`art:planar-field-formula`) | 71-74 | `fieldFormula`, `field_eq_fieldFormula`, `exists_angle`, `fieldFormula_periodic` |
+| `disp/006` (`art:planar-corner-field`) | 79-81 | `corner_field_formula`, `corner_field` |
+| `disp/007` (`art:planar-tangent-cancellation`) | 92-94 | `tangent_cancellation` |
+| `disp/008` | 98-100 | `derivative_triangular`, `derivative_coefficients_bounded` |
+| `disp/009` | 113-117 | `transversality_limits`, `transversality_contradiction` |
+| `disp/010` (`art:planar-determinant-derivative`) | 126-128 | `determinant_derivative` |
+| `disp/011` | 153-156 | `branch_cocoercivity`, `same_branch_secant` |
+| `disp/012` | 164-167 | `crossing_step_bound`, `crossing_secant` |
+| `A/local/prose/031` | `paper/sections/local.tex:186-190` | `tangent_cancellation` |
 
-Undisplayed steps of the proof that are stated as well: `corner_curve` (lines 41-44),
-`exists_angle` and `fieldFormula_periodic` (line 89), `transversality_contradiction`
-(lines 140-141), `one_sided_comparison` (lines 170-175), `transport_constants` (lines 186-191),
-`same_branch_secant` (lines 208-210), `crossing_tie_point` (lines 212-214) and
-`crossing_secant` (lines 230-232). `planar_field` itself is proved from the library theorem
+Undisplayed steps of the proof that are stated as well: `corner_curve` (lines 36-42),
+`exists_angle` and `fieldFormula_periodic` (line 75), `transversality_contradiction`
+(lines 105-119), `one_sided_comparison` (lines 137-139), `transport_constants` (lines 141-144),
+`same_branch_secant` (lines 149-157), `crossing_tie_point` (lines 157-160) and
+`crossing_secant` (lines 168-170). `planar_field` itself is proved from the library theorem
 `PlanarAllPairs.source_all_endpoint_estimates`, which follows the same construction.
 
 The `example`s at the end show that the hypotheses of every theorem above hold together for the
@@ -111,14 +107,14 @@ namespace BfgsCoverage.Article.PlanarGeometry
 
 /-! ### Definitions -/
 
-/-- Item `A/planar_geometry/disp/004` (`paper/appendices/planar_geometry.tex:71-74`), equation
+/-- Item `A/planar_geometry/disp/004` (`paper/appendices/planar_geometry.tex:64-66`), equation
 `art:planar-height`, in the proof of Lemma `art:planar-field`: the definition
 \[ h(t,\theta)=1+\sum_j\chi_j(\theta)\bigl(n(\theta)^Tv_j(t)-1\bigr) \]
 for angular cutoffs $\chi_j$ and velocities $v_j$. -/
 def height {m : ℕ} (χ : Fin m → ℝ → ℝ) (v : Fin m → ℝ → Vec 2) (t θ : ℝ) : ℝ :=
   1 + ∑ j, χ j θ * (dot (normal θ) (v j t) - 1)
 
-/-- Item `A/planar_geometry/disp/005` (`paper/appendices/planar_geometry.tex:83-86`), equation
+/-- Item `A/planar_geometry/disp/005` (`paper/appendices/planar_geometry.tex:71-74`), equation
 `art:planar-field-formula`, in the proof of Lemma `art:planar-field`: the right side of
 \[ w(x)=h(F(x),\theta(x))n(\theta(x))+h_\theta(F(x),\theta(x))T(\theta(x)), \]
 as a function of $t=F(x)$ and of the normal angle $\theta=\theta(x)$, with
@@ -187,7 +183,7 @@ theorem contDiffAt_two_iff (F : Vec 2 → ℝ) (p : Vec 2) :
   ⟨fun h => h.contDiffOn le_rfl (by simp), fun ⟨_, hN, hC⟩ => hC.contDiffAt hN⟩
 
 /-- Notation (`hregular`): the smooth or regular convex two-branch structure of hypothesis 2 of
-Theorem `art:planar-cluster` (`local.tex:218-221`), written as in the TeX (the form of `hregular`
+Theorem `art:planar-cluster` (`paper/sections/local.tex:202-215`), written as in the TeX (the form of `hregular`
 in this file), implies the library's form `ContDiffAt ℝ 2 F p ∨ ConvexTwoBranchRegularAt F p`
 used by `PlanarAllPairs.source_all_endpoint_estimates`. -/
 theorem regularity_of_literal {F : Vec 2 → ℝ} {p : Vec 2}
@@ -228,7 +224,7 @@ theorem literal_of_regularity {F : Vec 2 → ℝ} {p : Vec 2}
       fun z hz => max_of_isGreatest f (hrep z hz), hact 0, hact 1,
       independent_of_pairDet_ne_zero hdet⟩
 
-/-- Notation (`hnoncrit`): `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`local.tex:153-156`),
+/-- Notation (`hnoncrit`): `IsAffineCritical F p` is $0\in\aff\partial F(p)$ (`paper/sections/local.tex`),
 the affine span taken in Euclidean space. -/
 theorem isAffineCritical_iff (F : Vec 2 → ℝ) (p : Vec 2) :
     IsAffineCritical F p ↔
@@ -260,7 +256,7 @@ theorem field_eq_fieldFormula {m : ℕ} {F : Vec 2 → ℝ} (hF : ConvexOn ℝ u
     PlanarAmbientFrame.frame_eq_angular_frame _ hχ θ]
   rfl
 
-/-- Proof of Lemma `art:planar-field`, the angle in `paper/appendices/planar_geometry.tex:82`
+/-- Proof of Lemma `art:planar-field`, the angle in `paper/appendices/planar_geometry.tex:34-171`
 (not a register item): every Euclidean unit vector is a normal $n(\theta)$, so
 $\theta(x)$ with $n(\theta(x))=\nabla F(x)/\norm{\nabla F(x)}$ exists at every point with
 nonzero gradient. -/
@@ -285,7 +281,7 @@ theorem exists_angle (u : Vec 2) (hu : sqNorm u = 1) : ∃ θ : ℝ, normal θ =
   · simp [normal, Complex.sin_arg, hz, z]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claim of
-`paper/appendices/planar_geometry.tex:87` (not a register item): "All expressions are
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "All expressions are
 periodic, so no global choice of angle is required." For angular cutoffs
 $\theta\mapsto\chi_j(n(\theta))$, the formula (`art:planar-field-formula`) is
 $2\pi$-periodic in $\theta$. -/
@@ -407,7 +403,7 @@ theorem field_derivative_triangular {m : ℕ} {F : Vec 2 → ℝ} (hF : ConvexOn
     rw [← hrec, add_comm]
 
 /-- Proof of Lemma `art:planar-field`, the one-sided comparison of
-`paper/appendices/planar_geometry.tex:168-173` (not a register item): "If a continuous function
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "If a continuous function
 $u$ on $[0,1]$ has $u'_+\le0$ on $[0,1)$, then $u(1)\le u(0)$." The right derivative is a
 `HasDerivWithinAt` on `Ici θ`. (Proved with Mathlib's one-sided comparison
 `image_le_of_deriv_right_le_deriv_boundary`.) -/
@@ -711,9 +707,9 @@ theorem crossing_pairings_core {F : Vec 2 → ℝ} (hF : ConvexOn ℝ univ F) (f
 
 /-! ### Lemma `art:planar-field` -/
 
-/-- Item `A/planar_geometry/lemma/art:planar-field` (`paper/appendices/planar_geometry.tex:7-37`),
-Lemma `art:planar-field`, "One field with all endpoint estimates", including its displays
-`A/planar_geometry/disp/001` (lines 25-28) and `A/planar_geometry/disp/002` (lines 30-34).
+/-- Item `A/planar_geometry/lemma/art:planar-field` (`paper/appendices/planar_geometry.tex:7-33`),
+Lemma `art:planar-field`, "Let $F:\R^2\to\R$ be finite and convex with minimum $F_*$, and let $C\subset\{x:F(x)=\ell\}$ be a nonempty compact set at level $\ell>F_*$. Suppose the boundary of $\{F\le\ell\}$ contains no nontrivial line segment and every $p\in C$ lies outside $\mathcal C_{\rm aff}$ and satisfies the local $C^2$ or two-branch regularity hypothesis of Theorem~\ref{art:planar-cluster}. Fix $0<c_1<c_2<1$. Then there exist an open neighborhood $U\supset C$, a compact buffer $Q\supset\overline U$, a vector field $w$ defined on a neighborhood of $Q$, and constants $\eta,\kappa,\delta>0$ and $C_0,C_1,L\ge0$ such that: \begin{enumerate} \item $w$ is locally Lipschitz, bounded on $Q$, takes a common inner product with all subgradients at each point of $Q$, and satisfies $g^Tw(p)\ge\eta$ for every $p\in Q$ and $g\in\partial F(p)$; \item for every eligible pair $(x,z)$ in $U$ with $\norm{s}<\delta$ ($s=z-x$), the segment $[x,z]$ lies in $Q$ and \[ |\det(s,w(x+\theta s))|\ge\kappa\norm{s} \quad(0\le\theta\le1),\qquad \frac{(y^Tw(z))^2}{t}\le C_0; \] \item for every such pair there exist $\lambda>0$ and $\beta\in\R$ satisfying \[ w(z)=\lambda w(x)+\beta s,\qquad |\log\lambda|\le C_1d, \qquad d\le1\ \Longrightarrow\ \lambda^2\le1+Ld. \] \end{enumerate}", including its displays
+`A/planar_geometry/disp/001` (lines 22-25) and `A/planar_geometry/disp/002` (lines 27-31).
 
 Let $F:\R^2\to\R$ be finite and convex with minimum $F_*$, and let $C\subset\{F=\ell\}$ be a
 nonempty compact set, where $\ell>F_*$. Suppose the boundary of $\{F\le\ell\}$ contains no
@@ -723,18 +719,18 @@ constants. There exist an open neighborhood $U\supset C$, a compact buffer $Q\su
 a field $w$ defined on a neighborhood of $Q$, and constants $\eta,\kappa,\delta>0$,
 $C_0,C_1,L\ge0$ such that:
 1. The field is locally Lipschitz, bounded on $Q$, and every $g\in\partial F(p)$, $p\in Q$,
-   satisfies $g^Tw(p)\ge\eta$. All subgradients at a fixed point have the same pairing with
-   $w(p)$.
+ satisfies $g^Tw(p)\ge\eta$. All subgradients at a fixed point have the same pairing with
+ $w(p)$.
 2. For every eligible pair $x,z\in U$ with $\norm{s}<\delta$, its entire segment lies in $Q$ and
-   \[ |\det(s,w(x+\theta s))|\ge\kappa\norm{s}\quad(0\le\theta\le1),\qquad
-      (y^Tw(z))^2/t\le C_0. \]
+ \[ |\det(s,w(x+\theta s))|\ge\kappa\norm{s}\quad(0\le\theta\le1),\qquad
+ (y^Tw(z))^2/t\le C_0. \]
 3. For every such pair there are $\lambda>0$ and $\beta\in\R$ with
-   \[ w(z)=\lambda w(x)+\beta s,\qquad |\log\lambda|\le C_1d,\qquad
-      d\le1\ \Longrightarrow\ \lambda^2\le1+Ld. \]
+ \[ w(z)=\lambda w(x)+\beta s,\qquad |\log\lambda|\le C_1d,\qquad
+ d\le1\ \Longrightarrow\ \lambda^2\le1+Ld. \]
 All neighborhoods, constants and the field are chosen before the endpoint pair or any BFGS
 matrix (they are existentially quantified before the pair).
 
-"Defined on a neighborhood of $Q$" and "locally Lipschitz" are stated as: $w$ is locally
+"defined on a neighborhood of $Q$" and "locally Lipschitz" are stated as: $w$ is locally
 Lipschitz at every point of an open set $N\supset Q$. The proof is the library's
 `PlanarAllPairs.source_all_endpoint_estimates` (the same construction as the paper's proof),
 with `hregular` converted to the library's form by `regularity_of_literal`; boundedness on $Q$
@@ -787,7 +783,7 @@ theorem planar_field (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ
 /-! ### Corner motion -/
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:40-43` (not a register item): "At a nonsmooth point of
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "At a nonsmooth point of
 $C$, the local branch-value map $x\mapsto(f_1(x),f_2(x))$ has nonsingular derivative. The
 inverse function theorem gives a $C^2$ curve $p_j(t)$ characterized by
 $f_1(p_j(t))=f_2(p_j(t))=t$ for $t$ near $\ell$." The corner $c\in C$ comes with the
@@ -843,7 +839,7 @@ theorem corner_curve (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : �
     · rfl
     · exact heq.symm
 
-/-- Item `A/planar_geometry/disp/003` (`paper/appendices/planar_geometry.tex:45-48`), equation
+/-- Item `A/planar_geometry/disp/003` (`paper/appendices/planar_geometry.tex:41-43`), equation
 `art:corner-velocity`, in the proof of Lemma `art:planar-field`.
 
 Under the assumptions of the lemma, at a nonsmooth point $c$ of $C$ with the two-branch data of
@@ -896,11 +892,9 @@ theorem corner_velocity (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar :
 
 /-! ### The field near the switching curves -/
 
-/-- Item `A/planar_geometry/disp/006` (`paper/appendices/planar_geometry.tex:90-92`), equation
+/-- Item `A/planar_geometry/disp/006` (`paper/appendices/planar_geometry.tex:79-81`), equation
 `art:planar-corner-field`, in the proof of Lemma `art:planar-field`: the pointwise
-calculation. "Near the $j$th switching curve the relevant cutoff equals one and
-all others vanish. Consequently $h=n^Tv_j$, $h_\theta=T^Tv_j$, and
-\[ w(x)=v_j(F(x)). \]"
+calculation. "\begin{equation} w(x)=v_j(F(x)). \end{equation}"
 Under the assumptions of the lemma, with angular cutoffs $\chi_j$ with disjoint supports, at a
 smooth point $x$ with gradient $g$, normal angle $\theta$ ($n(\theta)=g/\norm g$) and
 $w(x)$ given by (`art:planar-field-formula`): if $\chi_j=1$ near $\theta$, then
@@ -948,11 +942,9 @@ theorem corner_field_formula (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fs
   rw [hw, fieldFormula, hh, hderiv]
   exact reconstruct θ (v j (F x))
 
-/-- Item `A/planar_geometry/disp/006` (`paper/appendices/planar_geometry.tex:90-92`), equation
+/-- Item `A/planar_geometry/disp/006` (`paper/appendices/planar_geometry.tex:79-81`), equation
 `art:planar-corner-field`, in the proof of Lemma `art:planar-field`: the neighborhood
-statement. "Near the $j$th switching curve the relevant cutoff equals one \dots\
-$w(x)=v_j(F(x))$. This holds on both smooth sides in a whole neighborhood of the curve.
-Use the same formula on the curve itself."
+statement. "\begin{equation} w(x)=v_j(F(x)). \end{equation}"
 
 Under the assumptions of the lemma, at a nonsmooth point $c$ of $C$ with its two-branch data,
 its curve $p$ (as in `corner_velocity`) and $v_j=p'$, let the smooth ambient cutoffs
@@ -1023,7 +1015,7 @@ theorem corner_field (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ
 
 /-! ### Visibility, tangent cancellation and the derivative of the field -/
 
-/-- Item `A/planar_geometry/disp/007` (`paper/appendices/planar_geometry.tex:98-100`), in the
+/-- Part of item `A/planar_geometry/proof/001` (`paper/appendices/planar_geometry.tex:34-171`): in the
 proof of Lemma `art:planar-field`: at a smooth point,
 \[ \nabla F(x)^Tw(x)=\norm{\nabla F(x)}h(F(x),\theta(x))>0. \]
 Under the assumptions of the lemma, with angular cutoffs $0\le\chi_j\le1$ with disjoint
@@ -1083,7 +1075,7 @@ theorem smooth_pairing (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : 
   change ‖euclideanVector g‖ * dot (normal θ) (w x) = _
   rw [hpair]
 
-/-- Item `A/planar_geometry/disp/008` (`paper/appendices/planar_geometry.tex:110-112`), equation
+/-- Item `A/planar_geometry/disp/007` (`paper/appendices/planar_geometry.tex:92-94`), equation
 `art:planar-tangent-cancellation`, in the proof of Lemma `art:planar-field`:
 \[ \partial_\theta(hn+h_\theta T)=(h+h_{\theta\theta})T. \]
 Under the assumptions of the lemma, for $C^2$ angular cutoffs $\chi_j$, any velocities and any
@@ -1112,11 +1104,8 @@ theorem tangent_cancellation (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fs
     ((hderiv.differentiable le_rfl) θ).hasDerivAt
   exact angularFrame_hasDerivAt h (deriv h) θ (deriv h θ) (deriv (deriv h) θ) h1 h2 rfl
 
-/-- Item `A/planar_geometry/disp/009` (`paper/appendices/planar_geometry.tex:115-117`), in the
-proof of Lemma `art:planar-field`: "Thus at a smooth point the derivative of $w$ maps the
-tangent line of a level curve into that same line. In the orthonormal basis $(T,n)$,
-\[ Dw=\begin{pmatrix}a&b\\0&e\end{pmatrix} \]
-with bounded coefficients." This theorem is the pointwise part; `derivative_coefficients_bounded`
+/-- Item `A/planar_geometry/disp/008` (`paper/appendices/planar_geometry.tex:98-100`), in the
+proof of Lemma `art:planar-field`: "\[ Dw=\begin{pmatrix}a&b\\0&e\end{pmatrix} \]" This theorem is the pointwise part; `derivative_coefficients_bounded`
 is the uniform bound.
 
 Under the assumptions of the lemma, with smooth ambient cutoffs, at a point $x$ where $F$ is
@@ -1148,10 +1137,9 @@ theorem derivative_triangular (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fs
       fderiv ℝ w x T = a • T ∧ fderiv ℝ w x n = b • T + e • n :=
   field_derivative_triangular hF χ hχ v w x hFx hgx hvx hw n T hn hT a b e ha hb he
 
-/-- Item `A/planar_geometry/disp/009` (`paper/appendices/planar_geometry.tex:115-117`), in the
-proof of Lemma `art:planar-field`: "with bounded coefficients". Under the assumptions of the
-lemma, if $w$ is locally Lipschitz on an open $N$ containing the compact buffer $Q$ ("Smaller
-compact buffers give uniform field and derivative bounds", line 98), there is one bound $B$
+/-- Item `A/planar_geometry/disp/008` (`paper/appendices/planar_geometry.tex:98-100`), in the
+proof of Lemma `art:planar-field`: "\[ Dw=\begin{pmatrix}a&b\\0&e\end{pmatrix} \]". Under the assumptions of the
+lemma, if $w$ is locally Lipschitz on an open $N$ containing the compact buffer $Q$ ("with uniformly bounded entries $a,b,e$ on $Q$", line 101), there is one bound $B$
 for the coefficients $a=T^TDwT$, $b=T^TDw\,n$, $e=n^TDw\,n$ at every $x\in Q$ and every unit
 normal $n$ with $T$ its rotation. -/
 theorem derivative_coefficients_bounded (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : ℝ)
@@ -1191,10 +1179,10 @@ theorem derivative_coefficients_bounded (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ 
 
 /-! ### Transversality of eligible steps -/
 
-/-- Item `A/planar_geometry/disp/010` (`paper/appendices/planar_geometry.tex:134-137`), in the
+/-- Item `A/planar_geometry/disp/009` (`paper/appendices/planar_geometry.tex:113-117`), in the
 proof of Lemma `art:planar-field`:
 \[ d/\norm{s}\longrightarrow-\bar g^T\hat s>0,\qquad
-   t/\norm{s}\longrightarrow(\bar h-\bar g)^T\hat s=0. \]
+ t/\norm{s}\longrightarrow(\bar h-\bar g)^T\hat s=0. \]
 Under the assumptions of the lemma and the facts proved before (visibility $\eta>0$ and common
 pairing of $w$ on $Q$): pairs $x_k,z_k$ with gradients $g_k,h_k$ coalesce to $p\in Q$
 ($s_k=z_k-x_k\to0$, $x_k\to p$), $s_k/\norm{s_k}\to\hat s$, $g_k\to\bar g$, $h_k\to\bar h$ with
@@ -1263,8 +1251,8 @@ theorem transversality_limits (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (F
       hcommon p hpQ hbar hhmem gbar hgmem, sub_self, zero_div, neg_zero]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claim of
-`paper/appendices/planar_geometry.tex:138-139` (not a register item): the limits of display
-`disp/010` contradict $t\ge(1-c_2)d$. Under the assumptions of `transversality_limits`, if
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): the limits of display
+`disp/009` contradict $t\ge(1-c_2)d$. Under the assumptions of `transversality_limits`, if
 the pairs are eligible, then `False`. (The uniform transversality of item 2 of the lemma, which
 this contradiction proves, is the library's `PlanarAllPairs.compact_pair_transversality_length`.) -/
 theorem transversality_contradiction (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : ℝ)
@@ -1320,11 +1308,9 @@ theorem transversality_contradiction (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ uni
 
 /-! ### Transport charged to decrease -/
 
-/-- Item `A/planar_geometry/disp/011` (`paper/appendices/planar_geometry.tex:149-151`), equation
+/-- Item `A/planar_geometry/disp/010` (`paper/appendices/planar_geometry.tex:126-128`), equation
 `art:planar-determinant-derivative`, in the proof of Lemma `art:planar-field`:
-"At a smooth point the basis $(T,n)$ has determinant $-1$. Writing $s=s_TT+s_nn$, direct
-calculation yields
-\[ \det(s,Dw\,s)=s_n\bigl[(a-e)s_T+bs_n\bigr]." \]
+"\begin{equation} \det(s,Dw\,s)=s_n\bigl[(a-e)s_T+bs_n\bigr]. \end{equation}" \]
 Under the assumptions of the lemma, for an eligible pair $x,z$ with step $s=z-x$ and a segment
 point $q=x+\theta s$ at which $F$ is $C^2$ with $\nabla F(q)\ne0$ and $w$ is given by
 (`art:planar-field-formula`) near $q$, with $n,T,a,b,e$ as in `derivative_triangular` at $q$ and
@@ -1372,10 +1358,10 @@ theorem determinant_derivative (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (F
       (hT ▸ hnT) s
     rw [hdet, ← hT, ← ha, ← hb, ← he, ← hsT, ← hsn]
 
-/-- Item `A/planar_geometry/disp/012` (`paper/appendices/planar_geometry.tex:160-164`), in the
+/-- Part of item `A/planar_geometry/proof/001` (`paper/appendices/planar_geometry.tex:34-171`): in the
 proof of Lemma `art:planar-field`: for $H(\theta)=\log|D(\theta)|$,
 \[ |H'_+(\theta)|\le A|\varphi'_+(\theta)|\le A\bigl(\varphi'_+(\theta)+2d\bigr),
-   \qquad 0\le\theta<1. \]
+ \qquad 0\le\theta<1. \]
 Under the assumptions of the lemma and the facts proved before: $w$ is the field of the proof
 for smooth ambient cutoffs $\chi_j$ and velocities $v_j$, locally Lipschitz on an open
 $N\supset Q$ ($Q$ compact); on $Q$ the velocities are $C^1$ at $F$, every point is smooth
@@ -1490,7 +1476,7 @@ theorem log_determinant_derivative_bound (F : Vec 2 → ℝ) (hF : ConvexOn ℝ 
     rw [abs_le]
     constructor <;> linarith
 
-/-- Item `A/planar_geometry/disp/013` (`paper/appendices/planar_geometry.tex:175-178`), in the
+/-- in the
 proof of Lemma `art:planar-field`: "Apply this fact to both
 \[ \pm\bigl(H(\theta)-H(0)\bigr)-A\bigl(\varphi(\theta)-\varphi(0)+2d\theta\bigr). \]
 Both start at zero and have nonpositive right derivative."
@@ -1533,7 +1519,7 @@ theorem comparison_functions (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
     simpa only [Real.log_abs] using hDcont.log hD0
   exact comparison_core hF x s d φ H (by rw [hφ, hq]) hHcont A hbound σ hσ u hu
 
-/-- Item `A/planar_geometry/disp/014` (`paper/appendices/planar_geometry.tex:181-183`), in the
+/-- in the
 proof of Lemma `art:planar-field`: "Since $\varphi(1)\le\varphi(0)$,
 \[ |H(1)-H(0)|\le2Ad." \]
 Under the assumptions of `comparison_functions` (without the sign and $u$). -/
@@ -1571,7 +1557,7 @@ theorem log_determinant_increment (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
   exact increment_core hF x s d φ H (by rw [hφ, hq]) hHcont hdesc A hA hbound
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:184-189` (not a register item): "Set
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "Set
 $\lambda=D(1)/D(0)>0$. Because $s,w(x)$ are linearly independent, solving in that basis gives
 $w(z)=\lambda w(x)+\beta s$; the preceding bound is $|\log\lambda|\le2Ad$. For $0<d\le1$,
 convexity of the exponential on $[0,1]$ gives $\lambda^2\le\exp(4Ad)\le1+(\exp(4A)-1)d$."
@@ -1642,11 +1628,8 @@ theorem transport_constants (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fsta
 
 /-! ### The secant correction -/
 
-/-- Item `A/planar_geometry/disp/015` (`paper/appendices/planar_geometry.tex:196-199`), in the
-proof of Lemma `art:planar-field`: "First suppose the endpoints use the same smooth branch $f$.
-On a larger convex chart, with Lipschitz constant $M>0$, sufficiently close buffered endpoints
-satisfy
-\[ \norm{\nabla f(z)-\nabla f(x)}^2\le2M\bigl[f(z)-f(x)-\nabla f(x)^T(z-x)\bigr]." \]
+/-- Item `A/planar_geometry/disp/011` (`paper/appendices/planar_geometry.tex:153-156`), in the
+proof of Lemma `art:planar-field`: "\[ \norm{\nabla f(z)-\nabla f(x)}^2 \le2M\bigl(f(z)-f(x)-\nabla f(x)^T(z-x)\bigr)\le2Mt, \]" \]
 Under the assumptions of the lemma: $f$ is convex and $C^2$ on the open convex chart $V$, with
 $\nabla f$ $M$-Lipschitz on $V$ in the Euclidean norm; the buffer $B$ has its $\rho$-balls in
 $V$; the eligible pair $x,z\in B$ uses the branch $f$ at both endpoints and
@@ -1676,7 +1659,7 @@ theorem branch_cocoercivity (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fst
   cocoercivity_core f V hVopen hfconv hfC M hM hLip B ρ hρ hBV x z hx hz hxz
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:206-208` (not a register item): "Since the branch values
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "Since the branch values
 and gradients at both endpoints agree with those of $F$, the bracket is at most $t$.
 Boundedness of $w$ then bounds $(y^Tw(z))^2/t$ uniformly." Under the assumptions of
 `branch_cocoercivity`, with $\nabla f(x)=g$, $\nabla f(z)=h$ and $\norm{w(z)}\le G$: the bracket
@@ -1734,7 +1717,7 @@ theorem same_branch_secant (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
     _ = 2 * M * G ^ 2 * dot (h - g) (z - x) := by ring
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:210-212` (not a register item): "For different endpoint
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "For different endpoint
 branches $i,j$ in a two-branch chart, the segment contains a tie point $p$. There
 $(\nabla f_j(p)-\nabla f_i(p))^Tw(p)=0$." Under the assumptions of the lemma: $F=\max(f_0,f_1)$
 on the open convex chart $V$ with convex $C^2$ branches, $w$ has the common pairing on $V$,
@@ -1763,7 +1746,7 @@ theorem crossing_tie_point (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
   tie_point_core hF f V hVconv hVopen hfC (fun u hu => isGreatest_of_max f (hmax u hu)) w hcommon
     x z hx hz i j hij hi hj
 
-/-- Item `A/planar_geometry/disp/016` (`paper/appendices/planar_geometry.tex:214-216`), in the
+/-- in the
 proof of Lemma `art:planar-field`: "The branch gradients and $w$ are Lipschitz, so
 \[ |y^Tw(z)|\le A_1\norm{s}." \]
 Under the assumptions of the lemma: $F=\max(f_0,f_1)$ on the open convex chart $V$ with convex
@@ -1816,7 +1799,7 @@ theorem crossing_numerator (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
     intro x _ _ _ hx
     exact absurd ⟨x, hx⟩ hV
 
-/-- Item `A/planar_geometry/disp/017` (`paper/appendices/planar_geometry.tex:219-221`), in the
+/-- in the
 proof of Lemma `art:planar-field`: "Put $r=\nabla f_j(z)-\nabla f_j(x)$, so
 $\norm{r}\le M\norm{s}$. Then
 \[ \nabla f_i(x)^Ts=-d,\qquad \nabla f_j(x)^Ts=t-d-r^Ts." \]
@@ -1851,10 +1834,8 @@ theorem crossing_pairings (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar 
     x z g h hx hz hp.gradient_x hp.gradient_z
     i j hi hj s y hs hy d t hd ht r hr
 
-/-- Item `A/planar_geometry/disp/018` (`paper/appendices/planar_geometry.tex:224-227`), in the
-proof of Lemma `art:planar-field`: "The two gradient rows are uniformly independent on the
-smaller chart. Their inverse bound and eligibility imply
-\[ \norm{s}\le A_2(2d+t+M\norm{s}^2)\le A_2\Bigl(1+\frac{2}{1-c_2}\Bigr)t+A_2M\norm{s}^2." \]
+/-- Item `A/planar_geometry/disp/012` (`paper/appendices/planar_geometry.tex:164-167`), in the
+proof of Lemma `art:planar-field`: "\[ \norm{s}\le A_2(2d+t+M\norm{s}^2) \le A_2\left(1+\frac{2}{1-c_2}\right)t+A_2M\norm{s}^2. \]" \]
 Under the assumptions of `crossing_pairings`, with the inverse bound
 $\norm{u}\le A_2(|\nabla f_0(x')^Tu|+|\nabla f_1(x')^Tu|)$ for all $u$ and $x'\in V$. -/
 theorem crossing_step_bound (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ)
@@ -1928,10 +1909,10 @@ theorem crossing_step_bound (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fsta
     nlinarith [mul_le_mul_of_nonneg_left h2 hA₂]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:228-230` (not a register item): "For sufficiently small
+`paper/appendices/planar_geometry.tex:34-171` (not a register item): "For sufficiently small
 $\norm{s}$, absorb the last term to obtain $t\ge a_0\norm{s}$ with $a_0>0$. Consequently
 $(y^Tw(z))^2/t\le A_1^2\norm{s}/a_0$, uniformly bounded." Under the assumptions of the lemma,
-for an eligible pair with the bounds of displays `disp/016` and `disp/018`, $A_2>0$ and
+for an eligible pair with the bounds of displays `disp/016` and `disp/012`, $A_2>0$ and
 $A_2M\norm{s}\le1/2$, with $a_0=1/(2A_2(1+2/(1-c_2)))$. -/
 theorem crossing_secant (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : ℝ)
     (_hFstar : IsLeast (range F) Fstar) (C : Set (Vec 2)) (ℓ : ℝ) (_hCne : C.Nonempty)

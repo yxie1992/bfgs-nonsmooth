@@ -32,8 +32,7 @@ open BfgsVerification
 
 /-! ## The mixed ridge -/
 
-/-- Item `A/geometry/prose/001` (`paper/sections/geometry.tex:4-5`):
-"Reaching $v=0$ does not eliminate the horizontal error $u^2$."
+/-- "Reaching $v=0$ does not eliminate the horizontal error $u^2$."
 On the nonsmooth line `v=0` the mixed ridge equals `u^2`, which exceeds the
 minimum value `F(0,0)=0` whenever `u ≠ 0`. -/
 theorem horizontal_error_on_line (u : ℝ) :
@@ -45,8 +44,7 @@ theorem horizontal_error_on_line (u : ℝ) :
   rw [h]
   simpa [UnexcitedMetric.objective] using sq_pos_of_ne_zero hu
 
-/-- Item `A/geometry/prose/002` (`paper/sections/geometry.tex:5-6`):
-"Yet the vertical gradient jump does not remove the direction that can reduce
+/-- "Yet the vertical gradient jump does not remove the direction that can reduce
 this error." For `u ≠ 0` the horizontal direction `(-u,0)` strictly lowers
 `F(u,v)=u^2+|v|` from every point `(u,v)`, on either side of the jump line `v=0`
 and on it: `F((u,v)+t(-u,0)) < F(u,v)` for `0<t≤1`. -/
@@ -90,8 +88,7 @@ theorem not_differentiable_on_line {p : Vec 2} (hp : p 1 = 0) :
   rw [hf] at hc
   exact not_differentiableAt_abs_zero hc
 
-/-- Item `A/geometry/prose/003` (`paper/sections/geometry.tex:6-7`):
-"Along $v=0$ the limiting gradients are $(2u,1)$ and $(2u,-1)$. Their difference
+/-- "Along $v=0$ the limiting gradients are $(2u,1)$ and $(2u,-1)$. Their difference
 is vertical." A vector `g` is a limit of actual gradients `∇F(p_k)` at
 differentiable points `p_k → (u,0)` exactly when `g=(2u,1)` or `g=(2u,-1)`; the
 difference of these two vectors is `(0,2)`. -/
@@ -171,8 +168,7 @@ theorem limiting_gradients (u : ℝ) :
   · ext i
     fin_cases i <;> norm_num
 
-/-- Item `A/geometry/prose/004` (`paper/sections/geometry.tex:7-9`):
-"At a point with $u\ne0$, the horizontal vector $(-u,0)$ has the same strictly
+/-- "At a point with $u\ne0$, the horizontal vector $(-u,0)$ has the same strictly
 negative pairing $-2u^2$ with both gradients (Figure~\ref{art:gradient-geometry}, left)." The gradients are the limiting
 gradients `(2u,1)` and `(2u,-1)` of `limiting_gradients`. -/
 theorem equal_negative_pairing {u : ℝ} (hu : u ≠ 0) :
@@ -180,7 +176,7 @@ theorem equal_negative_pairing {u : ℝ} (hu : u ≠ 0) :
       dot (![2 * u, -1] : Vec 2) ![-u, 0] = -2 * u ^ 2 ∧ -2 * u ^ 2 < 0 :=
   ArticleGeometry.mixed_ridge_equal_descent u hu
 
-/-- Item `A/geometry/disp/001` (`paper/sections/geometry.tex:11-14`), equation `art:mixed-inward-remainder`:
+/-- equation `art:mixed-inward-remainder`:
 "for $v\ne0$ and $0\le\tau\le1$,
 $$F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2."$$
 (Before 15 October 2026 the conditions stood in the display, M39.) With `F(u,v)=u^2+|v|` and its actual gradient `∇F(u,v)` (which exists for `v ≠ 0`). -/
@@ -191,8 +187,7 @@ theorem mixed_inward_remainder {u v τ : ℝ} (hv : v ≠ 0) (_hτ0 : 0 ≤ τ) 
   rw [PointwiseFeasibility.coordinateGradient_eq hg]
   simpa using ArticleGeometry.mixed_ridge_inward hg hτ1
 
-/-- Item `A/geometry/prose/005` (`paper/sections/geometry.tex:15-16`):
-"Thus the nonsmooth part is exactly linear under inward scaling, while the
+/-- "Thus the nonsmooth part is exactly linear under inward scaling, while the
 smooth part contributes a quadratic remainder." For `τ ≤ 1` the nonsmooth part
 satisfies `|(1-τ)v| = (1-τ)|v|`, so its inward first-order remainder vanishes at
 every `v ≠ 0` (where its derivative is `sign v`); the smooth part `u^2` has
@@ -213,7 +208,7 @@ theorem inward_split (u v τ : ℝ) (hτ : τ ≤ 1) :
 
 /-! ## The seed corner -/
 
-/-- Item `A/geometry/prose/014` (`paper/sections/geometry.tex:36-37`), with the slopes of
+/-- with the slopes of
 lines 37-39: the slopes are "$g_0=(1,0)$, $g_1=(-1,-1/8)$ and $g_2=(c_\circ,d_\circ)$ ... They are affinely
 independent, so no nonzero direction pairs equally with all three." -/
 theorem seed_affinely_independent :
@@ -227,16 +222,14 @@ theorem seed_affinely_independent :
   ext i j
   fin_cases i <;> fin_cases j <;> rfl
 
-/-- Item `A/geometry/prose/015` (`paper/sections/geometry.tex:37-39`):
-"Yet $(-1,16)$ has negative pairing with each, and zero is outside their convex
+/-- "Yet $(-1,16)$ has negative pairing with each, and zero is outside their convex
 hull." -/
 theorem seed_common_descent :
     (∀ j, dot (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD j) ![-1, 16] < 0) ∧
       (0 : Vec 2) ∉ convexHull ℝ (range (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD)) :=
   ⟨ArticleGeometry.seed_strict_common_descent, ArticleGeometry.seed_convex_hull_excludes_zero⟩
 
-/-- Item `A/geometry/prose/016` (`paper/sections/geometry.tex:39`):
-"The corner is therefore nonstationary." Zero is not a subgradient of the seed
+/-- "The corner is therefore nonstationary." Zero is not a subgradient of the seed
 objective `G(z)=max_i g_i^T z` at the corner `z=0`; indeed `G` decreases at unit
 rate along `(-1,16)`. -/
 theorem seed_corner_nonstationary :
@@ -253,7 +246,7 @@ theorem seed_corner_nonstationary :
   simp [dot] at h1
   linarith
 
-/-- Item `A/geometry/prose/010` (`paper/sections/geometry.tex:24-26`), caption of Figure
+/-- caption of Figure
 `art:gradient-geometry`: "the particular three-gradient seed used in
 Section~\ref{art:failure}. Its convex hull excludes zero, but its affine hull is
 the plane." -/
@@ -266,7 +259,7 @@ theorem seed_hulls :
 
 section Balance
 
-/-- Item `A/geometry/prose/019` (`paper/sections/geometry.tex:45-47`): for a nonempty
+/-- for a nonempty
 finite family of slopes `a_i`, "equality $a_i^Tv=\kappa<0$ for every $i$ asks for a
 common rate of descent ... The former fails when zero belongs to their affine
 hull". -/
@@ -276,7 +269,7 @@ theorem common_rate_fails_of_mem_affineSpan {ι : Type*} [Fintype ι] [Nonempty 
     ¬ ∃ (v : EuclideanSpace ℝ (Fin n)) (κ : ℝ), κ < 0 ∧ ∀ i, ⟪a i, v⟫_ℝ = κ := fun h =>
   (ArticleGeometry.affine_negative_common_rate_iff a (Classical.arbitrary ι)).mp h h0
 
-/-- Item `A/geometry/prose/020` (`paper/sections/geometry.tex:46-48`): "$a_i^Tv<0$ asks
+/-- "$a_i^Tv<0$ asks
 only for descent ... the latter fails when zero belongs to their convex hull." -/
 theorem descent_fails_of_mem_convexHull {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
     (a : ι → EuclideanSpace ℝ (Fin n))
@@ -284,7 +277,7 @@ theorem descent_fails_of_mem_convexHull {ι : Type*} [Fintype ι] [Nonempty ι] 
     ¬ ∃ v : EuclideanSpace ℝ (Fin n), ∀ i, ⟪a i, v⟫_ℝ < 0 := fun h =>
   (ArticleGeometry.finite_slopes_common_descent_iff a).mp h h0
 
-/-- Item `A/geometry/prose/021` (`paper/sections/geometry.tex:48-49`): "Indeed, a linear
+/-- "Indeed, a linear
 functional constant on the slopes is constant on their affine hull." -/
 theorem constant_on_affineSpan {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
     (a : ι → EuclideanSpace ℝ (Fin n))
@@ -292,7 +285,7 @@ theorem constant_on_affineSpan {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
     ∀ z ∈ affineSpan ℝ (range a), ⟪z, v⟫_ℝ = c :=
   AffineCriticalGeometry.affine_pairing_of_constant a v c h
 
-/-- Item `A/geometry/prose/022` (`paper/sections/geometry.tex:49-51`): "Conversely, if zero
+/-- "Conversely, if zero
 is outside that affine hull, its nearest point gives a separating functional
 constant on the hull; changing its sign gives the negative common value." The
 nearest point `p` of the affine hull to zero satisfies `z^T p = ‖p‖^2 > 0` on the
@@ -331,7 +324,7 @@ theorem nearest_point_common_rate {ι : Type*} [Fintype ι] [Nonempty ι] {n : �
     exact (pow_le_pow_iff_left₀ (norm_nonneg _) (norm_nonneg _) two_ne_zero).mp this
   · rw [inner_neg_right, hconst _ (subset_affineSpan ℝ _ (mem_range_self i))]
 
-/-- Item `A/geometry/prose/023` (`paper/sections/geometry.tex:52-53`): "The convex version
+/-- "The convex version
 follows from the same closest-point argument for the convex hull." If zero is
 outside the convex hull, its nearest point `p` in the hull satisfies
 `z^T p ≥ ‖p‖^2 > 0` on the hull, so `v=-p` is a common strict descent direction. -/
@@ -393,7 +386,7 @@ theorem benchmark_compact_sublevels_global :
   exact ⟨Localization.sublevel_compact UnexcitedMetric.objective_convex 0 hmin hu,
     ArticlePositive.mixed_benchmark_global⟩
 
-/-- Item `A/geometry/prose/031` (`paper/sections/geometry.tex:82-84`), caption of Table
+/-- caption of Table
 `art:positive-outcomes`, as corrected on 15 October 2026 (M31, reader point R-A-2): "The
 benchmark $u^2+|v|$ has compact sublevels and a centered representation on all of $\R^2$, so
 the first row gives global convergence." Every sublevel of `F(u,v)=u^2+|v|` is compact; on

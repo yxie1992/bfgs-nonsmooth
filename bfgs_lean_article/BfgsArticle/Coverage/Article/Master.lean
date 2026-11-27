@@ -63,15 +63,15 @@ theorem capGauge_nonneg (r : Vec 2) : 0 ≤ capGauge r := by
   simp only [capGauge]
   linarith
 
-/-- Item `A/master/prose/003` (`paper/master.tex:42-45`), witness for its correction M7 (until
+/-- Retained statement (not cited by a current register item since M45): witness for its correction M7 (until
 15 October 2026 the abstract said only "applies in arbitrary dimension on compact initial
 sublevels"): Theorem
 `art:centered` needs the compact initial sublevel to lie in the region `U` of the
-centered representation. The coercive cap `Ḡ` of Corollary `art:failure_polyhedral`
+centered representation. The coercive cap `Ḡ` of Theorem `art:failure_polyhedral`
 is finite and convex with minimizer `x_*=(-1,16)`; on the open convex set
 `U={x : ‖x-x_*‖_∞<1}` it equals `ψ(x)+γ(x-x_*)` with `ψ ≡ -1` (convex, locally
 `C^{1,1}`) and `γ(r)=max{r_1,-r_1-r_2/8,r_2}` (finite, convex, positively homogeneous
-of degree one). Yet the admissible run of Corollary `art:failure_polyhedral` has a
+of degree one). Yet the admissible run of Theorem `art:failure_polyhedral` has a
 compact initial sublevel, not contained in `U`, and `Ḡ(x_k)` does not tend to
 `Ḡ(x_*)`. -/
 theorem centered_representation_needs_containment :
@@ -264,7 +264,7 @@ def absVRun (u₀ v₀ : ℝ) (hv : 0 < v₀) : AdmissibleBFGSRun 2 absV where
     exact (axisRun v₀ hv).armijo k
   weak_wolfe := (axisRun v₀ hv).weak_wolfe
 
-/-- Item `A/master/prose/005` (`paper/master.tex:47-48`), supporting example for its note (also
+/-- Retained statement (not cited by a current register item since M45): supporting example for its note (also
 cited by the note of the introduction's `A/introduction/prose/036`): the local results assume
 a unique minimizer, and their conclusion `x_k → x_*` needs it. `F(u,v)=|v|` is a finite convex
 maximum of the linear (hence smooth and convex) branches `v`, `-v`; it equals `v` on the closed

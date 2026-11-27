@@ -107,19 +107,21 @@ for the author below (step 3 of the plan in `AGENTS.md`).
   - [x] Eliminate all em-dashes (`---`) across `paper/`, rephrasing parenthetical
     and compound sentences naturally and re-verifying `paper/build/master.pdf`
     (52 pages, 0 em-dashes, 0 warnings, 0 overfull boxes).
-  - [x] Run independent `gpt-6-astra` mathematical & Lean-coverage audit across
-    all 16 article TeX files and 16 Lean coverage modules; fix all 7 localized
-    proof/prose findings and 8 precision alignments, add the Lean theorem
-    `BfgsCoverage.Article.Energy.tail_vector_comparison` for `Lemma art:tail-comparison`,
-    add author/email metadata (`Yuchen Xie`, `yxie@u.northwestern.edu`), public
-    repository link, and citation to Lai (`arXiv:2610.34087v2`), and rebuild
-    `paper/build/master.pdf` (53 pages, 0 warnings, 0 overfull boxes, 0 em-dashes).
-  - [ ] Author review and any further prose/structural iteration on `paper/`.
-  - [ ] Once `paper/` text is approved by the author: migrate article Lean
-    coverage registers and modules (`BfgsArticle/Coverage/Article/`), update
-    correspondence tooling and ledger, sync `companion/appendices/seed_certificate.tex`
-    and finish the companion side of M44, and run fresh clean-tree axiom audit
-    and kernel replay.
+  - [x] Run 3-pass `gpt-6-astra` mathematical & Lean-coverage audit across all
+    article TeX files and Lean coverage modules; fix all findings, add author/email
+    metadata (`Yuchen Xie`, `yxie@u.northwestern.edu`), plain page style, public
+    repository link, and citation to Lai (`arXiv:2610.34087v2`).
+  - [x] Run `claude-opus-5.5` core-definition semantic audit, migrate all 15
+    active article registers (`A_*.json`, 561 items; `A_geometry.json` retired)
+    and all 16 `BfgsArticle/Coverage/Article/*.lean` modules (48 new unfolded
+    theorems + 4 open-problem `Prop`s), fix the 4 remaining minor prose/pointer
+    nits in `paper/`, create `ARTICLE_LEAN_MAP.md`, and verify `lake build`
+    (`7443/7443`), `check_coverage.py --strict` (`0` problems), 100% literal
+    prose-anchor matching, and standalone `dist/arxiv_submission.tar.gz` (53 pages,
+    0 warnings, 0 overfull boxes, 0 em-dashes).
+  - [ ] Post-arXiv companion & ledger sync: update `companion/appendices/seed_certificate.tex`
+    and the companion side of M44 (`C_*.json`), refresh correspondence/ledger,
+    and record fresh clean-tree `axiom_audit.py` and `kernel_replay.py` JSON receipts.
 
 ## Higher-priority follow-up: confident authorial wording (18 October 2026)
 

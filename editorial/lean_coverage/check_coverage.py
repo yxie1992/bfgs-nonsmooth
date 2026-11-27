@@ -101,9 +101,21 @@ def check(files, strict, allow_discrepancies=False):
             problems.append(f'{path}: no register file (register/{target.name})')
             continue
         registers[path] = json.loads(target.read_text())
-    all_ids = set()
+    all_ids, retired = set(), {}
     for target in ex.REGISTER.glob('*.json'):
-        all_ids |= {item['id'] for item in json.loads(target.read_text())['items']}
+        data = json.loads(target.read_text())
+        all_ids |= {item['id'] for item in data['items']}
+        for entry in data.get('retired', []):
+            retired[entry.get('id')] = (target.name, entry)
+    # Retired ids (items renumbered or moved by an edit) stay valid targets of references from
+    # other registers through their successor, which must be a current item.
+    for old_id, (name, entry) in retired.items():
+        successors = entry.get('successor') if isinstance(entry.get('successor'), list) else [entry.get('successor')]
+        if old_id in all_ids:
+            problems.append(f'register/{name}: retired id {old_id} is also a current item')
+        elif not entry.get('reason') or not successors or any(s not in all_ids for s in successors):
+            problems.append(f'register/{name}: retired id {old_id} needs a reason and current successor ids')
+    all_ids |= set(retired)
     names = known_names()
     summary = {}
     for path, register in registers.items():

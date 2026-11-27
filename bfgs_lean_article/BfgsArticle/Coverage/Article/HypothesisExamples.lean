@@ -51,8 +51,7 @@ open scoped BigOperators Topology ContDiff
 
 namespace BfgsCoverage.Article.HypothesisExamples
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-mixed`
-(`paper/appendices/hypothesis_examples.tex:12-30`): for every `b > 0`,
+/-- Item `A/hypothesis_examples/proposition/art:examples-mixed` (`paper/appendices/hypothesis_examples.tex:11-27`): for every `b > 0`,
 `F(u,v)=u²+|v|` is finite convex, has unique minimum zero and compact `K_b`.
 For every `0 < η ≤ b` the certificate is `W(x)=xxᵀ`, `m=η²`, `C=2b`,
 `L=0`, `δ=1`, including every sign condition of Definition `art:band-certificate`.
@@ -73,8 +72,7 @@ theorem mixed_certificates (b : ℝ) (hb : 0 < b) (c₁ c₂ : ℝ)
     fun η hη _ => ⟨Mixed.certificate b c₁ c₂ η hη,
       Mixed.certificate_parameters hb c₁ c₂ η hη⟩⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-mixed`
-(`paper/appendices/hypothesis_examples.tex:12-30`): the smallest eigenvalue
+/-- Item `A/hypothesis_examples/proposition/art:examples-mixed` (`paper/appendices/hypothesis_examples.tex:11-27`): the smallest eigenvalue
 of the displayed `H_k = diag(1,2^{-k})` is `2^{-k}`, and tends to zero.
 Precisely, this is the least value of `vᵀH_kv` on the Euclidean unit sphere,
 attained at the unit eigenvector `(0,1)`. -/
@@ -107,8 +105,7 @@ theorem mixed_smallest_eigenvalue :
     ext i
     fin_cases i <;> simp [Matrix.mulVec_diagonal]
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-mixed`
-(`paper/appendices/hypothesis_examples.tex:12-30`): the smallest eigenvalue
+/-- Item `A/hypothesis_examples/proposition/art:examples-mixed` (`paper/appendices/hypothesis_examples.tex:11-27`): the smallest eigenvalue
 of the displayed `H_k = diag(1,2^{-k})` is `2^{-k}`. Directly in Mathlib's
 real matrix spectrum, `2^{-k}` is its least element. -/
 theorem mixed_least_spectrum (k : ℕ) :
@@ -120,16 +117,14 @@ theorem mixed_least_spectrum (k : ℕ) :
   · exact pow_le_one₀ (by norm_num) (by norm_num)
   · exact le_rfl
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-mixed`
-(`paper/appendices/hypothesis_examples.tex:12-30`): the least actual spectral
+/-- Item `A/hypothesis_examples/proposition/art:examples-mixed` (`paper/appendices/hypothesis_examples.tex:11-27`): the least actual spectral
 value of every displayed `H_k` is `2^{-k}`, and these values tend to zero. -/
 theorem mixed_spectral_limit :
     (∀ k, IsLeast (spectrum ℝ (Mixed.run.H k)) ((1 / 2 : ℝ) ^ k)) ∧
       Tendsto (fun k : ℕ => (1 / 2 : ℝ) ^ k) atTop (𝓝 0) :=
   ⟨mixed_least_spectrum, mixed_smallest_eigenvalue.2⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-mixed`
-(`paper/appendices/hypothesis_examples.tex:12-30`): all objective and certificate
+/-- Item `A/hypothesis_examples/proposition/art:examples-mixed` (`paper/appendices/hypothesis_examples.tex:11-27`): all objective and certificate
 hypotheses hold jointly with the printed actual full-BFGS history in `K_{2/3}`,
 with `(c₁,c₂)=(1/4,1/2)`, `H₀=I`, and convergence despite the vanishing
 least eigenvalue. The certificate and the history refer to this same objective,
@@ -167,8 +162,7 @@ theorem mixed_history :
     exact ⟨Mixed.certificate (2 / 3) _ _ η hη,
       Mixed.certificate_parameters (by norm_num) _ _ η hη⟩
 
-/-- Item `A/hypothesis_examples/disp/003`
-(`paper/appendices/hypothesis_examples.tex:37-40`): for differentiable endpoints
+/-- Part of item `A/hypothesis_examples/proof/001` (`paper/appendices/hypothesis_examples.tex:28-39`): for differentiable endpoints
 `x=(u,v), z=(r,w)` of the mixed ridge in `K_b`, when `v,w` have the same sign,
 `t=2(r-u)²`, `yᵀz=2(r-u)r`, and `(yᵀz)² ≤ 2F(z)t`.
 Here `y=h-g` and `t=yᵀ(z-x)` are variables with their defining equations.
@@ -195,8 +189,7 @@ theorem mixed_same_sign_secants (b : ℝ) (_hb : 0 < b) (x z g h : Vec 2)
         Matrix.cons_val_one]
       ring
 
-/-- Item `A/hypothesis_examples/disp/004`
-(`paper/appendices/hypothesis_examples.tex:42-44`): for opposite signs and
+/-- Part of item `A/hypothesis_examples/proof/001` (`paper/appendices/hypothesis_examples.tex:28-39`): for opposite signs and
 `S=|v|+|w|>0`, `t=2(r-u)²+2S`, `yᵀz=2(r-u)r+2|w|`.
 The same full-space differentiable-endpoint assumptions as in display 003 apply. -/
 theorem mixed_opposite_sign_secants (b : ℝ) (_hb : 0 < b) (x z g h : Vec 2)
@@ -224,8 +217,7 @@ theorem mixed_opposite_sign_secants (b : ℝ) (_hb : 0 < b) (x z g h : Vec 2)
       Matrix.cons_val_one, abs_of_nonpos hx.le, abs_of_nonneg hz.le]
     constructor <;> ring
 
-/-- Item `A/hypothesis_examples/disp/005`
-(`paper/appendices/hypothesis_examples.tex:46-49`): the complete weighted
+/-- Part of item `A/hypothesis_examples/proof/001` (`paper/appendices/hypothesis_examples.tex:28-39`): the complete weighted
 Cauchy--Schwarz chain, with its printed intermediate expression:
 `(yᵀz)² ≤ t(2r²+2|w|²/S) ≤ 2F(z)t ≤ 2bt`. -/
 theorem mixed_crossing_cauchy (b : ℝ) (hb : 0 < b) (x z g h : Vec 2)
@@ -267,8 +259,7 @@ theorem mixed_crossing_cauchy (b : ℝ) (hb : 0 < b) (x z g h : Vec 2)
   · nlinarith [mul_le_mul_of_nonneg_left hcoeff htpos.le]
   · nlinarith [mul_le_mul_of_nonneg_right hzK htpos.le]
 
-/-- Item `A/hypothesis_examples/disp/006`
-(`paper/appendices/hypothesis_examples.tex:54-57`): on the printed mixed history,
+/-- Part of item `A/hypothesis_examples/proof/001` (`paper/appendices/hypothesis_examples.tex:28-39`): on the printed mixed history,
 `d_k=2^{-k}`, `F(x_k)-F(x_{k+1})=d_k/3`, and `t_k=2d_k`. -/
 theorem mixed_history_scalars (k : ℕ) :
     Mixed.run.d k = (1 / 2 : ℝ) ^ k ∧
@@ -278,8 +269,7 @@ theorem mixed_history_scalars (k : ℕ) :
   obtain ⟨hd, hΔ, ht⟩ := Mixed.run_scalars k
   exact ⟨hd, by simpa only [hd] using hΔ, by simpa only [hd] using ht⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-full-rank`
-(`paper/appendices/hypothesis_examples.tex:64-76`): the Euclidean objective
+/-- Item `A/hypothesis_examples/proposition/art:examples-full-rank` (`paper/appendices/hypothesis_examples.tex:41-52`): the Euclidean objective
 `F(x)=‖x‖₂²/2` has unique minimum zero and compact positive sublevels in every
 dimension `n ≥ 1`. On every `0 < η ≤ b` the field is `I`, with constants
 `2η,1,0,1`, is positive definite, and has rank exactly `n`. -/
@@ -300,8 +290,7 @@ theorem quadratic_certificates {n : ℕ} (_hn : 1 ≤ n) (b : ℝ) (_hb : 0 < b)
     Quadratic.sublevel_compact b, fun η hη _ =>
       ⟨Quadratic.certificate _ c₁ c₂ η hη, Quadratic.certificate_parameters _ c₁ c₂ η hη⟩⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-full-rank`
-(`paper/appendices/hypothesis_examples.tex:64-76`): for each prescribed `x₀ ≠ 0`,
+/-- Item `A/hypothesis_examples/proposition/art:examples-full-rank` (`paper/appendices/hypothesis_examples.tex:41-52`): for each prescribed `x₀ ≠ 0`,
 the same Euclidean objective, sublevel, full-rank certificates, identity matrices
 and actual-gradient full-BFGS history hold together. Its exact history is
 `x_k=2^{-k}x₀`, `g_k=x_k`, `H_k=I`, `α_k=1/2`, with constants `(1/4,1/2)`;
@@ -325,8 +314,7 @@ theorem quadratic_history {n : ℕ} (_hn : 1 ≤ n) (x₀ : Vec n) (hx₀ : x₀
         Tendsto R.x atTop (𝓝 0) :=
   Quadratic.joint_witness x₀ hx₀
 
-/-- Item `A/hypothesis_examples/proof/002`
-(`paper/appendices/hypothesis_examples.tex:77-85`): on the stated quadratic run,
+/-- Item `A/hypothesis_examples/proof/002` (`paper/appendices/hypothesis_examples.tex:53-58`): on the stated quadratic run,
 the actual decrease is `3d_k/4` and weak Wolfe is equality. The actual-gradient,
 identity-update, secant and transport equalities are also supplied by the core
 declarations cited in this proof's register item. -/
@@ -339,8 +327,7 @@ theorem quadratic_history_decrease {n : ℕ} (x₀ : Vec n) (hx₀ : x₀ ≠ 0)
   obtain ⟨_, hd, hΔ, _⟩ := Quadratic.run_scalars x₀ hx₀ k
   exact ⟨by rw [hd, hΔ]; ring, Quadratic.run_weak_wolfe_eq x₀ hx₀ k⟩
 
-/-- Item `A/hypothesis_examples/lemma/art:examples-run-existence`
-(`paper/appendices/hypothesis_examples.tex:89-101`): the exceptional set is the
+/-- Item `A/hypothesis_examples/lemma/art:examples-run-existence` (`paper/appendices/hypothesis_examples.tex:62-75`): the exceptional set is the
 set of failures of full-space differentiability on every line through a
 differentiability point. At any actual nonzero gradient and SPD `H`, `p=-Hg`
 admits a positive differentiable endpoint with strict Armijo and strict weak Wolfe.
@@ -367,8 +354,7 @@ theorem strict_wolfe_step {n : ℕ} (_hn : 1 ≤ n) {F : Vec n → ℝ}
   · apply (mul_lt_mul_left hα).mp
     nlinarith only [hw]
 
-/-- Item `A/hypothesis_examples/lemma/art:examples-run-existence`
-(`paper/appendices/hypothesis_examples.tex:89-101`): with the same full-space
+/-- Item `A/hypothesis_examples/lemma/art:examples-run-existence` (`paper/appendices/hypothesis_examples.tex:62-75`): with the same full-space
 line condition and no differentiable stationary point, every differentiable
 `x₀`, every SPD `H₀`, and every `0<c₁<c₂<1` admit an infinite actual-gradient
 full-BFGS run with exactly these initial data and constants. -/
@@ -385,16 +371,14 @@ theorem admissible_run_exists {n : ℕ} (_hn : 1 ≤ n) {F : Vec n → ℝ}
   AdmissibleRunExistence.exists_admissible_run hconv hbdd hline hstat
     (hasFDerivAt_coordinateGradient hx₀) hH₀ hc₁ hc₁₂ hc₂
 
-/-- Item `A/hypothesis_examples/disp/009`
-(`paper/appendices/hypothesis_examples.tex:124-126`): the definition of the
+/-- Item `A/hypothesis_examples/disp/005` (`paper/appendices/hypothesis_examples.tex:91-93`): the definition of the
 two-quadratic objective, with its coefficients in the original coordinates. -/
 theorem two_quadratic_formula (a b c : ℝ) (x : Vec 2) :
     TwoQuadraticExample.objective a b c x =
       max (a * (x 0) ^ 2 + b * (x 1) ^ 2 + x 1)
         (c * (x 0) ^ 2 + b * (x 1) ^ 2 - x 1) := rfl
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): unfold the new
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): unfold the new
 `PaperRegularAt` predicate. It is the literal smooth-neighborhood or convex
 two-active-`C²`-branch alternative, with independent actual branch gradients. -/
 theorem paperRegularAt_iff (F : Vec 2 → ℝ) (p : Vec 2) :
@@ -405,8 +389,7 @@ theorem paperRegularAt_iff (F : Vec 2 → ℝ) (p : Vec 2) :
         (∀ z ∈ V, F z = max (f₀ z) (f₁ z)) ∧ f₀ p = F p ∧ f₁ p = F p ∧
         LinearIndependent ℝ ![coordinateGradient f₀ p, coordinateGradient f₁ p]) := Iff.rfl
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): unfold every field of the
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): unfold every field of the
 new native `PlanarHypotheses` record used by the joint witness. Affine criticality
 uses the affine hull of the actual convex subdifferential; correctness means
 that an affine-critical point has zero in that subdifferential. The native
@@ -427,8 +410,7 @@ theorem planarHypotheses_iff (F : Vec 2 → ℝ) (B : ℝ) :
   · rintro ⟨hconv, hmin, hB, hcompact, hstrict, hregular, hcorrect⟩
     exact ⟨hconv, hmin, hB, hcompact, hstrict, hregular, hcorrect⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): unfold every field of the
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): unfold every field of the
 new `FiniteMaxHypotheses` record. The branch domain is the open neighborhood
 `univ` of zero. The active type is `{i | f_i(0)=F(0)}` with the original indices;
 the positive weights, sum-one and zero-gradient balance use that same type.
@@ -452,8 +434,7 @@ theorem finiteMaxHypotheses_iff {m : ℕ} (F : Vec 2 → ℝ) (f : Fin m → Vec
   · rintro ⟨hconv, hmin, huniq, hbranches, hrep, hcont, hind, hpos, hsum, hbal⟩
     exact ⟨hconv, hmin, huniq, hbranches, hrep, hcont, hind, hpos, hsum, hbal⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): for every `a,b,c>0`, zero
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): for every `a,b,c>0`, zero
 is the unique minimizer, all sublevels are compact, and the switching locus is
 `v=(c-a)u²/2`, reducing to the line `v=0` when `a=c`.
 The differentiability equivalence identifies this tie locus with the full-space
@@ -480,8 +461,7 @@ theorem two_quadratic_objective_geometry (a b c : ℝ)
   · rintro rfl x
     simpa only [sub_self, zero_mul, zero_div] using TwoQuadraticExample.tie_equation a b a x
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): all hypotheses of
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): all hypotheses of
 Corollary `art:planar-convergence` on each prescribed positive sublevel, written
 literally rather than assuming a geometry package. This includes the full
 neighborhood regularity alternative and `C_aff ∩ K_B ⊆ argmin F`. -/
@@ -507,8 +487,7 @@ theorem two_quadratic_planar_hypotheses (a b c : ℝ)
           argmin (TwoQuadraticExample.objective a b c) :=
   TwoQuadraticExample.paper_planar_hypotheses a b c ha hb hc B hB
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): the two original branches
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): the two original branches
 are both active at zero, their actual gradients are `(0,1)` and `(0,-1)`, and
 the complete finite-max hypotheses hold with strictly positive half weights.
 `finiteMaxHypotheses_iff` spells out all fields, including indexed affine
@@ -527,8 +506,7 @@ theorem two_quadratic_finite_max_hypotheses (a b c : ℝ)
     (TwoQuadraticExample.initial_gradients a b c).2,
     TwoQuadraticExample.finite_max_hypotheses a b c ha hb hc⟩
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics`
-(`paper/appendices/hypothesis_examples.tex:122-135`): the same family satisfies
+/-- Item `A/hypothesis_examples/proposition/art:examples-two-quadratics` (`paper/appendices/hypothesis_examples.tex:89-100`): the same family satisfies
 all planar and finite-max hypotheses jointly with convergence of every admissible
 run and an actual convergent run from every prescribed differentiable point,
 SPD initial matrix and valid constant pair. No hypotheses about the objective
@@ -558,8 +536,7 @@ theorem two_quadratic_joint (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   intro x₀ hx₀ H₀ hH₀ c₁ c₂ hc₁ hc₁₂ hc₂
   exact (TwoQuadraticExample.joint_witness a b c ha hb hc hx₀ H₀ hH₀ hc₁ hc₁₂ hc₂).2.2.2
 
-/-- Item `A/hypothesis_examples/disp/010`
-(`paper/appendices/hypothesis_examples.tex:142-144`): on the tie curve,
+/-- on the tie curve,
 the determinant of the two actual gradients is
 `-2u(a+c+b(c-a)²u²)`. The branch definitions and tie equation precede this display. -/
 theorem two_quadratic_tie_determinant (a b c : ℝ)
@@ -571,8 +548,7 @@ theorem two_quadratic_tie_determinant (a b c : ℝ)
   rw [TwoQuadraticExample.coordinateGradient_eq, TwoQuadraticExample.coordinateGradient_eq]
   exact TwoQuadraticExample.tie_determinant a b c ht
 
-/-- Item `A/hypothesis_examples/corollary/art:examples-nonradial-runs`
-(`paper/appendices/hypothesis_examples.tex:162-168`): for every differentiable
+/-- Item `A/hypothesis_examples/corollary/art:examples-nonradial-runs` (`paper/appendices/hypothesis_examples.tex:118-123`): for every differentiable
 `x₀` with `F(x₀)<1/100`, every SPD `H₀` and every valid fixed pair, there is an
 actual infinite full-BFGS run with exactly those data, converging to zero.
 Every admissible run starting in the stated low sublevel converges in value
@@ -595,8 +571,7 @@ theorem nonradial_runs {x₀ : Vec 2}
   exact ⟨PlanarQuadraticExample.fullBFGS_explicit_basin, R, hx, hH, h1, h2,
     PlanarQuadraticExample.fullBFGS_explicit_basin R (by simpa only [hx] using hlow)⟩
 
-/-- Item `A/hypothesis_examples/corollary/art:examples-nonradial-runs`
-(`paper/appendices/hypothesis_examples.tex:162-168`): the particular start
+/-- Item `A/hypothesis_examples/corollary/art:examples-nonradial-runs` (`paper/appendices/hypothesis_examples.tex:118-123`): the particular start
 `(1/1000,0)` is full-space differentiable and has exactly the printed value
 `1001/10^6 < 1/100`. Together with `nonradial_runs` it gives a run for every
 initial SPD matrix and every valid constant pair at this same start. -/
@@ -611,15 +586,13 @@ theorem nonradial_initial_value :
   rw [PlanarQuadraticExample.winner_zero_value h1.le h2.le]
   norm_num [PlanarQuadraticExample.branch]
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-no-step`
-(`paper/appendices/hypothesis_examples.tex:183-190`): the literal three-linear
+/-- Item `A/hypothesis_examples/proposition/art:examples-no-step` (`paper/appendices/hypothesis_examples.tex:145-152`): the literal three-linear
 objective `G(u,v)=max{u,-u+v,-u-v}`. -/
 theorem gauge_formula (x : Vec 2) :
     Gauge.objective x = max (x 0) (max (-x 0 + x 1) (-x 0 - x 1)) :=
   Gauge.objective_formula x
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-no-step`
-(`paper/appendices/hypothesis_examples.tex:183-190`): the same finite convex
+/-- Item `A/hypothesis_examples/proposition/art:examples-no-step` (`paper/appendices/hypothesis_examples.tex:145-152`): the same finite convex
 coercive homogeneous objective has unique minimizer zero and, for every `ε>0`,
 a differentiable start `(ε,0)` with `H₀=I` whose whole positive search ray has
 no differentiable weak-Wolfe endpoint for any `c₂<1`. Both the constant-gradient
@@ -645,16 +618,14 @@ theorem gauge_no_step {ε : ℝ} (hε : 0 < ε) :
       ¬ ∃ R : AdmissibleBFGSRun 2 Gauge.objective, R.x 0 = ![ε, 0] ∧ R.H 0 = 1 :=
   Gauge.joint_obstruction hε
 
-/-- Item `A/hypothesis_examples/proposition/art:examples-no-step`
-(`paper/appendices/hypothesis_examples.tex:183-190`): the gauge satisfies the
+/-- Item `A/hypothesis_examples/proposition/art:examples-no-step` (`paper/appendices/hypothesis_examples.tex:145-152`): the gauge satisfies the
 hypotheses of Theorem `art:homogeneous`; hence every infinite admissible run on it
 converges to zero, while `gauge_no_step` excludes the specified initial data. -/
 theorem gauge_covered_convergence (R : AdmissibleBFGSRun 2 Gauge.objective) :
     Tendsto (fun k => Gauge.objective (R.x k)) atTop (𝓝 0) ∧ Tendsto R.x atTop (𝓝 0) :=
   Gauge.admissible_runs_converge R
 
-/-- Item `A/hypothesis_examples/prose/006`
-(`paper/appendices/hypothesis_examples.tex:204-206`): this is an obstruction
+/-- this is an obstruction
 to an infinite differentiable history from the specified data, rather than a
 nonoptimal stagnating run. The search ray itself reaches the minimizer at the
 positive length `α=ε`, but no infinite admissible run has that initialization. -/
@@ -705,5 +676,23 @@ example : Gauge.objective ![1, 0] = 1 ∧
     ¬ ∃ R : AdmissibleBFGSRun 2 Gauge.objective, R.x 0 = ![1, 0] ∧ R.H 0 = 1 := by
   exact ⟨(Gauge.initial_state one_pos).1,
     (Gauge.initial_state one_pos).2.1.differentiableAt, (gauge_ray_minimizer one_pos).2.2.2⟩
+
+/-- Item `A/hypothesis_examples/disp/006` (`paper/appendices/hypothesis_examples.tex:130-136`), in
+the proof of Corollary `art:examples-nonradial-runs`: for the branches
+$f_0=u+u^2+\tfrac12v^2$, $f_1=v+\tfrac12u^2+\tfrac32v^2$, $f_2=-u-v+\tfrac32u^2+v^2$ of Theorem
+`art:nonradial-example`, completing squares gives the pairwise tie loci
+\[ f_0=f_1\iff\tfrac12(u+1)^2-(v+\tfrac12)^2=\tfrac14,\quad
+ f_0=f_2\iff(u-2)^2+(v-1)^2=5,\quad
+ f_1=f_2\iff\tfrac12(v+2)^2-(u-\tfrac12)^2=\tfrac74. \] -/
+theorem tie_loci (u v : ℝ) :
+    (u + u ^ 2 + v ^ 2 / 2 = v + u ^ 2 / 2 + 3 * v ^ 2 / 2 ↔
+        (u + 1) ^ 2 / 2 - (v + 1 / 2) ^ 2 = 1 / 4) ∧
+      (u + u ^ 2 + v ^ 2 / 2 = -u - v + 3 * u ^ 2 / 2 + v ^ 2 ↔ (u - 2) ^ 2 + (v - 1) ^ 2 = 5) ∧
+      (v + u ^ 2 / 2 + 3 * v ^ 2 / 2 = -u - v + 3 * u ^ 2 / 2 + v ^ 2 ↔
+        (v + 2) ^ 2 / 2 - (u - 1 / 2) ^ 2 = 7 / 4) := by
+  refine ⟨⟨fun h => by linear_combination h, fun h => by linear_combination h⟩,
+    ⟨fun h => by linear_combination (-2 : ℝ) * h, fun h => by linear_combination (-1 / 2 : ℝ) * h⟩,
+    ⟨fun h => by linear_combination h, fun h => by linear_combination h⟩⟩
+
 
 end BfgsCoverage.Article.HypothesisExamples

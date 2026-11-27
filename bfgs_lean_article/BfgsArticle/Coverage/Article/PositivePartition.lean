@@ -4,7 +4,7 @@ import BfgsVerification.QuadraticCellRadial
 # Lean coverage: `paper/statements/positive_partition.tex`
 
 Theorem `art:polyhedral` ("Local convergence on finite polyhedral cells"), which
-`paper/sections/local.tex` inputs at line 46. Its proof (`local.tex:48-77`) and the displays
+`paper/sections/local.tex` inputs at line 53. Its proof (`local.tex:55-80`) and the displays
 of that proof are covered in `BfgsArticle.Coverage.Article.Local`. Register:
 `editorial/lean_coverage/register/A_positive_partition.json`.
 
@@ -40,9 +40,8 @@ open Set Filter Topology BfgsVerification
 
 namespace BfgsCoverage.Article.PositivePartition
 
-/-- Item `A/positive_partition/theorem/art:polyhedral`
-(`paper/statements/positive_partition.tex:1-18`), Theorem `art:polyhedral`, including its
-displays `A/positive_partition/disp/001` (lines 6-8) and `A/positive_partition/disp/002`
+/-- Item `A/positive_partition/theorem/art:polyhedral` (`paper/statements/positive_partition.tex:1-16`), Theorem `art:polyhedral`, including its
+displays `A/positive_partition/disp/001` (lines 7-9) and `A/positive_partition/disp/002`
 (lines 13-15).
 
 Let $n\ge1$ and let $F:\R^n\to\R$ be finite and convex, with a unique minimizer $x_*$.

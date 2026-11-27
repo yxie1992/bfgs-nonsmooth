@@ -17,11 +17,15 @@ M44):
     plus Appendices A--E with author/email (`Yuchen Xie`, `yxie@u.northwestern.edu`),
     public repository link, and November 2026 literature update (`arXiv:2610.34087v2`)
     (53 pages, zero em-dashes, zero LaTeX/package warnings, zero overfull boxes).
-  - Independent `gpt-6-astra` mathematical & Lean-fidelity audit completed across
-    all 16 TeX files and 16 Lean coverage modules; all 7 localized proof/prose
-    findings and 8 minor precision alignments resolved, and
-    `BfgsCoverage.Article.Energy.tail_vector_comparison` added and verified
-    against Lean's three standard classical axioms.
+  - Independent 3-pass `gpt-6-astra` mathematical & Lean-fidelity audit plus
+    independent `claude-opus-5.5` core-definition semantic audit and full
+    article register/module migration completed: all 561 article items across
+    `editorial/lean_coverage/register/A_*.json` and all 16 coverage modules in
+    `BfgsArticle/Coverage/Article/*.lean` (including 48 new unfolded theorems and
+    all 4 open problems) pass `check_coverage.py --strict`, 100% literal prose-anchor
+    verification, and full `lake build` (`7443/7443` targets, standard classical
+    axioms only). Added human-readable `ARTICLE_LEAN_MAP.md` (linked from
+    `README.md`).
   - Old premature Section 2 (`paper/sections/geometry.tex`) dissolved into
     Section 1.1--1.2 (core analytical tools, Figure 1, affine-vs-convex balance,
     and Table 1) and Section 4.4 (practical hypothesis verification guide).
@@ -47,13 +51,11 @@ M44):
     alphabetical bibliography polished.
   - Every mathematical statement, hypothesis, quantifier, proof argument, and all
     110 historical `\label{art:...}` tags are preserved.
-- **Intentionally deferred until the author reviews `paper/build/master.pdf`:**
-  - Re-binding the article's Lean coverage registers/modules (including one new
-    coverage theorem for `Lemma art:tail-comparison` and dissolving
-    `A_geometry.json`), updating `refresh_correspondence.py` / `CHANGES.json` /
-    `ADDITIONS.json` for the structural reorganization, syncing the shared seed
-    appendix and finishing the companion side of M44 (`RESUME.md`), and running
-    fresh clean-tree `axiom_audit.py` and `kernel_replay.py`.
+- **Remaining companion/correspondence follow-ups (post-arXiv):**
+  - Sync `companion/appendices/seed_certificate.tex`, finish the companion side of
+    M44 (`RESUME.md`, updating the 24 shifted article display cross-references in
+    `C_*.json`), refresh `CLAIM_LEDGER.json` / `PROOF_CORRESPONDENCE.html`, and
+    record fresh clean-tree `AXIOM_AUDIT.json` and `KERNEL_REPLAY.json` receipts.
 
 ## Earlier checkpoint — 18 October 2026, Linux
 

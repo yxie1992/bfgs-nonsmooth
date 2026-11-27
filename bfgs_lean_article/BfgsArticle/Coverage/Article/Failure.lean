@@ -5,16 +5,17 @@ import BfgsVerification.DLiteralTargets
 import BfgsVerification.LQuadraticSeed
 import BfgsArticle.NonStrictTransfer
 import BfgsArticle.LUniformLocal
+import BfgsVerification.MaxAffineBasin
 
 /-!
 # Lean coverage: `paper/sections/failure.tex`
 
 Section `art:failure` ("Failure: a contracting mechanism and local realizations"). Register:
 `editorial/lean_coverage/register/A_failure.json`. Theorem `art:local-failure` itself
-(`paper/statements/negative_upper.tex`, included at line 51) is covered in
-`BfgsArticle.Coverage.Article.NegativeUpper`; its proof (lines 394-434) is covered here.
+(`paper/statements/negative_upper.tex`, included at line 300) is covered in
+`BfgsArticle.Coverage.Article.NegativeUpper`; its proof (lines 314-364) is covered here.
 
-## The specified implementation (lines 21-46)
+## The specified implementation (lines 29-55)
 
 The line search is `NonStrictLineSearch.fromMetric F x H c₁ c₂ N`
 (`specified_search`): at a differentiable point $x$ it uses $g=\nabla F(x)$
@@ -37,7 +38,7 @@ at the accepted trials are about $0.76658$, $0.39319$, $0.37521$ (`accepted_armi
 `accepted_armijo_ratios`), so for $c_1=0.38$, $c_2=1/2$ the phase-2 trial $1/16$ is rejected
 (`seed_cycle_range_counterexample`). Until 15 October 2026 the lemma and the table fixed no
 constants; the correction M11 added the range $0<c_1\le1/3$, $c_2>0$ to the lemma's query-list
-sentence and to the table's caption (lines 109-110 and 149-150). `seed_cycle` and `trial_table`
+sentence and to the table's caption (lines 124-125 and 149-150). `seed_cycle` and `trial_table`
 state the claims for this range, which contains that of Theorem `art:local-failure`.
 
 ## Notation
@@ -65,7 +66,7 @@ state the claims for this range, which contains that of Theorem `art:local-failu
 * `Vec 2` carries the sup norm; Euclidean norms are `‖euclideanVector z‖`; Hessians are
   `RadialHessian.matrix`, the matrix of `fderiv ℝ (fderiv ℝ F) x`. Where $F$ is differentiable
   on a neighborhood of $x$ and the derivative map is differentiable at $x$ (the convention of
-  lines 493-496), it is the classical Hessian, the derivative of the gradient map
+  the caption of Table `art:regularity-map`, lines 392-394), it is the classical Hessian, the derivative of the gradient map
   (`classical_hessian`); the branches of the first construction are $C^2$, so this holds at
   every point.
 * `lam` stands for $\lambda$ and `𝒢` for $\mathcal G$ in the covariance theorems.
@@ -74,24 +75,67 @@ state the claims for this range, which contains that of Theorem `art:local-failu
 
 | Item | Lines | Lean |
 |---|---|---|
-| `prose/003`, `disp/001` (`art:failure_tests`) | 22-32, 26-29 | `specified_search`, `failure_tests` |
-| `prose/005`, `prose/006` | 34-35, 44 | `strict_tests_same_decisions`, `strict_tests_same_decisions_lower`, `run_update_full` |
-| `disp/002` (`art:failure_update`) | 38-43 | `fullUpdate`, `failure_update` |
-| `prose/009`, `prose/010` | 52-54 | `failure_starts_null`, `no_uniform_lower_curvature` |
-| `prose/012` | 66 | `target_lengths_bisections` |
-| `disp/003`-`disp/006`, `prose/014`, `prose/015` | 74-98 | `seed_slopes`, `seed_coarse_bounds`, `seed_rho`, `seed_matrices_steps`, `seed_points`, `displacement_closure` |
-| `lemma/art:seed_cycle` (corrected), `disp/007`-`disp/009` | 100-120 | `seed_cycle`, `seed_closures`, `seed_margins`, `seed_query_bounds` |
-| `table/art:trial_table` (corrected), `prose/016`-`prose/023` | 122-162 | `trial_table`, `rejected_raise_value`, `accepted_pass_tests`, `seed_search`, `no_wolfe_rejection` |
-| range of the lemma and the table (corrected, M11) | 107-108, 147-148 | `accepted_armijo_iff`, `accepted_armijo_ratios`, `seed_cycle_range_counterexample` |
-| `disp/010`, `disp/011`, `prose/026`-`prose/028` | 184-200 | `cone_orbit`, `downhill_direction`, `cone_orbit_scaling`, `cone_limit_nonstationary` |
-| `corollary/art:failure_polyhedral` (`disp/012`) | 202-209 | `failure_polyhedral` |
-| `disp/013`, `disp/014`, `prose/032`-`prose/038` | 227-260 | `matched_scaling`, `matched_update`, `matched_comparisons`, `matched_search_transfer`, `matched_run_transfer`, `matched_identity_matrix`, `first_embedding_scales` |
-| `prose/039`-`prose/043`, `disp/015`-`disp/018` | 263-303 | `scalar_nodes`, `phi_unique`, `scalar_constants`, `ramp_center_coordinate`, `ramp_primitive`, `primitive_formulas`, `phi_formulas` |
-| `lemma/art:upper_scalar_lemma` (`disp/019`, `disp/020`), `disp/021`, `disp/022` | 305-354 | `upper_scalar_lemma`, `positive_interval_derivatives`, `constant_derivative_lengths` |
-| `disp/023`, `disp/024`, `prose/044`-`prose/048` | 358-383 | `upper_objective`, `upper_local_model`, `objective_branch_hessians`, `objective_minimizer`, `center_arguments`, `local_model_branches`, `center_value_slope` |
-| `disp/025`-`disp/028` (proof of Theorem `art:local-failure`) | 387-422 | `upper_orbit`, `query_slab`, `query_values`, `query_norm_bound` |
-| `prose/050` (Figure `art:shrinking-scales`) | 436-439 | `shrinking_scales` |
-| `prose/052`-`prose/054`, `prose/056`, `prose/059` | 449-486 | `no_uniform_lower_curvature`, `quadratic_restores_curvature`, `quadratic_changes_dynamics`, `regularity_map_first_row`, `classical_hessian` |
+| `prose/003` | 31-43 | `specified_search`, `fromMetric_fuel_mono`, `implemented_run_unique` |
+| `disp/001` (`art:failure_tests`) | 35-38 | `failure_tests` |
+| `prose/005` | 43-47 | `strict_tests_same_decisions`, `strict_tests_same_decisions_lower` |
+| `disp/002` (`art:failure_update`) | 50-54 | `fullUpdate`, `failure_update`, `fullUpdate_eq_update` |
+| `prose/006` | 55 | `run_update_full` |
+| `prose/012` | 73-79 | `target_lengths_bisections`, `seed_closures` |
+| `prose/015` | 79-81 | `displacement_closure` |
+| `prose/014` | 83-86 | `seed_coarse_bounds` |
+| `disp/004` | 87-90 | `seed_slopes` |
+| `disp/005` (`art:seed_rho`) | 92-95 | `seed_rho` |
+| `disp/006` (`art:seed_matrices`) | 97-103 | `seedStep`, `seed_matrices_steps` |
+| `disp/007` (`art:seed_points`) | 105-109 | `seedStart`, `seedPoint`, `seed_points` |
+| `lemma/art:seed_cycle` | 111-132 | `seed_cycle`, `seed_search`, `seed_closures`, `seed_rejections_raise`, `seed_margins`, `seed_query_bounds`, `accepted_armijo_iff`, `accepted_armijo_ratios`, `seed_cycle_range_counterexample` |
+| `disp/008` | 114-117 | `seed_closures`, `seed_cycle` |
+| `disp/009` (`art:seed_margins`) | 123-126 | `seed_margins`, `seed_cycle` |
+| `disp/010` (`art:seed_query_bounds`) | 129-131 | `seed_query_bounds`, `seed_cycle` |
+| `table/art:trial_table` | 134-162 | `trial_table`, `table_current`, `table_trial`, `table_decision`, `table_reject`, `seed_search`, `accepted_armijo_ratios`, `seed_cycle_range_counterexample` |
+| `prose/016` | 157-158 | `rejected_raise_value`, `table_reject` |
+| `prose/022` | 158-160 | `seed_search`, `table_decision`, `trial_table` |
+| `prose/020` | 166-170 | `rejected_raise_value`, `table_reject`, `trial_table`, `table_decision` |
+| `prose/021` | 170-173 | `accepted_pass_tests`, `seed_margins`, `no_wolfe_rejection` |
+| `disp/011` (`art:cone_orbit`) | 177-179 | `cone_orbit`, `implemented_run_unique`, `fromMetric_fuel_mono` |
+| `prose/027` | 180-183 | `cone_orbit_scaling`, `fullUpdate_scale` |
+| `prose/028` | 183-188 | `cone_limit_nonstationary` |
+| `disp/012` | 185-187 | `downhill_direction` |
+| `theorem/art:failure_polyhedral` | 193-204 | `failure_polyhedral` |
+| `prose/077` | 238-239 | `coercive_local_convergence` |
+| `prose/032` | 251-253 | `matched_scaling`, `matched_hasGradient` |
+| `disp/015` (`art:matched-scaling`) | 254-257 | `matched_scaling`, `matched_hasGradient` |
+| `prose/033` | 258-262 | `matched_update` |
+| `prose/034` | 262-264 | `matched_comparisons` |
+| `prose/036` | 264-265 | `matched_search_transfer`, `matched_run_transfer` |
+| `disp/016` | 268-270 | `matched_identity_matrix` |
+| `prose/037` | 271 | `matched_identity_matrix` |
+| `prose/038` | 271-276 | `first_embedding_scales`, `scalar_nodes` |
+| `prose/076` | 276-279 | `shrinking_scales`, `query_slab` |
+| `lemma/art:upper_scalar_lemma` | 281-292 | `upper_scalar_lemma_exists`, `upper_scalar_lemma` |
+| `prose/042` | 282 | `scalar_constants` |
+| `prose/050` | 305-310 | `shrinking_scales` |
+| `proof/002` | 314-364 | `upper_orbit`, `matched_search_transfer`, `query_slab`, `query_values`, `query_norm_bound` |
+| `disp/018` (`art:upper_objective`) | 316-319 | `upper_objective` |
+| `prose/044` | 320-325 | `objective_branch_hessians` |
+| `prose/045` | 325-329 | `objective_minimizer` |
+| `prose/046` | 331-332 | `center_arguments` |
+| `prose/047` | 332-336 | `local_model_branches` |
+| `disp/019` (`art:upper_local_model`) | 337-340 | `upper_local_model` |
+| `prose/048` | 341-342 | `center_value_slope` |
+| `disp/020` (`art:upper_orbit`) | 346-349 | `upper_orbit`, `implemented_run_unique` |
+| `prose/010` | 368-369 | `no_uniform_lower_curvature`, `phiSecond_plateau` |
+| `prose/053` | 369-370 | `quadratic_restores_curvature` |
+| `prose/054` | 370-372 | `quadratic_changes_dynamics` |
+| `prose/056` | 384-386 | `regularity_map_first_row`, `no_uniform_lower_curvature` |
+| `prose/059` | 392-394 | `classical_hessian` |
+| `A/seed_certificate/proof/002` | `paper/appendices/seed_certificate.tex:74-116` | `seed_cycle`, `seed_matrices_steps` |
+| `A/seed_certificate/prose/023` | `paper/appendices/seed_certificate.tex:133` | `seed_points` |
+| `A/seed_certificate/prose/012` | `paper/appendices/seed_certificate.tex:155-156` | `seed_cycle`, `seed_cycle_range_counterexample` |
+| `A/lower_curvature/prose/046` | `paper/appendices/lower_curvature.tex:14-18` | `ramp_center_coordinate`, `ramp_primitive` |
+| `A/lower_curvature/disp/001` | `paper/appendices/lower_curvature.tex:19-28` | `ramp_primitive`, `ramp_center_coordinate` |
+| `A/lower_curvature/disp/002` (`art:upper_scalar`) | `paper/appendices/lower_curvature.tex:36-40` | `phi_formulas`, `phi_unique` |
+| `A/lower_curvature/disp/003` | `paper/appendices/lower_curvature.tex:42-49` | `phi_formulas`, `phi_unique` |
+| `A/lower_curvature/disp/004` | `paper/appendices/lower_curvature.tex:53-56` | `positive_interval_derivatives` |
 
 The remaining items (summaries, restatements of the theorems, statements about the
 lower-curvature construction, figure and table items) are `SAME_AS`, `PART_OF`, `PROOF` or
@@ -187,7 +231,7 @@ theorem implemented_run_unique {n : ℕ} {F : Vec n → ℝ} {c₁ c₂ : ℝ}
     funext fun k => hg k (hxH k).1, funext fun k => hα k (hxH k).1 (hxH k).2⟩
 
 open Classical in
-/-- Item `A/failure/prose/003` (`paper/sections/failure.tex:20-30`): the specified line
+/-- Item `A/failure/prose/003` (`paper/sections/failure.tex:31-43`): the specified line
 search. At a differentiable point $x$ with $g=\nabla F(x)$ and $p=-Hg$, the search
 `NonStrictLineSearch.fromMetric F x H c₁ c₂ N` is the bracketing search started with
 $\alpha_{\rm lo}=0$, $\alpha_{\rm hi}=+\infty$ (`none`) and $\alpha=1$; one step with lower
@@ -218,7 +262,7 @@ theorem specified_search {n : ℕ} (F : Vec n → ℝ) (x : Vec n) (H : Mat n) (
   · rw [NonStrictLineSearch.search]
     rfl
 
-/-- Item `A/failure/disp/001` (`paper/sections/failure.tex:24-27`), equation
+/-- Item `A/failure/disp/001` (`paper/sections/failure.tex:35-38`), equation
 `art:failure_tests`: the two tests of the search,
 \[ F(x+\alpha p)\le F(x)+c_1\alpha g^Tp,\qquad \nabla F(x+\alpha p)^Tp\ge c_2g^Tp. \]
 `NonStrictLineSearch.Armijo` is literally the first inequality. `NonStrictLineSearch.Wolfe`
@@ -232,13 +276,12 @@ theorem failure_tests {n : ℕ} (F : Vec n → ℝ) (x p g : Vec n) (c₁ c₂ �
   unfold NonStrictLineSearch.Wolfe
   rw [DeterministicLineSearch.actual_coordinateGradient hg']
 
-/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:32-33`): "All comparisons in the
-construction are strict, so strict acceptance tests give the same decisions." The sentence
+/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:43-47`): "in~\eqref{art:failure_tests} hold. Along every run constructed below, every accepted and rejected trial point $x+\alpha p$ lies in the open smooth interior of a single active piece, and every inequality in~\eqref{art:failure_tests} holds or fails strictly, so strict and non-strict implementations execute the identical decision tree." The sentence
 describes the implementation used by both Theorem `art:local-failure` and Theorem
 `art:local-failure-lower`; this theorem covers the first construction and
 `strict_tests_same_decisions_lower` the constructions with positive lower curvature. For every
 $0<c_1\le1/3$, $c_1<c_2<1$, at every iterate of the three runs of the first construction (the
-seed run on $G$, the run on $\overline G$ of Corollary `art:failure_polyhedral`, and the $\ell$th
+seed run on $G$, the run on $\overline G$ of Theorem `art:failure_polyhedral`, and the $\ell$th
 run of Theorem `art:local-failure`, $\ell\ge1$), the specified search with the non-strict tests
 (`NonStrictLineSearch`) and the search with the strict tests $F(x+\alpha p)<F(x)+c_1\alpha
 g^Tp$, $\nabla F(x+\alpha p)^Tp>c_2g^Tp$ (`DeterministicLineSearch`) return the same accepted
@@ -262,10 +305,9 @@ theorem strict_tests_same_decisions (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁'
   obtain ⟨h1, h2, h3⟩ := DLiteralTargets.nonStrictRun c₁ c₂ hc₁ hc₁' hc hc₂
   exact ⟨fun k => (h1 k).2, fun k => (h2 k).2, fun ℓ hℓ k => (h3 ℓ hℓ k).2⟩
 
-/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:32-33`), for the constructions with
+/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:43-47`), for the constructions with
 positive lower curvature (Theorem `art:local-failure-lower` and Proposition
-`art:quadratic_failure`, which use the same implementation): "All comparisons in the
-construction are strict, so strict acceptance tests give the same decisions." For every
+`art:quadratic_failure`, which use the same implementation): "in~\eqref{art:failure_tests} hold. Along every run constructed below, every accepted and rejected trial point $x+\alpha p$ lies in the open smooth interior of a single active piece, and every inequality in~\eqref{art:failure_tests} holds or fails strictly, so strict and non-strict implementations execute the identical decision tree." For every
 $0<c_1\le1/3$, $c_1<c_2<1$:
 (1) the runs of Theorem `art:local-failure-lower`, on the objective of
 Appendix `art:lower_curvature` (`LUniform.smoothObjective`), with iterates `x ℓ` and matrices
@@ -309,14 +351,14 @@ theorem strict_tests_same_decisions_lower :
     obtain ⟨R, hx, hH, h1, h2, hlim, -, -, -, -, -, hns, hs, hU', -⟩ := hruns c₁ c₂ hc₁ hc₁' hc hc₂
     exact ⟨R, h1, h2, hx, hH, hU', hlim, fun k => ⟨hns k, hs k⟩⟩
 
-/-- The full inverse update $\mathcal B(H,g,g^+,\alpha)$ of equation `art:failure_update`. -/
+/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:50-54`): The full inverse update $\mathcal B(H,g,g^+,\alpha)$ of equation `art:failure_update`. -/
 def fullUpdate {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) : Mat n :=
   inverseBFGS H (bfgsStep H g α) (gplus - g)
 
-/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:38-43`), equation
+/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:50-54`), equation
 `art:failure_update`:
 \[ \mathcal B(H,g,g^+,\alpha)=\Bigl(I-\frac{sy^T}{y^Ts}\Bigr)H\Bigl(I-\frac{ys^T}{y^Ts}\Bigr)
-   +\frac{ss^T}{y^Ts},\quad s=-\alpha Hg,\quad y=g^+-g. \]
+ +\frac{ss^T}{y^Ts},\quad s=-\alpha Hg,\quad y=g^+-g. \]
 `fullUpdate` unfolds to this formula; in dimension two it is the library's
 `SeedCycle.update`. -/
 theorem failure_update {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) (s y : Vec n)
@@ -330,8 +372,7 @@ theorem failure_update {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) (s y :
 theorem fullUpdate_eq_update (H : Mat 2) (g gplus : Vec 2) (α : ℝ) :
     fullUpdate H g gplus α = SeedCycle.update H g gplus α := rfl
 
-/-- Item `A/failure/prose/006` (`paper/sections/failure.tex:44`): "No resetting or
-rescaling of the stored matrix is performed." In every run (`AdmissibleBFGSRun`) the next
+/-- Item `A/failure/prose/006` (`paper/sections/failure.tex:55`): "where $s=-\alpha Hg$ and $y=g^+-g$, with no resetting or rescaling of $H$." In every run (`AdmissibleBFGSRun`) the next
 matrix is the full update of the current one: $H_{k+1}=\mathcal B(H_k,g_k,g_{k+1},\alpha_k)$
 for every $k$. -/
 theorem run_update_full {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ) :
@@ -367,7 +408,7 @@ theorem mem_trialHistory {j : Fin 3} {a : ℝ} (ha : a ∈ trialHistory j) :
 def seedStep : Fin 3 → Vec 2 :=
   ![![-1, 0], ![127/1024, 1/64], seedRatio • ![1 - seedC, -seedD]]
 
-/-- The point $z_0$ of equation `art:seed_points`. -/
+/-- Item `A/failure/disp/007` (`paper/sections/failure.tex:105-109`): The point $z_0$ of equation `art:seed_points`. -/
 def seedStart : Vec 2 :=
   (1 / (1 - seedRatio)) • ![897/1024 - seedRatio * (1 - seedC), seedRatio * seedD - 1/64]
 
@@ -438,9 +479,9 @@ theorem seedSlope_succ (j : Fin 3) : seedSlope j.succ = SeedOrbit.gradient seedC
 theorem seedSlope_castSucc (j : Fin 3) : seedSlope j.castSucc = SeedOrbit.gradient seedC seedD j := by
   fin_cases j <;> rfl
 
-/-- Item `A/failure/disp/003` (`paper/sections/failure.tex:72-75`): the definitions
+/-- Item `A/failure/disp/004` (`paper/sections/failure.tex:87-90`): the definitions
 \[ g_0=(1,0)^T,\quad g_1=(-1,-1/8)^T,\quad g_2=(c_\circ,d_\circ)^T,\quad
-   G(z)=\max_{0\le i\le2}g_i^Tz, \]
+ G(z)=\max_{0\le i\le2}g_i^Tz, \]
 with $(c_\circ,d_\circ)=$ (`seedC`, `seedD`) $=$ (`root 0`, `root 1`), the root of
 Lemma `art:root_certificate`. The library's `SeedOrbit.gradient seedC seedD i` is $g_i$ and
 `SeedOrbit.objective seedC seedD` is $G$. -/
@@ -460,17 +501,16 @@ theorem seed_slopes :
       fun i => by simpa [MaxAffine.Family.branch, family] using (family seedC seedD).branch_le i z
     exact max_le (max_le (h 0) (h 1)) (h 2)
 
-/-- Item `A/failure/prose/014` (`paper/sections/failure.tex:76-77`): "The useful coarse
-bounds are $0.318<c_\circ<0.319$ and $-1.026<d_\circ<-1.025$." -/
+/-- Item `A/failure/prose/014` (`paper/sections/failure.tex:83-86`): "Specifically, let $(c_\circ,d_\circ)$ be the algebraic root isolated to within $10^{-30}$ by the rational contraction certificate in Appendix~\ref{art:seed_certificate}, which satisfies $0.318<c_\circ<0.319$ and $-1.026<d_\circ<-1.025$. Define" -/
 theorem seed_coarse_bounds :
     (0.318 : ℝ) < seedC ∧ seedC < 0.319 ∧ (-1.026 : ℝ) < seedD ∧ seedD < -1.025 := by
   obtain ⟨h1, h2, h3, h4⟩ := AlgebraicSeed.box_coarse AlgebraicSeed.root_spec.1
   norm_num
   exact ⟨by linarith, by linarith, by linarith, by linarith⟩
 
-/-- Item `A/failure/disp/004` (`paper/sections/failure.tex:78-81`), equation `art:seed_rho`:
+/-- Item `A/failure/disp/005` (`paper/sections/failure.tex:92-95`), equation `art:seed_rho`:
 \[ \rho=\frac{129(c_\circ-8d_\circ)}{(16c_\circ-127d_\circ-16)(127c_\circ+16d_\circ+129)},
-   \qquad 0.060<\rho<0.061. \]
+ \qquad 0.060<\rho<0.061. \]
 The library's `seedRatio` is $\rho$ (the first conjunct is its defining formula). -/
 theorem seed_rho :
     seedRatio = 129 * (seedC - 8 * seedD) /
@@ -482,11 +522,11 @@ theorem seed_rho :
   norm_num
   exact ⟨by linarith, by linarith⟩
 
-/-- Item `A/failure/disp/005` (`paper/sections/failure.tex:83-89`), equations
+/-- Item `A/failure/disp/006` (`paper/sections/failure.tex:97-103`), equations
 `art:seed_matrices` and `art:seed_steps`:
 \[ M_0=I,\quad M_1=\begin{pmatrix}129/256&-1/16\\-1/16&1\end{pmatrix},\quad
-   M_2=\mathcal B(M_1,g_1,g_2,1/4),\qquad
-   s_0=(-1,0)^T,\quad s_1=(127/1024,1/64)^T,\quad s_2=\rho(1-c_\circ,-d_\circ)^T. \]
+ M_2=\mathcal B(M_1,g_1,g_2,1/4),\qquad
+ s_0=(-1,0)^T,\quad s_1=(127/1024,1/64)^T,\quad s_2=\rho(1-c_\circ,-d_\circ)^T. \]
 The library's `SeedOrbit.metric seedC seedD j` is $M_j$; `seedStep` is literally
 $(s_0,s_1,s_2)$. The last conjunct (not part of the display) identifies the displayed steps
 with the BFGS steps $s_j=-\alpha_jM_jg_j$, $\alpha=(1,1/4,1/16)$ (`SeedOrbit.length`). -/
@@ -499,10 +539,10 @@ theorem seed_matrices_steps :
     ∀ j, seedStep j = -length j • (metric seedC seedD j *ᵥ SeedOrbit.gradient seedC seedD j) :=
   ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl, fun j => seedStep_eq j⟩
 
-/-- Item `A/failure/disp/006` (`paper/sections/failure.tex:92-96`), equation
+/-- Item `A/failure/disp/007` (`paper/sections/failure.tex:105-109`), equation
 `art:seed_points`:
 \[ z_0=\frac1{1-\rho}\begin{pmatrix}897/1024-\rho(1-c_\circ)\\ \rho d_\circ-1/64\end{pmatrix},
-   \qquad z_{j+1}=z_j+s_j\quad(j=0,1,2). \]
+ \qquad z_{j+1}=z_j+s_j\quad(j=0,1,2). \]
 `seedPoint` is literally $(z_0,z_1,z_2,z_3)$; the last conjunct identifies $z_0,z_1,z_2$ with
 the library's `SeedOrbit.point`. -/
 theorem seed_points :
@@ -513,8 +553,7 @@ theorem seed_points :
   refine ⟨rfl, fun j => ?_, seedPoint_castSucc⟩
   fin_cases j <;> rfl
 
-/-- Item `A/failure/prose/015` (`paper/sections/failure.tex:90-91`): "The point is then
-determined by the displacement closure $s_0+s_1+s_2=-(1-\rho)z_0$." -/
+/-- Item `A/failure/prose/015` (`paper/sections/failure.tex:79-81`): "$2\times2$ matrix $M_3$ to be proportional to $I$). Once $g_2$ and $\rho$ are fixed, the displacement closure $z_0+s_0+s_1+s_2=\rho z_0$ uniquely determines the starting point $z_0$." -/
 theorem displacement_closure :
     seedStep 0 + seedStep 1 + seedStep 2 = -(1 - seedRatio) • seedPoint 0 := by
   have h := one_sub_ratio_ne
@@ -525,9 +564,7 @@ theorem displacement_closure :
 
 theorem phase_val (j : Fin 3) : phase j.val = j := Fin.ext (Nat.mod_eq_of_lt j.isLt)
 
-/-- Item `A/failure/prose/022` (`paper/sections/failure.tex:158-160`): "Thus the displayed
-lengths are outputs of the specified search for the entire parameter range in
-Theorem `art:local-failure`; no accepted-length sequence is assumed." The specified search
+/-- Item `A/failure/prose/022` (`paper/sections/failure.tex:158-160`): "and therefore fails Armijo for every $c_1>0$; every accepted trial satisfies the strict Armijo and weak-Wolfe margins~\eqref{art:seed_margins}, making the decisions identical for all $0<c_1\le1/3$ and $c_2>0$.}" The specified search
 from $(z_j,M_j)$ on $G$ returns the accepted length $\alpha_j$ and the trial list of phase
 $j$ for every $0<c_1\le1/3$ and $c_2>0$, which contains the range $0<c_1\le1/3$,
 $c_1<c_2<1$ of the theorem. -/
@@ -563,7 +600,7 @@ theorem seed_query_active (q : Fin 9) :
   rw [seed_query_eq]
   exact objective_of_active (source_trial_certificate q).active
 
-/-- Item `A/failure/disp/007` (`paper/sections/failure.tex:100-103`), in Lemma
+/-- Item `A/failure/disp/008` (`paper/sections/failure.tex:114-117`), in Lemma
 `art:seed_cycle`:
 \[ \mathcal B(I,g_0,g_1,1)=M_1,\qquad \mathcal B(M_2,g_2,g_0,1/16)=\rho I,\qquad z_3=\rho z_0. \]
 $\mathcal B$ is `fullUpdate` (equation `art:failure_update`), $M_j$ is `metric seedC seedD j`
@@ -590,7 +627,7 @@ theorem seed_rejections_raise (q : Fin 9) (hq : trialAccept q = false) :
   rw [seed_base_active, seed_query_active, seed_query_eq, seedPoint_castSucc]
   exact hd
 
-/-- Item `A/failure/disp/008` (`paper/sections/failure.tex:108-111`), equation
+/-- Item `A/failure/disp/009` (`paper/sections/failure.tex:123-126`), equation
 `art:seed_margins` of Lemma `art:seed_cycle`: at every acceptance, $j=0,1,2$,
 \[ G(z_j)+\tfrac13g_j^Ts_j-G(z_{j+1})>0,\qquad g_{j+1}^Ts_j>0>g_j^Ts_j, \]
 where $g_3=g_0$ ($g_j$ is `seedSlope j`, $s_j$ is `seedStep j`). -/
@@ -613,10 +650,8 @@ theorem seed_margins (j : Fin 3) :
   refine ⟨?_, hw, hn⟩
   linarith
 
-/-- Item `A/failure/disp/009` (`paper/sections/failure.tex:115-117`), equation
-`art:seed_query_bounds` of Lemma `art:seed_cycle`: "All listed queries and the three base
-points $z_0,z_1,z_2$ have a unique active branch, and each such point $z$, with second coordinate $[z]_2$,
-satisfies \[ |g_i^Tz|<3\quad(i=0,1,2),\qquad [z]_2<2,\qquad G(z)>0. \]"
+/-- Item `A/failure/disp/010` (`paper/sections/failure.tex:129-131`), equation
+`art:seed_query_bounds` of Lemma `art:seed_cycle`: "\begin{equation} |g_i^Tz|<3\quad(i=0,1,2),\qquad [z]_2<2,\qquad G(z)>0. \end{equation}"
 The listed queries are the nine rows $z_j+\alpha p_j$ of Table `art:trial_table`
 ($p_j=-M_jg_j$ is `seedDir j`); $[z]_2$ is `z 1`. -/
 theorem seed_query_bounds :
@@ -635,19 +670,11 @@ theorem seed_query_bounds :
     rw [seed_query_active, seed_query_eq]
     exact ⟨⟨trialActive q, hc.active⟩, hc.branch_bounds, hc.vertical, hc.value_pos⟩
 
-/-- Item `A/failure/lemma/art:seed_cycle` (`paper/sections/failure.tex:98-118`), Lemma
+/-- Item `A/failure/lemma/art:seed_cycle` (`paper/sections/failure.tex:111-132`), Lemma
 `art:seed_cycle` (Exact cycle and strict trial decisions), with the parameter range that the
 correction M11 of 15 October 2026 added to its query-list sentence.
 
-"The matrices in `art:seed_matrices` are positive definite, and
-\[ \mathcal B(I,g_0,g_1,1)=M_1,\qquad \mathcal B(M_2,g_2,g_0,1/16)=\rho I,\qquad z_3=\rho z_0. \]
-At $z_j$, $j=0,1,2$, the unique active gradient is $g_j$. With $p_j=-M_jg_j$, for every
-$0<c_1\le1/3$ and $c_2>0$ the entire line-search query list is Table `art:trial_table`. At every
-rejection the objective strictly exceeds its current value. At every acceptance,
-\[ G(z_j)+\tfrac13g_j^Ts_j-G(z_{j+1})>0,\qquad g_{j+1}^Ts_j>0>g_j^Ts_j, \]
-where $g_3=g_0$. All listed queries and the three base points $z_0,z_1,z_2$ have a unique
-active branch, and each such point $z$, with second coordinate $[z]_2$, satisfies
-\[ |g_i^Tz|<3\quad(i=0,1,2),\qquad [z]_2<2,\qquad G(z)>0. \]"
+"The matrices $M_0,M_1,M_2$ in~\eqref{art:seed_matrices} are positive definite, and \[ \mathcal B(I,g_0,g_1,1)=M_1,\qquad \mathcal B(M_2,g_2,g_0,1/16)=\rho I,\qquad z_3=\rho z_0. \] At $z_j$ ($j=0,1,2$), the unique active gradient of $G$ is $g_j$. With $p_j=-M_jg_j$, for every $0<c_1\le1/3$ and $c_2>0$ the complete line-search query sequence is given by Table~\ref{art:trial_table}: every rejected trial strictly exceeds the current objective value $G(z_j)$, and every accepted step satisfies the strict margins \begin{equation} G(z_j)+\tfrac13g_j^Ts_j-G(z_{j+1})>0,\qquad g_{j+1}^Ts_j>0>g_j^Ts_j, \end{equation} where $g_3=g_0$. Moreover, all nine trial points and $z_0,z_1,z_2$ have a unique active branch and satisfy, with $[z]_2$ denoting the second coordinate, \begin{equation} |g_i^Tz|<3\quad(i=0,1,2),\qquad [z]_2<2,\qquad G(z)>0. \end{equation}"
 
 The query list depends on the line-search constants, and before the correction the lemma fixed
 none: the accepted trial $1/16$ of phase 2 passes Armijo only for $c_1\le r_2<0.37521$
@@ -800,12 +827,12 @@ theorem table_decision {c₁ c₂ : ℝ} (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1
   simp only [one_smul] at ha hw
   exact ⟨le_of_lt ha, le_of_lt hw⟩
 
-/-- Item `A/failure/table/art:trial_table` (`paper/sections/failure.tex:120-149`), Table
+/-- Item `A/failure/table/art:trial_table` (`paper/sections/failure.tex:134-162`), Table
 `art:trial_table`, with the parameter range that the correction M11 of 15 October 2026 added to
-its caption (the Decision column, "the deterministic trial tree", holds for $0<c_1\le1/3$,
+its caption (the Decision column, "\begin{table}[tbp] \centering \setlength{\tabcolsep}{5.8pt} \begin{tabular}{cccccl} \toprule Phase $j$ & \shortstack{$10^4G$\\current} & Trial $\alpha$ & \shortstack{$10^4G$\\trial} & Active branch & Decision\\ \midrule 0 & $(8884,8885)$ & $1$ & $(1218,1219)$ & 1 & accept\\ \midrule 1 & $(1218,1219)$ & $1$ & $(3845,3846)$ & 0 & reject\\ & & $1/2$ & $(1364,1365)$ & 0 & reject\\ & & $1/4$ & $(723,724)$ & 2 & accept\\ \midrule 2 & $(723,724)$ & $1$ & $(6687,6691)$ & 0 & reject\\ & & $1/2$ & $(3406,3408)$ & 0 & reject\\ & & $1/4$ & $(1765,1767)$ & 0 & reject\\ & & $1/8$ & $(944,946)$ & 0 & reject\\ & & $1/16$ & $(534,536)$ & 0 & accept\\ \bottomrule \end{tabular} \caption{Complete line-search query tree across one three-step cycle, with rigorous rational enclosures for $10^4G(z_j)$ (``current'') and $10^4G(z_j+\alpha p_j)$ (``trial''). Every rejected trial strictly raises $G$ and therefore fails Armijo for every $c_1>0$; every accepted trial satisfies the strict Armijo and weak-Wolfe margins~\eqref{art:seed_margins}, making the decisions identical for all $0<c_1\le1/3$ and $c_2>0$.} \end{table}", holds for $0<c_1\le1/3$,
 $c_2>0$, but the row $(2,1/16)$ is rejected for $c_1=0.38$, `seed_cycle_range_counterexample`);
-and the caption claim Item `A/failure/prose/018` (`paper/sections/failure.tex:147`): "All displayed
-intervals are rational enclosures, not rounded values."
+and the caption claim: "rigorous rational enclosures for $10^4G(z_j)$ (``current'') and
+$10^4G(z_j+\alpha p_j)$ (``trial'')"
 
 Columns "Phase $j$", "Trial $\alpha$", "Active branch" and "Decision" are the library's
 `trialPhase`, `trialLength`, `trialActive` and `trialAccept` (first four conjuncts, literally
@@ -856,11 +883,10 @@ theorem trial_table :
   · funext j
     fin_cases j <;> rfl
 
-/-- Item `A/failure/prose/020` (`paper/sections/failure.tex:153-155`), and the caption claim
-Item `A/failure/prose/016` (`paper/sections/failure.tex:143-144`) of Table `art:trial_table`
-("Every rejected trial raises the objective and therefore fails Armijo"):
-"Every rejected candidate has a value larger than the current value, so it fails Armijo
-for every $c_1>0$." -/
+/-- Item `A/failure/prose/020` (`paper/sections/failure.tex:166-170`), and the caption claim
+Item `A/failure/prose/016` (`paper/sections/failure.tex:157-158`) of Table `art:trial_table`
+("while Table~\ref{art:trial_table} and Figure~\ref{art:cycle-figure} make the line-search dynamics immediately readable: phase~$0$ accepts $\alpha=1$ on its first try, phase~$1$ overshoots onto branch~$0$ at $\alpha=1,1/2$ (strictly raising $G$) before bisecting to $\alpha=1/4$ on branch~$2$, and phase~$2$ bisects four times from $\alpha=1$ down to $\alpha=1/16$ on branch~$0$. At each"):
+"Every rejected trial strictly raises $G$ and therefore fails Armijo for every $c_1>0$." -/
 theorem rejected_raise_value (q : Fin 9) (hq : trialAccept q = false) :
     objective seedC seedD (seedPoint (trialPhase q).castSucc) <
       objective seedC seedD (seedPoint (trialPhase q).castSucc + trialLength q • seedDir (trialPhase q)) ∧
@@ -869,10 +895,7 @@ theorem rejected_raise_value (q : Fin 9) (hq : trialAccept q = false) :
         (seedDir (trialPhase q)) (SeedOrbit.gradient seedC seedD (trialPhase q)) c₁ (trialLength q) := by
   exact ⟨seed_rejections_raise q hq, fun c₁ hc₁ => table_reject hc₁ q hq⟩
 
-/-- Item `A/failure/prose/021` (`paper/sections/failure.tex:155-158`): "At each accepted
-candidate the decrease exceeds one third of the predicted decrease, while the new
-directional derivative is positive and the old one is negative. Hence Armijo holds for
-$c_1\le1/3$ and weak Wolfe holds for every $c_2>0$." The first sentence restates
+/-- Item `A/failure/prose/021` (`paper/sections/failure.tex:170-173`): "bisects four times from $\alpha=1$ down to $\alpha=1/16$ on branch~$0$. At each acceptance, $G(z_{j+1})<G(z_j)+\tfrac13g_j^Ts_j$ and $g_{j+1}^Ts_j>0>g_j^Ts_j$, so Armijo holds strictly for all $c_1\le1/3$ and weak Wolfe holds strictly for all $c_2>0$ without a single Wolfe rejection." The first sentence restates
 display `art:seed_margins` (`seed_margins`); the conclusion: -/
 theorem accepted_pass_tests (q : Fin 9) (hq : trialAccept q = true) :
     (∀ c₁ : ℝ, c₁ ≤ 1/3 →
@@ -914,7 +937,7 @@ theorem accepted_pass_tests (q : Fin 9) (hq : trialAccept q = true) :
       nlinarith
     nlinarith
 
-/-- Item `A/failure/prose/023` (`paper/sections/failure.tex:161`): "The routine never needs
+/-- "The routine never needs
 a Wolfe rejection on this example." For every $0<c_1\le1/3$, $c_1<c_2<1$, at every trial of
 every line search of the seed run (`orbitPoint`, `orbitMetric`; Lemma `art:seed_cycle` and
 equation `art:cone_orbit`), Armijo implies weak Wolfe, so a Wolfe rejection (Armijo holds,
@@ -1109,14 +1132,9 @@ theorem fullUpdate_scale {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) {t :
   rw [fullUpdate, bfgsStep_scale_matrix, inverseBFGS_scale _ _ _ ht]
   rfl
 
-/-- Item `A/failure/prose/026` (`paper/sections/failure.tex:183-185`) and
-Item `A/failure/prose/027` (`paper/sections/failure.tex:191-195`):
-"A smaller copy has the same active slopes, and its inverse matrix produces proportionally
-smaller steps. Both sides of every line-search comparison have the same scale. [...] Each
-query in phase $j$ is $\rho^m$ times its base query. Gradients are unchanged, function
-differences and gradient--step products scale by $\rho^m$, and `art:failure_update` scales
-the updated matrix by $\rho^m$. Thus every branch choice and every rejection is preserved, as
-well as acceptance."
+/-- and
+Item `A/failure/prose/027` (`paper/sections/failure.tex:180-183`):
+"Indeed, scaling $(z_j,M_j)$ by $\rho^m$ scales every trial point $z_j+\alpha p_j$ by $\rho^m$, leaves active branches and gradients unchanged, scales objective differences and directional derivatives by $\rho^m>0$, and multiplies the updated matrix~\eqref{art:failure_update} by $\rho^m$. Thus $x_k\to0$ with"
 
 For the iterate $k=3m+j$ of the seed run (`orbitPoint k` $=\rho^mz_j$, `orbitMetric k`
 $=\rho^mM_j$) and every row $q$ of phase $j$ of Table `art:trial_table`: the query is $\rho^m$
@@ -1222,7 +1240,7 @@ theorem seedPoint_zero_eq : seedPoint 0 = orbitPoint 0 := by
   rw [h]
   exact seedPoint_castSucc 0
 
-/-- Item `A/failure/disp/010` (`paper/sections/failure.tex:188-190`), equation `art:cone_orbit`:
+/-- Item `A/failure/disp/011` (`paper/sections/failure.tex:177-179`), equation `art:cone_orbit`:
 \[ x_{3m+j}=\rho^mz_j,\qquad H_{3m+j}=\rho^mM_j,\qquad j=0,1,2. \]
 For every $0<c_1\le1/3$, $c_1<c_2<1$, the run produced on $G$ by the specified implementation
 from $x_0=z_0$, $H_0=I$ (any trial budget $N\ge5$ in each search) is unique, is the library's
@@ -1253,7 +1271,7 @@ theorem cone_orbit (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1/3) 
   · obtain ⟨hx, hH, -, -⟩ := orbit_phase_parameters m j
     exact ⟨hx.trans (by rw [seedPoint_castSucc]), hH⟩
 
-/-- Item `A/failure/disp/011` (`paper/sections/failure.tex:197-199`): the direction
+/-- Item `A/failure/disp/012` (`paper/sections/failure.tex:185-187`): the direction
 $w=(-1,16)^T$ satisfies
 \[ g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1. \] -/
 theorem downhill_direction :
@@ -1263,9 +1281,7 @@ theorem downhill_direction :
   refine ⟨by norm_num [dot, g0, Fin.sum_univ_two], by norm_num [dot, g1, Fin.sum_univ_two],
     by simp [dot, g2, Fin.sum_univ_two]; ring, by linarith⟩
 
-/-- Item `A/failure/prose/028` (`paper/sections/failure.tex:195-200`): "The iterates converge
-to zero, but the direction $w=(-1,16)^T$ satisfies [display]. Hence $G(tw)=-t$ for $t\ge0$,
-so this limit is nonstationary." The iterates `orbitPoint` are those of the run of
+/-- Item `A/failure/prose/028` (`paper/sections/failure.tex:183-188`): "updated matrix~\eqref{art:failure_update} by $\rho^m$. Thus $x_k\to0$ with $G(x_k)\downarrow0$, even though along $w=(-1,16)^T$ we have \[ g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1, \] so $G(tw)=-t$ for all $t\ge0$ and the limit $0$ is nonstationary. Capping $G$" The iterates `orbitPoint` are those of the run of
 `cone_orbit`. -/
 theorem cone_limit_nonstationary :
     Tendsto orbitPoint atTop (𝓝 0) ∧
@@ -1275,20 +1291,16 @@ theorem cone_limit_nonstationary :
   ⟨orbitPoint_tendsto, fun _ ht => objective_downhill_ray ht, SeedOrbit.objective_zero _ _,
     limit_not_stationary⟩
 
-/-! ### Corollary `art:failure_polyhedral` -/
+/-! ### Theorem `art:failure_polyhedral` -/
 
-/-- Item `A/failure/corollary/art:failure_polyhedral` (`paper/sections/failure.tex:202-210`),
-Corollary `art:failure_polyhedral` (Coercive polyhedral global failure), including its display
-Item `A/failure/disp/012` (`paper/sections/failure.tex:205-207`).
+/-- Item `A/failure/theorem/art:failure_polyhedral` (`paper/sections/failure.tex:193-204`),
+Theorem `art:failure_polyhedral` (Global failure on a coercive polyhedral function), including its display
+Item `A/failure/disp/013` (`paper/sections/failure.tex:195-197`).
 
-"For every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the same deterministic run, with $H_0=I$,
-fails for
-\[ \overline G(u,v)=\max\{u,-u-v/8,c_\circ u+d_\circ v,v-17\}. \]
-This function is coercive and has unique minimizer $(-1,16)$, with value $-1$, while the run
-converges to the nonstationary origin with value zero."
+"Define the four-piece polyhedral convex function on $\R^2$ by \[ \overline G(u,v)=\max\{u,\;-u-v/8,\;c_\circ u+d_\circ v,\;v-17\}. \] Then $\overline G$ is coercive with unique global minimizer $(-1,16)$ and minimum value $\overline G(-1,16)=-1$. Nevertheless, starting from $x_0=z_0$ and $H_0=I$, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the unit-first bracketing full-BFGS algorithm generates the trajectory~\eqref{art:cone_orbit}, which converges to the nonstationary point $(0,0)$ with limiting value $\overline G(0,0)=0>-1$."
 
 $\overline G$ is a variable with its defining equation `hGbar` ($u$ = `x 0`, $v$ = `x 1`).
-"The same deterministic run": for every $0<c_1\le1/3$, $c_1<c_2<1$, the run produced on
+"generates the trajectory~\eqref{art:cone_orbit}": for every $0<c_1\le1/3$, $c_1<c_2<1$, the run produced on
 $\overline G$ by the specified implementation from $z_0$ with $H_0=I$ is unique and has the
 iterates and matrices of the run on $G$ (`orbitPoint`, `orbitMetric`, equation
 `art:cone_orbit`). Coercive: $\overline G\to\infty$ along the cocompact filter. -/
@@ -1370,6 +1382,86 @@ theorem failure_polyhedral (Gbar : Vec 2 → ℝ)
 
 /-! ### Matching the spatial scale, objective scale and initial matrix -/
 
+/-- Item `A/failure/prose/077` (`paper/sections/failure.tex:238-239`): "Near $(-1,16)$, the polyhedral function $\overline G$ still converges locally by Theorem~\ref{art:polyhedral}. To refute \emph{local} every-start convergence near the unique minimizer of a" There is
+$\delta>0$ such that every admissible run on $\overline G$ with
+$\overline G(x_0)\le-1+\delta$ has $\overline G(x_k)\to-1$ and $x_k\to(-1,16)$ (the library's
+local basin of a finite maximum of affine functions with a unique minimizer). -/
+theorem coercive_local_convergence (Gbar : Vec 2 → ℝ)
+    (hGbar : ∀ x : Vec 2, Gbar x =
+      max (max (x 0) (-x 0 - x 1 / 8)) (max (seedC * x 0 + seedD * x 1) (x 1 - 17))) :
+    ∃ δ : ℝ, 0 < δ ∧ ∀ R : AdmissibleBFGSRun 2 Gbar, Gbar (R.x 0) ≤ -1 + δ →
+      Tendsto (fun k => Gbar (R.x k)) atTop (𝓝 (-1)) ∧ Tendsto R.x atTop (𝓝 ![-1, 16]) := by
+  obtain ⟨-, hval, hmin, huniq, -⟩ := failure_polyhedral Gbar hGbar
+  have hG : Gbar = coerciveObjective := by
+    funext x
+    rw [hGbar]
+    apply le_antisymm
+    · obtain ⟨h0, h1, h3⟩ := coercive_coordinate_bounds x
+      have h2 := coerciveFamily.branch_le 2 x
+      have he2 : coerciveFamily.branch 2 x = seedC * x 0 + seedD * x 1 := by
+        simp [coerciveFamily, MaxAffine.Family.branch, dot, Fin.sum_univ_two, g2]
+      rw [he2] at h2
+      exact max_le (max_le h0 (by linarith)) (max_le h2 h3)
+    · unfold coerciveObjective MaxAffine.Family.objective
+      apply Finset.sup'_le
+      intro i _
+      have e0 : coerciveFamily.branch 0 x = x 0 := by
+        simp [coerciveFamily, MaxAffine.Family.branch, dot, Fin.sum_univ_two, g0]
+      have e1 : coerciveFamily.branch 1 x = -x 0 - x 1 / 8 := by
+        simp [coerciveFamily, MaxAffine.Family.branch, dot, Fin.sum_univ_two, g1]
+        ring
+      have e2 : coerciveFamily.branch 2 x = seedC * x 0 + seedD * x 1 := by
+        simp [coerciveFamily, MaxAffine.Family.branch, dot, Fin.sum_univ_two, g2]
+      have e3 : coerciveFamily.branch 3 x = x 1 - 17 := by
+        simp [coerciveFamily, MaxAffine.Family.branch, dot, Fin.sum_univ_two]
+        ring
+      fin_cases i
+      · show coerciveFamily.branch 0 x ≤ _
+        rw [e0]
+        exact (le_max_left _ _).trans (le_max_left _ _)
+      · show coerciveFamily.branch 1 x ≤ _
+        rw [e1]
+        exact (le_max_right _ _).trans (le_max_left _ _)
+      · show coerciveFamily.branch 2 x ≤ _
+        rw [e2]
+        exact (le_max_left _ _).trans (le_max_right _ _)
+      · show coerciveFamily.branch 3 x ≤ _
+        rw [e3]
+        exact (le_max_right _ _).trans (le_max_right _ _)
+  have hs : CenteredSmoothSublinear.LocallyC11On univ (fun _ : Vec 2 => (0 : ℝ)) := by
+    refine ⟨differentiableOn_const 0, ?_⟩
+    rw [fderiv_const]
+    exact (LocallyLipschitz.const (0 : Vec 2 →L[ℝ] ℝ)).locallyLipschitzOn
+  have hF : (fun x => (fun _ : Vec 2 => (0 : ℝ)) x + coerciveFamily.objective x) = Gbar := by
+    funext x
+    rw [hG]
+    simp [coerciveObjective]
+  have hmin' : ∀ x, (fun _ : Vec 2 => (0 : ℝ)) ![-1, 16] + coerciveFamily.objective ![-1, 16] ≤
+      (fun _ : Vec 2 => (0 : ℝ)) x + coerciveFamily.objective x := by
+    intro x
+    have := hmin x
+    rw [hG] at this
+    simpa [coerciveObjective] using this
+  have huniq' : ∀ x, (fun _ : Vec 2 => (0 : ℝ)) x + coerciveFamily.objective x =
+      (fun _ : Vec 2 => (0 : ℝ)) ![-1, 16] + coerciveFamily.objective ![-1, 16] → x = ![-1, 16] := by
+    intro x hx
+    apply huniq x
+    rw [hG]
+    simpa [coerciveObjective] using hx
+  obtain ⟨δ, hδ, h⟩ := coerciveFamily.local_basin (convexOn_const 0 convex_univ) hs ![-1, 16] hmin' huniq'
+  rw [hF] at h
+  have hv : (fun _ : Vec 2 => (0 : ℝ)) ![-1, 16] + coerciveFamily.objective ![-1, 16] = -1 := by
+    have := congrFun hF ![-1, 16]
+    rw [this, hval]
+  rw [hv] at h
+  refine ⟨δ, hδ, fun R hR => ?_⟩
+  have heq : (fun k => 0 + coerciveFamily.objective (R.x k)) = fun k => Gbar (R.x k) :=
+    funext fun k => congrFun hF (R.x k)
+  have h0 : (0 : ℝ) + coerciveFamily.objective (R.x 0) = Gbar (R.x 0) := congrFun hF (R.x 0)
+  obtain ⟨h1, h2⟩ := h R (by rw [h0]; exact hR)
+  rw [heq] at h1
+  exact ⟨h1, h2⟩
+
 /-- A positive multiple of a positive definite matrix is positive definite. -/
 theorem posDef_smul {n : ℕ} {H : Mat n} (hH : H.PosDef) {r : ℝ} (hr : 0 < r) : (r • H).PosDef := by
   constructor
@@ -1413,12 +1505,11 @@ theorem matched_hasGradient {n : ℕ} {F 𝒢 : Vec n → ℝ} {xbar : Vec n} {C
   rw [he] at hm
   exact hm
 
-/-- Item `A/failure/disp/014` (`paper/sections/failure.tex:236-239`), equation
+/-- Item `A/failure/disp/015` (`paper/sections/failure.tex:254-257`), equation
 `art:matched-scaling`, with its hypothesis
-Item `A/failure/disp/013` (`paper/sections/failure.tex:231-233`) (equation
+Item `A/failure/disp/014` (`paper/sections/failure.tex:248-250`) (equation
 `art:matched-local-model`) and the preceding claim
-Item `A/failure/prose/032` (`paper/sections/failure.tex:234`): "Differentiation gives
-$g_F=(\sigma/\lambda)g_{\mathcal G}$."
+Item `A/failure/prose/032` (`paper/sections/failure.tex:251-253`): "\begin{equation} H_F=\frac{\lambda^2}{\sigma}H_{\mathcal G},\qquad p_F=\lambda p_{\mathcal G},\qquad s_F=\lambda s_{\mathcal G}. \end{equation}"
 
 Suppose $F(\bar x+\lambda z)=C+\sigma\mathcal G(z)$, $\lambda,\sigma>0$, on an open set $U$
 (near the current and queried points), and $\mathcal G$ has gradient $g_{\mathcal G}$ at
@@ -1443,11 +1534,7 @@ theorem matched_scaling {n : ℕ} (F 𝒢 : Vec n → ℝ) (xbar : Vec n) (C lam
   · rw [hp, smul_neg]
   · rw [hp, smul_comm]
 
-/-- Item `A/failure/prose/033` (`paper/sections/failure.tex:240-244`): "At an accepted pair
-$y_F=(\sigma/\lambda)y_{\mathcal G}$. Thus $y_F^Ts_F=\sigma y_{\mathcal G}^Ts_{\mathcal G}$;
-the two projection factors in the inverse update are identical, and its rank-one term is
-multiplied by $\lambda^2/\sigma$. This proves the matrix relation in `art:matched-scaling`
-again after the update." With $g_F=(\sigma/\lambda)g_{\mathcal G}$,
+/-- Item `A/failure/prose/033` (`paper/sections/failure.tex:258-262`): "At an accepted step, $y_F=(\sigma/\lambda)y_{\mathcal G}$ and $y_F^Ts_F=\sigma y_{\mathcal G}^Ts_{\mathcal G}$, so in~\eqref{art:failure_update} the projection matrices $I-s_Fy_F^T/(y_F^Ts_F)$ are invariant while the rank-one term $s_Fs_F^T/(y_F^Ts_F)$ scales by $\lambda^2/\sigma$, preserving $H_F=(\lambda^2/\sigma)H_{\mathcal G}$ across all subsequent updates. Likewise," With $g_F=(\sigma/\lambda)g_{\mathcal G}$,
 $g_F^+=(\sigma/\lambda)g_{\mathcal G}^+$ and $H_F=(\lambda^2/\sigma)H_{\mathcal G}$ (no
 condition on $y^Ts$ is needed): -/
 theorem matched_update {n : ℕ} (lam σ : ℝ) (hlam : 0 < lam) (hσ : 0 < σ) (H𝒢 : Mat n)
@@ -1495,9 +1582,7 @@ theorem matched_update {n : ℕ} (lam σ : ℝ) (hlam : 0 < lam) (hσ : 0 < σ) 
     rw [fullUpdate, fullUpdate, bfgsStep_scale_matrix, bfgsStep_scale_gradient,
       ← smul_sub, inverseBFGS_scale _ _ _ hr, inverseBFGS_scale_secant_pair _ _ _ hq]
 
-/-- Item `A/failure/prose/034` (`paper/sections/failure.tex:244-246`): "Function differences
-and all gradient--step products are multiplied by $\sigma>0$, so the Armijo and weak-Wolfe
-comparisons, including their strict signs, agree." Under the local model on $U$, for a point
+/-- Item `A/failure/prose/034` (`paper/sections/failure.tex:262-264`): "$H_F=(\lambda^2/\sigma)H_{\mathcal G}$ across all subsequent updates. Likewise, both sides of the Armijo and weak-Wolfe tests~\eqref{art:failure_tests} multiply by $\sigma>0$, preserving every strict trial decision whenever all queried" Under the local model on $U$, for a point
 $z$ and a trial point $z+\alpha p$ in $U$ where $\mathcal G$ is differentiable, with
 $p_F=\lambda p$ and $g_F=(\sigma/\lambda)g$: the function difference and every
 gradient--step product are multiplied by $\sigma$, and the non-strict and strict Armijo and
@@ -1564,10 +1649,7 @@ theorem matched_comparisons {n : ℕ} (F 𝒢 : Vec n → ℝ) (xbar : Vec n) (C
     · intro h
       nlinarith [mul_lt_mul_of_pos_left h hσ]
 
-/-- Item `A/failure/prose/036` (`paper/sections/failure.tex:248-251`), first part: "To
-transfer a particular run, the local model must cover the current point and every candidate
-the search actually visits. Under that containment, induction on the bracket decisions
-transfers the full trial tree". If the local model holds on an open $U$ that contains the
+/-- Item `A/failure/prose/036` (`paper/sections/failure.tex:264-265`), first part: "by $\sigma>0$, preserving every strict trial decision whenever all queried points remain inside $U$.". If the local model holds on an open $U$ that contains the
 current point $z$ and every candidate $z+ap$ that the specified search on $\mathcal G$ from
 $(z,H)$ visits, where $\mathcal G$ is differentiable, then the specified search on $F$ from
 $(\bar x+\lambda z,(\lambda^2/\sigma)H)$ returns the same accepted length and the same trial
@@ -1597,8 +1679,7 @@ theorem matched_search_transfer {n : ℕ} (F 𝒢 : Vec n → ℝ) (xbar : Vec n
     (bfgsStep H g 1) g b c₁ c₂ hz hzb hdb
   exact ⟨hA, hW⟩
 
-/-- Item `A/failure/prose/036` (`paper/sections/failure.tex:248-251`), second part: "and
-induction on accepted steps transfers the matrices." If an implemented run on $\mathcal G$
+/-- Item `A/failure/prose/036` (`paper/sections/failure.tex:264-265`), second part: "by $\sigma>0$, preserving every strict trial decision whenever all queried points remain inside $U$." If an implemented run on $\mathcal G$
 (an `AdmissibleBFGSRun` whose lengths are outputs of the specified search) has all its
 points and all visited candidates in $U$ (candidates where $\mathcal G$ is differentiable),
 and $F$ is convex, then $\bar x+\lambda x_k$, $(\lambda^2/\sigma)H_k$,
@@ -1656,8 +1737,7 @@ theorem matched_run_transfer {n : ℕ} (F 𝒢 : Vec n → ℝ) (hF : ConvexOn �
     (R.hasGradient k) (R.H k) R.c₁ R.c₂ N (by rw [hs k]; exact hq k)
   exact h.trans (hs k)
 
-/-- Item `A/failure/prose/037` (`paper/sections/failure.tex:254-255`): "The choice
-$\sigma=\lambda^2$ is decisive: it leaves the initial matrix unchanged":
+/-- Item `A/failure/disp/016` (`paper/sections/failure.tex:268-270`): Item `A/failure/prose/037` (`paper/sections/failure.tex:271`): "\[ \sigma=\lambda^2\quad\Longrightarrow\quad H_F=H_{\mathcal G}, \]":
 $H_F=(\lambda^2/\sigma)H_{\mathcal G}=H_{\mathcal G}$. -/
 theorem matched_identity_matrix {n : ℕ} (lam σ : ℝ) (hlam : lam ≠ 0) (hσ : σ = lam ^ 2)
     (H : Mat n) : (lam ^ 2 / σ) • H = H := by
@@ -1666,8 +1746,7 @@ theorem matched_identity_matrix {n : ℕ} (lam σ : ℝ) (hlam : lam ≠ 0) (hσ
 /-! ### The scalar interpolation -/
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/042` (`paper/sections/failure.tex:271-272`): "Let $\theta=1/16$,
-$a_\ell=\theta^\ell$, $\varepsilon=1/128$, and $b_*=2c_\circ-32d_\circ\in(33,34)$." The
+/-- Item `A/failure/prose/042` (`paper/sections/failure.tex:282`): "Let $\theta=1/16$, $a_\ell=\theta^\ell$, and $b_*=2c_\circ-32d_\circ\in(33,34)$." The
 library's $\theta$ (`DScalarGeometric.theta`, `DScalarRamp.theta`), $a_\ell$ (`scale ℓ`),
 $\varepsilon$ (`DScalarRamp.epsilon`) and $b_*$ (`DEmbedding.bStar`) have these values, and
 $33<b_*<34$. -/
@@ -1682,7 +1761,7 @@ theorem scalar_parameter_bounds {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) 
   · norm_num
   · exact ⟨by linarith [DEmbedding.bStar_bounds.1], DEmbedding.bStar_bounds.2.le⟩
 
-/-- Item `A/failure/disp/015` (`paper/sections/failure.tex:273-276`): for $b\in\{2,b_*\}$,
+/-- Part of item `A/lower_curvature/prose/046` (`paper/appendices/lower_curvature.tex:14-18`): for $b\in\{2,b_*\}$,
 \[ t_b=\frac{1-(1+\theta+\theta^2)/b}{1-\theta^2},\qquad v=\frac{\xi-t_b+\varepsilon}{2\varepsilon}. \]
 The library's `DScalarRamp.center b` is $t_b$ and `DScalarRamp.rampCoordinate b ξ` is $v$. -/
 theorem ramp_center_coordinate (b ξ : ℝ) :
@@ -1692,9 +1771,9 @@ theorem ramp_center_coordinate (b ξ : ℝ) :
       (ξ - DScalarRamp.center b + DScalarRamp.epsilon) / (2 * DScalarRamp.epsilon) :=
   ⟨rfl, rfl⟩
 
-/-- Item `A/failure/disp/016` (`paper/sections/failure.tex:277-285`): for $b\in\{2,b_*\}$,
+/-- for $b\in\{2,b_*\}$,
 \[ P_b(\xi)=\begin{cases}0&\xi\le t_b-\varepsilon,\\ 3v^2-2v^3&|\xi-t_b|<\varepsilon,\\
-   1&\xi\ge t_b+\varepsilon,\end{cases}\qquad J_b(\xi)=\int_0^\xi P_b(t)\,dt. \]
+ 1&\xi\ge t_b+\varepsilon,\end{cases}\qquad J_b(\xi)=\int_0^\xi P_b(t)\,dt. \]
 The library's `DScalarRamp.ramp b` is $P_b$ and `DScalarRamp.primitive b` is $J_b$. -/
 theorem ramp_primitive {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ξ : ℝ) :
     (ξ ≤ DScalarRamp.center b - DScalarRamp.epsilon → DScalarRamp.ramp b ξ = 0) ∧
@@ -1708,7 +1787,7 @@ theorem ramp_primitive {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ξ : ℝ
   obtain ⟨h1, h2⟩ := abs_lt.mp h
   exact DScalarRamp.ramp_eq_cubic (by linarith) (by linarith)
 
-/-- Item `A/failure/prose/043` (`paper/sections/failure.tex:286-287`): "The middle formula
+/-- "The middle formula
 for $J_b$ is $2\varepsilon(v^3-v^4/2)$; its outer formulas are zero and $\xi-t_b$." -/
 theorem primitive_formulas {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ξ : ℝ) :
     (ξ ≤ DScalarRamp.center b - DScalarRamp.epsilon → ∫ t in (0 : ℝ)..ξ, DScalarRamp.ramp b t = 0) ∧
@@ -1724,11 +1803,11 @@ theorem primitive_formulas {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ξ :
   exact DScalarRamp.primitive_eq_quartic (by linarith) (by linarith)
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/017` (`paper/sections/failure.tex:289-294`), equation
-`art:upper_scalar`, and Item `A/failure/disp/018` (`paper/sections/failure.tex:296-303`): the definition of
+/-- equation
+`art:upper_scalar`, : the definition of
 $\varphi_b$, $b\in\{2,b_*\}$. For $b\theta a_\ell\le x\le ba_\ell$,
 \[ \varphi_b(x)=(\theta a_\ell)^3+ba_\ell^3(1-\theta)\{\theta^2\xi+(1-\theta^2)J_b(\xi)\},\qquad
-   \xi=\frac{x/(ba_\ell)-\theta}{1-\theta}, \]
+ \xi=\frac{x/(ba_\ell)-\theta}{1-\theta}, \]
 and $\varphi_b(x)=1-3(x+1)+3(x+1)^2$ ($x<-1$), $-x^3$ ($-1\le x\le0$), $1+x-b$ ($x\ge b$).
 The library's `DScalar.phi b` satisfies these formulas; by `phi_unique` they determine it. -/
 theorem phi_formulas {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) :
@@ -1746,7 +1825,7 @@ theorem phi_formulas {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) :
     fun x hx => DScalar.phi_eq_outer hl hr hx⟩
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/041` (`paper/sections/failure.tex:268-269`): "The following
+/-- "The following
 formulas fix the construction completely." Every function satisfying the defining formulas
 `art:upper_scalar` and the completion of $\varphi_b$ is `DScalar.phi b`. -/
 theorem phi_unique {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ψ : ℝ → ℝ)
@@ -1772,18 +1851,12 @@ theorem phi_unique {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ψ : ℝ →
   rw [h1 ℓ x hℓ1.le hℓ2, f1 ℓ x hℓ1.le hℓ2]
 
 open DScalarGeometric in
-/-- Item `A/failure/lemma/art:upper_scalar_lemma` (`paper/sections/failure.tex:305-317`), Lemma
+/-- Item `A/failure/lemma/art:upper_scalar_lemma` (`paper/sections/failure.tex:281-292`), Lemma
 `art:upper_scalar_lemma` (Scalar interpolation), including its displays
-Item `A/failure/disp/019` (`paper/sections/failure.tex:308-312`) (equations
-`art:scalar_curvature` and `art:scalar_plateau`) and
-Item `A/failure/disp/020` (`paper/sections/failure.tex:314-316`).
+Item `A/failure/disp/017` (`paper/sections/failure.tex:285-289`) (equations
+`art:scalar_curvature` and `art:scalar_plateau`) .
 
-"The functions $\varphi_b$ are convex, coercive and globally $C^{2,1}$, are nonnegative, and
-vanish only at zero. They satisfy
-\[ 0\le\varphi_b''\le\max\{6,102/b\},\qquad
-   \varphi_b(ba_\ell+h)=a_\ell^3+a_\ell^2h\quad(|h|\le a_\ell/2). \]
-Their second derivatives are globally Lipschitz with constant
-$L_b=\max\{6,139264/(5b^2)\}$."
+"Let $\theta=1/16$, $a_\ell=\theta^\ell$, and $b_*=2c_\circ-32d_\circ\in(33,34)$. For each $b\in\{2,b_*\}$ there exists a convex, coercive, nonnegative function $\varphi_b\in C^{2,1}(\R)$ vanishing only at $0$ such that \begin{align} 0&\le\varphi_b''(x)\le\max\{6,102/b\}\qquad(x\in\R),\\ \varphi_b(ba_\ell+h)&=a_\ell^3+a_\ell^2h \qquad(\ell\ge0,\;|h|\le a_\ell/2), \end{align} and $\varphi_b''$ is globally Lipschitz on $\R$ with constant $L_b=\max\{6,139264/(5b^2)\}$."
 
 Here $b\in\{2,b_*\}$, $\varphi_b$ is `DScalar.phi b`, $\varphi_b''$ is
 `deriv (deriv (DScalar.phi b))` and coercive means $\varphi_b\to\infty$ along the cocompact
@@ -1805,11 +1878,33 @@ theorem upper_scalar_lemma {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) :
   simpa only [Real.dist_eq, NNReal.coe_mk] using h
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/021` (`paper/sections/failure.tex:321-324`), in the proof of Lemma
+/-- Item `A/failure/lemma/art:upper_scalar_lemma` (`paper/sections/failure.tex:281-292`), Lemma
+`art:upper_scalar_lemma` ($C^{2,1}$ scalar plateau spline), with its display
+\eqref{art:scalar_curvature}--\eqref{art:scalar_plateau}.
+
+"Let $\theta=1/16$, $a_\ell=\theta^\ell$, and $b_*=2c_\circ-32d_\circ\in(33,34)$. For each $b\in\{2,b_*\}$ there exists a convex, coercive, nonnegative function $\varphi_b\in C^{2,1}(\R)$ vanishing only at $0$ such that \begin{align} 0&\le\varphi_b''(x)\le\max\{6,102/b\}\qquad(x\in\R),\\ \varphi_b(ba_\ell+h)&=a_\ell^3+a_\ell^2h \qquad(\ell\ge0,\;|h|\le a_\ell/2), \end{align} and $\varphi_b''$ is globally Lipschitz on $\R$ with constant $L_b=\max\{6,139264/(5b^2)\}$."
+
+The witness is the explicit spline `DScalar.phi b` of equation `art:upper_scalar`
+(`upper_scalar_lemma`); $a_\ell$ is `scale ℓ`, coercive means $\varphi_b\to\infty$ along the
+cocompact filter of $\R$, and $C^{2,1}$ is `ContDiff ℝ 2` with the Lipschitz bound. -/
+theorem upper_scalar_lemma_exists :
+    DScalarGeometric.theta = 1 / 16 ∧ (∀ ℓ : ℕ, scale ℓ = DScalarGeometric.theta ^ ℓ) ∧
+      DEmbedding.bStar = 2 * seedC - 32 * seedD ∧ 33 < DEmbedding.bStar ∧ DEmbedding.bStar < 34 ∧
+      ∀ b : ℝ, (b = 2 ∨ b = DEmbedding.bStar) → ∃ φ : ℝ → ℝ,
+        ConvexOn ℝ univ φ ∧ Tendsto φ (cocompact ℝ) atTop ∧ ContDiff ℝ 2 φ ∧
+        (∀ x, 0 ≤ φ x) ∧ (∀ x, φ x = 0 ↔ x = 0) ∧
+        (∀ x, 0 ≤ deriv (deriv φ) x ∧ deriv (deriv φ) x ≤ max 6 (102 / b)) ∧
+        (∀ (ℓ : ℕ) (h : ℝ), |h| ≤ scale ℓ / 2 → φ (b * scale ℓ + h) = (scale ℓ) ^ 3 + (scale ℓ) ^ 2 * h) ∧
+        ∀ x y : ℝ, |deriv (deriv φ) x - deriv (deriv φ) y| ≤ max 6 (139264 / (5 * b ^ 2)) * |x - y| := by
+  obtain ⟨h1, -, h3, -, h5, h6, h7⟩ := scalar_constants
+  exact ⟨h1, h3, h5, h6, h7, fun b hb => ⟨DScalar.phi b, upper_scalar_lemma hb⟩⟩
+
+open DScalarGeometric in
+/-- In the proof of Lemma
 `art:upper_scalar_lemma`: on a positive interval $b\theta a_\ell\le x\le ba_\ell$, with
 $\xi=(x/(ba_\ell)-\theta)/(1-\theta)$,
 \[ \varphi_b'=a_\ell^2\{\theta^2+(1-\theta^2)P_b(\xi)\},\qquad
-   \varphi_b''=\frac{a_\ell(1+\theta)}bP_b'(\xi). \] -/
+ \varphi_b''=\frac{a_\ell(1+\theta)}bP_b'(\xi). \] -/
 theorem positive_interval_derivatives {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) (ℓ : ℕ) (x : ℝ)
     (hx1 : b * theta * scale ℓ ≤ x) (hx2 : x ≤ b * scale ℓ) :
     deriv (DScalar.phi b) x = (scale ℓ) ^ 2 *
@@ -1871,7 +1966,7 @@ theorem ramp_eq_zero_iff (b ξ : ℝ) :
     nlinarith [mul_pos (mul_pos hv0 hv0) (by linarith : (0 : ℝ) < 3 - 2 * DScalarRamp.rampCoordinate b ξ)]
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/022` (`paper/sections/failure.tex:343-346`), in the proof of Lemma
+/-- In the proof of Lemma
 `art:upper_scalar_lemma`: "The constant-derivative lengths below and above $ba_\ell$,
 divided by $a_\ell$, are
 \[ b(1-\theta)(1-t_b-\varepsilon),\qquad \frac{b(1-\theta)(t_b-\varepsilon)}\theta." \]
@@ -1953,7 +2048,7 @@ theorem constant_derivative_lengths {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bSt
     rw [DScalar.coordinate_le_iff hb0 ha, DScalar.upper_threshold_identity, heq]
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/039` (`paper/sections/failure.tex:263-265`): "Their node values are
+/-- "Their node values are
 $a_\ell^3$ and their node slopes are $a_\ell^2$. A monotone derivative connects neighboring
 nodes and is constant on a neighborhood of each node." For $b\in\{2,b_*\}$ and every $\ell$:
 $\varphi_b(ba_\ell)=a_\ell^3$, $\varphi_b'(ba_\ell)=a_\ell^2$, $\varphi_b'$ is monotone, and
@@ -1974,7 +2069,7 @@ theorem scalar_nodes {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) :
 
 /-! ### One objective and the local model -/
 
-/-- Item `A/failure/disp/023` (`paper/sections/failure.tex:360-363`), equation
+/-- Item `A/failure/disp/018` (`paper/sections/failure.tex:316-319`), equation
 `art:upper_objective`:
 \[ F(u,v)=\max\{\varphi_2(u),\varphi_2(-u-v/8),\varphi_{b_*}(c_\circ u+d_\circ v),v\}. \]
 The library's `DEmbedding.objective` is the maximum of the four branches
@@ -2010,11 +2105,7 @@ theorem phiSecond_plateau {b h : ℝ} (hl : 2 ≤ b) (hr : b ≤ 34) (m : ℕ)
     simpa only [he] using DScalar.phiFirst_plateau hl hr m hy
   exact (DScalar.phiFirst_hasDerivAt hl _).unique ((hasDerivAt_const _ _).congr_of_eventuallyEq heq)
 
-/-- Item `A/failure/prose/044` (`paper/sections/failure.tex:364-369`): "The Hessian of each of
-the first three branches is a nonnegative scalar multiple of $g_ig_i^T$. Equation
-`art:scalar_curvature` gives the upper bounds $51$, $51(65/64)<52$, and $12$, respectively, on
-their operator norms; the last branch has zero Hessian. Their Hessians are globally Lipschitz
-because $\varphi_b''$ is Lipschitz and the arguments are linear." (Euclidean operator norms;
+/-- Item `A/failure/prose/044` (`paper/sections/failure.tex:320-325`): "For $i=0,1,2$, $\nabla^2f_i(x)=\varphi_{b_i}''(g_i^Tx)g_ig_i^T\succeq0$; by \eqref{art:scalar_curvature}, their operator norms are bounded by $51$, $51(65/64)<52$, and $\max\{6,102/b_*\}\norm{g_2}^2=6\norm{g_2}^2<12$, respectively, while $f_3(u,v)=v$ has zero Hessian, so $0\preceq\nabla^2f_i\preceq64I$ and each $\nabla^2f_i$ is globally Lipschitz. Because $u$ and $-u-v/8$ are linearly independent and" (Euclidean operator norms;
 Lipschitz constant $60000$.) -/
 theorem objective_branch_hessians :
     (∀ (i : Fin 3) (x : Vec 2), ∃ t : ℝ, 0 ≤ t ∧
@@ -2034,11 +2125,7 @@ theorem objective_branch_hessians :
   obtain ⟨h0, h1, -, h2, h3⟩ := DEmbedding.branch_individual_hessian_bounds x
   exact ⟨h0, h1, by norm_num, h2.le, h3⟩
 
-/-- Item `A/failure/prose/045` (`paper/sections/failure.tex:369-373`): "The first two scalar
-arguments are independent, so their coercivity makes every sublevel of $F$ compact.
-Nonnegativity and their unique scalar zeros show $F(x)=0$ exactly at $x=0$. At zero the first
-three gradients vanish and the last is $(0,1)^T$, giving $F'(0;h)=\max\{0,h_2\}$; thus the
-minimizer is nonsmooth." -/
+/-- Item `A/failure/prose/045` (`paper/sections/failure.tex:325-329`): "globally Lipschitz. Because $u$ and $-u-v/8$ are linearly independent and $\varphi_2$ is coercive and nonnegative with unique zero at $0$, every sublevel of $F$ is compact and $F(x)=0$ if and only if $x=0$. At $0$, $\nabla f_i(0)=0$ for $i=0,1,2$ while $\nabla f_3(0)=(0,1)^T$, so $F'(0;h)=\max\{0,h_2\}$ and $0$ is a nonsmooth minimizer." -/
 theorem objective_minimizer :
     (∀ a : ℝ, IsCompact {x | DEmbedding.objective x ≤ a}) ∧
     (∀ x, 0 ≤ DEmbedding.objective x) ∧ (∀ x, DEmbedding.objective x = 0 ↔ x = 0) ∧
@@ -2057,9 +2144,7 @@ theorem objective_minimizer :
   rwa [hz] at h
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/046` (`paper/sections/failure.tex:375-376`): "Let
-$\bar x_\ell=a_\ell(2,-32)^T$. The first two scalar arguments at $\bar x_\ell$ equal $2a_\ell$,
-and the third equals $b_*a_\ell$." -/
+/-- Item `A/failure/prose/046` (`paper/sections/failure.tex:331-332`): "For each $\ell\ge1$, set $\bar x_\ell=a_\ell(2,-32)^T$, where $g_0^T\bar x_\ell=g_1^T\bar x_\ell=2a_\ell$ and $g_2^T\bar x_\ell=b_*a_\ell$. Whenever $|g_i^Th|\le a_\ell/2$ for $i=0,1,2$," -/
 theorem center_arguments (ℓ : ℕ) :
     DEmbedding.center ℓ = scale ℓ • ![2, -32] ∧
     dot g0 (DEmbedding.center ℓ) = 2 * scale ℓ ∧ dot g1 (DEmbedding.center ℓ) = 2 * scale ℓ ∧
@@ -2067,7 +2152,7 @@ theorem center_arguments (ℓ : ℕ) :
   ⟨rfl, DEmbedding.center_argument ℓ 0, DEmbedding.center_argument ℓ 1, DEmbedding.center_argument ℓ 2⟩
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/024` (`paper/sections/failure.tex:377-380`), equation
+/-- Item `A/failure/disp/019` (`paper/sections/failure.tex:337-340`), equation
 `art:upper_local_model`:
 \[ F(\bar x_\ell+h)=a_\ell^3+a_\ell^2G(h)\quad\text{if }|g_i^Th|\le a_\ell/2\quad(i=0,1,2). \] -/
 theorem upper_local_model (ℓ : ℕ) (h : Vec 2)
@@ -2076,10 +2161,7 @@ theorem upper_local_model (ℓ : ℕ) (h : Vec 2)
   DEmbedding.local_cone ℓ hh
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/047` (`paper/sections/failure.tex:381-383`): "Indeed, the first three
-branches are on their affine regions and each has value at least $a_\ell^3/2$. The first two
-slab inequalities imply $|h_1|\le a_\ell/2$ and $|h_2|\le8a_\ell$, so the fourth branch is
-negative." ($h_1$ = `h 0`, $h_2$ = `h 1`.) -/
+/-- Item `A/failure/prose/047` (`paper/sections/failure.tex:332-336`): "and $g_2^T\bar x_\ell=b_*a_\ell$. Whenever $|g_i^Th|\le a_\ell/2$ for $i=0,1,2$, the plateau identity~\eqref{art:scalar_plateau} puts the first three branches on their affine segments with values at least $a_\ell^3/2>0$, while $|h_1|\le a_\ell/2$ and $|h_2|\le8(|h_1|+a_\ell/2)\le8a_\ell$ force $f_3(\bar x_\ell+h)=-32a_\ell+h_2<0$. Hence" ($h_1$ = `h 0`, $h_2$ = `h 1`.) -/
 theorem local_model_branches (ℓ : ℕ) (h : Vec 2)
     (hh : ∀ i : Fin 3, |dot (SeedOrbit.gradient seedC seedD i) h| ≤ scale ℓ / 2) :
     (∀ i : Fin 3, DEmbedding.branch i.castSucc (DEmbedding.center ℓ + h) =
@@ -2090,8 +2172,7 @@ theorem local_model_branches (ℓ : ℕ) (h : Vec 2)
     DEmbedding.slab_horizontal ℓ hh, DEmbedding.slab_vertical ℓ hh, DEmbedding.last_branch_negative ℓ hh⟩
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/048` (`paper/sections/failure.tex:384-385`): "In particular
-$F(\bar x_\ell)=a_\ell^3$ and $F'(\bar x_\ell;(-1,16)^T)=-a_\ell^2<0$." -/
+/-- Item `A/failure/prose/048` (`paper/sections/failure.tex:341-342`): "and in particular $F(\bar x_\ell)=a_\ell^3>0$ with $F'(\bar x_\ell;(-1,16)^T)=-a_\ell^2<0$, so $0\notin\partial F(\bar x_\ell)$." -/
 theorem center_value_slope (ℓ : ℕ) :
     DEmbedding.objective (DEmbedding.center ℓ) = (scale ℓ) ^ 3 ∧
     Tendsto (fun t : ℝ => (DEmbedding.objective (DEmbedding.center ℓ + t • ![-1, 16]) -
@@ -2108,7 +2189,7 @@ theorem seedPoint_eq_orbit (m : ℕ) (j : Fin 3) :
   rw [(orbit_phase_parameters m j).1, seedPoint_castSucc]
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/025` (`paper/sections/failure.tex:389-392`), equation `art:upper_orbit`,
+/-- Item `A/failure/disp/020` (`paper/sections/failure.tex:346-349`), equation `art:upper_orbit`,
 in the proof of Theorem `art:local-failure`. For $\ell\ge1$, every $0<c_1\le1/3$,
 $c_1<c_2<1$, with $F$ the objective `art:upper_objective`, $x_0^{(\ell)}=\bar x_\ell+a_\ell^2z_0$
 and $H_0=I$: the run produced by the specified implementation is unique, and
@@ -2146,7 +2227,7 @@ theorem upper_orbit (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (c₁ c₂ : ℝ) (hc₁ : 0 
     rw [seedPoint_castSucc, smul_smul]
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/026` (`paper/sections/failure.tex:397-400`), in the proof of Theorem
+/-- In the proof of Theorem
 `art:local-failure`: for $\ell\ge1$, $m\ge0$, every base query
 $z_{\rm trial}=z_j+\alpha p_j$ (a row of Table `art:trial_table`) and $i=0,1,2$,
 \[ |g_i^T(a_\ell^2\rho^mz_{\rm trial})|<3a_\ell^2\le3a_\ell/16<a_\ell/2. \] -/
@@ -2170,11 +2251,11 @@ theorem query_slab (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (m : ℕ) (q : Fin 9) (i : Fin
     _ = 3 * (scale ℓ) ^ 2 := by ring
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/027` (`paper/sections/failure.tex:403-407`), in the proof of Theorem
+/-- In the proof of Theorem
 `art:local-failure`: for $\ell\ge1$, $m\ge0$ and every base query $z_{\rm trial}$ with active
 index $i$ (`trialActive`),
 \[ F(\bar x_\ell+a_\ell^2\rho^mz_{\rm trial})=a_\ell^3+a_\ell^4\rho^mG(z_{\rm trial}),\qquad
-   \nabla F=a_\ell^2g_{\rm active}. \] -/
+ \nabla F=a_\ell^2g_{\rm active}. \] -/
 theorem query_values (ℓ : ℕ) (hℓ : 1 ≤ ℓ) (m : ℕ) (q : Fin 9) :
     DEmbedding.objective (DEmbedding.center ℓ + ((scale ℓ) ^ 2 * seedRatio ^ m) •
         (seedPoint (trialPhase q).castSucc + trialLength q • seedDir (trialPhase q))) =
@@ -2200,7 +2281,7 @@ def baseQueryMax : ℝ :=
       ‖euclideanVector (seedPoint (trialPhase q).castSucc + trialLength q • seedDir (trialPhase q))‖))
 
 open DScalarGeometric in
-/-- Item `A/failure/disp/028` (`paper/sections/failure.tex:422-424`), in the proof of Theorem
+/-- In the proof of Theorem
 `art:local-failure`: "Since the base query set is finite, the norm of every query is bounded
 by
 \[ a_\ell\|(2,-32)\|+a_\ell^2\max_{\text{base points and queries}}\|z\|, \]
@@ -2248,11 +2329,7 @@ theorem query_norm_bound :
 /-! ### Scales of the first embedding -/
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/038` (`paper/sections/failure.tex:255-260`): "In the first
-embedding, the corner's objective height is $a_\ell^3$ and its affine slopes are
-$a_\ell^2g_i$. Taking spatial scale $\lambda=a_\ell^2$ gives $\sigma=a_\ell^4=\lambda^2$, so
-every copy starts with $I$. Its affine neighborhood has width proportional to $a_\ell$, much
-larger than the entire copied trial tree, whose width is proportional to $a_\ell^2$."
+/-- Item `A/failure/prose/038` (`paper/sections/failure.tex:271-276`): "which leaves $H_0=I$ unchanged across every scale. To achieve $\sigma=\lambda^2$ together with global $C^{2,1}$ smoothness at the accumulation point $0$, let $\theta=1/16$ and $a_\ell=\theta^\ell$. Placing scalar affine plateaus of value $a_\ell^3$ and slope $a_\ell^2$ at nodes $ba_\ell$ gives local slope factor $a_\ell^2=\sigma/\lambda$; setting spatial scale $\lambda=a_\ell^2$ then yields $\sigma=a_\ell^4=\lambda^2$. Better still, each affine plateau has width"
 
 For $\ell\ge1$: $F(\bar x_\ell)=a_\ell^3$; at a point $\bar x_\ell+h$ of the open slab
 $|g_j^Th|<a_\ell/2$ with strictly active $g_i$ the gradient is $a_\ell^2g_i$; the local model
@@ -2292,10 +2369,8 @@ theorem first_embedding_scales (ℓ : ℕ) (hℓ : 1 ≤ ℓ) :
 /-! ### Figure `art:shrinking-scales` -/
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/050` (`paper/sections/failure.tex:438-441`), the factual claims of
-the caption of Figure `art:shrinking-scales`: "In one fixed objective, bad centers
-$\bar x_\ell\to x_*$ have affine-model neighborhoods of width $O(a_\ell)$. Each complete copied
-query orbit fits inside a region of size $O(a_\ell^2)$ and converges to $\bar x_\ell$."
+/-- Item `A/failure/prose/076` (`paper/sections/failure.tex:276-279`): Item `A/failure/prose/050` (`paper/sections/failure.tex:305-310`), the factual claims of
+the caption of Figure `art:shrinking-scales`: "$\sigma=a_\ell^4=\lambda^2$. Better still, each affine plateau has width $\Theta(a_\ell)$, whereas the entire copied BFGS trial tree has diameter $\Theta(a_\ell^2)\ll a_\ell$, creating asymptotic room to contain every accepted and rejected query inside the flat region (Figure~\ref{art:shrinking-scales})."
 Here $x_*=0$; the affine model `art:upper_local_model` holds on the slab
 $|g_i^Th|\le a_\ell/2$, which lies in the box $|h_1|\le a_\ell/2$, $|h_2|\le8a_\ell$ and
 contains the box $\|h\|_\infty\le a_\ell/6$; for $\ell\ge1$ every accepted point and every
@@ -2345,7 +2420,7 @@ theorem shrinking_scales :
 /-! ### Remarks on Theorem `art:local-failure` -/
 
 open DScalarGeometric in
-/-- Item `A/failure/prose/009` (`paper/sections/failure.tex:52-53`): "The failure set supplied by
+/-- "The failure set supplied by
 the theorem is a sequence of starts; it is not a positive-measure basin." The starts
 $x_0^{(\ell)}=\bar x_\ell+a_\ell^2z_0$, $\ell\ge1$, of Theorem `art:local-failure` form a
 countable set of Lebesgue measure zero. -/
@@ -2362,10 +2437,7 @@ theorem failure_starts_null :
 
 /-! ### What changes when positive lower curvature is required -/
 
-/-- Item `A/failure/prose/010` (`paper/sections/failure.tex:52-53`) and
-Item `A/failure/prose/052` (`paper/sections/failure.tex:450-451`): "There is no uniform positive lower curvature
-requirement on these branches." / "The flat affine regions in the first construction explain
-why its convex branches have no uniform positive lower curvature." The four branches of
+/-- Item `A/failure/prose/010` (`paper/sections/failure.tex:368-369`) : "In Theorem~\ref{art:local-failure}, the flat affine plateaus where $\varphi_b''=0$ prevent the branches from being strongly convex. Adding a positive quadratic" The four branches of
 Theorem `art:local-failure` have zero Hessian on the flat affine regions (the open plateaus
 around the nodes $\bar x_\ell$, and everywhere for the last branch) and at the minimizer, so no
 branch satisfies $\nabla^2f_i\succeq\mu I$ with $\mu>0$. -/
@@ -2397,8 +2469,7 @@ theorem no_uniform_lower_curvature :
     simp [Matrix.neg_mulVec, Pi.single_apply] at h
     linarith
 
-/-- Item `A/failure/prose/053` (`paper/sections/failure.tex:451-452`): "Adding the same positive
-quadratic to each branch restores that curvature": for every $\mu>0$ each branch plus
+/-- Item `A/failure/prose/053` (`paper/sections/failure.tex:369-370`): "prevent the branches from being strongly convex. Adding a positive quadratic $\tfrac\mu2\norm{z}^2$ restores uniform strong convexity, but perturbs the": for every $\mu>0$ each branch plus
 $\frac\mu2\|x\|^2$ is $\mu$-strongly convex (`FixedNormal.EuclideanStrongConvexOn`:
 $f-\frac\mu2\|\cdot\|^2$ is convex). -/
 theorem quadratic_restores_curvature (μ : ℝ) (i : Fin 4) :
@@ -2406,8 +2477,7 @@ theorem quadratic_restores_curvature (μ : ℝ) (i : Fin 4) :
   unfold FixedNormal.EuclideanStrongConvexOn
   simpa only [add_sub_cancel_right] using DEmbedding.branch_convex i
 
-/-- Item `A/failure/prose/054` (`paper/sections/failure.tex:452-453`): "[...] but changes the
-dynamics. The old exact cycle can no longer be copied without adjustment." For every $\mu>0$,
+/-- Item `A/failure/prose/054` (`paper/sections/failure.tex:370-372`): "$\tfrac\mu2\norm{z}^2$ restores uniform strong convexity, but perturbs the branch gradients by $\mu z$ and breaks exact scale invariance: the homogeneous seed orbit is no longer an exact trajectory. Remarkably, the failing cycle is" For every $\mu>0$,
 the objective $Q_\mu=\frac\mu2\|x\|^2+G$ has gradient $g_0+\mu z_0$ at $z_0$, and no step of
 the form $-\alpha(g_0+\mu z_0)$ from $z_0$ (with $H_0=I$) reaches the seed point $z_1$. -/
 theorem quadratic_changes_dynamics (μ : ℝ) (hμ : 0 < μ) :
@@ -2456,10 +2526,7 @@ theorem quadratic_changes_dynamics (μ : ℝ) (hμ : 0 < μ) :
     rw [hα0] at e0
     norm_num at e0
 
-/-- Item `A/failure/prose/059` (`paper/sections/failure.tex:485-487`): "In
-Theorem~\ref{art:local-failure-lower} and Table~\ref{art:regularity-map}, a Hessian is the
-classical one: the derivative of the gradient map, with that map defined in a neighborhood of
-the point. A pointwise second-order expansion alone is not the convention."
+/-- Item `A/failure/prose/059` (`paper/sections/failure.tex:392-394`): "\caption{Comparison of the two local smooth-branch counterexamples. Here $\nabla^2F(x)$ denotes the classical Fr\'echet derivative of $\nabla F$ defined on a neighborhood of $x$. Both theorems hold for one fixed objective, $H_0=I$,"
 
 Convention: $F$ has a classical Hessian at $x$ ($x$ is a twice-differentiable point) when $F$
 is differentiable on a neighborhood of $x$ and its derivative map is differentiable at $x$:
@@ -2517,11 +2584,9 @@ theorem classical_hessian {n : ℕ} (F : Vec n → ℝ) (x : Vec n)
       (RadialHessian.bilinearMatrix (fderiv ℝ (fderiv ℝ F) x) *ᵥ v) i
     rw [← hd, h, hsymm]
 
-/-- Item `A/failure/prose/056` (`paper/sections/failure.tex:468-470`): the first row of
-Table `art:regularity-map`. "Four convex $C^{2,1}$ branches | $0\preceq\nabla^2f_i\preceq64I$
-globally | All branch Hessians exist and are Lipschitz; no uniform positive lower bound." The
-last column is headed "At the minimizer" (the minimizer $0$; "At the accumulation point" before
-15 October 2026, M30). -/
+/-- Item `A/failure/prose/056` (`paper/sections/failure.tex:384-386`): the first row of
+Table `art:regularity-map`. "Four convex $C^{2,1}$ branches (Theorem~\ref{art:local-failure}) & $0\preceq\nabla^2f_i(x)\preceq64I$ on $\R^2$ & Smooth $C^{2,1}$ branches everywhere; curvature vanishes on plateaus\\[3pt]" The
+last column is headed "Regularity at $x_*=0$" (the minimizer $0$). -/
 theorem regularity_map_first_row :
     (∀ i : Fin 4, ConvexOn ℝ univ (DEmbedding.branch i) ∧ ContDiff ℝ 2 (DEmbedding.branch i)) ∧
     (∀ (i : Fin 4) (x : Vec 2), (RadialHessian.matrix (DEmbedding.branch i) x).PosSemidef ∧
@@ -2536,8 +2601,7 @@ theorem regularity_map_first_row :
     fun i => ((DEmbedding.branch_contDiff i).fderiv_right (m := 1) (by norm_num)).differentiable
       (by norm_num) 0, DEmbedding.branch_hessian_lipschitz, no_uniform_lower_curvature.2.2⟩
 
-/-- Item `A/failure/prose/012` (`paper/sections/failure.tex:65`): "The target lengths
-$1,1/4,1/16$ fit the bisections of the unit-first search." Starting from $\alpha=1$ with
+/-- Item `A/failure/prose/012` (`paper/sections/failure.tex:73-79`): "Counting degrees of freedom shows why three slopes in $\R^2$ just suffice. Fix $H_0=I$ and set $g_0=(1,0)^T$ and $g_1=(-1,-1/8)^T$, so a unit step $\alpha_0=1$ produces the rational matrix $M_1=\mathcal B(I,g_0,g_1,1)$. The third slope $g_2=(c_\circ,d_\circ)^T$ supplies two real parameters, which we tune so that the dyadic bisection step lengths $\alpha_1=1/4$ and $\alpha_2=1/16$ close the matrix cycle at a scalar multiple $M_3=\rho I$ (two equations for the symmetric $2\times2$ matrix $M_3$ to be proportional to $I$). Once $g_2$ and $\rho$ are" Starting from $\alpha=1$ with
 $\alpha_{\rm lo}=0$, successive Armijo rejections bisect: the $k$th trial is $2^{-k}$, and
 $1,1/4,1/16$ are the trials $k=0,2,4$. -/
 theorem target_lengths_bisections :

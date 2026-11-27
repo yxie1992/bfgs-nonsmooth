@@ -55,6 +55,18 @@ Every item may have a `note`. `discrepancies` entries have `item`,
 `description`, `severity` (`error`, `imprecision` or `typo`) and, when there is
 one, the Lean name of a corrected statement or counterexample.
 
+A register may also list `retired` entries: ids that an edit removed or
+renumbered but that other registers still reference (the companion registers
+cite article ids). Each entry has the old `id`, a `successor` (an id or a list
+of ids, all current items) and a `reason`; a retired id must not also be a
+current id. `check_coverage.py` accepts references to retired ids. The rewrite of
+November 2026 (M45) retired `register/A_geometry.json` (its section was dissolved
+into `sections/introduction.tex` and `sections/local.tex`): its ids are retired
+in `A_introduction.json`, while `BfgsArticle/Coverage/Article/Geometry.lean`
+stays because companion modules import it. A renumbered mechanical id that is
+still current (for example a display after an inserted display) cannot be
+retired; references to it from other registers need checking by hand.
+
 ## Rules for coverage theorems
 
 The finished pilot, `bfgs_lean_article/BfgsArticle/Coverage/Article/MatrixAlgebra.lean`
