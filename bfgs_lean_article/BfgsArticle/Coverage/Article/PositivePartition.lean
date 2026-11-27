@@ -40,7 +40,7 @@ open Set Filter Topology BfgsVerification
 
 namespace BfgsCoverage.Article.PositivePartition
 
-/-- Item `A/positive_partition/theorem/art:polyhedral` (`paper/statements/positive_partition.tex:1-16`), Theorem `art:polyhedral`, including its
+/-- Item `A/positive_partition/theorem/art:polyhedral` (`paper/statements/positive_partition.tex:1-17`), Theorem `art:polyhedral`, including its
 displays `A/positive_partition/disp/001` (lines 7-9) and `A/positive_partition/disp/002`
 (lines 13-15).
 

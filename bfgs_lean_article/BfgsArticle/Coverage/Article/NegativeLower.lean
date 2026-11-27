@@ -37,7 +37,7 @@ included in Section `art:failure` (`paper/sections/failure.tex:376`). Register:
 | Item | Lines | Lean |
 |---|---|---|
 | `theorem/art:local-failure-lower` | 1-26 | `local_failure_lower`, `fromMetric_fuel_mono` |
-| `A/lower_curvature/proof/004` | `paper/appendices/lower_curvature.tex:254-307` | `local_failure_lower` |
+| `A/lower_curvature/proof/004` | `paper/appendices/lower_curvature.tex:254-308` | `local_failure_lower` |
 
 The proof assembles the article package theorem `LUniform.uniformSmoothLocalFailure`
 (`BfgsArticle/LUniformLocal.lean`), whose objective is the whitened four-branch function

@@ -428,7 +428,7 @@ theorem taylor_upper_of_lipschitz {n : ℕ} {f : Vec n → ℝ} {B : Set (Vec n)
 /-- Item `A/local/disp/003` (`paper/sections/local.tex:66-68`), in the proof of Theorem
 `art:polyhedral`.
 
-Under the assumptions of Theorem `art:polyhedral` (`paper/statements/positive_partition.tex:1-16`, written out as
+Under the assumptions of Theorem `art:polyhedral` (`paper/statements/positive_partition.tex:1-17`, written out as
 in `PositivePartition.polyhedral`), the proof first discards the cells not containing $x_*$ and
 shrinks to a common Euclidean ball $B=B_\rho(x_*)\subset U\cap\bigcap_{i:x_*\in P_i}V_i$ that meets
 only cells containing $x_*$ (`hdisc`), on which the gradients of the remaining extensions have

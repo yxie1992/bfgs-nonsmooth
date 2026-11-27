@@ -100,7 +100,7 @@ The register lists every item and the Lean names that cover it.
 | `prose/031` | 298-301 | `whitening_identities` |
 | `prose/032` | 301-302 | `whitening_initial` |
 | `prose/033` | 302-306 | `whitening_constants` |
-| `A/verification/prose/032` | `paper/sections/verification.tex:70-73` | `quadratic_failure` |
+| `A/verification/prose/032` | `paper/sections/verification.tex:71-74` | `quadratic_failure` |
 
 The statements about $\psi_b$ are made, as in the appendix, for the two values $b=b_i$
 (`b = LEmbedding.parameter i`, the theorems with suffix `_bi`); the same names without the suffix
@@ -1630,7 +1630,7 @@ theorem finite_max_local_taylor {n m : ℕ} (F : Vec n → ℝ) (f : Fin m → V
     filter_upwards [hc.eventually (eventually_gt_nhds (sub_pos.mpr hi))] with z hz
     linarith
 
-/-- Part of item `A/lower_curvature/proof/004` (`paper/appendices/lower_curvature.tex:254-307`): "Applying
+/-- Part of item `A/lower_curvature/proof/004` (`paper/appendices/lower_curvature.tex:254-308`): "Applying
 this with $L=512$ and combining it with strong convexity proves
 \[ \mu I\preceq\nabla^2F(x)\preceq512I\quad\text{whenever }F\text{ is twice differentiable}." \]
 -/
@@ -1650,8 +1650,8 @@ theorem copy_constants_def (ℓ : ℕ) :
       LEmbedding.offset = 1 + LEmbedding.mu / 2 * sqNorm LEmbedding.center :=
   ⟨rfl, rfl⟩
 
-/-- Item `A/lower_curvature/disp/019` (`paper/appendices/lower_curvature.tex:280-283`), equation `art:lower_local_model`
-(`paper/appendices/lower_curvature.tex:280-283`): "\begin{equation} F(\bar x_\ell+a_\ell y)=a_\ell^2\bigl(C_*+Q_\mu(y)\bigr) \qquad(\ell\ge1,\;y\in V). \end{equation}" \]
+/-- Item `A/lower_curvature/disp/019` (`paper/appendices/lower_curvature.tex:281-284`), equation `art:lower_local_model`
+(`paper/appendices/lower_curvature.tex:281-284`): "\begin{equation} F(\bar x_\ell+a_\ell y)=a_\ell^2\bigl(C_*+Q_\mu(y)\bigr) \qquad(\ell\ge1,\;y\in V). \end{equation}" \]
 Here $Q_\mu$ is taken with the fixed $\mu=1/4096$; the neighborhood is
 `LEmbedding.localDomain` $=\{y:\|y\|_\infty<1,\ |q_i^Ty|<1/2\}$. -/
 theorem lower_local_model :
@@ -1660,7 +1660,7 @@ theorem lower_local_model :
         LScalarGeometric.scale ℓ ^ 2 * (LEmbedding.offset + LQuadraticSeed.objective LEmbedding.mu y) :=
   ⟨LEmbedding.localDomain, LEmbedding.localDomain_nhds, fun ℓ _ _ hy => LEmbedding.local_model ℓ hy⟩
 
-/-- Item `A/lower_curvature/prose/026` (`paper/appendices/lower_curvature.tex:274-279`):
+/-- Item `A/lower_curvature/prose/026` (`paper/appendices/lower_curvature.tex:274-280`):
 "Setting $\bar x_\ell=a_\ell c_*$ and $C_*=1+\tfrac\mu2\norm{c_*}^2$, for every $y$ in the neighborhood $V=\{y:|q_i^Ty|\le1/2\;(i=0,1,2),\;y_2<1\}$, \eqref{art:lower_plateau} and $q_i+\mu c_*=g_i$ give $f_i(\bar x_\ell+a_\ell y)=a_\ell^2(C_*+\tfrac\mu2\norm{y}^2+g_i^Ty)\ge\tfrac12a_\ell^2$ for $i=0,1,2$, while $f_3(\bar x_\ell+a_\ell y)=\tfrac\mu2a_\ell^2\norm{c_*+y}^2+a_\ell(-32+y_2)<0$ for all $\ell\ge1$ since $a_\ell\le1/128$. Hence" -/
 theorem local_model_reasons (ℓ : ℕ) (y : Vec 2) (hy : y ∈ LEmbedding.localDomain) :
     (∀ i : Fin 3, |dot (LEmbedding.slope i) y| ≤ 1/2 →
@@ -1696,7 +1696,7 @@ theorem local_model_reasons (ℓ : ℕ) (y : Vec 2) (hy : y ∈ LEmbedding.local
 /-- The admissible pair `c₁ = 10⁻⁴`, `c₂ = 1/2`, used to name pair-independent objects. -/
 theorem fixedPair : LUniform.Admissible (1/10000) (1/2) := LUniform.sourcePair
 
-/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:287-290`), with prose
+/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:288-291`), with prose
 item `A/lower_curvature/prose/027`: "$(c_1,c_2)$. Starting at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with initial matrix $H_0^{\rm seed}\succ0$, scale covariance~\eqref{art:matched-scaling} with $\lambda=a_\ell$ and $\sigma=a_\ell^2=\lambda^2$ gives by induction $x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ and $H_k^{(\ell)}=H_k^{\rm seed}$," \]
 (Text as corrected on 15 October 2026, M33 and M41: before, "all of whose queries" and "For every
 $\ell$".) This theorem states the copies for every $\ell$, $\ell=0$ included; `copy_runs_from_one`
@@ -1737,7 +1737,7 @@ theorem copy_runs :
         (LUniform.copy_nonstrict_actual_search LActualCopies.smoothData h ℓ k) N hN, rfl, rfl,
       fun k => ⟨rfl, rfl⟩⟩
 
-/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:287-290`), with prose
+/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:288-291`), with prose
 item `A/lower_curvature/prose/027`, as corrected on 15 October 2026 (M33 and
 M41, reader points R-F-1 and R-F-8): "$(c_1,c_2)$. Starting at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with initial matrix $H_0^{\rm seed}\succ0$, scale covariance~\eqref{art:matched-scaling} with $\lambda=a_\ell$ and $\sigma=a_\ell^2=\lambda^2$ gives by induction $x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ and $H_k^{(\ell)}=H_k^{\rm seed}$," \]
 `copy_runs` restricted to `ℓ ≥ 1`, the range of `art:lower_local_model`; its second conjunct
@@ -1765,7 +1765,7 @@ theorem copy_runs_from_one :
   obtain ⟨h1, h2, h3, h4⟩ := copy_runs
   exact ⟨h1, h2, h3, fun c₁ c₂ hc₁ hc₁' hc hc₂ ℓ _ => h4 c₁ c₂ hc₁ hc₁' hc hc₂ ℓ⟩
 
-/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:287-290`): "$(c_1,c_2)$. Starting at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with initial matrix $H_0^{\rm seed}\succ0$, scale covariance~\eqref{art:matched-scaling} with $\lambda=a_\ell$ and $\sigma=a_\ell^2=\lambda^2$ gives by induction $x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ and $H_k^{(\ell)}=H_k^{\rm seed}$,"
+/-- Item `A/lower_curvature/prose/028` (`paper/appendices/lower_curvature.tex:288-291`): "$(c_1,c_2)$. Starting at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with initial matrix $H_0^{\rm seed}\succ0$, scale covariance~\eqref{art:matched-scaling} with $\lambda=a_\ell$ and $\sigma=a_\ell^2=\lambda^2$ gives by induction $x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ and $H_k^{(\ell)}=H_k^{\rm seed}$,"
 (Corrected on 15 October 2026, M33: before "applies to every query".) For the copy $\ell$ at step
 $k$ and every attempted length $a$: the gradient and the direction scale by $a_\ell$ (so
 $\lambda^2/\sigma=a_\ell^2/a_\ell^2=1$ keeps the matrix), the query is the scaled seed query, which
@@ -1890,7 +1890,7 @@ theorem euclid_le_two_of_mem_localDomain {y : Vec 2} (hy : y ∈ LEmbedding.loca
     nlinarith [abs_lt.mp h0, abs_lt.mp h1]
   exact (sq_le_sq₀ (norm_nonneg _) (by norm_num)).mp hsq
 
-/-- Item `A/lower_curvature/prose/029` (`paper/appendices/lower_curvature.tex:290-293`): "$x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ and $H_k^{(\ell)}=H_k^{\rm seed}$, converging to the nonstationary point $\bar x_\ell\ne0$ ($\partial F(\bar x_\ell)=a_\ell\conv\{g_0,g_1,g_2\}\not\ni0$) with $F(x_k^{(\ell)})\downarrow a_\ell^2C_*>0$ and query norms bounded by $a_\ell(\norm{c_*}+\sup_{\text{seed queries}}\norm{x^{\rm seed}})\to0$." The copies
+/-- Item `A/lower_curvature/prose/029` (`paper/appendices/lower_curvature.tex:291-294`): "$x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ and $H_k^{(\ell)}=H_k^{\rm seed}$, converging to the nonstationary point $\bar x_\ell\ne0$ ($\partial F(\bar x_\ell)=a_\ell\conv\{g_0,g_1,g_2\}\not\ni0$) with $F(x_k^{(\ell)})\downarrow a_\ell^2C_*>0$ and query norms bounded by $a_\ell(\norm{c_*}+\sup_{\text{seed queries}}\norm{x^{\rm seed}})\to0$." The copies
 $x_k^{(\ell)}=\bar x_\ell+a_\ell x_k^{\rm seed}$ of `copy_runs`; the seed query norms (Euclidean)
 form the bounded set `S`, and the copy queries are those of the copy runs. -/
 theorem copy_limits (ℓ : ℕ) :
@@ -1979,7 +1979,7 @@ theorem copy_limits (ℓ : ℕ) :
   · simpa only [zero_mul] using LScalar.scale_tendsto_zero.mul_const
       (‖euclideanVector LEmbedding.center‖ + sSup S)
 
-/-- Item `A/lower_curvature/prose/030` (`paper/appendices/lower_curvature.tex:295-298`): "Finally, apply the single invertible linear change of coordinates $A=(H_0^{\rm seed})^{1/2}\succ0$, replacing $F$ by $\widetilde F(z)=F(Az)$ and each run by $\widetilde x_k^{(\ell)}=A^{-1}x_k^{(\ell)}$ and $\widetilde H_k^{(\ell)}=A^{-1}H_k^{(\ell)}A^{-T}$. Because $\widetilde g=A^Tg$" `LUniform.initialMetric` is
+/-- Item `A/lower_curvature/prose/030` (`paper/appendices/lower_curvature.tex:296-299`): "Finally, apply the single invertible linear change of coordinates $A=(H_0^{\rm seed})^{1/2}\succ0$, replacing $F$ by $\widetilde F(z)=F(Az)$ and each run by $\widetilde x_k^{(\ell)}=A^{-1}x_k^{(\ell)}$ and $\widetilde H_k^{(\ell)}=A^{-1}H_k^{(\ell)}A^{-T}$. Because $\widetilde g=A^Tg$" `LUniform.initialMetric` is
 $H_0^{\rm seed}$ (the initial matrix of every copy, `copy_runs`), `LUniform.coordinateMatrix` is
 its positive semidefinite square root $A$, and `LUniform.smoothObjective` is $\widetilde F$. -/
 theorem whitening_setup :
@@ -1991,7 +1991,7 @@ theorem whitening_setup :
   ⟨rfl, LUniform.initialMetric_posDef, LUniform.initialMetric_posDef.posSemidef.posSemidef_sqrt,
     LUniform.coordinateMatrix_square, LUniform.coordinateMatrix_invertible, fun _ => rfl⟩
 
-/-- Item `A/lower_curvature/prose/031` (`paper/appendices/lower_curvature.tex:298-301`), with prose
+/-- Item `A/lower_curvature/prose/031` (`paper/appendices/lower_curvature.tex:299-302`), with prose
 item `A/lower_curvature/prose/031` (lines 298-301): "$\widetilde H_k^{(\ell)}=A^{-1}H_k^{(\ell)}A^{-T}$. Because $\widetilde g=A^Tg$ and $\widetilde s=A^{-1}s$ leave all scalar products $g^Ts$, function values, trial decisions, and inverse-BFGS updates~\eqref{art:failure_update} invariant (cf.~\cite[Section~2]{LO}), every run $\ell\ge1$ now starts from". For an invertible $A$ and
 $\widetilde F(z)=F(Az)$: gradients transform by $A^T$ at $A^{-1}x$, steps by $A^{-1}$, the
 (non-strict) Armijo and Wolfe tests are equivalent, the inverse update commutes with the change of
@@ -2019,12 +2019,12 @@ theorem whitening_identities (A : Mat 2) (hA : A.det ≠ 0) (F : Vec 2 → ℝ) 
     fun H s y => AffineWhitening.update_equiv A hA H s y,
     fun x H c₁ c₂ fuel => AffineWhitening.nonstrict_fromMetric_equiv A hA F x H c₁ c₂ fuel⟩
 
-/-- Item `A/lower_curvature/prose/032` (`paper/appendices/lower_curvature.tex:301-302`): "(cf.~\cite[Section~2]{LO}), every run $\ell\ge1$ now starts from $\widetilde H_0^{(\ell)}=I$, while $\widetilde F$ inherits four strongly convex" -/
+/-- Item `A/lower_curvature/prose/032` (`paper/appendices/lower_curvature.tex:302-303`): "(cf.~\cite[Section~2]{LO}), every run $\ell\ge1$ now starts from $\widetilde H_0^{(\ell)}=I$, while $\widetilde F$ inherits four strongly convex" -/
 theorem whitening_initial :
     LUniform.coordinateMatrix⁻¹ * LUniform.initialMetric * (LUniform.coordinateMatrix⁻¹)ᵀ = 1 :=
   AffineWhitening.squareRoot_initial_metric _ _
 
-/-- Item `A/lower_curvature/prose/033` (`paper/appendices/lower_curvature.tex:302-306`):
+/-- Item `A/lower_curvature/prose/033` (`paper/appendices/lower_curvature.tex:303-307`):
 "$\widetilde H_0^{(\ell)}=I$, while $\widetilde F$ inherits four strongly convex $C^{1,1}$ branches (with the first three not twice differentiable at $0$) and satisfies $\underline\mu I\preceq\nabla^2\widetilde F\preceq\overline L I$ wherever twice differentiable with $\underline\mu=\mu\lambda_{\min}(H_0^{\rm seed})$ and $\overline L=512\lambda_{\max}(H_0^{\rm seed})$.\qed" The whitened objective and its branches are
 $\underline\mu$-strongly convex, the branch gradients are $\overline L$-Lipschitz, and
 $\underline\mu I\preceq\nabla^2\widetilde F\preceq\overline LI$ at twice-differentiable points. -/

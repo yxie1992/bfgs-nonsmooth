@@ -104,7 +104,7 @@ Lean proof does not use.
 | `prose/034` | 268-272 | `l1_nonsmooth`, `linf_nonsmooth` |
 | `prose/037` | 272-274 | `euclidean_norm_case`, `asymmetric_example`, `homogeneous_examples_norm` |
 | `prose/041` | 278-280 | `homogeneous_value_dichotomy` |
-| `A/introduction/prose/035` | `paper/sections/introduction.tex:237-239` | `linf_nonsmooth`, `linf_tie_example` |
+| `A/introduction/prose/035` | `paper/sections/introduction.tex:238-240` | `linf_nonsmooth`, `linf_tie_example` |
 | `A/hypothesis_examples/proof/001` | `paper/appendices/hypothesis_examples.tex:28-39` | `mixed_radial_secant` |
 
 The theorem item `art:centered` also lists `centered_summands_not_minimized` (its last sentence);

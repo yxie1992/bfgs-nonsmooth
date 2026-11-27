@@ -98,11 +98,12 @@ fact, it continues to hold along our nonstationary counterexamples, where
 $H_k\to0$ drives $q_k\to0$ exponentially.
 
 \paragraph{2. Directional and transported comparison energies.}
-Because $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$ universally, an optimality gap
-$F(x_k)-F_*\ge\eta>0$ can persist only if $H_k$ collapses along every direction
-capable of witnessing that gap. To prevent this collapse without bounding
-$\tr(B_k)$, we test $B_k=H_k^{-1}$ solely along a comparison vector $w_k$ (or a
-positive-semidefinite comparison tensor $W(x_k)$) chosen purely for the proof.
+By Cauchy--Schwarz in the $H_k$-inner product, any vector $w_k$ satisfies
+$w_k^TB_kw_k\ge(g_k^Tw_k)^2/q_k$. Under bounded gradients and $d_k\to0$, the
+divergence $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$ therefore forces the average of
+$w_k^TB_kw_k$ to diverge along any field maintaining $|g_k^Tw_k|\ge\sqrt m>0$.
+Testing $B_k=H_k^{-1}$ solely along such a vector $w_k$ (or a
+positive-semidefinite tensor $W(x_k)$) avoids bounding $\tr(B_k)$ altogether.
 In the primal update $B_{k+1}=\widehat B_k+y_ky_k^T/t_k$ with $t_k=y_k^Ts_k$,
 the rank-one downdate $\widehat B_k=B_k-g_kg_k^T/q_k\succeq0$ annihilates the
 step direction: $\widehat B_ks_k=0$. Evaluating $E_k=r_k^TB_kr_k$ along the
@@ -183,10 +184,10 @@ constructive global and local counterexamples.
 Theorem~\ref{art:minor-hierarchy} establishes the adjacent-degree principal-minor
 hierarchy for a single inverse-BFGS update, and Theorem~\ref{art:reciprocal-growth}
 derives the universal divergence of the geometric and arithmetic means of
-$(g_k^TH_kg_k)^{-1}$ whenever gradients are bounded and $d_k\to0$. Notably,
-neither theorem uses convexity of the objective: they are structural properties
-of the unmodified BFGS update under weak-Wolfe curvature $y_k^Ts_k\ge(1-c_2)d_k$
-alone. Theorem~\ref{art:certificate} and Lemma~\ref{art:tail-comparison} couple
+$(g_k^TH_kg_k)^{-1}$ whenever gradients are bounded and $d_k\to0$. Notably, although Theorem~\ref{art:reciprocal-growth} is stated for admissible
+runs, its proof uses no convexity of $F$: both theorems are purely algebraic
+properties of the BFGS update under $y_k^Ts_k\ge(1-c_2)d_k$, bounded gradients,
+and $d_k\to0$. Theorem~\ref{art:certificate} and Lemma~\ref{art:tail-comparison} couple
 this growth law with transported comparison fields $W_\eta(x)$ and local vector
 fields $w(x)$, establishing convergence without bounding condition numbers,
 requiring smooth surrogates, or assuming prior iterate or spectral limits.
@@ -206,7 +207,7 @@ Coercive degree-one homogeneous (all norms, gauges, coercive $\max_ia_i^Tx$), Th
 Finite polyhedral $C^{1,1}$ partition with unique $x_*$ (including smooth loss $+\;\lambda\norm{x}_1$), Theorem~\ref{art:polyhedral}
 & Sublevel $\{F\le F_*+\varepsilon\}$ independent of $H_0$
 & $F(x_k)\to F_*$ and $x_k\to x_*$\\\addlinespace
-Nondegenerate planar smooth maximum $\max_if_i$, Corollary~\ref{art:planar-max}
+Nondegenerate planar smooth $\max_if_i$ (unique $x_*$, strict contours), Corollary~\ref{art:planar-max}
 & Sublevel $\{F<F_*+\varepsilon\}$ independent of $H_0$
 & $F(x_k)\to F_*$ and $x_k\to x_*$\\
 \bottomrule
@@ -234,9 +235,9 @@ starting point and every $H_0\succ0$ (Corollary~\ref{art:mixed-benchmark}).
 Theorem~\ref{art:homogeneous} and Corollary~\ref{art:homogeneous-examples} prove
 global whole-sequence convergence $x_k\to0$ from every admissible starting point
 for every norm on $\R^n$, every gauge with bounded unit ball, and every coercive
-linear maximum $\max_{1\le i\le m}a_i^Tx$. In particular, this covers
-$\norm{x}_1$ and $\norm{x}_\infty$, whose nonsmooth loci contain coordinate
-hyperplanes and diagonal facets rather than an isolated point.
+linear maximum $\max_{1\le i\le m}a_i^Tx$. In particular, for $n\ge2$ this covers $\norm{x}_1$ and $\norm{x}_\infty$,
+whose nonsmooth loci contain coordinate hyperplanes and diagonal facets,
+respectively, rather than an isolated point.
 \item \emph{Polyhedral partitions and composite regularizers in $\R^n$.}
 Near a unique minimizer $x_*$, only polyhedral cells containing $x_*$ intersect a
 small ball, so inward rays stay inside single cells. Combining convex sublevel
@@ -249,14 +250,14 @@ and~\ref{art:local-centered}).
 \item \emph{Curved planar switching interfaces via moving contour fields.}
 When switching loci bend, inward rays cross interfaces and radial secant bounds
 can fail on every neighborhood of the minimizer, as we demonstrate explicitly on
-a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a
-normal-angle contour-velocity field whose angular derivative cancels normal
-components, Theorem~\ref{art:planar-cluster} proves that every run on a planar
-objective with strict contours and regular two-branch kinks accumulates at the
-affine-critical set $\{p:0\in\aff\partial F(p)\}$. Under active-gradient affine independence and strict complementarity at $x_*$,
-the classical multiplier nondegeneracy condition of nonsmooth Newton and bundle
-theory~\preprintcite{LW} applied here without prior iterate or spectral
-assumptions, every affine-critical point near $x_*$ is optimal. This yields
+a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a normal-angle contour-velocity field whose angular derivative cancels
+normal components, Theorem~\ref{art:planar-cluster} proves that every admissible
+run on a planar objective with strict contours and regular two-branch kinks has
+a cluster point in the affine-critical set $\{p:0\in\aff\partial F(p)\}$. When
+the active gradients at $x_*$ are affinely independent with strictly positive
+optimal weights (the multiplier nondegeneracy condition of nonsmooth Newton and
+bundle theory~\preprintcite{LW}, used here with no prior iterate or spectral
+assumptions), every affine-critical point near $x_*$ is optimal. This yields
 local whole-sequence convergence (Corollaries~\ref{art:planar-convergence}
 and~\ref{art:planar-max}) and an explicit convergence basin $\{F<1/100\}$ on
 the nonradial three-quadratic example.
@@ -327,9 +328,10 @@ theorem, corollary, and rational interval certificate in this paper, together
 with the extended theory in the accompanying companion monograph, has been
 formalized and machine-checked from first principles in the Lean~4 theorem
 prover on top of \textsf{Mathlib}, using only the standard axioms of classical
-mathematics and verified in the Lean kernel (Section~\ref{art:verification}).
-Nevertheless, the paper is completely self-contained and written to be read
-independently as an ordinary mathematical article.
+mathematics and verified in the Lean kernel (Section~\ref{art:verification};
+\url{https://github.com/yxie1992/bfgs-nonsmooth}). Nevertheless, the paper is
+completely self-contained and written to be read independently as an ordinary
+mathematical article.
 
 The rest of the paper is organized as follows. Section~\ref{art:energy}
 establishes the BFGS invariants, reference energy identity, principal-minor
