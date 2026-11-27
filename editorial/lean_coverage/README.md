@@ -30,12 +30,8 @@ standard axioms. Agreed scope (author, 14 October 2026):
 - Lean: `bfgs_lean_article/BfgsArticle/Coverage/Article/<Name>.lean` and
   `.../Coverage/Companion/<Name>.lean`, namespace `BfgsCoverage.Article.<Name>`
   or `BfgsCoverage.Companion.<Name>`. The register field `lean_module` names it.
-- `AGENT_BRIEFS.md`: the briefs of the coverage and reviewer agents, and the
-  prompts of the companion groups.
 - `companion_hints.py` writes `hints/<stem>.json` (git-ignored): for each
   companion file, its claim-ledger records with their Lean exports.
-- `pause_notes/<group>.md`: the reading notes and item plans of the companion
-  agents paused on 14 October 2026 (see `HANDOFF.md`).
 
 ## Statuses
 
@@ -184,8 +180,7 @@ Lean files are still those of the base commit:
    compares against that copy instead of a commit.
 4. By hand: the statuses, anchors and notes of the edited items, and the Lean
    docstrings that quote the old text. A resolved discrepancy gets a final status,
-   a note "Corrected on <date> (M<n>)", and its entry moves from `discrepancies`
-   to `resolved_discrepancies`, with a `resolved` field saying when and where
-   (`TODO_MANUSCRIPT_REVIEW.md`). Its description keeps the old text.
+   a note saying when it was corrected, and its entry moves from `discrepancies`
+   to `resolved_discrepancies`, keeping the old text in its description.
 5. Compile the changed coverage modules, run `check_coverage.py --strict` on the
    edited files, and `lake build` once no agent runs Lean.

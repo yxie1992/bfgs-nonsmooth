@@ -95,23 +95,7 @@ MacBook; the 786-module M42 replay of 16 October took 26.8 minutes.
 | `BfgsArticle/LUniformLocal.lean` | Theorem `art:local-failure-lower` for every `0<c₁≤1/3`, `c₁<c₂<1`: `LUniform.uniformSmoothLocalFailure` (target `UniformSmoothLocalFailureTarget`), with one objective, one family of starts with `H₀=I`, and the same iterates, matrices and complete traces for every pair. Also `uniform_identity_failure`, `uniform_fixed_metric_failure` and `branch_not_twice_differentiable_zero`. |
 | `BfgsArticle/AdmissibleRunExistence.lean` | Existence of admissible runs, so that statements about every run are not vacuous. `AdmissibleRunExistence.exists_wolfe_step` and `exists_admissible_run`: if `F` is convex, bounded below, differentiable at all but countably many points of every line through a point of differentiability, and has no point of differentiability with gradient zero, then from every point of differentiability, for every `H₀≻0` and all `0<c₁<c₂<1`, an infinite admissible run exists (every step strict Armijo and strict weak Wolfe). For Theorem `art:nonradial-example`: `PlanarQuadraticExample.exists_admissible_run` and `nonradial_example_nonvacuous`. The article's registers cite it, and several companion coverage modules import it. |
 | `BfgsArticle/HypothesisExamples.lean` | M42 joint objective/certificate/run witnesses: `HypothesisExamples.Mixed.joint_witness` for `u²+|v|`, `HypothesisExamples.Quadratic.joint_witness` for a full-rank Euclidean quadratic calibration in arbitrary dimension, and `HypothesisExamples.Gauge.joint_obstruction` for a coercive max-linear objective with no differentiable weak-Wolfe first step from the stated identity-initialized data. |
-| `BfgsArticle/TwoQuadraticExample.lean` | M42's positive-parameter two-quadratic family. `TwoQuadraticExample.paper_planar_hypotheses`, `finite_max_hypotheses` and `joint_witness` prove the literal planar assumptions, the indexed active-gradient conditions, universal convergence, and an actual infinite run for every differentiable start, SPD matrix and valid constant pair. The `Radial` namespace also proves a fixed-band radial obstruction for the specialization `(1,1,2)`. |
-
-The two M42 mathematical modules and the literal article coverage were
-independently reviewed on 16 October 2026
-(`editorial/main_results_scope_20261016/verification/`, relative to the repository
-root). The new coverage module has 29 named theorems, including direct statements
-about the mixed run's least spectral value. The article additions and the
-Chapter 7 caveat have 54 new classified items. Clean module compilations and
-standard-axiom checks passed. The full package build with the new coverage import
-also passes (105 seconds on the MacBook, no new warnings). The reviewed
-correspondence integration is complete (103 rows). Fresh package-wide evidence
-on clean commit `74900ef` passed on 16 October: 5506 audited declarations,
-standard axioms only, and 786 modules replayed through the kernel with the
-checker self-test passed. `BfgsArticleAxioms.lean` remains the same 182-name guard.
-The current reports include these additions; the 15 October release archive
-records the earlier edition. See
-`editorial/main_results_scope_20261016/verification/EVIDENCE.md` in the repository.
+| `BfgsArticle/TwoQuadraticExample.lean` | Positive-parameter two-quadratic family: `TwoQuadraticExample.paper_planar_hypotheses`, `finite_max_hypotheses` and `joint_witness` prove the literal planar assumptions, the indexed active-gradient conditions, universal convergence, and an actual infinite run for every differentiable start, SPD matrix and valid constant pair. The `Radial` namespace also proves a fixed-band radial obstruction for the specialization `(1,1,2)`. |
 
 The library's local construction starts from `LSeedCopies.run`, an orbit chosen for
 `c₁=10⁻⁴`, `c₂=1/2` only. `LUniformLocal.lean` therefore selects a new source orbit
@@ -137,7 +121,9 @@ article and the companion, both complete: one module per TeX file, namespaces
 `BfgsCoverage.Article.<Name>` and `BfgsCoverage.Companion.<Name>`. Each
 declaration states a claim of the documents, and its docstring names the claim's
 register item and source lines. The registers in
-`editorial/lean_coverage/register/` link every item to its declarations. Method
-and rules: `editorial/lean_coverage/README.md`; progress: `TODO_LEAN_COVERAGE.md`
-at the repository root. `BfgsArticle.lean` imports every finished coverage
-module, so `lake build` checks it and the axiom audit includes its names.
+`editorial/lean_coverage/register/` link every item to its declarations; see
+[`../ARTICLE_LEAN_MAP.md`](../ARTICLE_LEAN_MAP.md) for the human-readable index
+of the article's definitions and 38 numbered statements, and
+`../editorial/lean_coverage/README.md` for the register format and checker.
+`BfgsArticle.lean` imports every coverage module, so `lake build` compiles them
+all and `scripts/axiom_audit.py` verifies their axioms.

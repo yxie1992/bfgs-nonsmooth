@@ -42,9 +42,9 @@ introductions={
 'D':'A finite algebraic cycle first determines every query of a specified line search. Scaled copies then produce one fixed convex objective with failing initial points approaching its optimizer.',
 'L':'Positive lower curvature requires a separate construction. The local finite-branch functions have Lipschitz gradients, and three of the four lose second differentiability at the minimizer.',
 'E':'This chapter records the formal verification: the dated authoring audit comes first, followed by the preserved release record.'}
-# M44 in TODO_MANUSCRIPT_REVIEW.md (18 October 2026): wording edits that remove
-# defensive or over-qualifying sentences, applied to the finished chapter bodies.
-m44_edits=json.loads((ROOT/'editorial/defensive_wording_20261018/companion_edits.json').read_text())['edits']
+# Companion wording refinements removing defensive or over-qualifying sentences,
+# applied to the finished chapter bodies.
+m44_edits=json.loads((ROOT/'editorial/companion_edits.json').read_text())['edits']
 rows=[];transform_log=[];chapter_inputs=[]
 for module,title in order:
  group=[c for c in claims if c['module']==module];path=SOURCE/group[0]['corrected_source'];text=path.read_text();original=text
