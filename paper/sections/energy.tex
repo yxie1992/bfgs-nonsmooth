@@ -5,21 +5,21 @@ continuity of the gradient to bound the full secant ratio
 $\norm{y_k}^2/(y_k^Ts_k)$, keeping the trace of the Hessian approximation
 $B_k=H_k^{-1}$ under control~\cite{FND_P76,FND_BN89,FND_N92}. When gradients jump
 across nonsmooth kinks, $\norm{y_k}^2/(y_k^Ts_k)$ can diverge to $+\infty$ even
-along steps approaching a minimizer. In this section we develop an analytical
-engine for unmodified full BFGS that works directly in this singular regime.
+along steps approaching a minimizer. Here we analyze unmodified full BFGS
+directly in this singular regime by estimating the partial sums of the same
+scalar sequence $(g_k^TH_kg_k)^{-1}$ in two ways.
 
-The argument decouples the matrix dynamics into two opposing laws. First,
-evaluating $B_k$ along a single comparison direction (or positive-semidefinite
-field) yields a quadratic energy that drains at rate $(g_k^Tw_k)^2/(g_k^TH_kg_k)$
-while seeing \emph{only} the directional projection $y_k^Tw_{k+1}$ of each
-gradient jump; if that directional secant cost stays bounded, any persistent
-optimality gap forces the partial sums $\sum_{k<N}(g_k^TH_kg_k)^{-1}$ to grow at
-most linearly in $N$. Second, an adjacent-degree hierarchy for the principal
-minors of the inverse-Hessian approximations $H_k$ proves that, along
-\emph{any} bounded-gradient BFGS run whose predicted decreases vanish,
-$\frac1N\sum_{k<N}(g_k^TH_kg_k)^{-1}\to+\infty$. Together, these two laws force
-the optimality gap to vanish without any upper bound on $\norm{B_k}$ or
-assumption on the limiting spectrum of $H_k$.
+First, evaluating $B_k$ along a comparison direction $w_k$ (or a
+positive-semidefinite tensor field) gives a quadratic energy whose one-step
+change involves the gradient jump only through its directional projection
+$y_k^Tw_{k+1}$. Whenever that projected secant cost stays bounded, any
+persistent optimality gap forces the partial sums $\sum_{k<N}(g_k^TH_kg_k)^{-1}$
+to grow at most linearly in $N$. Second, an adjacent-degree hierarchy for the
+principal minors of the inverse-Hessian approximations $H_k$ proves that, along
+any bounded-gradient BFGS run whose predicted decreases vanish, the averages
+$\frac1N\sum_{k<N}(g_k^TH_kg_k)^{-1}$ diverge to $+\infty$. Combining the two
+estimates rules out a persistent optimality gap without any upper bound on
+$\norm{B_k}$ or assumption on the limiting spectrum of $H_k$.
 
 \subsection{Full-BFGS invariants and the reference energy duality}
 
@@ -131,10 +131,10 @@ $E_N\ge0$ yields~\eqref{art:energy-budget}.\qed
 Inequality~\eqref{art:energy-budget} isolates the exact requirement for
 convergence: if $F(x_k)-F_*\ge\eta>0$ for all $k$ while the radial secant error
 satisfies $R_k\le C$, then $\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$, bounding the
-average of $q_k^{-1}$ uniformly in $N$. Crucially, $B_k$ is never bounded from
+average of $q_k^{-1}$ uniformly in $N$. Notably, $B_k$ is never bounded from
 above: $n-1$ eigenvalues of $B_k$ may diverge to $+\infty$ across kinks while
-the single inequality $E_N\ge0$ closes the telescope. Everything now turns on
-proving that full BFGS forces $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$.
+the single inequality $E_N\ge0$ closes the telescope. It remains to show that
+the BFGS update forces $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$.
 
 \subsection{The principal-minor hierarchy and universal reciprocal growth}
 
@@ -193,7 +193,7 @@ yields~\eqref{art:hierarchy}, and the $j=n$ case of
 Lemma~\ref{art:gram-compression} gives $\det H_+=(\alpha/\beta)\det H$.\qed
 \end{proof}
 
-Notice that Theorem~\ref{art:minor-hierarchy} is a purely algebraic property of
+Theorem~\ref{art:minor-hierarchy} is a purely algebraic property of
 the rank-two BFGS update: it makes no reference to convexity or smoothness of an
 objective function. Whenever gradients remain bounded along a run and the
 predicted decreases $d_k$ tend to zero, cascading~\eqref{art:hierarchy} across
@@ -259,9 +259,9 @@ moving comparison geometry viable: writing $\Pi_s=I-ss^T/(s^Ts)$ for the
 orthogonal projector onto $s^\perp$, we have
 $\widehat B_k=\Pi_{s_k}\widehat B_k\Pi_{s_k}\succeq0$, so any component of field
 motion parallel to the step $s_k$ is annihilated for free. Only transverse
-multiplicative distortion perpendicular to $s_k$ costs energy, and when that
-distortion is $1+O(d_k)$ per step, the Armijo summability $\sum_kd_k<\infty$
-keeps the cumulative multiplicative factor bounded.
+distortion perpendicular to $s_k$ increases the energy; when that factor is
+$1+O(d_k)$ per step, the decrease in $F$ controls the distortion via
+$\sum_kd_k<\infty$ and keeps the cumulative multiplicative factor bounded.
 
 To state this purely in terms of the objective $F$, let $x,z\in\R^n$ be
 differentiable points and write $g=\nabla F(x)$, $h=\nabla F(z)$, $s=z-x$,
@@ -270,7 +270,12 @@ $(x,z)$ \emph{eligible} when
 \[
  d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge\omega d.
 \]
-Every consecutive pair $(x_k,x_{k+1})$ of an admissible run is eligible.
+Every consecutive pair $(x_k,x_{k+1})$ of an admissible run is eligible. On
+each positive sublevel band, a comparison field needs to detect the optimality
+gap, bound the projected gradient jump by the secant curvature, and bound the
+cost of changing the field by the predicted decrease; we refer to these three
+requirements as \emph{visibility}, \emph{directional secant control}, and
+\emph{projected transport}.
 
 \begin{definition}[Band certificate]\label{art:band-certificate}
 Let $K=\{x:F(x)\le b\}$ be compact, with $b>F_*=\min F$.
@@ -289,11 +294,9 @@ and~\eqref{art:secant-control}--\eqref{art:transport} hold for all eligible
 pairs $(x,z)$ in $K_\eta$ with $d\le\delta_\eta$.
 \end{definition}
 
-The three inequalities capture \emph{visibility} of the optimality gap,
-\emph{directional secant control}, and \emph{projected transport}. Notably,
-$W_\eta(x)$ need not be continuous, uniformly bounded, or full rank, and all
-constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness
-at the minimizer.
+Here $W_\eta(x)$ need not be continuous, uniformly bounded, or full rank, and
+all constants may degenerate as $\eta\downarrow0$, allowing arbitrary
+nonsmoothness at the minimizer.
 
 \begin{theorem}[Convergence from band certificates]\label{art:certificate}
 If $K=\{F\le b\}$ is compact and admits a band certificate on every nonempty

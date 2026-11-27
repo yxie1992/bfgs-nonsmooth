@@ -102,7 +102,7 @@ theorem compression_eq_library {n j : ℕ} (H : Mat n) (g y : Vec n) (hH : H.Pos
 /-! ### The proof of Lemma `art:gram-compression`, in the order of the TeX -/
 
 /-- Proof of Lemma `art:gram-compression`, undisplayed claims of
-`paper/appendices/matrix_algebra.tex:16-75` (not a register item):
+`paper/appendices/matrix_algebra.tex:16-77` (not a register item):
 "Put $v=Hg$, $\kappa=g^THy=-\beta q$ \dots Since $y^Ts=\alpha\beta q$".
 
 Under the assumptions of Theorem `art:minor-hierarchy`,
@@ -122,7 +122,7 @@ theorem kappa_eq_and_curvature {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q
   · rw [hs, dot_smul_right, mul_assoc, hβq]
     ring
 
-/-- Item `A/matrix_algebra/disp/002` (`paper/appendices/matrix_algebra.tex:19-22`), in the
+/-- Item `A/matrix_algebra/disp/002` (`paper/appendices/matrix_algebra.tex:21-24`), in the
 proof of Lemma `art:gram-compression`.
 
 Under the assumptions of Theorem `art:minor-hierarchy` (the display does not involve $Z$),
@@ -149,7 +149,7 @@ theorem update_split {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)
   rw [hform, hκβ, neg_mul, inv_neg, neg_smul, sub_neg_eq_add, transpose_add, transpose_one,
     transpose_smul, BFGSCompression.transpose_outer]
 
-/-- Item `A/matrix_algebra/disp/003` (`paper/appendices/matrix_algebra.tex:24-29`), in the
+/-- Item `A/matrix_algebra/disp/003` (`paper/appendices/matrix_algebra.tex:26-31`), in the
 proof of Lemma `art:gram-compression`: the claim $A=Z^THZ\succ0$ of the display
 \[ A=Z^THZ\succ0,\quad a=Z^THg,\quad b=Z^THy,\quad r=y^THy,\quad
  u=a^TA^{-1}a,\quad w=a^TA^{-1}b,\quad z=b^TA^{-1}b. \]
@@ -166,7 +166,7 @@ theorem compression_posDef {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q �
   subst hA
   exact metricGram_posDef hH (mulVec_injective_of_orthonormal hZ)
 
-/-- Item `A/matrix_algebra/disp/004` (`paper/appendices/matrix_algebra.tex:31-36`), in the
+/-- Item `A/matrix_algebra/disp/004` (`paper/appendices/matrix_algebra.tex:33-38`), in the
 proof of Lemma `art:gram-compression`.
 
 Under the assumptions of the lemma, with $v,\kappa,P,\mathcal F$ and $A,a,b,r$ as defined
@@ -190,8 +190,8 @@ theorem compression_formula {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q 
   simp [CompressionDeterminant.compression, outer, Matrix.mul_apply, Fin.sum_univ_two]
   ring
 
-/-- Item `A/matrix_algebra/disp/005` (`paper/appendices/matrix_algebra.tex:40-44`), equation `art:compression-determinant`
-(`paper/appendices/matrix_algebra.tex:40-44`), in the proof of Lemma `art:gram-compression`.
+/-- Item `A/matrix_algebra/disp/005` (`paper/appendices/matrix_algebra.tex:42-46`), equation `art:compression-determinant`
+(`paper/appendices/matrix_algebra.tex:42-46`), in the proof of Lemma `art:gram-compression`.
 
 Under the assumptions of the lemma, with $v,\kappa,P,\mathcal F$ and $A,a,b,r,u,w,z$ as
 defined in the proof,
@@ -222,7 +222,7 @@ theorem compression_determinant {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (�
     div_mul_eq_mul_div, eq_div_iff (pow_ne_zero 2 hκ0)]
   linear_combination hdet
 
-/-- Item `A/matrix_algebra/disp/006` (`paper/appendices/matrix_algebra.tex:48-52`), in the
+/-- Item `A/matrix_algebra/disp/006` (`paper/appendices/matrix_algebra.tex:50-54`), in the
 proof of Lemma `art:gram-compression`.
 
 Under the assumptions of the lemma, with $\kappa$ and $A,a,b,r,u,w,z$ as defined in the
@@ -256,7 +256,7 @@ theorem gram_schur {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)
     hcols ▸ metricGram_det_append_two hH g y Z hZinj⟩
 
 /-- Proof of Lemma `art:gram-compression`, undisplayed claim of
-`paper/appendices/matrix_algebra.tex:16-75` (not a register item): "Both are Gram
+`paper/appendices/matrix_algebra.tex:16-77` (not a register item): "Both are Gram
 determinants and hence nonnegative, including when their column families are dependent",
 i.e. $\det\operatorname{Gram}_H(y,Z)\ge0$ and $\det\operatorname{Gram}_H(g,y,Z)\ge0$. -/
 theorem gram_dets_nonneg {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)
@@ -269,7 +269,7 @@ theorem gram_dets_nonneg {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β 
       0 ≤ (metricGram H (fromCols (Matrix.of ![g, y])ᵀ Z)).det :=
   ⟨metricGram_det_nonneg hH.posSemidef _, metricGram_det_nonneg hH.posSemidef _⟩
 
-/-- Item `A/matrix_algebra/disp/007` (`paper/appendices/matrix_algebra.tex:56-61`), in the
+/-- Item `A/matrix_algebra/disp/007` (`paper/appendices/matrix_algebra.tex:58-63`), in the
 proof of Lemma `art:gram-compression`.
 
 Under the assumptions of the lemma, with $v,\kappa,P,\mathcal F$ as defined in the proof,
@@ -315,7 +315,7 @@ theorem compression_gram_bound {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α
     nlinarith [mul_nonneg hnonneg (by positivity : (0 : ℝ) ≤ β ^ 2 * q)]
 
 /-- Proof of Lemma `art:gram-compression`, undisplayed step of
-`paper/appendices/matrix_algebra.tex:16-75` (not a register item): by display 002 the
+`paper/appendices/matrix_algebra.tex:16-77` (not a register item): by display 002 the
 compression of the update is the compression of $\mathcal F$ plus $\rho aa^T$ with
 $\rho=\alpha/(\beta q)$:
 \[ Z^TH_+Z=Z^T\mathcal FZ+\frac{\alpha}{\beta q}aa^T. \] -/
@@ -334,7 +334,7 @@ theorem compression_update {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q �
     BFGSCompression.congruence_outer, ha, hv]
 
 /-- Proof of Lemma `art:gram-compression`, undisplayed claims of
-`paper/appendices/matrix_algebra.tex:16-75` (not a register item): "Adding $\rho aa^T$ to
+`paper/appendices/matrix_algebra.tex:16-77` (not a register item): "Adding $\rho aa^T$ to
 the compression changes the coefficient $r/\kappa^2$ by $\rho$. The same $2\times2$
 expansion therefore changes its determinant by exactly $\rho\det A\,u$. No invertibility of
 $Z^T\mathcal FZ$ is used." For every real $\rho$,
@@ -366,7 +366,7 @@ theorem compression_add_rank_one {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (
       (isUnit_iff_ne_zero.mpr hApos.det_pos.ne') (isSymm_of_posDef hApos), hu]
 
 /-- Proof of Lemma `art:gram-compression`, undisplayed claims of
-`paper/appendices/matrix_algebra.tex:16-75` (not a register item): "Since $Z^Tv=a$, the value
+`paper/appendices/matrix_algebra.tex:16-77` (not a register item): "Since $Z^Tv=a$, the value
 $\rho=\alpha/(\beta q)$ gives the compression $Z^TH_+Z$. The Schur complement of $A$ in
 $\operatorname{Gram}_H(g,Z)$ gives $u\le q$ (and $u\ge0$ since $A\succ0$), so the increase is at
 most $(\alpha/\beta)\det A$." (Corrected on 15 October 2026, M34; before, the Schur complement
@@ -398,7 +398,7 @@ theorem u_bounds {n j : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : ℝ)
   exact metricGram_det_append_one hH g Z hZinj
 
 /-- Proof of Lemma `art:gram-compression`, undisplayed claims of
-`paper/appendices/matrix_algebra.tex:16-75` (not a register item): "When $j=n$, $Z$ is an
+`paper/appendices/matrix_algebra.tex:16-77` (not a register item): "When $j=n$, $Z$ is an
 orthogonal matrix, $A^{-1}=Z^TH^{-1}Z$, and $u=q$, $w=\kappa$, $z=r$. The right side of
 \eqref{art:compression-determinant} then vanishes, while the rank-one increase is exactly $(\alpha/\beta)\det A$. Orthogonal
 invariance gives the stated determinant identity." Stated as: if $j=n$, then $ZZ^T=I$,

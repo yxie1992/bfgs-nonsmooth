@@ -1328,10 +1328,10 @@ theorem euclidean_residuals_basin {n : ℕ} {J : Type*} [Fintype J] {m : J → �
   exact ⟨U, hU, hxU, ε, hε, hbasin⟩
 
 
-/-! ### Affine criticality in the plane (`local.tex:152-164`) -/
+/-! ### Affine criticality in the plane (`local.tex:152-165`) -/
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/disp/006` (`paper/sections/local.tex:157-159`): the definition
+/-- Item `A/local/disp/006` (`paper/sections/local.tex:158-160`): the definition
 \[ \mathcal C_{\rm aff}=\{p:0\in\aff\partial F(p)\} \]
 for $F:\R^2\to\R$. The library predicate `AffineCriticalObjective.IsAffineCritical F p` (stated
 with the Euclidean copy of $\partial F(p)$) unfolds to $0\in\aff\partial F(p)$, where
@@ -1389,7 +1389,7 @@ theorem least_norm_orthogonal {n : ℕ} (S : AffineSubspace ℝ (Vec n)) {a : Ve
   linarith
 
 open AffineCriticalObjective ConvexSubdifferential in
-/-- Item `A/local/prose/021` (`paper/sections/local.tex:160-164`), anchor "Recall from Section~\ref{art:geometry} why $\mathcal C_{\rm aff}$ is the natural critical set for equal-rate comparison directions: at any $p\notin\mathcal C_{\rm aff}$, the minimum-norm vector $a\in\aff\partial F(p)$ is nonzero and satisfies $g^Ta=\norm{a}^2>0$ for all $g\in\partial F(p)$, so $-a/\norm{a}^2$ decreases every active supporting model at unit rate.".
+/-- Item `A/local/prose/021` (`paper/sections/local.tex:161-165`), anchor "Recall from Section~\ref{art:geometry} why $\mathcal C_{\rm aff}$ is the natural critical set for equal-rate comparison directions: at any $p\notin\mathcal C_{\rm aff}$, the minimum-norm vector $a\in\aff\partial F(p)$ is nonzero and satisfies $g^Ta=\norm{a}^2>0$ for all $g\in\partial F(p)$, so $-a/\norm{a}^2$ decreases every active supporting model at unit rate.".
 
 Let $F:\R^2\to\R$ be finite and convex and $p\notin\mathcal C_{\rm aff}$. The affine hull
 $\aff\partial F(p)$ has a unique least-norm point $a$; it satisfies $a\ne0$ and
@@ -1653,7 +1653,7 @@ theorem regular_of_paper {F : Vec 2 → ℝ} {p : Vec 2}
     · exact pairDet_ne_zero_of_linearIndependent hind
 
 open AffineCriticalObjective in
-/-- Item `A/local/theorem/art:planar-cluster` (`paper/sections/local.tex:202-215`), Theorem
+/-- Item `A/local/theorem/art:planar-cluster` (`paper/sections/local.tex:200-213`), Theorem
 `art:planar-cluster` ("Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$, and have a compact sublevel $K=\{x:F(x)\le b\}$ with $b>F_*$. Assume that: \begin{enumerate} \item for every $F_*<t\le b$, the boundary of $\{F\le t\}$ contains no nontrivial line segment; and \item at every $p\in K\setminus\mathcal C_{\rm aff}$, either $F$ is $C^2$ near $p$, or $F=\max\{f_1,f_2\}$ near $p$ for convex $C^2$ functions $f_1,f_2$ both active at $p$ with $\nabla f_1(p)$ and $\nabla f_2(p)$ linearly independent. \end{enumerate} Then every infinite admissible full-BFGS run starting in $K$ has at least one cluster point in $\mathcal C_{\rm aff}$ (with no local structure assumed at points of $\mathcal C_{\rm aff}$ itself).").
 
 Let $F:\R^2\to\R$ be finite and convex, attain its minimum $F_*$ (`IsLeast (range F) Fstar`),
@@ -1687,7 +1687,7 @@ theorem planar_cluster (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fstar : 
   exact ⟨p, hp, ha⟩
 
 open AffineCriticalObjective in
-/-- Item `A/local/disp/007` (`paper/sections/local.tex:225-229`), in the proof of Theorem
+/-- Item `A/local/disp/007` (`paper/sections/local.tex:223-227`), in the proof of Theorem
 `art:planar-cluster`.
 
 Under the assumptions of the theorem, for an admissible run starting in $K$, every $k$ and
@@ -1714,7 +1714,7 @@ theorem planar_cluster_segment_values (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ un
     R.convex.2 (mem_univ _) (mem_univ _) (sub_nonneg.mpr hθ1) hθ0 (by ring)⟩
 
 open AffineCriticalObjective ConvexSubdifferential TransportedCertificate in
-/-- Part of item `A/local/proof/005` (`paper/sections/local.tex:216-245`): in the proof of Theorem
+/-- Part of item `A/local/proof/005` (`paper/sections/local.tex:214-243`): in the proof of Theorem
 `art:planar-cluster`.
 
 Under the assumptions of the theorem, for an admissible run starting in $K$ with value limit
@@ -1799,7 +1799,7 @@ theorem planar_cluster_field (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fst
       simpa [pairDecrease, pairStep] using h
 
 open AffineCriticalObjective in
-/-- Part of item `A/local/proof/005` (`paper/sections/local.tex:216-245`): in the proof of Theorem
+/-- Part of item `A/local/proof/005` (`paper/sections/local.tex:214-243`): in the proof of Theorem
 `art:planar-cluster`.
 
 Under the assumptions of the theorem, for an admissible run starting in $K$, a field
@@ -1861,7 +1861,7 @@ theorem planar_cluster_energy (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (F
   linarith
 
 open AffineCriticalObjective in
-/-- Item `A/local/corollary/art:planar-convergence` (`paper/sections/local.tex:247-252`),
+/-- Item `A/local/corollary/art:planar-convergence` (`paper/sections/local.tex:245-250`),
 Corollary `art:planar-convergence` ("Under the hypotheses of Theorem~\ref{art:planar-cluster}, if $\mathcal C_{\rm aff}\cap K\subseteq\argmin F$, then every admissible run starting in $K$ satisfies $F(x_k)\to F_*$ and $\dist(x_k,\argmin F)\to0$, with $x_k\to x_*$ when the minimizer $x_*$ is unique.").
 
 Under the hypotheses of Theorem `art:planar-cluster`, assume in addition that
@@ -1937,7 +1937,7 @@ theorem active_family_conversion {F : Vec 2 → ℝ} {m : ℕ} (f : Fin m → Ve
     rfl
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:268-283`), Corollary
+/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:266-281`), Corollary
 `art:planar-max` ("Nondegenerate planar smooth maxima"), including its display
 `A/local/disp/008`.
 
@@ -1976,7 +1976,7 @@ theorem planar_max (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (xstar : Vec 2
     hwz hb hstrict
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:268-283`), last sentence:
+/-- Item `A/local/corollary/art:planar-max` (`paper/sections/local.tex:266-281`), last sentence:
 "Let $F:\R^2\to\R$ be finite and convex with a unique minimizer $x_*$, and suppose $F=\max_{1\le i\le m}f_i$ near $x_*$ for convex $C^2$ branches $f_i$. Assume that sufficiently low positive sublevels have no boundary line segments (for instance, if the branches active at $x_*$ share a positive lower Hessian bound near $x_*$), and that the active index set $I_*=\{i:f_i(x_*)=F(x_*)\}$ has affinely independent gradients $\{\nabla f_i(x_*)\}_{i\in I_*}$ admitting strictly positive weights \[ \lambda_i^*>0\quad(i\in I_*),\qquad \sum_{i\in I_*}\lambda_i^*=1, \qquad \sum_{i\in I_*}\lambda_i^*\nabla f_i(x_*)=0. \] Then there exists $\varepsilon>0$, independent of $H_0\succ0$ and of $0<c_1<c_2<1$, such that every infinite admissible full-BFGS run with $F(x_0)<F(x_*)+\varepsilon$ satisfies $F(x_k)\to F(x_*)$ and $x_k\to x_*$."
 
 Under the assumptions of `planar_max` without the contour hypothesis, if the active branches have
@@ -2094,7 +2094,7 @@ theorem augmented_continuousAt {m : ℕ} (f : Fin m → Vec 2 → ℝ) (U : Set 
   · exact continuousAt_const
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Part of item `A/local/prose/037` (`paper/sections/local.tex:262-266`): in the proof of Corollary
+/-- Part of item `A/local/prose/037` (`paper/sections/local.tex:260-264`): in the proof of Corollary
 `art:planar-max`.
 
 Under the assumptions of the corollary, let $A(x)$ be the $3\times|I_*|$ matrix with columns
@@ -2134,9 +2134,9 @@ theorem planar_max_barycentric (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (
 
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Part of item `A/local/proof/007` (`paper/sections/local.tex:284-313`): "affine independence makes that
+/-- Part of item `A/local/proof/007` (`paper/sections/local.tex:282-311`): "affine independence makes that
 balance unique and continuous": continuity. It is also the undisplayed claim of
-`paper/sections/local.tex:284-313` in the proof of Corollary `art:planar-max`: "This expression is
+`paper/sections/local.tex:282-311` in the proof of Corollary `art:planar-max`: "This expression is
 continuous and equals $\lambda^*$ at $x_*$."
 
 Under the assumptions of the corollary, with $A(x)$ as in display `disp/012`, the balance
@@ -2178,7 +2178,7 @@ theorem planar_max_balance_continuous (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ un
     exact (gram_solution (A xstar) hdet lam _ hsol).symm
 
 open ConvexSubdifferential AffineCriticalObjective in
-/-- Item `A/local/prose/037` (`paper/sections/local.tex:262-266`), anchor "For a finite smooth maximum $F=\max_{1\le i\le m}f_i$ in $\R^2$, both the isolation condition $\mathcal C_{\rm aff}=\{x_*\}$ near $x_*$ and two-branch regularity away from $x_*$ follow automatically from standard multiplier nondegeneracy at $x_*$, namely affine independence of the active gradients together with strictly positive optimal convex weights.".
+/-- Item `A/local/prose/037` (`paper/sections/local.tex:260-264`), anchor "For a finite smooth maximum $F=\max_{1\le i\le m}f_i$ in $\R^2$, both the isolation condition $\mathcal C_{\rm aff}=\{x_*\}$ near $x_*$ and two-branch regularity away from $x_*$ follow automatically from standard multiplier nondegeneracy at $x_*$, namely affine independence of the active gradients together with strictly positive optimal convex weights.".
 
 Under the assumptions of Corollary `art:planar-max` (the contour hypothesis is not used): near
 $x_*$, every affine-critical point is a minimizer (affine correctness), and at a nearby
@@ -2312,7 +2312,7 @@ theorem planar_max_regular_near (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (
   · exact PlanarMaxRegular.regular_of_finite_max_independent hF hU hpU (fun i => hf (a i)) hrp
       hp.1 hn
 
-/-! ### The planar construction sketch (`local.tex:166-200`) -/
+/-! ### The planar construction sketch (`local.tex:167-198`) -/
 
 /-- anchor "prohibit long accepted
 chords with vanishing value decrease".
@@ -2331,7 +2331,7 @@ theorem strict_contours_short_chords {n : ℕ} {F : Vec n → ℝ} (R : Admissib
   have h := hℓ.sub (hℓ.comp (tendsto_add_atTop_nat 1))
   simpa using h
 
-/-- Item `A/local/prose/024` (`paper/sections/local.tex:170-176`), anchor "\item \emph{Corner velocities cancel jumps.} Where two convex $C^2$ branches $f_1,f_2$ tie with linearly independent gradients, the implicit function theorem parametrizes the corner curve $p_j(t)$ by the level $f_1(p_j(t))=f_2(p_j(t))=t$. Differentiating in $t$ gives a velocity vector $v_j(t)=p_j'(t)$ satisfying $\nabla f_1(p_j(t))^Tv_j(t)=\nabla f_2(p_j(t))^Tv_j(t)=1$: thus $v_j$ has strictly positive pairing with the subdifferential while annihilating the leading gradient jump $(\nabla f_2-\nabla f_1)^Tv_j=0$.".
+/-- Item `A/local/prose/024` (`paper/sections/local.tex:171-177`), anchor "\item \emph{Corner velocities cancel jumps.} Where two convex $C^2$ branches $f_1,f_2$ tie with linearly independent gradients, the implicit function theorem parametrizes the corner curve $p_j(t)$ by the level $f_1(p_j(t))=f_2(p_j(t))=t$. Differentiating in $t$ gives a velocity vector $v_j(t)=p_j'(t)$ satisfying $\nabla f_1(p_j(t))^Tv_j(t)=\nabla f_2(p_j(t))^Tv_j(t)=1$: thus $v_j$ has strictly positive pairing with the subdifferential while annihilating the leading gradient jump $(\nabla f_2-\nabla f_1)^Tv_j=0$.".
 
 At a two-branch corner $p_0$ ($F=\max\{f_1,f_2\}$ near $p_0$ with $C^2$ branches, both active,
 linearly independent gradients) the corner moves smoothly with the level: there is a curve $p(t)$,
@@ -2385,7 +2385,7 @@ theorem corner_moves_with_level {F : Vec 2 → ℝ} {p₀ : Vec 2} (V : Set (Vec
   · rw [hneg, e2]
 
 open AffineCriticalObjective in
-/-- Item `A/local/prose/028` (`paper/sections/local.tex:177-179`), anchor "\item \emph{Normal-angle blending cancels tangent derivatives.} When positive sublevels $\{F\le t\}$ are strictly convex (contain no boundary line segments), distinct corners on $\{F=t\}$ have disjoint supporting-normal arcs. Writing", first claim.
+/-- Item `A/local/prose/028` (`paper/sections/local.tex:179-181`), anchor "\item \emph{Normal-angle blending cancels tangent derivatives.} When positive sublevels $\{F\le t\}$ are strictly convex (contain no boundary line segments), distinct corners on $\{F=t\}$ have disjoint supporting-normal arcs. Writing", first claim.
 
 On a compact set $C$ contained in one level $\{F=\ell\}$, at each point of which $F$ is $C^2$
 nearby or has the convex two-branch structure of Theorem `art:planar-cluster`, there are only
@@ -2402,7 +2402,7 @@ theorem finitely_many_corners {F : Vec 2 → ℝ} (C : Set (Vec 2)) (ℓ : ℝ) 
   PlanarCornerCharts.finite_nonsmooth_on_compact_level hC hlevel
     (fun p hp => (regular_of_paper (hreg p hp)).imp id (fun h => h.to_regular))
 
-/-- Item `A/local/prose/028` (`paper/sections/local.tex:177-179`), second claim: "\item \emph{Normal-angle blending cancels tangent derivatives.} When positive sublevels $\{F\le t\}$ are strictly convex (contain no boundary line segments), distinct corners on $\{F=t\}$ have disjoint supporting-normal arcs. Writing"
+/-- Item `A/local/prose/028` (`paper/sections/local.tex:179-181`), second claim: "\item \emph{Normal-angle blending cancels tangent derivatives.} When positive sublevels $\{F\le t\}$ are strictly convex (contain no boundary line segments), distinct corners on $\{F=t\}$ have disjoint supporting-normal arcs. Writing"
 
 For finite convex $F$ and two points $p,z$ of the level $\{F=\ell\}$, a common nonzero supporting
 normal $a$ of $\{F\le\ell\}$ at $p$ and at $z$ exposes the whole segment $[p,z]$ in the boundary
@@ -2424,7 +2424,7 @@ theorem common_normal_exposes_segment {F : Vec 2 → ℝ} (hF : ConvexOn ℝ uni
       (PlanarNormalGeometry.segment_support_of_common_normal hKc hsp hsz w hw)
   exact ⟨hseg, fun hstrict => hstrict p z hseg⟩
 
-/-- Item `A/local/prose/031` (`paper/sections/local.tex:186-190`), anchor "across the kink. Everywhere smooth, the classical support-parametrization identity $\partial_\theta(hn+h_\theta T)=(h+h_{\theta\theta})T$~\cite{geom_Bogosel2023} cancels the normal component of the angular derivative, so $Dw$ maps the one-dimensional level-set tangent line into itself: $\det(s,Dw\,s)=0$ whenever $s$ is tangent to $\{F=\text{const}\}$.".
+/-- Item `A/local/prose/031` (`paper/sections/local.tex:186-189`), anchor "across the kink. Everywhere smooth, the classical support-parametrization identity $\partial_\theta(hn+h_\theta T)=(h+h_{\theta\theta})T$~\cite{geom_Bogosel2023} cancels the normal component of the angular derivative, so $Dw$ maps the one-dimensional level-set tangent line into itself: $\det(s,Dw\,s)=0$ whenever $s$ is tangent to $\{F=\text{const}\}$.".
 
 If a linear map $Dw$ maps the tangent vector $T$ into its own line ($Dw\,T=cT$), then for a
 tangent step $s=rT$, $Dw\,s$ is parallel to $s$, so $\det(s,Dw\,s)=0$
@@ -2488,7 +2488,7 @@ theorem example_eq (f : Fin 3 → Vec 2 → ℝ)
   rw [hF x, hfe]
   rfl
 
-/-- Item `A/local/theorem/art:nonradial-example` (`paper/sections/local.tex:323-337`), Theorem
+/-- Item `A/local/theorem/art:nonradial-example` (`paper/sections/local.tex:321-335`), Theorem
 `art:nonradial-example` ("For the three-quadratic maximum on $\R^2$ given by \[ \begin{aligned} f_0(u,v)&=u+u^2+\tfrac12v^2,\qquad f_1(u,v)=v+\tfrac12u^2+\tfrac32v^2,\\ f_2(u,v)&=-u-v+\tfrac32u^2+v^2,\qquad F(u,v)=\max_{0\le i\le2}f_i(u,v), \end{aligned} \] every infinite admissible full-BFGS run with $F(x_0)<1/100$, arbitrary $H_0\succ0$, and any fixed $0<c_1<c_2<1$ satisfies $F(x_k)\to0$ and $x_k\to(0,0)$. Nevertheless, the radial secant condition~\eqref{art:radial-condition} fails on a positive sublevel band inside every neighborhood of $(0,0)$, even when restricted to pairs eligible for $(c_1,c_2)=(1/4,1/2)$."), including its display
 `A/local/disp/009` (lines 325-331).
 
@@ -2531,7 +2531,7 @@ theorem nonradial_example (f : Fin 3 → Vec 2 → ℝ)
       RadialCertificate.radialNumerator] using hexc
 
 /-- Proof of Theorem `art:nonradial-example`, undisplayed claims of
-`paper/sections/local.tex:338-377` (not a register item): "The branch Hessians lie between $I$
+`paper/sections/local.tex:336-375` (not a register item): "The branch Hessians lie between $I$
 and $3I$, and $(f_0+f_1+f_2)/3=u^2+v^2$. Thus $F\ge u^2+v^2$, zero is the unique minimizer, and
 all positive contours are strict. The active gradients at zero are $(1,0),(0,1),(-1,-1)$, with
 positive weights $1/3$." -/
@@ -2570,7 +2570,7 @@ theorem example_model_facts (f : Fin 3 → Vec 2 → ℝ)
     fin_cases j <;> norm_num
 
 /-- Proof of Theorem `art:nonradial-example`, undisplayed claims of
-`paper/sections/local.tex:338-377` (not a register item): $D=3(1+v-uv)$ is the determinant of
+`paper/sections/local.tex:336-375` (not a register item): $D=3(1+v-uv)$ is the determinant of
 the augmented gradient matrix (rows $\partial_u$, $\partial_v$, $1$); on $|u|,|v|\le1/10$,
 $D\ge267/100$ and the three numerators are at least $23/100$, $49/100$, $45/100$; the
 coefficients $\lambda_i=$ numerator$_i/D$ sum to one and their weighted gradient is zero;
@@ -2617,7 +2617,7 @@ theorem example_box_facts (f : Fin 3 → Vec 2 → ℝ)
     · simp only [hg]
       exact PlanarQuadraticExample.gradient_affineIndependent hD
 
-/-- Item `A/local/disp/010` (`paper/sections/local.tex:345-349`), in the proof of Theorem
+/-- Item `A/local/disp/010` (`paper/sections/local.tex:343-347`), in the proof of Theorem
 `art:nonradial-example`.
 
 With $D=3(1+v-uv)$ ($u=x_0$, $v=x_1$), direct solution of the augmented system
@@ -2649,7 +2649,7 @@ theorem example_coefficients (f : Fin 3 → Vec 2 → ℝ)
   · linear_combination (-1 - 2 * x 1) * e0 + (-(1 + x 0)) * e1 +
       (1 + 2 * x 0 + 3 * x 1 + 5 * x 0 * x 1) * hl1
 
-/-- Item `A/local/disp/011` (`paper/sections/local.tex:359-361`), in the proof of Theorem
+/-- Item `A/local/disp/011` (`paper/sections/local.tex:357-359`), in the proof of Theorem
 `art:nonradial-example`.
 
 For $v(u)=\bigl(-1+\sqrt{1+4u+2u^2}\bigr)/2$ (the object defined by the display, `hv`),
@@ -2664,7 +2664,7 @@ theorem example_tie_expansion (v : ℝ → ℝ)
   convert h using 2 with u
   ring
 
-/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:338-377`
+/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:336-375`
 (not a register item): "This is the positive active tie $f_0=f_1$, with $f_2$ inactive", for
 $0<u<1/10$. -/
 theorem example_tie (f : Fin 3 → Vec 2 → ℝ)
@@ -2682,7 +2682,7 @@ theorem example_tie (f : Fin 3 → Vec 2 → ℝ)
   subst hve
   exact ⟨PlanarQuadraticExample.tieHeight_pos hu, PlanarQuadraticExample.tie_active hu hu'⟩
 
-/-- Item `A/local/disp/012` (`paper/sections/local.tex:363-366`), in the proof of Theorem
+/-- Item `A/local/disp/012` (`paper/sections/local.tex:361-364`), in the proof of Theorem
 `art:nonradial-example`.
 
 At the tie point $(u,v)$, $v=v(u)$, for small $u$ ($0<u<1/10$):
@@ -2713,7 +2713,7 @@ theorem example_radial_jump (f : Fin 3 → Vec 2 → ℝ)
   simp [dot, Fin.sum_univ_two, PlanarQuadraticExample.base]
   ring
 
-/-- Item `A/local/disp/013` (`paper/sections/local.tex:369-371`), in the proof of Theorem
+/-- Item `A/local/disp/013` (`paper/sections/local.tex:367-369`), in the proof of Theorem
 `art:nonradial-example`.
 
 For fixed $0<u<1/10$ and $v=v(u)$, take $x=(u,v+e)$ and $z=(u,v-e)$ with $e>0$ tending to zero.
@@ -3022,7 +3022,7 @@ theorem euclidean_norm_not_polyhedral :
   have h'' : (m₁ : ℝ) + 1 = (m₂ : ℝ) + 1 := inv_inj.mp h'
   exact_mod_cast add_right_cancel h''
 
-/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:338-377`
+/-- Proof of Theorem `art:nonradial-example`, undisplayed claim of `paper/sections/local.tex:336-375`
 (not a register item): "As $u,e\to0^+$, $\Delta/d\to1/2$ and $t/d\to1$", with
 $d=2e(1+3v+3e)$, $t=2e(1+2v+4e)$, $\Delta=e(1+4v)+e^2$ (display `disp/013`) and $v=v(u)$. -/
 theorem example_ratio_limits (v : ℝ → ℝ)

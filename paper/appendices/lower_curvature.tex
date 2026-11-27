@@ -1,11 +1,16 @@
 \section{Scalar spline interpolations and the strongly convex local embedding}
 \label{art:lower_curvature}
 
-This appendix supplies the explicit scalar plateau splines for both local
-counterexamples (Lemma~\ref{art:upper_scalar_lemma} for Theorem~\ref{art:local-failure},
-and its $C^{1,1}$ counterpart below) and proves
-Theorem~\ref{art:local-failure-lower} via a scale-normalized BFGS return map and
-stable-manifold perturbation. Throughout, an \emph{admissible pair} means any
+This appendix contains the two scalar spline constructions and the
+perturbed-orbit persistence proof used in Section~\ref{art:failure}.
+Subsection~\ref{art:upper_spline_subsec} proves
+Lemma~\ref{art:upper_scalar_lemma}, giving the $C^{2,1}$ plateau spline for the
+exact-copy construction of Theorem~\ref{art:local-failure}. Under uniform strong
+convexity (Theorem~\ref{art:local-failure-lower}), exact scale invariance is
+lost: the second subsection therefore constructs a single perturbed failing
+orbit via a scale-normalized BFGS return map and its local stable manifold, and
+the third subsection copies that orbit across scales using a $C^{1,1}$ spline.
+Throughout, an \emph{admissible pair} means any
 fixed $(c_1,c_2)$ with $0<c_1\le1/3$ and $c_1<c_2<1$; the objectives, orbits,
 and starting points constructed below do not depend on $(c_1,c_2)$.
 
@@ -98,10 +103,10 @@ nonstationary with $Q_\mu(0)=0$.
 
 \begin{proposition}[Perturbed failing trajectory under strong convexity]\label{art:quadratic_failure}
 Let $\mu>0$. For every neighborhood $V$ of $0\in\R^2$, there exists an initial
-state $(x_0,H_0)$ with $H_0\succ0$ that generates the same infinite
-deterministic full-BFGS run on $Q_\mu$ for every admissible pair
-$0<c_1\le1/3$, $c_1<c_2<1$, converging to the nonstationary origin with
-$Q_\mu(x_k)\downarrow0$,
+state $(x_0,H_0)$ with $H_0\succ0$ such that the infinite deterministic
+full-BFGS run on $Q_\mu$ from $(x_0,H_0)$ is independent of $(c_1,c_2)$ across
+all admissible pairs $0<c_1\le1/3$, $c_1<c_2<1$, converging to the
+nonstationary origin with $Q_\mu(x_k)\downarrow0$,
 accepted step lengths repeating $1,1/4,1/16$, and $x_0$ together with all
 accepted and rejected trial points differentiable and contained in $V$.
 \end{proposition}
@@ -196,15 +201,16 @@ produces a stable $\rho$-eigenvector with $\tau$-component $1$.\qed
 
 \begin{proof}[Proposition~\ref{art:quadratic_failure}]
 Since $\det D\mathcal T_\mu(P_*)\ne0$ and $P_*$ is hyperbolic, $\mathcal T_\mu$
-is a local real-analytic diffeomorphism with a smooth two-dimensional local
+is a local real-analytic diffeomorphism admitting a smooth two-dimensional local
 stable manifold through $P_*$ tangent to its stable eigenspace (see, e.g.,
 Dyatlov~\preprintcite*[Section~3.5, Theorem~3 and Remark~4]{DY}). Because each
 of the finitely many physical query maps $\Phi_q(w)=\tau q(w)$ satisfies
 $\Phi_q(P_*)=0$, shrink the implementation neighborhood of
 Lemma~\ref{art:lower_hyperbolic} inside $\bigcap_q\Phi_q^{-1}(V)$ so that
-$\hat\rho>0$ and $M(\zeta,\eta)\succ0$ throughout. Since the stable eigenspace
-has a vector with $\tau$-coordinate $1$, this local stable manifold contains an
-initial state $w_0$ with $\tau_0>0$ whose forward iterates
+$\hat\rho>0$ and $M(\zeta,\eta)\succ0$ throughout. Because the stable
+$\rho$-eigenvector has $\tau$-coordinate $1$, this local stable manifold is not
+confined to the boundary $\tau=0$: it penetrates into positive physical scale
+and contains an initial state $w_0$ with $\tau_0>0$ whose forward iterates
 $w_m=(\hat z_m,\zeta_m,\eta_m,\tau_m)=\mathcal T_\mu^m(w_0)$ stay in that
 neighborhood and converge to $P_*$ with $\tau_m>0$ and $\tau_m\to0$. Unfolding
 the substeps yields a single deterministic full-BFGS run valid for every
@@ -282,7 +288,7 @@ for all $\ell\ge1$ since $a_\ell\le1/128$. Hence
  F(\bar x_\ell+a_\ell y)=a_\ell^2\bigl(C_*+Q_\mu(y)\bigr)
  \qquad(\ell\ge1,\;y\in V).
 \end{equation}
-By Proposition~\ref{art:quadratic_failure}, choose \emph{one} perturbed failing
+By Proposition~\ref{art:quadratic_failure}, choose a single perturbed failing
 trajectory $(x_k^{\rm seed},H_k^{\rm seed})$ on $Q_\mu$ whose initial point and
 all accepted and rejected queries lie in $V$ for every admissible pair
 $(c_1,c_2)$. Starting at $\bar x_\ell+a_\ell x_0^{\rm seed}$ with initial matrix

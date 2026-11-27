@@ -104,7 +104,7 @@ library's `HasBandCertificates F K Fstar c₁ c₂` (`hasBandCertificates_iff`).
 | `disp/024` | 333-335 | `certificate_reciprocal_budget`, `certificate_budget_general`, `finite_reciprocal_sum_le` |
 | `lemma/art:tail-comparison` | 347-360 | `tail_vector_comparison` |
 | `disp/026` | 365-370 | `tail_energy_step` |
-| `A/introduction/prose/041` | `paper/sections/introduction.tex:14-16` | `secant_ratio_unbounded` |
+| `A/introduction/prose/041` | `paper/sections/introduction.tex:12-14` | `secant_ratio_unbounded` |
 
 ## Standing assumptions inside proofs
 
@@ -1140,7 +1140,7 @@ theorem stepProjector_eq {n : ℕ} (s : Vec n) :
     TransportedCertificate.stepProjector s = 1 - (dot s s)⁻¹ • outer s s := by
   simp only [TransportedCertificate.stepProjector, sqNorm, dot, pow_two]
 
-/-- Item `A/energy/definition/art:band-certificate` (`paper/sections/energy.tex:275-290`),
+/-- Item `A/energy/definition/art:band-certificate` (`paper/sections/energy.tex:280-295`),
 Definition `art:band-certificate` (Band certificate), with its displays
 \eqref{art:visibility}, \eqref{art:secant-control}, \eqref{art:transport}.
 
@@ -1214,7 +1214,7 @@ theorem hasBandCertificates_iff {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) 
     exact (Cert.secant x z g h hx hz hp hd).trans
       (mul_le_mul_of_nonneg_right (le_max_left _ _) ht)
 
-/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:295-296`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." With $F_*=\min F$, no positive band
+/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:298-299`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." With $F_*=\min F$, no positive band
 contains a minimizer: for every $\eta>0$, $K_\eta\cap\arg\min F=\emptyset$. The certificate
 conditions concern only (differentiable) points of the bands, so they impose nothing at an
 optimizer. -/
@@ -1296,7 +1296,7 @@ def absCert (K : Set (Vec 1)) (c₁ c₂ η : ℝ) (hη : 0 < η) (hc₂ : c₂ 
     rw [stepProjector_one_dim hs]
     simpa using Matrix.PosSemidef.zero
 
-/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:295-296`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." Witness: $F(x)=|x|$ on $\R^1$ is finite and
+/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:298-299`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." Witness: $F(x)=|x|$ on $\R^1$ is finite and
 convex, with unique minimizer $0$ and $F_*=\min F=0$; it is not differentiable at $0$; its
 sublevel sets are compact; and for all constants $0<c_1<c_2<1$ and every $b>F_*=0$ the set
 $K=\{F\le b\}$ admits the band certificates of Definition `art:band-certificate` (with
@@ -1333,7 +1333,7 @@ theorem nonsmooth_optimizer_certificates :
 
 /-! ### Theorem `art:certificate` -/
 
-/-- Item `A/energy/theorem/art:certificate` (`paper/sections/energy.tex:298-307`), Theorem
+/-- Item `A/energy/theorem/art:certificate` (`paper/sections/energy.tex:301-310`), Theorem
 `art:certificate` (Transported comparison certificate), with its display
 `A/energy/disp/022`.
 
@@ -1375,7 +1375,7 @@ memberships of the iterates involved); those general forms are satisfiable (see 
 examples at the end). -/
 
 /-- Proof of Theorem `art:certificate`, undisplayed claim of
-`paper/sections/energy.tex:308-340` (not a register item): $E_k=\tr(B_kW(x_k))\ge0$ whenever
+`paper/sections/energy.tex:311-343` (not a register item): $E_k=\tr(B_kW(x_k))\ge0$ whenever
 $x_k$ lies in the band of the certificate. -/
 theorem certificate_energy_nonneg {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (K : Set (Vec n)) (Fstar η : ℝ)
@@ -1454,7 +1454,7 @@ theorem iterates_in_band {n : ℕ} {F : Vec n → ℝ} (b : ℝ) (K : Set (Vec n
   show F (R.x k) ≥ Fstar + ℓ / 2
   linarith
 
-/-- Item `A/energy/disp/023` (`paper/sections/energy.tex:323-328`), in the proof of Theorem
+/-- Item `A/energy/disp/023` (`paper/sections/energy.tex:326-331`), in the proof of Theorem
 `art:certificate`. Standing assumptions: those of the theorem; the limiting gap
 $\lim_k(F(x_k)-F_*)=\ell>0$; the certificate `Cert` of the band $K_{\ell/2}$ (with
 $C\ge0$; band subscripts omitted: $W,m,C,L,\delta$ are `Cert.W`, `Cert.m`, ...); $J$ with
@@ -1579,7 +1579,7 @@ theorem certificate_budget_general {n : ℕ} {F : Vec n → ℝ} (R : Admissible
   simpa only [add_zero] using hfin
 
 /-- Item `A/energy/prose/042` (`paper/sections/energy.tex:261-264`): Proof of Theorem `art:certificate`, undisplayed claim of
-`paper/sections/energy.tex:308-340` (not a register item): with $P_J=1$ and
+`paper/sections/energy.tex:311-343` (not a register item): with $P_J=1$ and
 $P_{k+1}=P_k(1+Ld_k)$ ($L\ge0$), summability gives
 $1\le P_k\le\exp(L\sum_{j\ge J}d_j)=\overline P$ for every $k\ge J$. -/
 theorem normalization_bounds {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (L : ℝ)
@@ -1599,7 +1599,7 @@ theorem normalization_bounds {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRu
   rw [hPd i, ← tsum_mul_left]
   exact ⟨ResidualBudget.one_le_driftProduct hu i, ResidualBudget.driftProduct_le_exp_tsum hu hsu i⟩
 
-/-- Item `A/energy/disp/024` (`paper/sections/energy.tex:333-335`), in the proof of Theorem
+/-- Item `A/energy/disp/024` (`paper/sections/energy.tex:336-338`), in the proof of Theorem
 `art:certificate`. Under the standing assumptions of display `A/energy/disp/023`, with
 $\overline P=\exp(L\sum_{j\ge J}d_j)$ (`Pbar`), for every $N\ge J$,
 \[ m\overline P^{-1}\sum_{k=J}^{N-1}q_k^{-1}\le E_J+C(N-J). \]
@@ -1633,7 +1633,7 @@ theorem zero_gradient_minimizer {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ
     (x : Vec n) (hx : HasFDerivAt F (gradientFunctional 0) x) : ∀ z, F x ≤ F z :=
   global_minimum_of_zero_gradient hF hx
 
-/-- Item `A/energy/prose/002` (`paper/sections/energy.tex:6-8`): "$B_k=H_k^{-1}$ under control~\cite{FND_P76,FND_BN89,FND_N92}. When gradients jump across nonsmooth kinks, $\norm{y_k}^2/(y_k^Ts_k)$ can diverge to $+\infty$ even along steps approaching a minimizer. In this section we develop an analytical" For the convex
+/-- Item `A/energy/prose/002` (`paper/sections/energy.tex:6-9`): "$B_k=H_k^{-1}$ under control~\cite{FND_P76,FND_BN89,FND_N92}. When gradients jump across nonsmooth kinks, $\norm{y_k}^2/(y_k^Ts_k)$ can diverge to $+\infty$ even along steps approaching a minimizer. In this section we develop an analytical" For the convex
 $F(x)=|x|$ on $\R^1$: for every $\varepsilon>0$ there are differentiable points $x,z$ with
 gradients $g,h$, $\|z-x\|^2=4\varepsilon^2$ and $\|h-g\|^2=4$. -/
 theorem secant_jump_persists :
@@ -1688,7 +1688,7 @@ theorem certificate_not_necessary :
     exact AccumulatingKinks.every_neighborhood_no_certificates hnhds
       ((hasBandCertificates_iff _ _ _ _ _ (by norm_num)).mp hcert)
 
-/-- Item `A/energy/lemma/art:tail-comparison` (`paper/sections/energy.tex:347-360`): Lemma `art:tail-comparison` (`paper/sections/energy.tex`, Tail vector comparison): along an
+/-- Item `A/energy/lemma/art:tail-comparison` (`paper/sections/energy.tex:350-363`): Lemma `art:tail-comparison` (`paper/sections/energy.tex`, Tail vector comparison): along an
 admissible run with bounded gradients and $\sum_k d_k < \infty$, there cannot exist an index $J$,
 vectors $w_k$, scalars $\lambda_k,\beta_k$, and constants $m>0$, $C,L\ge0$ satisfying
 $(g_k^T w_k)^2 \ge m$, $(y_k^T w_{k+1})^2 / t_k \le C$, $w_{k+1} = \lambda_k w_k + \beta_k s_k$,
@@ -1794,7 +1794,7 @@ theorem energy_step_chain {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n
       EnergyIdentities.energy_outer, hE, ha, div_eq_inv_mul]
     rfl
 
-/-- Item `A/energy/prose/002` (`paper/sections/energy.tex:6-8`): "$B_k=H_k^{-1}$ under control~\cite{FND_P76,FND_BN89,FND_N92}. When gradients jump across nonsmooth kinks, $\norm{y_k}^2/(y_k^Ts_k)$ can diverge to $+\infty$ even along steps approaching a minimizer. In this section we develop an analytical" For the finite convex $F(x)=|x|$ on $\R^1$, minimized at $0$: the differentiable
+/-- Item `A/energy/prose/002` (`paper/sections/energy.tex:6-9`): "$B_k=H_k^{-1}$ under control~\cite{FND_P76,FND_BN89,FND_N92}. When gradients jump across nonsmooth kinks, $\norm{y_k}^2/(y_k^Ts_k)$ can diverge to $+\infty$ even along steps approaching a minimizer. In this section we develop an analytical" For the finite convex $F(x)=|x|$ on $\R^1$, minimized at $0$: the differentiable
 points $x_k=-1/(k+1)$ and $z_k=1/(k+1)$, with gradients $g_k=-1$, $h_k=1$, tend to the
 minimizer, $y=h_k-g_k$ and $s=z_k-x_k$ have $y^Ts>0$, and $\|y\|^2/(y^Ts)\to+\infty$. -/
 theorem secant_ratio_unbounded :
@@ -1914,7 +1914,7 @@ theorem stepProjector_orthogonal {n : ℕ} (s : Vec n) (hs : s ≠ 0) :
   · rw [Matrix.sub_mulVec, Matrix.one_mulVec, Matrix.smul_mulVec_assoc, outer_mulVec, hv,
       zero_smul, smul_zero, sub_zero]
 
-/-- Item `A/energy/disp/026` (`paper/sections/energy.tex:365-370`), in the proof of Lemma
+/-- Item `A/energy/disp/026` (`paper/sections/energy.tex:368-373`), in the proof of Lemma
 `art:tail-comparison`. Under the hypotheses of the lemma at an index $k\ge J$, with
 $E_k=w_k^TB_kw_k$ and $\widehat B_k$ of Lemma `art:run-invariants` (variables with their
 defining equations),

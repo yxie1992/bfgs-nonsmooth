@@ -104,8 +104,8 @@ Lean proof does not use.
 | `prose/034` | 268-272 | `l1_nonsmooth`, `linf_nonsmooth` |
 | `prose/037` | 272-274 | `euclidean_norm_case`, `asymmetric_example`, `homogeneous_examples_norm` |
 | `prose/041` | 278-280 | `homogeneous_value_dichotomy` |
-| `A/introduction/prose/035` | `paper/sections/introduction.tex:238-240` | `linf_nonsmooth`, `linf_tie_example` |
-| `A/hypothesis_examples/proof/001` | `paper/appendices/hypothesis_examples.tex:28-39` | `mixed_radial_secant` |
+| `A/introduction/prose/035` | `paper/sections/introduction.tex:258-260` | `linf_nonsmooth`, `linf_tie_example` |
+| `A/hypothesis_examples/proof/001` | `paper/appendices/hypothesis_examples.tex:29-40` | `mixed_radial_secant` |
 
 The theorem item `art:centered` also lists `centered_summands_not_minimized` (its last sentence);
 the corollary `art:homogeneous-examples` is `homogeneous_examples_norm`,
@@ -791,7 +791,7 @@ theorem ae_curvature_misses_jump (f : ℝ → ℝ) (hf : ∀ t, f t = (t + 2) ^ 
 sufficient; Theorem~\ref{art:nonradial-example} will exhibit convergence where
 \eqref{art:radial-condition}, and hence by Theorem~\ref{art:radial-equivalence} also
 \eqref{art:inward-condition}, fails on positive bands arbitrarily near the minimizer." For the objective $F=\max_if_i$ of Theorem
-`art:nonradial-example` (`PlanarQuadraticExample.objective`, `paper/sections/local.tex:325-331`),
+`art:nonradial-example` (`PlanarQuadraticExample.objective`, `paper/sections/local.tex:323-329`),
 with minimizer $0$ and $F(0)=0$: on every sublevel $\{F\le b\}$, $b>0$, both
 \eqref{art:inward-condition} and \eqref{art:radial-condition} fail (each on some positive
 band), while every admissible run with $F(x_0)<1/100$ converges to $0$ in value and iterates
@@ -1266,8 +1266,8 @@ theorem mixed_hypotheses (F : Vec 2 → ℝ) (hF_def : ∀ x, F x = (x 0) ^ 2 + 
     Localization.sublevel_compact hconv 0 hmin hunique, hψ, hψ11, hγ, hγh,
     fun x => by simp [hF_def]⟩
 
-/-- Item `A/global/corollary/art:mixed-benchmark` (`paper/sections/global.tex:18-24`), Corollary `art:mixed-benchmark`
-(`paper/sections/global.tex:18-24`), including its display `A/global/disp/001`
+/-- Item `A/global/corollary/art:mixed-benchmark` (`paper/sections/global.tex:17-23`), Corollary `art:mixed-benchmark`
+(`paper/sections/global.tex:17-23`), including its display `A/global/disp/001`
 "For $F(u,v)=u^2+|v|$, every infinite admissible full-BFGS run, with arbitrary $H_0\succ0$ and any fixed $0<c_1<c_2<1$, satisfies \[ F(u_k,v_k)\longrightarrow0,\qquad (u_k,v_k)\longrightarrow(0,0). \]" Here $(u,v)$ is `x : Vec 2` with $u=x_0$, $v=x_1$;
 $H_0$, $c_1$, $c_2$ are fields of the run.
 
@@ -1328,7 +1328,7 @@ theorem mixed_secant_same_sign {u v r w : ℝ} (hv : v ≠ 0) (hw : w ≠ 0) (hv
     rw [mixed_objective_apply]
     nlinarith [abs_nonneg w]
 
-/-- Item `A/global/disp/002` (`paper/sections/global.tex:37-40`): , in the proof of Corollary
+/-- Item `A/global/disp/002` (`paper/sections/global.tex:36-39`): , in the proof of Corollary
 `art:mixed-benchmark`, second case: for differentiable points $x=(u,v)$ and $z=(r,w)$ of
 $F(u,v)=u^2+|v|$ with $v$ and $w$ of opposite signs, $y=\nabla F(z)-\nabla F(x)$,
 $t=y^T(z-x)$ and $S=|v|+|w|>0$: $t=2(r-u)^2+2S$, $y^Tz=2(r-u)r+2|w|$, and

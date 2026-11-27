@@ -13,7 +13,7 @@ included in Section `art:failure` (`paper/sections/failure.tex:300`). Register:
 ## The specified implementation
 
 The theorem is about "the deterministic unit-first bracketing implementation of
-Section `art:failure`" (`failure.tex:29-55`). In Lean it is
+Section `art:failure`" (`failure.tex:30-56`). In Lean it is
 `NonStrictLineSearch.fromMetric F x H c₁ c₂ N`: at a differentiable point `x` it uses
 `g = coordinateGradient F x` ($=\nabla F(x)$) and $p=-Hg$ (`bfgsStep H g 1`), starts with
 $\alpha_{\rm lo}=0$, $\alpha_{\rm hi}=+\infty$ (`none`) and trial length $\alpha=1$, tests
@@ -37,7 +37,7 @@ by `(x 0, H 0)`: the implementation is deterministic.
 `Vec 2 = Fin 2 → ℝ` carries the sup norm; the theorem's norms are Euclidean,
 `‖euclideanVector z‖`. `RadialHessian.matrix f x` is the matrix of `fderiv ℝ (fderiv ℝ f) x`;
 for the $C^2$ branches $f_i$ (differentiable everywhere, with a differentiable derivative map)
-it is the classical Hessian of the caption of Table `art:regularity-map` (`failure.tex:392-394`), the derivative of the gradient map
+it is the classical Hessian of the caption of Table `art:regularity-map` (`failure.tex:394-396`), the derivative of the gradient map
 (`BfgsCoverage.Article.Failure.classical_hessian`). $A\succeq0$ is `A.PosSemidef`.
 `FrameNorms.euclideanOpNorm` is the Euclidean operator norm.
 `ConvexSubdifferential.subdifferential F x` is
@@ -170,11 +170,11 @@ theorem mem_trialHistory {j : Fin 3} {a : ℝ} (ha : a ∈ trialHistory j) :
 
 /-! ### Theorem `art:local-failure` -/
 
-/-- Item `A/negative_upper/theorem/art:local-failure` (`paper/statements/negative_upper.tex:1-25`),
+/-- Item `A/negative_upper/theorem/art:local-failure` (`paper/statements/negative_upper.tex:1-26`),
 Theorem `art:local-failure` (Local failure with globally smooth convex branches), including its
 displays Item `A/negative_upper/disp/001` (`paper/statements/negative_upper.tex:4-6`),
-Item `A/negative_upper/disp/002` (`paper/statements/negative_upper.tex:11-13`) and
-Item `A/negative_upper/disp/003` (`paper/statements/negative_upper.tex:16-20`).
+Item `A/negative_upper/disp/002` (`paper/statements/negative_upper.tex:13-15`) and
+Item `A/negative_upper/disp/003` (`paper/statements/negative_upper.tex:17-21`).
 
 "There exist four globally convex functions $f_i\in C^{2,1}(\R^2)$ satisfying \[ 0\preceq\nabla^2f_i(x)\preceq64I\qquad(i=0,1,2,3;\;x\in\R^2) \] such that $F=\max_{0\le i\le3}f_i$ has compact sublevel sets and a unique nonsmooth minimizer at $0$, together with starting points $x_0^{(\ell)}\to0$ ($\ell\ge1$), all initialized with $H_0=I$, having the following property: for every fixed pair \[ 0<c_1\le\tfrac13,\qquad c_1<c_2<1, \] the unit-first bracketing BFGS algorithm of Section~\ref{art:failure} generates the same infinite full-BFGS run from $x_0^{(\ell)}$, and that run satisfies \[ x_k^{(\ell)}\longrightarrow\bar x_\ell\ne0,\qquad F(x_k^{(\ell)})\downarrow F(\bar x_\ell)>F(0)=0,\qquad 0\notin\partial F(\bar x_\ell). \] Every accepted and rejected trial point is differentiable, each line search terminates in at most five trials with accepted step lengths repeating $1,1/4,1/16$, and the supremum of the norms of all accepted and rejected query points in the $\ell$th run tends to zero as $\ell\to\infty$."
 

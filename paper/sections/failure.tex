@@ -7,21 +7,22 @@ show that outside those structures, convexity, coercivity, and smooth or
 strongly convex branch formulas do not prevent unmodified full BFGS from
 converging to nonstationary points.
 
-Our construction develops three general mechanisms for analyzing quasi-Newton
-failure:
+The construction proceeds in three steps:
 \begin{enumerate}
-\item an \emph{exact self-similar three-step BFGS cycle} around a nonstationary
-three-slope corner in $\R^2$ where $0\in\aff\{g_0,g_1,g_2\}\setminus\conv\{g_0,g_1,g_2\}$,
-which immediately yields global failure on a coercive four-piece polyhedral
-objective from $H_0=I$ (Theorem~\ref{art:failure_polyhedral});
-\item a \emph{metric-preserving scale-covariance law} ($\sigma=\lambda^2$) that
-embeds infinitely many shrinking copies of that cycle near the unique minimizer
-of one four-branch $C^{2,1}$ convex objective while keeping $H_0=I$ fixed
-across every scale (Theorem~\ref{art:local-failure}); and
-\item a \emph{scale-normalized return-map and stable-manifold perturbation}
-that preserves the failing query tree when uniform strong convexity breaks exact
-homogeneity, yielding local failure on a four-branch uniformly strongly convex
-$C^{1,1}$ objective (Theorem~\ref{art:local-failure-lower}).
+\item First, at a nonstationary three-slope corner in $\R^2$ where
+$0\in\aff\{g_0,g_1,g_2\}\setminus\conv\{g_0,g_1,g_2\}$, we construct three BFGS
+steps after which the iterate and inverse-Hessian matrix are exact scalar copies
+of their initial values, yielding global convergence to a nonstationary point on
+a coercive four-piece polyhedral objective from $H_0=I$
+(Theorem~\ref{art:failure_polyhedral}).
+\item Second, we place shrinking copies of that three-step cycle near the unique
+minimizer of a single four-branch $C^{2,1}$ convex objective under the scaling
+relation $\sigma=\lambda^2$, which leaves the initial matrix $H_0=I$ unchanged
+across every scale (Theorem~\ref{art:local-failure}).
+\item Third, because uniform strong convexity breaks exact scaling, we analyze a
+scale-normalized three-step return map and extract a perturbed failing orbit on
+its local stable manifold, embedding failing runs into a four-branch uniformly
+strongly convex $C^{1,1}$ objective (Theorem~\ref{art:local-failure-lower}).
 \end{enumerate}
 
 \subsection{The line-search implementation}
@@ -46,7 +47,7 @@ of a single active piece, and every inequality in~\eqref{art:failure_tests}
 holds or fails strictly, so strict and non-strict implementations execute the
 identical decision tree.
 
-We write one unmodified inverse-BFGS update cleanly as the operator
+We write one unmodified inverse-BFGS update as the operator
 \begin{equation}\label{art:failure_update}
  \mathcal B(H,g,g^+,\alpha)
  =\left(I-\frac{sy^T}{y^Ts}\right)H
@@ -56,12 +57,11 @@ where $s=-\alpha Hg$ and $y=g^+-g$, with no resetting or rescaling of $H$.
 
 \subsection{A self-similar three-step cycle and global polyhedral failure}
 
-How can unmodified BFGS from $H_0=I$ stall at a corner where strict descent
-exists? Consider a three-piece positively homogeneous cone
-$G(z)=\max_{0\le i\le2}g_i^Tz$ on $\R^2$. If three consecutive BFGS steps visit
-smooth regions of branches $0,1,2,0$ in turn and return \emph{both} the inverse
-Hessian and the iterate to the same scalar multiple $\rho\in(0,1)$ of their
-starting values,
+Consider a three-piece positively homogeneous cone
+$G(z)=\max_{0\le i\le2}g_i^Tz$ on $\R^2$. If three consecutive BFGS steps from
+$H_0=I$ visit smooth regions of branches $0,1,2,0$ in turn and return both the
+inverse Hessian and the iterate to the same scalar multiple $\rho\in(0,1)$ of
+their starting values,
 \[
  H_3=\rho I,\qquad z_3=\rho z_0,
 \]
@@ -239,7 +239,7 @@ Near $(-1,16)$, the polyhedral function $\overline G$ still converges locally by
 Theorem~\ref{art:polyhedral}. To refute \emph{local} every-start convergence near the unique minimizer of a
 single smooth-branch objective, we must embed infinitely many shrinking copies
 of the bad corner at centers $\bar x_\ell\to0$ inside one fixed function $F$,
-with every failing run initialized from the \emph{same} matrix $H_0=I$.
+with every failing run initialized from the same matrix $H_0=I$.
 
 A simple scale-covariance calculation governs when rescaled copies share an
 initial inverse-Hessian approximation. Suppose that on an open region $U$
@@ -264,7 +264,7 @@ both sides of the Armijo and weak-Wolfe tests~\eqref{art:failure_tests} multiply
 by $\sigma>0$, preserving every strict trial decision whenever all queried
 points remain inside $U$.
 
-Equation~\eqref{art:matched-scaling} reveals the decisive scaling law
+Equation~\eqref{art:matched-scaling} isolates the condition
 \[
  \sigma=\lambda^2\quad\Longrightarrow\quad H_F=H_{\mathcal G},
 \]
@@ -273,7 +273,7 @@ together with global $C^{2,1}$ smoothness at the accumulation point $0$, let
 $\theta=1/16$ and $a_\ell=\theta^\ell$. Placing scalar affine plateaus of value
 $a_\ell^3$ and slope $a_\ell^2$ at nodes $ba_\ell$ gives local slope factor
 $a_\ell^2=\sigma/\lambda$; setting spatial scale $\lambda=a_\ell^2$ then yields
-$\sigma=a_\ell^4=\lambda^2$. Better still, each affine plateau has width
+$\sigma=a_\ell^4=\lambda^2$. Moreover, each affine plateau has width
 $\Theta(a_\ell)$, whereas the entire copied BFGS trial tree has diameter
 $\Theta(a_\ell^2)\ll a_\ell$, creating asymptotic room to contain every accepted
 and rejected query inside the flat region (Figure~\ref{art:shrinking-scales}).
@@ -295,7 +295,7 @@ The explicit piecewise-quartic formula for $\varphi_b$ and the elementary
 calculus verification of Lemma~\ref{art:upper_scalar_lemma} are given in
 Appendix~\ref{art:lower_curvature} (equation~\eqref{art:upper_scalar}), side by
 side with the companion $C^{1,1}$ spline used for strong convexity. With
-$\varphi_b$ in hand, the proof of our first local failure theorem is immediate.
+$\varphi_b$ defined, we obtain the first local failure theorem.
 
 \input{statements/negative_upper}
 
@@ -369,9 +369,11 @@ In Theorem~\ref{art:local-failure}, the flat affine plateaus where $\varphi_b''=
 prevent the branches from being strongly convex. Adding a positive quadratic
 $\tfrac\mu2\norm{z}^2$ restores uniform strong convexity, but perturbs the
 branch gradients by $\mu z$ and breaks exact scale invariance: the homogeneous
-seed orbit is no longer an exact trajectory. Remarkably, the failing cycle is
-\emph{dynamically stable} in a codimension-three sense, yielding an independent
-local counterexample under uniform strong convexity.
+seed orbit is no longer an exact trajectory. Although generic perturbations move
+off the cycle, the homogeneous seed fixed point of a scale-normalized three-step
+return map admits a two-dimensional local stable manifold extending into
+positive scale, on which the nine-query decision tree persists and yields a
+second local counterexample under uniform strong convexity.
 
 \input{statements/negative_lower}
 
@@ -414,7 +416,7 @@ manifold that penetrates into the region $\tau>0$. Any positive-$\tau$ point on 
 perturbed BFGS run converging to the nonstationary origin with identical trial
 lists across all $0<c_1\le1/3$, $c_1<c_2<1$ (Proposition~\ref{art:quadratic_failure}).
 \item \emph{Orbit-copying spline and global whitening.} Because $Q_\mu$ itself
-is not scale-homogeneous, we select \emph{one} sufficiently small perturbed
+is not scale-homogeneous, we select a single sufficiently small perturbed
 orbit $(x_k^{\rm seed},H_k^{\rm seed})$ and replicate it at centers
 $\bar x_\ell=a_\ell(2,-32)^T$ ($a_\ell=128^{-\ell}$) via scalar splines $\psi_b$
 with node values $a_\ell^2$ and slopes $a_\ell$. This yields the exact local

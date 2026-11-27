@@ -1,19 +1,18 @@
 \section{Global convergence: mixed benchmarks, inward models, and homogeneous geometry}\label{art:global}
 
-We now turn the comparison-energy framework of Section~\ref{art:energy} into
-concrete global convergence theorems on $\R^n$. To make the mechanism
-completely transparent before introducing general sublevel-band definitions, we
-begin by resolving the open benchmark $F(u,v)=u^2+|v|$ of Guo and
-Lewis~\cite{GL18} directly in a few lines, and then extract the general
-one-point inward principle that powers our $n$-dimensional theorems.
+We now apply the comparison-energy estimates of Section~\ref{art:energy} to
+global convergence on $\R^n$. Before introducing general sublevel-band
+hypotheses, we settle whole-sequence convergence on the benchmark
+$F(u,v)=u^2+|v|$ of Guo and Lewis~\cite{GL18}, and then formulate the one-point
+inward ray condition behind our $n$-dimensional theorems.
 
-\subsection{Warm-up: whole-sequence convergence on $F(u,v)=u^2+|v|$}
+\subsection{The Guo--Lewis benchmark $F(u,v)=u^2+|v|$}
 
 On $F(u,v)=u^2+|v|$, Guo and Lewis~\cite[Corollary~4.4]{GL18} proved via smooth
 surrogates that $\liminf_{k\to\infty}|v_k|=0$, leaving open whether the full
-sequence $(u_k,v_k)$ converges to $(0,0)$. With Lemma~\ref{art:reference-energy}
-and Theorem~\ref{art:reciprocal-growth} in hand, whole-sequence convergence
-follows directly from a two-line radial secant estimate.
+sequence $(u_k,v_k)$ converges to $(0,0)$. Combining
+Lemma~\ref{art:reference-energy} with Theorem~\ref{art:reciprocal-growth}
+resolves this question by bounding the radial projection of the gradient jump.
 
 \begin{corollary}[Whole-sequence convergence on $u^2+|v|$]\label{art:mixed-benchmark}
 For $F(u,v)=u^2+|v|$, every infinite admissible full-BFGS run, with arbitrary
@@ -47,14 +46,15 @@ Theorem~\ref{art:reciprocal-growth}. Hence $u_k^2+|v_k|\to0$ and
 $(u_k,v_k)\to(0,0)$.\qed
 \end{proof}
 
-Why did the cross-kink jump $y_k=(2(u_{k+1}-u_k),\pm2)$ satisfy
-$(y_k^Tx_{k+1})^2\le2bt_k$ even when $s_k\to0$ makes $\norm{y_k}^2/t_k\to+\infty$?
-Because along every inward segment toward the origin, $|v|$ scales exactly
-linearly while $u^2$ contributes only a quadratic Taylor error~\eqref{art:mixed-inward-remainder}
+The benchmark proof above compares gradients at two points $(x,z)$: the
+cross-kink jump $y_k=(2(u_{k+1}-u_k),\pm2)$ satisfies $(y_k^Tx_{k+1})^2\le2bt_k$
+even when $s_k\to0$ drives $\norm{y_k}^2/t_k\to+\infty$, because along any
+single inward ray toward $(0,0)$ the term $|v|$ scales linearly while $u^2$
+contributes only the quadratic Taylor error~\eqref{art:mixed-inward-remainder}
 (an explicit admissible run with $H_k=\operatorname{diag}(1,2^{-k})\to\operatorname{diag}(1,0)$
-is exhibited in Proposition~\ref{art:examples-mixed}). We now show that this
-one-point inward property controls two-point radial secants for arbitrary finite
-convex functions on $\R^n$.
+is given in Proposition~\ref{art:examples-mixed}). We next give a condition on
+the objective along one inward ray that implies the required two-point radial
+secant estimate for arbitrary finite convex functions on $\R^n$.
 
 \subsection{From one-point inward models to two-point secant control}
 
@@ -207,7 +207,7 @@ follows from convexity of $F$), and Corollary~\ref{art:radial-convergence}
 completes the proof.\qed
 \end{proof}
 
-Notice that Theorem~\ref{art:centered} recovers
+Theorem~\ref{art:centered} recovers
 Corollary~\ref{art:mixed-benchmark} immediately in $\R^2$ by taking
 $\psi(u,v)=u^2$, $\gamma(u,v)=|v|$, $x_*=(0,0)$, and $U=\R^2$, and extends it
 to arbitrary smooth-plus-norm or smooth-plus-support-function sums in $\R^n$

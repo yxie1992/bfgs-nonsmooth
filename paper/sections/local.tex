@@ -11,11 +11,11 @@ inside any prescribed neighborhood of $x_*$ and trap every Armijo run
 independently of $H_0$.
 
 We use this sublevel localization to establish two distinct mechanisms for local
-convergence. First, in arbitrary dimension $\R^n$, finite polyhedral cell
-partitions and local centered decompositions enjoy inward radial accuracy near
-$x_*$. Second, in $\R^2$, we treat curved switching interfaces, along which inward
-radial secant bounds fail, by constructing a moving contour-velocity comparison
-field.
+convergence. First, in arbitrary dimension $\R^n$, on each cell of a finite
+polyhedral partition (or under a local centered decomposition), the smooth
+branch gives the required approximation along rays toward $x_*$. Second, in
+$\R^2$, we treat curved switching interfaces, along which inward radial secant
+bounds fail, by constructing a moving contour-velocity comparison field.
 
 \subsection{Sublevel localization, polyhedral partitions, and composite penalties}
 
@@ -43,7 +43,7 @@ $\{F\le F(x_*)+\varepsilon\}\subset B_r(x_*)\subset U$, and Armijo descent
 preserves this sublevel.\qed
 \end{proof}
 
-Near $x_*$, a finite polyhedral partition simplifies dramatically: every closed
+Near $x_*$, a finite polyhedral partition simplifies because every closed
 cell that does not contain $x_*$ stays bounded away from $x_*$, so within a
 small ball around $x_*$ every active cell is a convex polyhedron containing
 $x_*$ itself. Any inward ray $x-\tau(x-x_*)$ therefore remains inside a single
@@ -138,22 +138,23 @@ local convergence even though $\norm{A_j(x-x_*)}_2$ is not polyhedral.
 
 \subsection{Curved switching interfaces and contour-velocity fields in the plane}
 
-What happens when nonsmooth kinks follow \emph{curved} switching manifolds
-through $x_*$, as in a pointwise maximum $F=\max_{1\le i\le m}f_i$ of smooth
-strongly convex functions whose active Hessians differ? In that setting, inward
-rays toward $x_*$ cross the curved switching locus transversely, and the radial
-secant condition~\eqref{art:radial-condition} can fail on \emph{every}
-neighborhood of $x_*$. For instance, on the three-quadratic maximum of
-Theorem~\ref{art:nonradial-example} below, the tie curve $f_0(u,v)=f_1(u,v)$
-satisfies $v=u-\tfrac12u^2+O(u^3)$, along which the gradient jump pairs
-nontrivially with the radial vector, $(\nabla f_0-\nabla f_1)^T(u,v)=\tfrac12u^2-v^2\ne0$,
-driving $(y^Tz)^2/t\to+\infty$ for short steps straddling the curve.
+When nonsmooth kinks follow curved switching curves through $x_*$, as in a
+pointwise maximum $F=\max_{1\le i\le m}f_i$ of smooth strongly convex functions
+whose active Hessians differ, inward rays toward $x_*$ cross the switching
+locus transversely and the radial secant condition~\eqref{art:radial-condition}
+can fail on every neighborhood of $x_*$. For instance, on the three-quadratic
+maximum of Theorem~\ref{art:nonradial-example} below, the tie curve
+$f_0(u,v)=f_1(u,v)$ satisfies $v=u-\tfrac12u^2+O(u^3)$, along which the gradient
+jump pairs nontrivially with the radial vector,
+$(\nabla f_0-\nabla f_1)^T(u,v)=\tfrac12u^2-v^2\ne0$, driving
+$(y^Tz)^2/t\to+\infty$ for short steps straddling the curve.
 
-To prove convergence across curved kinks, the comparison vector $w(x)$ must
-rotate so that it pairs equally with both active gradients across each switching
-curve while changing slowly enough along BFGS steps to satisfy the transport
-bound of Lemma~\ref{art:tail-comparison}. In $\R^2$, we can build such a field globally
-around any positive level curve away from the \emph{affine-critical set}
+To prove convergence across curved kinks, a radial comparison vector must be
+replaced by a moving vector field $w(x)$ that pairs equally with both active
+gradients across each switching curve while changing slowly enough along BFGS
+steps to satisfy the transport bound of Lemma~\ref{art:tail-comparison}. In
+$\R^2$, we can build such a field globally around any positive level curve away
+from the \emph{affine-critical set}
 \[
  \mathcal C_{\rm aff}=\{p\in\R^2:0\in\aff\partial F(p)\}.
 \]
@@ -168,35 +169,32 @@ curve $\{F=\ell\}$ ($\ell>F_*$) proceeds in three steps (proved in full in
 Lemma~\ref{art:planar-field} of Appendix~\ref{art:planar-appendix}):
 \begin{enumerate}
 \item \emph{Corner velocities cancel jumps.} Where two convex $C^2$ branches
-$f_1,f_2$ tie with linearly independent gradients, the implicit function theorem
-parametrizes the corner curve $p_j(t)$ by the level $f_1(p_j(t))=f_2(p_j(t))=t$.
-Differentiating in $t$ gives a velocity vector $v_j(t)=p_j'(t)$ satisfying
-$\nabla f_1(p_j(t))^Tv_j(t)=\nabla f_2(p_j(t))^Tv_j(t)=1$: thus $v_j$ has
-strictly positive pairing with the subdifferential while annihilating the
-leading gradient jump $(\nabla f_2-\nabla f_1)^Tv_j=0$.
-\item \emph{Normal-angle blending cancels tangent derivatives.} When positive
-sublevels $\{F\le t\}$ are strictly convex (contain no boundary line segments),
-distinct corners on $\{F=t\}$ have disjoint supporting-normal arcs. Writing
-$n(\theta)=(\cos\theta,\sin\theta)^T$ and $T(\theta)=(-\sin\theta,\cos\theta)^T$,
-we blend the positive corner pairings $n(\theta)^Tv_j(t)$ smoothly with $1$ into
-a positive periodic height function $h(t,\theta)$ and set
-$w(x)=h(F(x),\theta(x))n(\theta(x))+h_\theta(F(x),\theta(x))T(\theta(x))$ where
-$n(\theta(x))=\nabla F(x)/\norm{\nabla F(x)}$. Near the $j$th switching curve,
-$h=n^Tv_j$ and $h_\theta=T^Tv_j$, so $w(x)=v_j(F(x))$ extends Lipschitz-continuously
-across the kink. Everywhere smooth, the classical support-parametrization
-identity $\partial_\theta(hn+h_\theta T)=(h+h_{\theta\theta})T$~\cite{geom_Bogosel2023}
-cancels the normal component of the angular derivative, so $Dw$ maps the
-one-dimensional level-set tangent line into itself: $\det(s,Dw\,s)=0$ whenever
-$s$ is tangent to $\{F=\text{const}\}$.
-\item \emph{Charging field rotation to Armijo decrease.} Because weak Wolfe
-keeps eligible steps uniformly transverse to $w$, $|\det(s,w)|\ge\kappa\norm{s}$.
-Along an eligible step $s$, tangent preservation bounds the derivative of
-$\log|\det(s,w)|$ by a multiple of the normal displacement, hence by the
-variation of $F$ along the chord, which convexity bounds by $2d$. Expressing
-$w(z)=\lambda w(x)+\beta s$ in the basis $(w(x),s)$ therefore yields
-$\lambda=\det(s,w(z))/\det(s,w(x))$ with $|\log\lambda|\le C_1d$ and
-$\lambda^2\le1+Ld$, charging all field rotation to the summable decreases $d_k$
-without requiring $\sum_k\norm{s_k}<\infty$.
+$f_1,f_2$ tie with linearly independent gradients, the switching curve is
+parametrized by the objective level $f_1(p_j(t))=f_2(p_j(t))=t$. As the level
+$t$ increases, both active branches change at unit rate along the corner
+trajectory $p_j(t)$. Differentiating in $t$ therefore gives a velocity vector
+$v_j(t)=p_j'(t)$ satisfying $\nabla f_1(p_j(t))^Tv_j(t)=\nabla f_2(p_j(t))^Tv_j(t)=1$:
+both active gradients have unit inner product with $v_j(t)$, so their difference
+$\nabla f_2-\nabla f_1$ vanishes in that direction.
+\item \emph{Normal-angle extension and tangent preservation.} When positive
+sublevels $\{F\le t\}$ contain no boundary line segments, distinct corners on
+$\{F=t\}$ have disjoint supporting-normal arcs. We interpolate the positive
+corner pairings smoothly across unit-normal angles $\theta$ into a positive
+periodic support height $h(t,\theta)$ and define $w(x)=hn+h_\theta T$ along the
+intervening smooth arcs (with unit normal $n=\nabla F/\norm{\nabla F}$ and
+tangent $T$), which collapses to $w(x)=v_j(F(x))$ across the $j$th switching
+curve. Differentiating $hn+h_\theta T$ with respect to $\theta$ cancels the
+normal component~\cite{geom_Bogosel2023}, so $Dw$ maps the one-dimensional
+level-set tangent line into itself: $\det(s,Dw\,s)=0$ whenever $s$ is tangent to
+$\{F=\text{const}\}$.
+\item \emph{Bounding field change by functional decrease.} Weak Wolfe keeps
+short eligible steps uniformly transverse to $w$. Because $Dw$ preserves
+level-set tangents, the transverse change in $w$ along an eligible step $s$
+comes only from motion across level curves and is bounded by the variation of
+$F$ along the chord, which convexity controls by $2d$. Expressing
+$w(z)=\lambda w(x)+\beta s$ in the basis $(w(x),s)$ then yields
+$\lambda^2\le1+Ld$ (Appendix~\ref{art:planar-appendix}), so the decrease in $F$
+bounds the cost of changing the field without requiring $\sum_k\norm{s_k}<\infty$.
 \end{enumerate}
 
 \begin{theorem}[Affine-critical cluster points in the plane]\label{art:planar-cluster}
@@ -312,13 +310,13 @@ positive sublevels inside that neighborhood contain no nontrivial line
 segments.\qed
 \end{proof}
 
-This multiplier nondegeneracy matches the active-set regularity conditions of
-local bundle-Newton theory~\preprintcite[Propositions~5.5--5.6]{LW} and
-Gebken~\cite{BG}, with a crucial difference: Corollary~\ref{art:planar-max}
-proves convergence of unmodified BFGS from objective geometry alone, with no
-assumed iterate or spectral asymptotics. We conclude the curved-interface theory
-with an explicit three-quadratic maximum showing that moving comparison fields
-strictly reach beyond radial analysis.
+This multiplier nondegeneracy matches the active-set regularity assumption of
+local bundle-Newton and piecewise-smooth analyses (Gebken~\cite{BG}; Lewis and
+Wylie~\preprintcite*[Propositions~5.5--5.6]{LW}), with a key difference:
+Corollary~\ref{art:planar-max} proves convergence of unmodified BFGS from
+objective geometry alone, with no assumed iterate or spectral asymptotics. We
+conclude the curved-interface theory with an explicit three-quadratic maximum
+showing that moving comparison fields strictly reach beyond radial analysis.
 
 \begin{theorem}[Explicit convergence basin with curved, nonradial switching]\label{art:nonradial-example}
 For the three-quadratic maximum on $\R^2$ given by
@@ -405,7 +403,7 @@ Proposition~\ref{art:examples-full-rank} gives a full-rank certificate in $\R^n$
 Lemma~\ref{art:examples-run-existence} proves that on any bounded-below finite
 convex objective having no differentiable stationary point and at most countably
 many nondifferentiable points along each line through a differentiability point,
-infinite admissible runs exist from \emph{every} differentiable $x_0$,
+infinite admissible runs exist from every differentiable $x_0$,
 $H_0\succ0$, and $0<c_1<c_2<1$,
 establishing unrestricted run existence for a parameterized curved two-quadratic
 family (Proposition~\ref{art:examples-two-quadratics}) and for the

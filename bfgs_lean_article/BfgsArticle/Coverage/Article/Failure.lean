@@ -128,14 +128,14 @@ state the claims for this range, which contains that of Theorem `art:local-failu
 | `prose/054` | 370-372 | `quadratic_changes_dynamics` |
 | `prose/056` | 384-386 | `regularity_map_first_row`, `no_uniform_lower_curvature` |
 | `prose/059` | 392-394 | `classical_hessian` |
-| `A/seed_certificate/proof/002` | `paper/appendices/seed_certificate.tex:74-116` | `seed_cycle`, `seed_matrices_steps` |
-| `A/seed_certificate/prose/023` | `paper/appendices/seed_certificate.tex:133` | `seed_points` |
-| `A/seed_certificate/prose/012` | `paper/appendices/seed_certificate.tex:155-156` | `seed_cycle`, `seed_cycle_range_counterexample` |
-| `A/lower_curvature/prose/046` | `paper/appendices/lower_curvature.tex:14-18` | `ramp_center_coordinate`, `ramp_primitive` |
-| `A/lower_curvature/disp/001` | `paper/appendices/lower_curvature.tex:19-28` | `ramp_primitive`, `ramp_center_coordinate` |
-| `A/lower_curvature/disp/002` (`art:upper_scalar`) | `paper/appendices/lower_curvature.tex:36-40` | `phi_formulas`, `phi_unique` |
-| `A/lower_curvature/disp/003` | `paper/appendices/lower_curvature.tex:42-49` | `phi_formulas`, `phi_unique` |
-| `A/lower_curvature/disp/004` | `paper/appendices/lower_curvature.tex:53-56` | `positive_interval_derivatives` |
+| `A/seed_certificate/proof/002` | `paper/appendices/seed_certificate.tex:72-114` | `seed_cycle`, `seed_matrices_steps` |
+| `A/seed_certificate/prose/023` | `paper/appendices/seed_certificate.tex:131` | `seed_points` |
+| `A/seed_certificate/prose/012` | `paper/appendices/seed_certificate.tex:153-154` | `seed_cycle`, `seed_cycle_range_counterexample` |
+| `A/lower_curvature/prose/046` | `paper/appendices/lower_curvature.tex:19-23` | `ramp_center_coordinate`, `ramp_primitive` |
+| `A/lower_curvature/disp/001` | `paper/appendices/lower_curvature.tex:24-33` | `ramp_primitive`, `ramp_center_coordinate` |
+| `A/lower_curvature/disp/002` (`art:upper_scalar`) | `paper/appendices/lower_curvature.tex:41-45` | `phi_formulas`, `phi_unique` |
+| `A/lower_curvature/disp/003` | `paper/appendices/lower_curvature.tex:47-54` | `phi_formulas`, `phi_unique` |
+| `A/lower_curvature/disp/004` | `paper/appendices/lower_curvature.tex:58-61` | `positive_interval_derivatives` |
 
 The remaining items (summaries, restatements of the theorems, statements about the
 lower-curvature construction, figure and table items) are `SAME_AS`, `PART_OF`, `PROOF` or
@@ -231,7 +231,7 @@ theorem implemented_run_unique {n : ℕ} {F : Vec n → ℝ} {c₁ c₂ : ℝ}
     funext fun k => hg k (hxH k).1, funext fun k => hα k (hxH k).1 (hxH k).2⟩
 
 open Classical in
-/-- Item `A/failure/prose/003` (`paper/sections/failure.tex:31-43`): the specified line
+/-- Item `A/failure/prose/003` (`paper/sections/failure.tex:32-44`): the specified line
 search. At a differentiable point $x$ with $g=\nabla F(x)$ and $p=-Hg$, the search
 `NonStrictLineSearch.fromMetric F x H c₁ c₂ N` is the bracketing search started with
 $\alpha_{\rm lo}=0$, $\alpha_{\rm hi}=+\infty$ (`none`) and $\alpha=1$; one step with lower
@@ -262,7 +262,7 @@ theorem specified_search {n : ℕ} (F : Vec n → ℝ) (x : Vec n) (H : Mat n) (
   · rw [NonStrictLineSearch.search]
     rfl
 
-/-- Item `A/failure/disp/001` (`paper/sections/failure.tex:35-38`), equation
+/-- Item `A/failure/disp/001` (`paper/sections/failure.tex:36-39`), equation
 `art:failure_tests`: the two tests of the search,
 \[ F(x+\alpha p)\le F(x)+c_1\alpha g^Tp,\qquad \nabla F(x+\alpha p)^Tp\ge c_2g^Tp. \]
 `NonStrictLineSearch.Armijo` is literally the first inequality. `NonStrictLineSearch.Wolfe`
@@ -276,7 +276,7 @@ theorem failure_tests {n : ℕ} (F : Vec n → ℝ) (x p g : Vec n) (c₁ c₂ �
   unfold NonStrictLineSearch.Wolfe
   rw [DeterministicLineSearch.actual_coordinateGradient hg']
 
-/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:43-47`): "in~\eqref{art:failure_tests} hold. Along every run constructed below, every accepted and rejected trial point $x+\alpha p$ lies in the open smooth interior of a single active piece, and every inequality in~\eqref{art:failure_tests} holds or fails strictly, so strict and non-strict implementations execute the identical decision tree." The sentence
+/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:44-48`): "in~\eqref{art:failure_tests} hold. Along every run constructed below, every accepted and rejected trial point $x+\alpha p$ lies in the open smooth interior of a single active piece, and every inequality in~\eqref{art:failure_tests} holds or fails strictly, so strict and non-strict implementations execute the identical decision tree." The sentence
 describes the implementation used by both Theorem `art:local-failure` and Theorem
 `art:local-failure-lower`; this theorem covers the first construction and
 `strict_tests_same_decisions_lower` the constructions with positive lower curvature. For every
@@ -305,7 +305,7 @@ theorem strict_tests_same_decisions (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁'
   obtain ⟨h1, h2, h3⟩ := DLiteralTargets.nonStrictRun c₁ c₂ hc₁ hc₁' hc hc₂
   exact ⟨fun k => (h1 k).2, fun k => (h2 k).2, fun ℓ hℓ k => (h3 ℓ hℓ k).2⟩
 
-/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:43-47`), for the constructions with
+/-- Item `A/failure/prose/005` (`paper/sections/failure.tex:44-48`), for the constructions with
 positive lower curvature (Theorem `art:local-failure-lower` and Proposition
 `art:quadratic_failure`, which use the same implementation): "in~\eqref{art:failure_tests} hold. Along every run constructed below, every accepted and rejected trial point $x+\alpha p$ lies in the open smooth interior of a single active piece, and every inequality in~\eqref{art:failure_tests} holds or fails strictly, so strict and non-strict implementations execute the identical decision tree." For every
 $0<c_1\le1/3$, $c_1<c_2<1$:
@@ -351,11 +351,11 @@ theorem strict_tests_same_decisions_lower :
     obtain ⟨R, hx, hH, h1, h2, hlim, -, -, -, -, -, hns, hs, hU', -⟩ := hruns c₁ c₂ hc₁ hc₁' hc hc₂
     exact ⟨R, h1, h2, hx, hH, hU', hlim, fun k => ⟨hns k, hs k⟩⟩
 
-/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:50-54`): The full inverse update $\mathcal B(H,g,g^+,\alpha)$ of equation `art:failure_update`. -/
+/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:51-55`): The full inverse update $\mathcal B(H,g,g^+,\alpha)$ of equation `art:failure_update`. -/
 def fullUpdate {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) : Mat n :=
   inverseBFGS H (bfgsStep H g α) (gplus - g)
 
-/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:50-54`), equation
+/-- Item `A/failure/disp/002` (`paper/sections/failure.tex:51-55`), equation
 `art:failure_update`:
 \[ \mathcal B(H,g,g^+,\alpha)=\Bigl(I-\frac{sy^T}{y^Ts}\Bigr)H\Bigl(I-\frac{ys^T}{y^Ts}\Bigr)
  +\frac{ss^T}{y^Ts},\quad s=-\alpha Hg,\quad y=g^+-g. \]
@@ -372,7 +372,7 @@ theorem failure_update {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) (s y :
 theorem fullUpdate_eq_update (H : Mat 2) (g gplus : Vec 2) (α : ℝ) :
     fullUpdate H g gplus α = SeedCycle.update H g gplus α := rfl
 
-/-- Item `A/failure/prose/006` (`paper/sections/failure.tex:55`): "where $s=-\alpha Hg$ and $y=g^+-g$, with no resetting or rescaling of $H$." In every run (`AdmissibleBFGSRun`) the next
+/-- Item `A/failure/prose/006` (`paper/sections/failure.tex:56`): "where $s=-\alpha Hg$ and $y=g^+-g$, with no resetting or rescaling of $H$." In every run (`AdmissibleBFGSRun`) the next
 matrix is the full update of the current one: $H_{k+1}=\mathcal B(H_k,g_k,g_{k+1},\alpha_k)$
 for every $k$. -/
 theorem run_update_full {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ) :
@@ -1761,7 +1761,7 @@ theorem scalar_parameter_bounds {b : ℝ} (hb : b = 2 ∨ b = DEmbedding.bStar) 
   · norm_num
   · exact ⟨by linarith [DEmbedding.bStar_bounds.1], DEmbedding.bStar_bounds.2.le⟩
 
-/-- Part of item `A/lower_curvature/prose/046` (`paper/appendices/lower_curvature.tex:14-18`): for $b\in\{2,b_*\}$,
+/-- Part of item `A/lower_curvature/prose/046` (`paper/appendices/lower_curvature.tex:19-23`): for $b\in\{2,b_*\}$,
 \[ t_b=\frac{1-(1+\theta+\theta^2)/b}{1-\theta^2},\qquad v=\frac{\xi-t_b+\varepsilon}{2\varepsilon}. \]
 The library's `DScalarRamp.center b` is $t_b$ and `DScalarRamp.rampCoordinate b ξ` is $v$. -/
 theorem ramp_center_coordinate (b ξ : ℝ) :
@@ -2477,7 +2477,7 @@ theorem quadratic_restores_curvature (μ : ℝ) (i : Fin 4) :
   unfold FixedNormal.EuclideanStrongConvexOn
   simpa only [add_sub_cancel_right] using DEmbedding.branch_convex i
 
-/-- Item `A/failure/prose/054` (`paper/sections/failure.tex:370-372`): "$\tfrac\mu2\norm{z}^2$ restores uniform strong convexity, but perturbs the branch gradients by $\mu z$ and breaks exact scale invariance: the homogeneous seed orbit is no longer an exact trajectory. Remarkably, the failing cycle is" For every $\mu>0$,
+/-- Item `A/failure/prose/054` (`paper/sections/failure.tex:370-373`): "$\tfrac\mu2\norm{z}^2$ restores uniform strong convexity, but perturbs the branch gradients by $\mu z$ and breaks exact scale invariance: the homogeneous seed orbit is no longer an exact trajectory. Remarkably, the failing cycle is" For every $\mu>0$,
 the objective $Q_\mu=\frac\mu2\|x\|^2+G$ has gradient $g_0+\mu z_0$ at $z_0$, and no step of
 the form $-\alpha(g_0+\mu z_0)$ from $z_0$ (with $H_0=I$) reaches the seed point $z_1$. -/
 theorem quadratic_changes_dynamics (μ : ℝ) (hμ : 0 < μ) :
@@ -2526,7 +2526,7 @@ theorem quadratic_changes_dynamics (μ : ℝ) (hμ : 0 < μ) :
     rw [hα0] at e0
     norm_num at e0
 
-/-- Item `A/failure/prose/059` (`paper/sections/failure.tex:392-394`): "\caption{Comparison of the two local smooth-branch counterexamples. Here $\nabla^2F(x)$ denotes the classical Fr\'echet derivative of $\nabla F$ defined on a neighborhood of $x$. Both theorems hold for one fixed objective, $H_0=I$,"
+/-- Item `A/failure/prose/059` (`paper/sections/failure.tex:394-396`): "\caption{Comparison of the two local smooth-branch counterexamples. Here $\nabla^2F(x)$ denotes the classical Fr\'echet derivative of $\nabla F$ defined on a neighborhood of $x$. Both theorems hold for one fixed objective, $H_0=I$,"
 
 Convention: $F$ has a classical Hessian at $x$ ($x$ is a twice-differentiable point) when $F$
 is differentiable on a neighborhood of $x$ and its derivative map is differentiable at $x$:
@@ -2584,7 +2584,7 @@ theorem classical_hessian {n : ℕ} (F : Vec n → ℝ) (x : Vec n)
       (RadialHessian.bilinearMatrix (fderiv ℝ (fderiv ℝ F) x) *ᵥ v) i
     rw [← hd, h, hsymm]
 
-/-- Item `A/failure/prose/056` (`paper/sections/failure.tex:384-386`): the first row of
+/-- Item `A/failure/prose/056` (`paper/sections/failure.tex:386-388`): the first row of
 Table `art:regularity-map`. "Four convex $C^{2,1}$ branches (Theorem~\ref{art:local-failure}) & $0\preceq\nabla^2f_i(x)\preceq64I$ on $\R^2$ & Smooth $C^{2,1}$ branches everywhere; curvature vanishes on plateaus\\[3pt]" The
 last column is headed "Regularity at $x_*=0$" (the minimizer $0$). -/
 theorem regularity_map_first_row :

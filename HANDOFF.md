@@ -17,9 +17,10 @@ M44):
     plus Appendices A--E with author/email (`Yuchen Xie`, `yxie@u.northwestern.edu`),
     public repository link, and November 2026 literature update (`arXiv:2610.34087v2`)
     (53 pages, zero em-dashes, zero LaTeX/package warnings, zero overfull boxes).
-  - Independent 3-pass `gpt-6-astra` mathematical & Lean-fidelity audit plus
-    independent `claude-opus-5.5` core-definition semantic audit and full
-    article register/module migration completed: all 561 article items across
+  - Independent 3-pass `gpt-6-astra` mathematical & Lean-fidelity audit,
+    independent `claude-opus-5.5` core-definition semantic audit, full
+    article register/module migration, and `gpt-6.2-astra` literary/editorial
+    refinement pass completed: all 560 active article items across
     `editorial/lean_coverage/register/A_*.json` and all 16 coverage modules in
     `BfgsArticle/Coverage/Article/*.lean` (including 48 new unfolded theorems and
     all 4 open problems) pass `check_coverage.py --strict`, 100% literal prose-anchor

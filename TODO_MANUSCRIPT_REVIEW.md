@@ -119,6 +119,16 @@ for the author below (step 3 of the plan in `AGENTS.md`).
     (`7443/7443`), `check_coverage.py --strict` (`0` problems), 100% literal
     prose-anchor matching, and standalone `dist/arxiv_submission.tar.gz` (53 pages,
     0 warnings, 0 overfull boxes, 0 em-dashes).
+  - [x] Run `gpt-6.2-astra` cover-to-cover literary/editorial presentation review
+    and apply all recommendations across `paper/` (framing Abstract and §§1--2
+    around conflicting estimates on $(g_k^TH_kg_k)^{-1}$, stating the
+    admissible-run vs.\ implemented-line-search asymmetry ahead of Table 1,
+    trimming duplicate summary layers and defensive self-descriptions, clarifying
+    $(c_1,c_2)$-independence and local stable-manifold persistence, and smoothing
+    transitions in §§3--6 and Appendices A--E); resync all `A_*.json` registers
+    (560 active items, 100% literal prose-anchor match), `ARTICLE_LEAN_MAP.md`,
+    and `paper/build/master.pdf` (53 pages, 0 em-dashes, 0 warnings, 0 overfull
+    boxes).
   - [ ] Post-arXiv companion & ledger sync: update `companion/appendices/seed_certificate.tex`
     and the companion side of M44 (`C_*.json`), refresh correspondence/ledger,
     and record fresh clean-tree `axiom_audit.py` and `kernel_replay.py` JSON receipts.
