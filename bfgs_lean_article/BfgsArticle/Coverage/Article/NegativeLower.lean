@@ -37,7 +37,7 @@ included in Section `art:failure` (`paper/sections/failure.tex:378`). Register:
 | Item | Lines | Lean |
 |---|---|---|
 | `theorem/art:local-failure-lower` | 1-26 | `local_failure_lower`, `fromMetric_fuel_mono` |
-| `A/lower_curvature/proof/004` | `paper/appendices/lower_curvature.tex:260-314` | `local_failure_lower` |
+| `A/lower_curvature/proof/004` | `paper/appendices/lower_curvature.tex:260-315` | `local_failure_lower` |
 
 The proof assembles the article package theorem `LUniform.uniformSmoothLocalFailure`
 (`BfgsArticle/LUniformLocal.lean`), whose objective is the whitened four-branch function
@@ -141,8 +141,8 @@ theorem smooth_center_value (m : ℕ) :
 
 /-! ### Theorem `art:local-failure-lower` -/
 
-/-- Item `A/negative_lower/theorem/art:local-failure-lower` (`paper/statements/negative_lower.tex:1-27`), Theorem `art:local-failure-lower`
-(`paper/statements/negative_lower.tex:1-27`), including its display
+/-- Item `A/negative_lower/theorem/art:local-failure-lower` (`paper/statements/negative_lower.tex:1-26`), Theorem `art:local-failure-lower`
+(`paper/statements/negative_lower.tex:1-26`), including its display
 `A/negative_lower/disp/001` (lines 8-11).
 
 "There exist a finite strongly convex function $F=\max_{0\le i\le3}f_i$ on $\R^2$ with compact sublevel sets and a unique nonsmooth minimizer at $0$, where each branch $f_i\in C^{1,1}(\R^2)$ is uniformly strongly convex with globally Lipschitz gradient and constants $0<\underline\mu\le\overline L<\infty$ satisfy \[ \underline\mu I\preceq\nabla^2F(x)\preceq\overline L I \quad\text{at every twice-differentiable point }x\in\R^2 \] (with the first three branches not twice differentiable at $0$), together with starting points $x_0^{(\ell)}\to0$ ($\ell\ge1$), all initialized with $H_0=I$, such that for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$ the unit-first bracketing BFGS algorithm of Section~\ref{art:failure} generates the same infinite full-BFGS run from $x_0^{(\ell)}$ satisfying \[ x_k^{(\ell)}\longrightarrow\bar x_\ell\ne0,\qquad \bar x_\ell\longrightarrow0,\qquad F(x_k^{(\ell)})\downarrow F(\bar x_\ell)>F(0),\qquad 0\notin\partial F(\bar x_\ell). \] Every accepted and rejected trial point is differentiable, the accepted step lengths repeat $1,1/4,1/16$, and the supremum of all query norms in the $\ell$th run tends to zero as $\ell\to\infty$."

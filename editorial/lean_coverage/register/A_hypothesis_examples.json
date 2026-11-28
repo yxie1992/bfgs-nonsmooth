@@ -1,447 +1,447 @@
 {
-  "file": "paper/appendices/hypothesis_examples.tex",
-  "lean_module": "BfgsArticle.Coverage.Article.HypothesisExamples",
-  "items": [
-    {
-      "id": "A/hypothesis_examples/prose/001",
-      "kind": "prose",
-      "anchor": "This appendix exhibits explicit band certificates and full-BFGS trajectories for",
-      "lines": [
-        3,
-        8
-      ],
-      "status": "SAME_AS",
-      "of": [
-        "A/hypothesis_examples/proposition/art:examples-mixed",
-        "A/hypothesis_examples/proposition/art:examples-full-rank",
-        "A/hypothesis_examples/lemma/art:examples-run-existence",
-        "A/hypothesis_examples/proposition/art:examples-two-quadratics",
-        "A/hypothesis_examples/corollary/art:examples-nonradial-runs",
-        "A/hypothesis_examples/proposition/art:examples-no-step"
-      ],
-      "note": "Overview of the appendix; \"sharp\" is interpretive."
-    },
-    {
-      "id": "A/hypothesis_examples/prose/002",
-      "kind": "prose",
-      "anchor": "Throughout, norms are\nEuclidean.",
-      "lines": [
-        7,
-        8
-      ],
-      "status": "NON_CLAIM",
-      "reason": "Notation convention. The Lean statements use sqNorm or euclideanVector for Euclidean norms, never the Pi/sup norm of Vec n for the quadratic objective or the Rayleigh unit sphere."
-    },
-    {
-      "id": "A/hypothesis_examples/proposition/art:examples-mixed",
-      "kind": "proposition",
-      "environment": "proposition",
-      "lines": [
-        12,
-        28
-      ],
-      "labels": [
-        "art:examples-mixed"
-      ],
-      "title": "Degenerating trajectory and band certificate on $u^2+|v|$",
-      "container": null,
-      "sha256": "eb74dcb1f8dcaf2e",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.mixed_certificates",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_history",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_smallest_eigenvalue",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_least_spectrum",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_spectral_limit",
-        "BfgsVerification.HypothesisExamples.Mixed.certificate",
-        "BfgsVerification.HypothesisExamples.Mixed.certificate_parameters",
-        "BfgsVerification.HypothesisExamples.Mixed.joint_witness"
-      ],
-      "note": "New on 16 October 2026 (M42). Literal statement set: mixed_certificates keeps every b > 0 and every 0 < η ≤ b, with the exact objective formula, convexity, attained minimum zero, uniqueness, compact K_b and W(x)=xxᵀ, m=η², C=2b≥0, L=0, δ=1. The valid line-search constants are arbitrary; the construction actually works for any constants. BandCertificate includes m>0, L≥0, δ>0, PSD/symmetry, visibility, and secant/transport for every eligible pair of actual full-space gradients in the positive band with d≤δ; its fields and eligibility are documented in the module. mixed_history jointly supplies those objective facts, all certificates and the actual-gradient full-BFGS history at b=2/3, with the printed coordinates, constants, initialization, containment and limits. mixed_smallest_eigenvalue gives an exact least-Rayleigh-value characterization: on sqNorm v=1, the least vᵀH_kv is 2^{-k}, attained at the unit eigenvector (0,1), and 2^{-k}→0. This is stronger evidence than only H_k tending to a singular matrix. The same least value and limit are included in mixed_history for that same run. F is finite because its codomain is ℝ. Added after independent review on 16 October 2026 (O1): mixed_least_spectrum states IsLeast (spectrum ℝ (Mixed.run.H k)) (2^{-k}) for every k; mixed_spectral_limit combines that direct actual-spectrum statement with convergence to zero."
-    },
-    {
-      "id": "A/hypothesis_examples/disp/001",
-      "kind": "display",
-      "environment": "display",
-      "lines": [
-        16,
-        19
-      ],
-      "labels": [],
-      "title": null,
-      "container": "A/hypothesis_examples/proposition/art:examples-mixed",
-      "sha256": "ab632bd5d3391181",
-      "status": "PART_OF",
-      "of": "A/hypothesis_examples/proposition/art:examples-mixed",
-      "note": "Exact field and constants in mixed_certificates, for arbitrary b>0 and 0<η≤b; also in the joint history at b=2/3."
-    },
-    {
-      "id": "A/hypothesis_examples/disp/002",
-      "kind": "display",
-      "environment": "display",
-      "lines": [
-        21,
-        25
-      ],
-      "labels": [],
-      "title": null,
-      "container": "A/hypothesis_examples/proposition/art:examples-mixed",
-      "sha256": "a7ad16f3bbd9eda7",
-      "status": "PART_OF",
-      "of": "A/hypothesis_examples/proposition/art:examples-mixed",
-      "note": "mixed_history states all four formulas for one R : AdmissibleBFGSRun 2 Mixed.objective, including its actual gradients and full inverse-BFGS update. The real geometric power (1/2)^k denotes 2^{-k}."
-    },
-    {
-      "id": "A/hypothesis_examples/proof/001",
-      "kind": "proof",
-      "environment": "proof",
-      "lines": [
-        29,
-        40
-      ],
-      "labels": [],
-      "title": null,
-      "container": null,
-      "sha256": "f4d38c7be1cf747a",
-      "status": "PROOF",
-      "lean": [
-        "BfgsVerification.HypothesisExamples.Mixed.radial_pairing",
-        "BfgsVerification.HypothesisExamples.Mixed.gradient_eq_of_nonneg",
-        "BfgsVerification.HypothesisExamples.Mixed.gradient_eq_of_nonpos",
-        "BfgsVerification.HypothesisExamples.Mixed.differentiable_coordinate_ne_zero",
-        "BfgsVerification.HypothesisExamples.Mixed.secant_bound",
-        "BfgsVerification.HypothesisExamples.Mixed.projected_transport",
-        "BfgsVerification.HypothesisExamples.Mixed.run",
-        "BfgsVerification.HypothesisExamples.Mixed.run_limits",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_same_sign_secants",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_opposite_sign_secants",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_crossing_cauchy",
-        "BfgsCoverage.Article.HypothesisExamples.mixed_history_scalars",
-        "BfgsCoverage.Article.Global.mixed_radial_secant"
-      ],
-      "of": "A/hypothesis_examples/proposition/art:examples-mixed",
-      "note": "The library proves the proposition along this proof. The secant bound (y^Tz)^2 <= 2F(z)t <= 2bt of the two-case calculation (before M45 displayed here: mixed_same_sign_secants, mixed_opposite_sign_secants, mixed_crossing_cauchy; now in the proof of Corollary art:mixed-benchmark, Global.mixed_radial_secant) and the scalars of the history (mixed_history_scalars) are stated separately."
-    },
-    {
-      "id": "A/hypothesis_examples/proposition/art:examples-full-rank",
-      "kind": "proposition",
-      "environment": "proposition",
-      "lines": [
-        42,
-        53
-      ],
-      "labels": [
-        "art:examples-full-rank"
-      ],
-      "title": "Full-rank band certificate in $\\R^n$",
-      "container": null,
-      "sha256": "f89b755b9449606e",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.quadratic_certificates",
-        "BfgsCoverage.Article.HypothesisExamples.quadratic_history",
-        "BfgsVerification.HypothesisExamples.Quadratic.objective",
-        "BfgsVerification.HypothesisExamples.Quadratic.objective_euclidean",
-        "BfgsVerification.HypothesisExamples.Quadratic.certificate",
-        "BfgsVerification.HypothesisExamples.Quadratic.certificate_parameters",
-        "BfgsVerification.HypothesisExamples.Quadratic.joint_witness"
-      ],
-      "note": "New on 16 October 2026 (M42). Literal statement set: quadratic_certificates covers every n≥1, every b>0 and every 0<η≤b, with the exact Euclidean objective formula, convexity, attained minimum zero, uniqueness, compact K_b, the exact identity field/constants, C≥0 and pointwise positive definiteness and rank n. The library's remaining certificate signs and all three inequalities are part of BandCertificate, documented in the module. Vec n carries the Pi/sup norm, so F is explicitly sqNorm/2=‖euclideanVector x‖²/2. quadratic_history joins objective, compact sublevel, all identity certificates and actual-gradient full-BFGS history for every prescribed x₀≠0. It states all coordinates, matrices, gradients, step lengths, constants, same-run initialization, b=F(x₀)>0, containment and value/iterate limits. It supplies certificates for every η>0, hence in particular the printed η≤b."
-    },
-    {
-      "id": "A/hypothesis_examples/disp/003",
-      "kind": "display",
-      "environment": "display",
-      "lines": [
-        46,
-        49
-      ],
-      "labels": [],
-      "title": null,
-      "container": "A/hypothesis_examples/proposition/art:examples-full-rank",
-      "sha256": "1f9bfe91ee450783",
-      "status": "PART_OF",
-      "of": "A/hypothesis_examples/proposition/art:examples-full-rank",
-      "note": "Exact field and constants in quadratic_certificates and in the same-run statement quadratic_history."
-    },
-    {
-      "id": "A/hypothesis_examples/proof/002",
-      "kind": "proof",
-      "environment": "proof",
-      "lines": [
-        54,
-        59
-      ],
-      "labels": [],
-      "title": null,
-      "container": null,
-      "sha256": "7058035e2b2a2c54",
-      "status": "PROOF",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.quadratic_history_decrease",
-        "BfgsVerification.HypothesisExamples.Quadratic.objective_hasGradient",
-        "BfgsVerification.HypothesisExamples.Quadratic.identity_energy",
-        "BfgsVerification.HypothesisExamples.Quadratic.exact_field_equalities",
-        "BfgsVerification.HypothesisExamples.Quadratic.inverseBFGS_identity",
-        "BfgsVerification.HypothesisExamples.Quadratic.run",
-        "BfgsVerification.HypothesisExamples.Quadratic.run_scalars",
-        "BfgsVerification.HypothesisExamples.Quadratic.run_weak_wolfe_eq",
-        "BfgsVerification.HypothesisExamples.Quadratic.run_limits"
-      ],
-      "of": "A/hypothesis_examples/proposition/art:examples-full-rank",
-      "note": "Actual gradient x; secant y=s; secant/transport equalities for all pairs; identity preserved by the full inverse update; literal Δ_k=3d_k/4 and weak-Wolfe equality; nonzero finite-index gradients and geometric limits. This proof has no separate display."
-    },
-    {
-      "id": "A/hypothesis_examples/lemma/art:examples-run-existence",
-      "kind": "lemma",
-      "environment": "lemma",
-      "lines": [
-        63,
-        76
-      ],
-      "labels": [
-        "art:examples-run-existence"
-      ],
-      "title": "Existence of differentiable Armijo--weak-Wolfe steps and runs",
-      "container": null,
-      "sha256": "293f06db312e0d30",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.strict_wolfe_step",
-        "BfgsCoverage.Article.HypothesisExamples.admissible_run_exists",
-        "BfgsVerification.AdmissibleRunExistence.exists_wolfe_step",
-        "BfgsVerification.AdmissibleRunExistence.exists_admissible_run"
-      ],
-      "note": "New on 16 October 2026 (M42). The two literal wrappers cover both clauses. F : Vec n → ℝ is finite, globally convex and bounded below. For every full-space differentiability point x and every nonzero direction p, the full-space nondifferentiability times on x+t•p are countable. strict_wolfe_step takes an actual nonzero gradient, SPD H, valid constants and p=-Hg, and returns α>0, an actual endpoint gradient, strict Armijo and strict weak Wolfe paired with p (the core's equivalent step-pairing form is divided by α>0). admissible_run_exists adds nonzero gradients at all differentiability points and keeps every prescribed differentiable x₀, SPD H₀ and constant pair, with the exact initial actual gradient coordinateGradient F x₀. The run structure includes the full update. No line-restricted differentiability assumption or prescribed search algorithm is substituted."
-    },
-    {
-      "id": "A/hypothesis_examples/disp/004",
-      "kind": "display",
-      "environment": "display",
-      "lines": [
-        66,
-        68
-      ],
-      "labels": [],
-      "title": null,
-      "container": "A/hypothesis_examples/lemma/art:examples-run-existence",
-      "sha256": "61d11c6a9a263857",
-      "status": "PART_OF",
-      "of": "A/hypothesis_examples/lemma/art:examples-run-existence",
-      "note": "Exactly the set in hypothesis hline of both wrappers: {t : ℝ | ¬ DifferentiableAt ℝ F (x+t•p)}."
-    },
-    {
-      "id": "A/hypothesis_examples/proof/003",
-      "kind": "proof",
-      "environment": "proof",
-      "lines": [
-        77,
-        88
-      ],
-      "labels": [],
-      "title": null,
-      "container": null,
-      "sha256": "ef06455ef1eec4ec",
-      "status": "PROOF",
-      "lean": [
-        "BfgsVerification.AdmissibleRunExistence.exists_wolfe_step",
-        "BfgsVerification.AdmissibleRunExistence.exists_admissible_run",
-        "BfgsVerification.curvature_pos_of_weakWolfe",
-        "BfgsVerification.inverseBFGS_posDef"
-      ],
-      "of": "A/hypothesis_examples/lemma/art:examples-run-existence",
-      "note": "The core proof follows the printed secant-slope argument: negative directional derivative, small and large slopes, intermediate value and an open interval avoiding the countable exceptional set, then supporting inequality and strict Wolfe. The infinite run is built by recursive choice on actual-gradient SPD states, using positive secant curvature and preservation of positive definiteness. No separate proof display occurs."
-    },
-    {
-      "id": "A/hypothesis_examples/proposition/art:examples-two-quadratics",
-      "kind": "proposition",
-      "environment": "proposition",
-      "lines": [
-        90,
-        101
-      ],
-      "labels": [
-        "art:examples-two-quadratics"
-      ],
-      "title": "Curved two-quadratic family with global convergence and run existence",
-      "container": null,
-      "sha256": "7a3a500287a7aa0b",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.two_quadratic_joint",
-        "BfgsCoverage.Article.HypothesisExamples.two_quadratic_objective_geometry",
-        "BfgsCoverage.Article.HypothesisExamples.two_quadratic_planar_hypotheses",
-        "BfgsCoverage.Article.HypothesisExamples.two_quadratic_finite_max_hypotheses",
-        "BfgsCoverage.Article.HypothesisExamples.paperRegularAt_iff",
-        "BfgsCoverage.Article.HypothesisExamples.planarHypotheses_iff",
-        "BfgsCoverage.Article.HypothesisExamples.finiteMaxHypotheses_iff",
-        "BfgsVerification.TwoQuadraticExample.paper_planar_hypotheses",
-        "BfgsVerification.TwoQuadraticExample.joint_witness"
-      ],
-      "note": "New on 16 October 2026 (M42). Literal statement set with only a,b,c>0 as objective premises. two_quadratic_objective_geometry covers the unique attained minimum zero, every compact sublevel, the exact tie parabola, full-space differentiability off precisely that parabola, and the a=c line specialization. two_quadratic_planar_hypotheses states all article hypotheses on every positive sublevel, including the open-neighborhood C²/convex-two-branch alternative with both branches active and independent actual gradients, and C_aff∩K⊆argmin F. two_quadratic_finite_max_hypotheses identifies both original active indices and gradients (0,±1), and supplies the complete finite-max package with weights 1/2. The three iff helpers unfold PaperRegularAt, PlanarHypotheses and FiniteMaxHypotheses; the latter includes convexity, unique minimizer, globally convex C² branches on the open neighborhood univ, actual finite-maximum representation, low strict contours, indexed affine independence, positive weights, sum one and zero balance. two_quadratic_joint joins those proved hypotheses with convergence of every admissible run and an actual convergent run for every prescribed full-space differentiability point, SPD matrix and valid constants; it is not a collection of unrelated existential witnesses. The universal convergence also includes Euclidean solution-set distance, stronger than the printed value/iterate conclusion."
-    },
-    {
-      "id": "A/hypothesis_examples/disp/005",
-      "kind": "display",
-      "environment": "display",
-      "lines": [
-        92,
-        94
-      ],
-      "labels": [],
-      "title": null,
-      "container": "A/hypothesis_examples/proposition/art:examples-two-quadratics",
-      "sha256": "99803c489e957590",
-      "status": "DEFINITION",
-      "lean": [
-        "BfgsVerification.TwoQuadraticExample.objective",
-        "BfgsVerification.TwoQuadraticExample.branch",
-        "BfgsCoverage.Article.HypothesisExamples.two_quadratic_formula"
-      ],
-      "note": "two_quadratic_formula unfolds the definitions to the exact printed maximum in u=x 0, v=x 1."
-    },
-    {
-      "id": "A/hypothesis_examples/proof/004",
-      "kind": "proof",
-      "environment": "proof",
-      "lines": [
-        102,
-        117
-      ],
-      "labels": [],
-      "title": null,
-      "container": null,
-      "sha256": "f17cca6898c63875",
-      "status": "PROOF",
-      "lean": [
-        "BfgsVerification.TwoQuadraticExample.branch_actual_hessian_lower_bound",
-        "BfgsVerification.TwoQuadraticExample.objective_lower",
-        "BfgsVerification.TwoQuadraticExample.strict_contours",
-        "BfgsVerification.TwoQuadraticExample.tie_determinant_ne_zero",
-        "BfgsVerification.TwoQuadraticExample.affineCritical_set",
-        "BfgsVerification.TwoQuadraticExample.regular_paper",
-        "BfgsVerification.TwoQuadraticExample.initial_active_family",
-        "BfgsVerification.TwoQuadraticExample.nondifferentiable_line_finite",
-        "BfgsVerification.TwoQuadraticExample.gradient_ne_zero_of_hasFDerivAt",
-        "BfgsVerification.TwoQuadraticExample.exists_admissible_run",
-        "BfgsVerification.TwoQuadraticExample.global_convergence",
-        "BfgsCoverage.Article.HypothesisExamples.two_quadratic_tie_determinant"
-      ],
-      "of": "A/hypothesis_examples/proposition/art:examples-two-quadratics",
-      "note": "The exact determinant display is its own LEAN item. The core proves the actual Hessian bound with μ=2min(a,min(b,c)), the averaging lower bound, strict contours, C_aff={0}, regular switching, indexed half-weight balance, finite full-space nondifferentiability times on every line through a differentiable start, and absence of a differentiable stationary point. It applies the general run-existence theorem and the planar convergence theorem to this same family. Undisplayed proof steps are covered by the result proofs under the coverage method. The optional radial-obstruction results in the core are not asserted by this appendix and are not part of this item."
-    },
-    {
-      "id": "A/hypothesis_examples/corollary/art:examples-nonradial-runs",
-      "kind": "corollary",
-      "environment": "corollary",
-      "lines": [
-        119,
-        124
-      ],
-      "labels": [
-        "art:examples-nonradial-runs"
-      ],
-      "title": "Run existence on the three-quadratic nonradial example",
-      "container": null,
-      "sha256": "89a96a68fdefde87",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.nonradial_runs",
-        "BfgsCoverage.Article.HypothesisExamples.nonradial_initial_value",
-        "BfgsVerification.PlanarQuadraticExample.objective_exists_admissible_run",
-        "BfgsVerification.PlanarQuadraticExample.fullBFGS_explicit_basin",
-        "BfgsVerification.PlanarQuadraticExample.start_point_facts"
-      ],
-      "note": "New on 16 October 2026 (M42). nonradial_runs quantifies over every full-space differentiable x₀ with F(x₀)<1/100, every H₀≻0 and all 0<c₁<c₂<1. It joins an actual run with precisely those data and convergence to the universal convergence statement for every run in the low sublevel. The objective is the same PlanarQuadraticExample.objective as A/local/theorem/art:nonradial-example; its branch formulas are A/local/disp/009. nonradial_initial_value proves full-space differentiability at (1/1000,0), the exact value 1001/10^6 and the strict threshold. Applying the all-start theorem to this point gives the numerical witness for every SPD matrix and valid pair, not merely existence of some unspecified low start."
-    },
-    {
-      "id": "A/hypothesis_examples/proof/005",
-      "kind": "proof",
-      "environment": "proof",
-      "lines": [
-        125,
-        142
-      ],
-      "labels": [],
-      "title": null,
-      "container": null,
-      "sha256": "52c2778fd14af00f",
-      "status": "PROOF",
-      "lean": [
-        "BfgsVerification.PlanarQuadraticExample.objective_run_hypotheses",
-        "BfgsVerification.PlanarQuadraticExample.tie_line_finite",
-        "BfgsVerification.PlanarQuadraticExample.nondifferentiable_line_finite",
-        "BfgsVerification.PlanarQuadraticExample.gradient_ne_zero_of_hasFDerivAt"
-      ],
-      "of": "A/hypothesis_examples/corollary/art:examples-nonradial-runs",
-      "note": "No separate proof display. The general existence premises are proved for the printed three-quadratic objective; the original convergence theorem supplies the exact 1/100 basin. Pairwise branch differences have finite zero sets on every nonconstant line, and actual differentiable gradients are nonzero. The exact initial value is checked by direct substitution in nonradial_initial_value."
-    },
-    {
-      "id": "A/hypothesis_examples/disp/006",
-      "kind": "display",
-      "environment": "display",
-      "lines": [
-        131,
-        137
-      ],
-      "labels": [],
-      "title": null,
-      "container": "A/hypothesis_examples/proof/005",
-      "sha256": "4c898c452ac21211",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.tie_loci"
-      ],
-      "note": "The three equivalences for all real u, v (explicit polynomials of the branches of Theorem art:nonradial-example)."
-    },
-    {
-      "id": "A/hypothesis_examples/proposition/art:examples-no-step",
-      "kind": "proposition",
-      "environment": "proposition",
-      "lines": [
-        146,
-        153
-      ],
-      "labels": [
-        "art:examples-no-step"
-      ],
-      "title": "A coercive homogeneous objective with no differentiable first step",
-      "container": null,
-      "sha256": "5e647827345b1129",
-      "status": "LEAN",
-      "lean": [
-        "BfgsCoverage.Article.HypothesisExamples.gauge_no_step",
-        "BfgsCoverage.Article.HypothesisExamples.gauge_formula",
-        "BfgsCoverage.Article.HypothesisExamples.gauge_covered_convergence",
-        "BfgsVerification.HypothesisExamples.Gauge.joint_obstruction"
-      ],
-      "note": "New on 16 October 2026 (M42). gauge_formula identifies the objective with the exact maximum. gauge_no_step joins all objective hypotheses (finite real-valued, convex, coercive, degree-one homogeneous, unique attained minimum zero) and every prescribed ε>0 initial state with the actual gradient (1,0), identity metric and full ray (ε−α,0). For α<ε it gives that actual gradient; for every α≥ε it gives full-space nondifferentiability. For every c₂<1 and α>0 it excludes an actual endpoint gradient satisfying weak Wolfe, without an Armijo premise. It excludes every admissible run from these data, whose constants are internally any valid pair. gauge_covered_convergence verifies the homogeneous theorem's convergence conclusion for all admissible runs on this objective; no run from the obstructed initialization is claimed."
-    },
-    {
-      "id": "A/hypothesis_examples/proof/006",
-      "kind": "proof",
-      "environment": "proof",
-      "lines": [
-        154,
-        163
-      ],
-      "labels": [],
-      "title": null,
-      "container": null,
-      "sha256": "1aebc7c30fe7e091",
-      "status": "PROOF",
-      "lean": [
-        "BfgsVerification.HypothesisExamples.Gauge.coordinate_bounds",
-        "BfgsVerification.HypothesisExamples.Gauge.initial_state",
-        "BfgsVerification.HypothesisExamples.Gauge.ray_step",
-        "BfgsVerification.HypothesisExamples.Gauge.ray_gradient_before",
-        "BfgsVerification.HypothesisExamples.Gauge.ray_not_differentiable_after",
-        "BfgsVerification.HypothesisExamples.Gauge.no_differentiable_weak_wolfe",
-        "BfgsVerification.HypothesisExamples.Gauge.no_admissible_run"
-      ],
-      "of": "A/hypothesis_examples/proposition/art:examples-no-step",
-      "note": "No separate display. The core follows the printed two-regime proof, including all points beyond the nonsmooth minimizer, with actual ambient gradients. Its coordinate bound |v|/2≤G is equivalent to the printed |v|≤2G. The obstruction is already to the first positive differentiable weak-Wolfe step."
-    }
-  ],
-  "discrepancies": []
+ "file": "paper/appendices/hypothesis_examples.tex",
+ "lean_module": "BfgsArticle.Coverage.Article.HypothesisExamples",
+ "items": [
+  {
+   "id": "A/hypothesis_examples/prose/001",
+   "kind": "prose",
+   "anchor": "This appendix exhibits explicit band certificates and full-BFGS trajectories for",
+   "lines": [
+    3,
+    8
+   ],
+   "status": "SAME_AS",
+   "of": [
+    "A/hypothesis_examples/proposition/art:examples-mixed",
+    "A/hypothesis_examples/proposition/art:examples-full-rank",
+    "A/hypothesis_examples/lemma/art:examples-run-existence",
+    "A/hypothesis_examples/proposition/art:examples-two-quadratics",
+    "A/hypothesis_examples/corollary/art:examples-nonradial-runs",
+    "A/hypothesis_examples/proposition/art:examples-no-step"
+   ],
+   "note": "Overview of the appendix; \"sharp\" is interpretive."
+  },
+  {
+   "id": "A/hypothesis_examples/prose/002",
+   "kind": "prose",
+   "anchor": "Throughout, norms are\nEuclidean.",
+   "lines": [
+    7,
+    8
+   ],
+   "status": "NON_CLAIM",
+   "reason": "Notation convention. The Lean statements use sqNorm or euclideanVector for Euclidean norms, never the Pi/sup norm of Vec n for the quadratic objective or the Rayleigh unit sphere."
+  },
+  {
+   "id": "A/hypothesis_examples/proposition/art:examples-mixed",
+   "kind": "proposition",
+   "environment": "proposition",
+   "lines": [
+    12,
+    28
+   ],
+   "labels": [
+    "art:examples-mixed"
+   ],
+   "title": "Degenerating trajectory and band certificate on $u^2+|v|$",
+   "container": null,
+   "sha256": "eb74dcb1f8dcaf2e",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.mixed_certificates",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_history",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_smallest_eigenvalue",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_least_spectrum",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_spectral_limit",
+    "BfgsVerification.HypothesisExamples.Mixed.certificate",
+    "BfgsVerification.HypothesisExamples.Mixed.certificate_parameters",
+    "BfgsVerification.HypothesisExamples.Mixed.joint_witness"
+   ],
+   "note": "New on 16 October 2026 (M42). Literal statement set: mixed_certificates keeps every b > 0 and every 0 < η ≤ b, with the exact objective formula, convexity, attained minimum zero, uniqueness, compact K_b and W(x)=xxᵀ, m=η², C=2b≥0, L=0, δ=1. The valid line-search constants are arbitrary; the construction actually works for any constants. BandCertificate includes m>0, L≥0, δ>0, PSD/symmetry, visibility, and secant/transport for every eligible pair of actual full-space gradients in the positive band with d≤δ; its fields and eligibility are documented in the module. mixed_history jointly supplies those objective facts, all certificates and the actual-gradient full-BFGS history at b=2/3, with the printed coordinates, constants, initialization, containment and limits. mixed_smallest_eigenvalue gives an exact least-Rayleigh-value characterization: on sqNorm v=1, the least vᵀH_kv is 2^{-k}, attained at the unit eigenvector (0,1), and 2^{-k}→0. This is stronger evidence than only H_k tending to a singular matrix. The same least value and limit are included in mixed_history for that same run. F is finite because its codomain is ℝ. Added after independent review on 16 October 2026 (O1): mixed_least_spectrum states IsLeast (spectrum ℝ (Mixed.run.H k)) (2^{-k}) for every k; mixed_spectral_limit combines that direct actual-spectrum statement with convergence to zero."
+  },
+  {
+   "id": "A/hypothesis_examples/disp/001",
+   "kind": "display",
+   "environment": "display",
+   "lines": [
+    16,
+    19
+   ],
+   "labels": [],
+   "title": null,
+   "container": "A/hypothesis_examples/proposition/art:examples-mixed",
+   "sha256": "ab632bd5d3391181",
+   "status": "PART_OF",
+   "of": "A/hypothesis_examples/proposition/art:examples-mixed",
+   "note": "Exact field and constants in mixed_certificates, for arbitrary b>0 and 0<η≤b; also in the joint history at b=2/3."
+  },
+  {
+   "id": "A/hypothesis_examples/disp/002",
+   "kind": "display",
+   "environment": "display",
+   "lines": [
+    21,
+    25
+   ],
+   "labels": [],
+   "title": null,
+   "container": "A/hypothesis_examples/proposition/art:examples-mixed",
+   "sha256": "a7ad16f3bbd9eda7",
+   "status": "PART_OF",
+   "of": "A/hypothesis_examples/proposition/art:examples-mixed",
+   "note": "mixed_history states all four formulas for one R : AdmissibleBFGSRun 2 Mixed.objective, including its actual gradients and full inverse-BFGS update. The real geometric power (1/2)^k denotes 2^{-k}."
+  },
+  {
+   "id": "A/hypothesis_examples/proof/001",
+   "kind": "proof",
+   "environment": "proof",
+   "lines": [
+    29,
+    40
+   ],
+   "labels": [],
+   "title": null,
+   "container": null,
+   "sha256": "f4d38c7be1cf747a",
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.HypothesisExamples.Mixed.radial_pairing",
+    "BfgsVerification.HypothesisExamples.Mixed.gradient_eq_of_nonneg",
+    "BfgsVerification.HypothesisExamples.Mixed.gradient_eq_of_nonpos",
+    "BfgsVerification.HypothesisExamples.Mixed.differentiable_coordinate_ne_zero",
+    "BfgsVerification.HypothesisExamples.Mixed.secant_bound",
+    "BfgsVerification.HypothesisExamples.Mixed.projected_transport",
+    "BfgsVerification.HypothesisExamples.Mixed.run",
+    "BfgsVerification.HypothesisExamples.Mixed.run_limits",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_same_sign_secants",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_opposite_sign_secants",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_crossing_cauchy",
+    "BfgsCoverage.Article.HypothesisExamples.mixed_history_scalars",
+    "BfgsCoverage.Article.Global.mixed_radial_secant"
+   ],
+   "of": "A/hypothesis_examples/proposition/art:examples-mixed",
+   "note": "The library proves the proposition along this proof. The secant bound (y^Tz)^2 <= 2F(z)t <= 2bt of the two-case calculation (before M45 displayed here: mixed_same_sign_secants, mixed_opposite_sign_secants, mixed_crossing_cauchy; now in the proof of Corollary art:mixed-benchmark, Global.mixed_radial_secant) and the scalars of the history (mixed_history_scalars) are stated separately."
+  },
+  {
+   "id": "A/hypothesis_examples/proposition/art:examples-full-rank",
+   "kind": "proposition",
+   "environment": "proposition",
+   "lines": [
+    42,
+    53
+   ],
+   "labels": [
+    "art:examples-full-rank"
+   ],
+   "title": "Full-rank band certificate in $\\R^n$",
+   "container": null,
+   "sha256": "f89b755b9449606e",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.quadratic_certificates",
+    "BfgsCoverage.Article.HypothesisExamples.quadratic_history",
+    "BfgsVerification.HypothesisExamples.Quadratic.objective",
+    "BfgsVerification.HypothesisExamples.Quadratic.objective_euclidean",
+    "BfgsVerification.HypothesisExamples.Quadratic.certificate",
+    "BfgsVerification.HypothesisExamples.Quadratic.certificate_parameters",
+    "BfgsVerification.HypothesisExamples.Quadratic.joint_witness"
+   ],
+   "note": "New on 16 October 2026 (M42). Literal statement set: quadratic_certificates covers every n≥1, every b>0 and every 0<η≤b, with the exact Euclidean objective formula, convexity, attained minimum zero, uniqueness, compact K_b, the exact identity field/constants, C≥0 and pointwise positive definiteness and rank n. The library's remaining certificate signs and all three inequalities are part of BandCertificate, documented in the module. Vec n carries the Pi/sup norm, so F is explicitly sqNorm/2=‖euclideanVector x‖²/2. quadratic_history joins objective, compact sublevel, all identity certificates and actual-gradient full-BFGS history for every prescribed x₀≠0. It states all coordinates, matrices, gradients, step lengths, constants, same-run initialization, b=F(x₀)>0, containment and value/iterate limits. It supplies certificates for every η>0, hence in particular the printed η≤b."
+  },
+  {
+   "id": "A/hypothesis_examples/disp/003",
+   "kind": "display",
+   "environment": "display",
+   "lines": [
+    46,
+    49
+   ],
+   "labels": [],
+   "title": null,
+   "container": "A/hypothesis_examples/proposition/art:examples-full-rank",
+   "sha256": "1f9bfe91ee450783",
+   "status": "PART_OF",
+   "of": "A/hypothesis_examples/proposition/art:examples-full-rank",
+   "note": "Exact field and constants in quadratic_certificates and in the same-run statement quadratic_history."
+  },
+  {
+   "id": "A/hypothesis_examples/proof/002",
+   "kind": "proof",
+   "environment": "proof",
+   "lines": [
+    54,
+    59
+   ],
+   "labels": [],
+   "title": null,
+   "container": null,
+   "sha256": "7058035e2b2a2c54",
+   "status": "PROOF",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.quadratic_history_decrease",
+    "BfgsVerification.HypothesisExamples.Quadratic.objective_hasGradient",
+    "BfgsVerification.HypothesisExamples.Quadratic.identity_energy",
+    "BfgsVerification.HypothesisExamples.Quadratic.exact_field_equalities",
+    "BfgsVerification.HypothesisExamples.Quadratic.inverseBFGS_identity",
+    "BfgsVerification.HypothesisExamples.Quadratic.run",
+    "BfgsVerification.HypothesisExamples.Quadratic.run_scalars",
+    "BfgsVerification.HypothesisExamples.Quadratic.run_weak_wolfe_eq",
+    "BfgsVerification.HypothesisExamples.Quadratic.run_limits"
+   ],
+   "of": "A/hypothesis_examples/proposition/art:examples-full-rank",
+   "note": "Actual gradient x; secant y=s; secant/transport equalities for all pairs; identity preserved by the full inverse update; literal Δ_k=3d_k/4 and weak-Wolfe equality; nonzero finite-index gradients and geometric limits. This proof has no separate display."
+  },
+  {
+   "id": "A/hypothesis_examples/lemma/art:examples-run-existence",
+   "kind": "lemma",
+   "environment": "lemma",
+   "lines": [
+    63,
+    76
+   ],
+   "labels": [
+    "art:examples-run-existence"
+   ],
+   "title": "Existence of differentiable Armijo--weak-Wolfe steps and runs",
+   "container": null,
+   "sha256": "293f06db312e0d30",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.strict_wolfe_step",
+    "BfgsCoverage.Article.HypothesisExamples.admissible_run_exists",
+    "BfgsVerification.AdmissibleRunExistence.exists_wolfe_step",
+    "BfgsVerification.AdmissibleRunExistence.exists_admissible_run"
+   ],
+   "note": "New on 16 October 2026 (M42). The two literal wrappers cover both clauses. F : Vec n → ℝ is finite, globally convex and bounded below. For every full-space differentiability point x and every nonzero direction p, the full-space nondifferentiability times on x+t•p are countable. strict_wolfe_step takes an actual nonzero gradient, SPD H, valid constants and p=-Hg, and returns α>0, an actual endpoint gradient, strict Armijo and strict weak Wolfe paired with p (the core's equivalent step-pairing form is divided by α>0). admissible_run_exists adds nonzero gradients at all differentiability points and keeps every prescribed differentiable x₀, SPD H₀ and constant pair, with the exact initial actual gradient coordinateGradient F x₀. The run structure includes the full update. No line-restricted differentiability assumption or prescribed search algorithm is substituted."
+  },
+  {
+   "id": "A/hypothesis_examples/disp/004",
+   "kind": "display",
+   "environment": "display",
+   "lines": [
+    66,
+    68
+   ],
+   "labels": [],
+   "title": null,
+   "container": "A/hypothesis_examples/lemma/art:examples-run-existence",
+   "sha256": "61d11c6a9a263857",
+   "status": "PART_OF",
+   "of": "A/hypothesis_examples/lemma/art:examples-run-existence",
+   "note": "Exactly the set in hypothesis hline of both wrappers: {t : ℝ | ¬ DifferentiableAt ℝ F (x+t•p)}."
+  },
+  {
+   "id": "A/hypothesis_examples/proof/003",
+   "kind": "proof",
+   "environment": "proof",
+   "lines": [
+    77,
+    88
+   ],
+   "labels": [],
+   "title": null,
+   "container": null,
+   "sha256": "ef06455ef1eec4ec",
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.AdmissibleRunExistence.exists_wolfe_step",
+    "BfgsVerification.AdmissibleRunExistence.exists_admissible_run",
+    "BfgsVerification.curvature_pos_of_weakWolfe",
+    "BfgsVerification.inverseBFGS_posDef"
+   ],
+   "of": "A/hypothesis_examples/lemma/art:examples-run-existence",
+   "note": "The core proof follows the printed secant-slope argument: negative directional derivative, small and large slopes, intermediate value and an open interval avoiding the countable exceptional set, then supporting inequality and strict Wolfe. The infinite run is built by recursive choice on actual-gradient SPD states, using positive secant curvature and preservation of positive definiteness. No separate proof display occurs."
+  },
+  {
+   "id": "A/hypothesis_examples/proposition/art:examples-two-quadratics",
+   "kind": "proposition",
+   "environment": "proposition",
+   "lines": [
+    90,
+    101
+   ],
+   "labels": [
+    "art:examples-two-quadratics"
+   ],
+   "title": "Curved two-quadratic family with global convergence and run existence",
+   "container": null,
+   "sha256": "7a3a500287a7aa0b",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.two_quadratic_joint",
+    "BfgsCoverage.Article.HypothesisExamples.two_quadratic_objective_geometry",
+    "BfgsCoverage.Article.HypothesisExamples.two_quadratic_planar_hypotheses",
+    "BfgsCoverage.Article.HypothesisExamples.two_quadratic_finite_max_hypotheses",
+    "BfgsCoverage.Article.HypothesisExamples.paperRegularAt_iff",
+    "BfgsCoverage.Article.HypothesisExamples.planarHypotheses_iff",
+    "BfgsCoverage.Article.HypothesisExamples.finiteMaxHypotheses_iff",
+    "BfgsVerification.TwoQuadraticExample.paper_planar_hypotheses",
+    "BfgsVerification.TwoQuadraticExample.joint_witness"
+   ],
+   "note": "New on 16 October 2026 (M42). Literal statement set with only a,b,c>0 as objective premises. two_quadratic_objective_geometry covers the unique attained minimum zero, every compact sublevel, the exact tie parabola, full-space differentiability off precisely that parabola, and the a=c line specialization. two_quadratic_planar_hypotheses states all article hypotheses on every positive sublevel, including the open-neighborhood C²/convex-two-branch alternative with both branches active and independent actual gradients, and C_aff∩K⊆argmin F. two_quadratic_finite_max_hypotheses identifies both original active indices and gradients (0,±1), and supplies the complete finite-max package with weights 1/2. The three iff helpers unfold PaperRegularAt, PlanarHypotheses and FiniteMaxHypotheses; the latter includes convexity, unique minimizer, globally convex C² branches on the open neighborhood univ, actual finite-maximum representation, low strict contours, indexed affine independence, positive weights, sum one and zero balance. two_quadratic_joint joins those proved hypotheses with convergence of every admissible run and an actual convergent run for every prescribed full-space differentiability point, SPD matrix and valid constants; it is not a collection of unrelated existential witnesses. The universal convergence also includes Euclidean solution-set distance, stronger than the printed value/iterate conclusion."
+  },
+  {
+   "id": "A/hypothesis_examples/disp/005",
+   "kind": "display",
+   "environment": "display",
+   "lines": [
+    92,
+    94
+   ],
+   "labels": [],
+   "title": null,
+   "container": "A/hypothesis_examples/proposition/art:examples-two-quadratics",
+   "sha256": "99803c489e957590",
+   "status": "DEFINITION",
+   "lean": [
+    "BfgsVerification.TwoQuadraticExample.objective",
+    "BfgsVerification.TwoQuadraticExample.branch",
+    "BfgsCoverage.Article.HypothesisExamples.two_quadratic_formula"
+   ],
+   "note": "two_quadratic_formula unfolds the definitions to the exact printed maximum in u=x 0, v=x 1."
+  },
+  {
+   "id": "A/hypothesis_examples/proof/004",
+   "kind": "proof",
+   "environment": "proof",
+   "lines": [
+    102,
+    117
+   ],
+   "labels": [],
+   "title": null,
+   "container": null,
+   "sha256": "f17cca6898c63875",
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.TwoQuadraticExample.branch_actual_hessian_lower_bound",
+    "BfgsVerification.TwoQuadraticExample.objective_lower",
+    "BfgsVerification.TwoQuadraticExample.strict_contours",
+    "BfgsVerification.TwoQuadraticExample.tie_determinant_ne_zero",
+    "BfgsVerification.TwoQuadraticExample.affineCritical_set",
+    "BfgsVerification.TwoQuadraticExample.regular_paper",
+    "BfgsVerification.TwoQuadraticExample.initial_active_family",
+    "BfgsVerification.TwoQuadraticExample.nondifferentiable_line_finite",
+    "BfgsVerification.TwoQuadraticExample.gradient_ne_zero_of_hasFDerivAt",
+    "BfgsVerification.TwoQuadraticExample.exists_admissible_run",
+    "BfgsVerification.TwoQuadraticExample.global_convergence",
+    "BfgsCoverage.Article.HypothesisExamples.two_quadratic_tie_determinant"
+   ],
+   "of": "A/hypothesis_examples/proposition/art:examples-two-quadratics",
+   "note": "The exact determinant display is its own LEAN item. The core proves the actual Hessian bound with μ=2min(a,min(b,c)), the averaging lower bound, strict contours, C_aff={0}, regular switching, indexed half-weight balance, finite full-space nondifferentiability times on every line through a differentiable start, and absence of a differentiable stationary point. It applies the general run-existence theorem and the planar convergence theorem to this same family. Undisplayed proof steps are covered by the result proofs under the coverage method. The optional radial-obstruction results in the core are not asserted by this appendix and are not part of this item."
+  },
+  {
+   "id": "A/hypothesis_examples/corollary/art:examples-nonradial-runs",
+   "kind": "corollary",
+   "environment": "corollary",
+   "lines": [
+    119,
+    124
+   ],
+   "labels": [
+    "art:examples-nonradial-runs"
+   ],
+   "title": "Run existence on the three-quadratic nonradial example",
+   "container": null,
+   "sha256": "89a96a68fdefde87",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.nonradial_runs",
+    "BfgsCoverage.Article.HypothesisExamples.nonradial_initial_value",
+    "BfgsVerification.PlanarQuadraticExample.objective_exists_admissible_run",
+    "BfgsVerification.PlanarQuadraticExample.fullBFGS_explicit_basin",
+    "BfgsVerification.PlanarQuadraticExample.start_point_facts"
+   ],
+   "note": "New on 16 October 2026 (M42). nonradial_runs quantifies over every full-space differentiable x₀ with F(x₀)<1/100, every H₀≻0 and all 0<c₁<c₂<1. It joins an actual run with precisely those data and convergence to the universal convergence statement for every run in the low sublevel. The objective is the same PlanarQuadraticExample.objective as A/local/theorem/art:nonradial-example; its branch formulas are A/local/disp/009. nonradial_initial_value proves full-space differentiability at (1/1000,0), the exact value 1001/10^6 and the strict threshold. Applying the all-start theorem to this point gives the numerical witness for every SPD matrix and valid pair, not merely existence of some unspecified low start."
+  },
+  {
+   "id": "A/hypothesis_examples/proof/005",
+   "kind": "proof",
+   "environment": "proof",
+   "lines": [
+    125,
+    142
+   ],
+   "labels": [],
+   "title": null,
+   "container": null,
+   "sha256": "52c2778fd14af00f",
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.PlanarQuadraticExample.objective_run_hypotheses",
+    "BfgsVerification.PlanarQuadraticExample.tie_line_finite",
+    "BfgsVerification.PlanarQuadraticExample.nondifferentiable_line_finite",
+    "BfgsVerification.PlanarQuadraticExample.gradient_ne_zero_of_hasFDerivAt"
+   ],
+   "of": "A/hypothesis_examples/corollary/art:examples-nonradial-runs",
+   "note": "No separate proof display. The general existence premises are proved for the printed three-quadratic objective; the original convergence theorem supplies the exact 1/100 basin. Pairwise branch differences have finite zero sets on every nonconstant line, and actual differentiable gradients are nonzero. The exact initial value is checked by direct substitution in nonradial_initial_value."
+  },
+  {
+   "id": "A/hypothesis_examples/disp/006",
+   "kind": "display",
+   "environment": "display",
+   "lines": [
+    131,
+    137
+   ],
+   "labels": [],
+   "title": null,
+   "container": "A/hypothesis_examples/proof/005",
+   "sha256": "4c898c452ac21211",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.tie_loci"
+   ],
+   "note": "The three equivalences for all real u, v (explicit polynomials of the branches of Theorem art:nonradial-example)."
+  },
+  {
+   "id": "A/hypothesis_examples/proposition/art:examples-no-step",
+   "kind": "proposition",
+   "environment": "proposition",
+   "lines": [
+    146,
+    153
+   ],
+   "labels": [
+    "art:examples-no-step"
+   ],
+   "title": "A coercive homogeneous objective with no differentiable first step",
+   "container": null,
+   "sha256": "bf38620959338f41",
+   "status": "LEAN",
+   "lean": [
+    "BfgsCoverage.Article.HypothesisExamples.gauge_no_step",
+    "BfgsCoverage.Article.HypothesisExamples.gauge_formula",
+    "BfgsCoverage.Article.HypothesisExamples.gauge_covered_convergence",
+    "BfgsVerification.HypothesisExamples.Gauge.joint_obstruction"
+   ],
+   "note": "New on 16 October 2026 (M42). gauge_formula identifies the objective with the exact maximum. gauge_no_step joins all objective hypotheses (finite real-valued, convex, coercive, degree-one homogeneous, unique attained minimum zero) and every prescribed ε>0 initial state with the actual gradient (1,0), identity metric and full ray (ε−α,0). For α<ε it gives that actual gradient; for every α≥ε it gives full-space nondifferentiability. For every c₂<1 and α>0 it excludes an actual endpoint gradient satisfying weak Wolfe, without an Armijo premise. It excludes every admissible run from these data, whose constants are internally any valid pair. gauge_covered_convergence verifies the homogeneous theorem's convergence conclusion for all admissible runs on this objective; no run from the obstructed initialization is claimed."
+  },
+  {
+   "id": "A/hypothesis_examples/proof/006",
+   "kind": "proof",
+   "environment": "proof",
+   "lines": [
+    154,
+    163
+   ],
+   "labels": [],
+   "title": null,
+   "container": null,
+   "sha256": "1aebc7c30fe7e091",
+   "status": "PROOF",
+   "lean": [
+    "BfgsVerification.HypothesisExamples.Gauge.coordinate_bounds",
+    "BfgsVerification.HypothesisExamples.Gauge.initial_state",
+    "BfgsVerification.HypothesisExamples.Gauge.ray_step",
+    "BfgsVerification.HypothesisExamples.Gauge.ray_gradient_before",
+    "BfgsVerification.HypothesisExamples.Gauge.ray_not_differentiable_after",
+    "BfgsVerification.HypothesisExamples.Gauge.no_differentiable_weak_wolfe",
+    "BfgsVerification.HypothesisExamples.Gauge.no_admissible_run"
+   ],
+   "of": "A/hypothesis_examples/proposition/art:examples-no-step",
+   "note": "No separate display. The core follows the printed two-regime proof, including all points beyond the nonsmooth minimizer, with actual ambient gradients. Its coordinate bound |v|/2≤G is equivalent to the printed |v|≤2G. The obstruction is already to the first positive differentiable weak-Wolfe step."
+  }
+ ],
+ "discrepancies": []
 }

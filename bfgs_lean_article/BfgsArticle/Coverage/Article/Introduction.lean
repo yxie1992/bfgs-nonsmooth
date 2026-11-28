@@ -84,7 +84,7 @@ theorem l1_not_differentiable {n : ℕ} (i : Fin n) {x : Vec n} (hx : x i = 0) :
   rw [hf] at hc
   exact not_differentiableAt_abs_zero hc
 
-/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:258-260`): the norm
+/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:255-257`): the norm
 `‖x‖_1`, "linear maximum $\max_{1\le i\le m}a_i^Tx$. In particular, this covers $\norm{x}_1$ and $\norm{x}_\infty$, whose nonsmooth loci contain coordinate hyperplanes and diagonal facets rather than an isolated point." For `n ≥ 2`:
 `∑_j |x_j|` is not differentiable at any `x` with `x_i = 0`; the Euclidean norm is
 differentiable exactly at `x ≠ 0`; and the nonsmooth points of `‖·‖_1` are not
@@ -150,7 +150,7 @@ def SwitchingPoint (i j : Fin 3) (x : Vec 2) : Prop :=
     PlanarQuadraticExample.branch i x = PlanarQuadraticExample.branch j x ∧
     PlanarQuadraticExample.objective x = PlanarQuadraticExample.branch i x
 
-/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:268-271`): "\item \emph{Curved planar switching interfaces via moving contour fields.} When switching loci bend, inward rays cross interfaces and radial secant bounds can fail on every neighborhood of the minimizer, as we demonstrate explicitly on a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a". For every pair of branches, the
+/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:265-268`): "\item \emph{Curved planar switching interfaces via moving contour fields.} When switching loci bend, inward rays cross interfaces and radial secant bounds can fail on every neighborhood of the minimizer, as we demonstrate explicitly on a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a". For every pair of branches, the
 switching set (tie of the two branches, both active) inside `|u|,|v| ≤ 1/10`
 contains `0` and two points `q,r` with `0,q,r` not collinear, so it lies on no
 line, and it is not a cone with vertex `0` either (`q/2` is not a switching point),
@@ -605,7 +605,7 @@ theorem benchmark_compact_sublevels_global :
   exact ⟨Localization.sublevel_compact UnexcitedMetric.objective_convex 0 hmin hu,
     ArticlePositive.mixed_benchmark_global⟩
 
-/-- Item `A/introduction/prose/031` (`paper/sections/introduction.tex:240`): , as corrected on 15 October 2026 (M31, reader point R-A-2): "$0<c_1<c_2<1$. For $F(u,v)=u^2+|v|$ the first row applies on all of $\R^2$.}" Every sublevel of `F(u,v)=u^2+|v|` is compact; on
+/-- Item `A/introduction/prose/031` (`paper/sections/introduction.tex:237`): , as corrected on 15 October 2026 (M31, reader point R-A-2): "$0<c_1<c_2<1$. For $F(u,v)=u^2+|v|$ the first row applies on all of $\R^2$.}" Every sublevel of `F(u,v)=u^2+|v|` is compact; on
 $U=\R^2$, $F(x)=\psi(x)+\gamma(x-x_*)$ with $x_*=0$ a minimizer of $F$, $\psi(u,v)=u^2$ convex
 and locally $C^{1,1}$, and $\gamma(u,v)=|v|$ convex and positively homogeneous of degree one (the
 hypotheses of Theorem `art:centered`); and every infinite admissible run converges to the

@@ -38,7 +38,7 @@ the section. Register: `editorial/lean_coverage/register/A_local.json`.
   (`DifferentiableOn ℝ f V ∧ LocallyLipschitzOn V (fderiv ℝ f)`); $\partial F(p)$ is
   `ConvexSubdifferential.subdifferential F p`; $\mathcal C_{\rm aff}$ is
   `{p | AffineCriticalObjective.IsAffineCritical F p}` (display `disp/006`); a cluster point $p$ of
-  the iterates is `MapClusterPt p atTop R.x`; eligibility of a pair (`energy.tex:266-272`) is
+  the iterates is `MapClusterPt p atTop R.x`; eligibility of a pair (`energy.tex:265-271`) is
   `TransportedCertificate.EligiblePair F c₁ c₂ x z g h`.
 * Objects introduced by the text ($\delta$, $B_r(x_*)$, $B_\rho(x_*)$, $L$, $\psi$, $\gamma$, $I_0$, $\sigma$,
   $A(x)$, $E_k$, $v(u)$, $D$, the branches $f_i$ and $F$ of the example) are variables with their

@@ -45,7 +45,7 @@ variables with their defining equations or properties.
   `PlanarAmbientFrame.rotate u = ![-u 1, u 0]`, so `rotate (normal θ) = tangent θ`.
 * `normalized g = ‖euclideanVector g‖⁻¹ • g` is $g/\norm{g}$; `coordinateGradient F x` is
   $\nabla F(x)$; `subdifferential F x` is $\partial F(x)$.
-* For differentiable $x,z$ (energy.tex:234-239), `EligiblePair F c₁ c₂ x z g h` says that
+* For differentiable $x,z$ (energy.tex:233-238), `EligiblePair F c₁ c₂ x z g h` says that
   `g`, `h` are the gradients at `x`, `z` and that the pair is eligible:
   $d>0$, $c_1d\le\Delta\le d$, $t\ge(1-c_2)d$, with $s=z-x$, $y=h-g$, $d=-g^Ts$
   (`-dot g (z - x)`), $\Delta=F(x)-F(z)$ and $t=y^Ts$ (`dot (h - g) (z - x)`).
@@ -256,7 +256,7 @@ theorem field_eq_fieldFormula {m : ℕ} {F : Vec 2 → ℝ} (hF : ConvexOn ℝ u
     PlanarAmbientFrame.frame_eq_angular_frame _ hχ θ]
   rfl
 
-/-- Proof of Lemma `art:planar-field`, the angle in `paper/appendices/planar_geometry.tex:35-178`
+/-- Proof of Lemma `art:planar-field`, the angle in `paper/appendices/planar_geometry.tex:35-179`
 (not a register item): every Euclidean unit vector is a normal $n(\theta)$, so
 $\theta(x)$ with $n(\theta(x))=\nabla F(x)/\norm{\nabla F(x)}$ exists at every point with
 nonzero gradient. -/
@@ -281,7 +281,7 @@ theorem exists_angle (u : Vec 2) (hu : sqNorm u = 1) : ∃ θ : ℝ, normal θ =
   · simp [normal, Complex.sin_arg, hz, z]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claim of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "All expressions are
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "All expressions are
 periodic, so no global choice of angle is required." For angular cutoffs
 $\theta\mapsto\chi_j(n(\theta))$, the formula (`art:planar-field-formula`) is
 $2\pi$-periodic in $\theta$. -/
@@ -403,7 +403,7 @@ theorem field_derivative_triangular {m : ℕ} {F : Vec 2 → ℝ} (hF : ConvexOn
     rw [← hrec, add_comm]
 
 /-- Proof of Lemma `art:planar-field`, the one-sided comparison of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "If a continuous function
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "If a continuous function
 $u$ on $[0,1]$ has $u'_+\le0$ on $[0,1)$, then $u(1)\le u(0)$." The right derivative is a
 `HasDerivWithinAt` on `Ici θ`. (Proved with Mathlib's one-sided comparison
 `image_le_of_deriv_right_le_deriv_boundary`.) -/
@@ -783,7 +783,7 @@ theorem planar_field (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ
 /-! ### Corner motion -/
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "At a nonsmooth point of
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "At a nonsmooth point of
 $C$, the local branch-value map $x\mapsto(f_1(x),f_2(x))$ has nonsingular derivative. The
 inverse function theorem gives a $C^2$ curve $p_j(t)$ characterized by
 $f_1(p_j(t))=f_2(p_j(t))=t$ for $t$ near $\ell$." The corner $c\in C$ comes with the
@@ -1015,7 +1015,7 @@ theorem corner_field (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar : ℝ
 
 /-! ### Visibility, tangent cancellation and the derivative of the field -/
 
-/-- Part of item `A/planar_geometry/proof/001` (`paper/appendices/planar_geometry.tex:35-178`): in the
+/-- Part of item `A/planar_geometry/proof/001` (`paper/appendices/planar_geometry.tex:35-179`): in the
 proof of Lemma `art:planar-field`: at a smooth point,
 \[ \nabla F(x)^Tw(x)=\norm{\nabla F(x)}h(F(x),\theta(x))>0. \]
 Under the assumptions of the lemma, with angular cutoffs $0\le\chi_j\le1$ with disjoint
@@ -1251,7 +1251,7 @@ theorem transversality_limits (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (F
       hcommon p hpQ hbar hhmem gbar hgmem, sub_self, zero_div, neg_zero]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claim of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): the limits of display
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): the limits of display
 `disp/009` contradict $t\ge(1-c_2)d$. Under the assumptions of `transversality_limits`, if
 the pairs are eligible, then `False`. (The uniform transversality of item 2 of the lemma, which
 this contradiction proves, is the library's `PlanarAllPairs.compact_pair_transversality_length`.) -/
@@ -1358,7 +1358,7 @@ theorem determinant_derivative (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (F
       (hT ▸ hnT) s
     rw [hdet, ← hT, ← ha, ← hb, ← he, ← hsT, ← hsn]
 
-/-- Part of item `A/planar_geometry/proof/001` (`paper/appendices/planar_geometry.tex:35-178`): in the
+/-- Part of item `A/planar_geometry/proof/001` (`paper/appendices/planar_geometry.tex:35-179`): in the
 proof of Lemma `art:planar-field`: for $H(\theta)=\log|D(\theta)|$,
 \[ |H'_+(\theta)|\le A|\varphi'_+(\theta)|\le A\bigl(\varphi'_+(\theta)+2d\bigr),
  \qquad 0\le\theta<1. \]
@@ -1557,7 +1557,7 @@ theorem log_determinant_increment (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F)
   exact increment_core hF x s d φ H (by rw [hφ, hq]) hHcont hdesc A hA hbound
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "Set
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "Set
 $\lambda=D(1)/D(0)>0$. Because $s,w(x)$ are linearly independent, solving in that basis gives
 $w(z)=\lambda w(x)+\beta s$; the preceding bound is $|\log\lambda|\le2Ad$. For $0<d\le1$,
 convexity of the exponential on $[0,1]$ gives $\lambda^2\le\exp(4Ad)\le1+(\exp(4A)-1)d$."
@@ -1659,7 +1659,7 @@ theorem branch_cocoercivity (F : Vec 2 → ℝ) (_hF : ConvexOn ℝ univ F) (Fst
   cocoercivity_core f V hVopen hfconv hfC M hM hLip B ρ hρ hBV x z hx hz hxz
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "Since the branch values
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "Since the branch values
 and gradients at both endpoints agree with those of $F$, the bracket is at most $t$.
 Boundedness of $w$ then bounds $(y^Tw(z))^2/t$ uniformly." Under the assumptions of
 `branch_cocoercivity`, with $\nabla f(x)=g$, $\nabla f(z)=h$ and $\norm{w(z)}\le G$: the bracket
@@ -1717,7 +1717,7 @@ theorem same_branch_secant (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar
     _ = 2 * M * G ^ 2 * dot (h - g) (z - x) := by ring
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "For different endpoint
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "For different endpoint
 branches $i,j$ in a two-branch chart, the segment contains a tie point $p$. There
 $(\nabla f_j(p)-\nabla f_i(p))^Tw(p)=0$." Under the assumptions of the lemma: $F=\max(f_0,f_1)$
 on the open convex chart $V$ with convex $C^2$ branches, $w$ has the common pairing on $V$,
@@ -1834,7 +1834,7 @@ theorem crossing_pairings (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fstar 
     x z g h hx hz hp.gradient_x hp.gradient_z
     i j hi hj s y hs hy d t hd ht r hr
 
-/-- Item `A/planar_geometry/disp/012` (`paper/appendices/planar_geometry.tex:171-174`), in the
+/-- Item `A/planar_geometry/disp/012` (`paper/appendices/planar_geometry.tex:172-175`), in the
 proof of Lemma `art:planar-field`: "\[ \norm{s}\le A_2(2d+t+M\norm{s}^2) \le A_2\left(1+\frac{2}{1-c_2}\right)t+A_2M\norm{s}^2. \]" \]
 Under the assumptions of `crossing_pairings`, with the inverse bound
 $\norm{u}\le A_2(|\nabla f_0(x')^Tu|+|\nabla f_1(x')^Tu|)$ for all $u$ and $x'\in V$. -/
@@ -1909,7 +1909,7 @@ theorem crossing_step_bound (F : Vec 2 → ℝ) (hF : ConvexOn ℝ univ F) (Fsta
     nlinarith [mul_le_mul_of_nonneg_left h2 hA₂]
 
 /-- Proof of Lemma `art:planar-field`, undisplayed claims of
-`paper/appendices/planar_geometry.tex:35-178` (not a register item): "For sufficiently small
+`paper/appendices/planar_geometry.tex:35-179` (not a register item): "For sufficiently small
 $\norm{s}$, absorb the last term to obtain $t\ge a_0\norm{s}$ with $a_0>0$. Consequently
 $(y^Tw(z))^2/t\le A_1^2\norm{s}/a_0$, uniformly bounded." Under the assumptions of the lemma,
 for an eligible pair with the bounds of displays `disp/016` and `disp/012`, $A_2>0$ and

@@ -104,7 +104,7 @@ Lean proof does not use.
 | `prose/034` | 268-272 | `l1_nonsmooth`, `linf_nonsmooth` |
 | `prose/037` | 272-274 | `euclidean_norm_case`, `asymmetric_example`, `homogeneous_examples_norm` |
 | `prose/041` | 278-280 | `homogeneous_value_dichotomy` |
-| `A/introduction/prose/035` | `paper/sections/introduction.tex:258-260` | `linf_nonsmooth`, `linf_tie_example` |
+| `A/introduction/prose/035` | `paper/sections/introduction.tex:255-257` | `linf_nonsmooth`, `linf_tie_example` |
 | `A/hypothesis_examples/proof/001` | `paper/appendices/hypothesis_examples.tex:29-40` | `mixed_radial_secant` |
 
 The theorem item `art:centered` also lists `centered_summands_not_minimized` (its last sentence);
@@ -208,8 +208,8 @@ theorem sublevel_convex {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
 
 /-- "A gradient jump can make
 the positive correction in \eqref{art:energy-identity} large." The correction of an accepted
-pair $(x,z)=(x_k,x_{k+1})$ is $R_k=N^2/T$ (`paper/sections/energy.tex:101-104`), and accepted pairs are eligible
-(`paper/sections/energy.tex:273`). For the strongly convex $F(t)=(t+2)^2/2+|t|$ on $\R$, whose derivative jumps
+pair $(x,z)=(x_k,x_{k+1})$ is $R_k=N^2/T$ (`paper/sections/energy.tex:100-103`), and accepted pairs are eligible
+(`paper/sections/energy.tex:272`). For the strongly convex $F(t)=(t+2)^2/2+|t|$ on $\R$, whose derivative jumps
 from $1$ to $3$ at $t=0$ and whose minimizer is $x_*=-1$, there is a positive band on which
 $N^2/T$ exceeds every constant $C$, over differentiable pairs $z<0<x$ across the jump with
 $F_*+\eta\le F(z)\le F(x)\le3$ and $T>0$ that are eligible for $c_1=1/4$, $c_2=1/2$ (the
@@ -263,7 +263,7 @@ theorem gradient_jump_large_correction (f : ℝ → ℝ) (hf : ∀ t, f t = (t +
     have hsq : (1 : ℝ) ≤ ((1 - ε / 2 - (3 + ε)) * (1 - ε / 2)) ^ 2 := by nlinarith
     linarith
 
-/-- Item `A/global/prose/042` (`paper/sections/global.tex:70-71`): Item `A/global/disp/003` (`paper/sections/global.tex:64-69`): the notation
+/-- Item `A/global/prose/042` (`paper/sections/global.tex:69-70`): Item `A/global/disp/003` (`paper/sections/global.tex:63-68`): the notation
 $r_x=x-x_*$, $g=\nabla F(x)$, $h=\nabla F(z)$, $T=(h-g)^T(z-x)$, $N=(h-g)^Tr_z$, for
 differentiable $x,z\in K$. The coverage theorems write $r_x$ as `x - xstar` and $T$, $N$ as
 the dot products themselves (or as variables with these defining equations); a gradient
@@ -276,8 +276,8 @@ theorem secant_notation {n : ℕ} (xstar x z g h : Vec n) :
       (∀ v, gradientFunctional g v = dot g v) :=
   ⟨rfl, rfl, gradientFunctional_apply g⟩
 
-/-- Item `A/global/disp/004` (`paper/sections/global.tex:74-80`), equation `art:radial-condition`
-(`paper/sections/global.tex:74-80`): the radial secant condition on positive bands.
+/-- Item `A/global/disp/004` (`paper/sections/global.tex:73-79`), equation `art:radial-condition`
+(`paper/sections/global.tex:73-79`): the radial secant condition on positive bands.
 For every $\eta>0$ there is $C_\eta\ge0$ such that $N^2\le C_\eta T$ whenever
 $F_*+\eta\le F(z)\le F(x)$ and $T>0$, for all differentiable $x,z\in K$ (eligible for the
 line search or not, lines 84-91), with $g=\nabla F(x)$, $h=\nabla F(z)$, $T=(h-g)^T(z-x)$,
@@ -289,8 +289,8 @@ def RadialSecantCondition {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (K : Set
       F xstar + η ≤ F z → F z ≤ F x → 0 < dot (h - g) (z - x) →
       (dot (h - g) (z - xstar)) ^ 2 ≤ C * dot (h - g) (z - x)
 
-/-- Item `A/global/disp/005` (`paper/sections/global.tex:84-91`), equation `art:inward-condition`
-(`paper/sections/global.tex:84-91`): the inward model condition. For every $\eta>0$ there
+/-- Item `A/global/disp/005` (`paper/sections/global.tex:83-90`), equation `art:inward-condition`
+(`paper/sections/global.tex:83-90`): the inward model condition. For every $\eta>0$ there
 are $M_\eta\ge0$, $\theta_\eta\in(0,1/2]$ such that
 $0\le F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x\le\frac{M_\eta}{2}\tau^2$ for
 $0\le\tau\le\theta_\eta$, "\begin{equation} \begin{gathered} \text{for every }\eta>0\text{ there exist }M_\eta\ge0\text{ and } \theta_\eta\in(0,1/2]\text{ such that}\\ 0\le F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x \le\frac{M_\eta}{2}\tau^2\quad(0\le\tau\le\theta_\eta) \end{gathered} \end{equation}"
@@ -336,7 +336,7 @@ theorem inwardModelCondition_iff {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (
       have := mul_le_mul_of_nonneg_right (le_max_left M 0) (sq_nonneg τ)
       linarith)⟩
 
-/-- Item `A/global/prose/010` (`paper/sections/global.tex:92-93`): "at every differentiable $x\in K$ with $F(x)\ge F_*+\eta$. By convexity, the inward sample $x-\tau r_x$ remains in $K$ and need not be differentiable; $\tau$" In the setting of the section, for $x\in K$ and $0\le\tau\le1$ the inward point
+/-- Item `A/global/prose/010` (`paper/sections/global.tex:91-92`): "at every differentiable $x\in K$ with $F(x)\ge F_*+\eta$. By convexity, the inward sample $x-\tau r_x$ remains in $K$ and need not be differentiable; $\tau$" In the setting of the section, for $x\in K$ and $0\le\tau\le1$ the inward point
 $x-\tau r_x=(1-\tau)x+\tau x_*$ lies in $K$. -/
 theorem inward_point_mem {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
     (xstar : Vec n) (_hmin : ∀ x, F xstar ≤ F x) (b : ℝ) (hb : F xstar < b)
@@ -348,7 +348,7 @@ theorem inward_point_mem {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F
   rw [he]
   exact sublevel_convex hF b hx (show F xstar ≤ b from hb.le) (by linarith) hτ0 (by ring)
 
-/-- Item `A/global/prose/011` (`paper/sections/global.tex:93-94`): "inward sample $x-\tau r_x$ remains in $K$ and need not be differentiable; $\tau$ is a dimensionless fraction of the ray to $x_*$, and both $M_\eta$ and" The inward point
+/-- Item `A/global/prose/011` (`paper/sections/global.tex:92-93`): "inward sample $x-\tau r_x$ remains in $K$ and need not be differentiable; $\tau$ is a dimensionless fraction of the ray to $x_*$, and both $M_\eta$ and" The inward point
 $x-\tau r_x$ is at Euclidean distance $\tau\|r_x\|$ from $x$ and $(1-\tau)\|r_x\|$ from
 $x_*$. -/
 theorem inward_point_fraction {n : ℕ} (xstar x : Vec n) {τ : ℝ} (hτ0 : 0 ≤ τ) (hτ1 : τ ≤ 1) :
@@ -402,7 +402,7 @@ theorem mixed_inward_condition (F : Vec 2 → ℝ) (hF_def : ∀ x, F x = (x 0) 
 /-! ### Theorem `art:radial-equivalence` and its proof -/
 
 /-- Proof of Theorem `art:radial-equivalence`, undisplayed claim of
-`paper/sections/global.tex:102-137` (not a register item): constants $\Lambda,R>0$ bounding
+`paper/sections/global.tex:101-136` (not a register item): constants $\Lambda,R>0$ bounding
 the Euclidean norms of all subgradients at points of the compact set $K$ and $\|x-x_*\|$ on
 $K$ exist. -/
 theorem exists_subgradient_and_radius_bounds {n : ℕ} {F : Vec n → ℝ}
@@ -445,7 +445,7 @@ theorem lipschitz_on_K {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
   · linarith [neg_abs_le (dot vz (x - z))]
   · linarith [neg_abs_le (dot vx (z - x))]
 
-/-- Item `A/global/disp/006` (`paper/sections/global.tex:107-109`), in the proof of Theorem
+/-- Item `A/global/disp/006` (`paper/sections/global.tex:106-108`), in the proof of Theorem
 `art:radial-equivalence`: the supporting-plane error
 \[ D_F(z,x)=F(z)-F(x)-\nabla F(x)^T(z-x)\ge0. \]
 Stated under the hypotheses of the theorem ($F$ finite convex, $x_*$ a minimizer,
@@ -464,13 +464,13 @@ theorem supporting_plane_error {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ 
   linarith [convex_supporting_inequality hF hg z]
 
 /-- Proof of Theorem `art:radial-equivalence`, undisplayed claim of
-`paper/sections/global.tex:102-137` (not a register item): at differentiable endpoints
+`paper/sections/global.tex:101-136` (not a register item): at differentiable endpoints
 $T=D_F(z,x)+D_F(x,z)$. -/
 theorem curvature_eq_errors {n : ℕ} (F : Vec n → ℝ) (x z g h : Vec n) :
     dot (h - g) (z - x) = (F z - F x - dot g (z - x)) + (F x - F z - dot h (x - z)) :=
   RadialCertificate.secantCurvature_eq_errors F x z g h
 
-/-- Item `A/global/disp/007` (`paper/sections/global.tex:118-120`), in the proof of Theorem
+/-- Item `A/global/disp/007` (`paper/sections/global.tex:117-119`), in the proof of Theorem
 `art:radial-equivalence`: "\[ \tau N\le D_F(z,x)+\tfrac12M\tau^2\qquad(0\le\tau\le\theta). \]" \]
 Stated under the hypotheses of the theorem, the constants $\Lambda,R$, the inward condition,
 a fixed positive band $\eta>0$ with its constants $M\ge0$, $\theta\in(0,1/2]$ (hypothesis
@@ -504,7 +504,7 @@ theorem inward_probe_at_z {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ 
   unfold RadialCertificate.radialNumerator RadialCertificate.supportingError at hp
   linarith
 
-/-- Item `A/global/disp/008` (`paper/sections/global.tex:124-126`), in the proof of Theorem
+/-- Item `A/global/disp/008` (`paper/sections/global.tex:123-125`), in the proof of Theorem
 `art:radial-equivalence`: "\[ \tau(T-N)\le D_F(x,z)+\tfrac12M\tau^2\qquad(0\le\tau\le\theta). \]" \]
 Stated under the same assumptions as `inward_probe_at_z`, with the case $N<0$ and
 $D_F(x,z)=F(x)-F(z)-\nabla F(z)^T(x-z)$. -/
@@ -538,8 +538,8 @@ theorem inward_probe_at_x {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ 
     RadialCertificate.supportingError at hp
   linarith
 
-/-- Item `A/global/disp/009` (`paper/sections/global.tex:134-136`), equation `art:inward-to-radial`
-(`paper/sections/global.tex:134-136`), in the proof of Theorem `art:radial-equivalence`:
+/-- Item `A/global/disp/009` (`paper/sections/global.tex:133-135`), equation `art:inward-to-radial`
+(`paper/sections/global.tex:133-135`), in the proof of Theorem `art:radial-equivalence`:
 \[ N^2\le \max\{2M,4\Lambda R/\theta\}\,T. \]
 Stated under the hypotheses of the theorem, the constants $\Lambda,R>0$ (Euclidean bounds on
 subgradients at points of $K$ and on $\|x-x_*\|$ for $x\in K$), the inward condition, a
@@ -617,8 +617,8 @@ theorem inward_to_radial {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F
     have hNA : N ^ 2 ≤ (T - N) ^ 2 := by nlinarith
     exact hNA.trans (hq.trans (mul_le_mul_of_nonneg_left hDT hC))
 
-/-- Item `A/global/theorem/art:radial-equivalence` (`paper/sections/global.tex:97-101`), Theorem `art:radial-equivalence`
-(`paper/sections/global.tex:97-101`): "For any finite convex $F:\R^n\to\R$ and compact sublevel $K=\{F\le b\}$, the one-point inward condition~\eqref{art:inward-condition} implies the two-point radial secant condition~\eqref{art:radial-condition}." The setting
+/-- Item `A/global/theorem/art:radial-equivalence` (`paper/sections/global.tex:96-100`), Theorem `art:radial-equivalence`
+(`paper/sections/global.tex:96-100`): "For any finite convex $F:\R^n\to\R$ and compact sublevel $K=\{F\le b\}$, the one-point inward condition~\eqref{art:inward-condition} implies the two-point radial secant condition~\eqref{art:radial-condition}." The setting
 $x_*$ a minimizer, $F_*=F(x_*)$, $K=\{x:F(x)\le b\}$ compact, $b>F_*$.
 
 The proof is the paper's: `exists_subgradient_and_radius_bounds` chooses $\Lambda,R$, and
@@ -638,7 +638,7 @@ theorem radial_equivalence {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ
   exact inward_to_radial hF xstar hmin b hb K hK_def hK Λ R hΛ hR hΛK hRK hIR η hη M θ hM hθ hθ'
     hMθ x z g h hx hz hg hh hzband horder _ _ rfl rfl hT
 
-/-- Item `A/global/prose/014` (`paper/sections/global.tex:139-141`): "Chapter~4 of the companion proves that the converse implication also holds on compact sublevels, so~\eqref{art:radial-condition} and~\eqref{art:inward-condition} are in fact equivalent characterizations of radial comparison geometry." In the setting of the section, \eqref{art:radial-condition} implies
+/-- Item `A/global/prose/014` (`paper/sections/global.tex:138-140`): "Chapter~4 of the companion proves that the converse implication also holds on compact sublevels, so~\eqref{art:radial-condition} and~\eqref{art:inward-condition} are in fact equivalent characterizations of radial comparison geometry." In the setting of the section, \eqref{art:radial-condition} implies
 \eqref{art:inward-condition} on the same compact sublevel; the inward condition asks no
 differentiability at $x-\tau r_x$ (the library's
 `RadialCertificate.inward_of_radial_on_compact_sublevel`). -/
@@ -655,7 +655,7 @@ theorem radial_implies_inward {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ u
 /-! ### Corollary `art:radial-convergence` -/
 
 /-- Proof of Corollary `art:radial-convergence`, undisplayed claims of
-`paper/sections/global.tex:149-157` (not a register item): "Take $W_\eta(x)=r_xr_x^T$.
+`paper/sections/global.tex:148-156` (not a register item): "Take $W_\eta(x)=r_xr_x^T$.
 Convexity gives $g^Tr_x\ge F(x)-F_*\ge\eta$, proving visibility with $m_\eta=\eta^2$.
 By Theorem~\ref{art:radial-equivalence} we may assume \eqref{art:radial-condition}; it gives
 secant control on eligible pairs in $K_\eta$, since these have $F(z)<F(x)$ and $T=t>0$. Finally
@@ -693,8 +693,8 @@ theorem radial_band_certificate {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ
       abel
     · simp
 
-/-- Item `A/global/corollary/art:radial-convergence` (`paper/sections/global.tex:143-148`), Corollary `art:radial-convergence`
-(`paper/sections/global.tex:143-148`): "Under either~\eqref{art:radial-condition} or~\eqref{art:inward-condition} on a compact sublevel $K=\{F\le b\}$, every admissible run starting at $x_0\in K$ satisfies $F(x_k)\to F_*$ and $\dist(x_k,\argmin F)\to0$, with $x_k\to x_*$ when $x_*$ is the unique minimizer." In the setting of Section 3 ($x_*$ a minimizer, $F_*=F(x_*)$,
+/-- Item `A/global/corollary/art:radial-convergence` (`paper/sections/global.tex:142-147`), Corollary `art:radial-convergence`
+(`paper/sections/global.tex:142-147`): "Under either~\eqref{art:radial-condition} or~\eqref{art:inward-condition} on a compact sublevel $K=\{F\le b\}$, every admissible run starting at $x_0\in K$ satisfies $F(x_k)\to F_*$ and $\dist(x_k,\argmin F)\to0$, with $x_k\to x_*$ when $x_*$ is the unique minimizer." In the setting of Section 3 ($x_*$ a minimizer, $F_*=F(x_*)$,
 $K=\{F\le b\}$ compact, $b>F_*$); "either condition" is \eqref{art:radial-condition} or
 \eqref{art:inward-condition}. The distance is the Euclidean one,
 `euclideanSolutionDistance F x` $=\operatorname{dist}(x,\arg\min F)$.
@@ -727,7 +727,7 @@ theorem radial_convergence {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ
 
 /-! ### Remarks on the inward condition (lines 158-165) -/
 
-/-- Item `A/global/prose/017` (`paper/sections/global.tex:160-161`): "accuracy \emph{only along rays toward $x_*$}: in smooth regions its infinitesimal form is $r_x^T\nabla^2F(x)r_x$ rather than $\lambda_{\max}(\nabla^2F(x))$," Where $F$ is $C^2$ at $x$, the second derivative at $\tau=0$ of the inward
+/-- Item `A/global/prose/017` (`paper/sections/global.tex:159-160`): "accuracy \emph{only along rays toward $x_*$}: in smooth regions its infinitesimal form is $r_x^T\nabla^2F(x)r_x$ rather than $\lambda_{\max}(\nabla^2F(x))$," Where $F$ is $C^2$ at $x$, the second derivative at $\tau=0$ of the inward
 remainder $\tau\mapsto F(x-\tau r_x)-F(x)+\tau\nabla F(x)^Tr_x$ is $r_x^T\nabla^2F(x)r_x$,
 with $\nabla^2F(x)$ the library's `RadialHessian.matrix F x` (entries of the second Fréchet
 derivative). -/
@@ -760,7 +760,7 @@ theorem inward_remainder_second_derivative {n : ℕ} {F : Vec n → ℝ} {x : Ve
   change (-r) ⬝ᵥ (RadialHessian.matrix F x *ᵥ -r) = r ⬝ᵥ (RadialHessian.matrix F x *ᵥ r)
   rw [Matrix.mulVec_neg, neg_dotProduct, dotProduct_neg, neg_neg]
 
-/-- Item `A/global/prose/018` (`paper/sections/global.tex:162-163`): "while its finite-difference form also rules out uncompensated radial derivative jumps. Transverse kinks whose switching surfaces are cones aimed at $x_*$ have" For the strongly
+/-- Item `A/global/prose/018` (`paper/sections/global.tex:161-162`): "while its finite-difference form also rules out uncompensated radial derivative jumps. Transverse kinks whose switching surfaces are cones aimed at $x_*$ have" For the strongly
 convex $f(t)=(t+2)^2/2+|t|$ (derivative jump at $t=0$), $F(x)=f(x_0)$ on $\R^1$, minimizer
 $x_*=-1$ and the compact sublevel $K=\{F\le3\}$: the radial expression
 $r_t^T\nabla^2f(t)r_t=(t+1)^2f''(t)$ lies in $[0,3]$ for almost every $t$ with $f(t)\le3$, yet
@@ -837,7 +837,7 @@ theorem nonradial_example_condition_fails :
 
 /-! ### Homogeneous terms (lines 167-174) -/
 
-/-- Item `A/global/prose/020` (`paper/sections/global.tex:169-170`): "Any finite convex positively homogeneous function $\gamma:\R^n\to\R$ of degree one satisfies $\gamma((1-\tau)r)=(1-\tau)\gamma(r)$ for $0\le\tau\le1$, so its" Sublinear: subadditive and positively homogeneous; the identity holds
+/-- Item `A/global/prose/020` (`paper/sections/global.tex:168-169`): "Any finite convex positively homogeneous function $\gamma:\R^n\to\R$ of degree one satisfies $\gamma((1-\tau)r)=(1-\tau)\gamma(r)$ for $0\le\tau\le1$, so its" Sublinear: subadditive and positively homogeneous; the identity holds
 for $\tau\le1$. -/
 theorem homogeneous_sublinear {n : ℕ} {γ : Vec n → ℝ} (hγ : ConvexOn ℝ univ γ)
     (hγh : Homogeneous.PositiveDegreeOne γ) :
@@ -851,7 +851,7 @@ theorem homogeneous_sublinear {n : ℕ} {γ : Vec n → ℝ} (hγ : ConvexOn ℝ
   simp only [smul_eq_mul] at h
   linarith
 
-/-- Item `A/global/prose/047` (`paper/sections/global.tex:163-165`): Item `A/global/prose/021` (`paper/sections/global.tex:170-172`): "jumps. Transverse kinks whose switching surfaces are cones aimed at $x_*$ have zero inward error regardless of how wildly their gradients jump in angular directions." For finite convex
+/-- Item `A/global/prose/047` (`paper/sections/global.tex:162-164`): Item `A/global/prose/021` (`paper/sections/global.tex:169-171`): "jumps. Transverse kinks whose switching surfaces are cones aimed at $x_*$ have zero inward error regardless of how wildly their gradients jump in angular directions." For finite convex
 positively homogeneous $\gamma$ (centered at $0$), at every point $r$ where $\gamma$ is
 differentiable, the inward remainder vanishes:
 $\gamma(r-\tau r)-\gamma(r)+\tau\nabla\gamma(r)^Tr=0$ for $\tau\le1$ (Euler's identity
@@ -873,7 +873,7 @@ theorem eq_zero_of_gradientFunctional_eq_zero {n : ℕ} {g : Vec n}
   have h' := congrArg (fun l : Vec n →L[ℝ] ℝ => l (Pi.single i 1)) h
   simpa [gradientFunctional_apply, dot, Pi.single_apply] using h'
 
-/-- Proof of Theorem `art:centered`, undisplayed claim of `paper/sections/global.tex:188-208`
+/-- Proof of Theorem `art:centered`, undisplayed claim of `paper/sections/global.tex:187-207`
 (not a register item): "Since $g_0\ne0$, convexity implies $F(x_0)>F(x_*)$." -/
 theorem initial_value_gt {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (xstar : Vec n) (hmin : ∀ x, F xstar ≤ F x) : F xstar < F (R.x 0) := by
@@ -901,7 +901,7 @@ theorem norm_euclideanVector_coords_le {n : ℕ} (l : Vec n →L[ℝ] ℝ) :
   have h0' := norm_nonneg l
   nlinarith
 
-/-- Proof of Theorem `art:centered`, undisplayed claim of `paper/sections/global.tex:188-208`
+/-- Proof of Theorem `art:centered`, undisplayed claim of `paper/sections/global.tex:187-207`
 (not a register item): "On compact convex $K\subset U$, local $C^{1,1}$ regularity provides a
 uniform Lipschitz constant $L$ for $\nabla\psi$". The constant is Euclidean:
 $\|\nabla\psi(y)-\nabla\psi(x)\|\le L\|y-x\|$ for $x,y\in K$; `coordinateGradient ψ x` is
@@ -947,7 +947,7 @@ theorem uniform_lipschitz_gradient {n : ℕ} {ψ : Vec n → ℝ} {U K : Set (Ve
       _ ≤ max (M : ℝ) (2 * G / ρ) * ‖euclideanVector (y - x)‖ :=
           mul_le_mul_of_nonneg_right (le_max_right _ _) hEn
 
-/-- Item `A/global/disp/011` (`paper/sections/global.tex:196-199`), in the proof of Theorem
+/-- Item `A/global/disp/011` (`paper/sections/global.tex:195-198`), in the proof of Theorem
 `art:centered`: "\[ \left|\psi(x-\tau r_x)-\psi(x)+\tau\nabla\psi(x)^Tr_x\right| \le\tfrac12L\tau^2\norm{r_x}^2\qquad(0\le\tau\le1). \]" \]
 Stated under the hypotheses of the theorem, for an admissible run whose initial sublevel is
 compact and contained in $U$, with $K=\{F\le F(x_0)\}$ and a uniform Euclidean Lipschitz
@@ -1042,7 +1042,7 @@ theorem smooth_inward_remainder {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ
   calc |ψ (x - τ • r) - ψ x + τ * c| ≤ L / 2 * τ ^ 2 * ‖euclideanVector r‖ ^ 2 := hfin
     _ = 1 / 2 * L * τ ^ 2 * ‖euclideanVector r‖ ^ 2 := by ring
 
-/-- Proof of Theorem `art:centered`, undisplayed claims of `paper/sections/global.tex:188-208`
+/-- Proof of Theorem `art:centered`, undisplayed claims of `paper/sections/global.tex:187-207`
 (not a register item): "At a differentiable point of $F$ in $U$, the representation and
 smoothness of $\psi$ imply differentiability of $\gamma$ at $r_x$. Differentiating its
 homogeneity identity gives $\nabla\gamma(r_x)^Tr_x=\gamma(r_x)$. Its contribution to the inward
@@ -1061,7 +1061,7 @@ theorem homogeneous_part_at_differentiable {n : ℕ} {F ψ γ : Vec n → ℝ} (
   exact ⟨hγd, Homogeneous.supporting_euler hγh (convex_supporting_inequality hγ hγd),
     fun τ hτ => homogeneous_inward_remainder_zero hγ hγh hγd τ hτ⟩
 
-/-- Proof of Theorem `art:centered`, undisplayed claim of `paper/sections/global.tex:188-208`
+/-- Proof of Theorem `art:centered`, undisplayed claim of `paper/sections/global.tex:187-207`
 (not a register item): "The upper bound in \eqref{art:inward-condition} follows with
 $M=L\max_{x\in K}\|r_x\|^2$; its lower bound follows from convexity of $F$." Under the
 hypotheses of the theorem, the inward condition holds on $K=\{F\le F(x_0)\}$ (with
@@ -1119,8 +1119,8 @@ theorem centered_inward_condition {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn �
     have habs := (le_abs_self _).trans hrem
     nlinarith
 
-/-- Item `A/global/theorem/art:centered` (`paper/sections/global.tex:176-187`), Theorem `art:centered`
-(`paper/sections/global.tex:176-187`), including its display `A/global/disp/010`
+/-- Item `A/global/theorem/art:centered` (`paper/sections/global.tex:175-186`), Theorem `art:centered`
+(`paper/sections/global.tex:175-186`), including its display `A/global/disp/010`
 (lines 176-187). "Let $F:\R^n\to\R$ be finite and convex, and let $x_*$ minimize $F$. Let $U\subseteq\R^n$ be an open convex set, let $\psi:U\to\R$ be convex and locally $C^{1,1}$, and let $\gamma:\R^n\to\R$ be finite, convex, and positively homogeneous of degree one. Suppose \[ F(x)=\psi(x)+\gamma(x-x_*)\qquad(x\in U). \] Then every admissible run whose initial sublevel $K=\{x:F(x)\le F(x_0)\}$ is compact and contained in $U$ satisfies $F(x_k)\to F(x_*)$ and $\dist(x_k,\argmin F)\to0$; if $x_*$ is the unique minimizer, then $x_k\to x_*$."
 
 Locally $C^{1,1}$ on $U$ is the library's `LocallyC11On U ψ` ($\psi$ differentiable on $U$ with
@@ -1150,7 +1150,7 @@ theorem centered {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
     (Or.inr (centered_inward_condition hF xstar hmin U hU hUc ψ hψ hψ11 γ hγ hγh hrep R hKc hKU))
     R (le_refl (F (R.x 0)))
 
-/-- Item `A/global/prose/024` (`paper/sections/global.tex:173-174`), "contributes only a smooth quadratic remainder, even when neither $\psi$ nor $\gamma(\cdot-x_*)$ attains a minimum at $x_*$ on its own." An instance of all hypotheses of Theorem `art:centered` (with $U=\R$ and all sublevels
+/-- Item `A/global/prose/024` (`paper/sections/global.tex:172-173`), "contributes only a smooth quadratic remainder, even when neither $\psi$ nor $\gamma(\cdot-x_*)$ attains a minimum at $x_*$ on its own." An instance of all hypotheses of Theorem `art:centered` (with $U=\R$ and all sublevels
 compact, so that every admissible run qualifies): $\psi(x)=x^2$, $\gamma(r)=r$, $x_*=-1/2$,
 $F(x)=x^2+x+1/2$; neither $\psi$ nor $\gamma(\cdot-x_*)$ is minimized at $x_*$. -/
 theorem centered_summands_not_minimized :
@@ -1226,7 +1226,7 @@ theorem centered_global {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
 
 /-! ### Corollary `art:mixed-benchmark` -/
 
-/-- Item `A/global/prose/048` (`paper/sections/global.tex:210-212`): Proof of Corollary `art:mixed-benchmark`, undisplayed claims of
+/-- Item `A/global/prose/048` (`paper/sections/global.tex:209-211`): Proof of Corollary `art:mixed-benchmark`, undisplayed claims of
 `paper/sections/global.tex` (not a register item): "Notice that Theorem~\ref{art:centered} recovers Corollary~\ref{art:mixed-benchmark} immediately in $\R^2$ by taking $\psi(u,v)=u^2$, $\gamma(u,v)=|v|$, $x_*=(0,0)$, and $U=\R^2$, and extends it" All hypotheses of Theorem `art:centered`
 hold for these data. -/
 theorem mixed_hypotheses (F : Vec 2 → ℝ) (hF_def : ∀ x, F x = (x 0) ^ 2 + |x 1|) :
@@ -1266,8 +1266,8 @@ theorem mixed_hypotheses (F : Vec 2 → ℝ) (hF_def : ∀ x, F x = (x 0) ^ 2 + 
     Localization.sublevel_compact hconv 0 hmin hunique, hψ, hψ11, hγ, hγh,
     fun x => by simp [hF_def]⟩
 
-/-- Item `A/global/corollary/art:mixed-benchmark` (`paper/sections/global.tex:17-23`), Corollary `art:mixed-benchmark`
-(`paper/sections/global.tex:17-23`), including its display `A/global/disp/001`
+/-- Item `A/global/corollary/art:mixed-benchmark` (`paper/sections/global.tex:16-22`), Corollary `art:mixed-benchmark`
+(`paper/sections/global.tex:16-22`), including its display `A/global/disp/001`
 "For $F(u,v)=u^2+|v|$, every infinite admissible full-BFGS run, with arbitrary $H_0\succ0$ and any fixed $0<c_1<c_2<1$, satisfies \[ F(u_k,v_k)\longrightarrow0,\qquad (u_k,v_k)\longrightarrow(0,0). \]" Here $(u,v)$ is `x : Vec 2` with $u=x_0$, $v=x_1$;
 $H_0$, $c_1$, $c_2$ are fields of the run.
 
@@ -1293,7 +1293,7 @@ theorem mixed_gradient {u v : ℝ} (hv : v ≠ 0) :
 theorem mixed_objective_apply (r w : ℝ) : UnexcitedMetric.objective ![r, w] = r ^ 2 + |w| := by
   simp [UnexcitedMetric.objective]
 
-/-- Proof of Corollary `art:mixed-benchmark`, first case (`paper/sections/global.tex:74-80`, not
+/-- Proof of Corollary `art:mixed-benchmark`, first case (`paper/sections/global.tex:73-79`, not
 a register item): for differentiable points $x=(u,v)$ and $z=(r,w)$ of $F(u,v)=u^2+|v|$ with $v$
 and $w$ of the same sign, $y=\nabla F(z)-\nabla F(x)=(2(r-u),0)$, $t=y^T(z-x)=2(r-u)^2$ and
 $(y^Tz)^2=4(r-u)^2r^2=2r^2t\le2F(z)t$. -/
@@ -1328,7 +1328,7 @@ theorem mixed_secant_same_sign {u v r w : ℝ} (hv : v ≠ 0) (hw : w ≠ 0) (hv
     rw [mixed_objective_apply]
     nlinarith [abs_nonneg w]
 
-/-- Item `A/global/disp/002` (`paper/sections/global.tex:36-39`): , in the proof of Corollary
+/-- Item `A/global/disp/002` (`paper/sections/global.tex:35-38`): , in the proof of Corollary
 `art:mixed-benchmark`, second case: for differentiable points $x=(u,v)$ and $z=(r,w)$ of
 $F(u,v)=u^2+|v|$ with $v$ and $w$ of opposite signs, $y=\nabla F(z)-\nabla F(x)$,
 $t=y^T(z-x)$ and $S=|v|+|w|>0$: $t=2(r-u)^2+2S$, $y^Tz=2(r-u)r+2|w|$, and
@@ -1374,7 +1374,7 @@ theorem mixed_secant_opposite_sign {u v r w : ℝ} (hv : v ≠ 0) (hw : w ≠ 0)
     rw [ht']
     nlinarith
 
-/-- Proof of Corollary `art:mixed-benchmark` (`paper/sections/global.tex:84-91`, not a register
+/-- Proof of Corollary `art:mixed-benchmark` (`paper/sections/global.tex:83-90`, not a register
 item): "In either case, $R_k=(y_k^Tx_{k+1})^2/t_k\le2F(x_{k+1})$": for all differentiable points
 $x=(u,v)$, $z=(r,w)$ of $F(u,v)=u^2+|v|$ ($v,w\ne0$), $(y^Tz)^2\le2F(z)\,t$. -/
 theorem mixed_radial_secant {u v r w : ℝ} (hv : v ≠ 0) (hw : w ≠ 0)
@@ -1442,7 +1442,7 @@ theorem unit_sphere_nonempty {n : ℕ} (hn : 1 ≤ n) :
     simp [sqNorm, Pi.single_apply]
   rw [hs, Real.sqrt_one]
 
-/-- The sphere argument of `paper/sections/global.tex:234-245` and `:235-239`: a continuous
+/-- The sphere argument of `paper/sections/global.tex:233-244` and `:235-239`: a continuous
 positively homogeneous function that is positive off zero attains a positive minimum $\mu$ on
 the Euclidean unit sphere, and $F(x)\ge\mu\|x\|$. -/
 theorem sphere_minimum {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hc : Continuous F)
@@ -1489,7 +1489,7 @@ theorem sphere_minimum {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hc : Contin
             conv_rhs => rw [hxu, hhom _ hnx.le u]
             ring
 
-/-- Item `A/global/prose/031` (`paper/sections/global.tex:220-222`), first half:
+/-- Item `A/global/prose/031` (`paper/sections/global.tex:219-221`), first half:
 "Imposing coercivity prevents rays of zero or negative slope"; also the proof of
 Theorem `art:homogeneous` (item `A/global/proof/005`, lines 235-237):
 "Positive homogeneity gives $F(0)=0$. If $F(x)\le0$ for some $x\ne0$, then
@@ -1501,7 +1501,7 @@ theorem coercive_homogeneous_positive {n : ℕ} {F : Vec n → ℝ}
   ⟨Homogeneous.value_zero hhom, fun _ hx => Homogeneous.positive_of_bounded_zero_sublevel hhom
     (Homogeneous.bounded_zero_sublevel_of_coercive hcoer) hx⟩
 
-/-- Item `A/global/disp/013` (`paper/sections/global.tex:239-241`), in the proof of Theorem
+/-- Item `A/global/disp/013` (`paper/sections/global.tex:238-240`), in the proof of Theorem
 `art:homogeneous`: "\[ \mu=\min_{\norm{x}=1}F(x)>0,\qquad F(x)\ge\mu\norm{x}\quad(x\in\R^n). \]" \]
 Stated under the hypotheses of the theorem: the minimum over the Euclidean unit sphere exists,
 and the minimum $\mu$ is positive with $F(x)\ge\mu\|x\|$ for every $x$. -/
@@ -1525,13 +1525,13 @@ theorem sublevels_compact_of_coercive {n : ℕ} {F : Vec n → ℝ} (hc : Contin
   simpa only [Set.mem_compl_iff, Set.mem_setOf_eq, not_lt] using hx
 
 /-- A lower bound $F(x)\ge\mu\|x\|$ with $\mu>0$ gives coercivity
-(`paper/sections/global.tex:258-266`, "hence coercivity"). -/
+(`paper/sections/global.tex:257-265`, "hence coercivity"). -/
 theorem coercive_of_lower_bound {n : ℕ} {F : Vec n → ℝ} {μ : ℝ} (hμ : 0 < μ)
     (hlow : ∀ x, μ * ‖euclideanVector x‖ ≤ F x) : Tendsto F (cocompact (Vec n)) atTop := by
   refine tendsto_atTop_mono (fun x => ?_) (tendsto_norm_cocompact_atTop.const_mul_atTop hμ)
   exact (mul_le_mul_of_nonneg_left (norm_le_norm_euclideanVector x) hμ.le).trans (hlow x)
 
-/-- Item `A/global/prose/031` (`paper/sections/global.tex:220-222`), second half:
+/-- Item `A/global/prose/031` (`paper/sections/global.tex:219-221`), second half:
 "turns value convergence into global iterate convergence from every starting point". With
 $F(x)\ge\mu\|x\|$, $\mu>0$ (display `A/global/disp/013`), $F(x_k)\to0$ gives $x_k\to0$; also
 the proof of Theorem `art:homogeneous` (item `A/global/proof/005`, line 244): "$F(x_k)\ge\mu\norm{x_k}$
@@ -1544,8 +1544,8 @@ theorem iterates_of_values {n : ℕ} {F : Vec n → ℝ} {μ : ℝ} (hμ : 0 < �
   · rw [le_div_iff₀ hμ, mul_comm]
     exact (mul_le_mul_of_nonneg_left (norm_le_norm_euclideanVector (x k)) hμ.le).trans (hlow _)
 
-/-- Item `A/global/theorem/art:homogeneous` (`paper/sections/global.tex:225-233`), Theorem `art:homogeneous`
-(`paper/sections/global.tex:225-233`), including its display `A/global/disp/012`
+/-- Item `A/global/theorem/art:homogeneous` (`paper/sections/global.tex:224-232`), Theorem `art:homogeneous`
+(`paper/sections/global.tex:224-232`), including its display `A/global/disp/012`
 (lines 234-245): "Let $F:\R^n\to\R$ ($n\ge1$) be finite, convex, positively homogeneous of degree one, and coercive. Then $0$ is the unique minimizer of $F$, and every infinite admissible full-BFGS run from any differentiable $x_0\ne0$, with any $H_0\succ0$ and fixed $0<c_1<c_2<1$, satisfies \[ F(x_k)\longrightarrow0,\qquad x_k\longrightarrow0. \]" Coercive is
 `Tendsto F (cocompact (Vec n)) atTop`; the run is arbitrary (`∀ R`), so are its fields.
 
@@ -1581,7 +1581,7 @@ theorem homogeneous {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hF : ConvexOn 
   rw [h0] at hv
   exact ⟨hv, iterates_of_values hμ0 hlow hv⟩
 
-/-- Item `A/global/prose/030` (`paper/sections/global.tex:220`), "When $\psi=0$, the inward remainder vanishes everywhere on $\R^n$." (The October proof of
+/-- Item `A/global/prose/030` (`paper/sections/global.tex:219`), "When $\psi=0$, the inward remainder vanishes everywhere on $\R^n$." (The October proof of
 Theorem `art:homogeneous` also used this, as "the inward remainder is identically zero", for a
 radial route that the current proof no longer takes.) For finite
 convex positively homogeneous $F$, centered at $x_*=0$, the inward remainder vanishes at every
@@ -1600,7 +1600,7 @@ theorem homogeneous_inward_condition {n : ℕ} {F : Vec n → ℝ} (hF : ConvexO
   rw [hzero x g hg τ (by linarith)]
   simp
 
-/-- Proof of Theorem `art:homogeneous`, last sentence (`paper/sections/global.tex:234-245`,
+/-- Proof of Theorem `art:homogeneous`, last sentence (`paper/sections/global.tex:233-244`,
 not a register item): "Alternatively, the inward remainder is identically zero, so the radial
 convergence corollary applies directly." A second proof of the run conclusion, through
 `homogeneous_inward_condition` and Corollary `art:radial-convergence`. -/
@@ -1619,7 +1619,7 @@ theorem homogeneous_via_radial {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hF 
 /-! ### Corollary `art:homogeneous-examples` and its proof -/
 
 /-- Proof of Corollary `art:homogeneous-examples`, undisplayed claims of
-`paper/sections/global.tex:258-266` (not a register item): positivity off zero and "the same
+`paper/sections/global.tex:257-265` (not a register item): positivity off zero and "the same
 sphere argument gives $F(x)\ge\mu\|x\|$, hence coercivity". -/
 theorem coercive_of_positive {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
     (hhom : Homogeneous.PositiveDegreeOne F) (hpos : ∀ x, x ≠ 0 → 0 < F x) :
@@ -1628,8 +1628,8 @@ theorem coercive_of_positive {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ} (hF : 
   obtain ⟨hμ0, hlow⟩ := hprop μ hμ
   exact coercive_of_lower_bound hμ0 hlow
 
-/-- Item `A/global/corollary/art:homogeneous-examples` (`paper/sections/global.tex:247-257`), Corollary `art:homogeneous-examples`
-(`paper/sections/global.tex:247-257`), the norm case: "The global convergence conclusion of Theorem~\ref{art:homogeneous} holds on $\R^n$ for: \begin{enumerate} \item every norm on $\R^n$ (in particular $\norm{x}_1$ and $\norm{x}_\infty$); \item every finite convex degree-one gauge whose unit sublevel $\{x:F(x)\le1\}$ is bounded; and \item every finite linear maximum $F(x)=\max_{1\le i\le m}a_i^Tx$ whose zero sublevel $\{x:F(x)\le0\}$ is bounded. \end{enumerate}". A norm on $\R^n$ is a `Seminorm` that
+/-- Item `A/global/corollary/art:homogeneous-examples` (`paper/sections/global.tex:246-256`), Corollary `art:homogeneous-examples`
+(`paper/sections/global.tex:246-256`), the norm case: "The global convergence conclusion of Theorem~\ref{art:homogeneous} holds on $\R^n$ for: \begin{enumerate} \item every norm on $\R^n$ (in particular $\norm{x}_1$ and $\norm{x}_\infty$); \item every finite convex degree-one gauge whose unit sublevel $\{x:F(x)\le1\}$ is bounded; and \item every finite linear maximum $F(x)=\max_{1\le i\le m}a_i^Tx$ whose zero sublevel $\{x:F(x)\le0\}$ is bounded. \end{enumerate}". A norm on $\R^n$ is a `Seminorm` that
 vanishes only at zero. The conclusion is that of `homogeneous`: zero is the unique minimizer,
 and every admissible run (from every admissible start) has $N(x_k)\to0$ and $x_k\to0$.
 The other two cases are `homogeneous_examples_gauge` and `homogeneous_examples_maxLinear`. -/
@@ -1646,7 +1646,7 @@ theorem homogeneous_examples_norm {n : ℕ} (hn : 1 ≤ n) (N : Seminorm ℝ (Ve
     lt_of_le_of_ne (apply_nonneg N x) (fun h => hx (hN x h.symm))
   exact homogeneous hn hF hhom (coercive_of_positive hn hF hhom hpos)
 
-/-- Item `A/global/corollary/art:homogeneous-examples` (`paper/sections/global.tex:247-257`),
+/-- Item `A/global/corollary/art:homogeneous-examples` (`paper/sections/global.tex:246-256`),
 the gauge case: "The global convergence conclusion of Theorem~\ref{art:homogeneous} holds on $\R^n$ for: \begin{enumerate} \item every norm on $\R^n$ (in particular $\norm{x}_1$ and $\norm{x}_\infty$); \item every finite convex degree-one gauge whose unit sublevel $\{x:F(x)\le1\}$ is bounded; and \item every finite linear maximum $F(x)=\max_{1\le i\le m}a_i^Tx$ whose zero sublevel $\{x:F(x)\le0\}$ is bounded. \end{enumerate}". -/
 theorem homogeneous_examples_gauge {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ}
     (hF : ConvexOn ℝ univ F) (hhom : Homogeneous.PositiveDegreeOne F)
@@ -1661,7 +1661,7 @@ theorem homogeneous_examples_gauge {n : ℕ} (hn : 1 ≤ n) {F : Vec n → ℝ}
   exact homogeneous hn hF hhom (coercive_of_positive hn hF hhom hpos)
 
 /-- Proof of Corollary `art:homogeneous-examples`, undisplayed claim of
-`paper/sections/global.tex:258-266` (not a register item): "Finite maxima of linear forms are
+`paper/sections/global.tex:257-265` (not a register item): "Finite maxima of linear forms are
 finite, convex and degree-one homogeneous". -/
 theorem maxLinear_convex_homogeneous {n m : ℕ} (a : Fin m → Vec n) (F : Vec n → ℝ)
     (hF_def : ∀ x, IsGreatest (Set.range fun i => dot (a i) x) (F x)) :
@@ -1686,7 +1686,7 @@ theorem maxLinear_convex_homogeneous {n m : ℕ} (a : Fin m → Vec n) (F : Vec 
       simp only [dot_smul_right]
       exact mul_le_mul_of_nonneg_left (hub ⟨i, rfl⟩) ht
 
-/-- Item `A/global/prose/049` (`paper/sections/global.tex:212-216`): Theorem `art:centered`
+/-- Item `A/global/prose/049` (`paper/sections/global.tex:211-215`): Theorem `art:centered`
 "$\psi(u,v)=u^2$, $\gamma(u,v)=|v|$, $x_*=(0,0)$, and $U=\R^2$, and extends it to arbitrary smooth-plus-norm or smooth-plus-support-function sums in $\R^n$ such as $\psi(x)+\norm{Ax}_1$ or $\psi(x)+\max_ia_i^Tx$ whenever the composite minimizer $x_*$ centers the homogeneous term (or locally after active-sign splitting, as we exploit for the Lasso in Section~\ref{art:local}).". The two homogeneous terms $\gamma(x)=\|Ax\|_1$ and $\gamma(x)=\max_ia_i^Tx$
 are finite, convex and positively homogeneous of degree one, as Theorem `art:centered` requires
 of $\gamma$. -/
@@ -1709,7 +1709,7 @@ theorem composite_homogeneous_terms {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ)
     simp only [Pi.smul_apply, smul_eq_mul]
     rw [abs_mul, abs_of_nonneg hc]
 
-/-- Item `A/global/corollary/art:homogeneous-examples` (`paper/sections/global.tex:247-257`),
+/-- Item `A/global/corollary/art:homogeneous-examples` (`paper/sections/global.tex:246-256`),
 the linear-maximum case: "The global convergence conclusion of Theorem~\ref{art:homogeneous} holds on $\R^n$ for: \begin{enumerate} \item every norm on $\R^n$ (in particular $\norm{x}_1$ and $\norm{x}_\infty$); \item every finite convex degree-one gauge whose unit sublevel $\{x:F(x)\le1\}$ is bounded; and \item every finite linear maximum $F(x)=\max_{1\le i\le m}a_i^Tx$ whose zero sublevel $\{x:F(x)\le0\}$ is bounded. \end{enumerate}". The
 maximum is `IsGreatest` of the values $a_i^Tx$; there are no affine intercepts. -/
 theorem homogeneous_examples_maxLinear {n m : ℕ} (hn : 1 ≤ n) (a : Fin m → Vec n)
@@ -1969,7 +1969,7 @@ theorem linf_norm_case {n : ℕ} (hn : 1 ≤ n) (F : Vec n → ℝ)
     funext fun x => (linf_eq_norm F hF_def x).trans (coe_normSeminorm ℝ (Vec n) ▸ rfl)
   exact homogeneous_examples_norm hn (normSeminorm ℝ (Vec n)) (fun x hx => norm_eq_zero.mp hx)
 
-/-- Item `A/global/prose/034` (`paper/sections/global.tex:268-272`), the $\ell^1$ part: "Corollary~\ref{art:homogeneous-examples} goes well beyond isolated kinks: in dimension $n\ge2$, $\norm{x}_1=\sum_i|x_i|$ is nondifferentiable along every coordinate hyperplane, and $\norm{x}_\infty=\max_i|x_i|$ has gradient jumps along every diagonal hyperplane $|x_i|=|x_j|$ where two largest coordinates tie, recovering and vastly generalizing the Euclidean-norm theorem of Guo and". On the hyperplane $\{x_i=0\}$: along the normal direction $e_i$ the
+/-- Item `A/global/prose/034` (`paper/sections/global.tex:267-271`), the $\ell^1$ part: "Corollary~\ref{art:homogeneous-examples} goes well beyond isolated kinks: in dimension $n\ge2$, $\norm{x}_1=\sum_i|x_i|$ is nondifferentiable along every coordinate hyperplane, and $\norm{x}_\infty=\max_i|x_i|$ has gradient jumps along every diagonal hyperplane $|x_i|=|x_j|$ where two largest coordinates tie, recovering and vastly generalizing the Euclidean-norm theorem of Guo and". On the hyperplane $\{x_i=0\}$: along the normal direction $e_i$ the
 norm is $\|x\|_1+|t|$ (the partial derivative jumps from $-1$ to $1$), the norm is not
 differentiable there, and for $n\ge2$ no point of the hyperplane is isolated. -/
 theorem l1_nonsmooth {n : ℕ} (F : Vec n → ℝ) (hF_def : ∀ x, F x = ∑ i, |x i|) (i : Fin n) :
@@ -2013,7 +2013,7 @@ theorem l1_nonsmooth {n : ℕ} (F : Vec n → ℝ) (hF_def : ∀ x, F x = ∑ i,
         abs_of_pos (by positivity)]
       linarith
 
-/-- Item `A/global/prose/034` (`paper/sections/global.tex:268-272`), the $\ell^\infty$ part:
+/-- Item `A/global/prose/034` (`paper/sections/global.tex:267-271`), the $\ell^\infty$ part:
 "Corollary~\ref{art:homogeneous-examples} goes well beyond isolated kinks: in dimension $n\ge2$, $\norm{x}_1=\sum_i|x_i|$ is nondifferentiable along every coordinate hyperplane, and $\norm{x}_\infty=\max_i|x_i|$ has gradient jumps along every diagonal hyperplane $|x_i|=|x_j|$ where two largest coordinates tie, recovering and vastly generalizing the Euclidean-norm theorem of Guo and". At $x$
 with $|x_i|=|x_j|=\max_k|x_k|>0$, $i\ne j$, the norm $\|\cdot\|_\infty$ is not differentiable
 (along $\operatorname{sign}(x_i)e_i$ it equals $\|x\|_\infty+\max(s,0)$), and such tie points
@@ -2164,7 +2164,7 @@ def euclideanSeminorm (n : ℕ) : Seminorm ℝ (Vec n) :=
       simp only [euclideanVector, WithLp.equiv_symm_smul]
       exact norm_smul c _)
 
-/-- Item `A/global/prose/037` (`paper/sections/global.tex:272-274`): "recovering and vastly generalizing the Euclidean-norm theorem of Guo and Lewis~\cite[Corollary~4.2]{GL18} and the one-dimensional $|x|$ analysis of Lewis and Overton~\cite[Section~5.1]{LO} without any symmetry requirement. Moreover,". The mathematical content, the conclusion of Theorem
+/-- Item `A/global/prose/037` (`paper/sections/global.tex:271-273`): "recovering and vastly generalizing the Euclidean-norm theorem of Guo and Lewis~\cite[Corollary~4.2]{GL18} and the one-dimensional $|x|$ analysis of Lewis and Overton~\cite[Section~5.1]{LO} without any symmetry requirement. Moreover,". The mathematical content, the conclusion of Theorem
 `art:homogeneous` for $F(x)=\sqrt{\sum_ix_i^2}$, as an instance of the norm case
 `homogeneous_examples_norm`; the attribution to [GL18] is not checked. -/
 theorem euclidean_norm_case {n : ℕ} (hn : 1 ≤ n) (F : Vec n → ℝ)
@@ -2240,7 +2240,7 @@ theorem asymmetric_example :
   simp only [hF, Pi.neg_apply]
   norm_num
 
-/-- Item `A/global/prose/041` (`paper/sections/global.tex:278-280`): "which full BFGS converges to a nonstationary corner. (When coercivity itself is dropped on a positively homogeneous function, Chapter~7 of the companion proves the global value dichotomy $F(x_k)\to0$ or $F(x_k)\to-\infty$.)"
+/-- Item `A/global/prose/041` (`paper/sections/global.tex:273-275`): "which full BFGS converges to a nonstationary corner. (When coercivity itself is dropped on a positively homogeneous function, Chapter~7 of the companion proves the global value dichotomy $F(x_k)\to0$ or $F(x_k)\to-\infty$.)"
 For finite convex positively homogeneous $F$ (no coercivity): every admissible run has
 $F(x_k)\to0$ or $F(x_k)\to-\infty$; if $F$ is bounded below, zero minimizes $F$ and
 $F(x_k)\to0$; if the zero sublevel is bounded, $x_k\to0$ (the library's
@@ -2306,7 +2306,7 @@ theorem euclidean_norm_not_maxLinear (m : ℕ) (a : Fin m → Vec 2) :
     exact hunit _ (hf1 t)
   exact (Set.infinite_range_of_injective hinj).mono hsub (Set.finite_range a)
 
-/-- Item `A/global/prose/032` (`paper/sections/global.tex:222-223`): "into global iterate convergence from every starting point, with no smoothness or finite-piece hypothesis." Coercivity, with the other hypotheses of Theorem `art:homogeneous`
+/-- Item `A/global/prose/032` (`paper/sections/global.tex:221-222`): "into global iterate convergence from every starting point, with no smoothness or finite-piece hypothesis." Coercivity, with the other hypotheses of Theorem `art:homogeneous`
 (finite, convex, positively homogeneous of degree one), forces neither: the $\ell^1$ norm on
 $\R^2$ satisfies all of them and is not differentiable at $(1,0)\ne0$ (`l1_nonsmooth`), and the
 Euclidean norm on $\R^2$ satisfies all of them and is not a finite maximum of linear forms

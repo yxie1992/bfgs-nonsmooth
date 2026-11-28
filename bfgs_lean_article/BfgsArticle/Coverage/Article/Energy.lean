@@ -202,7 +202,7 @@ theorem abs_coord_convex : ConvexOn ℝ Set.univ (fun x : Vec 1 => |x 0|) := by
 
 /-! ### Definition `art:admissible` -/
 
-/-- Item `A/energy/definition/art:admissible` (`paper/sections/energy.tex:26-45`), Definition
+/-- Item `A/energy/definition/art:admissible` (`paper/sections/energy.tex:25-44`), Definition
 `art:admissible` (Admissible runs), with its displays \eqref{art:update} and \eqref{art:aw}.
 
 Let $F:\R^n\to\R$ be finite and convex, with $n\ge1$. An admissible run is an infinite
@@ -285,7 +285,7 @@ theorem library_formulas {n : ℕ} (H : Mat n) (g s y a b : Vec n) (α : ℝ) :
   ⟨rfl, rfl, rfl, fun _ _ => rfl, rfl, rfl, gradientFunctional_apply a⟩
 
 /-- The Lean names of the run notation of Definition `art:admissible` and of the display
-`paper/sections/energy.tex:51-57`, unfolded: $s_k$ is `R.displacement k`, $y_k$ is
+`paper/sections/energy.tex:50-56`, unfolded: $s_k$ is `R.displacement k`, $y_k$ is
 `R.gradientChange k`, $t_k$ is `R.curvature k`, $B_k$ is `R.hessian k`, $q_k$ is `R.q k`,
 $d_k$ is `R.d k`, and $\beta_k=-y_k^TH_kg_k/q_k$ (the $\beta$ of Theorem `art:minor-hierarchy`
 for the $k$-th update) is `R.beta k`. -/
@@ -297,7 +297,7 @@ theorem run_notation {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (
       R.beta k = -dot (R.gradientChange k) (R.H k *ᵥ R.g k) / R.q k :=
   ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
-/-- Item `A/energy/disp/001` (`paper/sections/energy.tex:32-38`), the display
+/-- Item `A/energy/disp/001` (`paper/sections/energy.tex:31-37`), the display
 \eqref{art:update} of Definition `art:admissible`:
 \[ s_k=-\alpha_kH_kg_k,\quad x_{k+1}=x_k+s_k,\quad y_k=g_{k+1}-g_k,\quad
  H_{k+1}=\Bigl(I-\frac{s_ky_k^T}{t_k}\Bigr)H_k\Bigl(I-\frac{y_ks_k^T}{t_k}\Bigr)
@@ -314,7 +314,7 @@ theorem update_formula {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
       R.curvature k = dot (R.gradientChange k) (R.displacement k) :=
   ⟨rfl, R.step k, rfl, R.update k, rfl⟩
 
-/-- Item `A/energy/disp/002` (`paper/sections/energy.tex:41-44`), the Armijo--weak Wolfe
+/-- Item `A/energy/disp/002` (`paper/sections/energy.tex:40-43`), the Armijo--weak Wolfe
 conditions \eqref{art:aw} of Definition `art:admissible`, with their constants:
 $0<c_1<c_2<1$ and, for every $k$,
 \[ F(x_{k+1})\le F(x_k)+c_1g_k^Ts_k,\qquad g_{k+1}^Ts_k\ge c_2g_k^Ts_k. \]
@@ -325,7 +325,7 @@ theorem armijo_weak_wolfe {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n
         dot (R.g (k + 1)) (R.displacement k) ≥ R.c₂ * dot (R.g k) (R.displacement k) :=
   ⟨⟨R.c₁_pos, R.c₁_lt_c₂, R.c₂_lt_one⟩, fun k => ⟨R.armijo k, R.weak_wolfe k⟩⟩
 
-/-- Item `A/energy/disp/003` (`paper/sections/energy.tex:51-57`):
+/-- Item `A/energy/disp/003` (`paper/sections/energy.tex:50-56`):
 \[ B_k=H_k^{-1},\quad q_k=g_k^TH_kg_k,\quad d_k=-g_k^Ts_k=\alpha_kq_k,\quad
  \Delta_k=F(x_k)-F(x_{k+1}),\quad \omega=1-c_2. \]
 The display defines notation and asserts $-g_k^Ts_k=\alpha_kq_k$. In Lean $B_k$ is
@@ -343,7 +343,7 @@ theorem notation_display {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n 
 
 /-! ### Lemma `art:run-invariants` -/
 
-/-- Item `A/energy/lemma/art:run-invariants` (`paper/sections/energy.tex:61-74`), Lemma
+/-- Item `A/energy/lemma/art:run-invariants` (`paper/sections/energy.tex:60-73`), Lemma
 `art:run-invariants`, with its displays \eqref{art:decrease-bounds} and
 \eqref{art:hessian-update}.
 
@@ -376,7 +376,7 @@ theorem run_invariants {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
 
 /-! ### Lemma `art:reference-energy` -/
 
-/-- Item `A/energy/disp/006` (`paper/sections/energy.tex:101-104`): for a fixed $x_*$, put
+/-- Item `A/energy/disp/006` (`paper/sections/energy.tex:100-103`): for a fixed $x_*$, put
 $r_k=x_k-x_*$ and
 \[ E_k=r_k^TB_kr_k,\qquad a_k=g_k^Tr_k,\qquad R_k=\frac{(y_k^Tr_{k+1})^2}{t_k}. \]
 These are the library's `R.referenceEnergy xstar k`, `R.referencePairing xstar k` and
@@ -397,7 +397,7 @@ theorem reference_notation {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
   · rw [hRk, hr]
     rfl
 
-/-- Item `A/energy/lemma/art:reference-energy` (`paper/sections/energy.tex:99-115`), Lemma
+/-- Item `A/energy/lemma/art:reference-energy` (`paper/sections/energy.tex:98-114`), Lemma
 `art:reference-energy` (Reference energy), with its displays \eqref{art:energy-identity} and
 \eqref{art:energy-budget}.
 
@@ -425,7 +425,7 @@ theorem reference_energy {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n 
   subst hEf haf hRf hFstar
   exact ⟨R.fixed_reference_energy xstar, R.fixed_reference_energy_bound xstar⟩
 
-/-- Item `A/energy/disp/009` (`paper/sections/energy.tex:119-124`), in the proof of Lemma
+/-- Item `A/energy/disp/009` (`paper/sections/energy.tex:118-123`), in the proof of Lemma
 `art:reference-energy`. With $r_k=x_k-x_*$ and $\widehat B_k$ of Lemma `art:run-invariants`
 (the variable `Bhat` with its defining equation), since $r_{k+1}=r_k+s_k$ and
 $\widehat B_ks_k=0$,
@@ -484,7 +484,7 @@ theorem persistent_gap_budget_general {n : ℕ} {F : Vec n → ℝ} (R : Admissi
     _ ≤ E 0 + ∑ k ∈ Finset.range N, Rk k := hbudget
     _ ≤ E 0 + C * N := by linarith
 
-/-- Item `A/energy/prose/011` (`paper/sections/energy.tex:131-134`). With the notation of
+/-- Item `A/energy/prose/011` (`paper/sections/energy.tex:130-133`). With the notation of
 Lemma `art:reference-energy`, a minimizer $x_*$ and $F_*=F(x_*)$: if a gap of at least
 $\eta>0$ persists, $F(x_k)-F_*\ge\eta$ for all $k$, and the secant correction satisfies
 $R_k\le C$ for all $k$, then \eqref{art:energy-budget} gives, for every $N$,
@@ -521,7 +521,7 @@ theorem reciprocal_sum_linear_general {n : ℕ} {F : Vec n → ℝ} (R : Admissi
   rw [div_mul_eq_mul_div, div_add_div_same, le_div_iff₀ hη2]
   linarith
 
-/-- Item `A/energy/prose/011` (`paper/sections/energy.tex:131-134`): "Inequality~\eqref{art:energy-budget} isolates the exact requirement for convergence: if $F(x_k)-F_*\ge\eta>0$ for all $k$ while the radial secant error satisfies $R_k\le C$, then $\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$, bounding the average of $q_k^{-1}$ uniformly in $N$. Crucially, $B_k$ is never bounded from" Under these assumptions,
+/-- Item `A/energy/prose/011` (`paper/sections/energy.tex:130-133`): "Inequality~\eqref{art:energy-budget} isolates the exact requirement for convergence: if $F(x_k)-F_*\ge\eta>0$ for all $k$ while the radial secant error satisfies $R_k\le C$, then $\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$, bounding the average of $q_k^{-1}$ uniformly in $N$. Crucially, $B_k$ is never bounded from" Under these assumptions,
 \[ \sum_{k<N}q_k^{-1}\le\frac{E_0}{\eta^2}+\frac{C}{\eta^2}N\qquad\text{for every }N. \]
 Proved from `reciprocal_sum_linear_general`, whose finite-horizon assumptions are satisfiable. -/
 theorem reciprocal_sum_linear {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
@@ -535,7 +535,7 @@ theorem reciprocal_sum_linear {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
   reciprocal_sum_linear_general R xstar hmin Fstar hFstar r hr E hE Rk hRk η hη N (hgap N) C
     fun k _ => hC k
 
-/-- Item `A/energy/prose/013` (`paper/sections/energy.tex:134-136`): "average of $q_k^{-1}$ uniformly in $N$. Crucially, $B_k$ is never bounded from above: $n-1$ eigenvalues of $B_k$ may diverge to $+\infty$ across kinks while the single inequality $E_N\ge0$ closes the telescope. Everything now turns on" For every fixed $x_*$ and
+/-- Item `A/energy/prose/013` (`paper/sections/energy.tex:133-135`): "average of $q_k^{-1}$ uniformly in $N$. Crucially, $B_k$ is never bounded from above: $n-1$ eigenvalues of $B_k$ may diverge to $+\infty$ across kinks while the single inequality $E_N\ge0$ closes the telescope. Everything now turns on" For every fixed $x_*$ and
 every $k$, $E_k=r_k^TB_kr_k\ge0$ (and $E_0$ is a real number). -/
 theorem energy_nonneg {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (xstar : Vec n)
     (r : ℕ → Vec n) (hr : ∀ k, r k = R.x k - xstar)
@@ -553,7 +553,7 @@ theorem columnSelection_eq {n : ℕ} (U : Mat n) (I : Finset (Fin n)) :
   ext a b
   simp [coordinateMatrix, Matrix.mul_apply, Matrix.one_apply]
 
-/-- Item `A/energy/disp/010` (`paper/sections/energy.tex:144-147`): for a symmetric
+/-- Item `A/energy/disp/010` (`paper/sections/energy.tex:143-146`): for a symmetric
 $n\times n$ matrix $H$,
 \[ e_j(H)=\sum_{I\subset\{1,\ldots,n\},\ |I|=j}\det H_{I,I},\qquad e_{n+1}(H)=0. \]
 The library's `principalSum H j` is literally the first sum, over the `j`-element subsets
@@ -564,7 +564,7 @@ theorem principalSum_def {n : ℕ} (H : Mat n) (j : ℕ) :
       principalSum H (n + 1) = 0 :=
   ⟨rfl, principalSum_terminal H⟩
 
-/-- Item `A/energy/prose/014` (`paper/sections/energy.tex:141-143`): "For a symmetric $n\times n$ matrix $H$, let $e_j(H)$ denote the $j$th elementary symmetric polynomial of its eigenvalues, which by multilinearity of $\det(I+zH)$ equals the sum of all $j\times j$ principal minors:"
+/-- Item `A/energy/prose/014` (`paper/sections/energy.tex:140-142`): "For a symmetric $n\times n$ matrix $H$, let $e_j(H)$ denote the $j$th elementary symmetric polynomial of its eigenvalues, which by multilinearity of $\det(I+zH)$ equals the sum of all $j\times j$ principal minors:"
 
 For a symmetric $H$ (`H.IsHermitian`, which for a real matrix says $H^T=H$): the coefficient
 of $z^j$ in the polynomial $\det(I+zH)$ is $e_j(H)$, so
@@ -608,7 +608,7 @@ theorem principal_sums_coefficients {n : ℕ} (H : Mat n) (hH : H.IsHermitian) :
     rw [← PrincipalInvariance.principalSum_conjugate _ _ H hUU j,
       hH.star_mul_self_mul_eq_diagonal, hid, principalSum_diagonal]
 
-/-- Item `A/energy/prose/015` (`paper/sections/energy.tex:148-149`): "These quantities are orthogonally invariant, with $e_1(H)=\tr H$ and $e_n(H)=\det H$. Classical smooth BFGS theory couples $e_1$ directly to $e_n$," -/
+/-- Item `A/energy/prose/015` (`paper/sections/energy.tex:147-148`): "These quantities are orthogonally invariant, with $e_1(H)=\tr H$ and $e_n(H)=\det H$. Classical smooth BFGS theory couples $e_1$ directly to $e_n$," -/
 theorem principal_trace_det {n : ℕ} (H : Mat n) (_hH : H.IsSymm) :
     principalSum H 1 = H.trace ∧ principalSum H n = H.det :=
   ⟨principalSum_one H, principalSum_top H⟩
@@ -637,7 +637,7 @@ theorem compressions_and_volume {n : ℕ} (H : Mat n) (_hH : H.IsSymm) :
 
 /-! ### Theorem `art:minor-hierarchy` -/
 
-/-- Item `A/energy/theorem/art:minor-hierarchy` (`paper/sections/energy.tex:156-168`), Theorem
+/-- Item `A/energy/theorem/art:minor-hierarchy` (`paper/sections/energy.tex:155-167`), Theorem
 `art:minor-hierarchy` (Principal-minor hierarchy), with its displays `A/energy/disp/011`
 and \eqref{art:hierarchy}.
 
@@ -683,7 +683,7 @@ theorem minor_hierarchy {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β : �
   · subst hHplus hs
     exact hdet
 
-/-- Item `A/energy/disp/013` (`paper/sections/energy.tex:173-177`), in the proof of Theorem
+/-- Item `A/energy/disp/013` (`paper/sections/energy.tex:172-176`), in the proof of Theorem
 `art:minor-hierarchy`. Under the assumptions of the theorem, for $1\le j\le n$ and $Z$ with
 $j$ orthonormal columns (`Zᵀ * Z = 1`), Lemma `art:gram-compression` gives
 \[ \det(Z^TH_+Z)\le\frac{\det\operatorname{Gram}_H(y,Z)}{\beta^2q}
@@ -713,7 +713,7 @@ theorem compression_bound {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β :
   subst hHplus hs hβ_def hq_def
   exact h
 
-/-- Item `A/energy/disp/014` (`paper/sections/energy.tex:182-189`), in the proof of Theorem
+/-- Item `A/energy/disp/014` (`paper/sections/energy.tex:181-188`), in the proof of Theorem
 `art:minor-hierarchy`. Under the assumptions of the theorem and $1\le j\le n$, choose an
 orthonormal eigenbasis of $H$: `U` with `Uᵀ * U = 1` and `H * U = U * diagonal lam`
 (column $i$ is an eigenvector with eigenvalue $\lambda_i>0$), and write $y_i$ (`yc i`) for
@@ -766,7 +766,7 @@ theorem eigenbasis_gram_sum {n : ℕ} (H Hplus : Mat n) (g y s : Vec n) (α q β
 
 /-! ### Theorem `art:reciprocal-growth` -/
 
-/-- Item `A/energy/theorem/art:reciprocal-growth` (`paper/sections/energy.tex:203-209`),
+/-- Item `A/energy/theorem/art:reciprocal-growth` (`paper/sections/energy.tex:202-208`),
 Theorem `art:reciprocal-growth` (Reciprocal growth), with its display
 \eqref{art:reciprocal-limits}.
 
@@ -796,7 +796,7 @@ theorem potential_eq_weighted (n : ℕ) (r : ℝ) (e : ℕ → ℝ) :
   intro j _
   rw [show 1 + j - 1 = j by omega, add_comm 1 j]
 
-/-- Item `A/energy/disp/016` (`paper/sections/energy.tex:213-216`), in the proof of Theorem
+/-- Item `A/energy/disp/016` (`paper/sections/energy.tex:212-215`), in the proof of Theorem
 `art:reciprocal-growth`. Under the assumptions of the theorem, with $\Lambda>0$,
 $\|g_k\|\le\Lambda$ for all $k$, and $K_0=4\Lambda^2/\omega^2$: for the actual run, for every $k$,
 \[ \beta_k=-\frac{y_k^TH_kg_k}{q_k}=\frac{t_k}{d_k}\ge\omega,\qquad \|y_k\|\le2\Lambda,\qquad
@@ -831,7 +831,7 @@ theorem run_bounds {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
   · rw [hd]
     field_simp
 
-/-- Item `A/energy/disp/017` (`paper/sections/energy.tex:218-221`), equation
+/-- Item `A/energy/disp/017` (`paper/sections/energy.tex:217-220`), equation
 `art:normalized-hierarchy`, in the proof of Theorem `art:reciprocal-growth`. Under
 the assumptions of display `A/energy/disp/016`, for every $k$ and $1\le j\le n$,
 \[ q_ke_j(H_{k+1})\le K_0e_{j+1}(H_k)+\frac{d_k}{\omega}e_j(H_k). \]
@@ -848,7 +848,7 @@ theorem normalized_hierarchy {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRu
   rw [hK0]
   exact h
 
-/-- Item `A/energy/disp/018` (`paper/sections/energy.tex:225-227`), in the proof of Theorem
+/-- Item `A/energy/disp/018` (`paper/sections/energy.tex:224-226`), in the proof of Theorem
 `art:reciprocal-growth`. Under the assumptions of display `A/energy/disp/016`, fix $\eta>0$
 and $J$ with $d_k/\omega\le\eta$ for $k\ge J$. For $H\succ0$ define
 $V_\eta(H)=\sum_{j=1}^n(K_0/\eta)^{j-1}e_j(H)$ (the variable `V`, specified on positive
@@ -873,7 +873,7 @@ theorem potential_pos {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
       (principalSum_nonneg hH.posSemidef))
 
 /-- Proof of Theorem `art:reciprocal-growth`, undisplayed claim of
-`paper/sections/energy.tex:210-243` (not a register item): under the assumptions of display
+`paper/sections/energy.tex:209-242` (not a register item): under the assumptions of display
 `A/energy/disp/018`, $q_k\le\Lambda^2\tr H_k\le\Lambda^2V_\eta(H_k)$. -/
 theorem q_le_potential {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (_hbdd : ∃ Λ : ℝ, ∀ k, ‖euclideanVector (R.g k)‖ ≤ Λ) (_hd : Tendsto R.d atTop (𝓝 0))
@@ -900,7 +900,7 @@ theorem q_le_potential {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     exact ScalarHierarchy.first_le_weighted n _ _ hn (div_nonneg hK0nn hη.le)
       (principalSum_nonneg hH.posSemidef)
 
-/-- Item `A/energy/disp/019` (`paper/sections/energy.tex:235-238`), in the proof of Theorem
+/-- Item `A/energy/disp/019` (`paper/sections/energy.tex:234-237`), in the proof of Theorem
 `art:reciprocal-growth`. Under the assumptions of display `A/energy/disp/018`,
 \[ V_\eta(H_{k+1})\le\frac{2\eta}{q_k}V_\eta(H_k)\quad(k\ge J),\qquad
  \prod_{k=J}^{J+m-1}q_k^{-1}\ge\frac{1}{\Lambda^2V_\eta(H_J)(2\eta)^{m-1}}\quad(m\ge1). \]
@@ -1009,7 +1009,7 @@ theorem reciprocal_sum_superlinear_of_minimizer {n : ℕ} {F : Vec n → ℝ}
     (R.summable_predicted_decreases_of_lower_bound (F xstar)
       fun k => hmin (R.x k)).tendsto_atTop_zero
 
-/-- Item `A/energy/prose/010` (`paper/sections/energy.tex:20-22`): "$\frac1N\sum_{k<N}(g_k^TH_kg_k)^{-1}\to+\infty$. Together, these two laws force the optimality gap to vanish without any upper bound on $\norm{B_k}$ or assumption on the limiting spectrum of $H_k$." For an admissible run with bounded gradients and
+/-- Item `A/energy/prose/010` (`paper/sections/energy.tex:19-21`): "$\frac1N\sum_{k<N}(g_k^TH_kg_k)^{-1}\to+\infty$. Together, these two laws force the optimality gap to vanish without any upper bound on $\norm{B_k}$ or assumption on the limiting spectrum of $H_k$." For an admissible run with bounded gradients and
 $d_k\to0$, a minimizer $x_*$ with $F_*=F(x_*)$, and the notation of Lemma
 `art:reference-energy`: if the secant corrections are bounded, $R_k\le C$, the gap
 $F(x_k)-F_*$ cannot stay $\ge\eta>0$ for all $k$ (display `A/energy/prose/011` against
@@ -1026,7 +1026,7 @@ theorem persistent_gap_contradiction {n : ℕ} {F : Vec n → ℝ} (R : Admissib
   exact reciprocal_sum_superlinear R hbdd hd ⟨E 0 / η ^ 2, C / η ^ 2,
     reciprocal_sum_linear R xstar hmin Fstar hFstar r hr E hE Rk hRk η hη hgap C hC⟩
 
-/-- Item `A/energy/prose/021` (`paper/sections/energy.tex:248-250`): "arbitrary nonsmooth runs with bounded gradients and $d_k\to0$ (weaker even than the summability $\sum_kd_k<\infty$ implied by Armijo on bounded-below objectives; non-asymptotic finite-horizon bounds are recorded in Chapter~2 of" For every admissible
+/-- Item `A/energy/prose/021` (`paper/sections/energy.tex:247-249`): "arbitrary nonsmooth runs with bounded gradients and $d_k\to0$ (weaker even than the summability $\sum_kd_k<\infty$ implied by Armijo on bounded-below objectives; non-asymptotic finite-horizon bounds are recorded in Chapter~2 of" For every admissible
 run: a compact initial sublevel $\{F\le F(x_0)\}$ gives $\sum_kd_k<\infty$, and
 $\sum_kd_k<\infty$ implies $d_k\to0$. -/
 theorem summability_stronger {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) :
@@ -1035,7 +1035,7 @@ theorem summability_stronger {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRu
   ⟨fun hK => R.summable_predicted_decreases_of_compact_sublevel hK,
     fun hs => hs.tendsto_atTop_zero⟩
 
-/-- Item `A/energy/prose/022` (`paper/sections/energy.tex:250-251`): "objectives; non-asymptotic finite-horizon bounds are recorded in Chapter~2 of the companion).". The stronger consequence for admissible runs (companion Theorem `M:superquadratic`,
+/-- Item `A/energy/prose/022` (`paper/sections/energy.tex:249-250`): "objectives; non-asymptotic finite-horizon bounds are recorded in Chapter~2 of the companion).". The stronger consequence for admissible runs (companion Theorem `M:superquadratic`,
 (`M:superquad`)): bounded gradients and $\sum_kd_k<\infty$ give
 $\frac1{N^2}\sum_{k<N}q_k^{-1}\to+\infty$. The finite-horizon bound is `finite_horizon_bound`. -/
 theorem superquadratic_growth {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
@@ -1045,7 +1045,7 @@ theorem superquadratic_growth {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSR
   exact superquadraticReciprocalGrowth n R.toFullBFGSRun G (1 - R.c₂) hG R.wolfe_constant_pos hg
     R.beta_lower_bound hs
 
-/-- Item `A/energy/prose/022` (`paper/sections/energy.tex:250-251`): the finite-horizon bounds
+/-- Item `A/energy/prose/022` (`paper/sections/energy.tex:249-250`): the finite-horizon bounds
 of the companion's Chapter 2 (Theorem `M:superquadratic`, (`M:finitehorizon`)), for admissible
 runs. Assume bounded gradients, $\|g_k\|\le G$ with $G>0$, and $\sum_kd_k<\infty$; the weak
 Wolfe constant is $\omega=1-c_2$. For a tail $J$ put $D_J=\sum_{k\ge J}d_k$,
@@ -1081,7 +1081,7 @@ theorem finite_horizon_bound {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRu
 
 /-! ### Moving comparison directions: eligible pairs and band certificates -/
 
-/-- Item `A/energy/prose/041` (`paper/sections/energy.tex:260-261`): Item `A/energy/prose/026` (`paper/sections/energy.tex:93-97`): "$\widehat B_k=\Pi_{s_k}\widehat B_k\Pi_{s_k}\succeq0$, so any component of field motion parallel to the step $s_k$ is annihilated for free. Only transverse" For every admissible run and every $k$, with $\widehat B_k$ as in Lemma
+/-- Item `A/energy/prose/041` (`paper/sections/energy.tex:259-260`): Item `A/energy/prose/026` (`paper/sections/energy.tex:92-96`): "$\widehat B_k=\Pi_{s_k}\widehat B_k\Pi_{s_k}\succeq0$, so any component of field motion parallel to the step $s_k$ is annihilated for free. Only transverse" For every admissible run and every $k$, with $\widehat B_k$ as in Lemma
 `art:run-invariants`: $(v+cs_k)^T\widehat B_k(v+cs_k)=v^T\widehat B_kv$ for all $v$ and $c$;
 $\Pi_{s_k}\widehat B_k\Pi_{s_k}=\widehat B_k$; and
 $\tr(\widehat B_kW)=\tr(\widehat B_k\Pi_{s_k}W\Pi_{s_k})$ for every matrix $W$. -/
@@ -1107,7 +1107,7 @@ theorem projection_no_cost {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun 
     rw [Matrix.mulVec_smul, hker, smul_zero]
   exact EnergyIdentities.energy_add_kernel hsymm hk v
 
-/-- Item `A/energy/disp/020` (`paper/sections/energy.tex:270-272`), with the notation of
+/-- Item `A/energy/disp/020` (`paper/sections/energy.tex:269-271`), with the notation of
 the text: for differentiable $x,z$ write $g=\nabla F(x)$, $h=\nabla F(z)$, $s=z-x$,
 $y=h-g$, $d=-g^Ts$, $\Delta=F(x)-F(z)$ and $t=y^Ts$; the pair is eligible when
 \[ d>0,\qquad c_1d\le\Delta\le d,\qquad t\ge\omega d. \]
@@ -1127,7 +1127,7 @@ theorem eligiblePair_iff {n : ℕ} (F : Vec n → ℝ) (c₁ c₂ : ℝ) (x z g 
   · rintro ⟨⟨hx, hz⟩, h1, h2, h3, h4⟩
     exact ⟨hx, hz, h1, h2, h3, h4⟩
 
-/-- Item `A/energy/prose/028` (`paper/sections/energy.tex:273`): "Every consecutive pair $(x_k,x_{k+1})$ of an admissible run is eligible." For every admissible run and every $k$, the pair $(x_k,x_{k+1})$ with gradients
+/-- Item `A/energy/prose/028` (`paper/sections/energy.tex:272`): "Every consecutive pair $(x_k,x_{k+1})$ of an admissible run is eligible." For every admissible run and every $k$, the pair $(x_k,x_{k+1})$ with gradients
 $(g_k,g_{k+1})$ is eligible for the run's constants; its $d$ and $t$ are $d_k$ and $t_k$. -/
 theorem accepted_pairs_eligible {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (k : ℕ) :
     TransportedCertificate.EligiblePair F R.c₁ R.c₂ (R.x k) (R.x (k + 1)) (R.g k) (R.g (k + 1)) ∧
@@ -1135,12 +1135,12 @@ theorem accepted_pairs_eligible {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFG
       dot (R.g (k + 1) - R.g k) (R.x (k + 1) - R.x k) = R.curvature k :=
   ⟨R.accepted_pair_eligible k, R.accepted_pair_decrease k, R.accepted_pair_curvature k⟩
 
-/-- Item `A/energy/prose/030` (`paper/sections/energy.tex:257-260`): "direction rotates with the iterate. The identity $\widehat B_ks_k=0$ makes moving comparison geometry viable: writing $\Pi_s=I-ss^T/(s^Ts)$ for the orthogonal projector onto $s^\perp$, we have $\widehat B_k=\Pi_{s_k}\widehat B_k\Pi_{s_k}\succeq0$, so any component of field" The library's `stepProjector s` is this matrix. -/
+/-- Item `A/energy/prose/030` (`paper/sections/energy.tex:256-259`): "direction rotates with the iterate. The identity $\widehat B_ks_k=0$ makes moving comparison geometry viable: writing $\Pi_s=I-ss^T/(s^Ts)$ for the orthogonal projector onto $s^\perp$, we have $\widehat B_k=\Pi_{s_k}\widehat B_k\Pi_{s_k}\succeq0$, so any component of field" The library's `stepProjector s` is this matrix. -/
 theorem stepProjector_eq {n : ℕ} (s : Vec n) :
     TransportedCertificate.stepProjector s = 1 - (dot s s)⁻¹ • outer s s := by
   simp only [TransportedCertificate.stepProjector, sqNorm, dot, pow_two]
 
-/-- Item `A/energy/definition/art:band-certificate` (`paper/sections/energy.tex:280-295`),
+/-- Item `A/energy/definition/art:band-certificate` (`paper/sections/energy.tex:279-294`),
 Definition `art:band-certificate` (Band certificate), with its displays
 \eqref{art:visibility}, \eqref{art:secant-control}, \eqref{art:transport}.
 
@@ -1214,7 +1214,7 @@ theorem hasBandCertificates_iff {n : ℕ} (F : Vec n → ℝ) (K : Set (Vec n)) 
     exact (Cert.secant x z g h hx hz hp hd).trans
       (mul_le_mul_of_nonneg_right (le_max_left _ _) ht)
 
-/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:298-299`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." With $F_*=\min F$, no positive band
+/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:297-298`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." With $F_*=\min F$, no positive band
 contains a minimizer: for every $\eta>0$, $K_\eta\cap\arg\min F=\emptyset$. The certificate
 conditions concern only (differentiable) points of the bands, so they impose nothing at an
 optimizer. -/
@@ -1296,7 +1296,7 @@ def absCert (K : Set (Vec 1)) (c₁ c₂ η : ℝ) (hη : 0 < η) (hc₂ : c₂ 
     rw [stepProjector_one_dim hs]
     simpa using Matrix.PosSemidef.zero
 
-/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:298-299`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." Witness: $F(x)=|x|$ on $\R^1$ is finite and
+/-- Item `A/energy/prose/034` (`paper/sections/energy.tex:297-298`): "constants may degenerate as $\eta\downarrow0$, allowing arbitrary nonsmoothness at the minimizer." Witness: $F(x)=|x|$ on $\R^1$ is finite and
 convex, with unique minimizer $0$ and $F_*=\min F=0$; it is not differentiable at $0$; its
 sublevel sets are compact; and for all constants $0<c_1<c_2<1$ and every $b>F_*=0$ the set
 $K=\{F\le b\}$ admits the band certificates of Definition `art:band-certificate` (with
@@ -1333,7 +1333,7 @@ theorem nonsmooth_optimizer_certificates :
 
 /-! ### Theorem `art:certificate` -/
 
-/-- Item `A/energy/theorem/art:certificate` (`paper/sections/energy.tex:301-310`), Theorem
+/-- Item `A/energy/theorem/art:certificate` (`paper/sections/energy.tex:300-309`), Theorem
 `art:certificate` (Transported comparison certificate), with its display
 `A/energy/disp/022`.
 
@@ -1375,7 +1375,7 @@ memberships of the iterates involved); those general forms are satisfiable (see 
 examples at the end). -/
 
 /-- Proof of Theorem `art:certificate`, undisplayed claim of
-`paper/sections/energy.tex:311-343` (not a register item): $E_k=\tr(B_kW(x_k))\ge0$ whenever
+`paper/sections/energy.tex:310-342` (not a register item): $E_k=\tr(B_kW(x_k))\ge0$ whenever
 $x_k$ lies in the band of the certificate. -/
 theorem certificate_energy_nonneg {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F)
     (K : Set (Vec n)) (Fstar η : ℝ)
@@ -1454,7 +1454,7 @@ theorem iterates_in_band {n : ℕ} {F : Vec n → ℝ} (b : ℝ) (K : Set (Vec n
   show F (R.x k) ≥ Fstar + ℓ / 2
   linarith
 
-/-- Item `A/energy/disp/023` (`paper/sections/energy.tex:326-331`), in the proof of Theorem
+/-- Item `A/energy/disp/023` (`paper/sections/energy.tex:325-330`), in the proof of Theorem
 `art:certificate`. Standing assumptions: those of the theorem; the limiting gap
 $\lim_k(F(x_k)-F_*)=\ell>0$; the certificate `Cert` of the band $K_{\ell/2}$ (with
 $C\ge0$; band subscripts omitted: $W,m,C,L,\delta$ are `Cert.W`, `Cert.m`, ...); $J$ with
@@ -1578,8 +1578,8 @@ theorem certificate_budget_general {n : ℕ} {F : Vec n → ℝ} (R : Admissible
   rw [Finset.sum_Ico_eq_sum_range, ← Nat.cast_sub hJN]
   simpa only [add_zero] using hfin
 
-/-- Item `A/energy/prose/042` (`paper/sections/energy.tex:261-264`): Proof of Theorem `art:certificate`, undisplayed claim of
-`paper/sections/energy.tex:311-343` (not a register item): with $P_J=1$ and
+/-- Item `A/energy/prose/042` (`paper/sections/energy.tex:260-263`): Proof of Theorem `art:certificate`, undisplayed claim of
+`paper/sections/energy.tex:310-342` (not a register item): with $P_J=1$ and
 $P_{k+1}=P_k(1+Ld_k)$ ($L\ge0$), summability gives
 $1\le P_k\le\exp(L\sum_{j\ge J}d_j)=\overline P$ for every $k\ge J$. -/
 theorem normalization_bounds {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRun n F) (L : ℝ)
@@ -1599,7 +1599,7 @@ theorem normalization_bounds {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGSRu
   rw [hPd i, ← tsum_mul_left]
   exact ⟨ResidualBudget.one_le_driftProduct hu i, ResidualBudget.driftProduct_le_exp_tsum hu hsu i⟩
 
-/-- Item `A/energy/disp/024` (`paper/sections/energy.tex:336-338`), in the proof of Theorem
+/-- Item `A/energy/disp/024` (`paper/sections/energy.tex:335-337`), in the proof of Theorem
 `art:certificate`. Under the standing assumptions of display `A/energy/disp/023`, with
 $\overline P=\exp(L\sum_{j\ge J}d_j)$ (`Pbar`), for every $N\ge J$,
 \[ m\overline P^{-1}\sum_{k=J}^{N-1}q_k^{-1}\le E_J+C(N-J). \]
@@ -1627,7 +1627,7 @@ theorem certificate_reciprocal_budget {n : ℕ} {F : Vec n → ℝ} (b : ℝ) (K
 
 /-! ### Remaining prose claims -/
 
-/-- Item `A/energy/prose/008` (`paper/sections/energy.tex:47-48`): "Overton~\cite{LO}; see also~\preprintcite{XW}. Reaching $\nabla F(x_k)=0$ is exact finite termination at a global minimizer." For a finite convex $F$, a point where $F$ is differentiable with
+/-- Item `A/energy/prose/008` (`paper/sections/energy.tex:46-47`): "Overton~\cite{LO}; see also~\preprintcite{XW}. Reaching $\nabla F(x_k)=0$ is exact finite termination at a global minimizer." For a finite convex $F$, a point where $F$ is differentiable with
 $\nabla F(x)=0$ is a global minimizer. -/
 theorem zero_gradient_minimizer {n : ℕ} (F : Vec n → ℝ) (hF : ConvexOn ℝ Set.univ F)
     (x : Vec n) (hx : HasFDerivAt F (gradientFunctional 0) x) : ∀ z, F x ≤ F z :=
@@ -1688,7 +1688,7 @@ theorem certificate_not_necessary :
     exact AccumulatingKinks.every_neighborhood_no_certificates hnhds
       ((hasBandCertificates_iff _ _ _ _ _ (by norm_num)).mp hcert)
 
-/-- Item `A/energy/lemma/art:tail-comparison` (`paper/sections/energy.tex:350-363`): Lemma `art:tail-comparison` (`paper/sections/energy.tex`, Tail vector comparison): along an
+/-- Item `A/energy/lemma/art:tail-comparison` (`paper/sections/energy.tex:349-362`): Lemma `art:tail-comparison` (`paper/sections/energy.tex`, Tail vector comparison): along an
 admissible run with bounded gradients and $\sum_k d_k < \infty$, there cannot exist an index $J$,
 vectors $w_k$, scalars $\lambda_k,\beta_k$, and constants $m>0$, $C,L\ge0$ satisfying
 $(g_k^T w_k)^2 \ge m$, $(y_k^T w_{k+1})^2 / t_k \le C$, $w_{k+1} = \lambda_k w_k + \beta_k s_k$,
@@ -1710,7 +1710,7 @@ theorem tail_vector_comparison {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGS
 
 /-! ### Statements of the rewritten Section 2 (M45) -/
 
-/-- Item `A/energy/prose/021` (`paper/sections/energy.tex:248-250`): Item `A/energy/lemma/art:run-invariants` (`paper/sections/energy.tex:61-74`), Lemma
+/-- Item `A/energy/prose/021` (`paper/sections/energy.tex:247-249`): Item `A/energy/lemma/art:run-invariants` (`paper/sections/energy.tex:60-73`), Lemma
 `art:run-invariants` (Primal--dual invariants), with its displays \eqref{art:decrease-bounds}
 and \eqref{art:hessian-update}.
 
@@ -1747,7 +1747,7 @@ theorem primal_dual_invariants {n : ℕ} {F : Vec n → ℝ} (R : AdmissibleBFGS
   have hs := h4 hlim
   exact ⟨hlim, hs, hs.tendsto_atTop_zero⟩
 
-/-- Item `A/energy/disp/009` (`paper/sections/energy.tex:119-124`), in the proof of Lemma
+/-- Item `A/energy/disp/009` (`paper/sections/energy.tex:118-123`), in the proof of Lemma
 `art:reference-energy`. With $r_k=x_k-x_*$, $E_k=r_k^TB_kr_k$, $a_k=g_k^Tr_k$,
 $R_k=(y_k^Tr_{k+1})^2/t_k$ and $\widehat B_k$ of Lemma `art:run-invariants` (variables with
 their defining equations), since $r_{k+1}=r_k+s_k$ and $\widehat B_ks_k=0$,
@@ -1841,7 +1841,7 @@ theorem secant_ratio_unbounded :
     simp only [hval]
     exact tendsto_atTop_add_const_right _ 1 tendsto_natCast_atTop_atTop
 
-/-- Item `A/energy/prose/040` (`paper/sections/energy.tex:196-201`): Theorem
+/-- Item `A/energy/prose/040` (`paper/sections/energy.tex:195-200`): Theorem
 `art:minor-hierarchy` "makes no reference to convexity or smoothness of an objective function.
 Whenever gradients remain bounded along a run and the predicted decreases $d_k$ tend to zero,
 cascading \eqref{art:hierarchy} across $j=1,\ldots,n$ forces both the geometric and arithmetic
@@ -1889,7 +1889,7 @@ theorem reciprocal_growth_without_objective {n : ℕ} (H : ℕ → Mat n) (g : �
     nlinarith
   exact reciprocalGrowth n R Λ ω hΛ hω hbdd hbeta hd
 
-/-- Item `A/energy/prose/030` (`paper/sections/energy.tex:257-260`): "writing
+/-- Item `A/energy/prose/030` (`paper/sections/energy.tex:256-259`): "writing
 $\Pi_s=I-ss^T/(s^Ts)$ for the orthogonal projector onto $s^\perp$". For $s\ne0$, the library's
 `stepProjector s` is this matrix, it is symmetric, it annihilates $s$ and it fixes every vector
 orthogonal to $s$. -/
@@ -1914,7 +1914,7 @@ theorem stepProjector_orthogonal {n : ℕ} (s : Vec n) (hs : s ≠ 0) :
   · rw [Matrix.sub_mulVec, Matrix.one_mulVec, Matrix.smul_mulVec_assoc, outer_mulVec, hv,
       zero_smul, smul_zero, sub_zero]
 
-/-- Item `A/energy/disp/026` (`paper/sections/energy.tex:368-373`), in the proof of Lemma
+/-- Item `A/energy/disp/026` (`paper/sections/energy.tex:367-372`), in the proof of Lemma
 `art:tail-comparison`. Under the hypotheses of the lemma at an index $k\ge J$, with
 $E_k=w_k^TB_kw_k$ and $\widehat B_k$ of Lemma `art:run-invariants` (variables with their
 defining equations),

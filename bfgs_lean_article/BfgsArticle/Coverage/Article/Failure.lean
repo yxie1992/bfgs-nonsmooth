@@ -130,7 +130,7 @@ state the claims for this range, which contains that of Theorem `art:local-failu
 | `prose/059` | 392-394 | `classical_hessian` |
 | `A/seed_certificate/proof/002` | `paper/appendices/seed_certificate.tex:72-114` | `seed_cycle`, `seed_matrices_steps` |
 | `A/seed_certificate/prose/023` | `paper/appendices/seed_certificate.tex:131` | `seed_points` |
-| `A/seed_certificate/prose/012` | `paper/appendices/seed_certificate.tex:153-154` | `seed_cycle`, `seed_cycle_range_counterexample` |
+| `A/seed_certificate/prose/012` | `paper/appendices/seed_certificate.tex:155-156` | `seed_cycle`, `seed_cycle_range_counterexample` |
 | `A/lower_curvature/prose/046` | `paper/appendices/lower_curvature.tex:19-23` | `ramp_center_coordinate`, `ramp_primitive` |
 | `A/lower_curvature/disp/001` | `paper/appendices/lower_curvature.tex:24-33` | `ramp_primitive`, `ramp_center_coordinate` |
 | `A/lower_curvature/disp/002` (`art:upper_scalar`) | `paper/appendices/lower_curvature.tex:41-45` | `phi_formulas`, `phi_unique` |
@@ -883,7 +883,7 @@ theorem trial_table :
   · funext j
     fin_cases j <;> rfl
 
-/-- Item `A/failure/prose/020` (`paper/sections/failure.tex:166-170`), and the caption claim
+/-- Item `A/failure/prose/020` (`paper/sections/failure.tex:179-183`), and the caption claim
 Item `A/failure/prose/016` (`paper/sections/failure.tex:157-158`) of Table `art:trial_table`
 ("while Table~\ref{art:trial_table} and Figure~\ref{art:cycle-figure} make the line-search dynamics immediately readable: phase~$0$ accepts $\alpha=1$ on its first try, phase~$1$ overshoots onto branch~$0$ at $\alpha=1,1/2$ (strictly raising $G$) before bisecting to $\alpha=1/4$ on branch~$2$, and phase~$2$ bisects four times from $\alpha=1$ down to $\alpha=1/16$ on branch~$0$. At each"):
 "Every rejected trial strictly raises $G$ and therefore fails Armijo for every $c_1>0$." -/
@@ -895,7 +895,7 @@ theorem rejected_raise_value (q : Fin 9) (hq : trialAccept q = false) :
         (seedDir (trialPhase q)) (SeedOrbit.gradient seedC seedD (trialPhase q)) c₁ (trialLength q) := by
   exact ⟨seed_rejections_raise q hq, fun c₁ hc₁ => table_reject hc₁ q hq⟩
 
-/-- Item `A/failure/prose/021` (`paper/sections/failure.tex:170-173`): "bisects four times from $\alpha=1$ down to $\alpha=1/16$ on branch~$0$. At each acceptance, $G(z_{j+1})<G(z_j)+\tfrac13g_j^Ts_j$ and $g_{j+1}^Ts_j>0>g_j^Ts_j$, so Armijo holds strictly for all $c_1\le1/3$ and weak Wolfe holds strictly for all $c_2>0$ without a single Wolfe rejection." The first sentence restates
+/-- Item `A/failure/prose/021` (`paper/sections/failure.tex:183-186`): "bisects four times from $\alpha=1$ down to $\alpha=1/16$ on branch~$0$. At each acceptance, $G(z_{j+1})<G(z_j)+\tfrac13g_j^Ts_j$ and $g_{j+1}^Ts_j>0>g_j^Ts_j$, so Armijo holds strictly for all $c_1\le1/3$ and weak Wolfe holds strictly for all $c_2>0$ without a single Wolfe rejection." The first sentence restates
 display `art:seed_margins` (`seed_margins`); the conclusion: -/
 theorem accepted_pass_tests (q : Fin 9) (hq : trialAccept q = true) :
     (∀ c₁ : ℝ, c₁ ≤ 1/3 →
@@ -1133,7 +1133,7 @@ theorem fullUpdate_scale {n : ℕ} (H : Mat n) (g gplus : Vec n) (α : ℝ) {t :
   rfl
 
 /-- and
-Item `A/failure/prose/027` (`paper/sections/failure.tex:180-183`):
+Item `A/failure/prose/027` (`paper/sections/failure.tex:193-196`):
 "Indeed, scaling $(z_j,M_j)$ by $\rho^m$ scales every trial point $z_j+\alpha p_j$ by $\rho^m$, leaves active branches and gradients unchanged, scales objective differences and directional derivatives by $\rho^m>0$, and multiplies the updated matrix~\eqref{art:failure_update} by $\rho^m$. Thus $x_k\to0$ with"
 
 For the iterate $k=3m+j$ of the seed run (`orbitPoint k` $=\rho^mz_j$, `orbitMetric k`
@@ -1240,7 +1240,7 @@ theorem seedPoint_zero_eq : seedPoint 0 = orbitPoint 0 := by
   rw [h]
   exact seedPoint_castSucc 0
 
-/-- Item `A/failure/disp/011` (`paper/sections/failure.tex:177-179`), equation `art:cone_orbit`:
+/-- Item `A/failure/disp/011` (`paper/sections/failure.tex:190-192`), equation `art:cone_orbit`:
 \[ x_{3m+j}=\rho^mz_j,\qquad H_{3m+j}=\rho^mM_j,\qquad j=0,1,2. \]
 For every $0<c_1\le1/3$, $c_1<c_2<1$, the run produced on $G$ by the specified implementation
 from $x_0=z_0$, $H_0=I$ (any trial budget $N\ge5$ in each search) is unique, is the library's
@@ -1271,7 +1271,7 @@ theorem cone_orbit (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤ 1/3) 
   · obtain ⟨hx, hH, -, -⟩ := orbit_phase_parameters m j
     exact ⟨hx.trans (by rw [seedPoint_castSucc]), hH⟩
 
-/-- Item `A/failure/disp/012` (`paper/sections/failure.tex:185-187`): the direction
+/-- Item `A/failure/disp/012` (`paper/sections/failure.tex:198-200`): the direction
 $w=(-1,16)^T$ satisfies
 \[ g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1. \] -/
 theorem downhill_direction :
@@ -1281,7 +1281,7 @@ theorem downhill_direction :
   refine ⟨by norm_num [dot, g0, Fin.sum_univ_two], by norm_num [dot, g1, Fin.sum_univ_two],
     by simp [dot, g2, Fin.sum_univ_two]; ring, by linarith⟩
 
-/-- Item `A/failure/prose/028` (`paper/sections/failure.tex:183-188`): "updated matrix~\eqref{art:failure_update} by $\rho^m$. Thus $x_k\to0$ with $G(x_k)\downarrow0$, even though along $w=(-1,16)^T$ we have \[ g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1, \] so $G(tw)=-t$ for all $t\ge0$ and the limit $0$ is nonstationary. Capping $G$" The iterates `orbitPoint` are those of the run of
+/-- Item `A/failure/prose/028` (`paper/sections/failure.tex:196-201`): "updated matrix~\eqref{art:failure_update} by $\rho^m$. Thus $x_k\to0$ with $G(x_k)\downarrow0$, even though along $w=(-1,16)^T$ we have \[ g_0^Tw=g_1^Tw=-1,\qquad g_2^Tw=-c_\circ+16d_\circ<-1, \] so $G(tw)=-t$ for all $t\ge0$ and the limit $0$ is nonstationary. Capping $G$" The iterates `orbitPoint` are those of the run of
 `cone_orbit`. -/
 theorem cone_limit_nonstationary :
     Tendsto orbitPoint atTop (𝓝 0) ∧
@@ -1293,9 +1293,9 @@ theorem cone_limit_nonstationary :
 
 /-! ### Theorem `art:failure_polyhedral` -/
 
-/-- Item `A/failure/theorem/art:failure_polyhedral` (`paper/sections/failure.tex:193-204`),
+/-- Item `A/failure/theorem/art:failure_polyhedral` (`paper/sections/failure.tex:206-217`),
 Theorem `art:failure_polyhedral` (Global failure on a coercive polyhedral function), including its display
-Item `A/failure/disp/013` (`paper/sections/failure.tex:195-197`).
+Item `A/failure/disp/013` (`paper/sections/failure.tex:208-210`).
 
 "Define the four-piece polyhedral convex function on $\R^2$ by \[ \overline G(u,v)=\max\{u,\;-u-v/8,\;c_\circ u+d_\circ v,\;v-17\}. \] Then $\overline G$ is coercive with unique global minimizer $(-1,16)$ and minimum value $\overline G(-1,16)=-1$. Nevertheless, starting from $x_0=z_0$ and $H_0=I$, for every fixed pair $0<c_1\le1/3$, $c_1<c_2<1$, the unit-first bracketing full-BFGS algorithm generates the trajectory~\eqref{art:cone_orbit}, which converges to the nonstationary point $(0,0)$ with limiting value $\overline G(0,0)=0>-1$."
 

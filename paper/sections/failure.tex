@@ -12,8 +12,8 @@ The construction proceeds in three steps:
 \item First, at a nonstationary three-slope corner in $\R^2$ where
 $0\in\aff\{g_0,g_1,g_2\}\setminus\conv\{g_0,g_1,g_2\}$, we construct three BFGS
 steps after which the iterate and inverse-Hessian matrix are exact scalar copies
-of their initial values, yielding global convergence to a nonstationary point on
-a coercive four-piece polyhedral objective from $H_0=I$
+of their initial values; the resulting run from $z_0$ with $H_0=I$ converges to
+a nonstationary point of a coercive four-piece polyhedral objective
 (Theorem~\ref{art:failure_polyhedral}).
 \item Second, we place shrinking copies of that three-step cycle near the unique
 minimizer of a single four-branch $C^{2,1}$ convex objective under the scaling
@@ -161,6 +161,19 @@ decisions identical for all $0<c_1\le1/3$ and $c_2>0$.}
 \label{art:trial_table}
 \end{table}
 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/cycle_trials.pdf}
+\caption{Geometry of the self-similar three-step cycle. Solid, dashed, and
+dash--dot rays show phases $0,1,2$ with accepted step lengths $1,1/4,1/16$:
+(a)~the accepted cycle $z_0\to z_1\to z_2\to z_3=\rho z_0$; (b)~all nine unit
+and bisected trial queries; (c)~enlargement near the nonstationary origin.
+Vertical-to-horizontal aspect ratios are $22/4.6$, $2.5/4.2$, and $23/21$ in
+(a), (b), and (c); exact rational proofs are in
+Appendix~\ref{art:seed_certificate}.}
+\label{art:cycle-figure}
+\end{figure}
+
 The rational root proof, symbolic closure identity, and interval enclosures for
 Lemma~\ref{art:seed_cycle} are given in Appendix~\ref{art:seed_certificate},
 while Table~\ref{art:trial_table} and Figure~\ref{art:cycle-figure} make the
@@ -214,19 +227,6 @@ $(u,v)=(-1,16)$, where $c_\circ(-1)+16d_\circ<-16<-1$. Finally, $\overline G(u,v
 implies $u\le t$, $v\le t+17$, and $-u-v/8\le t$ (hence $u\ge-9t/8-17/8$ and
 $v\ge-8t-8u\ge-16t$), so every sublevel of $\overline G$ is compact.\qed
 \end{proof}
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\textwidth]{figures/cycle_trials.pdf}
-\caption{Geometry of the self-similar three-step cycle. Solid, dashed, and
-dash--dot rays show phases $0,1,2$ with accepted step lengths $1,1/4,1/16$:
-(a)~the accepted cycle $z_0\to z_1\to z_2\to z_3=\rho z_0$; (b)~all nine unit
-and bisected trial queries; (c)~enlargement near the nonstationary origin.
-Vertical-to-horizontal aspect ratios are $22/4.6$, $2.5/4.2$, and $23/21$ in
-(a), (b), and (c); exact rational proofs are in
-Appendix~\ref{art:seed_certificate}.}
-\label{art:cycle-figure}
-\end{figure}
 
 Theorem~\ref{art:failure_polyhedral} shows that homogeneity in
 Theorem~\ref{art:homogeneous} is sharp: shifting one affine piece by $-17$
@@ -426,8 +426,8 @@ initial matrix $H_0^{\rm seed}\succ0$ on every copy. A single global linear
 change of coordinates $z\mapsto(H_0^{\rm seed})^{1/2}z$ transforms that common
 initial matrix into $H_0=I$ simultaneously for all $\ell\ge1$. Because the ratio
 of node slope $a_\ell$ to node position $ba_\ell$ stays $\Theta(1)$ as
-$\ell\to\infty$, $\psi_b$ remains globally $C^{1,1}$ while losing second
-differentiability at $0$, pinpointing the exact regularity trade-off between
-Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}.
+$\ell\to\infty$, $\psi_b$ remains globally $C^{1,1}$ while losing second differentiability at
+$0$, which is where this second local construction loses $C^2$ regularity
+(compare Theorems~\ref{art:local-failure} and~\ref{art:local-failure-lower}).
 \end{enumerate}
 

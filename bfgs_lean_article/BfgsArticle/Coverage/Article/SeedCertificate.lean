@@ -879,7 +879,7 @@ theorem query_directions (j : Fin 3) :
   · ext i
     fin_cases i <;> simp [SeedOrbit.direction]
 
-/-- Item `A/seed_certificate/disp/011` (`paper/appendices/seed_certificate.tex:138-144`), with
+/-- Item `A/seed_certificate/disp/011` (`paper/appendices/seed_certificate.tex:139-145`), with
 the text: the query of row `q` of Table `art:trial_table`,
 $q=z_j+\alpha p_j$ with $j$ the phase and $\alpha$ the trial length. -/
 def queryPoint (c d r : ℝ) (q : Fin 9) : Vec 2 :=
@@ -2065,8 +2065,8 @@ theorem query_lower_bounds_box {c d r : ℝ}
   · exact rowBounds7 hc hd hr
   · exact rowBounds8 hc hd hr
 
-/-- Item `A/seed_certificate/disp/012` (`paper/appendices/seed_certificate.tex:147-149`), equation `art:query_lower_bounds`
-(`paper/appendices/seed_certificate.tex:147-149`),
+/-- Item `A/seed_certificate/disp/012` (`paper/appendices/seed_certificate.tex:149-151`), equation `art:query_lower_bounds`
+(`paper/appendices/seed_certificate.tex:149-151`),
 
 "\begin{equation} \frac1{10^4}(729,\;2417,\;145,\;75,\;5964,\;2682,\;1041,\;221,\;20). \end{equation}"
 
@@ -2882,7 +2882,7 @@ theorem valueBounds8 {c d r : ℝ}
     linarith
 
 
-/-- Item `A/seed_certificate/prose/006` (`paper/appendices/seed_certificate.tex:150`): "The same interval operations give the value enclosures in Table~\ref{art:trial_table}," On the query box the interval
+/-- Item `A/seed_certificate/prose/006` (`paper/appendices/seed_certificate.tex:152`): "The same interval operations give the value enclosures in Table~\ref{art:trial_table}," On the query box the interval
 rules enclose the designated active values $g_j^Tz_j$ and $g_i^Tq$ of every row in the open
 intervals of Table `art:trial_table` (scaled by $10^4$); at the root these values are
 $G(z_j)$ and $G(z_j+\alpha p_j)$, $G(z)=\max_ig_i^Tz$ (`SeedOrbit.objective`). -/
@@ -3056,7 +3056,7 @@ theorem certifiedPoint_of_certificate {x : Vec 2} {i : Fin 3}
   · have := abs_lt.mp (h.branch_bounds k)
     exact ⟨by linarith, by linarith⟩
 
-/-- Item `A/seed_certificate/prose/010` (`paper/appendices/seed_certificate.tex:151-154`): "positive active-branch gaps at $z_0,z_1,z_2$ (hence local differentiability at every base point and query), and positivity of $3\pm g_i^Tq$, $2-[q]_2$, and $g_i^Tq$ across all base points and queries, establishing~\eqref{art:seed_query_bounds} and completing the proof of Lemma~\ref{art:seed_cycle}." The
+/-- Item `A/seed_certificate/prose/010` (`paper/appendices/seed_certificate.tex:153-156`): "positive active-branch gaps at $z_0,z_1,z_2$ (hence local differentiability at every base point and query), and positivity of $3\pm g_i^Tq$, $2-[q]_2$, and $g_i^Tq$ across all base points and queries, establishing~\eqref{art:seed_query_bounds} and completing the proof of Lemma~\ref{art:seed_cycle}." The
 positivity of these quantities at the three base points and the nine queries, and
 \eqref{art:seed_query_bounds}: $|g_i^Tz|<3$, $[z]_2<2$, $G(z)>0$. -/
 theorem seed_query_bounds_certificate :
@@ -3078,7 +3078,7 @@ theorem seed_query_bounds_certificate :
         objective_of_active h.active]
       exact h.value_pos⟩
 
-/-- Item `A/seed_certificate/prose/011` (`paper/appendices/seed_certificate.tex:151-152`): "positive active-branch gaps at $z_0,z_1,z_2$ (hence local differentiability at every base point and query), and positivity of $3\pm g_i^Tq$, $2-[q]_2$, and" Near each
+/-- Item `A/seed_certificate/prose/011` (`paper/appendices/seed_certificate.tex:153-154`): "positive active-branch gaps at $z_0,z_1,z_2$ (hence local differentiability at every base point and query), and positivity of $3\pm g_i^Tq$, $2-[q]_2$, and" Near each
 query $G$ is differentiable with gradient $g_i$, `i` the active index. -/
 theorem query_differentiable_near (q : Fin 9) :
     ∀ᶠ z in 𝓝 (queryPoint seedC seedD seedRatio q),
