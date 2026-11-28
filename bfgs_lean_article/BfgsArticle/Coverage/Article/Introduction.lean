@@ -35,7 +35,7 @@ formula. -/
 theorem mixed_model_formula (u v : ℝ) : UnexcitedMetric.objective ![u, v] = u ^ 2 + |v| := by
   simp [UnexcitedMetric.objective]
 
-/-- Item `A/introduction/prose/010` (`paper/sections/introduction.tex:140-141`):
+/-- Item `A/introduction/prose/010` (`paper/sections/introduction.tex:141-142`):
 "succeeds on $F(u,v)=u^2+|v|$. Approaching the nonsmooth line $v=0$ need not make $u^2$ small, because the gradient jumps vertically between $(2u,1)$ and" For `u ≠ 0` the points `(u,1/(k+1))`, at which `F(u,v)=u^2+|v|` is
 differentiable, approach the point `(u,0)` of the nonsmooth line `v=0`; their
 smooth coordinate stays `u`, and their values tend to `u^2`, above the minimum
@@ -84,7 +84,7 @@ theorem l1_not_differentiable {n : ℕ} (i : Fin n) {x : Vec n} (hx : x i = 0) :
   rw [hf] at hc
   exact not_differentiableAt_abs_zero hc
 
-/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:255-257`): the norm
+/-- Item `A/introduction/prose/035` (`paper/sections/introduction.tex:257-259`): the norm
 `‖x‖_1`, "linear maximum $\max_{1\le i\le m}a_i^Tx$. In particular, this covers $\norm{x}_1$ and $\norm{x}_\infty$, whose nonsmooth loci contain coordinate hyperplanes and diagonal facets rather than an isolated point." For `n ≥ 2`:
 `∑_j |x_j|` is not differentiable at any `x` with `x_i = 0`; the Euclidean norm is
 differentiable exactly at `x ≠ 0`; and the nonsmooth points of `‖·‖_1` are not
@@ -150,7 +150,7 @@ def SwitchingPoint (i j : Fin 3) (x : Vec 2) : Prop :=
     PlanarQuadraticExample.branch i x = PlanarQuadraticExample.branch j x ∧
     PlanarQuadraticExample.objective x = PlanarQuadraticExample.branch i x
 
-/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:265-268`): "\item \emph{Curved planar switching interfaces via moving contour fields.} When switching loci bend, inward rays cross interfaces and radial secant bounds can fail on every neighborhood of the minimizer, as we demonstrate explicitly on a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a". For every pair of branches, the
+/-- Item `A/introduction/prose/038` (`paper/sections/introduction.tex:267-270`): "\item \emph{Curved planar switching interfaces via moving contour fields.} When switching loci bend, inward rays cross interfaces and radial secant bounds can fail on every neighborhood of the minimizer, as we demonstrate explicitly on a three-quadratic maximum (Theorem~\ref{art:nonradial-example}). Using a". For every pair of branches, the
 switching set (tie of the two branches, both active) inside `|u|,|v| ≤ 1/10`
 contains `0` and two points `q,r` with `0,q,r` not collinear, so it lies on no
 line, and it is not a cone with vertex `0` either (`q/2` is not a switching point),
@@ -317,7 +317,7 @@ theorem not_differentiable_on_line {p : Vec 2} (hp : p 1 = 0) :
   rw [hf] at hc
   exact not_differentiableAt_abs_zero hc
 
-/-- Item `A/introduction/prose/067` (`paper/sections/introduction.tex:141-142`): "make $u^2$ small, because the gradient jumps vertically between $(2u,1)$ and $(2u,-1)$. Yet both gradients have the same negative pairing $-2u^2$ with the" A vector `g` is a limit of actual gradients `∇F(p_k)` at
+/-- Item `A/introduction/prose/067` (`paper/sections/introduction.tex:142-143`): "make $u^2$ small, because the gradient jumps vertically between $(2u,1)$ and $(2u,-1)$. Yet both gradients have the same negative pairing $-2u^2$ with the" A vector `g` is a limit of actual gradients `∇F(p_k)` at
 differentiable points `p_k → (u,0)` exactly when `g=(2u,1)` or `g=(2u,-1)`; the
 difference of these two vectors is `(0,2)`. -/
 theorem limiting_gradients (u : ℝ) :
@@ -396,14 +396,14 @@ theorem limiting_gradients (u : ℝ) :
   · ext i
     fin_cases i <;> norm_num
 
-/-- Item `A/introduction/prose/068` (`paper/sections/introduction.tex:142-143`): "$(2u,-1)$. Yet both gradients have the same negative pairing $-2u^2$ with the horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$ the" The gradients are the limiting
+/-- Item `A/introduction/prose/068` (`paper/sections/introduction.tex:143-144`): "$(2u,-1)$. Yet both gradients have the same negative pairing $-2u^2$ with the horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$ the" The gradients are the limiting
 gradients `(2u,1)` and `(2u,-1)` of `limiting_gradients`. -/
 theorem equal_negative_pairing {u : ℝ} (hu : u ≠ 0) :
     dot (![2 * u, 1] : Vec 2) ![-u, 0] = -2 * u ^ 2 ∧
       dot (![2 * u, -1] : Vec 2) ![-u, 0] = -2 * u ^ 2 ∧ -2 * u ^ 2 < 0 :=
   ArticleGeometry.mixed_ridge_equal_descent u hu
 
-/-- Item `A/introduction/disp/004` (`paper/sections/introduction.tex:146-148`): "\begin{equation} F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2. \end{equation}"$$
+/-- Item `A/introduction/disp/004` (`paper/sections/introduction.tex:147-149`): "\begin{equation} F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2. \end{equation}"$$
 With `F(u,v)=u^2+|v|` and its actual gradient `∇F(u,v)` (which exists for `v ≠ 0`). -/
 theorem mixed_inward_remainder {u v τ : ℝ} (hv : v ≠ 0) (_hτ0 : 0 ≤ τ) (hτ1 : τ ≤ 1) :
     UnexcitedMetric.objective ((1 - τ) • ![u, v]) - UnexcitedMetric.objective ![u, v] +
@@ -412,7 +412,7 @@ theorem mixed_inward_remainder {u v τ : ℝ} (hv : v ≠ 0) (_hτ0 : 0 ≤ τ) 
   rw [PointwiseFeasibility.coordinateGradient_eq hg]
   simpa using ArticleGeometry.mixed_ridge_inward hg hτ1
 
-/-- Item `A/introduction/prose/005` (`paper/sections/introduction.tex:143-149`): "horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$ the nonsmooth term $|v|$ scales linearly with zero Taylor remainder: for $v\ne0$ and $0\le\tau\le1$, \begin{equation} F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2. \end{equation} Only the smooth component $u^2$ contributes a quadratic remainder. A general" For `τ ≤ 1` the nonsmooth part
+/-- Item `A/introduction/prose/005` (`paper/sections/introduction.tex:144-150`): "horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$ the nonsmooth term $|v|$ scales linearly with zero Taylor remainder: for $v\ne0$ and $0\le\tau\le1$, \begin{equation} F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2. \end{equation} Only the smooth component $u^2$ contributes a quadratic remainder. A general" For `τ ≤ 1` the nonsmooth part
 satisfies `|(1-τ)v| = (1-τ)|v|`, so its inward first-order remainder vanishes at
 every `v ≠ 0` (where its derivative is `sign v`); the smooth part `u^2` has
 inward remainder `((1-τ)u)^2-u^2+τ(2u)u = τ^2u^2`. -/
@@ -432,7 +432,7 @@ theorem inward_split (u v τ : ℝ) (hτ : τ ≤ 1) :
 
 /-! ## The seed corner -/
 
-/-- Item `A/introduction/prose/076` (`paper/sections/introduction.tex:170-171`): Item `A/introduction/prose/014` (`paper/sections/introduction.tex:167-170`): the slopes are "$(-1,16)^T$ decreases all three linear pieces, yet \emph{every} nonzero vector $w\in\R^2$ sees an $O(1)$ jump across at least one switching step. We show that" -/
+/-- Item `A/introduction/prose/076` (`paper/sections/introduction.tex:172-173`): Item `A/introduction/prose/014` (`paper/sections/introduction.tex:169-172`): the slopes are "$(-1,16)^T$ decreases all three linear pieces, yet \emph{every} nonzero vector $w\in\R^2$ sees an $O(1)$ jump across at least one switching step. We show that" -/
 theorem seed_affinely_independent :
     SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD =
         ![![1, 0], ![-1, -1 / 8], ![SeedOrbit.seedC, SeedOrbit.seedD]] ∧
@@ -468,7 +468,7 @@ theorem seed_corner_nonstationary :
   simp [dot] at h1
   linarith
 
-/-- Item `A/introduction/prose/069` (`paper/sections/introduction.tex:132-135`): "with both. (b)~The nonstationary three-slope corner of Section~\ref{art:failure}: $0$ lies outside $\conv\{g_0,g_1,g_2\}$ (at distance $1/\sqrt{257}$ above the edge $[g_1,g_0]$, so $(-1,16)$ is a strict common descent direction), yet $\aff\{g_0,g_1,g_2\}=\R^2$, destroying any jump-canceling comparison direction.}" -/
+/-- Item `A/introduction/prose/069` (`paper/sections/introduction.tex:133-136`): "with both. (b)~The nonstationary three-slope corner of Section~\ref{art:failure}: $0$ lies outside $\conv\{g_0,g_1,g_2\}$ (at distance $1/\sqrt{257}$ above the edge $[g_1,g_0]$, so $(-1,16)$ is a strict common descent direction), yet $\aff\{g_0,g_1,g_2\}=\R^2$, destroying any jump-canceling comparison direction.}" -/
 theorem seed_hulls :
     (0 : Vec 2) ∉ convexHull ℝ (range (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD)) ∧
       affineSpan ℝ (range (SeedOrbit.gradient SeedOrbit.seedC SeedOrbit.seedD)) = ⊤ :=
@@ -605,7 +605,7 @@ theorem benchmark_compact_sublevels_global :
   exact ⟨Localization.sublevel_compact UnexcitedMetric.objective_convex 0 hmin hu,
     ArticlePositive.mixed_benchmark_global⟩
 
-/-- Item `A/introduction/prose/031` (`paper/sections/introduction.tex:237`): , as corrected on 15 October 2026 (M31, reader point R-A-2): "$0<c_1<c_2<1$. For $F(u,v)=u^2+|v|$ the first row applies on all of $\R^2$.}" Every sublevel of `F(u,v)=u^2+|v|` is compact; on
+/-- Item `A/introduction/prose/031` (`paper/sections/introduction.tex:239`): , as corrected on 15 October 2026 (M31, reader point R-A-2): "$0<c_1<c_2<1$. For $F(u,v)=u^2+|v|$ the first row applies on all of $\R^2$.}" Every sublevel of `F(u,v)=u^2+|v|` is compact; on
 $U=\R^2$, $F(x)=\psi(x)+\gamma(x-x_*)$ with $x_*=0$ a minimizer of $F$, $\psi(u,v)=u^2$ convex
 and locally $C^{1,1}$, and $\gamma(u,v)=|v|$ convex and positively homogeneous of degree one (the
 hypotheses of Theorem `art:centered`); and every infinite admissible run converges to the
@@ -644,7 +644,7 @@ theorem benchmark_centered_global :
     simpa [UnexcitedMetric.objective] using UnexcitedMetric.objective_nonneg x
   exact ⟨hcompact, ⟨hψ, hψ11, hγ, hγh, hmin, fun x => by simp [UnexcitedMetric.objective]⟩, hglobal⟩
 
-/-- Item `A/introduction/prose/020` (`paper/sections/introduction.tex:161-164`): The common-descent half of the balance facts, for a nonempty finite slope family `a_i` in
+/-- Item `A/introduction/prose/020` (`paper/sections/introduction.tex:163-166`): The common-descent half of the balance facts, for a nonempty finite slope family `a_i` in
 `EuclideanSpace ℝ (Fin n)`: a direction with `a_i^Tw < 0` for all `i` exists iff zero is outside
 the convex hull of the slopes. -/
 theorem common_descent_iff {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
@@ -653,7 +653,7 @@ theorem common_descent_iff {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}
       (0 : EuclideanSpace ℝ (Fin n)) ∉ convexHull ℝ (range a) :=
   ArticleGeometry.finite_slopes_common_descent_iff a
 
-/-- Item `A/introduction/prose/019` (`paper/sections/introduction.tex:164-167`): The equal-rate half of the balance facts: a direction with `a_i^Tw = κ < 0` for all `i`
+/-- Item `A/introduction/prose/019` (`paper/sections/introduction.tex:166-169`): The equal-rate half of the balance facts: a direction with `a_i^Tw = κ < 0` for all `i`
 exists iff zero is outside the affine hull of the slopes. Such a direction is exactly one that
 screens out all jumps, `(a_i-a_j)^Tw = 0`, while keeping `a_i^Tw < 0`. -/
 theorem equal_rate_descent_iff {ι : Type*} [Fintype ι] [Nonempty ι] {n : ℕ}

@@ -824,7 +824,7 @@ theorem strictConvex_sublevel_of_strong {n : ℕ} {F : Vec n → ℝ} (hcont : C
   have h4 : a * ℓ + b * ℓ = ℓ := by rw [← add_mul, hab, one_mul]
   nlinarith
 
-/-- Item `C/11_U/prose/030` (`companion/chapters/11_U.tex:344-345`): "A quadratic-plus-absolute-value
+/-- Item `C/11_U/prose/030` (`companion/chapters/11_U.tex:344-346`): "A quadratic-plus-absolute-value
 objective is included". For $F(u,v)=\frac12(\|u\|^2+v^2)+|v|$ in any dimension $n=m+1$, with
 $\psi=\frac12\|x\|^2$ (`NormalSpike.quadratic`) and $h=|\cdot|$: $\psi$ is convex with locally
 Lipschitz gradient, $h$ is convex and locally $C^{1,1}$ off $0$, $F$ is $1$-strongly convex,
@@ -1688,7 +1688,7 @@ theorem bump_masses :
     density_total_mass⟩
 
 open NormalSpike in
-/-- Item `C/11_U/prose/036` (`companion/chapters/11_U.tex:377-380`): "The sum is locally finite
+/-- Item `C/11_U/prose/036` (`companion/chapters/11_U.tex:377-379`): "The sum is locally finite
 away from zero, so $r$ is convex, $C^1$ globally, and $C^3$ on $(0,\infty)$ and $(-\infty,0)$. In
 particular it is locally $C^{1,1}$ away from zero." Locally finite: near every $v\neq0$ all
 bumps from some index on vanish. Library: `exists_tail_below_neighborhood`,
@@ -1900,7 +1900,7 @@ theorem sample_sqNorm (m : ℕ) (u0 : Vec (m + 1)) (v : ℝ) :
     sqNorm (Fin.cons v u0 : Vec (m + 2)) = v ^ 2 + sqNorm u0 := by
   simp only [sqNorm, Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ]
 
-/-- Item `C/11_U/prose/042` (`companion/chapters/11_U.tex:399-401`): "Fix any sufficiently small
+/-- Item `C/11_U/prose/042` (`companion/chapters/11_U.tex:399-400`): "Fix any sufficiently small
 nonzero $u_0$, and take $x_j=(u_0,a_j)$. Their objective values approach the positive level
 $\|u_0\|^2/2$." For every $u_0\in\mathbb R^{n-1}$, $F(u_0,a_j)\to\|u_0\|^2/2$, which is positive
 when $u_0\neq0$ ($a_j$ = `scale N`). -/

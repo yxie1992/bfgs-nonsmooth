@@ -427,7 +427,7 @@ theorem quadratic_failure (μ : ℝ) (hμ : 0 < μ) (V : Set (Vec 2)) (hV : V �
 `art:quadratic_failure` (`paper/appendices/lower_curvature.tex:104-112`), as corrected on
 15 October 2026 (M33, reader point R-F-1).
 
-"Let $\mu>0$. For every neighborhood $V$ of $0\in\R^2$, there exists an initial state $(x_0,H_0)$ with $H_0\succ0$ that generates the same infinite deterministic full-BFGS run on $Q_\mu$ for every admissible pair $0<c_1\le1/3$, $c_1<c_2<1$, converging to the nonstationary origin with $Q_\mu(x_k)\downarrow0$, accepted step lengths repeating $1,1/4,1/16$, and $x_0$ together with all accepted and rejected trial points differentiable and contained in $V$."
+"Let $\mu>0$. For every neighborhood $V$ of $0\in\R^2$, there exists an initial state $(x_0,H_0)$ with $H_0\succ0$ such that the infinite deterministic full-BFGS run on $Q_\mu$ from $(x_0,H_0)$ is independent of $(c_1,c_2)$ across all admissible pairs $0<c_1\le1/3$, $c_1<c_2<1$, converging to the nonstationary origin with $Q_\mu(x_k)\downarrow0$, accepted step lengths repeating $1,1/4,1/16$, and $x_0$ together with all accepted and rejected trial points differentiable and contained in $V$."
 
 As `quadratic_failure`, with the initial point: $Q_\mu$ is differentiable at $x_0$ and
 $x_0\in V$ (the start of copy $\ell$ in Section D.3 needs the local model there). -/
@@ -571,13 +571,15 @@ theorem seed_return (μ : ℝ) :
 /-! ### Lemma `art:lower_hyperbolic` -/
 
 /-- The stable subspace of a linear endomorphism of the state space: the sum of its generalized
-eigenspaces for the real eigenvalues of modulus less than one. -/
+eigenspaces for the real eigenvalues of modulus less than one. Because `lower_hyperbolic` proves
+that the degree-5 characteristic polynomial of $D\mathcal T_\mu(P_*)$ splits completely into five
+real linear factors, this coincides with the full stable generalized eigenspace. -/
 def stableSubspace (L : Module.End ℝ LNormalizedReturn.State) : Submodule ℝ LNormalizedReturn.State :=
   ⨆ (t : ℝ) (_ : |t| < 1), L.maxGenEigenspace t
 
 /-- Item `A/lower_curvature/lemma/art:lower_hyperbolic` (`paper/appendices/lower_curvature.tex:141-153`), Lemma `art:lower_hyperbolic`
 (`paper/appendices/lower_curvature.tex:141-153`), including its display
-`A/lower_curvature/disp/011` (lines 142-145).
+`A/lower_curvature/disp/011` (lines 147-150).
 
 "On a sufficiently small neighborhood of $P_*$, every state with $\tau>0$ executes the exact nine-query decision lists of Table~\ref{art:trial_table} under the unit-first bracketing algorithm for every admissible pair $(c_1,c_2)$, and~\eqref{art:lower_return} is its three-step return map. Moreover, $D\mathcal T_\mu(P_*)$ has five real eigenvalues \[ \rho^{-1},\quad\rho^{-1},\quad\lambda_s,\quad\lambda_u,\quad\rho, \qquad 0.038<\lambda_s<0.039,\quad 1.564<\lambda_u<1.565, \] and its two-dimensional stable eigenspace contains an eigenvector with $\tau$-component equal to $1$."
 
@@ -589,7 +591,8 @@ table's unique active branch (of $Q_\mu$), the search's attempted lengths are th
 full-BFGS step and update with actual gradients. The return map: $x_3=\tau'z'$ and
 $H_3=\tau'M(\zeta',\eta')$ for $(z',\zeta',\eta',\tau')=\mathcal T_\mu(w)$. The eigenvalues
 (with algebraic multiplicity) are stated as the factorization of the characteristic polynomial
-of $D\mathcal T_\mu(P_*)$. The stable eigenspace is `stableSubspace`. -/
+of $D\mathcal T_\mu(P_*)$. The stable eigenspace is `stableSubspace` (dimension 2 proved below in
+`stableSubspace_finrank`), and `v` is an explicit $\rho$-eigenvector with $\tau$-component `v 4 = 1`. -/
 theorem lower_hyperbolic (μ : ℝ) (_hμ : 0 < μ) :
     (∃ N ∈ 𝓝 LNormalizedReturn.seed, ∀ w ∈ N, 0 < LNormalizedReturn.scale w →
       ∀ c₁ c₂ : ℝ, 0 < c₁ → c₁ ≤ 1/3 → c₁ < c₂ → c₂ < 1 →
@@ -624,6 +627,7 @@ theorem lower_hyperbolic (μ : ℝ) (_hμ : 0 < μ) :
           (Polynomial.X - Polynomial.C seedRatio⁻¹) ^ 2 * (Polynomial.X - Polynomial.C ls) *
             (Polynomial.X - Polynomial.C lu) * (Polynomial.X - Polynomial.C seedRatio)) ∧
       ∃ v ∈ stableSubspace (fderiv ℝ (LNormalizedReturn.returnMap μ) LNormalizedReturn.seed).toLinearMap,
+        (fderiv ℝ (LNormalizedReturn.returnMap μ) LNormalizedReturn.seed).toLinearMap v = seedRatio • v ∧
         v 4 = 1 := by
   refine ⟨⟨_, LNormalizedOracle.uniform_conditions_eventually μ, ?_⟩, ?_, ?_⟩
   · intro w hw hτ c₁ c₂ hc₁ hc₁' hc hc₂
@@ -664,7 +668,7 @@ theorem lower_hyperbolic (μ : ℝ) (_hμ : 0 < μ) :
     refine ⟨ls, lu, ⟨by norm_num at hs ⊢; linarith [hs.1], by norm_num at hs ⊢; linarith [hs.2]⟩,
       ⟨by norm_num at hu ⊢; linarith [hu.1], by norm_num at hu ⊢; linarith [hu.2]⟩, hchar⟩
   · obtain ⟨v, hv4, hDv⟩ := LReturnSpectrum.actual_scale_eigenvector μ
-    refine ⟨v, ?_, hv4⟩
+    refine ⟨v, ?_, hDv, hv4⟩
     set L := (fderiv ℝ (LNormalizedReturn.returnMap μ) LNormalizedReturn.seed).toLinearMap
     have hρ : |seedRatio| < 1 := by
       rw [abs_of_pos source_ratio_pos_lt_one.1]
@@ -974,6 +978,25 @@ theorem stableSubspace_iff_diagonal (μ : ℝ) {ls lu : ℝ} (hs : 0 < ls ∧ ls
     rw [hsplit]
     exact (stableSubspace T.toLinearMap).add_mem ((stableSubspace T.toLinearMap).smul_mem _ h0)
       ((stableSubspace T.toLinearMap).smul_mem _ h1)
+
+/-- Explicit two-dimensionality of `stableSubspace` in Lemma `art:lower_hyperbolic`. -/
+theorem stableSubspace_finrank (μ : ℝ) :
+    Module.finrank ℝ
+      (stableSubspace (fderiv ℝ (LNormalizedReturn.returnMap μ) LNormalizedReturn.seed).toLinearMap) = 2 := by
+  obtain ⟨ls, lu, hs, hu, E, -, hE, -⟩ := LReturnSpectrum.actual_spectral_contract μ
+  have hls : 0 < ls ∧ ls < 1 := ⟨by norm_num at hs; linarith [hs.1], by norm_num at hs; linarith [hs.2]⟩
+  have hlu : 1 < lu := by norm_num at hu; linarith [hu.1]
+  let f : Vec 2 →ₗ[ℝ] LNormalizedReturn.State :=
+    (E : LBlockSplitting.Coordinates →L[ℝ] LNormalizedReturn.State).toLinearMap.comp
+      (LinearMap.inl ℝ (Vec 2) (Vec 3))
+  have hinj : Function.Injective f := fun a b hab => by
+    have := E.injective hab
+    simpa using congrArg Prod.fst this
+  have hrange : LinearMap.range f =
+      stableSubspace (fderiv ℝ (LNormalizedReturn.returnMap μ) LNormalizedReturn.seed).toLinearMap := by
+    ext v
+    simpa [f] using (stableSubspace_iff_diagonal μ hls hlu hE v).symm
+  rw [← hrange, LinearMap.finrank_range_of_inj hinj, Module.finrank_fin_fun]
 
 /-- Item `A/lower_curvature/prose/036` (`paper/appendices/lower_curvature.tex:212-215`): "$\hat\rho>0$ and $M(\zeta,\eta)\succ0$ throughout. Since the stable eigenspace has a vector with $\tau$-coordinate $1$, this local stable manifold contains an initial state $w_0$ with $\tau_0>0$ whose forward iterates $w_m=(\hat z_m,\zeta_m,\eta_m,\tau_m)=\mathcal T_\mu^m(w_0)$ stay in that neighborhood and converge to $P_*$ with $\tau_m>0$ and $\tau_m\to0$. Unfolding"
 

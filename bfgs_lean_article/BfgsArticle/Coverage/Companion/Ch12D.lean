@@ -551,11 +551,9 @@ theorem accepted_lengths (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₁' : c₁ ≤
   exact ⟨e0, e1, e2, h0, h1, h2⟩
 
 open DScalarGeometric in
-/-- Item `C/12_D/prose/008` (`companion/chapters/12_D.tex:68`): "It does not address strong-Wolfe
-interpolation searches or a positive-measure basin of failing initial points." The failing
+/-- Auxiliary to Item `C/12_D/theorem/D:main` (`companion/chapters/12_D.tex:47-62`): the failing
 starts $x_0^{(n)}=p_n+a_n^2z_0$, $n\ge1$, of Theorem `D:main` form a countable set of Lebesgue
-measure zero; they are not a positive-measure basin. (Strong-Wolfe interpolation searches are
-outside the theorem, which concerns the specified search.) -/
+measure zero; they are not a positive-measure basin. -/
 theorem starts_null :
     {x : Vec 2 | ∃ n : ℕ, 1 ≤ n ∧ x = DEmbedding.center n + (scale n) ^ 2 • Failure.seedPoint 0}.Countable ∧
     MeasureTheory.volume

@@ -637,6 +637,33 @@ theorem gauge_ray_minimizer {ε : ℝ} (hε : 0 < ε) :
   rintro ⟨R, hx, hH⟩
   exact Gauge.no_admissible_run hε R hx hH
 
+/-- Proof of Proposition `art:examples-two-quadratics` and Corollary `art:examples-nonradial-runs`
+(`paper/appendices/hypothesis_examples.tex:114-115, 139-140`): any nonzero real polynomial
+$a t^2 + b t + c$ of degree at most two has at most two real roots. -/
+theorem quadratic_zeros_le_two (a b c : ℝ) (hne : a ≠ 0 ∨ b ≠ 0 ∨ c ≠ 0) :
+    Set.ncard {t : ℝ | a * t ^ 2 + b * t + c = 0} ≤ 2 := by
+  let p : Polynomial ℝ := Polynomial.C a * Polynomial.X ^ 2 + Polynomial.C b * Polynomial.X + Polynomial.C c
+  have hp0 : p ≠ 0 := by
+    intro h0
+    rcases hne with ha | hb | hc
+    · exact ha (by simpa [p] using congrArg (fun q : Polynomial ℝ => q.coeff 2) h0)
+    · exact hb (by simpa [p] using congrArg (fun q : Polynomial ℝ => q.coeff 1) h0)
+    · exact hc (by simpa [p] using congrArg (fun q : Polynomial ℝ => q.coeff 0) h0)
+  have hdeg : p.natDegree ≤ 2 := by
+    dsimp [p]
+    compute_degree!
+  have hsub : {t : ℝ | a * t ^ 2 + b * t + c = 0} ⊆ (p.roots.toFinset : Set ℝ) := by
+    intro t ht
+    rw [Finset.mem_coe, Multiset.mem_toFinset, Polynomial.mem_roots hp0]
+    simpa [p, Polynomial.IsRoot] using ht
+  calc
+    Set.ncard {t : ℝ | a * t ^ 2 + b * t + c = 0}
+        ≤ Set.ncard (p.roots.toFinset : Set ℝ) := Set.ncard_le_ncard hsub (Finset.finite_toSet _)
+    _ = p.roots.toFinset.card := Set.ncard_coe_Finset _
+    _ ≤ Multiset.card p.roots := Multiset.toFinset_card_le _
+    _ ≤ p.natDegree := Polynomial.card_roots' p
+    _ ≤ 2 := hdeg
+
 /-! ## Joint non-vacuity at explicit parameter values
 
 The two explicit histories are actual-gradient infinite full-BFGS runs.

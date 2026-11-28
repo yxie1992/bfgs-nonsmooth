@@ -1875,13 +1875,11 @@ def tableTrial : Fin 9 → ℝ × ℝ :=
   ![(1218, 1219), (3845, 3846), (1364, 1365), (723, 724), (6687, 6691), (3406, 3408), (1765, 1767),
     (944, 946), (534, 536)]
 
-/-- Unfolds a row expression of the certificate to coordinates. -/
-local macro "unfold_row" : tactic =>
-  `(tactic| (simp [queryLowerBound, gapExpr, descentExpr, decisionExpr, wolfeExpr, queryPoint,
-    currentValueExpr, trialValueExpr,
-    SeedOrbit.trial, SeedOrbit.point, SeedOrbit.initialPoint, SeedOrbit.direction,
-    SeedOrbit.gradient, SeedCycle.g0, SeedCycle.g1, SeedCycle.g2, dot, Fin.sum_univ_two,
-    trialPhase, trialLength, trialActive, trialAccept] <;> ring))
+section UnfoldRow
+attribute [local simp] queryLowerBound gapExpr descentExpr decisionExpr wolfeExpr queryPoint
+  currentValueExpr trialValueExpr SeedOrbit.trial SeedOrbit.point SeedOrbit.initialPoint
+  SeedOrbit.direction SeedOrbit.gradient SeedCycle.g0 SeedCycle.g1 SeedCycle.g2 dot
+  Fin.sum_univ_two trialPhase trialLength trialActive trialAccept
 
 /-- Row 1 of display `art:query_lower_bounds` on the query box. -/
 theorem rowBounds0 {c d r : ℝ}
@@ -1894,12 +1892,12 @@ theorem rowBounds0 {c d r : ℝ}
   obtain ⟨h0, h1, h2, h3, h4⟩ := rawRow0 hc hd hr
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
-    · convert h0 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
     · exact absurd rfl hk
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
-  · convert h4 using 1; unfold_row
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
+  · convert h4 using 1; simp
 
 /-- Row 2 of display `art:query_lower_bounds` on the query box. -/
 theorem rowBounds1 {c d r : ℝ}
@@ -1913,10 +1911,10 @@ theorem rowBounds1 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
   · exact absurd hacc (by decide)
 
 /-- Row 3 of display `art:query_lower_bounds` on the query box. -/
@@ -1931,10 +1929,10 @@ theorem rowBounds2 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
   · exact absurd hacc (by decide)
 
 /-- Row 4 of display `art:query_lower_bounds` on the query box. -/
@@ -1948,12 +1946,12 @@ theorem rowBounds3 {c d r : ℝ}
   obtain ⟨h0, h1, h2, h3, h4⟩ := rawRow3 hc hd hr
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
     · exact absurd rfl hk
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
-  · convert h4 using 1; unfold_row
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
+  · convert h4 using 1; simp
 
 /-- Row 5 of display `art:query_lower_bounds` on the query box. -/
 theorem rowBounds4 {c d r : ℝ}
@@ -1967,10 +1965,10 @@ theorem rowBounds4 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
   · exact absurd hacc (by decide)
 
 /-- Row 6 of display `art:query_lower_bounds` on the query box. -/
@@ -1985,10 +1983,10 @@ theorem rowBounds5 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
   · exact absurd hacc (by decide)
 
 /-- Row 7 of display `art:query_lower_bounds` on the query box. -/
@@ -2003,10 +2001,10 @@ theorem rowBounds6 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
   · exact absurd hacc (by decide)
 
 /-- Row 8 of display `art:query_lower_bounds` on the query box. -/
@@ -2021,10 +2019,10 @@ theorem rowBounds7 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
   · exact absurd hacc (by decide)
 
 /-- Row 9 of display `art:query_lower_bounds` on the query box. -/
@@ -2039,11 +2037,11 @@ theorem rowBounds8 {c d r : ℝ}
   refine ⟨fun k hk => ?_, ?_, ?_, fun hacc => ?_⟩
   · fin_cases k
     · exact absurd rfl hk
-    · convert h0 using 1; unfold_row
-    · convert h1 using 1; unfold_row
-  · convert h2 using 1; unfold_row
-  · convert h3 using 1; unfold_row
-  · convert h4 using 1; unfold_row
+    · convert h0 using 1; (simp; ring)
+    · convert h1 using 1; (simp; ring)
+  · convert h2 using 1; simp
+  · convert h3 using 1; (simp; ring)
+  · convert h4 using 1; simp
 
 
 /-- The bounds of display `art:query_lower_bounds` on the whole query box. -/
@@ -2147,16 +2145,16 @@ theorem valueBounds0 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 0 < (tableTrial 0).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue0 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 0 = (((1 : ℝ)*(((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹))+((0 : ℝ)*(((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹))) from by unfold_row]
+  · rw [show currentValueExpr c d r 0 = (((1 : ℝ)*(((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹))+((0 : ℝ)*(((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹))) from by (simp; ring)]
     show (8884 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 0 = (((1 : ℝ)*(((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹))+((0 : ℝ)*(((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹))) from by unfold_row]
+  · rw [show currentValueExpr c d r 0 = (((1 : ℝ)*(((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹))+((0 : ℝ)*(((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹))) from by (simp; ring)]
     show 10 ^ 4 * _ < (8885 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 0 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(-1 : ℝ))))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(0 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 0 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(-1 : ℝ))))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(0 : ℝ))))) from by (simp; ring)]
     show (1218 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 0 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(-1 : ℝ))))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(0 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 0 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(-1 : ℝ))))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+((1 : ℝ)*(0 : ℝ))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (1219 : ℝ)
     linarith
 
@@ -2232,16 +2230,16 @@ theorem valueBounds1 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 1 < (tableTrial 1).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue1 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 1 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 1 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by (simp; ring)]
     show (1218 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 1 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 1 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (1219 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 1 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1 : ℝ)*(1/16 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 1 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1 : ℝ)*(1/16 : ℝ))))) from by (simp; ring)]
     show (3845 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 1 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1 : ℝ)*(1/16 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 1 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1 : ℝ)*(1/16 : ℝ))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (3846 : ℝ)
     linarith
 
@@ -2318,16 +2316,16 @@ theorem valueBounds2 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 2 < (tableTrial 2).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue2 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 2 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 2 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by (simp; ring)]
     show (1218 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 2 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 2 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (1219 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 2 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/2 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/2 : ℝ)*(1/16 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 2 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/2 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/2 : ℝ)*(1/16 : ℝ))))) from by (simp; ring)]
     show (1364 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 2 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/2 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/2 : ℝ)*(1/16 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 2 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/2 : ℝ)*(127/256 : ℝ))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/2 : ℝ)*(1/16 : ℝ))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (1365 : ℝ)
     linarith
 
@@ -2404,16 +2402,16 @@ theorem valueBounds3 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 3 < (tableTrial 3).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue3 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 3 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 3 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by (simp; ring)]
     show (1218 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 3 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 3 = (((-1 : ℝ)*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ)))+((-1/8 : ℝ)*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (1219 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 3 = ((c*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/4 : ℝ)*(127/256 : ℝ))))+(d*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/4 : ℝ)*(1/16 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 3 = ((c*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/4 : ℝ)*(127/256 : ℝ))))+(d*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/4 : ℝ)*(1/16 : ℝ))))) from by (simp; ring)]
     show (723 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 3 = ((c*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/4 : ℝ)*(127/256 : ℝ))))+(d*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/4 : ℝ)*(1/16 : ℝ))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 3 = ((c*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-1 : ℝ))+((1/4 : ℝ)*(127/256 : ℝ))))+(d*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(0 : ℝ))+((1/4 : ℝ)*(1/16 : ℝ))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (724 : ℝ)
     linarith
 
@@ -2496,16 +2494,16 @@ theorem valueBounds4 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 4 < (tableTrial 4).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue4 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 4 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 4 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show (723 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 4 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 4 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (724 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 4 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 4 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show (6687 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 4 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 4 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (6691 : ℝ)
     linarith
 
@@ -2589,16 +2587,16 @@ theorem valueBounds5 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 5 < (tableTrial 5).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue5 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 5 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 5 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show (723 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 5 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 5 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (724 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 5 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/2 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/2 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 5 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/2 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/2 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show (3406 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 5 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/2 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/2 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 5 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/2 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/2 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (3408 : ℝ)
     linarith
 
@@ -2682,16 +2680,16 @@ theorem valueBounds6 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 6 < (tableTrial 6).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue6 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 6 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 6 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show (723 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 6 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 6 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (724 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 6 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/4 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/4 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 6 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/4 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/4 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show (1765 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 6 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/4 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/4 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 6 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/4 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/4 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (1767 : ℝ)
     linarith
 
@@ -2775,16 +2773,16 @@ theorem valueBounds7 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 7 < (tableTrial 7).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue7 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 7 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 7 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show (723 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 7 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 7 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (724 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 7 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/8 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/8 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 7 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/8 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/8 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show (944 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 7 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/8 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/8 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 7 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/8 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/8 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (946 : ℝ)
     linarith
 
@@ -2868,19 +2866,21 @@ theorem valueBounds8 {c d r : ℝ}
       10 ^ 4 * trialValueExpr c d r 8 < (tableTrial 8).2 := by
   obtain ⟨h0, h1, h2, h3⟩ := rawValue8 hc hd hr
   refine ⟨?_, ?_, ?_, ?_⟩
-  · rw [show currentValueExpr c d r 8 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 8 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show (723 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show currentValueExpr c d r 8 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by unfold_row]
+  · rw [show currentValueExpr c d r 8 = ((c*((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ)))+(d*((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ)))) from by (simp; ring)]
     show 10 ^ 4 * _ < (724 : ℝ)
     linarith
-  · rw [show trialValueExpr c d r 8 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/16 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/16 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 8 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/16 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/16 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show (534 : ℝ) < 10 ^ 4 * _
     linarith
-  · rw [show trialValueExpr c d r 8 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/16 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/16 : ℝ)*(((-16 : ℝ)*r)*d))))) from by unfold_row]
+  · rw [show trialValueExpr c d r 8 = (((1 : ℝ)*(((((897/1024 : ℝ)-(r*((1 : ℝ)-c)))*(((1 : ℝ)-r))⁻¹)+(-897/1024 : ℝ))+((1/16 : ℝ)*(((16 : ℝ)*r)*((1 : ℝ)-c)))))+((0 : ℝ)*(((((r*d)-(1/64 : ℝ))*(((1 : ℝ)-r))⁻¹)+(1/64 : ℝ))+((1/16 : ℝ)*(((-16 : ℝ)*r)*d))))) from by (simp; ring)]
     show 10 ^ 4 * _ < (536 : ℝ)
     linarith
 
+
+end UnfoldRow
 
 /-- Item `A/seed_certificate/prose/006` (`paper/appendices/seed_certificate.tex:152`): "The same interval operations give the value enclosures in Table~\ref{art:trial_table}," On the query box the interval
 rules enclose the designated active values $g_j^Tz_j$ and $g_i^Tq$ of every row in the open

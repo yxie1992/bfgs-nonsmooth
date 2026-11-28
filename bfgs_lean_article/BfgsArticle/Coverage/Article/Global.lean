@@ -104,7 +104,7 @@ Lean proof does not use.
 | `prose/034` | 268-272 | `l1_nonsmooth`, `linf_nonsmooth` |
 | `prose/037` | 272-274 | `euclidean_norm_case`, `asymmetric_example`, `homogeneous_examples_norm` |
 | `prose/041` | 278-280 | `homogeneous_value_dichotomy` |
-| `A/introduction/prose/035` | `paper/sections/introduction.tex:255-257` | `linf_nonsmooth`, `linf_tie_example` |
+| `A/introduction/prose/035` | `paper/sections/introduction.tex:257-259` | `linf_nonsmooth`, `linf_tie_example` |
 | `A/hypothesis_examples/proof/001` | `paper/appendices/hypothesis_examples.tex:29-40` | `mixed_radial_secant` |
 
 The theorem item `art:centered` also lists `centered_summands_not_minimized` (its last sentence);
@@ -208,8 +208,8 @@ theorem sublevel_convex {n : ℕ} {F : Vec n → ℝ} (hF : ConvexOn ℝ univ F)
 
 /-- "A gradient jump can make
 the positive correction in \eqref{art:energy-identity} large." The correction of an accepted
-pair $(x,z)=(x_k,x_{k+1})$ is $R_k=N^2/T$ (`paper/sections/energy.tex:100-103`), and accepted pairs are eligible
-(`paper/sections/energy.tex:272`). For the strongly convex $F(t)=(t+2)^2/2+|t|$ on $\R$, whose derivative jumps
+pair $(x,z)=(x_k,x_{k+1})$ is $R_k=N^2/T$ (`paper/sections/energy.tex:101-104`), and accepted pairs are eligible
+(`paper/sections/energy.tex:273`). For the strongly convex $F(t)=(t+2)^2/2+|t|$ on $\R$, whose derivative jumps
 from $1$ to $3$ at $t=0$ and whose minimizer is $x_*=-1$, there is a positive band on which
 $N^2/T$ exceeds every constant $C$, over differentiable pairs $z<0<x$ across the jump with
 $F_*+\eta\le F(z)\le F(x)\le3$ and $T>0$ that are eligible for $c_1=1/4$, $c_2=1/2$ (the

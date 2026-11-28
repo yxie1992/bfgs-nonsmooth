@@ -2055,7 +2055,7 @@ theorem additive_errors_not_summable (C2 : ℝ) (hC2 : 0 < C2) :
 
 /-! ### Relation to earlier work -/
 
-/-- Item `C/02_M/prose/030` (`companion/chapters/02_M.tex:282`): "The BFGS update, secant
+/-- Item `C/02_M/prose/030` (`companion/chapters/02_M.tex:280`): "The BFGS update, secant
 equation, positive-definiteness preservation and determinant identity are classical." The
 mathematical facts named (proved here; their attribution is bibliographic): for the inverse
 update $H_+=(I-sy^T/t)H(I-ys^T/t)+ss^T/t$, $t=y^Ts$:

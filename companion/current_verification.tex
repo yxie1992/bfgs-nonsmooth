@@ -28,18 +28,13 @@ The only transitive axiom dependencies were \texttt{propext},
 implementation artifacts, examining types, proof values and structural
 dependencies. This restriction identifies the foundations the proofs use.
 
-The unmodified audit runner and its source provenance are under
-\path{editorial/formal_audit/}. Per-command output, input/output hashes,
-elapsed times, package states and the overall PASS are in
-\path{editorial/formal_audit/runs/20260912_narrative/SUMMARY.json} and its
-\path{logs/} directory. The preceding sealed master-report validation also
-passed, with output retained in \path{editorial/logs/baseline_release_gate.json}.
-Reproduction from the repository root is:
+The core audit evidence for the main library and supplements is preserved under
+\path{bfgs_lean_stage1/master_report/audit/}, while package-wide axiom and
+kernel-replay audits for the combined library, supplements, and coverage
+modules are run from \path{bfgs_lean_article/} via:
 \begin{Verbatim}[fontsize=\small]
-python3 editorial/formal_audit/run.py --run 
-  --run-dir editorial/formal_audit/runs/local_replay
+python3 scripts/axiom_audit.py --jobs 6 --report AXIOM_AUDIT.json
 \end{Verbatim}
-The command is one shell line; the displayed break is typographic.
 
 The narrative revision also adds two separately compiled article supplements.
 The mixed-benchmark theorem quantifies over every admissible
@@ -54,14 +49,12 @@ type/value dependencies, and agreement with the ordinary axiom collector.
 The runs, exact types and hashed compiler outputs are registered in
 \path{editorial/narrative_rebuild/FORMAL_SUPPLEMENTS.json}. These totals
 overlap the main library and are not additive. A further review
-freshly compiled the unchanged fourteen article-geometry declarations and
-checked their types, proof values and complete structural dependencies,
-including mutual inductives and recursor rules. The 26,496-declaration
-closure agrees with the earlier audit, uses only the three permitted
-axioms, and agrees independently with Lean's ordinary axiom collector.
-Exact theorem types are unchanged. The runner and the compiler/audit
-evidence are under \path{editorial/satisfaction_review/formal/}; the earlier
-evidence remains under \path{editorial/article_formal/}.
+freshly compiled the unchanged fourteen article-geometry declarations in
+\path{editorial/article_formal/} and checked their types, proof values and
+complete structural dependencies, including mutual inductives and recursor
+rules. The 26,496-declaration closure agrees with the earlier audit, uses only
+the three permitted axioms, and agrees independently with Lean's ordinary axiom
+collector. Exact theorem types are unchanged.
 
 The same review also formalized the restriction and fixed-coordinate-change
 argument for the first three lower-counterexample branches: each

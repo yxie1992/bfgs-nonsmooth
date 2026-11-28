@@ -171,7 +171,7 @@ Also Item `C/13_L/prose/006` (`companion/chapters/13_L.tex:33`): "The orbits, ob
 initial points below are chosen before this pair." Here the initial state and the iterates `x`,
 matrices `H` are chosen before the pair (likewise in `local_failure` and `agreement`).
 
-Also Item `C/13_L/prose/082` (`companion/chapters/13_L.tex:412`), corrected on 15 October 2026
+Also Item `C/13_L/prose/082` (`companion/chapters/13_L.tex:410`), corrected on 15 October 2026
 (M13; before: "This chapter uses the fixed line-search pair displayed in this chapter; D's wider
 parameter family is not imported."): "Like Chapter~\ref{comp:D}, the chapter covers every pair
 $0<c_1\le1/3$, $c_1<c_2<1$." This theorem and `local_failure` hold for every such pair, the
@@ -585,7 +585,7 @@ theorem strict_margins_same_decisions :
   · exact (LUniform.nonstrict_failure_search _ h m k).trans (LUniform.failure_search _ h m k).symm
   · exact (LUniform.nonstrict_failure_search _ h m k).trans (LUniform.failure_search _ h m k).symm
 
-/-- Item `C/13_L/prose/083` (`companion/chapters/13_L.tex:412`): "The first three branches of the
+/-- Item `C/13_L/prose/083` (`companion/chapters/13_L.tex:410`): "The first three branches of the
 local finite-branch construction fail to be twice differentiable at the minimizer." (Corrected
 on 15 October 2026, M30; before "at the accumulation point".) The
 four branches of the local construction, before (`LEmbedding.branch`) and after
@@ -1380,7 +1380,7 @@ theorem scale_eigenvector (μ : ℝ) (hμ : 0 < μ) :
       ∃ v ∈ BfgsCoverage.Article.LowerCurvature.stableSubspace
         (fderiv ℝ (LNormalizedReturn.returnMap μ) LNormalizedReturn.seed).toLinearMap, v 4 ≠ 0 := by
   obtain ⟨-, -, hstab⟩ := BfgsCoverage.Article.LowerCurvature.lower_hyperbolic μ hμ
-  obtain ⟨v, hv, hv4⟩ := hstab
+  obtain ⟨v, hv, -, hv4⟩ := hstab
   refine ⟨fun v hv => ?_, LReturnSpectrum.actual_scale_eigenvector μ, v, hv, by rw [hv4]; norm_num⟩
   obtain ⟨s₁, s₂, s₃, s₄, s₅, s₆, s₇, s₈, hform⟩ :=
     BfgsCoverage.Article.LowerCurvature.return_block_form μ (LShapeDerivative.jacobian seedC seedD)

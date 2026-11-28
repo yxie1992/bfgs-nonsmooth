@@ -9,11 +9,12 @@ along steps approaching a minimizer. Here we analyze unmodified full BFGS
 directly in this singular regime by estimating the partial sums of the same
 scalar sequence $(g_k^TH_kg_k)^{-1}$ in two ways.
 
-First, evaluating $B_k$ along a comparison direction $w_k$ gives a quadratic
-energy whose one-step change involves the gradient jump only through its
-directional projection $y_k^Tw_{k+1}$. Whenever that projected secant cost stays bounded, any
-persistent optimality gap forces the partial sums $\sum_{k<N}(g_k^TH_kg_k)^{-1}$
-to grow at most linearly in $N$. Second, an adjacent-degree hierarchy for the
+First, evaluating $B_k$ along the radial vector $r_k=x_k-x_*$ (or a comparison
+field with visibility and controlled transport) gives a quadratic energy whose
+one-step change involves the gradient jump only through its directional
+projection. Whenever that projected secant cost stays bounded, any persistent
+optimality gap forces the partial sums $\sum_{k<N}(g_k^TH_kg_k)^{-1}$ to grow
+at most linearly in $N$. Second, an adjacent-degree hierarchy for the
 principal minors of the inverse-Hessian approximations $H_k$ proves that, along
 any bounded-gradient BFGS run whose predicted decreases vanish, the averages
 $\frac1N\sum_{k<N}(g_k^TH_kg_k)^{-1}$ diverge to $+\infty$. Combining the two
@@ -127,12 +128,12 @@ $k<N$; summing~\eqref{art:energy-identity} over $0\le k<N$ and dropping
 $E_N\ge0$ yields~\eqref{art:energy-budget}.\qed
 \end{proof}
 
-Inequality~\eqref{art:energy-budget} isolates the exact requirement for
-convergence: if $F(x_k)-F_*\ge\eta>0$ for all $k$ while the radial secant error
+Inequality~\eqref{art:energy-budget} isolates the radial requirement of this
+proof: if $F(x_k)-F_*\ge\eta>0$ for all $k$ while the radial secant error
 satisfies $R_k\le C$, then $\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$, bounding the
-average of $q_k^{-1}$ uniformly in $N$. Notably, $B_k$ is never bounded from
-above: $n-1$ eigenvalues of $B_k$ may diverge to $+\infty$ across kinks while
-the single inequality $E_N\ge0$ closes the telescope. It remains to show that
+average of $q_k^{-1}$ uniformly in $N$. Notably, this budget imposes no upper
+bound on the other $n-1$ directions of $B_k$: only the single inequality
+$E_N\ge0$ closes the telescope. It remains to show that
 the BFGS update forces $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$.
 
 \subsection{The principal-minor hierarchy and universal reciprocal growth}

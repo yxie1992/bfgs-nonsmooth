@@ -16,22 +16,24 @@ src=src.replace(r'c_\circ','c').replace(r'd_\circ','d')
 # table is the unnumbered table of a section of Chapter D and lists decimals, and
 # its root lemma claims the thirty digits of D:rho; the article keeps its wording.
 companion_only=[
- # M16 (a): the next subsection of the article is the next section here.
- ('the next\nsubsection','the next\nsection'),
- # W9: the companion calls the g_i gradients, not slopes.
- ('of the third slope','of the third gradient $g_2=(c,d)^T$'),
- # W6: the root lemma claims the thirty digits of D:rho (Lean:
+ # The next subsection of the article is the next section in the companion.
+ ('in the symbolic cycle below','in the symbolic cycle of the next section'),
+ # The companion calls the g_i gradients, not slopes.
+ ('the third slope $(c,d)$','the third gradient $g_2=(c,d)^T$'),
+ # The root lemma claims the thirty digits of D:rho (Lean:
  # Companion.SeedCertificate.root_certificate).
- ('In particular all divisions used below are valid.',
-  'In particular all divisions used below are valid. The same interval rules on the root box give the thirty digits in \\eqref{art:seed_rho}.'),
- # M16 (b): comp:trial_table labels a section heading, not a table.
- ('Table~\\ref{art:trial_table}','the table in Section~\\ref{art:trial_table}'),
- # R-E-9 (a), M38: the companion writes the second coordinate as (z)_2 (D:trialbounds).
+ ('In particular, all divisions used below are valid.',
+  'In particular, all divisions used below are valid. The same interval rules on the root box give the thirty digits in \\eqref{art:seed_rho}.'),
+ # comp:trial_table labels a section heading, not a table.
+ ('For each row of Table~\\ref{art:trial_table}',
+  'For each row of the table in Section~\\ref{art:trial_table}'),
+ # The companion writes the second coordinate as (z)_2 (D:trialbounds).
  ('$2-[q]_2$','$2-(q)_2$'),
- # M15: the companion's table lists decimals; the interval operations give rational
+ ('by Lemma~\\ref{art:run-invariants}.','by \\eqref{M:basic} in Chapter~\\ref{comp:M}.'),
+ # The companion's table lists decimals; the interval operations give rational
  # enclosures of width at most 4e-4 (Lean: Companion.SeedCertificate.table_enclosure_widths).
- ('The same interval operations give the value enclosures in that table.',
-  'For each trial value $G(z_j+\\alpha p_j)$ in the table of Section~\\ref{art:trial_table} and each current value $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width at most $4\\cdot10^{-4}$; the twelve-digit decimals there are explanatory.')]
+ ('The same interval operations give the value enclosures in Table~\\ref{art:trial_table},',
+  'For each trial value $G(z_j+\\alpha p_j)$ in the table of Section~\\ref{art:trial_table} and each current value $G(z_j)$ in the display after it, the same interval operations give a rational enclosure of width at most $4\\cdot10^{-4}$ (the twelve-digit decimals there are explanatory), as well as')]
 for old,new in companion_only:
  assert src.count(old)==1,old
  src=src.replace(old,new)

@@ -2437,7 +2437,7 @@ theorem printed_multiplier (u ε : ℝ) (hε : 0 < ε) (hs : ε < 6 * u ^ 2) :
           field_simp
           ring
 
-/-- Item `C/10_Q/prose/054` (`companion/chapters/10_Q.tex:324`): "The theorem in this chapter
+/-- Item `C/10_Q/prose/054` (`companion/chapters/10_Q.tex:321`): "The theorem in this chapter
 treats the complete stated finite family." In particular the special case $u^2+|v|$ (with $F$ a
 variable with this defining equation) is the member $a=(1,1)$, $b=(1,-1)$, and the theorem gives
 full convergence of every admissible run on it. -/

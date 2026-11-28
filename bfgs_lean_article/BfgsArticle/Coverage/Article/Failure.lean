@@ -239,8 +239,11 @@ bracket `lo`, upper bracket `hi` and trial `α` tests Armijo first and weak Wolf
 accepts if both hold, sets $\alpha_{\rm hi}=\alpha$ and tries $(\alpha_{\rm lo}+\alpha)/2$
 after an Armijo rejection, and sets $\alpha_{\rm lo}=\alpha$ and tries
 $(\alpha+\alpha_{\rm hi})/2$, or $2\alpha$ while $\alpha_{\rm hi}=\infty$, after a Wolfe
-rejection. The output is the accepted length and the list of all trial lengths; the budget
-`N` only bounds the number of trials (`fromMetric_fuel_mono`). -/
+rejection. `NonStrictLineSearch.Armijo` is literally the first inequality. Note that raw
+`NonStrictLineSearch.Wolfe` evaluates `coordinateGradient F (x + α • p)` (`fderiv`), which would
+default to `0` at a nondifferentiable point; `failure_tests` below equates `Wolfe` with the
+genuine directional-derivative inequality whenever the trial point is differentiable, and all
+counterexample theorems prove differentiability at every accepted and rejected trial point. -/
 theorem specified_search {n : ℕ} (F : Vec n → ℝ) (x : Vec n) (H : Mat n) (c₁ c₂ : ℝ)
     (g : Vec n) (hg : HasFDerivAt F (gradientFunctional g) x) (p : Vec n) (hp : p = -(H *ᵥ g)) :
     (∀ N, NonStrictLineSearch.fromMetric F x H c₁ c₂ N =

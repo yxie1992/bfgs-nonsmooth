@@ -38,7 +38,7 @@ the section. Register: `editorial/lean_coverage/register/A_local.json`.
   (`DifferentiableOn ℝ f V ∧ LocallyLipschitzOn V (fderiv ℝ f)`); $\partial F(p)$ is
   `ConvexSubdifferential.subdifferential F p`; $\mathcal C_{\rm aff}$ is
   `{p | AffineCriticalObjective.IsAffineCritical F p}` (display `disp/006`); a cluster point $p$ of
-  the iterates is `MapClusterPt p atTop R.x`; eligibility of a pair (`energy.tex:265-271`) is
+  the iterates is `MapClusterPt p atTop R.x`; eligibility of a pair (`energy.tex:266-272`) is
   `TransportedCertificate.EligiblePair F c₁ c₂ x z g h`.
 * Objects introduced by the text ($\delta$, $B_r(x_*)$, $B_\rho(x_*)$, $L$, $\psi$, $\gamma$, $I_0$, $\sigma$,
   $A(x)$, $E_k$, $v(u)$, $D$, the branches $f_i$ and $F$ of the example) are variables with their
@@ -929,18 +929,16 @@ theorem quadratic_max_no_polyhedral_cells (F : Vec 2 → ℝ)
 /-! ### Corollary `art:local-centered` and its two examples -/
 
 /-- Item `A/local/corollary/art:local-centered` (`paper/sections/local.tex:101-108`), Corollary
-`art:local-centered`.
-
-If the representation and smoothness assumptions of Theorem `art:centered` hold on a neighborhood
-of a unique minimizer $x_*$ -- an open convex set $U\ni x_*$, $\psi$ convex and locally
-$C^{1,1}$ on $U$, $\gamma:\R^n\to\R$ finite, convex and positively homogeneous of degree one, and
-$F(x)=\psi(x)+\gamma(x-x_*)$ on $U$ -- then some $\varepsilon>0$, chosen from the objective alone,
-has the following property: every admissible run starting with $F(x_0)\le F(x_*)+\varepsilon$
-stays in that neighborhood and converges to $x_*$ in value and iterates.
+`art:local-centered`: if the centered smooth-plus-homogeneous representation of Theorem
+`art:centered` holds on an open neighborhood $U$ of a unique minimizer $x_*$ ($\psi$ convex and
+locally $C^{1,1}$ on $U$, $\gamma:\R^n\to\R$ finite, convex and positively homogeneous of degree
+one, and $F(x)=\psi(x)+\gamma(x-x_*)$ on $U$), then some $\varepsilon>0$, chosen from $F$ and $U$
+alone, has the following property: every admissible run starting with
+$F(x_0)\le F(x_*)+\varepsilon$ stays in $U$ and converges to $x_*$ in value and iterates.
 (`Homogeneous.PositiveDegreeOne γ` is `∀ t ≥ 0, ∀ x, γ (t • x) = t * γ x`.) -/
 theorem local_centered {n : ℕ} (F ψ γ : Vec n → ℝ) (hF : ConvexOn ℝ univ F) (xstar : Vec n)
     (hmin : ∀ x, F xstar ≤ F x) (huniq : ∀ x, F x = F xstar → x = xstar)
-    (U : Set (Vec n)) (hU : IsOpen U) (_hUc : Convex ℝ U) (hxU : xstar ∈ U)
+    (U : Set (Vec n)) (hU : IsOpen U) (hxU : xstar ∈ U)
     (hψ : ConvexOn ℝ U ψ) (hψs : CenteredSmoothSublinear.LocallyC11On U ψ)
     (hγ : ConvexOn ℝ univ γ) (hγh : Homogeneous.PositiveDegreeOne γ)
     (hrep : ∀ x ∈ U, F x = ψ x + γ (x - xstar)) :
@@ -1169,7 +1167,7 @@ theorem lasso_local_basin {m n : ℕ} (A : Matrix (Fin m) (Fin n) ℝ) (b : Vec 
   have hγ' : ∀ r, γ r = lam * ∑ i ∈ I0, |r i| := fun r => by rw [hγ]
   obtain ⟨hNo, hNc, hxN⟩ := lasso_neighborhood A b lam hlam F hFdef xstar hmin huniq I0 hI0 σ hσ N hN
   obtain ⟨hψc, hψs, hγc, hγh⟩ := lasso_parts A b lam hlam I0 σ ψ γ hψ' hγ'
-  exact local_centered F ψ γ (lasso_convex A b lam hlam.le F hFdef) xstar hmin huniq N hNo hNc hxN
+  exact local_centered F ψ γ (lasso_convex A b lam hlam.le F hFdef) xstar hmin huniq N hNo hxN
     (hψc.subset (subset_univ _) hNc)
     (ConvexCellRadial.contDiffOn_two_locallyC11 hNo (hψs.of_le (by norm_cast)).contDiffOn)
     hγc hγh
@@ -1323,7 +1321,7 @@ theorem euclidean_residuals_basin {n : ℕ} {J : Type*} [Fintype J] {m : J → �
   have hF : ConvexOn ℝ univ F :=
     (hloss.add (convexOn_finset_sum _ _ fun j _ => norm_affine_convex (A j) (b j))).congr
       (fun x _ => (hFdef x).symm)
-  obtain ⟨ε, hε, hbasin⟩ := local_centered F ψ γ hF xstar hmin huniq U hU hUc hxU
+  obtain ⟨ε, hε, hbasin⟩ := local_centered F ψ γ hF xstar hmin huniq U hU hxU
     (hψc.subset (subset_univ _) hUc) hψs hγc hγh (fun x _ => hdec x)
   exact ⟨U, hU, hxU, ε, hε, hbasin⟩
 
@@ -2331,7 +2329,7 @@ theorem strict_contours_short_chords {n : ℕ} {F : Vec n → ℝ} (R : Admissib
   have h := hℓ.sub (hℓ.comp (tendsto_add_atTop_nat 1))
   simpa using h
 
-/-- Item `A/local/prose/024` (`paper/sections/local.tex:171-177`), anchor "\item \emph{Corner velocities cancel jumps.} Where two convex $C^2$ branches $f_1,f_2$ tie with linearly independent gradients, the implicit function theorem parametrizes the corner curve $p_j(t)$ by the level $f_1(p_j(t))=f_2(p_j(t))=t$. Differentiating in $t$ gives a velocity vector $v_j(t)=p_j'(t)$ satisfying $\nabla f_1(p_j(t))^Tv_j(t)=\nabla f_2(p_j(t))^Tv_j(t)=1$: thus $v_j$ has strictly positive pairing with the subdifferential while annihilating the leading gradient jump $(\nabla f_2-\nabla f_1)^Tv_j=0$.".
+/-- Item `A/local/prose/024` (`paper/sections/local.tex:171-178`), anchor "\item \emph{Corner velocities cancel jumps.} Where two convex $C^2$ branches $f_1,f_2$ tie with linearly independent gradients, the implicit function theorem parametrizes the corner curve $p_j(t)$ by the level $f_1(p_j(t))=f_2(p_j(t))=t$. Differentiating in $t$ gives a velocity vector $v_j(t)=p_j'(t)$ satisfying $\nabla f_1(p_j(t))^Tv_j(t)=\nabla f_2(p_j(t))^Tv_j(t)=1$: thus $v_j$ has strictly positive pairing with the subdifferential while annihilating the leading gradient jump $(\nabla f_2-\nabla f_1)^Tv_j=0$.".
 
 At a two-branch corner $p_0$ ($F=\max\{f_1,f_2\}$ near $p_0$ with $C^2$ branches, both active,
 linearly independent gradients) the corner moves smoothly with the level: there is a curve $p(t)$,

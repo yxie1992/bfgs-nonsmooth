@@ -1236,28 +1236,33 @@ theorem c2_failure_refutes_local_theorem :
   exact hnot (hconv (R ℓ) h1 h2 hℓ)
 
 /-- The failing starts: the starting points $x_0$ from which the specified unit-first search
-(`NonStrictLineSearch.fromMetric`, some trial budget at each step) with $H_0=I$ and the constants
-$c_1,c_2$ produces an infinite admissible run on $F$ whose values do not tend to $F(x_*)$. -/
+(`NonStrictLineSearch.fromMetric`, some trial budget at each step, with all evaluated trial points
+differentiable) with $H_0=I$ and the constants $c_1,c_2$ produces an infinite admissible run on $F$
+whose values do not tend to $F(x_*)$. -/
 def failingStarts {n : ℕ} (F : Vec n → ℝ) (xstar : Vec n) (c₁ c₂ : ℝ) : Set (Vec n) :=
   {x₀ | ∃ R : AdmissibleBFGSRun n F, R.x 0 = x₀ ∧ R.H 0 = 1 ∧ R.c₁ = c₁ ∧ R.c₂ = c₂ ∧
-    (∀ k, ∃ N : ℕ, (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ N).1 = some (R.α k)) ∧
+    (∀ k, ∃ N : ℕ,
+      (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ N).1 = some (R.α k) ∧
+      (∀ a ∈ (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ N).2,
+        DifferentiableAt ℝ F (R.x k + a • bfgsStep (R.H k) (R.g k) 1))) ∧
     ¬ Tendsto (fun k => F (R.x k)) atTop (𝓝 (F xstar))}
 
 /-- Item `C/01_I/prose/138` (`companion/chapters/01_I.tex:345`), OPEN (stated without proof):
 "generic or positive-measure failure."
 
-Some finite convex objective with an attained minimum and some pair $0<c_1<c_2<1$ have a large set
-of failing starts $S$ (`failingStarts`), in one of the two senses of the gap. Generic failure, read
-topologically: $S$ is comeagre in some nonempty open set $U$ of starting points ($U\setminus S$ is
-meagre), i.e. failure from a generic start of an open region. This is the weakest of the usual
-readings: it follows from failure on a comeagre set of all starting points and from failure at
-every point of a nonempty open set; and for sets with the Baire property it is the same as being
-nonmeagre, the topological counterpart of the second sense. Positive-measure failure: $S$ has
-positive Lebesgue (outer) measure. The failing starts of the constructions are countable, hence
+Some finite nonsmooth convex objective with an attained minimum and some pair $0<c_1<c_2<1$ have a
+large set of failing starts $S$ (`failingStarts`), in one of the two senses of the gap. Generic
+failure, read topologically: $S$ is comeagre in some nonempty open set $U$ of starting points
+($U\setminus S$ is meagre), i.e. failure from a generic start of an open region. This is the weakest
+of the usual readings: it follows from failure on a comeagre set of all starting points and from
+failure at every point of a nonempty open set; and for sets with the Baire property it is the same
+as being nonmeagre, the topological counterpart of the second sense. Positive-measure failure: $S$
+has positive Lebesgue (outer) measure. The failing starts of the constructions are countable, hence
 null and meagre (`Ch12D.starts_null`). -/
 def GenericOrPositiveMeasureFailure : Prop :=
   ∃ (n : ℕ) (F : Vec n → ℝ) (xstar : Vec n) (c₁ c₂ : ℝ),
-    ConvexOn ℝ univ F ∧ (∀ x, F xstar ≤ F x) ∧ 0 < c₁ ∧ c₁ < c₂ ∧ c₂ < 1 ∧
+    ConvexOn ℝ univ F ∧ ¬ Differentiable ℝ F ∧ (∀ x, F xstar ≤ F x) ∧
+    0 < c₁ ∧ c₁ < c₂ ∧ c₂ < 1 ∧
     ((∃ U : Set (Vec n), IsOpen U ∧ U.Nonempty ∧ IsMeagre (U \ failingStarts F xstar c₁ c₂)) ∨
       0 < MeasureTheory.volume (failingStarts F xstar c₁ c₂))
 

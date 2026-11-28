@@ -159,14 +159,14 @@ article's Corollary `art:local-centered` (`BfgsCoverage.Article.Local.local_cent
 with the localization lemma. -/
 theorem centered_local {n : ℕ} (F ψ γ : Vec n → ℝ) (hF : ConvexOn ℝ univ F) (xstar : Vec n)
     (hmin : ∀ x, F xstar ≤ F x) (huniq : ∀ x, F x = F xstar → x = xstar)
-    (U : Set (Vec n)) (hU : IsOpen U) (hUc : Convex ℝ U) (hxU : xstar ∈ U)
+    (U : Set (Vec n)) (hU : IsOpen U) (_hUc : Convex ℝ U) (hxU : xstar ∈ U)
     (hψ : ConvexOn ℝ U ψ) (hψ11 : CenteredSmoothSublinear.LocallyC11On U ψ)
     (hγ : ConvexOn ℝ univ γ) (hγh : Homogeneous.PositiveDegreeOne γ)
     (hrep : ∀ x ∈ U, F x = ψ x + γ (x - xstar)) :
     ∃ ε : ℝ, 0 < ε ∧ ∀ R : AdmissibleBFGSRun n F, F (R.x 0) ≤ F xstar + ε →
       (∀ k, R.x k ∈ U) ∧ Tendsto (fun k => F (R.x k)) atTop (𝓝 (F xstar)) ∧
         Tendsto R.x atTop (𝓝 xstar) :=
-  BfgsCoverage.Article.Local.local_centered F ψ γ hF xstar hmin huniq U hU hUc hxU hψ hψ11 hγ hγh
+  BfgsCoverage.Article.Local.local_centered F ψ γ hF xstar hmin huniq U hU hxU hψ hψ11 hγ hγh
     hrep
 
 /-! ### The proof of Theorem `F:centered` -/

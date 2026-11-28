@@ -940,20 +940,25 @@ def NondegenerateSmoothMaxLocalConvergenceHigherDim : Prop :=
 
 /-- Item `A/verification/prose/040` (`paper/sections/verification.tex:107-110`), open problem 4:
 "can a \emph{convex} nonsmooth function admit a positive-measure set of initial states
-$(x_0,H_0)$ on which full BFGS converges to nonstationary points". The proposition asserts such a
-function and set: a finite convex $F$ on $\R^n$, a pair $0<c_1<c_2<1$, and a set $S$ of
-parameters $(x_0,A)$ of positive Lebesgue measure (the initial matrix is the symmetric part
-$H_0=\frac12(A+A^T)$, so positive measure in $A$ is positive measure of symmetric matrices), such
-that from every $(x_0,H_0)$ of $S$ the unit-first bracketing search
-(`NonStrictLineSearch.fromMetric`) generates an infinite admissible run converging to a point
-$\bar x$ with $0\notin\partial F(\bar x)$. Its negation is "under absolutely continuous random initialization as in Challenge~7.1~\cite{LO}, can a \emph{convex} nonsmooth function admit a positive-measure set of initial states $(x_0,H_0)$ on which full BFGS converges to nonstationary points, or are all convex nonstationary basins of measure zero?". Neither is proved. -/
+$(x_0,H_0)$ on which full BFGS converges to nonstationary points, or are all convex nonstationary
+basins of measure zero?". The proposition states the positive-measure failure alternative: a
+finite convex nonsmooth $F$ on $\R^n$, a pair $0<c_1<c_2<1$, and a set $S$ of parameters $(x_0,A)$
+of positive Lebesgue measure (with initial matrix $H_0=\frac12(A+A^T)$), such that from every
+$(x_0,H_0)$ of $S$ the unit-first bracketing search (`NonStrictLineSearch.fromMetric`) generates
+an infinite admissible run with all queried trial points differentiable and converging to a point
+$\bar x$ with $0\notin\partial F(\bar x)$. Its logical negation is the measure-zero alternative.
+Neither is proved; stated as an open problem. -/
 def ConvexPositiveMeasureFailure : Prop :=
-  ∃ (n : ℕ) (F : Vec n → ℝ) (c₁ c₂ : ℝ), ConvexOn ℝ univ F ∧ 0 < c₁ ∧ c₁ < c₂ ∧ c₂ < 1 ∧
+  ∃ (n : ℕ) (F : Vec n → ℝ) (c₁ c₂ : ℝ), ConvexOn ℝ univ F ∧ ¬ Differentiable ℝ F ∧
+    0 < c₁ ∧ c₁ < c₂ ∧ c₂ < 1 ∧
     ∃ S : Set (Vec n × (Fin n → Fin n → ℝ)), MeasureTheory.volume S ≠ 0 ∧
       ∀ p ∈ S, ∃ R : AdmissibleBFGSRun n F,
         R.x 0 = p.1 ∧ R.H 0 = (1 / 2 : ℝ) • (Matrix.of p.2 + (Matrix.of p.2)ᵀ) ∧
         R.c₁ = c₁ ∧ R.c₂ = c₂ ∧
-        (∀ k, ∃ fuel : ℕ, (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ fuel).1 = some (R.α k)) ∧
+        (∀ k, ∃ fuel : ℕ,
+          (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ fuel).1 = some (R.α k) ∧
+          ∀ a ∈ (NonStrictLineSearch.fromMetric F (R.x k) (R.H k) c₁ c₂ fuel).2,
+            DifferentiableAt ℝ F (R.x k + a • bfgsStep (R.H k) (R.g k) 1)) ∧
         ∃ xbar : Vec n, Tendsto R.x atTop (𝓝 xbar) ∧
           (0 : Vec n) ∉ ConvexSubdifferential.subdifferential F xbar
 

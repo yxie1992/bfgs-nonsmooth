@@ -14,6 +14,7 @@ for name in ['paper','companion']:
  overfull=re.findall(r'Overfull \\[hv]box.*',text)
  results.append({'document':name,'pdf':str(pdf.relative_to(ROOT)),'pages':pages,'sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),'errors':errors,'overfull_warnings':overfull})
 out={'status':'PASS' if all(not x['errors'] for x in results) else 'FAIL','scope':'Compilation, references and PDF metadata; visual and mathematical reviews are separate','documents':results}
+(ROOT/'editorial/logs').mkdir(parents=True,exist_ok=True)
 (ROOT/'editorial/logs/document_checks.json').write_text(json.dumps(out,indent=2)+'\n')
 print(json.dumps(out,indent=2))
 assert out['status']=='PASS'

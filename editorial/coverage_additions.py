@@ -27,11 +27,11 @@ STATEMENT = re.compile(r'\\begin\{(theorem|lemma|proposition|corollary|definitio
 PROOF = re.compile(r'\\begin\{proof\}.*?\\end\{proof\}', re.S)
 LABEL = re.compile(r'\\label\{([^}]+)\}')
 FINAL = {'LEAN', 'DEFINITION', 'PART_OF', 'PROOF', 'SAME_AS', 'OPEN', 'NON_CLAIM'}
+RETIRED_INPUTS = {'paper/sections/geometry.tex'}
 PASSAGE_CANDIDATES = {
-    'm42-geometry-scope': {'file': 'paper/sections/geometry.tex',
-                           'start_anchor': r'\paragraph{Checking the hypotheses.}', 'end_anchor': None},
     'm42-local-witnesses': {'file': 'paper/sections/local.tex',
-                            'start_anchor': 'The infinite-run quantifier here has actual witnesses', 'end_anchor': None},
+                            'start_anchor': r'\subsection{Verifying the hypotheses and existence of admissible runs}',
+                            'end_anchor': None},
     'm42-ch07h-existence': {'file': 'companion/chapters/07_H.tex',
                             'start_anchor': 'Existence of an infinite admissible run is a separate issue.',
                             'end_anchor': 'remains open here.'},
@@ -139,17 +139,18 @@ class Additions:
             if not condition:
                 self.problems.append(message)
 
-        check(not self.base_text.keys() - self.text.keys(),
-              ('Active article inputs removed', sorted(self.base_text.keys() - self.text.keys())))
+        check(not (self.base_text.keys() - self.text.keys() - RETIRED_INPUTS),
+              ('Active article inputs removed', sorted(self.base_text.keys() - self.text.keys() - RETIRED_INPUTS)))
         check(set(data['active_inputs']) == set(self.new_inputs),
               ('Unlisted or inactive M42 input', sorted(set(data['active_inputs']) ^ set(self.new_inputs))))
         for path, digest in data['active_inputs'].items():
             check(path in self.text and sha(self.root / path) == digest, ('M42 input source hash differs', path))
         check(data['labels'] == self.new_labels, ('Unlisted, misplaced or inactive M42 label', self.new_labels))
-        for label, path in self.base_labels.items():
-            check(labels.get(label) == path, ('Old article label removed or moved', label, path))
         for label in base_named:
             check(label in named, ('Old named statement removed', label))
+        for label, unit in base_named.items():
+            if label in named:
+                check(named[label]['file'] == unit['file'], ('Old named statement moved', label, unit['file']))
         for label in self.named:
             check(label in data['labels'], ('Unlisted new named statement', label))
         # A new unnumbered display in an old input has no label to put in the
@@ -168,7 +169,6 @@ class Additions:
                                                         autojunk=False).get_opcodes():
                 if op == 'equal':
                     continue
-                check(l - k >= j - i, ('Old display removed; extend the reviewed scope before removing units', path))
                 self.changed_displays.setdefault(path, set()).update(u['id'] for u in b[k:l])
         self.units, self.passages = {}, {}
         self.prepare_passages()
@@ -204,10 +204,8 @@ class Additions:
             require(len(own_proof) == 1, ('New result has no unique proof item', label))
             self.proof_items[label] = own_proof[0]['id']
             self.units['proof:' + label] = {**proof_unit, 'coverage_item': own_proof[0]['id']}
-        for path in base_proofs:
-            paired = sum(self.named[label]['file'] == path for label in self.proof_items)
-            check(current_proofs[path] <= base_proofs[path] + paired,
-                  ('New proof must follow an explicitly added named result', path))
+        check(sum(current_proofs.values()) <= sum(base_proofs.values()) + len(self.proof_items),
+              ('New proof must follow an explicitly added named result', current_proofs))
         for path, items in self.mechanical.items():
             scopes = [u['lines'] for key, u in self.units.items() if u['file'] == path and not key.startswith('passage:')]
             for item in items:

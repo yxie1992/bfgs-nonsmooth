@@ -4509,7 +4509,7 @@ theorem centered_nuclear_smooth_covered {F ψ : Vec 3 → ℝ} (hψ : ConvexOn �
 
 /-! ### Relation to earlier work (lines 436-443) -/
 
-/-- Item `C/04_R/prose/104` (`companion/chapters/04_R.tex:441`): "The Euclidean-norm theorem is
+/-- Item `C/04_R/prose/104` (`companion/chapters/04_R.tex:439`): "The Euclidean-norm theorem is
 a known case recovered here." The Euclidean norm on $\R^n$, $n\ge1$, is finite sublinear
 (`sublinear_examples`), so it satisfies (IR) toward $0$ on every sublevel (zero radial error), and
 the radial argument (Corollary `art:radial-convergence`, `Article.Global.radial_convergence`) gives
@@ -4541,7 +4541,7 @@ theorem euclidean_norm_recovered {n : ℕ} (hn : 1 ≤ n) :
   rw [h0] at hv
   exact ⟨hv, hi huniq⟩
 
-/-- Item `C/04_R/prose/106` (`companion/chapters/04_R.tex:443`): "The optimizer in this example
+/-- Item `C/04_R/prose/106` (`companion/chapters/04_R.tex:441`): "The optimizer in this example
 is a specialization of singular-value thresholding." For $C=\operatorname{diag}(2,0)$ (singular
 values $2,0$) and threshold $1$, soft-thresholding the singular values gives
 $\operatorname{diag}(\max\{2-1,0\},\max\{0-1,0\})=\operatorname{diag}(1,0)=X_*$, the unique

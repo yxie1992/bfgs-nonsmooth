@@ -6,12 +6,12 @@ import BfgsVerification.PointwiseCertificateFeasibility
 import BfgsVerification.QuadraticCellRadial
 
 /-!
-# Lean coverage of `paper/sections/geometry.tex`
+# Shared geometric coverage theorems (`BfgsCoverage.Article.Geometry`)
 
-Coverage theorems for the claims made only in Section `art:geometry` ("What the
-results say about nonsmooth BFGS"), its Figure `art:gradient-geometry` and its
-Table `art:positive-outcomes`. Register:
-`editorial/lean_coverage/register/A_geometry.json`.
+Coverage theorems for geometric remarks across `paper/sections/introduction.tex`
+(including Figure `art:gradient-geometry` and Table `art:positive-outcomes`),
+`paper/sections/global.tex`, and `paper/sections/local.tex`, cited by registers
+`A_introduction.json`, `A_global.json`, and `A_local.json` (and companion registers).
 
 Conventions. The mixed ridge `F(u,v)=u^2+|v|` is
 `BfgsVerification.UnexcitedMetric.objective`, literally `(x 0)^2+|x 1|` on

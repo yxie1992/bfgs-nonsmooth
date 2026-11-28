@@ -97,7 +97,7 @@ $q_k^{-1}=(g_k^TH_kg_k)^{-1}$ to diverge to $+\infty$
 This law holds along every bounded-gradient BFGS run with $d_k\to0$,
 without any smoothness, strong convexity, or condition-number assumption. In
 fact, it continues to hold along our nonstationary counterexamples, where
-$H_k\to0$ drives $q_k\to0$ exponentially.
+$H_k\to0$ drives $q_k\to0$ (exponentially on the homogeneous seed cycle).
 
 \paragraph{2. Directional and transported comparison energies.}
 By Cauchy--Schwarz in the $H_k$-inner product, any vector $w_k$ satisfies
@@ -115,13 +115,14 @@ algebraically free and gives the exact one-step identity
 \[
  E_{k+1}=E_k-\frac{(g_k^Tr_k)^2}{q_k}+\frac{(y_k^Tr_{k+1})^2}{t_k}.
 \]
-Every step at value gap $\eta>0$ reduces $E_k$ by at least $\eta^2/q_k$, while
-the gradient jump enters only through its radial projection $y_k^Tr_{k+1}$,
-not through $\norm{y_k}$. If $(y_k^Tr_{k+1})^2/t_k\le C$, summing over $k<N$
-and using $E_N\ge0$ forces $\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$, a linear upper
-bound that directly contradicts $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$. Here
-$B_k$ may blow up arbitrarily in directions orthogonal to $r_k$; only the
-nonnegativity $E_N\ge0$ is used.
+At value gap $\eta>0$, the downdate subtracts at least $\eta^2/q_k$ before the
+radial secant term is added, and the gradient jump enters only through its
+radial projection $y_k^Tr_{k+1}$, not through $\norm{y_k}$. If
+$(y_k^Tr_{k+1})^2/t_k\le C$, summing over $k<N$ and using $E_N\ge0$ forces
+$\eta^2\sum_{k<N}q_k^{-1}\le E_0+CN$, a linear upper bound that directly
+contradicts $\frac1N\sum_{k<N}q_k^{-1}\to+\infty$. Notably, this budget imposes
+no upper bound on directions orthogonal to $r_k$; only the nonnegativity
+$E_N\ge0$ is used.
 
 \begin{figure}[tbp]
 \centering
@@ -139,9 +140,9 @@ $\aff\{g_0,g_1,g_2\}=\R^2$, destroying any jump-canceling comparison direction.}
 Figure~\ref{art:gradient-geometry}(a) illustrates why this directional filtering
 succeeds on $F(u,v)=u^2+|v|$. Approaching the nonsmooth line $v=0$ need not
 make $u^2$ small, because the gradient jumps vertically between $(2u,1)$ and
-$(2u,-1)$. Yet both gradients have the same negative pairing $-2u^2$ with the
-horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$ the
-nonsmooth term $|v|$ scales linearly with zero Taylor remainder: for $v\ne0$
+$(2u,-1)$. For $u\ne0$, both gradients have the same negative pairing $-2u^2$
+with the horizontal direction $(-u,0)$, and along any inward ray toward $(0,0)$
+the nonsmooth term $|v|$ scales linearly with zero Taylor remainder: for $v\ne0$
 and $0\le\tau\le1$,
 \begin{equation}\label{art:mixed-inward-remainder}
  F((1-\tau)(u,v))-F(u,v)+\tau\nabla F(u,v)^T(u,v)=\tau^2u^2.
@@ -149,8 +150,9 @@ and $0\le\tau\le1$,
 Only the smooth component $u^2$ contributes a quadratic remainder. A general
 Bregman-duality estimate (Theorem~\ref{art:radial-equivalence}) converts any
 such one-point inward quadratic bound into the two-point secant bound
-$(y_k^Tr_{k+1})^2\le C_\eta t_k$ across arbitrary kinks. When kinks instead lie along \emph{curved} switching interfaces, radial rays
-cross them transversely and radial secant bounds fail. Even there, the identity
+$(y_k^Tr_{k+1})^2\le C_\eta t_k$ across arbitrary kinks. When kinks instead lie
+along \emph{curved} switching interfaces, radial rays cross them transversely
+and radial secant bounds can fail. Even there, the identity
 $\widehat B_ks_k=0$ implies that rotating a comparison field $w(x)$ along
 level-set contours costs zero energy in the step direction $s_k$, while the
 decrease in $F$ bounds the transverse multiplicative cost $1+Ld_k$ through the
@@ -247,8 +249,8 @@ Via Bregman inward-to-secant duality (Theorem~\ref{art:radial-equivalence}),
 Theorem~\ref{art:centered} covers $F(x)=\psi(x)+\gamma(x-x_*)$ in $\R^n$ for
 convex $\psi\in C^{1,1}_{\rm loc}$ and degree-one homogeneous convex $\gamma$,
 even when neither summand is minimized at $x_*$ alone, settling whole-sequence
-convergence $(u_k,v_k)\to(0,0)$ on $F(u,v)=u^2+|v|$ from every starting point
-and $H_0\succ0$ (Corollary~\ref{art:mixed-benchmark}).
+convergence $(u_k,v_k)\to(0,0)$ for every admissible run on $F(u,v)=u^2+|v|$
+(Corollary~\ref{art:mixed-benchmark}).
 \item \emph{Coercive positively homogeneous functions in $\R^n$.}
 Theorem~\ref{art:homogeneous} and Corollary~\ref{art:homogeneous-examples} yield
 global convergence $x_k\to0$ for all norms, bounded-unit-ball gauges, and
@@ -265,10 +267,9 @@ Corollaries~\ref{art:plq} and~\ref{art:local-centered}).
 \item \emph{Curved planar switching interfaces.}
 When switching curves bend, radial secant bounds can fail on every neighborhood
 of the minimizer, as shown on an explicit three-quadratic maximum
-(Theorem~\ref{art:nonradial-example}). A normal-angle contour-velocity field
-whose angular derivative cancels normal components forces cluster points into
-the affine-critical set $\{p:0\in\aff\partial F(p)\}$
-(Theorem~\ref{art:planar-cluster}). When the active gradients at $x_*$ are
+(Theorem~\ref{art:nonradial-example}). A normal-angle contour-velocity field whose angular derivative cancels normal
+components forces at least one cluster point into the affine-critical set
+$\{p:0\in\aff\partial F(p)\}$ (Theorem~\ref{art:planar-cluster}). When the active gradients at $x_*$ are
 affinely independent with strictly positive optimal weights, every
 affine-critical point near $x_*$ is optimal, matching the multiplier
 nondegeneracy condition of nonsmooth Newton and bundle theory~\preprintcite{LW}
@@ -287,13 +288,15 @@ polyhedral function $\overline G(u,v)=\max\{u,-u-v/8,c_\circ u+d_\circ v,v-17\}$
 with unique minimizer $(-1,16)$ and minimum $-1$, on which unmodified BFGS from
 $z_0$ with $H_0=I$ and Lewis--Overton's unit-first bracketing search converges
 to the nonstationary origin with value $0$ for every $0<c_1\le1/3$, $c_1<c_2<1$
-(Theorem~\ref{art:failure_polyhedral}). Centering at the origin in
+(Theorem~\ref{art:failure_polyhedral}). Homogeneity in
 Theorem~\ref{art:homogeneous} is therefore essential: nonzero affine offsets can
-separate a nonstationary corner from the global minimizer.
+destroy the centered representation and separate a nonstationary corner from
+the global minimizer.
 \item \emph{Two local counterexamples near the minimizer of smooth-branch and
 strongly convex maxima.}
 Although Theorem~\ref{art:polyhedral} guarantees local convergence on any finite
-polyhedral objective, finitely many nonlinear smooth branches can replicate the
+polyhedral objective with a unique minimizer, finitely many nonlinear smooth
+branches can replicate the
 three-slope corner at shrinking scales $\bar x_\ell\to0$ around the unique
 minimizer of a single fixed function. Using the scale-covariance relation that
 $F(\bar x+\lambda z)=C+\sigma\mathcal G(z)$ preserves $H_0=I$ when
